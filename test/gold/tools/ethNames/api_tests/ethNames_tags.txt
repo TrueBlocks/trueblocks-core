@@ -17,9 +17,6 @@ names?tags
       "tags": "30-Contracts:Balancer"
     },
     {
-      "tags": "30-Contracts:Chainlink"
-    },
-    {
       "tags": "30-Contracts:Compound"
     },
     {

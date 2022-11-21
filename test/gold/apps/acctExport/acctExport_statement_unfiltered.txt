@@ -1,0 +1,357 @@
+chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --statements --first_block 8860513 --last_block 8860531 --ether --fmt json
+TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+TEST[DATE|TIME] Statements:  true
+TEST[DATE|TIME] FirstBlock:  8860513
+TEST[DATE|TIME] LastBlock:  8860531
+TEST[DATE|TIME] Ether:  true
+TEST[DATE|TIME] Format:  json
+{ "data": [
+TIME ~ CLOCK - <INFO>  : Calling a contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 8860512 prior to its deployment 10000835
+TIME ~ CLOCK - <INFO>  : doEthCall in CUniPrice::findPair returned false
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8860512...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8860512 at four-byte 0x59e02dd7 returned 0x000000000000000000000000000000000000000000000009ece258f2964500000000000000000000000000000000000000000000000000000000000000000001
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 2
+  0: bytes32 val_0 = <>
+  1: bool val_1 = <>
+dataArray.size: 2
+  0 (0x000) 0000000000000000...0000000000000009ece258f296450000 <=o <-r
+  1 (0x020) 0000000000000000...00000000000000000000000000000001
+
+==================================================
+params.size: 2
+  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
+  1: bool val_1 = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 2
+  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
+  1: bool val_1 = <>
+dataArray.size: 2
+  0 (0x000) 0000000000000000...0000000000000009ece258f296450000 <=o
+  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
+
+==================================================
+params.size: 2
+  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
+  1: bool val_1 = true
+params.size: 2
+  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
+  1: bool val_1 = true
+==================================================
+
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8860513...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8860513 at four-byte 0x59e02dd7 returned 0x000000000000000000000000000000000000000000000009ece258f2964500000000000000000000000000000000000000000000000000000000000000000001
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 2
+  0: bytes32 val_0 = <>
+  1: bool val_1 = <>
+dataArray.size: 2
+  0 (0x000) 0000000000000000...0000000000000009ece258f296450000 <=o <-r
+  1 (0x020) 0000000000000000...00000000000000000000000000000001
+
+==================================================
+params.size: 2
+  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
+  1: bool val_1 = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 2
+  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
+  1: bool val_1 = <>
+dataArray.size: 2
+  0 (0x000) 0000000000000000...0000000000000009ece258f296450000 <=o
+  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
+
+==================================================
+params.size: 2
+  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
+  1: bool val_1 = true
+params.size: 2
+  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
+  1: bool val_1 = true
+==================================================
+
+{
+  "blockNumber": 8860513,
+  "transactionIndex": 85,
+  "transactionHash": "0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a",
+  "timestamp": 1572720150,
+  "date": "2019-11-02 18:42:30 UTC",
+  "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+  "sender": "0x0",
+  "recipient": "0x0",
+  "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+  "assetSymbol": "ETH",
+  "decimals": 18,
+  "prevAppBlk": 8860511,
+  "prevBal": "4.999744015000000000",
+  "begBal": "4.999744015000000000",
+  "begBalDiff": "",
+  "amountNet": "-0.000034017000000000",
+  "endBal": "4.999709998000000000",
+  "endBalCalc": "4.999709998000000000",
+  "endBalDiff": "",
+  "totalIn": "",
+  "amountIn": "",
+  "internalIn": "",
+  "selfDestructIn": "",
+  "minerBaseRewardIn": "",
+  "minerNephewRewardIn": "",
+  "minerTxFeeIn": "",
+  "minerUncleRewardIn": "",
+  "prefundIn": "",
+  "totalOut": "0.000034017000000000",
+  "totalOutLessGas": "",
+  "amountOut": "",
+  "internalOut": "",
+  "selfDestructOut": "",
+  "gasCost": "0.000034017000000000",
+  "spotPrice": 183.09000,
+  "priceSource": "maker",
+  "reconciliationType": "regular",
+  "reconciled": true
+}
+, {
+  "blockNumber": 8860513,
+  "transactionIndex": 85,
+  "transactionHash": "0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a",
+  "timestamp": 1572720150,
+  "date": "2019-11-02 18:42:30 UTC",
+  "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+  "sender": "0x0",
+  "recipient": "0x0",
+  "assetAddr": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+  "assetSymbol": "SAI",
+  "decimals": 18,
+  "prevAppBlk": 8860512,
+  "prevBal": "7500.0000000",
+  "begBal": "7500.0000000",
+  "begBalDiff": "",
+  "amountNet": "-500.0000000",
+  "endBal": "7000.0000000",
+  "endBalCalc": "7000.0000000",
+  "endBalDiff": "",
+  "totalIn": "",
+  "amountIn": "",
+  "internalIn": "",
+  "selfDestructIn": "",
+  "minerBaseRewardIn": "",
+  "minerNephewRewardIn": "",
+  "minerTxFeeIn": "",
+  "minerUncleRewardIn": "",
+  "prefundIn": "",
+  "totalOut": "500.0000000",
+  "totalOutLessGas": "500.0000000",
+  "amountOut": "500.0000000",
+  "internalOut": "",
+  "selfDestructOut": "",
+  "gasCost": "",
+  "spotPrice": 1.00000,
+  "priceSource": "stable-coin",
+  "reconciled": true
+}
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8860529...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8860529 at four-byte 0x59e02dd7 returned 0x000000000000000000000000000000000000000000000009ece258f2964500000000000000000000000000000000000000000000000000000000000000000001
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 2
+  0: bytes32 val_0 = <>
+  1: bool val_1 = <>
+dataArray.size: 2
+  0 (0x000) 0000000000000000...0000000000000009ece258f296450000 <=o <-r
+  1 (0x020) 0000000000000000...00000000000000000000000000000001
+
+==================================================
+params.size: 2
+  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
+  1: bool val_1 = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 2
+  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
+  1: bool val_1 = <>
+dataArray.size: 2
+  0 (0x000) 0000000000000000...0000000000000009ece258f296450000 <=o
+  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
+
+==================================================
+params.size: 2
+  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
+  1: bool val_1 = true
+params.size: 2
+  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
+  1: bool val_1 = true
+==================================================
+
+, {
+  "blockNumber": 8860529,
+  "transactionIndex": 145,
+  "transactionHash": "0x3af5419098b5510f39ec64d6eb8ee08f3fe5cb538469fa9ef263cf7ebd4b607d",
+  "timestamp": 1572720358,
+  "date": "2019-11-02 18:45:58 UTC",
+  "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+  "sender": "0x0",
+  "recipient": "0x0",
+  "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+  "assetSymbol": "ETH",
+  "decimals": 18,
+  "prevAppBlk": 8860513,
+  "prevBal": "4.999709998000000000",
+  "begBal": "4.999709998000000000",
+  "begBalDiff": "",
+  "amountNet": "-0.000046049000000000",
+  "endBal": "4.999663949000000000",
+  "endBalCalc": "4.999663949000000000",
+  "endBalDiff": "",
+  "totalIn": "",
+  "amountIn": "",
+  "internalIn": "",
+  "selfDestructIn": "",
+  "minerBaseRewardIn": "",
+  "minerNephewRewardIn": "",
+  "minerTxFeeIn": "",
+  "minerUncleRewardIn": "",
+  "prefundIn": "",
+  "totalOut": "0.000046049000000000",
+  "totalOutLessGas": "",
+  "amountOut": "",
+  "internalOut": "",
+  "selfDestructOut": "",
+  "gasCost": "0.000046049000000000",
+  "spotPrice": 183.09000,
+  "priceSource": "maker",
+  "reconciliationType": "regular",
+  "reconciled": true
+}
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8860531...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8860531 at four-byte 0x59e02dd7 returned 0x000000000000000000000000000000000000000000000009ece258f2964500000000000000000000000000000000000000000000000000000000000000000001
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 2
+  0: bytes32 val_0 = <>
+  1: bool val_1 = <>
+dataArray.size: 2
+  0 (0x000) 0000000000000000...0000000000000009ece258f296450000 <=o <-r
+  1 (0x020) 0000000000000000...00000000000000000000000000000001
+
+==================================================
+params.size: 2
+  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
+  1: bool val_1 = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 2
+  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
+  1: bool val_1 = <>
+dataArray.size: 2
+  0 (0x000) 0000000000000000...0000000000000009ece258f296450000 <=o
+  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
+
+==================================================
+params.size: 2
+  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
+  1: bool val_1 = true
+params.size: 2
+  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
+  1: bool val_1 = true
+==================================================
+
+, {
+  "blockNumber": 8860531,
+  "transactionIndex": 152,
+  "transactionHash": "0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124",
+  "timestamp": 1572720361,
+  "date": "2019-11-02 18:46:01 UTC",
+  "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+  "sender": "0x0",
+  "recipient": "0x0",
+  "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+  "assetSymbol": "ETH",
+  "decimals": 18,
+  "prevAppBlk": 8860529,
+  "prevBal": "4.999663949000000000",
+  "begBal": "4.999663949000000000",
+  "begBalDiff": "",
+  "amountNet": "-0.000024541000000000",
+  "endBal": "4.999639408000000000",
+  "endBalCalc": "4.999639408000000000",
+  "endBalDiff": "",
+  "totalIn": "",
+  "amountIn": "",
+  "internalIn": "",
+  "selfDestructIn": "",
+  "minerBaseRewardIn": "",
+  "minerNephewRewardIn": "",
+  "minerTxFeeIn": "",
+  "minerUncleRewardIn": "",
+  "prefundIn": "",
+  "totalOut": "0.000024541000000000",
+  "totalOutLessGas": "",
+  "amountOut": "",
+  "internalOut": "",
+  "selfDestructOut": "",
+  "gasCost": "0.000024541000000000",
+  "spotPrice": 183.09000,
+  "priceSource": "maker",
+  "reconciliationType": "regular",
+  "reconciled": true
+}
+, {
+  "blockNumber": 8860531,
+  "transactionIndex": 152,
+  "transactionHash": "0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124",
+  "timestamp": 1572720361,
+  "date": "2019-11-02 18:46:01 UTC",
+  "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+  "sender": "0x0",
+  "recipient": "0x0",
+  "assetAddr": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+  "assetSymbol": "SAI",
+  "decimals": 18,
+  "prevAppBlk": 8860513,
+  "prevBal": "7000.0000000",
+  "begBal": "7000.0000000",
+  "begBalDiff": "",
+  "amountNet": "-7000.0000000",
+  "endBal": "",
+  "endBalCalc": "",
+  "endBalDiff": "",
+  "totalIn": "",
+  "amountIn": "",
+  "internalIn": "",
+  "selfDestructIn": "",
+  "minerBaseRewardIn": "",
+  "minerNephewRewardIn": "",
+  "minerTxFeeIn": "",
+  "minerUncleRewardIn": "",
+  "prefundIn": "",
+  "totalOut": "7000.0000000",
+  "totalOutLessGas": "7000.0000000",
+  "amountOut": "7000.0000000",
+  "internalOut": "",
+  "selfDestructOut": "",
+  "gasCost": "",
+  "spotPrice": 1.00000,
+  "priceSource": "stable-coin",
+  "reconciled": true
+}
+] }

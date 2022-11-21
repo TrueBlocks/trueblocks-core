@@ -104,6 +104,9 @@ func GetOptions() *ServeOptions {
 }
 
 func ResetOptions() {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
 	defaultServeOptions = ServeOptions{}
 	globals.SetDefaults(&defaultServeOptions.Globals)
+	defaultServeOptions.Globals.Writer = w
 }

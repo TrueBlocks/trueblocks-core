@@ -128,6 +128,15 @@ names?terms=etwork&verbose
       "petname": "frequently-innocent-mollusk"
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c",
+      "name": "Bancor Network Token",
+      "symbol": "BNT",
+      "source": "Giveth website",
+      "decimals": 18,
+      "petname": "firstly-amazed-pony"
+    },
+    {
       "tags": "31-Gitcoin:Grants",
       "address": "0x1fb3e449448faf1330dba45d945554c1bedcab5a",
       "name": "Grant 2250 - Cura Network - the decentralized healthcare system that super-charges healthcare delivery",
@@ -200,6 +209,15 @@ names?terms=etwork&verbose
       "petname": "overly-rich-teal"
     },
     {
+      "tags": "30-Contracts",
+      "address": "0x32a3256a4b15badd4a6e072a03d23404d925a5cf",
+      "name": "Celsius Network: Contract",
+      "symbol": "",
+      "source": "EtherScan.io",
+      "decimals": 0,
+      "petname": "usually-quick-bug"
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x3543638ed4a9006e4840b105944271bcea15605d",
       "name": "UNetworkToken",
@@ -225,15 +243,6 @@ names?terms=etwork&verbose
       "source": "Tokenomics",
       "decimals": 0,
       "petname": "oddly-true-bedbug"
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x3883f5e181fccaf8410fa61e12b59bad963fb645",
-      "name": "Theta Token",
-      "symbol": "THETA",
-      "source": "On chain",
-      "decimals": 18,
-      "petname": "A decentralized peer-to-peer network tha"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -362,6 +371,15 @@ names?terms=etwork&verbose
       "petname": "vaguely-complete-bengal"
     },
     {
+      "tags": "30-Contracts",
+      "address": "0x54431918cec22932fcf97e54769f4e00f646690f",
+      "name": "1inch Network: Deployer Related",
+      "symbol": "",
+      "source": "EtherScan.io",
+      "decimals": 0,
+      "petname": "blatantly-clean-sunbird"
+    },
+    {
       "tags": "31-Gitcoin:Grants",
       "address": "0x55b23ed53fe13060183b92979c737a8ef9a73b73",
       "name": "Grant 4201 - Spect Network",
@@ -396,6 +414,15 @@ names?terms=etwork&verbose
       "source": "On chain",
       "decimals": 18,
       "petname": "nationally-powerful-shepherd"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x607f4c5bb672230e8672085532f7e901544a7375",
+      "name": "iEx.ec Network Token",
+      "symbol": "RLC",
+      "source": "Giveth website",
+      "decimals": 9,
+      "petname": "instantly-elegant-wombat"
     },
     {
       "tags": "31-Giveth:Project",
@@ -482,9 +509,9 @@ names?terms=etwork&verbose
       "tags": "50-Tokens:ERC20",
       "address": "0x69af81e73a73b40adf4f3d4223cd9b1ece623074",
       "name": "Mask Network",
-      "symbol": "",
+      "symbol": "MASK",
       "source": "Giveth website",
-      "decimals": 0,
+      "decimals": 18,
       "petname": "surely-ruling-moray"
     },
     {
@@ -522,6 +549,24 @@ names?terms=etwork&verbose
       "source": "Tokenomics",
       "decimals": 0,
       "petname": "infinitely-hardy-hyena"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x744d70fdbe2ba4cf95131626614a1763df805b9e",
+      "name": "Status Network Token",
+      "symbol": "SNT",
+      "source": "Giveth website",
+      "decimals": 18,
+      "petname": "ultimately-sensible-satyr"
+    },
+    {
+      "tags": "30-Contracts",
+      "address": "0x75db8b92937f8f86213e523788ab9f066efde3fe",
+      "name": "Celsius Network: Wallet 2",
+      "symbol": "",
+      "source": "EtherScan.io",
+      "decimals": 0,
+      "petname": "initially-valid-shiner"
     },
     {
       "tags": "30-Contracts:Kyber Network",
@@ -566,7 +611,7 @@ names?terms=etwork&verbose
       "symbol": "SAN",
       "source": "On chain",
       "decimals": 18,
-      "petname": "A Better Way to Trade Crypto-Markets - M"
+      "petname": "roughly-solid-bluejay"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -587,15 +632,6 @@ names?terms=etwork&verbose
       "petname": "certainly-sterling-insect"
     },
     {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0",
-      "name": "Matic Network",
-      "symbol": "",
-      "source": "Giveth website",
-      "decimals": 0,
-      "petname": "sensibly-equipped-warthog"
-    },
-    {
       "tags": "30-Contracts:Set Protocol",
       "address": "0x818e6fecd516ecc3849daf6845e3ec868087b755",
       "name": "Kyber Network Proxy",
@@ -608,9 +644,9 @@ names?terms=etwork&verbose
       "tags": "50-Tokens:ERC20",
       "address": "0x8290333cef9e6d528dd5618fb97a76f268f3edd4",
       "name": "Ankr Network",
-      "symbol": "",
+      "symbol": "ANKR",
       "source": "Giveth website",
-      "decimals": 0,
+      "decimals": 18,
       "petname": "positively-superb-malamute"
     },
     {
@@ -749,6 +785,15 @@ names?terms=etwork&verbose
       "petname": "firstly-upright-mite"
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xa117000000f279d81a1d3cc75430faa017fa5a2e",
+      "name": "Aragon Network Token",
+      "symbol": "ANT",
+      "source": "Giveth website",
+      "decimals": 18,
+      "petname": "eminently-enough-snake"
+    },
+    {
       "tags": "31-Gitcoin:Grants",
       "address": "0xa1381b40e0a6b91814f77de19a7ad2cb21753184",
       "name": "Grant 0334 Interstate Network EVM optimistic rollup",
@@ -792,6 +837,15 @@ names?terms=etwork&verbose
       "source": "https://gitcoin.co/grants/1995/ralie-network-connecting-through-blockchain",
       "decimals": 0,
       "petname": "conversely-humorous-wolf"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xa74476443119a942de498590fe1f2454d7d4ac0d",
+      "name": "Golem Network Token",
+      "symbol": "GNT",
+      "source": "Giveth website",
+      "decimals": 18,
+      "petname": "only-polished-ram"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -905,9 +959,9 @@ names?terms=etwork&verbose
       "tags": "50-Tokens:ERC20",
       "address": "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
       "name": "Synthetix Network Token",
-      "symbol": "",
+      "symbol": "SNX",
       "source": "Giveth website",
-      "decimals": 0,
+      "decimals": 18,
       "petname": "greatly-quality-maggot"
     },
     {
@@ -954,6 +1008,15 @@ names?terms=etwork&verbose
       "source": "https://gitcoin.co/grants/2190/layer-2-faucet-in-ethereum-network",
       "decimals": 0,
       "petname": "remarkably-apparent-eagle"
+    },
+    {
+      "tags": "30-Contracts",
+      "address": "0xc4a8b7e29e3c8ec560cd4945c1cf3461a85a148d",
+      "name": "1inch Network: Deployer Related",
+      "symbol": "",
+      "source": "EtherScan.io",
+      "decimals": 0,
+      "petname": "finally-faithful-wren"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1017,15 +1080,6 @@ names?terms=etwork&verbose
       "source": "On chain",
       "decimals": 18,
       "petname": "mentally-excited-piranha"
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-      "name": "OMG Network",
-      "symbol": "",
-      "source": "Giveth website",
-      "decimals": 0,
-      "petname": "purely-wise-perch"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1111,10 +1165,10 @@ names?terms=etwork&verbose
     {
       "tags": "50-Tokens:ERC20",
       "address": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
-      "name": "Kyber Network",
-      "symbol": "",
+      "name": "Kyber Network Crystal",
+      "symbol": "KNC",
       "source": "Giveth website",
-      "decimals": 0,
+      "decimals": 18,
       "petname": "primarily-big-lemming"
     },
     {
@@ -1282,10 +1336,10 @@ names?terms=etwork&verbose
     {
       "tags": "50-Tokens:ERC20",
       "address": "0xf970b8e36e23f7fc3fd752eea86f8be8d83375a6",
-      "name": "Ripio Credit Network",
-      "symbol": "",
+      "name": "Ripio Credit Network Token",
+      "symbol": "RCN",
       "source": "Giveth website",
-      "decimals": 0,
+      "decimals": 18,
       "petname": "loudly-touched-ladybug"
     },
     {

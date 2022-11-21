@@ -1,4 +1,3 @@
-Env: DICT_MODE=false
 chifra transactions  0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c --articulate --fmt json --trace
 TEST[DATE|TIME] Transactions:  [0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c]
 TEST[DATE|TIME] Articulate:  true
@@ -40,22 +39,13 @@ params.size: 0
           "data": "0x0000000000000000000000000000000000000000000000000000000005f5e100",
           "articulatedLog": {
             "name": "Transfer",
-            "inputs": [
-              {
-                "name": "_from",
-                "value": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28"
-              },
-              {
-                "name": "_to",
-                "value": "0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021"
-              },
-              {
-                "name": "_amount",
-                "value": "100000000"
-              }
-            ]
+            "inputs": {
+              "_amount": "100000000",
+              "_from": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28",
+              "_to": "0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021"
+            }
           },
-          "compressedLog": "{name:Transfer|inputs:[{name:_from|value:0xe81a6c6b733d52df5d6aa863d75aab78147a0f28}|{name:_to|value:0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021}|{name:_amount|value:100000000}]}"
+          "compressedLog": "{name:Transfer|inputs:{_amount:100000000|_from:0xe81a6c6b733d52df5d6aa863d75aab78147a0f28|_to:0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021}}"
         },
         {
           "address": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
@@ -222,22 +212,14 @@ params.size: 0
         "articulatedTrace": {
           "name": "balanceOf",
           "stateMutability": "view",
-          "inputs": [
-            {
-              "name": "_owner",
-              "value": "0xc14830e53aa344e8c14603a91229a0b925b0b262",
-              "internalType": "address"
-            }
-          ],
-          "outputs": [
-            {
-              "name": "_balance",
-              "value": "0",
-              "internalType": "uint256"
-            }
-          ]
+          "inputs": {
+            "_owner": "0xc14830e53aa344e8c14603a91229a0b925b0b262"
+          },
+          "outputs": {
+            "_balance": "0"
+          }
         },
-        "compressedTrace": "{name:balanceOf|inputs:[{name:_owner|value:0xc14830e53aa344e8c14603a91229a0b925b0b262|internalType:address}]|outputs:[{name:_balance|value:0|internalType:uint256}]}",
+        "compressedTrace": "{name:balanceOf|inputs:{_owner:0xc14830e53aa344e8c14603a91229a0b925b0b262}|outputs:{_balance:0}}",
         "timestamp": 1544664392
       },
       {
@@ -263,22 +245,14 @@ params.size: 0
         "articulatedTrace": {
           "name": "balanceOf",
           "stateMutability": "view",
-          "inputs": [
-            {
-              "name": "_owner",
-              "value": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28",
-              "internalType": "address"
-            }
-          ],
-          "outputs": [
-            {
-              "name": "_balance",
-              "value": "0",
-              "internalType": "uint256"
-            }
-          ]
+          "inputs": {
+            "_owner": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28"
+          },
+          "outputs": {
+            "_balance": "0"
+          }
         },
-        "compressedTrace": "{name:balanceOf|inputs:[{name:_owner|value:0xe81a6c6b733d52df5d6aa863d75aab78147a0f28|internalType:address}]|outputs:[{name:_balance|value:0|internalType:uint256}]}",
+        "compressedTrace": "{name:balanceOf|inputs:{_owner:0xe81a6c6b733d52df5d6aa863d75aab78147a0f28}|outputs:{_balance:0}}",
         "timestamp": 1544664392
       },
       {
@@ -304,22 +278,14 @@ params.size: 0
         "articulatedTrace": {
           "name": "balanceOf",
           "stateMutability": "view",
-          "inputs": [
-            {
-              "name": "_owner",
-              "value": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a",
-              "internalType": "address"
-            }
-          ],
-          "outputs": [
-            {
-              "name": "_balance",
-              "value": "100000000",
-              "internalType": "uint256"
-            }
-          ]
+          "inputs": {
+            "_owner": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a"
+          },
+          "outputs": {
+            "_balance": "100000000"
+          }
         },
-        "compressedTrace": "{name:balanceOf|inputs:[{name:_owner|value:0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a|internalType:address}]|outputs:[{name:_balance|value:100000000|internalType:uint256}]}",
+        "compressedTrace": "{name:balanceOf|inputs:{_owner:0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a}|outputs:{_balance:100000000}}",
         "timestamp": 1544664392
       },
       {
@@ -345,22 +311,14 @@ params.size: 0
         "articulatedTrace": {
           "name": "balanceOf",
           "stateMutability": "view",
-          "inputs": [
-            {
-              "name": "_owner",
-              "value": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28",
-              "internalType": "address"
-            }
-          ],
-          "outputs": [
-            {
-              "name": "_balance",
-              "value": "100000000",
-              "internalType": "uint256"
-            }
-          ]
+          "inputs": {
+            "_owner": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28"
+          },
+          "outputs": {
+            "_balance": "100000000"
+          }
         },
-        "compressedTrace": "{name:balanceOf|inputs:[{name:_owner|value:0xe81a6c6b733d52df5d6aa863d75aab78147a0f28|internalType:address}]|outputs:[{name:_balance|value:100000000|internalType:uint256}]}",
+        "compressedTrace": "{name:balanceOf|inputs:{_owner:0xe81a6c6b733d52df5d6aa863d75aab78147a0f28}|outputs:{_balance:100000000}}",
         "timestamp": 1544664392
       },
       {
@@ -386,22 +344,14 @@ params.size: 0
         "articulatedTrace": {
           "name": "balanceOf",
           "stateMutability": "view",
-          "inputs": [
-            {
-              "name": "_owner",
-              "value": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a",
-              "internalType": "address"
-            }
-          ],
-          "outputs": [
-            {
-              "name": "_balance",
-              "value": "100000000",
-              "internalType": "uint256"
-            }
-          ]
+          "inputs": {
+            "_owner": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a"
+          },
+          "outputs": {
+            "_balance": "100000000"
+          }
         },
-        "compressedTrace": "{name:balanceOf|inputs:[{name:_owner|value:0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a|internalType:address}]|outputs:[{name:_balance|value:100000000|internalType:uint256}]}",
+        "compressedTrace": "{name:balanceOf|inputs:{_owner:0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a}|outputs:{_balance:100000000}}",
         "timestamp": 1544664392
       },
       {
@@ -427,22 +377,14 @@ params.size: 0
         "articulatedTrace": {
           "name": "balanceOf",
           "stateMutability": "view",
-          "inputs": [
-            {
-              "name": "_owner",
-              "value": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28",
-              "internalType": "address"
-            }
-          ],
-          "outputs": [
-            {
-              "name": "_balance",
-              "value": "100000000",
-              "internalType": "uint256"
-            }
-          ]
+          "inputs": {
+            "_owner": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28"
+          },
+          "outputs": {
+            "_balance": "100000000"
+          }
         },
-        "compressedTrace": "{name:balanceOf|inputs:[{name:_owner|value:0xe81a6c6b733d52df5d6aa863d75aab78147a0f28|internalType:address}]|outputs:[{name:_balance|value:100000000|internalType:uint256}]}",
+        "compressedTrace": "{name:balanceOf|inputs:{_owner:0xe81a6c6b733d52df5d6aa863d75aab78147a0f28}|outputs:{_balance:100000000}}",
         "timestamp": 1544664392
       },
       {
@@ -468,25 +410,13 @@ params.size: 0
         "articulatedTrace": {
           "name": "transfer",
           "stateMutability": "nonpayable",
-          "inputs": [
-            {
-              "name": "_token",
-              "value": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a",
-              "internalType": "address"
-            },
-            {
-              "name": "_to",
-              "value": "0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021",
-              "internalType": "address"
-            },
-            {
-              "name": "_value",
-              "value": "100000000",
-              "internalType": "uint256"
-            }
-          ]
+          "inputs": {
+            "_to": "0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021",
+            "_token": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a",
+            "_value": "100000000"
+          }
         },
-        "compressedTrace": "{name:transfer|inputs:[{name:_token|value:0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a|internalType:address}|{name:_to|value:0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021|internalType:address}|{name:_value|value:100000000|internalType:uint256}]}",
+        "compressedTrace": "{name:transfer|inputs:{_to:0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021|_token:0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a|_value:100000000}}",
         "timestamp": 1544664392
       },
       {
@@ -556,27 +486,15 @@ params.size: 0
         "articulatedTrace": {
           "name": "transfer",
           "stateMutability": "nonpayable",
-          "inputs": [
-            {
-              "name": "_to",
-              "value": "0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021",
-              "internalType": "address"
-            },
-            {
-              "name": "_value",
-              "value": "100000000",
-              "internalType": "uint256"
-            }
-          ],
-          "outputs": [
-            {
-              "name": "_success",
-              "value": "true",
-              "internalType": "bool"
-            }
-          ]
+          "inputs": {
+            "_to": "0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021",
+            "_value": "100000000"
+          },
+          "outputs": {
+            "_success": "true"
+          }
         },
-        "compressedTrace": "{name:transfer|inputs:[{name:_to|value:0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021|internalType:address}|{name:_value|value:100000000|internalType:uint256}]|outputs:[{name:_success|value:true|internalType:bool}]}",
+        "compressedTrace": "{name:transfer|inputs:{_to:0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021|_value:100000000}|outputs:{_success:true}}",
         "timestamp": 1544664392
       },
       {

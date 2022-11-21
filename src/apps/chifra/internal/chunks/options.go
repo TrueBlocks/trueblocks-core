@@ -145,6 +145,9 @@ func GetOptions() *ChunksOptions {
 }
 
 func ResetOptions() {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
 	defaultChunksOptions = ChunksOptions{}
 	globals.SetDefaults(&defaultChunksOptions.Globals)
+	defaultChunksOptions.Globals.Writer = w
 }

@@ -49,8 +49,13 @@ bool COptions::finishClean(CAccountName& account) {
         account.tags = "";
 
     if (!isContract) {
-        // If the tag is not empty and not 30-Contracts, perserve it. Otherwise it's an individual
-        account.tags = !account.tags.empty() && account.tags != "30-Contracts" ? account.tags : "90-Individuals:Other";
+        if (account.tags == "30-Contracts:Humanity DAO") {
+            account.tags = "90-Individuals:Humanity DAO";
+        }
+        bool isEmpty = account.tags.empty();
+        bool isContract = contains(account.tags, "Contracts");
+        bool isToken = contains(account.tags, "Tokens");
+        account.tags = !isEmpty && !isContract && !isToken ? account.tags : "90-Individuals:Other";
         if (wasContract) {
             // This used to be a contract and now is not, so it must be a self destruct
             account.isContract = true;
@@ -120,11 +125,11 @@ bool COptions::cleanNames(const string_q& sourceIn, const string_q& destIn) {
     replace(source, "~", getHomeFolder());
     replace(source, "$HOME", getHomeFolder());
     replaceAll(source, "//", "/");
-    if (!fileExists(source))
+    if (!fileExists(source)) {
         return false;
+    }
 
     string_q dest = destIn;
-
     cerr << "Processing names file (" << source << ") into " << dest << endl;
 
     string_q contents = asciiFileToString(source);
@@ -166,17 +171,25 @@ bool COptions::cleanNames(const string_q& sourceIn, const string_q& destIn) {
 //--------------------------------------------------------------------
 bool COptions::handle_clean(void) {
     string_q mainSource = getGlobalConfig("ethNames")->getConfigStr("settings", "source", "<not_set>");
-    string_q mainDest = chainConfigsTxt_names;
-    if (!cleanNames(mainSource, mainDest))
-        return usage("This installation of TrueBlocks may not clean the names file.");
-    LOG_WARN("The primary names file was cleaned.", string_q(50, ' '));
+    if (mainSource == "<not_set>") {
+        LOG_WARN("The primary names database was not cleaned.", string_q(50, ' '));
+    } else {
+        string_q mainDest = chainConfigsTxt_names;
+        if (!cleanNames(mainSource, mainDest))
+            return usage("This installation of TrueBlocks may not clean the names file.");
+        LOG_WARN("The primary names database was cleaned.", string_q(50, ' '));
+    }
 
-    //    string_q customSource = getGlobalConfig("ethNames")->getConfigStr("settings", "custom", "<not_set>");
-    //    string_q customDest = chainConfigsTxt_namesCustom;
-    //    if (!cleanNames(customSource, customDest))
-    //        return usage("This installation of TrueBlocks may not clean the names file. Customized names file was not
-    //        set.");
-    LOG_WARN("The custom names file was NOT cleaned.", string_q(50, ' '));
+    string_q customSource = getGlobalConfig("ethNames")->getConfigStr("settings", "custom", "<not_set>");
+    if (customSource == "<not_set>") {
+        LOG_WARN("The custom names database was not cleaned.", string_q(50, ' '));
+    } else {
+        string_q customDest = chainConfigsTxt_namesCustom;
+        if (!cleanNames(customSource, customDest))
+            return usage(
+                "This installation of TrueBlocks may not clean the names file. Customized names file was not set.");
+        LOG_WARN("The custom names database was cleaned.", string_q(50, ' '));
+    }
 
     // Bin files will get rebuilt if the ascii file changed
 

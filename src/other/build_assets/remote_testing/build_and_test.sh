@@ -10,14 +10,16 @@ RUN_SERVER=false
 SRV_PORT=`shuf -n 1 -i 8091-10000`
 
 echo "Will perform $MAKE_TARGET"
+echo "Home folder: $HOME"
+echo "Whoami: `whoami`"
 
 if [ "$MAKE_TARGET" == "test-all" ]
 then
     RUN_SERVER=true
     echo "Server required. Will use port $SRV_PORT"
     echo "[settings]
-    api_provider=\"http://localhost:$SRV_PORT\"
-    " > $HOME/.local/share/trueblocks/testRunner.toml
+api_provider=\"http://localhost:$SRV_PORT\"
+" > $HOME/.local/share/trueblocks/testRunner.toml
 fi
 
 cd /root/trueblocks-core/build
@@ -25,6 +27,9 @@ echo $(pwd)
 
 # Set the correct PATH
 export PATH=$(pwd)/../bin:$(pwd)/../bin/test:$PATH
+
+echo "----- We need autossh connections (should see at least two, maybe three -----"
+ps -ef | grep autossh
 
 # Run server if needed
 if $RUN_SERVER
@@ -50,6 +55,27 @@ then
 
     echo "Running tests..."
 fi
+
+# echo "----- Contents of testRunner.toml -----"
+# cat $HOME/.local/share/trueblocks/testRunner.toml
+# echo "---------------------------------------"
+# echo
+# echo "----- Contents of trueBlocks.toml -----"
+# cat $HOME/.local/share/trueblocks/trueBlocks.toml
+# echo "---------------------------------------"
+# echo
+# echo "----- ls -lR /home/unchained -----"
+# ls -lR /home/unchained/
+# echo "---------------------------------------"
+# echo
+# echo "----- ls -lR $HOME/.local/share/trueblocks/ -----"
+# ls -lR $HOME/.local/share/trueblocks/
+# echo "---------------------------------------"
+# echo
+# echo "----- 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --last_block 8860511 --articulate --ether --fmt json ----- "
+# chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --last_block 8860511 --articulate --ether --fmt json
+# echo "---------------------------------------"
+# echo
 
 # Run test
 echo "make $MAKE_TARGET"

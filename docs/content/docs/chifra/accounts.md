@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-10-08T19:54:08
+date: 2022-11-18T02:30:56
 lastmod:
   - :git
   - lastmod
@@ -77,9 +77,9 @@ Flags:
   -r, --receipts            export receipts instead of transactional data
   -l, --logs                export logs instead of transactional data
   -t, --traces              export traces instead of transactional data
-  -A, --statements          export reconciliations instead of transactional data (assumes --accounting option)
   -n, --neighbors           export the neighbors of the given address
   -C, --accounting          attach accounting records to the exported data (applies to transactions export only)
+  -A, --statements          for the accounting options only, export only statements
   -a, --articulate          articulate transactions, traces, logs, and outputs
   -i, --cache               write transactions to the cache (see notes)
   -R, --cache_traces        write traces to the cache (see notes)
@@ -89,10 +89,10 @@ Flags:
       --relevant            for log and accounting export only, export only logs relevant to one of the given export addresses
       --emitter strings     for log export only, export only logs if emitted by one of these address(es)
       --topic strings       for log export only, export only logs with this topic(s)
-      --asset strings       for the statements option only, export only reconciliations for this asset
-  -f, --flow string         for the statements option only, export only statements with incoming value or outgoing value
+      --asset strings       for the accounting options only, export statements only for this asset
+  -f, --flow string         for the accounting options only, export statements with incoming, outgoing, or zero value
                             One of [ in | out | zero ]
-  -y, --factory             scan for contract creations from the given address(es) and report address of those contracts
+  -y, --factory             for --traces only, report addresses created by (or self-destructed by) the given address(es)
   -u, --unripe              export transactions labeled upripe (i.e. less than 28 blocks old)
   -F, --first_block uint    first block to process (inclusive)
   -L, --last_block uint     last block to process (inclusive)
@@ -135,6 +135,8 @@ Flags:
       --delete        delete a monitor, but do not remove it
       --undelete      undelete a previously deleted monitor
       --remove        remove a previously deleted monitor
+      --decache       removes a monitor and all associated data from the cache
+      --list          list monitors in the cache (--verbose for more detail)
       --watch         continually scan for new blocks and extract data for monitored addresses
   -s, --sleep float   seconds to sleep between monitor passes (default 14)
   -x, --fmt string    export format, one of [none|json*|txt|csv]
@@ -144,6 +146,7 @@ Flags:
 Notes:
   - An address must start with '0x' and be forty-two characters long.
   - If no address is presented to the --clean command, all monitors will be cleaned.
+  - The --decache option will remove all cache items (blocks, txs, traces, recons) for the given address(es).
 ```
 
 **Source code**: [`internal/monitors`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/monitors)

@@ -27,6 +27,13 @@ TEST[DATE|TIME] Format:  json
     "petname": "actually-suitable-finch"
   },
   {
+    "tags": "30-Contracts",
+    "address": "0x000000000000541e251335090ac5b47176af4f7e",
+    "name": "dex.blue",
+    "source": "EtherScan.io",
+    "petname": "adequately-probable-werewolf"
+  },
+  {
     "tags": "50-Tokens:ERC20",
     "address": "0x0000000000085d4780b73119b644ae5ecd22b376",
     "name": "TrueUSD",
@@ -355,6 +362,24 @@ TEST[DATE|TIME] Format:  json
     "petname": "luckily-steady-fawn"
   },
   {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x0040a2cebc65894bc2cfb57565f9acfa33fab137",
+    "name": "SushiSwap LP Token",
+    "symbol": "SLP",
+    "source": "On chain",
+    "decimals": 18,
+    "petname": "amazingly-complete-turtle"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x004375dff511095cc5a197a54140a24efef3a416",
+    "name": "Uniswap V2",
+    "symbol": "UNI-V2",
+    "source": "On chain",
+    "decimals": 18,
+    "petname": "exactly-feasible-dogfish"
+  },
+  {
     "tags": "90-Individuals:Other",
     "address": "0x00476aecb24edfed50aaf2e2361badbd8d3efdc2",
     "name": "Name 0x00476aec",
@@ -383,6 +408,15 @@ TEST[DATE|TIME] Format:  json
     "name": "Grant 2763 - rugpullindex.com - Improving stake safety",
     "source": "https://gitcoin.co/grants/2763/rugpullindexcom-improving-stake-safety",
     "petname": "entirely-neat-fowl"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x0054c61a19e307ddd3ff81746487d7526f8c4a76",
+    "name": "Uniswap V2",
+    "symbol": "UNI-V2",
+    "source": "On chain",
+    "decimals": 18,
+    "petname": "formerly-vast-locust"
   },
   {
     "tags": "30-Contracts",
@@ -547,7 +581,7 @@ TEST[DATE|TIME] Format:  json
     "symbol": "FKX",
     "source": "On chain",
     "decimals": 18,
-    "petname": "FortKnoxster offers end-to-end encrypted"
+    "petname": "annually-relevant-grouper"
   },
   {
     "tags": "31-Gitcoin:Grants",
@@ -605,8 +639,10 @@ TEST[DATE|TIME] Format:  json
   {
     "tags": "50-Tokens:ERC20",
     "address": "0x00c83aecc790e8a4453e5dd3b0b4b3680501a7a7",
-    "name": "Skale",
+    "name": "SKALE",
+    "symbol": "SKL",
     "source": "Giveth website",
+    "decimals": 18,
     "petname": "violently-fun-shark"
   },
   {
@@ -1506,36 +1542,4 @@ TEST[DATE|TIME] Format:  json
     "source": "On chain",
     "decimals": 18,
     "petname": "surely-flowing-dolphin"
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x030ba81f1c18d280636f32af80b9aad02cf0854e",
-    "name": "Aave interest bearing WETH",
-    "symbol": "aWETH",
-    "source": "On chain",
-    "decimals": 18,
-    "petname": "specially-strong-polecat"
-  },
-  {
-    "tags": "91-Early:Addresses",
-    "address": "0x0312855bb6e548578a36fa8de63b8f0d3d7d7dc2",
-    "name": "Betonhashv84",
-    "source": "EtherScan.io",
-    "petname": "mutually-true-gnat"
-  },
-  {
-    "tags": "91-Early:Addresses",
-    "address": "0x0318179601a70085aeb488f178b081295b65ecc9",
-    "name": "Self_Store",
-    "source": "EtherScan.io",
-    "petname": "intensely-organic-lionfish"
-  },
-  {
-    "tags": "50-Tokens:ERC721",
-    "address": "0x031920cc2d9f5c10b444fd44009cd64f829e7be2",
-    "name": "CryptoZunks",
-    "symbol": "ZUNK",
-    "source": "On chain",
-    "decimals": 18,
-    "petname": "nicely-integral-grizzly"
   }] }

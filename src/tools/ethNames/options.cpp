@@ -194,7 +194,8 @@ bool COptions::parseArguments(string_q& command) {
         abi_spec.loadAbisFromKnown(true);
         crudCommands.push_back("create");
         terms.push_back(autoname);
-        ::setenv("TB_NAME_NAME", autoname.c_str(), true);
+        // ::setenv("TB_NAME_ADDRESS", autoname.c_str(), true);
+        ::setenv("TB_NAME_NAME", addr_2_Petname(autoname, '-').c_str(), true);
         ::setenv("TB_NAME_TAG", "50-Tokens:ERC20", true);
         ::setenv("TB_NAME_SOURCE", "TrueBlocks.io", true);
         ::setenv("TB_NAME_SYMBOL", "", true);
@@ -254,9 +255,14 @@ bool COptions::parseArguments(string_q& command) {
         manageFields("CAccountName:tags", true);
         format = "[{TAGS}]";
         addr_only = false;
-        types |= NAMED;
-        types |= PREFUND;
-        types |= CUSTOM;
+        if (custom) {
+            types = 0;
+            types |= CUSTOM;
+        } else {
+            types |= NAMED;
+            types |= PREFUND;
+            types |= CUSTOM;
+        }
     }
 
     // Prepare formatting

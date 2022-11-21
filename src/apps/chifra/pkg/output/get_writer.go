@@ -14,13 +14,17 @@ import (
 // to recover. Plus, output file is disabled in server, so it is safe to exit.
 func (opts *OutputOptions) GetOutputFileWriter() io.Writer {
 	if opts.OutputFn == "" {
-		// If there's no file path, we can just return the default writer. Note that
-		// even in the API mode, the OutputFn may be non-empty. In that case (i.e. --to_file)
-		// we write to a file and return the file name.
+		// If there's no output filename, we return the default writer (standard out).
 		return opts.Writer
 	}
 
-	// Otherwise, let's try to create the file
+	// Note on the command line, the OutputFn value can come from either the --output option
+	// (in which case the user is telling us exactly which file to use) or the `--to_file` option
+	// in which case we create a temporary file. In both cases, the we return the name of the file
+	// and the caller is responisbile to remove the file when it is no longer needed.
+	// In API mode, --output is disallowed, but `--to_file` will work even though the
+	// file may not be available (because the caller is on a different machine). I'm not sure
+	// why it works this way -- if the caller is on the same machine, why can't they name thier file?
 	var file *os.File
 	var err error
 	if opts.Append {
@@ -35,7 +39,12 @@ func (opts *OutputOptions) GetOutputFileWriter() io.Writer {
 	return file
 }
 
-// IsApiMode return true if `w` is successfully case into a `http.ResponseWriter`
+// IsApiMode return true if `w` is successfully cast into a `http.ResponseWriter`
 func (opts *OutputOptions) IsApiMode() bool {
-	return utils.IsServerWriter(opts.Writer)
+	w, ok := opts.Writer.(*JsonWriter)
+	if !ok {
+		return utils.IsServerWriter(opts.Writer)
+	}
+
+	return utils.IsServerWriter(*w.GetOutputWriter())
 }

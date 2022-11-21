@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	tokensPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -25,7 +26,13 @@ var tokensCmd = &cobra.Command{
 	Short:   shortTokens,
 	Long:    longTokens,
 	Version: versionText,
+	PreRun: outputHelpers.PreRunWithJsonWriter("tokens", func() *globals.GlobalOptions {
+		return &tokensPkg.GetOptions().Globals
+	}),
 	RunE:    file.RunWithFileSupport("tokens", tokensPkg.RunTokens, tokensPkg.ResetOptions),
+	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
+		return &tokensPkg.GetOptions().Globals
+	}),
 }
 
 const usageTokens = `tokens [flags] <address> <address> [address...] [block...]

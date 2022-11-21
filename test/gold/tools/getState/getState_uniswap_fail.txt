@@ -3,4 +3,9 @@ TEST[DATE|TIME] Blocks:  [10092000]
 TEST[DATE|TIME] Call:  0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0902f1ad
 TEST[DATE|TIME] Format:  txt
 blockNumber	address	signature	encoding	bytes	compressedResult
+TIME ~ CLOCK - <INFO>  : Calling 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 at block 10092000...: 
+TIME ~ CLOCK - <INFO>  : Calling 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 at block 10092000...: 
+TIME ~ CLOCK - <INFO>  : call to 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 at block 10092000 at four-byte 0x59679b0f returned {code:-32000,message:executionreverted}
+TIME ~ CLOCK - <INFO>  : getPC_internal: eth_call using four-byte 0x59679b0f contract 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 block 10092000 returned: false
+TIME ~ CLOCK - <INFO>  : call to 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 at block 10092000 at four-byte 0x0902f1ad returned {code:-32000,message:executionreverted}
 "No result from call to 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 with fourbyte 0x0902f1ad at block 10092000"

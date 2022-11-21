@@ -17,11 +17,15 @@ Arguments:
   blocks - one or more dates, block numbers, hashes, or special named blocks (see notes)
 
 Flags:
-  -l, --list         export a list of the 'special' blocks
-  -t, --timestamps   display or process timestamps
-  -x, --fmt string   export format, one of [none|json*|txt|csv]
-  -v, --verbose      enable verbose (increase detail with --log_level)
-  -h, --help         display this help screen
+  -l, --list          export a list of the 'special' blocks
+  -t, --timestamps    display or process timestamps
+  -u, --count         with --timestamps only, returns the number of timestamps in the cache
+  -r, --repair uint   with --timestamps only, repair a single timestamp by querying the chain
+  -c, --check         with --timestamps only, checks the validity of the timestamp data
+      --update        with --timestamps only, bring the timestamp database forward to the latest block
+  -x, --fmt string    export format, one of [none|json*|txt|csv]
+  -v, --verbose       enable verbose (increase detail with --log_level)
+  -h, --help          display this help screen
 
 Notes:
   - The block list may contain any combination of number, hash, date, special named blocks.
@@ -37,7 +41,6 @@ All tools accept the following additional flags, although in some cases, they ha
   -v, --version         display the current version of the tool
       --wei             export values in wei (the default)
       --ether           export values in ether
-      --dollars         export values in US dollars
       --raw             pass raw RPC data directly from the node with no processing
       --to_file         write the results to a temporary file and return the filename
       --output string   write the results to file 'fn' and return the filename

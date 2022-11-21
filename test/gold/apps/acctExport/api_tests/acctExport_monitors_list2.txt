@@ -1,0 +1,4 @@
+monitors?addrs=0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533%200x001d14804b399c6ef80e64576f657660804fec0b&list&fmt=csv
+"address","nRecords","fileSize","lastScanned"
+"0x001d14804b399c6ef80e64576f657660804fec0b","3","32","0"
+"0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533","5","48","0"

@@ -2,5 +2,9 @@ chifra state  0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --parts all 2500000
 TEST[DATE|TIME] Addrs:  [0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359]
 TEST[DATE|TIME] Blocks:  [2500000]
 TEST[DATE|TIME] Parts:  [all]
-blockNumber	address	balance	nonce	code	storage	deployed	accttype
-2500000	0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	3905662906205094119236	0	0x606060405236156100...65c6b64bfe7fe36bd19b	0x000000000000000000000000d176b08cfcb3872208f44b86f87b32faf32c531b	988725	Contract
+TEST[DATE|TIME] Format:  txt
+blockNumber	address	proxy	balance	nonce	code	deployed	accttype
+TIME ~ CLOCK - <INFO>  : Calling 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 2500000...: 
+TIME ~ CLOCK - <INFO>  : call to 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 2500000 at four-byte 0x59679b0f returned 0x
+TIME ~ CLOCK - <INFO>  : getPC_internal: query for slot 0x contract 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 block 2500000 returned: 0xd1220a0cf47c7b9be7a2e6ba89f429762e7b9adb
+2500000	0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	0xd1220a0cf47c7b9be7a2e6ba89f429762e7b9adb	3905662906205094119236	0	0x606060405236156100...65c6b64bfe7fe36bd19b	988725	Proxy

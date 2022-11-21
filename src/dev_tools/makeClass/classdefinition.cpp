@@ -616,6 +616,48 @@ const char* STR_DISPLAY_CLASSDEFINITION = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+void checkSorts(const string_q& className, const CStringArray& fields, const CStringArray& lines,
+                const string_q& field) {
+    size_t which = 0;
+    for (size_t i = 0; i < fields.size(); i++) {
+        if (contains(fields[i], field)) {
+            which = i;
+        }
+    }
+    if (!which) {
+        cerr << "Could not find field '" << field << "' in the following fields:\n";
+        for (auto field : fields)
+            cerr << "\t" << field << "\n";
+        cerr << "\n";
+        exit(0);
+    }
+    // cerr << "Found " << field << " at column " << which << endl;
+
+    CUintArray sorted;
+    for (auto line : lines) {
+        CStringArray parts;
+        explode(parts, line, ',');
+        // cerr << className << " parts: " << parts.size() << " " << line << endl;
+        if (parts.size() > which && !parts[which].empty()) {
+            sorted.push_back(str_2_Uint(trim(parts[which])));
+        }
+    }
+    // for (auto s : sorted) {
+    //     cerr << "\t" << s << "\n";
+    // }
+    sort(sorted.begin(), sorted.end());
+    // for (size_t i = 0; i < sorted.size(); i++) {
+    //     cerr << "\t" << (i + 1) << "-" << sorted[i] << "\n";
+    // }
+    for (size_t i = 1; i < sorted.size(); i++) {
+        if (sorted[i] != i + 1) {
+            LOG_ERR(bYellow, "makeClass:", " incorrect sort of \"", field, "\" field at row ", (i + 1), "-", sorted[i],
+                    " for ", className, cOff);
+            exit(0);
+        }
+    }
+}
+
 CClassDefinition::CClassDefinition(const CToml& toml) {
     //------------------------------------------------------------------------------------------------
     class_name = toml.getConfigStr("settings", "class", "");
@@ -623,10 +665,18 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
     field_str = toml.getConfigStr("settings", "fields", "");
     head_includes = toml.getConfigStr("settings", "includes", "");
     src_includes = toml.getConfigStr("settings", "cpp_includes", "");
-    sort_str = toml.getConfigStr("settings", "sort", "");
     contained_by = toml.getConfigStr("settings", "contained_by", "");
     doc_producer = toml.getConfigStr("settings", "doc_producer", "");
+    sort_str = toml.getConfigStr("settings", "sort", "");
+    if (contains(sort_str, ";")) {
+        LOG_ERR("makeClass: do not include semicolon in sort string ", sort_str);
+        exit(0);
+    }
     eq_str = toml.getConfigStr("settings", "equals", "");
+    if (contains(eq_str, ";")) {
+        LOG_ERR("makeClass: do not include semicolon in equals string ", eq_str);
+        exit(0);
+    }
     tsx = toml.getConfigBool("settings", "tsx", false);
     doc_group = toml.getConfigStr("settings", "doc_group", "");
     doc_descr = toml.getConfigStr("settings", "doc_descr", "");
@@ -659,7 +709,12 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
         field_str.clear();
         CStringArray lines;
         explode(lines, contents, '\n');
+        checkSorts(class_name, fields, lines, "doc");
+        checkSorts(class_name, fields, lines, "disp");
         for (auto line : lines) {
+            if (trim(line).empty()) {
+                continue;
+            }
             CParameter tmp;
             tmp.parseCSV(fields, line);
             if (tmp.is_flags & IS_EXTRA) {

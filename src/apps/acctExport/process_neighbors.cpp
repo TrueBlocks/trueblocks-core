@@ -14,7 +14,7 @@
 
 //-----------------------------------------------------------------------
 void COptions::addNeighbor(CAddressUintMap& map, const address_t& addr) {
-    if ((addr == accountedFor.address || isZeroAddr(addr)))
+    if ((addr == ledgerManager.accountedFor || isZeroAddr(addr)))
         return;
     map[addr]++;
 }
@@ -75,7 +75,9 @@ bool doOne(COptions* options, const CAddressUintMap& theMap, const string_q& typ
     if (theMap.size() == 0)
         return false;
 
-    bool testMode = isTestMode() || getEnvStr("HIDE_NAMES") == "true";
+    if (getEnvStr("HIDE_NAMES") == "true") {
+        return false;
+    }
 
     CNameStatsArray unnamed;
     CNameStatsArray named;
@@ -99,8 +101,6 @@ bool doOne(COptions* options, const CAddressUintMap& theMap, const string_q& typ
         bool frst = true;
         os << ", \"named" << type << "\": {";
         for (auto stats : named) {
-            if (testMode && (stats.isCustom || contains(stats.tags, "Individuals")))
-                stats.name = "Name " + stats.address.substr(0, 10);
             if (!frst)
                 os << ",";
             os << "\"" << stats.address << "\": { ";
@@ -138,6 +138,10 @@ bool doOne(COptions* options, const CAddressUintMap& theMap, const string_q& typ
 
 //-----------------------------------------------------------------------
 bool COptions::reportNeighbors(void) {
+    if (isTestMode()) {
+        return true;
+    }
+
     doOne(this, fromAddrMap, "From");
     doOne(this, toAddrMap, "To");
     if (logFilter.emitters.size() > 0)

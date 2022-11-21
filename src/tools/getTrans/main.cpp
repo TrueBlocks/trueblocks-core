@@ -24,14 +24,20 @@ int main(int argc, const char* argv[]) {
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
-        CRuntimeClass* pClass =
-            !options.reconcile.empty() ? GETRUNTIME_CLASS(CReconciliation) : GETRUNTIME_CLASS(CTransaction);
+        CRuntimeClass* pClass = !options.ledgerManager.accountedFor.empty() ? GETRUNTIME_CLASS(CReconciliation)
+                                                                            : GETRUNTIME_CLASS(CTransaction);
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], pClass);
         forEveryTransaction(visitTransaction, &options, options.transList.queries);
         once = false;
     }
     cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
+
+    // TODO: Report on no statements if there were none
+    // } else {
+    //     LOG_ERR("No material transactions found");
+    //     return true;
+    // }
 
     etherlib_cleanup();
     return 0;
@@ -106,24 +112,6 @@ bool visitTransaction(CTransaction& trans, void* data) {
         return true;  // continue even with an invalid item
     }
 
-    if (!opt->reconcile.empty())
-        return visitReconciliation(trans, opt);
-
-    if (opt->uniq) {
-        trans.forEveryUniqueAppearanceInTxPerTx(visitAddrs, transFilter, opt);
-        return true;
-    }
-
-    if (opt->isRaw || opt->isVeryRaw) {
-        string_q result;
-        queryRawTransaction(result, trans.getValueByName("hash"));
-        if (!isText && !opt->firstOut)
-            cout << ",";
-        cout << result;
-        opt->firstOut = false;
-        return true;
-    }
-
     //////////////////////////////////////////////////////
     if (opt->trace) {
         if (!trans.pBlock) {
@@ -140,6 +128,25 @@ bool visitTransaction(CTransaction& trans, void* data) {
         for (auto log : trans.receipt.logs)
             opt->abi_spec.loadAbiFromEtherscan(log.address);
         opt->abi_spec.articulateTransaction(&trans);
+    }
+
+    if (!opt->ledgerManager.accountedFor.empty()) {
+        return visitReconciliation(trans, opt);
+    }
+
+    if (opt->uniq) {
+        trans.forEveryUniqueAppearanceInTxPerTx(visitAddrs, transFilter, opt);
+        return true;
+    }
+
+    if (opt->isRaw || opt->isVeryRaw) {
+        string_q result;
+        queryRawTransaction(result, trans.getValueByName("hash"));
+        if (!isText && !opt->firstOut)
+            cout << ",";
+        cout << result;
+        opt->firstOut = false;
+        return true;
     }
 
     manageFields("CFunction:message", !trans.articulatedTx.message.empty());

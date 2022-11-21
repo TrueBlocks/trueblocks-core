@@ -39,7 +39,7 @@ extern bool getTransaction(CTransaction& trans, const hash_t& txHash);
 extern bool getTransaction(CTransaction& trans, const hash_t& blockHash, txnum_t txID);
 extern bool getReceipt(CReceipt& receipt, const hash_t& txHash);
 extern bool getLogEntry(CLogEntry& log, const hash_t& txHash);
-extern void getTraces(CTraceArray& traces, const hash_t& txHash, const CTransaction* pTrans);
+extern void getTraces(CTraceArray& traces, const hash_t& txHash, const CTransaction* pT);
 extern void getStateDiffAddrs(CAddressArray& addrs, const hash_t& txHash);
 extern void getTracesByFilter(CTraceArray& traces, const CTraceFilter& filter);
 extern size_t getTraceCount(const hash_t& hashIn);
@@ -66,11 +66,9 @@ extern bool queryRawStateDiff(string_q& results, const hash_t& hashIn);
 extern bool queryRawLogs(string_q& results, const CLogFilter& query);
 
 //-----------------------------------------------------------------------
-extern string_q getTokenBalanceOf(const address_t& token, const address_t& holder, blknum_t blockNum);
-inline bigint_t getTokenBalanceOf2(const address_t& token, const address_t& holder, blknum_t blockNum) {
-    return str_2_BigInt(getTokenBalanceOf(token, holder, blockNum));
-};
+extern bigint_t getTokenBalanceAt(const address_t& token, const address_t& holder, blknum_t blockNum);
 extern string_q getTokenSymbol(const address_t& token, blknum_t blockNum);
+extern uint64_t getTokenDecimals(const address_t& token, blknum_t blockNum);
 extern string_q getTokenState(const address_t& token, const string_q& whichState, const CAbi& abi_spec,
                               blknum_t blockNum, const string_q& bytes = "");
 

@@ -7,9 +7,9 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10220,apps,Accounts,export,acctExport,receipts,r,,false,false,true,true,header,switch,<boolean>,export receipts instead of transactional data
 10230,apps,Accounts,export,acctExport,logs,l,,false,false,true,true,header,switch,<boolean>,export logs instead of transactional data
 10240,apps,Accounts,export,acctExport,traces,t,,false,false,true,true,header,switch,<boolean>,export traces instead of transactional data
-10282,apps,Accounts,export,acctExport,statements,A,,false,false,true,true,header,switch,<boolean>,export reconciliations instead of transactional data (assumes --accounting option)
 10215,apps,Accounts,export,acctExport,neighbors,n,,false,false,true,true,header,switch,<boolean>,export the neighbors of the given address
 10280,apps,Accounts,export,acctExport,accounting,C,,false,false,true,true,header,switch,<boolean>,attach accounting records to the exported data (applies to transactions export only)
+10282,apps,Accounts,export,acctExport,statements,A,,false,false,true,true,header,switch,<boolean>,for the accounting options only&#44; export only statements
 10310,apps,Accounts,export,acctExport,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate transactions&#44; traces&#44; logs&#44; and outputs
 10320,apps,Accounts,export,acctExport,cache,i,false,false,true,true,true,header,switch,<boolean>,write transactions to the cache (see notes)
 10330,apps,Accounts,export,acctExport,cache_traces,R,false,false,true,true,true,header,switch,<boolean>,write traces to the cache (see notes)
@@ -19,9 +19,9 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10340,apps,Accounts,export,acctExport,relevant,,,false,false,true,true,header,switch,<boolean>,for log and accounting export only&#44; export only logs relevant to one of the given export addresses
 10342,apps,Accounts,export,acctExport,emitter,,,false,false,true,true,local,flag,list<addr>,for log export only&#44; export only logs if emitted by one of these address(es)
 10344,apps,Accounts,export,acctExport,topic,,,false,false,true,true,local,flag,list<topic>,for log export only&#44; export only logs with this topic(s)
-10346,apps,Accounts,export,acctExport,asset,,,false,false,true,true,local,flag,list<addr>,for the statements option only&#44; export only reconciliations for this asset
-10346,apps,Accounts,export,acctExport,flow,f,,false,false,true,true,header,flag,enum[in|out|zero],for the statements option only&#44; export only statements with incoming value or outgoing value
-10332,apps,Accounts,export,acctExport,factory,y,false,false,false,true,false,header,switch,<boolean>,scan for contract creations from the given address(es) and report address of those contracts
+10346,apps,Accounts,export,acctExport,asset,,,false,false,true,true,local,flag,list<addr>,for the accounting options only&#44; export statements only for this asset
+10346,apps,Accounts,export,acctExport,flow,f,,false,false,true,true,header,flag,enum[in|out|zero],for the accounting options only&#44; export statements with incoming&#44; outgoing&#44; or zero value
+10332,apps,Accounts,export,acctExport,factory,y,false,false,false,true,false,header,switch,<boolean>,for --traces only&#44; report addresses created by (or self-destructed by) the given address(es)
 10080,apps,Accounts,export,acctExport,unripe,u,,false,false,true,true,gocmd,switch,<boolean>,export transactions labeled upripe (i.e. less than 28 blocks old)
 10092,apps,Accounts,export,acctExport,load,,,false,false,false,false,header,flag,<string>,a comma separated list of dynamic traversers to load
 10093,apps,Accounts,export,acctExport,reversed,,,false,false,false,false,header,switch,<boolean>,produce results in reverse chronological order
@@ -39,6 +39,8 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 11087,apps,Accounts,monitors,acctExport,deleteMe,,,false,false,true,true,gocmd,switch,<boolean>,delete a monitor&#44; but do not remove it
 11093,apps,Accounts,monitors,acctExport,undelete,,,false,false,true,true,gocmd,switch,<boolean>,undelete a previously deleted monitor
 11091,apps,Accounts,monitors,acctExport,remove,,,false,false,true,true,gocmd,switch,<boolean>,remove a previously deleted monitor
+11092,apps,Accounts,monitors,acctExport,decache,,,false,false,true,false,gocmd,switch,<boolean>,removes a monitor and all associated data from the cache
+11093,apps,Accounts,monitors,acctExport,list,,,false,false,true,true,gocmd,switch,<boolean>,list monitors in the cache (--verbose for more detail)
 11294,apps,Accounts,monitors,acctExport,watch,,,false,false,true,true,gocmd,switch,<boolean>,continually scan for new blocks and extract data for monitored addresses
 11296,apps,Accounts,monitors,acctExport,sleep,s,14,false,false,true,true,gocmd,flag,<double>,seconds to sleep between monitor passes
 11440,apps,Accounts,monitors,acctExport,first_block,F,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
@@ -46,6 +48,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 11095,apps,Accounts,monitors,acctExport,,,,false,false,true,true,--,description,,Add&#44; remove&#44; clean&#44; and list address monitors.
 11097,apps,Accounts,monitors,acctExport,n1,,,false,false,false,false,--,note,,An `address` must start with '0x' and be forty-two characters long.
 11099,apps,Accounts,monitors,acctExport,n2,,,false,false,false,false,--,note,,If no address is presented to the --clean command&#44; all monitors will be cleaned.
+11100,apps,Accounts,monitors,acctExport,n3,,,false,false,false,false,--,note,,The --decache option will remove all cache items (blocks&#44; txs&#44; traces&#44; recons) for the given address(es).
 
 12005,apps,Accounts,list,acctExport,addrs,,,true,false,true,true,local,positional,list<addr>,one or more addresses (0x...) to list
 12015,apps,Accounts,list,acctExport,count,U,,false,false,true,true,gocmd,switch,<boolean>,display only the count of records for each monitor
@@ -124,7 +127,8 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13580,tools,ChainData,transactions,getTrans,trace,t,,false,false,true,true,header,switch,<boolean>,include the transaction's traces in the results
 13605,tools,ChainData,transactions,getTrans,uniq,u,,false,false,true,true,header,switch,<boolean>,display a list of uniq addresses found in the transaction
 13610,tools,ChainData,transactions,getTrans,flow,f,,false,false,true,true,header,flag,enum[from|to],for the uniq option only&#44; export only from or to (including trace from or to)
-13615,tools,ChainData,transactions,getTrans,reconcile,r,,false,false,true,true,header,flag,<address>,reconcile the transaction as per the provided address
+13615,tools,ChainData,transactions,getTrans,reconcile,r,,false,false,true,true,header,deprecated,<address>,please use statements option instead
+13617,tools,ChainData,transactions,getTrans,account_for,A,,false,false,true,true,local,flag,<address>,reconcile the transaction as per the provided address
 13620,tools,ChainData,transactions,getTrans,cache,o,,false,false,true,true,header,switch,<boolean>,force the results of the query into the tx cache (and the trace cache if applicable)
 13622,tools,ChainData,transactions,getTrans,,,,false,false,true,true,--,description,,Retrieve one or more transactions from the chain or local cache.
 13624,tools,ChainData,transactions,getTrans,n1,,,false,false,false,false,--,note,,The `transactions` list may be one or more transaction hashes&#44; blockNumber.transactionID pairs&#44; or a blockHash.transactionID pairs.
@@ -163,19 +167,20 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13940,tools,ChainData,when,whenBlock,blocks,,,false,false,true,true,gocmd,positional,list<string>,one or more dates&#44; block numbers&#44; hashes&#44; or special named blocks (see notes)
 13960,tools,ChainData,when,whenBlock,list,l,,false,false,true,true,gocmd,switch,<boolean>,export a list of the 'special' blocks
 13962,tools,ChainData,when,whenBlock,timestamps,t,,false,false,true,true,gocmd,switch,<boolean>,display or process timestamps
-13968,tools,ChainData,when,whenBlock,count,u,,false,false,false,false,gocmd,switch,<boolean>,with --timestamps only&#44; returns the number of timestamps in the cache
-13966,tools,ChainData,when,whenBlock,truncate,n,,false,false,false,false,gocmd,flag,<blknum>,with --timestamps only&#44; truncates the timestamp file at this block
-13966,tools,ChainData,when,whenBlock,repair,r,,false,false,false,false,gocmd,flag,<blknum>,with --timestamps only&#44; repair a single timestamp by querying the chain
-13964,tools,ChainData,when,whenBlock,check,c,,false,false,false,false,gocmd,switch,<boolean>,with --timestamps only&#44; checks the validity of the timestamp data
-13970,tools,ChainData,when,whenBlock,deep,e,,false,false,false,false,gocmd,switch,<boolean>,with --timestamps --check only&#44; verifies timestamps from on chain (slow)
-13972,tools,ChainData,when,whenBlock,,,,false,false,true,false,--,description,,Find block(s) based on date&#44; blockNum&#44; timestamp&#44; or 'special'.
-13974,tools,ChainData,when,whenBlock,n1,,,false,false,false,false,--,note,,The block list may contain any combination of `number`&#44; `hash`&#44; `date`&#44; special `named` blocks.
-13976,tools,ChainData,when,whenBlock,n2,,,false,false,false,false,--,note,,Block numbers&#44; timestamps&#44; or dates in the future are estimated with 13 second blocks.
-13976,tools,ChainData,when,whenBlock,n3,,,false,false,false,false,--,note,,Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
+13968,tools,ChainData,when,whenBlock,count,u,,false,false,true,true,gocmd,switch,<boolean>,with --timestamps only&#44; returns the number of timestamps in the cache
+13970,tools,ChainData,when,whenBlock,truncate,n,,false,false,false,false,gocmd,flag,<blknum>,with --timestamps only&#44; truncates the timestamp file at this block
+13972,tools,ChainData,when,whenBlock,repair,r,,false,false,true,true,gocmd,flag,<blknum>,with --timestamps only&#44; repair a single timestamp by querying the chain
+13974,tools,ChainData,when,whenBlock,check,c,,false,false,true,true,gocmd,switch,<boolean>,with --timestamps only&#44; checks the validity of the timestamp data
+13976,tools,ChainData,when,whenBlock,update,,,false,false,true,true,gocmd,switch,<boolean>,with --timestamps only&#44; bring the timestamp database forward to the latest block
+13978,tools,ChainData,when,whenBlock,deep,e,,false,false,false,false,gocmd,switch,<boolean>,with --timestamps --check only&#44; verifies timestamps from on chain (slow)
+13980,tools,ChainData,when,whenBlock,,,,false,false,true,false,--,description,,Find block(s) based on date&#44; blockNum&#44; timestamp&#44; or 'special'.
+13982,tools,ChainData,when,whenBlock,n1,,,false,false,false,false,--,note,,The block list may contain any combination of `number`&#44; `hash`&#44; `date`&#44; special `named` blocks.
+13984,tools,ChainData,when,whenBlock,n2,,,false,false,false,false,--,note,,Block numbers&#44; timestamps&#44; or dates in the future are estimated with 13 second blocks.
+13986,tools,ChainData,when,whenBlock,n3,,,false,false,false,false,--,note,,Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
 
 13100,tools,ChainState,state,getState,addrs,,,true,false,true,true,header,positional,list<addr>,one or more addresses (0x...) from which to retrieve balances
 13120,tools,ChainState,state,getState,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest'
-13140,tools,ChainState,state,getState,parts,p,,false,false,true,true,local,flag,list<enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]>,control which state to export
+13140,tools,ChainState,state,getState,parts,p,,false,false,true,true,local,flag,list<enum[none|some*|all|balance|nonce|code|proxy|deployed|accttype]>,control which state to export
 13160,tools,ChainState,state,getState,changes,c,,false,false,true,true,header,switch,<boolean>,only report a balance when it changes from one block to the next
 13180,tools,ChainState,state,getState,no_zero,n,,false,false,true,true,header,switch,<boolean>,suppress the display of zero balance accounts
 13190,tools,ChainState,state,getState,call,a,,false,false,false,true,header,flag,<string>,a bang-separated string consisting of address!4-byte!bytes

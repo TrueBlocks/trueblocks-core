@@ -3,8 +3,8 @@ state?addrs=0xf27daff52c38b2c373ad2b9392652ddf433303c4&blocks=0%204000000&noZero
   "data": [
     {
       "blockNumber": 4000000,
-      "balance": 672784612482328700000000,
       "address": "0xf27daff52c38b2c373ad2b9392652ddf433303c4",
+      "balance": 672784612482328700000000,
       "ether": 672784.6124823287
     }
   ],

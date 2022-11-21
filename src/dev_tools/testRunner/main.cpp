@@ -71,6 +71,13 @@ int main(int argc, const char* argv[]) {
 
             map<string_q, CTestCase> testMap;
             for (auto line : lines) {
+                if (getEnvStr("TEST_TEST_ONLY") == "true") {
+                    if (startsWith(line, "test,")) {
+                        replace(line, "test,", "on,");
+                    } else {
+                        replace(line, "on,", "local,");
+                    }
+                }
                 if (startsWith(line, "erigon"))
                     replace(line, "erigon", "local");
                 if (runLocal && startsWith(line, "local"))
@@ -307,12 +314,16 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             if (!prepender.str().empty()) {
                 contents = prepender.str() + contents;
             }
-            if (outputFile.length()) {
+
+            if (!outputFile.empty() && fileExists(outputFile)) {
                 ostringstream os;
                 os << "----" << endl;
                 os << "Results in " << substitute(outputFile, goldApiPath, "./") << endl;
                 os << asciiFileToString(outputFile) << endl;
                 contents += os.str();
+                // } else if (!outputFile.empty()) {
+                //     cerr << "Output file not seen: " << outputFile << endl;
+                //     exit(1);
             }
 
             replaceAll(contents, "3735928559", "\"0xdeadbeef\"");
@@ -342,6 +353,21 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
 
             string_q oldFn = test.workPath + test.fileName;
             string_q oldText = asciiFileToString(oldFn);
+            if (contains(oldText, "The XDG_")) {
+                // Weird case where we can't turn off timestamp from logs, so we blow away the timing here
+                CStringArray lines;
+                explode(lines, oldText, '\n');
+                ostringstream os;
+                for (auto line : lines) {
+                    if (contains(line, "The XDG_")) {
+                        line = substitute(line, "The XDG_", "|The XDG_");
+                        nextTokenClear(line, '|');
+                    }
+                    os << line << endl;
+                }
+                oldText = os.str();
+                stringToAsciiFile(oldFn, oldText);
+            }
 
             bool hasId = contains(oldText, "\"id\":");
             bool isTools = contains(oldFn, "/tools/");
@@ -364,6 +390,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                     nextTokenClear(oldText, ']');
                     oldText = pre + oldText;
                 }
+
                 replaceAny(oldText, ",{}[]", "\n");
                 CStringArray lines;
                 explode(lines, oldText, '\n');
@@ -469,7 +496,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
 bool saveAndCopy(const string_q& customFile, void* data) {
     CStringArray parts;
     explode(parts, customFile, '/');
-    string_q destFile = rootConfigs + parts[parts.size() - 1];
+    string_q destFile = rootConfigs + "configs/mainnet/" + parts[parts.size() - 1];
     string_q saveFile = cacheFolder_tmp + parts[parts.size() - 1] + ".save";
     copyFile(destFile, saveFile);
     copyFile(customFile, destFile);
@@ -480,7 +507,7 @@ bool saveAndCopy(const string_q& customFile, void* data) {
 bool replaceFile(const string_q& customFile, void* data) {
     CStringArray parts;
     explode(parts, customFile, '/');
-    string_q destFile = rootConfigs + parts[parts.size() - 1];
+    string_q destFile = rootConfigs + "configs/mainnet/" + parts[parts.size() - 1];
     string_q saveFile = cacheFolder_tmp + parts[parts.size() - 1] + ".save";
     copyFile(saveFile, destFile);
     ::remove(saveFile.c_str());

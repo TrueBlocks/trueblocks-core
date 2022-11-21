@@ -39,6 +39,7 @@ TEST[DATE|TIME] Format:  csv
 "30-Contracts","0x9ae98746eb8a0aeee5ff2b6b15875313a986f103","Parity ProofOfSMS","","","","multiply-lucky-buzzard"
 "50-Tokens:ERC20","0x9cb2f26a23b8d89973f08c957c4d7cdf75cd341c","Digital Rand","DZAR","","6","multiply-gorgeous-hornet"
 "30-Contracts","0xa540fb50288cc31639305b1675c70763c334953b","DEX.AG","","","","multiply-saving-raven"
+"30-Contracts","0xab1c342c7bf5ec5f02adea1c2270670bca144cbb","Iron Bank: Unitroller","","","","multiply-correct-jawfish"
 "50-Tokens:ERC20","0xb3319f5d18bc0d84dd1b4825dcde5d5f7266d407","Compound 0x","cZRX","","8","multiply-picked-calf"
 "50-Tokens:ERC20","0xba7435a4b4c747e0101780073eeda872a69bdcd4","AirdropToken","AIRDROP","","18","multiply-definite-kodiak"
 "31-Gitcoin:Grants","0xbc58fd3becf189232edf3f7bf10f486c8ebb060d","Grant 0857 Community Currencies NOW","","","","multiply-grown-marten"

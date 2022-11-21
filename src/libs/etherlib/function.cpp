@@ -459,12 +459,10 @@ void CFunction::registerClass(void) {
     ADD_FIELD(CFunction, "declaration", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CFunction, "declaration");
     HIDE_FIELD(CFunction, "anonymous");
-    if (useDict()) {
-        HIDE_FIELD(CFunction, "inputs");
-        SHOW_FIELD(CFunction, "inputs_dict")
-        HIDE_FIELD(CFunction, "outputs");
-        SHOW_FIELD(CFunction, "outputs_dict")
-    }
+    HIDE_FIELD(CFunction, "inputs");
+    SHOW_FIELD(CFunction, "inputs_dict")
+    HIDE_FIELD(CFunction, "outputs");
+    SHOW_FIELD(CFunction, "outputs_dict")
     HIDE_FIELD(CFunction, "abi_source");
     // EXISTING_CODE
 }

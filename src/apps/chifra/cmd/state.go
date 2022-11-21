@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	statePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/state"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -25,7 +26,13 @@ var stateCmd = &cobra.Command{
 	Short:   shortState,
 	Long:    longState,
 	Version: versionText,
+	PreRun: outputHelpers.PreRunWithJsonWriter("state", func() *globals.GlobalOptions {
+		return &statePkg.GetOptions().Globals
+	}),
 	RunE:    file.RunWithFileSupport("state", statePkg.RunState, statePkg.ResetOptions),
+	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
+		return &statePkg.GetOptions().Globals
+	}),
 }
 
 const usageState = `state [flags] <address> [address...] [block...]
@@ -52,7 +59,7 @@ func init() {
 	stateCmd.Flags().SortFlags = false
 
 	stateCmd.Flags().StringSliceVarP(&statePkg.GetOptions().Parts, "parts", "p", nil, `control which state to export
-One or more of [ none | some | all | balance | nonce | code | storage | deployed | accttype ]`)
+One or more of [ none | some | all | balance | nonce | code | proxy | deployed | accttype ]`)
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Changes, "changes", "c", false, "only report a balance when it changes from one block to the next")
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().NoZero, "no_zero", "n", false, "suppress the display of zero balance accounts")
 	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Call, "call", "a", "", "a bang-separated string consisting of address!4-byte!bytes (hidden)")

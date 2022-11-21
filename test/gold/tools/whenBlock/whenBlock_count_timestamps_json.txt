@@ -1,0 +1,11 @@
+chifra when  --count --fmt json --timestamps
+TEST[DATE|TIME] Timestamps:  true
+TEST[DATE|TIME] Count:  true
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "count": 5000000
+    }
+  ]
+}

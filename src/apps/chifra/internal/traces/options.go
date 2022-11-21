@@ -151,6 +151,9 @@ func GetOptions() *TracesOptions {
 }
 
 func ResetOptions() {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
 	defaultTracesOptions = TracesOptions{}
 	globals.SetDefaults(&defaultTracesOptions.Globals)
+	defaultTracesOptions.Globals.Writer = w
 }

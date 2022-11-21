@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"path"
+	"path/filepath"
 	"strings"
 	"sync"
 	"time"
@@ -265,7 +265,7 @@ func establishExportPaths(chain string) {
 	}
 
 	exportPath = cwd + "/exports/" + chain + "/"
-	_, err := os.Stat(path.Join(exportPath, folders[len(folders)-1]))
+	_, err := os.Stat(filepath.Join(exportPath, folders[len(folders)-1]))
 	if err == nil {
 		// If the last path already exists, assume we've been here before
 		return

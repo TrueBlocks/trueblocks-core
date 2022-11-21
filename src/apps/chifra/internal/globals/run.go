@@ -11,13 +11,14 @@ import (
 	"io"
 	"os"
 	"os/exec"
+	"strings"
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
 func (opts *GlobalOptions) PassItOn(path, chain, cmdLine string, envIn []string) error {
-	options := cmdLine
+	options := strings.Trim(cmdLine, " ")
 	options += opts.toCmdLine()
 
 	var wg sync.WaitGroup

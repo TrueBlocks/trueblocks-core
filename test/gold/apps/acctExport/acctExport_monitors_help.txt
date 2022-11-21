@@ -13,6 +13,8 @@ Flags:
       --delete             delete a monitor, but do not remove it
       --undelete           undelete a previously deleted monitor
       --remove             remove a previously deleted monitor
+      --decache            removes a monitor and all associated data from the cache
+      --list               list monitors in the cache (--verbose for more detail)
       --watch              continually scan for new blocks and extract data for monitored addresses
   -s, --sleep float        seconds to sleep between monitor passes (default 14)
   -F, --first_block uint   first block to process (inclusive) (hidden)
@@ -24,3 +26,4 @@ Flags:
 Notes:
   - An address must start with '0x' and be forty-two characters long.
   - If no address is presented to the --clean command, all monitors will be cleaned.
+  - The --decache option will remove all cache items (blocks, txs, traces, recons) for the given address(es).

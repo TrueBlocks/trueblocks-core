@@ -146,6 +146,9 @@ func GetOptions() *TokensOptions {
 }
 
 func ResetOptions() {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
 	defaultTokensOptions = TokensOptions{}
 	globals.SetDefaults(&defaultTokensOptions.Globals)
+	defaultTokensOptions.Globals.Writer = w
 }

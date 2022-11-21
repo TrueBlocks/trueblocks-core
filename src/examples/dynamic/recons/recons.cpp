@@ -53,7 +53,7 @@
 //     this->bytes = padLeft(substitute(r1, "0x", ""), 64, '0') + padLeft(substitute(r2, "0x", ""), 64, '0');
 //     this->abi_spec.loadAbiFromEtherscan(factory);
 //     this->blockNumber = getLatestBlock_client();
-//     if (!doEthCall(*this)) {
+//     if (!doEthCall(*this, true /* proxy */)) {
 //         LOG_WARN("Could not find pair for ", r1, " to ", r2);
 //         return false;
 //     }
@@ -105,7 +105,7 @@ bool display(CTraverser* trav, void* data) {
     tt->block.timestamp = bn_2_Timestamp(tt->app->blk);
 
     cerr << tt->searchType << " ";
-    if (doEthCall(tt->uni) && !tt->uni.result.outputs.empty()) {
+    if (doEthCall(tt->uni, true /* proxy */) && !tt->uni.result.outputs.empty()) {
         CStringArray results;
         if (tt->uni.getResults(results) && results.size() > 1) {
             double reserve1 = str_2_Double(wei_2_Ether(str_2_Wei(results[0]), 18));
@@ -118,7 +118,8 @@ bool display(CTraverser* trav, void* data) {
             if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
                 archive >> trav->trans.statements;
                 for (CReconciliation& statement : trav->trans.statements) {
-                    if (statement.assetSymbol == "ETH") {
+                    statement.pTransaction = &trav->trans;
+                    if (isEtherAddr(statement.assetAddr)) {
                         double begBal = str_2_Double(substitute(statement.Format("[{BEGBAL}]"), "\"", ""));
                         double totIn = str_2_Double(substitute(statement.Format("[{TOTALIN}]"), "\"", ""));
                         double totOut = str_2_Double(substitute(statement.Format("[{TOTALOUT}]"), "\"", ""));
@@ -150,7 +151,7 @@ bool display(CTraverser* trav, void* data) {
                     }
                 }
             } else {
-                LOG_WARN("Cannot find recon: ", path);
+                LOG_WARN("Cannot find statement: ", path);
             }
         } else {
             cerr << "Invalid results from uni at block " << tt->app->blk << "\r";

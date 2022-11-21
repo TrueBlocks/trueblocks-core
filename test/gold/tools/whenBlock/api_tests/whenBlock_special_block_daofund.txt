@@ -3,9 +3,9 @@ when?blocks=daofund&verbose
   "data": [
     {
       "blockNumber": 1428756,
-      "timestamp": 1461980573,
       "date": "2016-04-30 01:42:53 UTC",
-      "name": "daofund"
+      "name": "daofund",
+      "timestamp": 1461980573
     }
   ],
   "meta": {

@@ -260,20 +260,4 @@ void establishTestData(void) {
     doCommand("chifra abis 0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc");
     doCommand("chifra abis 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11");
     doCommand("chifra abis 0x7d655c57f71464b6f83811c55d84009cd9f5221c");
-
-    // Remove a few things from the cache
-    ::remove(getBinaryCacheFilename(CT_TXS, 8854723, 61).c_str());
-    ::remove(getBinaryCacheFilename(CT_TXS, 8855603, 121).c_str());
-    ::remove(getBinaryCacheFilename(CT_TXS, 8856290, 62).c_str());
-    ::remove(getBinaryCacheFilename(CT_TXS, 8856316, 91).c_str());
-    ::remove(getBinaryCacheFilename(CT_TXS, 8856476, 55).c_str());
-    ::remove(getBinaryCacheFilename(CT_TXS, 8856511, 161).c_str());
-    ::remove(getBinaryCacheFilename(CT_TXS, 8860434, 21).c_str());
-    ::remove(getBinaryCacheFilename(CT_TXS, 8860511, 47).c_str());
-    ::remove(getBinaryCacheFilename(CT_TXS, 8860513, 85).c_str());
-    ::remove(getBinaryCacheFilename(CT_TXS, 8860529, 145).c_str());
-    ::remove(getBinaryCacheFilename(CT_TXS, 8860531, 152).c_str());
-    ::remove(getBinaryCacheFilename(CT_TXS, 8867898, 28).c_str());
-    ::remove(getBinaryCacheFilename(CT_TXS, 8875684, 148).c_str());
-    ::remove(getBinaryCacheFilename(CT_TXS, 8876232, 84).c_str());
 }

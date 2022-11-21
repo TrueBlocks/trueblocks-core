@@ -1,4 +1,3 @@
-Env: DICT_MODE=false
 chifra traces  0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --articulate --fmt json --verbose
 TEST[DATE|TIME] Transactions:  [0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f]
 TEST[DATE|TIME] Articulate:  true
@@ -338,25 +337,13 @@ params.size: 0
     "articulatedTrace": {
       "name": "acceptTheseAskRequestsAndBUY",
       "stateMutability": "nonpayable",
-      "inputs": [
-        {
-          "name": "_keys",
-          "value": "[6, 5]",
-          "internalType": "uint256[]"
-        },
-        {
-          "name": "_tokenAmounts",
-          "value": "[25000000000000000000, 25000000000000000000]",
-          "internalType": "uint256[]"
-        },
-        {
-          "name": "_dollarPrices",
-          "value": "[2000000000000000000, 2000000000000000000]",
-          "internalType": "uint256[]"
-        }
-      ]
+      "inputs": {
+        "_dollarPrices": "[2000000000000000000, 2000000000000000000]",
+        "_keys": "[6, 5]",
+        "_tokenAmounts": "[25000000000000000000, 25000000000000000000]"
+      }
     },
-    "compressedTrace": "{name:acceptTheseAskRequestsAndBUY|inputs:[{name:_keys|value:[6|5]|internalType:uint256[]}|{name:_tokenAmounts|value:[25000000000000000000|25000000000000000000]|internalType:uint256[]}|{name:_dollarPrices|value:[2000000000000000000|2000000000000000000]|internalType:uint256[]}]}",
+    "compressedTrace": "{name:acceptTheseAskRequestsAndBUY|inputs:{_dollarPrices:[2000000000000000000|2000000000000000000]|_keys:[6|5]|_tokenAmounts:[25000000000000000000|25000000000000000000]}}",
     "timestamp": 1542327008
   },  {
     "blockHash": "0xc9d375441b8deb0ca5544234ccbe3f6a9f67361ec30128030401b0d16713b55a",
@@ -385,22 +372,14 @@ params.size: 0
     "articulatedTrace": {
       "name": "USD",
       "stateMutability": "nonpayable",
-      "inputs": [
-        {
-          "name": "_id",
-          "value": "0",
-          "internalType": "uint256"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "ret_0",
-          "value": "47231959280000",
-          "internalType": "uint256"
-        }
-      ]
+      "inputs": {
+        "_id": "0"
+      },
+      "outputs": {
+        "ret_0": "47231959280000"
+      }
     },
-    "compressedTrace": "{name:USD|inputs:[{name:_id|value:0|internalType:uint256}]|outputs:[{name:ret_0|value:47231959280000|internalType:uint256}]}",
+    "compressedTrace": "{name:USD|inputs:{_id:0}|outputs:{ret_0:47231959280000}}",
     "timestamp": 1542327008
   },  {
     "blockHash": "0xc9d375441b8deb0ca5544234ccbe3f6a9f67361ec30128030401b0d16713b55a",
@@ -429,21 +408,13 @@ params.size: 0
     "articulatedTrace": {
       "name": "USD",
       "stateMutability": "nonpayable",
-      "inputs": [
-        {
-          "name": "_id",
-          "value": "0",
-          "internalType": "uint256"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "ret_0",
-          "value": "47231959280000",
-          "internalType": "uint256"
-        }
-      ]
+      "inputs": {
+        "_id": "0"
+      },
+      "outputs": {
+        "ret_0": "47231959280000"
+      }
     },
-    "compressedTrace": "{name:USD|inputs:[{name:_id|value:0|internalType:uint256}]|outputs:[{name:ret_0|value:47231959280000|internalType:uint256}]}",
+    "compressedTrace": "{name:USD|inputs:{_id:0}|outputs:{ret_0:47231959280000}}",
     "timestamp": 1542327008
   }] }

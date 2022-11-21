@@ -12,6 +12,7 @@ package transactionsPkg
 import (
 	"net/http"
 
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -20,6 +21,7 @@ import (
 // RunTransactions handles the transactions command for the command line. Returns error only as per cobra.
 func RunTransactions(cmd *cobra.Command, args []string) (err error) {
 	opts := transactionsFinishParse(args)
+	outputHelpers.SetWriterForCommand("transactions", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.TransactionsInternal()
@@ -29,9 +31,12 @@ func RunTransactions(cmd *cobra.Command, args []string) (err error) {
 // ServeTransactions handles the transactions command for the API. Returns error and a bool if handled
 func ServeTransactions(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := transactionsFinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("transactions", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return opts.TransactionsInternal()
+	err, handled = opts.TransactionsInternal()
+	outputHelpers.CloseJsonWriterIfNeededApi("transactions", err, &opts.Globals)
+	return
 }
 
 // TransactionsInternal handles the internal workings of the transactions command.  Returns error and a bool if handled

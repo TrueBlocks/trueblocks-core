@@ -3,9 +3,9 @@ state?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&parts=nonce&blocks=250000
   "data": [
     {
       "blockNumber": 2500000,
+      "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
       "balance": 3905662906205094300000,
       "nonce": 0,
-      "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
       "ether": 3905.6629062050943
     }
   ],
