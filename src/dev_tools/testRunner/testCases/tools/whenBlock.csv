@@ -69,6 +69,8 @@ on      ,both ,fast  ,when  ,tools/whenBlock ,check_not_timestamps        ,y    
 on      ,both ,fast  ,when  ,tools/whenBlock ,deep_not_timestamps         ,y    ,blocks = 1301000 & deep                                                                     
 on      ,both ,fast  ,when  ,tools/whenBlock ,deep_not_check              ,y    ,blocks = 1301000 & timestamps & deep                                                        
 on      ,both ,fast  ,when  ,tools/whenBlock ,drop_not_timestamps         ,y    ,blocks = 1301000 & repair                                                                   
+on      ,both ,fast  ,when  ,tools/whenBlock ,repair_fail                 ,y    ,repair                                                                   
+on      ,both ,fast  ,when  ,tools/whenBlock ,repair_fail_2               ,y    ,timestamps & repair                                                                   
 on      ,both ,fast  ,when  ,tools/whenBlock ,fix_and_check_bad           ,y    ,timestamps & fix & check                                                                    
         
 local   ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_hourly                 ,n    ,fmt = txt & blocks = 1125561-1130516:hourly                                                 

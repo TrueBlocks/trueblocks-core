@@ -1208,13 +1208,14 @@ paths:
           schema:
             type: boolean
         - name: repair
-          description: with --timestamps only, repair a single timestamp by querying the chain
+          description: >
+            with --timestamps only, repairs block(s) in the block range by re-querying from the chain
           required: false
           style: form
           in: query
           explode: true
           schema:
-            type: number
+            type: boolean
         - name: check
           description: with --timestamps only, checks the validity of the timestamp data
           required: false
