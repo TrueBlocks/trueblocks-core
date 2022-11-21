@@ -29,7 +29,6 @@ inline bool noopFunc(CTraverser* trav, void* data) {
 extern bool filterByRange(CTraverser* trav, void* data);
 
 typedef map<address_t, CMonitor> monitor_map_t;
-typedef enum { EXTRACT = 0, READ, UPDATE, RECONCILE, SCANNING, SKIPPING, COMPLETE } searchOpType;
 //-----------------------------------------------------------------------
 class CTraverser {
   public:
@@ -37,13 +36,11 @@ class CTraverser {
     size_t index;
     size_t nProcessed;
     string_q searchType;
-    searchOpType searchOp;
     CMonitor* curMonitor;
     monitor_map_t monitorMap;
     blkrange_t traverserRange;
     CTraverser(const string_q& o) : index(0), nProcessed(0), searchType(o) {
         logging = !isTestMode() || getEnvStr("FORCE_LOGGING") == "true";
-        searchOp = EXTRACT;
         curMonitor = nullptr;
         traverserRange = make_pair(0, NOPOS);
         filterFunc = filterByRange;

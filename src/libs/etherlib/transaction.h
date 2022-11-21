@@ -19,8 +19,8 @@
 #include "abi.h"
 #include "receipt.h"
 #include "trace.h"
-#include "reconciliation.h"
 #include "ethstate.h"
+#include "ledgermanager.h"
 
 namespace qblocks {
 
@@ -90,6 +90,11 @@ class CTransaction : public CBaseNode {
     bool loadTransAsPrefund(blknum_t bn, blknum_t txid, const address_t& addr, const wei_t& amount);
     bool loadTransAsBlockReward(blknum_t bn, blknum_t txid, const address_t& addr);
     bool loadTransAsUncleReward(blknum_t bn, blknum_t uncleBn, const address_t& addr);
+    bool isReconciled(const address_t& accountedFor) const;
+    bool readReconsFromCache(const address_t& accountedFor);
+    void cacheIfReconciled(const address_t& accountedFor) const;
+    string_q getReconcilationPath(const address_t& address) const;
+
     // EXISTING_CODE
     bool operator==(const CTransaction& it) const;
     bool operator!=(const CTransaction& it) const {

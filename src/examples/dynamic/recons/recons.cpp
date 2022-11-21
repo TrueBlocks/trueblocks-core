@@ -119,7 +119,7 @@ bool display(CTraverser* trav, void* data) {
                 archive >> trav->trans.statements;
                 for (CReconciliation& statement : trav->trans.statements) {
                     statement.pTransaction = &trav->trans;
-                    if (statement.assetSymbol == "ETH") {
+                    if (isEtherAddr(statement.assetAddr)) {
                         double begBal = str_2_Double(substitute(statement.Format("[{BEGBAL}]"), "\"", ""));
                         double totIn = str_2_Double(substitute(statement.Format("[{TOTALIN}]"), "\"", ""));
                         double totOut = str_2_Double(substitute(statement.Format("[{TOTALOUT}]"), "\"", ""));
@@ -151,7 +151,7 @@ bool display(CTraverser* trav, void* data) {
                     }
                 }
             } else {
-                LOG_WARN("Cannot find recon: ", path);
+                LOG_WARN("Cannot find statement: ", path);
             }
         } else {
             cerr << "Invalid results from uni at block " << tt->app->blk << "\r";

@@ -13,9 +13,18 @@
 
 package main
 
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd"
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd"
+)
 
 func main() {
+	// pprofFile, pprofErr := os.Create("cpu.pprof")
+	// if pprofErr != nil {
+	// 	log.Fatal(pprofErr)
+	// }
+	// pprof.StartCPUProfile(pprofFile)
+	// defer pprof.StopCPUProfile()
+
 	if cmd.Initialize() {
 		cmd.Execute()
 	}

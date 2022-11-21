@@ -618,10 +618,6 @@ const char* STR_DISPLAY_CLASSDEFINITION = "";
 // EXISTING_CODE
 void checkSorts(const string_q& className, const CStringArray& fields, const CStringArray& lines,
                 const string_q& field) {
-    if (className == "CReconciliation") {
-        return;
-    }
-
     size_t which = 0;
     for (size_t i = 0; i < fields.size(); i++) {
         if (contains(fields[i], field)) {
@@ -669,10 +665,18 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
     field_str = toml.getConfigStr("settings", "fields", "");
     head_includes = toml.getConfigStr("settings", "includes", "");
     src_includes = toml.getConfigStr("settings", "cpp_includes", "");
-    sort_str = toml.getConfigStr("settings", "sort", "");
     contained_by = toml.getConfigStr("settings", "contained_by", "");
     doc_producer = toml.getConfigStr("settings", "doc_producer", "");
+    sort_str = toml.getConfigStr("settings", "sort", "");
+    if (contains(sort_str, ";")) {
+        LOG_ERR("makeClass: do not include semicolon in sort string ", sort_str);
+        exit(0);
+    }
     eq_str = toml.getConfigStr("settings", "equals", "");
+    if (contains(eq_str, ";")) {
+        LOG_ERR("makeClass: do not include semicolon in equals string ", eq_str);
+        exit(0);
+    }
     tsx = toml.getConfigBool("settings", "tsx", false);
     doc_group = toml.getConfigStr("settings", "doc_group", "");
     doc_descr = toml.getConfigStr("settings", "doc_descr", "");

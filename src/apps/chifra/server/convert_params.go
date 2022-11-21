@@ -13,6 +13,8 @@ package servePkg
 func convertToCommandLine(in string) string {
 	// BEG_CONVERT_CODE
 	switch in {
+	case "accountFor":
+		return "account_for"
 	case "allowMissing":
 		return "allow_missing"
 	case "appsPerChunk":

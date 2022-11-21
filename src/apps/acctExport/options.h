@@ -51,7 +51,7 @@ class CIndexArchiveWithNeighborMaps : public CIndexArchive {
 };
 
 //-----------------------------------------------------------------------
-class COptions : public CAbiOptions {
+class COptions : public CStatementOptions {
   public:
     // BEG_CODE_DECLARE
     CFourbyteArray fourbytes;
@@ -59,9 +59,9 @@ class COptions : public CAbiOptions {
     bool receipts;
     bool logs;
     bool traces;
-    bool statements;
     bool neighbors;
     bool accounting;
+    bool statements;
     bool articulate;
     bool cache;
     bool cache_traces;
@@ -77,12 +77,8 @@ class COptions : public CAbiOptions {
 
     bool skip_ddos{true};
     uint64_t max_traces{250};
-    CAppearanceArray_mon monApps;
     CMonitorArray allMonitors;
     const CMonitor* curMonitor;
-    CAccountName accountedFor;
-
-    CReconciliationMap prevStatements;
 
     CBlockAddressMap prefundAddrMap;
     CBlockAddressMap blkRewardMap;
@@ -99,7 +95,6 @@ class COptions : public CAbiOptions {
     CAddressUintMap abiMap;
 
     CLogFilter logFilter;
-    CAddressBoolMap assetFilter;
 
     CScrapeStatistics stats;
 
@@ -128,13 +123,9 @@ class COptions : public CAbiOptions {
     bool isEmitter(const address_t& test) const;
     bool wasEmittedBy(const address_t& test) const;
     bool isRelevant(const CLogEntry& log) const;
+    bool fourByteFilter(const string_q& input) const;
 
     void writePerformanceData(void);
-
-    bool process_reconciliation(CTraverser* trav);
-    bool isReconciled(CTraverser* trav) const;
-    void cacheIfReconciled(CTraverser* trav, bool isNew) const;
-    bool token_list_from_logs(CAccountNameMap& tokenList, const CTraverser* trav);
 
     // Used as temporary data to count neighbor traversals
     size_t neighborCount{0};
@@ -144,4 +135,3 @@ class COptions : public CAbiOptions {
 
 //--------------------------------------------------------------------------------
 extern bool visitOnLoad(CAppearance_mon& app, void* data);
-extern bool fourByteFilter(const string_q& input, const COptions* opt);

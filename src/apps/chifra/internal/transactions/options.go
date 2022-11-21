@@ -29,7 +29,7 @@ type TransactionsOptions struct {
 	Uniq           bool                     `json:"uniq,omitempty"`           // Display a list of uniq addresses found in the transaction
 	Flow           string                   `json:"flow,omitempty"`           // For the uniq option only, export only from or to (including trace from or to)
 	Reconcile      string                   `json:"reconcile,omitempty"`      // Please use statements option instead
-	Statements     string                   `json:"statements,omitempty"`     // Reconcile the transaction as per the provided address
+	AccountFor     string                   `json:"accountFor,omitempty"`     // Reconcile the transaction as per the provided address
 	Cache          bool                     `json:"cache,omitempty"`          // Force the results of the query into the tx cache (and the trace cache if applicable)
 	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
 	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
@@ -44,7 +44,7 @@ func (opts *TransactionsOptions) testLog() {
 	logger.TestLog(opts.Trace, "Trace: ", opts.Trace)
 	logger.TestLog(opts.Uniq, "Uniq: ", opts.Uniq)
 	logger.TestLog(len(opts.Flow) > 0, "Flow: ", opts.Flow)
-	logger.TestLog(len(opts.Statements) > 0, "Statements: ", opts.Statements)
+	logger.TestLog(len(opts.AccountFor) > 0, "AccountFor: ", opts.AccountFor)
 	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
 	opts.Globals.TestLog()
 }
@@ -78,8 +78,8 @@ func (opts *TransactionsOptions) toCmdLine() string {
 	if len(opts.Flow) > 0 {
 		options += " --flow " + opts.Flow
 	}
-	if len(opts.Statements) > 0 {
-		options += " --statements " + opts.Statements
+	if len(opts.AccountFor) > 0 {
+		options += " --account_for " + opts.AccountFor
 	}
 	if opts.Cache {
 		options += " --cache"
@@ -112,8 +112,8 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 			opts.Flow = value[0]
 		case "reconcile":
 			opts.Reconcile = value[0]
-		case "statements":
-			opts.Statements = value[0]
+		case "accountFor":
+			opts.AccountFor = value[0]
 		case "cache":
 			opts.Cache = true
 		default:
@@ -125,7 +125,7 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
-	opts.Statements = ens.ConvertOneEns(opts.Globals.Chain, opts.Statements)
+	opts.AccountFor = ens.ConvertOneEns(opts.Globals.Chain, opts.AccountFor)
 	// EXISTING_CODE
 
 	return opts
@@ -138,7 +138,7 @@ func transactionsFinishParse(args []string) *TransactionsOptions {
 	defFmt := "txt"
 	// EXISTING_CODE
 	opts.Transactions = args
-	opts.Statements = ens.ConvertOneEns(opts.Globals.Chain, opts.Statements)
+	opts.AccountFor = ens.ConvertOneEns(opts.Globals.Chain, opts.AccountFor)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

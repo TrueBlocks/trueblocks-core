@@ -77,6 +77,9 @@ string_q CReconciliation::getValueByName(const string_q& fieldName) const {
             if (fieldName % "assetSymbol") {
                 return assetSymbol;
             }
+            if (fieldName % "accountedFor") {
+                return addr_2_Str(accountedFor);
+            }
             if (fieldName % "amountIn") {
                 return bni_2_Str(amountIn);
             }
@@ -101,10 +104,13 @@ string_q CReconciliation::getValueByName(const string_q& fieldName) const {
             if (fieldName % "endBal") {
                 return bni_2_Str(endBal);
             }
+            if (fieldName % "encoding") {
+                return encoding;
+            }
             break;
         case 'g':
-            if (fieldName % "gasCostOut") {
-                return bni_2_Str(gasCostOut);
+            if (fieldName % "gasOut") {
+                return bni_2_Str(gasOut);
             }
             break;
         case 'i':
@@ -113,6 +119,11 @@ string_q CReconciliation::getValueByName(const string_q& fieldName) const {
             }
             if (fieldName % "internalOut") {
                 return bni_2_Str(internalOut);
+            }
+            break;
+        case 'l':
+            if (fieldName % "logIndex") {
+                return uint_2_Str(logIndex);
             }
             break;
         case 'm':
@@ -130,38 +141,50 @@ string_q CReconciliation::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'p':
-            if (fieldName % "prevBlk") {
-                return uint_2_Str(prevBlk);
-            }
-            if (fieldName % "prevBlkBal") {
-                return bni_2_Str(prevBlkBal);
+            if (fieldName % "priceSource") {
+                return priceSource;
             }
             if (fieldName % "prefundIn") {
                 return bni_2_Str(prefundIn);
             }
-            if (fieldName % "priceSource") {
-                return priceSource;
+            if (fieldName % "prevAppBlk") {
+                return uint_2_Str(prevAppBlk);
+            }
+            if (fieldName % "prevBal") {
+                return bni_2_Str(prevBal);
             }
             break;
         case 'r':
+            if (fieldName % "recipient") {
+                return addr_2_Str(recipient);
+            }
             if (fieldName % "reconciliationType") {
                 return reconciliationType;
             }
             break;
         case 's':
+            if (fieldName % "spotPrice") {
+                return double_2_Str(spotPrice, 5);
+            }
+            if (fieldName % "sender") {
+                return addr_2_Str(sender);
+            }
+            if (fieldName % "signature") {
+                return signature;
+            }
             if (fieldName % "selfDestructIn") {
                 return bni_2_Str(selfDestructIn);
             }
             if (fieldName % "selfDestructOut") {
                 return bni_2_Str(selfDestructOut);
             }
-            if (fieldName % "spotPrice") {
-                return double_2_Str(spotPrice, 5);
-            }
             break;
         case 't':
             if (fieldName % "transactionIndex") {
                 return uint_2_Str(transactionIndex);
+            }
+            if (fieldName % "transactionHash") {
+                return hash_2_Str(transactionHash);
             }
             if (fieldName % "timestamp") {
                 return ts_2_Str(timestamp);
@@ -196,6 +219,10 @@ bool CReconciliation::setValueByName(const string_q& fieldNameIn, const string_q
                 assetSymbol = fieldValue;
                 return true;
             }
+            if (fieldName % "accountedFor") {
+                accountedFor = str_2_Addr(fieldValue);
+                return true;
+            }
             if (fieldName % "amountIn") {
                 amountIn = str_2_BigInt(fieldValue);
                 return true;
@@ -226,10 +253,14 @@ bool CReconciliation::setValueByName(const string_q& fieldNameIn, const string_q
                 endBal = str_2_BigInt(fieldValue);
                 return true;
             }
+            if (fieldName % "encoding") {
+                encoding = fieldValue;
+                return true;
+            }
             break;
         case 'g':
-            if (fieldName % "gasCostOut") {
-                gasCostOut = str_2_BigInt(fieldValue);
+            if (fieldName % "gasOut") {
+                gasOut = str_2_BigInt(fieldValue);
                 return true;
             }
             break;
@@ -240,6 +271,12 @@ bool CReconciliation::setValueByName(const string_q& fieldNameIn, const string_q
             }
             if (fieldName % "internalOut") {
                 internalOut = str_2_BigInt(fieldValue);
+                return true;
+            }
+            break;
+        case 'l':
+            if (fieldName % "logIndex") {
+                logIndex = str_2_Uint(fieldValue);
                 return true;
             }
             break;
@@ -262,30 +299,46 @@ bool CReconciliation::setValueByName(const string_q& fieldNameIn, const string_q
             }
             break;
         case 'p':
-            if (fieldName % "prevBlk") {
-                prevBlk = str_2_Uint(fieldValue);
-                return true;
-            }
-            if (fieldName % "prevBlkBal") {
-                prevBlkBal = str_2_BigInt(fieldValue);
+            if (fieldName % "priceSource") {
+                priceSource = fieldValue;
                 return true;
             }
             if (fieldName % "prefundIn") {
                 prefundIn = str_2_BigInt(fieldValue);
                 return true;
             }
-            if (fieldName % "priceSource") {
-                priceSource = fieldValue;
+            if (fieldName % "prevAppBlk") {
+                prevAppBlk = str_2_Uint(fieldValue);
+                return true;
+            }
+            if (fieldName % "prevBal") {
+                prevBal = str_2_BigInt(fieldValue);
                 return true;
             }
             break;
         case 'r':
+            if (fieldName % "recipient") {
+                recipient = str_2_Addr(fieldValue);
+                return true;
+            }
             if (fieldName % "reconciliationType") {
                 reconciliationType = fieldValue;
                 return true;
             }
             break;
         case 's':
+            if (fieldName % "spotPrice") {
+                spotPrice = str_2_Double(fieldValue);
+                return true;
+            }
+            if (fieldName % "sender") {
+                sender = str_2_Addr(fieldValue);
+                return true;
+            }
+            if (fieldName % "signature") {
+                signature = fieldValue;
+                return true;
+            }
             if (fieldName % "selfDestructIn") {
                 selfDestructIn = str_2_BigInt(fieldValue);
                 return true;
@@ -294,14 +347,14 @@ bool CReconciliation::setValueByName(const string_q& fieldNameIn, const string_q
                 selfDestructOut = str_2_BigInt(fieldValue);
                 return true;
             }
-            if (fieldName % "spotPrice") {
-                spotPrice = str_2_Double(fieldValue);
-                return true;
-            }
             break;
         case 't':
             if (fieldName % "transactionIndex") {
                 transactionIndex = str_2_Uint(fieldValue);
+                return true;
+            }
+            if (fieldName % "transactionHash") {
+                transactionHash = str_2_Hash(fieldValue);
                 return true;
             }
             if (fieldName % "timestamp") {
@@ -336,14 +389,22 @@ bool CReconciliation::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> blockNumber;
     archive >> transactionIndex;
+    archive >> logIndex;
+    archive >> transactionHash;
     archive >> timestamp;
     archive >> assetAddr;
     archive >> assetSymbol;
     archive >> decimals;
-    archive >> prevBlk;
-    archive >> prevBlkBal;
+    archive >> spotPrice;
+    archive >> priceSource;
+    archive >> accountedFor;
+    archive >> sender;
+    archive >> recipient;
     archive >> begBal;
     archive >> endBal;
+    archive >> encoding;
+    archive >> signature;
+    archive >> reconciliationType;
     archive >> amountIn;
     archive >> internalIn;
     archive >> selfDestructIn;
@@ -355,10 +416,9 @@ bool CReconciliation::Serialize(CArchive& archive) {
     archive >> amountOut;
     archive >> internalOut;
     archive >> selfDestructOut;
-    archive >> gasCostOut;
-    archive >> reconciliationType;
-    archive >> spotPrice;
-    archive >> priceSource;
+    archive >> gasOut;
+    archive >> prevAppBlk;
+    archive >> prevBal;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -374,14 +434,22 @@ bool CReconciliation::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << blockNumber;
     archive << transactionIndex;
+    archive << logIndex;
+    archive << transactionHash;
     archive << timestamp;
     archive << assetAddr;
     archive << assetSymbol;
     archive << decimals;
-    archive << prevBlk;
-    archive << prevBlkBal;
+    archive << spotPrice;
+    archive << priceSource;
+    archive << accountedFor;
+    archive << sender;
+    archive << recipient;
     archive << begBal;
     archive << endBal;
+    archive << encoding;
+    archive << signature;
+    archive << reconciliationType;
     archive << amountIn;
     archive << internalIn;
     archive << selfDestructIn;
@@ -393,10 +461,9 @@ bool CReconciliation::SerializeC(CArchive& archive) const {
     archive << amountOut;
     archive << internalOut;
     archive << selfDestructOut;
-    archive << gasCostOut;
-    archive << reconciliationType;
-    archive << spotPrice;
-    archive << priceSource;
+    archive << gasOut;
+    archive << prevAppBlk;
+    archive << prevBal;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -448,15 +515,31 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CReconciliation, "blockNumber", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CReconciliation, "transactionIndex", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CReconciliation, "logIndex", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CReconciliation, "transactionHash", T_HASH | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "timestamp", T_TIMESTAMP, ++fieldNum);
+    ADD_FIELD(CReconciliation, "date", T_DATE, ++fieldNum);
+    HIDE_FIELD(CReconciliation, "date");
     ADD_FIELD(CReconciliation, "assetAddr", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "assetSymbol", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "decimals", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CReconciliation, "prevBlk", T_BLOCKNUM, ++fieldNum);
-    ADD_FIELD(CReconciliation, "prevBlkBal", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "spotPrice", T_DOUBLE, ++fieldNum);
+    ADD_FIELD(CReconciliation, "priceSource", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CReconciliation, "accountedFor", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CReconciliation, "sender", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CReconciliation, "recipient", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "begBal", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "amountNet", T_INT256, ++fieldNum);
+    HIDE_FIELD(CReconciliation, "amountNet");
     ADD_FIELD(CReconciliation, "endBal", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "amountIn", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "encoding", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CReconciliation, "signature", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CReconciliation, "reconciliationType", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CReconciliation, "reconciled", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CReconciliation, "reconciled");
+    ADD_FIELD(CReconciliation, "totalIn", T_INT256, ++fieldNum);
+    HIDE_FIELD(CReconciliation, "totalIn");
+    ADD_FIELD(CReconciliation, "amountIn", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "internalIn", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "selfDestructIn", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "minerBaseRewardIn", T_INT256 | TS_OMITEMPTY, ++fieldNum);
@@ -464,13 +547,22 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "minerTxFeeIn", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "minerUncleRewardIn", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "prefundIn", T_INT256 | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CReconciliation, "amountOut", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "totalOut", T_INT256, ++fieldNum);
+    HIDE_FIELD(CReconciliation, "totalOut");
+    ADD_FIELD(CReconciliation, "amountOut", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "internalOut", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "selfDestructOut", T_INT256 | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CReconciliation, "gasCostOut", T_INT256 | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CReconciliation, "reconciliationType", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CReconciliation, "spotPrice", T_DOUBLE, ++fieldNum);
-    ADD_FIELD(CReconciliation, "priceSource", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CReconciliation, "gasOut", T_INT256 | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CReconciliation, "totalOutLessGas", T_INT256, ++fieldNum);
+    HIDE_FIELD(CReconciliation, "totalOutLessGas");
+    ADD_FIELD(CReconciliation, "prevAppBlk", T_BLOCKNUM | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CReconciliation, "prevBal", T_INT256 | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CReconciliation, "begBalDiff", T_INT256 | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CReconciliation, "begBalDiff");
+    ADD_FIELD(CReconciliation, "endBalDiff", T_INT256 | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CReconciliation, "endBalDiff");
+    ADD_FIELD(CReconciliation, "endBalCalc", T_INT256 | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CReconciliation, "endBalCalc");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CReconciliation, "schema");
@@ -481,16 +573,16 @@ void CReconciliation::registerClass(void) {
     builtIns.push_back(_biCReconciliation);
 
     // EXISTING_CODE
-    ADD_FIELD(CReconciliation, "begBalDiff", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "endBalCalc", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "endBalDiff", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "totalIn", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "totalOut", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "totalOutLessGas", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "amountNet", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "reconciled", T_BOOL, ++fieldNum);
-    ADD_FIELD(CReconciliation, "transactionHash", T_TEXT, ++fieldNum);
-    ADD_FIELD(CReconciliation, "date", T_DATE, ++fieldNum);
+    SET_TYPE(CReconciliation, "reconciled", T_BOOL);  // remove TS_OMITEMPTY
+    UNHIDE_FIELD(CReconciliation, "date");
+    UNHIDE_FIELD(CReconciliation, "amountNet");
+    UNHIDE_FIELD(CReconciliation, "reconciled");
+    UNHIDE_FIELD(CReconciliation, "totalIn");
+    UNHIDE_FIELD(CReconciliation, "totalOut");
+    UNHIDE_FIELD(CReconciliation, "totalOutLessGas");
+    UNHIDE_FIELD(CReconciliation, "begBalDiff");
+    UNHIDE_FIELD(CReconciliation, "endBalDiff");
+    UNHIDE_FIELD(CReconciliation, "endBalCalc");
     // EXISTING_CODE
 }
 
@@ -506,8 +598,6 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
                         return rec->assetSymbol;
                     if (expContext().asEther) {
                         return "ETH";
-                    } else if (expContext().asDollars) {
-                        return "USD";
                     }
                     return "WEI";
                 }
@@ -549,8 +639,8 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
                 }
                 break;
             case 'g':
-                if (fieldIn % "gasCostOut") {
-                    return bni_2_Export(rec->timestamp, rec->gasCostOut, rec->decimals);
+                if (fieldIn % "gasOut") {
+                    return bni_2_Export(rec->timestamp, rec->gasOut, rec->decimals);
                 }
                 break;
             case 'h':
@@ -638,8 +728,8 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
                 if (fieldIn % "prefundIn") {
                     return bni_2_Export(rec->timestamp, rec->prefundIn, rec->decimals);
                 }
-                if (fieldIn % "prevBlkBal") {
-                    return bni_2_Export(rec->timestamp, rec->prevBlkBal, rec->decimals);
+                if (fieldIn % "prevBal") {
+                    return bni_2_Export(rec->timestamp, rec->prevBal, rec->decimals);
                 }
                 // EXISTING_CODE
                 break;
@@ -659,9 +749,41 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
 bool CReconciliation::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
-    if (m_schema < getVersionNum(0, 11, 8)) {
-        // This class has a complicated history, so we hide back level gunk in a single function below
-        return readBackLevel_old(archive);
+    if (m_schema <= getVersionNum(0, 11, 4)) {
+        LOG_ERR("Reconcilation file is too old. Delete all reconciliations from the cache.");
+        quickQuitHandler(1);
+
+    } else if (m_schema < getVersionNum(0, 42, 6)) {
+        archive >> blockNumber;
+        archive >> transactionIndex;
+        archive >> timestamp;
+        archive >> assetAddr;
+        archive >> assetSymbol;
+        archive >> decimals;
+        archive >> prevAppBlk;
+        archive >> prevBal;
+        archive >> begBal;
+        archive >> endBal;
+        archive >> amountIn;
+        archive >> internalIn;
+        archive >> selfDestructIn;
+        archive >> minerBaseRewardIn;
+        archive >> minerNephewRewardIn;
+        archive >> minerTxFeeIn;
+        archive >> minerUncleRewardIn;
+        archive >> prefundIn;
+        archive >> amountOut;
+        archive >> internalOut;
+        archive >> selfDestructOut;
+        archive >> gasOut;
+        archive >> reconciliationType;
+        archive >> spotPrice;
+        archive >> priceSource;
+
+        bool isEth = assetSymbol == "ETH" || assetSymbol == "WEI" || assetSymbol.empty();
+        spotPrice = getPriceInUsd(isEth ? FAKE_ETH_ADDRESS : assetAddr, priceSource, blockNumber);
+        finishParse();
+        done = true;
     }
     // EXISTING_CODE
     return done;
@@ -691,15 +813,28 @@ ostream& operator<<(ostream& os, const CReconciliation& it) {
 
 //---------------------------------------------------------------------------
 const char* STR_DISPLAY_RECONCILIATION =
+    "[{BLOCKNUMBER}]\t"
+    "[{TRANSACTIONINDEX}]\t"
+    "[{LOGINDEX}]\t"
+    "[{TRANSACTIONHASH}]\t"
+    "[{TIMESTAMP}]\t"
+    "[{DATE}]\t"
     "[{ASSETADDR}]\t"
     "[{ASSETSYMBOL}]\t"
     "[{DECIMALS}]\t"
-    "[{BLOCKNUMBER}]\t"
-    "[{TRANSACTIONINDEX}]\t"
-    "[{TIMESTAMP}]\t"
-    "[{PREVBLK}]\t"
-    "[{PREVBLKBAL}]\t"
+    "[{SPOTPRICE}]\t"
+    "[{PRICESOURCE}]\t"
+    "[{ACCOUNTEDFOR}]\t"
+    "[{SENDER}]\t"
+    "[{RECIPIENT}]\t"
     "[{BEGBAL}]\t"
+    "[{AMOUNTNET}]\t"
+    "[{ENDBAL}]\t"
+    "[{ENCODING}]\t"
+    "[{SIGNATURE}]\t"
+    "[{RECONCILIATIONTYPE}]\t"
+    "[{RECONCILED}]\t"
+    "[{TOTALIN}]\t"
     "[{AMOUNTIN}]\t"
     "[{INTERNALIN}]\t"
     "[{SELFDESTRUCTIN}]\t"
@@ -708,23 +843,17 @@ const char* STR_DISPLAY_RECONCILIATION =
     "[{MINERTXFEEIN}]\t"
     "[{MINERUNCLEREWARDIN}]\t"
     "[{PREFUNDIN}]\t"
-    "[{TOTALIN}]\t"
+    "[{TOTALOUT}]\t"
     "[{AMOUNTOUT}]\t"
     "[{INTERNALOUT}]\t"
     "[{SELFDESTRUCTOUT}]\t"
-    "[{GASCOSTOUT}]\t"
-    "[{TOTALOUT}]\t"
+    "[{GASOUT}]\t"
     "[{TOTALOUTLESSGAS}]\t"
-    "[{AMOUNTNET}]\t"
-    "[{ENDBAL}]\t"
+    "[{PREVAPPBLK}]\t"
+    "[{PREVBAL}]\t"
     "[{BEGBALDIFF}]\t"
-    "[{ENDBALCALC}]\t"
     "[{ENDBALDIFF}]\t"
-    "[{RECONCILED}]\t"
-    "[{SPOTPRICE}]\t"
-    "[{PRICESOURCE}]\t"
-    "[{TRANSACTIONHASH}]\t"
-    "[{DATE}]";
+    "[{ENDBALCALC}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
@@ -778,33 +907,12 @@ string_q bni_2_Ether(const bigint_t& num, uint64_t decimals) {
     return (negative ? "-" : "") + ret + parts[1] + string_q(round - parts[1].length(), '0');
 }
 
-//---------------------------------------------------------------------------
-string_q bni_2_Dollars(const timestamp_t& ts, const bigint_t& numIn, uint64_t decimals) {
-    if (numIn == 0)
-        return "";
-    bigint_t n = numIn;
-    bool negative = false;
-    if (n < 0) {
-        negative = true;
-        n = n * -1;
-    }
-    return (negative ? "-" : "") + wei_2_Dollars(ts, str_2_Wei(bni_2_Str(n)), decimals);
-}
-
 //--------------------------------------------------------------------------------
 string_q wei_2_Export(const blknum_t& bn, const wei_t& weiIn, uint64_t decimals) {
     string_q ret;
     if (weiIn != 0) {
         if (expContext().asEther) {
             ret = wei_2_Ether_local(weiIn, decimals);
-        } else if (expContext().asDollars) {
-            static map<blknum_t, timestamp_t> timestampMap;
-            if (timestampMap[bn] == (timestamp_t)0) {
-                CBlock blk;
-                getBlockHeader(blk, bn);
-                timestampMap[bn] = blk.timestamp;
-            }
-            ret = wei_2_Dollars(timestampMap[bn], weiIn, decimals);
         } else {
             ret = wei_2_Str(weiIn);
         }
@@ -822,8 +930,6 @@ string_q bni_2_Export(const timestamp_t& ts, const bigint_t& numIn, uint64_t dec
         return quote + quote;
     if (expContext().asEther) {
         return quote + bni_2_Ether(numIn, decimals) + quote;
-    } else if (expContext().asDollars) {
-        return quote + bni_2_Dollars(ts, numIn, decimals) + quote;
     } else {
         return quote + bni_2_Str(numIn) + quote;
     }
@@ -846,7 +952,7 @@ CReconciliation operator+(const CReconciliation& a, const CReconciliation& b) {
     rec.amountOut += b.amountOut;
     rec.internalOut += b.internalOut;
     rec.selfDestructOut += b.selfDestructOut;
-    rec.gasCostOut += b.gasCostOut;
+    rec.gasOut += b.gasOut;
     return rec;
 }
 
@@ -855,403 +961,22 @@ CReconciliation& CReconciliation::operator+=(const CReconciliation& r) {
     CReconciliation prev = *this;
     *this = *this + r;
     reconciliationType = "summary";
-    prevBlk = prev.prevBlk;
-    prevBlkBal = prev.prevBlkBal;
+    prevAppBlk = prev.prevAppBlk;
+    prevBal = prev.prevBal;
     begBal = prev.begBal;
     return *this;
 }
 
 //---------------------------------------------------------------------------
-void CReconciliation::initForToken(CAccountName& tokenName) {
-    assetAddr = tokenName.address;
-    ASSERT(!assetAddr.empty());
-    assetSymbol = tokenName.symbol;
-    if (assetSymbol.empty()) {
-        assetSymbol = getTokenSymbol(tokenName.address, blockNumber);
-        if (contains(assetSymbol, "reverted"))
-            assetSymbol = "";
-    }
-    if (assetSymbol.empty())
-        assetSymbol = tokenName.address.substr(0, 4);
-    decimals = tokenName.decimals != 0 ? tokenName.decimals : 18;
+CReconciliation::CReconciliation(const address_t& aF, const address_t& asset, const CTransaction* pT) {
+    initialize();
+    blockNumber = pT->blockNumber;
+    transactionIndex = pT->transactionIndex;
+    timestamp = pT->timestamp;
+    pTransaction = pT;
+    accountedFor = aF;
+    assetAddr = asset;
+    transactionHash = pT->hash;
 }
-
-#define LOG_TRIAL_BALANCE()                                                                                            \
-    LOG4("Trial balance: ", reconciliationType);                                                                       \
-    LOG4("  hash: ", trans->hash);                                                                                     \
-    LOG4("  ------------------------------");                                                                          \
-    LOG4("  prevBal:       ", prevBlkBal);                                                                             \
-    LOG4("  begBal:        ", begBal);                                                                                 \
-    LOG4("  begBalDiff:    ", begBalDiff());                                                                           \
-    LOG4("  ------------------------------");                                                                          \
-    LOG8("  amountIn:      ", amountIn);                                                                               \
-    LOG8("  internalIn:    ", internalIn);                                                                             \
-    LOG8("  slfDstrctIn:   ", selfDestructIn);                                                                         \
-    LOG8("  minBRwdIn:     ", minerBaseRewardIn);                                                                      \
-    LOG8("  minNRwdIn:     ", minerNephewRewardIn);                                                                    \
-    LOG8("  minTxFeeIn:    ", minerTxFeeIn);                                                                           \
-    LOG8("  minURwdIn:     ", minerUncleRewardIn);                                                                     \
-    LOG8("  prefundIn:     ", prefundIn);                                                                              \
-    LOG4("  totalIn:       ", totalIn());                                                                              \
-    LOG8("  amountOut:     ", amountOut);                                                                              \
-    LOG8("  internalOut:   ", internalOut);                                                                            \
-    LOG8("  slfDstrctOt:   ", selfDestructOut);                                                                        \
-    LOG8("  gasCostOut:    ", gasCostOut);                                                                             \
-    LOG4("  totalOut:      ", totalOut());                                                                             \
-    LOG4("  amountNet:     ", amountNet());                                                                            \
-    LOG4("  endBal:        ", endBal);                                                                                 \
-    LOG4("  ------------------------------");                                                                          \
-    LOG4("  endBalCalc:    ", endBalCalc());                                                                           \
-    LOG4("  endBalDiff:    ", endBalDiff());                                                                           \
-    LOG4("  regular-recon: ", reconciled() ? "true" : "false");
-
-//-----------------------------------------------------------------------
-bool CReconciliation::reconcileEth(const CReconciliation& prevRecon, blknum_t nextBlock, const CTransaction* trans,
-                                   const CAccountName& accountedFor) {
-    address_t acctFor = accountedFor.address;
-    prevBlkBal = prevRecon.endBal;
-    prevBlk = prevRecon.blockNumber;
-    assetSymbol = "ETH";
-    assetAddr = acctFor;
-
-    bigint_t balEOLB = getBalanceAt(acctFor, blockNumber == 0 ? 0 : blockNumber - 1);
-    bigint_t balEOB = getBalanceAt(acctFor, blockNumber);
-
-    begBal = balEOLB;
-    endBal = balEOB;
-
-    if (trans->from == acctFor) {
-        amountOut = trans->isError ? 0 : trans->value;
-        gasCostOut = str_2_BigInt(trans->getValueByName("gasCost"));
-    }
-
-    if (trans->to == acctFor) {
-        if (trans->from == "0xPrefund") {
-            prefundIn = trans->value;
-        } else if (trans->from == "0xBlockReward") {
-            minerBaseRewardIn = trans->value;
-            minerNephewRewardIn = trans->extraValue1;
-            minerTxFeeIn = trans->extraValue2;
-        } else if (trans->from == "0xUncleReward") {
-            minerUncleRewardIn = trans->value;
-        } else {
-            amountIn = trans->isError ? 0 : trans->value;
-        }
-    }
-
-    bool prevDifferent = prevRecon.blockNumber != blockNumber;
-    bool nextDifferent = blockNumber != nextBlock;
-    if (trans->blockNumber == 0) {
-        reconciliationType = "genesis";
-
-    } else {
-        if (prevDifferent && nextDifferent) {
-            reconciliationType = "regular";
-
-        } else if (prevDifferent) {
-            reconciliationType = "prevdiff-partial";
-
-        } else if (nextDifferent) {
-            reconciliationType = "partial-nextdiff";
-
-        } else {
-            reconciliationType = "partial-partial";
-        }
-    }
-
-    LOG_TRIAL_BALANCE();
-    if (reconciled())
-        return true;
-
-    // Reconciliation failed, let's try to reconcile by traces
-    if (reconcileUsingTraces(prevRecon.endBal, trans, accountedFor))
-        return true;
-
-    // Reconciliation by traces failed, we want to correct for that and try
-    // one more method - intra block.
-    if (prevDifferent && nextDifferent) {
-        // The trace reconcile may have changed values
-        begBal = balEOLB;
-        endBal = balEOB;
-        reconciliationType = "regular";
-
-    } else if (prevDifferent) {
-        // This tx has a tx after it in the same block but none before it
-        begBal = balEOLB;
-        endBal = endBalCalc();
-        reconciliationType = "prevdiff-partial";
-
-    } else if (nextDifferent) {
-        // This tx has a tx before it in the block but none after it
-        begBal = prevRecon.endBal;
-        endBal = balEOB;
-        reconciliationType = "partial-nextdiff";
-
-    } else {
-        // this tx has both a tx before it and one after it in the same block
-        begBal = prevRecon.endBal;
-        endBal = endBalCalc();
-        reconciliationType = "partial-partial";
-    }
-
-    LOG_TRIAL_BALANCE();
-    return reconciled();
-}
-
-//---------------------------------------------------------------------------
-bool CReconciliation::reconcileUsingTraces(bigint_t prevEndBal, const CTransaction* trans,
-                                           const CAccountName& accountedFor) {
-    address_t acctFor = accountedFor.address;
-    amountOut = amountIn = 0;
-    prefundIn = minerBaseRewardIn = minerNephewRewardIn = minerTxFeeIn + minerUncleRewardIn = 0;
-
-    if (trans->blockNumber == 0) {
-        begBal = 0;
-        prefundIn = trans->value;
-    } else {
-        if (trans->traces.size() == 0) {
-            blknum_t bn = trans->blockNumber;
-            blknum_t txid = trans->transactionIndex;
-            loadTraces(*((CTransaction*)trans), bn, txid, false, false);  // NOLINT
-        }
-        for (auto trace : trans->traces) {
-            if (!trace.action.selfDestructed.empty()) {
-                // do not collapse
-                if (trace.action.refundAddress == acctFor)
-                    selfDestructIn += trace.action.balance;
-                // do not collapse
-                if (trace.action.selfDestructed == acctFor)
-                    selfDestructOut += trace.action.balance;
-            } else {
-                if (trace.action.from == acctFor && !trace.isDelegateCall()) {
-                    // Sometimes, EOAs appear here, but there is no way
-                    // that a trace can initiate an expenditure on an EOA
-                    // TODO(tjayrush): unless it's the first trace?
-                    // unless the EOA initiated the top level tx. I think
-                    // this might be a bug in a smart contract or something.
-                    if (accountedFor.isContract || trans->from == acctFor) {
-                        internalOut += trans->isError ? 0 : trace.action.value;
-                    }
-                }
-
-                if (trace.action.to == acctFor && !trace.isDelegateCall()) {
-                    if (trans->from == "0xPrefund") {
-                        prefundIn = trans->value;
-                    } else if (trans->from == "0xBlockReward") {
-                        minerBaseRewardIn = trans->value;
-                        minerNephewRewardIn = trans->extraValue1;
-                        minerTxFeeIn = trans->extraValue2;
-                    } else if (trans->from == "0xUncleReward") {
-                        minerUncleRewardIn = trans->value;
-                    } else {
-                        internalIn += trans->isError ? 0 : trace.action.value;
-                    }
-                }
-            }
-        }
-    }
-
-    reconciliationType = "by-trace";
-    LOG_TRIAL_BALANCE();
-    if (!reconciled())
-        ((CTransaction*)trans)->traces.clear();  // NOLINT
-    return reconciled();
-}
-
-//-----------------------------------------------------------------------
-bigint_t CReconciliation::totalIn(void) const {
-    return amountIn + internalIn + selfDestructIn + prefundIn + minerBaseRewardIn + minerNephewRewardIn + minerTxFeeIn +
-           minerUncleRewardIn;
-}
-
-//-----------------------------------------------------------------------
-bigint_t CReconciliation::totalOut(void) const {
-    return amountOut + internalOut + selfDestructOut + gasCostOut;
-}
-
-//-----------------------------------------------------------------------
-bigint_t CReconciliation::totalOutLessGas(void) const {
-    return amountOut + internalOut + selfDestructOut;
-}
-
-//---------------------------------------------------------------------------
-bigint_t CReconciliation::begBalDiff(void) const {
-    return blockNumber == 0 ? 0 : begBal - prevBlkBal;
-}
-
-//---------------------------------------------------------------------------
-bigint_t CReconciliation::endBalCalc(void) const {
-    return begBal + amountNet();
-}
-
-//---------------------------------------------------------------------------
-bigint_t CReconciliation::endBalDiff(void) const {
-    return endBalCalc() - endBal;
-}
-
-//---------------------------------------------------------------------------
-bool CReconciliation::reconciled(void) const {
-    return (endBalDiff() == 0 && begBalDiff() == 0);
-}
-
-//---------------------------------------------------------------------------
-bigint_t CReconciliation::amountNet(void) const {
-    return totalIn() - totalOut();
-}
-
-//---------------------------------------------------------------------------
-bool CReconciliation::readBackLevel_old(CArchive& archive) {
-    bigint_t unusedBi;
-    bool unusedBool;
-    if (m_schema < getVersionNum(0, 10, 1)) {
-        archive >> blockNumber;
-        archive >> transactionIndex;
-        archive >> timestamp;
-        archive >> assetAddr;
-        archive >> assetSymbol;
-        archive >> decimals;
-        // archive >> prevBlk;
-        // archive >> prevBlkBal;
-        archive >> begBal;
-        archive >> unusedBi;  // begBalDiff
-        archive >> amountIn;
-        archive >> amountOut;
-        archive >> internalIn;
-        archive >> internalOut;
-        archive >> selfDestructIn;
-        archive >> selfDestructOut;
-        archive >> minerBaseRewardIn;
-        archive >> minerNephewRewardIn;
-        archive >> minerTxFeeIn;
-        archive >> minerUncleRewardIn;
-        archive >> prefundIn;
-        archive >> gasCostOut;
-        archive >> endBal;
-        archive >> unusedBi;  // endBalCalc
-        archive >> unusedBi;  // endBalDiff
-        archive >> unusedBi;  // amountNet
-        // archive >> spotPrice;  // not present before
-        archive >> reconciliationType;
-        archive >> unusedBool;  // reconciled;
-    } else if (m_schema < getVersionNum(0, 10, 2)) {
-        archive >> blockNumber;
-        archive >> transactionIndex;
-        archive >> timestamp;
-        archive >> assetAddr;
-        archive >> assetSymbol;
-        archive >> decimals;
-        // archive >> prevBlk;
-        // archive >> prevBlkBal;
-        archive >> begBal;
-        archive >> unusedBi;  // begBalDiff
-        archive >> amountIn;
-        archive >> amountOut;
-        archive >> internalIn;
-        archive >> internalOut;
-        archive >> selfDestructIn;
-        archive >> selfDestructOut;
-        archive >> minerBaseRewardIn;
-        archive >> minerNephewRewardIn;
-        archive >> minerTxFeeIn;
-        archive >> minerUncleRewardIn;
-        archive >> prefundIn;
-        archive >> gasCostOut;
-        archive >> endBal;
-        archive >> unusedBi;  // endBalCalc
-        archive >> unusedBi;  // endBalDiff
-        archive >> unusedBi;  // amountNet
-        archive >> spotPrice;
-        archive >> reconciliationType;
-        // archive >> reconTrail;
-        archive >> unusedBool;  // reconciled;
-    } else if (m_schema < getVersionNum(0, 11, 8)) {
-        archive >> blockNumber;
-        archive >> transactionIndex;
-        archive >> timestamp;
-        archive >> assetAddr;
-        archive >> assetSymbol;
-        archive >> decimals;
-        archive >> prevBlk;
-        archive >> prevBlkBal;
-        archive >> begBal;
-        archive >> endBal;
-        archive >> amountIn;
-        archive >> internalIn;
-        archive >> selfDestructIn;
-        archive >> minerBaseRewardIn;
-        archive >> minerNephewRewardIn;
-        archive >> minerTxFeeIn;
-        archive >> minerUncleRewardIn;
-        archive >> prefundIn;
-        archive >> amountOut;
-        archive >> internalOut;
-        archive >> selfDestructOut;
-        archive >> gasCostOut;
-        archive >> reconciliationType;
-        if (m_schema >= getVersionNum(0, 11, 4)) {
-            archive >> spotPrice;  // spotPrice was double, but always set to 1.0. We will reset it below
-        } else {
-            archive >> unusedBi;  // spotPrice was an unset (i.e. undefined value) bigInt
-        }
-    }
-
-    bool isEth = assetSymbol == "ETH" || assetSymbol == "WEI" || assetSymbol.empty();
-    address_t addr = isEth ? "" : assetAddr;
-    spotPrice = getPriceInUsd(blockNumber, priceSource, addr);
-    finishParse();
-    return true;
-}
-
-//-----------------------------------------------------------------------
-// uint64_t i ndexFromTimeStamp(const C PriceQuoteArray& q uotes, timestamp_t ts) {
-//     timestamp_t first = (timestamp_t)q uotes[0].timestamp;
-//     if (ts < first)
-//         return 0;
-//     timestamp_t since = ts - first;
-//     return min(q uotes.size() - 1, size_t(since / (5 * 60)));
-// }
-
-//-----------------------------------------------------------------------
-// static string_q getWeiQuote(const CPriceQuoteArray& quotes, const timestamp_t& ts, const wei_t& weiIn,
-//                             uint64_t decimals) {
-//     return wei_2_Ether(weiIn)
-//     // uint64_t index = indexFromTimeStamp(quotes, ts);
-//     // double price = q uotes[index].close * 100.0;
-//     // wei_t wei = weiIn;
-//     // wei *= ((uint64_t)price);
-//     // wei /= 100;
-//     // return wei_2_Ether(wei, decimals);
-// }
-
-// TODO: BOGUS - OPEN THE TEXT FILE AFTER DOWNLOADING IT FROM SMART CONTRACT, BUILD BINARY CACHE, READ IT IN
-string_q wei_2_Dollars(const timestamp_t& ts, const wei_t& weiIn, uint64_t decimals) {
-    return wei_2_Ether(weiIn, 18);  // getWeiQuote(quotes, ts, weiIn, decimals);
-}
-
-// //-----------------------------------------------------------------------
-// string_q wei_2_Dollars(const timestamp_t& ts, const wei_t& weiIn, uint64_t decimals) {
-//     if (weiIn == 0)
-//         return "";
-
-//     // TODO(tjayrush): global data
-//     static C PriceQuoteArray q uotes;
-//     if (q uotes.size())  // leave early if we can
-//         return getWeiQuote(q uotes, ts, weiIn, decimals);
-
-//     {  // give ourselves a frame to make the mutex
-//         mutex aMutex;
-//         lock_guard<mutex> lock(aMutex);
-//         if (q uotes.size())  // leave early if we can (another thread may have filled the array while we were waiting
-//             return getWeiQuote(q uotes, ts, weiIn, decimals);
-
-//         string_q message;
-//         C PriceSource source(S TR_PRICE_URL, "USDT_ETH", parsePoloniex);
-//         if (!l oadPriceData(source, q uotes, false, message)) {
-//             cerr << "Cannot load price data. Quitting..." << endl;
-//             quickQuitHandler(EXIT_FAILURE);
-//         }
-//     }
-//     return getWeiQuote(q uotes, ts, weiIn, decimals);
-// }
 // EXISTING_CODE
 }  // namespace qblocks

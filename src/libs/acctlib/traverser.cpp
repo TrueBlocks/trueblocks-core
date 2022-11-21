@@ -81,7 +81,6 @@ ostream& operator<<(ostream& os, const CTraverser& it) {
     os << "index: " << it.index << endl;
     os << "nProcessed: " << it.nProcessed << endl;
     os << "searchType: " << it.searchType << endl;
-    os << "searchOp: " << it.searchOp << endl;
     os << "curMonitor: " << it.curMonitor << endl;
     // os << "monitorMap: " << it.monitorMap << endl;
     os << "traverserRange: " << it.traverserRange << endl;
