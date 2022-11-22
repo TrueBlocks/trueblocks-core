@@ -41,30 +41,17 @@ func (walker *IndexWalker) GetData() interface{} {
 	return walker.data
 }
 
-func (walker *IndexWalker) WalkIndexFiles(cacheType paths.CacheType, blockNums []uint64) error {
+func (walker *IndexWalker) WalkBloomFilters(blockNums []uint64) error {
 	filenameChan := make(chan paths.IndexFileInfo)
 
 	var nRoutines int = 1
-	go paths.WalkCacheFolder(walker.chain, cacheType, filenameChan)
+	go paths.WalkCacheFolder(walker.chain, paths.Index_Bloom, filenameChan)
 
 	cnt := 0
 	for result := range filenameChan {
 		switch result.Type {
 		case paths.Index_Bloom:
 			skip := (walker.testMode && cnt > walker.maxTests) || !strings.HasSuffix(result.Path, ".bloom")
-			if !skip && shouldDisplay(result, blockNums) {
-				ok, err := walker.visitFunc1(walker, result.Path, cnt == 0)
-				if err != nil {
-					return err
-				}
-				if ok {
-					cnt++
-				} else {
-					return nil
-				}
-			}
-		case paths.Index_Staging:
-			skip := (walker.testMode)
 			if !skip && shouldDisplay(result, blockNums) {
 				ok, err := walker.visitFunc1(walker, result.Path, cnt == 0)
 				if err != nil {
@@ -83,7 +70,7 @@ func (walker *IndexWalker) WalkIndexFiles(cacheType paths.CacheType, blockNums [
 				continue
 			}
 		default:
-			log.Fatal("You may only traverse bloom or stage folders")
+			log.Fatal("You may only traverse the bloom folder")
 		}
 	}
 

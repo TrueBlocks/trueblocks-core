@@ -6,7 +6,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
@@ -75,7 +74,7 @@ func (opts *ChunksOptions) HandlePinManifest(blockNums []uint64) error {
 		pinChunk,
 		&m,
 	)
-	if err := walker.WalkIndexFiles(paths.Index_Bloom, blockNums); err != nil {
+	if err := walker.WalkBloomFilters(blockNums); err != nil {
 		return err
 	}
 

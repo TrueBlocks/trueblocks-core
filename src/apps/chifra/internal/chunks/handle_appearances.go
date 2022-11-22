@@ -65,5 +65,5 @@ func (opts *ChunksOptions) HandleAppearances(blockNums []uint64) error {
 		showAppearances,
 		nil, /* data */
 	)
-	return walker.WalkIndexFiles(paths.Index_Bloom, blockNums)
+	return walker.WalkBloomFilters(blockNums)
 }

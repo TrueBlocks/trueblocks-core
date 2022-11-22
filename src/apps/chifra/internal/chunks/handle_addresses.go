@@ -127,5 +127,5 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 		showAddresses,
 		nil, /* data */
 	)
-	return walker.WalkIndexFiles(paths.Index_Bloom, blockNums)
+	return walker.WalkBloomFilters(blockNums)
 }

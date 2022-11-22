@@ -73,7 +73,7 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 		showBloom,
 		nil,
 	)
-	return walker.WalkIndexFiles(paths.Index_Bloom, blockNums)
+	return walker.WalkBloomFilters(blockNums)
 }
 
 func Display(bl *bloom.ChunkBloom, verbose int) {

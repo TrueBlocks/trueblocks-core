@@ -63,7 +63,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 		truncateIndex,
 		nil,
 	)
-	if err := walker.WalkIndexFiles(paths.Index_Bloom, blockNums); err != nil {
+	if err := walker.WalkBloomFilters(blockNums); err != nil {
 		return err
 	}
 

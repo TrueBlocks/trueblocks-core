@@ -36,7 +36,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 		man,
 	)
 
-	if err := walker.WalkIndexFiles(paths.Index_Bloom, blockNums); err != nil {
+	if err := walker.WalkBloomFilters(blockNums); err != nil {
 		return man.Chunks, len(man.Chunks)
 	}
 

@@ -72,5 +72,5 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 		showIndex,
 		nil, /* data */
 	)
-	return walker.WalkIndexFiles(paths.Index_Bloom, blockNums)
+	return walker.WalkBloomFilters(blockNums)
 }

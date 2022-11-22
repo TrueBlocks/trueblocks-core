@@ -124,20 +124,8 @@ func (opts *ChunksOptions) HandleStats(blockNums []uint64) error {
 		nil,
 	)
 
-	if err = walker.WalkIndexFiles(paths.Index_Bloom, blockNums); err != nil {
+	if err = walker.WalkBloomFilters(blockNums); err != nil {
 		return err
-	}
-
-	if opts.Globals.Verbose {
-		walker = index.NewIndexWalker(
-			opts.Globals.Chain,
-			opts.Globals.TestMode,
-			100, /* maxTests */
-			opts,
-			showStagingStats,
-			nil,
-		)
-		err = walker.WalkIndexFiles(paths.Index_Staging, blockNums)
 	}
 
 	return err
