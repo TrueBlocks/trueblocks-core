@@ -30,7 +30,7 @@ Flags:
   -R, --cache_traces         write traces to the cache (see notes)
   -U, --count                only available for --appearances mode, if present, return only the number of records
   -c, --first_record <num>   the first record to process
-  -e, --max_records <num>    the maximum number of records to process before reporting
+  -e, --max_records <num>    the maximum number of records to process
       --relevant             for log and accounting export only, export only logs relevant to one of the given export addresses
       --emitter string       for log export only, export only logs if emitted by one of these address(es)
       --topic string         for log export only, export only logs with this topic(s)

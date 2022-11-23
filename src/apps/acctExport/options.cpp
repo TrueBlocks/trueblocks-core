@@ -45,7 +45,7 @@ static const COption params[] = {
     COption("cache_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
     COption("count", "U", "", OPT_SWITCH, "only available for --appearances mode, if present, return only the number of records"),  // NOLINT
     COption("first_record", "c", "<uint64>", OPT_FLAG, "the first record to process"),
-    COption("max_records", "e", "<uint64>", OPT_FLAG, "the maximum number of records to process before reporting"),
+    COption("max_records", "e", "<uint64>", OPT_FLAG, "the maximum number of records to process"),
     COption("relevant", "", "", OPT_SWITCH, "for log and accounting export only, export only logs relevant to one of the given export addresses"),  // NOLINT
     COption("emitter", "", "list<addr>", OPT_FLAG, "for log export only, export only logs if emitted by one of these address(es)"),  // NOLINT
     COption("topic", "", "list<topic>", OPT_FLAG, "for log export only, export only logs with this topic(s)"),

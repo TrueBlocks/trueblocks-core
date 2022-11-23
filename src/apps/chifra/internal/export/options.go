@@ -37,7 +37,7 @@ type ExportOptions struct {
 	CacheTraces bool                  `json:"cacheTraces,omitempty"` // Write traces to the cache (see notes)
 	Count       bool                  `json:"count,omitempty"`       // Only available for --appearances mode, if present, return only the number of records
 	FirstRecord uint64                `json:"firstRecord,omitempty"` // The first record to process
-	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process before reporting
+	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process
 	Relevant    bool                  `json:"relevant,omitempty"`    // For log and accounting export only, export only logs relevant to one of the given export addresses
 	Emitter     []string              `json:"emitter,omitempty"`     // For log export only, export only logs if emitted by one of these address(es)
 	Topic       []string              `json:"topic,omitempty"`       // For log export only, export only logs with this topic(s)
