@@ -122,6 +122,22 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: firstRecord
+          description: the first record to process
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+        - name: maxRecords
+          description: the maximum number of records to process
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
       responses:
         "200":
           description: returns the requested data
@@ -297,7 +313,7 @@ paths:
           schema:
             type: number
         - name: maxRecords
-          description: the maximum number of records to process before reporting
+          description: the maximum number of records to process
           required: false
           style: form
           in: query

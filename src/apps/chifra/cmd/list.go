@@ -55,8 +55,10 @@ func init() {
 	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Count, "count", "U", false, "display only the count of records for each monitor")
 	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Appearances, "appearances", "p", false, "export each monitor's list of appearances (the default) (hidden)")
 	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Silent, "silent", "", false, "freshen the monitor only (no reporting) (hidden)")
-	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to export (inclusive, ignored when counting or freshening) (hidden)")
-	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to export (inclusive, ignored when counting or freshening) (hidden)")
+	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().FirstRecord, "first_record", "c", 0, "the first record to process")
+	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().MaxRecords, "max_records", "e", 250, "the maximum number of records to process")
+	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to export (inclusive, ignored when freshening) (hidden)")
+	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to export (inclusive, ignored when freshening) (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
 		listCmd.Flags().MarkHidden("appearances")
 		listCmd.Flags().MarkHidden("silent")
