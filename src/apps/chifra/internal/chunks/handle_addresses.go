@@ -18,63 +18,77 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
-func showAddresses(walker *index.IndexWalker, path string, first bool) (bool, error) {
-	var castOk bool
-	var opts *ChunksOptions
-	if opts, castOk = walker.GetOpts().(*ChunksOptions); !castOk {
-		logger.Fatal("should not happen ==> cannot cast ChunksOptions in showAddresses")
-		return false, nil
-	}
-	path = paths.ToIndexPath(path)
-
-	indexChunk, err := index.NewChunkData(path)
+func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
+	defer opts.Globals.RenderFooter()
+	err := opts.Globals.RenderHeader(types.SimpleIndexAddress{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.NoHeader, true)
 	if err != nil {
-		return false, err
-	}
-	defer indexChunk.Close()
-
-	_, err = indexChunk.File.Seek(int64(index.HeaderWidth), io.SeekStart)
-	if err != nil {
-		return false, err
+		return err
 	}
 
-	cnt := 0
-	for i := 0; i < int(indexChunk.Header.AddressCount); i++ {
-		if opts.Globals.TestMode && i > walker.MaxTests() {
-			continue
+	showAddresses := func(walker *index.IndexWalker, path string, first bool) (bool, error) {
+		if path != paths.ToBloomPath(path) {
+			logger.Fatal("should not happen ==> we're spinning through the bloom filters")
 		}
 
-		obj := index.AddressRecord{}
-		err := obj.ReadAddress(indexChunk.File)
+		path = paths.ToIndexPath(path)
+
+		indexChunk, err := index.NewChunkData(path)
+		if err != nil {
+			return false, err
+		}
+		defer indexChunk.Close()
+
+		_, err = indexChunk.File.Seek(int64(index.HeaderWidth), io.SeekStart)
 		if err != nil {
 			return false, err
 		}
 
-		r := types.SimpleIndexAddress{
-			Address: hexutil.Encode(obj.Address.Bytes()),
-			Range:   indexChunk.Range.String(),
-			Offset:  obj.Offset,
-			Count:   obj.Count,
-		}
-		if !opts.Globals.ToFile {
-			err = opts.Globals.RenderObject(r, first && cnt == 0)
+		cnt := 0
+		for i := 0; i < int(indexChunk.Header.AddressCount); i++ {
+			if opts.Globals.TestMode && i > walker.MaxTests() {
+				continue
+			}
+
+			obj := index.AddressRecord{}
+			err := obj.ReadAddress(indexChunk.File)
 			if err != nil {
 				return false, err
 			}
-		}
-		cnt++
 
-		if opts.Globals.Verbose {
-			if _, err = opts.HandleDetails(&indexChunk, &obj); err != nil {
-				return false, err
+			r := types.SimpleIndexAddress{
+				Address: hexutil.Encode(obj.Address.Bytes()),
+				Range:   indexChunk.Range.String(),
+				Offset:  obj.Offset,
+				Count:   obj.Count,
+			}
+			if !opts.Globals.ToFile {
+				err = opts.Globals.RenderObject(r, first && cnt == 0)
+				if err != nil {
+					return false, err
+				}
+			}
+			cnt++
+
+			if opts.Globals.Verbose {
+				if _, err = opts.handleDetails(&indexChunk, &obj); err != nil {
+					return false, err
+				}
 			}
 		}
+
+		return true, nil
 	}
 
-	return true, nil
+	walker := index.NewIndexWalker(
+		opts.Globals.Chain,
+		opts.Globals.TestMode,
+		10, /* maxTests */
+		showAddresses,
+	)
+	return walker.WalkBloomFilters(blockNums)
 }
 
-func (opts *ChunksOptions) HandleDetails(indexChunk *index.ChunkData, record *index.AddressRecord) (bool, error) {
+func (opts *ChunksOptions) handleDetails(indexChunk *index.ChunkData, record *index.AddressRecord) (bool, error) {
 	apps, err := indexChunk.ReadAppearanceRecordsAndResetOffset(record)
 	if err != nil {
 		return false, err
@@ -110,22 +124,4 @@ func (opts *ChunksOptions) HandleDetails(indexChunk *index.ChunkData, record *in
 	fmt.Printf("Wrote % 5d to %s\n", len(apps), outFn)
 	file.StringToAsciiFile(outFn, b.String())
 	return true, nil
-}
-
-func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
-	defer opts.Globals.RenderFooter()
-	err := opts.Globals.RenderHeader(types.SimpleIndexAddress{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.NoHeader, true)
-	if err != nil {
-		return err
-	}
-
-	walker := index.NewIndexWalker(
-		opts.Globals.Chain,
-		opts.Globals.TestMode,
-		10, /* maxTests */
-		opts,
-		showAddresses,
-		nil, /* data */
-	)
-	return walker.WalkBloomFilters(blockNums)
 }

@@ -13,32 +13,20 @@ type IndexWalker struct {
 	chain      string
 	testMode   bool
 	maxTests   int
-	opts       interface{}
 	visitFunc1 walkerFunc
-	data       interface{}
 }
 
-func NewIndexWalker(chain string, testMode bool, maxTests int, opts interface{}, visitFunc walkerFunc, data interface{}) IndexWalker {
+func NewIndexWalker(chain string, testMode bool, maxTests int, visitFunc walkerFunc) IndexWalker {
 	return IndexWalker{
 		chain:      chain,
 		testMode:   testMode,
 		maxTests:   maxTests,
-		opts:       opts,
 		visitFunc1: visitFunc,
-		data:       data,
 	}
-}
-
-func (walker *IndexWalker) GetOpts() interface{} {
-	return walker.opts
 }
 
 func (walker *IndexWalker) MaxTests() int {
 	return walker.maxTests
-}
-
-func (walker *IndexWalker) GetData() interface{} {
-	return walker.data
 }
 
 func (walker *IndexWalker) WalkBloomFilters(blockNums []uint64) error {
