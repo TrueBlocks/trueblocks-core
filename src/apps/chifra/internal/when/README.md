@@ -19,7 +19,7 @@ Arguments:
 Flags:
   -l, --list         export a list of the 'special' blocks
   -t, --timestamps   display or process timestamps
-  -u, --count        with --timestamps only, returns the number of timestamps in the cache
+  -U, --count        with --timestamps only, returns the number of timestamps in the cache
   -r, --repair       with --timestamps only, repairs block(s) in the block range by re-querying from the chain
   -c, --check        with --timestamps only, checks the validity of the timestamp data
       --update       with --timestamps only, bring the timestamp database forward to the latest block
