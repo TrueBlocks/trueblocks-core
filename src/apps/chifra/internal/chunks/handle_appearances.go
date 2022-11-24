@@ -13,43 +13,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func showAppearances(walker *index.IndexWalker, path string, first bool) (bool, error) {
-	var castOk bool
-	var opts *ChunksOptions
-	if opts, castOk = walker.GetOpts().(*ChunksOptions); !castOk {
-		logger.Fatal("should not happen ==> cannot cast ChunksOptions in showAppearances")
-		return false, nil
-	}
-	path = paths.ToIndexPath(path)
-
-	indexChunk, err := index.NewChunkData(path)
-	if err != nil {
-		return false, err
-	}
-	defer indexChunk.Close()
-
-	_, err = indexChunk.File.Seek(indexChunk.AppTableStart, io.SeekStart)
-	if err != nil {
-		return false, err
-	}
-
-	for i := 0; i < int(indexChunk.Header.AppearanceCount); i++ {
-		if opts.Globals.TestMode && i > walker.MaxTests() {
-			continue
-		}
-		obj := index.AppearanceRecord{}
-		err := obj.ReadAppearance(indexChunk.File)
-		if err != nil {
-			return false, err
-		}
-		err = opts.Globals.RenderObject(obj, first && i == 0)
-		if err != nil {
-			return false, err
-		}
-	}
-	return true, nil
-}
-
 func (opts *ChunksOptions) HandleAppearances(blockNums []uint64) error {
 	defer opts.Globals.RenderFooter()
 	err := opts.Globals.RenderHeader(types.SimpleIndexAppearance{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.NoHeader, true)
@@ -57,13 +20,46 @@ func (opts *ChunksOptions) HandleAppearances(blockNums []uint64) error {
 		return err
 	}
 
+	showAppearances := func(walker *index.IndexWalker, path string, first bool) (bool, error) {
+		if path != paths.ToBloomPath(path) {
+			logger.Fatal("should not happen ==> we're spinning through the bloom filters")
+		}
+
+		path = paths.ToIndexPath(path)
+
+		indexChunk, err := index.NewChunkData(path)
+		if err != nil {
+			return false, err
+		}
+		defer indexChunk.Close()
+
+		_, err = indexChunk.File.Seek(indexChunk.AppTableStart, io.SeekStart)
+		if err != nil {
+			return false, err
+		}
+
+		for i := 0; i < int(indexChunk.Header.AppearanceCount); i++ {
+			if opts.Globals.TestMode && i > walker.MaxTests() {
+				continue
+			}
+			obj := index.AppearanceRecord{}
+			err := obj.ReadAppearance(indexChunk.File)
+			if err != nil {
+				return false, err
+			}
+			err = opts.Globals.RenderObject(obj, first && i == 0)
+			if err != nil {
+				return false, err
+			}
+		}
+		return true, nil
+	}
+
 	walker := index.NewIndexWalker(
 		opts.Globals.Chain,
 		opts.Globals.TestMode,
 		10, /* maxTests */
-		opts,
 		showAppearances,
-		nil, /* data */
 	)
-	return walker.WalkIndexFiles(paths.Index_Bloom, blockNums)
+	return walker.WalkBloomFilters(blockNums)
 }
