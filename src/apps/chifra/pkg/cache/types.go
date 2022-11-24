@@ -1,8 +1,7 @@
 package cache
 
-type unsignedLong = uint64
 type cString struct {
-	size    unsignedLong
+	size    uint64
 	content []byte
 }
 

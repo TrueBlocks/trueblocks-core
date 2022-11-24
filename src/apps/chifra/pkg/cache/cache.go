@@ -89,6 +89,8 @@ func getItem[Data cacheable](
 }
 
 // SetBlock stores block in the cache
+// TODO: Move to it's own type specific file (see https://github.com/TrueBlocks/trueblocks-core/pull/2584#discussion_r1031564867)
+// TODO: This also applies to Set/GetTransaction
 func SetBlock(chainName string, block *types.SimpleBlock) (err error) {
 	filePath := getPathByBlock(ItemBlock, block.BlockNumber)
 
