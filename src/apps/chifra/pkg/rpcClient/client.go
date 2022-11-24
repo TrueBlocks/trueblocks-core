@@ -227,7 +227,7 @@ func GetTransactionReceipt(chain string, bn uint64, txid uint64) (receipt types.
 
 		logs = append(logs, types.SimpleLog{
 			Address:          logAddress,
-			LogIndex:         uint32(logIndex),
+			LogIndex:         logIndex,
 			BlockNumber:      logBlockNumber,
 			TransactionIndex: uint32(logTxIndex),
 			Timestamp:        0, // FIXME
@@ -265,7 +265,7 @@ func GetTransactionReceipt(chain string, bn uint64, txid uint64) (receipt types.
 		CumulativeGasUsed: fmt.Sprint(cumulativeGasUsed),
 		GasUsed:           gasUsed,
 		Logs:              logs,
-		Status:            status,
+		Status:            uint32(status),
 		IsError:           status == 0,
 		TransactionHash:   common.HexToHash(ethReceipt.TransactionHash),
 		TransactionIndex:  transactionIndex,
