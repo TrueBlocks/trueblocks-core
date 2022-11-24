@@ -40,6 +40,14 @@ func (opts *ListOptions) validateList() error {
 		}
 	}
 
+	if opts.FirstRecord == 0 {
+		opts.FirstRecord = 1
+	}
+
+	if opts.Count && opts.MaxRecords != 250 {
+		return validate.Usage("The {0} option is not available with the {1} option.", "--count", "--max_records")
+	}
+
 	if len(opts.Globals.File) == 0 {
 		err := validate.ValidateAtLeastOneAddr(opts.Addrs)
 		if err != nil {

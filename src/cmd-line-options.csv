@@ -14,8 +14,8 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10320,apps,Accounts,export,acctExport,cache,i,false,false,true,true,true,header,switch,<boolean>,write transactions to the cache (see notes)
 10330,apps,Accounts,export,acctExport,cache_traces,R,false,false,true,true,true,header,switch,<boolean>,write traces to the cache (see notes)
 10334,apps,Accounts,export,acctExport,count,U,,false,false,true,true,header,switch,<boolean>,only available for --appearances mode&#44; if present&#44; return only the number of records
-10336,apps,Accounts,export,acctExport,first_record,c,0,false,false,true,true,header,flag,<uint64>,the first record to process
-10338,apps,Accounts,export,acctExport,max_records,e,250,false,false,true,true,header,flag,<uint64>,the maximum number of records to process before reporting
+10336,apps,Accounts,export,acctExport,first_record,c,1,false,false,true,true,header,flag,<uint64>,the first record to process
+10338,apps,Accounts,export,acctExport,max_records,e,250,false,false,true,true,header,flag,<uint64>,the maximum number of records to process
 10340,apps,Accounts,export,acctExport,relevant,,,false,false,true,true,header,switch,<boolean>,for log and accounting export only&#44; export only logs relevant to one of the given export addresses
 10342,apps,Accounts,export,acctExport,emitter,,,false,false,true,true,local,flag,list<addr>,for log export only&#44; export only logs if emitted by one of these address(es)
 10344,apps,Accounts,export,acctExport,topic,,,false,false,true,true,local,flag,list<topic>,for log export only&#44; export only logs with this topic(s)
@@ -33,6 +33,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10472,apps,Accounts,export,acctExport,n3,,,false,false,false,false,--,note,,For the --logs option&#44; you may optionally specify one or more --emitter&#44; one or more --topics&#44; or both.
 10474,apps,Accounts,export,acctExport,n4,,,false,false,false,false,--,note,,The --logs option is significantly faster if you provide an --emitter or a --topic.
 10476,apps,Accounts,export,acctExport,n5,,,false,false,false,false,--,note,,Neighbors include every address that appears in any transaction in which the export address also appears.
+10478,apps,Accounts,export,acctExport,n6,,,false,false,false,false,--,note,,If provided&#44; --max_records dominates&#44; also&#44; if provided&#44; --first_block overrides --first_record.
 
 11200,apps,Accounts,monitors,acctExport,addrs,,,false,false,true,true,local,positional,list<addr>,one or more addresses (0x...) to process
 11085,apps,Accounts,monitors,acctExport,clean,,,false,false,true,true,gocmd,switch,<boolean>,clean (i.e. remove duplicate appearances) from monitors
@@ -54,8 +55,10 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12015,apps,Accounts,list,acctExport,count,U,,false,false,true,true,gocmd,switch,<boolean>,display only the count of records for each monitor
 11210,apps,Accounts,list,acctExport,appearances,p,,false,false,false,true,gocmd,switch,<boolean>,export each monitor's list of appearances (the default)
 11210,apps,Accounts,list,acctExport,silent,,,false,false,false,true,gocmd,switch,<boolean>,freshen the monitor only (no reporting)
-11440,apps,Accounts,list,acctExport,first_block,F,0,false,false,false,false,gocmd,flag,<blknum>,first block to export (inclusive&#44; ignored when counting or freshening)
-11450,apps,Accounts,list,acctExport,last_block,L,NOPOS,false,false,false,false,gocmd,flag,<blknum>,last block to export (inclusive&#44; ignored when counting or freshening)
+11430,apps,Accounts,list,acctExport,first_record,c,1,false,false,true,true,header,flag,<uint64>,the first record to process
+11435,apps,Accounts,list,acctExport,max_records,e,250,false,false,true,true,header,flag,<uint64>,the maximum number of records to process
+11440,apps,Accounts,list,acctExport,first_block,F,0,false,false,false,false,gocmd,flag,<blknum>,first block to export (inclusive&#44; ignored when freshening)
+11450,apps,Accounts,list,acctExport,last_block,L,NOPOS,false,false,false,false,gocmd,flag,<blknum>,last block to export (inclusive&#44; ignored when freshening)
 12025,apps,Accounts,list,acctExport,,,,false,false,true,true,--,description,,List every appearance of an address anywhere on the chain.
 11097,apps,Accounts,list,acctExport,n1,,,false,false,false,false,--,note,,No other options are permitted when --silent is selected.
 
@@ -154,7 +157,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13420,tools,ChainData,traces,getTraces,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the retrieved data if ABIs can be found
 13490,tools,ChainData,traces,getTraces,filter,f,,false,false,true,true,header,flag,<string>,call the node's trace_filter routine with bang-separated filter
 13420,tools,ChainData,traces,getTraces,statediff,d,,false,false,true,true,header,switch,<boolean>,export state diff traces (not implemented)
-13440,tools,ChainData,traces,getTraces,count,c,,false,false,true,true,header,switch,<boolean>,show the number of traces for the transaction only (fast)
+13440,tools,ChainData,traces,getTraces,count,U,,false,false,true,true,header,switch,<boolean>,show the number of traces for the transaction only (fast)
 13460,tools,ChainData,traces,getTraces,skip_ddos,s,true,false,true,false,false,header,toggle,<boolean>,skip over the 2016 ddos during export ([{DEF}] by default)
 13480,tools,ChainData,traces,getTraces,max,m,250,false,true,false,false,header,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction is
 13500,tools,ChainData,traces,getTraces,,,,false,false,true,true,--,description,,Retrieve traces for the given transaction(s).
@@ -167,7 +170,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13940,tools,ChainData,when,whenBlock,blocks,,,false,false,true,true,gocmd,positional,list<string>,one or more dates&#44; block numbers&#44; hashes&#44; or special named blocks (see notes)
 13960,tools,ChainData,when,whenBlock,list,l,,false,false,true,true,gocmd,switch,<boolean>,export a list of the 'special' blocks
 13962,tools,ChainData,when,whenBlock,timestamps,t,,false,false,true,true,gocmd,switch,<boolean>,display or process timestamps
-13968,tools,ChainData,when,whenBlock,count,u,,false,false,true,true,gocmd,switch,<boolean>,with --timestamps only&#44; returns the number of timestamps in the cache
+13968,tools,ChainData,when,whenBlock,count,U,,false,false,true,true,gocmd,switch,<boolean>,with --timestamps only&#44; returns the number of timestamps in the cache
 13970,tools,ChainData,when,whenBlock,truncate,n,,false,false,false,false,gocmd,flag,<blknum>,with --timestamps only&#44; truncates the timestamp file at this block
 13972,tools,ChainData,when,whenBlock,repair,r,,false,false,true,true,gocmd,switch,<boolean>,with --timestamps only&#44; repairs block(s) in the block range by re-querying from the chain
 13974,tools,ChainData,when,whenBlock,check,c,,false,false,true,true,gocmd,switch,<boolean>,with --timestamps only&#44; checks the validity of the timestamp data

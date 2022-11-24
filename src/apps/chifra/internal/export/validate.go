@@ -5,10 +5,14 @@
 package exportPkg
 
 import (
+	"fmt"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -29,8 +33,35 @@ func (opts *ExportOptions) validateExport() error {
 		return validate.Usage("--unripe are disabled for testing.")
 	}
 
-	if opts.Count && (opts.Logs || opts.Receipts || opts.Traces || opts.Neighbors) {
-		return validate.Usage("The {0} option is only available with transactional options.", "--count")
+	if opts.LastBlock == 0 {
+		opts.LastBlock = utils.NOPOS
+	}
+
+	if opts.FirstBlock >= opts.LastBlock {
+		msg := fmt.Sprintf("first_block (%d) must be strictly earlier than last_block (%d).", opts.FirstBlock, opts.LastBlock)
+		return validate.Usage(msg)
+	}
+
+	if opts.LastBlock != utils.NOPOS {
+		provider := config.GetRpcProvider(opts.Globals.Chain)
+		latest := rpcClient.BlockNumber(provider)
+		if opts.LastBlock > latest {
+			msg := fmt.Sprintf("latest block (%d) must be before the chain's latest block (%d).", opts.LastBlock, latest)
+			return validate.Usage(msg)
+		}
+	}
+
+	if opts.FirstRecord == 0 {
+		opts.FirstRecord = 1
+	}
+
+	if opts.Count {
+		if opts.Logs || opts.Receipts || opts.Traces || opts.Neighbors {
+			return validate.Usage("The {0} option is only available with transactional options.", "--count")
+		}
+		if opts.MaxRecords > 0 && opts.MaxRecords != 250 {
+			return validate.Usage("The {0} option is not available with the {1} option.", "--count", "--max_records")
+		}
 	}
 
 	if !opts.Logs && len(opts.Emitter) > 0 {
@@ -87,10 +118,6 @@ func (opts *ExportOptions) validateExport() error {
 		if opts.Globals.Format == "ofx" {
 			return validate.Usage("The {0} option is only available with the {1} option.", "--fmt ofx", "--accounting")
 		}
-	}
-
-	if !opts.Count && len(opts.Addrs) == 0 {
-		return validate.Usage("You must provide at least one Ethereum address for this command.")
 	}
 
 	if !validate.CanArticulate(opts.Articulate) {

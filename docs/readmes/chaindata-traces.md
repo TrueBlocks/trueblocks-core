@@ -20,7 +20,7 @@ Flags:
   -a, --articulate      articulate the retrieved data if ABIs can be found
   -f, --filter string   call the node's trace_filter routine with bang-separated filter
   -d, --statediff       export state diff traces (not implemented)
-  -c, --count           show the number of traces for the transaction only (fast)
+  -U, --count           show the number of traces for the transaction only (fast)
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)
   -h, --help            display this help screen

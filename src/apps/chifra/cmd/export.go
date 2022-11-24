@@ -53,7 +53,8 @@ Notes:
   - Articulating the export means turn the EVM's byte data into human-readable text (if possible).
   - For the --logs option, you may optionally specify one or more --emitter, one or more --topics, or both.
   - The --logs option is significantly faster if you provide an --emitter or a --topic.
-  - Neighbors include every address that appears in any transaction in which the export address also appears.`
+  - Neighbors include every address that appears in any transaction in which the export address also appears.
+  - If provided, --max_records dominates, also, if provided, --first_block overrides --first_record.`
 
 func init() {
 	exportCmd.Flags().SortFlags = false
@@ -69,8 +70,8 @@ func init() {
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Cache, "cache", "i", false, "write transactions to the cache (see notes)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().CacheTraces, "cache_traces", "R", false, "write traces to the cache (see notes)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Count, "count", "U", false, "only available for --appearances mode, if present, return only the number of records")
-	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().FirstRecord, "first_record", "c", 0, "the first record to process")
-	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().MaxRecords, "max_records", "e", 250, "the maximum number of records to process before reporting")
+	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().FirstRecord, "first_record", "c", 1, "the first record to process")
+	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().MaxRecords, "max_records", "e", 250, "the maximum number of records to process")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Relevant, "relevant", "", false, "for log and accounting export only, export only logs relevant to one of the given export addresses")
 	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Emitter, "emitter", "", nil, "for log export only, export only logs if emitted by one of these address(es)")
 	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Topic, "topic", "", nil, "for log export only, export only logs with this topic(s)")

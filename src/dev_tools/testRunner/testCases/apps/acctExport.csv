@@ -13,6 +13,58 @@ on,both,fast,list,apps/acctExport,list_appearances,y,addrs = 0x001d14804b399c6ef
 on,both,fast,list,apps/acctExport,list_appearances_csv,n,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & fmt = csv & no_header
 on,both,fast,list,apps/acctExport,list_appearances_dates,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & verbose
 
+on,both,fast,list,apps/acctExport,100_list_n,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt                                                           & max_records = 100
+on,both,fast,list,apps/acctExport,102_list_mr,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt                                                           & max_records = 10
+on,both,fast,list,apps/acctExport,104_list_fr,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt                                        & first_record = 3 & max_records = 100
+on,both,fast,list,apps/acctExport,106_list_fr_mr,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt                                        & first_record = 3 & max_records = 10
+on,both,fast,list,apps/acctExport,108_list_lb,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt                    & last_block = 100
+on,both,fast,list,apps/acctExport,110_list_lb_mr,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt                    & last_block = 100                     & max_records = 10
+on,both,fast,list,apps/acctExport,110_list_lb_mr_2,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt                    & last_block = 100                     & max_records = 1
+on,both,fast,list,apps/acctExport,112_list_lb_fr,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt                    & last_block = 100  & first_record = 1
+on,both,fast,list,apps/acctExport,114_list_lb_fr_mr,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt                    & last_block = 100  & first_record = 1 & max_records = 10
+on,both,fast,list,apps/acctExport,114_list_lb_fr_mr_2,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt                    & last_block = 100  & first_record = 1 & max_records = 1
+
+on,both,fast,list,apps/acctExport,116_list_fb,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 90                                        & max_records = 100
+on,both,fast,list,apps/acctExport,118_list_fb_mr,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 90                                        & max_records = 10
+on,both,fast,list,apps/acctExport,120_list_fb_fr,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 90                     & first_record = 3 & max_records = 100
+on,both,fast,list,apps/acctExport,122_list_fb_fr_mr,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 90                     & first_record = 3 & max_records = 10
+on,both,fast,list,apps/acctExport,124_list_fb_lb,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 55 & last_block = 236
+on,both,fast,list,apps/acctExport,124_list_fb_lb_2,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 236
+on,both,fast,list,apps/acctExport,124_list_fb_lb_3,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 235
+on,both,fast,list,apps/acctExport,124_list_fb_lb_4,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 55 & last_block = 235
+on,both,fast,list,apps/acctExport,126_list_fb_lb_mr,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 2516                    & max_records = 10
+on,both,fast,list,apps/acctExport,126_list_fb_lb_mr_2,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 2516                    & max_records = 8
+on,both,fast,list,apps/acctExport,128_list_fb_lb_fr,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 2516 & first_record = 3
+on,both,fast,list,apps/acctExport,128_list_fb_lb_fr_2,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 235  & first_record = 3
+on,both,fast,list,apps/acctExport,128_list_fb_lb_fr_3,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 235  & first_record = 4
+on,both,fast,list,apps/acctExport,130_list_fb_lb_fr_mr,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 235  & first_record = 3 & max_records = 10
+
+on,both,fast,export,apps/acctExport,100_export_n,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt                                                           & max_records = 100
+on,both,fast,export,apps/acctExport,102_export_mr,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt                                                           & max_records = 10
+on,both,fast,export,apps/acctExport,104_export_fr,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt                                        & first_record = 3 & max_records = 100
+on,both,fast,export,apps/acctExport,106_export_fr_mr,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt                                        & first_record = 3 & max_records = 10
+on,both,fast,export,apps/acctExport,108_export_lb,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt                    & last_block = 100
+on,both,fast,export,apps/acctExport,110_export_lb_mr,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt                    & last_block = 100                     & max_records = 10
+on,both,fast,export,apps/acctExport,110_export_lb_mr_2,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt                    & last_block = 100                     & max_records = 1
+on,both,fast,export,apps/acctExport,112_export_lb_fr,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt                    & last_block = 100  & first_record = 1
+on,both,fast,export,apps/acctExport,114_export_lb_fr_mr,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt                    & last_block = 100  & first_record = 1 & max_records = 10
+on,both,fast,export,apps/acctExport,114_export_lb_fr_mr_2,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt                    & last_block = 100  & first_record = 1 & max_records = 1
+
+on,both,fast,export,apps/acctExport,116_export_fb,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt & first_block = 90                                        & max_records = 100
+on,both,fast,export,apps/acctExport,118_export_fb_mr,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt & first_block = 90                                        & max_records = 10
+on,both,fast,export,apps/acctExport,120_export_fb_fr,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt & first_block = 90                     & first_record = 3 & max_records = 100
+on,both,fast,export,apps/acctExport,122_export_fb_fr_mr,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt & first_block = 90                     & first_record = 3 & max_records = 10
+on,both,fast,export,apps/acctExport,124_export_fb_lb,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt & first_block = 55 & last_block = 236
+on,both,fast,export,apps/acctExport,124_export_fb_lb_2,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt & first_block = 56 & last_block = 236
+on,both,fast,export,apps/acctExport,124_export_fb_lb_3,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt & first_block = 56 & last_block = 235
+on,both,fast,export,apps/acctExport,124_export_fb_lb_4,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt & first_block = 55 & last_block = 235
+on,both,fast,export,apps/acctExport,126_export_fb_lb_mr,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt & first_block = 56 & last_block = 2516                    & max_records = 10
+on,both,fast,export,apps/acctExport,126_export_fb_lb_mr_2,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt & first_block = 56 & last_block = 2516                    & max_records = 8
+on,both,fast,export,apps/acctExport,128_export_fb_lb_fr,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt & first_block = 56 & last_block = 2516 & first_record = 3
+on,both,fast,export,apps/acctExport,128_export_fb_lb_fr_2,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt & first_block = 56 & last_block = 235  & first_record = 3
+on,both,fast,export,apps/acctExport,128_export_fb_lb_fr_3,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt & first_block = 56 & last_block = 235  & first_record = 4
+on,both,fast,export,apps/acctExport,130_export_fb_lb_fr_mr,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt & first_block = 56 & last_block = 235  & first_record = 3 & max_records = 10
+
 on,both,fast,list,apps/acctExport,ens_test_list,y,addrs = rhyslindmark.eth & first_block = 4037786 & last_block = 4081406
 
 on,cmd,fast,monitors,apps/acctExport,monitors_help,n,@h
@@ -34,7 +86,7 @@ on,both,fast,export,apps/acctExport,monitors_count,y,addrs = 0x001d14804b399c6ef
 on,both,fast,export,apps/acctExport,monitors_appearances,n,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 0 & last_block = 3375495 & fmt = csv & appearances
 on,both,fast,export,apps/acctExport,monitors_data,n,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & fmt = csv
 on,both,fast,export,apps/acctExport,monitors_prefund1,y,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & first_block = 0 & last_block = 1
-on,both,fast,export,apps/acctExport,monitors_prefund2,y,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & first_block = 2 & last_block = 2
+on,both,fast,export,apps/acctExport,monitors_prefund2,y,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & first_block = 2 & last_block = 3
 on,both,fast,export,apps/acctExport,monitors_prefund3,y,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & first_block = 2 & last_block = 7
 
 on,both,fast,export,apps/acctExport,export_apps,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 1 & appearances & fmt = json
@@ -74,8 +126,8 @@ on,both,fast,export,apps/acctExport,statement_2,y,addrs = 0x08166f02313feae18bb0
 on,both,fast,export,apps/acctExport,statement_3_bad,y,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & statements & last_block = 4000000 & fmt = json
 on,both,fast,export,apps/acctExport,statement_3,y,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & accounting & statements & last_block = 4000000 & fmt = json
 on,both,fast,export,apps/acctExport,statement_3_accounting,y,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & last_block = 4000000 & fmt = json
-on,both,fast,export,apps/acctExport,statement_token_ibt,n,addrs = 0xec3ef464bf821c3b10a18adf9ac7177a628e87cc & accounting & statements & first_block = 7005600 & last_block = 7005780 & ether & fmt = json
-on,both,fast,export,apps/acctExport,statement_token_ibt_2,n,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & statements & first_block = 12704456 & last_block = 12705893 & ether & fmt = csv & max_records = 4000
+junk,both,fast,export,apps/acctExport,statement_token_ibt,n,addrs = 0xec3ef464bf821c3b10a18adf9ac7177a628e87cc & accounting & statements & first_block = 7005600 & last_block = 7005780 & ether & fmt = json
+junk,both,fast,export,apps/acctExport,statement_token_ibt_2,n,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & statements & first_block = 12704456 & last_block = 12705893 & ether & fmt = csv & max_records = 4000
 
 on,both,fast,export,apps/acctExport,ens_test_export,y,addrs = rhyslindmark.eth & first_block = 4037786 & last_block = 4081450
 on,both,fast,export,apps/acctExport,monitors_data2,n,addrs = 0x1234567890123456789012345678901234567890 & addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 3000000 & last_block = 3375498 & fmt = csv & no_header
@@ -96,16 +148,16 @@ on,both,fast,export,apps/acctExport,export_relevant,n,addrs = 0x9531c059098e3d19
 on,both,fast,export,apps/acctExport,export_relevant_not_emit,n,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & logs & last_block = 10272064 & emitter = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 & fmt = csv
 on,both,fast,export,apps/acctExport,export_relevant_emit,n,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & logs & last_block = 10272064 & emitter = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 & fmt = csv & relevant
 
-on,both,fast,export,apps/acctExport,old_bug,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & max_records = 1 & first_record = 212 & fmt = json
-on,both,fast,export,apps/acctExport,old_bug2_1,y,addrs = 0x000001f568875f378bf6d170b790967fe429c81a & max_records = 1 & first_record = 1 & articulate & fmt = json
-on,both,fast,export,apps/acctExport,old_bug2_5,y,addrs = 0x000001f568875f378bf6d170b790967fe429c81a & max_records = 1 & first_record = 5 & fmt = json
-on,both,fast,export,apps/acctExport,old_bug2_336,y,addrs = 0x000001f568875f378bf6d170b790967fe429c81a & max_records = 2 & first_record = 336 & articulate & fmt = json
+on,both,fast,export,apps/acctExport,old_bug,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & max_records = 1 & first_record = 213 & fmt = json
+on,both,fast,export,apps/acctExport,old_bug2_1,y,addrs = 0x000001f568875f378bf6d170b790967fe429c81a & max_records = 1 & first_record = 2 & articulate & fmt = json
+on,both,fast,export,apps/acctExport,old_bug2_5,y,addrs = 0x000001f568875f378bf6d170b790967fe429c81a & max_records = 1 & first_record = 6 & fmt = json
+on,both,fast,export,apps/acctExport,old_bug2_336,y,addrs = 0x000001f568875f378bf6d170b790967fe429c81a & max_records = 2 & first_record = 337 & articulate & fmt = json
 
 on,both,fast,export,apps/acctExport,transfer_fourbytes,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & max_records = 10 & fourbytes = 0xa9059cbb & fmt = json
 on,both,fast,export,apps/acctExport,transfer_fourbytes_trace,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & max_records = 10 & fourbytes = 0xa9059cbb & traces & fmt = json
 on,both,fast,export,apps/acctExport,transfer_no_topics,y,addrs = 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 & max_records = 5 & logs
 on,both,fast,export,apps/acctExport,transfer_topics,y,addrs = 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 & max_records = 5 & topics = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & logs
-on,both,fast,export,apps/acctExport,accounting_intra_tokens,y,addrs = 0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E & max_records = 3 & first_record = 683 & accounting & fmt = json & log_level = 10
+on,both,fast,export,apps/acctExport,accounting_intra_tokens,y,addrs = 0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E & max_records = 3 & first_record = 684 & accounting & fmt = json & log_level = 10
 
 #,,,,,,,these tests cover the issue noted but solutions are not implemented (gold tests are incorrect)
 local,both,fast,export,apps/acctExport,failed_statement_2572_1,y,addrs = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & accounting & statements & ether & fmt = json & first_block = 15549161 & last_block = 15549163 & asset = 0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 & max_records = 10000
