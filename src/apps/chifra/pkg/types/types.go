@@ -62,6 +62,12 @@ type SimpleFunction struct {
 	Outputs         []SimpleParameter `json:"outputs"`
 }
 
+// TODO: remove this type when we move ABI output to StreamMany
+type SimpleFunctionOutput struct {
+	Encoding  string `json:"encoding,omitempty"`
+	Signature string `json:"signature,omitempty"`
+}
+
 type SimpleMonitor struct {
 	Address     string `json:"address"`
 	NRecords    int    `json:"nRecords"`
