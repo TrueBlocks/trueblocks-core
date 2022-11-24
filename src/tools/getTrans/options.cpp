@@ -92,11 +92,13 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (isRaw)
+    if (isRaw) {
         expContext().exportFmt = JSON1;
+    }
 
-    if (trace && !isTracingNode())
+    if (trace && !isTracingNode()) {
         return usage("Tracing is required for this program to work properly.");
+    }
 
     if (articulate) {
         // show certain fields and hide others
