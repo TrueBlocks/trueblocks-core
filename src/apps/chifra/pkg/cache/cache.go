@@ -18,14 +18,14 @@ type cacheable interface {
 }
 
 // getCacheAndChainPath returns path to cache for given chain
-func getCacheAndChainPath(chainName string) string {
+func getCacheAndChainPath(chain string) string {
 	cacheDir := config.GetRootConfig().Settings.CachePath
-	return path.Join(cacheDir, chainName)
+	return path.Join(cacheDir, chain)
 }
 
 // save writes contents of `content` Reader to a file
-func save(chainName string, filePath string, content io.Reader) (err error) {
-	cacheDir := getCacheAndChainPath(chainName)
+func save(chain string, filePath string, content io.Reader) (err error) {
+	cacheDir := getCacheAndChainPath(chain)
 	fullPath := path.Join(cacheDir, filePath)
 	file, err := os.Create(fullPath)
 	if err != nil {
@@ -37,22 +37,22 @@ func save(chainName string, filePath string, content io.Reader) (err error) {
 }
 
 // load opens binary cache file for reading
-func load(chainName string, filePath string) (file io.Reader, err error) {
-	cacheDir := getCacheAndChainPath(chainName)
+func load(chain string, filePath string) (file io.Reader, err error) {
+	cacheDir := getCacheAndChainPath(chain)
 	fullPath := path.Join(cacheDir, filePath)
 	file, err = os.Open(fullPath)
 	return
 }
 
-func remove(chainName string, filePath string) (err error) {
-	cacheDir := getCacheAndChainPath(chainName)
+func remove(chain string, filePath string) (err error) {
+	cacheDir := getCacheAndChainPath(chain)
 	fullPath := path.Join(cacheDir, filePath)
 	return os.Remove(fullPath)
 }
 
 // setItem serializes value into binary format and saves it to a file
 func setItem[Data cacheable](
-	chainName string,
+	chain string,
 	filePath string,
 	value *Data,
 	write func(w *bufio.Writer, d *Data) error,
@@ -64,17 +64,17 @@ func setItem[Data cacheable](
 		return
 	}
 	reader := bytes.NewReader(buf.Bytes())
-	err = save(chainName, filePath, reader)
+	err = save(chain, filePath, reader)
 	return
 }
 
 // getItem reads data structure from binary format
 func getItem[Data cacheable](
-	chainName string,
+	chain string,
 	filePath string,
 	read func(w *bufio.Reader) (*Data, error),
 ) (value *Data, err error) {
-	reader, err := load(chainName, filePath)
+	reader, err := load(chain, filePath)
 	if err != nil {
 		return
 	}
@@ -83,7 +83,7 @@ func getItem[Data cacheable](
 	value, err = read(bufReader)
 	if err != nil && !os.IsNotExist(err) {
 		// Ignore the error, we will re-try next time
-		remove(chainName, filePath)
+		remove(chain, filePath)
 	}
 	return
 }
@@ -91,11 +91,11 @@ func getItem[Data cacheable](
 // SetBlock stores block in the cache
 // TODO: Move to it's own type specific file (see https://github.com/TrueBlocks/trueblocks-core/pull/2584#discussion_r1031564867)
 // TODO: This also applies to Set/GetTransaction
-func SetBlock(chainName string, block *types.SimpleBlock) (err error) {
+func SetBlock(chain string, block *types.SimpleBlock) (err error) {
 	filePath := getPathByBlock(ItemBlock, block.BlockNumber)
 
 	return setItem(
-		chainName,
+		chain,
 		filePath,
 		block,
 		WriteBlock,
@@ -103,22 +103,22 @@ func SetBlock(chainName string, block *types.SimpleBlock) (err error) {
 }
 
 // GetBlock reads block from the cache
-func GetBlock(chainName string) (block *types.SimpleBlock, err error) {
+func GetBlock(chain string) (block *types.SimpleBlock, err error) {
 	filePath := getPathByBlock(ItemBlock, block.BlockNumber)
 
 	return getItem(
-		chainName,
+		chain,
 		filePath,
 		ReadBlock,
 	)
 }
 
 // SetTransaction stores transaction in the cache
-func SetTransaction(chainName string, tx *types.SimpleTransaction) (err error) {
+func SetTransaction(chain string, tx *types.SimpleTransaction) (err error) {
 	filePath := getPathByBlock(ItemTransaction, tx.BlockNumber)
 
 	return setItem(
-		chainName,
+		chain,
 		filePath,
 		tx,
 		WriteTransaction,
@@ -126,11 +126,11 @@ func SetTransaction(chainName string, tx *types.SimpleTransaction) (err error) {
 }
 
 // GetTransaction reads transactiono from the cache
-func GetTransaction(chainName string, blockNumber types.Blknum, txIndex uint64) (tx *types.SimpleTransaction, err error) {
+func GetTransaction(chain string, blockNumber types.Blknum, txIndex uint64) (tx *types.SimpleTransaction, err error) {
 	filePath := getPathByBlockAndTransactionIndex(ItemTransaction, blockNumber, txIndex)
 
 	return getItem(
-		chainName,
+		chain,
 		filePath,
 		ReadTransaction,
 	)
