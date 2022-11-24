@@ -50,37 +50,31 @@ int main(int argc, const char* argv[]) {
 
             if (options.appearances) {
                 CAppearanceTraverser at;
-                at.traverserRange = options.exportRange;
                 traversers.push_back(at);
             }
 
             if (options.receipts) {
                 CReceiptTraverser rt;
-                rt.traverserRange = options.exportRange;
                 traversers.push_back(rt);
             }
 
             if (options.neighbors) {
                 CNeighborTraverser nt;
-                nt.traverserRange = options.exportRange;
                 traversers.push_back(nt);
             }
 
             if (options.logs) {
                 CLogTraverser lt;
-                lt.traverserRange = options.exportRange;
                 traversers.push_back(lt);
             }
 
             if (options.traces) {
                 CTraceTraverser tt;
-                tt.traverserRange = options.exportRange;
                 traversers.push_back(tt);
             }
 
             if (traversers.empty()) {
                 CTransactionTraverser tt;
-                tt.traverserRange = options.exportRange;
                 traversers.push_back(tt);
             }
 

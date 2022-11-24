@@ -34,8 +34,9 @@ type ListOptions struct {
 }
 
 var defaultListOptions = ListOptions{
-	MaxRecords: 250,
-	LastBlock:  utils.NOPOS,
+	FirstRecord: 1,
+	MaxRecords:  250,
+	LastBlock:   utils.NOPOS,
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -44,7 +45,7 @@ func (opts *ListOptions) testLog() {
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
 	logger.TestLog(opts.Silent, "Silent: ", opts.Silent)
-	logger.TestLog(opts.FirstRecord != 0, "FirstRecord: ", opts.FirstRecord)
+	logger.TestLog(opts.FirstRecord != 1, "FirstRecord: ", opts.FirstRecord)
 	logger.TestLog(opts.MaxRecords != 250, "MaxRecords: ", opts.MaxRecords)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
@@ -61,7 +62,7 @@ func (opts *ListOptions) String() string {
 func listFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
 	copy := defaultListOptions
 	opts := &copy
-	opts.FirstRecord = 0
+	opts.FirstRecord = 1
 	opts.MaxRecords = 250
 	opts.FirstBlock = 0
 	opts.LastBlock = utils.NOPOS

@@ -18,7 +18,7 @@ Arguments:
 
 Flags:
   -U, --count               display only the count of records for each monitor
-  -c, --first_record uint   the first record to process
+  -c, --first_record uint   the first record to process (default 1)
   -e, --max_records uint    the maximum number of records to process (default 250)
   -x, --fmt string          export format, one of [none|json*|txt|csv]
   -v, --verbose             enable verbose (increase detail with --log_level)

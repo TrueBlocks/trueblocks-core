@@ -223,6 +223,10 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    if (first_record == 0) {
+        return usage("Should not happen: " + uint_2_Str(first_record) + "  must be at least 1.");
+    }
+
     if (!isApiMode() && (max_records == 250 || max_records == 0))
         max_records = (((size_t)-100000000));  // this is a very large number that won't wrap
 
@@ -249,6 +253,8 @@ bool COptions::parseArguments(string_q& command) {
     if (!loadNames()) {
         return usage("Could not load names database.");
     }
+
+    exportRange = make_pair(first_block, last_block);
 
     for (auto addr : addrs) {
         CMonitor monitor;
@@ -287,11 +293,6 @@ bool COptions::parseArguments(string_q& command) {
     // TODO: This can be removed
     CMonitor m;
     cleanFolder(m.getPathToMonitor("", true));
-
-    if (first_block > last_block) {
-        return usage("--first_block must be less than or equal to --last_block.");
-    }
-    exportRange = make_pair(first_block, last_block);
 
     if (count) {
         cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CMonitorCount)->m_ClassName);
@@ -364,7 +365,7 @@ void COptions::Init(void) {
     cache_traces = getGlobalConfig("acctExport")->getConfigBool("settings", "cache_traces", false);
     // clang-format on
     count = false;
-    first_record = 0;
+    first_record = 1;
     max_records = 250;
     relevant = false;
     flow = "";
@@ -420,6 +421,7 @@ COptions::COptions(void) {
     notes.push_back("For the --logs option, you may optionally specify one or more --emitter, one or more --topics, or both.");  // NOLINT
     notes.push_back("The --logs option is significantly faster if you provide an --emitter or a --topic.");
     notes.push_back("Neighbors include every address that appears in any transaction in which the export address also appears.");  // NOLINT
+    notes.push_back("If provided, --max_records dominates, also, if provided, --first_block overrides --first_record.");
     // clang-format on
     // END_CODE_NOTES
 
