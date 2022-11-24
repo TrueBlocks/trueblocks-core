@@ -98,6 +98,7 @@ func helperCheckTransaction(t *testing.T, tr *types.SimpleTransaction, expected 
 }
 
 func TestReadBlock(t *testing.T) {
+	// TODO: Can we find a better place for this?
 	f, err := os.Open("./cache_block.bin")
 	if err != nil {
 		t.Fatal("cannot open file")
