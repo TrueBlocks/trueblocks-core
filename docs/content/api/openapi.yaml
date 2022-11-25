@@ -138,6 +138,22 @@ paths:
           explode: true
           schema:
             type: number
+        - name: firstBlock
+          description: first block to export (inclusive, ignored when freshening)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+        - name: lastBlock
+          description: last block to export (inclusive, ignored when freshening)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
       responses:
         "200":
           description: returns the requested data
