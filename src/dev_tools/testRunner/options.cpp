@@ -260,4 +260,7 @@ void establishTestData(void) {
     doCommand("chifra abis 0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc");
     doCommand("chifra abis 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11");
     doCommand("chifra abis 0x7d655c57f71464b6f83811c55d84009cd9f5221c");
+
+    doCommand("chifra monitors --decache 0xf503017d7baf7fbc0fff7492b751025c6a78179b");
+    doCommand("chifra monitors --decache 0x9531c059098e3d194ff87febb587ab07b30b1306");
 }

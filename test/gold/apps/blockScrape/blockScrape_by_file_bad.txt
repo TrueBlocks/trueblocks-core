@@ -1,5 +1,5 @@
 chifra scrape  --file cmd_file_2
-Error: The --file option is not allowed in scrape mode.
+Error: open cmd_file_2: no such file or directory
 Usage:
   chifra scrape [flags]
 

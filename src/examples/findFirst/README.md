@@ -31,7 +31,7 @@ int main(int argc, const char* argv[]) {
     for (blknum_t bl = startBlock; bl < getLatestBlock_client(); bl++) {
         CBlock block;
         getBlock(block, bl);
-        if (!block.forEveryUniqueAppearanceInTxs(visitAddress /* func */, NULL /* filterFunc */, &theDaoAddr /* data */))
+        if (!block.forEveryUniqueAppearanceInTxs(visitAddress /* func */, NULL /* filterFun */, &theDaoAddr /* data */))
             return 0;
     }
 

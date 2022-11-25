@@ -68,7 +68,7 @@ func (opts *WhenOptions) WhenInternal() (err error, handled bool) {
 			if opts.Check {
 				err = opts.HandleTimestampsCheck()
 
-			} else if opts.Repair != utils.NOPOS {
+			} else if opts.Repair {
 				err = opts.HandleTimestampsRepair()
 
 			} else {

@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.43.0-beta
+  version: 0.44.0-beta
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra serve`, you can
@@ -122,6 +122,38 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: firstRecord
+          description: the first record to process
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+        - name: maxRecords
+          description: the maximum number of records to process
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+        - name: firstBlock
+          description: first block to export (inclusive, ignored when freshening)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+        - name: lastBlock
+          description: last block to export (inclusive, ignored when freshening)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
       responses:
         "200":
           description: returns the requested data
@@ -297,7 +329,7 @@ paths:
           schema:
             type: number
         - name: maxRecords
-          description: the maximum number of records to process before reporting
+          description: the maximum number of records to process
           required: false
           style: form
           in: query
@@ -1208,13 +1240,14 @@ paths:
           schema:
             type: boolean
         - name: repair
-          description: with --timestamps only, repair a single timestamp by querying the chain
+          description: >
+            with --timestamps only, repairs block(s) in the block range by re-querying from the chain
           required: false
           style: form
           in: query
           explode: true
           schema:
-            type: number
+            type: boolean
         - name: check
           description: with --timestamps only, checks the validity of the timestamp data
           required: false

@@ -38,11 +38,9 @@ class CTraverser {
     string_q searchType;
     CMonitor* curMonitor;
     monitor_map_t monitorMap;
-    blkrange_t traverserRange;
     CTraverser(const string_q& o) : index(0), nProcessed(0), searchType(o) {
         logging = !isTestMode() || getEnvStr("FORCE_LOGGING") == "true";
         curMonitor = nullptr;
-        traverserRange = make_pair(0, NOPOS);
         filterFunc = filterByRange;
     }
     virtual ~CTraverser(void) {

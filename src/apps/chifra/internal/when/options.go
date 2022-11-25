@@ -27,7 +27,7 @@ type WhenOptions struct {
 	Timestamps bool                     `json:"timestamps,omitempty"` // Display or process timestamps
 	Count      bool                     `json:"count,omitempty"`      // With --timestamps only, returns the number of timestamps in the cache
 	Truncate   uint64                   `json:"truncate,omitempty"`   // With --timestamps only, truncates the timestamp file at this block
-	Repair     uint64                   `json:"repair,omitempty"`     // With --timestamps only, repair a single timestamp by querying the chain
+	Repair     bool                     `json:"repair,omitempty"`     // With --timestamps only, repairs block(s) in the block range by re-querying from the chain
 	Check      bool                     `json:"check,omitempty"`      // With --timestamps only, checks the validity of the timestamp data
 	Update     bool                     `json:"update,omitempty"`     // With --timestamps only, bring the timestamp database forward to the latest block
 	Deep       bool                     `json:"deep,omitempty"`       // With --timestamps --check only, verifies timestamps from on chain (slow)
@@ -37,7 +37,6 @@ type WhenOptions struct {
 
 var defaultWhenOptions = WhenOptions{
 	Truncate: utils.NOPOS,
-	Repair:   utils.NOPOS,
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -47,7 +46,7 @@ func (opts *WhenOptions) testLog() {
 	logger.TestLog(opts.Timestamps, "Timestamps: ", opts.Timestamps)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.Truncate != utils.NOPOS, "Truncate: ", opts.Truncate)
-	logger.TestLog(opts.Repair != utils.NOPOS, "Repair: ", opts.Repair)
+	logger.TestLog(opts.Repair, "Repair: ", opts.Repair)
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	logger.TestLog(opts.Update, "Update: ", opts.Update)
 	logger.TestLog(opts.Deep, "Deep: ", opts.Deep)
@@ -65,7 +64,6 @@ func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 	copy := defaultWhenOptions
 	opts := &copy
 	opts.Truncate = utils.NOPOS
-	opts.Repair = utils.NOPOS
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "blocks":
@@ -82,7 +80,7 @@ func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 		case "truncate":
 			opts.Truncate = globals.ToUint64(value[0])
 		case "repair":
-			opts.Repair = globals.ToUint64(value[0])
+			opts.Repair = true
 		case "check":
 			opts.Check = true
 		case "update":
@@ -112,9 +110,6 @@ func whenFinishParse(args []string) *WhenOptions {
 	opts.Blocks = args
 	if opts.Truncate == 0 {
 		opts.Truncate = utils.NOPOS
-	}
-	if opts.Repair == 0 {
-		opts.Repair = utils.NOPOS
 	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {

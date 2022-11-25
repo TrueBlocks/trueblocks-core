@@ -12,9 +12,9 @@ Arguments:
 Flags:
   -l, --list            export a list of the 'special' blocks
   -t, --timestamps      display or process timestamps
-  -u, --count           with --timestamps only, returns the number of timestamps in the cache
+  -U, --count           with --timestamps only, returns the number of timestamps in the cache
   -n, --truncate uint   with --timestamps only, truncates the timestamp file at this block (hidden)
-  -r, --repair uint     with --timestamps only, repair a single timestamp by querying the chain
+  -r, --repair          with --timestamps only, repairs block(s) in the block range by re-querying from the chain
   -c, --check           with --timestamps only, checks the validity of the timestamp data
       --update          with --timestamps only, bring the timestamp database forward to the latest block
   -e, --deep            with --timestamps --check only, verifies timestamps from on chain (slow) (hidden)

@@ -37,7 +37,7 @@ type ExportOptions struct {
 	CacheTraces bool                  `json:"cacheTraces,omitempty"` // Write traces to the cache (see notes)
 	Count       bool                  `json:"count,omitempty"`       // Only available for --appearances mode, if present, return only the number of records
 	FirstRecord uint64                `json:"firstRecord,omitempty"` // The first record to process
-	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process before reporting
+	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process
 	Relevant    bool                  `json:"relevant,omitempty"`    // For log and accounting export only, export only logs relevant to one of the given export addresses
 	Emitter     []string              `json:"emitter,omitempty"`     // For log export only, export only logs if emitted by one of these address(es)
 	Topic       []string              `json:"topic,omitempty"`       // For log export only, export only logs with this topic(s)
@@ -54,8 +54,9 @@ type ExportOptions struct {
 }
 
 var defaultExportOptions = ExportOptions{
-	MaxRecords: 250,
-	LastBlock:  utils.NOPOS,
+	FirstRecord: 1,
+	MaxRecords:  250,
+	LastBlock:   utils.NOPOS,
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -74,7 +75,7 @@ func (opts *ExportOptions) testLog() {
 	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
 	logger.TestLog(opts.CacheTraces, "CacheTraces: ", opts.CacheTraces)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
-	logger.TestLog(opts.FirstRecord != 0, "FirstRecord: ", opts.FirstRecord)
+	logger.TestLog(opts.FirstRecord != 1, "FirstRecord: ", opts.FirstRecord)
 	logger.TestLog(opts.MaxRecords != 250, "MaxRecords: ", opts.MaxRecords)
 	logger.TestLog(opts.Relevant, "Relevant: ", opts.Relevant)
 	logger.TestLog(len(opts.Emitter) > 0, "Emitter: ", opts.Emitter)
@@ -140,7 +141,7 @@ func (opts *ExportOptions) toCmdLine() string {
 	if opts.Count {
 		options += " --count"
 	}
-	if opts.FirstRecord != 0 {
+	if opts.FirstRecord != 1 {
 		options += (" --first_record " + fmt.Sprintf("%d", opts.FirstRecord))
 	}
 	if opts.MaxRecords != 250 {
@@ -189,7 +190,7 @@ func (opts *ExportOptions) toCmdLine() string {
 func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions {
 	copy := defaultExportOptions
 	opts := &copy
-	opts.FirstRecord = 0
+	opts.FirstRecord = 1
 	opts.MaxRecords = 250
 	opts.FirstBlock = 0
 	opts.LastBlock = utils.NOPOS

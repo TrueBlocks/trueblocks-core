@@ -112,9 +112,8 @@ func RunWithFileSupport(
 
 		// TODO: see issue #2444 - probably better ways to do this
 		disallowed := map[string]bool{
-			"serve":  true,
-			"scrape": true,
-			"init":   true,
+			"serve": true,
+			"init": true,
 		}
 		if disallowed[mode] {
 			msg := fmt.Sprintf("The --file option is not allowed in %s mode.", mode)

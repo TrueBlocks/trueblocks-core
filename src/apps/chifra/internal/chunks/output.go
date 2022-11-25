@@ -13,9 +13,11 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/spf13/cobra"
 )
 
@@ -116,6 +118,15 @@ func (opts *ChunksOptions) defaultFormat(def string) string {
 		return "json"
 	}
 	return def
+}
+
+func (opts *ChunksOptions) shouldShow(obj index.AddressRecord) bool {
+	for _, addr := range opts.Belongs {
+		if hexutil.Encode(obj.Address.Bytes()) == addr {
+			return true
+		}
+	}
+	return false
 }
 
 // EXISTING_CODE

@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2022-11-12T22:17:28
+date: 2022-11-23T12:59:12
 lastmod:
   - :git
   - lastmod
@@ -187,7 +187,7 @@ Flags:
   -a, --articulate      articulate the retrieved data if ABIs can be found
   -f, --filter string   call the node's trace_filter routine with bang-separated filter
   -d, --statediff       export state diff traces (not implemented)
-  -c, --count           show the number of traces for the transaction only (fast)
+  -U, --count           show the number of traces for the transaction only (fast)
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)
   -h, --help            display this help screen
@@ -221,15 +221,15 @@ Arguments:
   blocks - one or more dates, block numbers, hashes, or special named blocks (see notes)
 
 Flags:
-  -l, --list          export a list of the 'special' blocks
-  -t, --timestamps    display or process timestamps
-  -u, --count         with --timestamps only, returns the number of timestamps in the cache
-  -r, --repair uint   with --timestamps only, repair a single timestamp by querying the chain
-  -c, --check         with --timestamps only, checks the validity of the timestamp data
-      --update        with --timestamps only, bring the timestamp database forward to the latest block
-  -x, --fmt string    export format, one of [none|json*|txt|csv]
-  -v, --verbose       enable verbose (increase detail with --log_level)
-  -h, --help          display this help screen
+  -l, --list         export a list of the 'special' blocks
+  -t, --timestamps   display or process timestamps
+  -U, --count        with --timestamps only, returns the number of timestamps in the cache
+  -r, --repair       with --timestamps only, repairs block(s) in the block range by re-querying from the chain
+  -c, --check        with --timestamps only, checks the validity of the timestamp data
+      --update       with --timestamps only, bring the timestamp database forward to the latest block
+  -x, --fmt string   export format, one of [none|json*|txt|csv]
+  -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen
 
 Notes:
   - The block list may contain any combination of number, hash, date, special named blocks.

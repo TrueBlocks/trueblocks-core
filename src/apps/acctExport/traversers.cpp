@@ -52,6 +52,7 @@ CTraceTraverser::CTraceTraverser(void) : CTraverser("traces") {
 
 //--------------------------------------------------------------------------
 CNeighborTraverser::CNeighborTraverser(void) : CTraverser("neighbors") {
+    filterFunc = filterByRange;
     preFunc = neighbors_Pre;
     postFunc = post_Func;
 }

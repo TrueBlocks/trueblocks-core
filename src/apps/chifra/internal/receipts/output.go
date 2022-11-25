@@ -15,6 +15,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
@@ -91,6 +92,23 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 						cancel()
 						return
 					}
+					continue
+				}
+
+				// TODO: This can be hidden behind the GetTransactionReceipt interface. No reason
+				// TODO: for this calling code to know the data is in the cache
+				// Try to load receipt from cache
+				transaction, _ := cache.GetTransaction(
+					opts.Globals.Chain,
+					uint64(tx.BlockNumber),
+					uint64(tx.TransactionIndex),
+				)
+				if transaction != nil && transaction.Receipt != nil {
+					// Some values are not cached
+					transaction.Receipt.BlockNumber = uint64(tx.BlockNumber)
+					transaction.Receipt.TransactionHash = transaction.Hash
+					transaction.Receipt.TransactionIndex = uint64(tx.TransactionIndex)
+					modelChan <- transaction.Receipt
 					continue
 				}
 

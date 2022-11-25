@@ -22,7 +22,7 @@ func WalkCacheFolder(chain string, cacheType CacheType, filenameChan chan<- Inde
 		filenameChan <- IndexFileInfo{Type: None}
 	}()
 
-	path := config.GetPathToIndex(chain)
+	path := filepath.Join(config.GetPathToIndex(chain), tailFolder(chain, cacheType))
 	if cacheType == Index_Bloom {
 		path = ToBloomPath(path)
 	}
@@ -41,4 +41,16 @@ func WalkCacheFolder(chain string, cacheType CacheType, filenameChan chan<- Inde
 		}
 		return nil
 	})
+}
+
+func tailFolder(chain string, ct CacheType) string {
+	descrs := map[CacheType]string{
+		None:          "unknown",
+		Index_Bloom:   "blooms",
+		Index_Final:   "finalized",
+		Index_Staging: "staging",
+		Index_Ripe:    "ripe",
+		Index_Unripe:  "unripe",
+	}
+	return descrs[ct]
 }

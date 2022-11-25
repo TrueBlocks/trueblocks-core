@@ -32,7 +32,7 @@ type SimpleReceipt struct {
 	Logs              []SimpleLog    `json:"logs,omitempty"`
 	// LogsBloom         string         `json:"-"`
 	// Root              string         `json:"-"`
-	Status           uint64         `json:"status"`
+	Status           uint32         `json:"status"`
 	IsError          bool           `json:"isError,omitempty"`
 	To               common.Address `json:"to,omitempty"`
 	TransactionHash  common.Hash    `json:"hash"`

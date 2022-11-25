@@ -37,18 +37,7 @@ bool CTraverser::traverse(const CAppearanceArray_mon& apps, void* data) {
     if (preFunc && !(*preFunc)(this, data))
         return false;
 
-    blknum_t start = 0;
-    if (traverserRange.first != 0) {
-        for (index = 0; index < apps.size() && !shouldQuit(); index++) {
-            if (apps[index].blk >= traverserRange.first) {
-                break;
-            }
-            start = index;
-        }
-    }
-
-    // For each appearance...
-    for (index = start; index < apps.size() && !shouldQuit(); index++) {
+    for (index = 0; index < apps.size() && !shouldQuit(); index++) {
         app = &apps[index];
         trans = CTransaction();  // reset
         bool passedFilter = !filterFunc || (*filterFunc)(this, data);
@@ -70,9 +59,7 @@ bool CTraverser::traverse(const CAppearanceArray_mon& apps, void* data) {
 
 //-----------------------------------------------------------------------
 bool filterByRange(CTraverser* trav, void* data) {
-    if (!bn_2_Timestamp(trav->app->blk) || shouldQuit())
-        return false;
-    return inRange(blknum_t(trav->app->blk), trav->traverserRange.first, trav->traverserRange.second);
+    return bn_2_Timestamp(trav->app->blk) || shouldQuit();
 }
 
 //-------------------------------------------------------------------------
@@ -83,7 +70,6 @@ ostream& operator<<(ostream& os, const CTraverser& it) {
     os << "searchType: " << it.searchType << endl;
     os << "curMonitor: " << it.curMonitor << endl;
     // os << "monitorMap: " << it.monitorMap << endl;
-    os << "traverserRange: " << it.traverserRange << endl;
     return os;
 }
 

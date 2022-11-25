@@ -30,7 +30,7 @@ Flags:
   -R, --cache_traces         write traces to the cache (see notes)
   -U, --count                only available for --appearances mode, if present, return only the number of records
   -c, --first_record <num>   the first record to process
-  -e, --max_records <num>    the maximum number of records to process before reporting
+  -e, --max_records <num>    the maximum number of records to process
       --relevant             for log and accounting export only, export only logs relevant to one of the given export addresses
       --emitter string       for log export only, export only logs if emitted by one of these address(es)
       --topic string         for log export only, export only logs with this topic(s)
@@ -53,4 +53,5 @@ Notes:
   - For the --logs option, you may optionally specify one or more --emitter, one or more --topics, or both.
   - The --logs option is significantly faster if you provide an --emitter or a --topic.
   - Neighbors include every address that appears in any transaction in which the export address also appears.
+  - If provided, --max_records dominates, also, if provided, --first_block overrides --first_record.
 
