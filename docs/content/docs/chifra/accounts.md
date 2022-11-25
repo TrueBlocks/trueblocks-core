@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-11-23T23:06:33
+date: 2022-11-25T10:46:46
 lastmod:
   - :git
   - lastmod
@@ -42,6 +42,8 @@ Flags:
   -U, --count               display only the count of records for each monitor
   -c, --first_record uint   the first record to process (default 1)
   -e, --max_records uint    the maximum number of records to process (default 250)
+  -F, --first_block uint    first block to export (inclusive, ignored when freshening)
+  -L, --last_block uint     last block to export (inclusive, ignored when freshening)
   -x, --fmt string          export format, one of [none|json*|txt|csv]
   -v, --verbose             enable verbose (increase detail with --log_level)
   -h, --help                display this help screen
