@@ -220,6 +220,8 @@ func readCacheHeader(reader *bufio.Reader, target *cacheHeader) (err error) {
 }
 
 // TODO: Move to it's own type specific file (see https://github.com/TrueBlocks/trueblocks-core/pull/2584#discussion_r1031564867)
+// TODO: Also, eventually much of this code will be auto-generated. When that happens use `if err := Function(); err != nil { return }`
+// TODO: pattern for these tests
 // (applies to the rest of "Read[DataType]" functions below as well)
 func ReadBlock(reader *bufio.Reader) (block *types.SimpleBlock, err error) {
 	block = &types.SimpleBlock{}

@@ -98,12 +98,13 @@ func helperCheckTransaction(t *testing.T, tr *types.SimpleTransaction, expected 
 }
 
 func TestReadBlock(t *testing.T) {
+	// TODO: Can we find a better place for this?
 	f, err := os.Open("./cache_block.bin")
-	defer f.Close()
-	buf := bufio.NewReader(f)
 	if err != nil {
 		t.Fatal("cannot open file")
 	}
+	defer f.Close()
+	buf := bufio.NewReader(f)
 	block, err := ReadBlock(buf)
 	if err != nil {
 		t.Fatal(err)

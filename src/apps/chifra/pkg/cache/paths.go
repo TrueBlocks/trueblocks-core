@@ -18,6 +18,7 @@ func getDirectoryByItem(item CacheItem) string {
 	return itemToDirectory[item]
 }
 
+// TODO: combine this with code found in other places that does the same thing
 func getDirStructureByBlock(blockNumber types.Blknum) (result string, paddedBn string) {
 	paddedBn = fmt.Sprintf("%09d", blockNumber)
 	parts := make([]string, 3)
