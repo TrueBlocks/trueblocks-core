@@ -43,9 +43,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 			case validate.OKAY:
 				chunk.BloomHash = "" // we don't have to download it
 				chunk.BloomSize = 0
-				if opts.Globals.Verbose {
-					reportReason("The bloom file", bloomStatus, path)
-				}
+				reportReason("The bloom file", bloomStatus, path, opts.Globals.Verbose)
 			case validate.FILE_ERROR:
 				return false, err // bubble the error up
 			case validate.FILE_MISSING:
@@ -55,9 +53,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 			case validate.WRONG_MAGIC:
 				fallthrough
 			case validate.WRONG_HASH:
-				if opts.Globals.Verbose {
-					reportReason("The bloom file", bloomStatus, path)
-				}
+				reportReason("The bloom file", bloomStatus, path, opts.Globals.Verbose)
 			default:
 				logger.Fatal("should not happen ==> unknown return from IsValidChunk")
 			}
@@ -67,9 +63,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 				chunk.IndexHash = "" // we don't have to download it
 				chunk.IndexSize = 0
 				if file.FileExists(paths.ToIndexPath(path)) {
-					if opts.Globals.Verbose {
-						reportReason("The index file", indexStatus, paths.ToIndexPath(path))
-					}
+					reportReason("The index file", indexStatus, paths.ToIndexPath(path), opts.Globals.Verbose)
 				}
 			case validate.FILE_ERROR:
 				return false, err // bubble the error up
@@ -80,9 +74,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 			case validate.WRONG_MAGIC:
 				fallthrough
 			case validate.WRONG_HASH:
-				if opts.Globals.Verbose {
-					reportReason("The index file", indexStatus, paths.ToIndexPath(path))
-				}
+				reportReason("The index file", indexStatus, paths.ToIndexPath(path), opts.Globals.Verbose)
 			default:
 				logger.Fatal("should not happen ==> unknown return from IsValidChunk")
 			}
@@ -94,18 +86,14 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 			return true, nil
 
 		} else {
-			if opts.Globals.Verbose {
-				reportReason("The bloom file", validate.NOT_IN_MANIFEST, path)
-			}
+			reportReason("The bloom file", validate.NOT_IN_MANIFEST, path, opts.Globals.Verbose)
 			if err := os.Remove(path); err != nil {
 				return false, err
 			}
 
 			indexPath := paths.ToIndexPath(path)
 			if file.FileExists(indexPath) {
-				if opts.Globals.Verbose {
-					reportReason("The index file", validate.NOT_IN_MANIFEST, indexPath)
-				}
+				reportReason("The index file", validate.NOT_IN_MANIFEST, indexPath, opts.Globals.Verbose)
 				if err := os.Remove(indexPath); err != nil {
 					return false, err
 				}
@@ -171,7 +159,11 @@ var reasons = map[validate.ErrorType]string{
 	validate.NOT_IN_MANIFEST: "is not in the manifest",
 }
 
-func reportReason(prefix string, status validate.ErrorType, path string) {
+func reportReason(prefix string, status validate.ErrorType, path string, verbose bool) {
+	if !verbose {
+		return
+	}
+
 	col := colors.BrightGreen
 	if status != validate.OKAY {
 		if status == validate.FILE_ERROR || status == validate.NOT_IN_MANIFEST {

@@ -144,6 +144,8 @@ func writeDefaultHeader(writer *bufio.Writer, className string) (err error) {
 
 func WriteBlock(writer *bufio.Writer, block *types.SimpleBlock) (err error) {
 	write := createWriteFn(writer)
+
+	// TODO: Use new style test for error
 	err = writeDefaultHeader(writer, "CBlock")
 	if err != nil {
 		return

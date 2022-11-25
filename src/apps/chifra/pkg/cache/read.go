@@ -12,6 +12,7 @@ import (
 )
 
 func validateHeader(header *cacheHeader) error {
+	// TODO: I think this hard coded version value needs to pick up a version generated automatically from code.
 	if header.schema != 41000 {
 		return errors.New("invalid schema")
 	}
@@ -57,6 +58,7 @@ func readFromArray[Item ArrayItem](
 	// make target large enough
 	*target = make([]Item, 0, itemCount)
 
+	// TODO: If we know the width of each record, couldn't we read the entire array from disc directly into memory?
 	// read items
 	for i := 0; uint64(i) < itemCount; i++ {
 		item, readErr := readValue(reader)
@@ -228,6 +230,7 @@ func ReadBlock(reader *bufio.Reader) (block *types.SimpleBlock, err error) {
 	read := createReadFn(reader)
 
 	header := &cacheHeader{}
+	// TODO: Move this to new style test for error
 	err = readCacheHeader(reader, header)
 	if err != nil {
 		return

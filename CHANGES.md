@@ -3,6 +3,39 @@
 
 This file details changes made to TrueBlocks per version (starting with version v0.40.0). See the [migration notes](./MIGRATIONS.md) for changes from previous versions.
 
+## v0.44.0
+
+### Significant Bug Fixes
+  - Fixes a significant bug related to scraping at the head of the chain that was introduced in v0.41.0. [Migration needed](./MIGRATIONS.md).
+
+### System-Wide Changes
+
+- Updates version to v0.44.0
+- Implements first version of GoLang native binary cache (for `chifra receipts` only, but more soon).
+
+### Changes to Specific Tools
+
+- **chifra export:**
+  - *Breaking change:* Changes default for `--first_block` to `1`. May have semantic effects.
+  - Significant improvements to `--first_block/--last_block` and `--first_record/--max_record` and how they interact. Much better testing.
+
+- **chifra list:**
+  - Adds `--first_block/--last_block` and `--first_record/--max_record` to `chifra list`.
+
+- **chifra scrape:**
+  - Fixes a significant bug related to scraping at the head of the chain that was introduced in v0.41.0.
+  - Re-enables `--file` option to fix broken docker build.
+
+- **chifra serve:**
+  - Disallows `--chain` option on command line. Not needed, as the API obeys the configuration file `defaultChain` setting, and the API serves any chain with the `--chain` option.
+
+- **chifra traces:**
+  - Changes `-c` shortcut to `-U` to be more consistent with other tools.
+
+- **chifra when:**
+  - Changes `-u` shortcut to `-U` to be more consistent with other tools.
+  - Changes previously hidden `--repair` option to a switch and picks up block identifiers from the command line.
+
 ## v0.43.0
 
 ### System-Wide Changes
