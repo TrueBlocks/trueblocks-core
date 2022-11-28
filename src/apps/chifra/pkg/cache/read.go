@@ -12,7 +12,9 @@ import (
 )
 
 func validateHeader(header *cacheHeader) error {
-	// TODO: I think this hard coded version value needs to pick up a version generated automatically from code.
+	// TODO(cache): I don't think we want to hard code this version value here. We want to read it programmatically
+	// TODO(cache): from auto-generated code. There is a string called version.LibraryVersion that we can use
+	// TODO(cache): to calculate this value. We can add a function to the version package.
 	if header.schema != 41000 {
 		return errors.New("invalid schema")
 	}
@@ -58,7 +60,10 @@ func readFromArray[Item ArrayItem](
 	// make target large enough
 	*target = make([]Item, 0, itemCount)
 
-	// TODO: If we know the width of each record, couldn't we read the entire array from disc directly into memory?
+	// TODO(cache): Just noting. If we knew the records in the array were fixed with (I think we
+	// TODO(cache): may be able to know that), we can read and write the entire chunk of memory
+	// TODO(cache): in one write (or read). It will almost certainly be faster. I don't think we do
+	// TODO(cache): this in C++ code, but I always wanted to.
 	// read items
 	for i := 0; uint64(i) < itemCount; i++ {
 		item, readErr := readValue(reader)
@@ -221,16 +226,15 @@ func readCacheHeader(reader *bufio.Reader, target *cacheHeader) (err error) {
 	return
 }
 
-// TODO: Move to it's own type specific file (see https://github.com/TrueBlocks/trueblocks-core/pull/2584#discussion_r1031564867)
-// TODO: Also, eventually much of this code will be auto-generated. When that happens use `if err := Function(); err != nil { return }`
-// TODO: pattern for these tests
+// TODO(cache): Move to it's own type specific file
+// TODO(cache): (see https://github.com/TrueBlocks/trueblocks-core/pull/2584#discussion_r1031564867)
+// TODO(cache): Eventually much of this code will be auto-generated.
 // (applies to the rest of "Read[DataType]" functions below as well)
 func ReadBlock(reader *bufio.Reader) (block *types.SimpleBlock, err error) {
 	block = &types.SimpleBlock{}
 	read := createReadFn(reader)
 
 	header := &cacheHeader{}
-	// TODO: Move this to new style test for error
 	err = readCacheHeader(reader, header)
 	if err != nil {
 		return

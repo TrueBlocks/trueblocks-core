@@ -95,8 +95,8 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 					continue
 				}
 
-				// TODO: This can be hidden behind the GetTransactionReceipt interface. No reason
-				// TODO: for this calling code to know the data is in the cache
+				// TODO(cache): Can this be hidden behind the GetTransactionReceipt interface. No reason
+				// TODO(cache): for this calling code to know the data is in the cache.
 				// Try to load receipt from cache
 				transaction, _ := cache.GetTransaction(
 					opts.Globals.Chain,

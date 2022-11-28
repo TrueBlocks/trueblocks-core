@@ -18,6 +18,7 @@ type cacheable interface {
 }
 
 // getCacheAndChainPath returns path to cache for given chain
+// TODO(cache): I changed the word 'chainName' to 'chain' to be consistent with existing other code
 func getCacheAndChainPath(chain string) string {
 	cacheDir := config.GetRootConfig().Settings.CachePath
 	return path.Join(cacheDir, chain)
