@@ -11,11 +11,13 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
+// TODO(cache): I don't think we want to hard code this version value here. We want to read it programmatically
+// TODO(cache): from auto-generated code. There is a string called version.LibraryVersion that we can use
+// TODO(cache): to calculate this value. We can add a function to the version package.
+var minimumCacheVersion = uint64(41000)
+
 func validateHeader(header *cacheHeader) error {
-	// TODO(cache): I don't think we want to hard code this version value here. We want to read it programmatically
-	// TODO(cache): from auto-generated code. There is a string called version.LibraryVersion that we can use
-	// TODO(cache): to calculate this value. We can add a function to the version package.
-	if header.schema != 41000 {
+	if header.schema < minimumCacheVersion {
 		return errors.New("invalid schema")
 	}
 	return nil
