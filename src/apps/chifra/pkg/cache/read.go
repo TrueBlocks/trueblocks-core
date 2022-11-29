@@ -11,9 +11,11 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
+var minimumCacheVersion = uint64(41000)
+
 func validateHeader(header *cacheHeader) error {
 	// TODO: I think this hard coded version value needs to pick up a version generated automatically from code.
-	if header.schema != 41000 {
+	if header.schema < minimumCacheVersion {
 		return errors.New("invalid schema")
 	}
 	return nil
