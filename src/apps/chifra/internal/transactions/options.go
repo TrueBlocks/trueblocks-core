@@ -31,6 +31,7 @@ type TransactionsOptions struct {
 	Reconcile      string                   `json:"reconcile,omitempty"`      // Please use statements option instead
 	AccountFor     string                   `json:"accountFor,omitempty"`     // Reconcile the transaction as per the provided address
 	Cache          bool                     `json:"cache,omitempty"`          // Force the results of the query into the tx cache (and the trace cache if applicable)
+	Source         bool                     `json:"source,omitempty"`         // Find the source of the funds sent to the receiver
 	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
 	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
 }
@@ -46,6 +47,7 @@ func (opts *TransactionsOptions) testLog() {
 	logger.TestLog(len(opts.Flow) > 0, "Flow: ", opts.Flow)
 	logger.TestLog(len(opts.AccountFor) > 0, "AccountFor: ", opts.AccountFor)
 	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
+	logger.TestLog(opts.Source, "Source: ", opts.Source)
 	opts.Globals.TestLog()
 }
 
@@ -84,6 +86,9 @@ func (opts *TransactionsOptions) toCmdLine() string {
 	if opts.Cache {
 		options += " --cache"
 	}
+	if opts.Source {
+		options += " --source"
+	}
 	options += " " + strings.Join(opts.Transactions, " ")
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -116,6 +121,8 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 			opts.AccountFor = value[0]
 		case "cache":
 			opts.Cache = true
+		case "source":
+			opts.Source = true
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "transactions")

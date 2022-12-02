@@ -1093,5 +1093,25 @@ bool CTransaction::forEveryTrace(TRACEVISITFUNC func, void* data) const {
 
     return true;
 }
+
+//-------------------------------------------------------------------------
+CTransfer CTransaction::toTransfer(void) const {
+    CTransfer transfer;
+    transfer.sender = from;
+    transfer.recipient = to;
+    transfer.blockNumber = blockNumber;
+    transfer.transactionIndex = transactionIndex;
+    transfer.logIndex = 0;
+    transfer.timestamp = str_2_Ts(Format("[{TIMESTAMP}]"));
+    transfer.date = ts_2_Date(transfer.timestamp);
+    transfer.transactionHash = hash;
+    transfer.encoding = input.substr(0, 10);
+    transfer.assetAddr = FAKE_ETH_ADDRESS;
+    transfer.log = nullptr;
+    transfer.assetSymbol = expContext().asEther ? "ETH" : "WEI";
+    transfer.decimals = 18;
+    transfer.amount = value;
+    return transfer;
+}
 // EXISTING_CODE
 }  // namespace qblocks
