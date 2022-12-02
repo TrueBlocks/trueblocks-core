@@ -5,6 +5,7 @@
 package file
 
 import (
+	"errors"
 	"io"
 	"os"
 	"syscall"
@@ -63,6 +64,9 @@ func WaitOnLock(filePath string, openFlags int) (file *os.File, err error) {
 
 	for i := 0; i < maxSecondsLock; i++ {
 		err = Lock(file)
+		if err == nil {
+			return
+		}
 		if err == syscall.EAGAIN || err == syscall.EACCES {
 			// Another process has already locked the file, we wait
 			continue
@@ -73,5 +77,5 @@ func WaitOnLock(filePath string, openFlags int) (file *os.File, err error) {
 		}
 		time.Sleep(1 * time.Second)
 	}
-	return
+	return file, errors.New("lock timeout")
 }

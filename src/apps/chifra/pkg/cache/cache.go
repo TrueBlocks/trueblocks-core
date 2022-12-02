@@ -31,9 +31,9 @@ func save(chain string, filePath string, content io.Reader) (err error) {
 	fullPath := path.Join(cacheDir, filePath)
 
 	var file *os.File
-	if _, err = os.Stat(fullPath); os.IsNotExist(err) {
+	if filePkg.FileExists(fullPath) {
 		// If file doesn't exist, we don't need a lock
-		file, err = os.Create(fullPath)
+		file, err = os.OpenFile(fullPath, os.O_RDWR|os.O_CREATE, 0666)
 		if err != nil {
 			return
 		}
