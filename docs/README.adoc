@@ -19,7 +19,7 @@ If you want to use our browser front-end, see link:https://github.com/TrueBlocks
 +
 [shell]
 ----
-sudo apt install build-essential git cmake python libcurl3-dev clang-format jq
+sudo apt install build-essential git cmake python3 libcurl3-dev clang-format jq
 ----
 +
 **For Mac**:

@@ -28,7 +28,7 @@ project(trueBlocks)
 set_property(GLOBAL PROPERTY ALLOW_DUPLICATE_CUSTOM_TARGETS 1)
 
 # ----------------------------------------------------------------------------------------
-# Mandatory python interpret, the directive PythonInterp sets the following variables
+# Mandatory python3 interpret, the directive PythonInterp sets the following variables
 message(STATUS "======== LOOKING FOR PYTHON ========================")
 
 find_package(Python COMPONENTS Interpreter Development)
