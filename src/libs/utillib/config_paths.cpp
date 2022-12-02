@@ -100,6 +100,11 @@ string_q getChain(void) {
 }
 
 //---------------------------------------------------------------------------------------------------
+string_q getChainSymbol(void) {
+    return getGlobalConfig("")->getConfigStr("chains." + getChain(), "symbol", "ETH");
+}
+
+//---------------------------------------------------------------------------------------------------
 string_q getRpcProvider(void) {
     string_q ret = getConfigEnv()->rpcProvider;
     ASSERT(!ret.empty());

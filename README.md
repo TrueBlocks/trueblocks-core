@@ -11,9 +11,6 @@ Please complete any applicable [Migrations](https://github.com/TrueBlocks/truebl
 [![Twitter Follow](https://img.shields.io/twitter/follow/trueblocks?style=social)](https://twitter.com/trueblocks)
 
 ## Table of Contents
-- [Recent Migrations](#recent-migrations)
-- [TrueBlocks Core](#trueblocks-core)
-  - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
   - [Quick install](#quick-install)
     - [Optional steps](#optional-steps)
