@@ -11,12 +11,20 @@ Please complete any applicable [Migrations](https://github.com/TrueBlocks/truebl
 [![Twitter Follow](https://img.shields.io/twitter/follow/trueblocks?style=social)](https://twitter.com/trueblocks)
 
 ## Table of Contents
+- [Recent Migrations](#recent-migrations)
+- [TrueBlocks Core](#trueblocks-core)
+  - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
-  - [Quick Install](#quick-install)
-  - [Introducing Chifra](#introducing-chifra)
+  - [Quick install](#quick-install)
+    - [Optional steps](#optional-steps)
+  - [Introducing chifra](#introducing-chifra)
+    - [Getting status](#getting-status)
+    - [-- Troubleshooting](#---troubleshooting)
   - [Using Chifra](#using-chifra)
-  - [Building the Index](#building-the-index)
+  - [Building the index](#building-the-index)
   - [Docker](#docker)
+  - [Documentation](#documentation)
+  - [Stargazers over time](#stargazers-over-time)
   - [Contributing](#contributing)
   - [List of Contributors](#list-of-contributors)
   - [Contact](#contact)
@@ -42,7 +50,7 @@ If you need help with a step, see the [installation's troubleshooting section](h
 
 0. Install dependencies
     - &#9745; [Install the latest version of Go](https://golang.org/doc/install).
-    - &#9745; Install the other dependencies with your command line: `build-essential` `git` `cmake` `ninja` `python` `python-dev` `libcurl3-dev` `clang-format` `jq`.
+    - &#9745; Install the other dependencies with your command line: `build-essential` `git` `cmake` `ninja` `python` `libcurl3-dev` `clang-format` `jq`.
 
 Alternatively, for nix users, you can drop into an isolated environment with necessary dependencies with `nix-shell`.
 
