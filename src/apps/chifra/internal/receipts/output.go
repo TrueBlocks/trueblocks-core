@@ -98,6 +98,7 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 				// TODO(cache): Can this be hidden behind the GetTransactionReceipt interface. No reason
 				// TODO(cache): for this calling code to know the data is in the cache.
 				// Try to load receipt from cache
+				// TODO(cache): We should not be sending chain here. We have enough information to fully resolve the path at this level. Send only path.
 				transaction, _ := cache.GetTransaction(
 					opts.Globals.Chain,
 					uint64(tx.BlockNumber),

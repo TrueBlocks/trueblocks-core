@@ -17,6 +17,8 @@
 
 namespace qblocks {
 
+// Originally copied from https://github.com/prysmaticlabs/prysm/blob/develop/validator/accounts/petnames/names.go but
+// modifed.
 static vector<string> adjectives = {
     "able",       "above",    "absolute", "accepted", "accurate", "ace",      "active",   "actual",   "adapted",
     "adapting",   "adequate", "adjusted", "advanced", "alert",    "alive",    "allowed",  "allowing", "amazed",
@@ -183,7 +185,7 @@ static uint64_t convert(const string& str) {
 }
 
 // addr_2_Petname returns a deterministic triple of adverb-adjective-name given an address.
-string addr_2_Petname(const string& address, char sep) {
+string_q addr_2_Petname(const string& address, char sep) {
     if (address.length() < 42 || address.substr(0, 2) != "0x") {
         return address;
     }

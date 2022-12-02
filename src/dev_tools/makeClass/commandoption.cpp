@@ -726,7 +726,7 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
 }
 
 //---------------------------------------------------------------------------------------------------
-void CCommandOption::verifyHotkey(CStringArray& warnings, map<string, string>& existing) {
+void CCommandOption::verifyHotkey(CStringArray& warnings, map<string, string>& hotKeys) {
     if (hotKey.empty() || contains(option_type, "positional") || contains(option_type, "description") ||
         contains(option_type, "note") || contains(option_type, "error")) {
         return;
@@ -742,13 +742,13 @@ void CCommandOption::verifyHotkey(CStringArray& warnings, map<string, string>& e
 
     const string_q HOTKEY_WARNING =
         "Hotkey (-[{HOTKEY}]) for tool '[{TOOL}]' at command '[{LONGNAME}]:[{HOTKEY}]' +MSG+|";
-    string_q key = tool + ":" + hotKey;
-    if (!existing[key].empty()) {
+    string_q key = api_route + ":" + tool + ":" + hotKey;
+    if (!hotKeys[key].empty()) {
         string_q warn = Format(HOTKEY_WARNING);
-        replace(warn, "+MSG+", "conflicts with existing '" + existing[key] + "'");
+        replace(warn, "+MSG+", "conflicts with existing '" + hotKeys[key] + "'");
         warnstream << warn;
     }
-    existing[key] = longName + ":" + hotKey;  // store for later to find dups
+    hotKeys[key] = longName + ":" + hotKey;  // store for later to find dups
 
     bool isUpper = (toLower(hotKey) != hotKey);
     bool isFirst = hotKey == longName.substr(0, 1);

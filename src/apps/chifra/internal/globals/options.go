@@ -193,7 +193,7 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 		opts.Chain = config.GetDefaultChain()
 	}
 	if err := tslib.EstablishTsFile(opts.Chain); err != nil {
-		fmt.Println("Could not establish ts file:", err)
+		logger.Log(logger.Error, "Could not establish ts file:", err)
 	}
 
 	return opts
@@ -204,7 +204,7 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 
 func (opts *GlobalOptions) FinishParse(args []string) {
 	if err := tslib.EstablishTsFile(opts.Chain); err != nil {
-		fmt.Println("Could not establish ts file:", err)
+		logger.Log(logger.Error, "Could not establish ts file:", err)
 	}
 }
 

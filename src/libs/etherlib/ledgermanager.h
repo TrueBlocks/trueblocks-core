@@ -61,11 +61,12 @@ class CLedgerManager {
         assetFilter[asset] = true;
     }
 
+    CTransferArray transfers;
+
   private:
     CAddressBoolMap assetFilter;
     CLedgerManager(){};
     CLedgerEntryMap ledgers;
-    CTransferArray transfers;
 };
 
 }  // namespace qblocks

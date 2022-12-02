@@ -55,8 +55,9 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12015,apps,Accounts,list,acctExport,count,U,,false,false,true,true,gocmd,switch,<boolean>,display only the count of records for each monitor
 11210,apps,Accounts,list,acctExport,appearances,p,,false,false,false,true,gocmd,switch,<boolean>,export each monitor's list of appearances (the default)
 11210,apps,Accounts,list,acctExport,silent,,,false,false,false,true,gocmd,switch,<boolean>,freshen the monitor only (no reporting)
-11430,apps,Accounts,list,acctExport,first_record,c,1,false,false,true,true,header,flag,<uint64>,the first record to process
-11435,apps,Accounts,list,acctExport,max_records,e,250,false,false,true,true,header,flag,<uint64>,the maximum number of records to process
+11215,apps,Accounts,list,acctExport,no_zero,n,,false,false,true,true,gocmd,switch,<boolean>,suppress the display of zero appearance accounts
+11430,apps,Accounts,list,acctExport,first_record,c,1,false,false,true,true,gocmd,flag,<uint64>,the first record to process
+11435,apps,Accounts,list,acctExport,max_records,e,250,false,false,true,true,gocmd,flag,<uint64>,the maximum number of records to process
 11440,apps,Accounts,list,acctExport,first_block,F,0,false,false,true,true,gocmd,flag,<blknum>,first block to export (inclusive&#44; ignored when freshening)
 11450,apps,Accounts,list,acctExport,last_block,L,NOPOS,false,false,true,true,gocmd,flag,<blknum>,last block to export (inclusive&#44; ignored when freshening)
 12025,apps,Accounts,list,acctExport,,,,false,false,true,true,--,description,,List every appearance of an address anywhere on the chain.
@@ -133,6 +134,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13615,tools,ChainData,transactions,getTrans,reconcile,r,,false,false,true,true,header,deprecated,<address>,please use statements option instead
 13617,tools,ChainData,transactions,getTrans,account_for,A,,false,false,true,true,local,flag,<address>,reconcile the transaction as per the provided address
 13620,tools,ChainData,transactions,getTrans,cache,o,,false,false,true,true,header,switch,<boolean>,force the results of the query into the tx cache (and the trace cache if applicable)
+13620,tools,ChainData,transactions,getTrans,source,s,,false,false,false,false,header,switch,<boolean>,find the source of the funds sent to the receiver
 13622,tools,ChainData,transactions,getTrans,,,,false,false,true,true,--,description,,Retrieve one or more transactions from the chain or local cache.
 13624,tools,ChainData,transactions,getTrans,n1,,,false,false,false,false,--,note,,The `transactions` list may be one or more transaction hashes&#44; blockNumber.transactionID pairs&#44; or a blockHash.transactionID pairs.
 13626,tools,ChainData,transactions,getTrans,n2,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
