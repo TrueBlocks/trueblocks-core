@@ -45,7 +45,7 @@ func EstablishIndexChunk(chain string, fileRange paths.FileRange) (bool, error) 
 		return exists, fmt.Errorf("filename not found in chunks: %s", fileRange)
 	}
 
-	logger.Log(logger.Info, "Downloading", colors.Blue, fileRange, colors.Off, "from IPFS.")
+	logger.Log(logger.Info, "Bloom filter hit, downloading index portion", (colors.Blue + fileRange.String() + colors.Off), "from IPFS.")
 
 	// Start downloading the filter
 	matchedPin.BloomHash = "" // we want to download only the index chunk
