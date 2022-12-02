@@ -16,6 +16,10 @@ func (opts *TransactionsOptions) validateTransactions() error {
 		return opts.BadFlag
 	}
 
+	if opts.Source {
+		return validate.Usage("The --source flag is currently disabled.")
+	}
+
 	if len(opts.Flow) > 0 {
 		if !opts.Uniq {
 			return validate.Usage("The {0} option is only available with the {1} option", "--flow", "--uniq")
