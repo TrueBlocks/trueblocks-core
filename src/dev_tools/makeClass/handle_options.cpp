@@ -54,14 +54,14 @@ bool COptions::handle_options(void) {
         notesStream << "    // clang-format off" << endl;
         configStream << "    // clang-format off" << endl;
         CStringArray warnings;
-        map<string, string> existing;
+        map<string, string> hotKeys;
         size_t errCnt = 1;
         bool allAuto = true;
 
         for (auto option : cmdOptionArray) {
             option.verifyOptions(warnings);
             if ((option.group + "/" + option.tool) == tool.first) {
-                option.verifyHotkey(warnings, existing);
+                option.verifyHotkey(warnings, hotKeys);
                 if (option.tool == "chifra")
                     allAuto = false;
 
