@@ -39,7 +39,10 @@ bool CTransaction::readReconsFromCache(const address_t& accountedFor) {
         archive >> statements;
         archive.Release();
         for (auto& statement : statements) {
-            if (statement.m_schema < getVersionNum(0, 43, 0)) {
+            // Prior to 0.45.0, we sometimes cached unreconciled statements, clean them
+            bool isReconciled = statement.reconciled();
+            bool isBackLevel = statement.m_schema < getVersionNum(0, 43, 0);
+            if (isBackLevel || !isReconciled) {
                 // This is an old version of the reconciliation, delete it and return false
                 LOG_WARN("Back-level cache for statements found. Removing....");
                 statements.clear();
@@ -83,19 +86,19 @@ void CTransaction::cacheIfReconciled(const address_t& accountedFor) const {
 
 //-----------------------------------------------------------------------
 bool CTransaction::isReconciled(const address_t& accountedFor) const {
-    bool ret = true;
+    bool balanced = true;
     for (auto statement : statements) {
-        if (!statement.trialBalance()) {
+        if (!statement.reconciled()) {
             ostringstream os;
             os << bMagenta << "unreconciled " << (isEtherAddr(statement.assetAddr) ? "eth-transfer" : "tok-transfer")
                << ": " << cOff << "chifra export " << accountedFor
                << " --accounting --statements --ether --fmt json --chain " << getChain() << " --first_block "
                << (blockNumber - 1) << " --last_block " << (blockNumber + 1);
             LOG_WARN(os.str());
-            ret = false;
+            balanced = false;
         }
     }
-    return ret;
+    return balanced;
 }
 
 }  // namespace qblocks
