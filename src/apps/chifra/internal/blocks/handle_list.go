@@ -20,6 +20,7 @@ func (opts *BlocksOptions) HandleList() error {
 
 	// ctx, cancel := context.WithCancel(context.Background())
 
+	// Note: Make sure to add an entry to enabledForCmd in src/apps/chifra/pkg/output/helpers.go
 	// fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
 	// 	for bn := meta.Latest - opts.List; bn > end; bn-- {
 	// 		var block types.SimpleBlock

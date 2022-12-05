@@ -17,6 +17,8 @@ import (
 func (opts *WhenOptions) HandleShowBlocks() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
+
+	// Note: Make sure to add an entry to enabledForCmd in src/apps/chifra/pkg/output/helpers.go
 	fetchData := func(modelChan chan types.Modeler[types.RawNamedBlock], errorChan chan error) {
 		for _, br := range opts.BlockIds {
 			blockNums, err := br.ResolveBlocks(opts.Globals.Chain)

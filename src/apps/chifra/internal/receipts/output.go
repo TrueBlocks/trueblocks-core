@@ -70,6 +70,7 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 
+	// Note: Make sure to add an entry to enabledForCmd in src/apps/chifra/pkg/output/helpers.go
 	fetchTransactionData := func(modelChan chan types.Modeler[types.RawReceipt], errorChan chan error) {
 		// TODO: stream transaction identifiers
 		for idIndex, rng := range opts.TransactionIds {
