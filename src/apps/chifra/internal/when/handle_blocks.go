@@ -26,7 +26,7 @@ func (opts *WhenOptions) HandleShowBlocks() error {
 				return
 			}
 			for _, bn := range blockNums {
-				block, err := rpcClient.GetBlockByNumber(opts.Globals.Chain, bn)
+				block, err := rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, false)
 				// TODO: rpcClient should return a custom type of error in this case
 				if err != nil && strings.Contains(err.Error(), "not found") {
 					errorChan <- err

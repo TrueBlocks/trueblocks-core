@@ -430,11 +430,11 @@ func DecodeHex(hex string) []byte {
 	return hexutil.MustDecode(hex)
 }
 
-func GetBlockByNumber(chain string, bn uint64) (types.SimpleNamedBlock, error) {
+func GetBlockByNumber(chain string, bn uint64, withTxs bool) (types.SimpleNamedBlock, error) {
 	var block BlockHeader
 	var payload = RPCPayload{
 		Method:    "eth_getBlockByNumber",
-		RPCParams: RPCParams{fmt.Sprintf("0x%x", bn), false},
+		RPCParams: RPCParams{fmt.Sprintf("0x%x", bn), withTxs},
 	}
 	rpcProvider := config.GetRpcProvider(chain)
 	err := FromRpc(rpcProvider, &payload, &block)
