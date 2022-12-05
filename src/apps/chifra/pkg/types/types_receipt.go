@@ -68,13 +68,14 @@ func (r *SimpleReceipt) Model(showHidden bool, format string) Model {
 		model["isError"] = r.IsError
 		order = append(order, "isError")
 	}
+	if r.ContractAddress != common.HexToAddress("0x0") {
+		model["contractAddress"] = r.ContractAddress
+		order = append(order, "contractAddress")
+	}
 
 	if showHidden && format == "json" {
 		// TODO: The tests in this section of code are basically implementing `omitempty`
 		model["blockHash"] = r.BlockHash
-		if r.ContractAddress != common.HexToAddress("0x0") {
-			model["contractAddress"] = r.ContractAddress
-		}
 		model["cumulativeGasUsed"] = r.CumulativeGasUsed
 		if r.From != common.HexToAddress("0x0") {
 			model["from"] = r.From
@@ -89,7 +90,6 @@ func (r *SimpleReceipt) Model(showHidden bool, format string) Model {
 
 		order = append(order, []string{
 			"blockHash",
-			"contractAddress",
 			"cumulativeGasUsed",
 			"from",
 			"effectiveGasPrice",
