@@ -57,3 +57,7 @@ func (s *SimpleBlock) Model(showHidden bool, format string) Model {
 		Order: order,
 	}
 }
+
+func (s *SimpleBlock) GetTimestamp() uint64 {
+	return uint64(s.Timestamp.Unix())
+}
