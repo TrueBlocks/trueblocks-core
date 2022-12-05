@@ -333,7 +333,7 @@ func TxCountByBlockNumber(provider string, blkNum uint64) (uint64, error) {
 	}
 
 	cnt, err := ec.TransactionCount(context.Background(), block.Hash())
-	return uint64(cnt), nil
+	return uint64(cnt), err
 }
 
 // BlockHashFromHash returns a block's hash if it's a valid block
