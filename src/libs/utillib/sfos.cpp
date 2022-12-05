@@ -171,29 +171,14 @@ string_q makeValidName(const string_q& inOut) {
 }
 
 //------------------------------------------------------------------------------------------
-string_q doCommand(const string_q& cmd) {
+string_q doCommand(const string_q& cmd, bool readStderr) {
     time_q now = Now();
     string_q tmpPath = "/tmp/";
     string_q filename = tmpPath + makeValidName("qb_" + now.Format("%Y%m%d%H%M%S"));
     string_q theCommand = (cmd + " >" + filename);
-    // clang-format off
-    if (system(theCommand.c_str())) {}  // Don't remove cruft. Silences compiler warnings
-    // clang-format on
-
-    // Check twice for existance since the previous command creates the file but may take some time
-    waitForCreate(filename);
-    string_q ret;
-    asciiFileToString(filename, ret);
-    ::remove(filename.c_str());
-    return trim(ret, '\n');
-}
-
-//------------------------------------------------------------------------------------------
-string_q doCommand2(const string_q& cmd) {
-    time_q now = Now();
-    string_q tmpPath = "/tmp/";
-    string_q filename = tmpPath + makeValidName("qb_" + now.Format("%Y%m%d%H%M%S"));
-    string_q theCommand = (cmd + " >/dev/null 2>" + filename);
+    if (readStderr) {
+        theCommand = (cmd + " >/dev/null 2>" + filename);
+    }
     // clang-format off
     if (system(theCommand.c_str())) {}  // Don't remove cruft. Silences compiler warnings
     // clang-format on
@@ -319,32 +304,6 @@ bool establishFolder(const string_q& path, string_q& created) {
 #ifdef MACOS
 // #error
 #endif
-
-//----------------------------------------------------------------------------
-string_q listProcesses(const string_q& progName) {
-    string_q cmd = "pgrep -lfa \"" + progName + "\"";
-    string_q result = doCommand(cmd);
-    CStringArray lines;
-    explode(lines, result, '\n');
-    result = "";
-    for (auto line : lines) {
-        if (!contains(line, "sh -c")) {
-            // each line is of form: 'pid program options'. Skip over pid
-            nextTokenClear(line, ' ');
-            if (startsWith(line, progName)) {
-                result += line + "\n";
-            }
-        }
-    }
-    if (isTestMode())
-        LOG4("\n", cmd, "\n", result, " ", !result.empty());
-    return result;
-}
-
-//----------------------------------------------------------------------------
-bool isRunning(const string_q& progName) {
-    return contains(listProcesses(progName), progName);
-}
 
 #ifndef HOST_NAME_MAX
 #define HOST_NAME_MAX 256

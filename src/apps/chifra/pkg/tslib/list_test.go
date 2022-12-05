@@ -77,7 +77,7 @@ func TestGetSpecials(t *testing.T) {
 
 	// TODO: Turn off go testing that requires connection to a node
 	// for _, item := range specials {
-	// 	if item.TimeStamp == 0 {
+	// 	if item.Timestamp == 0 {
 	// 		t.Error("Special block ", item.Name, " with zero timestamp")
 	// 	}
 	// 	if item.Date == "" {

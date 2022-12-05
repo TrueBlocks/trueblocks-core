@@ -13,7 +13,10 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------
-bool COptions::handle_block_summaries(blknum_t start, blknum_t nBlocks) {
+bool COptions::handle_block_summaries(void) {
+    blknum_t client = isTestMode() ? 2000100 : getLatestBlock_client();
+    blknum_t start = client - listOffset;
+    blknum_t nBlocks = list_count;
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
     blknum_t end = (start < nBlocks ? 0 : start - nBlocks);
     for (blknum_t b = start; b > end; b--) {
