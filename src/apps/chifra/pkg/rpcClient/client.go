@@ -465,6 +465,7 @@ func GetBlockByNumber(chain string, bn uint64, withTxs bool) (types.SimpleBlock,
 		GasUsed:     gu,
 		Miner:       common.HexToAddress(block.Result.Miner),
 		Difficulty:  d,
+		// Transactions: block.Result.Transactons,
 	}, nil
 }
 

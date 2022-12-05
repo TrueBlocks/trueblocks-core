@@ -135,8 +135,6 @@ type Logs struct {
 	ID int `json:"id"`
 }
 
-// Receipt carries values returned by the eth_getReceipt RPC call
-
 // Transaction carries values returned by the eth_getTransacction RPC calls
 type Transaction struct {
 	Jsonrpc string `json:"jsonrpc"`

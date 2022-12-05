@@ -24,7 +24,7 @@ func (opts *BlocksOptions) HandleList() error {
 	// fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
 	// 	for bn := meta.Latest - opts.List; bn > end; bn-- {
 	// 		var block types.SimpleBlock
-	// 		if block, err = rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, false); err != nil {
+	// 		if block, err = rpcClient.GetBlockHeaderByNumber(opts.Globals.Chain, bn); err != nil {
 	// 			errorChan <- err
 	// 			cancel()
 	// 			return
