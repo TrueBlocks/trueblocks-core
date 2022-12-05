@@ -37,3 +37,7 @@ func (s *SimpleNamedBlock) Model(showHidden bool, format string) Model {
 		Order: order,
 	}
 }
+
+func (s *SimpleNamedBlock) GetTimestamp() uint64 {
+	return s.Timestamp
+}
