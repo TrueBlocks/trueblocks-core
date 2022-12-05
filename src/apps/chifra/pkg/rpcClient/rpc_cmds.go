@@ -136,25 +136,6 @@ type Logs struct {
 }
 
 // Receipt carries values returned by the eth_getReceipt RPC call
-type Receipt struct {
-	Jsonrpc string `json:"jsonrpc"`
-	Result  struct {
-		BlockHash         string        `json:"blockHash"`
-		BlockNumber       string        `json:"blockNumber"`
-		ContractAddress   string        `json:"contractAddress"`
-		CumulativeGasUsed string        `json:"cumulativeGasUsed"`
-		From              string        `json:"from"`
-		GasUsed           string        `json:"gasUsed"`
-		Logs              []interface{} `json:"logs"`
-		LogsBloom         string        `json:"logsBloom"`
-		Root              string        `json:"root"`
-		Status            interface{}   `json:"status"`
-		To                interface{}   `json:"to"`
-		TransactionHash   string        `json:"transactionHash"`
-		TransactionIndex  string        `json:"transactionIndex"`
-	} `json:"result"`
-	ID int `json:"id"`
-}
 
 // Transaction carries values returned by the eth_getTransacction RPC calls
 type Transaction struct {
