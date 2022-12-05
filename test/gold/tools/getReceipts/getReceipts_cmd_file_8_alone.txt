@@ -9,7 +9,6 @@ TEST[DATE|TIME] Format:  json
       "blockHash": "0x37e9e5ad5ff7aaf10d4ba0ab9eaa5ebe76e6d5bf29602ca67aec6675e2b51135",
       "blockNumber": 5644782,
       "cumulativeGasUsed": "21000",
-      "effectiveGasPrice": 0,
       "gasUsed": 21000,
       "hash": "0x785b88bfb800c34f0972bd2a1b02fb4bd03abc72dce675d00c2e4ae99f7aff96",
       "status": 1,
@@ -19,7 +18,6 @@ TEST[DATE|TIME] Format:  json
       "blockHash": "0xccff406c95943cebea30307dd06824423f91240bd6aab7029d8003655ae7f23e",
       "blockNumber": 5644882,
       "cumulativeGasUsed": "52053",
-      "effectiveGasPrice": 0,
       "gasUsed": 52053,
       "hash": "0xb440bb9522672cdee57b447f406a22feec453764be784c6bd1b1f3188fa677be",
       "logs": [
