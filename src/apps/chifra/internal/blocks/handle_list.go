@@ -4,56 +4,49 @@
 
 package blocksPkg
 
-import (
-	"context"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-)
-
 func (opts *BlocksOptions) HandleList() error {
-	meta, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
-	if err != nil {
-		return err
-	}
-	if opts.Globals.TestMode {
-		meta.Latest = 2000100
-	}
-	start := meta.Latest - opts.List
-	end := start - opts.ListCount
-	if start < opts.ListCount {
-		end = 0
-	}
+	// meta, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+	// if err != nil {
+	// 	return err
+	// }
+	// if opts.Globals.TestMode {
+	// 	meta.Latest = 2000100
+	// }
+	// start := meta.Latest - opts.List
+	// end := start - opts.ListCount
+	// if start < opts.ListCount {
+	// 	end = 0
+	// }
 
-	ctx, cancel := context.WithCancel(context.Background())
+	// ctx, cancel := context.WithCancel(context.Background())
 
-	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
-		for bn := meta.Latest - opts.List; bn > end; bn-- {
-			var block types.SimpleBlock
-			if block, err = rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, false); err != nil {
-				errorChan <- err
-				cancel()
-				return
-			} else {
-				modelChan <- &block
-			}
-		}
-	}
+	// fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
+	// 	for bn := meta.Latest - opts.List; bn > end; bn-- {
+	// 		var block types.SimpleBlock
+	// 		if block, err = rpcClient.GetBlockByNumber(opts.Globals.Chain, bn); err != nil {
+	// 			errorChan <- err
+	// 			cancel()
+	// 			return
+	// 		} else {
+	// 			modelChan <- &block
+	// 		}
+	// 	}
+	// }
 
-	return output.StreamMany(ctx, fetchData, output.OutputOptions{
-		Writer:     opts.Globals.Writer,
-		Chain:      opts.Globals.Chain,
-		TestMode:   opts.Globals.TestMode,
-		NoHeader:   opts.Globals.NoHeader,
-		ShowRaw:    opts.Globals.ShowRaw,
-		Verbose:    opts.Globals.Verbose,
-		LogLevel:   opts.Globals.LogLevel,
-		Format:     opts.Globals.Format,
-		OutputFn:   opts.Globals.OutputFn,
-		Append:     opts.Globals.Append,
-		JsonIndent: "  ",
-	})
+	// return output.StreamMany(ctx, fetchData, output.OutputOptions{
+	// 	Writer:     opts.Globals.Writer,
+	// 	Chain:      opts.Globals.Chain,
+	// 	TestMode:   opts.Globals.TestMode,
+	// 	NoHeader:   opts.Globals.NoHeader,
+	// 	ShowRaw:    opts.Globals.ShowRaw,
+	// 	Verbose:    opts.Globals.Verbose,
+	// 	LogLevel:   opts.Globals.LogLevel,
+	// 	Format:     opts.Globals.Format,
+	// 	OutputFn:   opts.Globals.OutputFn,
+	// 	Append:     opts.Globals.Append,
+	// 	JsonIndent: "  ",
+	// })
+	return nil
 }
 
 /*
