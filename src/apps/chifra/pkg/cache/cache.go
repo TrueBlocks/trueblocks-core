@@ -8,6 +8,7 @@ import (
 	"path"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	filePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -28,9 +29,24 @@ func getCacheAndChainPath(chain string) string {
 func save(chain string, filePath string, content io.Reader) (err error) {
 	cacheDir := getCacheAndChainPath(chain)
 	fullPath := path.Join(cacheDir, filePath)
-	file, err := os.Create(fullPath)
-	if err != nil {
-		return
+
+	var file *os.File
+	if filePkg.FileExists(fullPath) {
+		// If file doesn't exist, we don't need a lock
+		file, err = os.OpenFile(fullPath, os.O_RDWR|os.O_CREATE, 0666)
+		if err != nil {
+			return
+		}
+		defer file.Close()
+	} else {
+		file, err = filePkg.WaitOnLock(fullPath, filePkg.DefaultOpenFlags)
+		if err != nil {
+			return
+		}
+		defer file.Close()
+		if err = filePkg.Empty(file); err != nil {
+			return
+		}
 	}
 
 	_, err = io.Copy(file, content)
@@ -38,7 +54,7 @@ func save(chain string, filePath string, content io.Reader) (err error) {
 }
 
 // load opens binary cache file for reading
-func load(chain string, filePath string) (file io.Reader, err error) {
+func load(chain string, filePath string) (file io.ReadCloser, err error) {
 	cacheDir := getCacheAndChainPath(chain)
 	fullPath := path.Join(cacheDir, filePath)
 	file, err = os.Open(fullPath)
@@ -75,12 +91,13 @@ func getItem[Data cacheable](
 	filePath string,
 	read func(w *bufio.Reader) (*Data, error),
 ) (value *Data, err error) {
-	reader, err := load(chain, filePath)
+	file, err := load(chain, filePath)
 	if err != nil {
 		return
 	}
+	defer file.Close()
 
-	bufReader := bufio.NewReader(reader)
+	bufReader := bufio.NewReader(file)
 	value, err = read(bufReader)
 	if err != nil && !os.IsNotExist(err) {
 		// Ignore the error, we will re-try next time
