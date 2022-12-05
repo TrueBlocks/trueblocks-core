@@ -72,6 +72,10 @@ func (r *SimpleReceipt) Model(showHidden bool, format string) Model {
 		model["contractAddress"] = r.ContractAddress
 		order = append(order, "contractAddress")
 	}
+	if r.EffectiveGasPrice > 0 {
+		model["effectiveGasPrice"] = r.EffectiveGasPrice
+		order = append(order, "effectiveGasPrice")
+	}
 
 	if showHidden && format == "json" {
 		// TODO: The tests in this section of code are basically implementing `omitempty`
@@ -80,7 +84,6 @@ func (r *SimpleReceipt) Model(showHidden bool, format string) Model {
 		if r.From != common.HexToAddress("0x0") {
 			model["from"] = r.From
 		}
-		model["effectiveGasPrice"] = r.EffectiveGasPrice
 		if len(r.Logs) > 0 {
 			model["logs"] = r.Logs
 		}
@@ -92,7 +95,6 @@ func (r *SimpleReceipt) Model(showHidden bool, format string) Model {
 			"blockHash",
 			"cumulativeGasUsed",
 			"from",
-			"effectiveGasPrice",
 			"logs",
 			"to",
 		}...)
