@@ -60,7 +60,7 @@ class COptions : public CBlockOptions {
     void Init(void) override;
 
     bool handle_appearances(blknum_t num);
-    bool handle_block_summaries(blknum_t start, blknum_t count);
+    bool handle_block_summaries(void);
     bool handle_logs(void);
     bool processFastPath(void);
 };
