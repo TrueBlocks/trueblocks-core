@@ -2,7 +2,6 @@ package types
 
 import (
 	"math/big"
-	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/bykof/gostradamus"
@@ -161,7 +160,7 @@ type SimpleTransaction struct {
 	BlockNumber          Blknum          `json:"blockNumber"`
 	TransactionIndex     uint64          `json:"transactionIndex"`
 	Nonce                uint64          `json:"nonce"`
-	Timestamp            time.Time       `json:"timestamp"`
+	Timestamp            int64           `json:"timestamp"`
 	From                 common.Address  `json:"from"`
 	To                   common.Address  `json:"to"`
 	Value                Wei             `json:"value"`

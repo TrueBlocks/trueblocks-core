@@ -6,7 +6,6 @@ import (
 	"math"
 	"math/big"
 	"strings"
-	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common"
@@ -53,11 +52,12 @@ func writeAddress(writer *bufio.Writer, address *common.Address) (err error) {
 	return writeString(writer, &value)
 }
 
-func writeTimestamp(writer *bufio.Writer, value *time.Time) (err error) {
-	write := createWriteFn(writer)
-	sec := value.Unix()
-	return write(sec)
-}
+// TODO: this can probably be removed
+// func writeTimestamp(writer *bufio.Writer, value *time.Time) (err error) {
+// 	write := createWriteFn(writer)
+// 	sec := value.Unix()
+// 	return write(sec)
+// }
 
 func writeBigUint(writer *bufio.Writer, value *big.Int) (err error) {
 	write := createWriteFn(writer)
@@ -248,7 +248,7 @@ func WriteTransaction(writer *bufio.Writer, tx *types.SimpleTransaction) (err er
 		return
 	}
 
-	err = writeTimestamp(writer, &tx.Timestamp)
+	err = write(&tx.Timestamp)
 	if err != nil {
 		return
 	}
