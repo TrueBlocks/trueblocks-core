@@ -4,7 +4,7 @@ type RawNamedBlock interface{}
 
 type SimpleNamedBlock struct {
 	BlockNumber uint64 `json:"blockNumber"`
-	TimeStamp   uint64 `json:"timestamp"`
+	Timestamp   uint64 `json:"timestamp"`
 	Date        string `json:"date"`
 	Name        string `json:"name,omitempty"`
 }
@@ -16,7 +16,7 @@ func (s *SimpleNamedBlock) Raw() *RawNamedBlock {
 func (s *SimpleNamedBlock) Model(showHidden bool, format string) Model {
 	model := map[string]interface{}{
 		"blockNumber": s.BlockNumber,
-		"timestamp":   s.TimeStamp,
+		"timestamp":   s.Timestamp,
 		"date":        s.Date,
 	}
 

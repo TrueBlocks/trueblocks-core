@@ -31,7 +31,7 @@ func (h IpfsHash) String() string {
 
 type SimpleTimestamp struct {
 	BlockNumber uint64 `json:"blockNumber"`
-	TimeStamp   uint64 `json:"timestamp"`
+	Timestamp   uint64 `json:"timestamp"`
 	Diff        uint64 `json:"diff"`
 }
 

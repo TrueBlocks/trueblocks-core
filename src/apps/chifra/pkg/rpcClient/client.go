@@ -455,7 +455,7 @@ func GetBlockByNumber(chain string, bn uint64) (types.SimpleNamedBlock, error) {
 	}
 	return types.SimpleNamedBlock{
 		BlockNumber: n,
-		TimeStamp:   ts,
+		Timestamp:   ts,
 	}, nil
 }
 
