@@ -1,5 +1,10 @@
 package rpcClient
 
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+)
+
 // // GetTransactionReceipt retrieves a SimpleReceipt from the node using the RPC's eth_getTransactionReceipt
 // func GetTransactionReceipt(chain string, bn uint64, txid uint64) (receipt types.SimpleReceipt, err error) {
 // 	// First, get raw receipt directly from RPC
@@ -55,27 +60,27 @@ package rpcClient
 // 	return
 // }
 
-// func getRawTransactionReceipt(chain string, bn uint64, txid uint64) (receipt *types.RawReceipt, err error) {
-// 	tx, err := TxFromNumberAndId(chain, bn, txid)
-// 	if err != nil {
-// 		return
-// 	}
+func getRawTransactionReceipt(chain string, bn uint64, txid uint64) (receipt *types.RawReceipt, err error) {
+	tx, err := TxFromNumberAndId(chain, bn, txid)
+	if err != nil {
+		return
+	}
 
-// 	var response struct {
-// 		Result types.RawReceipt `json:"result"`
-// 	}
-// 	err = FromRpc(
-// 		config.GetRpcProvider(chain),
-// 		&RPCPayload{
-// 			Method:    "eth_getTransactionReceipt",
-// 			RPCParams: RPCParams{tx.Hash().Hex()},
-// 		},
-// 		&response,
-// 	)
-// 	if err != nil {
-// 		return
-// 	}
-// 	receipt = &response.Result
+	var response struct {
+		Result types.RawReceipt `json:"result"`
+	}
+	err = FromRpc(
+		config.GetRpcProvider(chain),
+		&RPCPayload{
+			Method:    "eth_getTransactionReceipt",
+			RPCParams: RPCParams{tx.Hash().Hex()},
+		},
+		&response,
+	)
+	if err != nil {
+		return
+	}
+	receipt = &response.Result
 
-// 	return
-// }
+	return
+}

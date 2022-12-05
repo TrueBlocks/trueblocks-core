@@ -166,34 +166,9 @@ func TxFromNumberAndId(chain string, blkNum, txId uint64) (ethTypes.Transaction,
 	return *tx, nil
 }
 
-func GetRawTransactionReceipt(chain string, bn uint64, txid uint64) (receipt *types.RawReceipt, err error) {
-	tx, err := TxFromNumberAndId(chain, bn, txid)
-	if err != nil {
-		return
-	}
-
-	var response struct {
-		Result types.RawReceipt `json:"result"`
-	}
-	err = FromRpc(
-		config.GetRpcProvider(chain),
-		&RPCPayload{
-			Method:    "eth_getTransactionReceipt",
-			RPCParams: RPCParams{tx.Hash().Hex()},
-		},
-		&response,
-	)
-	if err != nil {
-		return
-	}
-	receipt = &response.Result
-
-	return
-}
-
 func GetTransactionReceipt(chain string, bn uint64, txid uint64) (receipt types.SimpleReceipt, err error) {
 	// First, get raw receipt directly from RPC
-	ethReceipt, err := GetRawTransactionReceipt(chain, bn, txid)
+	ethReceipt, err := getRawTransactionReceipt(chain, bn, txid)
 	if err != nil {
 		return
 	}
