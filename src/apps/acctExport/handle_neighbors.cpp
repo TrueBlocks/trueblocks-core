@@ -278,6 +278,7 @@ bool neighbors_Pre(CTraverser* trav, void* data) {
             curRange++;
         }
         if (curRange < ranges.size()) {
+            trav->index = i;
             if (!opt->showAddrsInTx(trav, ranges[curRange], app))
                 return false;
             curRange--;  // back up one in case the next appearances is in the same range
