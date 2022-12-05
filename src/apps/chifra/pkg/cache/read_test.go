@@ -142,7 +142,7 @@ func TestReadBlock(t *testing.T) {
 		t.Fatal("invalid finalized")
 
 	}
-	if block.Timestamp.Unix() != 1508131303 {
+	if block.Timestamp != 1508131303 {
 		t.Fatal("invalid timestamp")
 
 	}

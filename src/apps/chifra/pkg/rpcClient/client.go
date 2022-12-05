@@ -12,7 +12,6 @@ import (
 	"strconv"
 	"strings"
 	"sync"
-	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -459,7 +458,7 @@ func GetBlockByNumber(chain string, bn uint64, withTxs bool) (types.SimpleBlock,
 	}
 	return types.SimpleBlock{
 		BlockNumber: n,
-		Timestamp:   time.Unix(int64(ts), 0),
+		Timestamp:   int64(ts),
 		Hash:        common.HexToHash(block.Result.Hash),
 		ParentHash:  common.HexToHash(block.Result.ParentHash),
 		GasLimit:    gl,

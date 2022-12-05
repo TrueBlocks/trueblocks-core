@@ -198,7 +198,7 @@ func WriteBlock(writer *bufio.Writer, block *types.SimpleBlock) (err error) {
 		return
 	}
 
-	err = writeTimestamp(writer, &block.Timestamp)
+	err = write(&block.Timestamp)
 	if err != nil {
 		return
 	}

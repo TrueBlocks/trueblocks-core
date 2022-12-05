@@ -286,7 +286,7 @@ func ReadBlock(reader *bufio.Reader) (block *types.SimpleBlock, err error) {
 		return
 	}
 
-	err = readTimestamp(read, &block.Timestamp)
+	err = read(&block.Timestamp)
 	if err != nil {
 		return
 	}
