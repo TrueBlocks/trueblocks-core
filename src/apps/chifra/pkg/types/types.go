@@ -14,7 +14,7 @@ type Modeler[Raw RawData] interface {
 }
 
 type RawData interface {
-	RawReceipt | RawWhenCount | RawNamedBlock
+	RawReceipt | RawWhenCount | RawNamedBlock | RawBlock
 }
 
 type Model struct {

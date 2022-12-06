@@ -10,7 +10,7 @@ import (
 )
 
 func GetBlockHeaderByNumber(chain string, bn uint64) (types.SimpleBlockHeader, error) {
-	var blockHeader BlockHeader
+	var blockHeader BlockHeaderResponse
 	var payload = RPCPayload{
 		Method:    "eth_getBlockByNumber",
 		RPCParams: RPCParams{fmt.Sprintf("0x%x", bn), false},
@@ -24,11 +24,11 @@ func GetBlockHeaderByNumber(chain string, bn uint64) (types.SimpleBlockHeader, e
 		msg := fmt.Sprintf("block number or timestamp for %d not found", bn)
 		return types.SimpleBlockHeader{}, fmt.Errorf(msg)
 	}
-	n, _ := strconv.ParseUint(blockHeader.Result.Number[2:], 16, 64)
-	ts, _ := strconv.ParseUint(blockHeader.Result.Timestamp[2:], 16, 64)
-	// gl, _ := strconv.ParseUint(blockHeader.Result.GasLimit[2:], 16, 64)
-	// gu, _ := strconv.ParseUint(blockHeader.Result.GasUsed[2:], 16, 64)
-	// d, _ := strconv.ParseUint(blockHeader.Result.Difficulty[2:], 16, 64)
+
+	rawBlock := blockHeader.Result
+
+	n, _ := strconv.ParseUint(rawBlock.Number[2:], 16, 64)
+	ts, _ := strconv.ParseUint(rawBlock.Timestamp[2:], 16, 64)
 	if n == 0 {
 		ts, err = GetBlockZeroTs(chain)
 		if err != nil {
@@ -39,19 +39,13 @@ func GetBlockHeaderByNumber(chain string, bn uint64) (types.SimpleBlockHeader, e
 	block := types.SimpleBlockHeader{
 		BlockNumber: n,
 		Timestamp:   int64(ts),
-		// Hash:        common.HexToHash(blockHeader.Result.Hash),
-		// ParentHash:  common.HexToHash(blockHeader.Result.ParentHash),
-		// GasLimit:    gl,
-		// GasUsed:     gu,
-		// Miner:       common.HexToAddress(blockHeader.Result.Miner),
-		// Difficulty:  d,
 	}
 
 	return block, nil
 }
 
 func GetBlockByNumber(chain string, bn uint64, withTxs bool) (types.SimpleBlock, error) {
-	var block BlockHeader
+	var block BlockHeaderResponse
 	var payload = RPCPayload{
 		Method:    "eth_getBlockByNumber",
 		RPCParams: RPCParams{fmt.Sprintf("0x%x", bn), withTxs},
@@ -86,4 +80,11 @@ func GetBlockByNumber(chain string, bn uint64, withTxs bool) (types.SimpleBlock,
 		Miner:       common.HexToAddress(block.Result.Miner),
 		Difficulty:  d,
 	}, nil
+}
+
+// BlockHeaderResponse carries values returned by the `eth_getBlockByNumber` RPC command
+type BlockHeaderResponse struct {
+	Jsonrpc string         `json:"jsonrpc"`
+	Result  types.RawBlock `json:"result"`
+	ID      int            `json:"id"`
 }

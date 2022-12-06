@@ -39,8 +39,7 @@ func (opts *WhenOptions) HandleShowBlocks() error {
 				if bn > meta.Latest {
 					msg := fmt.Sprintf("Block %d is greater than the latest block %d", bn, meta.Latest)
 					errorChan <- errors.New(msg)
-					cancel()
-					return
+					continue
 				}
 
 				block, err := rpcClient.GetBlockHeaderByNumber(opts.Globals.Chain, bn)
