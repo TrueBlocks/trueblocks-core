@@ -6,8 +6,6 @@ package whenPkg
 
 import (
 	"context"
-	"errors"
-	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -17,11 +15,6 @@ import (
 )
 
 func (opts *WhenOptions) HandleShowBlocks() error {
-
-	meta, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
-	if err != nil {
-		return err
-	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 
@@ -36,12 +29,6 @@ func (opts *WhenOptions) HandleShowBlocks() error {
 			}
 
 			for _, bn := range blockNums {
-				if bn > meta.Latest {
-					msg := fmt.Sprintf("Block %d is greater than the latest block %d", bn, meta.Latest)
-					errorChan <- errors.New(msg)
-					continue
-				}
-
 				block, err := rpcClient.GetBlockHeaderByNumber(opts.Globals.Chain, bn)
 				// TODO: rpcClient should return a custom type of error in this case
 				if err != nil && strings.Contains(err.Error(), "not found") {

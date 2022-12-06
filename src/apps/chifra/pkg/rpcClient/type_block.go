@@ -11,23 +11,15 @@ import (
 )
 
 func GetBlockHeaderByNumber(chain string, bn uint64) (types.SimpleBlockHeader, error) {
-	var blockHeader BlockHeaderResponse
-	var payload = RPCPayload{
-		Method:    "eth_getBlockByNumber",
-		RPCParams: RPCParams{fmt.Sprintf("0x%x", bn), false},
-	}
-	rpcProvider := config.GetRpcProvider(chain)
-	err := FromRpc(rpcProvider, &payload, &blockHeader)
+	rawBlock, err := getRawBlock(chain, bn, false)
 	if err != nil {
 		return types.SimpleBlockHeader{}, err
 	}
 
-	if len(blockHeader.Result.Number) == 0 || len(blockHeader.Result.Timestamp) == 0 {
+	if len(rawBlock.Number) == 0 || len(rawBlock.Timestamp) == 0 {
 		msg := fmt.Sprintf("block number or timestamp for %d not found", bn)
 		return types.SimpleBlockHeader{}, fmt.Errorf(msg)
 	}
-
-	rawBlock := blockHeader.Result
 
 	timestamp, err := hexutil.DecodeUint64(rawBlock.Timestamp)
 	if err != nil {
@@ -50,7 +42,7 @@ func GetBlockHeaderByNumber(chain string, bn uint64) (types.SimpleBlockHeader, e
 		BlockNumber: blockNumber,
 		Timestamp:   int64(timestamp),
 	}
-	block.SetRaw(rawBlock)
+	block.SetRaw(*rawBlock)
 
 	return block, nil
 }
@@ -128,16 +120,9 @@ func getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error)
 
 	rawBlock := &response.Result
 	if len(response.Result.Timestamp) == 0 {
-		msg := fmt.Sprintf("zero timestamp for block %d", bn)
+		msg := fmt.Sprintf("block number or timestamp for %d not found", bn)
 		return rawBlock, errors.New(msg)
 	}
 
 	return rawBlock, err
-}
-
-// BlockHeaderResponse carries values returned by the `eth_getBlockByNumber` RPC command
-type BlockHeaderResponse struct {
-	Jsonrpc string         `json:"jsonrpc"`
-	Result  types.RawBlock `json:"result"`
-	ID      int            `json:"id"`
 }
