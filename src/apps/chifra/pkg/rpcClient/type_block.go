@@ -16,11 +16,6 @@ func GetBlockHeaderByNumber(chain string, bn uint64) (types.SimpleBlockHeader, e
 		return types.SimpleBlockHeader{}, err
 	}
 
-	if len(rawBlock.Number) == 0 || len(rawBlock.Timestamp) == 0 {
-		msg := fmt.Sprintf("block number or timestamp for %d not found", bn)
-		return types.SimpleBlockHeader{}, fmt.Errorf(msg)
-	}
-
 	timestamp, err := hexutil.DecodeUint64(rawBlock.Timestamp)
 	if err != nil {
 		return types.SimpleBlockHeader{}, err
@@ -29,13 +24,6 @@ func GetBlockHeaderByNumber(chain string, bn uint64) (types.SimpleBlockHeader, e
 	blockNumber, err := hexutil.DecodeUint64(rawBlock.Number)
 	if err != nil {
 		return types.SimpleBlockHeader{}, err
-	}
-
-	if blockNumber == 0 {
-		timestamp, err = GetBlockZeroTs(chain)
-		if err != nil {
-			return types.SimpleBlockHeader{}, err
-		}
 	}
 
 	block := types.SimpleBlockHeader{
