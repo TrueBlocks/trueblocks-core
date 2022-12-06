@@ -2,6 +2,7 @@ package types
 
 import (
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 type RawBlock struct {
@@ -56,7 +57,7 @@ func (s *SimpleBlock) Model(showHidden bool, format string) Model {
 		"blockNumber":     s.BlockNumber,
 		"timestamp":       s.Timestamp,
 		"difficulty":      s.Difficulty,
-		"miner":           s.Miner,
+		"miner":           hexutil.Encode(s.Miner.Bytes()),
 		"transactionsCnt": 12,
 		"uncle_count":     13,
 		"gasLimit":        s.GasLimit,

@@ -49,20 +49,25 @@ func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
 
 	// EXISTING_CODE
 	if opts.Ported() {
+		handled = true
 		if opts.List > 0 {
-			return opts.HandleList(), true
+			err = opts.HandleList()
+
 		} else if opts.Globals.ShowRaw {
-			return opts.HandleShowBlocks(), true
+			err = opts.HandleShowBlocks()
+
+		} else {
+			log.Panic("Invalid chifra blocks: unhandled case")
 		}
-		log.Panic("Invalid chifra blocks: unhandled case")
-	}
 
-	if opts.Globals.IsApiMode() {
-		return nil, false
-	}
+	} else {
+		if opts.Globals.IsApiMode() {
+			return nil, false
+		}
 
-	handled = true
-	err = opts.Globals.PassItOn("getBlocks", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
+		handled = true
+		err = opts.Globals.PassItOn("getBlocks", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
+	}
 	// EXISTING_CODE
 
 	return

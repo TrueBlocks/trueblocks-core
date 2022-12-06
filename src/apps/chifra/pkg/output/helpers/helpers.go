@@ -11,6 +11,7 @@ import (
 )
 
 var enabledForCmds = map[string]bool{
+	"blocks":   true,
 	"receipts": true,
 	"when":     true,
 }
