@@ -56,24 +56,11 @@ func GetBlockHeaderByNumber(chain string, bn uint64) (types.SimpleBlockHeader, e
 }
 
 func GetBlockByNumber(chain string, bn uint64, withTxs bool) (types.SimpleBlock, error) {
-	var blockHeader BlockHeaderResponse
-	var payload = RPCPayload{
-		Method:    "eth_getBlockByNumber",
-		RPCParams: RPCParams{fmt.Sprintf("0x%x", bn), withTxs},
-	}
-	rpcProvider := config.GetRpcProvider(chain)
-	err := FromRpc(rpcProvider, &payload, &blockHeader)
+	rawBlock, err := getRawBlock(chain, bn, withTxs)
 	if err != nil {
 		return types.SimpleBlock{}, err
 	}
 
-	rawBlock := blockHeader.Result
-	if len(rawBlock.Number) == 0 || len(rawBlock.Timestamp) == 0 {
-		msg := fmt.Sprintf("block number or timestamp for %d not found", bn)
-		return types.SimpleBlock{}, fmt.Errorf(msg)
-	}
-
-	//
 	timestamp, err := hexutil.DecodeUint64(rawBlock.Timestamp)
 	if err != nil {
 		return types.SimpleBlock{}, err
@@ -99,13 +86,6 @@ func GetBlockByNumber(chain string, bn uint64, withTxs bool) (types.SimpleBlock,
 		return types.SimpleBlock{}, err
 	}
 
-	if blockNumber == 0 {
-		timestamp, err = GetBlockZeroTs(chain)
-		if err != nil {
-			return types.SimpleBlock{}, err
-		}
-	}
-
 	block := types.SimpleBlock{
 		BlockNumber: blockNumber,
 		Timestamp:   int64(timestamp),
@@ -116,7 +96,7 @@ func GetBlockByNumber(chain string, bn uint64, withTxs bool) (types.SimpleBlock,
 		Miner:       common.HexToAddress(rawBlock.Miner),
 		Difficulty:  difficulty,
 	}
-	block.SetRaw(rawBlock)
+	block.SetRaw(*rawBlock)
 
 	return block, nil
 }
