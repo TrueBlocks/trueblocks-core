@@ -16,7 +16,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	ethTypes "github.com/ethereum/go-ethereum/core/types"
@@ -164,93 +163,6 @@ func TxFromNumberAndId(chain string, blkNum, txId uint64) (ethTypes.Transaction,
 	}
 
 	return *tx, nil
-}
-
-func GetTransactionReceipt(chain string, bn uint64, txid uint64) (receipt types.SimpleReceipt, err error) {
-	// First, get raw receipt directly from RPC
-	ethReceipt, err := getRawTransactionReceipt(chain, bn, txid)
-	if err != nil {
-		return
-	}
-
-	// Prepare logs of type []SimpleLog
-	logs := []types.SimpleLog{}
-	for _, log := range ethReceipt.Logs {
-		logAddress := common.HexToAddress(log.Address)
-		logIndex, parseErr := hexutil.DecodeUint64(log.LogIndex)
-		if parseErr != nil {
-			err = parseErr
-			return
-		}
-
-		logBlockNumber, parseErr := hexutil.DecodeUint64(log.BlockNumber)
-		if parseErr != nil {
-			err = parseErr
-			return
-		}
-
-		logTxIndex, parseErr := hexutil.DecodeUint64(log.TransactionIndex)
-		if parseErr != nil {
-			err = parseErr
-			return
-		}
-
-		logTopics := make([]common.Hash, 0, len(log.Topics))
-		for _, topic := range log.Topics {
-			logTopics = append(logTopics, common.HexToHash(topic))
-		}
-
-		logs = append(logs, types.SimpleLog{
-			Address:          logAddress,
-			LogIndex:         logIndex,
-			BlockNumber:      logBlockNumber,
-			TransactionIndex: uint32(logTxIndex),
-			Timestamp:        0, // FIXME
-			Topics:           logTopics,
-			Data:             string(log.Data),
-			CompressedLog:    "", // FIXME
-		})
-	}
-
-	// Type-cast values that are not strings
-	blockNumber, err := hexutil.DecodeUint64(ethReceipt.BlockNumber)
-	if err != nil {
-		return
-	}
-	cumulativeGasUsed, err := hexutil.DecodeUint64(ethReceipt.CumulativeGasUsed)
-	if err != nil {
-		return
-	}
-	gasUsed, err := hexutil.DecodeUint64(ethReceipt.GasUsed)
-	if err != nil {
-		return
-	}
-	status, err := hexutil.DecodeUint64(ethReceipt.Status)
-	if err != nil {
-		return
-	}
-	transactionIndex, err := hexutil.DecodeUint64(ethReceipt.TransactionIndex)
-	if err != nil {
-		return
-	}
-	receipt = types.SimpleReceipt{
-		BlockHash:         common.HexToHash(ethReceipt.BlockHash),
-		BlockNumber:       blockNumber,
-		ContractAddress:   common.HexToAddress(ethReceipt.ContractAddress),
-		CumulativeGasUsed: fmt.Sprint(cumulativeGasUsed),
-		GasUsed:           gasUsed,
-		Logs:              logs,
-		Status:            uint32(status),
-		IsError:           status == 0,
-		TransactionHash:   common.HexToHash(ethReceipt.TransactionHash),
-		TransactionIndex:  transactionIndex,
-		// From:
-		// To:
-		// EffectiveGasPrice
-	}
-	receipt.SetRaw(*ethReceipt)
-
-	return
 }
 
 // TxHashFromNumberAndId returns a transaction's hash if it's a valid transaction
