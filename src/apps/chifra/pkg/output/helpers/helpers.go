@@ -16,6 +16,10 @@ var enabledForCmds = map[string]bool{
 	"when":     true,
 }
 
+func DisableCommand(cmd string) {
+	enabledForCmds[cmd] = false
+}
+
 func PreRunWithJsonWriter(cmdName string, getOptions func() *globals.GlobalOptions) func(cmd *cobra.Command, args []string) {
 	return func(cmd *cobra.Command, args []string) {
 		opts := getOptions()

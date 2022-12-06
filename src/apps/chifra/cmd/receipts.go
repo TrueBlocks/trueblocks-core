@@ -61,6 +61,10 @@ func init() {
 	receiptsCmd.SetOut(os.Stderr)
 
 	// EXISTING_CODE
+	isArticulate := receiptsPkg.GetOptions().Articulate
+	if isArticulate {
+		outputHelpers.DisableCommand("receipts")
+	}
 	// EXISTING_CODE
 
 	chifraCmd.AddCommand(receiptsCmd)
