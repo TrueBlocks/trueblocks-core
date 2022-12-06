@@ -50,6 +50,7 @@ func GetBlockHeaderByNumber(chain string, bn uint64) (types.SimpleBlockHeader, e
 		BlockNumber: blockNumber,
 		Timestamp:   int64(timestamp),
 	}
+	block.SetRaw(rawBlock)
 
 	return block, nil
 }
@@ -115,11 +116,12 @@ func GetBlockByNumber(chain string, bn uint64, withTxs bool) (types.SimpleBlock,
 		Miner:       common.HexToAddress(rawBlock.Miner),
 		Difficulty:  difficulty,
 	}
+	block.SetRaw(rawBlock)
 
 	return block, nil
 }
 
-func getRawBlock(chain string, bn uint64, withTxs bool) (rawBlock *types.RawBlock, err error) {
+func getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error) {
 	var response struct {
 		Result types.RawBlock `json:"result"`
 	}
@@ -129,8 +131,9 @@ func getRawBlock(chain string, bn uint64, withTxs bool) (rawBlock *types.RawBloc
 		RPCParams: RPCParams{fmt.Sprintf("0x%x", bn), withTxs},
 	}
 
-	if err = FromRpc(config.GetRpcProvider(chain), &payload, &response); err != nil {
-		return
+	err := FromRpc(config.GetRpcProvider(chain), &payload, &response)
+	if err != nil {
+		return &types.RawBlock{}, err
 	}
 
 	if bn == 0 {
@@ -138,12 +141,12 @@ func getRawBlock(chain string, bn uint64, withTxs bool) (rawBlock *types.RawBloc
 		var ts uint64
 		ts, err = GetBlockZeroTs(chain)
 		if err != nil {
-			return
+			return &types.RawBlock{}, err
 		}
 		response.Result.Timestamp = fmt.Sprintf("0x%x", ts)
 	}
 
-	rawBlock = &response.Result
+	rawBlock := &response.Result
 	if len(response.Result.Timestamp) == 0 {
 		msg := fmt.Sprintf("zero timestamp for block %d", bn)
 		return rawBlock, errors.New(msg)
