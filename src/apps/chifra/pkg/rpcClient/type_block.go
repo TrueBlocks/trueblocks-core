@@ -9,8 +9,45 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-func GetBlockHeaderByNumber(chain string, bn uint64) (types.SimpleBlock, error) {
-	return GetBlockByNumber(chain, bn, false)
+func GetBlockHeaderByNumber(chain string, bn uint64) (types.SimpleBlockHeader, error) {
+	var blockHeader BlockHeader
+	var payload = RPCPayload{
+		Method:    "eth_getBlockByNumber",
+		RPCParams: RPCParams{fmt.Sprintf("0x%x", bn), false},
+	}
+	rpcProvider := config.GetRpcProvider(chain)
+	err := FromRpc(rpcProvider, &payload, &blockHeader)
+	if err != nil {
+		return types.SimpleBlockHeader{}, err
+	}
+	if len(blockHeader.Result.Number) == 0 || len(blockHeader.Result.Timestamp) == 0 {
+		msg := fmt.Sprintf("block number or timestamp for %d not found", bn)
+		return types.SimpleBlockHeader{}, fmt.Errorf(msg)
+	}
+	n, _ := strconv.ParseUint(blockHeader.Result.Number[2:], 16, 64)
+	ts, _ := strconv.ParseUint(blockHeader.Result.Timestamp[2:], 16, 64)
+	// gl, _ := strconv.ParseUint(blockHeader.Result.GasLimit[2:], 16, 64)
+	// gu, _ := strconv.ParseUint(blockHeader.Result.GasUsed[2:], 16, 64)
+	// d, _ := strconv.ParseUint(blockHeader.Result.Difficulty[2:], 16, 64)
+	if n == 0 {
+		ts, err = GetBlockZeroTs(chain)
+		if err != nil {
+			return types.SimpleBlockHeader{}, err
+		}
+	}
+
+	block := types.SimpleBlockHeader{
+		BlockNumber: n,
+		Timestamp:   int64(ts),
+		// Hash:        common.HexToHash(blockHeader.Result.Hash),
+		// ParentHash:  common.HexToHash(blockHeader.Result.ParentHash),
+		// GasLimit:    gl,
+		// GasUsed:     gu,
+		// Miner:       common.HexToAddress(blockHeader.Result.Miner),
+		// Difficulty:  d,
+	}
+
+	return block, nil
 }
 
 func GetBlockByNumber(chain string, bn uint64, withTxs bool) (types.SimpleBlock, error) {

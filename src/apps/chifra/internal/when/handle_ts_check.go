@@ -70,7 +70,7 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Si
 		Timestamp:   uint64(itemOnDisc.Ts),
 	}
 
-	expected := types.SimpleBlock{BlockNumber: bn, Timestamp: int64(onDisc.Timestamp)}
+	expected := types.SimpleBlockHeader{BlockNumber: bn, Timestamp: int64(onDisc.Timestamp)}
 	if opts.Deep {
 		// If we're going deep, we need to query the node
 		expected, _ = rpcClient.GetBlockHeaderByNumber(opts.Globals.Chain, bn)

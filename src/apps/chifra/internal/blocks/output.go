@@ -10,6 +10,7 @@ package blocksPkg
 
 // EXISTING_CODE
 import (
+	"log"
 	"net/http"
 
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -47,9 +48,13 @@ func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if false && opts.List > 0 {
-		// return opts.HandleList(), true
-		opts.HandleList()
+	if opts.Ported() {
+		if opts.List > 0 {
+			return opts.HandleList(), true
+		} else if opts.Globals.ShowRaw {
+			return opts.HandleShowBlocks(), true
+		}
+		log.Panic("Invalid chifra blocks: unhandled case")
 	}
 
 	if opts.Globals.IsApiMode() {
@@ -64,4 +69,11 @@ func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
 }
 
 // EXISTING_CODE
+func (opts *BlocksOptions) Ported() bool {
+	// return opts.Globals.ShowRaw || opts.List > 0
+	// return opts.Globals.ShowRaw
+	// return opts.List > 0
+	return false
+}
+
 // EXISTING_CODE
