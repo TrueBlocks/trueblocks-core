@@ -48,7 +48,7 @@ func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.Ported() {
+	if opts.IsPorted() {
 		handled = true
 		if opts.List > 0 {
 			err = opts.HandleList()
@@ -72,11 +72,8 @@ func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
 }
 
 // EXISTING_CODE
-func (opts *BlocksOptions) Ported() bool {
-	if os.Getenv("TEST_PORTED") != "true" {
-		return false
-	}
-	return opts.Globals.ShowRaw || opts.List > 0
+func (opts *BlocksOptions) IsPorted() bool {
+	return os.Getenv("TEST_PORTED") == "true"
 }
 
 // EXISTING_CODE
