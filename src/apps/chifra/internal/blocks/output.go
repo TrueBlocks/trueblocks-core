@@ -11,7 +11,6 @@ package blocksPkg
 // EXISTING_CODE
 import (
 	"net/http"
-	"os"
 
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -73,7 +72,7 @@ func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
 
 // EXISTING_CODE
 func (opts *BlocksOptions) IsPorted() bool {
-	return os.Getenv("TEST_PORTED") == "true"
+	return false // os.Getenv("TEST_PORTED") == "true" // opts.List > 0 || opts.Globals.ShowRaw
 }
 
 // EXISTING_CODE

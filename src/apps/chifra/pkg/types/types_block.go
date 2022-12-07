@@ -19,13 +19,15 @@ type RawBlock struct {
 	Number           string        `json:"number"`
 	ParentHash       string        `json:"parentHash"`
 	ReceiptsRoot     string        `json:"receiptsRoot"`
-	SealFields       []string      `json:"sealFields"`
 	Sha3Uncles       string        `json:"sha3Uncles"`
 	Size             string        `json:"size"`
 	StateRoot        string        `json:"stateRoot"`
 	Timestamp        string        `json:"timestamp"`
 	TransactionsRoot string        `json:"transactionsRoot"`
+	TotalDifficulty  string        `json:"totalDifficulty"`
 	Transactions     []interface{} `json:"transactions"`
+	Uncles           []interface{} `json:"uncles"`
+	// SealFields       []string      `json:"sealFields"`
 }
 
 type SimpleBlock struct {
@@ -53,15 +55,17 @@ func (s *SimpleBlock) SetRaw(rawBlock RawBlock) {
 
 func (s *SimpleBlock) Model(showHidden bool, format string) Model {
 	model := map[string]interface{}{
-		"hash":            s.Hash,
-		"blockNumber":     s.BlockNumber,
-		"timestamp":       s.Timestamp,
-		"difficulty":      s.Difficulty,
-		"miner":           hexutil.Encode(s.Miner.Bytes()),
-		"transactionsCnt": 12,
-		"uncle_count":     13,
 		"gasLimit":        s.GasLimit,
 		"gasUsed":         s.GasUsed,
+		"hash":            s.Hash,
+		"blockNumber":     s.BlockNumber,
+		"parentHash":      s.ParentHash,
+		"miner":           hexutil.Encode(s.Miner.Bytes()),
+		"difficulty":      s.Difficulty,
+		"timestamp":       s.Timestamp,
+		"baseFeePerGas":   s.BaseFeePerGas.Uint64(),
+		"transactionsCnt": len(s.Transactions),
+		"unclesCnt":       len(s.raw.Uncles),
 	}
 
 	order := []string{
@@ -74,8 +78,8 @@ func (s *SimpleBlock) Model(showHidden bool, format string) Model {
 		"difficulty",
 		"timestamp",
 		"baseFeePerGas",
-		// "transactionsCnt",
-		// "uncle_count",
+		"transactionsCnt",
+		"unclesCnt",
 	}
 
 	return Model{
