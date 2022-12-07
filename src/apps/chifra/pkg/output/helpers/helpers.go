@@ -11,7 +11,7 @@ import (
 )
 
 var enabledForCmds = map[string]bool{
-	// "blocks":   os.Getenv("TEST_PORTED") == "true",
+	"blocks":   os.Getenv("TEST_TEST_ONLY") == "true",
 	"receipts": true,
 	"when":     true,
 }

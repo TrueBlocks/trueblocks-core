@@ -42,6 +42,7 @@ type SimpleBlock struct {
 	Timestamp     int64               `json:"timestamp"`
 	BaseFeePerGas Wei                 `json:"baseFeePerGas"`
 	Transactions  []SimpleTransaction `json:"transactions"`
+	Uncles        []common.Hash       `json:"uncles"`
 	raw           *RawBlock
 }
 
@@ -55,29 +56,29 @@ func (s *SimpleBlock) SetRaw(rawBlock RawBlock) {
 
 func (s *SimpleBlock) Model(showHidden bool, format string) Model {
 	model := map[string]interface{}{
-		"gasLimit":        s.GasLimit,
-		"gasUsed":         s.GasUsed,
-		"hash":            s.Hash,
 		"blockNumber":     s.BlockNumber,
+		"timestamp":       s.Timestamp,
+		"hash":            s.Hash,
 		"parentHash":      s.ParentHash,
 		"miner":           hexutil.Encode(s.Miner.Bytes()),
 		"difficulty":      s.Difficulty,
-		"timestamp":       s.Timestamp,
 		"baseFeePerGas":   s.BaseFeePerGas.Uint64(),
+		"gasLimit":        s.GasLimit,
+		"gasUsed":         s.GasUsed,
 		"transactionsCnt": len(s.Transactions),
 		"unclesCnt":       len(s.raw.Uncles),
 	}
 
 	order := []string{
-		"gasLimit",
-		"gasUsed",
-		"hash",
 		"blockNumber",
+		"timestamp",
+		"hash",
 		"parentHash",
 		"miner",
 		"difficulty",
-		"timestamp",
 		"baseFeePerGas",
+		"gasLimit",
+		"gasUsed",
 		"transactionsCnt",
 		"unclesCnt",
 	}
