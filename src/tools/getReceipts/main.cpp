@@ -46,7 +46,7 @@ bool visitTransaction(CTransaction& trans, void* data) {
         return true;  // continue even with an invalid item
     }
 
-    if (opt->isRaw || opt->isVeryRaw) {
+    if (opt->isRaw) {
         string_q result;
         queryRawReceipt(result, trans.getValueByName("hash"));
         if (!isText && !opt->firstOut)

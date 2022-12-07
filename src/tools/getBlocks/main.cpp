@@ -97,7 +97,7 @@ string_q doOneBlock(blknum_t num, COptions& opt) {
     CBlock gold;
     gold.blockNumber = num;
     string_q result;
-    if (opt.isRaw || opt.isVeryRaw) {
+    if (opt.isRaw) {
         if (!queryRawBlock(result, uint_2_Str(num), true, opt.hashes)) {
             result = "Could not query raw block " + uint_2_Str(num) + ". Is an Ethereum node running?";
 
