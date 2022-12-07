@@ -6,13 +6,13 @@ import (
 )
 
 type RawBlock struct {
-	Author           string        `json:"author"`
+	Author           string        `json:"author,omitempty"`
 	Difficulty       string        `json:"difficulty"`
-	ExtraData        string        `json:"extraData"`
+	ExtraData        string        `json:"extraData,omitempty"`
 	GasLimit         string        `json:"gasLimit"`
 	GasUsed          string        `json:"gasUsed"`
 	Hash             string        `json:"hash"`
-	LogsBloom        string        `json:"logsBloom"`
+	LogsBloom        string        `json:"logsBloom,omitempty"`
 	Miner            string        `json:"miner"`
 	MixHash          string        `json:"mixHash"`
 	Nonce            string        `json:"nonce"`
@@ -65,15 +65,17 @@ func (s *SimpleBlock) Model(showHidden bool, format string) Model {
 	}
 
 	order := []string{
-		"hash",
-		"blockNumber",
-		"timestamp",
-		"difficulty",
-		"miner",
-		"transactionsCnt",
-		"uncle_count",
 		"gasLimit",
 		"gasUsed",
+		"hash",
+		"blockNumber",
+		"parentHash",
+		"miner",
+		"difficulty",
+		"timestamp",
+		"baseFeePerGas",
+		// "transactionsCnt",
+		// "uncle_count",
 	}
 
 	return Model{

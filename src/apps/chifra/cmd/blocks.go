@@ -89,11 +89,6 @@ One of [ from | to | reward ]`)
 	blocksCmd.SetOut(os.Stderr)
 
 	// EXISTING_CODE
-	isRaw := blocksPkg.GetOptions().Globals.ShowRaw
-	isList := blocksPkg.GetOptions().List > 0
-	if true || (!isRaw && !isList) {
-		outputHelpers.DisableCommand("blocks")
-	}
 	// EXISTING_CODE
 
 	chifraCmd.AddCommand(blocksCmd)
