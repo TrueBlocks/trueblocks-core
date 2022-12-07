@@ -49,7 +49,7 @@ class COptions : public COptionsBase {
     void Init(void) override;
 
     void doTests(CMeasure& total, CTestCaseArray& testArray, const string_q& testPath, const string_q& testName,
-                 int which);
+                 int which, bool doRemove);
     bool cleanTest(const string_q& path, const string_q& testName);
 };
 
