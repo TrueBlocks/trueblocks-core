@@ -41,7 +41,7 @@ func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) e
 		exportRange := paths.FileRange{First: opts.FirstBlock, Last: opts.LastBlock}
 		results := make([]types.SimpleAppearance, 0, mon.Count())
 		verboseResults := make([]types.VerboseAppearance, 0, mon.Count())
-		for _, app := range apps {
+		for record, app := range apps {
 			appRange := paths.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)}
 			if appRange.Intersects(exportRange) {
 				if opts.Globals.Verbose {
@@ -56,14 +56,18 @@ func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) e
 						Timestamp:        ts,
 						Date:             gostradamus.FromUnixTimestamp(int64(ts)),
 					}
-					verboseResults = append(verboseResults, s)
+					if uint64(record+1) >= opts.FirstRecord && (opts.MaxRecords == 250 || uint64(len(verboseResults)) < opts.MaxRecords) {
+						verboseResults = append(verboseResults, s)
+					}
 				} else {
 					s := types.SimpleAppearance{
 						Address:          mon.GetAddrStr(),
 						BlockNumber:      app.BlockNumber,
 						TransactionIndex: app.TransactionId,
 					}
-					results = append(results, s)
+					if uint64(record+1) >= opts.FirstRecord && (opts.MaxRecords == 250 || uint64(len(results)) < opts.MaxRecords) {
+						results = append(results, s)
+					}
 				}
 			}
 		}

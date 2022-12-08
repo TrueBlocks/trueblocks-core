@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2022-05-02T07:09:41
+date: 2022-11-15T00:45:51
 lastmod:
   - :git
   - lastmod
@@ -68,7 +68,6 @@ Transaction data is made of the following data fields:
 
 | Field            | Description                                                                                           | Type                 |
 | ---------------- | ----------------------------------------------------------------------------------------------------- | -------------------- |
-| gasPrice         | the number of wei per unit of gas the sender is willing to spend                                      | gas                  |
 | hash             | The hash of the transaction                                                                           | hash                 |
 | blockHash        | The hash of the block containing this transaction                                                     | hash                 |
 | blockNumber      | the number of the block                                                                               | blknum               |
@@ -79,6 +78,7 @@ Transaction data is made of the following data fields:
 | to               | address to which the transaction was sent                                                             | address              |
 | value            | the amount of wei sent with this transactions                                                         | wei                  |
 | gas              | the maximum number of gas allowed for this transaction                                                | gas                  |
+| gasPrice         | the number of wei per unit of gas the sender is willing to spend                                      | gas                  |
 | input            | byte data either containing a message or funcational data for a smart contracts. See the --articulate | bytes                |
 | receipt          |                                                                                                       | CReceipt             |
 | statements       | array of reconciliations                                                                              | CReconciliationArray |
@@ -130,6 +130,7 @@ Log data is made of the following data fields:
 | blockNumber      | the number of the block                                                                           | blknum      |
 | transactionIndex | the zero-indexed position of the transaction in the block                                         | blknum      |
 | logIndex         | the zero-indexed position of this log relative to the block                                       | blknum      |
+| transactionHash  | the hash of the transction                                                                        | hash        |
 | timestamp        | the timestamp of the block this log appears in                                                    | timestamp   |
 | address          | the smart contract that emitted this log                                                          | address     |
 | topics           | The first topic hashes event signature of the log, up to 3 additional index parameters may appear | CTopicArray |
@@ -156,6 +157,7 @@ Trace data is made of the following data fields:
 | ---------------- | --------------------------------------------------------- | ------------ |
 | blockHash        | The hash of the block containing this trace               | hash         |
 | blockNumber      | the number of the block                                   | blknum       |
+| timestamp        | the timestamp of the block                                | timestamp    |
 | transactionHash  | the transaction's hash containing this trace              | hash         |
 | transactionIndex | the zero-indexed position of the transaction in the block | blknum       |
 | traceAddress     | a particular trace's address in the trace tree            | CStringArray |

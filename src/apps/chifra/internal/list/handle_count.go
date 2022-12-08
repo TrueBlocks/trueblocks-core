@@ -14,16 +14,20 @@ import (
 func (opts *ListOptions) HandleListCount(monitorArray []monitor.Monitor) error {
 	results := make([]types.SimpleMonitor, 0, len(monitorArray))
 	for _, mon := range monitorArray {
-		simp := types.SimpleMonitor{
-			Address:     mon.GetAddrStr(),
-			NRecords:    int(mon.Count()),
-			FileSize:    file.FileSize(mon.Path()),
-			LastScanned: mon.Header.LastScanned,
+		if !opts.NoZero || mon.Count() > 0 {
+			simp := types.SimpleMonitor{
+				Address:     mon.GetAddrStr(),
+				NRecords:    int(mon.Count()),
+				FileSize:    file.FileSize(mon.Path()),
+				LastScanned: mon.Header.LastScanned,
+			}
+			if opts.Globals.TestMode {
+				simp.NRecords = 1001001
+				simp.FileSize = 1001001
+				simp.LastScanned = maxTestingBlock
+			}
+			results = append(results, simp)
 		}
-		if opts.Globals.TestMode {
-			simp.LastScanned = maxTestingBlock
-		}
-		results = append(results, simp)
 		mon.Close()
 	}
 

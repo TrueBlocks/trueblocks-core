@@ -16,10 +16,10 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-extern double getPrice_UsdPerEth(blknum_t bn, string_q& priceSource);
-extern double getPrice_UsdPerTok(blknum_t bn, string_q& priceSource, const address_t& address);
-extern double getPrice_EthPerTok(blknum_t bn, string_q& priceSource, const address_t& address);
-extern double getPriceMaker_UsdPerEth(blknum_t bn, string_q& priceSource);
+extern double getPrice_UsdPerEth(string_q& priceSource, blknum_t bn);
+extern double getPrice_UsdPerTok(const address_t& assetAddr, string_q& priceSource, blknum_t bn);
+extern double getPrice_EthPerTok(const address_t& assetAddr, string_q& priceSource, blknum_t bn);
+extern double getPriceMaker_UsdPerEth(string_q& priceSource, blknum_t bn);
 
 //---------------------------------------------------------------------------
 static const address_t sai = "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359";
@@ -41,7 +41,9 @@ class CUniPair : public CEthCall {
     address_t r2;
     bool reversed;
     bool selfie;
-    CUniPair(const address_t& r1In, const address_t& r2In) : r1(r1In), r2(r2In), reversed(false), selfie(false) {
+    CUniPair(blknum_t bn, const address_t& r1In, const address_t& r2In)
+        : CEthCall(), r1(r1In), r2(r2In), reversed(false), selfie(false) {
+        blockNumber = bn;
         if (r1In > r2In) {
             r1 = r2In;
             r2 = r1In;
@@ -50,15 +52,17 @@ class CUniPair : public CEthCall {
             selfie = true;
         }
     }
-    CUniPair(void) : reversed(false), selfie(false) {
+    CUniPair(void) : CEthCall(), reversed(false), selfie(false) {
     }
     CUniPair(const CUniPair& p) {
+        CEthCall::initialize();
         r1 = p.r1;
         r2 = p.r2;
         reversed = p.reversed;
         selfie = p.selfie;
     }
     CUniPair& operator=(const CUniPair& p) {
+        CEthCall::operator=(p);
         r1 = p.r1;
         r2 = p.r2;
         reversed = p.reversed;
@@ -70,12 +74,13 @@ class CUniPair : public CEthCall {
 };
 
 //---------------------------------------------------------------------------
-double getPriceInUsd(blknum_t bn, string& priceSource, const address_t& addr) {
+double getPriceInUsd(const address_t& assetAddr, string& priceSource, blknum_t bn) {
     // TODO: Multi-chain missing feature on other chains
     if (getChain() != "mainnet") {
         return 1.0;
     }
-    return addr.empty() ? getPrice_UsdPerEth(bn, priceSource) : getPrice_UsdPerTok(bn, priceSource, addr);
+    return assetAddr.empty() || assetAddr == FAKE_ETH_ADDRESS ? getPrice_UsdPerEth(priceSource, bn)
+                                                              : getPrice_UsdPerTok(assetAddr, priceSource, bn);
 }
 
 //---------------------------------------------------------------------------
@@ -100,11 +105,14 @@ bool CUniPair::findPair(void) {
         uniFactory.address = uniswapFactory;
         uniFactory.encoding = getPair;
         uniFactory.abi_spec.loadAbisKnown("uniswap");
-        uniFactory.blockNumber = getLatestBlock_client();  // doesn't really matter
+        uniFactory.blockNumber = blockNumber;
         uniFactory.deployed = getDeployBlock(uniswapFactory);
     }
     uniFactory.bytes = hex_2_Pad64(r1) + hex_2_Pad64(r2);
-    if (!doEthCall(uniFactory)) {
+    if (!doEthCall(uniFactory, true /* proxy */)) {
+        if (isTestMode()) {
+            LOG_INFO("doEthCall in CUniPrice::findPair returned false");
+        }
         notPairs[key] = true;
         return false;
     }
@@ -129,8 +137,12 @@ bool CUniPair::getPrice(blknum_t bn, string_q& priceSource, double& priceOut) {
     priceOut = 1.;
 
     blockNumber = bn;
-    if (!doEthCall(*this))
+    if (!doEthCall(*this, true /* proxy */)) {
+        if (isTestMode()) {
+            LOG_INFO("doEthCall in CUniPrice::getPrice returned false");
+        }
         return false;
+    }
 
     CStringArray results;
     if (!getCallResult(results) || results.size() < 2) {
@@ -158,18 +170,18 @@ bool CUniPair::getPrice(blknum_t bn, string_q& priceSource, double& priceOut) {
 }
 
 //---------------------------------------------------------------------------
-double getPrice_UsdPerEth(blknum_t bn, string_q& priceSource) {
-    CUniPair usdEth(dai, wEth);
+double getPrice_UsdPerEth(string_q& priceSource, blknum_t bn) {
+    CUniPair usdEth(bn, dai, wEth);
     if (usdEth.findPair()) {
         double price;
         if (usdEth.getPrice(bn, priceSource, price))
             return price;
     }
-    return getPriceMaker_UsdPerEth(bn, priceSource);
+    return getPriceMaker_UsdPerEth(priceSource, bn);
 }
 
 //---------------------------------------------------------------------------
-double getPrice_UsdPerTok(blknum_t bn, string_q& priceSource, const address_t& tok) {
+double getPrice_UsdPerTok(const address_t& assetAddr, string_q& priceSource, blknum_t bn) {
     static const CStringArray stableCoins = {
         dai,
         "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",  // USDC
@@ -178,26 +190,26 @@ double getPrice_UsdPerTok(blknum_t bn, string_q& priceSource, const address_t& t
         sai,
     };
     for (auto coin : stableCoins) {
-        if (coin % tok) {
+        if (coin % assetAddr) {
             priceSource = "stable-coin";
             return 1.;  // Short curcuit...not accuate, but fast
         }
     }
 
-    if (tok % wEth)
-        return getPrice_UsdPerEth(bn, priceSource);
+    if (assetAddr % wEth)
+        return getPrice_UsdPerEth(priceSource, bn);
 
-    double ethPerTok = getPrice_EthPerTok(bn, priceSource, tok);
+    double ethPerTok = getPrice_EthPerTok(assetAddr, priceSource, bn);
     if (ethPerTok == 0.)
         return 0.;
-    double usdPerEth = getPrice_UsdPerEth(bn, priceSource);
+    double usdPerEth = getPrice_UsdPerEth(priceSource, bn);
     LOG4("ethPerTok: ", ethPerTok, " usdPerEth: ", usdPerEth, " price: ", (usdPerEth * ethPerTok));
     return usdPerEth * ethPerTok;
 }
 
 //---------------------------------------------------------------------------
-double getPrice_EthPerTok(blknum_t bn, string_q& priceSource, const address_t& tok) {
-    CUniPair thePair(wEth, tok);
+double getPrice_EthPerTok(const address_t& tokenAddr, string_q& priceSource, blknum_t bn) {
+    CUniPair thePair(bn, wEth, tokenAddr);
     if (thePair.findPair()) {
         double price;
         if (thePair.getPrice(bn, priceSource, price))
@@ -209,7 +221,7 @@ double getPrice_EthPerTok(blknum_t bn, string_q& priceSource, const address_t& t
 }
 
 //---------------------------------------------------------------------------
-double getPriceMaker_UsdPerEth(blknum_t bn, string_q& priceSource) {
+double getPriceMaker_UsdPerEth(string_q& priceSource, blknum_t bn) {
     static const char* makerMedianizer = "0x729d19f657bd0614b4985cf1d82531c67569197b";
     static const char* peek = "0x59e02dd7";
     static CAbi spec;
@@ -220,7 +232,7 @@ double getPriceMaker_UsdPerEth(blknum_t bn, string_q& priceSource) {
     theCall.address = makerMedianizer;
     theCall.encoding = peek;
     theCall.abi_spec = spec;
-    if (doEthCall(theCall)) {
+    if (doEthCall(theCall, true /* proxy */)) {
         CStringArray results;
         theCall.getCallResult(results);
         if (results.size() > 1 && results[1] == "true") {
@@ -229,6 +241,10 @@ double getPriceMaker_UsdPerEth(blknum_t bn, string_q& priceSource) {
             wei_t ether = wei / weiPerEther();
             priceSource = "maker";
             return str_2_Uint(wei_2_Str(ether)) / 100.;
+        }
+    } else {
+        if (isTestMode()) {
+            LOG_INFO("doEthCall in getPriceMaker_UsdPerEth returned false");
         }
     }
 

@@ -440,6 +440,9 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
 void CTransaction::finishParse() {
     // EXISTING_CODE
     receipt.pTransaction = this;
+    for (size_t i = 0; i < traces.size(); i++) {
+        traces[i].pTransaction = this;
+    }
     // EXISTING_CODE
 }
 
@@ -1082,13 +1085,33 @@ bool CTransaction::forEveryTrace(TRACEVISITFUNC func, void* data) const {
         return false;
 
     CTraceArray traceArray;
-    getTraces(traceArray, hash);
+    getTraces(traceArray, hash, this);
     for (auto trace : traceArray) {
         if (!(*func)(trace, data))
             return false;
     }
 
     return true;
+}
+
+//-------------------------------------------------------------------------
+CTransfer CTransaction::toTransfer(void) const {
+    CTransfer transfer;
+    transfer.sender = from;
+    transfer.recipient = to;
+    transfer.blockNumber = blockNumber;
+    transfer.transactionIndex = transactionIndex;
+    transfer.logIndex = 0;
+    transfer.timestamp = str_2_Ts(Format("[{TIMESTAMP}]"));
+    transfer.date = ts_2_Date(transfer.timestamp);
+    transfer.transactionHash = hash;
+    transfer.encoding = input.substr(0, 10);
+    transfer.assetAddr = FAKE_ETH_ADDRESS;
+    transfer.log = nullptr;
+    transfer.assetSymbol = expContext().asEther ? "ETH" : "WEI";
+    transfer.decimals = 18;
+    transfer.amount = value;
+    return transfer;
 }
 // EXISTING_CODE
 }  // namespace qblocks

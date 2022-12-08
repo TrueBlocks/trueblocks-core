@@ -17,16 +17,18 @@ Arguments:
   blocks - a space-separated list of one or more block identifiers (required)
 
 Flags:
-  -e, --hashes       display only transaction hashes, default is to display full transaction detail
-  -c, --uncles       display uncle blocks (if any) instead of the requested block
-  -t, --trace        export the traces from the block as opposed to the block data
-  -s, --apps         display a list of uniq address appearances in the block
-  -u, --uniq         display a list of uniq address appearances per transaction
-  -U, --count        display the number of the lists of appearances for --addrs or --uniq
-  -o, --cache        force a write of the block to the cache
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -v, --verbose      enable verbose (increase detail with --log_level)
-  -h, --help         display this help screen
+  -e, --hashes        display only transaction hashes, default is to display full transaction detail
+  -c, --uncles        display uncle blocks (if any) instead of the requested block
+  -t, --trace         export the traces from the block as opposed to the block data
+  -s, --apps          display a list of uniq address appearances in the block
+  -u, --uniq          display a list of uniq address appearances per transaction
+  -f, --flow string   for the uniq and apps options only, export only from or to (including trace from or to)
+                      One of [ from | to | reward ]
+  -U, --count         display the number of the lists of appearances for --addrs or --uniq
+  -o, --cache         force a write of the block to the cache
+  -x, --fmt string    export format, one of [none|json*|txt|csv]
+  -v, --verbose       enable verbose (increase detail with --log_level)
+  -h, --help          display this help screen
 
 Notes:
   - Blocks is a space-separated list of values, a start-end range, a special, or any combination.
@@ -46,7 +48,6 @@ All tools accept the following additional flags, although in some cases, they ha
   -v, --version         display the current version of the tool
       --wei             export values in wei (the default)
       --ether           export values in ether
-      --dollars         export values in US dollars
       --raw             pass raw RPC data directly from the node with no processing
       --to_file         write the results to a temporary file and return the filename
       --output string   write the results to file 'fn' and return the filename

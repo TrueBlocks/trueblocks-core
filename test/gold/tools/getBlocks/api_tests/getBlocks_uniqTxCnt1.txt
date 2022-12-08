@@ -6,5 +6,12 @@ blocks?blocks=3982128&uniq&count&fmt=json
       "transactionsCnt": 91,
       "uniq": 253
     }
-  ]
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
 }

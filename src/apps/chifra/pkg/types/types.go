@@ -1,6 +1,9 @@
 package types
 
 import (
+	"math/big"
+	"time"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/bykof/gostradamus"
 	"github.com/ethereum/go-ethereum/common"
@@ -12,7 +15,7 @@ type Modeler[Raw RawData] interface {
 }
 
 type RawData interface {
-	RawReceipt
+	RawReceipt | RawWhenCount | RawNamedBlock
 }
 
 type Model struct {
@@ -28,15 +31,8 @@ func (h IpfsHash) String() string {
 
 type SimpleTimestamp struct {
 	BlockNumber uint64 `json:"blockNumber"`
-	TimeStamp   uint64 `json:"timestamp"`
+	Timestamp   uint64 `json:"timestamp"`
 	Diff        uint64 `json:"diff"`
-}
-
-type SimpleNamedBlock struct {
-	BlockNumber uint64 `json:"blockNumber"`
-	TimeStamp   uint64 `json:"timestamp"`
-	Date        string `json:"date"`
-	Name        string `json:"name,omitempty"`
 }
 
 type SimpleAppearance struct {
@@ -54,6 +50,20 @@ type VerboseAppearance struct {
 }
 
 type SimpleFunction struct {
+	Encoding        string            `json:"encoding,omitempty"`
+	Signature       string            `json:"signature,omitempty"`
+	Name            string            `json:"name"`
+	FunctionType    string            `json:"functionType"`
+	AbiSource       string            `json:"abi_source"`
+	Anonymous       bool              `json:"anonymous"`
+	Constant        bool              `json:"constant"`
+	StateMutability string            `json:"stateMutability"`
+	Inputs          []SimpleParameter `json:"inputs"`
+	Outputs         []SimpleParameter `json:"outputs"`
+}
+
+// TODO: remove this type when we move ABI output to StreamMany
+type SimpleFunctionOutput struct {
 	Encoding  string `json:"encoding,omitempty"`
 	Signature string `json:"signature,omitempty"`
 }
@@ -119,99 +129,99 @@ type SimpleIndexAddressBelongs struct {
 }
 
 type SimpleLog struct {
-	Address          common.Address `json:"address"`
-	LogIndex         uint32         `json:"logIndex"`
-	BlockNumber      uint64         `json:"blockNumber,omitempty"`
-	TransactionIndex uint32         `json:"transactionIndex,omitempty"`
-	Timestamp        uint64         `json:"timestamp,omitempty"`
-	Topics           []common.Hash  `json:"topics"`
-	Data             string         `json:"data,omitempty"`
-	CompressedLog    string         `json:"compressedLog,omitempty"`
-}
-
-type SimpleReceipt struct {
-	BlockHash         common.Hash    `json:"blockHash"`
-	BlockNumber       uint64         `json:"blockNumber"`
-	ContractAddress   common.Address `json:"contractAddress,omitempty"`
-	CumulativeGasUsed string         `json:"cumulativeGasUsed"`
-	From              common.Address `json:"from"`
-	GasUsed           uint64         `json:"gasUsed"`
-	EffectiveGasPrice uint64         `json:"effectiveGasPrice"`
-	Logs              []SimpleLog    `json:"logs,omitempty"`
-	// LogsBloom         string         `json:"-"`
-	// Root              string         `json:"-"`
-	Status           uint64         `json:"status"`
-	IsError          bool           `json:"isError,omitempty"`
-	To               common.Address `json:"to,omitempty"`
-	TransactionHash  common.Hash    `json:"hash"`
-	TransactionIndex uint64         `json:"transactionIndex"`
-	raw              *RawReceipt
-}
-
-func (r *SimpleReceipt) Raw() *RawReceipt {
-	return r.raw
-}
-
-func (r *SimpleReceipt) SetRaw(rawReceipt RawReceipt) {
-	r.raw = &rawReceipt
-}
-
-// To support custom format: just execute template on the output of Model
-func (r *SimpleReceipt) Model(showHidden bool, format string) Model {
-	model := map[string]interface{}{
-		"blockNumber":      r.BlockNumber,
-		"transactionIndex": r.TransactionIndex,
-		"hash":             r.TransactionHash,
-		"gasUsed":          r.GasUsed,
-		"status":           r.Status,
-		"isError":          r.IsError,
-	}
-	order := []string{
-		"blockNumber",
-		"transactionIndex",
-		"hash",
-		"gasUsed",
-		"status",
-		"isError",
-	}
-
-	if showHidden && format == "json" {
-		model["blockHash"] = r.BlockHash
-		model["contractAddress"] = r.ContractAddress
-		model["cumulativeGasUsed"] = r.CumulativeGasUsed
-		model["from"] = r.From
-		model["effectiveGasPrice"] = r.EffectiveGasPrice
-		model["logs"] = r.Logs
-		model["to"] = r.To
-
-		order = append(order, []string{
-			"blockHash",
-			"contractAddress",
-			"cumulativeGasUsed",
-			"from",
-			"effectiveGasPrice",
-			"logs",
-			"to",
-		}...)
-	}
-
-	if format == "api" {
-		model["logs"] = r.Logs
-		order = append(order, []string{"logs"}...)
-	}
-
-	return Model{
-		Data:  model,
-		Order: order,
-	}
+	Address          common.Address  `json:"address"`
+	LogIndex         uint64          `json:"logIndex"`
+	BlockNumber      uint64          `json:"blockNumber"`
+	TransactionIndex uint32          `json:"transactionIndex"`
+	Timestamp        uint64          `json:"timestamp,omitempty"`
+	Topics           []common.Hash   `json:"topics,omitempty"`
+	Data             string          `json:"data,omitempty"`
+	CompressedLog    string          `json:"compressedLog,omitempty"`
+	ArticulatedLog   *SimpleFunction `json:"-"`
 }
 
 type SimpleName struct {
-	Tags        string `json:"tags"`
-	Address     string `json:"address"`
-	Name        string `json:"name"`
-	Symbol      string `json:"symbol,omitempty"`
-	Source      string `json:"source,omitempty"`
-	Decimals    string `json:"decimals,omitempty"`
-	Description string `json:"description,omitempty"`
+	Tags     string `json:"tags"`
+	Address  string `json:"address"`
+	Name     string `json:"name"`
+	Symbol   string `json:"symbol,omitempty"`
+	Source   string `json:"source,omitempty"`
+	Decimals string `json:"decimals,omitempty"`
+	Petname  string `json:"petname,omitempty"`
+}
+
+type Wei = big.Int
+type Gas = uint64
+type Blknum = uint64
+type Topic = string
+
+type SimpleTransaction struct {
+	Hash                 common.Hash     `json:"hash"`
+	BlockHash            common.Hash     `json:"blockHash"`
+	BlockNumber          Blknum          `json:"blockNumber"`
+	TransactionIndex     uint64          `json:"transactionIndex"`
+	Nonce                uint64          `json:"nonce"`
+	Timestamp            time.Time       `json:"timestamp"`
+	From                 common.Address  `json:"from"`
+	To                   common.Address  `json:"to"`
+	Value                Wei             `json:"value"`
+	ExtraValue1          Wei             `json:"extraValue1"`
+	ExtraValue2          Wei             `json:"extraValue2"`
+	Gas                  Gas             `json:"gas"`
+	GasPrice             Gas             `json:"gasPrice"`
+	MaxFeePerGas         Gas             `json:"maxFeePerGas"`
+	MaxPriorityFeePerGas Gas             `json:"maxPriorityFeePerGas"`
+	Input                string          `json:"input"`
+	IsError              bool            `json:"isError"`
+	HasToken             bool            `json:"hasToken"`
+	Cachebits            uint8           `json:"cachebits"`
+	Reserved2            uint8           `json:"reserved2"`
+	Receipt              *SimpleReceipt  `json:"receipt"`
+	Traces               []SimpleTrace   `json:"traces"`
+	ArticulatedTx        *SimpleFunction `json:"articulatedTx"`
+}
+
+type SimpleTrace struct {
+	BlockHash        common.Hash        `json:"blockHash"`
+	BlockNumber      Blknum             `json:"blockNumber"`
+	Subtraces        uint64             `json:"subtraces"`
+	TraceAddress     []string           `json:"traceAddress"`
+	TransactionHash  common.Hash        `json:"transactionHash"`
+	TransactionIndex Blknum             `json:"transactionIndex"`
+	TraceType        string             `json:"traceType"`
+	Error            string             `json:"error"`
+	Action           *SimpleTraceAction `json:"action"`
+	Result           *SimpleTraceResult `json:"result"`
+	ArticulatedTrace *SimpleFunction    `json:"articulatedTrace"`
+}
+
+type SimpleTraceAction struct {
+	SelfDestructed common.Address `json:"selfDestructed"`
+	Balance        Wei            `json:"balance"`
+	CallType       string         `json:"callType"`
+	From           common.Address `json:"from"`
+	Gas            Gas            `json:"gas"`
+	Init           string         `json:"init"`
+	Input          string         `json:"input"`
+	RefundAddress  common.Address `json:"refundAddress"`
+	To             common.Address `json:"to"`
+	Value          Wei            `json:"value"`
+}
+type SimpleTraceResult struct {
+	NewContract common.Address `json:"newContract"`
+	Code        string         `json:"code"`
+	GasUsed     Gas            `json:"gasUsed"`
+	Output      string         `json:"output"`
+}
+
+type SimpleParameter struct {
+	ParameterType string            `json:"parameterType"`
+	Name          string            `json:"name"`
+	StrDefault    string            `json:"strDefault"`
+	Value         string            `json:"value"`
+	Indexed       bool              `json:"indexed"`
+	InternalType  string            `json:"internalType"`
+	Components    []SimpleParameter `json:"components"`
+	Unused        bool              `json:"unused"`
+	IsFlags       uint64            `json:"is_flags"`
 }

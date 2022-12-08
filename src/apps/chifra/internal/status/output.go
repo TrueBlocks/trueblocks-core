@@ -12,6 +12,7 @@ package statusPkg
 import (
 	"net/http"
 
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -20,6 +21,7 @@ import (
 // RunStatus handles the status command for the command line. Returns error only as per cobra.
 func RunStatus(cmd *cobra.Command, args []string) (err error) {
 	opts := statusFinishParse(args)
+	outputHelpers.SetWriterForCommand("status", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.StatusInternal()
@@ -29,9 +31,12 @@ func RunStatus(cmd *cobra.Command, args []string) (err error) {
 // ServeStatus handles the status command for the API. Returns error and a bool if handled
 func ServeStatus(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := statusFinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("status", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return opts.StatusInternal()
+	err, handled = opts.StatusInternal()
+	outputHelpers.CloseJsonWriterIfNeededApi("status", err, &opts.Globals)
+	return
 }
 
 // StatusInternal handles the internal workings of the status command.  Returns error and a bool if handled
@@ -42,7 +47,7 @@ func (opts *StatusOptions) StatusInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.Globals.ApiMode {
+	if opts.Globals.IsApiMode() {
 		return nil, false
 	}
 

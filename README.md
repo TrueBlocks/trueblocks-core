@@ -1,6 +1,6 @@
 # Recent Migrations
 
-Please complete any applicable [Migrations](https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md) which contains important information.
+Please complete any applicable [Migrations](https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md).
 
 # TrueBlocks Core
 
@@ -15,13 +15,13 @@ Please complete any applicable [Migrations](https://github.com/TrueBlocks/truebl
 - [TrueBlocks Core](#trueblocks-core)
   - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
-  - [Quick Install](#quick-install)
+  - [Quick install](#quick-install)
     - [Optional steps](#optional-steps)
   - [Introducing chifra](#introducing-chifra)
     - [Getting status](#getting-status)
     - [-- Troubleshooting](#---troubleshooting)
-  - [Using chifra](#using-chifra)
-  - [Building the Index](#building-the-index)
+  - [Using Chifra](#using-chifra)
+  - [Building the index](#building-the-index)
   - [Docker](#docker)
   - [Documentation](#documentation)
   - [Contributing](#contributing)
@@ -38,7 +38,7 @@ TrueBlocks is a collection of libraries, tools, and applications that improve ac
 
 3) TrueBlocks enhances the Ethereum RPC interfaces. For example, you may query blocks and transactions by date, by block range, by hashes, or any combination. Furthermore, two additional endpoints are provided to extract (`export`) and list (`list`) historical transactions per address.
 
-## Quick Install
+## Quick install
 
 TrueBlocks runs on Linux and Mac. There is no official Windows support.
 Some users have had success using WSL─you're on your own!
@@ -49,7 +49,7 @@ If you need help with a step, see the [installation's troubleshooting section](h
 
 0. Install dependencies
     - &#9745; [Install the latest version of Go](https://golang.org/doc/install).
-    - &#9745; Install the other dependencies with your command line: `build-essential` `git` `cmake` `ninja` `python` `python-dev` `libcurl3-dev` `clang-format` `jq`.
+    - &#9745; Install the other dependencies with your command line: `build-essential` `git` `cmake` `ninja` `python3` `libcurl3-dev` `clang-format` `jq`.
 
 Alternatively, for nix users, you can drop into an isolated environment with necessary dependencies with `nix-shell`.
 
@@ -125,7 +125,7 @@ If you get this error, edit the configuration file mentioned. The file is well d
 When the `chifra status` command returns a valid response, you may move to the next section. If
 you continue to have trouble, join our [discord discussion](https://discord.gg/kAFcZH2x7K).
 
-## Using chifra
+## Using Chifra
 
 If you've gotten this far, you're ready to use TrueBlocks. Run this command which shows every 10th block between the first and the 100,000th.
 
@@ -135,7 +135,7 @@ chifra blocks 0-100000:10
 
 Hit `Control+C` to stop the processing.
 
-## Building the Index
+## Building the index
 
 ---
 

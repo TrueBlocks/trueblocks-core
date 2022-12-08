@@ -27,7 +27,8 @@ blocks?blocks=2222222&trace&fmt=json
         "code": "",
         "gasUsed": 0,
         "output": ""
-      }
+      },
+      "timestamp": 1473348165
     },
     {
       "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
@@ -55,7 +56,8 @@ blocks?blocks=2222222&trace&fmt=json
         "code": "",
         "gasUsed": 0,
         "output": "0x"
-      }
+      },
+      "timestamp": 1473348165
     },
     {
       "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
@@ -83,7 +85,8 @@ blocks?blocks=2222222&trace&fmt=json
         "code": "",
         "gasUsed": 0,
         "output": "0x"
-      }
+      },
+      "timestamp": 1473348165
     },
     {
       "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
@@ -111,7 +114,8 @@ blocks?blocks=2222222&trace&fmt=json
         "code": "",
         "gasUsed": 0,
         "output": "0x"
-      }
+      },
+      "timestamp": 1473348165
     },
     {
       "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
@@ -139,7 +143,8 @@ blocks?blocks=2222222&trace&fmt=json
         "code": "",
         "gasUsed": 0,
         "output": "0x"
-      }
+      },
+      "timestamp": 1473348165
     },
     {
       "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
@@ -167,7 +172,8 @@ blocks?blocks=2222222&trace&fmt=json
         "code": "",
         "gasUsed": 0,
         "output": "0x"
-      }
+      },
+      "timestamp": 1473348165
     },
     {
       "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
@@ -195,7 +201,8 @@ blocks?blocks=2222222&trace&fmt=json
         "code": "",
         "gasUsed": 0,
         "output": "0x"
-      }
+      },
+      "timestamp": 1473348165
     },
     {
       "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
@@ -223,7 +230,8 @@ blocks?blocks=2222222&trace&fmt=json
         "code": "",
         "gasUsed": 0,
         "output": "0x"
-      }
+      },
+      "timestamp": 1473348165
     },
     {
       "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
@@ -251,7 +259,8 @@ blocks?blocks=2222222&trace&fmt=json
         "code": "",
         "gasUsed": 0,
         "output": "0x"
-      }
+      },
+      "timestamp": 1473348165
     },
     {
       "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
@@ -279,7 +288,8 @@ blocks?blocks=2222222&trace&fmt=json
         "code": "",
         "gasUsed": 0,
         "output": "0x"
-      }
+      },
+      "timestamp": 1473348165
     },
     {
       "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
@@ -307,7 +317,8 @@ blocks?blocks=2222222&trace&fmt=json
         "code": "",
         "gasUsed": 15479,
         "output": "0x"
-      }
+      },
+      "timestamp": 1473348165
     },
     {
       "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
@@ -335,7 +346,8 @@ blocks?blocks=2222222&trace&fmt=json
         "code": "",
         "gasUsed": 0,
         "output": "0x"
-      }
+      },
+      "timestamp": 1473348165
     },
     {
       "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
@@ -363,7 +375,8 @@ blocks?blocks=2222222&trace&fmt=json
         "code": "",
         "gasUsed": 15479,
         "output": "0x"
-      }
+      },
+      "timestamp": 1473348165
     },
     {
       "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
@@ -391,7 +404,8 @@ blocks?blocks=2222222&trace&fmt=json
         "code": "",
         "gasUsed": 15479,
         "output": "0x"
-      }
+      },
+      "timestamp": 1473348165
     },
     {
       "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
@@ -419,7 +433,15 @@ blocks?blocks=2222222&trace&fmt=json
         "code": "",
         "gasUsed": 15479,
         "output": "0x"
-      }
+      },
+      "timestamp": 1473348165
     }
-  ]
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
 }

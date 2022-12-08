@@ -27,8 +27,11 @@ type TransactionsOptions struct {
 	Articulate     bool                     `json:"articulate,omitempty"`     // Articulate the retrieved data if ABIs can be found
 	Trace          bool                     `json:"trace,omitempty"`          // Include the transaction's traces in the results
 	Uniq           bool                     `json:"uniq,omitempty"`           // Display a list of uniq addresses found in the transaction
-	Reconcile      string                   `json:"reconcile,omitempty"`      // Reconcile the transaction as per the provided address
+	Flow           string                   `json:"flow,omitempty"`           // For the uniq option only, export only from or to (including trace from or to)
+	Reconcile      string                   `json:"reconcile,omitempty"`      // Please use statements option instead
+	AccountFor     string                   `json:"accountFor,omitempty"`     // Reconcile the transaction as per the provided address
 	Cache          bool                     `json:"cache,omitempty"`          // Force the results of the query into the tx cache (and the trace cache if applicable)
+	Source         bool                     `json:"source,omitempty"`         // Find the source of the funds sent to the receiver
 	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
 	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
 }
@@ -41,8 +44,10 @@ func (opts *TransactionsOptions) testLog() {
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(opts.Trace, "Trace: ", opts.Trace)
 	logger.TestLog(opts.Uniq, "Uniq: ", opts.Uniq)
-	logger.TestLog(len(opts.Reconcile) > 0, "Reconcile: ", opts.Reconcile)
+	logger.TestLog(len(opts.Flow) > 0, "Flow: ", opts.Flow)
+	logger.TestLog(len(opts.AccountFor) > 0, "AccountFor: ", opts.AccountFor)
 	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
+	logger.TestLog(opts.Source, "Source: ", opts.Source)
 	opts.Globals.TestLog()
 }
 
@@ -72,11 +77,17 @@ func (opts *TransactionsOptions) toCmdLine() string {
 	if opts.Uniq {
 		options += " --uniq"
 	}
-	if len(opts.Reconcile) > 0 {
-		options += " --reconcile " + opts.Reconcile
+	if len(opts.Flow) > 0 {
+		options += " --flow " + opts.Flow
+	}
+	if len(opts.AccountFor) > 0 {
+		options += " --account_for " + opts.AccountFor
 	}
 	if opts.Cache {
 		options += " --cache"
+	}
+	if opts.Source {
+		options += " --source"
 	}
 	options += " " + strings.Join(opts.Transactions, " ")
 	// EXISTING_CODE
@@ -102,10 +113,16 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 			opts.Trace = true
 		case "uniq":
 			opts.Uniq = true
+		case "flow":
+			opts.Flow = value[0]
 		case "reconcile":
 			opts.Reconcile = value[0]
+		case "accountFor":
+			opts.AccountFor = value[0]
 		case "cache":
 			opts.Cache = true
+		case "source":
+			opts.Source = true
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "transactions")
@@ -115,7 +132,7 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
-	opts.Reconcile = ens.ConvertOneEns(opts.Globals.Chain, opts.Reconcile)
+	opts.AccountFor = ens.ConvertOneEns(opts.Globals.Chain, opts.AccountFor)
 	// EXISTING_CODE
 
 	return opts
@@ -128,7 +145,7 @@ func transactionsFinishParse(args []string) *TransactionsOptions {
 	defFmt := "txt"
 	// EXISTING_CODE
 	opts.Transactions = args
-	opts.Reconcile = ens.ConvertOneEns(opts.Globals.Chain, opts.Reconcile)
+	opts.AccountFor = ens.ConvertOneEns(opts.Globals.Chain, opts.AccountFor)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
@@ -140,4 +157,12 @@ func GetOptions() *TransactionsOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return &defaultTransactionsOptions
+}
+
+func ResetOptions() {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
+	defaultTransactionsOptions = TransactionsOptions{}
+	globals.SetDefaults(&defaultTransactionsOptions.Globals)
+	defaultTransactionsOptions.Globals.Writer = w
 }

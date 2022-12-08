@@ -28,17 +28,19 @@ bool COptions::handle_status(ostream& os) {
         }
 
         CStatusTerse st = status;
-        bool isText = expContext().exportFmt != JSON1 && expContext().exportFmt != API1;
+        bool isText = expContext().exportFmt != JSON1;
         if (!isText) {
             fmt = "";
             manageFields("CStatusTerse:modes1,modes2", FLD_HIDE);
             manageFields("CStatus:clientIds,host,isApi,isScraping,caches,chains", FLD_HIDE);
         }
+        size_t nRecords = ((fileSize(indexFolderBin_ts) / sizeof(uint32_t)) / 2);
         ostringstream m;
         if (isTestMode())
-            m << "--client--, --final--, --staging--, --unripe";
+            m << "--client--, --final--, --staging--, --unripe-- ts: --ts--";
         else
-            m << meta.client << ", " << meta.finalized << ", " << meta.staging << ", " << meta.unripe;
+            m << meta.client << ", " << meta.finalized << ", " << meta.staging << ", " << meta.unripe << ", "
+              << "ts: " << nRecords;
         replace(fmt, "[{PROGRESS}]", m.str());
         ostringstream n;
         n << meta.chain << " (" << meta.chainId << "," << meta.networkId << ")";
@@ -78,8 +80,9 @@ bool COptions::handle_status(ostream& os) {
         } else {
             LOG8("Read from cache");
         }
-        if (!origMode.empty())
-            LOG_PROGRESS(COMPLETE, index.nFiles, index.nFiles, "");
+        if (!isTestMode() && !origMode.empty()) {
+            LOG_PROG("Complete ", index.nFiles, " of ", index.nFiles);
+        }
         status.caches.push_back(&index);
     }
 
@@ -275,6 +278,7 @@ bool noteMonitor(const string_q& path, void* data) {
         string_q addr = substitute(path, "/0x", "|");
         nextTokenClear(addr, '|');
         mdi.address = "0x" + nextTokenClear(addr, '.');
+        mdi.petname = addr_2_Petname(mdi.address, '-');
         findName(mdi.address, mdi);
         if (!isTestMode()) {
             CArchive archive(READING_ARCHIVE);
@@ -298,6 +302,7 @@ bool noteMonitor(const string_q& path, void* data) {
         } else {
             mdi = CMonitorCacheItem();
             mdi.address = "---address---";
+            mdi.petname = "--petname--";
             mdi.name = "--name--";
             mdi.tags = "--tags--";
             mdi.source = "--source--";
@@ -306,6 +311,7 @@ bool noteMonitor(const string_q& path, void* data) {
 
         CMonitor m;
         m.address = mdi.address;
+        m.petname = mdi.petname;
         CMonitorHeader header;
         m.readMonitorHeader(header);
         mdi.deleted = header.deleted;
@@ -337,7 +343,9 @@ bool noteIndex(const string_q& path, void* data) {
         timestamp_t unused;
         blknum_t last = NOPOS;
         blknum_t first = path_2_Bn(path, last, unused);
-        LOG_PROGRESS(SCANNING, ++counter->fileRange.first, counter->fileRange.second, "\r");
+        if (!isTestMode()) {
+            LOG_PROG("Scanning ", ++counter->fileRange.first, " of ", counter->fileRange.second, "\r");
+        }
 
         if (last < counter->options->scanRange.first)
             return true;
@@ -405,10 +413,12 @@ bool noteABI(const string_q& path, void* data) {
         string_q addr = substitute(path, "/0x", "|");
         nextTokenClear(addr, '|');
         abii.address = "0x" + nextTokenClear(addr, '.');
+        abii.petname = addr_2_Petname(abii.address, '-');
         CAccountName n;
         findName(abii.address, n);
         if (isTestMode()) {
             abii.address = "---address---";
+            abii.petname = "--petname--";
             abii.name = "--name--";
             abii.nFunctions = abii.nEvents = abii.nOther = abii.sizeInBytes = 36963;
         } else {

@@ -33,7 +33,6 @@ func EditName(w http.ResponseWriter, r *http.Request) {
 	cmd.Env = append(cmd.Env, "TB_NAME_SOURCE="+newName.Source)
 	cmd.Env = append(cmd.Env, "TB_NAME_SYMBOL="+newName.Symbol)
 	cmd.Env = append(cmd.Env, "TB_NAME_DECIMALS="+newName.Decimals)
-	cmd.Env = append(cmd.Env, "TB_NAME_DESCR="+newName.Description)
 	out, err := cmd.Output()
 	if err != nil {
 		log.Print("Error from server: ", err)
@@ -54,19 +53,19 @@ func EditName(w http.ResponseWriter, r *http.Request) {
 }
 
 type NamedAddress struct {
-	Tags        string `json:"tags"`
-	Address     string `json:"address"`
-	Name        string `json:"name"`
-	Symbol      string `json:"symbol,omitempty"`
-	Source      string `json:"source"`
-	Decimals    string `json:"decimals,omitempty"`
-	Description string `json:"description,omitempty"`
-	Deleted     bool   `json:"deleted,omitempty"`
-	IsCustom    bool   `json:"isCustom,omitempty"`
-	IsPrefund   bool   `json:"isPrefund,omitempty"`
-	IsContract  bool   `json:"isContract,omitempty"`
-	IsErc20     bool   `json:"isErc20,omitempty"`
-	IsErc721    bool   `json:"isErc721,omitempty"`
+	Tags       string `json:"tags"`
+	Address    string `json:"address"`
+	Name       string `json:"name"`
+	Symbol     string `json:"symbol,omitempty"`
+	Source     string `json:"source"`
+	Decimals   string `json:"decimals,omitempty"`
+	Petname    string `json:"petname,omitempty"`
+	Deleted    bool   `json:"deleted,omitempty"`
+	IsCustom   bool   `json:"isCustom,omitempty"`
+	IsPrefund  bool   `json:"isPrefund,omitempty"`
+	IsContract bool   `json:"isContract,omitempty"`
+	IsErc20    bool   `json:"isErc20,omitempty"`
+	IsErc721   bool   `json:"isErc721,omitempty"`
 }
 
 func NewNamedAddress() NamedAddress {
@@ -75,7 +74,7 @@ func NewNamedAddress() NamedAddress {
 	ret.Address = "none"
 	ret.Tags = "19-Unknown"
 	ret.Source = "EtherScan.io"
-	// ret.Description = ""
+	// ret.Petname = ""
 	return *ret
 }
 

@@ -152,6 +152,12 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	}
 	reports = append(reports, d2r)
 
+	// stage := types.ReportCheck{Reason: "Check staging folder"}
+	// if err := opts.CheckStaging(0, allowMissing, &stage); err != nil {
+	// 	return err
+	// }
+	// reports = append(reports, stage)
+
 	for i := 0; i < len(reports); i++ {
 		reports[i].FailedCnt = reports[i].CheckedCnt - reports[i].PassedCnt
 		if reports[i].FailedCnt == 0 {

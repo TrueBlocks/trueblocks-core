@@ -1,0 +1,11 @@
+[settings]
+class = CTransfer
+fields = transfer.csv
+includes = utillib.h|logentry.h
+equals = compare(it) == 0
+sort = v1.compare(v2) < 0
+cpp_includes = etherlib.h
+doc_group = 03-Chain State
+doc_descr = a representation of an ERC-20 token transfer
+doc_api = 21-transfer
+doc_producer = transactions, export

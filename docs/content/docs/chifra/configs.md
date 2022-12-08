@@ -90,7 +90,6 @@ If you're running against mutliple chains, you may place any of these files in t
 | [settings]          |                                                                                                                                     |
 | cache               | If true, queried transactions are cached<br />false                                                                                 |
 | cache_traces        | If true, queried traces are cached<br />false                                                                                       |
-| max_slow_queries    | In API mode only, if transactions do not reconcile, only produce this many results per page<br />13                                 |
 | ether_rounding      | When doing reconciliations, round to this number of decimals places<br />18                                                         |
 | start_when_deployed | For smart contracts only, if `true`, start scan when contract is first deployed. If `false`, scan entire history (slower)<br />true |
 | max_traces          | For any given transaction, limit number of traces to this number<br />250                                                           |

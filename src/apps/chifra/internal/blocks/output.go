@@ -12,6 +12,7 @@ package blocksPkg
 import (
 	"net/http"
 
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -20,6 +21,7 @@ import (
 // RunBlocks handles the blocks command for the command line. Returns error only as per cobra.
 func RunBlocks(cmd *cobra.Command, args []string) (err error) {
 	opts := blocksFinishParse(args)
+	outputHelpers.SetWriterForCommand("blocks", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.BlocksInternal()
@@ -29,9 +31,12 @@ func RunBlocks(cmd *cobra.Command, args []string) (err error) {
 // ServeBlocks handles the blocks command for the API. Returns error and a bool if handled
 func ServeBlocks(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := blocksFinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("blocks", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return opts.BlocksInternal()
+	err, handled = opts.BlocksInternal()
+	outputHelpers.CloseJsonWriterIfNeededApi("blocks", err, &opts.Globals)
+	return
 }
 
 // BlocksInternal handles the internal workings of the blocks command.  Returns error and a bool if handled
@@ -42,7 +47,12 @@ func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.Globals.ApiMode {
+	if false && opts.List > 0 {
+		// return opts.HandleList(), true
+		opts.HandleList()
+	}
+
+	if opts.Globals.IsApiMode() {
 		return nil, false
 	}
 

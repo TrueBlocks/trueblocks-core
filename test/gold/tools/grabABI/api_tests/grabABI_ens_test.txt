@@ -172,5 +172,12 @@ abis?addrs=uniswap.eth&fmt=json
       "input_names": "",
       "output_names": "val_0,"
     }
-  ]
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
 }

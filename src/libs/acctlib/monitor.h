@@ -19,7 +19,7 @@
 #include "transaction.h"
 #include "reconciliation.h"
 #include "ethstate.h"
-#include "monitoredapp.h"
+#include "monitordapp.h"
 
 namespace qblocks {
 

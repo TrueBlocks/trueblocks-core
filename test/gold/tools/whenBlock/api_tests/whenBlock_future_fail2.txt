@@ -3,8 +3,8 @@ when?blocks=1000000-50000000:35000000
   "data": [
     {
       "blockNumber": 1000000,
-      "timestamp": 1455404053,
-      "date": "2016-02-13 22:54:13 UTC"
+      "date": "2016-02-13 22:54:13 UTC",
+      "timestamp": 1455404053
     }
   ],
   "meta": {
@@ -16,9 +16,7 @@ when?blocks=1000000-50000000:35000000
     "chainId": 1,
     "networkId": 1,
     "chain": "mainnet"
-  }
-}
-{
+  },
   "errors": [
     "block number or timestamp for 36000000 not found"
   ]

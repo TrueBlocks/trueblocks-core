@@ -20,7 +20,7 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("addrs2", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported"),  // NOLINT
+    COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported"),  // NOLINT
     COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),  // NOLINT
     COption("parts", "p", "list<enum[name|symbol|decimals|totalSupply|version|none|all*]>", OPT_FLAG, "which parts of the token information to retrieve"),  // NOLINT
     COption("by_acct", "b", "", OPT_SWITCH, "consider each address an ERC20 token except the last, whose balance is reported for each token"),  // NOLINT
@@ -116,7 +116,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // We're going to turn some of these fields back on
-    manageFields("CAccountName:isCustom,isPrefund,tags,name,symbol,source,decimals,description", false);
+    manageFields("CAccountName:isCustom,isPrefund,tags,name,symbol,source,decimals,petname", false);
     manageFields("CMonitor:all", false);
     manageFields("CTokenBalanceRecord:all", false);
 
@@ -223,7 +223,7 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     // BEG_CODE_GLOBALOPTS
-    registerOptions(nParams, params, OPT_RAW, OPT_DOLLARS | OPT_ETHER);
+    registerOptions(nParams, params, OPT_RAW, OPT_ETHER);
     // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT

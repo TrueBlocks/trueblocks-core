@@ -1,6 +1,5 @@
 // TODO(tjayrush): If an abi file is newer than the monitor file - clear the cache
 // TODO(tjayrush): accounting disallows freshen, apps, logs, receipts, statements, traces, but requires articulate
-// TODO(tjayrush): accounting must be exportFmt API1 - why?
 // TODO(tjayrush): accounting must be for one monitor address - why?
 // TODO(tjayrush): accounting requires node balances - why?
 // TODO(tjayrush): Used to do this: if any ABI files was newer, re-read abi and re-articulate in cache
@@ -38,21 +37,21 @@ static const COption params[] = {
     COption("receipts", "r", "", OPT_SWITCH, "export receipts instead of transactional data"),
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transactional data"),
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transactional data"),
-    COption("statements", "A", "", OPT_SWITCH, "export reconciliations instead of transactional data (assumes --accounting option)"),  // NOLINT
     COption("neighbors", "n", "", OPT_SWITCH, "export the neighbors of the given address"),
     COption("accounting", "C", "", OPT_SWITCH, "attach accounting records to the exported data (applies to transactions export only)"),  // NOLINT
+    COption("statements", "A", "", OPT_SWITCH, "for the accounting options only, export only statements"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("cache", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
     COption("cache_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
     COption("count", "U", "", OPT_SWITCH, "only available for --appearances mode, if present, return only the number of records"),  // NOLINT
     COption("first_record", "c", "<uint64>", OPT_FLAG, "the first record to process"),
-    COption("max_records", "e", "<uint64>", OPT_FLAG, "the maximum number of records to process before reporting"),
+    COption("max_records", "e", "<uint64>", OPT_FLAG, "the maximum number of records to process"),
     COption("relevant", "", "", OPT_SWITCH, "for log and accounting export only, export only logs relevant to one of the given export addresses"),  // NOLINT
     COption("emitter", "", "list<addr>", OPT_FLAG, "for log export only, export only logs if emitted by one of these address(es)"),  // NOLINT
     COption("topic", "", "list<topic>", OPT_FLAG, "for log export only, export only logs with this topic(s)"),
-    COption("asset", "", "list<addr>", OPT_FLAG, "for the statements option only, export only reconciliations for this asset"),  // NOLINT
-    COption("flow", "", "enum[in|out|zero]", OPT_FLAG, "for the statements option only, export only statements with incoming value or outgoing value"),  // NOLINT
-    COption("factory", "y", "", OPT_SWITCH, "scan for contract creations from the given address(es) and report address of those contracts"),  // NOLINT
+    COption("asset", "", "list<addr>", OPT_FLAG, "for the accounting options only, export statements only for this asset"),  // NOLINT
+    COption("flow", "f", "enum[in|out|zero]", OPT_FLAG, "for the accounting options only, export statements with incoming, outgoing, or zero value"),  // NOLINT
+    COption("factory", "y", "", OPT_SWITCH, "for --traces only, report addresses created by (or self-destructed by) the given address(es)"),  // NOLINT
     COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
     COption("reversed", "", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
     COption("first_block", "F", "<blknum>", OPT_FLAG, "first block to process (inclusive)"),
@@ -116,14 +115,14 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-t" || arg == "--traces") {
             traces = true;
 
-        } else if (arg == "-A" || arg == "--statements") {
-            statements = true;
-
         } else if (arg == "-n" || arg == "--neighbors") {
             neighbors = true;
 
         } else if (arg == "-C" || arg == "--accounting") {
             accounting = true;
+
+        } else if (arg == "-A" || arg == "--statements") {
+            statements = true;
 
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
@@ -173,10 +172,10 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "--asset") {
             return flag_required("asset");
 
-        } else if (startsWith(arg, "--flow:")) {
+        } else if (startsWith(arg, "-f:") || startsWith(arg, "--flow:")) {
             if (!confirmEnum("flow", flow, arg))
                 return false;
-        } else if (arg == "--flow") {
+        } else if (arg == "-f" || arg == "--flow") {
             return flag_required("flow");
 
         } else if (arg == "-y" || arg == "--factory") {
@@ -224,29 +223,38 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (!isApiMode() && max_records == 250)
+    if (first_record == 0) {
+        return usage("Should not happen: " + uint_2_Str(first_record) + "  must be at least 1.");
+    }
+
+    if (!isApiMode() && (max_records == 250 || max_records == 0))
         max_records = (((size_t)-100000000));  // this is a very large number that won't wrap
 
-    if (accounting && !isArchiveNode())
+    if (!isArchiveNode() && accounting) {
         return usage("The --accounting option requires historical balances which your RPC server does not provide.");
+    }
 
-    if ((appearances + logs + receipts + traces + statements + neighbors + accounting) > 1)
-        return usage("Please export only one of list, receipts, statements, logs, or traces.");
-
-    for (auto e : emitter)
+    for (auto e : emitter) {
         logFilter.emitters.push_back(e);
+    }
 
-    for (auto t : topics)
+    for (auto t : topics) {
         logFilter.topics.push_back(t);
+    }
 
-    for (auto t : topic)
+    for (auto t : topic) {
         logFilter.topics.push_back(t);
+    }
 
-    for (auto addr : asset)
-        assetFilter[addr] = true;
+    for (auto addr : asset) {  // asset is an array even though it's singular
+        ledgerManager.setAssetFilter(addr);
+    }
 
-    if (!loadNames())
+    if (!loadNames()) {
         return usage("Could not load names database.");
+    }
+
+    exportRange = make_pair(first_block, last_block);
 
     for (auto addr : addrs) {
         CMonitor monitor;
@@ -255,17 +263,20 @@ bool COptions::parseArguments(string_q& command) {
         monitor.finishParse();
         monitor.isStaging = !fileExists(monitor.getPathToMonitor(monitor.address, false));
 
-        if (accountedFor.address.empty()) {
-            accountedFor.address = monitor.address;
-            findName(monitor.address, accountedFor);
-            accountedFor.isContract = !getCodeAt(monitor.address, latest).empty();
+        if (ledgerManager.accountedFor.empty()) {
+            ledgerManager.accountedFor = monitor.address;
+            ledgerManager.name.address = monitor.address;
+            findName(monitor.address, ledgerManager.name);
+            ledgerManager.name.petname = addr_2_Petname(ledgerManager.accountedFor, '-');  // order matters
+            ledgerManager.name.isContract = !getCodeAt(monitor.address, latest).empty();
         }
 
         allMonitors.push_back(monitor);
     }
 
-    if (appearances || count)
+    if (appearances || count) {
         articulate = false;
+    }
 
     if (articulate) {
         abi_spec.loadAbisFromKnown();
@@ -275,22 +286,21 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (!setDisplayFormatting())
+    if (!setDisplayFormatting()) {
         return false;
+    }
 
     // TODO: This can be removed
     CMonitor m;
     cleanFolder(m.getPathToMonitor("", true));
-
-    if (first_block > last_block)
-        return usage("--first_block must be less than or equal to --last_block.");
-    exportRange = make_pair(first_block, last_block);
 
     if (count) {
         cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CMonitorCount)->m_ClassName);
         for (auto monitor : allMonitors) {
             CMonitorCount monCount;
             monCount.address = monitor.address;
+            // CMonitorCount doesn't have a petname
+            // monCount.petname = addr_2_Petname(monCount.address, '-');
             monCount.fileSize = fileSize(monitor.getPathToMonitor(monitor.address, false));
             monCount.nRecords = monitor.getRecordCnt(monitor.getPathToMonitor(monitor.address, false));
             cout << ((isJson() && !firstOut) ? ", " : "");
@@ -346,16 +356,16 @@ void COptions::Init(void) {
     receipts = false;
     logs = false;
     traces = false;
-    statements = false;
     neighbors = false;
     accounting = false;
+    statements = false;
     articulate = false;
     // clang-format off
     cache = getGlobalConfig("acctExport")->getConfigBool("settings", "cache", false);
     cache_traces = getGlobalConfig("acctExport")->getConfigBool("settings", "cache_traces", false);
     // clang-format on
     count = false;
-    first_record = 0;
+    first_record = 1;
     max_records = 250;
     relevant = false;
     flow = "";
@@ -375,9 +385,11 @@ void COptions::Init(void) {
     meta = getMetaData();
 
     allMonitors.clear();
-    monApps.clear();
 
-    accountedFor.address = "";
+    ledgerManager.appArray.clear();
+    ledgerManager.accountedFor = "";
+    ledgerManager.name.address = "";
+    ledgerManager.name.petname = "";
 
     // We don't clear these because they are part of meta data
     // prefundAddrMap.clear();
@@ -389,10 +401,6 @@ void COptions::Init(void) {
     minArgs = 0;
     fileRange = make_pair(NOPOS, NOPOS);
     allMonitors.clear();
-    reportFreq = reportDef = 7;
-    slowQueries = 0;
-    maxSlowQueries =
-        isApiMode() ? getGlobalConfig("acctExport")->getConfigInt("settings", "max_slow_queries", 50) : NOPOS;
 
     // Establish folders. This may be redundant, but it's cheap.
     establishCacheFolders();
@@ -413,6 +421,7 @@ COptions::COptions(void) {
     notes.push_back("For the --logs option, you may optionally specify one or more --emitter, one or more --topics, or both.");  // NOLINT
     notes.push_back("The --logs option is significantly faster if you provide an --emitter or a --topic.");
     notes.push_back("Neighbors include every address that appears in any transaction in which the export address also appears.");  // NOLINT
+    notes.push_back("If provided, --max_records dominates, also, if provided, --first_block overrides --first_record.");
     // clang-format on
     // END_CODE_NOTES
 
@@ -433,8 +442,8 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 bool COptions::setDisplayFormatting(void) {
+    bool isText = expContext().exportFmt != JSON1;
     if (count) {
-        bool isText = expContext().exportFmt != JSON1 && expContext().exportFmt != API1;
         string_q format =
             getGlobalConfig("acctExport")->getConfigStr("display", "format", isText ? STR_DISPLAY_MONITORCOUNT : "");
         expContext().fmtMap["monitorcount_fmt"] = cleanFmt(format);
@@ -447,7 +456,7 @@ bool COptions::setDisplayFormatting(void) {
         show += (isApiMode() ? "|CTransaction:encoding,function,input,etherGasCost|CTrace:traceAddress" : "");
         manageFields(show, true);
         manageFields("CTrace: blockHash, blockNumber, transactionHash, transactionIndex", false);  // hide
-        if (expContext().exportFmt != JSON1 && expContext().exportFmt != API1) {
+        if (isText) {
             string_q format;
 
             format = getGlobalConfig("acctExport")->getConfigStr("display", "format", STR_DISPLAY_TRANSACTION);
@@ -492,7 +501,7 @@ bool COptions::setDisplayFormatting(void) {
             HIDE_FIELD(CAppearanceDisplay, "symbol");
             HIDE_FIELD(CAppearanceDisplay, "source");
             HIDE_FIELD(CAppearanceDisplay, "decimals");
-            HIDE_FIELD(CAppearanceDisplay, "description");
+            HIDE_FIELD(CAppearanceDisplay, "petname");
             HIDE_FIELD(CAppearanceDisplay, "isCustom");
             HIDE_FIELD(CAppearanceDisplay, "isPrefund");
             HIDE_FIELD(CAppearanceDisplay, "isContract");
@@ -537,9 +546,9 @@ bool COptions::setDisplayFormatting(void) {
         }
 
         if (accounting) {
-            articulate = true;
+            articulate = !getEtherscanKey(false).empty();
             manageFields("CTransaction:statements", true);
-            if (statements) {
+            if (statements && isText) {
                 string_q format =
                     getGlobalConfig("acctExport")->getConfigStr("display", "statement", STR_DISPLAY_RECONCILIATION);
                 expContext().fmtMap["header"] = noHeader ? "" : cleanFmt(format);
@@ -551,6 +560,7 @@ bool COptions::setDisplayFormatting(void) {
         if (logs) {
             SHOW_FIELD(CLogEntry, "blockNumber");
             SHOW_FIELD(CLogEntry, "transactionIndex");
+            SHOW_FIELD(CLogEntry, "transactionHash");
             SHOW_FIELD(CReceipt, "blockNumber");
             SHOW_FIELD(CReceipt, "transactionIndex");
         }
@@ -562,7 +572,7 @@ bool COptions::setDisplayFormatting(void) {
             SHOW_FIELD(CTrace, "transactionHash");
         }
     }
-    articulate = (articulate && (!isTestMode() || getEnvStr("TEST_NO_ART") != "true"));
+    articulate = (articulate && (!isTestMode() || getEnvStr("TEST_NO_ARTICULATION") != "true"));
 
     // TODO(tjayrush): This doesn't work for some reason (see test case acctExport_export_logs.txt)
     if (!articulate)
@@ -581,30 +591,37 @@ bool COptions::setDisplayFormatting(void) {
 
 //-----------------------------------------------------------------------
 bool COptions::isEmitter(const address_t& test) const {
-    for (auto monitor : allMonitors)
-        if (monitor.address == test)
+    for (auto monitor : allMonitors) {
+        if (monitor.address == test) {
             return true;
+        }
+    }
     return false;
 }
 
 //-----------------------------------------------------------------------
 bool COptions::isRelevant(const CLogEntry& log) const {
     string_q str = toLower(log.Format(STR_DISPLAY_LOGENTRY));
-    for (auto monitor : allMonitors)
-        if (contains(str, monitor.address.substr(2)))
+    for (auto monitor : allMonitors) {
+        if (contains(str, monitor.address.substr(2))) {
             return true;
+        }
+    }
     return false;
 }
 
 //-----------------------------------------------------------------------
-bool fourByteFilter(const string_q& input, const COptions* opt) {
+bool COptions::fourByteFilter(const string_q& input) const {
     ASSERT(!opt->watch);
-    if (opt->fourbytes.empty())
+    if (fourbytes.empty()) {
         return true;
+    }
 
-    for (auto four : opt->fourbytes)
-        if (startsWith(input, four))
+    for (auto four : fourbytes) {
+        if (startsWith(input, four)) {
             return true;
+        }
+    }
 
     return false;
 }

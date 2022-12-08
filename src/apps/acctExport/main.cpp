@@ -50,47 +50,35 @@ int main(int argc, const char* argv[]) {
 
             if (options.appearances) {
                 CAppearanceTraverser at;
-                at.traverserRange = options.exportRange;
                 traversers.push_back(at);
             }
 
             if (options.receipts) {
                 CReceiptTraverser rt;
-                rt.traverserRange = options.exportRange;
                 traversers.push_back(rt);
-            }
-
-            if (options.statements) {
-                CStatementTraverser st;
-                st.traverserRange = options.exportRange;
-                traversers.push_back(st);
             }
 
             if (options.neighbors) {
                 CNeighborTraverser nt;
-                nt.traverserRange = options.exportRange;
                 traversers.push_back(nt);
             }
 
             if (options.logs) {
                 CLogTraverser lt;
-                lt.traverserRange = options.exportRange;
                 traversers.push_back(lt);
             }
 
             if (options.traces) {
                 CTraceTraverser tt;
-                tt.traverserRange = options.exportRange;
                 traversers.push_back(tt);
             }
 
             if (traversers.empty()) {
                 CTransactionTraverser tt;
-                tt.traverserRange = options.exportRange;
                 traversers.push_back(tt);
             }
 
-            forEveryAppearance(traversers, options.monApps, &options);
+            forEveryAppearance(traversers, options.ledgerManager.appArray, &options);
 
         } else {
             options.handle_traversers();
@@ -106,9 +94,17 @@ int main(int argc, const char* argv[]) {
     os << ", \"first_block\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.exportRange.first)) << endl;
     os << ", \"last_block\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.exportRange.second)) << endl;
     if (!options.count && options.allMonitors.size() == 1) {
-        findName(options.accountedFor.address, options.allMonitors[0]);
-        if (options.abi_spec.nInterfaces() == 0) {
-            HIDE_FIELD(CMonitor, "abi_spec");
+        HIDE_FIELD(CMonitor, "abi_spec");
+        if (!findName(options.ledgerManager.accountedFor, options.allMonitors[0])) {
+            blknum_t blk = min(options.exportRange.second, options.meta.client);
+            options.ledgerManager.name.isContract = isContractAt(options.allMonitors[0].address, blk);
+            options.allMonitors[0].petname = addr_2_Petname(options.allMonitors[0].address, '-');
+            HIDE_FIELD(CAccountName, "isCustom");
+            HIDE_FIELD(CAccountName, "isPrefund");
+            HIDE_FIELD(CAccountName, "isContract");
+            HIDE_FIELD(CAccountName, "isErc20");
+            HIDE_FIELD(CAccountName, "isErc721");
+            options.allMonitors[0].decimals = 18;
         }
         os << ", \"accountedFor\": " << options.allMonitors[0] << endl;
     }
@@ -145,56 +141,46 @@ void start_Log(CTraverser* trav, void* data) {
     return;
 }
 
+extern const CStringArray searchOps;
+
 //-----------------------------------------------------------------------
 // Returns false if the loop shouldQuit
 bool prog_Log(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)data;
-    if (!trav->logging)
+    if (!trav->logging || isTestMode())
         return !shouldQuit();
 
-    size_t freq = opt->reportFreq;
-    opt->reportFreq = opt->reportDef;  // reset
+    size_t freq = 7;
     if (trav->nProcessed % freq)
         return !shouldQuit();
 
-    blknum_t prog = opt->first_record + trav->nProcessed;
-    blknum_t nApps = opt->stats.nFileRecords;
-
-    ostringstream post;
-    if (trav->searchType == "appearances" || trav->searchType == "receipts" || trav->searchType == "txs") {
-        // We report differently if there are the same number of items as appearances...
-        // Reports as "searchType index of total operation for address A"
-        post << " " << trav->searchType << " for address " << opt->accountedFor.address;
-    } else {
-        // ...or if there are more than such as statements, logs, traces, or neighbors
-        // Reports as "searchType index of total txs (found X operation) for address A"
-        post << " txs (" << prog << " " << trav->searchType << ") for address " << opt->accountedFor.address;
+    ostringstream found;
+    if (trav->searchType != "appearances" && trav->searchType != "txs" && trav->searchType != "receipts") {
+        found << " (found " << trav->nProcessed << " " << trav->searchType << ")";
     }
-    LOG_PROGRESS(trav->searchOp, blknum_t(opt->first_record + trav->index), nApps, post.str() + "\r");
 
-    return (opt->slowQueries <= opt->maxSlowQueries && !shouldQuit());
+    LOG_PROG(searchOps[opt->ledgerManager.searchOp], " ", opt->first_record + trav->index, " of ",
+             opt->stats.nFileRecords, " txs at block ", trav->trans.blockNumber, found.str(), " for address ",
+             opt->ledgerManager.accountedFor, "\r");
+
+    return !shouldQuit();
 }
 
 //-----------------------------------------------------------------------
 void end_Log(CTraverser* trav, void* data) {
     const COptions* opt = (const COptions*)data;
-    if (!trav->logging)
+    if (!trav->logging || isTestMode())
         return;
 
-    blknum_t prog = opt->first_record + trav->nProcessed;
-    blknum_t nApps = opt->stats.nFileRecords;
-
-    ostringstream post;
-    if (trav->searchType == "appearances" || trav->searchType == "receipts" || trav->searchType == "txs") {
-        // We report differently if there are the same number of items as appearances...
-        // Reports as "searchType index of total operation for address A"
-        post << " " << trav->searchType << " for address " << opt->accountedFor.address;
-    } else {
-        // ...or if there are more than such as statements, logs, traces, or neighbors
-        // Reports as "searchType index of total txs (found X operation) for address A"
-        post << " txs (" << prog << " " << trav->searchType << ") for address " << opt->accountedFor.address;
+    ostringstream found;
+    if (trav->searchType != "appearances" && trav->searchType != "txs" && trav->searchType != "receipts") {
+        found << " (found " << trav->nProcessed << " " << trav->searchType << ")";
     }
-    LOG_PROGRESS(COMPLETE, blknum_t(opt->first_record + trav->index), nApps, post.str());
+
+    LOG_PROG(searchOps[opt->ledgerManager.searchOp], " ", opt->first_record + trav->index, " of ",
+             opt->stats.nFileRecords, " txs at block ", trav->trans.blockNumber, found.str(), " for address ",
+             opt->ledgerManager.accountedFor, "\r");
+
     return;
 }
 
@@ -213,12 +199,10 @@ bool loadTx_Func(CTraverser* trav, void* data) {
     bool inCache = trav->app->blk != 0 && fileExists(txFilename);
     if (inCache) {
         readTransFromBinary(trav->trans, txFilename);
-        trav->searchOp = searchOpType(READ);
+        opt->ledgerManager.searchOp = READ;
 
     } else {
-        trav->searchOp = EXTRACT;
-        opt->slowQueries++;
-        opt->reportFreq = 1;
+        opt->ledgerManager.searchOp = EXTRACT;
         dirty = true;
         if (trav->app->blk == 0) {
             address_t addr = opt->prefundAddrMap[trav->app->txid];
@@ -268,3 +252,15 @@ bool loadTx_Func(CTraverser* trav, void* data) {
 
     return true;
 }
+
+// clang-format off
+const CStringArray searchOps = {
+    "Extracting",
+    "Reading",
+    "Updating",
+    "Reconciling",
+    "Scanning",
+    "Skipping",
+    "Completed",
+};
+// clang-format on

@@ -1,215 +1,205 @@
-chifra when  --list --fmt api
+chifra when  --list --fmt json
 TEST[DATE|TIME] List:  true
-TEST[DATE|TIME] Format:  api
+TEST[DATE|TIME] Format:  json
 {
   "data": [
     {
       "blockNumber": 0,
-      "timestamp": 1438269975,
       "date": "2015-07-30 15:26:15",
-      "name": "first"
+      "name": "first",
+      "timestamp": 1438269975
     },
     {
       "blockNumber": 46147,
-      "timestamp": 1438918233,
       "date": "2015-08-07 03:30:33",
-      "name": "firstTrans"
+      "name": "firstTrans",
+      "timestamp": 1438918233
     },
     {
       "blockNumber": 50111,
-      "timestamp": 1438984075,
       "date": "2015-08-07 21:47:55",
-      "name": "firstContract"
+      "name": "firstContract",
+      "timestamp": 1438984075
     },
     {
       "blockNumber": 200000,
-      "timestamp": 1441661589,
       "date": "2015-09-07 21:33:09",
-      "name": "iceage"
+      "name": "iceage",
+      "timestamp": 1441661589
     },
     {
       "blockNumber": 543626,
-      "timestamp": 1447577992,
       "date": "2015-11-15 08:59:52",
-      "name": "devcon1"
+      "name": "devcon1",
+      "timestamp": 1447577992
     },
     {
       "blockNumber": 1150000,
-      "timestamp": 1457981393,
       "date": "2016-03-14 18:49:53",
-      "name": "homestead"
+      "name": "homestead",
+      "timestamp": 1457981393
     },
     {
       "blockNumber": 1428756,
-      "timestamp": 1461980573,
       "date": "2016-04-30 01:42:53",
-      "name": "daofund"
+      "name": "daofund",
+      "timestamp": 1461980573
     },
     {
       "blockNumber": 1718497,
-      "timestamp": 1466134488,
       "date": "2016-06-17 03:34:48",
-      "name": "daohack"
+      "name": "daohack",
+      "timestamp": 1466134488
     },
     {
       "blockNumber": 1920000,
-      "timestamp": 1469020840,
       "date": "2016-07-20 13:20:40",
-      "name": "daofork"
+      "name": "daofork",
+      "timestamp": 1469020840
     },
     {
       "blockNumber": 2286910,
-      "timestamp": 1474275599,
       "date": "2016-09-19 08:59:59",
-      "name": "devcon2"
+      "name": "devcon2",
+      "timestamp": 1474275599
     },
     {
       "blockNumber": 2463000,
-      "timestamp": 1476796771,
       "date": "2016-10-18 13:19:31",
-      "name": "tangerine"
+      "name": "tangerine",
+      "timestamp": 1476796771
     },
     {
       "blockNumber": 2675000,
-      "timestamp": 1479831344,
       "date": "2016-11-22 16:15:44",
-      "name": "spurious"
+      "name": "spurious",
+      "timestamp": 1479831344
     },
     {
       "blockNumber": 2717576,
-      "timestamp": 1480448309,
       "date": "2016-11-29 19:38:29",
-      "name": "stateclear"
+      "name": "stateclear",
+      "timestamp": 1480448309
     },
     {
       "blockNumber": 3265360,
-      "timestamp": 1488272400,
       "date": "2017-02-28 09:00:00",
-      "name": "eea"
+      "name": "eea",
+      "timestamp": 1488272400
     },
     {
       "blockNumber": 3327417,
-      "timestamp": 1489165544,
       "date": "2017-03-10 17:05:44",
-      "name": "ens2"
+      "name": "ens2",
+      "timestamp": 1489165544
     },
     {
       "blockNumber": 4041179,
-      "timestamp": 1500417203,
       "date": "2017-07-18 22:33:23",
-      "name": "parityhack1"
+      "name": "parityhack1",
+      "timestamp": 1500417203
     },
     {
       "blockNumber": 4370000,
-      "timestamp": 1508131331,
       "date": "2017-10-16 05:22:11",
-      "name": "byzantium"
+      "name": "byzantium",
+      "timestamp": 1508131331
     },
     {
       "blockNumber": 4469339,
-      "timestamp": 1509526798,
       "date": "2017-11-01 08:59:58",
-      "name": "devcon3"
+      "name": "devcon3",
+      "timestamp": 1509526798
     },
     {
       "blockNumber": 4501969,
-      "timestamp": 1509981921,
       "date": "2017-11-06 15:25:21",
-      "name": "parityhack2"
+      "name": "parityhack2",
+      "timestamp": 1509981921
     },
     {
       "blockNumber": 4605167,
-      "timestamp": 1511415679,
       "date": "2017-11-23 05:41:19",
-      "name": "kitties"
+      "name": "kitties",
+      "timestamp": 1511415679
     },
     {
       "blockNumber": 4620855,
-      "timestamp": 1511634257,
       "date": "2017-11-25 18:24:17",
-      "name": "makerdao"
+      "name": "makerdao",
+      "timestamp": 1511634257
     },
     {
       "blockNumber": 6610517,
-      "timestamp": 1540890000,
       "date": "2018-10-30 09:00:00",
-      "name": "devcon4"
+      "name": "devcon4",
+      "timestamp": 1540890000
     },
     {
       "blockNumber": 6627917,
-      "timestamp": 1541137042,
       "date": "2018-11-02 05:37:22",
-      "name": "uniswap"
+      "name": "uniswap",
+      "timestamp": 1541137042
     },
     {
       "blockNumber": 7280000,
-      "timestamp": 1551383524,
       "date": "2019-02-28 19:52:04",
-      "name": "constantinople"
+      "name": "constantinople",
+      "timestamp": 1551383524
     },
     {
       "blockNumber": 8700401,
-      "timestamp": 1570525179,
       "date": "2019-10-08 08:59:39",
-      "name": "devcon5"
+      "name": "devcon5",
+      "timestamp": 1570525179
     },
     {
       "blockNumber": 8928158,
-      "timestamp": 1573672677,
       "date": "2019-11-13 19:17:57",
-      "name": "mcdai"
+      "name": "mcdai",
+      "timestamp": 1573672677
     },
     {
       "blockNumber": 9069000,
-      "timestamp": 1575764709,
       "date": "2019-12-08 00:25:09",
-      "name": "istanbul"
+      "name": "istanbul",
+      "timestamp": 1575764709
     },
     {
       "blockNumber": 9200000,
-      "timestamp": 1577953849,
       "date": "2020-01-02 08:30:49",
-      "name": "muirglacier"
+      "name": "muirglacier",
+      "timestamp": 1577953849
     },
     {
       "blockNumber": 12244000,
-      "timestamp": 1618481223,
       "date": "2021-04-15 10:07:03",
-      "name": "berlin"
+      "name": "berlin",
+      "timestamp": 1618481223
     },
     {
       "blockNumber": 12965000,
-      "timestamp": 1628166822,
       "date": "2021-08-05 12:33:42",
-      "name": "london"
+      "name": "london",
+      "timestamp": 1628166822
     },
     {
       "blockNumber": 13773000,
-      "timestamp": 1639079723,
       "date": "2021-12-09 19:55:23",
-      "name": "arrowglacier"
+      "name": "arrowglacier",
+      "timestamp": 1639079723
     },
     {
       "blockNumber": 15050000,
-      "timestamp": 1656586444,
       "date": "2022-06-30 10:54:04",
-      "name": "grayglacier"
+      "name": "grayglacier",
+      "timestamp": 1656586444
     },
     {
       "blockNumber": 15537393,
-      "timestamp": 1663224162,
       "date": "2022-09-15 06:42:42",
-      "name": "themerge"
+      "name": "themerge",
+      "timestamp": 1663224162
     }
-  ],
-  "meta": {
-    "client": "0xdeadbeef",
-    "finalized": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "unripe": "0xdeadbeef",
-    "chainId": 1,
-    "networkId": 1,
-    "chain": "mainnet"
-  }
+  ]
 }

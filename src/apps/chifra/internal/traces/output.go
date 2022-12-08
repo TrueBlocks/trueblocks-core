@@ -12,6 +12,7 @@ package tracesPkg
 import (
 	"net/http"
 
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -20,6 +21,7 @@ import (
 // RunTraces handles the traces command for the command line. Returns error only as per cobra.
 func RunTraces(cmd *cobra.Command, args []string) (err error) {
 	opts := tracesFinishParse(args)
+	outputHelpers.SetWriterForCommand("traces", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.TracesInternal()
@@ -29,9 +31,12 @@ func RunTraces(cmd *cobra.Command, args []string) (err error) {
 // ServeTraces handles the traces command for the API. Returns error and a bool if handled
 func ServeTraces(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := tracesFinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("traces", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return opts.TracesInternal()
+	err, handled = opts.TracesInternal()
+	outputHelpers.CloseJsonWriterIfNeededApi("traces", err, &opts.Globals)
+	return
 }
 
 // TracesInternal handles the internal workings of the traces command.  Returns error and a bool if handled
@@ -42,7 +47,7 @@ func (opts *TracesOptions) TracesInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.Globals.ApiMode {
+	if opts.Globals.IsApiMode() {
 		return nil, false
 	}
 

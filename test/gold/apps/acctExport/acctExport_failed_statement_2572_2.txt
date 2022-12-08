@@ -1,0 +1,94 @@
+chifra export  0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 --accounting --statements --ether --fmt json --first_block 11670418 --last_block 11670420 --asset 0xc713e5e149d5d0715dcd1c156a020976e7e56b88 --max_records 10000
+TEST[DATE|TIME] Addrs:  [0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7]
+TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] Statements:  true
+TEST[DATE|TIME] MaxRecords:  10000
+TEST[DATE|TIME] Asset:  [0xc713e5e149d5d0715dcd1c156a020976e7e56b88]
+TEST[DATE|TIME] FirstBlock:  11670418
+TEST[DATE|TIME] LastBlock:  11670420
+TEST[DATE|TIME] Ether:  true
+TEST[DATE|TIME] Format:  json
+{ "data": [
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xc713e5e149d5d0715dcd1c156a020976e7e56b88
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         aMKR
+TIME ~ CLOCK - <INFO>  :    hash:                0x634799410165000edaf1b1e8e5e8055b39cdd534d3c3dc9738865d39adb5d888
+TIME ~ CLOCK - <INFO>  :    blockNumber:         11670419
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    91
+TIME ~ CLOCK - <INFO>  :    logIndex:            195
+TIME ~ CLOCK - <INFO>  :    begBal:              14922878205530494041
+TIME ~ CLOCK - <INFO>  :    amountOut:           14922878243871414864
+TIME ~ CLOCK - <INFO>  :    totalOut:            14922878243871414864
+TIME ~ CLOCK - <INFO>  :    amountNet:           -14922878243871414864
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          14922878205530494041
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          -38340920823
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          -38340920823
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 11670418 prevBlock: 11670418 transfer.blockNumber: 11670419 nextBlock: 11670437
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    blks:                [11670419] 1 1
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xc713e5e149d5d0715dcd1c156a020976e7e56b88
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         aMKR
+TIME ~ CLOCK - <INFO>  :    hash:                0x634799410165000edaf1b1e8e5e8055b39cdd534d3c3dc9738865d39adb5d888
+TIME ~ CLOCK - <INFO>  :    blockNumber:         11670419
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    91
+TIME ~ CLOCK - <INFO>  :    logIndex:            195
+TIME ~ CLOCK - <INFO>  :    begBal:              14922878205530494041
+TIME ~ CLOCK - <INFO>  :    amountOut:           14922878243871414864
+TIME ~ CLOCK - <INFO>  :    totalOut:            14922878243871414864
+TIME ~ CLOCK - <INFO>  :    impliedBurn:         38340920823
+TIME ~ CLOCK - <INFO>  :    amountNet:           -14922878205530494041
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : Calling 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 11670419...: 
+TIME ~ CLOCK - <INFO>  : call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 11670419 at four-byte 0xe6a43905 returned 0x0000000000000000000000000000000000000000000000000000000000000000
+{
+  "blockNumber": 11670419,
+  "transactionIndex": 91,
+  "logIndex": 195,
+  "transactionHash": "0x634799410165000edaf1b1e8e5e8055b39cdd534d3c3dc9738865d39adb5d888",
+  "timestamp": 1610856118,
+  "date": "2021-01-17 04:01:58 UTC",
+  "assetAddr": "0xc713e5e149d5d0715dcd1c156a020976e7e56b88",
+  "assetSymbol": "aMKR",
+  "decimals": 18,
+  "spotPrice": 0.00000,
+  "priceSource": "not-priced",
+  "accountedFor": "0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7",
+  "sender": "0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7",
+  "recipient": "0x0000000000000000000000000000000000000000",
+  "begBal": "14.922878205530494041",
+  "amountNet": "-14.922878243871414864",
+  "endBal": "",
+  "reconciliationType": "regular-token",
+  "reconciled": false,
+  "totalIn": "",
+  "amountIn": "",
+  "internalIn": "",
+  "selfDestructIn": "",
+  "minerBaseRewardIn": "",
+  "minerNephewRewardIn": "",
+  "minerTxFeeIn": "",
+  "minerUncleRewardIn": "",
+  "prefundIn": "",
+  "totalOut": "14.922878243871414864",
+  "amountOut": "14.922878243871414864",
+  "internalOut": "",
+  "selfDestructOut": "",
+  "gasOut": "",
+  "totalOutLessGas": "14.922878243871414864",
+  "prevAppBlk": 11670418,
+  "prevBal": "14.922878205530494041",
+  "begBalDiff": "",
+  "endBalDiff": "-0.000000038340920823",
+  "endBalCalc": "-0.000000038340920823"
+}
+] }

@@ -75,7 +75,7 @@ void COptions::verifyGoEnumValidators(void) {
             if (contains(contents, e)) {
                 // cout << cGreen << "HAS: " << fn << ": " << e << cOff << endl;
             } else {
-                LOG_WARN("\t", p.api_route, " has no enum validator for ", e);
+                LOG_WARN("\t", bRed, p.api_route, " has no enum validator for ", e, cOff);
             }
         }
     }
@@ -227,7 +227,7 @@ string_q get_use(const CCommandOption& cmd) {
                 arguments << endl << "Arguments:" << endl;
             else
                 arguments << endl;
-            arguments << substitute(p.Format("  [{LONGNAME}] - [{DESCRIPTION}]"), "addrs2", "addrs");
+            arguments << p.Format("  [{LONGNAME}] - [{DESCRIPTION}]");
             if (p.is_required)
                 arguments << " (required)";
             if (contains(p.data_type, "enum")) {

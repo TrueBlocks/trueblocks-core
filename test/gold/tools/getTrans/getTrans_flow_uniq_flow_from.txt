@@ -1,0 +1,7 @@
+chifra transactions  4102000.0 --fmt txt --uniq --flow from
+TEST[DATE|TIME] Transactions:  [4102000.0]
+TEST[DATE|TIME] Uniq:  true
+TEST[DATE|TIME] Flow:  from
+TEST[DATE|TIME] Format:  txt
+bn	tx	tc	addr	reason
+4102000	0		0xca88207e34b1bb8fc5c3d8e55465295930d1289d	from

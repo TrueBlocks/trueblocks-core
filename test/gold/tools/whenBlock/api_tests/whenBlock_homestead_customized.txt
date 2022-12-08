@@ -3,9 +3,19 @@ when?blocks=homestead&verbose&fmt=json
   "data": [
     {
       "blockNumber": 1150000,
-      "timestamp": 1457981393,
+      "date": "2016-03-14 18:49:53 UTC",
       "name": "homestead",
-      "date": "2016-03-14 18:49:53 UTC"
+      "timestamp": 1457981393
     }
-  ]
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
 }

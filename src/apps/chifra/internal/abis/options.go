@@ -118,8 +118,8 @@ func abisFinishParse(args []string) *AbisOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	// EXISTING_CODE
-	if opts.Globals.ApiMode {
-		defFmt = "api"
+	if opts.Globals.IsApiMode() {
+		defFmt = "json"
 	}
 	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, args)
 	// EXISTING_CODE
@@ -133,4 +133,12 @@ func GetOptions() *AbisOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return &defaultAbisOptions
+}
+
+func ResetOptions() {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
+	defaultAbisOptions = AbisOptions{}
+	globals.SetDefaults(&defaultAbisOptions.Globals)
+	defaultAbisOptions.Globals.Writer = w
 }

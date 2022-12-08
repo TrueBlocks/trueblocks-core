@@ -17,10 +17,15 @@ Arguments:
   addrs - one or more addresses (0x...) to list (required)
 
 Flags:
-  -U, --count        display only the count of records for each monitor
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -v, --verbose      enable verbose (increase detail with --log_level)
-  -h, --help         display this help screen
+  -U, --count               display only the count of records for each monitor
+  -n, --no_zero             suppress the display of zero appearance accounts
+  -c, --first_record uint   the first record to process (default 1)
+  -e, --max_records uint    the maximum number of records to process (default 250)
+  -F, --first_block uint    first block to export (inclusive, ignored when freshening)
+  -L, --last_block uint     last block to export (inclusive, ignored when freshening)
+  -x, --fmt string          export format, one of [none|json*|txt|csv]
+  -v, --verbose             enable verbose (increase detail with --log_level)
+  -h, --help                display this help screen
 
 Notes:
   - No other options are permitted when --silent is selected.
@@ -34,7 +39,6 @@ All tools accept the following additional flags, although in some cases, they ha
   -v, --version         display the current version of the tool
       --wei             export values in wei (the default)
       --ether           export values in ether
-      --dollars         export values in US dollars
       --raw             pass raw RPC data directly from the node with no processing
       --to_file         write the results to a temporary file and return the filename
       --output string   write the results to file 'fn' and return the filename

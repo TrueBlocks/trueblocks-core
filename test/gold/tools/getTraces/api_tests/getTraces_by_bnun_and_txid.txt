@@ -1,4 +1,4 @@
-traces?transactions=4348290.92&fmt=api
+traces?transactions=4348290.92&fmt=json
 {
   "data": [
     {
@@ -27,7 +27,8 @@ traces?transactions=4348290.92&fmt=api
         "code": "",
         "gasUsed": 48838,
         "output": "0x"
-      }
+      },
+      "timestamp": 1507485040
     },
     {
       "blockHash": "0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73",
@@ -55,7 +56,8 @@ traces?transactions=4348290.92&fmt=api
         "code": "",
         "gasUsed": 28693,
         "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
-      }
+      },
+      "timestamp": 1507485040
     },
     {
       "blockHash": "0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73",
@@ -83,7 +85,8 @@ traces?transactions=4348290.92&fmt=api
         "code": "",
         "gasUsed": 0,
         "output": "0x"
-      }
+      },
+      "timestamp": 1507485040
     }
   ],
   "meta": {

@@ -1,0 +1,5 @@
+chifra monitors  0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 --decache
+TEST[DATE|TIME] Addrs:  [0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533]
+TEST[DATE|TIME] Decache:  true
+TEST[DATE|TIME] Format:  txt
+INFO[DATE|TIME] Decaching monitor for address  0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 not tested.

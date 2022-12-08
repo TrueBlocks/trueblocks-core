@@ -12,6 +12,7 @@ package logsPkg
 import (
 	"net/http"
 
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -20,6 +21,7 @@ import (
 // RunLogs handles the logs command for the command line. Returns error only as per cobra.
 func RunLogs(cmd *cobra.Command, args []string) (err error) {
 	opts := logsFinishParse(args)
+	outputHelpers.SetWriterForCommand("logs", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.LogsInternal()
@@ -29,9 +31,12 @@ func RunLogs(cmd *cobra.Command, args []string) (err error) {
 // ServeLogs handles the logs command for the API. Returns error and a bool if handled
 func ServeLogs(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := logsFinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("logs", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return opts.LogsInternal()
+	err, handled = opts.LogsInternal()
+	outputHelpers.CloseJsonWriterIfNeededApi("logs", err, &opts.Globals)
+	return
 }
 
 // LogsInternal handles the internal workings of the logs command.  Returns error and a bool if handled
@@ -42,7 +47,7 @@ func (opts *LogsOptions) LogsInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.Globals.ApiMode {
+	if opts.Globals.IsApiMode() {
 		return nil, false
 	}
 

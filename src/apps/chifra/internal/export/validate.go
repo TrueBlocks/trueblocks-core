@@ -5,10 +5,14 @@
 package exportPkg
 
 import (
+	"fmt"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -25,21 +29,39 @@ func (opts *ExportOptions) validateExport() error {
 		}
 	}
 
-	if len(opts.Flow) > 0 {
-		if err := validate.ValidateEnum("--flow", opts.Flow, "[in|out|zero]"); err != nil {
-			return err
-		}
-		if !opts.Statements {
-			return validate.Usage("The {0} option is only available with {1} option.", "--flow", "--statements")
-		}
-	}
-
 	if opts.Globals.TestMode && opts.Unripe {
 		return validate.Usage("--unripe are disabled for testing.")
 	}
 
-	if opts.Count && (opts.Logs || opts.Receipts || opts.Traces || opts.Statements || opts.Neighbors) {
-		return validate.Usage("The {0} option is only available with transactional options.", "--count")
+	if opts.LastBlock == 0 {
+		opts.LastBlock = utils.NOPOS
+	}
+
+	if opts.FirstBlock >= opts.LastBlock {
+		msg := fmt.Sprintf("first_block (%d) must be strictly earlier than last_block (%d).", opts.FirstBlock, opts.LastBlock)
+		return validate.Usage(msg)
+	}
+
+	if opts.LastBlock != utils.NOPOS {
+		provider := config.GetRpcProvider(opts.Globals.Chain)
+		latest := rpcClient.BlockNumber(provider)
+		if opts.LastBlock > latest {
+			msg := fmt.Sprintf("latest block (%d) must be before the chain's latest block (%d).", opts.LastBlock, latest)
+			return validate.Usage(msg)
+		}
+	}
+
+	if opts.FirstRecord == 0 {
+		opts.FirstRecord = 1
+	}
+
+	if opts.Count {
+		if opts.Logs || opts.Receipts || opts.Traces || opts.Neighbors {
+			return validate.Usage("The {0} option is only available with transactional options.", "--count")
+		}
+		if opts.MaxRecords > 0 && opts.MaxRecords != 250 {
+			return validate.Usage("The {0} option is not available with the {1} option.", "--count", "--max_records")
+		}
 	}
 
 	if !opts.Logs && len(opts.Emitter) > 0 {
@@ -50,45 +72,61 @@ func (opts *ExportOptions) validateExport() error {
 		return validate.Usage("The {0} option is only available with the {1} option.", "--topic", "--logs")
 	}
 
-	if !opts.Statements && len(opts.Asset) > 0 {
-		return validate.Usage("The {0} option is only available with the {1} option.", "--asset", "--statements")
-	}
-
 	if !opts.Traces && opts.Factory {
 		return validate.Usage("The {0} option is only available with the {1} option.", "--factory", "--traces")
 	}
 
-	if len(opts.Fourbytes) > 0 && (opts.Logs || opts.Receipts || opts.Statements || opts.Appearances) {
+	if len(opts.Fourbytes) > 0 && (opts.Logs || opts.Receipts || opts.Appearances) {
 		return validate.Usage("The {0} option is only available with the {1} option.", "--fourbyte", "no option or the --accounting")
 	}
 
-	if opts.Accounting && (opts.Appearances || opts.Logs || opts.Receipts || opts.Traces || opts.Statements || opts.Neighbors) {
-		return validate.Usage("The {0} option is not available with other options.", "--accounting")
-	}
+	if opts.Accounting {
+		if len(opts.Addrs) != 1 {
+			return validate.Usage("The {0} option is allows with only a single address.", "--accounting")
+		}
 
-	if opts.Accounting && len(opts.Addrs) != 1 {
-		return validate.Usage("The {0} option is allows with only a single address.", "--accounting")
-	}
+		if opts.Appearances || opts.Logs || opts.Receipts || opts.Traces || opts.Neighbors {
+			return validate.Usage("The {0} option is not available with other options.", "--accounting")
+		}
 
-	if opts.Accounting && opts.Globals.Chain != "mainnet" {
-		logger.Log(logger.Warning, "The --accounting option reports a spotPrice of one for all assets on non-mainnet chains.")
-	}
+		if opts.Globals.Chain != "mainnet" {
+			logger.Log(logger.Warning, "The --accounting option reports a spotPrice of one for all assets on non-mainnet chains.")
+		}
 
-	if !opts.Count && len(opts.Addrs) == 0 {
-		return validate.Usage("You must provide at least one Ethereum address for this command.")
+		if opts.Statements {
+			if len(opts.Flow) > 0 {
+				if err := validate.ValidateEnum("--flow", opts.Flow, "[in|out|zero]"); err != nil {
+					return err
+				}
+			}
+
+		} else {
+			if len(opts.Flow) > 0 {
+				return validate.Usage("The {0} option is only available with {1} option.", "--flow", "--statements")
+			}
+
+			if len(opts.Asset) > 0 {
+				return validate.Usage("The {0} option is only available with the {1} option.", "--asset", "--statements")
+			}
+		}
+
+	} else {
+		if opts.Statements {
+			return validate.Usage("The {0} option is only available with the {1} option.", "--statements", "--accounting")
+		}
+
+		if opts.Globals.Format == "ofx" {
+			return validate.Usage("The {0} option is only available with the {1} option.", "--fmt ofx", "--accounting")
+		}
 	}
 
 	if !validate.CanArticulate(opts.Articulate) {
 		return validate.Usage("The {0} option requires an EtherScan API key.", "--articulate")
 	}
 
-	if opts.Globals.Format == "ofx" && !opts.Accounting {
-		return validate.Usage("The {0} option is only available with the {1} option.", "--fmt ofx", "--accounting")
-	}
-
 	// Note that this does not return if the index is not initialized
 	if err := index.IndexIsInitialized(opts.Globals.Chain); err != nil {
-		if opts.Globals.ApiMode {
+		if opts.Globals.IsApiMode() {
 			return err
 		} else {
 			logger.Fatal(err)

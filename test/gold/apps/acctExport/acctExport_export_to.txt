@@ -1,4 +1,4 @@
-chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --last_block 10296792 --fmt api --tox
+chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --last_block 10296792 --fmt json --tox
 Error: 
   unknown flag: --tox
 
@@ -15,28 +15,28 @@ Flags:
   -r, --receipts            export receipts instead of transactional data
   -l, --logs                export logs instead of transactional data
   -t, --traces              export traces instead of transactional data
-  -A, --statements          export reconciliations instead of transactional data (assumes --accounting option)
   -n, --neighbors           export the neighbors of the given address
   -C, --accounting          attach accounting records to the exported data (applies to transactions export only)
+  -A, --statements          for the accounting options only, export only statements
   -a, --articulate          articulate transactions, traces, logs, and outputs
   -i, --cache               write transactions to the cache (see notes)
   -R, --cache_traces        write traces to the cache (see notes)
   -U, --count               only available for --appearances mode, if present, return only the number of records
-  -c, --first_record uint   the first record to process
-  -e, --max_records uint    the maximum number of records to process before reporting (default 250)
+  -c, --first_record uint   the first record to process (default 1)
+  -e, --max_records uint    the maximum number of records to process (default 250)
       --relevant            for log and accounting export only, export only logs relevant to one of the given export addresses
       --emitter strings     for log export only, export only logs if emitted by one of these address(es)
       --topic strings       for log export only, export only logs with this topic(s)
-      --asset strings       for the statements option only, export only reconciliations for this asset
-      --flow string         for the statements option only, export only statements with incoming value or outgoing value
+      --asset strings       for the accounting options only, export statements only for this asset
+  -f, --flow string         for the accounting options only, export statements with incoming, outgoing, or zero value
                             One of [ in | out | zero ]
-  -y, --factory             scan for contract creations from the given address(es) and report address of those contracts
+  -y, --factory             for --traces only, report addresses created by (or self-destructed by) the given address(es)
   -u, --unripe              export transactions labeled upripe (i.e. less than 28 blocks old)
       --load string         a comma separated list of dynamic traversers to load (hidden)
       --reversed            produce results in reverse chronological order (hidden)
   -F, --first_block uint    first block to process (inclusive)
   -L, --last_block uint     last block to process (inclusive)
-  -x, --fmt string          export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string          export format, one of [none|json*|txt|csv]
   -v, --verbose             enable verbose (increase detail with --log_level)
   -h, --help                display this help screen
 
@@ -46,3 +46,4 @@ Notes:
   - For the --logs option, you may optionally specify one or more --emitter, one or more --topics, or both.
   - The --logs option is significantly faster if you provide an --emitter or a --topic.
   - Neighbors include every address that appears in any transaction in which the export address also appears.
+  - If provided, --max_records dominates, also, if provided, --first_block overrides --first_record.

@@ -82,7 +82,7 @@ class CAbi : public CBaseNode {
     // EXISTING_CODE
   private:
     bool loadAbiFromFile(const string_q& fileName);
-    bool loadAbiFromAddress(const address_t& addr, bool recurse);
+    bool loadAbiFromAddress(const address_t& addr);
     bool loadAbiFromJson(const string_q& str);
     friend bool loadAbiFile(const string_q& path, void* data);
     friend bool loadAbiJsonString(const string_q& path, CAbi& abi);
@@ -190,6 +190,6 @@ extern bool decodeRLP(CParameterArray& ifaces, const string_q& desc, const strin
 extern bool sortByFuncName(const CFunction& f1, const CFunction& f2);
 extern bool isKnownAbi(const string_q& addr, string_q& path);
 extern bool isTokenRelated(const string_q& needle);
-extern string_q getEtherscanKey(void);
+extern string_q getEtherscanKey(bool required);
 // EXISTING_CODE
 }  // namespace qblocks

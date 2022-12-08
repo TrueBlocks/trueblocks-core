@@ -8,7 +8,7 @@ names?terms=network&matchCase
       "symbol": "",
       "source": "Tokenomics",
       "decimals": 0,
-      "description": ""
+      "petname": "plainly-climbing-coral"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -17,7 +17,7 @@ names?terms=network&matchCase
       "symbol": "JRTBNT",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "seriously-quiet-dory"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -26,7 +26,7 @@ names?terms=network&matchCase
       "symbol": "WAB",
       "source": "On chain",
       "decimals": 18,
-      "description": "WAB network is a 5.0 Blockchain with outstanding features, a completed decentralization blockchain with remarkable transaction speed of millions per second."
+      "petname": "admittedly-quality-unicorn"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -35,7 +35,7 @@ names?terms=network&matchCase
       "symbol": "SAN",
       "source": "On chain",
       "decimals": 18,
-      "description": "A Better Way to Trade Crypto-Markets - Market Datafeeds, Newswires, and Crowd Sentiment Insights for the Blockchain World"
+      "petname": "roughly-solid-bluejay"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -44,7 +44,7 @@ names?terms=network&matchCase
       "symbol": "",
       "source": "https://gitcoin.co/grants/2728/using-social-networks-for-fun-affordable-and-lucr",
       "decimals": 0,
-      "description": ""
+      "petname": "mistakenly-shining-hound"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -53,7 +53,7 @@ names?terms=network&matchCase
       "symbol": "",
       "source": "https://gitcoin.co/grants/2776/pulp-network",
       "decimals": 0,
-      "description": ""
+      "petname": "strangely-valid-guinea"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -62,7 +62,7 @@ names?terms=network&matchCase
       "symbol": "Vegeta",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "usually-sure-gator"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -71,7 +71,7 @@ names?terms=network&matchCase
       "symbol": "",
       "source": "https://gitcoin.co/grants/2694/matrix2-an-aggregated-layer-2-network",
       "decimals": 0,
-      "description": ""
+      "petname": "firstly-trusty-boar"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -80,7 +80,7 @@ names?terms=network&matchCase
       "symbol": "",
       "source": "https://gitcoin.co/grants/3090/atelio-creating-open-blockchain-based-digital-sup",
       "decimals": 0,
-      "description": ""
+      "petname": "locally-apparent-dane"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -89,7 +89,7 @@ names?terms=network&matchCase
       "symbol": "",
       "source": "https://gitcoin.co/grants/2190/layer-2-faucet-in-ethereum-network",
       "decimals": 0,
-      "description": ""
+      "petname": "remarkably-apparent-eagle"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -98,7 +98,7 @@ names?terms=network&matchCase
       "symbol": "",
       "source": "https://gitcoin.co/grants/1487/memorialnetwork",
       "decimals": 0,
-      "description": ""
+      "petname": "notably-ethical-rhino"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -107,7 +107,7 @@ names?terms=network&matchCase
       "symbol": "SNET",
       "source": "On chain",
       "decimals": 8,
-      "description": ""
+      "petname": "loosely-crucial-lamb"
     }
   ],
   "meta": {

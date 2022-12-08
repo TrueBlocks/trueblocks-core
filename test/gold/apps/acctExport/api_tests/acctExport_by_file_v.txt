@@ -1,0 +1,6 @@
+export?file=cmd_file_2&fmt=json
+{
+  "errors": [
+    "You must provide at least one Ethereum address for this command."
+  ]
+}

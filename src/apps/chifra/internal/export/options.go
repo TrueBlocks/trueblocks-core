@@ -29,21 +29,21 @@ type ExportOptions struct {
 	Receipts    bool                  `json:"receipts,omitempty"`    // Export receipts instead of transactional data
 	Logs        bool                  `json:"logs,omitempty"`        // Export logs instead of transactional data
 	Traces      bool                  `json:"traces,omitempty"`      // Export traces instead of transactional data
-	Statements  bool                  `json:"statements,omitempty"`  // Export reconciliations instead of transactional data (assumes --accounting option)
 	Neighbors   bool                  `json:"neighbors,omitempty"`   // Export the neighbors of the given address
 	Accounting  bool                  `json:"accounting,omitempty"`  // Attach accounting records to the exported data (applies to transactions export only)
+	Statements  bool                  `json:"statements,omitempty"`  // For the accounting options only, export only statements
 	Articulate  bool                  `json:"articulate,omitempty"`  // Articulate transactions, traces, logs, and outputs
 	Cache       bool                  `json:"cache,omitempty"`       // Write transactions to the cache (see notes)
 	CacheTraces bool                  `json:"cacheTraces,omitempty"` // Write traces to the cache (see notes)
 	Count       bool                  `json:"count,omitempty"`       // Only available for --appearances mode, if present, return only the number of records
 	FirstRecord uint64                `json:"firstRecord,omitempty"` // The first record to process
-	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process before reporting
+	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process
 	Relevant    bool                  `json:"relevant,omitempty"`    // For log and accounting export only, export only logs relevant to one of the given export addresses
 	Emitter     []string              `json:"emitter,omitempty"`     // For log export only, export only logs if emitted by one of these address(es)
 	Topic       []string              `json:"topic,omitempty"`       // For log export only, export only logs with this topic(s)
-	Asset       []string              `json:"asset,omitempty"`       // For the statements option only, export only reconciliations for this asset
-	Flow        string                `json:"flow,omitempty"`        // For the statements option only, export only statements with incoming value or outgoing value
-	Factory     bool                  `json:"factory,omitempty"`     // Scan for contract creations from the given address(es) and report address of those contracts
+	Asset       []string              `json:"asset,omitempty"`       // For the accounting options only, export statements only for this asset
+	Flow        string                `json:"flow,omitempty"`        // For the accounting options only, export statements with incoming, outgoing, or zero value
+	Factory     bool                  `json:"factory,omitempty"`     // For --traces only, report addresses created by (or self-destructed by) the given address(es)
 	Unripe      bool                  `json:"unripe,omitempty"`      // Export transactions labeled upripe (i.e. less than 28 blocks old)
 	Load        string                `json:"load,omitempty"`        // A comma separated list of dynamic traversers to load
 	Reversed    bool                  `json:"reversed,omitempty"`    // Produce results in reverse chronological order
@@ -54,8 +54,9 @@ type ExportOptions struct {
 }
 
 var defaultExportOptions = ExportOptions{
-	MaxRecords: 250,
-	LastBlock:  utils.NOPOS,
+	FirstRecord: 1,
+	MaxRecords:  250,
+	LastBlock:   utils.NOPOS,
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -67,14 +68,14 @@ func (opts *ExportOptions) testLog() {
 	logger.TestLog(opts.Receipts, "Receipts: ", opts.Receipts)
 	logger.TestLog(opts.Logs, "Logs: ", opts.Logs)
 	logger.TestLog(opts.Traces, "Traces: ", opts.Traces)
-	logger.TestLog(opts.Statements, "Statements: ", opts.Statements)
 	logger.TestLog(opts.Neighbors, "Neighbors: ", opts.Neighbors)
 	logger.TestLog(opts.Accounting, "Accounting: ", opts.Accounting)
+	logger.TestLog(opts.Statements, "Statements: ", opts.Statements)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
 	logger.TestLog(opts.CacheTraces, "CacheTraces: ", opts.CacheTraces)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
-	logger.TestLog(opts.FirstRecord != 0, "FirstRecord: ", opts.FirstRecord)
+	logger.TestLog(opts.FirstRecord != 1, "FirstRecord: ", opts.FirstRecord)
 	logger.TestLog(opts.MaxRecords != 250, "MaxRecords: ", opts.MaxRecords)
 	logger.TestLog(opts.Relevant, "Relevant: ", opts.Relevant)
 	logger.TestLog(len(opts.Emitter) > 0, "Emitter: ", opts.Emitter)
@@ -119,14 +120,14 @@ func (opts *ExportOptions) toCmdLine() string {
 	if opts.Traces {
 		options += " --traces"
 	}
-	if opts.Statements {
-		options += " --statements"
-	}
 	if opts.Neighbors {
 		options += " --neighbors"
 	}
 	if opts.Accounting {
 		options += " --accounting"
+	}
+	if opts.Statements {
+		options += " --statements"
 	}
 	if opts.Articulate {
 		options += " --articulate"
@@ -140,7 +141,7 @@ func (opts *ExportOptions) toCmdLine() string {
 	if opts.Count {
 		options += " --count"
 	}
-	if opts.FirstRecord != 0 {
+	if opts.FirstRecord != 1 {
 		options += (" --first_record " + fmt.Sprintf("%d", opts.FirstRecord))
 	}
 	if opts.MaxRecords != 250 {
@@ -189,7 +190,7 @@ func (opts *ExportOptions) toCmdLine() string {
 func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions {
 	copy := defaultExportOptions
 	opts := &copy
-	opts.FirstRecord = 0
+	opts.FirstRecord = 1
 	opts.MaxRecords = 250
 	opts.FirstBlock = 0
 	opts.LastBlock = utils.NOPOS
@@ -218,12 +219,12 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 			opts.Logs = true
 		case "traces":
 			opts.Traces = true
-		case "statements":
-			opts.Statements = true
 		case "neighbors":
 			opts.Neighbors = true
 		case "accounting":
 			opts.Accounting = true
+		case "statements":
+			opts.Statements = true
 		case "articulate":
 			opts.Articulate = true
 		case "cache":
@@ -313,4 +314,12 @@ func GetOptions() *ExportOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return &defaultExportOptions
+}
+
+func ResetOptions() {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
+	defaultExportOptions = ExportOptions{}
+	globals.SetDefaults(&defaultExportOptions.Globals)
+	defaultExportOptions.Globals.Writer = w
 }

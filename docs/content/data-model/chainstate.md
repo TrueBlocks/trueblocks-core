@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2022-02-10T20:02:12
+date: 2022-11-12T22:29:54
 lastmod:
   - :git
   - lastmod
@@ -35,16 +35,16 @@ The balance of an address at a given block.
 
 State data is made of the following data fields:
 
-| Field       | Description                                                                                     | Type    |
-| ----------- | ----------------------------------------------------------------------------------------------- | ------- |
-| blockNumber | the block number at which this state was taken                                                  | blknum  |
-| balance     | the balance at the address at the given block height                                            | wei     |
-| nonce       | the nonce of the address at the given block height                                              | uint64  |
-| code        | the byte code at the address (if this is a smart contract)                                      | bytes   |
-| storage     | this field is un-implemented and current returns the first storage location in a smart contract | bytes   |
-| address     | the address of the state being queried                                                          | address |
-| deployed    | the block number at which this smart contract was deployed (if a smart contact)                 | blknum  |
-| accttype    | the type of the address at the given block                                                      | string  |
+| Field       | Description                                                                     | Type    |
+| ----------- | ------------------------------------------------------------------------------- | ------- |
+| blockNumber | the block number at which this state was taken                                  | blknum  |
+| address     | the address of the state being queried                                          | address |
+| proxy       | if this is a proxy, this is the proxied-to address                              | address |
+| balance     | the balance at the address at the given block height                            | wei     |
+| nonce       | the nonce of the address at the given block height                              | uint64  |
+| code        | the byte code at the address (if this is a smart contract)                      | bytes   |
+| deployed    | the block number at which this smart contract was deployed (if a smart contact) | blknum  |
+| accttype    | the type of the address at the given block                                      | string  |
 
 
 ## Result
@@ -60,6 +60,27 @@ State data is made of the following data fields:
 | callResult       | the result of the call to the contract                                          | CFunction |
 | compressedResult | the compressed version of the result of the call to the contract                | string    |
 | deployed         | the block number at which this smart contract was deployed (if a smart contact) | blknum    |
+
+## Transfer
+
+
+| Field            | Description                                                                                    | Type      |
+| ---------------- | ---------------------------------------------------------------------------------------------- | --------- |
+| blockNumber      | the number of the block                                                                        | blknum    |
+| transactionIndex | the zero-indexed position of the transaction in the block                                      | blknum    |
+| logIndex         | the zero-indexed position of the log in the transaction                                        | blknum    |
+| transactionHash  | the hash of the transaction that triggered this reconciliation                                 | hash      |
+| timestamp        | the Unix timestamp of the object                                                               | timestamp |
+| date             | a calculated field -- the date of this transaction                                             | datetime  |
+| sender           | the initiator of the transfer (the sender)                                                     | address   |
+| recipient        | the receiver of the transfer (the recipient)                                                   | address   |
+| assetAddr        | 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for ETH reconcilations, the token address otherwise | address   |
+| assetSymbol      | either ETH, WEI or the symbol of the asset being reconciled as queried from the chain          | string    |
+| decimals         | Equivalent to the queried value of `decimals` from an ERC20 contract or, if ETH or WEI then 18 | uint64    |
+| amount           | the amount of the transfer in the units of the asset                                           | uint256   |
+| spotPrice        | The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction       | double    |
+| priceSource      | The on-chain source from which the spot price was taken                                        | string    |
+| encoding         | The four-byte encoding of the transaction's function call                                      | string    |
 
 ## Token
 
@@ -77,7 +98,7 @@ Token data is made of the following data fields:
 | ---------- | ------------------------------------------------------------ | ------- |
 | holder     | the address for which we are reporting the token balance     | address |
 | balance    | the balance at the address at the given block height         | wei     |
-| address    | description: the address of the token contract being queried | address |
+| address    | the address of the token contract being queried              | address |
 | name       | the name of the token contract, if available                 | string  |
 | symbol     | the symbol for this token contract                           | string  |
 | decimals   | the number of decimals for the token contract                | uint64  |
@@ -96,6 +117,11 @@ This documentation mentions the following basic data types.
 | blknum    | an alias for a uint64                           |                |
 | bool      | a value either `true`, `false`, `1`, or `0`     |                |
 | bytes     | an arbitrarily long string of bytes             |                |
+| datetime  | a JSON formatted date                           | as a string    |
+| double    | a floating point number of double precision     |                |
+| hash      | a 32-byte hexadecimal string starting with '0x' | lowercase      |
 | string    | a normal character string                       |                |
+| timestamp | a 64-bit unsigned integer                       | Unix timestamp |
+| uint256   |                                                 |                |
 | uint64    | a 64-bit unsigned integer                       |                |
 | wei       | an unsigned big number                          | as a string    |

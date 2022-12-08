@@ -201,12 +201,23 @@ void CToml::mergeFile(CToml* tomlIn) {
 
 //---------------------------------------------------------------------------------------
 string_q CToml::getConfigStr(const string_q& section, const string_q& key, const string_q& def) const {
-    string_q env = getEnvStr(toUpper(section + "_" + key));
-    if (!env.empty())
+    string_q theKey = toUpper("TB_" + substitute(section, ".", "_") + "_" + key);
+    string_q env = getEnvStr(theKey);
+    if (!env.empty()) {
         return env;
+
+    } else {
+        // Backward compatibility -- old style
+        theKey = toUpper(section + "_" + key);
+        env = getEnvStr(theKey);
+        if (!env.empty())
+            return env;
+    }
+
     CTomlKey* found = findKey(section, key);
     if (found)
         return found->getValue();
+
     return def;
 }
 

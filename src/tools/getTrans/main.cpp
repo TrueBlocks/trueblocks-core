@@ -24,8 +24,8 @@ int main(int argc, const char* argv[]) {
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
-        CRuntimeClass* pClass =
-            !options.reconcile.empty() ? GETRUNTIME_CLASS(CReconciliation) : GETRUNTIME_CLASS(CTransaction);
+        CRuntimeClass* pClass = !options.ledgerManager.accountedFor.empty() ? GETRUNTIME_CLASS(CReconciliation)
+                                                                            : GETRUNTIME_CLASS(CTransaction);
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], pClass);
         forEveryTransaction(visitTransaction, &options, options.transList.queries);
@@ -33,8 +33,32 @@ int main(int argc, const char* argv[]) {
     }
     cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
 
+    // TODO: Report on no statements if there were none
+    // } else {
+    //     LOG_ERR("No material transactions found");
+    //     return true;
+    // }
+
     etherlib_cleanup();
     return 0;
+}
+
+//----------------------------------------------------------------
+bool shouldShow(const COptions* opt, const string_q& val) {
+    if (opt->flow.empty()) {
+        return true;
+    }
+
+    switch (opt->flow[0]) {
+        case 't':  // to
+            return contains(substitute(substitute(val, "_topic", ""), "generator", ""), "to");
+        case 'f':  // from
+            return contains(val, "from");
+        case 'r':  // reward
+            return contains(val, "miner") || contains(val, "uncle");
+    }
+
+    return true;
 }
 
 //----------------------------------------------------------------
@@ -46,15 +70,22 @@ bool visitAddrs(const CAppearance& item, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
     if (isText) {
-        cout << trim(item.Format(expContext().fmtMap["format"]), '\t') << endl;
+        string_q val = trim(item.Format(expContext().fmtMap["format"]), '\t');
+        if (shouldShow(opt, val)) {
+            cout << val << endl;
+        }
     } else {
-        if (!opt->firstOut)
-            cout << ",";
-        cout << "  ";
+        ostringstream os;
         indent();
-        item.toJson(cout);
+        item.toJson(os);
         unindent();
-        opt->firstOut = false;
+        if (shouldShow(opt, os.str())) {
+            if (!opt->firstOut)
+                cout << ",";
+            cout << "  ";
+            cout << os.str();
+            opt->firstOut = false;
+        }
     }
     return !shouldQuit();
 }
@@ -73,15 +104,35 @@ bool visitTransaction(CTransaction& trans, void* data) {
 
     COptions* opt = reinterpret_cast<COptions*>(data);
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
+    CBlock block;
 
     if (contains(trans.hash, "invalid")) {
         string_q hash = nextTokenClear(trans.hash, ' ');
-        opt->errors.push_back("Transaction " + hash + " not found.");
+        opt->errors.push_back("transaction " + hash + " not found");
         return true;  // continue even with an invalid item
     }
 
-    if (!opt->reconcile.empty())
+    //////////////////////////////////////////////////////
+    if (opt->trace) {
+        if (!trans.pBlock) {
+            getBlockLight(block, trans.blockNumber);
+            trans.timestamp = block.timestamp;
+            trans.pBlock = &block;
+        }
+        getTraces(trans.traces, trans.getValueByName("hash"), &trans);
+    }
+    //////////////////////////////////////////////////////
+
+    if (opt->articulate) {
+        opt->abi_spec.loadAbiFromEtherscan(trans.to);
+        for (auto log : trans.receipt.logs)
+            opt->abi_spec.loadAbiFromEtherscan(log.address);
+        opt->abi_spec.articulateTransaction(&trans);
+    }
+
+    if (!opt->ledgerManager.accountedFor.empty()) {
         return visitReconciliation(trans, opt);
+    }
 
     if (opt->uniq) {
         trans.forEveryUniqueAppearanceInTxPerTx(visitAddrs, transFilter, opt);
@@ -96,18 +147,6 @@ bool visitTransaction(CTransaction& trans, void* data) {
         cout << result;
         opt->firstOut = false;
         return true;
-    }
-
-    //////////////////////////////////////////////////////
-    if (opt->trace)
-        getTraces(trans.traces, trans.getValueByName("hash"));
-    //////////////////////////////////////////////////////
-
-    if (opt->articulate) {
-        opt->abi_spec.loadAbiFromEtherscan(trans.to);
-        for (auto log : trans.receipt.logs)
-            opt->abi_spec.loadAbiFromEtherscan(log.address);
-        opt->abi_spec.articulateTransaction(&trans);
     }
 
     manageFields("CFunction:message", !trans.articulatedTx.message.empty());
@@ -128,7 +167,6 @@ bool visitTransaction(CTransaction& trans, void* data) {
     if (opt->cache) {
         string_q txFilename = getBinaryCacheFilename(CT_TXS, trans.blockNumber, trans.transactionIndex);
         if (!fileExists(txFilename)) {
-            CBlock block;
             getBlockLight(block, trans.blockNumber);
             trans.timestamp = block.timestamp;
             trans.receipt.status = NO_STATUS;

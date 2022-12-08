@@ -4,28 +4,41 @@
 
 package whenPkg
 
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+import (
+	"context"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+)
 
 func (opts *WhenOptions) HandleTimestampCount() error {
-	type TsCount struct {
-		Count uint64 `json:"count"`
+
+	ctx, cancel := context.WithCancel(context.Background())
+	fetchData := func(modelChan chan types.Modeler[types.RawWhenCount], errorChan chan error) {
+		if count, err := tslib.NTimestamps(opts.Globals.Chain); err != nil {
+			errorChan <- err
+			cancel()
+			return
+		} else {
+			if opts.Globals.TestMode {
+				count = 5000000
+			}
+			modelChan <- &types.SimpleWhenCount{Count: count}
+		}
 	}
 
-	count, err := tslib.NTimestamps(opts.Globals.Chain)
-	if err != nil {
-		return err
-	}
-	if opts.Globals.TestMode {
-		count = 5000000
-	}
-
-	obj := TsCount{Count: count}
-
-	// TODO: Fix export without arrays
-	err = opts.Globals.RenderHeader(obj, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
-	defer opts.Globals.RenderFooter()
-	if err != nil {
-		return err
-	}
-	return opts.Globals.RenderObject(obj, true)
+	return output.StreamMany(ctx, fetchData, output.OutputOptions{
+		Writer:     opts.Globals.Writer,
+		Chain:      opts.Globals.Chain,
+		TestMode:   opts.Globals.TestMode,
+		NoHeader:   opts.Globals.NoHeader,
+		ShowRaw:    opts.Globals.ShowRaw,
+		Verbose:    opts.Globals.Verbose,
+		LogLevel:   opts.Globals.LogLevel,
+		Format:     opts.Globals.Format,
+		OutputFn:   opts.Globals.OutputFn,
+		Append:     opts.Globals.Append,
+		JsonIndent: "  ",
+	})
 }

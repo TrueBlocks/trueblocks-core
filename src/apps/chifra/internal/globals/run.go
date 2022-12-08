@@ -11,13 +11,14 @@ import (
 	"io"
 	"os"
 	"os/exec"
+	"strings"
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
 func (opts *GlobalOptions) PassItOn(path, chain, cmdLine string, envIn []string) error {
-	options := cmdLine
+	options := strings.Trim(cmdLine, " ")
 	options += opts.toCmdLine()
 
 	var wg sync.WaitGroup
@@ -36,9 +37,7 @@ func (opts *GlobalOptions) PassItOn(path, chain, cmdLine string, envIn []string)
 	cmd := exec.Command(config.GetPathToCommands(path), options)
 	cmd.Env = append(os.Environ(), "FROM_CHIFRA=true")
 	cmd.Env = append(cmd.Env, "TB_CONFIG_ENV="+envStr)
-	for _, e := range envIn {
-		cmd.Env = append(cmd.Env, e)
-	}
+	cmd.Env = append(cmd.Env, envIn...)
 	if os.Getenv("TEST_MODE") == "true" {
 		cmd.Env = append(cmd.Env, "TEST_MODE=true")
 	}

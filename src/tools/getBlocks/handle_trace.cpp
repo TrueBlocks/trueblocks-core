@@ -31,6 +31,7 @@ bool traceBlock(uint64_t num, void* data) {
     } else {
         CBlock block;
         queryBlock(block, uint_2_Str(num), true);
+        block.finishParse();
         block.forEveryTrace(visitTrace, data);
         return !shouldQuit();
     }

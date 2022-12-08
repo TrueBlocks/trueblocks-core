@@ -258,6 +258,9 @@ inline string_q padNum9(int32_t n) {
 }
 
 //--------------------------------------------------------------------
+inline string_q padNum2T(uint64_t n) {
+    return padLeft(uint_2_Str((n)), 2);
+}
 inline string_q padNum3T(uint64_t n) {
     return padLeft(uint_2_Str((n)), 3);
 }
@@ -281,6 +284,9 @@ inline string_q padNum9T(uint64_t n) {
 }
 
 //--------------------------------------------------------------------
+inline string_q padNum2T(int64_t n) {
+    return padLeft(int_2_Str((n)), 2);
+}
 inline string_q padNum3T(int64_t n) {
     return padLeft(int_2_Str((n)), 3);
 }
@@ -305,7 +311,6 @@ inline string_q padNum9T(int64_t n) {
 
 //--------------------------------------------------------------------
 extern string_q escape_string(const string_q& str);
-extern void cleanString(string_q& str, bool isCode);
 extern void removeCharacter(string_q& str, char ch);
 extern void removeCharacters(string_q& str, size_t n, const char* chars);
 extern void simplifySolidity(string_q& code);

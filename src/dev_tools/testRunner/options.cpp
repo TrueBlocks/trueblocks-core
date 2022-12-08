@@ -105,7 +105,7 @@ bool COptions::parseArguments(string_q& command) {
                 if (been_here)
                     break;
                 been_here = true;
-                if (hasEsKey) {
+                if (hasEsKey && getEnvStr("NO_ES") != "true") {
                     tests.push_back("tools/ethslurp");
                 }
                 tests.push_back("tools/ethNames");
@@ -157,7 +157,7 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("libs/acctlib");
         if (makeClassOn)
             tests.push_back("dev_tools/makeClass");
-        if (hasEsKey) {
+        if (hasEsKey && getEnvStr("NO_ES") != "true") {
             tests.push_back("tools/ethslurp");
         }
         tests.push_back("tools/ethNames");
@@ -261,19 +261,6 @@ void establishTestData(void) {
     doCommand("chifra abis 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11");
     doCommand("chifra abis 0x7d655c57f71464b6f83811c55d84009cd9f5221c");
 
-    // Remove a few things from the cache
-    ::remove(getBinaryCacheFilename(CT_TXS, 8854723, 61).c_str());
-    ::remove(getBinaryCacheFilename(CT_TXS, 8855603, 121).c_str());
-    ::remove(getBinaryCacheFilename(CT_TXS, 8856290, 62).c_str());
-    ::remove(getBinaryCacheFilename(CT_TXS, 8856316, 91).c_str());
-    ::remove(getBinaryCacheFilename(CT_TXS, 8856476, 55).c_str());
-    ::remove(getBinaryCacheFilename(CT_TXS, 8856511, 161).c_str());
-    ::remove(getBinaryCacheFilename(CT_TXS, 8860434, 21).c_str());
-    ::remove(getBinaryCacheFilename(CT_TXS, 8860511, 47).c_str());
-    ::remove(getBinaryCacheFilename(CT_TXS, 8860513, 85).c_str());
-    ::remove(getBinaryCacheFilename(CT_TXS, 8860529, 145).c_str());
-    ::remove(getBinaryCacheFilename(CT_TXS, 8860531, 152).c_str());
-    ::remove(getBinaryCacheFilename(CT_TXS, 8867898, 28).c_str());
-    ::remove(getBinaryCacheFilename(CT_TXS, 8875684, 148).c_str());
-    ::remove(getBinaryCacheFilename(CT_TXS, 8876232, 84).c_str());
+    doCommand("chifra monitors --decache 0xf503017d7baf7fbc0fff7492b751025c6a78179b 2>/dev/null");
+    doCommand("chifra monitors --decache 0x9531c059098e3d194ff87febb587ab07b30b1306 2>/dev/null");
 }

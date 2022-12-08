@@ -3,8 +3,8 @@ state?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&parts=accttype&blocks=250
   "data": [
     {
       "blockNumber": 2500000,
-      "balance": 3905662906205094300000,
       "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
+      "balance": 3905662906205094300000,
       "accttype": "Contract",
       "ether": 3905.6629062050943
     }

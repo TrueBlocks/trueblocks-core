@@ -1,14 +1,16 @@
-receipts?transactions=0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765&fmt=api
+receipts?transactions=0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765&fmt=json
 {
   "data": [
     {
-      "contractAddress": "0x0",
+      "blockNumber": 4000000,
       "gasUsed": 39512,
-      "effectiveGasPrice": 4000000000,
+      "hash": "0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765",
       "logs": [
         {
           "address": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
           "logIndex": 59,
+          "blockNumber": 4000000,
+          "transactionIndex": 68,
           "topics": [
             "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
           ],
@@ -17,20 +19,26 @@ receipts?transactions=0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd6
         {
           "address": "0x11b1f00bccf07754e6f1996864531fa162145cde",
           "logIndex": 60,
+          "blockNumber": 4000000,
+          "transactionIndex": 68,
           "topics": [
             "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
           ],
           "data": "0x000000000000000000000000209c4784ab1e8183cf58ca33cb740efbf3fc18ef"
         }
       ],
-      "status": null
+      "status": 1,
+      "transactionIndex": 68
     }
   ],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
+    "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
   }
 }

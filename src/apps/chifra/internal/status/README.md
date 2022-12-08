@@ -19,7 +19,7 @@ Flags:
   -d, --details         include details about items found in monitors, slurps, abis, or price caches
   -t, --types strings   for caches mode only, which type(s) of cache to report
                         One or more of [ blocks | txs | traces | slurps | all ]
-  -x, --fmt string      export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)
   -h, --help            display this help screen
 ```
@@ -32,7 +32,6 @@ All tools accept the following additional flags, although in some cases, they ha
   -v, --version         display the current version of the tool
       --wei             export values in wei (the default)
       --ether           export values in ether
-      --dollars         export values in US dollars
       --raw             pass raw RPC data directly from the node with no processing
       --to_file         write the results to a temporary file and return the filename
       --output string   write the results to file 'fn' and return the filename

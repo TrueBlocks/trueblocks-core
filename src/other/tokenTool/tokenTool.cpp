@@ -17,6 +17,16 @@
 extern bool build_cap_table(COptions& options, int argc, const char* argv[]);
 //--------------------------------------------------------------
 int main(int argc, const char* argv[]) {
+    ostringstream os;
+    os << "mainnet,";
+    os << "/Users/jrush/Library/Application Support/TrueBlocks/,";
+    os << "/Users/jrush/Library/Application Support/TrueBlocks/config/mainnet/,";
+    os << "/Users/jrush/Data/trueblocks/v0.40.0/cache/,";
+    os << "/Users/jrush/Data/trueblocks/v0.40.0/unchained/,";
+    os << "mainnet,";
+    os << "http://localhost:8545";
+    setenv("TB_CONFIG_ENV", os.str().c_str(), true);
+
     etherlib_init(quickQuitHandler);
 
     COptions options;
@@ -74,8 +84,8 @@ bool build_cap_table(COptions& options, int argc, const char* argv[]) {
                         // event Mint        (address _to, uint256 _value)
                         // event CreatedToken(address _to, uint256 _value)
                         address_t receiver = art.inputs[0].value;
-                        wei_t prevBal = options.getTokenBalance(receiver, blockNum - 1);
-                        wei_t curBal = options.getTokenBalance(receiver, blockNum);
+                        wei_t prevBal = options.getTokenBalanceOld(receiver, blockNum - 1);
+                        wei_t curBal = options.getTokenBalanceOld(receiver, blockNum);
                         wei_t amount = str_2_Wei(art.inputs[1].value);
 
                         options.updateHolder(trans, receiver, curBal);
@@ -95,12 +105,12 @@ bool build_cap_table(COptions& options, int argc, const char* argv[]) {
                     } else if (log.articulatedLog.name == "Transfer") {
                         // event Transfer(address _from, address _to, uint256 _value)
                         address_t sender = art.inputs[0].value;
-                        wei_t prevBalS = options.getTokenBalance(sender, blockNum - 1);
-                        wei_t curBalS = options.getTokenBalance(sender, blockNum);
+                        wei_t prevBalS = options.getTokenBalanceOld(sender, blockNum - 1);
+                        wei_t curBalS = options.getTokenBalanceOld(sender, blockNum);
 
                         address_t receiver = art.inputs[1].value;
-                        wei_t prevBalR = options.getTokenBalance(receiver, blockNum - 1);
-                        wei_t curBalR = options.getTokenBalance(receiver, blockNum);
+                        wei_t prevBalR = options.getTokenBalanceOld(receiver, blockNum - 1);
+                        wei_t curBalR = options.getTokenBalanceOld(receiver, blockNum);
 
                         wei_t amount = str_2_Wei(art.inputs[2].value);
 
@@ -152,9 +162,6 @@ bool build_cap_table(COptions& options, int argc, const char* argv[]) {
 // event OwnerUpdate(address _prevOwner,address _newOwner)
 //-------------------------------------------------------------------------
 string_q COptions::getTotalSupply(blknum_t blockNum) {
-#ifdef DEBUGGING
-    return "1000000000000";
-#else
     string_q encoding = "0x18160ddd";
     string_q cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"[CMD]\"}, \"[BLOCK]\"]";
     replace(cmd, "[CMD]", encoding);
@@ -168,16 +175,10 @@ string_q COptions::getTotalSupply(blknum_t blockNum) {
     if (!abi_spec.articulateOutputs(encoding, output, ret))
         return "";
     return ret.outputs[0].value;
-#endif
 }
 
 //-------------------------------------------------------------------------
-wei_t COptions::getTokenBalance(const address_t& holder, blknum_t blockNum) {
-#ifdef DEBUGGING
-    wei_t w = str_2_Wei(holder);
-    w = (w >> 22);
-    return w;
-#else
+wei_t COptions::getTokenBalanceOld(const address_t& holder, blknum_t blockNum) {
     string_q encoding = "0x70a08231";
     string_q cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"[CMD][HOLDER]\"}, \"[BLOCK]\"]";
     replace(cmd, "[CMD]", encoding);
@@ -189,7 +190,6 @@ wei_t COptions::getTokenBalance(const address_t& holder, blknum_t blockNum) {
     if (!abi_spec.articulateOutputs(encoding, callRPC("eth_call", cmd, false), ret))
         return 0;
     return str_2_Wei(ret.outputs[0].value);
-#endif
 }
 
 //-------------------------------------------------------------------------
@@ -302,10 +302,15 @@ string_q COptions::report(void) {
 #endif
 }
 
-// 13700,tools,State,toktools,tokenTool,tokens,,,true,false,true,true,header,positional,list<addr>,an ERC20 token addresses
-// 13705,tools,State,toktools,tokenTool,reverse,r,,false,false,true,true,header,switch,<boolean>,present the cap table in reverse order by holding
-// 13710,tools,State,toktools,tokenTool,start,s,0,false,false,true,true,header,flag,<blknum>,block on which to start the analysis
-// 13715,tools,State,toktools,tokenTool,bucket,b,100,false,false,true,true,header,flag,<uint64>,number of block to process between cap table reports (default = 100)
-// 13720,tools,State,toktools,tokenTool,n_rows,n,30,false,false,true,true,header,flag,<uint64>,show this many rows of the cap table (default = 30)
-// 13725,tools,State,toktools,tokenTool,show_errs,r,,false,false,true,true,header,switch,<boolean>,in verbose mode & # 4 4 ; print out in-error transactions (never affects accounting)
-// 13730,tools,State,toktools,tokenTool,,,,false,false,true,true,--,description,,Show ERC20 token cap tables with various options.
+// 13700,tools,State,toktools,tokenTool,tokens,,,true,false,true,true,header,positional,list<addr>,an ERC20 token
+// addresses 13705,tools,State,toktools,tokenTool,reverse,r,,false,false,true,true,header,switch,<boolean>,present the
+// cap table in reverse order by holding
+// 13710,tools,State,toktools,tokenTool,start,s,0,false,false,true,true,header,flag,<blknum>,block on which to start the
+// analysis 13715,tools,State,toktools,tokenTool,bucket,b,100,false,false,true,true,header,flag,<uint64>,number of block
+// to process between cap table reports (default = 100)
+// 13720,tools,State,toktools,tokenTool,n_rows,n,30,false,false,true,true,header,flag,<uint64>,show this many rows of
+// the cap table (default = 30)
+// 13725,tools,State,toktools,tokenTool,show_errs,r,,false,false,true,true,header,switch,<boolean>,in verbose mode & # 4
+// 4 ; print out in-error transactions (never affects accounting)
+// 13730,tools,State,toktools,tokenTool,,,,false,false,true,true,--,description,,Show ERC20 token cap tables with
+// various options.

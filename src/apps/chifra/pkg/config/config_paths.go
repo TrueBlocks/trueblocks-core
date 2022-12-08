@@ -8,7 +8,7 @@ import (
 	"log"
 	"os"
 	"os/user"
-	"path"
+	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -36,7 +36,7 @@ func GetPathToChainConfig(chain string) string {
 	ret := GetPathToRootConfig()
 
 	// Our configuration files are always in ./config folder relative to top most folder
-	cfgFolder := path.Join(ret, "config/", chain) + "/"
+	cfgFolder := filepath.Join(ret, "config/", chain) + "/"
 	if _, err := os.Stat(cfgFolder); err != nil {
 		log.Fatal(usage.Usage(chainConfigMustExist, chain, cfgFolder))
 	}
@@ -56,7 +56,7 @@ func GetPathToIndex(chain string) string {
 	// We want the index folder to be named `unchained` and be in
 	// the root of cache path
 	if !strings.Contains(indexPath, "/unchained") {
-		indexPath = path.Join(indexPath, "unchained")
+		indexPath = filepath.Join(indexPath, "unchained")
 	}
 
 	// We always have to have a chain...
@@ -65,7 +65,7 @@ func GetPathToIndex(chain string) string {
 	}
 
 	// We know what we want, create it if it doesn't exist and return it
-	newPath := path.Join(indexPath, chain) + "/"
+	newPath := filepath.Join(indexPath, chain) + "/"
 	EstablishIndexPaths(newPath)
 	return newPath
 }
@@ -83,7 +83,7 @@ func GetPathToCache(chain string) string {
 	// We want the cache folder to be named `cache` and be in
 	// the root of cache path
 	if !strings.Contains(cachePath, "/cache") {
-		cachePath = path.Join(cachePath, "cache")
+		cachePath = filepath.Join(cachePath, "cache")
 	}
 
 	// We always have to have a chain...
@@ -92,7 +92,7 @@ func GetPathToCache(chain string) string {
 	}
 
 	// We know what we want, create it if it doesn't exist and return it
-	newPath := path.Join(cachePath, chain) + "/"
+	newPath := filepath.Join(cachePath, chain) + "/"
 	EstablishCachePaths(newPath)
 	return newPath
 }
@@ -110,7 +110,7 @@ func EstablishCachePaths(cachePath string) {
 		"abis", "blocks", "monitors", "monitors/staging", "objs", "prices",
 		"recons", "slurps", "tmp", "traces", "txs", "names",
 	}
-	_, err := os.Stat(path.Join(cachePath, folders[len(folders)-1]))
+	_, err := os.Stat(filepath.Join(cachePath, folders[len(folders)-1]))
 	if err == nil {
 		// If the last path already exists, assume we've been here before
 		return
@@ -126,7 +126,7 @@ func EstablishIndexPaths(indexPath string) {
 	folders := []string{
 		"blooms", "finalized", "maps", "ripe", "staging", "unripe",
 	}
-	_, err := os.Stat(path.Join(indexPath, folders[len(folders)-1]))
+	_, err := os.Stat(filepath.Join(indexPath, folders[len(folders)-1]))
 	if err == nil {
 		// If the last path already exists, assume we've been here before
 		return

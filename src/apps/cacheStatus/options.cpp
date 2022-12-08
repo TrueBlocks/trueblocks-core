@@ -17,6 +17,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
+extern bool isRunning(const string_q& prog);
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
@@ -328,4 +329,25 @@ bool countFiles(const string_q& path, void* data) {
         counter->isValid = true;
     }
     return !shouldQuit();
+}
+
+//----------------------------------------------------------------------------
+bool isRunning(const string_q& progName) {
+    string_q cmd = "pgrep -lfa \"" + progName + "\"";
+    string_q result = doCommand(cmd);
+    CStringArray lines;
+    explode(lines, result, '\n');
+    result = "";
+    for (auto line : lines) {
+        if (!contains(line, "sh -c")) {
+            // each line is of form: 'pid program options'. Skip over pid
+            nextTokenClear(line, ' ');
+            if (startsWith(line, progName)) {
+                result += line + "\n";
+            }
+        }
+    }
+    if (isTestMode())
+        LOG4("\n", cmd, "\n", result, " ", !result.empty());
+    return contains(result, progName);
 }

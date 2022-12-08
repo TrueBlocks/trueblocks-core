@@ -5,39 +5,61 @@
 package whenPkg
 
 import (
+	"context"
+	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func (opts *WhenOptions) HandleShowBlocks() error {
-	// TODO: Fix export without arrays
-	err := opts.Globals.RenderHeader(types.SimpleNamedBlock{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
-	defer opts.Globals.RenderFooter()
-	if err != nil {
-		return err
+
+	ctx, cancel := context.WithCancel(context.Background())
+	fetchData := func(modelChan chan types.Modeler[types.RawNamedBlock], errorChan chan error) {
+		for _, br := range opts.BlockIds {
+			blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
+			if err != nil {
+				errorChan <- err
+				cancel()
+				return
+			}
+			for _, bn := range blockNums {
+				block, err := rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, false)
+				// TODO: rpcClient should return a custom type of error in this case
+				if err != nil && strings.Contains(err.Error(), "not found") {
+					errorChan <- err
+					continue
+				}
+				if err != nil {
+					errorChan <- err
+					cancel()
+					return
+				}
+				d, _ := tslib.FromTsToDate(block.GetTimestamp())
+				nm, _ := tslib.FromBnToName(opts.Globals.Chain, block.BlockNumber)
+				modelChan <- &types.SimpleNamedBlock{
+					BlockNumber: block.BlockNumber,
+					Timestamp:   block.GetTimestamp(),
+					Date:        d.Format("YYYY-MM-DD HH:mm:ss UTC"),
+					Name:        nm,
+				}
+			}
+		}
 	}
 
-	for i, br := range opts.BlockIds {
-		blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
-		if err != nil {
-			return err
-		}
-		for _, bn := range blockNums {
-			block, err := rpcClient.GetBlockByNumber(opts.Globals.Chain, bn)
-			if err != nil {
-				return err
-			}
-			d, _ := tslib.FromTsToDate(block.TimeStamp)
-			nm, _ := tslib.FromBnToName(opts.Globals.Chain, block.BlockNumber)
-			block.Date = d.Format("YYYY-MM-DD HH:mm:ss UTC")
-			block.Name = nm
-			err = opts.Globals.RenderObject(block, i == 0)
-			if err != nil {
-				return err
-			}
-		}
-	}
-
-	return nil
+	return output.StreamMany(ctx, fetchData, output.OutputOptions{
+		Writer:     opts.Globals.Writer,
+		Chain:      opts.Globals.Chain,
+		TestMode:   opts.Globals.TestMode,
+		NoHeader:   opts.Globals.NoHeader,
+		ShowRaw:    opts.Globals.ShowRaw,
+		Verbose:    opts.Globals.Verbose,
+		LogLevel:   opts.Globals.LogLevel,
+		Format:     opts.Globals.Format,
+		OutputFn:   opts.Globals.OutputFn,
+		Append:     opts.Globals.Append,
+		JsonIndent: "  ",
+	})
 }

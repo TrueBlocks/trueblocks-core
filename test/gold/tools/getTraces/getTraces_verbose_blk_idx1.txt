@@ -25,5 +25,6 @@ TEST[DATE|TIME] Format:  json
       "newContract": "0x0",
       "gasUsed": 0,
       "output": "0x"
-    }
+    },
+    "timestamp": 1494031419
   }] }

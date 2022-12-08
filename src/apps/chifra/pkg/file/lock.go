@@ -5,12 +5,14 @@
 package file
 
 import (
+	"errors"
 	"io"
 	"os"
 	"syscall"
+	"time"
 )
 
-// TODO: Why not use a mutex?
+var maxSecondsLock = 3
 
 // Lock asks the OS to lock a file for the current process
 func Lock(file *os.File) error {
@@ -48,4 +50,32 @@ func changeLock(file *os.File, lockConfig *syscall.Flock_t) error {
 	//
 	// More: https://stackoverflow.com/questions/29611352/what-is-the-difference-between-locking-with-fcntl-and-flock
 	return syscall.FcntlFlock(file.Fd(), syscall.F_SETLK, lockConfig)
+}
+
+var DefaultOpenFlags = os.O_RDWR | os.O_CREATE
+var DefaultOpenFlagsAppend = os.O_RDWR | os.O_CREATE | os.O_APPEND
+
+// WaitOnLock tries to lock a file for maximum `maxSecondsLock`
+func WaitOnLock(filePath string, openFlags int) (file *os.File, err error) {
+	file, err = os.OpenFile(filePath, openFlags, 0666)
+	if err != nil {
+		return
+	}
+
+	for i := 0; i < maxSecondsLock; i++ {
+		err = Lock(file)
+		if err == nil {
+			return
+		}
+		if err == syscall.EAGAIN || err == syscall.EACCES {
+			// Another process has already locked the file, we wait
+			continue
+		}
+		if err != nil {
+			// We cannot lock, so report the error back to the caller
+			return file, err
+		}
+		time.Sleep(1 * time.Second)
+	}
+	return file, errors.New("lock timeout")
 }

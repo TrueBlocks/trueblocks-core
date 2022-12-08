@@ -117,3 +117,11 @@ func GetOptions() *ExploreOptions {
 	// EXISTING_CODE
 	return &defaultExploreOptions
 }
+
+func ResetOptions() {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
+	defaultExploreOptions = ExploreOptions{}
+	globals.SetDefaults(&defaultExploreOptions.Globals)
+	defaultExploreOptions.Globals.Writer = w
+}

@@ -85,26 +85,6 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&maxRecords=3&neighbors
     "staging": "0xdeadbeef",
     "finalized": "0xdeadbeef",
     "client": "0xdeadbeef",
-    "namedFrom": {
-      "0x793ea9692ada1900fbd0b80fffec6e431fe8b391": {
-        "tags": "90-Individuals:Other",
-        "name": "Name 0x793ea969",
-        "count": 1
-      }
-    },
-    "unNamedFrom": {
-      "0x931f12be72a1d106408af5ced7e1b7af0bc864ae": 1,
-      "0xb26842086a407eb4fef0465f502285f3d25d168b": 1
-    },
-    "namedTo": {
-      "0x33990122638b9132ca29c723bdf037f1a891a70c": {
-        "tags": "91-Early:Addresses",
-        "name": "GlobalRegistrarAddr_frontier",
-        "isContract": true,
-        "count": 1
-      }
-    },
-    "unNamedTo": {},
     "first_block": "0xdeadbeef",
     "last_block": "0xdeadbeef",
     "accountedFor": {
@@ -114,7 +94,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&maxRecords=3&neighbors
       "symbol": "",
       "source": "On chain",
       "decimals": 1,
-      "description": "",
+      "petname": "willingly-mature-leech",
       "isCustom": false,
       "isPrefund": false,
       "isContract": true,

@@ -107,7 +107,7 @@ chifra chunks index --check
 You may see a few error reports. Regardless, run this next command:
 
 ```
-chifra index --all            # (If you've don't want all the index portions, use `chifra init` for a minimal installation.)
+chifra init --all            # (If you've don't want all the index portions, use `chifra init` for a minimal installation.)
 ```
 
 This command may take a long time. Allow it to run to completion. If it stops or you quit it, you may simply re-start it.

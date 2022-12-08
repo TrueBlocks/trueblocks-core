@@ -13,6 +13,8 @@ import (
 
 	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -24,7 +26,13 @@ var exportCmd = &cobra.Command{
 	Short:   shortExport,
 	Long:    longExport,
 	Version: versionText,
-	RunE:    exportPkg.RunExport,
+	PreRun: outputHelpers.PreRunWithJsonWriter("export", func() *globals.GlobalOptions {
+		return &exportPkg.GetOptions().Globals
+	}),
+	RunE:    file.RunWithFileSupport("export", exportPkg.RunExport, exportPkg.ResetOptions),
+	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
+		return &exportPkg.GetOptions().Globals
+	}),
 }
 
 const usageExport = `export [flags] <address> [address...] [topics...] [fourbytes...]
@@ -45,7 +53,8 @@ Notes:
   - Articulating the export means turn the EVM's byte data into human-readable text (if possible).
   - For the --logs option, you may optionally specify one or more --emitter, one or more --topics, or both.
   - The --logs option is significantly faster if you provide an --emitter or a --topic.
-  - Neighbors include every address that appears in any transaction in which the export address also appears.`
+  - Neighbors include every address that appears in any transaction in which the export address also appears.
+  - If provided, --max_records dominates, also, if provided, --first_block overrides --first_record.`
 
 func init() {
 	exportCmd.Flags().SortFlags = false
@@ -54,22 +63,22 @@ func init() {
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Receipts, "receipts", "r", false, "export receipts instead of transactional data")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Logs, "logs", "l", false, "export logs instead of transactional data")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Traces, "traces", "t", false, "export traces instead of transactional data")
-	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Statements, "statements", "A", false, "export reconciliations instead of transactional data (assumes --accounting option)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Neighbors, "neighbors", "n", false, "export the neighbors of the given address")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Accounting, "accounting", "C", false, "attach accounting records to the exported data (applies to transactions export only)")
+	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Statements, "statements", "A", false, "for the accounting options only, export only statements")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Articulate, "articulate", "a", false, "articulate transactions, traces, logs, and outputs")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Cache, "cache", "i", false, "write transactions to the cache (see notes)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().CacheTraces, "cache_traces", "R", false, "write traces to the cache (see notes)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Count, "count", "U", false, "only available for --appearances mode, if present, return only the number of records")
-	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().FirstRecord, "first_record", "c", 0, "the first record to process")
-	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().MaxRecords, "max_records", "e", 250, "the maximum number of records to process before reporting")
+	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().FirstRecord, "first_record", "c", 1, "the first record to process")
+	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().MaxRecords, "max_records", "e", 250, "the maximum number of records to process")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Relevant, "relevant", "", false, "for log and accounting export only, export only logs relevant to one of the given export addresses")
 	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Emitter, "emitter", "", nil, "for log export only, export only logs if emitted by one of these address(es)")
 	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Topic, "topic", "", nil, "for log export only, export only logs with this topic(s)")
-	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Asset, "asset", "", nil, "for the statements option only, export only reconciliations for this asset")
-	exportCmd.Flags().StringVarP(&exportPkg.GetOptions().Flow, "flow", "", "", `for the statements option only, export only statements with incoming value or outgoing value
+	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Asset, "asset", "", nil, "for the accounting options only, export statements only for this asset")
+	exportCmd.Flags().StringVarP(&exportPkg.GetOptions().Flow, "flow", "f", "", `for the accounting options only, export statements with incoming, outgoing, or zero value
 One of [ in | out | zero ]`)
-	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Factory, "factory", "y", false, "scan for contract creations from the given address(es) and report address of those contracts")
+	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Factory, "factory", "y", false, "for --traces only, report addresses created by (or self-destructed by) the given address(es)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Unripe, "unripe", "u", false, "export transactions labeled upripe (i.e. less than 28 blocks old)")
 	exportCmd.Flags().StringVarP(&exportPkg.GetOptions().Load, "load", "", "", "a comma separated list of dynamic traversers to load (hidden)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Reversed, "reversed", "", false, "produce results in reverse chronological order (hidden)")

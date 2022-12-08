@@ -16,6 +16,20 @@ func (opts *TransactionsOptions) validateTransactions() error {
 		return opts.BadFlag
 	}
 
+	if opts.Source {
+		return validate.Usage("The --source flag is currently disabled.")
+	}
+
+	if len(opts.Flow) > 0 {
+		if !opts.Uniq {
+			return validate.Usage("The {0} option is only available with the {1} option", "--flow", "--uniq")
+		}
+		err := validate.ValidateEnum("flow", opts.Flow, "[from|to]")
+		if err != nil {
+			return err
+		}
+	}
+
 	if len(opts.Globals.File) > 0 {
 		// Do nothing
 	} else {
@@ -24,11 +38,18 @@ func (opts *TransactionsOptions) validateTransactions() error {
 		}
 
 		if len(opts.Reconcile) > 0 {
-			if opts.Cache || opts.Trace || opts.Articulate || opts.Uniq {
-				return validate.Usage("Do not use other options with the --reconcile option.")
+			return validate.Usage("The --reconcile option has been deprecated. Use --statements instead.")
+		}
+
+		if len(opts.AccountFor) > 0 {
+			if opts.Cache {
+				return validate.Usage("The {0} option is not available with the {1} option", "--cache", "--account_for")
 			}
-			if !validate.IsValidAddress(opts.Reconcile) {
-				return validate.Usage("Invalid reconcilation address {0}.", opts.Reconcile)
+			if opts.Uniq {
+				return validate.Usage("The {0} option is not available with the {1} option", "--uniq", "--account_for")
+			}
+			if !validate.IsValidAddress(opts.AccountFor) {
+				return validate.Usage("Invalid reconcilation address {0}.", opts.AccountFor)
 			}
 		}
 

@@ -3,8 +3,7 @@ examples
 SymbolCache.noindex
 .DS_Store
 
-chifra
-chifra-new
+chifra*
 makeClass
 testRunner
 migrate

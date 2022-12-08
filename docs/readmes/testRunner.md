@@ -32,7 +32,7 @@ Flags:
   -r, --report         display performance report to screen
 
 Global Flags:
-  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string     export format, one of [none|json*|txt|csv]
   -v, --verbose uint   set verbose level (optional level defaults to 1)
   -h, --help           display this help screen
 

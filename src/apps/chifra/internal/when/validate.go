@@ -18,6 +18,10 @@ func (opts *WhenOptions) validateWhen() error {
 		return opts.BadFlag
 	}
 
+	if opts.Globals.ShowRaw {
+		return validate.Usage("The {0} option is not available for {1} command", "--raw", "when")
+	}
+
 	if opts.Timestamps {
 		if opts.List {
 			return validate.Usage("Please choose only one of {0}.", "--timestamps or --list")
@@ -25,6 +29,10 @@ func (opts *WhenOptions) validateWhen() error {
 
 		if opts.Deep && !opts.Check {
 			return validate.Usage("The {0} option is only available with the {1} option.", "--deep", "--timestamps --check")
+		}
+
+		if opts.Repair && len(opts.Blocks) == 0 {
+			return validate.Usage("The {0} option requires at least one block identifier.", "--repair")
 		}
 
 	} else {
@@ -41,11 +49,15 @@ func (opts *WhenOptions) validateWhen() error {
 			return validate.Usage("The {0} option is only available with the {1} option.", "--count", "--timestamps")
 		}
 
+		if opts.Update {
+			return validate.Usage("The {0} option is only available with the {1} option.", "--update", "--timestamps")
+		}
+
 		if opts.Truncate != utils.NOPOS {
 			return validate.Usage("The {0} option is only available with the {1} option.", "--truncate", "--timestamps")
 		}
 
-		if opts.Repair != utils.NOPOS {
+		if opts.Repair {
 			return validate.Usage("The {0} option is only available with the {1} option.", "--repair", "--timestamps")
 		}
 	}

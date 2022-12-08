@@ -1,4 +1,5 @@
-export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&fmt=json&maxRecords=1&firstRecord=212
+Env: TEST_NO_ARTICULATION=true
+export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&maxRecords=1&firstRecord=213&fmt=json
 {
   "data": [
     {
@@ -32,16 +33,7 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&fmt=json&maxRecords=1&fi
               "0x000000000000000000000000054993ab0f2b1acc0fdc65405ee203b4271bebe6"
             ],
             "data": "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
-            "articulatedLog": {
-              "name": "DonationSent",
-              "inputs": {
-                "amount": "9700000000000000000",
-                "dest": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-                "donor": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
-                "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
-              }
-            },
-            "compressedLog": "{name:DonationSent|inputs:{amount:9700000000000000000|dest:0xf503017d7baf7fbc0fff7492b751025c6a78179b|donor:0x054993ab0f2b1acc0fdc65405ee203b4271bebe6|token:0x6b175474e89094c44da98b954eedeac495271d0f}}"
+            "compressedLog": ""
           },
           {
             "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
@@ -52,15 +44,7 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&fmt=json&maxRecords=1&fi
               "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
             ],
             "data": "0x000000000000000000000000000000000000000000000000869d529b714a0000",
-            "articulatedLog": {
-              "name": "Transfer",
-              "inputs": {
-                "_amount": "9700000000000000000",
-                "_from": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
-                "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
-              }
-            },
-            "compressedLog": "{name:Transfer|inputs:{_amount:9700000000000000000|_from:0x054993ab0f2b1acc0fdc65405ee203b4271bebe6|_to:0xf503017d7baf7fbc0fff7492b751025c6a78179b}}"
+            "compressedLog": ""
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -72,16 +56,7 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&fmt=json&maxRecords=1&fi
               "0x000000000000000000000000054993ab0f2b1acc0fdc65405ee203b4271bebe6"
             ],
             "data": "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3",
-            "articulatedLog": {
-              "name": "DonationSent",
-              "inputs": {
-                "amount": "250000000000000000",
-                "dest": "0x00de4b13153673bcae2616b67bf822500d325fc3",
-                "donor": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
-                "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
-              }
-            },
-            "compressedLog": "{name:DonationSent|inputs:{amount:250000000000000000|dest:0x00de4b13153673bcae2616b67bf822500d325fc3|donor:0x054993ab0f2b1acc0fdc65405ee203b4271bebe6|token:0x6b175474e89094c44da98b954eedeac495271d0f}}"
+            "compressedLog": ""
           },
           {
             "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
@@ -92,34 +67,43 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&fmt=json&maxRecords=1&fi
               "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3"
             ],
             "data": "0x00000000000000000000000000000000000000000000000003782dace9d90000",
-            "articulatedLog": {
-              "name": "Transfer",
-              "inputs": {
-                "_amount": "250000000000000000",
-                "_from": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
-                "_to": "0x00de4b13153673bcae2616b67bf822500d325fc3"
-              }
-            },
-            "compressedLog": "{name:Transfer|inputs:{_amount:250000000000000000|_from:0x054993ab0f2b1acc0fdc65405ee203b4271bebe6|_to:0x00de4b13153673bcae2616b67bf822500d325fc3}}"
+            "compressedLog": ""
           }
         ],
         "status": 1
       },
       "traces": [],
-      "articulatedTx": {
-        "name": "donate",
-        "inputs": {
-          "_donations": "[{\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"9700000000000000000\", \"dest\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"250000000000000000\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}]"
-        }
-      },
-      "compressedTx": "{name:donate|inputs:{_donations:[{token:0x6b175474e89094c44da98b954eedeac495271d0f|amount:9700000000000000000|dest:0xf503017d7baf7fbc0fff7492b751025c6a78179b}|{token:0x6b175474e89094c44da98b954eedeac495271d0f|amount:250000000000000000|dest:0x00de4b13153673bcae2616b67bf822500d325fc3}]}}",
+      "compressedTx": "0x9120491c(stub:000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000020000000000000000000000006b175474e89094c44da98b954eedeac495271d0f000000000000000000000000000000000000000000000000869d529b714a0000000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b0000000000000000000000006b175474e89094c44da9, stub:8b954eedeac495271d0f00000000000000000000000000000000000000000000000003782dace9d9000000000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3)",
       "gasCost": 2743600000000000,
       "etherGasCost": 0.0027436,
-      "function": "donate",
+      "function": "",
       "gasUsed": 68590,
       "date": "2020-06-16 16:09:04 UTC",
       "ether": 0,
       "encoding": "0x9120491c"
     }
-  ]
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef",
+    "first_block": "0xdeadbeef",
+    "last_block": "0xdeadbeef",
+    "accountedFor": {
+      "tags": "00-Active",
+      "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "name": "Name 0xf503017d",
+      "symbol": "",
+      "source": "",
+      "decimals": 0,
+      "petname": "annually-famous-crappie",
+      "isCustom": true,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
+    }
+  }
 }

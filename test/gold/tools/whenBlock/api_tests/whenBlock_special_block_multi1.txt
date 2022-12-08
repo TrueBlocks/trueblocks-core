@@ -3,20 +3,20 @@ when?blocks=stateclear%20iceage%204001001&verbose
   "data": [
     {
       "blockNumber": 2717576,
-      "timestamp": 1480448309,
       "date": "2016-11-29 19:38:29 UTC",
-      "name": "stateclear"
+      "name": "stateclear",
+      "timestamp": 1480448309
     },
     {
       "blockNumber": 200000,
-      "timestamp": 1441661589,
       "date": "2015-09-07 21:33:09 UTC",
-      "name": "iceage"
+      "name": "iceage",
+      "timestamp": 1441661589
     },
     {
       "blockNumber": 4001001,
-      "timestamp": 1499651592,
-      "date": "2017-07-10 01:53:12 UTC"
+      "date": "2017-07-10 01:53:12 UTC",
+      "timestamp": 1499651592
     }
   ],
   "meta": {

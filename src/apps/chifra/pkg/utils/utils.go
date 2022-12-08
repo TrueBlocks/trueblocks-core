@@ -7,6 +7,7 @@ package utils
 import (
 	"bytes"
 	"fmt"
+	"io"
 	"log"
 	"math/big"
 	"net/http"
@@ -27,8 +28,11 @@ func IsTestModeServer(r *http.Request) bool {
 	return r.Header.Get("User-Agent") == "testRunner"
 }
 
-func IsApiMode() bool {
-	return os.Getenv("API_MODE") == "true"
+// IsServerWriter tries to cast `w` into `http.ResponseWriter`
+// and returns true if the cast was successful
+func IsServerWriter(w io.Writer) bool {
+	_, ok := w.(http.ResponseWriter)
+	return ok
 }
 
 func IsTerminal() bool {

@@ -29,14 +29,12 @@ func OutputHeader(data interface{}, w io.Writer, format string) error {
 }
 
 // TODO: Fix export without arrays
-func OutputSlice(data interface{}, w io.Writer, format string, hideHeader, apiMode, first bool, meta *rpcClient.MetaData) error {
+func OutputSlice(data interface{}, w io.Writer, format string, hideHeader, first bool, meta *rpcClient.MetaData) error {
 	var outputBytes []byte
 	var err error
 
 	preceeds := ""
 	switch format {
-	case "api":
-		fallthrough
 	case "json":
 		result := struct {
 			Data interface{}         `json:"data,omitempty"`
@@ -77,14 +75,12 @@ func OutputSlice(data interface{}, w io.Writer, format string, hideHeader, apiMo
 }
 
 // TODO: Fix export without arrays
-func OutputObject(data interface{}, w io.Writer, format string, hideHeader, apiMode, first bool, meta *rpcClient.MetaData) error {
+func OutputObject(data interface{}, w io.Writer, format string, hideHeader, first bool, meta *rpcClient.MetaData) error {
 	var outputBytes []byte
 	var err error
 
 	preceeds := ""
 	switch format {
-	case "api":
-		fallthrough
 	case "json":
 		outputBytes, err = json.MarshalIndent(data, "", "  ")
 		if err != nil {

@@ -110,3 +110,11 @@ func GetOptions() *LogsOptions {
 	// EXISTING_CODE
 	return &defaultLogsOptions
 }
+
+func ResetOptions() {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
+	defaultLogsOptions = LogsOptions{}
+	globals.SetDefaults(&defaultLogsOptions.Globals)
+	defaultLogsOptions.Globals.Writer = w
+}

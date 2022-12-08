@@ -12,6 +12,7 @@ package namesPkg
 import (
 	"net/http"
 
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -20,6 +21,7 @@ import (
 // RunNames handles the names command for the command line. Returns error only as per cobra.
 func RunNames(cmd *cobra.Command, args []string) (err error) {
 	opts := namesFinishParse(args)
+	outputHelpers.SetWriterForCommand("names", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.NamesInternal()
@@ -29,9 +31,12 @@ func RunNames(cmd *cobra.Command, args []string) (err error) {
 // ServeNames handles the names command for the API. Returns error and a bool if handled
 func ServeNames(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := namesFinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("names", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return opts.NamesInternal()
+	err, handled = opts.NamesInternal()
+	outputHelpers.CloseJsonWriterIfNeededApi("names", err, &opts.Globals)
+	return
 }
 
 // NamesInternal handles the internal workings of the names command.  Returns error and a bool if handled
@@ -48,7 +53,7 @@ func (opts *NamesOptions) NamesInternal() (err error, handled bool) {
 		return
 	}
 
-	if opts.Globals.ApiMode {
+	if opts.Globals.IsApiMode() {
 		return nil, false
 	}
 

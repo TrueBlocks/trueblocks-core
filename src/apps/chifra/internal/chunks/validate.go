@@ -79,12 +79,12 @@ func (opts *ChunksOptions) validateChunks() error {
 				return validate.Usage("Choose either {0} or {1}, not both.", "--verbose", "--belongs")
 			}
 			if len(opts.Blocks) == 0 {
-				return validate.Usage("You must specifiy at least one {0} with the {1} option", "block identifier", "--belongs")
+				return validate.Usage("You must specify at least one {0} with the {1} option", "block identifier", "--belongs")
 			}
 		}
 	}
 
-	if err = opts.isDisallowed(opts.Globals.ApiMode, "API"); err != nil {
+	if err = opts.isDisallowed(opts.Globals.IsApiMode(), "API"); err != nil {
 		return err
 	}
 
@@ -95,10 +95,6 @@ func (opts *ChunksOptions) validateChunks() error {
 	if opts.Globals.Verbose || opts.Globals.LogLevel > 0 {
 		if opts.Mode == "addresses" && opts.Globals.Format == "json" {
 			return validate.Usage("Do not use {0} with {1}", "--format json", "--verbose in the addresses mode")
-		}
-	} else {
-		if opts.Globals.ToFile {
-			return validate.Usage("You may not use the {0} option without {1}.", "--to_file", "--verbose")
 		}
 	}
 
@@ -121,7 +117,7 @@ func (opts *ChunksOptions) validateChunks() error {
 
 	// Note that this does not return if the index is not initialized
 	if err := index.IndexIsInitialized(opts.Globals.Chain); err != nil {
-		if opts.Globals.ApiMode {
+		if opts.Globals.IsApiMode() {
 			return err
 		} else {
 			logger.Fatal(err)

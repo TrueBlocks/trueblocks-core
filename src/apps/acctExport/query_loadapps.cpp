@@ -55,8 +55,8 @@ bool COptions::loadMonitors(void) {
                     loadNamesWithPrefunds();
                     reloaded = true;
                 }
-                findName(mon.address, accountedFor);
-                accountedFor.isContract = !getCodeAt(mon.address, meta.client).empty();
+                findName(mon.address, ledgerManager.name);
+                ledgerManager.name.isContract = !getCodeAt(mon.address, meta.client).empty();
             }
             monTmp.push_back(app);
         }
@@ -66,29 +66,32 @@ bool COptions::loadMonitors(void) {
     if (reversed)  // TODO(tjayrush): remove this comment once account works backwardly
         sort(monTmp.begin(), monTmp.end(), sortMonitoredAppearanceReverse);
 
-    // This limits the records to only those in the user's specified range, note we may bail early
-    // if the blockchain itself isn't caught up to the most recent block in the monitor which may
-    // happen if we re-sync the index (and optionally the node) from scratch
-    for (size_t i = first_record; i < min(blknum_t(monTmp.size()), (first_record + max_records)); i++) {
+    for (size_t i = 0; i < monTmp.size(); i++) {
         CAppearance_mon* app = &monTmp[i];
-        if (app->blk > meta.client) {
-            static bool hasFuture = false;
-            if (!hasFuture) {
-                if (!isTestMode())
-                    LOG_WARN("Cache file contains blocks ahead of the chain. Some apps will not be exported.");
-                hasFuture = true;
-            }
+        if (app->blk < exportRange.first || app->blk > exportRange.second) {
+            // do nothing
         } else {
-            monApps.push_back(*app);
+            if ((i + 1) >= first_record && (max_records == 250 || ledgerManager.appArray.size() < max_records)) {
+                if (app->blk > meta.client) {
+                    static bool hasFuture = false;
+                    if (!hasFuture) {
+                        if (!isTestMode())
+                            LOG_WARN("Cache file contains blocks ahead of the chain. Some apps will not be exported.");
+                        hasFuture = true;
+                    }
+                } else {
+                    ledgerManager.appArray.push_back(*app);
+                }
+            }
         }
     }
 
     // Make sure the timestamps column is at least as up to date as this monitor
-    if (monApps.size()) {
+    if (ledgerManager.appArray.size()) {
         // it's okay to not be able to freshen this. We'll just report less txs
         return bn_2_Timestamp(1);  // loads the timestamp file and returns non-zero
     }
 
-    LOG_INFO("Nothing to export" + (allMonitors.size() ? (" from " + accountedFor.address) : "") + ".");
+    LOG_INFO("Nothing to export" + (allMonitors.size() ? (" from " + ledgerManager.accountedFor) : "") + ".");
     return allMonitors.size() > 0;
 }

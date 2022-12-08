@@ -1,0 +1,675 @@
+chifra export  0x868b8fd259abfcfdf9634c343593b34ef359641d --last_block 8769141 --statements --ether --fmt json
+TEST[DATE|TIME] Addrs:  [0x868b8fd259abfcfdf9634c343593b34ef359641d]
+TEST[DATE|TIME] Statements:  true
+TEST[DATE|TIME] LastBlock:  8769141
+TEST[DATE|TIME] Ether:  true
+TEST[DATE|TIME] Format:  json
+{ "data": [
+TIME ~ CLOCK - <INFO>  : Calling a contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 8769018 prior to its deployment 10000835
+TIME ~ CLOCK - <INFO>  : doEthCall in CUniPrice::findPair returned false
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8769018...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8769018 at four-byte 0x59e02dd7 returned 0x0000000000000000000000000000000000000000000000096b794ada83c080000000000000000000000000000000000000000000000000000000000000000001
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 2
+  0: bytes32 val_0 = <>
+  1: bool val_1 = <>
+dataArray.size: 2
+  0 (0x000) 0000000000000000...00000000000000096b794ada83c08000 <=o <-r
+  1 (0x020) 0000000000000000...00000000000000000000000000000001
+
+==================================================
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096b794ada83c08000
+  1: bool val_1 = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096b794ada83c08000
+  1: bool val_1 = <>
+dataArray.size: 2
+  0 (0x000) 0000000000000000...00000000000000096b794ada83c08000 <=o
+  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
+
+==================================================
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096b794ada83c08000
+  1: bool val_1 = true
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096b794ada83c08000
+  1: bool val_1 = true
+==================================================
+
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8769019...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8769019 at four-byte 0x59e02dd7 returned 0x0000000000000000000000000000000000000000000000096b794ada83c080000000000000000000000000000000000000000000000000000000000000000001
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 2
+  0: bytes32 val_0 = <>
+  1: bool val_1 = <>
+dataArray.size: 2
+  0 (0x000) 0000000000000000...00000000000000096b794ada83c08000 <=o <-r
+  1 (0x020) 0000000000000000...00000000000000000000000000000001
+
+==================================================
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096b794ada83c08000
+  1: bool val_1 = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096b794ada83c08000
+  1: bool val_1 = <>
+dataArray.size: 2
+  0 (0x000) 0000000000000000...00000000000000096b794ada83c08000 <=o
+  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
+
+==================================================
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096b794ada83c08000
+  1: bool val_1 = true
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096b794ada83c08000
+  1: bool val_1 = true
+==================================================
+
+{
+  "blockNumber": 8769019,
+  "transactionIndex": 124,
+  "logIndex": 0,
+  "transactionHash": "0xf6bce3d9edd00f2e8a996505fded2e7e28a1b6af193d94e9524b9ac7fbf3e8b3",
+  "timestamp": 1571457514,
+  "date": "2019-10-19 03:58:34 UTC",
+  "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "assetSymbol": "ETH",
+  "decimals": 18,
+  "spotPrice": 173.76000,
+  "priceSource": "maker",
+  "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
+  "sender": "0x103348c47ffc3254aff761894e7c13ca0c680465",
+  "recipient": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
+  "begBal": "",
+  "amountNet": "0.025000000000000000",
+  "endBal": "0.025000000000000000",
+  "encoding": "",
+  "signature": "",
+  "reconciliationType": "regular",
+  "reconciled": true,
+  "totalIn": "0.025000000000000000",
+  "amountIn": "0.025000000000000000",
+  "internalIn": "",
+  "selfDestructIn": "",
+  "minerBaseRewardIn": "",
+  "minerNephewRewardIn": "",
+  "minerTxFeeIn": "",
+  "minerUncleRewardIn": "",
+  "prefundIn": "",
+  "totalOut": "",
+  "amountOut": "",
+  "internalOut": "",
+  "selfDestructOut": "",
+  "gasOut": "",
+  "totalOutLessGas": "",
+  "prevAppBlk": 8769018,
+  "prevBal": "",
+  "begBalDiff": "",
+  "endBalDiff": "",
+  "endBalCalc": "0.025000000000000000"
+}
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8769029...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8769029 at four-byte 0x59e02dd7 returned 0x0000000000000000000000000000000000000000000000096b794ada83c080000000000000000000000000000000000000000000000000000000000000000001
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 2
+  0: bytes32 val_0 = <>
+  1: bool val_1 = <>
+dataArray.size: 2
+  0 (0x000) 0000000000000000...00000000000000096b794ada83c08000 <=o <-r
+  1 (0x020) 0000000000000000...00000000000000000000000000000001
+
+==================================================
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096b794ada83c08000
+  1: bool val_1 = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096b794ada83c08000
+  1: bool val_1 = <>
+dataArray.size: 2
+  0 (0x000) 0000000000000000...00000000000000096b794ada83c08000 <=o
+  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
+
+==================================================
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096b794ada83c08000
+  1: bool val_1 = true
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096b794ada83c08000
+  1: bool val_1 = true
+==================================================
+
+TIME ~ CLOCK - <INFO>  : Calling a contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 8769018 prior to its deployment 10000835
+TIME ~ CLOCK - <INFO>  : doEthCall in CUniPrice::findPair returned false
+, {
+  "blockNumber": 8769029,
+  "transactionIndex": 80,
+  "logIndex": 0,
+  "transactionHash": "0x22f3135a1c2b201456a4770ef9c1ac65a759db3aebe5cb8ad36ad7373f48532f",
+  "timestamp": 1571457649,
+  "date": "2019-10-19 04:00:49 UTC",
+  "assetAddr": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
+  "assetSymbol": "TRB",
+  "decimals": 18,
+  "spotPrice": 0.00000,
+  "priceSource": "not-priced",
+  "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
+  "sender": "0x103348c47ffc3254aff761894e7c13ca0c680465",
+  "recipient": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
+  "begBal": "",
+  "amountNet": "85.0000000",
+  "endBal": "85.0000000",
+  "reconciliationType": "token",
+  "reconciled": true,
+  "totalIn": "85.0000000",
+  "amountIn": "85.0000000",
+  "internalIn": "",
+  "selfDestructIn": "",
+  "minerBaseRewardIn": "",
+  "minerNephewRewardIn": "",
+  "minerTxFeeIn": "",
+  "minerUncleRewardIn": "",
+  "prefundIn": "",
+  "totalOut": "",
+  "amountOut": "",
+  "internalOut": "",
+  "selfDestructOut": "",
+  "gasOut": "",
+  "totalOutLessGas": "",
+  "prevAppBlk": 8769028,
+  "prevBal": "",
+  "begBalDiff": "",
+  "endBalDiff": "",
+  "endBalCalc": "85.0000000"
+}
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8769052...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8769052 at four-byte 0x59e02dd7 returned 0x0000000000000000000000000000000000000000000000096b794ada83c080000000000000000000000000000000000000000000000000000000000000000001
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 2
+  0: bytes32 val_0 = <>
+  1: bool val_1 = <>
+dataArray.size: 2
+  0 (0x000) 0000000000000000...00000000000000096b794ada83c08000 <=o <-r
+  1 (0x020) 0000000000000000...00000000000000000000000000000001
+
+==================================================
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096b794ada83c08000
+  1: bool val_1 = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096b794ada83c08000
+  1: bool val_1 = <>
+dataArray.size: 2
+  0 (0x000) 0000000000000000...00000000000000096b794ada83c08000 <=o
+  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
+
+==================================================
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096b794ada83c08000
+  1: bool val_1 = true
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096b794ada83c08000
+  1: bool val_1 = true
+==================================================
+
+, {
+  "blockNumber": 8769052,
+  "transactionIndex": 73,
+  "logIndex": 0,
+  "transactionHash": "0x66cdceb982decd5c899ee7a608468eed3b0032b7f146bdef7a96ec0dfecfcc1d",
+  "timestamp": 1571458005,
+  "date": "2019-10-19 04:06:45 UTC",
+  "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "assetSymbol": "ETH",
+  "decimals": 18,
+  "spotPrice": 173.76000,
+  "priceSource": "maker",
+  "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
+  "sender": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
+  "recipient": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
+  "begBal": "0.025000000000000000",
+  "amountNet": "-0.000247180000000000",
+  "endBal": "0.024752820000000000",
+  "reconciliationType": "prevDiff-same",
+  "reconciled": true,
+  "totalIn": "",
+  "amountIn": "",
+  "internalIn": "",
+  "selfDestructIn": "",
+  "minerBaseRewardIn": "",
+  "minerNephewRewardIn": "",
+  "minerTxFeeIn": "",
+  "minerUncleRewardIn": "",
+  "prefundIn": "",
+  "totalOut": "0.000247180000000000",
+  "amountOut": "",
+  "internalOut": "",
+  "selfDestructOut": "",
+  "gasOut": "0.000247180000000000",
+  "totalOutLessGas": "",
+  "prevAppBlk": 8769029,
+  "prevBal": "0.025000000000000000",
+  "begBalDiff": "",
+  "endBalDiff": "",
+  "endBalCalc": "0.024752820000000000"
+}
+, {
+  "blockNumber": 8769052,
+  "transactionIndex": 73,
+  "logIndex": 0,
+  "transactionHash": "0x66cdceb982decd5c899ee7a608468eed3b0032b7f146bdef7a96ec0dfecfcc1d",
+  "timestamp": 1571458005,
+  "date": "2019-10-19 04:06:45 UTC",
+  "assetAddr": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
+  "assetSymbol": "TRB",
+  "decimals": 18,
+  "spotPrice": 0.00000,
+  "priceSource": "not-priced",
+  "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
+  "sender": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
+  "recipient": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
+  "begBal": "85.0000000",
+  "amountNet": "-85.0000000",
+  "endBal": "",
+  "reconciliationType": "token",
+  "reconciled": true,
+  "totalIn": "",
+  "amountIn": "",
+  "internalIn": "",
+  "selfDestructIn": "",
+  "minerBaseRewardIn": "",
+  "minerNephewRewardIn": "",
+  "minerTxFeeIn": "",
+  "minerUncleRewardIn": "",
+  "prefundIn": "",
+  "totalOut": "85.0000000",
+  "amountOut": "85.0000000",
+  "internalOut": "",
+  "selfDestructOut": "",
+  "gasOut": "",
+  "totalOutLessGas": "85.0000000",
+  "prevAppBlk": 8769029,
+  "prevBal": "85.0000000",
+  "begBalDiff": "",
+  "endBalDiff": "",
+  "endBalCalc": ""
+}
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8769052...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8769052 at four-byte 0x59e02dd7 returned 0x0000000000000000000000000000000000000000000000096b794ada83c080000000000000000000000000000000000000000000000000000000000000000001
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 2
+  0: bytes32 val_0 = <>
+  1: bool val_1 = <>
+dataArray.size: 2
+  0 (0x000) 0000000000000000...00000000000000096b794ada83c08000 <=o <-r
+  1 (0x020) 0000000000000000...00000000000000000000000000000001
+
+==================================================
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096b794ada83c08000
+  1: bool val_1 = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096b794ada83c08000
+  1: bool val_1 = <>
+dataArray.size: 2
+  0 (0x000) 0000000000000000...00000000000000096b794ada83c08000 <=o
+  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
+
+==================================================
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096b794ada83c08000
+  1: bool val_1 = true
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096b794ada83c08000
+  1: bool val_1 = true
+==================================================
+
+, {
+  "blockNumber": 8769052,
+  "transactionIndex": 74,
+  "logIndex": 0,
+  "transactionHash": "0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265",
+  "timestamp": 1571458005,
+  "date": "2019-10-19 04:06:45 UTC",
+  "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "assetSymbol": "ETH",
+  "decimals": 18,
+  "spotPrice": 173.76000,
+  "priceSource": "maker",
+  "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
+  "sender": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
+  "recipient": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
+  "begBal": "0.024752820000000000",
+  "amountNet": "-0.000702230000000000",
+  "endBal": "0.024050590000000000",
+  "reconciliationType": "same-nextDiff",
+  "reconciled": true,
+  "totalIn": "",
+  "amountIn": "",
+  "internalIn": "",
+  "selfDestructIn": "",
+  "minerBaseRewardIn": "",
+  "minerNephewRewardIn": "",
+  "minerTxFeeIn": "",
+  "minerUncleRewardIn": "",
+  "prefundIn": "",
+  "totalOut": "0.000702230000000000",
+  "amountOut": "",
+  "internalOut": "",
+  "selfDestructOut": "",
+  "gasOut": "0.000702230000000000",
+  "totalOutLessGas": "",
+  "prevAppBlk": 8769052,
+  "prevBal": "0.024752820000000000",
+  "begBalDiff": "",
+  "endBalDiff": "",
+  "endBalCalc": "0.024050590000000000"
+}
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8769064...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8769064 at four-byte 0x59e02dd7 returned 0x0000000000000000000000000000000000000000000000096bae95462b6200000000000000000000000000000000000000000000000000000000000000000001
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 2
+  0: bytes32 val_0 = <>
+  1: bool val_1 = <>
+dataArray.size: 2
+  0 (0x000) 0000000000000000...00000000000000096bae95462b620000 <=o <-r
+  1 (0x020) 0000000000000000...00000000000000000000000000000001
+
+==================================================
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096bae95462b620000
+  1: bool val_1 = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096bae95462b620000
+  1: bool val_1 = <>
+dataArray.size: 2
+  0 (0x000) 0000000000000000...00000000000000096bae95462b620000 <=o
+  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
+
+==================================================
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096bae95462b620000
+  1: bool val_1 = true
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096bae95462b620000
+  1: bool val_1 = true
+==================================================
+
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8769064...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8769064 at four-byte 0x59e02dd7 returned 0x0000000000000000000000000000000000000000000000096bae95462b6200000000000000000000000000000000000000000000000000000000000000000001
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 2
+  0: bytes32 val_0 = <>
+  1: bool val_1 = <>
+dataArray.size: 2
+  0 (0x000) 0000000000000000...00000000000000096bae95462b620000 <=o <-r
+  1 (0x020) 0000000000000000...00000000000000000000000000000001
+
+==================================================
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096bae95462b620000
+  1: bool val_1 = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096bae95462b620000
+  1: bool val_1 = <>
+dataArray.size: 2
+  0 (0x000) 0000000000000000...00000000000000096bae95462b620000 <=o
+  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
+
+==================================================
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096bae95462b620000
+  1: bool val_1 = true
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096bae95462b620000
+  1: bool val_1 = true
+==================================================
+
+, {
+  "blockNumber": 8769064,
+  "transactionIndex": 131,
+  "logIndex": 0,
+  "transactionHash": "0x0934c85fb30abe84acbc26afe3f209593dbe97aac6c205569b88b90376c65033",
+  "timestamp": 1571458209,
+  "date": "2019-10-19 04:10:09 UTC",
+  "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "assetSymbol": "ETH",
+  "decimals": 18,
+  "spotPrice": 173.78000,
+  "priceSource": "maker",
+  "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
+  "sender": "0xa7a7899d944fe658c4b0a1803bab2f490bd3849e",
+  "recipient": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
+  "begBal": "0.024050590000000000",
+  "amountNet": "0.450562200000000000",
+  "endBal": "0.474612790000000000",
+  "reconciliationType": "by-trace",
+  "reconciled": true,
+  "totalIn": "0.450562200000000000",
+  "amountIn": "",
+  "internalIn": "0.450562200000000000",
+  "selfDestructIn": "",
+  "minerBaseRewardIn": "",
+  "minerNephewRewardIn": "",
+  "minerTxFeeIn": "",
+  "minerUncleRewardIn": "",
+  "prefundIn": "",
+  "totalOut": "",
+  "amountOut": "",
+  "internalOut": "",
+  "selfDestructOut": "",
+  "gasOut": "",
+  "totalOutLessGas": "",
+  "prevAppBlk": 8769064,
+  "prevBal": "0.024050590000000000",
+  "begBalDiff": "",
+  "endBalDiff": "",
+  "endBalCalc": "0.474612790000000000"
+}
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8769130...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8769130 at four-byte 0x59e02dd7 returned 0x0000000000000000000000000000000000000000000000096c192a1d7aa500000000000000000000000000000000000000000000000000000000000000000001
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 2
+  0: bytes32 val_0 = <>
+  1: bool val_1 = <>
+dataArray.size: 2
+  0 (0x000) 0000000000000000...00000000000000096c192a1d7aa50000 <=o <-r
+  1 (0x020) 0000000000000000...00000000000000000000000000000001
+
+==================================================
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096c192a1d7aa50000
+  1: bool val_1 = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096c192a1d7aa50000
+  1: bool val_1 = <>
+dataArray.size: 2
+  0 (0x000) 0000000000000000...00000000000000096c192a1d7aa50000 <=o
+  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
+
+==================================================
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096c192a1d7aa50000
+  1: bool val_1 = true
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096c192a1d7aa50000
+  1: bool val_1 = true
+==================================================
+
+, {
+  "blockNumber": 8769130,
+  "transactionIndex": 51,
+  "logIndex": 0,
+  "transactionHash": "0xe9278cb13db118e569d98b43b5d7feb01f799ad734d255198d46c293f9455b9e",
+  "timestamp": 1571458850,
+  "date": "2019-10-19 04:20:50 UTC",
+  "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "assetSymbol": "ETH",
+  "decimals": 18,
+  "spotPrice": 173.81000,
+  "priceSource": "maker",
+  "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
+  "sender": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
+  "recipient": "0x103348c47ffc3254aff761894e7c13ca0c680465",
+  "begBal": "0.474612790000000000",
+  "amountNet": "-0.100021000000000000",
+  "endBal": "0.374591790000000000",
+  "reconciliationType": "regular",
+  "reconciled": true,
+  "totalIn": "",
+  "amountIn": "",
+  "internalIn": "",
+  "selfDestructIn": "",
+  "minerBaseRewardIn": "",
+  "minerNephewRewardIn": "",
+  "minerTxFeeIn": "",
+  "minerUncleRewardIn": "",
+  "prefundIn": "",
+  "totalOut": "0.100021000000000000",
+  "amountOut": "0.100000000000000000",
+  "internalOut": "",
+  "selfDestructOut": "",
+  "gasOut": "0.000021000000000000",
+  "totalOutLessGas": "0.100000000000000000",
+  "prevAppBlk": 8769064,
+  "prevBal": "0.474612790000000000",
+  "begBalDiff": "",
+  "endBalDiff": "",
+  "endBalCalc": "0.374591790000000000"
+}
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8769141...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8769141 at four-byte 0x59e02dd7 returned 0x0000000000000000000000000000000000000000000000096c192a1d7aa500000000000000000000000000000000000000000000000000000000000000000001
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 2
+  0: bytes32 val_0 = <>
+  1: bool val_1 = <>
+dataArray.size: 2
+  0 (0x000) 0000000000000000...00000000000000096c192a1d7aa50000 <=o <-r
+  1 (0x020) 0000000000000000...00000000000000000000000000000001
+
+==================================================
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096c192a1d7aa50000
+  1: bool val_1 = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096c192a1d7aa50000
+  1: bool val_1 = <>
+dataArray.size: 2
+  0 (0x000) 0000000000000000...00000000000000096c192a1d7aa50000 <=o
+  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
+
+==================================================
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096c192a1d7aa50000
+  1: bool val_1 = true
+params.size: 2
+  0: bytes32 val_0 = 0x0000000000000000000000000000000000000000000000096c192a1d7aa50000
+  1: bool val_1 = true
+==================================================
+
+, {
+  "blockNumber": 8769141,
+  "transactionIndex": 27,
+  "logIndex": 0,
+  "transactionHash": "0xcc85517a32761d7de6b4aa07c75d54f4b54a88663505d2734f4e98e441e8e35e",
+  "timestamp": 1571459025,
+  "date": "2019-10-19 04:23:45 UTC",
+  "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "assetSymbol": "ETH",
+  "decimals": 18,
+  "spotPrice": 173.81000,
+  "priceSource": "maker",
+  "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
+  "sender": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
+  "recipient": "0xf322ccd630465c8a6fc517326ff58fe102310251",
+  "begBal": "0.374591790000000000",
+  "amountNet": "-0.374591790000000000",
+  "endBal": "",
+  "reconciliationType": "regular",
+  "reconciled": true,
+  "totalIn": "",
+  "amountIn": "",
+  "internalIn": "",
+  "selfDestructIn": "",
+  "minerBaseRewardIn": "",
+  "minerNephewRewardIn": "",
+  "minerTxFeeIn": "",
+  "minerUncleRewardIn": "",
+  "prefundIn": "",
+  "totalOut": "0.374591790000000000",
+  "amountOut": "0.374570790000000000",
+  "internalOut": "",
+  "selfDestructOut": "",
+  "gasOut": "0.000021000000000000",
+  "totalOutLessGas": "0.374570790000000000",
+  "prevAppBlk": 8769130,
+  "prevBal": "0.374591790000000000",
+  "begBalDiff": "",
+  "endBalDiff": "",
+  "endBalCalc": ""
+}
+] }

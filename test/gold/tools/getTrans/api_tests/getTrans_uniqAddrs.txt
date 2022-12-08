@@ -31,6 +31,13 @@ transactions?transactions=1301011.0%201301672.0%201301324.0&uniq&fmt=json
     }
   ],
   "errors": [
-    "Transaction 1301324.0 not found."
-  ]
+    "transaction 1301324.0 not found"
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
 }

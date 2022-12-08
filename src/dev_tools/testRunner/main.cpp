@@ -71,6 +71,13 @@ int main(int argc, const char* argv[]) {
 
             map<string_q, CTestCase> testMap;
             for (auto line : lines) {
+                if (getEnvStr("TEST_TEST_ONLY") == "true") {
+                    if (startsWith(line, "test,")) {
+                        replace(line, "test,", "on,");
+                    } else {
+                        replace(line, "on,", "local,");
+                    }
+                }
                 if (startsWith(line, "erigon"))
                     replace(line, "erigon", "local");
                 if (runLocal && startsWith(line, "local"))
@@ -93,7 +100,9 @@ int main(int argc, const char* argv[]) {
 
                 if (line.empty() || ignore1 || ignore2 || ignore3 || ignore4) {
                     if (ignore2 && !options.ignoreOff) {
-                        cerr << iBlue << "   # " << line.substr(0, 120) << cOff << endl;
+                        if (trim(line).substr(0, 120).length() > 0) {
+                            cerr << iBlue << "   # " << line.substr(0, 120) << cOff << endl;
+                        }
                         CTestCase test(line, 0);
                         test.goldPath = substitute(getCWD(), "/test/gold/dev_tools/testRunner/",
                                                    "/test/gold/" + test.path + "/" + test.tool + "/" + test.fileName);
@@ -282,6 +291,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             // To run the test, we cd into the gold path (so we find the test files), but we send results to working
             // folder
             string_q goldApiPath = substitute(test.goldPath, "/api_tests", "");
+            string_q outputFile = test.getOutputFile(whichTest == API, goldApiPath);
             string_q theCmd = "cd \"" + goldApiPath + "\" ; " + cmd.str();
             if (test.builtin)
                 theCmd = "cd \"" + goldApiPath + "\" ; " + test.options;
@@ -303,6 +313,17 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             string_q contents = asciiFileToString(test.workPath + test.fileName);
             if (!prepender.str().empty()) {
                 contents = prepender.str() + contents;
+            }
+
+            if (!outputFile.empty() && fileExists(outputFile)) {
+                ostringstream os;
+                os << "----" << endl;
+                os << "Results in " << substitute(outputFile, goldApiPath, "./") << endl;
+                os << asciiFileToString(outputFile) << endl;
+                contents += os.str();
+                // } else if (!outputFile.empty()) {
+                //     cerr << "Output file not seen: " << outputFile << endl;
+                //     exit(1);
             }
 
             replaceAll(contents, "3735928559", "\"0xdeadbeef\"");
@@ -332,12 +353,33 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
 
             string_q oldFn = test.workPath + test.fileName;
             string_q oldText = asciiFileToString(oldFn);
+            if (contains(oldText, "The XDG_")) {
+                // Weird case where we can't turn off timestamp from logs, so we blow away the timing here
+                CStringArray lines;
+                explode(lines, oldText, '\n');
+                ostringstream os;
+                for (auto line : lines) {
+                    if (contains(line, "The XDG_")) {
+                        line = substitute(line, "The XDG_", "|The XDG_");
+                        nextTokenClear(line, '|');
+                    }
+                    os << line << endl;
+                }
+                oldText = os.str();
+                stringToAsciiFile(oldFn, oldText);
+            }
 
             bool hasId = contains(oldText, "\"id\":");
             bool isTools = contains(oldFn, "/tools/");
             bool isClasses = contains(oldFn, "classes");
             bool isBlocksLogs = contains(oldFn, "getBlocks") && contains(oldFn, "logs");
-            if (hasId && isTools && !isClasses && !isBlocksLogs) {
+            bool isReceipt = contains(oldFn, "getReceipts");
+            bool isBlocks = contains(oldFn, "getBlocks");
+            bool isTrans = contains(oldFn, "getTrans");
+            bool isLogs = contains(oldFn, "getLogs");
+            bool isTraces = contains(oldFn, "getTraces");
+            if (!isReceipt && !isBlocks && !isTrans && !isLogs && !isTraces && hasId && isTools && !isClasses &&
+                !isBlocksLogs) {
                 // This crazy shit is because we want to pass tests when running against different nodes (Parity,
                 // Erigon, etc.) so we have to remove some stuff and then sort the data (after deliniating it)
                 // so it matches more easily.
@@ -348,6 +390,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                     nextTokenClear(oldText, ']');
                     oldText = pre + oldText;
                 }
+
                 replaceAny(oldText, ",{}[]", "\n");
                 CStringArray lines;
                 explode(lines, oldText, '\n');
@@ -453,7 +496,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
 bool saveAndCopy(const string_q& customFile, void* data) {
     CStringArray parts;
     explode(parts, customFile, '/');
-    string_q destFile = rootConfigs + parts[parts.size() - 1];
+    string_q destFile = rootConfigs + "configs/mainnet/" + parts[parts.size() - 1];
     string_q saveFile = cacheFolder_tmp + parts[parts.size() - 1] + ".save";
     copyFile(destFile, saveFile);
     copyFile(customFile, destFile);
@@ -464,7 +507,7 @@ bool saveAndCopy(const string_q& customFile, void* data) {
 bool replaceFile(const string_q& customFile, void* data) {
     CStringArray parts;
     explode(parts, customFile, '/');
-    string_q destFile = rootConfigs + parts[parts.size() - 1];
+    string_q destFile = rootConfigs + "configs/mainnet/" + parts[parts.size() - 1];
     string_q saveFile = cacheFolder_tmp + parts[parts.size() - 1] + ".save";
     copyFile(saveFile, destFile);
     ::remove(saveFile.c_str());

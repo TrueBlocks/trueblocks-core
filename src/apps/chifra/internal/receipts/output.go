@@ -10,14 +10,14 @@ package receiptsPkg
 
 // EXISTING_CODE
 import (
-	"errors"
+	"context"
 	"fmt"
 	"net/http"
-	"os"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -29,6 +29,7 @@ import (
 // RunReceipts handles the receipts command for the command line. Returns error only as per cobra.
 func RunReceipts(cmd *cobra.Command, args []string) (err error) {
 	opts := receiptsFinishParse(args)
+	outputHelpers.SetWriterForCommand("receipts", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.ReceiptsInternal()
@@ -38,9 +39,12 @@ func RunReceipts(cmd *cobra.Command, args []string) (err error) {
 // ServeReceipts handles the receipts command for the API. Returns error and a bool if handled
 func ServeReceipts(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := receiptsFinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("receipts", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return opts.ReceiptsInternal()
+	err, handled = opts.ReceiptsInternal()
+	outputHelpers.CloseJsonWriterIfNeededApi("receipts", err, &opts.Globals)
+	return
 }
 
 // ReceiptsInternal handles the internal workings of the receipts command.  Returns error and a bool if handled
@@ -51,104 +55,93 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.Globals.ApiMode {
-		return nil, false
-	}
-
-	if len(os.Getenv("OLD")) > 0 {
-		err = opts.Globals.PassItOn("getReceipts", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
-		return err, true
-	}
-
 	if opts.Articulate {
-		err = opts.Globals.PassItOn("getReceipts", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
-		return err, true
+		if opts.Globals.IsApiMode() {
+			return nil, false
+		}
+		return opts.Globals.PassItOn("getReceipts", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr()), true
 	}
 
-	notFound := make([]error, 0)
 	clientVersion, err := rpcClient.GetVersion(opts.Globals.Chain)
 	if err != nil {
 		return err, true
 	}
 	erigonUsed := utils.IsClientErigon(clientVersion)
 
-	getTransaction := func(models chan types.Modeler[types.RawReceipt], errors chan error) {
+	ctx, cancel := context.WithCancel(context.Background())
+
+	fetchTransactionData := func(modelChan chan types.Modeler[types.RawReceipt], errorChan chan error) {
 		// TODO: stream transaction identifiers
 		for idIndex, rng := range opts.TransactionIds {
 			txList, err := rng.ResolveTxs(opts.Globals.Chain)
 			// TODO: rpcClient should return a custom type of error in this case
 			if err != nil && strings.Contains(err.Error(), "not found") {
-				notFound = append(notFound, err)
+				errorChan <- err
 				continue
 			}
 			if err != nil {
-				errors <- err
+				errorChan <- err
+				cancel()
 				return
 			}
 			for _, tx := range txList {
 				if tx.BlockNumber < uint32(byzantiumBlockNumber) && !erigonUsed {
 					err = opts.Globals.PassItOn("getReceipts", opts.Globals.Chain, getReceiptsCmdLine(opts, []string{rng.Orig}), opts.getEnvStr())
 					if err != nil {
-						errors <- err
+						errorChan <- err
+						cancel()
 						return
 					}
 					continue
 				}
 
+				// TODO(cache): Can this be hidden behind the GetTransactionReceipt interface. No reason
+				// TODO(cache): for this calling code to know the data is in the cache.
+				// Try to load receipt from cache
+				// TODO(cache): We should not be sending chain here. We have enough information to fully resolve the path at this level. Send only path.
+				transaction, _ := cache.GetTransaction(
+					opts.Globals.Chain,
+					uint64(tx.BlockNumber),
+					uint64(tx.TransactionIndex),
+				)
+				if transaction != nil && transaction.Receipt != nil {
+					// Some values are not cached
+					transaction.Receipt.BlockNumber = uint64(tx.BlockNumber)
+					transaction.Receipt.TransactionHash = transaction.Hash
+					transaction.Receipt.TransactionIndex = uint64(tx.TransactionIndex)
+					modelChan <- transaction.Receipt
+					continue
+				}
+
 				receipt, err := rpcClient.GetTransactionReceipt(opts.Globals.Chain, uint64(tx.BlockNumber), uint64(tx.TransactionIndex))
 				if err != nil && err.Error() == "not found" {
-					notFound = append(notFound, fmt.Errorf("transaction %s not found", opts.Transactions[idIndex]))
+					errorChan <- fmt.Errorf("transaction %s not found", opts.Transactions[idIndex])
 					continue
 				}
 				if err != nil {
-					errors <- err
+					errorChan <- err
+					cancel()
 					return
 				}
 
-				models <- &receipt
+				modelChan <- &receipt
 			}
 		}
 	}
-	var meta *rpcClient.MetaData
-	if opts.Globals.Format == "api" {
-		meta, err = rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
-		if err != nil {
-			return err, true
-		}
-	}
-	err = output.StreamMany(opts.Globals.Writer, getTransaction, output.OutputOptions{
-		ShowKeys:   !opts.Globals.NoHeader,
-		ShowRaw:    opts.Globals.Raw,
-		ShowHidden: opts.Globals.Verbose,
-		Format:     opts.Globals.Format,
-		Meta:       meta,
-	})
 
-	// If we didn't find some transactions, we want to report them to the user. In the
-	// future, we will stream both the data and errors, but meanwhile we can have the
-	// below workaround
-	if len(notFound) > 0 {
-		// Let's see if we're in server environment
-		_, ok := opts.Globals.Writer.(http.ResponseWriter)
-		var httpError string
-		// If there was any other error, put it on top
-		if err != nil {
-			httpError = err.Error() + "\n"
-		}
-		for _, err := range notFound {
-			if !ok {
-				// We are not in server environment, so just log the errors
-				logger.Log(logger.Error, err)
-			} else {
-				// For server, as a temporary solution, join all errors together.
-				// The client can still parse them (slicing the message by "\n")
-				httpError = httpError + err.Error() + "\n"
-			}
-		}
-		if ok {
-			err = errors.New(httpError)
-		}
-	}
+	err = output.StreamMany(ctx, fetchTransactionData, output.OutputOptions{
+		Writer:     opts.Globals.Writer,
+		Chain:      opts.Globals.Chain,
+		TestMode:   opts.Globals.TestMode,
+		NoHeader:   opts.Globals.NoHeader,
+		ShowRaw:    opts.Globals.ShowRaw,
+		Verbose:    opts.Globals.Verbose,
+		LogLevel:   opts.Globals.LogLevel,
+		Format:     opts.Globals.Format,
+		OutputFn:   opts.Globals.OutputFn,
+		Append:     opts.Globals.Append,
+		JsonIndent: "  ",
+	})
 
 	handled = true
 	// EXISTING_CODE

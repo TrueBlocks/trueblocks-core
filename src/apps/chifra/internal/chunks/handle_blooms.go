@@ -15,68 +15,45 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func showBloom(walker *index.IndexWalker, path string, first bool) (bool, error) {
-	var castOk bool
-	var opts *ChunksOptions
-	if opts, castOk = walker.GetOpts().(*ChunksOptions); !castOk {
-		logger.Fatal("should not happen ==> cannot cast ChunksOptions in showBloom")
-		return false, nil
-	}
-
-	var bl bloom.ChunkBloom
-	bl.ReadBloom(path)
-
-	if opts.Globals.Verbose {
-		Display(&bl, int(opts.Globals.LogLevel))
-	}
-
-	// TODO: Fix export without arrays
-	stats := NewChunkStats(path)
-	obj := NewSimpleBloom(stats, bl)
-	err := opts.Globals.RenderObject(obj, first)
-	if err != nil {
-		return false, err
-	}
-	return true, nil
-}
-
-func NewSimpleBloom(stats types.ReportChunks, bl bloom.ChunkBloom) types.SimpleBloom {
-	nInserted := 0
-	for _, bl := range bl.Blooms {
-		nInserted += int(bl.NInserted)
-	}
-
-	var ret types.SimpleBloom
-	ret.Magic = bl.Header.Magic
-	ret.Hash = bl.Header.Hash
-	ret.Size = stats.BloomSz
-	ret.Range = paths.FileRange{First: stats.Start, Last: stats.End}
-	ret.Count = stats.NBlooms
-	ret.Width = bloom.BLOOM_WIDTH_IN_BYTES
-	ret.NInserted = uint64(nInserted)
-
-	return ret
-}
-
 func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 	defer opts.Globals.RenderFooter()
-	err := opts.Globals.RenderHeader(types.SimpleBloom{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	err := opts.Globals.RenderHeader(types.SimpleBloom{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.NoHeader, true)
 	if err != nil {
 		return err
+	}
+
+	showBloom := func(walker *index.IndexWalker, path string, first bool) (bool, error) {
+		if path != paths.ToBloomPath(path) {
+			logger.Fatal("should not happen ==> we're spinning through the bloom filters")
+		}
+
+		var bl bloom.ChunkBloom
+		bl.ReadBloom(path)
+
+		if opts.Globals.Verbose {
+			displayBloom(&bl, int(opts.Globals.LogLevel))
+		}
+
+		// TODO: Fix export without arrays
+		stats := NewChunkStats(path)
+		obj := NewSimpleBloom(stats, bl)
+		err := opts.Globals.RenderObject(obj, first)
+		if err != nil {
+			return false, err
+		}
+		return true, nil
 	}
 
 	walker := index.NewIndexWalker(
 		opts.Globals.Chain,
 		opts.Globals.TestMode,
 		10, /* maxTests */
-		opts,
 		showBloom,
-		nil,
 	)
-	return walker.WalkIndexFiles(paths.Index_Bloom, blockNums)
+	return walker.WalkBloomFilters(blockNums)
 }
 
-func Display(bl *bloom.ChunkBloom, verbose int) {
+func displayBloom(bl *bloom.ChunkBloom, verbose int) {
 	var bytesPerLine = (2048 / 16) /* 128 */
 	if verbose > 0 && verbose <= 4 {
 		bytesPerLine = 32
@@ -105,4 +82,22 @@ func Display(bl *bloom.ChunkBloom, verbose int) {
 		}
 		fmt.Println()
 	}
+}
+
+func NewSimpleBloom(stats types.ReportChunks, bl bloom.ChunkBloom) types.SimpleBloom {
+	nInserted := 0
+	for _, bl := range bl.Blooms {
+		nInserted += int(bl.NInserted)
+	}
+
+	var ret types.SimpleBloom
+	ret.Magic = bl.Header.Magic
+	ret.Hash = bl.Header.Hash
+	ret.Size = stats.BloomSz
+	ret.Range = paths.FileRange{First: stats.Start, Last: stats.End}
+	ret.Count = stats.NBlooms
+	ret.Width = bloom.BLOOM_WIDTH_IN_BYTES
+	ret.NInserted = uint64(nInserted)
+
+	return ret
 }

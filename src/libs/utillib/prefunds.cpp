@@ -95,6 +95,8 @@ bool forEveryPrefund(ALLOCFUNC func, void* data) {
     for (auto prefund : prefundBalMap) {
         Allocation alloc;
         alloc.address = prefund.first;
+        // Allocation does not have a petname field
+        // alloc.petname = addr_2_Petname(alloc.address, '-');
         alloc.amount = prefund.second;
         if (!(*func)(alloc, data))
             return false;

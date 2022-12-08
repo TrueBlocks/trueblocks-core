@@ -25,7 +25,8 @@ TEST[DATE|TIME] Format:  json
       "newContract": "0x0",
       "gasUsed": 0,
       "output": "0x"
-    }
+    },
+    "timestamp": 1473348164
   },  {
     "blockHash": "0xe4c2b8cb9ddd1acb41043afb3bd0149c281eca23f1bc563af5899bac748ec372",
     "blockNumber": 2222221,
@@ -49,7 +50,8 @@ TEST[DATE|TIME] Format:  json
       "newContract": "0x0",
       "gasUsed": 0,
       "output": "0x"
-    }
+    },
+    "timestamp": 1473348164
   },  {
     "blockHash": "0xe4c2b8cb9ddd1acb41043afb3bd0149c281eca23f1bc563af5899bac748ec372",
     "blockNumber": 2222221,
@@ -73,7 +75,8 @@ TEST[DATE|TIME] Format:  json
       "newContract": "0x0",
       "gasUsed": 0,
       "output": "0x"
-    }
+    },
+    "timestamp": 1473348164
   },  {
     "blockHash": "0xe4c2b8cb9ddd1acb41043afb3bd0149c281eca23f1bc563af5899bac748ec372",
     "blockNumber": 2222221,
@@ -97,5 +100,6 @@ TEST[DATE|TIME] Format:  json
       "newContract": "0x0",
       "gasUsed": 0,
       "output": "0x"
-    }
+    },
+    "timestamp": 1473348164
   }] }

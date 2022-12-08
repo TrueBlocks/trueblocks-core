@@ -51,21 +51,3 @@ string_q logger<log_policy_i>::get_logline_header(void) {
 }
 
 }  // namespace qblocks
-
-// clang-format off
-const CStringArray searchOps = {
-    "Extracting",
-    "Reading",
-    "Updating",
-    "Reconciling",
-    "Scanning",
-    "Skipping",
-    "Completed",
-};
-// clang-format on
-
-void logProgress(searchOpType op, uint64_t progress, uint64_t goal, const string_q& post) {
-    if (isTestMode())
-        return;
-    LOG_PROG(padRight(searchOps[op], 11), " ", padNum8T(uint64_t(progress)), " of ", padNum8T(uint64_t(goal)), (post));
-}

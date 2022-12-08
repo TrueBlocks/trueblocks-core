@@ -3,9 +3,9 @@ when?blocks=daofork&verbose
   "data": [
     {
       "blockNumber": 1920000,
-      "timestamp": 1469020840,
       "date": "2016-07-20 13:20:40 UTC",
-      "name": "daofork"
+      "name": "daofork",
+      "timestamp": 1469020840
     }
   ],
   "meta": {

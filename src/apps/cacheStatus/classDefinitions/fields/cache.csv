@@ -5,4 +5,4 @@ nFiles      ,uint64    ,           ,       ,      ,        ,          ,        ,
 nFolders    ,uint64    ,           ,       ,      ,        ,          ,        ,      ,         ,  4 ,     ,        ,the number of subfolders in the cache
 sizeInBytes ,uint64    ,           ,       ,      ,        ,          ,        ,      ,         ,  5 ,     ,        ,the size of the cache in bytes
 isValid     ,bool      ,false      ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-items       ,CacheEntry,           ,true   ,true  ,true    ,          ,        ,      ,         ,  8 ,     ,        ,an array of cache items
+items       ,CacheEntry,           ,true   ,true  ,true    ,          ,        ,      ,         ,  6 ,     ,        ,an array of cache items

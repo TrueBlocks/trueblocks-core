@@ -31,6 +31,11 @@ int main(int argc, const char* argv[]) {
                 CTraceArray traces;
                 getTracesByFilter(traces, f);
                 for (auto trace : traces) {
+                    CBlock block;
+                    getBlock(block, trace.blockNumber);
+                    CTransaction trans;
+                    trans.timestamp = block.timestamp;
+                    trace.pTransaction = &trans;
                     cout << (!options.firstOut ? ", " : "");
                     cout << trace << endl;
                     options.firstOut = false;
@@ -54,7 +59,7 @@ bool visitTransaction(CTransaction& trans, void* data) {
 
     if (contains(trans.hash, "invalid")) {
         string_q hash = nextTokenClear(trans.hash, ' ');
-        opt->errors.push_back("Transaction " + hash + " not found.");
+        opt->errors.push_back("transaction " + hash + " not found");
         return true;  // continue even with an invalid item
     }
 

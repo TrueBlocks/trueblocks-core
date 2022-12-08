@@ -3,8 +3,8 @@ when?blocks=10000&verbose
   "data": [
     {
       "blockNumber": 10000,
-      "timestamp": 1438334627,
-      "date": "2015-07-31 09:23:47 UTC"
+      "date": "2015-07-31 09:23:47 UTC",
+      "timestamp": 1438334627
     }
   ],
   "meta": {

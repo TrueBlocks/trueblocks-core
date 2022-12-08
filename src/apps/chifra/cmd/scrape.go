@@ -13,6 +13,8 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	scrapePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/scrape"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -24,7 +26,13 @@ var scrapeCmd = &cobra.Command{
 	Short:   shortScrape,
 	Long:    longScrape,
 	Version: versionText,
-	RunE:    scrapePkg.RunScrape,
+	PreRun: outputHelpers.PreRunWithJsonWriter("scrape", func() *globals.GlobalOptions {
+		return &scrapePkg.GetOptions().Globals
+	}),
+	RunE:    file.RunWithFileSupport("scrape", scrapePkg.RunScrape, scrapePkg.ResetOptions),
+	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
+		return &scrapePkg.GetOptions().Globals
+	}),
 }
 
 const usageScrape = `scrape [flags]`

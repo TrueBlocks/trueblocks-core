@@ -8,7 +8,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Testing",
       "decimals": 0,
-      "description": ""
+      "petname": "abnormally-able-ant"
     },
     {
       "tags": "81-Custom",
@@ -17,7 +17,7 @@ names?prefund&custom
       "symbol": "AC_2",
       "source": "Testing",
       "decimals": 2,
-      "description": ""
+      "petname": "abnormally-able-ape"
     },
     {
       "tags": "81-Custom",
@@ -26,7 +26,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Testing",
       "decimals": 0,
-      "description": ""
+      "petname": "abnormally-able-asp"
     },
     {
       "tags": "81-Custom",
@@ -35,7 +35,7 @@ names?prefund&custom
       "symbol": "AC_4",
       "source": "Testing",
       "decimals": 4,
-      "description": ""
+      "petname": "abnormally-able-bat"
     },
     {
       "tags": "80-Prefund",
@@ -44,7 +44,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "easily-vocal-earwig"
     },
     {
       "tags": "80-Prefund",
@@ -53,7 +53,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "blatantly-distinct-crow"
     },
     {
       "tags": "80-Prefund",
@@ -62,7 +62,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "noticeably-noble-pangolin"
     },
     {
       "tags": "80-Prefund",
@@ -71,7 +71,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "firmly-renewed-gibbon"
     },
     {
       "tags": "80-Prefund",
@@ -80,7 +80,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "duly-giving-bat"
     },
     {
       "tags": "80-Prefund",
@@ -89,7 +89,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "terribly-endless-beetle"
     },
     {
       "tags": "80-Prefund",
@@ -98,7 +98,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "rapidly-fine-stud"
     },
     {
       "tags": "80-Prefund",
@@ -107,7 +107,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "supposedly-crucial-krill"
     },
     {
       "tags": "80-Prefund",
@@ -116,7 +116,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "awfully-normal-werewolf"
     },
     {
       "tags": "80-Prefund",
@@ -125,7 +125,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "severely-clever-guinea"
     },
     {
       "tags": "80-Prefund",
@@ -134,7 +134,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "pleasantly-humane-possum"
     },
     {
       "tags": "80-Prefund",
@@ -143,7 +143,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "badly-sunny-killdeer"
     },
     {
       "tags": "80-Prefund",
@@ -152,7 +152,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "solely-first-tahr"
     },
     {
       "tags": "80-Prefund",
@@ -161,7 +161,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "separately-communal-malamute"
     },
     {
       "tags": "80-Prefund",
@@ -170,7 +170,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "wholly-endless-redbird"
     },
     {
       "tags": "80-Prefund",
@@ -179,7 +179,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "gratefully-normal-goblin"
     },
     {
       "tags": "80-Prefund",
@@ -188,7 +188,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "equally-equal-crane"
     },
     {
       "tags": "80-Prefund",
@@ -197,7 +197,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "happily-sought-pony"
     },
     {
       "tags": "80-Prefund",
@@ -206,7 +206,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "roughly-genuine-anemone"
     },
     {
       "tags": "80-Prefund",
@@ -215,7 +215,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "mostly-epic-muskox"
     },
     {
       "tags": "80-Prefund",
@@ -224,7 +224,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "remarkably-fresh-bear"
     },
     {
       "tags": "80-Prefund",
@@ -233,7 +233,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "accurately-adequate-platypus"
     },
     {
       "tags": "80-Prefund",
@@ -242,7 +242,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "painfully-innocent-stingray"
     },
     {
       "tags": "80-Prefund",
@@ -251,7 +251,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "specially-noted-weasel"
     },
     {
       "tags": "80-Prefund",
@@ -260,7 +260,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "firmly-boss-stag"
     },
     {
       "tags": "80-Prefund",
@@ -269,7 +269,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "personally-smashing-skunk"
     },
     {
       "tags": "80-Prefund",
@@ -278,7 +278,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "deadly-game-foxhound"
     },
     {
       "tags": "80-Prefund",
@@ -287,7 +287,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "instantly-game-mackerel"
     },
     {
       "tags": "80-Prefund",
@@ -296,7 +296,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "strangely-set-clam"
     },
     {
       "tags": "80-Prefund",
@@ -305,7 +305,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "admittedly-ethical-orca"
     },
     {
       "tags": "80-Prefund",
@@ -314,7 +314,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "probably-related-joey"
     },
     {
       "tags": "80-Prefund",
@@ -323,7 +323,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "genuinely-stirred-worm"
     },
     {
       "tags": "80-Prefund",
@@ -332,7 +332,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "completely-huge-woodcock"
     },
     {
       "tags": "80-Prefund",
@@ -341,7 +341,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "nominally-caring-husky"
     },
     {
       "tags": "80-Prefund",
@@ -350,7 +350,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "rationally-picked-shark"
     },
     {
       "tags": "80-Prefund",
@@ -359,7 +359,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "broadly-peaceful-jaybird"
     },
     {
       "tags": "80-Prefund",
@@ -368,7 +368,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "personally-assured-ray"
     },
     {
       "tags": "80-Prefund",
@@ -377,7 +377,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "firstly-merry-earwig"
     },
     {
       "tags": "80-Prefund",
@@ -386,7 +386,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "locally-creative-crawdad"
     },
     {
       "tags": "80-Prefund",
@@ -395,7 +395,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "multiply-careful-skylark"
     },
     {
       "tags": "80-Prefund",
@@ -404,7 +404,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "miserably-refined-gazelle"
     },
     {
       "tags": "80-Prefund",
@@ -413,7 +413,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "wrongly-refined-jackass"
     },
     {
       "tags": "80-Prefund",
@@ -422,7 +422,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "factually-pure-filly"
     },
     {
       "tags": "80-Prefund",
@@ -431,7 +431,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "adversely-gorgeous-mastiff"
     },
     {
       "tags": "80-Prefund",
@@ -440,7 +440,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "arguably-up-antelope"
     },
     {
       "tags": "80-Prefund",
@@ -449,7 +449,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "gently-trusted-pheasant"
     },
     {
       "tags": "80-Prefund",
@@ -458,7 +458,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "positively-pet-sponge"
     },
     {
       "tags": "80-Prefund",
@@ -467,7 +467,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "probably-humble-goblin"
     },
     {
       "tags": "80-Prefund",
@@ -476,7 +476,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "gradually-mutual-boar"
     },
     {
       "tags": "80-Prefund",
@@ -485,7 +485,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "greatly-accepted-moray"
     },
     {
       "tags": "80-Prefund",
@@ -494,7 +494,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "vaguely-major-lizard"
     },
     {
       "tags": "80-Prefund",
@@ -503,7 +503,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "verbally-epic-cardinal"
     },
     {
       "tags": "80-Prefund",
@@ -512,7 +512,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "seemingly-loving-pigeon"
     },
     {
       "tags": "80-Prefund",
@@ -521,7 +521,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "eagerly-sought-whale"
     },
     {
       "tags": "80-Prefund",
@@ -530,7 +530,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "usefully-optimum-walrus"
     },
     {
       "tags": "80-Prefund",
@@ -539,7 +539,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "lightly-major-mole"
     },
     {
       "tags": "80-Prefund",
@@ -548,7 +548,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "instantly-smooth-sunbeam"
     },
     {
       "tags": "80-Prefund",
@@ -557,7 +557,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "severely-viable-troll"
     },
     {
       "tags": "80-Prefund",
@@ -566,7 +566,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "specially-rested-rooster"
     },
     {
       "tags": "80-Prefund",
@@ -575,7 +575,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "uniformly-moving-maggot"
     },
     {
       "tags": "80-Prefund",
@@ -584,7 +584,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "urgently-civil-earwig"
     },
     {
       "tags": "80-Prefund",
@@ -593,7 +593,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "merely-intimate-dingo"
     },
     {
       "tags": "80-Prefund",
@@ -602,7 +602,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "blindly-artistic-swine"
     },
     {
       "tags": "80-Prefund",
@@ -611,7 +611,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "normally-picked-raptor"
     },
     {
       "tags": "80-Prefund",
@@ -620,7 +620,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "carefully-becoming-kitten"
     },
     {
       "tags": "80-Prefund",
@@ -629,7 +629,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "rarely-wise-eft"
     },
     {
       "tags": "80-Prefund",
@@ -638,7 +638,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "seemingly-clever-finch"
     },
     {
       "tags": "80-Prefund",
@@ -647,7 +647,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "plainly-shining-emu"
     },
     {
       "tags": "80-Prefund",
@@ -656,7 +656,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "factually-cunning-koala"
     },
     {
       "tags": "80-Prefund",
@@ -665,7 +665,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "monthly-eager-prawn"
     },
     {
       "tags": "80-Prefund",
@@ -674,7 +674,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "uniformly-perfect-crayfish"
     },
     {
       "tags": "80-Prefund",
@@ -683,7 +683,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "annually-super-rodent"
     },
     {
       "tags": "80-Prefund",
@@ -692,7 +692,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "finally-precious-antelope"
     },
     {
       "tags": "80-Prefund",
@@ -701,7 +701,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "quietly-alive-tortoise"
     },
     {
       "tags": "80-Prefund",
@@ -710,7 +710,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "willingly-careful-oarfish"
     },
     {
       "tags": "80-Prefund",
@@ -719,7 +719,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "needlessly-mature-cheetah"
     },
     {
       "tags": "80-Prefund",
@@ -728,7 +728,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "partly-definite-thrush"
     },
     {
       "tags": "80-Prefund",
@@ -737,7 +737,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "yearly-intense-bird"
     },
     {
       "tags": "80-Prefund",
@@ -746,7 +746,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "especially-relative-jackass"
     },
     {
       "tags": "80-Prefund",
@@ -755,7 +755,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "uniformly-powerful-drum"
     },
     {
       "tags": "80-Prefund",
@@ -764,7 +764,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "honestly-tidy-rabbit"
     },
     {
       "tags": "80-Prefund",
@@ -773,7 +773,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "lately-skilled-mullet"
     },
     {
       "tags": "80-Prefund",
@@ -782,7 +782,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "constantly-modest-starfish"
     },
     {
       "tags": "80-Prefund",
@@ -791,7 +791,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "widely-glorious-grubworm"
     },
     {
       "tags": "80-Prefund",
@@ -800,7 +800,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "similarly-supreme-dogfish"
     },
     {
       "tags": "80-Prefund",
@@ -809,7 +809,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "blindly-curious-grouper"
     },
     {
       "tags": "80-Prefund",
@@ -818,7 +818,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "sensibly-romantic-zebra"
     },
     {
       "tags": "80-Prefund",
@@ -827,7 +827,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "terribly-equal-moth"
     },
     {
       "tags": "80-Prefund",
@@ -836,7 +836,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "hardly-internal-primate"
     },
     {
       "tags": "80-Prefund",
@@ -845,7 +845,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "basically-boss-bedbug"
     },
     {
       "tags": "80-Prefund",
@@ -854,7 +854,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "oddly-quick-oyster"
     },
     {
       "tags": "80-Prefund",
@@ -863,7 +863,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "vaguely-rapid-polliwog"
     },
     {
       "tags": "80-Prefund",
@@ -872,7 +872,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "strictly-unbiased-muskrat"
     },
     {
       "tags": "80-Prefund",
@@ -881,7 +881,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "physically-major-monarch"
     },
     {
       "tags": "80-Prefund",
@@ -890,7 +890,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "immensely-flowing-humpback"
     },
     {
       "tags": "80-Prefund",
@@ -899,7 +899,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "oddly-moving-crow"
     },
     {
       "tags": "80-Prefund",
@@ -908,7 +908,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "clearly-supreme-beagle"
     },
     {
       "tags": "80-Prefund",
@@ -917,7 +917,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "hugely-flowing-gibbon"
     },
     {
       "tags": "80-Prefund",
@@ -926,7 +926,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "finally-intent-moth"
     },
     {
       "tags": "80-Prefund",
@@ -935,7 +935,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "frankly-helpful-cheetah"
     },
     {
       "tags": "80-Prefund",
@@ -944,7 +944,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "strictly-enhanced-crawdad"
     },
     {
       "tags": "80-Prefund",
@@ -953,7 +953,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "virtually-loyal-stallion"
     },
     {
       "tags": "80-Prefund",
@@ -962,7 +962,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "nominally-wondrous-jawfish"
     },
     {
       "tags": "80-Prefund",
@@ -971,7 +971,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "fully-bright-minnow"
     },
     {
       "tags": "80-Prefund",
@@ -980,7 +980,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "humbly-obliging-mouse"
     },
     {
       "tags": "80-Prefund",
@@ -989,7 +989,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "lovely-comic-redbird"
     },
     {
       "tags": "80-Prefund",
@@ -998,7 +998,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "curiously-premium-manatee"
     },
     {
       "tags": "80-Prefund",
@@ -1007,7 +1007,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "illegally-summary-primate"
     },
     {
       "tags": "80-Prefund",
@@ -1016,7 +1016,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "notably-liberal-iguana"
     },
     {
       "tags": "80-Prefund",
@@ -1025,7 +1025,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "centrally-active-labrador"
     },
     {
       "tags": "80-Prefund",
@@ -1034,7 +1034,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "scarcely-crack-flamingo"
     },
     {
       "tags": "80-Prefund",
@@ -1043,7 +1043,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "notably-content-anteater"
     },
     {
       "tags": "80-Prefund",
@@ -1052,7 +1052,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "strangely-right-badger"
     },
     {
       "tags": "80-Prefund",
@@ -1061,7 +1061,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "typically-steady-bear"
     },
     {
       "tags": "80-Prefund",
@@ -1070,7 +1070,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "firstly-valid-sheep"
     },
     {
       "tags": "80-Prefund",
@@ -1079,7 +1079,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "shortly-special-baboon"
     },
     {
       "tags": "80-Prefund",
@@ -1088,7 +1088,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "vertically-notable-oarfish"
     },
     {
       "tags": "80-Prefund",
@@ -1097,7 +1097,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "slightly-awaited-flamingo"
     },
     {
       "tags": "80-Prefund",
@@ -1106,7 +1106,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "implicitly-amusing-moth"
     },
     {
       "tags": "80-Prefund",
@@ -1115,7 +1115,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "legally-exotic-joey"
     },
     {
       "tags": "80-Prefund",
@@ -1124,7 +1124,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "locally-adequate-lion"
     },
     {
       "tags": "80-Prefund",
@@ -1133,7 +1133,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "ideally-nice-skink"
     },
     {
       "tags": "80-Prefund",
@@ -1142,7 +1142,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "wrongly-relieved-airedale"
     },
     {
       "tags": "80-Prefund",
@@ -1151,7 +1151,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "properly-relevant-crane"
     },
     {
       "tags": "80-Prefund",
@@ -1160,7 +1160,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "sensibly-gorgeous-sturgeon"
     },
     {
       "tags": "80-Prefund",
@@ -1169,7 +1169,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "factually-major-dinosaur"
     },
     {
       "tags": "80-Prefund",
@@ -1178,7 +1178,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "correctly-grown-pony"
     },
     {
       "tags": "80-Prefund",
@@ -1187,7 +1187,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "cleanly-singular-lamb"
     },
     {
       "tags": "80-Prefund",
@@ -1196,7 +1196,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "properly-sterling-satyr"
     },
     {
       "tags": "80-Prefund",
@@ -1205,7 +1205,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "uniformly-adjusted-marmoset"
     },
     {
       "tags": "80-Prefund",
@@ -1214,7 +1214,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "accurately-refined-stork"
     },
     {
       "tags": "80-Prefund",
@@ -1223,7 +1223,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "hopelessly-glad-squid"
     },
     {
       "tags": "80-Prefund",
@@ -1232,7 +1232,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "initially-pure-ox"
     },
     {
       "tags": "80-Prefund",
@@ -1241,7 +1241,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "openly-beloved-krill"
     },
     {
       "tags": "80-Prefund",
@@ -1250,7 +1250,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "really-fit-falcon"
     },
     {
       "tags": "80-Prefund",
@@ -1259,7 +1259,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "obviously-master-unicorn"
     },
     {
       "tags": "80-Prefund",
@@ -1268,7 +1268,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "utterly-picked-mamoswine"
     },
     {
       "tags": "80-Prefund",
@@ -1277,7 +1277,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "yearly-pretty-ray"
     },
     {
       "tags": "80-Prefund",
@@ -1286,7 +1286,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "thoroughly-allowed-antelope"
     },
     {
       "tags": "80-Prefund",
@@ -1295,7 +1295,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "needlessly-factual-ghoul"
     },
     {
       "tags": "80-Prefund",
@@ -1304,7 +1304,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "seemingly-absolute-hookworm"
     },
     {
       "tags": "80-Prefund",
@@ -1313,7 +1313,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "intensely-content-terrier"
     },
     {
       "tags": "80-Prefund",
@@ -1322,7 +1322,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "arguably-optimal-doberman"
     },
     {
       "tags": "80-Prefund",
@@ -1331,7 +1331,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "yearly-working-eel"
     },
     {
       "tags": "80-Prefund",
@@ -1340,7 +1340,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "mutually-one-lioness"
     },
     {
       "tags": "80-Prefund",
@@ -1349,7 +1349,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "formally-touching-ocelot"
     },
     {
       "tags": "80-Prefund",
@@ -1358,7 +1358,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "slightly-nearby-rabbit"
     },
     {
       "tags": "80-Prefund",
@@ -1367,7 +1367,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "suitably-fit-asp"
     },
     {
       "tags": "80-Prefund",
@@ -1376,7 +1376,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "duly-quiet-aphid"
     },
     {
       "tags": "80-Prefund",
@@ -1385,7 +1385,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "unlikely-grown-peacock"
     },
     {
       "tags": "80-Prefund",
@@ -1394,7 +1394,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "early-hot-bee"
     },
     {
       "tags": "80-Prefund",
@@ -1403,7 +1403,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "grossly-casual-cheetah"
     },
     {
       "tags": "80-Prefund",
@@ -1412,7 +1412,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "mistakenly-on-shiner"
     },
     {
       "tags": "80-Prefund",
@@ -1421,7 +1421,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "sadly-stirred-llama"
     },
     {
       "tags": "80-Prefund",
@@ -1430,7 +1430,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "friendly-chief-cobra"
     },
     {
       "tags": "80-Prefund",
@@ -1439,7 +1439,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "entirely-handy-chamois"
     },
     {
       "tags": "80-Prefund",
@@ -1448,7 +1448,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "equally-organic-whippet"
     },
     {
       "tags": "80-Prefund",
@@ -1457,7 +1457,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "deadly-helped-alien"
     },
     {
       "tags": "80-Prefund",
@@ -1466,7 +1466,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "openly-more-muskrat"
     },
     {
       "tags": "80-Prefund",
@@ -1475,7 +1475,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "arguably-neat-dodo"
     },
     {
       "tags": "80-Prefund",
@@ -1484,7 +1484,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "recently-exact-fox"
     },
     {
       "tags": "80-Prefund",
@@ -1493,7 +1493,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "barely-advanced-reindeer"
     },
     {
       "tags": "80-Prefund",
@@ -1502,7 +1502,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "notably-trusting-thrush"
     },
     {
       "tags": "80-Prefund",
@@ -1511,7 +1511,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "deadly-innocent-gull"
     },
     {
       "tags": "80-Prefund",
@@ -1520,7 +1520,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "hardly-dominant-pelican"
     },
     {
       "tags": "80-Prefund",
@@ -1529,7 +1529,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "sincerely-romantic-jawfish"
     },
     {
       "tags": "80-Prefund",
@@ -1538,7 +1538,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "heartily-grateful-locust"
     },
     {
       "tags": "80-Prefund",
@@ -1547,7 +1547,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "horribly-evident-mule"
     },
     {
       "tags": "80-Prefund",
@@ -1556,7 +1556,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "hopefully-darling-skunk"
     },
     {
       "tags": "80-Prefund",
@@ -1565,7 +1565,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "remotely-true-mouse"
     },
     {
       "tags": "80-Prefund",
@@ -1574,7 +1574,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "publicly-actual-penguin"
     },
     {
       "tags": "80-Prefund",
@@ -1583,7 +1583,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "yearly-needed-lizard"
     },
     {
       "tags": "80-Prefund",
@@ -1592,7 +1592,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "poorly-frank-trout"
     },
     {
       "tags": "80-Prefund",
@@ -1601,7 +1601,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "jointly-moral-goose"
     },
     {
       "tags": "80-Prefund",
@@ -1610,7 +1610,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "honestly-frank-iguana"
     },
     {
       "tags": "80-Prefund",
@@ -1619,7 +1619,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "absolutely-holy-collie"
     },
     {
       "tags": "80-Prefund",
@@ -1628,7 +1628,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "totally-primary-chigger"
     },
     {
       "tags": "80-Prefund",
@@ -1637,7 +1637,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "firstly-direct-bluejay"
     },
     {
       "tags": "80-Prefund",
@@ -1646,7 +1646,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "reliably-working-cow"
     },
     {
       "tags": "80-Prefund",
@@ -1655,7 +1655,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "officially-feasible-jawfish"
     },
     {
       "tags": "80-Prefund",
@@ -1664,7 +1664,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "simply-intimate-colt"
     },
     {
       "tags": "80-Prefund",
@@ -1673,7 +1673,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "purely-striking-quetzal"
     },
     {
       "tags": "80-Prefund",
@@ -1682,7 +1682,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "mostly-divine-python"
     },
     {
       "tags": "80-Prefund",
@@ -1691,7 +1691,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "reliably-diverse-hyena"
     },
     {
       "tags": "80-Prefund",
@@ -1700,7 +1700,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "forcibly-credible-stork"
     },
     {
       "tags": "80-Prefund",
@@ -1709,7 +1709,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "secondly-premium-whale"
     },
     {
       "tags": "80-Prefund",
@@ -1718,7 +1718,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "scarcely-sought-flamingo"
     },
     {
       "tags": "80-Prefund",
@@ -1727,7 +1727,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "mainly-trusty-oryx"
     },
     {
       "tags": "80-Prefund",
@@ -1736,7 +1736,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "pleasantly-moved-pony"
     },
     {
       "tags": "80-Prefund",
@@ -1745,7 +1745,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "accurately-solid-sawfish"
     },
     {
       "tags": "80-Prefund",
@@ -1754,7 +1754,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "adequately-evident-tadpole"
     },
     {
       "tags": "80-Prefund",
@@ -1763,7 +1763,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "purely-stirring-elk"
     },
     {
       "tags": "80-Prefund",
@@ -1772,7 +1772,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "fairly-worthy-skunk"
     },
     {
       "tags": "80-Prefund",
@@ -1781,7 +1781,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "reasonably-intimate-mite"
     },
     {
       "tags": "80-Prefund",
@@ -1790,7 +1790,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "gladly-prime-cricket"
     },
     {
       "tags": "80-Prefund",
@@ -1799,7 +1799,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "loosely-lenient-ant"
     },
     {
       "tags": "80-Prefund",
@@ -1808,7 +1808,7 @@ names?prefund&custom
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "sadly-mighty-wolf"
     }
   ],
   "meta": {

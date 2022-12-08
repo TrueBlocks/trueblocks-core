@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2022-06-01T15:21:39
+date: 2022-11-09T20:09:02
 lastmod:
   - :git
   - lastmod
@@ -47,10 +47,10 @@ Arguments:
 
 Flags:
   -p, --parts strings   control which state to export
-                        One or more of [ none | some | all | balance | nonce | code | storage | deployed | accttype ]
+                        One or more of [ none | some | all | balance | nonce | code | proxy | deployed | accttype ]
   -c, --changes         only report a balance when it changes from one block to the next
   -n, --no_zero         suppress the display of zero balance accounts
-  -x, --fmt string      export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)
   -h, --help            display this help screen
 
@@ -91,7 +91,7 @@ Flags:
                         One or more of [ name | symbol | decimals | totalSupply | version | none | all ]
   -b, --by_acct         consider each address an ERC20 token except the last, whose balance is reported for each token
   -n, --no_zero         suppress the display of zero balance accounts
-  -x, --fmt string      export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)
   -h, --help            display this help screen
 

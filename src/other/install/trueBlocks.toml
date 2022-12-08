@@ -34,7 +34,7 @@ symbol = "ETH"
 apiProvider = "http://localhost:8080"
 chainId = "100"
 localExplorer = "http://localhost:1234"
-remoteExplorer = "https://blockscout.com/xdai/mainnet"
+remoteExplorer = "https://gnosisscan.io/"
 rpcProvider = "https://gnosischain-rpc.gateway.pokt.network"
 symbol = "XDAI"
 

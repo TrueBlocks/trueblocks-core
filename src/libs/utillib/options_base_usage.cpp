@@ -98,7 +98,7 @@ string_q COptionsBase::get_description(void) const {
 
     //---------------------------------------------------------------------------------------------------
     static COption opts[] = {
-        COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_FLAG, "export format"),
+        COption("fmt", "x", "enum[none|json*|txt|csv]", OPT_FLAG, "export format"),
         COption("verbose", "v", "<uint>", OPT_VERBOSE, "set verbose level (optional level defaults to 1)"),
         COption("help", "h", "<boolean>", OPT_HELP, "display this help screen"),
     };
@@ -125,7 +125,7 @@ string_q COptionsBase::get_description(void) const {
         os << endl << "Arguments:" << endl;
         for (auto option : positionals) {
             string_q req = (option.is_required ? " (required)" : "");
-            os << "  " << substitute(option.longName, "addrs2", "addrs") << " - " << option.description << req << endl;
+            os << "  " << option.longName << " - " << option.description << req << endl;
         }
     }
     os << endl << "Flags:" << endl;
@@ -152,7 +152,7 @@ string_q COptionsBase::get_description(void) const {
     os << endl;
     if (isEnabled(OPT_FMT) || isEnabled(OPT_VERBOSE) || isEnabled(OPT_HELP))
         os << "Global Flags:\n";
-    os << (isEnabled(OPT_FMT) ? "  -x, --fmt string     export format, one of [none|json*|txt|csv|api]\n" : "");
+    os << (isEnabled(OPT_FMT) ? "  -x, --fmt string     export format, one of [none|json*|txt|csv]\n" : "");
     os << (isEnabled(OPT_VERBOSE) ? "  -v, --verbose uint   set verbose level (optional level defaults to 1)\n" : "");
     os << (isEnabled(OPT_HELP) ? "  -h, --help           display this help screen\n" : "");
 
@@ -250,7 +250,6 @@ string_q clean_positionals(const string_q& progName, const string_q& strIn) {
         return " " + os.str();
     }
     string_q strOut = strIn;
-    replaceAll(strOut, "addrs2 blocks", "<address> <address> [address...] [block...]");
     replaceAll(strOut, "addrs blocks", "<address> [address...] [block...]");
     replaceAll(strOut, "transactions", "<tx_id> [tx_id...]");
     if (contains(progName, "when"))
@@ -284,9 +283,6 @@ string_q COptionsBase::get_positionals(COptionArray& pos) const {
     string_q ret = os.str();
     replace(ret, "&lt;address&gt; [address...] &lt;block&gt; [block...]", "&lt;address&gt; [address...] [block...]");
     replace(ret, "<address> [address...] <block> [block...]", "<address> [address...] [block...]");
-    replace(ret, "<address> [address...]2 <block>", "<address> <address> [address...]");
-    replace(ret, "&lt;address&gt; [address...]2 &lt;block&gt; [block...]",
-            "&lt;address&gt; &lt;address&gt; [address...] [block...]");
     replace(ret, "<address> [address...] topics fourbytes", "<address> [address...] [topics] [fourbytes]");
     replace(ret, "&lt;address&gt; [address...] topics fourbytes", "&lt;address&gt; [address...] [topics] [fourbytes]");
     return ret;

@@ -7,13 +7,9 @@ tags
 30-Contract:Optimism Mainnet
 30-Contracts
 30-Contracts:Balancer
-30-Contracts:Chainlink
 30-Contracts:Compound
 30-Contracts:Consensys
 30-Contracts:DAO Related
-30-Contracts:Giveth
-30-Contracts:Giveth LP Token
-30-Contracts:Giveth Staking
 30-Contracts:Kyber Network
 30-Contracts:Moloch
 30-Contracts:Pasta
@@ -22,7 +18,6 @@ tags
 30-Contracts:Uniswap
 30-Contracts:dAppNode
 30-Contracts:theGraph
-31-Contracts:Giveth Project
 31-Gitcoin:Admin
 31-Gitcoin:Contracts
 31-Gitcoin:Core
@@ -31,6 +26,7 @@ tags
 31-Gitcoin:Workstreams
 31-Giveth:Core
 31-Giveth:Project
+31-PublicNouns:Core
 34-ENS
 37-SelfDestructed
 39-Yearn
@@ -38,7 +34,7 @@ tags
 50-Tokens:ERC20
 50-Tokens:ERC721
 55-Defi
-55-Sactioned:OFAC SDN List
+66-Ofac:Sanctioned
 70-Vendors
 80-Malicious
 80-Malicious:DaoDrain

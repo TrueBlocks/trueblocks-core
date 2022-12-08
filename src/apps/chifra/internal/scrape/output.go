@@ -12,6 +12,7 @@ package scrapePkg
 import (
 	"net/http"
 
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 
 	"github.com/spf13/cobra"
@@ -22,6 +23,7 @@ import (
 // RunScrape handles the scrape command for the command line. Returns error only as per cobra.
 func RunScrape(cmd *cobra.Command, args []string) (err error) {
 	opts := scrapeFinishParse(args)
+	outputHelpers.SetWriterForCommand("scrape", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.ScrapeInternal()
@@ -31,9 +33,12 @@ func RunScrape(cmd *cobra.Command, args []string) (err error) {
 // ServeScrape handles the scrape command for the API. Returns error and a bool if handled
 func ServeScrape(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := scrapeFinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("scrape", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return opts.ScrapeInternal()
+	err, handled = opts.ScrapeInternal()
+	outputHelpers.CloseJsonWriterIfNeededApi("scrape", err, &opts.Globals)
+	return
 }
 
 // ScrapeInternal handles the internal workings of the scrape command.  Returns error and a bool if handled
@@ -44,7 +49,7 @@ func (opts *ScrapeOptions) ScrapeInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.Globals.ApiMode {
+	if opts.Globals.IsApiMode() {
 		return validate.Usage("chifra scrape is not available in API mode"), true
 	}
 

@@ -34,12 +34,12 @@ func ColorsOff() {
 	White = ""
 	Black = ""
 	Bright = ""
-	BrightRed = (Bright + Red)
-	BrightGreen = (Bright + Green)
-	BrightYellow = (Bright + Yellow)
-	BrightBlue = (Bright + Blue)
-	BrightMagenta = (Bright + Magenta)
-	BrightCyan = (Bright + Cyan)
-	BrightWhite = (Bright + White)
-	BrightBlack = (Bright + Black)
+	BrightRed = ""
+	BrightGreen = ""
+	BrightYellow = ""
+	BrightBlue = ""
+	BrightMagenta = ""
+	BrightCyan = ""
+	BrightWhite = ""
+	BrightBlack = ""
 }

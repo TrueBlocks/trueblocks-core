@@ -12,6 +12,7 @@ package whenPkg
 import (
 	"net/http"
 
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -21,6 +22,7 @@ import (
 // RunWhen handles the when command for the command line. Returns error only as per cobra.
 func RunWhen(cmd *cobra.Command, args []string) (err error) {
 	opts := whenFinishParse(args)
+	outputHelpers.SetWriterForCommand("when", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.WhenInternal()
@@ -30,9 +32,12 @@ func RunWhen(cmd *cobra.Command, args []string) (err error) {
 // ServeWhen handles the when command for the API. Returns error and a bool if handled
 func ServeWhen(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := whenFinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("when", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return opts.WhenInternal()
+	err, handled = opts.WhenInternal()
+	outputHelpers.CloseJsonWriterIfNeededApi("when", err, &opts.Globals)
+	return
 }
 
 // WhenInternal handles the internal workings of the when command.  Returns error and a bool if handled
@@ -43,13 +48,17 @@ func (opts *WhenOptions) WhenInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
+	// TODO: This should use StreamMany for all cases
 	handled = true
 
 	if opts.List {
 		err = opts.HandleList()
 
 	} else if opts.Timestamps {
-		if opts.Count {
+		if opts.Update {
+			err = opts.HandleTimestampUpdate()
+
+		} else if opts.Count {
 			err = opts.HandleTimestampCount()
 
 		} else if opts.Truncate != utils.NOPOS {
@@ -59,7 +68,7 @@ func (opts *WhenOptions) WhenInternal() (err error, handled bool) {
 			if opts.Check {
 				err = opts.HandleTimestampsCheck()
 
-			} else if opts.Repair != utils.NOPOS {
+			} else if opts.Repair {
 				err = opts.HandleTimestampsRepair()
 
 			} else {

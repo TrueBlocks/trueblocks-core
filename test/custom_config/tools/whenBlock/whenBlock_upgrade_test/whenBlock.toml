@@ -1,5 +1,0 @@
-[version]
-current = "0.3.0"
-
-[display]
-terse = "[{BLOCKNUMBER}\t][{DATE}\n]"

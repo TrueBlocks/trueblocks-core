@@ -12,6 +12,7 @@ package slurpPkg
 import (
 	"net/http"
 
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -20,6 +21,7 @@ import (
 // RunSlurp handles the slurp command for the command line. Returns error only as per cobra.
 func RunSlurp(cmd *cobra.Command, args []string) (err error) {
 	opts := slurpFinishParse(args)
+	outputHelpers.SetWriterForCommand("slurp", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.SlurpInternal()
@@ -29,9 +31,12 @@ func RunSlurp(cmd *cobra.Command, args []string) (err error) {
 // ServeSlurp handles the slurp command for the API. Returns error and a bool if handled
 func ServeSlurp(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := slurpFinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("slurp", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return opts.SlurpInternal()
+	err, handled = opts.SlurpInternal()
+	outputHelpers.CloseJsonWriterIfNeededApi("slurp", err, &opts.Globals)
+	return
 }
 
 // SlurpInternal handles the internal workings of the slurp command.  Returns error and a bool if handled
@@ -42,7 +47,7 @@ func (opts *SlurpOptions) SlurpInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.Globals.ApiMode {
+	if opts.Globals.IsApiMode() {
 		return nil, false
 	}
 

@@ -1,0 +1,46 @@
+chifra receipts  1428968.4 --fmt json --articulate
+TEST[DATE|TIME] Transactions:  [1428968.4]
+TEST[DATE|TIME] Articulate:  true
+TEST[DATE|TIME] Format:  json
+{ "data": [
+  {
+    "gasUsed": 66946,
+    "effectiveGasPrice": 20000000000,
+    "logs": [
+      {
+        "address": "0x33990122638b9132ca29c723bdf037f1a891a70c",
+        "logIndex": 0,
+        "topics": [
+          "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
+          "0x54686544414f0000000000000000000000000000000000000000000000000000",
+          "0x000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413"
+        ],
+        "articulatedLog": {
+          "name": "PrimaryChanged",
+          "stateMutability": "nonpayable",
+          "inputs": {
+            "addr": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+            "name": "0x54686544414f0000000000000000000000000000000000000000000000000000"
+          }
+        },
+        "compressedLog": "{name:PrimaryChanged|inputs:{addr:0xbb9bc244d798123fde783fcc1c72d3bb8c189413|name:0x54686544414f0000000000000000000000000000000000000000000000000000}}"
+      },
+      {
+        "address": "0x33990122638b9132ca29c723bdf037f1a891a70c",
+        "logIndex": 1,
+        "topics": [
+          "0xa6697e974e6a320f454390be03f74955e8978f1a6971ea6730542e37b66179bc",
+          "0x54686544414f0000000000000000000000000000000000000000000000000000"
+        ],
+        "articulatedLog": {
+          "name": "Changed",
+          "stateMutability": "nonpayable",
+          "inputs": {
+            "name": "0x54686544414f0000000000000000000000000000000000000000000000000000"
+          }
+        },
+        "compressedLog": "{name:Changed|inputs:{name:0x54686544414f0000000000000000000000000000000000000000000000000000}}"
+      }
+    ],
+    "status": null
+  }] }

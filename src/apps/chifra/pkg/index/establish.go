@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"path"
+	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -45,7 +45,7 @@ func EstablishIndexChunk(chain string, fileRange paths.FileRange) (bool, error) 
 		return exists, fmt.Errorf("filename not found in chunks: %s", fileRange)
 	}
 
-	logger.Log(logger.Info, "Downloading", colors.Blue, fileRange, colors.Off, "from IPFS.")
+	logger.Log(logger.Info, "Bloom filter hit, downloading index portion", (colors.Blue + fileRange.String() + colors.Off), "from IPFS.")
 
 	// Start downloading the filter
 	matchedPin.BloomHash = "" // we want to download only the index chunk
@@ -78,7 +78,7 @@ func CleanTemporaryFolders(indexPath string, incStaging bool) error {
 	}
 
 	for _, f := range folders {
-		folder := path.Join(indexPath, f)
+		folder := filepath.Join(indexPath, f)
 		err := os.RemoveAll(folder)
 		if err != nil {
 			return err
@@ -95,7 +95,7 @@ func IndexIsInitialized(chain string) error {
 	if !file.FileExists(path) {
 		msg := strings.Replace(IndexNotInitialized, "{0}", "{v0.40.0-beta}", -1)
 		msg = strings.Replace(msg, "[{VERSION}]", version.LibraryVersion, -1)
-		// msg = strings.Replace(msg, "[{FILE}]", fileName, -1)
+		msg = strings.Replace(msg, "[{PATH}]", path, -1)
 		msg = strings.Replace(msg, "{", colors.Green, -1)
 		msg = strings.Replace(msg, "}", colors.Off, -1)
 		return fmt.Errorf(msg)
@@ -109,6 +109,8 @@ const IndexNotInitialized string = `
 	  The Unchained Index does not appear to be initialized. You must run 'chifra init'
 	  (and allow it to complete) or 'chifra scrape' before using this command.
 	  
+	  Path: [{PATH}]
+
 	  [{VERSION}]
 
 	`

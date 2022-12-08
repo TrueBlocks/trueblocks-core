@@ -54,14 +54,14 @@ bool COptions::handle_options(void) {
         notesStream << "    // clang-format off" << endl;
         configStream << "    // clang-format off" << endl;
         CStringArray warnings;
-        map<string, string> existing;
+        map<string, string> hotKeys;
         size_t errCnt = 1;
         bool allAuto = true;
 
         for (auto option : cmdOptionArray) {
             option.verifyOptions(warnings);
             if ((option.group + "/" + option.tool) == tool.first) {
-                option.verifyHotkey(warnings, existing);
+                option.verifyHotkey(warnings, hotKeys);
                 if (option.tool == "chifra")
                     allAuto = false;
 
@@ -344,7 +344,7 @@ void COptions::generate_positional(const CCommandOption& option) {
     ostringstream posStream;
     if (option.codeLoc() == LOCAL) {
         if (option.data_type == "list<addr>") {
-            localStream << substitute(option.Format("    CAddressArray [{LONGNAME}];"), "addrs2", "addrs") << endl;
+            localStream << option.Format("    CAddressArray [{LONGNAME}];") << endl;
             posStream << option.Format(STR_ADDRLIST_PROCESSOR) << endl;
 
         } else if (option.data_type == "list<topic>") {
@@ -385,7 +385,7 @@ void COptions::generate_positional(const CCommandOption& option) {
 
     } else if (option.codeLoc() == HEADER || option.isConfig) {
         if (option.data_type == "list<addr>") {
-            headerStream << substitute(option.Format("    CAddressArray [{LONGNAME}];"), "addrs2", "addrs") << endl;
+            headerStream << option.Format("    CAddressArray [{LONGNAME}];") << endl;
             posStream << option.Format(STR_ADDRLIST_PROCESSOR) << endl;
 
         } else if (option.data_type == "list<topic>") {

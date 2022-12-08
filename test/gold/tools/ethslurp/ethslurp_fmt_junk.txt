@@ -3,7 +3,7 @@ TEST[DATE|TIME] Addrs:  [0x1324e7b922b30b49ab8ea81086341cc41c249346]
 TEST[DATE|TIME] Blocks:  [0-7000000]
 TEST[DATE|TIME] Types:  [int]
 TEST[DATE|TIME] Format:  junk
-Error: The --fmt option (junk) must be one of [ json | txt | csv | api ]
+Error: The --fmt option (junk) must be one of [ json | txt | csv ]
 Usage:
   chifra slurp [flags] <address> [address...] [block...]
 
@@ -15,7 +15,7 @@ Flags:
   -t, --types strings   which types of transactions to request
                         One or more of [ ext | int | token | nfts | miner | uncles | all ]
   -p, --appearances     show only the blocknumber.tx_id appearances of the exported transactions
-  -x, --fmt string      export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)
   -h, --help            display this help screen
 

@@ -1,11 +1,17 @@
-chifra receipts  0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 --fmt api --verbose
+chifra receipts  0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 --fmt json --verbose
 TEST[DATE|TIME] Transactions:  [0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3]
 TEST[DATE|TIME] Verbose:  true
-TEST[DATE|TIME] Format:  api
-{"data": [
-  {
-    "contractAddress": "0x0",
-    "gasUsed": 21000,
-    "effectiveGasPrice": 21000000000,
-    "status": null
-  }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
+      "blockNumber": 3657480,
+      "cumulativeGasUsed": "84000",
+      "gasUsed": 21000,
+      "hash": "0xc62d9410b73b18d767fe32df91e6336c5d563eceee49c55c56df65bfeb4b966d",
+      "status": 1,
+      "transactionIndex": 3
+    }
+  ]
+}

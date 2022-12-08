@@ -1,0 +1,10 @@
+cmdLineTest  2 --bool:1
+--------------------------------------------------------------------------------
+boolOption: 1
+boolSet: 1
+numOption: -1
+stringOption: 
+testNum: 2
+0. Running Test1
+	000.000 2. boolOption == true            ==> passed '(opts.boolSet && opts.boolOption)' is true
+ret: 0

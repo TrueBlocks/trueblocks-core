@@ -47,13 +47,13 @@ Env: TB_NAME_SOURCE   = SOURCE_CHANGED
 Env: TB_NAME_SYMBOL   = SYMBOL_CHANGED
 Env: TB_NAME_DECIMALS = 13
 Env: TB_NAME_DESCR    = DESCRIPTION_CHANGED
-chifra names  --update --log_level 10 --fmt api --expand
+chifra names  --update --log_level 10 --fmt json --expand
 TEST[DATE|TIME] Expand:  true
 TEST[DATE|TIME] Update:  true
 TEST[DATE|TIME] LogLevel:  10
-TEST[DATE|TIME] Format:  api
+TEST[DATE|TIME] Format:  json
 TIME ~ CLOCK - : 4-----Editing 0x0000000000000000000000000000000010101010
-{"data": [
+{ "data": [
   {
     "deleted": false,
     "tags": "TAGS_CHANGED",
@@ -62,5 +62,5 @@ TIME ~ CLOCK - : 4-----Editing 0x0000000000000000000000000000000010101010
     "symbol": "SYMBOL_CHANGED",
     "source": "SOURCE_CHANGED",
     "decimals": 13,
-    "description": "DESCRIPTION_CHANGED"
-  }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }
+    "petname": "abnormally-able-quetzal"
+  }] }

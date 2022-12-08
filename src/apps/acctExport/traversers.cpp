@@ -32,15 +32,6 @@ CReceiptTraverser::CReceiptTraverser(void) : CTraverser("receipts") {
 }
 
 //--------------------------------------------------------------------------
-CStatementTraverser::CStatementTraverser(void) : CTraverser("statements") {
-    filterFunc = filterByRange;
-    preFunc = pre_Func;
-    postFunc = post_Func;
-    dataFunc = loadTx_Func;
-    displayFunc = statements_Display;
-}
-
-//--------------------------------------------------------------------------
 CLogTraverser::CLogTraverser(void) : CTraverser("logs") {
     filterFunc = filterByRange;
     postFunc = post_Func;
@@ -61,6 +52,7 @@ CTraceTraverser::CTraceTraverser(void) : CTraverser("traces") {
 
 //--------------------------------------------------------------------------
 CNeighborTraverser::CNeighborTraverser(void) : CTraverser("neighbors") {
+    filterFunc = filterByRange;
     preFunc = neighbors_Pre;
     postFunc = post_Func;
 }

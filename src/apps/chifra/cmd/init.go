@@ -13,6 +13,8 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/init"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -24,7 +26,13 @@ var initCmd = &cobra.Command{
 	Short:   shortInit,
 	Long:    longInit,
 	Version: versionText,
-	RunE:    initPkg.RunInit,
+	PreRun: outputHelpers.PreRunWithJsonWriter("init", func() *globals.GlobalOptions {
+		return &initPkg.GetOptions().Globals
+	}),
+	RunE:    file.RunWithFileSupport("init", initPkg.RunInit, initPkg.ResetOptions),
+	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
+		return &initPkg.GetOptions().Globals
+	}),
 }
 
 const usageInit = `init [flags]`

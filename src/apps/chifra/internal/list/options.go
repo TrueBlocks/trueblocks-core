@@ -25,14 +25,19 @@ type ListOptions struct {
 	Count       bool                  `json:"count,omitempty"`       // Display only the count of records for each monitor
 	Appearances bool                  `json:"appearances,omitempty"` // Export each monitor's list of appearances (the default)
 	Silent      bool                  `json:"silent,omitempty"`      // Freshen the monitor only (no reporting)
-	FirstBlock  uint64                `json:"firstBlock,omitempty"`  // First block to export (inclusive, ignored when counting or freshening)
-	LastBlock   uint64                `json:"lastBlock,omitempty"`   // Last block to export (inclusive, ignored when counting or freshening)
+	NoZero      bool                  `json:"noZero,omitempty"`      // Suppress the display of zero appearance accounts
+	FirstRecord uint64                `json:"firstRecord,omitempty"` // The first record to process
+	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process
+	FirstBlock  uint64                `json:"firstBlock,omitempty"`  // First block to export (inclusive, ignored when freshening)
+	LastBlock   uint64                `json:"lastBlock,omitempty"`   // Last block to export (inclusive, ignored when freshening)
 	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
 	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
 }
 
 var defaultListOptions = ListOptions{
-	LastBlock: utils.NOPOS,
+	FirstRecord: 1,
+	MaxRecords:  250,
+	LastBlock:   utils.NOPOS,
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -41,6 +46,9 @@ func (opts *ListOptions) testLog() {
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
 	logger.TestLog(opts.Silent, "Silent: ", opts.Silent)
+	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
+	logger.TestLog(opts.FirstRecord != 1, "FirstRecord: ", opts.FirstRecord)
+	logger.TestLog(opts.MaxRecords != 250, "MaxRecords: ", opts.MaxRecords)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 	opts.Globals.TestLog()
@@ -56,6 +64,8 @@ func (opts *ListOptions) String() string {
 func listFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
 	copy := defaultListOptions
 	opts := &copy
+	opts.FirstRecord = 1
+	opts.MaxRecords = 250
 	opts.FirstBlock = 0
 	opts.LastBlock = utils.NOPOS
 	for key, value := range r.URL.Query() {
@@ -71,6 +81,12 @@ func listFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
 			opts.Appearances = true
 		case "silent":
 			opts.Silent = true
+		case "noZero":
+			opts.NoZero = true
+		case "firstRecord":
+			opts.FirstRecord = globals.ToUint64(value[0])
+		case "maxRecords":
+			opts.MaxRecords = globals.ToUint64(value[0])
 		case "firstBlock":
 			opts.FirstBlock = globals.ToUint64(value[0])
 		case "lastBlock":
@@ -108,4 +124,12 @@ func GetOptions() *ListOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return &defaultListOptions
+}
+
+func ResetOptions() {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
+	defaultListOptions = ListOptions{}
+	globals.SetDefaults(&defaultListOptions.Globals)
+	defaultListOptions.Globals.Writer = w
 }

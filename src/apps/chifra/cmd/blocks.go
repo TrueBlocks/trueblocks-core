@@ -13,6 +13,8 @@ import (
 
 	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -24,7 +26,13 @@ var blocksCmd = &cobra.Command{
 	Short:   shortBlocks,
 	Long:    longBlocks,
 	Version: versionText,
-	RunE:    blocksPkg.RunBlocks,
+	PreRun: outputHelpers.PreRunWithJsonWriter("blocks", func() *globals.GlobalOptions {
+		return &blocksPkg.GetOptions().Globals
+	}),
+	RunE:    file.RunWithFileSupport("blocks", blocksPkg.RunBlocks, blocksPkg.ResetOptions),
+	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
+		return &blocksPkg.GetOptions().Globals
+	}),
 }
 
 const usageBlocks = `blocks [flags] <block> [block...]
@@ -55,6 +63,8 @@ func init() {
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Trace, "trace", "t", false, "export the traces from the block as opposed to the block data")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Apps, "apps", "s", false, "display a list of uniq address appearances in the block")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Uniq, "uniq", "u", false, "display a list of uniq address appearances per transaction")
+	blocksCmd.Flags().StringVarP(&blocksPkg.GetOptions().Flow, "flow", "f", "", `for the uniq and apps options only, export only from or to (including trace from or to)
+One of [ from | to | reward ]`)
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Logs, "logs", "g", false, "display only the logs found in the block(s) (hidden)")
 	blocksCmd.Flags().StringSliceVarP(&blocksPkg.GetOptions().Emitter, "emitter", "m", nil, "for the --logs option only, filter logs to show only those logs emitted by the given address(es) (hidden)")
 	blocksCmd.Flags().StringSliceVarP(&blocksPkg.GetOptions().Topic, "topic", "p", nil, "for the --logs option only, filter logs to show only those with this topic(s) (hidden)")

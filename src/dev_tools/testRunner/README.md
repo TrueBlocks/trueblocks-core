@@ -15,7 +15,7 @@ The `testRunner` tool runs the TrueBlocks tests. The test cases are stored in CS
 | &#8208;f | &#8208;&#8208;filter &lt;val&gt; | determine how long it takes to run tests<br/>one of [fast, medi, slow, all]       |
 | &#8208;c | &#8208;&#8208;clean              | clean working folder before running tests                                         |
 | &#8208;r | &#8208;&#8208;report             | display performance report to screen                                              |
-| &#8208;x | &#8208;&#8208;fmt &lt;val&gt;    | export format, one of [none, json, txt, csv, api]                                 |
+| &#8208;x | &#8208;&#8208;fmt &lt;val&gt;    | export format, one of [none, json, txt, csv]                                      |
 | &#8208;v | &#8208;&#8208;verbose            | set verbose level (optional level defaults to 1)                                  |
 | &#8208;h | &#8208;&#8208;help               | display this help screen                                                          |
 

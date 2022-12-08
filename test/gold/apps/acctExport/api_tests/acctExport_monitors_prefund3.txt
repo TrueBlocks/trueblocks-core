@@ -41,10 +41,6 @@ export?addrs=0x05a56e2d52c817161883f50c441c3228cfe54d9f&firstBlock=2&lastBlock=7
     "staging": "0xdeadbeef",
     "finalized": "0xdeadbeef",
     "client": "0xdeadbeef",
-    "namedFrom": {},
-    "unNamedFrom": {
-      "0xBlockReward": 1
-    },
     "first_block": "0xdeadbeef",
     "last_block": "0xdeadbeef",
     "accountedFor": {
@@ -53,13 +49,8 @@ export?addrs=0x05a56e2d52c817161883f50c441c3228cfe54d9f&firstBlock=2&lastBlock=7
       "name": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "symbol": "",
       "source": "",
-      "decimals": 0,
-      "description": "",
-      "isCustom": false,
-      "isPrefund": false,
-      "isContract": false,
-      "isErc20": false,
-      "isErc721": false
+      "decimals": 18,
+      "petname": "early-definite-sunbird"
     }
   }
 }

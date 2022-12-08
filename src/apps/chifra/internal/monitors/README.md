@@ -23,15 +23,18 @@ Flags:
       --delete        delete a monitor, but do not remove it
       --undelete      undelete a previously deleted monitor
       --remove        remove a previously deleted monitor
+      --decache       removes a monitor and all associated data from the cache
+      --list          list monitors in the cache (--verbose for more detail)
       --watch         continually scan for new blocks and extract data for monitored addresses
   -s, --sleep float   seconds to sleep between monitor passes (default 14)
-  -x, --fmt string    export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string    export format, one of [none|json*|txt|csv]
   -v, --verbose       enable verbose (increase detail with --log_level)
   -h, --help          display this help screen
 
 Notes:
   - An address must start with '0x' and be forty-two characters long.
   - If no address is presented to the --clean command, all monitors will be cleaned.
+  - The --decache option will remove all cache items (blocks, txs, traces, recons) for the given address(es).
 ```
 
 #### Other Options
@@ -42,7 +45,6 @@ All tools accept the following additional flags, although in some cases, they ha
   -v, --version         display the current version of the tool
       --wei             export values in wei (the default)
       --ether           export values in ether
-      --dollars         export values in US dollars
       --raw             pass raw RPC data directly from the node with no processing
       --to_file         write the results to a temporary file and return the filename
       --output string   write the results to file 'fn' and return the filename

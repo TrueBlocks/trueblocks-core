@@ -194,12 +194,12 @@ bool COptions::parseArguments(string_q& command) {
         abi_spec.loadAbisFromKnown(true);
         crudCommands.push_back("create");
         terms.push_back(autoname);
-        ::setenv("TB_NAME_NAME", autoname.c_str(), true);
+        // ::setenv("TB_NAME_ADDRESS", autoname.c_str(), true);
+        ::setenv("TB_NAME_NAME", addr_2_Petname(autoname, '-').c_str(), true);
         ::setenv("TB_NAME_TAG", "50-Tokens:ERC20", true);
         ::setenv("TB_NAME_SOURCE", "TrueBlocks.io", true);
         ::setenv("TB_NAME_SYMBOL", "", true);
         ::setenv("TB_NAME_DECIMALS", "18", true);
-        ::setenv("TB_NAME_DESCR", "", true);
         ::setenv("TB_NAME_CUSTOM", "false", true);
         if (!handle_editcmds(true))  // returns true on success
             return false;
@@ -255,9 +255,14 @@ bool COptions::parseArguments(string_q& command) {
         manageFields("CAccountName:tags", true);
         format = "[{TAGS}]";
         addr_only = false;
-        types |= NAMED;
-        types |= PREFUND;
-        types |= CUSTOM;
+        if (custom) {
+            types = 0;
+            types |= CUSTOM;
+        } else {
+            types |= NAMED;
+            types |= PREFUND;
+            types |= CUSTOM;
+        }
     }
 
     // Prepare formatting
@@ -268,7 +273,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // Display formatting
     configureDisplay("ethNames", "CAccountName", str, meta);
-    if (!tags && (expContext().exportFmt == API1 || expContext().exportFmt == JSON1))
+    if (!tags && expContext().exportFmt == JSON1)
         manageFields("CAccountName:" + cleanFmt(STR_DISPLAY_ACCOUNTNAME));
     if (!expand) {
         HIDE_FIELD(CAccountName, "deleted");
@@ -288,7 +293,7 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CAccountName, "tags");
         HIDE_FIELD(CAccountName, "name");
         HIDE_FIELD(CAccountName, "symbol");
-        HIDE_FIELD(CAccountName, "description");
+        HIDE_FIELD(CAccountName, "petname");
         HIDE_FIELD(CAccountName, "source");
         HIDE_FIELD(CAccountName, "decimal");
         HIDE_FIELD(CAccountName, "isCustom");
@@ -442,6 +447,7 @@ void COptions::filterNames() {
                 CAccountName item;
                 item.tags = "81-Custom";
                 item.address = "0x000000000000000000000000000000000000000" + uint_2_Str(i);
+                item.petname = addr_2_Petname(item.address, '-');
                 item.name = "Account_" + uint_2_Str(i);
                 if (!(i % 2)) {
                     item.symbol = "AC_" + uint_2_Str(i);
@@ -468,7 +474,6 @@ void COptions::filterNames() {
 string_q shortenFormat(const string_q& fmtIn) {
     string_q ret = toUpper(fmtIn);
     replace(ret, "[{SOURCE}]", "");
-    replace(ret, "[{DESCRIPTION}]", "");
     replace(ret, "[{DECIMAL}]", "");
     replace(ret, "[{DELETED}]", "");
     replace(ret, "[{ISCUSTOM}]", "");
@@ -483,7 +488,6 @@ string_q shortenFormat(const string_q& fmtIn) {
 string_q getSearchFields(const string_q& fmtIn) {
     string_q ret = toUpper(fmtIn);
     replace(ret, "[{SOURCE}]", "");
-    replace(ret, "[{DESCRIPTION}]", "");
     replace(ret, "[{DECIMAL}]", "");
     replace(ret, "[{DELETED}]", "");
     replace(ret, "[{ISCUSTOM}]", "");

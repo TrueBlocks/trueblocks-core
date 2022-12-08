@@ -17,10 +17,10 @@ Arguments:
 
 Flags:
   -p, --parts strings   control which state to export
-                        One or more of [ none | some | all | balance | nonce | code | storage | deployed | accttype ]
+                        One or more of [ none | some | all | balance | nonce | code | proxy | deployed | accttype ]
   -c, --changes         only report a balance when it changes from one block to the next
   -n, --no_zero         suppress the display of zero balance accounts
-  -x, --fmt string      export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)
   -h, --help            display this help screen
 

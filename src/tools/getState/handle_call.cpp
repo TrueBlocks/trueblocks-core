@@ -12,12 +12,12 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
+string_q cleanInput(const string_q& cmd);
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_call(void) {
+    call = cleanInput(call);
+
     CStringArray callVariables;
-    replaceAll(call, "|", "!");
-    replaceAll(call, " !", "!");
-    replaceAll(call, "! ", "!");
     explode(callVariables, call, '!');
 
     string_q contract = callVariables.size() > 0 ? callVariables[0] : "";
@@ -93,7 +93,7 @@ bool COptions::handle_call(void) {
 
     manageFields("CEthCall:abi_spec,deployed", FLD_HIDE);
     manageFields("CEthCall:blockNumber,address,signature,compressedResult", FLD_SHOW);
-    if (expContext().exportFmt == JSON1 || expContext().exportFmt == API1) {
+    if (expContext().exportFmt == JSON1 || expContext().exportFmt == JSON1) {
         manageFields("CEthCall:signature", FLD_HIDE);
         manageFields("CEthCall:callResult", FLD_SHOW);
     }
@@ -103,7 +103,7 @@ bool COptions::handle_call(void) {
 
 //--------------------------------------------------------------------------------
 string_q cleanInput(const string_q& cmd) {
-    if (!contains(cmd, "--call"))
+    if (!contains(cmd, "-a:") && !contains(cmd, "--call"))
         return cmd;
 
     ostringstream out;
@@ -129,5 +129,10 @@ string_q cleanInput(const string_q& cmd) {
         }
         s++;
     }
-    return out.str();
+
+    string_q ret = out.str();
+    replaceAll(ret, "|", "!");
+    replaceAll(ret, " !", "!");
+    replaceAll(ret, "! ", "!");
+    return ret;
 }
