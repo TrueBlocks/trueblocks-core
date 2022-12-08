@@ -63,6 +63,7 @@ func SetWriterForCommand(cmdName string, opts *globals.GlobalOptions) {
 	}
 
 	// Run only in --file mode. Without --file, the default setup is OK.
+	// TODO: BOGUS - THIS WILL BE REMOVED TEST_TEST_ONLY
 	if os.Getenv("TEST_TEST_ONLY") != "true" {
 		if opts.File == "" {
 			return
