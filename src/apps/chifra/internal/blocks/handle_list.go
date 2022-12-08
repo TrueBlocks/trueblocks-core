@@ -13,6 +13,7 @@ import (
 )
 
 func (opts *BlocksOptions) HandleList() error {
+	// Don't do this in the loop
 	meta, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 	if err != nil {
 		return err
@@ -31,7 +32,8 @@ func (opts *BlocksOptions) HandleList() error {
 	// Note: Make sure to add an entry to enabledForCmd in src/apps/chifra/pkg/output/helpers.go
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
 		for bn := start; bn > end; bn-- {
-			block, err := rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, false)
+			finalized := meta.Age(bn) > 28
+			block, err := rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, finalized, false)
 			if err != nil {
 				errorChan <- err
 				cancel()

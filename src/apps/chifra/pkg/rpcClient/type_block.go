@@ -34,8 +34,7 @@ func GetBlockHeaderByNumber(chain string, bn uint64) (types.SimpleBlockHeader, e
 
 	return block, nil
 }
-
-func GetBlockByNumber(chain string, bn uint64, withTxs bool) (types.SimpleBlock, error) {
+func GetBlockByNumber(chain string, bn uint64, isFinal, withTxs bool) (types.SimpleBlock, error) {
 	rawBlock, err := getRawBlock(chain, bn, withTxs)
 	if err != nil {
 		return types.SimpleBlock{}, err
@@ -75,6 +74,7 @@ func GetBlockByNumber(chain string, bn uint64, withTxs bool) (types.SimpleBlock,
 		GasUsed:     gasUsed,
 		Miner:       common.HexToAddress(rawBlock.Miner),
 		Difficulty:  difficulty,
+		Finalized:   isFinal,
 	}
 	block.SetRaw(*rawBlock)
 

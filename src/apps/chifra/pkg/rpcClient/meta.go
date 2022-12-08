@@ -28,6 +28,10 @@ func (m MetaData) String() string {
 	return string(ret)
 }
 
+func (m MetaData) Age(bn uint64) int64 {
+	return int64(m.Latest) - int64(bn) // Allows negative
+}
+
 func GetMetaData(chain string, testmode bool) (*MetaData, error) {
 	provider := config.GetRpcProvider(chain)
 

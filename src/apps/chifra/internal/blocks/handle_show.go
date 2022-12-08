@@ -14,6 +14,12 @@ import (
 )
 
 func (opts *BlocksOptions) HandleShowBlocks() error {
+	// Don't do this in the loop
+	meta, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+	if err != nil {
+		return err
+	}
+
 	ctx, cancel := context.WithCancel(context.Background())
 
 	// Note: Make sure to add an entry to enabledForCmd in src/apps/chifra/pkg/output/helpers.go
@@ -26,7 +32,8 @@ func (opts *BlocksOptions) HandleShowBlocks() error {
 				return
 			}
 			for _, bn := range blockNums {
-				block, err := rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, !opts.Hashes)
+				finalized := meta.Age(bn) > 28
+				block, err := rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, finalized, !opts.Hashes)
 				// TODO: rpcClient should return a custom type of error in this case
 				if err != nil && strings.Contains(err.Error(), "not found") {
 					errorChan <- err
