@@ -11,15 +11,22 @@ Please complete any applicable [Migrations](https://github.com/TrueBlocks/truebl
 [![Twitter Follow](https://img.shields.io/twitter/follow/trueblocks?style=social)](https://twitter.com/trueblocks)
 
 ## Table of Contents
+- [Recent Migrations](#recent-migrations)
+- [TrueBlocks Core](#trueblocks-core)
+  - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
   - [Quick Install](#quick-install)
+    - [Optional steps](#optional-steps)
   - [Introducing chifra](#introducing-chifra)
+    - [Getting status](#getting-status)
+    - [-- Troubleshooting](#---troubleshooting)
   - [Using chifra](#using-chifra)
   - [Building the Index](#building-the-index)
   - [Docker](#docker)
-  - [Contributing](#contributing-to-trueblocks)
-  - [List of Contributors](#contributors)
+  - [Documentation](#documentation)
+  - [Contributing](#contributing)
   - [Contact](#contact)
+  - [List of Contributors](#list-of-contributors)
 
 ## Introduction
 
@@ -146,10 +153,9 @@ Our official docker version is in a [separate repo](https://github.com/TrueBlock
 
 See our [documentation repo](https://github.com/TrueBlocks/trueblocks-docs) for the TrueBlocks website.
 
-## Contributing to TrueBlocks
+## Contributing
 
----
-We love contributors. Please see information about our [work flow](./docs/BRANCHING.md) before proceeding.
+We love contributors. Please see information about our [work flow](https://github.com/TrueBlocks/trueblocks-core/blob/develop/docs/BRANCHING.md) before proceeding.
 
 1. Fork this repository into your own repo.
 2. Create a branch: `git checkout -b <branch_name>`.
@@ -157,19 +163,17 @@ We love contributors. Please see information about our [work flow](./docs/BRANCH
 4. Push back to the original branch: `git push origin TrueBlocks/trueblocks-core`
 5. Create the pull request.
 
-## Contributors
-
----
-Thanks to the following people who have contributed to this project:
-
-* [@tjayrush](https://github.com/tjayrush)
-* [@dszlachta](https://github.com/dszlachta)
-* [@MattDodsonEnglish](https://github.com/MattDodsonEnglish)
-* [@wildmolasses](https://github.com/wildmolasses)
-* [@crodnun](https://github.com/crodnun)
-* [@MysticRyuujin](https://github.com/MysticRyuujin)
-
 ## Contact
 
----
-If you have specific requests, contact us here <info@quickblocks.io>.
+If you have questions, comments, or complaints, please join the discussion on our discord server which is [linked from our website](https://trueblocks.io).
+
+## List of Contributors
+
+Thanks to the following people who have contributed to this project:
+
+- [@tjayrush](https://github.com/tjayrush)
+- [@dszlachta](https://github.com/dszlachta)
+- [@MattDodsonEnglish](https://github.com/MattDodsonEnglish)
+- [@wildmolasses](https://github.com/wildmolasses)
+- [@crodnun](https://github.com/crodnun)
+- [@MysticRyuujin](https://github.com/MysticRyuujin)
