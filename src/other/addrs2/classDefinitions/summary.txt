@@ -1,0 +1,4 @@
+[settings]
+class = CSummary
+fields = summary.csv
+includes = etherlib.h

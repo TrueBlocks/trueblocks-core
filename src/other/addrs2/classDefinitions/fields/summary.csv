@@ -1,0 +1,5 @@
+name  ,type   ,doc ,disp ,description
+start ,blknum ,    ,     ,
+end   ,blknum ,    ,     ,
+total ,uint64 ,    ,     ,
+count ,uint64 ,    ,     ,
