@@ -26,7 +26,7 @@ type RawBlock struct {
 	TransactionsRoot string        `json:"transactionsRoot"`
 	TotalDifficulty  string        `json:"totalDifficulty"`
 	Transactions     []interface{} `json:"transactions"`
-	Uncles           []interface{} `json:"uncles"`
+	Uncles           []string      `json:"uncles"`
 	// SealFields       []string      `json:"sealFields"`
 }
 
@@ -56,17 +56,16 @@ func (s *SimpleBlock) SetRaw(rawBlock RawBlock) {
 
 func (s *SimpleBlock) Model(showHidden bool, format string) Model {
 	model := map[string]interface{}{
-		"blockNumber":     s.BlockNumber,
-		"timestamp":       s.Timestamp,
-		"hash":            s.Hash,
-		"parentHash":      s.ParentHash,
-		"miner":           hexutil.Encode(s.Miner.Bytes()),
-		"difficulty":      s.Difficulty,
-		"baseFeePerGas":   s.BaseFeePerGas.Uint64(),
-		"gasLimit":        s.GasLimit,
-		"gasUsed":         s.GasUsed,
-		"transactionsCnt": len(s.Transactions),
-		"unclesCnt":       len(s.raw.Uncles),
+		"blockNumber":   s.BlockNumber,
+		"timestamp":     s.Timestamp,
+		"hash":          s.Hash,
+		"parentHash":    s.ParentHash,
+		"miner":         hexutil.Encode(s.Miner.Bytes()),
+		"difficulty":    s.Difficulty,
+		"finalized":     s.Finalized,
+		"baseFeePerGas": s.BaseFeePerGas.Uint64(),
+		"gasLimit":      s.GasLimit,
+		"gasUsed":       s.GasUsed,
 	}
 
 	order := []string{
@@ -76,11 +75,24 @@ func (s *SimpleBlock) Model(showHidden bool, format string) Model {
 		"parentHash",
 		"miner",
 		"difficulty",
+		"finalized",
 		"baseFeePerGas",
 		"gasLimit",
 		"gasUsed",
-		"transactionsCnt",
-		"unclesCnt",
+	}
+
+	if format == "json" {
+		model["transactions"] = s.Transactions
+		order = append(order, "transactions")
+		if len(s.Uncles) > 0 {
+			model["uncles"] = s.Uncles
+			order = append(order, "uncles")
+		}
+	} else {
+		model["transactionsCnt"] = len(s.Transactions)
+		order = append(order, "transactionsCnt")
+		model["unclesCnt"] = len(s.Uncles)
+		order = append(order, "unclesCnt")
 	}
 
 	return Model{

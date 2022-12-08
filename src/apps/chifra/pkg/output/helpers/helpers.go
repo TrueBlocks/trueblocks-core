@@ -63,8 +63,10 @@ func SetWriterForCommand(cmdName string, opts *globals.GlobalOptions) {
 	}
 
 	// Run only in --file mode. Without --file, the default setup is OK.
-	if opts.File == "" {
-		return
+	if os.Getenv("TEST_TEST_ONLY") != "true" {
+		if opts.File == "" {
+			return
+		}
 	}
 
 	// Try to cast the default writer to JsonWriter

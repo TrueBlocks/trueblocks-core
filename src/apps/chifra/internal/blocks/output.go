@@ -53,6 +53,9 @@ func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
 		if opts.List > 0 {
 			err = opts.HandleList()
 
+		} else if opts.Uncles {
+			err = opts.HandleShowUncles()
+
 		} else {
 			err = opts.HandleShowBlocks()
 
@@ -73,7 +76,7 @@ func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
 
 // EXISTING_CODE
 func (opts *BlocksOptions) IsPorted() bool {
-	return os.Getenv("TEST_TEST_ONLY") == "true" && (opts.List > 0 || opts.Globals.ShowRaw || opts.Hashes)
+	return os.Getenv("TEST_TEST_ONLY") == "true" && !opts.Uniq && !opts.Apps // && (opts.List > 0 || opts.Globals.ShowRaw)
 }
 
 // EXISTING_CODE
