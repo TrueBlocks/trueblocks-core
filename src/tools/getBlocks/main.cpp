@@ -40,9 +40,7 @@ int main(int argc, const char* argv[]) {
             options.blocks.forEveryBlockNumber(traceBlock, &options);
 
         } else if (options.listOffset != NOPOS) {
-            blknum_t client = isTestMode() ? 2000100 : getLatestBlock_client();
-            blknum_t start = client - options.listOffset;
-            options.handle_block_summaries(start, options.list_count);
+            options.handle_block_summaries();
 
         } else if (options.logs) {
             options.handle_logs();

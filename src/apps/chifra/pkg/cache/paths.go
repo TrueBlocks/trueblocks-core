@@ -18,7 +18,8 @@ func getDirectoryByItem(item CacheItem) string {
 	return itemToDirectory[item]
 }
 
-// TODO: combine this with code found in other places that does the same thing
+// TODO(cache): There is code in `chifra monitors --decache` that builds these identical paths. We should
+// TODO(cache): comine the at some point in the future. Of course, that code belongs here in the `cache` package.
 func getDirStructureByBlock(blockNumber types.Blknum) (result string, paddedBn string) {
 	paddedBn = fmt.Sprintf("%09d", blockNumber)
 	parts := make([]string, 3)

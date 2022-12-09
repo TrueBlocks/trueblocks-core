@@ -15,7 +15,7 @@
 
 //------------------------------------------------------------------------------------------------------------
 string_q get_usage(const string_q& route) {
-    return "```[plaintext]\n" + doCommand2("chifra " + route + " --help") + "\n```";
+    return "```[plaintext]\n" + doCommand("chifra " + route + " --help", true /* stderr */) + "\n```";
 }
 
 extern const char* STR_CONFIG;

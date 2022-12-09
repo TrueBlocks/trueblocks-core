@@ -29,6 +29,7 @@ class COptions : public CStatementOptions {
     bool uniq;
     string_q flow;
     bool cache;
+    bool source;
     // END_CODE_DECLARE
 
     COptionsTransList transList;

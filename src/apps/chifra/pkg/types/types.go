@@ -31,7 +31,7 @@ func (h IpfsHash) String() string {
 
 type SimpleTimestamp struct {
 	BlockNumber uint64 `json:"blockNumber"`
-	TimeStamp   uint64 `json:"timestamp"`
+	Timestamp   uint64 `json:"timestamp"`
 	Diff        uint64 `json:"diff"`
 }
 
@@ -154,20 +154,6 @@ type Wei = big.Int
 type Gas = uint64
 type Blknum = uint64
 type Topic = string
-
-type SimpleBlock struct {
-	GasLimit      uint64
-	GasUsed       uint64
-	Hash          common.Hash
-	BlockNumber   Blknum
-	ParentHash    common.Hash
-	Miner         common.Address
-	Difficulty    uint64
-	Finalized     bool
-	Timestamp     time.Time
-	BaseFeePerGas Wei
-	Transactions  []SimpleTransaction
-}
 
 type SimpleTransaction struct {
 	Hash                 common.Hash     `json:"hash"`

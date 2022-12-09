@@ -26,7 +26,7 @@ func (opts *WhenOptions) HandleShowBlocks() error {
 				return
 			}
 			for _, bn := range blockNums {
-				block, err := rpcClient.GetBlockByNumber(opts.Globals.Chain, bn)
+				block, err := rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, false)
 				// TODO: rpcClient should return a custom type of error in this case
 				if err != nil && strings.Contains(err.Error(), "not found") {
 					errorChan <- err
@@ -37,11 +37,11 @@ func (opts *WhenOptions) HandleShowBlocks() error {
 					cancel()
 					return
 				}
-				d, _ := tslib.FromTsToDate(block.TimeStamp)
+				d, _ := tslib.FromTsToDate(block.GetTimestamp())
 				nm, _ := tslib.FromBnToName(opts.Globals.Chain, block.BlockNumber)
 				modelChan <- &types.SimpleNamedBlock{
 					BlockNumber: block.BlockNumber,
-					TimeStamp:   block.TimeStamp,
+					Timestamp:   block.GetTimestamp(),
 					Date:        d.Format("YYYY-MM-DD HH:mm:ss UTC"),
 					Name:        nm,
 				}

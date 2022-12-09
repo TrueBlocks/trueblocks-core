@@ -143,9 +143,16 @@ func writeDefaultHeader(writer *bufio.Writer, className string) (err error) {
 }
 
 func WriteBlock(writer *bufio.Writer, block *types.SimpleBlock) (err error) {
+	// TODO(cache): It's not all clear to me why we need this "complication." I'd prefer seeing exactly
+	// TODO(cache): that we are writing LittleEndian. Plus, remember, all of the data-related code will
+	// TODO(cache): be auto-generated as soon as we get around to it. So, it doesn't save keystrokes, even.
 	write := createWriteFn(writer)
 
-	// TODO: Use new style test for error
+	// TODO(cache): I've not been consistent, but I've been trying to use the new style error
+	// TODO(cache): checking whenever I can. So
+	// TODO(cache): if err := writeDefaultHeader(writer, "CBlock"); err != nil {
+	// TODO(cache):     return
+	// TODO(cache): }
 	err = writeDefaultHeader(writer, "CBlock")
 	if err != nil {
 		return

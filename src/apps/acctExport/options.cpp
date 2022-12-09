@@ -546,7 +546,7 @@ bool COptions::setDisplayFormatting(void) {
         }
 
         if (accounting) {
-            articulate = !getEtherscanKey().empty();
+            articulate = !getEtherscanKey(false).empty();
             manageFields("CTransaction:statements", true);
             if (statements && isText) {
                 string_q format =

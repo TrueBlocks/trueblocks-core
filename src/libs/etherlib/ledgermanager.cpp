@@ -129,6 +129,8 @@ bool CLedgerManager::getTransfers(const CTransaction& trans) {
             transfer.sender = topic_2_Addr(log.topics[1]);
             transfer.recipient = topic_2_Addr(log.topics[2]);
             transfer.amount = str_2_Wei(log.data);
+
+            // TODO: Would enabling these make more transfers reconcile?
             // } else if (log.topics.size() > 1) {
             //     if (isWithdrawalTransfer(log.topics[0])) {
             //         transfer.sender = topic_2_Addr(log.topics[1]);
@@ -140,61 +142,49 @@ bool CLedgerManager::getTransfers(const CTransaction& trans) {
             //         transfer.recipient = topic_2_Addr(log.topics[1]);
             //         transfer.amount = str_2_Wei(log.data);
             //     }
-        }
 
-        if (transfer.amount != 0 && (transfer.sender == accountedFor || transfer.recipient == accountedFor)) {
-            transfer.blockNumber = trans.blockNumber;
-            transfer.transactionIndex = trans.transactionIndex;
-            transfer.logIndex = log.logIndex;
-            transfer.timestamp = ts;
-            transfer.date = dt;
-            transfer.transactionHash = trans.hash;
-            transfer.encoding = encoding;
-            transfer.assetAddr = log.address;
-            transfer.log = (CLogEntry*)&log;  // TODO: for debugging only, can be removed
+            bool nonZero = transfer.amount != 0;
+            bool ofInterest = (transfer.sender == accountedFor || transfer.recipient == accountedFor);
+            if (nonZero && ofInterest) {
+                transfer.blockNumber = trans.blockNumber;
+                transfer.transactionIndex = trans.transactionIndex;
+                transfer.logIndex = log.logIndex;
+                transfer.timestamp = ts;
+                transfer.date = dt;
+                transfer.transactionHash = trans.hash;
+                transfer.encoding = encoding;
+                transfer.assetAddr = log.address;
+                transfer.log = (CLogEntry*)&log;  // TODO: for debugging only, can be removed
 
-            transfer.assetSymbol = tokenName.symbol;
-            if (transfer.assetSymbol.empty()) {
-                transfer.assetSymbol = getTokenSymbol(transfer.assetAddr, trans.blockNumber);
+                transfer.assetSymbol = tokenName.symbol;
                 if (transfer.assetSymbol.empty()) {
-                    transfer.assetSymbol = transfer.assetAddr.substr(0, 4);
+                    transfer.assetSymbol = getTokenSymbol(transfer.assetAddr, trans.blockNumber);
+                    if (transfer.assetSymbol.empty()) {
+                        transfer.assetSymbol = transfer.assetAddr.substr(0, 4);
+                    }
                 }
-            }
 
-            transfer.decimals = tokenName.decimals;
-            if (transfer.decimals == 0) {
-                transfer.decimals = getTokenDecimals(transfer.assetAddr, trans.blockNumber);
+                transfer.decimals = tokenName.decimals;
                 if (transfer.decimals == 0) {
-                    transfer.decimals = 18;
+                    transfer.decimals = getTokenDecimals(transfer.assetAddr, trans.blockNumber);
+                    if (transfer.decimals == 0) {
+                        transfer.decimals = 18;
+                    }
                 }
-            }
 
-            tmp.push_back(transfer);
+                tmp.push_back(transfer);
+            }
         }
     }
 
+    // sorts the transfers (other than the top level) by assetAddr, blockNumber, transactionIndex, logIndex
     sort(tmp.begin(), tmp.end());
 
     transfers.clear();
     transfers.reserve(tmp.size() + 2);
 
-    CTransfer transfer;
-    transfer.sender = trans.from;
-    transfer.recipient = trans.to;
-    transfer.blockNumber = trans.blockNumber;
-    transfer.transactionIndex = trans.transactionIndex;
-    transfer.logIndex = 0;
-    transfer.timestamp = str_2_Ts(trans.Format("[{TIMESTAMP}]"));
-    transfer.date = ts_2_Date(transfer.timestamp);
-    transfer.transactionHash = trans.hash;
-    transfer.encoding = trans.input.substr(0, 10);
-    transfer.assetAddr = FAKE_ETH_ADDRESS;
-    transfer.log = nullptr;
-    transfer.assetSymbol = expContext().asEther ? "ETH" : "WEI";
-    transfer.decimals = 18;
-    transfer.amount = trans.value;
-
-    transfers.push_back(transfer);
+    // Adds the top level transaction itself to the front of the array
+    transfers.push_back(trans.toTransfer());
     transfers.insert(transfers.end(), tmp.begin(), tmp.end());
 
     return transfers.size() > 0;

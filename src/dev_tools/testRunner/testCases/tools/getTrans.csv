@@ -28,6 +28,7 @@ on,both,fast,transactions,tools/getTrans,bad_hash_msg,n,transactions = 0x060e4cf
 on,both,fast,transactions,tools/getTrans,bad_blkhash_msg,y,transactions = 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.2
 on,both,fast,transactions,tools/getTrans,revert_not_err,y,transactions = 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c & articulate & fmt = json & trace
 on,both,fast,transactions,tools/getTrans,message,y,transactions = 0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344 & articulate
+on,both,fast,transactions,tools/getTrans,source_disabled,y,transactions = 0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a & source & fmt = json
 
 on,cmd,medi,transactions,tools/getTrans,core_dump_bug,y,@avt & transactions = 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 & fmt = json
 on,both,fast,transactions,tools/getTrans,uniqAddrs_fail,y,transactions = 1301011.0 1301672.0 1301324.0 & broken & fmt = json

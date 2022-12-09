@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-11-25T10:46:46
+date: 2022-12-02T15:08:31
 lastmod:
   - :git
   - lastmod
@@ -40,6 +40,7 @@ Arguments:
 
 Flags:
   -U, --count               display only the count of records for each monitor
+  -n, --no_zero             suppress the display of zero appearance accounts
   -c, --first_record uint   the first record to process (default 1)
   -e, --max_records uint    the maximum number of records to process (default 250)
   -F, --first_block uint    first block to export (inclusive, ignored when freshening)

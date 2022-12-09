@@ -47,6 +47,11 @@ func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
+	if false && opts.List > 0 {
+		// return opts.HandleList(), true
+		opts.HandleList()
+	}
+
 	if opts.Globals.IsApiMode() {
 		return nil, false
 	}

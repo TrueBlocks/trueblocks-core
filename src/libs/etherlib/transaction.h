@@ -94,6 +94,7 @@ class CTransaction : public CBaseNode {
     bool readReconsFromCache(const address_t& accountedFor);
     void cacheIfReconciled(const address_t& accountedFor) const;
     string_q getReconcilationPath(const address_t& address) const;
+    CTransfer toTransfer(void) const;
 
     // EXISTING_CODE
     bool operator==(const CTransaction& it) const;

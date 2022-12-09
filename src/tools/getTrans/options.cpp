@@ -27,6 +27,7 @@ static const COption params[] = {
     COption("flow", "f", "enum[from|to]", OPT_FLAG, "for the uniq option only, export only from or to (including trace from or to)"),  // NOLINT
     COption("account_for", "A", "<address>", OPT_FLAG, "reconcile the transaction as per the provided address"),
     COption("cache", "o", "", OPT_SWITCH, "force the results of the query into the tx cache (and the trace cache if applicable)"),  // NOLINT
+    COption("source", "s", "", OPT_HIDDEN | OPT_SWITCH, "find the source of the funds sent to the receiver"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve one or more transactions from the chain or local cache."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -77,6 +78,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-o" || arg == "--cache") {
             cache = true;
+
+        } else if (arg == "-s" || arg == "--source") {
+            source = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -157,6 +161,7 @@ void COptions::Init(void) {
     uniq = false;
     flow = "";
     cache = false;
+    source = false;
     // END_CODE_INIT
 
     transList.Init();

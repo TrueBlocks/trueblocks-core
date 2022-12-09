@@ -18,7 +18,7 @@ If you wish to run the tests, you should also install `jq`. [Instructions here](
 yum update
 yum upgrade
 sudo yum groupinstall "Development Tools"  
-sudo yum install cmake python python-devel libcurl-devel
+sudo yum install cmake python3 libcurl-devel
 ```
 
 Additionally, please [install Go](https://golang.org/doc/install).
@@ -31,7 +31,7 @@ Additionally, please [install Go](https://golang.org/doc/install).
 
 ```bash
 sudo dnf group install 'Development Tools'
-sudo dnf install cmake python python-devel libcurl-devel
+sudo dnf install cmake python3 libcurl-devel
 yum -y install qt-devel cmake
 ```
 
@@ -44,7 +44,7 @@ Additionally, please [install Go](https://golang.org/doc/install).
 ### for FreeBSD
 
 ```bash
-sudo pkg install lang/gcc49 git cmake python ftp/curl
+sudo pkg install lang/gcc49 git cmake python3 ftp/curl
 cd /usr/include  
 sudo ln -s ./usr/local/include/curl curl  
 export CPLUS_INCLUDE_PATH=/usr/local/include/:${CPLUS_INCLUDE_PATH}
@@ -60,7 +60,7 @@ Additionally, please [install Go](https://golang.org/doc/install).
 ### for Ubuntu / Debian
 
 ```bash
-sudo apt install build-essential git cmake python python-dev libcurl3-dev
+sudo apt install build-essential git cmake python3 libcurl3-dev
 ```
 
 Additionally, please [install Go](https://golang.org/doc/install).
