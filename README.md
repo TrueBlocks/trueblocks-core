@@ -1,7 +1,7 @@
 <!-- markdownlint-disable MD033 MD036 MD041 -->
 <b>If you have an existing installation, complete applicable [Migrations](https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md) before proceeding.</b><hr>
 
-<font size="+2">TrueBlocks / Unchained Index</font>
+<h1>TrueBlocks / Unchained Index</h1>
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/TrueBlocks/trueblocks-core)
 [![GitHub contributors](https://img.shields.io/github/contributors/TrueBlocks/trueblocks-core)](https://github.com/TrueBlocks/trueblocks-core/contributors)
