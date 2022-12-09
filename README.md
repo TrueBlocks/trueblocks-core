@@ -13,7 +13,7 @@
 
 - [Introduction](#introduction)
 - [Installing](#installing)
-- [Using chifra](#using-chifra)
+- [Command line](#command-line)
 - [Troubleshooting](#troubleshooting)
 - [The unchained index](#the-unchained-index)
 - [Docker version](#docker-version)
@@ -30,33 +30,38 @@ Features include:
 
 - `chifra init` and `chifra scrape` which builds the Unchained Index, an index of address appearances that provides lightning-fast access to transactional histories,
 
-- A built-in binary cache, which speeds up second and subsequent queries by orders of magnitude,
+- An optional binary cache, which speeds up queries to the RPC by orders of magnitude,
 
-- Many enhanced command-line options enabling a new level of access to the data. Perfect for data scientists. Extract all `logs` produced by a contract, view all ERC-20 tokens from or to your account, etc.,
+- Enhanced command-line options enabling much better access to chain data for data scientists and analysts. For example, easily extract all `logs` produced by a smart
+contract or view all ERC-20 holdings for an account, etc.,
 
-- Advanced tools that can produce reconciled "bank statements" and accounting for any asset on any address.
+- Advanced tools for producing reconciled "bank statements" and accounting export for any token including ETH.
+  
+- An infinite number of other things restricted only by your imagination.
 
 ## Installing
 
-These instructions assume you know how to use the command line. If you need help, see the [installation's troubleshooting section](https://trueblocks.io/docs/install/install-trueblocks/#troubleshooting) and or consult Google.
+These instructions assume you know how to use the command line. If you need help, see the [installation's troubleshooting section](https://trueblocks.io/docs/install/install-trueblocks/#troubleshooting) or consult Google.
 
-TrueBlocks runs on Linux and Mac. There is no support, nor will there ever be, for Windows.
+TrueBlocks runs on Linux and Mac. There is no support for Windows.
 
 **Install dependencies**
 
-Install the [latest Go version](https://golang.org/doc/install). Verify that you are running at least version 1.18 of the Go tools:
+TrueBlocks requires Go version 1.18 or later. Install the [latest Go version](https://golang.org/doc/install). Verify the version you're running with:
 
 ```[shell]
 go version
 ```
 
-Install the following build dependencies for your operating system:
+Install the following required dependencies for your operating system:
 
 `build-essential git cmake ninja python3 libcurl3-dev clang-format jq`
 
-Consult Google for particulars for your operating system (probably `apt-get` on linux and `brew install` on Mac).
+Adjust this for the particulars for your operating system (probably `apt-get` on linux and `brew install` on Mac).
 
-**Download and build**
+**Building the repo**
+
+Download and build the repo using these commands:
 
 ```[shell]
 git clone -b develop https://github.com/trueblocks/trueblocks-core
@@ -66,11 +71,11 @@ cmake ../src
 make
 ```
 
-**Note:** You may speed up the build with `make -j <ncores>` where `ncores` represents the number of cores to use.
+**Note:** Speed up the build with `make -j <ncores>` where `ncores` represents the number of cores to use.
 
 **Add `./trueblocks-core/bin` to your $PATH**
 
-Search for instructions for setting your shell's $PATH on Google. The following assumes you've set the $PATH properly so that `chifra --help` returns results.
+Add the executable's folder to you path. Consult Google if you don't know how. The following instructions assume you've set the $PATH properly so that `chifra --help` works.
 
 **Edit the configuration**
 
@@ -80,23 +85,31 @@ If you've sucessfully built the executable and set the `$PATH`, you should be ab
 chifra status --terse
 ```
 
-and get valid results. If you get an error, the most likely cause is a misconfiguration. The error message will report the location of the config file:
+and get results. If you get an error, the most likely cause is an incomplete configuration. The error message will report the location of the config file:
 
 - `~/.local/share/trueblocks/trueBlocks.toml`, or
 - `~/Library/Application Support/TrueBlocks/trueBlocks.toml`, or
 - `$XDG_CONFIG_HOME` if set.
 
-Edit the `trueblocks.toml` file. Most likely, you need to set the `rpcProvider` to point to a valid RPC endpoint for your chain.
+Edit the `trueblocks.toml` file and set the `rpcProvider` to point to a valid RPC endpoint for your chain.
 
-The configuration file is reasonably-well documented. It should be self-explanitory.
+The configuration file is reasonably-well documented. Review other settins, most of which are self-explanitory.
 
 **Searching account histories**
 
-Most likely, you will want to use the Unchained Index. To do so, follow these instructions: [get the index](https://trueblocks.io/docs/install/get-the-index/)
+While optional, you most likely want to use the Unchained Index to search account histories. To do so, [get the index](https://trueblocks.io/docs/install/get-the-index/).
 
-To use the Account Explorer (which is still pre-beta), see [installing the explorer](https://trueblocks.io/docs/install/install-explorer/)
+**Account explorer**
 
-## Using chifra
+You may use the command line, of course, to access data, but you may also wish to run an API server:
+
+```[shell]
+chifra serve
+```
+
+Use `curl` to pull data or use it to drive our "pre-beta" Account Explorer. See [installing the explorer](https://trueblocks.io/docs/install/install-explorer/). The API provides the identical tools and options as the command line and it [documented here](https://trueblocks.io/api/).
+
+## Command line
 
 The TrueBlocks command-line tool is called `chifra`. This gives you access to all the other tools:
 
@@ -106,7 +119,7 @@ chifra --help
 
 Get more help on any sub-command with `chifra <cmd> --help`. Full documentation is available on [our website](https://trueblocks.io).
 
-**Getting status**
+**Getting data**
 
 Let's look at the first subcommand, called `status`.
 
