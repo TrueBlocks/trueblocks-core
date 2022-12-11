@@ -1768,6 +1768,27 @@ paths:
                         - $ref: "#/components/schemas/manifest"
         "400":
           description: bad input parameter
+  /node:
+    get:
+      tags:
+        - Admin
+      summary: Controls tools
+      description: Initalize and control long-running tools such as the API, scrapers, and monitors.
+      operationId: admin-node
+      responses:
+        "200":
+          description: returns the requested data
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    description: 
+                    type: array
+                    items:
+                      
+        "400":
+          description: bad input parameter
   /slurp:
     get:
       tags:
