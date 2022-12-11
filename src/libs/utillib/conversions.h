@@ -183,7 +183,10 @@ inline bool isApiMode(void) {
 
 //---------------------------------------------------------------------------
 inline bool isDockerMode(void) {
-    return fileExists("/.dockerenv");
+    static uint64_t docker_mode = NOPOS;
+    if (docker_mode == NOPOS)
+        docker_mode = getEnvStr("TB_DOCKER_MODE") == "true";
+    return docker_mode;
 }
 
 //-----------------------------------------------------------------------
