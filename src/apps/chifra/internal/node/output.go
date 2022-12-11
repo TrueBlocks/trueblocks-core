@@ -49,7 +49,7 @@ func (opts *NodeOptions) NodeInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	fmt.Println("node scrape:", colors.BrightGreen, opts.Scrape, colors.Off, " monitors:", colors.BrightGreen, opts.Monitors, colors.Off, " api:", colors.BrightGreen, opts.Api, colors.Off)
+	fmt.Println("node scrape:", colors.BrightGreen, opts.Scrape, colors.Off, " monitors:", colors.BrightGreen, opts.Monitor, colors.Off, " api:", colors.BrightGreen, opts.Api, colors.Off)
 	// EXISTING_CODE
 
 	return

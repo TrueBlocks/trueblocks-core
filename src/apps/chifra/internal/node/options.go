@@ -20,11 +20,11 @@ import (
 
 // NodeOptions provides all command options for the chifra node command.
 type NodeOptions struct {
-	Scrape   string                `json:"scrape,omitempty"`   // Start the scraper, initialize it with either just blooms or entire index, generate for new blocks
-	Monitors bool                  `json:"monitors,omitempty"` // Instruct the node to start the monitors tool
-	Api      string                `json:"api,omitempty"`      // Instruct the node to start the API server
-	Globals  globals.GlobalOptions `json:"globals,omitempty"`  // The global options
-	BadFlag  error                 `json:"badFlag,omitempty"`  // An error flag if needed
+	Scrape  string                `json:"scrape,omitempty"`  // Start the scraper, initialize it with either just blooms or entire index, generate for new blocks
+	Monitor bool                  `json:"monitor,omitempty"` // Instruct the node to start the monitors tool
+	Api     string                `json:"api,omitempty"`     // Instruct the node to start the API server
+	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
+	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 }
 
 var defaultNodeOptions = NodeOptions{
@@ -34,7 +34,7 @@ var defaultNodeOptions = NodeOptions{
 // testLog is used only during testing to export the options for this test case.
 func (opts *NodeOptions) testLog() {
 	logger.TestLog(len(opts.Scrape) > 0, "Scrape: ", opts.Scrape)
-	logger.TestLog(opts.Monitors, "Monitors: ", opts.Monitors)
+	logger.TestLog(opts.Monitor, "Monitor: ", opts.Monitor)
 	logger.TestLog(len(opts.Api) > 0, "Api: ", opts.Api)
 	opts.Globals.TestLog()
 }
@@ -71,8 +71,8 @@ func nodeFinishParseApi(w http.ResponseWriter, r *http.Request) *NodeOptions {
 		switch key {
 		case "scrape":
 			opts.Scrape = value[0]
-		case "monitors":
-			opts.Monitors = true
+		case "monitor":
+			opts.Monitor = true
 		case "api":
 			opts.Api = value[0]
 		default:

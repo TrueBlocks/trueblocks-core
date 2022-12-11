@@ -49,7 +49,7 @@ func init() {
 
 	nodeCmd.Flags().StringVarP(&nodePkg.GetOptions().Scrape, "scrape", "s", "", `start the scraper, initialize it with either just blooms or entire index, generate for new blocks
 One of [ off | blooms | full-index ]`)
-	nodeCmd.Flags().BoolVarP(&nodePkg.GetOptions().Monitors, "monitors", "m", false, "instruct the node to start the monitors tool")
+	nodeCmd.Flags().BoolVarP(&nodePkg.GetOptions().Monitor, "monitor", "m", false, "instruct the node to start the monitors tool")
 	nodeCmd.Flags().StringVarP(&nodePkg.GetOptions().Api, "api", "a", "on", `instruct the node to start the API server
 One of [ off | on ]`)
 	globals.InitGlobals(nodeCmd, &nodePkg.GetOptions().Globals)

@@ -14,7 +14,7 @@ Flags:
                         One of [ off | blooms | full-index ]
   -m, --monitors        instruct the node to start the monitors tool
   -a, --api string      instruct the node to start the API server
-                        One of [ off | on ]
+                        One of [ off | on ] (default "on")
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)
   -h, --help            display this help screen

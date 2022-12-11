@@ -23,7 +23,7 @@ func (opts *NodeOptions) validateNode() error {
 		return err
 	}
 
-	if !opts.Monitors && len(opts.Scrape) == 0 && len(opts.Api) == 0 {
+	if !opts.Monitor && len(opts.Scrape) == 0 && len(opts.Api) == 0 {
 		return validate.Usage("At least one of --scrape, --monitors, or --api must be present.")
 	}
 
