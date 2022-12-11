@@ -478,7 +478,7 @@ bool getChainList(CChainArray& chains) {
 
     time_q configFileDate = fileLastModifyDate(configFn);
     time_q binFileDate = fileLastModifyDate(binFn);
-    if (!isTestMode() && binFileDate > configFileDate) {
+    if (false && !isTestMode() && binFileDate > configFileDate) {
         CArchive archive(READING_ARCHIVE);
         if (archive.Lock(cacheFolder_tmp + "chains.bin", modeReadOnly, LOCK_NOWAIT)) {
             archive >> chains;
@@ -521,6 +521,11 @@ bool getChainList(CChainArray& chains) {
                 parts[1] = trim(nextTokenClear(parts[1], '#'));
                 parts[1] = trim(substitute(parts[1], "\"", ""));
                 replaceNames(current.chain, parts[0], parts[1]);
+                string_q env = "TB_CHAINS_" + toUpper(current.chain) + "_" + toUpper(parts[0]);
+                if (getEnvStr(env) != "") {
+                    parts[1] = getEnvStr(env);
+                    LOG_INFO("Overriding ", parts[0], " with environment variable: ", parts[1]);
+                }
                 current.setValueByName(parts[0], parts[1]);
             }
         }
@@ -549,7 +554,7 @@ bool getKeyList(CKeyArray& keys) {
 
     time_q configFileDate = fileLastModifyDate(configFn);
     time_q binFileDate = fileLastModifyDate(binFn);
-    if (!isTestMode() && binFileDate > configFileDate) {
+    if (false && !isTestMode() && binFileDate > configFileDate) {
         CArchive archive(READING_ARCHIVE);
         if (archive.Lock(cacheFolder_tmp + "keys.bin", modeReadOnly, LOCK_NOWAIT)) {
             archive >> keys;
@@ -592,6 +597,11 @@ bool getKeyList(CKeyArray& keys) {
                 parts[1] = trim(nextTokenClear(parts[1], '#'));
                 parts[1] = trim(substitute(parts[1], "\"", ""));
                 replaceNames(current.provider, parts[0], parts[1]);
+                string_q env = "TB_CHAINS_" + toUpper(current.provider) + "_" + toUpper(parts[0]);
+                if (getEnvStr(env) != "") {
+                    parts[1] = getEnvStr(env);
+                    LOG_INFO("Overriding ", parts[0], " with environment variable: ", parts[1]);
+                }
                 current.setValueByName(parts[0], parts[1]);
             }
         }
