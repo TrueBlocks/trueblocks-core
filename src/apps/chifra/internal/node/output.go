@@ -12,6 +12,7 @@ package nodePkg
 import (
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -49,10 +50,13 @@ func (opts *NodeOptions) NodeInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	fmt.Println("node scrape:", colors.BrightGreen, opts.Scrape, colors.Off, " monitors:", colors.BrightGreen, opts.Monitor, colors.Off, " api:", colors.BrightGreen, opts.Api, colors.Off)
+	cnt := 0
+	for {
+		fmt.Println("node scrape:", colors.BrightGreen, opts.Scrape, colors.Off, " monitors:", colors.BrightGreen, opts.Monitor, colors.Off, " api:", colors.BrightGreen, opts.Api, colors.Off, cnt)
+		time.Sleep(time.Second * 4)
+		cnt++
+	}
 	// EXISTING_CODE
-
-	return
 }
 
 // EXISTING_CODE
