@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-12-11T12:28:47
+date: 2022-12-11T13:46:29
 lastmod:
   - :git
   - lastmod
@@ -137,11 +137,12 @@ Manifest data is made of the following data fields:
 ## Key
 
 
-| Field  | Description                  | Type   |
-| ------ | ---------------------------- | ------ |
-| apiKey | An api key                   | string |
-| jwt    | An jwt token used for an API | string |
-| secret | A secret used for an API     | string |
+| Field    | Description                  | Type   |
+| -------- | ---------------------------- | ------ |
+| provider | The api provider             | string |
+| apiKey   | An api key                   | string |
+| jwt      | An jwt token used for an API | string |
+| secret   | A secret used for an API     | string |
 
 ## CacheEntry
 

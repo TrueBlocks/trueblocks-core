@@ -256,6 +256,7 @@ COptions::COptions(void) {
     CSlurpCache::registerClass();
     CAbiCacheItem::registerClass();
     CChain::registerClass();
+    CKey::registerClass();
 
     UNHIDE_FIELD(CCacheBase, "nApps");
     UNHIDE_FIELD(CCacheBase, "sizeInBytes");

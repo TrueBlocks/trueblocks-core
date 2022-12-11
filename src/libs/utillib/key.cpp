@@ -79,6 +79,11 @@ string_q CKey::getValueByName(const string_q& fieldName) const {
                 return jwt;
             }
             break;
+        case 'p':
+            if (fieldName % "provider") {
+                return provider;
+            }
+            break;
         case 's':
             if (fieldName % "secret") {
                 return secret;
@@ -116,6 +121,12 @@ bool CKey::setValueByName(const string_q& fieldNameIn, const string_q& fieldValu
                 return true;
             }
             break;
+        case 'p':
+            if (fieldName % "provider") {
+                provider = fieldValue;
+                return true;
+            }
+            break;
         case 's':
             if (fieldName % "secret") {
                 secret = fieldValue;
@@ -147,6 +158,7 @@ bool CKey::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive >> provider;
     archive >> apiKey;
     archive >> jwt;
     archive >> secret;
@@ -163,6 +175,7 @@ bool CKey::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive << provider;
     archive << apiKey;
     archive << jwt;
     archive << secret;
@@ -215,6 +228,7 @@ void CKey::registerClass(void) {
     ADD_FIELD(CKey, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CKey, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CKey, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CKey, "provider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CKey, "apiKey", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CKey, "jwt", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CKey, "secret", T_TEXT | TS_OMITEMPTY, ++fieldNum);

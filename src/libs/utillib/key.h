@@ -25,6 +25,7 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CKey : public CBaseNode {
   public:
+    string_q provider;
     string_q apiKey;
     string_q jwt;
     string_q secret;
@@ -90,6 +91,7 @@ inline void CKey::clear(void) {
 inline void CKey::initialize(void) {
     CBaseNode::initialize();
 
+    provider = "";
     apiKey = "";
     jwt = "";
     secret = "";
@@ -103,6 +105,7 @@ inline void CKey::duplicate(const CKey& ke) {
     clear();
     CBaseNode::duplicate(ke);
 
+    provider = ke.provider;
     apiKey = ke.apiKey;
     jwt = ke.jwt;
     secret = ke.secret;

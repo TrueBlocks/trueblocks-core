@@ -2911,6 +2911,9 @@ components:
       description: "The api key that carries information about configured apis"
       type: object
       properties:
+        provider:
+          type: string
+          description: "The api provider"
         apiKey:
           type: string
           description: "An api key"

@@ -15,6 +15,7 @@
 extern const char* STR_TERSE_REPORT;
 extern string_q pathName(const string_q& str, const string_q& path);
 extern bool getChainList(CChainArray& chains);
+extern bool getKeyList(CKeyArray& keys);
 //--------------------------------------------------------------------------------
 bool COptions::handle_status(ostream& os) {
     if (terse) {
@@ -234,6 +235,7 @@ bool COptions::handle_status(ostream& os) {
 
     if (origMode.empty() || contains(origMode, "all") || contains(origMode, "some")) {
         getChainList(status.chains);
+        getKeyList(status.keys);
     } else {
         HIDE_FIELD(CStatus, "chains");
         HIDE_FIELD(CStatus, "keys");
@@ -533,6 +535,83 @@ bool getChainList(CChainArray& chains) {
         if (archive.Lock(cacheFolder_tmp + "chains.bin", modeWriteCreate, LOCK_WAIT)) {
             archive << chains;
             archive.Release();
+        }
+    }
+
+    return true;
+}
+
+//--------------------------------------------------------------------------------
+bool getKeyList(CKeyArray& keys) {
+    // TODO: This hacky assed code is because our TOML code does not read arrays
+    string_q configFn = rootConfigToml_trueBlocks;
+    string_q binFn = cacheFolder_tmp + "keys.bin";
+
+    time_q configFileDate = fileLastModifyDate(configFn);
+    time_q binFileDate = fileLastModifyDate(binFn);
+    if (!isTestMode() && binFileDate > configFileDate) {
+        CArchive archive(READING_ARCHIVE);
+        if (archive.Lock(cacheFolder_tmp + "keys.bin", modeReadOnly, LOCK_NOWAIT)) {
+            archive >> keys;
+            archive.Release();
+            return true;
+        }
+    }
+
+    typedef enum { SEARCHING = 0, IN_CHAINS } State;
+    State state = SEARCHING;
+
+    CStringArray lines, lines2;
+    asciiFileToLines(rootConfigToml_trueBlocks, lines);
+    for (auto line : lines) {
+        if (!line.empty()) {
+            if (state == SEARCHING) {
+                if (line == "[keys]")
+                    state = IN_CHAINS;
+            } else {
+                lines2.push_back(line);
+            }
+        }
+    }
+
+    map<string, CKey> keyMap;
+    CKey current;
+    for (auto line : lines2) {
+        if (startsWith(line, "[keys.")) {
+            if (!current.provider.empty()) {
+                if (!isTestMode() || current.provider == "etherscan" || current.provider == "pinata")
+                    keys.push_back(current);
+            }
+            current = CKey();
+            current.provider = substitute(substitute(line, "[keys.", ""), "]", "");
+        } else {
+            CStringArray parts;
+            explode(parts, line, '=');
+            if (parts.size() == 2) {
+                parts[0] = trim(substitute(parts[0], "\"", ""));
+                parts[1] = trim(nextTokenClear(parts[1], '#'));
+                parts[1] = trim(substitute(parts[1], "\"", ""));
+                replaceNames(current.provider, parts[0], parts[1]);
+                current.setValueByName(parts[0], parts[1]);
+            }
+        }
+    }
+    if (!current.provider.empty()) {
+        if (!isTestMode() || current.provider == "etherscan" || current.provider == "pinata")
+            keys.push_back(current);
+    }
+
+    if (!isTestMode()) {
+        CArchive archive(WRITING_ARCHIVE);
+        if (archive.Lock(cacheFolder_tmp + "keys.bin", modeWriteCreate, LOCK_WAIT)) {
+            archive << keys;
+            archive.Release();
+        }
+    } else {
+        for (auto& key : keys) {
+            key.apiKey = "--api-key--";
+            key.jwt = "--jwt--";
+            key.secret = "--secret";
         }
     }
 
