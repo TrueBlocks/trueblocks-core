@@ -12,9 +12,9 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	servePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/serve"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
-	servePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/server"
 	"github.com/spf13/cobra"
 )
 

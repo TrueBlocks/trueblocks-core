@@ -84,7 +84,6 @@ void COptions::verifyGoEnumValidators(void) {
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_gocmds_options(const CCommandOption& p) {
     string_q fn = getPathToSource("apps/chifra/internal/" + p.api_route + "/options.go");
-    replaceAll(fn, "/internal/serve", "/server");
     establishFolder(fn);
     bool hasEns = contains(asciiFileToString(fn), "ens.Convert");
 
@@ -149,8 +148,6 @@ bool COptions::handle_gocmds_output(const CCommandOption& p) {
     }
 
     string_q fn = getPathToSource("apps/chifra/internal/" + p.api_route + "/output.go");
-    if (contains(fn, "/serve"))
-        return true;
 
     establishFolder(fn);
     codewrite_t cw(fn, source);
