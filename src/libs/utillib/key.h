@@ -15,62 +15,41 @@
  * Parts of this file were generated with makeClass --run. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
-#include "etherlib.h"
-#include "cache.h"
-#include "chain.h"
+#include "utillib.h"
 
 namespace qblocks {
 
 // EXISTING_CODE
-#include <ctime>
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CStatus : public CBaseNode {
+class CKey : public CBaseNode {
   public:
-    string_q clientVersion;
-    string_q clientIds;
-    string_q trueblocksVersion;
-    string_q rpcProvider;
-    string_q configPath;
-    string_q cachePath;
-    string_q indexPath;
-    string_q host;
-    bool isTesting;
-    bool isApi;
-    bool isScraping;
-    bool isArchive;
-    bool isTracing;
-    bool hasEskey;
-    bool hasPinkey;
-    timestamp_t ts;
-    CChainArray chains;
-    CKeyArray keys;
-    CCachePtrArray caches;
+    string_q apiKey;
+    string_q jwt;
+    string_q secret;
 
   public:
-    CStatus(void);
-    CStatus(const CStatus& st);
-    virtual ~CStatus(void);
-    CStatus& operator=(const CStatus& st);
+    CKey(void);
+    CKey(const CKey& ke);
+    virtual ~CKey(void);
+    CKey& operator=(const CKey& ke);
 
-    DECLARE_NODE(CStatus);
-
-    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
+    DECLARE_NODE(CKey);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CStatus& it) const;
-    bool operator!=(const CStatus& it) const {
+    bool operator==(const CKey& it) const;
+    bool operator!=(const CKey& it) const {
         return !operator==(it);
     }
-    friend bool operator<(const CStatus& v1, const CStatus& v2);
-    friend ostream& operator<<(ostream& os, const CStatus& it);
+    friend bool operator<(const CKey& v1, const CKey& v2);
+    friend ostream& operator<<(ostream& os, const CKey& it);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CStatus& st);
+    void duplicate(const CKey& ke);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -78,108 +57,70 @@ class CStatus : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CStatus::CStatus(void) {
+inline CKey::CKey(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CStatus::CStatus(const CStatus& st) {
+inline CKey::CKey(const CKey& ke) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(st);
+    duplicate(ke);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CStatus::~CStatus(void) {
+inline CKey::~CKey(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CStatus::clear(void) {
+inline void CKey::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CStatus::initialize(void) {
+inline void CKey::initialize(void) {
     CBaseNode::initialize();
 
-    clientVersion = "";
-    clientIds = "";
-    trueblocksVersion = "";
-    rpcProvider = "";
-    configPath = "";
-    cachePath = "";
-    indexPath = "";
-    host = "";
-    isTesting = false;
-    isApi = false;
-    isScraping = false;
-    isArchive = false;
-    isTracing = false;
-    hasEskey = false;
-    hasPinkey = false;
-    ts = date_2_Ts(Now());
-    chains.clear();
-    keys.clear();
-    caches.clear();
+    apiKey = "";
+    jwt = "";
+    secret = "";
 
     // EXISTING_CODE
-    // convert ts to UTC
-    time_t lt = ts;
-    tm unused;
-    auto local_field = gmtime_r(&lt, &unused);
-    local_field->tm_isdst = -1;
-    ts = mktime(local_field);
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CStatus::duplicate(const CStatus& st) {
+inline void CKey::duplicate(const CKey& ke) {
     clear();
-    CBaseNode::duplicate(st);
+    CBaseNode::duplicate(ke);
 
-    clientVersion = st.clientVersion;
-    clientIds = st.clientIds;
-    trueblocksVersion = st.trueblocksVersion;
-    rpcProvider = st.rpcProvider;
-    configPath = st.configPath;
-    cachePath = st.cachePath;
-    indexPath = st.indexPath;
-    host = st.host;
-    isTesting = st.isTesting;
-    isApi = st.isApi;
-    isScraping = st.isScraping;
-    isArchive = st.isArchive;
-    isTracing = st.isTracing;
-    hasEskey = st.hasEskey;
-    hasPinkey = st.hasPinkey;
-    ts = st.ts;
-    chains = st.chains;
-    keys = st.keys;
-    caches = st.caches;
+    apiKey = ke.apiKey;
+    jwt = ke.jwt;
+    secret = ke.secret;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CStatus& CStatus::operator=(const CStatus& st) {
-    duplicate(st);
+inline CKey& CKey::operator=(const CKey& ke) {
+    duplicate(ke);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CStatus::operator==(const CStatus& it) const {
+inline bool CKey::operator==(const CKey& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -187,7 +128,7 @@ inline bool CStatus::operator==(const CStatus& it) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CStatus& v1, const CStatus& v2) {
+inline bool operator<(const CKey& v1, const CKey& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -195,16 +136,16 @@ inline bool operator<(const CStatus& v1, const CStatus& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CStatus> CStatusArray;
-extern CArchive& operator>>(CArchive& archive, CStatusArray& array);
-extern CArchive& operator<<(CArchive& archive, const CStatusArray& array);
+typedef vector<CKey> CKeyArray;
+extern CArchive& operator>>(CArchive& archive, CKeyArray& array);
+extern CArchive& operator<<(CArchive& archive, const CKeyArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CStatus& sta);
-extern CArchive& operator>>(CArchive& archive, CStatus& sta);
+extern CArchive& operator<<(CArchive& archive, const CKey& key);
+extern CArchive& operator>>(CArchive& archive, CKey& key);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_STATUS;
+extern const char* STR_DISPLAY_KEY;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

@@ -1,0 +1,4 @@
+name   ,type   ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
+apiKey ,string ,           ,       ,      ,        ,          ,        ,      ,         ,  1 ,     ,        ,An api key
+jwt    ,string ,           ,       ,      ,        ,          ,        ,      ,         ,  2 ,     ,        ,An jwt token used for an API
+secret ,string ,           ,       ,      ,        ,          ,        ,      ,         ,  3 ,     ,        ,A secret used for an API

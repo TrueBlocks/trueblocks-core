@@ -14,7 +14,7 @@
 
 extern const char* STR_TERSE_REPORT;
 extern string_q pathName(const string_q& str, const string_q& path);
-extern void replaceNames(const string_q& chain, string_q& key, string_q& value);
+extern bool getChainList(CChainArray& chains);
 //--------------------------------------------------------------------------------
 bool COptions::handle_status(ostream& os) {
     if (terse) {
@@ -451,3 +451,83 @@ const char* STR_TERSE_REPORT =
     "[{TIME}] ++C1++Cache Path:++C2++   [{CACHEPATH}]\n"
     "[{TIME}] ++C1++Index Path:++C2++   [{INDEXPATH}]\n"
     "[{TIME}] ++C1++Progress:++C2++     [{PROGRESS}]";
+
+//--------------------------------------------------------------------------------
+static void replaceNames(const string_q& chain, string_q& key, string_q& value) {
+    if (!isTestMode())
+        return;
+    if (containsI(key, "Explorer"))
+        value = "--explorer-" + chain + "--";
+    else if (containsI(key, "Provider"))
+        value = "--provider-" + chain + "--";
+    else if (containsI(key, "Gateway"))
+        value = "--gateway-" + chain + "--";
+}
+
+//--------------------------------------------------------------------------------
+bool getChainList(CChainArray& chains) {
+    // TODO: This hacky assed code is because our TOML code does not read arrays
+    time_q configFileDate = fileLastModifyDate(rootConfigToml_trueBlocks);
+    time_q binFileDate = fileLastModifyDate(cacheFolder_tmp + "chains.bin");
+    if (!isTestMode() && binFileDate > configFileDate) {
+        CArchive archive(READING_ARCHIVE);
+        if (archive.Lock(cacheFolder_tmp + "chains.bin", modeReadOnly, LOCK_NOWAIT)) {
+            archive >> chains;
+            archive.Release();
+            return true;
+        }
+    }
+
+    typedef enum { SEARCHING = 0, IN_CHAINS } State;
+    State state = SEARCHING;
+
+    CStringArray lines, lines2;
+    asciiFileToLines(rootConfigToml_trueBlocks, lines);
+    for (auto line : lines) {
+        if (!line.empty()) {
+            if (state == SEARCHING) {
+                if (line == "[chains]")
+                    state = IN_CHAINS;
+            } else {
+                lines2.push_back(line);
+            }
+        }
+    }
+
+    map<string, CChain> chainMap;
+    CChain current;
+    for (auto line : lines2) {
+        if (startsWith(line, "[chains.")) {
+            if (!current.chain.empty()) {
+                if (!isTestMode() || current.chain == "mainnet" || current.chain == "gnosis")
+                    chains.push_back(current);
+            }
+            current = CChain();
+            current.chain = substitute(substitute(line, "[chains.", ""), "]", "");
+        } else {
+            CStringArray parts;
+            explode(parts, line, '=');
+            if (parts.size() == 2) {
+                parts[0] = trim(substitute(parts[0], "\"", ""));
+                parts[1] = trim(nextTokenClear(parts[1], '#'));
+                parts[1] = trim(substitute(parts[1], "\"", ""));
+                replaceNames(current.chain, parts[0], parts[1]);
+                current.setValueByName(parts[0], parts[1]);
+            }
+        }
+    }
+    if (!current.chain.empty()) {
+        if (!isTestMode() || current.chain == "mainnet" || current.chain == "gnosis")
+            chains.push_back(current);
+    }
+
+    if (!isTestMode()) {
+        CArchive archive(WRITING_ARCHIVE);
+        if (archive.Lock(cacheFolder_tmp + "chains.bin", modeWriteCreate, LOCK_WAIT)) {
+            archive << chains;
+            archive.Release();
+        }
+    }
+
+    return true;
+}

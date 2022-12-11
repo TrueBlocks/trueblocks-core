@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-09-19T21:00:15
+date: 2022-12-11T12:28:47
 lastmod:
   - :git
   - lastmod
@@ -49,7 +49,8 @@ Status data is made of the following data fields:
 | hasEskey          | `true` if an EtherScan key is present                    | bool           |
 | hasPinkey         | `true` if a Pinata API key is present                    | bool           |
 | ts                | the timestamp when this status data was produced         | timestamp      |
-| chains            |                                                          | CChainArray    |
+| chains            | the list of configured chains                            | CChainArray    |
+| keys              | the list of configured api keys                          | CKeyArray      |
 | caches            | a collection of information concerning the binary caches | CCachePtrArray |
 
 
@@ -132,6 +133,15 @@ Manifest data is made of the following data fields:
 | remoteExplorer | A remote explorer for the chain such as EtherScan                | string |
 | localExplorer  | The local explorer for the chain (typically TrueBlocks Explorer) | string |
 | ipfsGateway    | An IPFS gateway for pinning the index if enabled                 | string |
+
+## Key
+
+
+| Field  | Description                  | Type   |
+| ------ | ---------------------------- | ------ |
+| apiKey | An api key                   | string |
+| jwt    | An jwt token used for an API | string |
+| secret | A secret used for an API     | string |
 
 ## CacheEntry
 

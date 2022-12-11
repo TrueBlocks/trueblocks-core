@@ -39,6 +39,7 @@
 #include "markdown.h"
 #include "configenv.h"
 #include "chain.h"
+#include "key.h"
 #include "petname.h"
 
 using namespace qblocks;  // NOLINT
