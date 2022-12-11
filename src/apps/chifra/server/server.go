@@ -9,7 +9,7 @@ import (
 )
 
 // Runs initiates websocket pool and starts the server
-func RunInternal(port string) error {
+func ServeInternal(port string) error {
 	// Start listening for web sockets
 	RunWebsocketPool()
 
