@@ -12,7 +12,9 @@ package daemonPkg
 import (
 	"fmt"
 	"net/http"
-	"time"
+	"os"
+	"os/exec"
+	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -50,27 +52,56 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
+	var processes OurProcesses
 
-	// pathToChifra, err := exec.LookPath("chifra")
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
-	// fmt.Println("Path to chifra:", pathToChifra)
-	// command := []string{"serve"}
-	// env := os.Environ()
-	// err = syscall.Exec(pathToChifra, command, env)
-	// fmt.Println(err)
-
-	cnt := 0
-	for {
-		fmt.Println("node scrape:", colors.BrightGreen, opts.Scrape, colors.Off, " monitors:", colors.BrightGreen, opts.Monitor, colors.Off, " api:", colors.BrightGreen, opts.Api, colors.Off, cnt)
-		time.Sleep(time.Second * 4)
-		cnt++
+	var wg sync.WaitGroup
+	api, err := startApi(&wg)
+	if err != nil {
+		return err, true
 	}
+
+	processes = append(processes, api)
+	for _, proc := range processes {
+		fmt.Println(proc)
+	}
+	fmt.Println(wg)
+	wg.Wait()
+
 	// EXISTING_CODE
 
 	return
 }
 
 // EXISTING_CODE
+func startApi(wg *sync.WaitGroup) (OurProcess, error) {
+	cmd := exec.Command("chifra", "serve")
+	cmd.Stderr = os.Stderr
+	cmd.Stdout = os.Stdout
+	err := cmd.Start()
+	if err != nil {
+		return OurProcess{}, err
+	}
+	pid := cmd.Process.Pid
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		err = cmd.Wait()
+		if err != nil {
+			fmt.Printf("Api command finished with error: %v\n", err)
+		} else {
+			fmt.Println("Api command finished")
+		}
+	}()
+
+	fmt.Println(colors.BrightYellow, "Spawned api server to pid", pid, colors.Off)
+	proc := OurProcess{Name: "chifra serve", Pid: pid}
+	return proc, nil
+}
+
+type OurProcess struct {
+	Name string
+	Pid  int
+}
+type OurProcesses []OurProcess
+
 // EXISTING_CODE
