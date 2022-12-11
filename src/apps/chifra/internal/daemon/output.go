@@ -50,6 +50,17 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
+
+	// pathToChifra, err := exec.LookPath("chifra")
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
+	// fmt.Println("Path to chifra:", pathToChifra)
+	// command := []string{"serve"}
+	// env := os.Environ()
+	// err = syscall.Exec(pathToChifra, command, env)
+	// fmt.Println(err)
+
 	cnt := 0
 	for {
 		fmt.Println("node scrape:", colors.BrightGreen, opts.Scrape, colors.Off, " monitors:", colors.BrightGreen, opts.Monitor, colors.Off, " api:", colors.BrightGreen, opts.Api, colors.Off, cnt)
