@@ -24,7 +24,7 @@ num ,group       ,is_visible ,is_visible_docs ,api_group ,api_route    ,tool    
 04  ,Admin       ,true       ,true            ,apps      ,scrape       ,blockScrape              ,Scrape index         ,Scan the chain and update the TrueBlocks index of appearances.
 04  ,Admin       ,true       ,true            ,apps      ,chunks       ,chunkMan                 ,Manage chunks        ,Manage&#44; investigate&#44; and display the Unchained Index.
 04  ,Admin       ,true       ,true            ,apps      ,init         ,init                     ,Initialize index     ,Initialize the TrueBlocks system by downloading from IPFS.
-04  ,Admin       ,true       ,true            ,apps      ,node         ,node                     ,Controls tools       ,Initalize and control long-running tools such as the API&#44; scrapers&#44; and monitors.
+04  ,Admin       ,true       ,true            ,apps      ,daemon       ,daemon                   ,Controls tools       ,Initalize and control long-running tools such as the API&#44; scrapers&#44; and monitors.
 
 05  ,Other       ,false      ,true            ,          ,             ,                         ,                     ,Access to other and external data
 05  ,Other       ,true       ,true            ,apps      ,explore      ,fireStorm                ,Explore              ,Open a local or remote explorer for one or more addresses&#44; blocks&#44; or transactions.

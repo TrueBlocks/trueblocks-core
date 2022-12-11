@@ -5,7 +5,7 @@
  * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
-package nodePkg
+package daemonPkg
 
 import (
 	"encoding/json"
@@ -18,8 +18,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-// NodeOptions provides all command options for the chifra node command.
-type NodeOptions struct {
+// DaemonOptions provides all command options for the chifra daemon command.
+type DaemonOptions struct {
 	Scrape  string                `json:"scrape,omitempty"`  // Start the scraper, initialize it with either just blooms or entire index, generate for new blocks
 	Monitor bool                  `json:"monitor,omitempty"` // Instruct the node to start the monitors tool
 	Api     string                `json:"api,omitempty"`     // Instruct the node to start the API server
@@ -27,12 +27,12 @@ type NodeOptions struct {
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 }
 
-var defaultNodeOptions = NodeOptions{
+var defaultDaemonOptions = DaemonOptions{
 	Api: "on",
 }
 
 // testLog is used only during testing to export the options for this test case.
-func (opts *NodeOptions) testLog() {
+func (opts *DaemonOptions) testLog() {
 	logger.TestLog(len(opts.Scrape) > 0, "Scrape: ", opts.Scrape)
 	logger.TestLog(opts.Monitor, "Monitor: ", opts.Monitor)
 	logger.TestLog(len(opts.Api) > 0, "Api: ", opts.Api)
@@ -40,13 +40,13 @@ func (opts *NodeOptions) testLog() {
 }
 
 // String implements the Stringer interface
-func (opts *NodeOptions) String() string {
+func (opts *DaemonOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
 }
 
 // getEnvStr allows for custom environment strings when calling to the system (helps debugging).
-func (opts *NodeOptions) getEnvStr() []string {
+func (opts *DaemonOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -54,7 +54,7 @@ func (opts *NodeOptions) getEnvStr() []string {
 }
 
 // toCmdLine converts the option to a command line for calling out to the system.
-func (opts *NodeOptions) toCmdLine() string {
+func (opts *DaemonOptions) toCmdLine() string {
 	options := ""
 	options += " " + strings.Join([]string{}, " ")
 	// EXISTING_CODE
@@ -63,9 +63,9 @@ func (opts *NodeOptions) toCmdLine() string {
 	return options
 }
 
-// nodeFinishParseApi finishes the parsing for server invocations. Returns a new NodeOptions.
-func nodeFinishParseApi(w http.ResponseWriter, r *http.Request) *NodeOptions {
-	copy := defaultNodeOptions
+// daemonFinishParseApi finishes the parsing for server invocations. Returns a new DaemonOptions.
+func daemonFinishParseApi(w http.ResponseWriter, r *http.Request) *DaemonOptions {
+	copy := defaultDaemonOptions
 	opts := &copy
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -77,7 +77,7 @@ func nodeFinishParseApi(w http.ResponseWriter, r *http.Request) *NodeOptions {
 			opts.Api = value[0]
 		default:
 			if !globals.IsGlobalOption(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "node")
+				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "daemon")
 				return opts
 			}
 		}
@@ -89,8 +89,8 @@ func nodeFinishParseApi(w http.ResponseWriter, r *http.Request) *NodeOptions {
 	return opts
 }
 
-// nodeFinishParse finishes the parsing for command line invocations. Returns a new NodeOptions.
-func nodeFinishParse(args []string) *NodeOptions {
+// daemonFinishParse finishes the parsing for command line invocations. Returns a new DaemonOptions.
+func daemonFinishParse(args []string) *DaemonOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
@@ -102,16 +102,16 @@ func nodeFinishParse(args []string) *NodeOptions {
 	return opts
 }
 
-func GetOptions() *NodeOptions {
+func GetOptions() *DaemonOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &defaultNodeOptions
+	return &defaultDaemonOptions
 }
 
 func ResetOptions() {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
-	defaultNodeOptions = NodeOptions{}
-	globals.SetDefaults(&defaultNodeOptions.Globals)
-	defaultNodeOptions.Globals.Writer = w
+	defaultDaemonOptions = DaemonOptions{}
+	globals.SetDefaults(&defaultDaemonOptions.Globals)
+	defaultDaemonOptions.Globals.Writer = w
 }

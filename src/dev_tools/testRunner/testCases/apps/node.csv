@@ -1,3 +1,0 @@
-enabled ,mode ,speed ,route  ,path/tool        ,filename            ,post ,options                                                                ,opt_cmd ,has_env
-on      ,cmd  ,fast  ,node   ,apps/node        ,help                ,n    ,@h                                                                     
-on      ,cmd  ,fast  ,status ,apps/cacheStatus ,help_long           ,n    ,help                                                                   

@@ -6,7 +6,7 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 
-package nodePkg
+package daemonPkg
 
 // EXISTING_CODE
 import (
@@ -21,30 +21,30 @@ import (
 
 // EXISTING_CODE
 
-// RunNode handles the node command for the command line. Returns error only as per cobra.
-func RunNode(cmd *cobra.Command, args []string) (err error) {
-	opts := nodeFinishParse(args)
-	outputHelpers.SetWriterForCommand("node", &opts.Globals)
+// RunDaemon handles the daemon command for the command line. Returns error only as per cobra.
+func RunDaemon(cmd *cobra.Command, args []string) (err error) {
+	opts := daemonFinishParse(args)
+	outputHelpers.SetWriterForCommand("daemon", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	err, _ = opts.NodeInternal()
+	err, _ = opts.DaemonInternal()
 	return
 }
 
-// ServeNode handles the node command for the API. Returns error and a bool if handled
-func ServeNode(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
-	opts := nodeFinishParseApi(w, r)
-	outputHelpers.InitJsonWriterApi("node", w, &opts.Globals)
+// ServeDaemon handles the daemon command for the API. Returns error and a bool if handled
+func ServeDaemon(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+	opts := daemonFinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("daemon", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	err, handled = opts.NodeInternal()
-	outputHelpers.CloseJsonWriterIfNeededApi("node", err, &opts.Globals)
+	err, handled = opts.DaemonInternal()
+	outputHelpers.CloseJsonWriterIfNeededApi("daemon", err, &opts.Globals)
 	return
 }
 
-// NodeInternal handles the internal workings of the node command.  Returns error and a bool if handled
-func (opts *NodeOptions) NodeInternal() (err error, handled bool) {
-	err = opts.validateNode()
+// DaemonInternal handles the internal workings of the daemon command.  Returns error and a bool if handled
+func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
+	err = opts.validateDaemon()
 	if err != nil {
 		return err, true
 	}
@@ -57,6 +57,8 @@ func (opts *NodeOptions) NodeInternal() (err error, handled bool) {
 		cnt++
 	}
 	// EXISTING_CODE
+
+	return
 }
 
 // EXISTING_CODE

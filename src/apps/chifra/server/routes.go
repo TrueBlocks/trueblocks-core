@@ -17,6 +17,7 @@ import (
 	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
 	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
 	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
+	daemonPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/daemon"
 	explorePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/explore"
 	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
 	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/init"
@@ -24,7 +25,6 @@ import (
 	logsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/logs"
 	monitorsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/monitors"
 	namesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/names"
-	nodePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/node"
 	receiptsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/receipts"
 	scrapePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/scrape"
 	slurpPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/slurp"
@@ -181,12 +181,12 @@ func RouteInit(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// RouteNode Initalize and control long-running tools such as the API, scrapers, and monitors.
-func RouteNode(w http.ResponseWriter, r *http.Request) {
-	if err, handled := nodePkg.ServeNode(w, r); err != nil {
+// RouteDaemon Initalize and control long-running tools such as the API, scrapers, and monitors.
+func RouteDaemon(w http.ResponseWriter, r *http.Request) {
+	if err, handled := daemonPkg.ServeDaemon(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
 	} else if !handled {
-		CallOne(w, r, "chifra", "node", "node")
+		CallOne(w, r, "chifra", "daemon", "daemon")
 	}
 }
 
@@ -238,7 +238,7 @@ var routes = Routes{
 	Route{"RouteScrape", "GET", "/scrape", RouteScrape},
 	Route{"RouteChunks", "GET", "/chunks", RouteChunks},
 	Route{"RouteInit", "GET", "/init", RouteInit},
-	Route{"RouteNode", "GET", "/node", RouteNode},
+	Route{"RouteDaemon", "GET", "/daemon", RouteDaemon},
 	Route{"RouteExplore", "GET", "/explore", RouteExplore},
 	Route{"RouteSlurp", "GET", "/slurp", RouteSlurp},
 	// END_ROUTE_ITEMS

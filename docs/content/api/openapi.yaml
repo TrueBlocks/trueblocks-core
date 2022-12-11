@@ -1768,13 +1768,13 @@ paths:
                         - $ref: "#/components/schemas/manifest"
         "400":
           description: bad input parameter
-  /node:
+  /daemon:
     get:
       tags:
         - Admin
       summary: Controls tools
       description: Initalize and control long-running tools such as the API, scrapers, and monitors.
-      operationId: admin-node
+      operationId: admin-daemon
       responses:
         "200":
           description: returns the requested data

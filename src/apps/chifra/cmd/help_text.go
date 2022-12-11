@@ -29,7 +29,7 @@ const helpText = `  Accounts:
     scrape        scan the chain and update the TrueBlocks index of appearances
     chunks        manage, investigate, and display the Unchained Index
     init          initialize the TrueBlocks system by downloading from IPFS
-    node          initalize and control long-running tools such as the API, scrapers, and monitors
+    daemon        initalize and control long-running tools such as the API, scrapers, and monitors
   Other:
     explore       open a local or remote explorer for one or more addresses, blocks, or transactions
     slurp         fetch data from EtherScan for any address

@@ -1130,7 +1130,7 @@ const char* STR_DELETE_OPTS =
 
 // TODO: search for go-port
 bool goPortNewCode(const string_q& a) {
-    CStringArray tools = {"chunkMan", "fireStorm", "init", "flame", "explore", "node"};
+    CStringArray tools = {"chunkMan", "fireStorm", "init", "flame", "explore", "daemon"};
     for (auto tool : tools) {
         if (contains(a, tool))
             return true;

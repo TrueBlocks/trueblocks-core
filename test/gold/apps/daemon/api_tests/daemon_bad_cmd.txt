@@ -1,0 +1,6 @@
+daemon?not-an-option
+{
+  "errors": [
+    "Invalid key (not-an-option) in daemon route."
+  ]
+}

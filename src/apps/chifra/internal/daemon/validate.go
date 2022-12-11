@@ -2,11 +2,11 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package nodePkg
+package daemonPkg
 
 import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 
-func (opts *NodeOptions) validateNode() error {
+func (opts *DaemonOptions) validateDaemon() error {
 	opts.testLog()
 
 	if opts.BadFlag != nil {
