@@ -12,7 +12,7 @@ Usage:
 Flags:
   -s, --scrape string   start the scraper, initialize it with either just blooms or entire index, generate for new blocks
                         One of [ off | blooms | full-index ]
-  -m, --monitors        instruct the node to start the monitors tool
+  -m, --monitor         instruct the node to start the monitors tool
   -a, --api string      instruct the node to start the API server
                         One of [ off | on ] (default "on")
   -x, --fmt string      export format, one of [none|json*|txt|csv]

@@ -186,7 +186,7 @@ func RouteNode(w http.ResponseWriter, r *http.Request) {
 	if err, handled := nodePkg.ServeNode(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
 	} else if !handled {
-		CallOne(w, r, config.GetPathToCommands("node"), "", "node")
+		CallOne(w, r, "chifra", "node", "node")
 	}
 }
 

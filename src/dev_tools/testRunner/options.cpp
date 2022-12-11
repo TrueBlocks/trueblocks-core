@@ -131,6 +131,7 @@ bool COptions::parseArguments(string_q& command) {
                 tests.push_back("apps/chifra");
                 tests.push_back("apps/fireStorm");
                 tests.push_back("apps/init");
+                tests.push_back("apps/node");
 
             } else {
                 tests.push_back(arg);
@@ -177,6 +178,7 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("apps/chifra");
         tests.push_back("apps/fireStorm");
         tests.push_back("apps/init");
+        tests.push_back("apps/node");
     }
 
     SHOW_FIELD(CTestCase, "test_id");
