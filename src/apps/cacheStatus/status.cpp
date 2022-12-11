@@ -470,6 +470,8 @@ void CStatus::registerClass(void) {
 
     // EXISTING_CODE
     SHOW_FIELD(CStatus, "caches");
+    SHOW_FIELD(CStatus, "chains");
+    SHOW_FIELD(CStatus, "keys");
     HIDE_FIELD(CStatus, "ts");
     ADD_FIELD(CStatus, "date", T_DATE, ++fieldNum);
     SHOW_FIELD(CStatus, "date");
@@ -544,8 +546,9 @@ bool CStatus::readBackLevel(CArchive& archive) {
                 }
             }
         }
+        finishParse();
+        done = true;
     }
-    finishParse();
     // EXISTING_CODE
     return done;
 }

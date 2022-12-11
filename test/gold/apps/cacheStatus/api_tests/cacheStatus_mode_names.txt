@@ -28,7 +28,6 @@ status?modes=names
           "isValid": true
         }
       ],
-      "chains": [],
       "date": "--date--"
     }
   ],

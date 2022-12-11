@@ -32,7 +32,7 @@ bool COptions::handle_status(ostream& os) {
         if (!isText) {
             fmt = "";
             manageFields("CStatusTerse:modes1,modes2", FLD_HIDE);
-            manageFields("CStatus:clientIds,host,isApi,isScraping,caches,chains", FLD_HIDE);
+            manageFields("CStatus:clientIds,host,isApi,isScraping,caches,chains,keys", FLD_HIDE);
         }
         size_t nRecords = ((fileSize(indexFolderBin_ts) / sizeof(uint32_t)) / 2);
         ostringstream m;
@@ -232,8 +232,12 @@ bool COptions::handle_status(ostream& os) {
         status.caches.push_back(&slurps);
     }
 
-    if (origMode.empty() || contains(origMode, "all") || contains(origMode, "some"))
+    if (origMode.empty() || contains(origMode, "all") || contains(origMode, "some")) {
         getChainList(status.chains);
+    } else {
+        HIDE_FIELD(CStatus, "chains");
+        HIDE_FIELD(CStatus, "keys");
+    }
     status.toJson(os);
 
     return true;
@@ -467,8 +471,11 @@ static void replaceNames(const string_q& chain, string_q& key, string_q& value) 
 //--------------------------------------------------------------------------------
 bool getChainList(CChainArray& chains) {
     // TODO: This hacky assed code is because our TOML code does not read arrays
-    time_q configFileDate = fileLastModifyDate(rootConfigToml_trueBlocks);
-    time_q binFileDate = fileLastModifyDate(cacheFolder_tmp + "chains.bin");
+    string_q configFn = rootConfigToml_trueBlocks;
+    string_q binFn = cacheFolder_tmp + "chains.bin";
+
+    time_q configFileDate = fileLastModifyDate(configFn);
+    time_q binFileDate = fileLastModifyDate(binFn);
     if (!isTestMode() && binFileDate > configFileDate) {
         CArchive archive(READING_ARCHIVE);
         if (archive.Lock(cacheFolder_tmp + "chains.bin", modeReadOnly, LOCK_NOWAIT)) {

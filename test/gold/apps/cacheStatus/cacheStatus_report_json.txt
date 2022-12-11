@@ -15,6 +15,26 @@ TEST[DATE|TIME] Format:  json
   "isArchive": true,
   "isTracing": true,
   "hasEskey": true,
+  "chains": [
+    {
+      "chain": "mainnet",
+      "chainId": 1,
+      "symbol": "ETH",
+      "rpcProvider": "--provider-mainnet--",
+      "apiProvider": "--provider-mainnet--",
+      "remoteExplorer": "--explorer-mainnet--",
+      "localExplorer": "--explorer-mainnet--"
+    },
+    {
+      "chain": "gnosis",
+      "chainId": 100,
+      "symbol": "XDAI",
+      "rpcProvider": "--provider-gnosis--",
+      "apiProvider": "--provider-gnosis--",
+      "remoteExplorer": "--explorer-gnosis--",
+      "localExplorer": "--explorer-gnosis--"
+    }
+  ],
   "caches": [
     {
       "type": "CIndexCache",
@@ -51,26 +71,6 @@ TEST[DATE|TIME] Format:  json
       "nFolders": 0,
       "sizeInBytes": 0,
       "isValid": true
-    }
-  ],
-  "chains": [
-    {
-      "chain": "mainnet",
-      "chainId": 1,
-      "symbol": "ETH",
-      "rpcProvider": "--provider-mainnet--",
-      "apiProvider": "--provider-mainnet--",
-      "remoteExplorer": "--explorer-mainnet--",
-      "localExplorer": "--explorer-mainnet--"
-    },
-    {
-      "chain": "gnosis",
-      "chainId": 100,
-      "symbol": "XDAI",
-      "rpcProvider": "--provider-gnosis--",
-      "apiProvider": "--provider-gnosis--",
-      "remoteExplorer": "--explorer-gnosis--",
-      "localExplorer": "--explorer-gnosis--"
     }
   ],
   "date": "--date--"

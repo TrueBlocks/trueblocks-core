@@ -27,7 +27,6 @@ status?modes=index&firstBlock=1000000&lastBlock=2500000
           "isValid": true
         }
       ],
-      "chains": [],
       "date": "--date--"
     }
   ],
