@@ -597,7 +597,7 @@ bool getKeyList(CKeyArray& keys) {
                 parts[1] = trim(nextTokenClear(parts[1], '#'));
                 parts[1] = trim(substitute(parts[1], "\"", ""));
                 replaceNames(current.provider, parts[0], parts[1]);
-                string_q env = "TB_CHAINS_" + toUpper(current.provider) + "_" + toUpper(parts[0]);
+                string_q env = "TB_KEYS_" + toUpper(current.provider) + "_" + toUpper(parts[0]);
                 if (getEnvStr(env) != "") {
                     parts[1] = getEnvStr(env);
                     LOG_INFO("Overriding ", parts[0], " with environment variable: ", parts[1]);
