@@ -181,6 +181,11 @@ inline bool isApiMode(void) {
     return api_mode;
 }
 
+//---------------------------------------------------------------------------
+inline bool isDockerMode(void) {
+    return fileExists("/.dockerenv");
+}
+
 //-----------------------------------------------------------------------
 inline string_q insertCommas(const string_q& dIn) {
     string_q d = dIn;

@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-12-11T13:46:29
+date: 2022-12-11T14:34:31
 lastmod:
   - :git
   - lastmod
@@ -45,6 +45,7 @@ Status data is made of the following data fields:
 | isApi             | `true` if the server is running in API mode              | bool           |
 | isScraping        | `true` if the index scraper is running                   | bool           |
 | isArchive         | `true` if the rpcProvider is an archive node             | bool           |
+| isDocker          | `true` if the server is running in a docker container    | bool           |
 | isTracing         | `true` if the rpcProvider provides Parity traces         | bool           |
 | hasEskey          | `true` if an EtherScan key is present                    | bool           |
 | hasPinkey         | `true` if a Pinata API key is present                    | bool           |

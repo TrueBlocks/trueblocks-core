@@ -889,6 +889,9 @@ components:
         isArchive:
           type: boolean
           description: "`true` if the rpcProvider is an archive node"
+        isDocker:
+          type: boolean
+          description: "`true` if the server is running in a docker container"
         isTracing:
           type: boolean
           description: "`true` if the rpcProvider provides Parity traces"

@@ -136,6 +136,9 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
             if (fieldName % "isArchive") {
                 return bool_2_Str(isArchive);
             }
+            if (fieldName % "isDocker") {
+                return bool_2_Str(isDocker);
+            }
             if (fieldName % "isTracing") {
                 return bool_2_Str(isTracing);
             }
@@ -260,6 +263,10 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 isArchive = str_2_Bool(fieldValue);
                 return true;
             }
+            if (fieldName % "isDocker") {
+                isDocker = str_2_Bool(fieldValue);
+                return true;
+            }
             if (fieldName % "isTracing") {
                 isTracing = str_2_Bool(fieldValue);
                 return true;
@@ -329,6 +336,7 @@ bool CStatus::Serialize(CArchive& archive) {
     archive >> isApi;
     archive >> isScraping;
     archive >> isArchive;
+    archive >> isDocker;
     archive >> isTracing;
     archive >> hasEskey;
     archive >> hasPinkey;
@@ -374,6 +382,7 @@ bool CStatus::SerializeC(CArchive& archive) const {
     archive << isApi;
     archive << isScraping;
     archive << isArchive;
+    archive << isDocker;
     archive << isTracing;
     archive << hasEskey;
     archive << hasPinkey;
@@ -448,6 +457,7 @@ void CStatus::registerClass(void) {
     ADD_FIELD(CStatus, "isApi", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "isScraping", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "isArchive", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "isDocker", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "isTracing", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "hasEskey", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "hasPinkey", T_BOOL | TS_OMITEMPTY, ++fieldNum);
@@ -527,6 +537,41 @@ bool CStatus::readBackLevel(CArchive& archive) {
         archive >> junk;  // used to be isDocker
         archive >> isScraping;
         archive >> isArchive;
+        archive >> isTracing;
+        archive >> hasEskey;
+        archive >> hasPinkey;
+        // archive >> ts;
+        // archive >> caches;
+        // archive >> chains;
+        uint64_t nCaches = 0;
+        archive >> nCaches;
+        if (nCaches) {
+            for (size_t i = 0; i < nCaches; i++) {
+                string_q cacheType;
+                archive >> cacheType;
+                CCache* cache = reinterpret_cast<CCache*>(createObjectOfType(cacheType));  // NOLINT
+                if (cache) {
+                    cache->Serialize(archive);
+                    caches.push_back(cache);
+                }
+            }
+        }
+        finishParse();
+        done = true;
+    } else if (m_schema < getVersionNum(0, 44, 1)) {
+        archive >> clientVersion;
+        archive >> clientIds;
+        archive >> trueblocksVersion;
+        archive >> rpcProvider;
+        archive >> cachePath;
+        archive >> indexPath;
+        archive >> host;
+        archive >> isTesting;
+        archive >> isApi;
+        archive >> junk;  // used to be isDocker
+        archive >> isScraping;
+        archive >> isArchive;
+        isDocker = isDockerMode();  // added a field
         archive >> isTracing;
         archive >> hasEskey;
         archive >> hasPinkey;

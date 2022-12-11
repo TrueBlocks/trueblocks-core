@@ -40,6 +40,7 @@ class CStatus : public CBaseNode {
     bool isApi;
     bool isScraping;
     bool isArchive;
+    bool isDocker;
     bool isTracing;
     bool hasEskey;
     bool hasPinkey;
@@ -123,6 +124,7 @@ inline void CStatus::initialize(void) {
     isApi = false;
     isScraping = false;
     isArchive = false;
+    isDocker = false;
     isTracing = false;
     hasEskey = false;
     hasPinkey = false;
@@ -158,6 +160,7 @@ inline void CStatus::duplicate(const CStatus& st) {
     isApi = st.isApi;
     isScraping = st.isScraping;
     isArchive = st.isArchive;
+    isDocker = st.isDocker;
     isTracing = st.isTracing;
     hasEskey = st.hasEskey;
     hasPinkey = st.hasPinkey;

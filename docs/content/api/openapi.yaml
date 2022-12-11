@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.44.0-beta
+  version: 0.44.1-beta
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra serve`, you can
@@ -2774,6 +2774,9 @@ components:
         isArchive:
           type: boolean
           description: "`true` if the rpcProvider is an archive node"
+        isDocker:
+          type: boolean
+          description: "`true` if the server is running in a docker container"
         isTracing:
           type: boolean
           description: "`true` if the rpcProvider provides Parity traces"
