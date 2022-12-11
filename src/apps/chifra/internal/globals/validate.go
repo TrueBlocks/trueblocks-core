@@ -48,7 +48,7 @@ func (opts *GlobalOptions) Validate() error {
 	tmpPath := filepath.Join(config.GetPathToCache(opts.Chain), "tmp", "checkProvider.txt")
 	if !file.FileExists(tmpPath) {
 		if version, err := rpcClient.GetVersion(opts.Chain); err != nil {
-			logger.Fatal("Cannot connect with the node software.", err)
+			logger.Fatal("Cannot connect with the node software.", version, err)
 		} else {
 			file.StringToAsciiFile(tmpPath, version)
 		}
