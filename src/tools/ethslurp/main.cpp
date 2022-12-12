@@ -90,12 +90,9 @@ bool Slurp(CCachedAccount& theAccount, COptions& options) {
                            "&action=" + toEtherscan(type) + "&address=" + theAccount.addr +
                            "&page=" + uint_2_Str(theAccount.latestPage) + "&offset=" + uint_2_Str(5000) +
                            "&apikey=" + getEtherscanKey(true);
-            cerr << "url: " << url << endl;
 
             string_q responseStr = urlToString(url);
-            cerr << "responseStr: " << responseStr << endl;
-
-            if (true) {  // getGlobalConfig("")->getConfigBool("dev", "debug_curl", false)) {
+            if (getGlobalConfig("")->getConfigBool("dev", "debug_curl", false)) {
                 cerr << "[calling EtherScan: " << url << endl;
                 cerr << "[result: " << url << responseStr << endl;
             }

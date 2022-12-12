@@ -35,6 +35,20 @@ TEST[DATE|TIME] Format:  json
       "localExplorer": "--explorer-gnosis--"
     }
   ],
+  "keys": [
+    {
+      "provider": "etherscan",
+      "apiKey": "--api-key--",
+      "jwt": "--jwt--",
+      "secret": "--secret"
+    },
+    {
+      "provider": "pinata",
+      "apiKey": "--api-key--",
+      "jwt": "--jwt--",
+      "secret": "--secret"
+    }
+  ],
   "caches": [
     {
       "type": "CIndexCache",

@@ -202,9 +202,7 @@ void CToml::mergeFile(CToml* tomlIn) {
 //---------------------------------------------------------------------------------------
 string_q CToml::getConfigStr(const string_q& section, const string_q& key, const string_q& def) const {
     string_q theKey = toUpper("TB_" + substitute(section, ".", "_") + "_" + key);
-    cerr << "theKey: " << theKey << endl;
     string_q env = getEnvStr(theKey);
-    cerr << "env: " << env << endl;
     if (!env.empty()) {
         return env;
 
