@@ -459,7 +459,7 @@ const char* STR_TERSE_REPORT =
     "[{TIME}] ++C1++Progress:++C2++     [{PROGRESS}]";
 
 //--------------------------------------------------------------------------------
-static void replaceNames(const string_q& chain, string_q& key, string_q& value) {
+static void replaceNames(const string_q& chain, const string_q& key, string_q& value) {
     if (!isTestMode())
         return;
     if (containsI(key, "Explorer"))
@@ -520,12 +520,12 @@ bool getChainList(CChainArray& chains) {
                 parts[0] = trim(substitute(parts[0], "\"", ""));
                 parts[1] = trim(nextTokenClear(parts[1], '#'));
                 parts[1] = trim(substitute(parts[1], "\"", ""));
-                replaceNames(current.chain, parts[0], parts[1]);
                 string_q env = "TB_CHAINS_" + toUpper(current.chain) + "_" + toUpper(parts[0]);
                 if (getEnvStr(env) != "") {
                     parts[1] = getEnvStr(env);
                     LOG_INFO("Overriding ", parts[0], " with environment variable: ", parts[1]);
                 }
+                replaceNames(current.chain, parts[0], parts[1]);
                 current.setValueByName(parts[0], parts[1]);
             }
         }
@@ -596,12 +596,12 @@ bool getKeyList(CKeyArray& keys) {
                 parts[0] = trim(substitute(parts[0], "\"", ""));
                 parts[1] = trim(nextTokenClear(parts[1], '#'));
                 parts[1] = trim(substitute(parts[1], "\"", ""));
-                replaceNames(current.provider, parts[0], parts[1]);
                 string_q env = "TB_KEYS_" + toUpper(current.provider) + "_" + toUpper(parts[0]);
                 if (getEnvStr(env) != "") {
                     parts[1] = getEnvStr(env);
                     LOG_INFO("Overriding ", parts[0], " with environment variable: ", parts[1]);
                 }
+                replaceNames(current.provider, parts[0], parts[1]);
                 current.setValueByName(parts[0], parts[1]);
             }
         }
