@@ -657,6 +657,7 @@ string_q getEtherscanKey(bool required) {
 
     string_q key = getGlobalConfig("")->getConfigStr("keys.etherscan", "apiKey", "<not_set>");
     if (!key.empty() && key != "<not_set>") {
+        cerr << "Using key from the config file " << key << endl;
         return key;
     }
 
@@ -664,6 +665,8 @@ string_q getEtherscanKey(bool required) {
         errorMessage("Articulation requires an api_key from `Etherscan`. See `http://api.etherscan.io/apis`.");
         quickQuitHandler(0);
     }
+
+    cerr << "No key found" << endl;
     return "";
 }
 // EXISTING_CODE
