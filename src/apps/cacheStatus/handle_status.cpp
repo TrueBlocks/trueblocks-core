@@ -478,7 +478,7 @@ bool getChainList(CChainArray& chains) {
 
     time_q configFileDate = fileLastModifyDate(configFn);
     time_q binFileDate = fileLastModifyDate(binFn);
-    if (false && !isTestMode() && binFileDate > configFileDate) {
+    if (!isTestMode() && binFileDate > configFileDate) {
         CArchive archive(READING_ARCHIVE);
         if (archive.Lock(cacheFolder_tmp + "chains.bin", modeReadOnly, LOCK_NOWAIT)) {
             archive >> chains;
@@ -554,7 +554,7 @@ bool getKeyList(CKeyArray& keys) {
 
     time_q configFileDate = fileLastModifyDate(configFn);
     time_q binFileDate = fileLastModifyDate(binFn);
-    if (false && !isTestMode() && binFileDate > configFileDate) {
+    if (!isTestMode() && binFileDate > configFileDate) {
         CArchive archive(READING_ARCHIVE);
         if (archive.Lock(cacheFolder_tmp + "keys.bin", modeReadOnly, LOCK_NOWAIT)) {
             archive >> keys;
