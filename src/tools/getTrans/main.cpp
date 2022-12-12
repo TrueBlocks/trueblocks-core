@@ -100,9 +100,21 @@ bool transFilter(const CTransaction* trans, void* data) {
 
 //--------------------------------------------------------------
 bool visitTransaction(CTransaction& trans, void* data) {
-    LOG4("blockNumber.txid: ", trans.blockNumber, "\t", trans.transactionIndex);
-
     COptions* opt = reinterpret_cast<COptions*>(data);
+    if (opt->source) {
+        opt->ledgerManager.accountedFor = trans.from;
+
+        CSourceSearch search(opt);  // order matters
+        CLedgerManager man(opt->ledgerManager.accountedFor);
+
+        opt->showTransactionForSource(trans);
+        man.getTransfers(trans);
+        for (auto t : man.transfers) {
+            search.traceTransfer(t, search.transfer_2_Id(&t));
+        }
+        return true;
+    }
+
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
     CBlock block;
 
@@ -178,4 +190,14 @@ bool visitTransaction(CTransaction& trans, void* data) {
     }
 
     return true;
+}
+
+//----------------------------------------------------------------
+void COptions::showTransactionForSource(const CTransaction& trans) {
+    cout << string_q(140, ' ') << endl;
+    cout << bBlack << "chifra transactions --chain " << getChain() << " " << trans.hash;
+    if (source) {
+        cout << " --source --account_for " << addr_2_Color(ledgerManager.accountedFor) << ledgerManager.accountedFor;
+    }
+    cout << cOff << endl;
 }
