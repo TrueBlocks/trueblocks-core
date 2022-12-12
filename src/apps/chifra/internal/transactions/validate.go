@@ -16,7 +16,7 @@ func (opts *TransactionsOptions) validateTransactions() error {
 		return opts.BadFlag
 	}
 
-	if opts.Source {
+	if opts.Globals.TestMode && opts.Source {
 		return validate.Usage("The --source flag is currently disabled.")
 	}
 
