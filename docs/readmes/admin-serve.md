@@ -23,5 +23,5 @@ Notes:
   - See the API documentation for more information.
 ```
 
-**Source code**: [`server`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/server)
+**Source code**: [`internal/serve`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/serve)
 
