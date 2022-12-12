@@ -146,6 +146,15 @@ bool COptions::parseArguments(string_q& command) {
         configureDisplay("getTrans", "CTransaction", fmt);
     }
 
+    if (source) {
+        LOG_WARN("The --source option is unsupported. Use at your own risk.");    
+        if (!fileExists("./whiteList.csv")) {
+            return usage("./whiteList.csv file is required for this option.");
+        }
+        expContext().exportFmt = CSV1;
+        expContext().fmtMap["header"] = "";
+    }
+
     return true;
 }
 
