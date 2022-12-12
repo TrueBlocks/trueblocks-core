@@ -161,10 +161,14 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
             }
 
         } else if ((fld.is_flags & IS_OBJECT)) {
-            string_q str = STR_GETOBJ_CODE_FIELD;
-            if (!(fld.is_flags & IS_ARRAY))
-                str = STR_GETOBJ_CODE_FIELD_OBJ;
-            replace(str, "[PTR]", ((fld.is_flags & IS_POINTER) ? "" : "&"));
+            bool isArray = fld.is_flags & IS_ARRAY;
+            bool isPointer = fld.is_flags & IS_POINTER;
+            bool isObject = fld.is_flags & IS_OBJECT;
+            bool isObjectPtrArray = isObject && isPointer && isArray;
+
+            string_q str = isArray ? STR_GETOBJ_CODE_FIELD : STR_GETOBJ_CODE_FIELD_OBJ;
+            replace(str, "[PTR]", isPointer ? "" : "&");
+            replace(str, "[{TYPE}] empty;", isObjectPtrArray ? "[{TYPE}] empty = nullptr;" : "[{TYPE}] empty;");
             replaceAll(str, "[{TYPE}]",
                        substitute(substitute(substitute(fld.type, "Array2", ""), "Array", ""), "Ptr", "*"));
             replaceAll(str, "[{FIELD}]", fld.name);
