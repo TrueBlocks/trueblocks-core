@@ -647,13 +647,18 @@ bool CAbi::loadAbisKnown(const string_q& addr) {
 string_q getEtherscanKey(bool required) {
     // Try to read the key from env variable
     const char* STR_KEY_ENV = "TB_SETTINGS_ETHERSCANKEY";
+    cerr << "Reading key from env variable " << STR_KEY_ENV << endl;
     string_q env_value = getEnvStr(STR_KEY_ENV);
-    if (!env_value.empty())
+    cerr << "env_value: " << env_value << endl;
+    if (!env_value.empty()) {
+        cerr << "Using key from env variable " << STR_KEY_ENV << ": " << env_value << endl;
         return env_value;
+    }
 
     string_q key = getGlobalConfig("")->getConfigStr("keys.etherscan", "apiKey", "<not_set>");
-    if (!key.empty() && key != "<not_set>")
+    if (!key.empty() && key != "<not_set>") {
         return key;
+    }
 
     if (required) {
         errorMessage("Articulation requires an api_key from `Etherscan`. See `http://api.etherscan.io/apis`.");
