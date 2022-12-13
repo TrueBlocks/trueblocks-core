@@ -14,26 +14,26 @@
  * Parts of this file were generated with makeClass --run. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
-#include "chain.h"
+#include "key.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CChain, CBaseNode);
+IMPLEMENT_NODE(CKey, CBaseNode);
 
 //---------------------------------------------------------------------------
-extern string_q nextChainChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextChainChunk_custom(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextKeyChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextKeyChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CChain::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CKey::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["chain_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["key_fmt"] : fmtIn);
     if (fmt.empty()) {
         toJson(ctx);
         return;
@@ -43,13 +43,13 @@ void CChain::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextChainChunk, this);
+        ctx << getNextChunk(fmt, nextKeyChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextChainChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextKeyChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CChain*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CKey*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -58,9 +58,9 @@ string_q nextChainChunk(const string_q& fieldIn, const void* dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-string_q CChain::getValueByName(const string_q& fieldName) const {
+string_q CKey::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextChainChunk_custom(fieldName, this);
+    string_q ret = nextKeyChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -70,39 +70,23 @@ string_q CChain::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if (fieldName % "apiProvider") {
-                return apiProvider;
+            if (fieldName % "apiKey") {
+                return apiKey;
             }
             break;
-        case 'c':
-            if (fieldName % "chain") {
-                return chain;
-            }
-            if (fieldName % "chainId") {
-                return uint_2_Str(chainId);
+        case 'j':
+            if (fieldName % "jwt") {
+                return jwt;
             }
             break;
-        case 'i':
-            if (fieldName % "ipfsGateway") {
-                return ipfsGateway;
-            }
-            break;
-        case 'l':
-            if (fieldName % "localExplorer") {
-                return localExplorer;
-            }
-            break;
-        case 'r':
-            if (fieldName % "rpcProvider") {
-                return rpcProvider;
-            }
-            if (fieldName % "remoteExplorer") {
-                return remoteExplorer;
+        case 'p':
+            if (fieldName % "provider") {
+                return provider;
             }
             break;
         case 's':
-            if (fieldName % "symbol") {
-                return symbol;
+            if (fieldName % "secret") {
+                return secret;
             }
             break;
         default:
@@ -117,7 +101,7 @@ string_q CChain::getValueByName(const string_q& fieldName) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CChain::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CKey::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
@@ -126,46 +110,26 @@ bool CChain::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if (fieldName % "apiProvider") {
-                apiProvider = fieldValue;
+            if (fieldName % "apiKey") {
+                apiKey = fieldValue;
                 return true;
             }
             break;
-        case 'c':
-            if (fieldName % "chain") {
-                chain = fieldValue;
-                return true;
-            }
-            if (fieldName % "chainId") {
-                chainId = str_2_Uint(fieldValue);
+        case 'j':
+            if (fieldName % "jwt") {
+                jwt = fieldValue;
                 return true;
             }
             break;
-        case 'i':
-            if (fieldName % "ipfsGateway") {
-                ipfsGateway = fieldValue;
-                return true;
-            }
-            break;
-        case 'l':
-            if (fieldName % "localExplorer") {
-                localExplorer = fieldValue;
-                return true;
-            }
-            break;
-        case 'r':
-            if (fieldName % "rpcProvider") {
-                rpcProvider = fieldValue;
-                return true;
-            }
-            if (fieldName % "remoteExplorer") {
-                remoteExplorer = fieldValue;
+        case 'p':
+            if (fieldName % "provider") {
+                provider = fieldValue;
                 return true;
             }
             break;
         case 's':
-            if (fieldName % "symbol") {
-                symbol = fieldValue;
+            if (fieldName % "secret") {
+                secret = fieldValue;
                 return true;
             }
             break;
@@ -176,13 +140,13 @@ bool CChain::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
 }
 
 //---------------------------------------------------------------------------------------------------
-void CChain::finishParse() {
+void CKey::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CChain::Serialize(CArchive& archive) {
+bool CKey::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -194,14 +158,10 @@ bool CChain::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> chain;
-    archive >> chainId;
-    archive >> symbol;
-    archive >> rpcProvider;
-    archive >> apiProvider;
-    archive >> remoteExplorer;
-    archive >> localExplorer;
-    archive >> ipfsGateway;
+    archive >> provider;
+    archive >> apiKey;
+    archive >> jwt;
+    archive >> secret;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -209,30 +169,26 @@ bool CChain::Serialize(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CChain::SerializeC(CArchive& archive) const {
+bool CKey::SerializeC(CArchive& archive) const {
     // Writing always writes the latest version of the data
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << chain;
-    archive << chainId;
-    archive << symbol;
-    archive << rpcProvider;
-    archive << apiProvider;
-    archive << remoteExplorer;
-    archive << localExplorer;
-    archive << ipfsGateway;
+    archive << provider;
+    archive << apiKey;
+    archive << jwt;
+    archive << secret;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CChain::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+bool CKey::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
     ASSERT(archiveIn.isReading());
     ASSERT(archiveOut.isWriting());
-    CChain copy;
+    CKey copy;
     // EXISTING_CODE
     // EXISTING_CODE
     copy.Serialize(archiveIn);
@@ -241,7 +197,7 @@ bool CChain::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CChainArray& array) {
+CArchive& operator>>(CArchive& archive, CKeyArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -253,7 +209,7 @@ CArchive& operator>>(CArchive& archive, CChainArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CChainArray& array) {
+CArchive& operator<<(CArchive& archive, const CKeyArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -262,48 +218,44 @@ CArchive& operator<<(CArchive& archive, const CChainArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CChain::registerClass(void) {
+void CKey::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CChain, "schema"))
+    if (HAS_FIELD(CKey, "schema"))
         return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CChain, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CChain, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CChain, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CChain, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CChain, "chain", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CChain, "chainId", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CChain, "symbol", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CChain, "rpcProvider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CChain, "apiProvider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CChain, "remoteExplorer", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CChain, "localExplorer", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CChain, "ipfsGateway", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CKey, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CKey, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CKey, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CKey, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CKey, "provider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CKey, "apiKey", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CKey, "jwt", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CKey, "secret", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CChain, "schema");
-    HIDE_FIELD(CChain, "deleted");
-    HIDE_FIELD(CChain, "showing");
-    HIDE_FIELD(CChain, "cname");
+    HIDE_FIELD(CKey, "schema");
+    HIDE_FIELD(CKey, "deleted");
+    HIDE_FIELD(CKey, "showing");
+    HIDE_FIELD(CKey, "cname");
 
-    builtIns.push_back(_biCChain);
+    builtIns.push_back(_biCKey);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextChainChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CChain* cha = reinterpret_cast<const CChain*>(dataPtr);
-    if (cha) {
+string_q nextKeyChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CKey* key = reinterpret_cast<const CKey*>(dataPtr);
+    if (key) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if (fieldIn % "parsed")
-                    return nextBasenodeChunk(fieldIn, cha);
+                    return nextBasenodeChunk(fieldIn, key);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -320,7 +272,7 @@ string_q nextChainChunk_custom(const string_q& fieldIn, const void* dataPtr) {
 // EXISTING_CODE
 
 //---------------------------------------------------------------------------
-bool CChain::readBackLevel(CArchive& archive) {
+bool CKey::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -328,19 +280,19 @@ bool CChain::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CChain& cha) {
-    cha.SerializeC(archive);
+CArchive& operator<<(CArchive& archive, const CKey& key) {
+    key.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CChain& cha) {
-    cha.Serialize(archive);
+CArchive& operator>>(CArchive& archive, CKey& key) {
+    key.Serialize(archive);
     return archive;
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CChain& it) {
+ostream& operator<<(ostream& os, const CKey& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -350,7 +302,7 @@ ostream& operator<<(ostream& os, const CChain& it) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_CHAIN = "";
+const char* STR_DISPLAY_KEY = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

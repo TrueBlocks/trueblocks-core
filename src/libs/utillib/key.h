@@ -23,38 +23,34 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CChain : public CBaseNode {
+class CKey : public CBaseNode {
   public:
-    string_q chain;
-    uint64_t chainId;
-    string_q symbol;
-    string_q rpcProvider;
-    string_q apiProvider;
-    string_q remoteExplorer;
-    string_q localExplorer;
-    string_q ipfsGateway;
+    string_q provider;
+    string_q apiKey;
+    string_q jwt;
+    string_q secret;
 
   public:
-    CChain(void);
-    CChain(const CChain& ch);
-    virtual ~CChain(void);
-    CChain& operator=(const CChain& ch);
+    CKey(void);
+    CKey(const CKey& ke);
+    virtual ~CKey(void);
+    CKey& operator=(const CKey& ke);
 
-    DECLARE_NODE(CChain);
+    DECLARE_NODE(CKey);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CChain& it) const;
-    bool operator!=(const CChain& it) const {
+    bool operator==(const CKey& it) const;
+    bool operator!=(const CKey& it) const {
         return !operator==(it);
     }
-    friend bool operator<(const CChain& v1, const CChain& v2);
-    friend ostream& operator<<(ostream& os, const CChain& it);
+    friend bool operator<(const CKey& v1, const CKey& v2);
+    friend ostream& operator<<(ostream& os, const CKey& it);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CChain& ch);
+    void duplicate(const CKey& ke);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -62,80 +58,72 @@ class CChain : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CChain::CChain(void) {
+inline CKey::CKey(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CChain::CChain(const CChain& ch) {
+inline CKey::CKey(const CKey& ke) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(ch);
+    duplicate(ke);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CChain::~CChain(void) {
+inline CKey::~CKey(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CChain::clear(void) {
+inline void CKey::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CChain::initialize(void) {
+inline void CKey::initialize(void) {
     CBaseNode::initialize();
 
-    chain = "";
-    chainId = 0;
-    symbol = "";
-    rpcProvider = "http://localhost:8545";
-    apiProvider = "http://localhost:8080";
-    remoteExplorer = "http://etherscan.io";
-    localExplorer = "http://localhost:1234";
-    ipfsGateway = "http://gateway.ipfs.io/ipfs";
+    provider = "";
+    apiKey = "";
+    jwt = "";
+    secret = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CChain::duplicate(const CChain& ch) {
+inline void CKey::duplicate(const CKey& ke) {
     clear();
-    CBaseNode::duplicate(ch);
+    CBaseNode::duplicate(ke);
 
-    chain = ch.chain;
-    chainId = ch.chainId;
-    symbol = ch.symbol;
-    rpcProvider = ch.rpcProvider;
-    apiProvider = ch.apiProvider;
-    remoteExplorer = ch.remoteExplorer;
-    localExplorer = ch.localExplorer;
-    ipfsGateway = ch.ipfsGateway;
+    provider = ke.provider;
+    apiKey = ke.apiKey;
+    jwt = ke.jwt;
+    secret = ke.secret;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CChain& CChain::operator=(const CChain& ch) {
-    duplicate(ch);
+inline CKey& CKey::operator=(const CKey& ke) {
+    duplicate(ke);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CChain::operator==(const CChain& it) const {
+inline bool CKey::operator==(const CKey& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -143,7 +131,7 @@ inline bool CChain::operator==(const CChain& it) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CChain& v1, const CChain& v2) {
+inline bool operator<(const CKey& v1, const CKey& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -151,16 +139,16 @@ inline bool operator<(const CChain& v1, const CChain& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CChain> CChainArray;
-extern CArchive& operator>>(CArchive& archive, CChainArray& array);
-extern CArchive& operator<<(CArchive& archive, const CChainArray& array);
+typedef vector<CKey> CKeyArray;
+extern CArchive& operator>>(CArchive& archive, CKeyArray& array);
+extern CArchive& operator<<(CArchive& archive, const CKeyArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CChain& cha);
-extern CArchive& operator>>(CArchive& archive, CChain& cha);
+extern CArchive& operator<<(CArchive& archive, const CKey& key);
+extern CArchive& operator>>(CArchive& archive, CKey& key);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_CHAIN;
+extern const char* STR_DISPLAY_KEY;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

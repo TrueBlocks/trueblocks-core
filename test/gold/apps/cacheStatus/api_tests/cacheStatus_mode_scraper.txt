@@ -27,7 +27,6 @@ status?modes=index
           "isValid": true
         }
       ],
-      "chains": [],
       "date": "--date--"
     }
   ],

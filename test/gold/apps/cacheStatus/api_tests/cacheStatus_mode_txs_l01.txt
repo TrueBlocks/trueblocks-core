@@ -31,7 +31,6 @@ status?modes=caches&types=txs&details
           "isValid": false
         }
       ],
-      "chains": [],
       "date": "--date--"
     }
   ],

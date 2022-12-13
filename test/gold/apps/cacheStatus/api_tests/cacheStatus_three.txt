@@ -47,7 +47,6 @@ status?modes=abis%20caches%20monitors&types=slurps
           "isValid": true
         }
       ],
-      "chains": [],
       "date": "--date--"
     }
   ],

@@ -17,6 +17,26 @@ status?modes=some
       "isTracing": true,
       "hasEskey": true,
       "hasPinkey": false,
+      "chains": [
+        {
+          "chain": "mainnet",
+          "chainId": 1,
+          "symbol": "ETH",
+          "rpcProvider": "--provider-mainnet--",
+          "apiProvider": "--provider-mainnet--",
+          "remoteExplorer": "--explorer-mainnet--",
+          "localExplorer": "--explorer-mainnet--"
+        },
+        {
+          "chain": "gnosis",
+          "chainId": 100,
+          "symbol": "XDAI",
+          "rpcProvider": "--provider-gnosis--",
+          "apiProvider": "--provider-gnosis--",
+          "remoteExplorer": "--explorer-gnosis--",
+          "localExplorer": "--explorer-gnosis--"
+        }
+      ],
       "caches": [
         {
           "type": "CIndexCache",
@@ -56,24 +76,18 @@ status?modes=some
           "isValid": true
         }
       ],
-      "chains": [
+      "keys": [
         {
-          "chain": "mainnet",
-          "chainId": 1,
-          "symbol": "ETH",
-          "rpcProvider": "--provider-mainnet--",
-          "apiProvider": "--provider-mainnet--",
-          "remoteExplorer": "--explorer-mainnet--",
-          "localExplorer": "--explorer-mainnet--"
+          "provider": "etherscan",
+          "apiKey": "--api-key--",
+          "jwt": "--jwt--",
+          "secret": "--secret"
         },
         {
-          "chain": "gnosis",
-          "chainId": 100,
-          "symbol": "XDAI",
-          "rpcProvider": "--provider-gnosis--",
-          "apiProvider": "--provider-gnosis--",
-          "remoteExplorer": "--explorer-gnosis--",
-          "localExplorer": "--explorer-gnosis--"
+          "provider": "pinata",
+          "apiKey": "--api-key--",
+          "jwt": "--jwt--",
+          "secret": "--secret"
         }
       ],
       "date": "--date--"

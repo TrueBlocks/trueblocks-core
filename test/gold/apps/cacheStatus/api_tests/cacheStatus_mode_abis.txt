@@ -27,7 +27,6 @@ status?modes=abis
           "isValid": true
         }
       ],
-      "chains": [],
       "date": "--date--"
     }
   ],
