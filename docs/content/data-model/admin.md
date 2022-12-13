@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-12-12T19:19:36
+date: 2022-12-12T19:56:45
 lastmod:
   - :git
   - lastmod
@@ -49,8 +49,9 @@ Status data is made of the following data fields:
 | hasEskey          | `true` if an EtherScan key is present                    | bool           |
 | hasPinkey         | `true` if a Pinata API key is present                    | bool           |
 | ts                | the timestamp when this status data was produced         | timestamp      |
-| chains            |                                                          | CChainArray    |
+| chains            | the list of configured chains                            | CChainArray    |
 | caches            | a collection of information concerning the binary caches | CCachePtrArray |
+| keys              | the list of configured api keys                          | CKeyArray      |
 
 
 ## Cache

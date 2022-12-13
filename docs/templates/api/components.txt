@@ -906,11 +906,17 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/chain"
+          description: "the list of configured chains"
         caches:
           type: array
           items:
             $ref: "#/components/schemas/cache"
           description: "a collection of information concerning the binary caches"
+        keys:
+          type: array
+          items:
+            $ref: "#/components/schemas/key"
+          description: "the list of configured api keys"
     cache:
       description: "The cache data model carries information about the various local binary caches"
       type: object

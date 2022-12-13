@@ -164,7 +164,5 @@ extern const char* STR_DISPLAY_CHAIN;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern bool getChainList(CChainArray& chains);
-extern bool findChain(const string_q& needle, CChain& chainOut);
 // EXISTING_CODE
 }  // namespace qblocks

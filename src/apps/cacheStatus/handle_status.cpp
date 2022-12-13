@@ -14,7 +14,8 @@
 
 extern const char* STR_TERSE_REPORT;
 extern string_q pathName(const string_q& str, const string_q& path);
-extern void replaceNames(const string_q& chain, string_q& key, string_q& value);
+extern bool getChainList(CChainArray& chains);
+extern bool getKeyList(CKeyArray& keys);
 //--------------------------------------------------------------------------------
 bool COptions::handle_status(ostream& os) {
     if (terse) {
@@ -232,8 +233,13 @@ bool COptions::handle_status(ostream& os) {
         status.caches.push_back(&slurps);
     }
 
-    if (origMode.empty() || contains(origMode, "all") || contains(origMode, "some"))
+    if (origMode.empty() || contains(origMode, "all") || contains(origMode, "some")) {
         getChainList(status.chains);
+        getKeyList(status.keys);
+    } else {
+        HIDE_FIELD(CStatus, "chains");
+        HIDE_FIELD(CStatus, "keys");
+    }
     status.toJson(os);
 
     return true;
@@ -451,3 +457,173 @@ const char* STR_TERSE_REPORT =
     "[{TIME}] ++C1++Cache Path:++C2++   [{CACHEPATH}]\n"
     "[{TIME}] ++C1++Index Path:++C2++   [{INDEXPATH}]\n"
     "[{TIME}] ++C1++Progress:++C2++     [{PROGRESS}]";
+
+//--------------------------------------------------------------------------------
+static void replaceNames(const string_q& chain, const string_q& key, string_q& value) {
+    if (!isTestMode())
+        return;
+    if (containsI(key, "Explorer"))
+        value = "--explorer-" + chain + "--";
+    else if (containsI(key, "Provider"))
+        value = "--provider-" + chain + "--";
+    else if (containsI(key, "Gateway"))
+        value = "--gateway-" + chain + "--";
+}
+
+//--------------------------------------------------------------------------------
+bool getChainList(CChainArray& chains) {
+    // TODO: This hacky assed code is because our TOML code does not read arrays
+    string_q configFn = rootConfigToml_trueBlocks;
+    string_q binFn = cacheFolder_tmp + "chains.bin";
+
+    time_q configFileDate = fileLastModifyDate(configFn);
+    time_q binFileDate = fileLastModifyDate(binFn);
+    if (!isTestMode() && binFileDate > configFileDate) {
+        CArchive archive(READING_ARCHIVE);
+        if (archive.Lock(cacheFolder_tmp + "chains.bin", modeReadOnly, LOCK_NOWAIT)) {
+            archive >> chains;
+            archive.Release();
+            return true;
+        }
+    }
+
+    typedef enum { SEARCHING = 0, IN_CHAINS } State;
+    State state = SEARCHING;
+
+    CStringArray lines, lines2;
+    asciiFileToLines(rootConfigToml_trueBlocks, lines);
+    for (auto line : lines) {
+        if (!line.empty()) {
+            if (state == SEARCHING) {
+                if (line == "[chains]")
+                    state = IN_CHAINS;
+            } else {
+                lines2.push_back(line);
+            }
+        }
+    }
+
+    map<string, CChain> chainMap;
+    CChain current;
+    for (auto line : lines2) {
+        if (startsWith(line, "[chains.")) {
+            if (!current.chain.empty()) {
+                if (!isTestMode() || current.chain == "mainnet" || current.chain == "gnosis")
+                    chains.push_back(current);
+            }
+            current = CChain();
+            current.chain = substitute(substitute(line, "[chains.", ""), "]", "");
+        } else {
+            CStringArray parts;
+            explode(parts, line, '=');
+            if (parts.size() == 2) {
+                parts[0] = trim(substitute(parts[0], "\"", ""));
+                parts[1] = trim(nextTokenClear(parts[1], '#'));
+                parts[1] = trim(substitute(parts[1], "\"", ""));
+                string_q env = "TB_CHAINS_" + toUpper(current.chain) + "_" + toUpper(parts[0]);
+                if (getEnvStr(env) != "") {
+                    parts[1] = getEnvStr(env);
+                    LOG_INFO("Overriding ", parts[0], " with environment variable: ", parts[1]);
+                }
+                replaceNames(current.chain, parts[0], parts[1]);
+                current.setValueByName(parts[0], parts[1]);
+            }
+        }
+    }
+    if (!current.chain.empty()) {
+        if (!isTestMode() || current.chain == "mainnet" || current.chain == "gnosis")
+            chains.push_back(current);
+    }
+
+    if (!isTestMode()) {
+        CArchive archive(WRITING_ARCHIVE);
+        if (archive.Lock(cacheFolder_tmp + "chains.bin", modeWriteCreate, LOCK_WAIT)) {
+            archive << chains;
+            archive.Release();
+        }
+    }
+
+    return true;
+}
+
+//--------------------------------------------------------------------------------
+bool getKeyList(CKeyArray& keys) {
+    // TODO: This hacky assed code is because our TOML code does not read arrays
+    string_q configFn = rootConfigToml_trueBlocks;
+    string_q binFn = cacheFolder_tmp + "keys.bin";
+
+    time_q configFileDate = fileLastModifyDate(configFn);
+    time_q binFileDate = fileLastModifyDate(binFn);
+    if (!isTestMode() && binFileDate > configFileDate) {
+        CArchive archive(READING_ARCHIVE);
+        if (archive.Lock(cacheFolder_tmp + "keys.bin", modeReadOnly, LOCK_NOWAIT)) {
+            archive >> keys;
+            archive.Release();
+            return true;
+        }
+    }
+
+    typedef enum { SEARCHING = 0, IN_CHAINS } State;
+    State state = SEARCHING;
+
+    CStringArray lines, lines2;
+    asciiFileToLines(rootConfigToml_trueBlocks, lines);
+    for (auto line : lines) {
+        if (!line.empty()) {
+            if (state == SEARCHING) {
+                if (line == "[keys]")
+                    state = IN_CHAINS;
+            } else {
+                lines2.push_back(line);
+            }
+        }
+    }
+
+    map<string, CKey> keyMap;
+    CKey current;
+    for (auto line : lines2) {
+        if (startsWith(line, "[keys.")) {
+            if (!current.provider.empty()) {
+                if (!isTestMode() || current.provider == "etherscan" || current.provider == "pinata")
+                    keys.push_back(current);
+            }
+            current = CKey();
+            current.provider = substitute(substitute(line, "[keys.", ""), "]", "");
+        } else {
+            CStringArray parts;
+            explode(parts, line, '=');
+            if (parts.size() == 2) {
+                parts[0] = trim(substitute(parts[0], "\"", ""));
+                parts[1] = trim(nextTokenClear(parts[1], '#'));
+                parts[1] = trim(substitute(parts[1], "\"", ""));
+                string_q env = "TB_KEYS_" + toUpper(current.provider) + "_" + toUpper(parts[0]);
+                if (getEnvStr(env) != "") {
+                    parts[1] = getEnvStr(env);
+                    LOG_INFO("Overriding ", parts[0], " with environment variable: ", parts[1]);
+                }
+                replaceNames(current.provider, parts[0], parts[1]);
+                current.setValueByName(parts[0], parts[1]);
+            }
+        }
+    }
+    if (!current.provider.empty()) {
+        if (!isTestMode() || current.provider == "etherscan" || current.provider == "pinata")
+            keys.push_back(current);
+    }
+
+    if (!isTestMode()) {
+        CArchive archive(WRITING_ARCHIVE);
+        if (archive.Lock(cacheFolder_tmp + "keys.bin", modeWriteCreate, LOCK_WAIT)) {
+            archive << keys;
+            archive.Release();
+        }
+    } else {
+        for (auto& key : keys) {
+            key.apiKey = "--api-key--";
+            key.jwt = "--jwt--";
+            key.secret = "--secret";
+        }
+    }
+
+    return true;
+}
