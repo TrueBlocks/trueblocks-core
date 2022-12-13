@@ -2569,42 +2569,6 @@ components:
           type: string
           example: "one of 'EOA' or 'Contract'"
           description: "the type of the address at the given block"
-    result:
-      description: "the result of a call to a smart contract"
-      type: object
-      properties:
-        blockNumber:
-          type: number
-          format: blknum
-          example: 10021
-          description: "the block number at which this call was made"
-        address:
-          type: string
-          format: address
-          example: "0xa1e4...63b4"
-          description: "the address of contract being called"
-        signature:
-          type: string
-          description: "the canonical signature of the interface"
-        encoding:
-          type: string
-          description: "the encoding for the function call"
-        bytes:
-          type: string
-          description: "the bytes data following the encoding of the call"
-        callResult:
-          type: object
-          items:
-            $ref: "#/components/schemas/function"
-          description: "the result of the call to the contract"
-        compressedResult:
-          type: string
-          description: "the compressed version of the result of the call to the contract"
-        deployed:
-          type: number
-          format: blknum
-          example: 8901011
-          description: "the block number at which this smart contract was deployed (if a smart contact)"
     transfer:
       description: "a representation of an ERC-20 token transfer"
       type: object
@@ -2672,6 +2636,42 @@ components:
         encoding:
           type: string
           description: "The four-byte encoding of the transaction's function call"
+    result:
+      description: "the result of a call to a smart contract"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          example: 10021
+          description: "the block number at which this call was made"
+        address:
+          type: string
+          format: address
+          example: "0xa1e4...63b4"
+          description: "the address of contract being called"
+        signature:
+          type: string
+          description: "the canonical signature of the interface"
+        encoding:
+          type: string
+          description: "the encoding for the function call"
+        bytes:
+          type: string
+          description: "the bytes data following the encoding of the call"
+        callResult:
+          type: object
+          items:
+            $ref: "#/components/schemas/function"
+          description: "the result of the call to the contract"
+        compressedResult:
+          type: string
+          description: "the compressed version of the result of the call to the contract"
+        deployed:
+          type: number
+          format: blknum
+          example: 8901011
+          description: "the block number at which this smart contract was deployed (if a smart contact)"
     token:
       description: "on-chain token related data for a give address at a given block height"
       type: object
@@ -2880,6 +2880,22 @@ components:
         ipfsGateway:
           type: string
           description: "An IPFS gateway for pinning the index if enabled"
+    key:
+      description: "The api key that carries information about configured apis"
+      type: object
+      properties:
+        provider:
+          type: string
+          description: "The api provider"
+        apiKey:
+          type: string
+          description: "An api key"
+        jwt:
+          type: string
+          description: "An jwt token used for an API"
+        secret:
+          type: string
+          description: "A secret used for an API"
     cacheEntry:
       description: "an entry in one of the caches"
       type: object

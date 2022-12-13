@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-09-19T21:00:15
+date: 2022-12-12T19:19:36
 lastmod:
   - :git
   - lastmod
@@ -132,6 +132,16 @@ Manifest data is made of the following data fields:
 | remoteExplorer | A remote explorer for the chain such as EtherScan                | string |
 | localExplorer  | The local explorer for the chain (typically TrueBlocks Explorer) | string |
 | ipfsGateway    | An IPFS gateway for pinning the index if enabled                 | string |
+
+## Key
+
+
+| Field    | Description                  | Type   |
+| -------- | ---------------------------- | ------ |
+| provider | The api provider             | string |
+| apiKey   | An api key                   | string |
+| jwt      | An jwt token used for an API | string |
+| secret   | A secret used for an API     | string |
 
 ## CacheEntry
 

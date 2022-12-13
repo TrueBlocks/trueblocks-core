@@ -32,7 +32,7 @@ bool COptions::handle_status(ostream& os) {
         if (!isText) {
             fmt = "";
             manageFields("CStatusTerse:modes1,modes2", FLD_HIDE);
-            manageFields("CStatus:clientIds,host,isApi,isScraping,caches,chains", FLD_HIDE);
+            manageFields("CStatus:clientIds,host,isApi,isScraping,caches,chains,keys", FLD_HIDE);
         }
         size_t nRecords = ((fileSize(indexFolderBin_ts) / sizeof(uint32_t)) / 2);
         ostringstream m;
