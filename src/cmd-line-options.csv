@@ -223,10 +223,13 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12180,apps,Admin,scrape,blockScrape,allow_missing,,true,false,false,false,false,config,flag,<boolean>,do not report errors for blockchains that contain blocks with zero addresses
 12195,apps,Admin,scrape,blockScrape,,,,false,false,true,true,--,description,,Scan the chain and update the TrueBlocks index of appearances.
 
-13111,apps,Admin,serve,flame,port,p,:8080,false,false,true,true,header,flag,<string>,specify the server's port
-13112,apps,Admin,serve,flame,,,,false,false,true,true,--,description,,Serve the TrueBlocks API using the flame server.
-13113,apps,Admin,serve,flame,n1,,,false,false,false,false,--,note,,To start API open terminal window and run chifra serve.
-13114,apps,Admin,serve,flame,n2,,,false,false,false,false,--,note,,See the API documentation for more information.
+13111,apps,Admin,daemon,flame,port,p,:8080,false,false,true,true,header,flag,<string>,specify the server's port
+13112,apps,Admin,daemon,flame,scrape,s,,false,false,true,false,gocmd,flag,enum[off|blooms|full-index]>,start the scraper&#44; initialize it with either just blooms or entire index&#44; generate for new blocks
+13113,apps,Admin,daemon,flame,monitor,m,,false,false,true,false,gocmd,switch,<boolean>,instruct the node to start the monitors tool
+13114,apps,Admin,daemon,flame,api,a,on,false,false,true,false,gocmd,flag,enum[off|on*]>,instruct the node to start the API server
+13115,apps,Admin,daemon,flame,,,,false,false,true,true,--,description,,Initalize and control long-running processes such as the API&#44; scrapers&#44; and monitors.
+13116,apps,Admin,daemon,flame,n1,,,false,false,false,false,--,note,,To start API open terminal window and run chifra daemon.
+13117,apps,Admin,daemon,flame,n2,,,false,false,false,false,--,note,,See the API documentation for more information.
 
 10700,apps,Admin,status,cacheStatus,modes,,,false,false,true,true,local,positional,list<enum[index|monitors|names|abis|caches|some*|all]>,the type of status info to retrieve
 10720,apps,Admin,status,cacheStatus,details,d,,false,false,true,true,header,switch,<boolean>,include details about items found in monitors&#44; slurps&#44; abis&#44; or price caches
@@ -237,11 +240,6 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10820,apps,Admin,status,cacheStatus,first_block,F,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive -- testing only)
 10840,apps,Admin,status,cacheStatus,last_block,L,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive -- testing only)
 10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the status of the TrueBlocks system.
-
-20720,apps,Admin,daemon,daemonMan,scrape,s,,false,false,true,false,gocmd,flag,enum[off|blooms|full-index]>,start the scraper&#44; initialize it with either just blooms or entire index&#44; generate for new blocks
-20720,apps,Admin,daemon,daemonMan,monitor,m,,false,false,true,false,gocmd,switch,<boolean>,instruct the node to start the monitors tool
-20720,apps,Admin,daemon,daemonMan,api,a,on,false,false,true,false,gocmd,flag,enum[off|on*]>,instruct the node to start the API server
-20860,apps,Admin,daemon,daemonMan,,,,false,false,true,true,--,description,,Initalize and control long-running tools such as the API&#44; scrapers&#44; and monitors.
 
 31900,apps,Admin,chunks,chunkMan,mode,,,true,false,true,true,local,positional,enum[status|manifest|index|blooms|addresses|appearances|stats],the type of data to process
 31905,apps,Admin,chunks,chunkMan,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of blocks to intersect with chunk ranges

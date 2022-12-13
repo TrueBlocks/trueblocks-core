@@ -11,11 +11,10 @@ isTesting         ,bool      ,                 ,       ,      ,        ,        
 isApi             ,bool      ,                 ,       ,      ,        ,          ,        ,      ,         , 10 ,     ,        ,`true` if the server is running in API mode
 isScraping        ,bool      ,                 ,       ,      ,        ,          ,        ,      ,         , 11 ,     ,        ,`true` if the index scraper is running
 isArchive         ,bool      ,                 ,       ,      ,        ,          ,        ,      ,         , 12 ,     ,        ,`true` if the rpcProvider is an archive node
-isDocker          ,bool      ,                 ,       ,      ,        ,          ,        ,      ,         , 13 ,     ,        ,`true` if the server is running in a docker container
-isTracing         ,bool      ,                 ,       ,      ,        ,          ,        ,      ,         , 14 ,     ,        ,`true` if the rpcProvider provides Parity traces
-hasEskey          ,bool      ,                 ,       ,      ,        ,          ,        ,      ,         , 15 ,     ,        ,`true` if an EtherScan key is present
-hasPinkey         ,bool      ,                 ,       ,      ,        ,          ,        ,      ,         , 16 ,     ,        ,`true` if a Pinata API key is present
-ts                ,timestamp ,date_2_Ts(Now()) ,       ,      ,true    ,          ,        ,      ,         , 17 ,     ,        ,the timestamp when this status data was produced
-chains            ,Chain     ,                 ,true   ,true  ,true    ,          ,        ,      ,         , 18 ,     ,        ,the list of configured chains
+isTracing         ,bool      ,                 ,       ,      ,        ,          ,        ,      ,         , 13 ,     ,        ,`true` if the rpcProvider provides Parity traces
+hasEskey          ,bool      ,                 ,       ,      ,        ,          ,        ,      ,         , 14 ,     ,        ,`true` if an EtherScan key is present
+hasPinkey         ,bool      ,                 ,       ,      ,        ,          ,        ,      ,         , 15 ,     ,        ,`true` if a Pinata API key is present
+ts                ,timestamp ,date_2_Ts(Now()) ,       ,      ,true    ,          ,        ,      ,         , 16 ,     ,        ,the timestamp when this status data was produced
+chains            ,Chain     ,                 ,true   ,true  ,true    ,          ,        ,      ,         , 17 ,     ,        ,the list of configured chains
+caches            ,cachePtr  ,                 ,true   ,true  ,true    ,          ,        ,      ,         , 18 ,     ,        ,a collection of information concerning the binary caches
 keys              ,Key       ,                 ,true   ,true  ,true    ,          ,        ,      ,         , 19 ,     ,        ,the list of configured api keys
-caches            ,cachePtr  ,                 ,true   ,true  ,true    ,          ,        ,      ,         , 20 ,     ,        ,a collection of information concerning the binary caches

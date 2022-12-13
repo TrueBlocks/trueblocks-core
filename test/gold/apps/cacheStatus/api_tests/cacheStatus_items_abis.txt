@@ -14,7 +14,6 @@ status?details&modes=abis
       "isApi": true,
       "isScraping": false,
       "isArchive": true,
-      "isDocker": false,
       "isTracing": true,
       "hasEskey": true,
       "hasPinkey": false,

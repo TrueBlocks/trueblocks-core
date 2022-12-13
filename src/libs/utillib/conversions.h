@@ -181,14 +181,6 @@ inline bool isApiMode(void) {
     return api_mode;
 }
 
-//---------------------------------------------------------------------------
-inline bool isDockerMode(void) {
-    static uint64_t docker_mode = NOPOS;
-    if (docker_mode == NOPOS)
-        docker_mode = getEnvStr("TB_DOCKER_MODE") == "true";
-    return docker_mode;
-}
-
 //-----------------------------------------------------------------------
 inline string_q insertCommas(const string_q& dIn) {
     string_q d = dIn;

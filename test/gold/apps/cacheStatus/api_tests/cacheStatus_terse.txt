@@ -10,7 +10,6 @@ status?terse
       "indexPath": "--paths--",
       "isTesting": true,
       "isArchive": true,
-      "isDocker": false,
       "isTracing": true,
       "hasEskey": true,
       "hasPinkey": false,

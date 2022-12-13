@@ -40,14 +40,13 @@ class CStatus : public CBaseNode {
     bool isApi;
     bool isScraping;
     bool isArchive;
-    bool isDocker;
     bool isTracing;
     bool hasEskey;
     bool hasPinkey;
     timestamp_t ts;
     CChainArray chains;
-    CKeyArray keys;
     CCachePtrArray caches;
+    CKeyArray keys;
 
   public:
     CStatus(void);
@@ -124,14 +123,13 @@ inline void CStatus::initialize(void) {
     isApi = false;
     isScraping = false;
     isArchive = false;
-    isDocker = false;
     isTracing = false;
     hasEskey = false;
     hasPinkey = false;
     ts = date_2_Ts(Now());
     chains.clear();
-    keys.clear();
     caches.clear();
+    keys.clear();
 
     // EXISTING_CODE
     // convert ts to UTC
@@ -160,14 +158,13 @@ inline void CStatus::duplicate(const CStatus& st) {
     isApi = st.isApi;
     isScraping = st.isScraping;
     isArchive = st.isArchive;
-    isDocker = st.isDocker;
     isTracing = st.isTracing;
     hasEskey = st.hasEskey;
     hasPinkey = st.hasPinkey;
     ts = st.ts;
     chains = st.chains;
-    keys = st.keys;
     caches = st.caches;
+    keys = st.keys;
 
     // EXISTING_CODE
     // EXISTING_CODE

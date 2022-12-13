@@ -136,9 +136,6 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
             if (fieldName % "isArchive") {
                 return bool_2_Str(isArchive);
             }
-            if (fieldName % "isDocker") {
-                return bool_2_Str(isDocker);
-            }
             if (fieldName % "isTracing") {
                 return bool_2_Str(isTracing);
             }
@@ -263,10 +260,6 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 isArchive = str_2_Bool(fieldValue);
                 return true;
             }
-            if (fieldName % "isDocker") {
-                isDocker = str_2_Bool(fieldValue);
-                return true;
-            }
             if (fieldName % "isTracing") {
                 isTracing = str_2_Bool(fieldValue);
                 return true;
@@ -336,14 +329,13 @@ bool CStatus::Serialize(CArchive& archive) {
     archive >> isApi;
     archive >> isScraping;
     archive >> isArchive;
-    archive >> isDocker;
     archive >> isTracing;
     archive >> hasEskey;
     archive >> hasPinkey;
     // archive >> ts;
     // archive >> chains;
-    // archive >> keys;
     // archive >> caches;
+    // archive >> keys;
     // EXISTING_CODE
     uint64_t nCaches = 0;
     archive >> nCaches;
@@ -382,14 +374,13 @@ bool CStatus::SerializeC(CArchive& archive) const {
     archive << isApi;
     archive << isScraping;
     archive << isArchive;
-    archive << isDocker;
     archive << isTracing;
     archive << hasEskey;
     archive << hasPinkey;
     // archive << ts;
     // archive << chains;
-    // archive << keys;
     // archive << caches;
+    // archive << keys;
     // EXISTING_CODE
     archive << (uint64_t)caches.size();
     for (auto cache : caches) {
@@ -457,7 +448,6 @@ void CStatus::registerClass(void) {
     ADD_FIELD(CStatus, "isApi", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "isScraping", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "isArchive", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CStatus, "isDocker", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "isTracing", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "hasEskey", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "hasPinkey", T_BOOL | TS_OMITEMPTY, ++fieldNum);
@@ -465,10 +455,10 @@ void CStatus::registerClass(void) {
     HIDE_FIELD(CStatus, "ts");
     ADD_FIELD(CStatus, "chains", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CStatus, "chains");
-    ADD_FIELD(CStatus, "keys", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CStatus, "keys");
     ADD_FIELD(CStatus, "caches", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CStatus, "caches");
+    ADD_FIELD(CStatus, "keys", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CStatus, "keys");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CStatus, "schema");
@@ -558,41 +548,6 @@ bool CStatus::readBackLevel(CArchive& archive) {
         }
         finishParse();
         done = true;
-    } else if (m_schema < getVersionNum(0, 44, 1)) {
-        archive >> clientVersion;
-        archive >> clientIds;
-        archive >> trueblocksVersion;
-        archive >> rpcProvider;
-        archive >> cachePath;
-        archive >> indexPath;
-        archive >> host;
-        archive >> isTesting;
-        archive >> isApi;
-        archive >> junk;  // used to be isDocker
-        archive >> isScraping;
-        archive >> isArchive;
-        isDocker = isDockerMode();  // added a field
-        archive >> isTracing;
-        archive >> hasEskey;
-        archive >> hasPinkey;
-        // archive >> ts;
-        // archive >> caches;
-        // archive >> chains;
-        uint64_t nCaches = 0;
-        archive >> nCaches;
-        if (nCaches) {
-            for (size_t i = 0; i < nCaches; i++) {
-                string_q cacheType;
-                archive >> cacheType;
-                CCache* cache = reinterpret_cast<CCache*>(createObjectOfType(cacheType));  // NOLINT
-                if (cache) {
-                    cache->Serialize(archive);
-                    caches.push_back(cache);
-                }
-            }
-        }
-        finishParse();
-        done = true;
     }
     // EXISTING_CODE
     return done;
@@ -633,15 +588,6 @@ const CBaseNode* CStatus::getObjectAt(const string_q& fieldName, size_t index) c
         if (index < chains.size())
             return &chains[index];
     }
-    if (fieldName % "keys") {
-        if (index == NOPOS) {
-            CKey empty;
-            ((CStatus*)this)->keys.push_back(empty);  // NOLINT
-            index = keys.size() - 1;
-        }
-        if (index < keys.size())
-            return &keys[index];
-    }
     if (fieldName % "caches") {
         if (index == NOPOS) {
             CCache* empty = nullptr;
@@ -650,6 +596,15 @@ const CBaseNode* CStatus::getObjectAt(const string_q& fieldName, size_t index) c
         }
         if (index < caches.size())
             return caches[index];
+    }
+    if (fieldName % "keys") {
+        if (index == NOPOS) {
+            CKey empty;
+            ((CStatus*)this)->keys.push_back(empty);  // NOLINT
+            index = keys.size() - 1;
+        }
+        if (index < keys.size())
+            return &keys[index];
     }
     // EXISTING_CODE
     // EXISTING_CODE

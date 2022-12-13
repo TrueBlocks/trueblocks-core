@@ -14,7 +14,6 @@ status?modes=all
       "isApi": true,
       "isScraping": false,
       "isArchive": true,
-      "isDocker": false,
       "isTracing": true,
       "hasEskey": true,
       "hasPinkey": false,
@@ -36,20 +35,6 @@ status?modes=all
           "apiProvider": "--provider-gnosis--",
           "remoteExplorer": "--explorer-gnosis--",
           "localExplorer": "--explorer-gnosis--"
-        }
-      ],
-      "keys": [
-        {
-          "provider": "etherscan",
-          "apiKey": "--api-key--",
-          "jwt": "--jwt--",
-          "secret": "--secret"
-        },
-        {
-          "provider": "pinata",
-          "apiKey": "--api-key--",
-          "jwt": "--jwt--",
-          "secret": "--secret"
         }
       ],
       "caches": [
@@ -121,6 +106,20 @@ status?modes=all
           "nFolders": 0,
           "sizeInBytes": 0,
           "isValid": true
+        }
+      ],
+      "keys": [
+        {
+          "provider": "etherscan",
+          "apiKey": "--api-key--",
+          "jwt": "--jwt--",
+          "secret": "--secret"
+        },
+        {
+          "provider": "pinata",
+          "apiKey": "--api-key--",
+          "jwt": "--jwt--",
+          "secret": "--secret"
         }
       ],
       "date": "--date--"

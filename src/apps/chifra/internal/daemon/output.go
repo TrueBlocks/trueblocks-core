@@ -11,13 +11,17 @@ package daemonPkg
 // EXISTING_CODE
 import (
 	"fmt"
+	"log"
 	"net/http"
-	"os"
-	"os/exec"
-	"sync"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -38,6 +42,7 @@ func ServeDaemon(w http.ResponseWriter, r *http.Request) (err error, handled boo
 	opts := daemonFinishParseApi(w, r)
 	outputHelpers.InitJsonWriterApi("daemon", w, &opts.Globals)
 	// EXISTING_CODE
+	log.Fatal("Should not happen. Daemon is an invalid route for server")
 	// EXISTING_CODE
 	err, handled = opts.DaemonInternal()
 	outputHelpers.CloseJsonWriterIfNeededApi("daemon", err, &opts.Globals)
@@ -52,20 +57,38 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	var processes OurProcesses
+	handled = true
+	apiUrl := opts.Port
+	if !strings.HasPrefix(apiUrl, "http") {
+		apiUrl = "http://localhost" + apiUrl
+	}
 
-	var wg sync.WaitGroup
-	api, err := startApi(&wg)
+	pad := func(strIn string) string {
+		return utils.PadRight(strIn, 18, ' ')
+	}
+
+	chain := opts.Globals.Chain
+	meta, err := rpcClient.GetMetaData(chain, false)
+	logger.Log(logger.InfoC, pad("Server URL:"), apiUrl)
+	logger.Log(logger.InfoC, pad("RPC Provider:"), config.GetRpcProvider(chain))
+	logger.Log(logger.InfoC, pad("Root Config Path:"), config.GetPathToRootConfig())
+	logger.Log(logger.InfoC, pad("Chain Config Path:"), config.GetPathToChainConfig(chain))
+	logger.Log(logger.InfoC, pad("Cache Path:"), config.GetPathToCache(chain))
+	logger.Log(logger.InfoC, pad("Index Path:"), config.GetPathToIndex(chain))
 	if err != nil {
-		return err, true
+		msg := fmt.Sprintf("%sCould not load RPC provider: %s%s", colors.Red, err, colors.Off)
+		logger.Log(logger.InfoC, pad("Progress:"), msg)
+		log.Fatalf("")
+	} else {
+		nTs, _ := tslib.NTimestamps(opts.Globals.Chain)
+		msg := fmt.Sprintf("%d, %d, %d,  %d, ts: %d", meta.Latest, meta.Finalized, meta.Staging, meta.Unripe, nTs)
+		logger.Log(logger.InfoC, pad("Progress:"), msg)
 	}
 
-	processes = append(processes, api)
-	for _, proc := range processes {
-		fmt.Println(proc)
-	}
-	fmt.Println(wg)
-	wg.Wait()
+	// Start listening to the web sockets
+	RunWebsocketPool()
+	// Start listening for requests
+	log.Fatal(http.ListenAndServe(opts.Port, NewRouter()))
 
 	// EXISTING_CODE
 
@@ -73,35 +96,4 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 }
 
 // EXISTING_CODE
-func startApi(wg *sync.WaitGroup) (OurProcess, error) {
-	cmd := exec.Command("chifra", "serve")
-	cmd.Stderr = os.Stderr
-	cmd.Stdout = os.Stdout
-	err := cmd.Start()
-	if err != nil {
-		return OurProcess{}, err
-	}
-	pid := cmd.Process.Pid
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		err = cmd.Wait()
-		if err != nil {
-			fmt.Printf("Api command finished with error: %v\n", err)
-		} else {
-			fmt.Println("Api command finished")
-		}
-	}()
-
-	fmt.Println(colors.BrightYellow, "Spawned api server to pid", pid, colors.Off)
-	proc := OurProcess{Name: "chifra serve", Pid: pid}
-	return proc, nil
-}
-
-type OurProcess struct {
-	Name string
-	Pid  int
-}
-type OurProcesses []OurProcess
-
 // EXISTING_CODE

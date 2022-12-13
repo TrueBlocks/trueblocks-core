@@ -889,9 +889,6 @@ components:
         isArchive:
           type: boolean
           description: "`true` if the rpcProvider is an archive node"
-        isDocker:
-          type: boolean
-          description: "`true` if the server is running in a docker container"
         isTracing:
           type: boolean
           description: "`true` if the rpcProvider provides Parity traces"
@@ -910,16 +907,16 @@ components:
           items:
             $ref: "#/components/schemas/chain"
           description: "the list of configured chains"
-        keys:
-          type: array
-          items:
-            $ref: "#/components/schemas/key"
-          description: "the list of configured api keys"
         caches:
           type: array
           items:
             $ref: "#/components/schemas/cache"
           description: "a collection of information concerning the binary caches"
+        keys:
+          type: array
+          items:
+            $ref: "#/components/schemas/key"
+          description: "the list of configured api keys"
     cache:
       description: "The cache data model carries information about the various local binary caches"
       type: object

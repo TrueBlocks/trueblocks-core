@@ -34,9 +34,9 @@ on      ,both ,fast  ,when    ,apps/chifra ,run_when            ,y    ,modes = w
 on      ,both ,fast  ,status  ,apps/chifra ,run_status          ,y    ,modes = status all                                                                         
 local   ,both ,fast  ,status  ,apps/chifra ,run_status_details  ,y    ,modes = status all & details & first_block = 1400000 & last_block = 2000000                
         
-off     ,cmd  ,fast  ,null    ,apps/chifra ,help_server         ,n    ,modes = serve & help & log_level = 2                                                       
+off     ,cmd  ,fast  ,null    ,apps/chifra ,help_server         ,n    ,modes = daemon & help & log_level = 2                                                       
 off     ,both ,fast  ,export  ,apps/chifra ,run_list            ,y    ,modes = monitors & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & last_block = 10000 
 off     ,both ,slow  ,export  ,apps/chifra ,run_export          ,y    ,modes = export & addrs = 0xfdecc82ddfc56192e26f563c3d68cb544a96bfed & last_block = 10      
 off     ,both ,fast  ,null    ,apps/chifra ,run_daemon          ,y    ,modes = scrape & daemon & sleep 10 & filter 0x1 0x2                                        
 off     ,both ,fast  ,null    ,apps/chifra ,run_scrape          ,y    ,modes = scrape                                                                             
-off     ,both ,fast  ,null    ,apps/chifra ,run_server          ,y    ,modes = serve                                                                              
+off     ,both ,fast  ,null    ,apps/chifra ,run_server          ,y    ,modes = daemon                                                                             

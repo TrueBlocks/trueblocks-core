@@ -6,18 +6,17 @@
  * the code outside of 'BEG_ROUTE/END_ROUTE' tags.
  */
 
-package servePkg
+package daemonPkg
 
 import (
 	"encoding/json"
 	"net/http"
 
 	// BEG_ROUTE_PKGS
- 
+
 	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
 	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
 	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
-	daemonPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/daemon"
 	explorePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/explore"
 	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
 	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/init"
@@ -181,15 +180,6 @@ func RouteInit(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// RouteDaemon Initalize and control long-running tools such as the API, scrapers, and monitors.
-func RouteDaemon(w http.ResponseWriter, r *http.Request) {
-	if err, handled := daemonPkg.ServeDaemon(w, r); err != nil {
-		RespondWithError(w, http.StatusInternalServerError, err)
-	} else if !handled {
-		CallOne(w, r, "chifra", "daemon", "daemon")
-	}
-}
-
 // RouteExplore Open a local or remote explorer for one or more addresses, blocks, or transactions.
 func RouteExplore(w http.ResponseWriter, r *http.Request) {
 	if err, handled := explorePkg.ServeExplore(w, r); err != nil {
@@ -207,6 +197,7 @@ func RouteSlurp(w http.ResponseWriter, r *http.Request) {
 		CallOne(w, r, config.GetPathToCommands("ethslurp"), "", "slurp")
 	}
 }
+
 // END_ROUTE_CODE
 
 func Index(w http.ResponseWriter, r *http.Request) {
@@ -238,7 +229,6 @@ var routes = Routes{
 	Route{"RouteScrape", "GET", "/scrape", RouteScrape},
 	Route{"RouteChunks", "GET", "/chunks", RouteChunks},
 	Route{"RouteInit", "GET", "/init", RouteInit},
-	Route{"RouteDaemon", "GET", "/daemon", RouteDaemon},
 	Route{"RouteExplore", "GET", "/explore", RouteExplore},
 	Route{"RouteSlurp", "GET", "/slurp", RouteSlurp},
 	// END_ROUTE_ITEMS

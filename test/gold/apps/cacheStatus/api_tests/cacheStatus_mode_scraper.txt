@@ -14,7 +14,6 @@ status?modes=index
       "isApi": true,
       "isScraping": false,
       "isArchive": true,
-      "isDocker": false,
       "isTracing": true,
       "hasEskey": true,
       "hasPinkey": false,

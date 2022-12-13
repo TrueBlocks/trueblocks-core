@@ -104,7 +104,7 @@ While optional, you most likely want to use the Unchained Index to search accoun
 You may use the command line, of course, to access data, but you may also wish to run an API server:
 
 ```[shell]
-chifra serve
+chifra daemon
 ```
 
 Use `curl` to pull data or use it to drive our "pre-beta" Account Explorer. See [installing the explorer](https://trueblocks.io/docs/install/install-explorer/). The API provides the identical tools and options as the command line and it [documented here](https://trueblocks.io/api/).

@@ -117,7 +117,7 @@
     # This is wrong - should be required mode
     chifra pins [flags]
 
-    chifra serve [flags]
+    chifra daemon [flags]
 
     chifra init [flags]
 ```

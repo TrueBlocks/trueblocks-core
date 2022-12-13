@@ -14,7 +14,6 @@ status?modes=index&firstBlock=1000000&lastBlock=2500000
       "isApi": true,
       "isScraping": false,
       "isArchive": true,
-      "isDocker": false,
       "isTracing": true,
       "hasEskey": true,
       "hasPinkey": false,

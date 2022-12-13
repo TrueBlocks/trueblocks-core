@@ -25,11 +25,10 @@ const helpText = `  Accounts:
     tokens        retrieve token balance(s) for one or more addresses at given block(s)
   Admin:
     status        report on the status of the TrueBlocks system
-    serve         serve the TrueBlocks API using the flame server
+    daemon        initalize and control long-running processes such as the API, scrapers, and monitors
     scrape        scan the chain and update the TrueBlocks index of appearances
     chunks        manage, investigate, and display the Unchained Index
     init          initialize the TrueBlocks system by downloading from IPFS
-    daemon        initalize and control long-running tools such as the API, scrapers, and monitors
   Other:
     explore       open a local or remote explorer for one or more addresses, blocks, or transactions
     slurp         fetch data from EtherScan for any address

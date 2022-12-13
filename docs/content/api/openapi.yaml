@@ -7,10 +7,10 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.44.1-beta
+  version: 0.44.0-beta
   description: >
 
-    A REST layer over the TrueBlocks application. With `chifra serve`, you can
+    A REST layer over the TrueBlocks application. With `chifra daemon`, you can
     run this on your own machine, and make calls to `localhost`.
 
     ## How to use this API
@@ -25,7 +25,7 @@ info:
 
     1. [Install the trueblocks-core application](/docs/install/install-trueblocks/)
       on your machine, change your configs as needed.
-    2. Run `chifra serve`
+    2. Run `chifra daemon`
 
 
       ### Example queries
@@ -1768,27 +1768,6 @@ paths:
                         - $ref: "#/components/schemas/manifest"
         "400":
           description: bad input parameter
-  /daemon:
-    get:
-      tags:
-        - Admin
-      summary: Controls tools
-      description: Initalize and control long-running tools such as the API, scrapers, and monitors.
-      operationId: admin-daemon
-      responses:
-        "200":
-          description: returns the requested data
-          content:
-            application/json:
-              schema:
-                properties:
-                  data:
-                    description: 
-                    type: array
-                    items:
-                      
-        "400":
-          description: bad input parameter
   /slurp:
     get:
       tags:
@@ -2774,9 +2753,6 @@ components:
         isArchive:
           type: boolean
           description: "`true` if the rpcProvider is an archive node"
-        isDocker:
-          type: boolean
-          description: "`true` if the server is running in a docker container"
         isTracing:
           type: boolean
           description: "`true` if the rpcProvider provides Parity traces"
@@ -2795,16 +2771,16 @@ components:
           items:
             $ref: "#/components/schemas/chain"
           description: "the list of configured chains"
-        keys:
-          type: array
-          items:
-            $ref: "#/components/schemas/key"
-          description: "the list of configured api keys"
         caches:
           type: array
           items:
             $ref: "#/components/schemas/cache"
           description: "a collection of information concerning the binary caches"
+        keys:
+          type: array
+          items:
+            $ref: "#/components/schemas/key"
+          description: "the list of configured api keys"
     cache:
       description: "The cache data model carries information about the various local binary caches"
       type: object

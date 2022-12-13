@@ -37,16 +37,20 @@ var daemonCmd = &cobra.Command{
 
 const usageDaemon = `daemon [flags]`
 
-const shortDaemon = "initalize and control long-running tools such as the API, scrapers, and monitors"
+const shortDaemon = "initalize and control long-running processes such as the API, scrapers, and monitors"
 
 const longDaemon = `Purpose:
-  Initalize and control long-running tools such as the API, scrapers, and monitors.`
+  Initalize and control long-running processes such as the API, scrapers, and monitors.`
 
-const notesDaemon = ``
+const notesDaemon = `
+Notes:
+  - To start API open terminal window and run chifra daemon.
+  - See the API documentation for more information.`
 
 func init() {
 	daemonCmd.Flags().SortFlags = false
 
+	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Port, "port", "p", ":8080", "specify the server's port")
 	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Scrape, "scrape", "s", "", `start the scraper, initialize it with either just blooms or entire index, generate for new blocks
 One of [ off | blooms | full-index ]`)
 	daemonCmd.Flags().BoolVarP(&daemonPkg.GetOptions().Monitor, "monitor", "m", false, "instruct the node to start the monitors tool")

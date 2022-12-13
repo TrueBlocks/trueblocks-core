@@ -14,7 +14,6 @@ status?modes=caches&types=txs&details&depth=1
       "isApi": true,
       "isScraping": false,
       "isArchive": true,
-      "isDocker": false,
       "isTracing": true,
       "hasEskey": true,
       "hasPinkey": false,

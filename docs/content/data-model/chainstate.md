@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2022-12-11T12:28:47
+date: 2022-12-12T19:07:27
 lastmod:
   - :git
   - lastmod
