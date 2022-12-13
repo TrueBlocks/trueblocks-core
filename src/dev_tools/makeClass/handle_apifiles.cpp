@@ -70,7 +70,7 @@ bool COptions::writeOpenApiFile(void) {
     goConvertStream << "\t}" << endl;
 
     writeCodeOut(this, getPathToSource("apps/chifra/internal/daemon/routes.go"));
-    writeCodeOut(this, getPathToSource("apps/chifra/internal/daemon/convert_params.go"));
+    writeCodeOut(this, getPathToSource("apps/chifra/internal/daemon/caller.go"));
 
     if (getEnvStr("GENERATE_YAML") != "false") {
         writeCodeOut(this, getDocsPathContent("api/openapi.yaml"));
