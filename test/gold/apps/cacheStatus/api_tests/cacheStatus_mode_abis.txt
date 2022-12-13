@@ -17,6 +17,7 @@ status?modes=abis
       "isTracing": true,
       "hasEskey": true,
       "hasPinkey": false,
+      "chains": [],
       "caches": [
         {
           "type": "CAbiCache",
@@ -27,7 +28,6 @@ status?modes=abis
           "isValid": true
         }
       ],
-      "chains": [],
       "date": "--date--"
     }
   ],

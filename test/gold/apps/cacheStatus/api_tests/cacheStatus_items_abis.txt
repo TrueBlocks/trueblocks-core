@@ -17,6 +17,7 @@ status?details&modes=abis
       "isTracing": true,
       "hasEskey": true,
       "hasPinkey": false,
+      "chains": [],
       "caches": [
         {
           "items": [
@@ -51,7 +52,6 @@ status?details&modes=abis
           "isValid": true
         }
       ],
-      "chains": [],
       "date": "--date--"
     }
   ],

@@ -17,6 +17,7 @@ status?modes=index
       "isTracing": true,
       "hasEskey": true,
       "hasPinkey": false,
+      "chains": [],
       "caches": [
         {
           "type": "CIndexCache",
@@ -27,7 +28,6 @@ status?modes=index
           "isValid": true
         }
       ],
-      "chains": [],
       "date": "--date--"
     }
   ],

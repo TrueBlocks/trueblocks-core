@@ -17,6 +17,7 @@ status?modes=monitors
       "isTracing": true,
       "hasEskey": true,
       "hasPinkey": false,
+      "chains": [],
       "caches": [
         {
           "addrs": [
@@ -31,7 +32,6 @@ status?modes=monitors
           "isValid": true
         }
       ],
-      "chains": [],
       "date": "--date--"
     }
   ],

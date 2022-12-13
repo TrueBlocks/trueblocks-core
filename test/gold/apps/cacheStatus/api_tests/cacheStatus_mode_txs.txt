@@ -17,6 +17,7 @@ status?modes=caches&types=txs
       "isTracing": true,
       "hasEskey": true,
       "hasPinkey": false,
+      "chains": [],
       "caches": [
         {
           "type": "CChainCache",
@@ -27,7 +28,6 @@ status?modes=caches&types=txs
           "isValid": true
         }
       ],
-      "chains": [],
       "date": "--date--"
     }
   ],

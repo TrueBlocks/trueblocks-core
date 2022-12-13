@@ -17,6 +17,7 @@ status?modes=names
       "isTracing": true,
       "hasEskey": true,
       "hasPinkey": false,
+      "chains": [],
       "caches": [
         {
           "addrs": [],
@@ -28,7 +29,6 @@ status?modes=names
           "isValid": true
         }
       ],
-      "chains": [],
       "date": "--date--"
     }
   ],

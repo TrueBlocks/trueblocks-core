@@ -17,6 +17,7 @@ status?details&modes=index&firstBlock=1000000&lastBlock=2200000
       "isTracing": true,
       "hasEskey": true,
       "hasPinkey": false,
+      "chains": [],
       "caches": [
         {
           "items": [],
@@ -28,7 +29,6 @@ status?details&modes=index&firstBlock=1000000&lastBlock=2200000
           "isValid": true
         }
       ],
-      "chains": [],
       "date": "--date--"
     }
   ],

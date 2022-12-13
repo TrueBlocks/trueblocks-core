@@ -17,6 +17,7 @@ status?modes=index&firstBlock=1000000&lastBlock=2500000
       "isTracing": true,
       "hasEskey": true,
       "hasPinkey": false,
+      "chains": [],
       "caches": [
         {
           "type": "CIndexCache",
@@ -27,7 +28,6 @@ status?modes=index&firstBlock=1000000&lastBlock=2500000
           "isValid": true
         }
       ],
-      "chains": [],
       "date": "--date--"
     }
   ],

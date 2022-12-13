@@ -17,6 +17,7 @@ status?modes=caches&types=slurps
       "isTracing": true,
       "hasEskey": true,
       "hasPinkey": false,
+      "chains": [],
       "caches": [
         {
           "type": "CSlurpCache",
@@ -27,7 +28,6 @@ status?modes=caches&types=slurps
           "isValid": true
         }
       ],
-      "chains": [],
       "date": "--date--"
     }
   ],

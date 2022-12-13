@@ -17,6 +17,7 @@ status?modes=caches&types=txs&details&depth=0
       "isTracing": true,
       "hasEskey": true,
       "hasPinkey": false,
+      "chains": [],
       "caches": [
         {
           "items": [
@@ -31,7 +32,6 @@ status?modes=caches&types=txs&details&depth=0
           "isValid": false
         }
       ],
-      "chains": [],
       "date": "--date--"
     }
   ],
