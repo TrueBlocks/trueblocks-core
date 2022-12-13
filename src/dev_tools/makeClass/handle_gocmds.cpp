@@ -39,7 +39,6 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     replaceAll(source, "[{LONG}]", "Purpose:\n  " + p.description);
     replaceAll(source, "[{OPT_DEF}]", "");
     replaceAll(source, "validate[{PROPER}]Args", "[{ROUTE}]Pkg.Validate");
-    replaceAll(source, "/internal/[{ROUTE}]", (p.api_route == "serve" ? "/server" : "/internal/[{ROUTE}]"));
     replaceAll(source, "[{SET_OPTS}]", get_setopts(p));
     replaceAll(source, "[{HIDDEN}]", get_hidden(p));
     replaceAll(source, "[{USE}]", get_use(p));

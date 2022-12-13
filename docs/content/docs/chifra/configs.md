@@ -155,7 +155,7 @@ The following tools are documented, but customizing them is not supported. If yo
 | ----------------- | ----------------------------------------------------------------------------------------------------------- |
 |                   |                                                                                                             |
 | [settings]        |                                                                                                             |
-| api_provider      | The location of the API endpoint gotten from `chifra serve`<br />http://localhost:8080                      |
+| api_provider      | The location of the API endpoint gotten from `chifra daemon`<br />http://localhost:8080                     |
 | run_local         | If true, run tests labeled as `local` (most will fail)<br />false                                           |
 | json_pretty_print | Post processor for API test cases (formats output to verify valid JSON production)<br />jq .                |
 | test_epoch        | The epoch to report in the performance testing tool - usually tracks current version<br />E-<VERSION_MINOR> |

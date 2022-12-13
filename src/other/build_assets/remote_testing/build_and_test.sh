@@ -36,20 +36,20 @@ if $RUN_SERVER
 then
     if [ -n "$(pgrep chifra)" ]
     then
-        echo "Error: Chifra serve is already running"
+        echo "Error: chifra daemon is already running"
         exit 1
     fi
 
-    chifra serve -p ":$SRV_PORT" 2>/dev/null &
+    chifra daemon -p ":$SRV_PORT" 2>/dev/null &
 
-    echo "Waiting for chifra server -p :$SRV_PORT to start..."
+    echo "Waiting for chifra daemon -p :$SRV_PORT to start..."
     sleep 15
 
-    echo "Checking if chifra serve is running..."
+    echo "Checking if chifra daemon is running..."
     pgrep chifra
     if [ $? -gt 0 ]
     then
-        echo "Error: Waited 15 seconds, chifra serve is not running. Quitting..."
+        echo "Error: Waited 15 seconds, chifra daemon is not running. Quitting..."
         exit 2
     fi
 
