@@ -6,14 +6,14 @@
  * the code outside of 'BEG_ROUTE/END_ROUTE' tags.
  */
 
-package servePkg
+package daemonPkg
 
 import (
 	"encoding/json"
 	"net/http"
 
 	// BEG_ROUTE_PKGS
- 
+
 	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
 	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
 	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
@@ -197,6 +197,7 @@ func RouteSlurp(w http.ResponseWriter, r *http.Request) {
 		CallOne(w, r, config.GetPathToCommands("ethslurp"), "", "slurp")
 	}
 }
+
 // END_ROUTE_CODE
 
 func Index(w http.ResponseWriter, r *http.Request) {

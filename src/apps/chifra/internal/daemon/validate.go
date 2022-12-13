@@ -2,7 +2,7 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package servePkg
+package daemonPkg
 
 import (
 	"strings"
@@ -11,7 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *ServeOptions) validateServe() error {
+func (opts *DaemonOptions) validateDaemon() error {
 	opts.testLog()
 
 	if opts.BadFlag != nil {
@@ -19,7 +19,7 @@ func (opts *ServeOptions) validateServe() error {
 	}
 
 	if len(opts.Globals.Chain) > 0 && opts.Globals.Chain != config.GetDefaultChain() {
-		return validate.Usage("The {0} option is not supported by the {1} command.", "--chain", "serve")
+		return validate.Usage("The {0} option is not supported by the {1} command.", "--chain", "daemon")
 	}
 
 	if len(opts.Port) > 0 && !strings.Contains(opts.Port, ":") {

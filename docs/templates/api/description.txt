@@ -1,5 +1,5 @@
 
-    A REST layer over the TrueBlocks application. With `chifra serve`, you can
+    A REST layer over the TrueBlocks application. With `chifra daemon`, you can
     run this on your own machine, and make calls to `localhost`.
 
     ## How to use this API
@@ -14,7 +14,7 @@
 
     1. [Install the trueblocks-core application](/docs/install/install-trueblocks/)
       on your machine, change your configs as needed.
-    2. Run `chifra serve`
+    2. Run `chifra daemon`
 
 
       ### Example queries

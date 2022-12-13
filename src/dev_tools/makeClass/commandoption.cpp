@@ -815,7 +815,7 @@ string_q CCommandOption::toPairMap(void) const {
 
 //---------------------------------------------------------------------------------------------------
 bool isApiRoute(const string_q& route) {
-    if (route == "serve" || route == "blaze")
+    if (route == "daemon" || route == "blaze")
         return false;
     return !route.empty();
 }

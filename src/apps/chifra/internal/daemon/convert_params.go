@@ -6,7 +6,7 @@
  * the code outside of 'BEG_/END_' tags.
  */
 
-package servePkg
+package daemonPkg
 
 // TODO: Once we're fully ported to Go, this can go away when CallOne and PassItOn goes away
 // TODO: camelCase vs. snake_case - issue #1974
