@@ -17,7 +17,6 @@ status?modes=abis%20caches%20monitors&types=slurps
       "isTracing": true,
       "hasEskey": true,
       "hasPinkey": false,
-      "chains": [],
       "caches": [
         {
           "addrs": [

@@ -108,6 +108,20 @@ status?modes=all
           "isValid": true
         }
       ],
+      "keys": [
+        {
+          "provider": "etherscan",
+          "apiKey": "--api-key--",
+          "jwt": "--jwt--",
+          "secret": "--secret"
+        },
+        {
+          "provider": "pinata",
+          "apiKey": "--api-key--",
+          "jwt": "--jwt--",
+          "secret": "--secret"
+        }
+      ],
       "date": "--date--"
     }
   ],

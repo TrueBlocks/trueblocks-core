@@ -17,7 +17,6 @@ status?modes=index&firstBlock=100
       "isTracing": true,
       "hasEskey": true,
       "hasPinkey": false,
-      "chains": [],
       "caches": [
         {
           "type": "CIndexCache",

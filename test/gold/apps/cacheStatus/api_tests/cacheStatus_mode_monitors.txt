@@ -17,7 +17,6 @@ status?modes=monitors
       "isTracing": true,
       "hasEskey": true,
       "hasPinkey": false,
-      "chains": [],
       "caches": [
         {
           "addrs": [

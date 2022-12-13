@@ -34,20 +34,6 @@ TEST[DATE|TIME] Depth:  0
       "localExplorer": "--explorer-gnosis--"
     }
   ],
-  "keys": [
-    {
-      "provider": "etherscan",
-      "apiKey": "--api-key--",
-      "jwt": "--jwt--",
-      "secret": "--secret"
-    },
-    {
-      "provider": "pinata",
-      "apiKey": "--api-key--",
-      "jwt": "--jwt--",
-      "secret": "--secret"
-    }
-  ],
   "caches": [
     {
       "type": "CIndexCache",
@@ -113,6 +99,20 @@ TEST[DATE|TIME] Depth:  0
       "nFolders": 0,
       "sizeInBytes": 0,
       "isValid": true
+    }
+  ],
+  "keys": [
+    {
+      "provider": "etherscan",
+      "apiKey": "--api-key--",
+      "jwt": "--jwt--",
+      "secret": "--secret"
+    },
+    {
+      "provider": "pinata",
+      "apiKey": "--api-key--",
+      "jwt": "--jwt--",
+      "secret": "--secret"
     }
   ],
   "date": "--date--"

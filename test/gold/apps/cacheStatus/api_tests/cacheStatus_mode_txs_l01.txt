@@ -17,7 +17,6 @@ status?modes=caches&types=txs&details
       "isTracing": true,
       "hasEskey": true,
       "hasPinkey": false,
-      "chains": [],
       "caches": [
         {
           "items": [
