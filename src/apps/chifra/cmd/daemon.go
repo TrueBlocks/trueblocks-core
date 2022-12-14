@@ -37,15 +37,15 @@ var daemonCmd = &cobra.Command{
 
 const usageDaemon = `daemon [flags]`
 
-const shortDaemon = "initalize and control long-running processes such as the API, scrapers, and monitors"
+const shortDaemon = "initalize and control long-running processes such as the API and the scrapers"
 
 const longDaemon = `Purpose:
-  Initalize and control long-running processes such as the API, scrapers, and monitors.`
+  Initalize and control long-running processes such as the API and the scrapers.`
 
 const notesDaemon = `
 Notes:
   - To start API open terminal window and run chifra daemon.
-  - See the API documentation for more information.`
+  - See the API documentation (https://trueblocks.io/api) for more information.`
 
 func init() {
 	daemonCmd.Flags().SortFlags = false

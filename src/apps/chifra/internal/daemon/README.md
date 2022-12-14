@@ -8,7 +8,7 @@ Another way to get help to run `chifra --help` or `chifra <cmd> --help` on your 
 
 ```[plaintext]
 Purpose:
-  Initalize and control long-running processes such as the API, scrapers, and monitors.
+  Initalize and control long-running processes such as the API and the scrapers.
 
 Usage:
   chifra daemon [flags]
@@ -26,7 +26,7 @@ Flags:
 
 Notes:
   - To start API open terminal window and run chifra daemon.
-  - See the API documentation for more information.
+  - See the API documentation (https://trueblocks.io/api) for more information.
 ```
 
 #### Other Options
