@@ -14,6 +14,7 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -92,6 +93,15 @@ func (opts *MonitorsOptions) MonitorsInternal() (err error, handled bool) {
 	// EXISTING_CODE
 
 	return
+}
+
+// GetMonitorsOptions returns the options for this tool so other tools may use it.
+func GetMonitorsOptions(args []string, g *globals.GlobalOptions) *MonitorsOptions {
+	ret := monitorsFinishParse(args)
+	if g != nil {
+		ret.Globals = *g
+	}
+	return ret
 }
 
 // EXISTING_CODE

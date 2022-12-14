@@ -12,6 +12,7 @@ package statusPkg
 import (
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -56,6 +57,15 @@ func (opts *StatusOptions) StatusInternal() (err error, handled bool) {
 	// EXISTING_CODE
 
 	return
+}
+
+// GetStatusOptions returns the options for this tool so other tools may use it.
+func GetStatusOptions(args []string, g *globals.GlobalOptions) *StatusOptions {
+	ret := statusFinishParse(args)
+	if g != nil {
+		ret.Globals = *g
+	}
+	return ret
 }
 
 // EXISTING_CODE
