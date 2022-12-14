@@ -12,6 +12,7 @@ package namesPkg
 import (
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -62,6 +63,15 @@ func (opts *NamesOptions) NamesInternal() (err error, handled bool) {
 	// EXISTING_CODE
 
 	return
+}
+
+// GetNamesOptions returns the options for this tool so other tools may use it.
+func GetNamesOptions(args []string, g *globals.GlobalOptions) *NamesOptions {
+	ret := namesFinishParse(args)
+	if g != nil {
+		ret.Globals = *g
+	}
+	return ret
 }
 
 // EXISTING_CODE

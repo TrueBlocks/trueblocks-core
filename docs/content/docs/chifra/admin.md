@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-12-12T22:29:51
+date: 2022-12-14T17:38:13
 lastmod:
   - :git
   - lastmod
@@ -34,7 +34,7 @@ Another way to get help to run `chifra --help` or `chifra <cmd> --help` on your 
 
 ```[plaintext]
 Purpose:
-  Initalize and control long-running processes such as the API, scrapers, and monitors.
+  Initalize and control long-running processes such as the API and the scrapers.
 
 Usage:
   chifra daemon [flags]
@@ -52,7 +52,7 @@ Flags:
 
 Notes:
   - To start API open terminal window and run chifra daemon.
-  - See the API documentation for more information.
+  - See the API documentation (https://trueblocks.io/api) for more information.
 ```
 
 **Source code**: [`internal/daemon`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/daemon)

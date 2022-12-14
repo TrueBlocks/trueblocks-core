@@ -12,6 +12,7 @@ package tracesPkg
 import (
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -56,6 +57,15 @@ func (opts *TracesOptions) TracesInternal() (err error, handled bool) {
 	// EXISTING_CODE
 
 	return
+}
+
+// GetTracesOptions returns the options for this tool so other tools may use it.
+func GetTracesOptions(args []string, g *globals.GlobalOptions) *TracesOptions {
+	ret := tracesFinishParse(args)
+	if g != nil {
+		ret.Globals = *g
+	}
+	return ret
 }
 
 // EXISTING_CODE
