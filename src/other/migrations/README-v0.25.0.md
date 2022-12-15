@@ -58,7 +58,7 @@ The above commands will rebuild the TrueBlocks executables and create the new mu
 Let's make sure the build worked and that you have the latest version. Run
 
 ```
-chifra status --terse
+chifra config --terse
 ```
 
 Unless you're running your Ethereum node at `http://localhost:8545` (the default location), this will return an error message saying the node could not be found. If that happens, see the next set of instructions below.
@@ -129,7 +129,7 @@ symbol = "ETH"
 
 If you have values for the rpcProviders for other chains, you may set them now if you wish. Each chain has its own configuration section.
 
-Run `chifra status --terse` again. You should get the same migration message as earlier.
+Run `chifra config --terse` again. You should get the same migration message as earlier.
 
 ### Moving existing cache and unchained index folders
 
@@ -157,7 +157,7 @@ mv * mainnet
 
 *Note: You may get a warning saying you've tried to move a folder into itself. That's okay.*
 
-Run `chifra status --terse` again. You will continue to get the warning message.
+Run `chifra config --terse` again. You will continue to get the warning message.
 
 ### Removing old configuration files
 
@@ -180,13 +180,13 @@ When you've completed this step, the root configuration folder should contain a 
 
 **Note:**  You may remove the `[requires]` section from the `blockScrape.toml` file as it is no longer needed.
 
-Continue running `chifra status --terse` until chifra stops complaining. When it does stop complaining, you will be finished. Chifra should tell you what files it needs you to remove until its satisfied.
+Continue running `chifra config --terse` until chifra stops complaining. When it does stop complaining, you will be finished. Chifra should tell you what files it needs you to remove until its satisfied.
 
 ## Are you finished?
 
 If you've completed the above steps, you should be able to run any of the `chifra` commands. If `chifra` continues to complain, review the above steps and/or contact us in discord for help.
 
-Run `chifra status --terse`.
+Run `chifra config --terse`.
 
 If the migration is finished, it will return something similar to this:
 
@@ -200,7 +200,7 @@ If the migration is finished, it will return something similar to this:
 <date-time> RPC Provider: http://localhost:8545/
 ```
 
-Try this: `chifra status --terse --chain gnosis`. Does it work? You're multi-chain!
+Try this: `chifra config --terse --chain gnosis`. Does it work? You're multi-chain!
 
 ## Are we finished?
 

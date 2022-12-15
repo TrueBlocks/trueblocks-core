@@ -1,4 +1,4 @@
-status?modes=caches&types=txs&details
+config?modes=show&module=caches&types=txs&details
 {
   "data": [
     {

@@ -1,4 +1,4 @@
-status?
+config?modes=show&module=all
 {
   "data": [
     {
@@ -62,6 +62,38 @@ status?
           "addrs": [],
           "type": "CNameCache",
           "path": "namesPath",
+          "nFiles": 0,
+          "nFolders": 0,
+          "sizeInBytes": 0,
+          "isValid": true
+        },
+        {
+          "type": "CAbiCache",
+          "path": "abisPath",
+          "nFiles": 0,
+          "nFolders": 0,
+          "sizeInBytes": 0,
+          "isValid": true
+        },
+        {
+          "type": "CChainCache",
+          "path": "blocksPath",
+          "nFiles": 0,
+          "nFolders": 0,
+          "sizeInBytes": 0,
+          "isValid": true
+        },
+        {
+          "type": "CChainCache",
+          "path": "txsPath",
+          "nFiles": 0,
+          "nFolders": 0,
+          "sizeInBytes": 0,
+          "isValid": true
+        },
+        {
+          "type": "CChainCache",
+          "path": "tracesPath",
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,

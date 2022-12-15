@@ -1,5 +1,6 @@
-chifra status  some
-TEST[DATE|TIME] Modes:  [some]
+chifra config  show --module some
+TEST[DATE|TIME] Modes:  [show]
+TEST[DATE|TIME] Module:  [some]
 TEST[DATE|TIME] Depth:  0
 {
   "clientVersion": "Client version",

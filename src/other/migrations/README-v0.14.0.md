@@ -30,7 +30,7 @@ Please report any problems by creating an issue.
 
 ## Deprecated Command Line Options
 
-- The `--report` option of `chifra status` has been removed. Simply run `chifra status` with no options for the same result.
+- The `--report` option of `chifra config` has been removed. Simply run `chifra config` with no options for the same result.
 - The `--init_all` option of `chifra pins` has been removed. Use `chifra init --all` instead.
 - The globally available `--file:fn` option has been made consistent with other flags and no longer requires the colon (:).
 

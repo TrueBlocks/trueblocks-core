@@ -1,5 +1,6 @@
-chifra status  --details abis
-TEST[DATE|TIME] Modes:  [abis]
+chifra config  --details show --module abis
+TEST[DATE|TIME] Modes:  [show]
+TEST[DATE|TIME] Module:  [abis]
 TEST[DATE|TIME] Details:  true
 TEST[DATE|TIME] Depth:  0
 {

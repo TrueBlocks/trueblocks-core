@@ -1,4 +1,4 @@
-status?modes=names&toFile
+config?modes=show&module=names&toFile
 {
   "outputFilename": "--output_filename--"
 }

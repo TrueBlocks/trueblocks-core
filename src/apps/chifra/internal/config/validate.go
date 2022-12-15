@@ -2,7 +2,7 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package statusPkg
+package configPkg
 
 import (
 	"strconv"
@@ -10,7 +10,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *StatusOptions) validateStatus() error {
+func (opts *ConfigOptions) validateConfig() error {
 	opts.testLog()
 
 	if opts.BadFlag != nil {
@@ -26,7 +26,12 @@ func (opts *StatusOptions) validateStatus() error {
 		return err
 	}
 
-	err = validate.ValidateEnumSlice("modes", opts.Modes, "[index|monitors|names|abis|caches|some|all]")
+	err = validate.ValidateEnumSlice("module", opts.Module, "[index|monitors|names|abis|caches|some|all]")
+	if err != nil {
+		return err
+	}
+
+	err = validate.ValidateEnumSlice("modes", opts.Modes, "[show|edit]")
 	if err != nil {
 		return err
 	}

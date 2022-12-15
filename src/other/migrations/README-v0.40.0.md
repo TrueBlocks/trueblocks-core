@@ -35,7 +35,7 @@ migration is complete.
 
 ### Make a note of the following folders
 
-You will need the following folder locations to proceed. Run `chifra status --terse` and note these values:
+You will need the following folder locations to proceed. Run `chifra config --terse` and note these values:
 
 1. `$configPath`
 2. `$cachePath`
