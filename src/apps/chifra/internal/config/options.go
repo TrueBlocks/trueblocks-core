@@ -151,7 +151,17 @@ func configFinishParse(args []string) *ConfigOptions {
 	defFmt := "txt"
 	// EXISTING_CODE
 	defFmt = ""
-	opts.Modes = args
+	for _, mode := range args {
+		if mode == "show" || mode == "edit" {
+			opts.Modes = append(opts.Modes, mode)
+		} else {
+			opts.Module = append(opts.Module, mode)
+		}
+	}
+	if len(opts.Modes) == 0 {
+		opts.Modes = []string{"show"}
+		opts.Terse = true
+	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
