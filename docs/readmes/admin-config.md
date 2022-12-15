@@ -6,22 +6,24 @@ TrueBlocks maintains caches for the index of address appearances, named addresse
 
 ```[plaintext]
 Purpose:
-  Report on the status of the TrueBlocks system.
+  Report on and edit the configuration of the TrueBlocks system.
 
 Usage:
   chifra config <mode> [mode...] [flags]
 
 Arguments:
-  modes - the type of status info to retrieve
-	One or more of [ index | monitors | names | abis | caches | some | all ]
+  modes - either show or edit the configuration
+	One or more of [ show | edit ]
 
 Flags:
-  -d, --details         include details about items found in monitors, slurps, abis, or price caches
-  -t, --types strings   for caches mode only, which type(s) of cache to report
-                        One or more of [ blocks | txs | traces | slurps | all ]
-  -x, --fmt string      export format, one of [none|json*|txt|csv]
-  -v, --verbose         enable verbose (increase detail with --log_level)
-  -h, --help            display this help screen
+      --module strings   the type of information to show or edit
+                         One or more of [ index | monitors | names | abis | caches | some | all ]
+  -d, --details          include details about items found in monitors, slurps, abis, or price caches
+  -t, --types strings    for caches module only, which type(s) of cache to report
+                         One or more of [ blocks | txs | traces | slurps | all ]
+  -x, --fmt string       export format, one of [none|json*|txt|csv]
+  -v, --verbose          enable verbose (increase detail with --log_level)
+  -h, --help             display this help screen
 ```
 
 **Source code**: [`internal/config`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/config)
