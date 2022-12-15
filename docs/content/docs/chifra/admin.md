@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-12-14T16:57:49
+date: 2022-12-15T06:37:36
 lastmod:
   - :git
   - lastmod
@@ -23,6 +23,36 @@ control the creation, sharing, and pinning of the TrueBlocks index of appearance
 and even serve the data through an API.
 
 [See the API documentation for all information about using the API](/api).
+
+## chifra config
+
+The `chifra config` program allows you to manage the various TrueBlocks caches. You may list all of the caches, some of the cache, or even individual caches either in terse or full detail. The cache of interest is specified with the `modes` option.
+
+TrueBlocks maintains caches for the index of address appearances, named addresses, abi files, as well as other data including blockchain data, and address monitors.
+
+```[plaintext]
+Purpose:
+  Report on and edit the configuration of the TrueBlocks system.
+
+Usage:
+  chifra config <mode> [mode...] [flags]
+
+Arguments:
+  modes - either show or edit the configuration
+	One or more of [ show | edit ]
+
+Flags:
+      --module strings   the type of information to show or edit
+                         One or more of [ index | monitors | names | abis | caches | some | all ]
+  -d, --details          include details about items found in monitors, slurps, abis, or price caches
+  -t, --types strings    for caches module only, which type(s) of cache to report
+                         One or more of [ blocks | txs | traces | slurps | all ]
+  -x, --fmt string       export format, one of [none|json*|txt|csv]
+  -v, --verbose          enable verbose (increase detail with --log_level)
+  -h, --help             display this help screen
+```
+
+**Source code**: [`internal/config`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/config)
 
 ## chifra daemon
 
@@ -89,14 +119,14 @@ Each of the following additional configurable command line options are available
 **Configuration file:** `$CONFIG/$CHAIN/blockScrape.toml`  
 **Configuration group:** `[settings]`  
 
-| Item                         | Type   | Default | Description / Default                                                                                                    |
-| ---------------------------- | ------ | ------- | ------------------------------------------------------------------------------------------------------------------------ |
-| apps&lowbar;per&lowbar;chunk | uint64 | 200000  | the number of appearances to build into a chunk before consolidating it                                                  |
-| snap&lowbar;to&lowbar;grid   | uint64 | 100000  | an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index |
-| first&lowbar;snap            | uint64 | 0       | the first block at which snap_to_grid is enabled                                                                         |
-| unripe&lowbar;dist           | uint64 | 28      | the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe                |
-| channel&lowbar;count         | uint64 | 20      | number of concurrent processing channels                                                                                 |
-| allow&lowbar;missing         | bool   | true    | do not report errors for blockchains that contain blocks with zero addresses                                             |
+| Item               | Type         | Default      | Description / Default |
+| ------------------ | ------------ | ------------ | --------- |
+| apps&lowbar;per&lowbar;chunk | uint64       | 200000       | the number of appearances to build into a chunk before consolidating it |
+| snap&lowbar;to&lowbar;grid | uint64       | 100000       | an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index |
+| first&lowbar;snap  | uint64       | 0            | the first block at which snap_to_grid is enabled |
+| unripe&lowbar;dist | uint64       | 28           | the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe |
+| channel&lowbar;count | uint64       | 20           | number of concurrent processing channels |
+| allow&lowbar;missing | bool         | true         | do not report errors for blockchains that contain blocks with zero addresses |
 
 
 These items may be set in three ways, each overridding the preceeding method:

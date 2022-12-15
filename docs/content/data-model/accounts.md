@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-12-14T21:25:42
+date: 2022-12-15T06:37:35
 lastmod:
   - :git
   - lastmod
@@ -31,12 +31,12 @@ Once created, a monitor may be periodically *freshened* by calling either `chifr
 
 The following commands produce and manage monitors:
 
-| Tools                                                       |                                                              |
-| ----------------------------------------------------------- | ------------------------------------------------------------ |
-| [chifra config monitors](/docs/chifra/admin/#chifra-status) | report on the status of the TrueBlocks system                |
-| [chifra list](/docs/chifra/accounts/#chifra-list)           | list appearances for one or more addresses                   |
-| [chifra export](/docs/chifra/accounts/#chifra-export)       | export full detail of transactions for one or more addresses |
-| [chifra monitors](/docs/chifra/accounts/#chifra-monitors)   | delete, undelete, and remove previously created monitors     |
+| Tools                                                     |                                                              |
+| --------------------------------------------------------- | ------------------------------------------------------------ |
+| [chifra monitors](/docs/chifra/admin/#chifra-monitors)    | report on currently monitored addresses                      |
+| [chifra list](/docs/chifra/accounts/#chifra-list)         | list appearances for one or more addresses                   |
+| [chifra export](/docs/chifra/accounts/#chifra-export)     | export full detail of transactions for one or more addresses |
+| [chifra monitors](/docs/chifra/accounts/#chifra-monitors) | delete, undelete, and remove previously created monitors     |
 
 Monitor data is made of the following data fields:
 
