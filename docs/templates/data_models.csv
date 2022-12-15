@@ -16,7 +16,7 @@ Chain Data ,TraceResult    ,traceResult    ,./libs/etherlib/classDefinitions/tra
 Chain Data ,DatedBlock     ,datedBlock     ,./libs/etherlib/classDefinitions/datedBlock.txt
 State      ,State          ,state          ,./libs/etherlib/classDefinitions/ethstate.txt
 State      ,Token          ,token          ,./tools/getTokens/classDefinitions/tokenbalancerecord.txt
-Admin      ,Status         ,status         ,./apps/cacheStatus/classDefinitions/status.txt
+Admin      ,Config         ,config         ,./apps/cacheStatus/classDefinitions/status.txt
 Admin      ,Pin            ,pinnedChunk    ,./apps/blockScrape/classes/classDefinitions/pinnedchunk.txt
 Admin      ,Chunk          ,pinnedChunk    ,./apps/blockScrape/classes/classDefinitions/pinnedchunk.txt
 
