@@ -1,5 +1,6 @@
-chifra config  caches --types txs --details --depth 2
-TEST[DATE|TIME] Modes:  [caches]
+chifra config  show --module caches --types txs --details --depth 2
+TEST[DATE|TIME] Modes:  [show]
+TEST[DATE|TIME] Module:  [caches]
 TEST[DATE|TIME] Details:  true
 TEST[DATE|TIME] Types:  [txs]
 TEST[DATE|TIME] Depth:  2

@@ -53,7 +53,10 @@ func (opts *ConfigOptions) ConfigInternal() (err error, handled bool) {
 	}
 
 	handled = true
-	err = opts.Globals.PassItOn("cacheStatus", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
+	cmd := opts.toCmdLine()
+	// cmd = strings.Replace(strings.Replace(strings.Replace(cmd, "show", "", -1), "edit", "", -1), "--module", "", -1)
+	// fmt.Println(cmd)
+	err = opts.Globals.PassItOn("cacheStatus", opts.Globals.Chain, cmd, opts.getEnvStr())
 	// EXISTING_CODE
 
 	return

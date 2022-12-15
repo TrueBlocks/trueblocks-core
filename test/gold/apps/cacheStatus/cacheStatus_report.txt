@@ -1,90 +1,25 @@
 chifra config  --report --fmt txt
-TEST[DATE|TIME] Depth:  0
-TEST[DATE|TIME] Format:  txt
-{
-  "clientVersion": "Client version",
-  "clientIds": "chainId: 1 networkId: 1",
-  "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-",
-  "rpcProvider": "--providers--",
-  "configPath": "--paths--",
-  "cachePath": "--paths--",
-  "indexPath": "--paths--",
-  "host": "--hostname-- (--username--)",
-  "isTesting": true,
-  "isArchive": true,
-  "isTracing": true,
-  "hasEskey": true,
-  "chains": [
-    {
-      "chain": "mainnet",
-      "chainId": 1,
-      "symbol": "ETH",
-      "rpcProvider": "--provider-mainnet--",
-      "apiProvider": "--provider-mainnet--",
-      "remoteExplorer": "--explorer-mainnet--",
-      "localExplorer": "--explorer-mainnet--"
-    },
-    {
-      "chain": "gnosis",
-      "chainId": 100,
-      "symbol": "XDAI",
-      "rpcProvider": "--provider-gnosis--",
-      "apiProvider": "--provider-gnosis--",
-      "remoteExplorer": "--explorer-gnosis--",
-      "localExplorer": "--explorer-gnosis--"
-    }
-  ],
-  "caches": [
-    {
-      "type": "CIndexCache",
-      "path": "indexPath",
-      "nFiles": 0,
-      "nFolders": 0,
-      "sizeInBytes": 0,
-      "isValid": true
-    },
-    {
-      "addrs": [
-        "---address---",
-        "---address---"
-      ],
-      "type": "CMonitorCache",
-      "path": "monitorsPath",
-      "nFiles": 0,
-      "nFolders": 0,
-      "sizeInBytes": 0,
-      "isValid": true
-    },
-    {
-      "type": "CNameCache",
-      "path": "namesPath",
-      "nFiles": 0,
-      "nFolders": 0,
-      "sizeInBytes": 0,
-      "isValid": true
-    },
-    {
-      "type": "CSlurpCache",
-      "path": "slurpsPath",
-      "nFiles": 0,
-      "nFolders": 0,
-      "sizeInBytes": 0,
-      "isValid": true
-    }
-  ],
-  "keys": [
-    {
-      "provider": "etherscan",
-      "apiKey": "--api-key--",
-      "jwt": "--jwt--",
-      "secret": "--secret"
-    },
-    {
-      "provider": "pinata",
-      "apiKey": "--api-key--",
-      "jwt": "--jwt--",
-      "secret": "--secret"
-    }
-  ],
-  "date": "--date--"
-}
+Error: 
+  unknown flag: --report
+
+Usage:
+  chifra config <mode> [mode...] [flags]
+
+Arguments:
+  modes - either show or edit the configuration
+	One or more of [ show | edit ]
+
+Flags:
+      --module strings     the type of information to show or edit
+                           One or more of [ index | monitors | names | abis | caches | some | all ]
+  -d, --details            include details about items found in monitors, slurps, abis, or price caches
+  -t, --types strings      for caches module only, which type(s) of cache to report
+                           One or more of [ blocks | txs | traces | slurps | all ]
+  -p, --depth uint         for caches module only, number of levels deep to report (hidden)
+  -e, --terse              show a terse summary report for mode show (hidden)
+  -F, --first_block uint   first block to process (inclusive -- testing only) (hidden)
+  -L, --last_block uint    last block to process (inclusive -- testing only) (hidden)
+  -x, --fmt string         export format, one of [none|json*|txt|csv]
+  -v, --verbose            enable verbose (increase detail with --log_level)
+  -h, --help               display this help screen
+

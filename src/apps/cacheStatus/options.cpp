@@ -131,7 +131,7 @@ bool COptions::parseArguments(string_q& command) {
     establishIndexFolders();
     establishCacheFolders();
 
-    for (auto m : modes)
+    for (auto m : module)
         mode += (m + "|");
     origMode = mode;
 

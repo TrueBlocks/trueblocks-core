@@ -1,4 +1,4 @@
-status?modes=caches&types=slurps
+config?modes=show&module=caches&types=slurps
 {
   "data": [
     {

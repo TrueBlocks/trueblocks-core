@@ -26,7 +26,12 @@ func (opts *ConfigOptions) validateConfig() error {
 		return err
 	}
 
-	err = validate.ValidateEnumSlice("modes", opts.Modes, "[index|monitors|names|abis|caches|some|all]")
+	err = validate.ValidateEnumSlice("module", opts.Module, "[index|monitors|names|abis|caches|some|all]")
+	if err != nil {
+		return err
+	}
+
+	err = validate.ValidateEnumSlice("modes", opts.Modes, "[show|edit]")
 	if err != nil {
 		return err
 	}

@@ -1,4 +1,4 @@
-status?details&firstBlock=1400000&lastBlock=2000000
+config?modes=show&module=all&details&firstBlock=1400000&lastBlock=2000000
 {
   "data": [
     {
@@ -17,6 +17,26 @@ status?details&firstBlock=1400000&lastBlock=2000000
       "isTracing": true,
       "hasEskey": true,
       "hasPinkey": false,
+      "chains": [
+        {
+          "chain": "mainnet",
+          "chainId": 1,
+          "symbol": "ETH",
+          "rpcProvider": "--provider-mainnet--",
+          "apiProvider": "--provider-mainnet--",
+          "remoteExplorer": "--explorer-mainnet--",
+          "localExplorer": "--explorer-mainnet--"
+        },
+        {
+          "chain": "gnosis",
+          "chainId": 100,
+          "symbol": "XDAI",
+          "rpcProvider": "--provider-gnosis--",
+          "apiProvider": "--provider-gnosis--",
+          "remoteExplorer": "--explorer-gnosis--",
+          "localExplorer": "--explorer-gnosis--"
+        }
+      ],
       "caches": [
         {
           "items": [],
@@ -43,7 +63,7 @@ status?details&firstBlock=1400000&lastBlock=2000000
               "symbol": "--symbol--",
               "source": "--source--",
               "decimals": 0,
-              "description": "",
+              "petname": "--petname--",
               "isCustom": false,
               "isPrefund": false,
               "isContract": false,
@@ -69,6 +89,74 @@ status?details&firstBlock=1400000&lastBlock=2000000
           "isValid": true
         },
         {
+          "items": [
+            {
+              "type": "CAbiCacheItem",
+              "nFunctions": 36963,
+              "nEvents": 36963,
+              "nOther": 36963,
+              "nApps": 0,
+              "firstApp": 0,
+              "latestApp": 0,
+              "sizeInBytes": 36963,
+              "tags": "",
+              "address": "---address---",
+              "name": "--name--",
+              "symbol": "",
+              "source": "",
+              "decimals": 0,
+              "petname": "--petname--",
+              "isCustom": false,
+              "isPrefund": false,
+              "isContract": false,
+              "isErc20": false,
+              "isErc721": false
+            }
+          ],
+          "type": "CAbiCache",
+          "path": "abisPath",
+          "nFiles": 0,
+          "nFolders": 0,
+          "sizeInBytes": 0,
+          "isValid": true
+        },
+        {
+          "items": [
+            "Testing/00/00/00",
+            "Testing/00/01/00"
+          ],
+          "type": "CChainCache",
+          "path": "blocksPath",
+          "nFiles": 0,
+          "nFolders": 0,
+          "sizeInBytes": 0,
+          "isValid": false
+        },
+        {
+          "items": [
+            "Testing/00/00/00",
+            "Testing/00/01/00"
+          ],
+          "type": "CChainCache",
+          "path": "txsPath",
+          "nFiles": 0,
+          "nFolders": 0,
+          "sizeInBytes": 0,
+          "isValid": false
+        },
+        {
+          "items": [
+            "Testing/00/00/00",
+            "Testing/00/01/00"
+          ],
+          "type": "CChainCache",
+          "path": "tracesPath",
+          "nFiles": 0,
+          "nFolders": 0,
+          "sizeInBytes": 0,
+          "isValid": false
+        },
+        {
           "addrs": [],
           "items": [],
           "type": "CSlurpCache",
@@ -79,26 +167,18 @@ status?details&firstBlock=1400000&lastBlock=2000000
           "isValid": true
         }
       ],
-      "chains": [
+      "keys": [
         {
-          "chain": "mainnet",
-          "chainId": 1,
-          "symbol": "ETH",
-          "rpcProvider": "--provider-mainnet--",
-          "apiProvider": "--provider-mainnet--",
-          "remoteExplorer": "--explorer-mainnet--",
-          "localExplorer": "--explorer-mainnet--",
-          "ipfsGateway": "--gateway-mainnet--"
+          "provider": "etherscan",
+          "apiKey": "--api-key--",
+          "jwt": "--jwt--",
+          "secret": "--secret"
         },
         {
-          "chain": "gnosis",
-          "chainId": 100,
-          "symbol": "XDAI",
-          "rpcProvider": "--provider-gnosis--",
-          "apiProvider": "--provider-gnosis--",
-          "remoteExplorer": "--explorer-gnosis--",
-          "localExplorer": "--explorer-gnosis--",
-          "ipfsGateway": "--gateway-gnosis--"
+          "provider": "pinata",
+          "apiKey": "--api-key--",
+          "jwt": "--jwt--",
+          "secret": "--secret"
         }
       ],
       "date": "--date--"

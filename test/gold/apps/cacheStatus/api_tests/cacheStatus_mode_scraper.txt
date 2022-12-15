@@ -1,4 +1,4 @@
-status?modes=index
+config?modes=show&module=index
 {
   "data": [
     {

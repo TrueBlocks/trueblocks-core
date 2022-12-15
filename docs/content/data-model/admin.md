@@ -21,6 +21,15 @@ Tools in the Admin category produce data related to scraping the chain, producin
 
 ## Config
 
+The [chifra config](/docs/chifra/admin/#chifra-config) tool reports on the state (and size) of the various TrueBlocks local binary caches. TrueBlocks produces nine difference caches: `abis`, `blocks`, `monitors`, `names`, `objs`, `recons`, `slurps`, `traces`, `txs`. In general practice, these caches may take up a few GB of hard drive space, however, for very popular smart contract the size of the caches may grow rather large. Keep an eye on it.
+
+The following commands produce and manage status:
+
+| Tools                                              |                                               |
+| -------------------------------------------------- | --------------------------------------------- |
+| [chifra config](/docs/chifra/admin/#chifra-config) | report on the status of the TrueBlocks system |
+
+Status data is made of the following data fields:
 
 | Field             | Description                                              | Type           |
 | ----------------- | -------------------------------------------------------- | -------------- |
@@ -46,7 +55,7 @@ Tools in the Admin category produce data related to scraping the chain, producin
 
 ## Cache
 
-The [chifra config <type>](/docs/chifra/admin/#chifra-status) reports on the binary caches. Those reports come in the form of the Cache data type. Each cache data object may carry unique information for the given cache. See the source code for more information.
+The [chifra config <type>](/docs/chifra/admin/#chifra-config) reports on the binary caches. Those reports come in the form of the Cache data type. Each cache data object may carry unique information for the given cache. See the source code for more information.
 
 The following commands produce and manage caches:
 
@@ -138,9 +147,9 @@ Manifest data is made of the following data fields:
 
 
 | Field   | Description | Type    |
-| ------- | --- | ------- |
-| address |     | address |
-| name    |     | string  |
+| ------- | ----------- | ------- |
+| address |             | address |
+| name    |             | string  |
 
 ## Base types
 
