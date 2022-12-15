@@ -221,6 +221,7 @@ func preProcessBatch(batch []monitor.Monitor, i, nMons int) ([]string, []uint32)
 		addrs = append(addrs, batch[j].GetAddrStr())
 	}
 
+	fmt.Println(strings.Repeat(" ", 120), "\r")
 	s := fmt.Sprintf("%s\r%d-%d", colors.BrightBlue+spaces, i*addrsPerBatch, nMons)
 	fmt.Println(s, colors.Green, "chifra export --freshen", strings.Replace(strings.Join(addrs, " "), "0x", " \\\n\t0x", -1), colors.Off)
 

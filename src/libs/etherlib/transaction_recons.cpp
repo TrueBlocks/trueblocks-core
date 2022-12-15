@@ -93,7 +93,7 @@ bool CTransaction::isReconciled(const address_t& accountedFor) const {
             os << bMagenta << "unreconciled " << (isEtherAddr(statement.assetAddr) ? "eth-transfer" : "tok-transfer")
                << ": " << cOff << "chifra export " << accountedFor
                << " --accounting --statements --ether --fmt json --chain " << getChain() << " --first_block "
-               << (blockNumber - 1) << " --last_block " << (blockNumber + 1);
+               << (blockNumber - 1) << " --last_block " << (blockNumber + 1) << " --asset " << statement.assetAddr;
             LOG_WARN(os.str());
             balanced = false;
         }
