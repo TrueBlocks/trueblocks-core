@@ -1,4 +1,4 @@
-chifra status  --report --fmt json
+chifra config  --report --fmt json
 TEST[DATE|TIME] Depth:  0
 TEST[DATE|TIME] Format:  json
 { "data": [

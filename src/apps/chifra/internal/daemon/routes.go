@@ -19,6 +19,7 @@ import (
 	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
 	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
 	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
+	configPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/config"
 	explorePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/explore"
 	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
 	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/init"
@@ -30,7 +31,6 @@ import (
 	scrapePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/scrape"
 	slurpPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/slurp"
 	statePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/state"
-	statusPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/status"
 	tokensPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
 	tracesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/traces"
 	transactionsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/transactions"
@@ -155,12 +155,12 @@ func RouteTokens(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// RouteStatus Report on the status of the TrueBlocks system.
-func RouteStatus(w http.ResponseWriter, r *http.Request) {
-	if err, handled := statusPkg.ServeStatus(w, r); err != nil {
+// RouteConfig Report on the status of the TrueBlocks system.
+func RouteConfig(w http.ResponseWriter, r *http.Request) {
+	if err, handled := configPkg.ServeConfig(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
 	} else if !handled {
-		CallOne(w, r, config.GetPathToCommands("cacheStatus"), "", "status")
+		CallOne(w, r, config.GetPathToCommands("cacheStatus"), "", "config")
 	}
 }
 
@@ -230,7 +230,7 @@ var routes = Routes{
 	Route{"RouteWhen", "GET", "/when", RouteWhen},
 	Route{"RouteState", "GET", "/state", RouteState},
 	Route{"RouteTokens", "GET", "/tokens", RouteTokens},
-	Route{"RouteStatus", "GET", "/status", RouteStatus},
+	Route{"RouteConfig", "GET", "/config", RouteConfig},
 	Route{"RouteScrape", "GET", "/scrape", RouteScrape},
 	Route{"RouteChunks", "GET", "/chunks", RouteChunks},
 	Route{"RouteInit", "GET", "/init", RouteInit},

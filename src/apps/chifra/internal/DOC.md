@@ -83,7 +83,7 @@
 **One or more mode (optional - defaults to some)**
 
 ```
-    chifra status [flags] [mode...]
+    chifra config [flags] [mode...]
 ```
 
 **One or more mode**

@@ -1,4 +1,4 @@
-chifra status  
+chifra config  
 TEST[DATE|TIME] Depth:  0
 {
   "clientVersion": "Client version",

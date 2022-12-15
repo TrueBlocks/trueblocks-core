@@ -1,4 +1,4 @@
-chifra status  names --to_file
+chifra config  names --to_file
 TEST[DATE|TIME] Modes:  [names]
 TEST[DATE|TIME] Depth:  0
 TEST[DATE|TIME] ToFile:  true

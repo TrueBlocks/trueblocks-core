@@ -1,6 +1,6 @@
-## chifra status
+## chifra config
 
-The `chifra status` program allows you to manage the various TrueBlocks caches. You may list all of the caches, some of the cache, or even individual caches either in terse or full detail. The cache of interest is specified with the `modes` option.
+The `chifra config` program allows you to manage the various TrueBlocks caches. You may list all of the caches, some of the cache, or even individual caches either in terse or full detail. The cache of interest is specified with the `modes` option.
 
 TrueBlocks maintains caches for the index of address appearances, named addresses, abi files, as well as other data including blockchain data, and address monitors.
 
@@ -9,7 +9,7 @@ Purpose:
   Report on the status of the TrueBlocks system.
 
 Usage:
-  chifra status <mode> [mode...] [flags]
+  chifra config <mode> [mode...] [flags]
 
 Arguments:
   modes - the type of status info to retrieve
@@ -24,5 +24,5 @@ Flags:
   -h, --help            display this help screen
 ```
 
-**Source code**: [`internal/status`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/status)
+**Source code**: [`internal/config`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/config)
 

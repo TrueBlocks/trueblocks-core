@@ -1,4 +1,4 @@
-chifra status  some
+chifra config  some
 TEST[DATE|TIME] Modes:  [some]
 TEST[DATE|TIME] Depth:  0
 {

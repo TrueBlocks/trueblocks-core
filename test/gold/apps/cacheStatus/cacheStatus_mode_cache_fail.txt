@@ -1,10 +1,10 @@
-chifra status  caches --types junk
+chifra config  caches --types junk
 TEST[DATE|TIME] Modes:  [caches]
 TEST[DATE|TIME] Types:  [junk]
 TEST[DATE|TIME] Depth:  0
 Error: The --types option (junk) must be one of [ blocks | txs | traces | slurps | all ]
 Usage:
-  chifra status <mode> [mode...] [flags]
+  chifra config <mode> [mode...] [flags]
 
 Arguments:
   modes - the type of status info to retrieve

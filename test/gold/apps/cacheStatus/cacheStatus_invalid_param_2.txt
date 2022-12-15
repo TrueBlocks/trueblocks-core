@@ -1,9 +1,9 @@
-chifra status   -l --junk
+chifra config   -l --junk
 Error: 
   unknown shorthand flag: 'l' in -l
 
 Usage:
-  chifra status <mode> [mode...] [flags]
+  chifra config <mode> [mode...] [flags]
 
 Arguments:
   modes - the type of status info to retrieve

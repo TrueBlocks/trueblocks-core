@@ -1,4 +1,4 @@
-chifra status  index --first_block 1000000 --last_block 2500000
+chifra config  index --first_block 1000000 --last_block 2500000
 TEST[DATE|TIME] Modes:  [index]
 TEST[DATE|TIME] Depth:  0
 TEST[DATE|TIME] FirstBlock:  1000000

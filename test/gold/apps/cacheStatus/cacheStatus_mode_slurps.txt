@@ -1,4 +1,4 @@
-chifra status  caches --types slurps
+chifra config  caches --types slurps
 TEST[DATE|TIME] Modes:  [caches]
 TEST[DATE|TIME] Types:  [slurps]
 TEST[DATE|TIME] Depth:  0

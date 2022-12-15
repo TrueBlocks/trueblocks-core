@@ -1,9 +1,9 @@
-chifra status  --junk
+chifra config  --junk
 Error: 
   unknown flag: --junk
 
 Usage:
-  chifra status <mode> [mode...] [flags]
+  chifra config <mode> [mode...] [flags]
 
 Arguments:
   modes - the type of status info to retrieve

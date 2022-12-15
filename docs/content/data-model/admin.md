@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-12-12T19:56:45
+date: 2022-12-14T19:51:11
 lastmod:
   - :git
   - lastmod
@@ -19,17 +19,8 @@ toc: true
 
 Tools in the Admin category produce data related to scraping the chain, producing the indexes, and querying the status of the system. Additional data related to sharing the indexes via IPFS and pinning the same are also produced by tools in this category.
 
-## Status
+## Config
 
-The [chifra status](/docs/chifra/admin/#chifra-status) tool reports on the state (and size) of the various TrueBlocks local binary caches. TrueBlocks produces nine difference caches: `abis`, `blocks`, `monitors`, `names`, `objs`, `recons`, `slurps`, `traces`, `txs`. In general practice, these caches may take up a few GB of hard drive space, however, for very popular smart contract the size of the caches may grow rather large. Keep an eye on it.
-
-The following commands produce and manage status:
-
-| Tools                                              |                                               |
-| -------------------------------------------------- | --------------------------------------------- |
-| [chifra status](/docs/chifra/admin/#chifra-status) | report on the status of the TrueBlocks system |
-
-Status data is made of the following data fields:
 
 | Field             | Description                                              | Type           |
 | ----------------- | -------------------------------------------------------- | -------------- |
@@ -53,16 +44,15 @@ Status data is made of the following data fields:
 | caches            | a collection of information concerning the binary caches | CCachePtrArray |
 | keys              | the list of configured api keys                          | CKeyArray      |
 
-
 ## Cache
 
-The [chifra status <type>](/docs/chifra/admin/#chifra-status) reports on the binary caches. Those reports come in the form of the Cache data type. Each cache data object may carry unique information for the given cache. See the source code for more information.
+The [chifra config <type>](/docs/chifra/admin/#chifra-status) reports on the binary caches. Those reports come in the form of the Cache data type. Each cache data object may carry unique information for the given cache. See the source code for more information.
 
 The following commands produce and manage caches:
 
 | Tools                                              |                                               |
 | -------------------------------------------------- | --------------------------------------------- |
-| [chifra status](/docs/chifra/admin/#chifra-status) | report on the status of the TrueBlocks system |
+| [chifra config](/docs/chifra/admin/#chifra-config) | report on the status of the TrueBlocks system |
 
 Cache data is made of the following data fields:
 

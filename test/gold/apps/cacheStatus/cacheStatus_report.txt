@@ -1,4 +1,4 @@
-chifra status  --report --fmt txt
+chifra config  --report --fmt txt
 TEST[DATE|TIME] Depth:  0
 TEST[DATE|TIME] Format:  txt
 {

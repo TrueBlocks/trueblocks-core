@@ -1,4 +1,4 @@
-chifra status  names --output output_test_file
+chifra config  names --output output_test_file
 TEST[DATE|TIME] Modes:  [names]
 TEST[DATE|TIME] Depth:  0
 TEST[DATE|TIME] OutputFn:  output_test_file

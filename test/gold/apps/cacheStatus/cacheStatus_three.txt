@@ -1,4 +1,4 @@
-chifra status  abis caches monitors --types slurps
+chifra config  abis caches monitors --types slurps
 TEST[DATE|TIME] Modes:  [abis caches monitors]
 TEST[DATE|TIME] Types:  [slurps]
 TEST[DATE|TIME] Depth:  0

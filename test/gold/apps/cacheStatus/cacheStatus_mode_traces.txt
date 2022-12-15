@@ -1,4 +1,4 @@
-chifra status  caches --types traces
+chifra config  caches --types traces
 TEST[DATE|TIME] Modes:  [caches]
 TEST[DATE|TIME] Types:  [traces]
 TEST[DATE|TIME] Depth:  0

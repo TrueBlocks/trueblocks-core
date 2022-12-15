@@ -1,4 +1,4 @@
-chifra status  abis
+chifra config  abis
 TEST[DATE|TIME] Modes:  [abis]
 TEST[DATE|TIME] Depth:  0
 {

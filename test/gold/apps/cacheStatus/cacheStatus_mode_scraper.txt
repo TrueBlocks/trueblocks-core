@@ -1,4 +1,4 @@
-chifra status  index
+chifra config  index
 TEST[DATE|TIME] Modes:  [index]
 TEST[DATE|TIME] Depth:  0
 {

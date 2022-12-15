@@ -1,4 +1,4 @@
-chifra status  caches --types txs --types blocks
+chifra config  caches --types txs --types blocks
 TEST[DATE|TIME] Modes:  [caches]
 TEST[DATE|TIME] Types:  [txs blocks]
 TEST[DATE|TIME] Depth:  0

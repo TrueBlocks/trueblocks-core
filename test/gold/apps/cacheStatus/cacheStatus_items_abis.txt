@@ -1,4 +1,4 @@
-chifra status  --details abis
+chifra config  --details abis
 TEST[DATE|TIME] Modes:  [abis]
 TEST[DATE|TIME] Details:  true
 TEST[DATE|TIME] Depth:  0

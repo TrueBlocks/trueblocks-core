@@ -1,4 +1,4 @@
-chifra status  names
+chifra config  names
 TEST[DATE|TIME] Modes:  [names]
 TEST[DATE|TIME] Depth:  0
 {
