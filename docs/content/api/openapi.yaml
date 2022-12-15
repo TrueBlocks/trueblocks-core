@@ -1558,7 +1558,7 @@ paths:
                     description: This data model carries information about the TrueBlocks system including both the API server and the local binary caches
                     type: array
                     items:
-                      $ref: "#/components/schemas/config"
+                      $ref: "#/components/schemas/status"
                 example:
                   {
                     "data":
@@ -2726,7 +2726,7 @@ components:
         isErc721:
           type: boolean
           description: "`true` if the address is an ERC720, `false` otherwise"
-    config:
+    status:
       description: "This data model carries information about the TrueBlocks system including both the API server and the local binary caches"
       type: object
       properties:

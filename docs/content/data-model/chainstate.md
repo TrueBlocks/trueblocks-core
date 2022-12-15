@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2022-12-12T19:07:27
+date: 2022-12-15T07:04:10
 lastmod:
   - :git
   - lastmod
@@ -17,7 +17,7 @@ weight: 1400
 toc: true
 ---
 
-These commands compare the balance of an address against a particular token or block.
+The data structures produced by tools in the Chain State category provide details on the balances (ERC20 or ETH) of an address against a particular token or block. Additionally, direct access to a smart contract's state may be queries with the `chirfa state` tool. Data structures in that case are specific to the particular smart contract.
 
 _Each data structure is created by one or more tools which are detailed below_
 

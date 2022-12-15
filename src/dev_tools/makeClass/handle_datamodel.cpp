@@ -21,6 +21,7 @@ extern bool sortByDataModelName(const CClassDefinition& c1, const CClassDefiniti
 extern bool sortByDoc(const CParameter& c1, const CParameter& c2);
 extern string_q typeFmt(const CParameter& fld);
 extern string_q exFmt(const CParameter& fld);
+extern string_q cleanedAsciiFile(const string_q& inFn);
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_datamodel(void) {
@@ -65,14 +66,14 @@ bool COptions::handle_datamodel(void) {
             replace(front, "[{M1}]", "data:");
             replace(front, "[{M2}]", "parent: \"collections\"");
             docStream << front << endl;
-            docStream << asciiFileToString(groupFn);
+            docStream << cleanedAsciiFile(groupFn);
             weight += 200;
         }
 
         docStream << endl;
-        docStream << "## " << firstUpper(model.doc_api) << endl;
+        docStream << "## " << substitute(firstUpper(model.doc_api), "Config", "Status") << endl;
         docStream << endl;
-        docStream << asciiFileToString(modelFn) << endl;
+        docStream << cleanedAsciiFile(modelFn) << endl;
 
         ostringstream fieldStream, toolsStream;
         fieldStream << markDownRow("Field", "Description", "Type", widths);
@@ -90,7 +91,12 @@ bool COptions::handle_datamodel(void) {
             }
         }
 
-        yamlStream << model.Format(STR_YAML_MODELHEADER);
+        string_q head = model.Format(STR_YAML_MODELHEADER);
+        if (contains(head, "    config:")) {
+            // hack alert
+            replace(head, "    config:", "    status:");
+        }
+        yamlStream << head;
         yamlStream << yamlPropStream.str();
 
         string_q thisDoc = docStream.str();
@@ -105,7 +111,6 @@ bool COptions::handle_datamodel(void) {
             replace(thisDoc, "[{TOOLS}]", trim(toolsStream.str(), '\n'));
         else
             thisDoc += toolsStream.str();
-
         documentMap[model.doc_group] = documentMap[model.doc_group] + thisDoc;
     }
 
@@ -201,6 +206,19 @@ void addToTypeMap(map<string_q, string_q>& map, const string_q& group, const str
     if (existing.length() > 0)
         existing += ",";
     map[toLower(group)] = existing + type;
+}
+
+//------------------------------------------------------------------------------------------------------------
+string_q cleanedAsciiFile(const string_q& inFn) {
+    CStringArray lines;
+    asciiFileToLines(inFn, lines);
+    string_q contents;
+    for (auto line : lines) {
+        if (contains(line, "markdownlint"))
+            continue;
+        contents += line + "\n";
+    }
+    return contents;
 }
 
 //------------------------------------------------------------------------------------------------------------

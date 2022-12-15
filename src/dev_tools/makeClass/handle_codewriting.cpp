@@ -148,6 +148,10 @@ bool writeCodeOut(COptions* opts, const string_q& fn) {
         replace(converted, "[{DESCRIPTION}]", descr);
         replace(converted, "[{COMPONENTS}]", components);
         replace(converted, "[{VERSION}]", getVersionStr(false /* product */, false /* git_hash */));
+        // hack alert
+        if (contains(converted, "$ref: \"#/components/schemas/config\"")) {
+            replace(converted, "$ref: \"#/components/schemas/config\"", "$ref: \"#/components/schemas/status\"");
+        }
 
     } else if (endsWith(fn, ".h")) {
         CStringArray tokens = {"ERROR_DEFINES", "_CODE_DECLARE"};
