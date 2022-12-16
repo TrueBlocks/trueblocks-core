@@ -33,7 +33,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10472,apps,Accounts,export,acctExport,n3,,,false,false,false,false,--,note,,For the --logs option&#44; you may optionally specify one or more --emitter&#44; one or more --topics&#44; or both.
 10474,apps,Accounts,export,acctExport,n4,,,false,false,false,false,--,note,,The --logs option is significantly faster if you provide an --emitter or a --topic.
 10476,apps,Accounts,export,acctExport,n5,,,false,false,false,false,--,note,,Neighbors include every address that appears in any transaction in which the export address also appears.
-10478,apps,Accounts,export,acctExport,n6,,,false,false,false,false,--,note,,If provided&#44; --max_records dominates&#44; also&#44; if provided&#44; --first_block overrides --first_record.
+10478,apps,Accounts,export,acctExport,n6,,,false,false,false,false,--,note,,If provided&#44; --max_records dominates&#44; also&#44; if provided&#44; --first_record overrides --first_block.
 
 11200,apps,Accounts,monitors,acctExport,addrs,,,false,false,true,true,local,positional,list<addr>,one or more addresses (0x...) to process
 11085,apps,Accounts,monitors,acctExport,clean,,,false,false,true,true,gocmd,switch,<boolean>,clean (i.e. remove duplicate appearances) from monitors
