@@ -6,13 +6,9 @@ package globals
 
 import (
 	"fmt"
-	"path/filepath"
 	"strconv"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/bykof/gostradamus"
 )
@@ -45,14 +41,14 @@ func (opts *GlobalOptions) Validate() error {
 		opts.ToFile = false
 	}
 
-	tmpPath := filepath.Join(config.GetPathToCache(opts.Chain), "tmp", "checkProvider.txt")
-	if !file.FileExists(tmpPath) {
-		if version, err := rpcClient.GetVersion(opts.Chain); err != nil {
-			logger.Fatal("Cannot connect with the node software.", version, err)
-		} else {
-			file.StringToAsciiFile(tmpPath, version)
-		}
-	}
+	// tmpPath := filepath.Join(config.GetPathToCache(opts.Chain), "tmp", "checkProvider.txt")
+	// if !file.FileExists(tmpPath) {
+	// 	if version, err := rpcClient.GetVersion(opts.Chain); err != nil {
+	// 		logger.Fatal("Cannot connect with the node software.", version, err)
+	// 	} else {
+	// 		file.StringToAsciiFile(tmpPath, version)
+	// 	}
+	// }
 
 	err := validate.ValidateEnum("--fmt", opts.Format, "[json|txt|csv]")
 	if err != nil {
