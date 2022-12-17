@@ -25,7 +25,6 @@ type StatusOptions struct {
 	Details    bool                  `json:"details,omitempty"`    // Include details about items found in monitors, slurps, abis, or price caches
 	Types      []string              `json:"types,omitempty"`      // For caches mode only, which type(s) of cache to report
 	Depth      uint64                `json:"depth,omitempty"`      // For cache mode only, number of levels deep to report
-	Report     bool                  `json:"report,omitempty"`     // Run the command with no options for the same result
 	Terse      bool                  `json:"terse,omitempty"`      // Show a terse summary report
 	FirstBlock uint64                `json:"firstBlock,omitempty"` // First block to process (inclusive -- testing only)
 	LastBlock  uint64                `json:"lastBlock,omitempty"`  // Last block to process (inclusive -- testing only)
@@ -115,8 +114,6 @@ func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions
 			}
 		case "depth":
 			opts.Depth = globals.ToUint64(value[0])
-		case "report":
-			opts.Report = true
 		case "terse":
 			opts.Terse = true
 		case "firstBlock":

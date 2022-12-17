@@ -71,11 +71,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-p" || arg == "--depth") {
             return flag_required("depth");
 
-        } else if (arg == "-r" || arg == "--report") {
-            // clang-format off
-            return usage("the --report option is deprecated, run the command with no options for the same result");  // NOLINT
-            // clang-format on
-
         } else if (arg == "-e" || arg == "--terse") {
             terse = true;
 
