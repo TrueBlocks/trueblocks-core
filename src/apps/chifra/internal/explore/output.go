@@ -14,6 +14,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -66,6 +67,15 @@ func (opts *ExploreOptions) ExploreInternal() (err error, handled bool) {
 	// EXISTING_CODE
 
 	return
+}
+
+// GetExploreOptions returns the options for this tool so other tools may use it.
+func GetExploreOptions(args []string, g *globals.GlobalOptions) *ExploreOptions {
+	ret := exploreFinishParse(args)
+	if g != nil {
+		ret.Globals = *g
+	}
+	return ret
 }
 
 // EXISTING_CODE

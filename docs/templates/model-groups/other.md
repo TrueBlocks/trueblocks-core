@@ -1,6 +1,8 @@
-These commands call some useful miscellaneous tools:
-* `chifra explore` a quick way to open a blockchain explorer,
-* `ethslurp` an older tool that lets you call data from EtherScan. (This has issues of centralization and data quality, see explanation in its section).
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+The following commands provide useful miscellaneous tools:
+
+- `chifra explore` a quick way to open a blockchain explorer,
+- `ethslurp` an older tool that lets you call data from EtherScan. (This has issues of centralization and data quality, see explanation in its section).
 
 {{< alert icon="👉" title="note about keys"
 text="Note: some of these tools, like `ethslurp`, require an EtherScan key." >}}

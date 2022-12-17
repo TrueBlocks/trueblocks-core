@@ -82,7 +82,7 @@ Add the executable's folder to you path. Consult Google if you don't know how. T
 If you've sucessfully built the executable and set the `$PATH`, you should be able to run:
 
 ```[shell]
-chifra status --terse
+chifra config --terse
 ```
 
 and get results. If you get an error, the most likely cause is an incomplete configuration. The error message will report the location of the config file:
@@ -121,10 +121,10 @@ Get more help on any sub-command with `chifra <cmd> --help`. Full documentation 
 
 **Getting data**
 
-Let's look at the first subcommand, called `status`.
+Let's look at the first subcommand, called `config`.
 
 ```[shell]
-chifra status --terse
+chifra config --terse
 ```
 
 If you get a bunch of JSON data, congratulations, your installation is working.  Try this command which shows every 10th block between the first and the 100,000th:

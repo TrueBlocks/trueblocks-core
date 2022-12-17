@@ -28,7 +28,7 @@ Stop any long running TrueBlocks-related processes (such as the `chifra scrape`,
 
 ### A note on backups
 
-Run `chifra status --terse` and note these values:
+Run `chifra config --terse` and note these values:
 
 - `$indexPath`
 - `$cachePath`

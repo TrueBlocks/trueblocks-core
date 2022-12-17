@@ -1,12 +1,76 @@
-<!-- markdownlint-disable MD024 -->
+<!-- markdownlint-disable MD024 MD036 -->
 # Changes
 
 This file details changes made to TrueBlocks per version (starting with version v0.40.0). See the [migration notes](./MIGRATIONS.md) for changes from previous versions.
 
+## v0.45.0
+
+Changes in this release are in support of [the docker version](https://github.com/TrueBlocks/trueblocks-docker). The changes are focused on two tools (`serve` and `status`) which have been renamed to `daemon` and `config`, respectively. This change allows these tools to more clearly reflect what they do.
+
+### Bug Fixes
+
+- Fix to `chifra export --accounting` reporting incorrect reconciliations.
+
+### System-Wide Changes
+
+- Updates version to v0.45.0-beta
+- Near total rewrite of README for clarity and ease of use
+- Added many tests for various tools
+
+### Changes to Specific Tools
+
+**chifra serve**
+
+- **Breaking change**: `chifra serve` renamed to `chifra daemon`. All other options remain the same.
+
+**chifra config (formerly chifra status)**
+
+- Renamed `chifra status` to `chifra config`. `Chifra status` now reports that it's been deprecated and instructs the user to use `chifra config`.
+- Prepares to use this tool for interactive editing of configuration files such as `git` and `ipfs` do.
+- **Breaking change**: Moved existing positional options under `--module` flag which. Must be one of `[ index | monitors | names | abis | caches | some | all ]`.
+- **Breaking change**: Added new positional options which must be on of `[ show | edit ]`.
+
+**chifra export**
+
+- Rewrote the way `--first_block`, `--last_block`, `--first_record`, and `--max_record` behave, especially how they interoperate.
+
+**chifra scrape**
+
+- Internal-only changes in preparation for starting, pausing, and restarting the scraper from `chifra daemon`. In all other ways, it operates identical to previous versions.
+
+**chifra init**
+
+- Internal-only changes in preparation for starting, pausing, and restarting the scraper from `chifra daemon`. In all other ways, it operates identical to previous versions.
+
+**chifra monitors**
+
+- Internal-only changes in preparation for starting, pausing, and restarting the scraper from `chifra daemon`. In all other ways, it operates identical to previous versions.
+
+**chifra list**
+
+- Added the `no_zero` option to instruct `chifra list` to not report any addresses for which there are no transactions (incomplete).
+
+**chifra names**
+
+- Added a names to the names database
+
+**chifra blocks**
+
+- Started process of porting `chifra blocks` to GoLang.
+
+**chifra transactions**
+
+- Rudimentary implementation of `--source` option.
+
+**chifra version**
+
+- Added `chifra version` which is identical to many other command line tools. Identical behaviour to `chifra --version` which still works.
+
 ## v0.44.0
 
 ### Significant Bug Fixes
-  - Fixes a significant bug related to scraping at the head of the chain that was introduced in v0.41.0. [Migration needed](./MIGRATIONS.md).
+
+- Fixes a significant bug related to scraping at the head of the chain that was introduced in v0.41.0. [Migration needed](./MIGRATIONS.md).
 
 ### System-Wide Changes
 

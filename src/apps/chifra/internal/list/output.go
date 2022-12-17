@@ -12,6 +12,7 @@ package listPkg
 import (
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -71,6 +72,15 @@ func (opts *ListOptions) ListInternal() (err error, handled bool) {
 	// EXISTING_CODE
 
 	return
+}
+
+// GetListOptions returns the options for this tool so other tools may use it.
+func GetListOptions(args []string, g *globals.GlobalOptions) *ListOptions {
+	ret := listFinishParse(args)
+	if g != nil {
+		ret.Globals = *g
+	}
+	return ret
 }
 
 // EXISTING_CODE

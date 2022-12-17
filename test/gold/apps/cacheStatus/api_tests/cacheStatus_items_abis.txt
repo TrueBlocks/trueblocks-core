@@ -1,4 +1,4 @@
-status?details&modes=abis
+config?details&modes=show&module=abis
 {
   "data": [
     {

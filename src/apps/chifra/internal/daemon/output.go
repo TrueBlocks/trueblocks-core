@@ -15,6 +15,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -85,6 +86,9 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 		logger.Log(logger.InfoC, pad("Progress:"), msg)
 	}
 
+	go opts.HandleScraper()
+	go opts.HandleMonitor()
+
 	// Start listening to the web sockets
 	RunWebsocketPool()
 	// Start listening for requests
@@ -93,6 +97,15 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 	// EXISTING_CODE
 
 	return
+}
+
+// GetDaemonOptions returns the options for this tool so other tools may use it.
+func GetDaemonOptions(args []string, g *globals.GlobalOptions) *DaemonOptions {
+	ret := daemonFinishParse(args)
+	if g != nil {
+		ret.Globals = *g
+	}
+	return ret
 }
 
 // EXISTING_CODE

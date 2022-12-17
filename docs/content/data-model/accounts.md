@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-11-12T22:44:46
+date: 2022-12-16T23:17:17
 lastmod:
   - :git
   - lastmod
@@ -17,7 +17,7 @@ weight: 1000
 toc: true
 ---
 
-The primary purpose of TrueBlocks is to extract, directly from the blockchain, the entire transactional history for one or more addresses and present that information for use outside the blockchain. The results of this extraction are stored in a data structure called a [Monitor](/data-model/accounts/#monitor).
+The primary tool of TrueBlocks is `chifra export`. This tool extracts, directly from the chain, entire transactional histories for one or more addresses and presents that information for use outside the blockchain. The results of this extraction is stored in a data structure called a [Monitor](/data-model/accounts/#monitor).
 
 Monitors collect together [Appearances](/data-model/accounts/#appearance) (`blknum.tx_id` pairs) along with additional information such as [Reconciliations](/data-model/accounts/#reconciliation) (18-decimal place accurate accounting for each asset transfer), [Names](/data-model/accounts/#names) (associations of human-readable names with addresses), and [Abis](/data-model/accounts/#abis) which track the "meaning" of each transaction through its [Functions](/data-model/accounts/#function) and [Parameters](/data-model/accounts/#parameters).
 
@@ -31,12 +31,12 @@ Once created, a monitor may be periodically *freshened* by calling either `chifr
 
 The following commands produce and manage monitors:
 
-| Tools                                                       |                                                              |
-| ----------------------------------------------------------- | ------------------------------------------------------------ |
-| [chifra status monitors](/docs/chifra/admin/#chifra-status) | report on the status of the TrueBlocks system                |
-| [chifra list](/docs/chifra/accounts/#chifra-list)           | list appearances for one or more addresses                   |
-| [chifra export](/docs/chifra/accounts/#chifra-export)       | export full detail of transactions for one or more addresses |
-| [chifra monitors](/docs/chifra/accounts/#chifra-monitors)   | delete, undelete, and remove previously created monitors     |
+| Tools                                                        |                                                              |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [chifra config monitors](/docs/chifra/admin/#chifra-config ) | report on currently monitored addresses                      |
+| [chifra list](/docs/chifra/accounts/#chifra-list)            | list appearances for one or more addresses                   |
+| [chifra export](/docs/chifra/accounts/#chifra-export)        | export full detail of transactions for one or more addresses |
+| [chifra monitors](/docs/chifra/accounts/#chifra-monitors)    | delete, undelete, and remove previously created monitors     |
 
 Monitor data is made of the following data fields:
 

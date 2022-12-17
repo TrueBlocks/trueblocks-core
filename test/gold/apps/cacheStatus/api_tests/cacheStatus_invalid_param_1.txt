@@ -1,6 +1,6 @@
-status?junk
+config?junk
 {
   "errors": [
-    "Invalid key (junk) in status route."
+    "Invalid key (junk) in config route."
   ]
 }

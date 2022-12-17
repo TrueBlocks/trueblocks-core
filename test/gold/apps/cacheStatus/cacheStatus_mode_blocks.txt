@@ -1,5 +1,6 @@
-chifra status  caches --types blocks
-TEST[DATE|TIME] Modes:  [caches]
+chifra config  show --module caches --types blocks
+TEST[DATE|TIME] Modes:  [show]
+TEST[DATE|TIME] Module:  [caches]
 TEST[DATE|TIME] Types:  [blocks]
 TEST[DATE|TIME] Depth:  0
 {

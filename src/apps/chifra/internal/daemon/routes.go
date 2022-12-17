@@ -10,13 +10,16 @@ package daemonPkg
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
+	"time"
 
 	// BEG_ROUTE_PKGS
 
 	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
 	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
 	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
+	configPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/config"
 	explorePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/explore"
 	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
 	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/init"
@@ -28,12 +31,14 @@ import (
 	scrapePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/scrape"
 	slurpPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/slurp"
 	statePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/state"
-	statusPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/status"
 	tokensPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
 	tracesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/traces"
 	transactionsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/transactions"
 	whenPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/when"
 	config "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/gorilla/mux"
+	"golang.org/x/time/rate"
 	// END_ROUTE_PKGS
 )
 
@@ -150,12 +155,12 @@ func RouteTokens(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// RouteStatus Report on the status of the TrueBlocks system.
-func RouteStatus(w http.ResponseWriter, r *http.Request) {
-	if err, handled := statusPkg.ServeStatus(w, r); err != nil {
+// RouteConfig Report on the status of the TrueBlocks system.
+func RouteConfig(w http.ResponseWriter, r *http.Request) {
+	if err, handled := configPkg.ServeConfig(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
 	} else if !handled {
-		CallOne(w, r, config.GetPathToCommands("cacheStatus"), "", "status")
+		CallOne(w, r, config.GetPathToCommands("cacheStatus"), "", "config")
 	}
 }
 
@@ -225,7 +230,7 @@ var routes = Routes{
 	Route{"RouteWhen", "GET", "/when", RouteWhen},
 	Route{"RouteState", "GET", "/state", RouteState},
 	Route{"RouteTokens", "GET", "/tokens", RouteTokens},
-	Route{"RouteStatus", "GET", "/status", RouteStatus},
+	Route{"RouteConfig", "GET", "/config", RouteConfig},
 	Route{"RouteScrape", "GET", "/scrape", RouteScrape},
 	Route{"RouteChunks", "GET", "/chunks", RouteChunks},
 	Route{"RouteInit", "GET", "/init", RouteInit},
@@ -248,4 +253,84 @@ func RespondWithError(w http.ResponseWriter, httpStatus int, err error) {
 	marshalled, _ := json.MarshalIndent(ErrorResponse{Errors: []string{err.Error()}}, "", "  ")
 	w.WriteHeader(httpStatus)
 	w.Write(marshalled)
+}
+
+// Route A structure to hold the API's routes
+type Route struct {
+	Name        string
+	Method      string
+	Pattern     string
+	HandlerFunc http.HandlerFunc
+}
+
+// Routes An array of Route structures
+type Routes []Route
+
+// NewRouter Creates a new router given the routes array
+func NewRouter() *mux.Router {
+	router := mux.NewRouter().StrictSlash(true)
+	router.Use(CorsHandler)
+	router.
+		Methods("OPTIONS").
+		Handler(OptionsHandler)
+
+	for _, route := range routes {
+		var handler http.Handler
+		handler = route.HandlerFunc
+		handler = Logger(handler, route.Name)
+		router.
+			Methods(route.Method).
+			Path(route.Pattern).
+			Name(route.Name).
+			Handler(handler)
+	}
+
+	return router
+}
+
+func addCorsHeaders(w http.ResponseWriter) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+	w.Header().Set("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS")
+}
+
+var OptionsHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	addCorsHeaders(w)
+})
+
+// Logger sends information to the server's console
+func CorsHandler(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		addCorsHeaders(w)
+		next.ServeHTTP(w, r)
+	})
+}
+
+var nProcessed int
+
+// Logger sends information to the server's console
+func Logger(inner http.Handler, name string) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var limiter = rate.NewLimiter(1, 3)
+		if !limiter.Allow() {
+			http.Error(w, http.StatusText(http.StatusTooManyRequests), http.StatusTooManyRequests)
+			return
+		}
+		start := time.Now()
+		inner.ServeHTTP(w, r)
+		t := ""
+		if utils.IsTestModeServer(r) {
+			t = "-test"
+		}
+		log.Printf(
+			"%d %s%s %s %s %s",
+			nProcessed,
+			r.Method,
+			t,
+			r.RequestURI,
+			name,
+			time.Since(start),
+		)
+		nProcessed++
+	})
 }

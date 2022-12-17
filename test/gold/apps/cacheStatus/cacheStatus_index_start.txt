@@ -1,5 +1,6 @@
-chifra status  index --first_block 100
-TEST[DATE|TIME] Modes:  [index]
+chifra config  show --module index --first_block 100
+TEST[DATE|TIME] Modes:  [show]
+TEST[DATE|TIME] Module:  [index]
 TEST[DATE|TIME] Depth:  0
 TEST[DATE|TIME] FirstBlock:  100
 {
