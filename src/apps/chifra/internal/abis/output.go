@@ -12,6 +12,7 @@ package abisPkg
 import (
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -60,6 +61,15 @@ func (opts *AbisOptions) AbisInternal() (err error, handled bool) {
 	// EXISTING_CODE
 
 	return
+}
+
+// GetAbisOptions returns the options for this tool so other tools may use it.
+func GetAbisOptions(args []string, g *globals.GlobalOptions) *AbisOptions {
+	ret := abisFinishParse(args)
+	if g != nil {
+		ret.Globals = *g
+	}
+	return ret
 }
 
 // EXISTING_CODE

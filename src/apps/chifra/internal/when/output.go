@@ -12,6 +12,7 @@ package whenPkg
 import (
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
@@ -83,6 +84,15 @@ func (opts *WhenOptions) WhenInternal() (err error, handled bool) {
 	// EXISTING_CODE
 
 	return
+}
+
+// GetWhenOptions returns the options for this tool so other tools may use it.
+func GetWhenOptions(args []string, g *globals.GlobalOptions) *WhenOptions {
+	ret := whenFinishParse(args)
+	if g != nil {
+		ret.Globals = *g
+	}
+	return ret
 }
 
 // EXISTING_CODE

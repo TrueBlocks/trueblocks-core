@@ -12,6 +12,7 @@ package transactionsPkg
 import (
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -56,6 +57,15 @@ func (opts *TransactionsOptions) TransactionsInternal() (err error, handled bool
 	// EXISTING_CODE
 
 	return
+}
+
+// GetTransactionsOptions returns the options for this tool so other tools may use it.
+func GetTransactionsOptions(args []string, g *globals.GlobalOptions) *TransactionsOptions {
+	ret := transactionsFinishParse(args)
+	if g != nil {
+		ret.Globals = *g
+	}
+	return ret
 }
 
 // EXISTING_CODE
