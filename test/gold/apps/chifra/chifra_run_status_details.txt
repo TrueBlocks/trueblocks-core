@@ -1,5 +1,6 @@
-chifra  status all --details --first_block 1400000 --last_block 2000000
-TEST[DATE|TIME] Modes:  [all]
+chifra  config show --module all --details --first_block 1400000 --last_block 2000000
+TEST[DATE|TIME] Modes:  [show]
+TEST[DATE|TIME] Module:  [all]
 TEST[DATE|TIME] Details:  true
 TEST[DATE|TIME] Depth:  0
 TEST[DATE|TIME] FirstBlock:  1400000
@@ -17,6 +18,26 @@ TEST[DATE|TIME] LastBlock:  2000000
   "isArchive": true,
   "isTracing": true,
   "hasEskey": true,
+  "chains": [
+    {
+      "chain": "mainnet",
+      "chainId": 1,
+      "symbol": "ETH",
+      "rpcProvider": "--provider-mainnet--",
+      "apiProvider": "--provider-mainnet--",
+      "remoteExplorer": "--explorer-mainnet--",
+      "localExplorer": "--explorer-mainnet--"
+    },
+    {
+      "chain": "gnosis",
+      "chainId": 100,
+      "symbol": "XDAI",
+      "rpcProvider": "--provider-gnosis--",
+      "apiProvider": "--provider-gnosis--",
+      "remoteExplorer": "--explorer-gnosis--",
+      "localExplorer": "--explorer-gnosis--"
+    }
+  ],
   "caches": [
     {
       "type": "CIndexCache",
@@ -37,7 +58,8 @@ TEST[DATE|TIME] LastBlock:  2000000
           "address": "---address---",
           "name": "--name--",
           "symbol": "--symbol--",
-          "source": "--source--"
+          "source": "--source--",
+          "petname": "--petname--"
         }
       ],
       "type": "CMonitorCache",
@@ -67,7 +89,8 @@ TEST[DATE|TIME] LastBlock:  2000000
           "latestApp": 0,
           "sizeInBytes": 36963,
           "address": "---address---",
-          "name": "--name--"
+          "name": "--name--",
+          "petname": "--petname--"
         }
       ],
       "type": "CAbiCache",
@@ -119,26 +142,18 @@ TEST[DATE|TIME] LastBlock:  2000000
       "isValid": true
     }
   ],
-  "chains": [
+  "keys": [
     {
-      "chain": "mainnet",
-      "chainId": 1,
-      "symbol": "ETH",
-      "rpcProvider": "--provider-mainnet--",
-      "apiProvider": "--provider-mainnet--",
-      "remoteExplorer": "--explorer-mainnet--",
-      "localExplorer": "--explorer-mainnet--",
-      "ipfsGateway": "--gateway-mainnet--"
+      "provider": "etherscan",
+      "apiKey": "--api-key--",
+      "jwt": "--jwt--",
+      "secret": "--secret"
     },
     {
-      "chain": "gnosis",
-      "chainId": 100,
-      "symbol": "XDAI",
-      "rpcProvider": "--provider-gnosis--",
-      "apiProvider": "--provider-gnosis--",
-      "remoteExplorer": "--explorer-gnosis--",
-      "localExplorer": "--explorer-gnosis--",
-      "ipfsGateway": "--gateway-gnosis--"
+      "provider": "pinata",
+      "apiKey": "--api-key--",
+      "jwt": "--jwt--",
+      "secret": "--secret"
     }
   ],
   "date": "--date--"

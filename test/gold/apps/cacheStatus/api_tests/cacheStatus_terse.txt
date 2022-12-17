@@ -1,4 +1,4 @@
-status?terse
+config?terse
 {
   "data": [
     {

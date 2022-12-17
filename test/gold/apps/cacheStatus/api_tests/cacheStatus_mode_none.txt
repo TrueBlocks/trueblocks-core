@@ -1,4 +1,4 @@
-status?
+config?
 {
   "data": [
     {

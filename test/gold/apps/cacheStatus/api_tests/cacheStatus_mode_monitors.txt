@@ -1,4 +1,4 @@
-status?modes=monitors
+config?modes=show&module=monitors
 {
   "data": [
     {

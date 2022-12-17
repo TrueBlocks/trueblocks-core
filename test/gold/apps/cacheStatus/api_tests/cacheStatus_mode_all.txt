@@ -1,4 +1,4 @@
-status?modes=all
+config?modes=show&module=all
 {
   "data": [
     {
