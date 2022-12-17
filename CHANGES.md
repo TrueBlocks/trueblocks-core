@@ -1,12 +1,61 @@
-<!-- markdownlint-disable MD024 -->
+<!-- markdownlint-disable MD024 MD036 -->
 # Changes
 
 This file details changes made to TrueBlocks per version (starting with version v0.40.0). See the [migration notes](./MIGRATIONS.md) for changes from previous versions.
 
+## v0.45.0
+
+- The changes in this release are in support of our docker version. Two tools (`chifra serve` and `chifra status`) have been renamed to `chifra daemon` and `chifra config`, respectively in order to more clearly reflect what they do. A new tool called `chifra version` was also added.
+
+### Significant Bug Fixes
+
+- None.
+
+### System-Wide Changes
+
+- Updates version to v0.45.0
+- a
+- b
+
+### Changes to Specific Tools
+
+**chifra serve**
+
+- x
+
+**chifra scrape**
+
+- Internal-only changes in preparation for starting, pausing, and restarting the scraper from `chifra daemon`. In all other ways, it operates identical to previous versions.
+
+**chifra config (formerly chifra status)**
+
+- Renamed `chifra status` to `chifra config`. `Chifra status` now reports that it's been deprecated and instructs the user to use `chifra config`. No other changes were made to this tool, however, we did prepare to use this tool in a later version for interactive editing of configuration files in a way similar to other command line tools such as `git` and `ipfs`.
+
+- moved existing positional option to `--module` which must be one of [ index | monitors | names | abis | caches | some | all ].
+- added new positional option which must be on of `[ show | edit ]`.
+- 
+
+**chifra init**
+
+- Internal-only changes in preparation for starting, pausing, and restarting the scraper from `chifra daemon`. In all other ways, it operates identical to previous versions.
+
+**chifra monitors**
+
+- Internal-only changes in preparation for starting, pausing, and restarting the scraper from `chifra daemon`. In all other ways, it operates identical to previous versions.
+
+**chifra list**
+
+- Added the `no_zero` option to instruct `chifra list` to not report any addresses for which there are no transactions.
+
+**chifra version**
+
+- Added `chifra version` which is identical to many other command line tools. Identical behaviour to `chifra --version` which still works.
+
 ## v0.44.0
 
 ### Significant Bug Fixes
-  - Fixes a significant bug related to scraping at the head of the chain that was introduced in v0.41.0. [Migration needed](./MIGRATIONS.md).
+
+- Fixes a significant bug related to scraping at the head of the chain that was introduced in v0.41.0. [Migration needed](./MIGRATIONS.md).
 
 ### System-Wide Changes
 
