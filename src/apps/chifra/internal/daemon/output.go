@@ -86,6 +86,9 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 		logger.Log(logger.InfoC, pad("Progress:"), msg)
 	}
 
+	go opts.HandleScraper()
+	go opts.HandleMonitor()
+
 	// Start listening to the web sockets
 	RunWebsocketPool()
 	// Start listening for requests
