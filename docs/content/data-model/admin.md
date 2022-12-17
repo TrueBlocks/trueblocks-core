@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-12-12T19:56:45
+date: 2022-12-16T22:54:10
 lastmod:
   - :git
   - lastmod
@@ -17,7 +17,9 @@ weight: 1700
 toc: true
 ---
 
-Tools in the Admin category produce data related to scraping the chain, producing the indexes, and querying the status of the system. Additional data related to sharing the indexes via IPFS and pinning the same are also produced by tools in this category.
+The data models produced by the tools in the Admin category relate to scraping the chain, producing the Unchained Index, and querying the configuration of the system. Additional data related to sharing the indexes via IPFS and pinning the same are also produced by tools in this category.
+
+_Each data structure is created by one or more tools which are detailed below_
 
 ## Status
 
