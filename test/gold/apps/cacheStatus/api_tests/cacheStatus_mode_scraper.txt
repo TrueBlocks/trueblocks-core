@@ -1,4 +1,4 @@
-status?modes=index
+config?modes=show&module=index
 {
   "data": [
     {
@@ -27,7 +27,6 @@ status?modes=index
           "isValid": true
         }
       ],
-      "chains": [],
       "date": "--date--"
     }
   ],

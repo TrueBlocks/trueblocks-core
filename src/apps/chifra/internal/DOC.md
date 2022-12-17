@@ -83,7 +83,7 @@
 **One or more mode (optional - defaults to some)**
 
 ```
-    chifra status [flags] [mode...]
+    chifra config [flags] [mode...]
 ```
 
 **One or more mode**
@@ -117,7 +117,7 @@
     # This is wrong - should be required mode
     chifra pins [flags]
 
-    chifra serve [flags]
+    chifra daemon [flags]
 
     chifra init [flags]
 ```

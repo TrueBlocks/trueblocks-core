@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 The following commands produce and manage [{PLURAL}]:
 
 | Tools |     |

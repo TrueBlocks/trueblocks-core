@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2022-11-12T22:29:54
+date: 2022-12-16T22:54:10
 lastmod:
   - :git
   - lastmod
@@ -17,7 +17,7 @@ weight: 1400
 toc: true
 ---
 
-These commands compare the balance of an address against a particular token or block.
+The data structures produced by tools in the Chain State category provide details on the balances (ERC20 or ETH) of an address against a particular token or block. Additionally, direct access to a smart contract's state may be queries with the `chirfa state` tool. Data structures in that case are specific to the particular smart contract.
 
 _Each data structure is created by one or more tools which are detailed below_
 
@@ -47,20 +47,6 @@ State data is made of the following data fields:
 | accttype    | the type of the address at the given block                                      | string  |
 
 
-## Result
-
-
-| Field            | Description                                                                     | Type      |
-| ---------------- | ------------------------------------------------------------------------------- | --------- |
-| blockNumber      | the block number at which this call was made                                    | blknum    |
-| address          | the address of contract being called                                            | address   |
-| signature        | the canonical signature of the interface                                        | string    |
-| encoding         | the encoding for the function call                                              | string    |
-| bytes            | the bytes data following the encoding of the call                               | string    |
-| callResult       | the result of the call to the contract                                          | CFunction |
-| compressedResult | the compressed version of the result of the call to the contract                | string    |
-| deployed         | the block number at which this smart contract was deployed (if a smart contact) | blknum    |
-
 ## Transfer
 
 
@@ -81,6 +67,20 @@ State data is made of the following data fields:
 | spotPrice        | The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction       | double    |
 | priceSource      | The on-chain source from which the spot price was taken                                        | string    |
 | encoding         | The four-byte encoding of the transaction's function call                                      | string    |
+
+## Result
+
+
+| Field            | Description                                                                     | Type      |
+| ---------------- | ------------------------------------------------------------------------------- | --------- |
+| blockNumber      | the block number at which this call was made                                    | blknum    |
+| address          | the address of contract being called                                            | address   |
+| signature        | the canonical signature of the interface                                        | string    |
+| encoding         | the encoding for the function call                                              | string    |
+| bytes            | the bytes data following the encoding of the call                               | string    |
+| callResult       | the result of the call to the contract                                          | CFunction |
+| compressedResult | the compressed version of the result of the call to the contract                | string    |
+| deployed         | the block number at which this smart contract was deployed (if a smart contact) | blknum    |
 
 ## Token
 

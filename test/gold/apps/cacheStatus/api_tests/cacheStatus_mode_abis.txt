@@ -1,4 +1,4 @@
-status?modes=abis
+config?modes=show&module=abis
 {
   "data": [
     {
@@ -27,7 +27,6 @@ status?modes=abis
           "isValid": true
         }
       ],
-      "chains": [],
       "date": "--date--"
     }
   ],

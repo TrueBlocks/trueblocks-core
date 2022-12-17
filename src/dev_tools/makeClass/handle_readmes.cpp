@@ -55,7 +55,6 @@ bool COptions::handle_readmes(void) {
                 "[`[{FILE}]`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/"
                 "[{FILE}])\n";
             replaceAll(dFooter, "[{FILE}]", "internal/" + ep.api_route);
-            replaceAll(dFooter, "internal/serve", "server");
             string_q dReadme = getDocsPathReadmes(docFn);
             string_q dContents = substitute(contents, "[{FOOTER}]", dFooter);
             writeIfDifferent(dReadme, dContents);
@@ -66,7 +65,6 @@ bool COptions::handle_readmes(void) {
                 string_q sContents = substitute(contents, "[{FOOTER}]", sFooter);
                 string_q tReadme = getPathToSource("apps/chifra/internal/" + ep.api_route + "/README.md");
                 replaceAll(tReadme, "//", "/");
-                replaceAll(tReadme, "internal/serve", "server");
                 writeIfDifferent(tReadme, sContents);
             }
         }
@@ -75,7 +73,7 @@ bool COptions::handle_readmes(void) {
     // TODO: this should be generated from the data
     CStringArray items = {"Accounts:list,export,monitors,names,abis",
                           "Chain Data:blocks,transactions,receipts,logs,traces,when", "Chain State:state,result,tokens",
-                          "Admin:cacheStatus,serve,scrape,chunks,init", "Other:explore,ethslurp"};
+                          "Admin:config,daemon,scrape,chunks,init", "Other:explore,ethslurp"};
     uint32_t weight = 1100;
     for (auto item : items) {
         CStringArray parts;

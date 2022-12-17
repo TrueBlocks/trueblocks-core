@@ -1,4 +1,5 @@
-chifra status  --terse
+chifra config  --terse
+TEST[DATE|TIME] Modes:  [show]
 TEST[DATE|TIME] Depth:  0
 TEST[DATE|TIME] Terse:  true
 --TIME-- Client:       Client version (testing, archive, tracing)

@@ -1,4 +1,4 @@
-status?details&modes=caches&types=slurps
+config?details&modes=show&module=caches&types=slurps
 {
   "data": [
     {
@@ -29,7 +29,6 @@ status?details&modes=caches&types=slurps
           "isValid": true
         }
       ],
-      "chains": [],
       "date": "--date--"
     }
   ],

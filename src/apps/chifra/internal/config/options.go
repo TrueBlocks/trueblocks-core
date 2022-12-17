@@ -5,7 +5,7 @@
  * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
-package statusPkg
+package configPkg
 
 import (
 	"encoding/json"
@@ -19,28 +19,29 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-// StatusOptions provides all command options for the chifra status command.
-type StatusOptions struct {
-	Modes      []string              `json:"modes,omitempty"`      // The type of status info to retrieve
+// ConfigOptions provides all command options for the chifra config command.
+type ConfigOptions struct {
+	Modes      []string              `json:"modes,omitempty"`      // Either show or edit the configuration
+	Module     []string              `json:"module,omitempty"`     // The type of information to show or edit
 	Details    bool                  `json:"details,omitempty"`    // Include details about items found in monitors, slurps, abis, or price caches
-	Types      []string              `json:"types,omitempty"`      // For caches mode only, which type(s) of cache to report
-	Depth      uint64                `json:"depth,omitempty"`      // For cache mode only, number of levels deep to report
-	Report     bool                  `json:"report,omitempty"`     // Run the command with no options for the same result
-	Terse      bool                  `json:"terse,omitempty"`      // Show a terse summary report
+	Types      []string              `json:"types,omitempty"`      // For caches module only, which type(s) of cache to report
+	Depth      uint64                `json:"depth,omitempty"`      // For caches module only, number of levels deep to report
+	Terse      bool                  `json:"terse,omitempty"`      // Show a terse summary report for mode show
 	FirstBlock uint64                `json:"firstBlock,omitempty"` // First block to process (inclusive -- testing only)
 	LastBlock  uint64                `json:"lastBlock,omitempty"`  // Last block to process (inclusive -- testing only)
 	Globals    globals.GlobalOptions `json:"globals,omitempty"`    // The global options
 	BadFlag    error                 `json:"badFlag,omitempty"`    // An error flag if needed
 }
 
-var defaultStatusOptions = StatusOptions{
+var defaultConfigOptions = ConfigOptions{
 	Depth:     utils.NOPOS,
 	LastBlock: utils.NOPOS,
 }
 
 // testLog is used only during testing to export the options for this test case.
-func (opts *StatusOptions) testLog() {
+func (opts *ConfigOptions) testLog() {
 	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
+	logger.TestLog(len(opts.Module) > 0, "Module: ", opts.Module)
 	logger.TestLog(opts.Details, "Details: ", opts.Details)
 	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
 	logger.TestLog(opts.Depth != utils.NOPOS, "Depth: ", opts.Depth)
@@ -51,13 +52,13 @@ func (opts *StatusOptions) testLog() {
 }
 
 // String implements the Stringer interface
-func (opts *StatusOptions) String() string {
+func (opts *ConfigOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
 }
 
 // getEnvStr allows for custom environment strings when calling to the system (helps debugging).
-func (opts *StatusOptions) getEnvStr() []string {
+func (opts *ConfigOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -65,8 +66,11 @@ func (opts *StatusOptions) getEnvStr() []string {
 }
 
 // toCmdLine converts the option to a command line for calling out to the system.
-func (opts *StatusOptions) toCmdLine() string {
+func (opts *ConfigOptions) toCmdLine() string {
 	options := ""
+	for _, module := range opts.Module {
+		options += " --module " + module
+	}
 	if opts.Details {
 		options += " --details"
 	}
@@ -92,9 +96,9 @@ func (opts *StatusOptions) toCmdLine() string {
 	return options
 }
 
-// statusFinishParseApi finishes the parsing for server invocations. Returns a new StatusOptions.
-func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions {
-	copy := defaultStatusOptions
+// configFinishParseApi finishes the parsing for server invocations. Returns a new ConfigOptions.
+func configFinishParseApi(w http.ResponseWriter, r *http.Request) *ConfigOptions {
+	copy := defaultConfigOptions
 	opts := &copy
 	opts.Depth = utils.NOPOS
 	opts.FirstBlock = 0
@@ -106,6 +110,11 @@ func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Modes = append(opts.Modes, s...)
 			}
+		case "module":
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Module = append(opts.Module, s...)
+			}
 		case "details":
 			opts.Details = true
 		case "types":
@@ -115,8 +124,6 @@ func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions
 			}
 		case "depth":
 			opts.Depth = globals.ToUint64(value[0])
-		case "report":
-			opts.Report = true
 		case "terse":
 			opts.Terse = true
 		case "firstBlock":
@@ -125,7 +132,7 @@ func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions
 			opts.LastBlock = globals.ToUint64(value[0])
 		default:
 			if !globals.IsGlobalOption(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "status")
+				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "config")
 				return opts
 			}
 		}
@@ -137,14 +144,24 @@ func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions
 	return opts
 }
 
-// statusFinishParse finishes the parsing for command line invocations. Returns a new StatusOptions.
-func statusFinishParse(args []string) *StatusOptions {
+// configFinishParse finishes the parsing for command line invocations. Returns a new ConfigOptions.
+func configFinishParse(args []string) *ConfigOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	// EXISTING_CODE
 	defFmt = ""
-	opts.Modes = args
+	for _, mode := range args {
+		if mode == "show" || mode == "edit" {
+			opts.Modes = append(opts.Modes, mode)
+		} else {
+			opts.Module = append(opts.Module, mode)
+		}
+	}
+	if len(opts.Modes) == 0 {
+		opts.Modes = []string{"show"}
+		opts.Terse = true
+	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
@@ -152,16 +169,16 @@ func statusFinishParse(args []string) *StatusOptions {
 	return opts
 }
 
-func GetOptions() *StatusOptions {
+func GetOptions() *ConfigOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &defaultStatusOptions
+	return &defaultConfigOptions
 }
 
 func ResetOptions() {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
-	defaultStatusOptions = StatusOptions{}
-	globals.SetDefaults(&defaultStatusOptions.Globals)
-	defaultStatusOptions.Globals.Writer = w
+	defaultConfigOptions = ConfigOptions{}
+	globals.SetDefaults(&defaultConfigOptions.Globals)
+	defaultConfigOptions.Globals.Writer = w
 }

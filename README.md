@@ -82,7 +82,7 @@ Add the executable's folder to you path. Consult Google if you don't know how. T
 If you've sucessfully built the executable and set the `$PATH`, you should be able to run:
 
 ```[shell]
-chifra status --terse
+chifra config --terse
 ```
 
 and get results. If you get an error, the most likely cause is an incomplete configuration. The error message will report the location of the config file:
@@ -104,7 +104,7 @@ While optional, you most likely want to use the Unchained Index to search accoun
 You may use the command line, of course, to access data, but you may also wish to run an API server:
 
 ```[shell]
-chifra serve
+chifra daemon
 ```
 
 Use `curl` to pull data or use it to drive our "pre-beta" Account Explorer. See [installing the explorer](https://trueblocks.io/docs/install/install-explorer/). The API provides the identical tools and options as the command line and it [documented here](https://trueblocks.io/api/).
@@ -121,10 +121,10 @@ Get more help on any sub-command with `chifra <cmd> --help`. Full documentation 
 
 **Getting data**
 
-Let's look at the first subcommand, called `status`.
+Let's look at the first subcommand, called `config`.
 
 ```[shell]
-chifra status --terse
+chifra config --terse
 ```
 
 If you get a bunch of JSON data, congratulations, your installation is working.  Try this command which shows every 10th block between the first and the 100,000th:

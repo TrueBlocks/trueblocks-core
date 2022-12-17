@@ -1,4 +1,4 @@
-chifra status  --terse --chain gnosis
+chifra config  --terse --chain gnosis
 TEST[DATE|TIME] Depth:  0
 TEST[DATE|TIME] Terse:  true
 TEST[DATE|TIME] Chain:  gnosis

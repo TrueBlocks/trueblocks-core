@@ -112,9 +112,14 @@ bool writeCodeOut(COptions* opts, const string_q& fn) {
         CStringArray tokens = {"_CODE_AUTO", "_CODE_OPTIONS", "_CODE_LOCAL_INIT",
                                "_CODE_INIT", "_CODE_NOTES",   "ERROR_STRINGS"};
 
-        for (auto tok : tokens)
-            if (!contains(orig, tok) && !contains(orig, "_CHIFRA") && !contains(fn, "flame") && !contains(fn, "when"))
+        for (auto tok : tokens) {
+            bool missing = !contains(orig, tok);
+            bool ported =
+                contains(orig, "_CHIFRA") || contains(fn, "flame") || contains(fn, "when") || contains(fn, "daemon");
+            if (missing && !ported) {
                 LOG_WARN(fn, " does not contain token ", tok);
+            }
+        }
 
         converted = replaceCode(converted, "CODE_AUTO", opts->autoStream.str());
         converted = replaceCode(converted, "CODE_OPTIONS", opts->optionStream.str());
@@ -143,12 +148,21 @@ bool writeCodeOut(COptions* opts, const string_q& fn) {
         replace(converted, "[{DESCRIPTION}]", descr);
         replace(converted, "[{COMPONENTS}]", components);
         replace(converted, "[{VERSION}]", getVersionStr(false /* product */, false /* git_hash */));
+        // hack alert
+        if (contains(converted, "$ref: \"#/components/schemas/config\"")) {
+            replace(converted, "$ref: \"#/components/schemas/config\"", "$ref: \"#/components/schemas/status\"");
+        }
 
     } else if (endsWith(fn, ".h")) {
         CStringArray tokens = {"ERROR_DEFINES", "_CODE_DECLARE"};
-        for (auto tok : tokens)
-            if (!contains(orig, tok) && !contains(fn, "flame") && !contains(fn, "when"))
+        for (auto tok : tokens) {
+            bool missing = !contains(orig, tok);
+            bool ported =
+                contains(orig, "_CHIFRA") || contains(fn, "flame") || contains(fn, "when") || contains(fn, "daemon");
+            if (missing && !ported) {
                 LOG_WARN(fn, " does not contain token ", tok);
+            }
+        }
         converted = replaceCode(converted, "CODE_DECLARE", opts->headerStream.str());
         converted = replaceCode(converted, "ERROR_DEFINES", opts->errorDefStream.str());
 

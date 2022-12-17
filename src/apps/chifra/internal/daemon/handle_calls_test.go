@@ -2,7 +2,7 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package servePkg
+package daemonPkg
 
 // const output = "07807300 (  12097)- <PROG>  : Scanning 11403087 of 11854826 bloom hit false positive"
 

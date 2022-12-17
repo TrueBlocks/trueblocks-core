@@ -105,7 +105,7 @@ func GetIDs(provider string) (uint64, uint64, error) {
 func GetVersion(chain string) (version string, err error) {
 	provider := config.GetRpcProvider(chain)
 	var response struct {
-		Result string
+		Result string `json:"result"`
 	}
 	err = FromRpc(
 		provider,

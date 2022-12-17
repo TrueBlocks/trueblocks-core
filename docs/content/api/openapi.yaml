@@ -7,10 +7,10 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.44.0-beta
+  version: 0.45.0-beta
   description: >
 
-    A REST layer over the TrueBlocks application. With `chifra serve`, you can
+    A REST layer over the TrueBlocks application. With `chifra daemon`, you can
     run this on your own machine, and make calls to `localhost`.
 
     ## How to use this API
@@ -25,7 +25,7 @@ info:
 
     1. [Install the trueblocks-core application](/docs/install/install-trueblocks/)
       on your machine, change your configs as needed.
-    2. Run `chifra serve`
+    2. Run `chifra daemon`
 
 
       ### Example queries
@@ -1491,16 +1491,29 @@ paths:
                  }
         "400":
           description: bad input parameter
-  /status:
+  /config:
     get:
       tags:
         - Admin
-      summary: Report status
-      description: Report on the status of the TrueBlocks system.
-      operationId: admin-status
+      summary: Manage config
+      description: Report on and edit the configuration of the TrueBlocks system.
+      operationId: admin-config
       parameters:
         - name: modes
-          description: the type of status info to retrieve
+          description: either show or edit the configuration
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - show
+                - edit
+        - name: module
+          description: the type of information to show or edit
           required: false
           style: form
           in: query
@@ -1527,7 +1540,7 @@ paths:
           schema:
             type: boolean
         - name: terse
-          description: show a terse summary report
+          description: show a terse summary report for mode show
           required: false
           style: form
           in: query
@@ -2569,42 +2582,6 @@ components:
           type: string
           example: "one of 'EOA' or 'Contract'"
           description: "the type of the address at the given block"
-    result:
-      description: "the result of a call to a smart contract"
-      type: object
-      properties:
-        blockNumber:
-          type: number
-          format: blknum
-          example: 10021
-          description: "the block number at which this call was made"
-        address:
-          type: string
-          format: address
-          example: "0xa1e4...63b4"
-          description: "the address of contract being called"
-        signature:
-          type: string
-          description: "the canonical signature of the interface"
-        encoding:
-          type: string
-          description: "the encoding for the function call"
-        bytes:
-          type: string
-          description: "the bytes data following the encoding of the call"
-        callResult:
-          type: object
-          items:
-            $ref: "#/components/schemas/function"
-          description: "the result of the call to the contract"
-        compressedResult:
-          type: string
-          description: "the compressed version of the result of the call to the contract"
-        deployed:
-          type: number
-          format: blknum
-          example: 8901011
-          description: "the block number at which this smart contract was deployed (if a smart contact)"
     transfer:
       description: "a representation of an ERC-20 token transfer"
       type: object
@@ -2672,6 +2649,42 @@ components:
         encoding:
           type: string
           description: "The four-byte encoding of the transaction's function call"
+    result:
+      description: "the result of a call to a smart contract"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          example: 10021
+          description: "the block number at which this call was made"
+        address:
+          type: string
+          format: address
+          example: "0xa1e4...63b4"
+          description: "the address of contract being called"
+        signature:
+          type: string
+          description: "the canonical signature of the interface"
+        encoding:
+          type: string
+          description: "the encoding for the function call"
+        bytes:
+          type: string
+          description: "the bytes data following the encoding of the call"
+        callResult:
+          type: object
+          items:
+            $ref: "#/components/schemas/function"
+          description: "the result of the call to the contract"
+        compressedResult:
+          type: string
+          description: "the compressed version of the result of the call to the contract"
+        deployed:
+          type: number
+          format: blknum
+          example: 8901011
+          description: "the block number at which this smart contract was deployed (if a smart contact)"
     token:
       description: "on-chain token related data for a give address at a given block height"
       type: object
@@ -2770,11 +2783,17 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/chain"
+          description: "the list of configured chains"
         caches:
           type: array
           items:
             $ref: "#/components/schemas/cache"
           description: "a collection of information concerning the binary caches"
+        keys:
+          type: array
+          items:
+            $ref: "#/components/schemas/key"
+          description: "the list of configured api keys"
     cache:
       description: "The cache data model carries information about the various local binary caches"
       type: object
@@ -2880,6 +2899,22 @@ components:
         ipfsGateway:
           type: string
           description: "An IPFS gateway for pinning the index if enabled"
+    key:
+      description: "The api key that carries information about configured apis"
+      type: object
+      properties:
+        provider:
+          type: string
+          description: "The api provider"
+        apiKey:
+          type: string
+          description: "An api key"
+        jwt:
+          type: string
+          description: "An jwt token used for an API"
+        secret:
+          type: string
+          description: "A secret used for an API"
     cacheEntry:
       description: "an entry in one of the caches"
       type: object

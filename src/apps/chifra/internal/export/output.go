@@ -12,6 +12,7 @@ package exportPkg
 import (
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -62,6 +63,15 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 	// EXISTING_CODE
 
 	return
+}
+
+// GetExportOptions returns the options for this tool so other tools may use it.
+func GetExportOptions(args []string, g *globals.GlobalOptions) *ExportOptions {
+	ret := exportFinishParse(args)
+	if g != nil {
+		ret.Globals = *g
+	}
+	return ret
 }
 
 // EXISTING_CODE

@@ -1,5 +1,5 @@
-chifra argc: 5 [1:serve] [2:--help] [3:--verbose] [4:2] 
-chifra serve --help --verbose 2 
+chifra argc: 5 [1:daemon] [2:--help] [3:--verbose] [4:2] 
+chifra daemon --help --verbose 2 
 Usage of flame:
       --monitor       enable monitor scraper mode
       --pin           pins Bloom filters and chunks to pinning service (requires API key)

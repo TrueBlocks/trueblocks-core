@@ -41,6 +41,16 @@ func (opts *GlobalOptions) Validate() error {
 		opts.ToFile = false
 	}
 
+	// TODO: Can we re-enable this? It doesn't work in Sepolia under docker. Returns a really weird message.
+	// tmpPath := filepath.Join(config.GetPathToCache(opts.Chain), "tmp", "checkProvider.txt")
+	// if !file.FileExists(tmpPath) {
+	// 	if version, err := rpcClient.GetVersion(opts.Chain); err != nil {
+	// 		logger.Fatal("Cannot connect with the node software.", version, err)
+	// 	} else {
+	// 		file.StringToAsciiFile(tmpPath, version)
+	// 	}
+	// }
+
 	err := validate.ValidateEnum("--fmt", opts.Format, "[json|txt|csv]")
 	if err != nil {
 		return err

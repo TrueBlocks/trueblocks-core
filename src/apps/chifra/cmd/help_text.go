@@ -24,8 +24,8 @@ const helpText = `  Accounts:
     state         retrieve account balance(s) for one or more addresses at given block(s)
     tokens        retrieve token balance(s) for one or more addresses at given block(s)
   Admin:
-    status        report on the status of the TrueBlocks system
-    serve         serve the TrueBlocks API using the flame server
+    config        report on and edit the configuration of the TrueBlocks system
+    daemon        initalize and control long-running processes such as the API and the scrapers
     scrape        scan the chain and update the TrueBlocks index of appearances
     chunks        manage, investigate, and display the Unchained Index
     init          initialize the TrueBlocks system by downloading from IPFS

@@ -5,7 +5,7 @@
  * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
-package servePkg
+package daemonPkg
 
 import (
 	"encoding/json"
@@ -18,31 +18,38 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-// ServeOptions provides all command options for the chifra serve command.
-type ServeOptions struct {
+// DaemonOptions provides all command options for the chifra daemon command.
+type DaemonOptions struct {
 	Port    string                `json:"port,omitempty"`    // Specify the server's port
+	Scrape  string                `json:"scrape,omitempty"`  // Start the scraper, initialize it with either just blooms or entire index, generate for new blocks
+	Monitor bool                  `json:"monitor,omitempty"` // Instruct the node to start the monitors tool
+	Api     string                `json:"api,omitempty"`     // Instruct the node to start the API server
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 }
 
-var defaultServeOptions = ServeOptions{
+var defaultDaemonOptions = DaemonOptions{
 	Port: ":8080",
+	Api:  "on",
 }
 
 // testLog is used only during testing to export the options for this test case.
-func (opts *ServeOptions) testLog() {
+func (opts *DaemonOptions) testLog() {
 	logger.TestLog(len(opts.Port) > 0, "Port: ", opts.Port)
+	logger.TestLog(len(opts.Scrape) > 0, "Scrape: ", opts.Scrape)
+	logger.TestLog(opts.Monitor, "Monitor: ", opts.Monitor)
+	logger.TestLog(len(opts.Api) > 0, "Api: ", opts.Api)
 	opts.Globals.TestLog()
 }
 
 // String implements the Stringer interface
-func (opts *ServeOptions) String() string {
+func (opts *DaemonOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
 }
 
 // getEnvStr allows for custom environment strings when calling to the system (helps debugging).
-func (opts *ServeOptions) getEnvStr() []string {
+func (opts *DaemonOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -50,7 +57,7 @@ func (opts *ServeOptions) getEnvStr() []string {
 }
 
 // toCmdLine converts the option to a command line for calling out to the system.
-func (opts *ServeOptions) toCmdLine() string {
+func (opts *DaemonOptions) toCmdLine() string {
 	options := ""
 	if len(opts.Port) > 0 {
 		options += " --port " + opts.Port
@@ -62,17 +69,23 @@ func (opts *ServeOptions) toCmdLine() string {
 	return options
 }
 
-// serveFinishParseApi finishes the parsing for server invocations. Returns a new ServeOptions.
-func serveFinishParseApi(w http.ResponseWriter, r *http.Request) *ServeOptions {
-	copy := defaultServeOptions
+// daemonFinishParseApi finishes the parsing for server invocations. Returns a new DaemonOptions.
+func daemonFinishParseApi(w http.ResponseWriter, r *http.Request) *DaemonOptions {
+	copy := defaultDaemonOptions
 	opts := &copy
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "port":
 			opts.Port = value[0]
+		case "scrape":
+			opts.Scrape = value[0]
+		case "monitor":
+			opts.Monitor = true
+		case "api":
+			opts.Api = value[0]
 		default:
 			if !globals.IsGlobalOption(key) {
-				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "serve")
+				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "daemon")
 				return opts
 			}
 		}
@@ -84,8 +97,8 @@ func serveFinishParseApi(w http.ResponseWriter, r *http.Request) *ServeOptions {
 	return opts
 }
 
-// serveFinishParse finishes the parsing for command line invocations. Returns a new ServeOptions.
-func serveFinishParse(args []string) *ServeOptions {
+// daemonFinishParse finishes the parsing for command line invocations. Returns a new DaemonOptions.
+func daemonFinishParse(args []string) *DaemonOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
@@ -97,16 +110,16 @@ func serveFinishParse(args []string) *ServeOptions {
 	return opts
 }
 
-func GetOptions() *ServeOptions {
+func GetOptions() *DaemonOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &defaultServeOptions
+	return &defaultDaemonOptions
 }
 
 func ResetOptions() {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
-	defaultServeOptions = ServeOptions{}
-	globals.SetDefaults(&defaultServeOptions.Globals)
-	defaultServeOptions.Globals.Writer = w
+	defaultDaemonOptions = DaemonOptions{}
+	globals.SetDefaults(&defaultDaemonOptions.Globals)
+	defaultDaemonOptions.Globals.Writer = w
 }

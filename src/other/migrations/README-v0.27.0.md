@@ -30,7 +30,7 @@ Stop any long running TrueBlocks processes (such as the `chifra scrape` or `chif
 Run this command:
 
 ```
-chifra status --terse
+chifra config --terse
 ```
 
 Notice the `indexPath` value (<indexPath>). Change into that directory:
@@ -55,7 +55,7 @@ You should see something similar to the following:
 
 ### Remove incorrect files and sub-folders
 
-Make sure you're in the folder <indexPath> and that you see the above folder tree. `pwd` should report the same folder as `chifra status --terse` does for `indexPath`.
+Make sure you're in the folder <indexPath> and that you see the above folder tree. `pwd` should report the same folder as `chifra config --terse` does for `indexPath`.
 
 Complete the following commands:
 
