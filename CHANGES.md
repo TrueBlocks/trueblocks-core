@@ -5,35 +5,38 @@ This file details changes made to TrueBlocks per version (starting with version 
 
 ## v0.45.0
 
-- The changes in this release are in support of our docker version. Two tools (`chifra serve` and `chifra status`) have been renamed to `chifra daemon` and `chifra config`, respectively in order to more clearly reflect what they do. A new tool called `chifra version` was also added.
+Changes in this release are in support of [the docker version](https://github.com/TrueBlocks/trueblocks-docker). The changes are focused on two tools (`serve` and `status`) which have been renamed to `daemon` and `config`, respectively. This change allows these tools to more clearly reflect what they do.
 
-### Significant Bug Fixes
+### Bug Fixes
 
-- None.
+- Fix to `chifra export --accounting` reporting incorrect reconciliations.
 
 ### System-Wide Changes
 
-- Updates version to v0.45.0
-- a
-- b
+- Updates version to v0.45.0-beta
+- Near total rewrite of README for clarity and ease of use
+- Added many tests for various tools
 
 ### Changes to Specific Tools
 
 **chifra serve**
 
-- x
+- **Breaking change**: `chifra serve` renamed to `chifra daemon`. All other options remain the same.
+
+**chifra config (formerly chifra status)**
+
+- Renamed `chifra status` to `chifra config`. `Chifra status` now reports that it's been deprecated and instructs the user to use `chifra config`.
+- Prepares to use this tool for interactive editing of configuration files such as `git` and `ipfs` do.
+- **Breaking change**: Moved existing positional options under `--module` flag which. Must be one of `[ index | monitors | names | abis | caches | some | all ]`.
+- **Breaking change**: Added new positional options which must be on of `[ show | edit ]`.
+
+**chifra export**
+
+- Rewrote the way `--first_block`, `--last_block`, `--first_record`, and `--max_record` behave, especially how they interoperate.
 
 **chifra scrape**
 
 - Internal-only changes in preparation for starting, pausing, and restarting the scraper from `chifra daemon`. In all other ways, it operates identical to previous versions.
-
-**chifra config (formerly chifra status)**
-
-- Renamed `chifra status` to `chifra config`. `Chifra status` now reports that it's been deprecated and instructs the user to use `chifra config`. No other changes were made to this tool, however, we did prepare to use this tool in a later version for interactive editing of configuration files in a way similar to other command line tools such as `git` and `ipfs`.
-
-- moved existing positional option to `--module` which must be one of [ index | monitors | names | abis | caches | some | all ].
-- added new positional option which must be on of `[ show | edit ]`.
-- 
 
 **chifra init**
 
@@ -45,7 +48,19 @@ This file details changes made to TrueBlocks per version (starting with version 
 
 **chifra list**
 
-- Added the `no_zero` option to instruct `chifra list` to not report any addresses for which there are no transactions.
+- Added the `no_zero` option to instruct `chifra list` to not report any addresses for which there are no transactions (incomplete).
+
+**chifra names**
+
+- Added a names to the names database
+
+**chifra blocks**
+
+- Started process of porting `chifra blocks` to GoLang.
+
+**chifra transactions**
+
+- Rudimentary implementation of `--source` option.
 
 **chifra version**
 
