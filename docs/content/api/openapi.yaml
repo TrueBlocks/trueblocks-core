@@ -1491,16 +1491,29 @@ paths:
                  }
         "400":
           description: bad input parameter
-  /status:
+  /config:
     get:
       tags:
         - Admin
-      summary: Report status
-      description: Report on the status of the TrueBlocks system.
-      operationId: admin-status
+      summary: Manage config
+      description: Report on and edit the configuration of the TrueBlocks system.
+      operationId: admin-config
       parameters:
         - name: modes
-          description: the type of status info to retrieve
+          description: either show or edit the configuration
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - show
+                - edit
+        - name: module
+          description: the type of information to show or edit
           required: false
           style: form
           in: query
@@ -1527,7 +1540,7 @@ paths:
           schema:
             type: boolean
         - name: terse
-          description: show a terse summary report
+          description: show a terse summary report for mode show
           required: false
           style: form
           in: query
