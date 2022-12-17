@@ -20,7 +20,7 @@ This is a simple proceedure.
 
 Stop any long running TrueBlocks processes (such as the `chifra scrape` or `chifra serve`). Do not restart them until the migration is complete.
 
-You may wish to make a backup copy of your cache (although, being a cache, any cached files can be re-created, so this is optional). Find your `cachePath` with `chifra status --terse`.
+You may wish to make a backup copy of your cache (although, being a cache, any cached files can be re-created, so this is optional). Find your `cachePath` with `chifra config --terse`.
 
 ## Instructions
 
@@ -29,7 +29,7 @@ You may wish to make a backup copy of your cache (although, being a cache, any c
 Run this command:
 
 ```
-chifra status --migrate test
+chifra config --migrate test
 ```
 
 This will not modify any files. It will only tell you if any files need to be migrated.
@@ -39,7 +39,7 @@ If the above command reports that no files need to be migrated, you are finished
 If the above command reports that files need to be migrated (likely), run the following command (after making a backup if you wish):
 
 ```
-chifra status --migrate cache
+chifra config --migrate cache
 ```
 
 This will migrate all of your existing monitors. It should complete with no problems. If it does, you're finished.
@@ -48,9 +48,9 @@ You may wish to complete the above command for any other chains you're working w
 
 ### What should I do if there's a problem
 
-Because this migration involves upgrading the cache, any damaged or incompletely migrated files can be removed. They will be re-created during normal operation. In the unlikely event of a problem, you may remove the contents of the `monitors` subfolder in your `cachePath` (find `cachePath` with `chifra status --terse`).
+Because this migration involves upgrading the cache, any damaged or incompletely migrated files can be removed. They will be re-created during normal operation. In the unlikely event of a problem, you may remove the contents of the `monitors` subfolder in your `cachePath` (find `cachePath` with `chifra config --terse`).
 
-After deleting the contents of the `monitors` folder (do not delete the folder itself), run `chifra status --migrate cache` again. It should report a sucessful migration. Your old monitors will be re-created the next time you query your addresses.
+After deleting the contents of the `monitors` folder (do not delete the folder itself), run `chifra config --migrate cache` again. It should report a sucessful migration. Your old monitors will be re-created the next time you query your addresses.
 
 ## You're finished!
 

@@ -5,10 +5,7 @@
 package cmd
 
 import (
-	"bufio"
-	"bytes"
 	"fmt"
-	"io"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -47,45 +44,6 @@ func ErrFunc(cmd *cobra.Command, errMsg error) error {
 		msg = "\n  \033[31m" + msg + "\033[0m\n"
 	}
 	return fmt.Errorf(msg)
-}
-
-// enums
-// https://pkg.go.dev/github.com/thediveo/enumflag
-
-// dropNL drops new line characters (\n) from the progress stream
-func dropNL(data []byte) []byte {
-	if len(data) > 0 && data[len(data)-1] == '\n' {
-		return data[0 : len(data)-1]
-	}
-	return data
-}
-
-// ScanProgressLine looks for "lines" that end with `\r` not `\n` like usual
-func ScanProgressLine(data []byte, atEOF bool) (advance int, token []byte, err error) {
-	if atEOF && len(data) == 0 {
-		return 0, nil, nil
-	}
-	if i := bytes.IndexByte(data, '\n'); i >= 0 {
-		fmt.Fprintf(os.Stderr, "%s\n", string(data[0:i]))
-		return i + 1, data[0:i], nil
-	}
-	if i := bytes.IndexByte(data, '\r'); i >= 0 {
-		fmt.Fprintf(os.Stderr, "%s\r", string(data[0:i]))
-		return i + 1, dropNL(data[0:i]), nil
-	}
-	return bufio.ScanLines(data, atEOF)
-}
-
-// ScanForProgress watches stderr and picks of progress messages
-func ScanForProgress(stderrPipe io.Reader, fn func(string)) {
-	scanner := bufio.NewScanner(stderrPipe)
-	scanner.Split(ScanProgressLine)
-	for scanner.Scan() {
-		// we've already printed the token
-	}
-	if err := scanner.Err(); err != nil {
-		fmt.Println("TB: Error while reading stderr -- ", err)
-	}
 }
 
 func UsageWithNotes(notes string) string {
