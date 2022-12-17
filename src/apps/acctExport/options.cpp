@@ -421,7 +421,7 @@ COptions::COptions(void) {
     notes.push_back("For the --logs option, you may optionally specify one or more --emitter, one or more --topics, or both.");  // NOLINT
     notes.push_back("The --logs option is significantly faster if you provide an --emitter or a --topic.");
     notes.push_back("Neighbors include every address that appears in any transaction in which the export address also appears.");  // NOLINT
-    notes.push_back("If provided, --max_records dominates, also, if provided, --first_block overrides --first_record.");
+    notes.push_back("If provided, --max_records dominates, also, if provided, --first_record overrides --first_block.");
     // clang-format on
     // END_CODE_NOTES
 

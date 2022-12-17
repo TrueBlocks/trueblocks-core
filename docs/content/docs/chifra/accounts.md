@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-12-02T15:08:31
+date: 2022-12-16T21:58:05
 lastmod:
   - :git
   - lastmod
@@ -111,7 +111,7 @@ Notes:
   - For the --logs option, you may optionally specify one or more --emitter, one or more --topics, or both.
   - The --logs option is significantly faster if you provide an --emitter or a --topic.
   - Neighbors include every address that appears in any transaction in which the export address also appears.
-  - If provided, --max_records dominates, also, if provided, --first_block overrides --first_record.
+  - If provided, --max_records dominates, also, if provided, --first_record overrides --first_block.
 ```
 
 **Source code**: [`internal/export`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/export)
