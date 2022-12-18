@@ -40,10 +40,6 @@ func (opts *ListOptions) validateList() error {
 		}
 	}
 
-	if opts.FirstRecord == 0 {
-		opts.FirstRecord = 1
-	}
-
 	if opts.MaxRecords == 0 {
 		opts.MaxRecords = 250
 	}

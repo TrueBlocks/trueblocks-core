@@ -224,7 +224,8 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (first_record == 0) {
-        return usage("Should not happen: " + uint_2_Str(first_record) + "  must be at least 1.");
+        // return usage("Should not happen: " + uint_2_Str(first_record) + "  must be at least 1.");
+        first_record = 1;
     }
 
     if (!isApiMode() && (max_records == 250 || max_records == 0))
