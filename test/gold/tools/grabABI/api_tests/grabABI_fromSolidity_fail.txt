@@ -1,0 +1,6 @@
+abis?sol&addrs=0x12
+{
+  "errors": [
+    "Please specify at least one valid Ethereum address."
+  ]
+}
