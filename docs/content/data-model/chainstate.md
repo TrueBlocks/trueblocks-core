@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2022-12-18T21:02:08
+date: 2022-12-18T23:30:42
 lastmod:
   - :git
   - lastmod
@@ -22,6 +22,8 @@ The data structures produced by tools in the Chain State category provide detail
 _Each data structure is created by one or more tools which are detailed below_
 
 ## State
+
+The `state` object displays information about the type of account associated with an address, the block the address first appeared on the chain, the proxy address if the address is a proxied smart contract as well as account balance and a few other things.
 
 The following commands produce and manage states:
 
@@ -49,6 +51,15 @@ State data is made of the following data fields:
 
 ## Result
 
+For the `chifra state --call` tool, the `result` is the result returned by the call to the smart contract. This is the decoded `output` value of the smart contract call.
+
+The following commands produce and manage results:
+
+| Tools                                                 |                                                                         |
+| ----------------------------------------------------- | ----------------------------------------------------------------------- |
+| [chifra state](/docs/chifra/chainstate/#chifra-state) | retrieve account balance(s) for one or more addresses at given block(s) |
+
+Result data is made of the following data fields:
 
 | Field            | Description                                                                     | Type      |
 | ---------------- | ------------------------------------------------------------------------------- | --------- |
@@ -61,36 +72,16 @@ State data is made of the following data fields:
 | compressedResult | the compressed version of the result of the call to the contract                | string    |
 | deployed         | the block number at which this smart contract was deployed (if a smart contact) | blknum    |
 
-## Transfer
-
-
-| Field            | Description                                                                                    | Type      |
-| ---------------- | ---------------------------------------------------------------------------------------------- | --------- |
-| blockNumber      | the number of the block                                                                        | blknum    |
-| transactionIndex | the zero-indexed position of the transaction in the block                                      | blknum    |
-| logIndex         | the zero-indexed position of the log in the transaction                                        | blknum    |
-| transactionHash  | the hash of the transaction that triggered this reconciliation                                 | hash      |
-| timestamp        | the Unix timestamp of the object                                                               | timestamp |
-| date             | a calculated field -- the date of this transaction                                             | datetime  |
-| sender           | the initiator of the transfer (the sender)                                                     | address   |
-| recipient        | the receiver of the transfer (the recipient)                                                   | address   |
-| assetAddr        | 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for ETH reconcilations, the token address otherwise | address   |
-| assetSymbol      | either ETH, WEI or the symbol of the asset being reconciled as queried from the chain          | string    |
-| decimals         | Equivalent to the queried value of `decimals` from an ERC20 contract or, if ETH or WEI then 18 | uint64    |
-| amount           | the amount of the transfer in the units of the asset                                           | uint256   |
-| spotPrice        | The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction       | double    |
-| priceSource      | The on-chain source from which the spot price was taken                                        | string    |
-| encoding         | The four-byte encoding of the transaction's function call                                      | string    |
 
 ## Token
 
+The `token` data model represents the name, decmials, token symbol, and optionally the totalSupply of an ERC-20 token.
+
 The following commands produce and manage tokens:
 
-| Tools |     |
-| ----- | --- |
-
-* CLI: [chifra tokens](/docs/chifra/chainstate/#chifra-tokens)
-* [API](/api#operation/chainstate-tokens)
+| Tools                                                   |                                                                       |
+| ------------------------------------------------------- | --------------------------------------------------------------------- |
+| [chifra tokens](/docs/chifra/chainstate/#chifra-tokens) | retrieve token balance(s) for one or more addresses at given block(s) |
 
 Token data is made of the following data fields:
 
@@ -117,11 +108,6 @@ This documentation mentions the following basic data types.
 | blknum    | an alias for a uint64                           |                |
 | bool      | a value either `true`, `false`, `1`, or `0`     |                |
 | bytes     | an arbitrarily long string of bytes             |                |
-| datetime  | a JSON formatted date                           | as a string    |
-| double    | a floating point number of double precision     |                |
-| hash      | a 32-byte hexadecimal string starting with '0x' | lowercase      |
 | string    | a normal character string                       |                |
-| timestamp | a 64-bit unsigned integer                       | Unix timestamp |
-| uint256   |                                                 |                |
 | uint64    | a 64-bit unsigned integer                       |                |
 | wei       | an unsigned big number                          | as a string    |

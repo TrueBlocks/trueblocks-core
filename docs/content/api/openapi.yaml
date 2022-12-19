@@ -438,12 +438,12 @@ paths:
                       oneOf:
                         - $ref: "#/components/schemas/appearance"
                         - $ref: "#/components/schemas/reconciliation"
+                        - $ref: "#/components/schemas/transfer"
                         - $ref: "#/components/schemas/listStats"
                         - $ref: "#/components/schemas/transaction"
                         - $ref: "#/components/schemas/receipt"
                         - $ref: "#/components/schemas/log"
                         - $ref: "#/components/schemas/trace"
-                        - $ref: "#/components/schemas/transfer"
                 example:
                   {
                     "data":
@@ -1048,12 +1048,12 @@ paths:
               schema:
                 properties:
                   data:
-                    description: the transaction data for a given transaction directly from the blockchain
+                    description: a representation of an ERC-20 token transfer
                     type: array
                     items:
                       oneOf:
-                        - $ref: "#/components/schemas/transaction"
                         - $ref: "#/components/schemas/transfer"
+                        - $ref: "#/components/schemas/transaction"
         "400":
           description: bad input parameter
   /receipts:
@@ -2180,6 +2180,73 @@ components:
         isErc721:
           type: boolean
           description: "`true` if the address is an ERC720, `false` otherwise"
+    transfer:
+      description: "a representation of an ERC-20 token transfer"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          example: 10021
+          description: "the number of the block"
+        transactionIndex:
+          type: number
+          format: blknum
+          example: 305
+          description: "the zero-indexed position of the transaction in the block"
+        logIndex:
+          type: number
+          format: blknum
+          example: 305
+          description: "the zero-indexed position of the log in the transaction"
+        transactionHash:
+          type: string
+          format: hash
+          description: "the hash of the transaction that triggered this reconciliation"
+        timestamp:
+          type: number
+          format: timestamp
+          example: 1438335038
+          description: "the Unix timestamp of the object"
+        date:
+          type: datetime
+          description: "a calculated field -- the date of this transaction"
+        sender:
+          type: string
+          format: address
+          example: "0x1bd0...9ce9"
+          description: "the initiator of the transfer (the sender)"
+        recipient:
+          type: string
+          format: address
+          example: "0x38d1...1310"
+          description: "the receiver of the transfer (the recipient)"
+        assetAddr:
+          type: string
+          format: address
+          example: "0xf503...179b"
+          description: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for ETH reconcilations, the token address otherwise"
+        assetSymbol:
+          type: string
+          description: "either ETH, WEI or the symbol of the asset being reconciled as queried from the chain"
+        decimals:
+          type: number
+          format: uint64
+          description: "Equivalent to the queried value of `decimals` from an ERC20 contract or, if ETH or WEI then 18"
+        amount:
+          type: string
+          format: uint256
+          description: "the amount of the transfer in the units of the asset"
+        spotPrice:
+          type: number
+          format: double
+          description: "The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction"
+        priceSource:
+          type: string
+          description: "The on-chain source from which the spot price was taken"
+        encoding:
+          type: string
+          description: "The four-byte encoding of the transaction's function call"
     listStats:
       description: "data of the appropriate type from a single appearance of an address or the count of same"
       type: object
@@ -2623,73 +2690,6 @@ components:
           format: blknum
           example: 8901011
           description: "the block number at which this smart contract was deployed (if a smart contact)"
-    transfer:
-      description: "a representation of an ERC-20 token transfer"
-      type: object
-      properties:
-        blockNumber:
-          type: number
-          format: blknum
-          example: 10021
-          description: "the number of the block"
-        transactionIndex:
-          type: number
-          format: blknum
-          example: 305
-          description: "the zero-indexed position of the transaction in the block"
-        logIndex:
-          type: number
-          format: blknum
-          example: 305
-          description: "the zero-indexed position of the log in the transaction"
-        transactionHash:
-          type: string
-          format: hash
-          description: "the hash of the transaction that triggered this reconciliation"
-        timestamp:
-          type: number
-          format: timestamp
-          example: 1438335038
-          description: "the Unix timestamp of the object"
-        date:
-          type: datetime
-          description: "a calculated field -- the date of this transaction"
-        sender:
-          type: string
-          format: address
-          example: "0x1bd0...9ce9"
-          description: "the initiator of the transfer (the sender)"
-        recipient:
-          type: string
-          format: address
-          example: "0x38d1...1310"
-          description: "the receiver of the transfer (the recipient)"
-        assetAddr:
-          type: string
-          format: address
-          example: "0xf503...179b"
-          description: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for ETH reconcilations, the token address otherwise"
-        assetSymbol:
-          type: string
-          description: "either ETH, WEI or the symbol of the asset being reconciled as queried from the chain"
-        decimals:
-          type: number
-          format: uint64
-          description: "Equivalent to the queried value of `decimals` from an ERC20 contract or, if ETH or WEI then 18"
-        amount:
-          type: string
-          format: uint256
-          description: "the amount of the transfer in the units of the asset"
-        spotPrice:
-          type: number
-          format: double
-          description: "The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction"
-        priceSource:
-          type: string
-          description: "The on-chain source from which the spot price was taken"
-        encoding:
-          type: string
-          description: "The four-byte encoding of the transaction's function call"
     token:
       description: "on-chain token related data for a give address at a given block height"
       type: object

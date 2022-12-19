@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-12-16T23:17:17
+date: 2022-12-18T23:36:19
 lastmod:
   - :git
   - lastmod
@@ -181,14 +181,55 @@ Name data is made of the following data fields:
 | isErc721   | `true` if the address is an ERC720, `false` otherwise                               | bool    |
 
 
+## Transfer
+
+The `transfer` data model is produced by the reconciliation process of `chifra export`. It represents, for all intents and purposes, the asset value transfer produced by nearly all value transfers on any blockchain. While the details of various token transfers are varied, the underlying mechanism is through token transfers. In our accounting, we focus on the token transfers and label each such transfer on the `input` data or `event topic` data. In this way, our accounting remains relatively easy (we only reconcile tokens and ETH), but we cover every conceivable token asset transfer of any type.
+
+The following commands produce and manage transfers:
+
+| Tools                                                 |                                                              |
+| ----------------------------------------------------- | ------------------------------------------------------------ |
+| [chifra export](/docs/chifra/accounts/#chifra-export) | export full detail of transactions for one or more addresses |
+
+Transfer data is made of the following data fields:
+
+| Field            | Description                                                                                    | Type      |
+| ---------------- | ---------------------------------------------------------------------------------------------- | --------- |
+| blockNumber      | the number of the block                                                                        | blknum    |
+| transactionIndex | the zero-indexed position of the transaction in the block                                      | blknum    |
+| logIndex         | the zero-indexed position of the log in the transaction                                        | blknum    |
+| transactionHash  | the hash of the transaction that triggered this reconciliation                                 | hash      |
+| timestamp        | the Unix timestamp of the object                                                               | timestamp |
+| date             | a calculated field -- the date of this transaction                                             | datetime  |
+| sender           | the initiator of the transfer (the sender)                                                     | address   |
+| recipient        | the receiver of the transfer (the recipient)                                                   | address   |
+| assetAddr        | 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for ETH reconcilations, the token address otherwise | address   |
+| assetSymbol      | either ETH, WEI or the symbol of the asset being reconciled as queried from the chain          | string    |
+| decimals         | Equivalent to the queried value of `decimals` from an ERC20 contract or, if ETH or WEI then 18 | uint64    |
+| amount           | the amount of the transfer in the units of the asset                                           | uint256   |
+| spotPrice        | The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction       | double    |
+| priceSource      | The on-chain source from which the spot price was taken                                        | string    |
+| encoding         | The four-byte encoding of the transaction's function call                                      | string    |
+
+
 ## ListStats
 
+The `listStats` data model is used mostly by the frontend explorer application. It carries various information about the monitor data for an address.
+
+The following commands produce and manage listStats:
+
+| Tools                                             |                                            |
+| ------------------------------------------------- | ------------------------------------------ |
+| [chifra list](/docs/chifra/accounts/#chifra-list) | list appearances for one or more addresses |
+
+Liststats data is made of the following data fields:
 
 | Field    | Description                                               | Type    |
 | -------- | --------------------------------------------------------- | ------- |
 | address  | the address for this count                                | address |
 | nRecords | the number of appearances for the given address           | uint64  |
 | fileSize | the size of the monitor file containing those appearances | uint64  |
+
 
 ## Base types
 
@@ -205,4 +246,5 @@ This documentation mentions the following basic data types.
 | int256    | a signed big number                             | as a string    |
 | string    | a normal character string                       |                |
 | timestamp | a 64-bit unsigned integer                       | Unix timestamp |
+| uint256   |                                                 |                |
 | uint64    | a 64-bit unsigned integer                       |                |
