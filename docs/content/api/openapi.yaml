@@ -1739,6 +1739,7 @@ paths:
                       oneOf:
                         - $ref: "#/components/schemas/pinnedChunk"
                         - $ref: "#/components/schemas/manifest"
+                        - $ref: "#/components/schemas/indexchunk"
         "400":
           description: bad input parameter
   /init:
@@ -2870,6 +2871,32 @@ components:
           items:
             $ref: "#/components/schemas/pinnedChunk"
           description: "a list of the IPFS hashes of all of the chunks in the unchained index"
+    indexchunk:
+      description: "the internal data of the unchained index chunks"
+      type: object
+      properties:
+        range:
+          type: blockRange
+          description: "The block range (inclusive) covered by this chunk"
+        magic:
+          type: string
+          description: "An internal use only magic number to indicate file format"
+        hash:
+          type: string
+          format: hash
+          description: "The hash of the specification under which this chunk was generated"
+        addressCount:
+          type: number
+          format: uint64
+          description: "The number of addresses in this chunk"
+        appearanceCount:
+          type: number
+          format: uint64
+          description: "The number of appearances in this chunk"
+        size:
+          type: number
+          format: uint64
+          description: "The size of the chunk in bytes"
     chain:
       description: "The chain data model carries information about configured chains"
       type: object

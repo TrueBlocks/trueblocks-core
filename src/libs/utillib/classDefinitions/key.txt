@@ -5,4 +5,4 @@ includes = utillib.h
 cpp_includes =
 doc_group = 04-Admin
 doc_descr = The api key that carries information about configured apis
-doc_api = 35-key
+doc_api = 310-key

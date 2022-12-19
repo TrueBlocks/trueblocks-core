@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-12-16T23:17:17
+date: 2022-12-18T20:26:22
 lastmod:
   - :git
   - lastmod
@@ -122,6 +122,18 @@ Manifest data is made of the following data fields:
 | chunks    | a list of the IPFS hashes of all of the chunks in the unchained index | CPinnedChunkArray |
 
 
+## Indexchunk
+
+
+| Field           | Description                                                        | Type       |
+| --------------- | ------------------------------------------------------------------ | ---------- |
+| range           | The block range (inclusive) covered by this chunk                  | blockRange |
+| magic           | An internal use only magic number to indicate file format          | string     |
+| hash            | The hash of the specification under which this chunk was generated | hash       |
+| addressCount    | The number of addresses in this chunk                              | uint64     |
+| appearanceCount | The number of appearances in this chunk                            | uint64     |
+| size            | The size of the chunk in bytes                                     | uint64     |
+
 ## Chain
 
 
@@ -163,6 +175,7 @@ This documentation mentions the following basic data types.
 | address   | a 20-byte hexadecimal string starting with '0x' | lowercase      |
 | blknum    | an alias for a uint64                           |                |
 | bool      | a value either `true`, `false`, `1`, or `0`     |                |
+| hash      | a 32-byte hexadecimal string starting with '0x' | lowercase      |
 | ipfshash  | a multi-hash produced by IPFS                   | mixed-case     |
 | string    | a normal character string                       |                |
 | timestamp | a 64-bit unsigned integer                       | Unix timestamp |
