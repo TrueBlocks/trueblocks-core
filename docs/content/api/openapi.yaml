@@ -1740,6 +1740,10 @@ paths:
                         - $ref: "#/components/schemas/pinnedChunk"
                         - $ref: "#/components/schemas/manifest"
                         - $ref: "#/components/schemas/indexchunk"
+                        - $ref: "#/components/schemas/blooms"
+                        - $ref: "#/components/schemas/addresses"
+                        - $ref: "#/components/schemas/stats"
+                        - $ref: "#/components/schemas/appearances"
         "400":
           description: bad input parameter
   /init:
@@ -2583,6 +2587,42 @@ components:
           type: string
           example: "one of 'EOA' or 'Contract'"
           description: "the type of the address at the given block"
+    result:
+      description: "the result of a call to a smart contract"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          example: 10021
+          description: "the block number at which this call was made"
+        address:
+          type: string
+          format: address
+          example: "0xa1e4...63b4"
+          description: "the address of contract being called"
+        signature:
+          type: string
+          description: "the canonical signature of the interface"
+        encoding:
+          type: string
+          description: "the encoding for the function call"
+        bytes:
+          type: string
+          description: "the bytes data following the encoding of the call"
+        callResult:
+          type: object
+          items:
+            $ref: "#/components/schemas/function"
+          description: "the result of the call to the contract"
+        compressedResult:
+          type: string
+          description: "the compressed version of the result of the call to the contract"
+        deployed:
+          type: number
+          format: blknum
+          example: 8901011
+          description: "the block number at which this smart contract was deployed (if a smart contact)"
     transfer:
       description: "a representation of an ERC-20 token transfer"
       type: object
@@ -2650,42 +2690,6 @@ components:
         encoding:
           type: string
           description: "The four-byte encoding of the transaction's function call"
-    result:
-      description: "the result of a call to a smart contract"
-      type: object
-      properties:
-        blockNumber:
-          type: number
-          format: blknum
-          example: 10021
-          description: "the block number at which this call was made"
-        address:
-          type: string
-          format: address
-          example: "0xa1e4...63b4"
-          description: "the address of contract being called"
-        signature:
-          type: string
-          description: "the canonical signature of the interface"
-        encoding:
-          type: string
-          description: "the encoding for the function call"
-        bytes:
-          type: string
-          description: "the bytes data following the encoding of the call"
-        callResult:
-          type: object
-          items:
-            $ref: "#/components/schemas/function"
-          description: "the result of the call to the contract"
-        compressedResult:
-          type: string
-          description: "the compressed version of the result of the call to the contract"
-        deployed:
-          type: number
-          format: blknum
-          example: 8901011
-          description: "the block number at which this smart contract was deployed (if a smart contact)"
     token:
       description: "on-chain token related data for a give address at a given block height"
       type: object
@@ -2897,6 +2901,119 @@ components:
           type: number
           format: uint64
           description: "The size of the chunk in bytes"
+    blooms:
+      description: "information about a single bloom filter file"
+      type: object
+      properties:
+        range:
+          type: blockRange
+          description: "The block range (inclusive) covered by this chunk"
+        magic:
+          type: string
+          description: "An internal use only magic number to indicate file format"
+        hash:
+          type: string
+          format: hash
+          description: "The hash of the specification under which this chunk was generated"
+        count:
+          type: number
+          format: uint64
+          description: "The number of individual bloom filters in this bloom file"
+        nInserted:
+          type: number
+          format: uint64
+          description: "The number of addresses inserted into the bloom file"
+        size:
+          type: number
+          format: uint64
+          description: "The size on disc in bytes of this bloom file"
+        width:
+          type: number
+          format: uint64
+          description: "The width of the bloom filter"
+    addresses:
+      description: "address records found in individual chunks"
+      type: object
+      properties:
+        address:
+          type: string
+          format: address
+          description: "The address in this record"
+        range:
+          type: blockRange
+          description: "The block range of the chunk from which this address record was taken"
+        offset:
+          type: number
+          format: uint64
+          description: "The offset into the appearance table of the first record for this address"
+        count:
+          type: number
+          format: uint64
+          description: "The number of records in teh appearance table for this address"
+    stats:
+      description: "summary information about the unchained index"
+      type: object
+      properties:
+        start:
+          type: number
+          format: uint64
+          description: "the first block in the chunk's range"
+        end:
+          type: number
+          format: uint64
+          description: "the last block in the chunk's range"
+        nAddrs:
+          type: number
+          format: uint64
+          description: "the number of addresses in the chunk"
+        nApps:
+          type: number
+          format: uint64
+          description: "the number of appearances in the chunk"
+        nBlocks:
+          type: number
+          format: uint64
+          description: "the number of blocks in the chunk"
+        nBlooms:
+          type: number
+          format: uint64
+          description: "the number of bloom filters in the chunk's bloom"
+        recWid:
+          type: number
+          format: uint64
+          description: "the record width of a single bloom filter"
+        bloomSz:
+          type: number
+          format: uint64
+          description: "the size of the bloom filters on disc in bytes"
+        chunkSz:
+          type: number
+          format: uint64
+          description: "the size of the chunks on disc in bytes"
+        addrsPerBlock:
+          type: float
+          description: "the average number of addresses per block"
+        appsPerBlock:
+          type: float
+          description: "the average number of appearances per block"
+        appsPerAddr:
+          type: float
+          description: "the average number of appearances per address"
+        ratio:
+          type: float
+          description: "the ratio of appearances to addresses"
+    appearances:
+      description: "a single record in the appearance table of an index chunk"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: uint64
+          description: "The block number of this appearance"
+        transactionIndex:
+          type: number
+          format: uint64
+          description: "The transaction index of this appearance"
     chain:
       description: "The chain data model carries information about configured chains"
       type: object

@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-12-18T20:26:22
+date: 2022-12-18T21:05:46
 lastmod:
   - :git
   - lastmod
@@ -134,6 +134,56 @@ Manifest data is made of the following data fields:
 | appearanceCount | The number of appearances in this chunk                            | uint64     |
 | size            | The size of the chunk in bytes                                     | uint64     |
 
+## Blooms
+
+
+| Field     | Description                                                        | Type       |
+| --------- | ------------------------------------------------------------------ | ---------- |
+| range     | The block range (inclusive) covered by this chunk                  | blockRange |
+| magic     | An internal use only magic number to indicate file format          | string     |
+| hash      | The hash of the specification under which this chunk was generated | hash       |
+| count     | The number of individual bloom filters in this bloom file          | uint64     |
+| nInserted | The number of addresses inserted into the bloom file               | uint64     |
+| size      | The size on disc in bytes of this bloom file                       | uint64     |
+| width     | The width of the bloom filter                                      | uint64     |
+
+## Addresses
+
+
+| Field   | Description                                                               | Type       |
+| ------- | ------------------------------------------------------------------------- | ---------- |
+| address | The address in this record                                                | address    |
+| range   | The block range of the chunk from which this address record was taken     | blockRange |
+| offset  | The offset into the appearance table of the first record for this address | uint64     |
+| count   | The number of records in teh appearance table for this address            | uint64     |
+
+## Appearances
+
+
+| Field            | Description                              | Type   |
+| ---------------- | ---------------------------------------- | ------ |
+| blockNumber      | The block number of this appearance      | uint64 |
+| transactionIndex | The transaction index of this appearance | uint64 |
+
+## Stats
+
+
+| Field         | Description                                      | Type   |
+| ------------- | ------------------------------------------------ | ------ |
+| start         | the first block in the chunk's range             | uint64 |
+| end           | the last block in the chunk's range              | uint64 |
+| nAddrs        | the number of addresses in the chunk             | uint64 |
+| nApps         | the number of appearances in the chunk           | uint64 |
+| nBlocks       | the number of blocks in the chunk                | uint64 |
+| nBlooms       | the number of bloom filters in the chunk's bloom | uint64 |
+| recWid        | the record width of a single bloom filter        | uint64 |
+| bloomSz       | the size of the bloom filters on disc in bytes   | uint64 |
+| chunkSz       | the size of the chunks on disc in bytes          | uint64 |
+| addrsPerBlock | the average number of addresses per block        | float  |
+| appsPerBlock  | the average number of appearances per block      | float  |
+| appsPerAddr   | the average number of appearances per address    | float  |
+| ratio         | the ratio of appearances to addresses            | float  |
+
 ## Chain
 
 
@@ -175,6 +225,7 @@ This documentation mentions the following basic data types.
 | address   | a 20-byte hexadecimal string starting with '0x' | lowercase      |
 | blknum    | an alias for a uint64                           |                |
 | bool      | a value either `true`, `false`, `1`, or `0`     |                |
+| float     |                                                 |                |
 | hash      | a 32-byte hexadecimal string starting with '0x' | lowercase      |
 | ipfshash  | a multi-hash produced by IPFS                   | mixed-case     |
 | string    | a normal character string                       |                |

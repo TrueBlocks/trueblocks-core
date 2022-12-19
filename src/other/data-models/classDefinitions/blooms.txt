@@ -1,0 +1,7 @@
+[settings]
+class = CIndexChunk
+fields = indexchunk.csv
+doc_group = 04-Admin
+doc_descr = information about a single bloom filter file
+doc_api = 305-blooms
+doc_producer = chunks
