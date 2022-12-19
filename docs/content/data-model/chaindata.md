@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2022-12-16T22:54:10
+date: 2022-12-19T17:57:49
 lastmod:
   - :git
   - lastmod
@@ -88,7 +88,7 @@ Transaction data is made of the following data fields:
 | finalized        | flag indicating the system considers this data final                                                  | bool                 |
 | extraData        |                                                                                                       | string               |
 | isError          |                                                                                                       | bool                 |
-| date             |                                                                                                       | date                 |
+| date             |                                                                                                       | datetime             |
 
 
 ## Receipt
@@ -227,7 +227,7 @@ Datedblock data is made of the following data fields:
 | ----------- | ----------------------------------- | --------- |
 | blockNumber | the number of the block             | blknum    |
 | timestamp   | the Unix timestamp of the block     | timestamp |
-| date        | Human readable version of timestamp | date      |
+| date        | Human readable version of timestamp | datetime  |
 
 
 ## Base types
@@ -240,7 +240,7 @@ This documentation mentions the following basic data types.
 | blknum    | an alias for a uint64                           |                |
 | bool      | a value either `true`, `false`, `1`, or `0`     |                |
 | bytes     | an arbitrarily long string of bytes             |                |
-| date      | a JSON formatted date                           | as a string    |
+| datetime  | a JSON formatted date                           | as a string    |
 | gas       | an unsigned big number                          | as a string    |
 | hash      | a 32-byte hexadecimal string starting with '0x' | lowercase      |
 | string    | a normal character string                       |                |

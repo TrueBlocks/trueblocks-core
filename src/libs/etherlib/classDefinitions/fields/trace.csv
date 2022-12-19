@@ -7,9 +7,9 @@ transactionHash  ,hash        ,           ,       ,      ,        ,          ,  
 transactionIndex ,blknum      ,           ,       ,      ,        ,          ,        ,      ,         ,5   ,2    ,305           ,the zero-indexed position of the transaction in the block
 type             ,string      ,           ,       ,      ,        ,          ,        ,      ,         ,8   ,     ,              ,the type of the trace
 error            ,string      ,           ,       ,      ,        ,          ,        ,      ,         ,    ,5    ,              ,
-action           ,traceAction ,           ,true   ,      ,        ,          ,        ,      ,         ,9   ,     ,              ,the trace action for this trace
-result           ,traceResult ,           ,true   ,      ,        ,          ,        ,      ,         ,10  ,     ,              ,the trace result of this trace
-articulatedTrace ,function    ,           ,true   ,      ,        ,          ,        ,      ,         ,11  ,     ,              ,human readable version of the trace action input data
+action           ,TraceAction ,           ,true   ,      ,        ,          ,        ,      ,         ,9   ,     ,              ,the trace action for this trace
+result           ,TraceResult ,           ,true   ,      ,        ,          ,        ,      ,         ,10  ,     ,              ,the trace result of this trace
+articulatedTrace ,Function    ,           ,true   ,      ,        ,          ,        ,      ,         ,11  ,     ,              ,human readable version of the trace action input data
 compressedTrace  ,string      ,           ,       ,      ,true    ,          ,        ,      ,         ,12  ,     ,              ,a compressed string version of the articulated trace
 action::callType ,string      ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,4    ,              ,
 action::from     ,string      ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,6    ,              ,

@@ -152,7 +152,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
             replaceAll(fieldGetStr, "[{FIELD}]", fld.name);
             if (fld.name == "topics") {
                 replaceAll(fieldGetStr, "THING", "topic_2_Str");
-            } else if (contains(fld.type, "CBlockNumArray")) {
+            } else if (contains(fld.type, "CBlkNumArray")) {
                 replaceAll(fieldGetStr, "THING", "uint_2_Str");
             } else if (contains(fld.type, "CBigUintArray")) {
                 replaceAll(fieldGetStr, "THING", "bnu_2_Str");
@@ -636,7 +636,7 @@ string_q getCaseSetCode(const CParameterArray& fieldsIn) {
                 } else if (startsWith(p.type, "bytes")) {
                     outStream << (p.name + " = toLower(fieldValue);\n````return true;");
 
-                } else if (contains(p.type, "CStringArray") || contains(p.type, "CBlockNumArray")) {
+                } else if (contains(p.type, "CStringArray") || contains(p.type, "CBlkNumArray")) {
                     const char* STR_ARRAY_SET =
                         "string_q str = fieldValue;\n"
                         "while (!str.empty()) {\n"
@@ -645,7 +645,7 @@ string_q getCaseSetCode(const CParameterArray& fieldsIn) {
                         "return true;";
                     string_q str = substitute(STR_ARRAY_SET, "\n", "\n````");
                     replaceAll(str, "[{NAME}]", p.name);
-                    if (contains(p.type, "CBlockNumArray"))
+                    if (contains(p.type, "CBlkNumArray"))
                         replaceAll(str, "nextTokenClear(str, ',')", "str_2_Uint(nextTokenClear(str, ','))");
                     outStream << (str);
 

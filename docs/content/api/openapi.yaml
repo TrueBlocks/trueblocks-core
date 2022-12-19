@@ -2411,8 +2411,7 @@ components:
         isError:
           type: boolean
         date:
-          type: string
-          format: date
+          type: datetime
     receipt:
       description: "receipt data for a given transaction directly from the blockchain"
       type: object
@@ -2607,8 +2606,7 @@ components:
           example: 1438335038
           description: "the Unix timestamp of the block"
         date:
-          type: string
-          format: date
+          type: datetime
           example: "2015-07-30 15:34:53 UTC"
           description: "Human readable version of timestamp"
     state:
