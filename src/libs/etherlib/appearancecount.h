@@ -31,9 +31,9 @@ class CAppearanceCount : public CBaseNode {
 
   public:
     CAppearanceCount(void);
-    CAppearanceCount(const CAppearanceCount& li);
+    CAppearanceCount(const CAppearanceCount& ap);
     virtual ~CAppearanceCount(void);
-    CAppearanceCount& operator=(const CAppearanceCount& li);
+    CAppearanceCount& operator=(const CAppearanceCount& ap);
 
     DECLARE_NODE(CAppearanceCount);
 
@@ -49,7 +49,7 @@ class CAppearanceCount : public CBaseNode {
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CAppearanceCount& li);
+    void duplicate(const CAppearanceCount& ap);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -64,10 +64,10 @@ inline CAppearanceCount::CAppearanceCount(void) {
 }
 
 //--------------------------------------------------------------------------
-inline CAppearanceCount::CAppearanceCount(const CAppearanceCount& li) {
+inline CAppearanceCount::CAppearanceCount(const CAppearanceCount& ap) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(li);
+    duplicate(ap);
 }
 
 // EXISTING_CODE
@@ -99,21 +99,21 @@ inline void CAppearanceCount::initialize(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CAppearanceCount::duplicate(const CAppearanceCount& li) {
+inline void CAppearanceCount::duplicate(const CAppearanceCount& ap) {
     clear();
-    CBaseNode::duplicate(li);
+    CBaseNode::duplicate(ap);
 
-    address = li.address;
-    nRecords = li.nRecords;
-    fileSize = li.fileSize;
+    address = ap.address;
+    nRecords = ap.nRecords;
+    fileSize = ap.fileSize;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CAppearanceCount& CAppearanceCount::operator=(const CAppearanceCount& li) {
-    duplicate(li);
+inline CAppearanceCount& CAppearanceCount::operator=(const CAppearanceCount& ap) {
+    duplicate(ap);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
@@ -141,8 +141,8 @@ extern CArchive& operator>>(CArchive& archive, CAppearanceCountArray& array);
 extern CArchive& operator<<(CArchive& archive, const CAppearanceCountArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CAppearanceCount& lis);
-extern CArchive& operator>>(CArchive& archive, CAppearanceCount& lis);
+extern CArchive& operator<<(CArchive& archive, const CAppearanceCount& app);
+extern CArchive& operator>>(CArchive& archive, CAppearanceCount& app);
 
 //---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_APPEARANCECOUNT;

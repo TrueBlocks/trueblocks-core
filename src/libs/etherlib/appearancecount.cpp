@@ -233,15 +233,15 @@ void CAppearanceCount::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextAppearancecountChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CAppearanceCount* lis = reinterpret_cast<const CAppearanceCount*>(dataPtr);
-    if (lis) {
+    const CAppearanceCount* app = reinterpret_cast<const CAppearanceCount*>(dataPtr);
+    if (app) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if (fieldIn % "parsed")
-                    return nextBasenodeChunk(fieldIn, lis);
+                    return nextBasenodeChunk(fieldIn, app);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -266,14 +266,14 @@ bool CAppearanceCount::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CAppearanceCount& lis) {
-    lis.SerializeC(archive);
+CArchive& operator<<(CArchive& archive, const CAppearanceCount& app) {
+    app.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CAppearanceCount& lis) {
-    lis.Serialize(archive);
+CArchive& operator>>(CArchive& archive, CAppearanceCount& app) {
+    app.Serialize(archive);
     return archive;
 }
 

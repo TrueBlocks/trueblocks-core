@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-12-18T23:36:19
+date: 2022-12-20T15:25:42
 lastmod:
   - :git
   - lastmod
@@ -211,23 +211,25 @@ Transfer data is made of the following data fields:
 | priceSource      | The on-chain source from which the spot price was taken                                        | string    |
 | encoding         | The four-byte encoding of the transaction's function call                                      | string    |
 
+
 ## AppearanceCount
 
 The `appearanceCount` data model is used mostly by the frontend explorer application. It carries various information about the monitor data for an address.
 
-The following commands produce and manage appearanceCount:
+The following commands produce and manage appearancecounts:
 
 | Tools                                             |                                            |
 | ------------------------------------------------- | ------------------------------------------ |
 | [chifra list](/docs/chifra/accounts/#chifra-list) | list appearances for one or more addresses |
 
-AppearanceCount data is made of the following data fields:
+Appearancecount data is made of the following data fields:
 
 | Field    | Description                                               | Type    |
 | -------- | --------------------------------------------------------- | ------- |
 | address  | the address for this count                                | address |
 | nRecords | the number of appearances for the given address           | uint64  |
 | fileSize | the size of the monitor file containing those appearances | uint64  |
+
 
 ## Base types
 

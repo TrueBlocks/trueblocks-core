@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2022-11-23T12:59:12
+date: 2022-12-20T15:25:43
 lastmod:
   - :git
   - lastmod
