@@ -1,6 +1,6 @@
 [settings]
-class = CIndexChunk
-fields = indexchunk.csv
+class = CAppearances
+fields = appearances.csv
 doc_group = 04-Admin
 doc_descr = a single record in the appearance table of an index chunk
 doc_api = 307-appearances

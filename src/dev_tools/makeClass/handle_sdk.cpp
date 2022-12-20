@@ -27,6 +27,26 @@ bool COptions::handle_sdk(void) {
 
     LOG_INFO(cYellow, "handling sdk generation...", cOff);
 
+    if (!handle_sdk_types()) {
+        return false;
+    }
+    if (!handle_sdk_paths()) {
+        return false;
+    }
+
+    return true;
+}
+
+//------------------------------------------------------------------------------------------------------------
+bool COptions::handle_sdk_types(void) {
+    // for (auto model : dataModels) {
+    //     cerr << model.class_name << endl;
+    // }
+    return true;
+}
+
+//------------------------------------------------------------------------------------------------------------
+bool COptions::handle_sdk_paths(void) {
     for (auto ep : endpointArray) {
         CCommandOptionArray params;
         for (auto option : routeOptionArray) {

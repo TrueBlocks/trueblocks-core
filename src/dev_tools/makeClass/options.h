@@ -132,6 +132,8 @@ class COptions : public COptionsBase {
     bool handle_datamodel(void);
     bool handle_tsx(void);
     bool handle_tsx_type(const CClassDefinition& classDef);
+    bool handle_sdk_paths(void);
+    bool handle_sdk_types(void);
     bool handle_sdk(void);
 
     void generate_switch(const CCommandOption& option);
