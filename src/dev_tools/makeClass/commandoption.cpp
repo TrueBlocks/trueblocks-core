@@ -918,7 +918,7 @@ bool isCrud(const string_q& cmd) {
 }
 
 //---------------------------------------------------------------------------------------------------
-string_q CCommandOption::toApiPath(const string_q& inStr, const string_q& exampleFn) const {
+string_q CCommandOption::toApiPath(const string_q& returnTypesIn, const string_q& exampleFn) const {
     if (!isApiRoute(api_route) || contains(api_route, "explore"))
         return "";
 
@@ -959,15 +959,15 @@ string_q CCommandOption::toApiPath(const string_q& inStr, const string_q& exampl
 
     string_q content;
     ostringstream properties;
-    string_q descr = inStr;
-    string_q productions = nextTokenClear(descr, '|');
+    string_q descr = returnTypesIn;
+    string_q returnTypes = nextTokenClear(descr, '|');
     const char* STR_PROPERTIES =
         "data:\n"
         "  description: [{DESCR}]\n"
         "  type: array\n"
         "  items:\n"
-        "    [{PRODUCTIONS}]";
-    content = substitute(substitute(STR_PROPERTIES, "[{PRODUCTIONS}]", productions), "[{DESCR}]", descr);
+        "    [{RETTYPES}]";
+    content = substitute(substitute(STR_PROPERTIES, "[{RETTYPES}]", returnTypes), "[{DESCR}]", descr);
 
     if (!content.empty()) {
         if (!contains(content, string_q(18, ' '))) {

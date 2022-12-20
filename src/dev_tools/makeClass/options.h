@@ -42,6 +42,7 @@ class COptions : public COptionsBase {
     // BEG_CODE_DECLARE
     bool all;
     bool tsx;
+    bool sdk;
     bool openapi;
     // END_CODE_DECLARE
 
@@ -131,6 +132,7 @@ class COptions : public COptionsBase {
     bool handle_datamodel(void);
     bool handle_tsx(void);
     bool handle_tsx_type(const CClassDefinition& classDef);
+    bool handle_sdk(void);
 
     void generate_switch(const CCommandOption& option);
     void generate_toggle(const CCommandOption& option);
@@ -145,7 +147,7 @@ class COptions : public COptionsBase {
 
     bool writeOpenApiFile(void);
 
-    string_q getProductions(const CCommandOption& ep);
+    string_q getReturnTypes(const CCommandOption& ep, CStringArray& returnTypes);
     void verifyDescriptions(void);
 };
 
@@ -204,3 +206,8 @@ extern string_q getPathToTemplates(const string_q& part);
 
 extern bool parseEndpointsFile(const char* str, void* data);
 extern bool parseOptionsFile(const char* str, void* data);
+
+//---------------------------------------------------------------------------------------------------
+#define explorerPath string_q("/Users/jrush/Development/trueblocks-explorer/")
+#define sdkPath string_q("/Users/jrush/Development/trueblocks-sdk/")
+#define coreDocsPath string_q("/Users/jrush/Development/trueblocks-core/docs/content/api/openapi.yaml")
