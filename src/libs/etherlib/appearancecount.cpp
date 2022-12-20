@@ -14,26 +14,26 @@
  * Parts of this file were generated with makeClass --run. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
-#include "liststats.h"
+#include "appearancecount.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CListStats, CBaseNode);
+IMPLEMENT_NODE(CAppearanceCount, CBaseNode);
 
 //---------------------------------------------------------------------------
-extern string_q nextListstatsChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextListstatsChunk_custom(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextAppearancecountChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextAppearancecountChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CListStats::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CAppearanceCount::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["liststats_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["appearancecount_fmt"] : fmtIn);
     if (fmt.empty()) {
         toJson(ctx);
         return;
@@ -43,13 +43,13 @@ void CListStats::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) cons
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextListstatsChunk, this);
+        ctx << getNextChunk(fmt, nextAppearancecountChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextListstatsChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextAppearancecountChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CListStats*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CAppearanceCount*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -58,9 +58,9 @@ string_q nextListstatsChunk(const string_q& fieldIn, const void* dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-string_q CListStats::getValueByName(const string_q& fieldName) const {
+string_q CAppearanceCount::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextListstatsChunk_custom(fieldName, this);
+    string_q ret = nextAppearancecountChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -96,7 +96,7 @@ string_q CListStats::getValueByName(const string_q& fieldName) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CListStats::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CAppearanceCount::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
@@ -129,13 +129,13 @@ bool CListStats::setValueByName(const string_q& fieldNameIn, const string_q& fie
 }
 
 //---------------------------------------------------------------------------------------------------
-void CListStats::finishParse() {
+void CAppearanceCount::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CListStats::Serialize(CArchive& archive) {
+bool CAppearanceCount::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -157,7 +157,7 @@ bool CListStats::Serialize(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CListStats::SerializeC(CArchive& archive) const {
+bool CAppearanceCount::SerializeC(CArchive& archive) const {
     // Writing always writes the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -172,10 +172,10 @@ bool CListStats::SerializeC(CArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CListStats::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+bool CAppearanceCount::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
     ASSERT(archiveIn.isReading());
     ASSERT(archiveOut.isWriting());
-    CListStats copy;
+    CAppearanceCount copy;
     // EXISTING_CODE
     // EXISTING_CODE
     copy.Serialize(archiveIn);
@@ -184,7 +184,7 @@ bool CListStats::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CListStatsArray& array) {
+CArchive& operator>>(CArchive& archive, CAppearanceCountArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -196,7 +196,7 @@ CArchive& operator>>(CArchive& archive, CListStatsArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CListStatsArray& array) {
+CArchive& operator<<(CArchive& archive, const CAppearanceCountArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -205,35 +205,35 @@ CArchive& operator<<(CArchive& archive, const CListStatsArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CListStats::registerClass(void) {
+void CAppearanceCount::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CListStats, "schema"))
+    if (HAS_FIELD(CAppearanceCount, "schema"))
         return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CListStats, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CListStats, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CListStats, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CListStats, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CListStats, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CListStats, "nRecords", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CListStats, "fileSize", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CAppearanceCount, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAppearanceCount, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CAppearanceCount, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CAppearanceCount, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAppearanceCount, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CAppearanceCount, "nRecords", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CAppearanceCount, "fileSize", T_UNUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CListStats, "schema");
-    HIDE_FIELD(CListStats, "deleted");
-    HIDE_FIELD(CListStats, "showing");
-    HIDE_FIELD(CListStats, "cname");
+    HIDE_FIELD(CAppearanceCount, "schema");
+    HIDE_FIELD(CAppearanceCount, "deleted");
+    HIDE_FIELD(CAppearanceCount, "showing");
+    HIDE_FIELD(CAppearanceCount, "cname");
 
-    builtIns.push_back(_biCListStats);
+    builtIns.push_back(_biCAppearanceCount);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextListstatsChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CListStats* lis = reinterpret_cast<const CListStats*>(dataPtr);
+string_q nextAppearancecountChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CAppearanceCount* lis = reinterpret_cast<const CAppearanceCount*>(dataPtr);
     if (lis) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -258,7 +258,7 @@ string_q nextListstatsChunk_custom(const string_q& fieldIn, const void* dataPtr)
 // EXISTING_CODE
 
 //---------------------------------------------------------------------------
-bool CListStats::readBackLevel(CArchive& archive) {
+bool CAppearanceCount::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -266,19 +266,19 @@ bool CListStats::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CListStats& lis) {
+CArchive& operator<<(CArchive& archive, const CAppearanceCount& lis) {
     lis.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CListStats& lis) {
+CArchive& operator>>(CArchive& archive, CAppearanceCount& lis) {
     lis.Serialize(archive);
     return archive;
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CListStats& it) {
+ostream& operator<<(ostream& os, const CAppearanceCount& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -288,7 +288,7 @@ ostream& operator<<(ostream& os, const CListStats& it) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_LISTSTATS = "";
+const char* STR_DISPLAY_APPEARANCECOUNT = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

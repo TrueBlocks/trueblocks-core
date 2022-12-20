@@ -30,9 +30,10 @@ bool COptions::handle_sdk(void) {
     if (!handle_sdk_types()) {
         return false;
     }
-    // if (!handle_sdk_paths()) {
-    //     return false;
-    // }
+
+    if (!handle_sdk_paths()) {
+        return false;
+    }
 
     return true;
 }
@@ -41,6 +42,8 @@ bool COptions::handle_sdk(void) {
 bool sortByDataModelName2(const CClassDefinition& c1, const CClassDefinition& c2) {
     return c1.class_name < c2.class_name;
 }
+
+//------------------------------------------------------------------------------------------------------------
 bool COptions::handle_sdk_types(void) {
     sort(dataModels.begin(), dataModels.end(), sortByDataModelName2);
     cerr << "Generating types..." << dataModels.size() << endl;
@@ -181,13 +184,12 @@ const char* STR_PATH_FILE =
     "  options?: RequestInit,\n"
     ") {\n"
     "  return ApiCallers.fetch<[{RETTYPE}]>(\n"
-    "    {\n"
-    "      endpoint: '/[{LOWER}]', method: 'get', parameters, options,\n"
-    "    },\n"
+    "    { endpoint: '/[{LOWER}]', method: 'get', parameters, options },\n"
     "  );\n"
     "}\n";
 
 const char* STR_HEADER2 =
+    "/* eslint object-curly-newline: [\"error\", \"never\"] */\n"
     "/*\n"
     " * This file was generated with makeClass --sdk. Do not edit it.\n"
     " */\n";

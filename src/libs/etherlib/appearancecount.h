@@ -23,33 +23,33 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CListStats : public CBaseNode {
+class CAppearanceCount : public CBaseNode {
   public:
     address_t address;
     uint64_t nRecords;
     uint64_t fileSize;
 
   public:
-    CListStats(void);
-    CListStats(const CListStats& li);
-    virtual ~CListStats(void);
-    CListStats& operator=(const CListStats& li);
+    CAppearanceCount(void);
+    CAppearanceCount(const CAppearanceCount& li);
+    virtual ~CAppearanceCount(void);
+    CAppearanceCount& operator=(const CAppearanceCount& li);
 
-    DECLARE_NODE(CListStats);
+    DECLARE_NODE(CAppearanceCount);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CListStats& it) const;
-    bool operator!=(const CListStats& it) const {
+    bool operator==(const CAppearanceCount& it) const;
+    bool operator!=(const CAppearanceCount& it) const {
         return !operator==(it);
     }
-    friend bool operator<(const CListStats& v1, const CListStats& v2);
-    friend ostream& operator<<(ostream& os, const CListStats& it);
+    friend bool operator<(const CAppearanceCount& v1, const CAppearanceCount& v2);
+    friend ostream& operator<<(ostream& os, const CAppearanceCount& it);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CListStats& li);
+    void duplicate(const CAppearanceCount& li);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -57,14 +57,14 @@ class CListStats : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CListStats::CListStats(void) {
+inline CAppearanceCount::CAppearanceCount(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CListStats::CListStats(const CListStats& li) {
+inline CAppearanceCount::CAppearanceCount(const CAppearanceCount& li) {
     // EXISTING_CODE
     // EXISTING_CODE
     duplicate(li);
@@ -74,20 +74,20 @@ inline CListStats::CListStats(const CListStats& li) {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CListStats::~CListStats(void) {
+inline CAppearanceCount::~CAppearanceCount(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CListStats::clear(void) {
+inline void CAppearanceCount::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CListStats::initialize(void) {
+inline void CAppearanceCount::initialize(void) {
     CBaseNode::initialize();
 
     address = "";
@@ -99,7 +99,7 @@ inline void CListStats::initialize(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CListStats::duplicate(const CListStats& li) {
+inline void CAppearanceCount::duplicate(const CAppearanceCount& li) {
     clear();
     CBaseNode::duplicate(li);
 
@@ -112,7 +112,7 @@ inline void CListStats::duplicate(const CListStats& li) {
 }
 
 //--------------------------------------------------------------------------
-inline CListStats& CListStats::operator=(const CListStats& li) {
+inline CAppearanceCount& CAppearanceCount::operator=(const CAppearanceCount& li) {
     duplicate(li);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -120,7 +120,7 @@ inline CListStats& CListStats::operator=(const CListStats& li) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CListStats::operator==(const CListStats& it) const {
+inline bool CAppearanceCount::operator==(const CAppearanceCount& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -128,7 +128,7 @@ inline bool CListStats::operator==(const CListStats& it) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CListStats& v1, const CListStats& v2) {
+inline bool operator<(const CAppearanceCount& v1, const CAppearanceCount& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -136,16 +136,16 @@ inline bool operator<(const CListStats& v1, const CListStats& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CListStats> CListStatsArray;
-extern CArchive& operator>>(CArchive& archive, CListStatsArray& array);
-extern CArchive& operator<<(CArchive& archive, const CListStatsArray& array);
+typedef vector<CAppearanceCount> CAppearanceCountArray;
+extern CArchive& operator>>(CArchive& archive, CAppearanceCountArray& array);
+extern CArchive& operator<<(CArchive& archive, const CAppearanceCountArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CListStats& lis);
-extern CArchive& operator>>(CArchive& archive, CListStats& lis);
+extern CArchive& operator<<(CArchive& archive, const CAppearanceCount& lis);
+extern CArchive& operator>>(CArchive& archive, CAppearanceCount& lis);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_LISTSTATS;
+extern const char* STR_DISPLAY_APPEARANCECOUNT;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

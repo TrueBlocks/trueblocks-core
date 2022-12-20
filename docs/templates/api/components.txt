@@ -365,7 +365,7 @@ components:
         encoding:
           type: string
           description: "The four-byte encoding of the transaction's function call"
-    listStats:
+    appearanceCount:
       description: "data of the appropriate type from a single appearance of an address or the count of same"
       type: object
       properties:

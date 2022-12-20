@@ -175,7 +175,7 @@ paths:
                     items:
                       oneOf:
                         - $ref: "#/components/schemas/appearance"
-                        - $ref: "#/components/schemas/listStats"
+                        - $ref: "#/components/schemas/appearancecount"
                 example:
                   {
                     "data":
@@ -439,7 +439,7 @@ paths:
                         - $ref: "#/components/schemas/appearance"
                         - $ref: "#/components/schemas/reconciliation"
                         - $ref: "#/components/schemas/transfer"
-                        - $ref: "#/components/schemas/listStats"
+                        - $ref: "#/components/schemas/appearancecount"
                         - $ref: "#/components/schemas/transaction"
                         - $ref: "#/components/schemas/receipt"
                         - $ref: "#/components/schemas/log"
@@ -2247,7 +2247,7 @@ components:
         encoding:
           type: string
           description: "The four-byte encoding of the transaction's function call"
-    listStats:
+    appearancecount:
       description: "data of the appropriate type from a single appearance of an address or the count of same"
       type: object
       properties:
