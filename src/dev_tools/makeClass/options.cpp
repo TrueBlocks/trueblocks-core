@@ -180,7 +180,9 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (sdk) {
-        return handle_sdk();
+        if (!handle_sdk()) {
+            return false;
+        }
     }
 
     if (gocmds && !options) {
