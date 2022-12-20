@@ -36,7 +36,7 @@ class COptions : public CAbiOptions {
 
     blknum_t latestBlock;
 
-    CAccountNameMap items;
+    CNameMap items;
     CStringArray searches;
     string_q searchFields;
     uint64_t types;
@@ -49,10 +49,10 @@ class COptions : public CAbiOptions {
     void Init(void) override;
 
     void filterNames(void);
-    bool addIfUnique(const CAccountName& item);
+    bool addIfUnique(const CName& item);
     bool handle_clean(void);
 
-    bool finishClean(CAccountName& name);
+    bool finishClean(CName& name);
     bool cleanNames(const string_q& sourceIn, const string_q& destIn);
 
     CStringArray crudCommands;
@@ -61,6 +61,6 @@ class COptions : public CAbiOptions {
     }
 
     // Crud command handling
-    CAccountName target;
+    CName target;
     bool handle_editcmds(bool autoname);
 };

@@ -1374,7 +1374,7 @@ paths:
                     items:
                       oneOf:
                         - $ref: "#/components/schemas/state"
-                        - $ref: "#/components/schemas/result"
+                        - $ref: "#/components/schemas/ethcall"
                 example:
                   {
                     "data":
@@ -1739,11 +1739,11 @@ paths:
                       oneOf:
                         - $ref: "#/components/schemas/pinnedChunk"
                         - $ref: "#/components/schemas/manifest"
-                        - $ref: "#/components/schemas/indexchunk"
-                        - $ref: "#/components/schemas/blooms"
-                        - $ref: "#/components/schemas/addresses"
-                        - $ref: "#/components/schemas/stats"
-                        - $ref: "#/components/schemas/appearances"
+                        - $ref: "#/components/schemas/chunkIndex"
+                        - $ref: "#/components/schemas/chunkBlooms"
+                        - $ref: "#/components/schemas/chunkAddresses"
+                        - $ref: "#/components/schemas/chunkStats"
+                        - $ref: "#/components/schemas/chunkAppearances"
         "400":
           description: bad input parameter
   /init:
@@ -2652,7 +2652,7 @@ components:
           type: string
           example: "one of 'EOA' or 'Contract'"
           description: "the type of the address at the given block"
-    result:
+    ethcall:
       description: "the result of a call to a smart contract"
       type: object
       properties:
@@ -2873,7 +2873,7 @@ components:
           items:
             $ref: "#/components/schemas/pinnedChunk"
           description: "a list of the IPFS hashes of all of the chunks in the unchained index"
-    indexchunk:
+    chunkIndex:
       description: "the internal data of the unchained index chunks"
       type: object
       properties:
@@ -2899,7 +2899,7 @@ components:
           type: number
           format: uint64
           description: "The size of the chunk in bytes"
-    blooms:
+    chunkBlooms:
       description: "information about a single bloom filter file"
       type: object
       properties:
@@ -2929,7 +2929,7 @@ components:
           type: number
           format: uint64
           description: "The width of the bloom filter"
-    addresses:
+    chunkAddresses:
       description: "address records found in individual chunks"
       type: object
       properties:
@@ -2948,7 +2948,7 @@ components:
           type: number
           format: uint64
           description: "The number of records in teh appearance table for this address"
-    stats:
+    chunkStats:
       description: "summary information about the unchained index"
       type: object
       properties:
@@ -3000,7 +3000,7 @@ components:
         ratio:
           type: float
           description: "the ratio of appearances to addresses"
-    appearances:
+    chunkAppearances:
       description: "a single record in the appearance table of an index chunk"
       type: object
       properties:

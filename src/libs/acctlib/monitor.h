@@ -34,7 +34,7 @@ class CMonitorHeader {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CMonitor : public CAccountName {
+class CMonitor : public CName {
   public:
     blknum_t nAppearances;
     blknum_t lastExport;
@@ -115,7 +115,7 @@ inline void CMonitor::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void CMonitor::initialize(void) {
-    CAccountName::initialize();
+    CName::initialize();
 
     nAppearances = 0;
     lastExport = 0;
@@ -133,7 +133,7 @@ inline void CMonitor::initialize(void) {
 //--------------------------------------------------------------------------
 inline void CMonitor::duplicate(const CMonitor& mo) {
     clear();
-    CAccountName::duplicate(mo);
+    CName::duplicate(mo);
 
     nAppearances = mo.nAppearances;
     lastExport = mo.lastExport;

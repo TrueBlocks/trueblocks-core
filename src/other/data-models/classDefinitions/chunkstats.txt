@@ -1,7 +1,7 @@
 [settings]
-class = CStats
-fields = stats.csv
+class = CChunkStats
+fields = chunkstats.csv
 doc_group = 04-Admin
 doc_descr = summary information about the unchained index
-doc_api = 307-stats
+doc_api = 307-chunkStats
 doc_producer = chunks

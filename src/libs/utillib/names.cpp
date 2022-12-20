@@ -116,7 +116,7 @@ static bool readNamesFromAscii(void) {
             explode(fields, line, '\t');
         } else {
             if (!startsWith(line, '#') && contains(line, "0x")) {
-                CAccountName account;
+                CName account;
                 account.parseText(fields, line);
                 if (!hasName(account.address))
                     namesAllocated[nNameRecords++].name_2_Disc(account);
@@ -193,7 +193,7 @@ static bool addPrefund(const Allocation& prefund, void* data) {
         return true;
     }
 
-    CAccountName account;
+    CName account;
     account.address = prefund.address;
     account.petname = addr_2_Petname(account.address, '-');
     account.tags = "80-Prefund";
@@ -235,7 +235,7 @@ bool clearNames(void) {
 }
 
 //-----------------------------------------------------------------------
-bool findName(const address_t& addr, CAccountName& acct) {
+bool findName(const address_t& addr, CName& acct) {
     // When the caller ask for an account name, we convert the in-memory record
     // into that data structure. This takes time, so we cache it in the namesMap
     // for speed. If it's there, we use it.
@@ -256,8 +256,8 @@ bool findName(const address_t& addr, CAccountName& acct) {
 }
 
 //-----------------------------------------------------------------------
-bool findToken(const address_t& addr, CAccountName& acct) {
-    CAccountName item;
+bool findToken(const address_t& addr, CName& acct) {
+    CName item;
     if (findName(addr, item)) {
         bool t1 = contains(item.tags, "Tokens");
         bool t2 = contains(item.tags, "Contracts") && contains(item.name, "Airdrop");
@@ -288,7 +288,7 @@ bool forEveryNameOld(NAMEFUNC func, void* data) {
     for (auto name : namePtrMap) {
         if (!name.second)
             continue;
-        CAccountName acct;
+        CName acct;
         name.second->disc_2_Name(acct);
         if (!(*func)(acct, data))
             return false;
@@ -311,7 +311,7 @@ bool forEveryName(NAMEODFUNC func, void* data) {
 }
 
 //-----------------------------------------------------------------------
-bool NameOnDisc::name_2_Disc(const CAccountName& nm) {
+bool NameOnDisc::name_2_Disc(const CName& nm) {
     memset(this, 0, sizeof(NameOnDisc));
     strncpy(tags, nm.tags.c_str(), nm.tags.length());
     strncpy(address, nm.address.c_str(), nm.address.length());
@@ -330,7 +330,7 @@ bool NameOnDisc::name_2_Disc(const CAccountName& nm) {
 }
 
 //-----------------------------------------------------------------------
-bool NameOnDisc::disc_2_Name(CAccountName& nm) const {
+bool NameOnDisc::disc_2_Name(CName& nm) const {
     nm.tags = tags;
     nm.address = address;
     nm.petname = strlen(petname) == 0 ? addr_2_Petname(address, '-') : petname;
@@ -362,7 +362,7 @@ string_q NameOnDisc::Format(void) const {
 }
 
 //-----------------------------------------------------------------------
-bool updateName(const CAccountName& target, const string_q& crud) {
+bool updateName(const CName& target, const string_q& crud) {
     if (!hasName(target.address)) {
         if (nNameRecords == allocSize) {
             LOG4("Growing names array");
@@ -422,7 +422,7 @@ bool updateName(const CAccountName& target, const string_q& crud) {
 
     if (!isTestMode()) {
         ostringstream editRecord;
-        editRecord << Now().Format(FMT_JSON) << crud << "\t" << target.Format(STR_DISPLAY_ACCOUNTNAME) << endl;
+        editRecord << Now().Format(FMT_JSON) << crud << "\t" << target.Format(STR_DISPLAY_NAME) << endl;
         stringToAsciiFile(cacheFolder_names + "edit_log.txt", editRecord.str());
     }
 

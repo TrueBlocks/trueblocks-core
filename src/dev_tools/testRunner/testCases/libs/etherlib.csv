@@ -48,7 +48,7 @@ on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,CTransaction     ,n    ,v
 on      ,cmd  ,fast  ,null  ,etherlib/decodeAbiTest   ,01               ,n    ,verbose                       
         
 on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,README           ,n    ,                              
-on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CAccountName     ,n    ,val = CAccountName            
+on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CName            ,n    ,val = CName            
 on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CMonitor         ,n    ,val = CMonitor                
 on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CAcctCacheItem   ,n    ,val = CAcctCacheItem          
 on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CBlock           ,n    ,val = CBlock                  

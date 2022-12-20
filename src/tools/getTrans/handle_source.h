@@ -23,7 +23,7 @@ class CSourceSearch {
     static uint64_t max_depth;
     static uint64_t max_records;
     static blknum_t firstBlock;
-    static CAccountNameMap whiteList;
+    static CNameMap whiteList;
     static CAddressBoolMap purpleList;
     static bool initialized;
     static bool debugging;
@@ -35,7 +35,7 @@ class CSourceSearch {
         if (whiteList.size() == 0) {
             return true;
         }
-        CAccountName name = whiteList[tt->assetAddr];
+        CName name = whiteList[tt->assetAddr];
         if (name.address.empty()) {
             return false;
         }

@@ -30,18 +30,28 @@ bool COptions::handle_sdk(void) {
     if (!handle_sdk_types()) {
         return false;
     }
-    if (!handle_sdk_paths()) {
-        return false;
-    }
+    // if (!handle_sdk_paths()) {
+    //     return false;
+    // }
 
     return true;
 }
 
 //------------------------------------------------------------------------------------------------------------
+bool sortByDataModelName2(const CClassDefinition& c1, const CClassDefinition& c2) {
+    return c1.class_name < c2.class_name;
+}
 bool COptions::handle_sdk_types(void) {
-    // for (auto model : dataModels) {
-    //     cerr << model.class_name << endl;
-    // }
+    sort(dataModels.begin(), dataModels.end(), sortByDataModelName2);
+    cerr << "Generating types..." << dataModels.size() << endl;
+    for (auto model : dataModels) {
+        string_q className = model.class_name;
+        string_q fileName = className + ".ts";
+        replace(fileName, "C", "");
+        fileName = firstLower(fileName);
+        fileName = substitute(substitute(fileName, "appearanceDisplay", "appearance"), "logEntry", "log");
+        cout << model.class_name << endl << fileName << endl << endl;
+    }
     return true;
 }
 

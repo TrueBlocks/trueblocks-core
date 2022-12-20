@@ -99,11 +99,11 @@ int main(int argc, const char* argv[]) {
             blknum_t blk = min(options.exportRange.second, options.meta.client);
             options.ledgerManager.name.isContract = isContractAt(options.allMonitors[0].address, blk);
             options.allMonitors[0].petname = addr_2_Petname(options.allMonitors[0].address, '-');
-            HIDE_FIELD(CAccountName, "isCustom");
-            HIDE_FIELD(CAccountName, "isPrefund");
-            HIDE_FIELD(CAccountName, "isContract");
-            HIDE_FIELD(CAccountName, "isErc20");
-            HIDE_FIELD(CAccountName, "isErc721");
+            HIDE_FIELD(CName, "isCustom");
+            HIDE_FIELD(CName, "isPrefund");
+            HIDE_FIELD(CName, "isContract");
+            HIDE_FIELD(CName, "isErc20");
+            HIDE_FIELD(CName, "isErc721");
             options.allMonitors[0].decimals = 18;
         }
         os << ", \"accountedFor\": " << options.allMonitors[0] << endl;

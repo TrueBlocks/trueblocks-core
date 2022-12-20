@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-12-19T17:59:49
+date: 2022-12-20T10:28:58
 lastmod:
   - :git
   - lastmod
@@ -122,17 +122,17 @@ Manifest data is made of the following data fields:
 | chunks    | a list of the IPFS hashes of all of the chunks in the unchained index | CPinnedChunkArray |
 
 
-## Indexchunk
+## ChunkIndex
 
 The `indexchunk` data model represents internal information about each Unchained Index index chunk. It is used mostly interenally to study the characteristics of the Unchained Index.
 
-The following commands produce and manage indexchunks:
+The following commands produce and manage chunkindexs:
 
 | Tools                                              |                                                                 |
 | -------------------------------------------------- | --------------------------------------------------------------- |
 | [chifra chunks](/docs/chifra/admin/#chifra-chunks) | manage pinned index of appearances and associated Bloom filters |
 
-Indexchunk data is made of the following data fields:
+Chunkindex data is made of the following data fields:
 
 | Field           | Description                                                        | Type       |
 | --------------- | ------------------------------------------------------------------ | ---------- |
@@ -144,17 +144,17 @@ Indexchunk data is made of the following data fields:
 | size            | The size of the chunk in bytes                                     | uint64     |
 
 
-## Blooms
+## ChunkBlooms
 
 The `blooms` data model represents the bloom filter files that front the Unchained Index index portions. The information here is mostly for internal use only as it includes the size and number of the bloom filters present as well as the number of addresses inserted into the bloom. This information is used to study the characteristics of the Unchained Index.
 
-The following commands produce and manage blooms:
+The following commands produce and manage chunkBlooms:
 
 | Tools                                              |                                                                 |
 | -------------------------------------------------- | --------------------------------------------------------------- |
 | [chifra chunks](/docs/chifra/admin/#chifra-chunks) | manage pinned index of appearances and associated Bloom filters |
 
-Blooms data is made of the following data fields:
+Chunkblooms data is made of the following data fields:
 
 | Field     | Description                                                        | Type       |
 | --------- | ------------------------------------------------------------------ | ---------- |
@@ -167,17 +167,17 @@ Blooms data is made of the following data fields:
 | width     | The width of the bloom filter                                      | uint64     |
 
 
-## Addresses
+## ChunkAddresses
 
 The `addresses` data model is produced by `chifra chunks` and represents the records found in the addresses table of each Unchained Index chunk. The `offset` and `count` fields represent the location and number of records in the `appearances` table to which the address table is related.
 
-The following commands produce and manage addresses:
+The following commands produce and manage chunkAddresses:
 
 | Tools                                              |                                                                 |
 | -------------------------------------------------- | --------------------------------------------------------------- |
 | [chifra chunks](/docs/chifra/admin/#chifra-chunks) | manage pinned index of appearances and associated Bloom filters |
 
-Addresses data is made of the following data fields:
+Chunkaddresses data is made of the following data fields:
 
 | Field   | Description                                                               | Type       |
 | ------- | ------------------------------------------------------------------------- | ---------- |
@@ -187,17 +187,17 @@ Addresses data is made of the following data fields:
 | count   | The number of records in teh appearance table for this address            | uint64     |
 
 
-## Stats
+## ChunkStats
 
 The `stats` data model is produced by `chifra chunks` and brings together various statistical information such as average number of addresses in an Unchained Index chunk among other information.
 
-The following commands produce and manage stats:
+The following commands produce and manage chunkStats:
 
 | Tools                                              |                                                                 |
 | -------------------------------------------------- | --------------------------------------------------------------- |
 | [chifra chunks](/docs/chifra/admin/#chifra-chunks) | manage pinned index of appearances and associated Bloom filters |
 
-Stats data is made of the following data fields:
+Chunkstats data is made of the following data fields:
 
 | Field         | Description                                      | Type   |
 | ------------- | ------------------------------------------------ | ------ |
@@ -216,17 +216,17 @@ Stats data is made of the following data fields:
 | ratio         | the ratio of appearances to addresses            | float  |
 
 
-## Appearances
+## ChunkAppearances
 
 The `appearances` data model is the second of two tables inside of the Unchained Index chunks. The other is the `addresses` table which relates the addresses in that table to this table via the `offset` and `count` fields.
 
-The following commands produce and manage appearances:
+The following commands produce and manage chunkAppearances:
 
 | Tools                                              |                                                                 |
 | -------------------------------------------------- | --------------------------------------------------------------- |
 | [chifra chunks](/docs/chifra/admin/#chifra-chunks) | manage pinned index of appearances and associated Bloom filters |
 
-Appearances data is made of the following data fields:
+Chunkappearances data is made of the following data fields:
 
 | Field            | Description                              | Type   |
 | ---------------- | ---------------------------------------- | ------ |

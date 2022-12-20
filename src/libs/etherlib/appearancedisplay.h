@@ -23,7 +23,7 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CAppearanceDisplay : public CAccountName {
+class CAppearanceDisplay : public CName {
   public:
     blknum_t blockNumber;
     blknum_t transactionIndex;
@@ -93,7 +93,7 @@ inline void CAppearanceDisplay::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void CAppearanceDisplay::initialize(void) {
-    CAccountName::initialize();
+    CName::initialize();
 
     blockNumber = 0;
     transactionIndex = 0;
@@ -105,7 +105,7 @@ inline void CAppearanceDisplay::initialize(void) {
 //--------------------------------------------------------------------------
 inline void CAppearanceDisplay::duplicate(const CAppearanceDisplay& ap) {
     clear();
-    CAccountName::duplicate(ap);
+    CName::duplicate(ap);
 
     blockNumber = ap.blockNumber;
     transactionIndex = ap.transactionIndex;

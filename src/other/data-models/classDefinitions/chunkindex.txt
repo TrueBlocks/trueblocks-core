@@ -1,7 +1,7 @@
 [settings]
-class = CIndexChunk
-fields = indexchunk.csv
+class = CChunkIndex
+fields = chunkindex.csv
 doc_group = 04-Admin
 doc_descr = the internal data of the unchained index chunks
-doc_api = 304-indexchunk
+doc_api = 304-chunkIndex
 doc_producer = chunks

@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2022-12-18T23:30:42
+date: 2022-12-20T09:17:19
 lastmod:
   - :git
   - lastmod
@@ -49,17 +49,17 @@ State data is made of the following data fields:
 | accttype    | the type of the address at the given block                                      | string  |
 
 
-## Result
+## Ethcall
 
 For the `chifra state --call` tool, the `result` is the result returned by the call to the smart contract. This is the decoded `output` value of the smart contract call.
 
-The following commands produce and manage results:
+The following commands produce and manage ethcalls:
 
 | Tools                                                 |                                                                         |
 | ----------------------------------------------------- | ----------------------------------------------------------------------- |
 | [chifra state](/docs/chifra/chainstate/#chifra-state) | retrieve account balance(s) for one or more addresses at given block(s) |
 
-Result data is made of the following data fields:
+Ethcall data is made of the following data fields:
 
 | Field            | Description                                                                     | Type      |
 | ---------------- | ------------------------------------------------------------------------------- | --------- |

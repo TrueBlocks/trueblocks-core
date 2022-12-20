@@ -25,7 +25,7 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CAccountName : public CBaseNode {
+class CName : public CBaseNode {
   public:
     string_q tags;
     address_t address;
@@ -41,26 +41,26 @@ class CAccountName : public CBaseNode {
     bool isErc721;
 
   public:
-    CAccountName(void);
-    CAccountName(const CAccountName& ac);
-    virtual ~CAccountName(void);
-    CAccountName& operator=(const CAccountName& ac);
+    CName(void);
+    CName(const CName& na);
+    virtual ~CName(void);
+    CName& operator=(const CName& na);
 
-    DECLARE_NODE(CAccountName);
+    DECLARE_NODE(CName);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CAccountName& it) const;
-    bool operator!=(const CAccountName& it) const {
+    bool operator==(const CName& it) const;
+    bool operator!=(const CName& it) const {
         return !operator==(it);
     }
-    friend bool operator<(const CAccountName& v1, const CAccountName& v2);
-    friend ostream& operator<<(ostream& os, const CAccountName& it);
+    friend bool operator<(const CName& v1, const CName& v2);
+    friend ostream& operator<<(ostream& os, const CName& it);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CAccountName& ac);
+    void duplicate(const CName& na);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -68,37 +68,37 @@ class CAccountName : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CAccountName::CAccountName(void) {
+inline CName::CName(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CAccountName::CAccountName(const CAccountName& ac) {
+inline CName::CName(const CName& na) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(ac);
+    duplicate(na);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CAccountName::~CAccountName(void) {
+inline CName::~CName(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountName::clear(void) {
+inline void CName::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountName::initialize(void) {
+inline void CName::initialize(void) {
     CBaseNode::initialize();
 
     tags = "";
@@ -119,37 +119,37 @@ inline void CAccountName::initialize(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountName::duplicate(const CAccountName& ac) {
+inline void CName::duplicate(const CName& na) {
     clear();
-    CBaseNode::duplicate(ac);
+    CBaseNode::duplicate(na);
 
-    tags = ac.tags;
-    address = ac.address;
-    name = ac.name;
-    symbol = ac.symbol;
-    source = ac.source;
-    decimals = ac.decimals;
-    petname = ac.petname;
-    isCustom = ac.isCustom;
-    isPrefund = ac.isPrefund;
-    isContract = ac.isContract;
-    isErc20 = ac.isErc20;
-    isErc721 = ac.isErc721;
+    tags = na.tags;
+    address = na.address;
+    name = na.name;
+    symbol = na.symbol;
+    source = na.source;
+    decimals = na.decimals;
+    petname = na.petname;
+    isCustom = na.isCustom;
+    isPrefund = na.isPrefund;
+    isContract = na.isContract;
+    isErc20 = na.isErc20;
+    isErc721 = na.isErc721;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CAccountName& CAccountName::operator=(const CAccountName& ac) {
-    duplicate(ac);
+inline CName& CName::operator=(const CName& na) {
+    duplicate(na);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CAccountName::operator==(const CAccountName& it) const {
+inline bool CName::operator==(const CName& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
@@ -157,7 +157,7 @@ inline bool CAccountName::operator==(const CAccountName& it) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CAccountName& v1, const CAccountName& v2) {
+inline bool operator<(const CName& v1, const CName& v2) {
     // EXISTING_CODE
     if (v1.address == v2.address)
         return v1.tags < v2.tags;
@@ -167,21 +167,21 @@ inline bool operator<(const CAccountName& v1, const CAccountName& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CAccountName> CAccountNameArray;
-extern CArchive& operator>>(CArchive& archive, CAccountNameArray& array);
-extern CArchive& operator<<(CArchive& archive, const CAccountNameArray& array);
+typedef vector<CName> CNameArray;
+extern CArchive& operator>>(CArchive& archive, CNameArray& array);
+extern CArchive& operator<<(CArchive& archive, const CNameArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CAccountName& acc);
-extern CArchive& operator>>(CArchive& archive, CAccountName& acc);
+extern CArchive& operator<<(CArchive& archive, const CName& nam);
+extern CArchive& operator>>(CArchive& archive, CName& nam);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_ACCOUNTNAME;
+extern const char* STR_DISPLAY_NAME;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-typedef map<address_t, CAccountName> CAccountNameMap;
-extern CArchive& operator>>(CArchive& archive, CAccountNameMap& nameMap);
-extern CArchive& operator<<(CArchive& archive, const CAccountNameMap& nameMap);
+typedef map<address_t, CName> CNameMap;
+extern CArchive& operator>>(CArchive& archive, CNameMap& nameMap);
+extern CArchive& operator<<(CArchive& archive, const CNameMap& nameMap);
 // EXISTING_CODE
 }  // namespace qblocks
