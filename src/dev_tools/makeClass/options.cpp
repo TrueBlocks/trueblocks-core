@@ -179,12 +179,6 @@ bool COptions::parseArguments(string_q& command) {
             dataModels.push_back(classDef);
     }
 
-    if (sdk) {
-        if (!handle_sdk()) {
-            return false;
-        }
-    }
-
     if (gocmds && !options) {
         options = true;
     }
@@ -203,6 +197,8 @@ bool COptions::parseArguments(string_q& command) {
     if (format && !handle_format())
         return false;
     if (lint && !handle_lint())
+        return false;
+    if (sdk && !handle_sdk())
         return false;
 
     // Default to run if we get only all

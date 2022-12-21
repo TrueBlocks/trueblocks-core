@@ -1384,7 +1384,7 @@ paths:
                     type: array
                     items:
                       oneOf:
-                        - $ref: "#/components/schemas/state"
+                        - $ref: "#/components/schemas/ethstate"
                         - $ref: "#/components/schemas/ethcall"
                 example:
                   {
@@ -2628,7 +2628,7 @@ components:
           format: datetime
           example: "2015-07-30 15:34:53 UTC"
           description: "Human readable version of timestamp"
-    state:
+    ethstate:
       description: "the on-chain state of a given address"
       type: object
       properties:

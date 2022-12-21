@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2022-12-20T09:17:19
+date: 2022-12-20T19:33:37
 lastmod:
   - :git
   - lastmod
@@ -24,6 +24,7 @@ These commands call some useful miscellaneous tools:
 text="Note: some of these tools, like `ethslurp`, require an EtherScan key." >}}
 [Follow these instructions to add a key to your config](/docs/install/install-trueblocks/#3-update-the-configs-for-your-rpc-and-api-keys)
 
+<!-- markdownlint-disable MD041 -->
 ## chifra explore
 
 `chifra explore` opens Etherscan (and other explorers -- including our own) to the block, transaction hash, or address you specify. It's a handy (configurable) way to open an explorer from the command line, nothing more.

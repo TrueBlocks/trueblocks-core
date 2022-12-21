@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 ## chifra logs
 
 `chifra logs` returns the given transaction's logs. You may specify multiple transaction identifiers per invocation.
@@ -27,6 +28,7 @@ Notes:
   - If you specify a 32-byte hash, it will be assumed to be a transaction hash, if the transaction is not found, it will be used as a topic.
 ```
 
+<!-- markdownlint-disable MD041 -->
 #### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.

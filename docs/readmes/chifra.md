@@ -2,7 +2,7 @@
 
 `chifra` is an command line tool for accessing the entire collection of TrueBlocks tools. Enter `chifra <tool> --help` for more information.
 
-```
+```[shell]
 Purpose:
   Access to all TrueBlocks tools (chifra <cmd> --help for more).
 

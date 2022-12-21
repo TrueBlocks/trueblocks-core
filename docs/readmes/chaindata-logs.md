@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 ## chifra logs
 
 `chifra logs` returns the given transaction's logs. You may specify multiple transaction identifiers per invocation.

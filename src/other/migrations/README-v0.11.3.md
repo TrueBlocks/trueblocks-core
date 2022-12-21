@@ -33,7 +33,7 @@ make -j2
 
 Once that's done, complete the migration by first doing this:
 
-```
+```[shell]
 chifra config --migrate test
 ```
 
@@ -41,7 +41,7 @@ which checks to see if the cache needs to be migrated. If the above command repo
 
 If the above command reports that some parts of the cache need to be migrated, complete the following command:
 
-```
+```[shell]
 chifra config --migrate cache
 ```
 

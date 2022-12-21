@@ -130,7 +130,8 @@ bool COptions::handle_datamodel(void) {
         }
         document.second += substitute(STR_DOCUMENT_TAIL, "[{TYPES}]", tail);
         string_q outFn = getDocsPathContent("data-model/" + substitute(toLower(document.first), " ", "")) + ".md";
-        writeIfDifferent(outFn, document.second, Now());
+        string_q doc = substitute(document.second, "\n\n\n", "\n\n");
+        writeIfDifferent(outFn, doc, Now());
     }
 
     return true;
@@ -252,7 +253,6 @@ const char* STR_YAML_TAIL =
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_DOCUMENT_TAIL =
-    "\n"
     "## Base types\n"
     "\n"
     "This documentation mentions the following basic data types.\n"

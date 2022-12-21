@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-12-20T16:14:24
+date: 2022-12-20T19:50:09
 lastmod:
   - :git
   - lastmod
@@ -280,9 +280,9 @@ The following commands produce and manage cacheentrys:
 Cacheentry data is made of the following data fields:
 
 | Field   | Description | Type    |
-| ------- | ----------- | ------- |
-| address |             | address |
-| name    |             | string  |
+| ------- | --- | ------- |
+| address |     | address |
+| name    |     | string  |
 
 ## Base types
 

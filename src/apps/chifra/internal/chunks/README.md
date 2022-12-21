@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 ## chifra chunks
 
 The chifra chunks routine provides tools for interacting with, checking the validity of,
@@ -39,6 +40,7 @@ Notes:
   - The --belongs option is only available in the index mode.
 ```
 
+<!-- markdownlint-disable MD041 -->
 #### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.

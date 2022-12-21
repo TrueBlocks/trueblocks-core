@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 ## chifra receipts
 
 `chifra receipts` returns the given transaction's receipt. You may specify multiple transaction identifiers per invocation.
@@ -28,6 +29,7 @@ Notes:
   - If the queried node does not store historical state, the results for most older transactions are undefined.
 ```
 
+<!-- markdownlint-disable MD041 -->
 #### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.

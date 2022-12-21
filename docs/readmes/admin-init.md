@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 ## chifra init
 
 When invoked, `chifra init` reads a value from a smart contract called **The Unchained Index**

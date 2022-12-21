@@ -16,6 +16,7 @@
 extern const char* STR_PATH_FILE;
 extern const char* STR_HEADER2;
 extern string_q convert2(const string_q& in, map<string_q, string_q>& map);
+extern bool sortByDataModelName2(const CClassDefinition& c1, const CClassDefinition& c2);
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_sdk(void) {
     CToml config(rootConfigToml_makeClass);
@@ -26,10 +27,11 @@ bool COptions::handle_sdk(void) {
     }
 
     LOG_INFO(cYellow, "handling sdk generation...", cOff);
+    sort(dataModels.begin(), dataModels.end(), sortByDataModelName2);
 
-    // if (!handle_sdk_types()) {
-    //     return false;
-    // }
+    if (!handle_sdk_types()) {
+        return false;
+    }
 
     if (!handle_sdk_paths()) {
         return false;
@@ -39,21 +41,14 @@ bool COptions::handle_sdk(void) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-bool sortByDataModelName2(const CClassDefinition& c1, const CClassDefinition& c2) {
-    return c1.class_name < c2.class_name;
-}
-
-//------------------------------------------------------------------------------------------------------------
 bool COptions::handle_sdk_types(void) {
-    sort(dataModels.begin(), dataModels.end(), sortByDataModelName2);
-    cerr << "Generating types..." << dataModels.size() << endl;
     for (auto model : dataModels) {
         string_q className = model.class_name;
         string_q fileName = className + ".ts";
         replace(fileName, "C", "");
         fileName = firstLower(fileName);
         fileName = substitute(substitute(fileName, "appearanceDisplay", "appearance"), "logEntry", "log");
-        cout << model.class_name << endl << fileName << endl << endl;
+        // cout << model.class_name << endl << fileName << endl << endl;
     }
     return true;
 }
@@ -119,7 +114,7 @@ bool COptions::handle_sdk_paths(void) {
             } else {
                 out += "//\n// The " + ep.api_route + " tool is not available in the SDK.\n//\n";
             }
-            stringToAsciiFile(filename.str(), out);
+            writeIfDifferent(filename.str(), out);
         }
 
         counter.cmdCount += params.size();
@@ -164,6 +159,11 @@ string_q convert2(const string_q& in, map<string_q, string_q>& map) {
 }
 
 //------------------------------------------------------------------------------------------------------------
+bool sortByDataModelName2(const CClassDefinition& c1, const CClassDefinition& c2) {
+    return c1.class_name < c2.class_name;
+}
+
+//------------------------------------------------------------------------------------------------------------
 const char* STR_PATH_FILE =
     "import * as ApiCallers from '../lib/api_callers';\n"
     "import { [{TYPES}] } from '../types';\n"
@@ -190,6 +190,7 @@ const char* STR_PATH_FILE =
 
 const char* STR_HEADER2 =
     "/* eslint object-curly-newline: [\"error\", \"never\"] */\n"
+    "/* eslint max-len: [\"error\", 160] */\n"
     "/*\n"
     " * This file was generated with makeClass --sdk. Do not edit it.\n"
     " */\n";

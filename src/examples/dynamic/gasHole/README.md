@@ -168,7 +168,7 @@ const char* STR_OUTPUT_FORMAT =
 
 ...and finally, we present the results, converting the display string to CSV format, the filling in the data we pre-calculated above, and finally rendering the data to the standard output.
 
-```
+```[shell]
     string_q fmt = tab_2_Csv(STR_OUTPUT_FORMAT);
 
     fmt = substitute(fmt, "[{spotPrice}]", double_2_Str(spotPrice, 2));

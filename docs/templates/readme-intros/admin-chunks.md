@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 ## [{NAME}]
 
 The [{NAME}] routine provides tools for interacting with, checking the validity of,

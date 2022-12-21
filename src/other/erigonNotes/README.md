@@ -14,7 +14,7 @@ Run this command in one terminal window:
 
 Run this command in a different terminal window:
 
-```
+```[shell]
 ./build/bin/rpcdaemon \
     --datadir /mnt/md0/erigon-sepolia \
     --private.api.addr=localhost:9093 \
@@ -24,7 +24,7 @@ Run this command in a different terminal window:
 
 Make an entry in ~/.local/share/trueblocks/trueBlocks.toml, thus:
 
-```
+```[shell]
 [chains]
 
 *... leave other entries as they are *
@@ -36,7 +36,7 @@ rpcProvider = "http://localhost:8548"
 
 and in ~/.local/share/trueblocks/config/sepolia/blockScrape.toml, add this (create the file if it doesn't exist):
 
-```
+```[shell]
 [settings]
 block_cnt = 200
 allow_missing = true

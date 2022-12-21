@@ -34,14 +34,14 @@ Before proceeding, you must install the TrueBlocks headers and static libraries 
 
 Do this with from the `./build` folder:
 
-```
+```[shell]
 make -j
 make install
 ```
 
 To build each example program, enter into that folder and type
 
-```
+```[shell]
 make
 ```
 

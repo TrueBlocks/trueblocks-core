@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 ## chifra monitors
 
 A TrueBlocks monitor tool has two purposes. The first is to `--watch` a set of addresses. This function is in its early stages and will be better explained elsewhere. Please see an example of what one may do with `chifra monitors --watch` [here](https://tokenomics.io/).
@@ -37,6 +38,7 @@ Notes:
   - The --decache option will remove all cache items (blocks, txs, traces, recons) for the given address(es).
 ```
 
+<!-- markdownlint-disable MD041 -->
 #### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.

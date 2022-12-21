@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2022-12-20T09:17:19
+date: 2022-12-20T20:31:10
 lastmod:
   - :git
   - lastmod
@@ -21,11 +21,11 @@ The data structures produced by tools in the Chain State category provide detail
 
 Each data structure is created by one or more tools which are detailed below
 
-## State
+## Ethstate
 
 The `state` object displays information about the type of account associated with an address, the block the address first appeared on the chain, the proxy address if the address is a proxied smart contract as well as account balance and a few other things.
 
-The following commands produce and manage states:
+The following commands produce and manage ethstates:
 
 | Tools |     |
 | ----- | --- |
@@ -35,7 +35,7 @@ The balance of an address at a given block.
 * CLI: [chifra state](/docs/chifra/chainstate/#chifra-state)
 * [API](/api#operation/chainstate-state)
 
-State data is made of the following data fields:
+Ethstate data is made of the following data fields:
 
 | Field       | Description                                                                     | Type    |
 | ----------- | ------------------------------------------------------------------------------- | ------- |
@@ -99,12 +99,12 @@ Token data is made of the following data fields:
 
 This documentation mentions the following basic data types.
 
-| Type    | Description                                     | Notes       |
-| ------- | ----------------------------------------------- | ----------- |
-| address | a 20-byte hexadecimal string starting with '0x' | lowercase   |
-| blknum  | an alias for a uint64                           |             |
-| bool    | a value either `true`, `false`, `1`, or `0`     |             |
-| bytes   | an arbitrarily long string of bytes             |             |
-| string  | a normal character string                       |             |
-| uint64  | a 64-bit unsigned integer                       |             |
-| wei     | an unsigned big number                          | as a string |
+| Type      | Description                                     | Notes          |
+| --------- | ----------------------------------------------- | -------------- |
+| address   | a 20-byte hexadecimal string starting with '0x' | lowercase      |
+| blknum    | an alias for a uint64                           |                |
+| bool      | a value either `true`, `false`, `1`, or `0`     |                |
+| bytes     | an arbitrarily long string of bytes             |                |
+| string    | a normal character string                       |                |
+| uint64    | a 64-bit unsigned integer                       |                |
+| wei       | an unsigned big number                          | as a string    |

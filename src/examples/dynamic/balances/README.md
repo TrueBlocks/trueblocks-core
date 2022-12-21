@@ -13,7 +13,7 @@ chifra export --load libbalances.so <address>
 You can store the produced data into a file and open it up in an Excel spreadsheet. An example of this, using our own TrueBlocks address,
 would be like this:
 
-```
+```[shell]
 chifra export --load balances 0xf503017d7baf7fbc0fff7492b751025c6a78179b >balances.csv
 ```
 
