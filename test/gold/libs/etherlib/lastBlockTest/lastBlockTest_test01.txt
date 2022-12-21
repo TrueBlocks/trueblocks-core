@@ -70,13 +70,13 @@ Found 117 (117) files
 ../decodeAbiTest/decodeAbiTest_01.txt
 ../decodeAbiTest/decodeAbiTest_README.txt
 ../decodeAbiTest/speed_test.txt
-../displayStrsTest/displayStrsTest_CAccountName.txt
 ../displayStrsTest/displayStrsTest_CAcctCacheItem.txt
 ../displayStrsTest/displayStrsTest_CBlock.txt
 ../displayStrsTest/displayStrsTest_CBranch.txt
 ../displayStrsTest/displayStrsTest_CInfix.txt
 ../displayStrsTest/displayStrsTest_CLeaf.txt
 ../displayStrsTest/displayStrsTest_CMonitor.txt
+../displayStrsTest/displayStrsTest_CName.txt
 ../displayStrsTest/displayStrsTest_CRPCResult.txt
 ../displayStrsTest/displayStrsTest_CTreeNode.txt
 ../displayStrsTest/displayStrsTest_CTreeRoot.txt

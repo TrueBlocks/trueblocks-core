@@ -39,7 +39,7 @@ bool display(CTraverser* trav, void* data) {
     double gasCostEther = str_2_Double(trav->trans.Format("[{ETHERGASCOST}]"));
     double gasCostUsd = (gasCostEther * spotPrice);
 
-    CAccountName acct;
+    CName acct;
     findName(trav->trans.Format("[{FROM}]"), acct);
     if (acct.name.empty()) {
         acct.name = "anon";
