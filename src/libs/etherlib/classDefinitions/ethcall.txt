@@ -7,5 +7,5 @@ sort = v1.blockNumber < v2.blockNumber
 equals = blockNumber == it.blockNumber
 doc_group = 03-Chain State
 doc_descr = the result of a call to a smart contract
-doc_api = 21-result
+doc_api = 21-ethCall
 doc_producer = state

@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 ## chifra slurp
 
 `chifra slurp` is the first tool we built in the Ethereum space. It even has its [own website](http://ethslurp.com).
@@ -29,6 +30,7 @@ Notes:
   - Portions of this software are Powered by Etherscan.io APIs.
 ```
 
+<!-- markdownlint-disable MD041 -->
 #### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.

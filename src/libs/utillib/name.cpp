@@ -14,28 +14,28 @@
  * Parts of this file were generated with makeClass --run. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
-#include "accountname.h"
+#include "name.h"
 #include "options_base.h"
 #include "petname.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CAccountName, CBaseNode);
+IMPLEMENT_NODE(CName, CBaseNode);
 
 //---------------------------------------------------------------------------
-extern string_q nextAccountnameChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextAccountnameChunk_custom(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextNameChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextNameChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CAccountName::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CName::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["accountname_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["name_fmt"] : fmtIn);
     if (fmt.empty()) {
         toJson(ctx);
         return;
@@ -45,13 +45,13 @@ void CAccountName::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) co
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextAccountnameChunk, this);
+        ctx << getNextChunk(fmt, nextNameChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextAccountnameChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextNameChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CAccountName*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CName*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -60,9 +60,9 @@ string_q nextAccountnameChunk(const string_q& fieldIn, const void* dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-string_q CAccountName::getValueByName(const string_q& fieldName) const {
+string_q CName::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextAccountnameChunk_custom(fieldName, this);
+    string_q ret = nextNameChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -135,7 +135,7 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CName::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
@@ -216,7 +216,7 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
 }
 
 //---------------------------------------------------------------------------------------------------
-void CAccountName::finishParse() {
+void CName::finishParse() {
     // EXISTING_CODE
     if (petname.empty() || !isPetname(petname, '-')) {
         petname = addr_2_Petname(address, '-');
@@ -225,7 +225,7 @@ void CAccountName::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccountName::Serialize(CArchive& archive) {
+bool CName::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -256,7 +256,7 @@ bool CAccountName::Serialize(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccountName::SerializeC(CArchive& archive) const {
+bool CName::SerializeC(CArchive& archive) const {
     // Writing always writes the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -280,10 +280,10 @@ bool CAccountName::SerializeC(CArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccountName::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+bool CName::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
     ASSERT(archiveIn.isReading());
     ASSERT(archiveOut.isWriting());
-    CAccountName copy;
+    CName copy;
     // EXISTING_CODE
     // EXISTING_CODE
     copy.Serialize(archiveIn);
@@ -292,7 +292,7 @@ bool CAccountName::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CAccountNameArray& array) {
+CArchive& operator>>(CArchive& archive, CNameArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -304,7 +304,7 @@ CArchive& operator>>(CArchive& archive, CAccountNameArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CAccountNameArray& array) {
+CArchive& operator<<(CArchive& archive, const CNameArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -313,65 +313,65 @@ CArchive& operator<<(CArchive& archive, const CAccountNameArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CAccountName::registerClass(void) {
+void CName::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CAccountName, "schema"))
+    if (HAS_FIELD(CName, "schema"))
         return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CAccountName, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CAccountName, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CAccountName, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CAccountName, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CAccountName, "tags", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CAccountName, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CAccountName, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CAccountName, "symbol", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CAccountName, "source", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CAccountName, "decimals", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CAccountName, "petname", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CAccountName, "isCustom", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CAccountName, "isPrefund", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CAccountName, "isContract", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CAccountName, "isErc20", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CAccountName, "isErc721", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CName, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CName, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CName, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CName, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CName, "tags", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CName, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CName, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CName, "symbol", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CName, "source", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CName, "decimals", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CName, "petname", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CName, "isCustom", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CName, "isPrefund", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CName, "isContract", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CName, "isErc20", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CName, "isErc721", T_BOOL | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CAccountName, "schema");
-    HIDE_FIELD(CAccountName, "deleted");
-    HIDE_FIELD(CAccountName, "showing");
-    HIDE_FIELD(CAccountName, "cname");
+    HIDE_FIELD(CName, "schema");
+    HIDE_FIELD(CName, "deleted");
+    HIDE_FIELD(CName, "showing");
+    HIDE_FIELD(CName, "cname");
 
-    builtIns.push_back(_biCAccountName);
+    builtIns.push_back(_biCName);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextAccountnameChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CAccountName* acc = reinterpret_cast<const CAccountName*>(dataPtr);
-    if (acc) {
+string_q nextNameChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CName* nam = reinterpret_cast<const CName*>(dataPtr);
+    if (nam) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'n':
                 if (fieldIn % "name") {
-                    string_q ret = substitute(acc->name, "\"", "");
-                    if (isTestMode() && (acc->isCustom || contains(acc->tags, "Individuals"))) {
-                        ret = "Name " + acc->address.substr(0, 10);
+                    string_q ret = substitute(nam->name, "\"", "");
+                    if (isTestMode() && (nam->isCustom || contains(nam->tags, "Individuals"))) {
+                        ret = "Name " + nam->address.substr(0, 10);
                     }
                     return ret;
                 }
                 break;
             case 's':
                 if (fieldIn % "source")
-                    return substitute(acc->source, "\"", "");
+                    return substitute(nam->source, "\"", "");
                 break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if (fieldIn % "parsed")
-                    return nextBasenodeChunk(fieldIn, acc);
+                    return nextBasenodeChunk(fieldIn, nam);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -388,7 +388,7 @@ string_q nextAccountnameChunk_custom(const string_q& fieldIn, const void* dataPt
 // EXISTING_CODE
 
 //---------------------------------------------------------------------------
-bool CAccountName::readBackLevel(CArchive& archive) {
+bool CName::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     string_q unused_decsr;
@@ -440,19 +440,19 @@ bool CAccountName::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CAccountName& acc) {
-    acc.SerializeC(archive);
+CArchive& operator<<(CArchive& archive, const CName& nam) {
+    nam.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CAccountName& acc) {
-    acc.Serialize(archive);
+CArchive& operator>>(CArchive& archive, CName& nam) {
+    nam.Serialize(archive);
     return archive;
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CAccountName& it) {
+ostream& operator<<(ostream& os, const CName& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -462,7 +462,7 @@ ostream& operator<<(ostream& os, const CAccountName& it) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_ACCOUNTNAME =
+const char* STR_DISPLAY_NAME =
     "[{TAGS}]\t"
     "[{ADDRESS}]\t"
     "[{NAME}]\t"
@@ -480,12 +480,12 @@ const char* STR_DISPLAY_ACCOUNTNAME =
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-extern CArchive& operator>>(CArchive& archive, CAccountNameMap& nameMap) {
+extern CArchive& operator>>(CArchive& archive, CNameMap& nameMap) {
     uint64_t count;
     archive >> count;
     for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
-        CAccountName item;
+        CName item;
         item.Serialize(archive);
         nameMap[item.address] = item;
     }
@@ -493,7 +493,7 @@ extern CArchive& operator>>(CArchive& archive, CAccountNameMap& nameMap) {
 }
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CAccountNameMap& nameMap) {
+extern CArchive& operator<<(CArchive& archive, const CNameMap& nameMap) {
     uint64_t count = nameMap.size();
     archive << count;
     for (auto item : nameMap) {

@@ -1,4 +1,4 @@
 name ,type    ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
 name ,string  ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
 age  ,uint64  ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-next ,person* ,           ,true   ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+next ,Person* ,           ,true   ,      ,        ,          ,        ,      ,         ,    ,     ,        ,

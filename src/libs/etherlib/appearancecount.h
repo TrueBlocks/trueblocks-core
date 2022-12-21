@@ -15,9 +15,7 @@
  * Parts of this file were generated with makeClass --run. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
-#include "basetypes.h"
-#include "basenode.h"
-#include "sfarchive.h"
+#include "etherlib.h"
 
 namespace qblocks {
 
@@ -25,42 +23,33 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CAccountName : public CBaseNode {
+class CAppearanceCount : public CBaseNode {
   public:
-    string_q tags;
     address_t address;
-    string_q name;
-    string_q symbol;
-    string_q source;
-    uint64_t decimals;
-    string_q petname;
-    bool isCustom;
-    bool isPrefund;
-    bool isContract;
-    bool isErc20;
-    bool isErc721;
+    uint64_t nRecords;
+    uint64_t fileSize;
 
   public:
-    CAccountName(void);
-    CAccountName(const CAccountName& ac);
-    virtual ~CAccountName(void);
-    CAccountName& operator=(const CAccountName& ac);
+    CAppearanceCount(void);
+    CAppearanceCount(const CAppearanceCount& ap);
+    virtual ~CAppearanceCount(void);
+    CAppearanceCount& operator=(const CAppearanceCount& ap);
 
-    DECLARE_NODE(CAccountName);
+    DECLARE_NODE(CAppearanceCount);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CAccountName& it) const;
-    bool operator!=(const CAccountName& it) const {
+    bool operator==(const CAppearanceCount& it) const;
+    bool operator!=(const CAppearanceCount& it) const {
         return !operator==(it);
     }
-    friend bool operator<(const CAccountName& v1, const CAccountName& v2);
-    friend ostream& operator<<(ostream& os, const CAccountName& it);
+    friend bool operator<(const CAppearanceCount& v1, const CAppearanceCount& v2);
+    friend ostream& operator<<(ostream& os, const CAppearanceCount& it);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CAccountName& ac);
+    void duplicate(const CAppearanceCount& ap);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -68,120 +57,97 @@ class CAccountName : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CAccountName::CAccountName(void) {
+inline CAppearanceCount::CAppearanceCount(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CAccountName::CAccountName(const CAccountName& ac) {
+inline CAppearanceCount::CAppearanceCount(const CAppearanceCount& ap) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(ac);
+    duplicate(ap);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CAccountName::~CAccountName(void) {
+inline CAppearanceCount::~CAppearanceCount(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountName::clear(void) {
+inline void CAppearanceCount::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountName::initialize(void) {
+inline void CAppearanceCount::initialize(void) {
     CBaseNode::initialize();
 
-    tags = "";
     address = "";
-    name = "";
-    symbol = "";
-    source = "";
-    decimals = 0;
-    petname = "";
-    isCustom = false;
-    isPrefund = false;
-    isContract = false;
-    isErc20 = false;
-    isErc721 = false;
+    nRecords = 0;
+    fileSize = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountName::duplicate(const CAccountName& ac) {
+inline void CAppearanceCount::duplicate(const CAppearanceCount& ap) {
     clear();
-    CBaseNode::duplicate(ac);
+    CBaseNode::duplicate(ap);
 
-    tags = ac.tags;
-    address = ac.address;
-    name = ac.name;
-    symbol = ac.symbol;
-    source = ac.source;
-    decimals = ac.decimals;
-    petname = ac.petname;
-    isCustom = ac.isCustom;
-    isPrefund = ac.isPrefund;
-    isContract = ac.isContract;
-    isErc20 = ac.isErc20;
-    isErc721 = ac.isErc721;
+    address = ap.address;
+    nRecords = ap.nRecords;
+    fileSize = ap.fileSize;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CAccountName& CAccountName::operator=(const CAccountName& ac) {
-    duplicate(ac);
+inline CAppearanceCount& CAppearanceCount::operator=(const CAppearanceCount& ap) {
+    duplicate(ap);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CAccountName::operator==(const CAccountName& it) const {
+inline bool CAppearanceCount::operator==(const CAppearanceCount& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    // Equality operator as defined in class definition
-    return address % it.address;
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CAccountName& v1, const CAccountName& v2) {
+inline bool operator<(const CAppearanceCount& v1, const CAppearanceCount& v2) {
     // EXISTING_CODE
-    if (v1.address == v2.address)
-        return v1.tags < v2.tags;
     // EXISTING_CODE
-    // Default sort as defined in class definition
-    return v1.address < v2.address;
+    // No default sort defined in class definition, assume already sorted, preserve ordering
+    return true;
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CAccountName> CAccountNameArray;
-extern CArchive& operator>>(CArchive& archive, CAccountNameArray& array);
-extern CArchive& operator<<(CArchive& archive, const CAccountNameArray& array);
+typedef vector<CAppearanceCount> CAppearanceCountArray;
+extern CArchive& operator>>(CArchive& archive, CAppearanceCountArray& array);
+extern CArchive& operator<<(CArchive& archive, const CAppearanceCountArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CAccountName& acc);
-extern CArchive& operator>>(CArchive& archive, CAccountName& acc);
+extern CArchive& operator<<(CArchive& archive, const CAppearanceCount& app);
+extern CArchive& operator>>(CArchive& archive, CAppearanceCount& app);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_ACCOUNTNAME;
+extern const char* STR_DISPLAY_APPEARANCECOUNT;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-typedef map<address_t, CAccountName> CAccountNameMap;
-extern CArchive& operator>>(CArchive& archive, CAccountNameMap& nameMap);
-extern CArchive& operator<<(CArchive& archive, const CAccountNameMap& nameMap);
 // EXISTING_CODE
 }  // namespace qblocks
