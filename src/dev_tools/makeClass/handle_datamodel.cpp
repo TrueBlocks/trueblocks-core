@@ -42,7 +42,13 @@ bool COptions::handle_datamodel(void) {
     for (auto model : dataModels) {
         string_q groupLow = toLower(substitute(model.doc_group, " ", ""));
         string_q groupFn = getDocsPathTemplates("model-groups/" + groupLow + ".md");
+        if (!fileExists(groupFn)) {
+            LOG_WARN("Missing data model intro file: ", bYellow, getPathToTemplates(groupFn), cOff);
+        }
         string_q modelFn = getDocsPathTemplates("model-intros/" + model.doc_api + ".md");
+        if (!fileExists(modelFn)) {
+            LOG_WARN("Missing data model intro file: ", bYellow, getPathToTemplates(modelFn), cOff);
+        }
 
         sort(model.fieldArray.begin(), model.fieldArray.end(), sortByDoc);
 

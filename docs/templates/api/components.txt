@@ -810,7 +810,7 @@ components:
           format: blknum
           example: 8901011
           description: "the block number at which this smart contract was deployed (if a smart contact)"
-    token:
+    tokenBalanceRecord:
       description: "on-chain token related data for a give address at a given block height"
       type: object
       properties:

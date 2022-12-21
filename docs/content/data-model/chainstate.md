@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2022-12-20T20:31:10
+date: 2022-12-20T20:50:45
 lastmod:
   - :git
   - lastmod
@@ -71,17 +71,17 @@ Ethcall data is made of the following data fields:
 | compressedResult | the compressed version of the result of the call to the contract                | string    |
 | deployed         | the block number at which this smart contract was deployed (if a smart contact) | blknum    |
 
-## Token
+## TokenBalanceRecord
 
-The `token` data model represents the name, decmials, token symbol, and optionally the totalSupply of an ERC-20 token.
+The data model displays the token balance records for the `chifra tokens` tool.
 
-The following commands produce and manage tokens:
+The following commands produce and manage tokenbalancerecords:
 
-| Tools                                                   |                                                                       |
-| ------------------------------------------------------- | --------------------------------------------------------------------- |
-| [chifra tokens](/docs/chifra/chainstate/#chifra-tokens) | retrieve token balance(s) for one or more addresses at given block(s) |
+| Tools                                                 |                                                                       |
+| ----------------------------------------------------- | --------------------------------------------------------------------- |
+| [chifra tokens](/docs/chifra/accounts/#chifra-tokens) | retrieve token balance(s) for one or more addresses at given block(s) |
 
-Token data is made of the following data fields:
+Tokenbalancerecord data is made of the following data fields:
 
 | Field      | Description                                                  | Type    |
 | ---------- | ------------------------------------------------------------ | ------- |
