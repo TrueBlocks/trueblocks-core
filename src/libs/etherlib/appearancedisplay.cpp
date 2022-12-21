@@ -19,7 +19,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CAppearanceDisplay, CAccountName);
+IMPLEMENT_NODE(CAppearanceDisplay, CName);
 
 //---------------------------------------------------------------------------
 extern string_q nextAppearancedisplayChunk(const string_q& fieldIn, const void* dataPtr);
@@ -87,7 +87,7 @@ string_q CAppearanceDisplay::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     // Finally, give the parent class a chance
-    return CAccountName::getValueByName(fieldName);
+    return CName::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -98,7 +98,7 @@ bool CAppearanceDisplay::setValueByName(const string_q& fieldNameIn, const strin
     // EXISTING_CODE
     // EXISTING_CODE
 
-    if (CAccountName::setValueByName(fieldName, fieldValue))
+    if (CName::setValueByName(fieldName, fieldValue))
         return true;
     switch (tolower(fieldName[0])) {
         case 'b':
@@ -132,7 +132,7 @@ bool CAppearanceDisplay::Serialize(CArchive& archive) {
 
     // Always read the base class (it will handle its own backLevels if any, then
     // read this object's back level (if any) or the current version.
-    CAccountName::Serialize(archive);
+    CName::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -149,7 +149,7 @@ bool CAppearanceDisplay::Serialize(CArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CAppearanceDisplay::SerializeC(CArchive& archive) const {
     // Writing always writes the latest version of the data
-    CAccountName::SerializeC(archive);
+    CName::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -199,7 +199,7 @@ void CAppearanceDisplay::registerClass(void) {
     if (HAS_FIELD(CAppearanceDisplay, "schema"))
         return;
 
-    CAccountName::registerClass();
+    CName::registerClass();
 
     size_t fieldNum = 1000;
     ADD_FIELD(CAppearanceDisplay, "schema", T_NUMBER, ++fieldNum);

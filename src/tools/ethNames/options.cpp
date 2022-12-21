@@ -210,7 +210,7 @@ bool COptions::parseArguments(string_q& command) {
 
 #define anyBase() (match_case || expand || all || prefund || named || addr || to_custom || clean)
     if (expand) {
-        searchFields = STR_DISPLAY_ACCOUNTNAME;
+        searchFields = STR_DISPLAY_NAME;
         format = searchFields;
     }
 
@@ -251,8 +251,8 @@ bool COptions::parseArguments(string_q& command) {
     if (tags) {
         if (anyBase())
             return usage("Do not use the --tags option with any other option.");
-        manageFields("CAccountName:all", false);
-        manageFields("CAccountName:tags", true);
+        manageFields("CName:all", false);
+        manageFields("CName:tags", true);
         format = "[{TAGS}]";
         addr_only = false;
         if (custom) {
@@ -266,22 +266,22 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // Prepare formatting
-    string_q str = (format.empty() ? shortenFormat(STR_DISPLAY_ACCOUNTNAME) : format);
+    string_q str = (format.empty() ? shortenFormat(STR_DISPLAY_NAME) : format);
     if (verbose && !contains(format, "{SOURCE}"))
         str += "\t[{SOURCE}]";
     string_q meta = ", \"namePath\": \"" + (isTestMode() ? "--" : cacheFolder_names) + "\"";
 
     // Display formatting
-    configureDisplay("ethNames", "CAccountName", str, meta);
+    configureDisplay("ethNames", "CName", str, meta);
     if (!tags && expContext().exportFmt == JSON1)
-        manageFields("CAccountName:" + cleanFmt(STR_DISPLAY_ACCOUNTNAME));
+        manageFields("CName:" + cleanFmt(STR_DISPLAY_NAME));
     if (!expand) {
-        HIDE_FIELD(CAccountName, "deleted");
-        HIDE_FIELD(CAccountName, "isCustom");
-        HIDE_FIELD(CAccountName, "isPrefund");
-        HIDE_FIELD(CAccountName, "isContract");
-        HIDE_FIELD(CAccountName, "isErc20");
-        HIDE_FIELD(CAccountName, "isErc721");
+        HIDE_FIELD(CName, "deleted");
+        HIDE_FIELD(CName, "isCustom");
+        HIDE_FIELD(CName, "isPrefund");
+        HIDE_FIELD(CName, "isContract");
+        HIDE_FIELD(CName, "isErc20");
+        HIDE_FIELD(CName, "isErc721");
     }
 
     // Collect results for later display
@@ -289,18 +289,18 @@ bool COptions::parseArguments(string_q& command) {
 
     // Data wrangling
     if (addr_only) {
-        HIDE_FIELD(CAccountName, "deleted");
-        HIDE_FIELD(CAccountName, "tags");
-        HIDE_FIELD(CAccountName, "name");
-        HIDE_FIELD(CAccountName, "symbol");
-        HIDE_FIELD(CAccountName, "petname");
-        HIDE_FIELD(CAccountName, "source");
-        HIDE_FIELD(CAccountName, "decimal");
-        HIDE_FIELD(CAccountName, "isCustom");
-        HIDE_FIELD(CAccountName, "isPrefund");
-        HIDE_FIELD(CAccountName, "isContract");
-        HIDE_FIELD(CAccountName, "isErc20");
-        HIDE_FIELD(CAccountName, "isErc721");
+        HIDE_FIELD(CName, "deleted");
+        HIDE_FIELD(CName, "tags");
+        HIDE_FIELD(CName, "name");
+        HIDE_FIELD(CName, "symbol");
+        HIDE_FIELD(CName, "petname");
+        HIDE_FIELD(CName, "source");
+        HIDE_FIELD(CName, "decimal");
+        HIDE_FIELD(CName, "isCustom");
+        HIDE_FIELD(CName, "isPrefund");
+        HIDE_FIELD(CName, "isContract");
+        HIDE_FIELD(CName, "isErc20");
+        HIDE_FIELD(CName, "isErc721");
     }
 
     return true;
@@ -322,7 +322,7 @@ void COptions::Init(void) {
     terms.clear();
     items.clear();
     searches.clear();
-    searchFields = getSearchFields(STR_DISPLAY_ACCOUNTNAME);
+    searchFields = getSearchFields(STR_DISPLAY_NAME);
     types = NAMED;
     minArgs = 0;
 }
@@ -349,7 +349,7 @@ COptions::~COptions(void) {
 }
 
 //-----------------------------------------------------------------------
-bool COptions::addIfUnique(const CAccountName& item) {
+bool COptions::addIfUnique(const CName& item) {
     if (isZeroAddr(item.address))
         return false;
 
@@ -412,7 +412,7 @@ bool COptions::addIfUnique(const CAccountName& item) {
 bool addCustom(NameOnDisc* item, void* data) {
     COptions* opts = (COptions*)data;
     if (item->flags & IS_CUSTOM) {
-        CAccountName name;
+        CName name;
         item->disc_2_Name(name);
         opts->addIfUnique(name);
     }
@@ -420,7 +420,7 @@ bool addCustom(NameOnDisc* item, void* data) {
 }
 
 //-----------------------------------------------------------------------
-bool addRegular(CAccountName& item, void* data) {
+bool addRegular(CName& item, void* data) {
     COptions* opts = (COptions*)data;
     if (!item.isCustom && !item.isPrefund)
         opts->addIfUnique(item);
@@ -431,7 +431,7 @@ bool addRegular(CAccountName& item, void* data) {
 bool addPrefund(NameOnDisc* item, void* data) {
     COptions* opts = (COptions*)data;
     if (item->flags & IS_PREFUND) {
-        CAccountName name;
+        CName name;
         item->disc_2_Name(name);
         opts->addIfUnique(name);
     }
@@ -444,7 +444,7 @@ void COptions::filterNames() {
     if (types & CUSTOM) {
         if (isTestMode() && !isCrudCommand()) {
             for (uint32_t i = 1; i < 5; i++) {
-                CAccountName item;
+                CName item;
                 item.tags = "81-Custom";
                 item.address = "0x000000000000000000000000000000000000000" + uint_2_Str(i);
                 item.petname = addr_2_Petname(item.address, '-');

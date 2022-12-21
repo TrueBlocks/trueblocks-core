@@ -20,7 +20,7 @@
 #include "options_base.h"
 #include "colors.h"
 #include "filenames.h"
-#include "accountname.h"
+#include "name.h"
 #include "rpcresult.h"
 
 namespace qblocks {

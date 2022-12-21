@@ -31,7 +31,7 @@
 #include "performance.h"
 #include "options_base.h"
 #include "filenames.h"
-#include "accountname.h"
+#include "name.h"
 #include "memmap.h"
 #include "rpcresult.h"
 #include "logging.h"

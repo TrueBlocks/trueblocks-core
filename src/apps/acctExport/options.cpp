@@ -582,8 +582,8 @@ bool COptions::setDisplayFormatting(void) {
         SHOW_FIELD(CReceipt, "blockNumber");
         SHOW_FIELD(CReceipt, "transactionIndex");
     } else if (appearances) {
-        manageFields("CAccountName:all", false);
-        manageFields(verbose ? "CAccountName:address,name" : "CAccountName:address,name,timestamp,date", true);
+        manageFields("CName:all", false);
+        manageFields(verbose ? "CName:address,name" : "CName:address,name,timestamp,date", true);
     }
 
     return true;

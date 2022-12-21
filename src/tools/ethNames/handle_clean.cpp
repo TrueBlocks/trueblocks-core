@@ -24,7 +24,7 @@ bool startsWithNumber(const string_q& str) {
 }
 
 //--------------------------------------------------------------------
-bool COptions::finishClean(CAccountName& account) {
+bool COptions::finishClean(CName& account) {
     if (startsWithNumber(account.tags) &&
         account.tags > "799999")  // tags named higher than or equal to 80 are hand edited
         return true;
@@ -139,8 +139,8 @@ bool COptions::cleanNames(const string_q& sourceIn, const string_q& destIn) {
     string_q fieldStr = toLower(nextTokenClear(contents, '\n'));
     explode(fields, fieldStr, '\t');
 
-    CAccountName name;
-    CAccountNameArray names;
+    CName name;
+    CNameArray names;
     size_t cnt = 0;
     while (name.parseText(fields, contents)) {
         LOG_INFO("Cleaning ", ++cnt, " of ", nRecords, ": ", name.address, "                                  \r");
@@ -150,7 +150,7 @@ bool COptions::cleanNames(const string_q& sourceIn, const string_q& destIn) {
     }
 
     sort(names.begin(), names.end());
-    CAccountNameArray deduped;
+    CNameArray deduped;
 
     address_t prev;
     for (auto item : names) {
@@ -162,7 +162,7 @@ bool COptions::cleanNames(const string_q& sourceIn, const string_q& destIn) {
     ostringstream os;
     os << fieldStr << endl;
     for (auto n : deduped)
-        os << n.Format(STR_DISPLAY_ACCOUNTNAME) << endl;
+        os << n.Format(STR_DISPLAY_NAME) << endl;
     stringToAsciiFile(dest, os.str());
 
     return true;

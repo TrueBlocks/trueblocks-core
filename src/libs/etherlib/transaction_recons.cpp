@@ -51,7 +51,7 @@ bool CTransaction::readReconsFromCache(const address_t& accountedFor) {
             }
 
             // Freshen in case user has changed the names database since putting the statement in the cache
-            CAccountName tokenName;
+            CName tokenName;
             if (findToken(statement.assetAddr, tokenName)) {
                 statement.assetSymbol = tokenName.symbol;
                 statement.decimals = tokenName.decimals;
