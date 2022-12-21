@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2022-12-20T20:50:45
+date: 2022-12-20T21:17:09
 lastmod:
   - :git
   - lastmod
@@ -21,7 +21,7 @@ The data structures produced by tools in the Chain State category provide detail
 
 Each data structure is created by one or more tools which are detailed below
 
-## Ethstate
+## EthState
 
 The `state` object displays information about the type of account associated with an address, the block the address first appeared on the chain, the proxy address if the address is a proxied smart contract as well as account balance and a few other things.
 
@@ -48,7 +48,7 @@ Ethstate data is made of the following data fields:
 | deployed    | the block number at which this smart contract was deployed (if a smart contact) | blknum  |
 | accttype    | the type of the address at the given block                                      | string  |
 
-## Ethcall
+## EthCall
 
 For the `chifra state --call` tool, the `result` is the result returned by the call to the smart contract. This is the decoded `output` value of the smart contract call.
 
