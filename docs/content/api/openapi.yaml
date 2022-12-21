@@ -138,6 +138,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: uint64
         - name: maxRecords
           description: the maximum number of records to process
           required: false
@@ -146,6 +147,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: uint64
         - name: firstBlock
           description: first block to export (inclusive, ignored when freshening)
           required: false
@@ -154,6 +156,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: blknum
         - name: lastBlock
           description: last block to export (inclusive, ignored when freshening)
           required: false
@@ -162,6 +165,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: blknum
       responses:
         "200":
           description: returns the requested data
@@ -336,6 +340,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: uint64
         - name: maxRecords
           description: the maximum number of records to process
           required: false
@@ -344,6 +349,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: uint64
         - name: relevant
           description: >
             for log and accounting export only, export only logs relevant to one of the given export addresses
@@ -416,6 +422,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: blknum
         - name: lastBlock
           description: last block to process (inclusive)
           required: false
@@ -424,6 +431,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: blknum
       responses:
         "200":
           description: returns the requested data
@@ -531,6 +539,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: double
         - name: delete
           description: delete the item, but do not remove it
           required: false
@@ -939,6 +948,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: blknum
         - name: listCount
           description: the number of blocks to report for --list option
           required: false
@@ -947,6 +957,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: blknum
       responses:
         "200":
           description: returns the requested data
@@ -1558,7 +1569,7 @@ paths:
                     description: This data model carries information about the TrueBlocks system including both the API server and the local binary caches
                     type: array
                     items:
-                      $ref: "#/components/schemas/status"
+                      $ref: "#/components/schemas/config"
                 example:
                   {
                     "data":
@@ -1597,6 +1608,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: uint64
         - name: pin
           description: pin new chunks (requires locally-running IPFS daemon or --remote)
           required: false
@@ -1621,6 +1633,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: double
       responses:
         "200":
           description: returns the requested data
@@ -1725,6 +1738,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: double
       responses:
         "200":
           description: returns the requested data
@@ -1770,6 +1784,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: double
       responses:
         "200":
           description: returns the requested data
@@ -1985,7 +2000,7 @@ components:
           description: "the Unix timestamp of the object"
         date:
           type: string
-          format: date
+          format: datetime
           description: "a calculated field -- the date of this transaction"
         assetAddr:
           type: string
@@ -2211,7 +2226,7 @@ components:
           description: "the Unix timestamp of the object"
         date:
           type: string
-          format: date
+          format: datetime
           description: "a calculated field -- the date of this transaction"
         sender:
           type: string
@@ -2414,7 +2429,7 @@ components:
           type: boolean
         date:
           type: string
-          format: date
+          format: datetime
     receipt:
       description: "receipt data for a given transaction directly from the blockchain"
       type: object
@@ -2610,7 +2625,7 @@ components:
           description: "the Unix timestamp of the block"
         date:
           type: string
-          format: date
+          format: datetime
           example: "2015-07-30 15:34:53 UTC"
           description: "Human readable version of timestamp"
     state:
@@ -2733,7 +2748,7 @@ components:
         isErc721:
           type: boolean
           description: "`true` if the address is an ERC720, `false` otherwise"
-    status:
+    config:
       description: "This data model carries information about the TrueBlocks system including both the API server and the local binary caches"
       type: object
       properties:
@@ -2997,19 +3012,19 @@ components:
           description: "the size of the chunks on disc in bytes"
         addrsPerBlock:
           type: number
-          format: float
+          format: double
           description: "the average number of addresses per block"
         appsPerBlock:
           type: number
-          format: float
+          format: double
           description: "the average number of appearances per block"
         appsPerAddr:
           type: number
-          format: float
+          format: double
           description: "the average number of appearances per address"
         ratio:
           type: number
-          format: float
+          format: double
           description: "the ratio of appearances to addresses"
     chunkAppearances:
       description: "a single record in the appearance table of an index chunk"

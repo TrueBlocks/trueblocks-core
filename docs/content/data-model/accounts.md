@@ -21,7 +21,7 @@ The primary tool of TrueBlocks is `chifra export`. This tool extracts, directly 
 
 Monitors collect together [Appearances](/data-model/accounts/#appearance) (`blknum.tx_id` pairs) along with additional information such as [Reconciliations](/data-model/accounts/#reconciliation) (18-decimal place accurate accounting for each asset transfer), [Names](/data-model/accounts/#names) (associations of human-readable names with addresses), and [Abis](/data-model/accounts/#abis) which track the "meaning" of each transaction through its [Functions](/data-model/accounts/#function) and [Parameters](/data-model/accounts/#parameters).
 
-_Each data structure is created by one or more tools which are detailed below_
+Each data structure is created by one or more tools which are detailed below
 
 ## Monitor
 
@@ -56,7 +56,6 @@ Monitor data is made of the following data fields:
 | decimals    |                                                | uint64  |
 | isContract  |                                                | bool    |
 
-
 ## Appearance
 
 An appearance is a pointer (`blknum, tx_id` pair) into the blockchain indicating where a particular address appears. This includes obvious locations such as `to` or `from` as well as esoteric locations such as deep inside a tenth-level trace or as the miner of an uncle block. The primary goal of TrueBlocks is to identify every appearance for any address on the chain.
@@ -80,7 +79,6 @@ Appearance data is made of the following data fields:
 | name             | the name of the address, if found                         | string    |
 | timestamp        | the timestamp for this appearance                         | timestamp |
 | date             | the date represented by the timestamp                     | string    |
-
 
 ## Reconciliation
 
@@ -147,7 +145,6 @@ Reconciliation data is made of the following data fields:
 
 **Spot Price**: If the `spotPrice` is available from an on-chain source (such as UniSwap), then it represents the ETH/DAI value at the time of the transaction if the reconciliation is for ETH. For other assets, the `spotPrice` represents the asset's value relative to `ETH`, so to price a non-ETH asset in US dollars, one would need to convert first to `ETH` then to dollars. If a price is not available on-chain, the `spotPrice` will be zero and the caller is encouraged to get the price for the asset from other sources.
 
-
 ## Name
 
 TrueBlocks allows you to associate a human-readable name with an address. This feature goes a long way towards making the blockchain data one extracts with a [Monitor](/data-model/accounts/#monitor) much more readable.
@@ -180,7 +177,6 @@ Name data is made of the following data fields:
 | isErc20    | `true` if the address is an ERC20, `false` otherwise                                | bool    |
 | isErc721   | `true` if the address is an ERC720, `false` otherwise                               | bool    |
 
-
 ## Transfer
 
 The `transfer` data model is produced by the reconciliation process of `chifra export`. It represents, for all intents and purposes, the asset value transfer produced by nearly all value transfers on any blockchain. While the details of various token transfers are varied, the underlying mechanism is through token transfers. In our accounting, we focus on the token transfers and label each such transfer on the `input` data or `event topic` data. In this way, our accounting remains relatively easy (we only reconcile tokens and ETH), but we cover every conceivable token asset transfer of any type.
@@ -211,7 +207,6 @@ Transfer data is made of the following data fields:
 | priceSource      | The on-chain source from which the spot price was taken                                        | string    |
 | encoding         | The four-byte encoding of the transaction's function call                                      | string    |
 
-
 ## AppearanceCount
 
 The `appearanceCount` data model is used mostly by the frontend explorer application. It carries various information about the monitor data for an address.
@@ -229,7 +224,6 @@ Appearancecount data is made of the following data fields:
 | address  | the address for this count                                | address |
 | nRecords | the number of appearances for the given address           | uint64  |
 | fileSize | the size of the monitor file containing those appearances | uint64  |
-
 
 ## Base types
 

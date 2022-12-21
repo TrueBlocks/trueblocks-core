@@ -19,7 +19,7 @@ toc: true
 
 The data structures produced by tools in the Chain State category provide details on the balances (ERC20 or ETH) of an address against a particular token or block. Additionally, direct access to a smart contract's state may be queries with the `chirfa state` tool. Data structures in that case are specific to the particular smart contract.
 
-_Each data structure is created by one or more tools which are detailed below_
+Each data structure is created by one or more tools which are detailed below
 
 ## State
 
@@ -48,7 +48,6 @@ State data is made of the following data fields:
 | deployed    | the block number at which this smart contract was deployed (if a smart contact) | blknum  |
 | accttype    | the type of the address at the given block                                      | string  |
 
-
 ## Ethcall
 
 For the `chifra state --call` tool, the `result` is the result returned by the call to the smart contract. This is the decoded `output` value of the smart contract call.
@@ -71,7 +70,6 @@ Ethcall data is made of the following data fields:
 | callResult       | the result of the call to the contract                                          | CFunction |
 | compressedResult | the compressed version of the result of the call to the contract                | string    |
 | deployed         | the block number at which this smart contract was deployed (if a smart contact) | blknum    |
-
 
 ## Token
 
@@ -97,17 +95,16 @@ Token data is made of the following data fields:
 | isErc20    | `true` if the address is an ERC20, `false` otherwise         | bool    |
 | isErc721   | `true` if the address is an ERC720, `false` otherwise        | bool    |
 
-
 ## Base types
 
 This documentation mentions the following basic data types.
 
-| Type      | Description                                     | Notes          |
-| --------- | ----------------------------------------------- | -------------- |
-| address   | a 20-byte hexadecimal string starting with '0x' | lowercase      |
-| blknum    | an alias for a uint64                           |                |
-| bool      | a value either `true`, `false`, `1`, or `0`     |                |
-| bytes     | an arbitrarily long string of bytes             |                |
-| string    | a normal character string                       |                |
-| uint64    | a 64-bit unsigned integer                       |                |
-| wei       | an unsigned big number                          | as a string    |
+| Type    | Description                                     | Notes       |
+| ------- | ----------------------------------------------- | ----------- |
+| address | a 20-byte hexadecimal string starting with '0x' | lowercase   |
+| blknum  | an alias for a uint64                           |             |
+| bool    | a value either `true`, `false`, `1`, or `0`     |             |
+| bytes   | an arbitrarily long string of bytes             |             |
+| string  | a normal character string                       |             |
+| uint64  | a 64-bit unsigned integer                       |             |
+| wei     | an unsigned big number                          | as a string |
