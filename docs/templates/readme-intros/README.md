@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 ## README Templates
 
 Each tool and application has a corresponding template file in this folder. You may edit these templates and then run `make readmes` to regenerate the actual README file in the underlying tool.

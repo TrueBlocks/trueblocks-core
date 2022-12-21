@@ -1,6 +1,6 @@
 [settings]
-class = CAccountName
-fields = accountname.csv
+class = CName
+fields = name.csv
 includes = basetypes.h|basenode.h|sfarchive.h
 cpp_includes = options_base.h|petname.h
 sort = v1.address < v2.address

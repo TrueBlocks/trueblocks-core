@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 ## chifra init
 
 When invoked, `chifra init` reads a value from a smart contract called **The Unchained Index**
@@ -33,6 +34,7 @@ Notes:
   - Re-run chifra init as often as you wish. It will repair or freshen the index.
 ```
 
+<!-- markdownlint-disable MD041 -->
 #### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.

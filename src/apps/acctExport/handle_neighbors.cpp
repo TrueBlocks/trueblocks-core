@@ -47,7 +47,7 @@ bool isSame(const CReverseAppMapEntry* a, const CReverseAppMapEntry* b) {
 }
 
 //-----------------------------------------------------------------------
-bool assignReason(const CAccountName& accountedFor, CAppearance& app, const CTransaction& trans) {
+bool assignReason(const CName& accountedFor, CAppearance& app, const CTransaction& trans) {
     if (app.tx > 99996) {  // leave this here for searching: 99999
         app.reason = "miner";
         return true;

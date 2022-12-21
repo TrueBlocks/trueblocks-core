@@ -15,7 +15,11 @@ every:
 
 app:
 	@mkdir -p bin
+	@mv go.mod.save go.mod
+	@mv go.sum.save go.sum
 	go build -o $(dest) .
+	@mv go.mod go.mod.save
+	@mv go.sum go.sum.save
 
 test:
 	@make

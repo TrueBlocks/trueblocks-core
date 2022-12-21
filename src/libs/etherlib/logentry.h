@@ -40,7 +40,7 @@ class CLogEntry : public CBaseNode {
     blknum_t transactionLogIndex;
     timestamp_t timestamp;
     string_q type;
-    bool removed;
+    bool unused;
 
   public:
     CLogEntry(void);
@@ -120,7 +120,7 @@ inline void CLogEntry::initialize(void) {
     transactionLogIndex = 0;
     timestamp = 0;
     type = "";
-    removed = false;
+    unused = false;
 
     // EXISTING_CODE
     pReceipt = NULL;
@@ -145,7 +145,7 @@ inline void CLogEntry::duplicate(const CLogEntry& lo) {
     transactionLogIndex = lo.transactionLogIndex;
     timestamp = lo.timestamp;
     type = lo.type;
-    removed = lo.removed;
+    unused = lo.unused;
 
     // EXISTING_CODE
     // no deep copy because it's const

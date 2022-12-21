@@ -615,7 +615,7 @@ void CParameter::postProcessType(void) {
     if (startsWith(type, 'C'))
         is_flags |= IS_OBJECT;
     CStringArray builtinTypes = {
-        "CStringArray", "CBlockNumArray", "CAddressArray", "CBigUintArray", "CTopicArray",
+        "CStringArray", "CBlkNumArray", "CAddressArray", "CBigUintArray", "CTopicArray",
     };
     for (auto b : builtinTypes) {
         if (type == b) {

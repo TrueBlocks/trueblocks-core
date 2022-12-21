@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.45.0-beta
+  version: 0.50.0-beta
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra daemon`, you can
@@ -138,6 +138,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: uint64
         - name: maxRecords
           description: the maximum number of records to process
           required: false
@@ -146,6 +147,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: uint64
         - name: firstBlock
           description: first block to export (inclusive, ignored when freshening)
           required: false
@@ -154,6 +156,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: blknum
         - name: lastBlock
           description: last block to export (inclusive, ignored when freshening)
           required: false
@@ -162,6 +165,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: blknum
       responses:
         "200":
           description: returns the requested data
@@ -175,7 +179,7 @@ paths:
                     items:
                       oneOf:
                         - $ref: "#/components/schemas/appearance"
-                        - $ref: "#/components/schemas/listStats"
+                        - $ref: "#/components/schemas/appearanceCount"
                 example:
                   {
                     "data":
@@ -336,6 +340,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: uint64
         - name: maxRecords
           description: the maximum number of records to process
           required: false
@@ -344,6 +349,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: uint64
         - name: relevant
           description: >
             for log and accounting export only, export only logs relevant to one of the given export addresses
@@ -416,6 +422,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: blknum
         - name: lastBlock
           description: last block to process (inclusive)
           required: false
@@ -424,6 +431,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: blknum
       responses:
         "200":
           description: returns the requested data
@@ -439,7 +447,7 @@ paths:
                         - $ref: "#/components/schemas/appearance"
                         - $ref: "#/components/schemas/reconciliation"
                         - $ref: "#/components/schemas/transfer"
-                        - $ref: "#/components/schemas/listStats"
+                        - $ref: "#/components/schemas/appearanceCount"
                         - $ref: "#/components/schemas/transaction"
                         - $ref: "#/components/schemas/receipt"
                         - $ref: "#/components/schemas/log"
@@ -531,6 +539,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: double
         - name: delete
           description: delete the item, but do not remove it
           required: false
@@ -939,6 +948,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: blknum
         - name: listCount
           description: the number of blocks to report for --list option
           required: false
@@ -947,6 +957,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: blknum
       responses:
         "200":
           description: returns the requested data
@@ -1373,8 +1384,8 @@ paths:
                     type: array
                     items:
                       oneOf:
-                        - $ref: "#/components/schemas/state"
-                        - $ref: "#/components/schemas/result"
+                        - $ref: "#/components/schemas/ethState"
+                        - $ref: "#/components/schemas/ethCall"
                 example:
                   {
                     "data":
@@ -1473,7 +1484,7 @@ paths:
                     description: on-chain token related data for a give address at a given block height
                     type: array
                     items:
-                      $ref: "#/components/schemas/token"
+                      $ref: "#/components/schemas/tokenBalanceRecord"
                 example:
                  {
                    "data": [
@@ -1558,7 +1569,7 @@ paths:
                     description: This data model carries information about the TrueBlocks system including both the API server and the local binary caches
                     type: array
                     items:
-                      $ref: "#/components/schemas/status"
+                      $ref: "#/components/schemas/config"
                 example:
                   {
                     "data":
@@ -1597,6 +1608,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: uint64
         - name: pin
           description: pin new chunks (requires locally-running IPFS daemon or --remote)
           required: false
@@ -1621,6 +1633,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: double
       responses:
         "200":
           description: returns the requested data
@@ -1725,6 +1738,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: double
       responses:
         "200":
           description: returns the requested data
@@ -1739,11 +1753,11 @@ paths:
                       oneOf:
                         - $ref: "#/components/schemas/pinnedChunk"
                         - $ref: "#/components/schemas/manifest"
-                        - $ref: "#/components/schemas/indexchunk"
-                        - $ref: "#/components/schemas/blooms"
-                        - $ref: "#/components/schemas/addresses"
-                        - $ref: "#/components/schemas/stats"
-                        - $ref: "#/components/schemas/appearances"
+                        - $ref: "#/components/schemas/chunkIndex"
+                        - $ref: "#/components/schemas/chunkBlooms"
+                        - $ref: "#/components/schemas/chunkAddresses"
+                        - $ref: "#/components/schemas/chunkStats"
+                        - $ref: "#/components/schemas/chunkAppearances"
         "400":
           description: bad input parameter
   /init:
@@ -1770,6 +1784,7 @@ paths:
           explode: true
           schema:
             type: number
+            format: double
       responses:
         "200":
           description: returns the requested data
@@ -1984,7 +1999,8 @@ components:
           example: 1438335038
           description: "the Unix timestamp of the object"
         date:
-          type: datetime
+          type: string
+          format: datetime
           description: "a calculated field -- the date of this transaction"
         assetAddr:
           type: string
@@ -2209,7 +2225,8 @@ components:
           example: 1438335038
           description: "the Unix timestamp of the object"
         date:
-          type: datetime
+          type: string
+          format: datetime
           description: "a calculated field -- the date of this transaction"
         sender:
           type: string
@@ -2247,7 +2264,7 @@ components:
         encoding:
           type: string
           description: "The four-byte encoding of the transaction's function call"
-    listStats:
+    appearanceCount:
       description: "data of the appropriate type from a single appearance of an address or the count of same"
       type: object
       properties:
@@ -2263,6 +2280,19 @@ components:
           type: number
           format: uint64
           description: "the size of the monitor file containing those appearances"
+    abi:
+      description: "a human readable representation of a Solidity function call or event"
+      type: object
+      properties:
+        address:
+          type: string
+          format: address
+          description: "the smart contract that implements this abi"
+        interfaces:
+          type: array
+          items:
+            $ref: "#/components/schemas/function"
+          description: "the list of events and functions on this abi"
     block:
       description: "block data directly from the blockchain"
       type: object
@@ -2410,9 +2440,10 @@ components:
           type: string
         isError:
           type: boolean
+          description: "`true` if the transaction ended in error, `false` otherwise"
         date:
           type: string
-          format: date
+          format: datetime
     receipt:
       description: "receipt data for a given transaction directly from the blockchain"
       type: object
@@ -2608,10 +2639,10 @@ components:
           description: "the Unix timestamp of the block"
         date:
           type: string
-          format: date
+          format: datetime
           example: "2015-07-30 15:34:53 UTC"
           description: "Human readable version of timestamp"
-    state:
+    ethState:
       description: "the on-chain state of a given address"
       type: object
       properties:
@@ -2654,7 +2685,7 @@ components:
           type: string
           example: "one of 'EOA' or 'Contract'"
           description: "the type of the address at the given block"
-    result:
+    ethCall:
       description: "the result of a call to a smart contract"
       type: object
       properties:
@@ -2690,7 +2721,7 @@ components:
           format: blknum
           example: 8901011
           description: "the block number at which this smart contract was deployed (if a smart contact)"
-    token:
+    tokenBalanceRecord:
       description: "on-chain token related data for a give address at a given block height"
       type: object
       properties:
@@ -2731,7 +2762,7 @@ components:
         isErc721:
           type: boolean
           description: "`true` if the address is an ERC720, `false` otherwise"
-    status:
+    config:
       description: "This data model carries information about the TrueBlocks system including both the API server and the local binary caches"
       type: object
       properties:
@@ -2875,12 +2906,13 @@ components:
           items:
             $ref: "#/components/schemas/pinnedChunk"
           description: "a list of the IPFS hashes of all of the chunks in the unchained index"
-    indexchunk:
+    chunkIndex:
       description: "the internal data of the unchained index chunks"
       type: object
       properties:
         range:
-          type: blockRange
+          type: string
+          format: blockRange
           description: "The block range (inclusive) covered by this chunk"
         magic:
           type: string
@@ -2901,12 +2933,13 @@ components:
           type: number
           format: uint64
           description: "The size of the chunk in bytes"
-    blooms:
+    chunkBlooms:
       description: "information about a single bloom filter file"
       type: object
       properties:
         range:
-          type: blockRange
+          type: string
+          format: blockRange
           description: "The block range (inclusive) covered by this chunk"
         magic:
           type: string
@@ -2931,7 +2964,7 @@ components:
           type: number
           format: uint64
           description: "The width of the bloom filter"
-    addresses:
+    chunkAddresses:
       description: "address records found in individual chunks"
       type: object
       properties:
@@ -2940,7 +2973,8 @@ components:
           format: address
           description: "The address in this record"
         range:
-          type: blockRange
+          type: string
+          format: blockRange
           description: "The block range of the chunk from which this address record was taken"
         offset:
           type: number
@@ -2950,7 +2984,7 @@ components:
           type: number
           format: uint64
           description: "The number of records in teh appearance table for this address"
-    stats:
+    chunkStats:
       description: "summary information about the unchained index"
       type: object
       properties:
@@ -2991,18 +3025,22 @@ components:
           format: uint64
           description: "the size of the chunks on disc in bytes"
         addrsPerBlock:
-          type: float
+          type: number
+          format: double
           description: "the average number of addresses per block"
         appsPerBlock:
-          type: float
+          type: number
+          format: double
           description: "the average number of appearances per block"
         appsPerAddr:
-          type: float
+          type: number
+          format: double
           description: "the average number of appearances per address"
         ratio:
-          type: float
+          type: number
+          format: double
           description: "the ratio of appearances to addresses"
-    appearances:
+    chunkAppearances:
       description: "a single record in the appearance table of an index chunk"
       type: object
       properties:

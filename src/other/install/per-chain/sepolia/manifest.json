@@ -604,6 +604,20 @@
       "bloomSize": 131114,
       "indexHash": "QmS4AGEYsq8w5GZDukt884AJU4bH2jMBDvZBrgmCXN8GZi",
       "indexSize": 1799988
+    },
+    {
+      "range": "002472302-002484188",
+      "bloomHash": "QmQj9kagvL5QqSEJW6ewT51KH2MMPnfXCwUxGamiaAxsRE",
+      "bloomSize": 131114,
+      "indexHash": "QmaLv8zNQNzbTMTJMKEsuTCjSPxB8RR23fGvFDNFFvacyK",
+      "indexSize": 2111084
+    },
+    {
+      "range": "002484189-002500000",
+      "bloomHash": "Qmc66bPar5Xtkp7nKGp25auDNQLwKgqRsyxvoYRHndtPPC",
+      "bloomSize": 131114,
+      "indexHash": "QmWK7F9egech1ycDAtmJ5YfGx3QrLkxcP5ppRaW6pCJW3H",
+      "indexSize": 2237660
     }
   ]
 }

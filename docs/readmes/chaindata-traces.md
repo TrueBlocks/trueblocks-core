@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 ## chifra traces
 
 The `chifra traces` tool retrieves a transaction's traces. You may specify multiple transaction identifiers per invocation.

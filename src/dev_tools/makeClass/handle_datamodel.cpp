@@ -42,7 +42,13 @@ bool COptions::handle_datamodel(void) {
     for (auto model : dataModels) {
         string_q groupLow = toLower(substitute(model.doc_group, " ", ""));
         string_q groupFn = getDocsPathTemplates("model-groups/" + groupLow + ".md");
+        if (!fileExists(groupFn)) {
+            LOG_WARN("Missing data model intro file: ", bYellow, getPathToTemplates(groupFn), cOff);
+        }
         string_q modelFn = getDocsPathTemplates("model-intros/" + model.doc_api + ".md");
+        if (!fileExists(modelFn)) {
+            LOG_WARN("Missing data model intro file: ", bYellow, getPathToTemplates(modelFn), cOff);
+        }
 
         sort(model.fieldArray.begin(), model.fieldArray.end(), sortByDoc);
 
@@ -92,10 +98,6 @@ bool COptions::handle_datamodel(void) {
         }
 
         string_q head = model.Format(STR_YAML_MODELHEADER);
-        if (contains(head, "    config:")) {
-            // hack alert
-            replace(head, "    config:", "    status:");
-        }
         yamlStream << head;
         yamlStream << yamlPropStream.str();
 
@@ -134,7 +136,10 @@ bool COptions::handle_datamodel(void) {
         }
         document.second += substitute(STR_DOCUMENT_TAIL, "[{TYPES}]", tail);
         string_q outFn = getDocsPathContent("data-model/" + substitute(toLower(document.first), " ", "")) + ".md";
-        writeIfDifferent(outFn, document.second, Now());
+        string_q doc = substitute(document.second, "\n\n\n", "\n\n");
+        if (!contains(outFn, "/.md")) {
+            writeIfDifferent(outFn, doc, Now());
+        }
     }
 
     return true;
@@ -179,9 +184,12 @@ string_q typeFmt(const CParameter& fld) {
     if (fld.type == "blknum" || fld.type == "uint64" || fld.type == "timestamp" || fld.type == "double" ||
         fld.type == "uint32")
         return "[          type: number\n          format: {TYPE}\n]";
+
     if (fld.type == "address" || fld.type == "ipfshash" || fld.type == "hash" || fld.type == "bytes" ||
-        fld.type == "gas" || fld.type == "wei" || fld.type == "int256" || fld.type == "uint256" || fld.type == "date")
+        fld.type == "gas" || fld.type == "wei" || fld.type == "int256" || fld.type == "uint256" || fld.type == "date" ||
+        fld.type == "blockRange" || fld.type == "datetime")
         return "[          type: string\n          format: {TYPE}\n]";
+
     if (fld.type == "bool" || fld.type == "uint8")
         return "[          type: boolean\n]";
 
@@ -253,7 +261,6 @@ const char* STR_YAML_TAIL =
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_DOCUMENT_TAIL =
-    "\n"
     "## Base types\n"
     "\n"
     "This documentation mentions the following basic data types.\n"

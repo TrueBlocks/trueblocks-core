@@ -8,13 +8,13 @@ large or how small.
 
 To run this traverser, first build it (see below) and then run this command using any address (or addresses):
 
-```
+```[shell]
 chifra export --load simple1 <address> [address...]
 ```
 
 **Note:** The extracted blockchain data is not stored locally. This allows the tool to work against addresses with 10's or 100's of transactions as easily as those with 100's of millions of transactions. The end user, however, may choose to cache this data by sending the `--cache` option. Be careful, though, the data extraction can get quite large.
 
-```
+```[shell]
 #include "acctlib.h"
 
 //-----------------------------------------------------------------------

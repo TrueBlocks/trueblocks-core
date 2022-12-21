@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-12-16T23:17:18
+date: 2022-12-21T12:20:59
 lastmod:
   - :git
   - lastmod
@@ -24,6 +24,7 @@ and even serve the data through an API.
 
 [See the API documentation for all information about using the API](/api).
 
+<!-- markdownlint-disable MD041 -->
 ## chifra config
 
 The `chifra config` program allows you to manage the various TrueBlocks caches. You may list all of the caches, some of the cache, or even individual caches either in terse or full detail. The cache of interest is specified with the `modes` option.
@@ -54,6 +55,7 @@ Flags:
 
 **Source code**: [`internal/config`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/config)
 
+<!-- markdownlint-disable MD041 -->
 ## chifra daemon
 
 `chifra daemon` manages chifra's long-running processes include its JSON API server. Each of the `chifra` commands along with all of its options, are provided not only by the command line, but also the API server. We call this process the `flame` server, which is written in Go.
@@ -87,6 +89,7 @@ Notes:
 
 **Source code**: [`internal/daemon`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/daemon)
 
+<!-- markdownlint-disable MD041 -->
 ## chifra scrape
 
 The `chifra scrape` application creates TrueBlocks' chunked index of address appearances -- the fundamental data structure of the entire system. It also, optionally, pins each chunk of the index to IPFS.
@@ -154,6 +157,7 @@ Please [see this article](https://trueblocks.io/blog/a-long-winded-explanation-o
 
 **Source code**: [`internal/scrape`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/scrape)
 
+<!-- markdownlint-disable MD041 -->
 ## chifra chunks
 
 The chifra chunks routine provides tools for interacting with, checking the validity of,
@@ -197,6 +201,7 @@ Notes:
 
 **Source code**: [`internal/chunks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/chunks)
 
+<!-- markdownlint-disable MD041 -->
 ## chifra init
 
 When invoked, `chifra init` reads a value from a smart contract called **The Unchained Index**

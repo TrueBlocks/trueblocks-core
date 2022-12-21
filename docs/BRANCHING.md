@@ -70,24 +70,24 @@ Before merging a feature branch, changes to the `develop` branch made subsequent
 
 If the your branch is new, create the branch locally and then push to it to the repo. Feature branches should be made 'publicly' available to the entire team.
 
-```
-$ git checkout -b <feature-id> develop    // creates a local branch for the new feature
-$ git push origin <feature-id>            // makes the new feature remotely available
+```[shell]
+git checkout -b <feature-id> develop    // creates a local branch for the new feature
+git push origin <feature-id>            // makes the new feature remotely available
 ```
 
 Subsequent changes made to `develop` may be merged with:
 
-```
-$ git merge develop                       // merges changes from develop into feature branch
+```[shell]
+git merge develop                       // merges changes from develop into feature branch
 ```
 
 When completed, the branch will be merged into `develop` and the feature branch will be deleted.
 
-```
-$ git checkout develop                    // change to the develop branch  
-$ git merge --no-ff feature-id            // makes sure to create a commit object during merge
-$ git push origin develop                 // push merge changes
-$ git push origin :feature-id             // deletes the remote branch
+```[shell]
+git checkout develop                    // change to the develop branch  
+git merge --no-ff feature-id            // makes sure to create a commit object during merge
+git push origin develop                 // push merge changes
+git push origin :feature-id             // deletes the remote branch
 ```
 
 ### Issue Branches

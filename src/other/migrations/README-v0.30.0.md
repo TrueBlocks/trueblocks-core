@@ -28,7 +28,7 @@ You may wish to make a backup copy of your cache (although, being a cache, any c
 
 Run this command:
 
-```
+```[shell]
 chifra config --migrate test
 ```
 
@@ -38,7 +38,7 @@ If the above command reports that no files need to be migrated, you are finished
 
 If the above command reports that files need to be migrated (likely), run the following command (after making a backup if you wish):
 
-```
+```[shell]
 chifra config --migrate cache
 ```
 

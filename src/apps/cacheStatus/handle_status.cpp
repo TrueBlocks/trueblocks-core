@@ -420,7 +420,7 @@ bool noteABI(const string_q& path, void* data) {
         nextTokenClear(addr, '|');
         abii.address = "0x" + nextTokenClear(addr, '.');
         abii.petname = addr_2_Petname(abii.address, '-');
-        CAccountName n;
+        CName n;
         findName(abii.address, n);
         if (isTestMode()) {
             abii.address = "---address---";

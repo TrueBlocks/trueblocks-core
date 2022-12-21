@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2022-11-23T12:59:12
+date: 2022-12-21T12:20:59
 lastmod:
   - :git
   - lastmod
@@ -20,6 +20,7 @@ The TrueBlocks tools extract raw blockchain data directly from the node.
 You may extract block data, transactional data, receipts, logs, and traces.
 Each tool has it own set of options, allowing you to get exactly the data that
 you want.
+<!-- markdownlint-disable MD041 -->
 ## chifra blocks
 
 The `chifra blocks` tool retrieves block data from your Ethereum node or, if previously cached, from the TrueBlocks cache. You may specify multiple blocks per invocation.
@@ -64,6 +65,7 @@ Notes:
 
 **Source code**: [`internal/blocks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/blocks)
 
+<!-- markdownlint-disable MD041 -->
 ## chifra transactions
 
 The `chifra transactions` tool retrieves transactions directly from the Ethereum node (using the `--raw` option) or from the TrueBlocks cache (if present). You may specify multiple transaction identifiers per invocation. Unlike the Ethereum RPC, the reported transactions include the transaction's receipt and generated logs.
@@ -102,6 +104,7 @@ Notes:
 
 **Source code**: [`internal/transactions`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/transactions)
 
+<!-- markdownlint-disable MD041 -->
 ## chifra receipts
 
 `chifra receipts` returns the given transaction's receipt. You may specify multiple transaction identifiers per invocation.
@@ -134,6 +137,7 @@ Notes:
 
 **Source code**: [`internal/receipts`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/receipts)
 
+<!-- markdownlint-disable MD041 -->
 ## chifra logs
 
 `chifra logs` returns the given transaction's logs. You may specify multiple transaction identifiers per invocation.
@@ -165,6 +169,7 @@ Notes:
 
 **Source code**: [`internal/logs`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/logs)
 
+<!-- markdownlint-disable MD041 -->
 ## chifra traces
 
 The `chifra traces` tool retrieves a transaction's traces. You may specify multiple transaction identifiers per invocation.
@@ -202,6 +207,7 @@ Notes:
 
 **Source code**: [`internal/traces`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/traces)
 
+<!-- markdownlint-disable MD041 -->
 ## chifra when
 
 The `chifra when` tool answers one of two questions: (1) "At what date and time did a given block occur?" or (2) "What block occurred at or before a given date and time?"

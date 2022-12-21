@@ -6,3 +6,6 @@ cpp_includes = node.h
 equals = (address == it.address)
 tsx = true
 disabled = true
+doc_group = 01-Accounts
+doc_descr = a human readable representation of a Solidity function call or event
+doc_api = 07-abi

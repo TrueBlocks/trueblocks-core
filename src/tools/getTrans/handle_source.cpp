@@ -123,7 +123,7 @@ void CSourceSearch::showTransfer(const string_q& msg, const CTransfer* transfer)
     head = substitute(head, sender, coloredName(sender));
     head = substitute(head, recipient, coloredName(recipient));
 
-    CAccountName assetName;  // whiteList[transfer->assetAddr];
+    CName assetName;  // whiteList[transfer->assetAddr];
     ostringstream theSend;
     theSend << " sent " << unitValue << " "
             << " " << bBlue << symbol << cOff;
@@ -208,7 +208,7 @@ string_q addr_2_Color(const address_t& addr) {
 
 //--------------------------------------------------------------
 string_q CSourceSearch::addr_2_Name(const address_t& addr) const {
-    CAccountName name;
+    CName name;
     if (findName(addr, name)) {
         return padRight(name.name.substr(0, 42), 42, ' ');
     }
@@ -373,7 +373,7 @@ CSourceSearch::CSourceSearch(COptions* o) : opt(o) {
             CStringArray lines, fields;
             asciiFileToLines("./whiteList.csv", lines);
             for (auto line : lines) {
-                CAccountName name;
+                CName name;
                 if (fields.empty()) {
                     explode(fields, line, ',');
                     line = FAKE_ETH_ADDRESS + string_q(",") + getChainSymbol() + "," + getChainSymbol() + ",,18," +

@@ -4,7 +4,7 @@ This example starts at a given block and scans forward through the chain until i
 "The DAO" first appears (that is, where it was deployed). There are more efficient ways. This example simple shows
 how to scan the chain.
 
-```
+```[shell]
 bool visitAddress(const CAppearance& item, void* data) {
     if (item.addr == *reinterpret_cast<address_t*>(data)) {
         cout << "\nFound address at: " << item;

@@ -168,7 +168,7 @@ const char* STR_OUTPUT_FORMAT =
 
 ...and finally, we present the results, converting the display string to CSV format, the filling in the data we pre-calculated above, and finally rendering the data to the standard output.
 
-```
+```[shell]
     string_q fmt = tab_2_Csv(STR_OUTPUT_FORMAT);
 
     fmt = substitute(fmt, "[{spotPrice}]", double_2_Str(spotPrice, 2));
@@ -190,7 +190,6 @@ We've stored these results of this traversal in Google Sheets as well for your v
 - [Transactions](https://docs.google.com/spreadsheets/d/1eL5K9n3wFtxtT2XYczaSINuXq_WI7RAfZsziNYFJ7tc)
 - [By Month within Address](https://docs.google.com/spreadsheets/d/1l0PQxRcxhACfQfS1lzh7qYKTLTz1pnHn5JZhNWBjUQ8)
 - [By Address](https://docs.google.com/spreadsheets/d/1yxPsj9xkE1AFRysXJIBjMBqleF4G9iFfl9Bn0BRW00Q)
-
 
 Here's a chart a simple chart we produced using the very interesting data contained in the `compressedTx` field which we've not mentioned earlier. This field represents the actual function calls made by during each transaction in the contract's history. We produced this chart with Google Sheets.
 

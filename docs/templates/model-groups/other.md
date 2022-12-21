@@ -8,4 +8,4 @@ The following commands provide useful miscellaneous tools:
 text="Note: some of these tools, like `ethslurp`, require an EtherScan key." >}}
 [Follow these instructions to add a key to your config](/docs/install/install-trueblocks/#3-update-the-configs-for-your-rpc-and-api-keys)
 
-_Each data structure is created by one or more tools which are detailed below_
+Each data structure is created by one or more tools which are detailed below

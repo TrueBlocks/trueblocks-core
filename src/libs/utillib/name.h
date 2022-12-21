@@ -15,7 +15,9 @@
  * Parts of this file were generated with makeClass --run. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
-#include "etherlib.h"
+#include "basetypes.h"
+#include "basenode.h"
+#include "sfarchive.h"
 
 namespace qblocks {
 
@@ -23,33 +25,42 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CListStats : public CBaseNode {
+class CName : public CBaseNode {
   public:
+    string_q tags;
     address_t address;
-    uint64_t nRecords;
-    uint64_t fileSize;
+    string_q name;
+    string_q symbol;
+    string_q source;
+    uint64_t decimals;
+    string_q petname;
+    bool isCustom;
+    bool isPrefund;
+    bool isContract;
+    bool isErc20;
+    bool isErc721;
 
   public:
-    CListStats(void);
-    CListStats(const CListStats& li);
-    virtual ~CListStats(void);
-    CListStats& operator=(const CListStats& li);
+    CName(void);
+    CName(const CName& na);
+    virtual ~CName(void);
+    CName& operator=(const CName& na);
 
-    DECLARE_NODE(CListStats);
+    DECLARE_NODE(CName);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CListStats& it) const;
-    bool operator!=(const CListStats& it) const {
+    bool operator==(const CName& it) const;
+    bool operator!=(const CName& it) const {
         return !operator==(it);
     }
-    friend bool operator<(const CListStats& v1, const CListStats& v2);
-    friend ostream& operator<<(ostream& os, const CListStats& it);
+    friend bool operator<(const CName& v1, const CName& v2);
+    friend ostream& operator<<(ostream& os, const CName& it);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CListStats& li);
+    void duplicate(const CName& na);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -57,97 +68,120 @@ class CListStats : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CListStats::CListStats(void) {
+inline CName::CName(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CListStats::CListStats(const CListStats& li) {
+inline CName::CName(const CName& na) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(li);
+    duplicate(na);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CListStats::~CListStats(void) {
+inline CName::~CName(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CListStats::clear(void) {
+inline void CName::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CListStats::initialize(void) {
+inline void CName::initialize(void) {
     CBaseNode::initialize();
 
+    tags = "";
     address = "";
-    nRecords = 0;
-    fileSize = 0;
+    name = "";
+    symbol = "";
+    source = "";
+    decimals = 0;
+    petname = "";
+    isCustom = false;
+    isPrefund = false;
+    isContract = false;
+    isErc20 = false;
+    isErc721 = false;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CListStats::duplicate(const CListStats& li) {
+inline void CName::duplicate(const CName& na) {
     clear();
-    CBaseNode::duplicate(li);
+    CBaseNode::duplicate(na);
 
-    address = li.address;
-    nRecords = li.nRecords;
-    fileSize = li.fileSize;
+    tags = na.tags;
+    address = na.address;
+    name = na.name;
+    symbol = na.symbol;
+    source = na.source;
+    decimals = na.decimals;
+    petname = na.petname;
+    isCustom = na.isCustom;
+    isPrefund = na.isPrefund;
+    isContract = na.isContract;
+    isErc20 = na.isErc20;
+    isErc721 = na.isErc721;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CListStats& CListStats::operator=(const CListStats& li) {
-    duplicate(li);
+inline CName& CName::operator=(const CName& na) {
+    duplicate(na);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CListStats::operator==(const CListStats& it) const {
+inline bool CName::operator==(const CName& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default equal operator in class definition, assume none are equal (so find fails)
-    return false;
+    // Equality operator as defined in class definition
+    return address % it.address;
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CListStats& v1, const CListStats& v2) {
+inline bool operator<(const CName& v1, const CName& v2) {
     // EXISTING_CODE
+    if (v1.address == v2.address)
+        return v1.tags < v2.tags;
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted, preserve ordering
-    return true;
+    // Default sort as defined in class definition
+    return v1.address < v2.address;
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CListStats> CListStatsArray;
-extern CArchive& operator>>(CArchive& archive, CListStatsArray& array);
-extern CArchive& operator<<(CArchive& archive, const CListStatsArray& array);
+typedef vector<CName> CNameArray;
+extern CArchive& operator>>(CArchive& archive, CNameArray& array);
+extern CArchive& operator<<(CArchive& archive, const CNameArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CListStats& lis);
-extern CArchive& operator>>(CArchive& archive, CListStats& lis);
+extern CArchive& operator<<(CArchive& archive, const CName& nam);
+extern CArchive& operator>>(CArchive& archive, CName& nam);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_LISTSTATS;
+extern const char* STR_DISPLAY_NAME;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+typedef map<address_t, CName> CNameMap;
+extern CArchive& operator>>(CArchive& archive, CNameMap& nameMap);
+extern CArchive& operator<<(CArchive& archive, const CNameMap& nameMap);
 // EXISTING_CODE
 }  // namespace qblocks

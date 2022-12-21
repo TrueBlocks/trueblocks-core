@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2022-12-16T22:54:10
+date: 2022-12-21T12:20:58
 lastmod:
   - :git
   - lastmod
@@ -26,7 +26,7 @@ The following commands provide useful miscellaneous tools:
 text="Note: some of these tools, like `ethslurp`, require an EtherScan key." >}}
 [Follow these instructions to add a key to your config](/docs/install/install-trueblocks/#3-update-the-configs-for-your-rpc-and-api-keys)
 
-_Each data structure is created by one or more tools which are detailed below_
+Each data structure is created by one or more tools which are detailed below
 
 ## Function
 
@@ -50,7 +50,6 @@ Function data is made of the following data fields:
 | inputs    | the input parameters to the function, if any            | CParameterArray |
 | outputs   | the output parameters to the function, if any           | CParameterArray |
 
-
 ## Parameter
 
 Parameters are a constituent part of a [Function or Event](/data-model/accounts/#function). The parameters of a function are each individual value passed into the function. Along with the function's name, the parameters types (once canonicalized) are used to create a function's four byte signature (or an event's 32-byte signature). Parameters are important to TrueBlocks because we use them as part of the ABI decoding and the `--articulate` process to conver the blockchain's bytes into human-readable text.
@@ -72,7 +71,6 @@ Parameter data is made of the following data fields:
 | indexed      | `true` if this parameter is indexed                         | bool            |
 | internalType | for composite types, the internal type of the parameter     | string          |
 | components   | for composite types, the parameters making up the composite | CParameterArray |
-
 
 ## Base types
 
