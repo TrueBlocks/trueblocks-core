@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 ## chifra slurp
 
 `chifra slurp` is the first tool we built in the Ethereum space. It even has its [own website](http://ethslurp.com).

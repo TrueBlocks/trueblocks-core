@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 ## chifra blocks
 
 The `chifra blocks` tool retrieves block data from your Ethereum node or, if previously cached, from the TrueBlocks cache. You may specify multiple blocks per invocation.

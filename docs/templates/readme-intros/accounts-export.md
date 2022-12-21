@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 ## [{NAME}]
 
 The `[{NAME}]` tools provides a major part of the functionality of the TrueBlocks system. Using the index of appearances created with `chifra scrape` and the list of transaction identifiers created with `chifra list`, `[{NAME}]` completes the actual extraction of an address's transactional history from the node.

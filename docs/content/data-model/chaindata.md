@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2022-12-16T22:54:10
+date: 2022-12-21T12:20:58
 lastmod:
   - :git
   - lastmod
@@ -48,7 +48,6 @@ Block data is made of the following data fields:
 | finalized     | flag indicating the system considers this data final          | bool              |
 | unclesCnt     | the number of uncles in this block                            | uint64            |
 
-
 ## Transaction
 
 Transactions represent eth transfers to and from other addresses.
@@ -87,9 +86,8 @@ Transaction data is made of the following data fields:
 | hasToken         | `true` if the transaction is token related, `false` otherwise                                         | uint8                |
 | finalized        | flag indicating the system considers this data final                                                  | bool                 |
 | extraData        |                                                                                                       | string               |
-| isError          |                                                                                                       | bool                 |
-| date             |                                                                                                       | date                 |
-
+| isError          | `true` if the transaction ended in error, `false` otherwise                                           | uint8                |
+| date             |                                                                                                       | datetime             |
 
 ## Receipt
 
@@ -111,7 +109,6 @@ Receipt data is made of the following data fields:
 | contractAddress | the address of the newly created contract, if any                          | address        |
 | gasUsed         | the amount of gas actually used by the transaction                         | gas            |
 | logs            | a possibly empty array of logs                                             | CLogEntryArray |
-
 
 ## Log
 
@@ -137,7 +134,6 @@ Log data is made of the following data fields:
 | data             | any remaining un-indexed parameters to the event                                                  | bytes       |
 | articulatedLog   | a human-readable version of the topic and data fields                                             | CFunction   |
 | compressedLog    | a truncated, more readable version of the articulation                                            | string      |
-
 
 ## Trace
 
@@ -168,7 +164,6 @@ Trace data is made of the following data fields:
 | articulatedTrace | human readable version of the trace action input data     | CFunction    |
 | compressedTrace  | a compressed string version of the articulated trace      | string       |
 
-
 ## TraceAction
 
 Other than the first trace which is the trace of the transaction itself, traces represent calls into smart contracts. Because of this, `trace actions` closely resemble the fields of the [transaction](#transactions).
@@ -190,7 +185,6 @@ Traceaction data is made of the following data fields:
 | callType      | the type of call                                                           | string  |
 | refundAddress | if the call type is self-destruct, the address to which the refund is sent | address |
 
-
 ## TraceResult
 
 As mentioned above, other than the first trace, traces represent calls into other smart contracts. Because of this, the trace results closely resembles the fields of the [receipt](#receipts).
@@ -210,7 +204,6 @@ Traceresult data is made of the following data fields:
 | gasUsed     | the amount of gas used by this trace                                           | gas     |
 | output      | the result of the call of this trace                                           | bytes   |
 
-
 ## DatedBlock
 
 Left to its own devices, the blockchain would try to convince us that only hashes and bytes are important, but being human beings we know that this is not true. TrueBlocks `articulates` various types of data with [chifra names](/docs/chifra/accounts/#chifra-names) detailing the names for addresses, `-articulate` describing the Functions and Events of a transaction, and [chifra when](/docs/chifra/chaindata/#chifra-when) describing dated blocks. Dated blocks assign a human-readable date to blocks given block numbers or timestamps and visa versa.
@@ -227,8 +220,7 @@ Datedblock data is made of the following data fields:
 | ----------- | ----------------------------------- | --------- |
 | blockNumber | the number of the block             | blknum    |
 | timestamp   | the Unix timestamp of the block     | timestamp |
-| date        | Human readable version of timestamp | date      |
-
+| date        | Human readable version of timestamp | datetime  |
 
 ## Base types
 
@@ -240,7 +232,7 @@ This documentation mentions the following basic data types.
 | blknum    | an alias for a uint64                           |                |
 | bool      | a value either `true`, `false`, `1`, or `0`     |                |
 | bytes     | an arbitrarily long string of bytes             |                |
-| date      | a JSON formatted date                           | as a string    |
+| datetime  | a JSON formatted date                           | as a string    |
 | gas       | an unsigned big number                          | as a string    |
 | hash      | a 32-byte hexadecimal string starting with '0x' | lowercase      |
 | string    | a normal character string                       |                |

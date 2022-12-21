@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 ## chifra receipts
 
 `chifra receipts` returns the given transaction's receipt. You may specify multiple transaction identifiers per invocation.
