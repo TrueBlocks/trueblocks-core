@@ -172,7 +172,9 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
             replaceAll(str, "[{TYPE}]",
                        substitute(substitute(substitute(fld.type, "Array2", ""), "Array", ""), "Ptr", "*"));
             replaceAll(str, "[{FIELD}]", fld.name);
-            fieldGetObj += str;
+            if (!(fld.is_flags & IS_MINIMAL)) {
+                fieldGetObj += str;
+            }
         }
 
         replace(setFmt, "[{DEFB}]", fld.strDefault.empty() ? "false" : fld.strDefault);
@@ -261,8 +263,9 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
 
     //------------------------------------------------------------------------------------------------
     bool hasObjGetter = !fieldGetObj.empty() || toml.getConfigBool("settings", "force_objget", false);
-    if (hasObjGetter)
+    if (hasObjGetter) {
         fieldGetObj = substitute(string_q(STR_GETOBJ_CODE), "[{FIELDS}]", fieldGetObj);
+    }
 
     //------------------------------------------------------------------------------------------------
     bool hasStrGetter = !fieldGetStr.empty();

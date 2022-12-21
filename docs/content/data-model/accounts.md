@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-12-20T19:50:09
+date: 2022-12-21T08:39:13
 lastmod:
   - :git
   - lastmod
@@ -224,6 +224,29 @@ Appearancecount data is made of the following data fields:
 | address  | the address for this count                                | address |
 | nRecords | the number of appearances for the given address           | uint64  |
 | fileSize | the size of the monitor file containing those appearances | uint64  |
+
+## Abi
+
+An ABI describes an Application Binary Interface -- in other words, the [Function](/data-model/other/#function) and Event signatures for a given smart contract. Along with [Names](/data-model/accounts/#names) the use of ABIs goes a very long way towards making your Ethereum data much more understandable.
+
+Similar to names of addresses, ABI files are not available on-chain which means they must be acquired somewhere. Unfortunately, the Ethereum community has not yet understand that EtherScan is not a good place to store this very important information. For this reason, TrueBlocks uses EtherScan to acquire ABI files and therefor one needs to get an EtherScan API key to use this function.
+
+The following commands produce and manage abis:
+
+| Tools                                             |                                      |
+| ------------------------------------------------- | ------------------------------------ |
+| [chifra abis](/docs/chifra/accounts/#chifra-abis) | fetches the ABI for a smart contract |
+
+Abi data is made of the following data fields:
+
+| Field      | Description                                  | Type           |
+| ---------- | -------------------------------------------- | -------------- |
+| address    | the smart contract that implements this abi  | address        |
+| interfaces | the list of events and functions on this abi | CFunctionArray |
+
+**Notes**
+
+See the `chifra abis` command line for information about getting an EtherScan key.
 
 ## Base types
 

@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2022-12-20T19:50:09
+date: 2022-12-21T07:19:37
 lastmod:
   - :git
   - lastmod
@@ -86,7 +86,7 @@ Transaction data is made of the following data fields:
 | hasToken         | `true` if the transaction is token related, `false` otherwise                                         | uint8                |
 | finalized        | flag indicating the system considers this data final                                                  | bool                 |
 | extraData        |                                                                                                       | string               |
-| isError          |                                                                                                       | bool                 |
+| isError          | `true` if the transaction ended in error, `false` otherwise                                           | uint8                |
 | date             |                                                                                                       | datetime             |
 
 ## Receipt

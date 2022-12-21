@@ -2280,6 +2280,19 @@ components:
           type: number
           format: uint64
           description: "the size of the monitor file containing those appearances"
+    abi:
+      description: "a human readable representation of a Solidity function call or event"
+      type: object
+      properties:
+        address:
+          type: string
+          format: address
+          description: "the smart contract that implements this abi"
+        interfaces:
+          type: array
+          items:
+            $ref: "#/components/schemas/function"
+          description: "the list of events and functions on this abi"
     block:
       description: "block data directly from the blockchain"
       type: object
@@ -2427,6 +2440,7 @@ components:
           type: string
         isError:
           type: boolean
+          description: "`true` if the transaction ended in error, `false` otherwise"
         date:
           type: string
           format: datetime

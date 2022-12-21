@@ -14,9 +14,9 @@
 #include "options.h"
 
 extern const char* STR_PATH_FILE;
-extern const char* STR_HEADER2;
 extern string_q convert2(const string_q& in, map<string_q, string_q>& map);
 extern bool sortByDataModelName2(const CClassDefinition& c1, const CClassDefinition& c2);
+extern string_q type2Key(const string_q& type);
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_sdk(void) {
     CToml config(rootConfigToml_makeClass);
@@ -43,12 +43,79 @@ bool COptions::handle_sdk(void) {
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_sdk_types(void) {
     for (auto model : dataModels) {
-        string_q className = model.class_name;
-        string_q fileName = className + ".ts";
-        replace(fileName, "C", "");
-        fileName = firstLower(fileName);
-        fileName = substitute(substitute(fileName, "appearanceDisplay", "appearance"), "logEntry", "log");
-        // cout << model.class_name << endl << fileName << endl << endl;
+        string_q modelName = substitute(model.class_name, "Array", "");
+        modelName = firstUpper(substitute(substitute(modelName, "AppearanceDisplay", "Appearance"), "LogEntry", "Log"));
+        replace(modelName, "C", "");
+        if (modelName == "Status") {
+            modelName = "Config";
+        }
+
+        map<string_q, string_q> imports;
+        ostringstream fields;
+        for (auto field : model.fieldArray) {
+            if (endsWith(field.type, "Map") || field.type == "Value" || field.type == "topic" ||
+                startsWith(field.name, "unused") || contains(field.name, "::")) {
+                continue;
+            }
+            bool isArray = contains(field.type, "Array");
+            string_q ft =
+                substitute(substitute(substitute(substitute(field.type, "Array", ""), "Ptr", ""), "LogEntry", "Log"),
+                           "uint8", "bool");
+            if (startsWith(field.type, "C")) {
+                replace(ft, "C", "");
+            }
+            if (isArray) {
+                ft = ft + "[]";
+            }
+            ft = substitute(substitute(ft, "String", "string"), "Topic", "topic");
+            replace(ft, "bool", "boolean");
+
+            bool isOptional = field.is_flags & IS_OMITEMPTY;
+            fields << "  " << field.name << (isOptional ? "?" : "") << ": " << ft << endl;
+            replace(ft, "[]", "");
+
+            if (ft != modelName) {
+                imports[type2Key(toLower(ft))] = ft;
+            }
+        }
+
+        const char* STR_HEADER1 =
+            "/* eslint object-curly-newline: [\"error\", \"never\"] */\n"
+            "/* eslint max-len: [\"error\", 160] */\n"
+            "/*\n"
+            " * This file was generated with makeClass --sdk. Do not edit it.\n"
+            " */[{IMPORTS}]\n";
+
+        ostringstream os;
+        os << STR_HEADER1;
+        os << "export type " << modelName << " = {" << endl;
+        os << fields.str();
+        os << "}" << endl;
+        string_q contents = os.str();
+
+        if (imports.size() > 0) {
+            ostringstream imps;
+            for (auto imp : imports) {
+                if (imp.second == "string" || imp.second == "boolean") {
+                    continue;
+                }
+                if (imps.str() != "") {
+                    imps << ", ";
+                }
+                imps << imp.second;
+            }
+
+            if (imps.str() != "") {
+                ostringstream importLine;
+                importLine << endl << "import { " << imps.str() << " } from '.';" << endl;
+                replace(contents, "[{IMPORTS}]", importLine.str());
+            } else {
+                replace(contents, "[{IMPORTS}]", "");
+            }
+        }
+
+        string_q fileName = sdkPath + "src/types/" + firstLower(modelName) + ".ts";
+        writeIfDifferent(fileName, contents);
     }
     return true;
 }
@@ -67,7 +134,6 @@ bool COptions::handle_sdk_paths(void) {
         if (!ep.api_route.empty()) {
             ostringstream filename;
             filename << sdkPath << "src/paths/" << ep.api_route << ".ts";
-            // cerr << filename.str() << ": " << fileExists(filename.str()) << endl;
 
             map<string_q, string_q> imports;
             ostringstream rets;
@@ -78,7 +144,7 @@ bool COptions::handle_sdk_paths(void) {
                     rets << " | ";
                 }
                 rets << firstUpper(type) << "[]";
-                imports[toLower(type)] = firstUpper(type);
+                imports[type] = firstUpper(type);
             }
 
             ostringstream pp;
@@ -100,6 +166,13 @@ bool COptions::handle_sdk_paths(void) {
                 string_q v = imp.second;
                 tts << v;
             }
+
+            const char* STR_HEADER2 =
+                "/* eslint object-curly-newline: [\"error\", \"never\"] */\n"
+                "/* eslint max-len: [\"error\", 160] */\n"
+                "/*\n"
+                " * This file was generated with makeClass --sdk. Do not edit it.\n"
+                " */\n";
 
             string_q out = STR_HEADER2;
             if (ep.api_route != "daemon" && ep.api_route != "explore") {
@@ -164,6 +237,29 @@ bool sortByDataModelName2(const CClassDefinition& c1, const CClassDefinition& c2
 }
 
 //------------------------------------------------------------------------------------------------------------
+string_q type2Key(const string_q& in) {
+    string_q ret = in;
+    if (contains(ret, "list<")) {
+        ret = substitute(ret, "list<", "");
+        ret = substitute(ret, ">", "");
+    }
+    if (contains(ret, "enum[")) {
+        ret = substitute(ret, "enum[", "");
+        ret = substitute(ret, "]", "");
+    }
+    if (startsWith(ret, "int")) {
+        string_q key = substitute(ret, "int", "");
+        ret = "int" + padLeft(key, 5, '0');
+    }
+    if (startsWith(ret, "uint")) {
+        string_q key = substitute(ret, "uint", "");
+        ret = "uint" + padLeft(key, 5, '0');
+    }
+    ret = toLower(ret);
+    return ret;
+}
+
+//------------------------------------------------------------------------------------------------------------
 const char* STR_PATH_FILE =
     "import * as ApiCallers from '../lib/api_callers';\n"
     "import { [{TYPES}] } from '../types';\n"
@@ -187,10 +283,3 @@ const char* STR_PATH_FILE =
     "    { endpoint: '/[{LOWER}]', method: 'get', parameters, options },\n"
     "  );\n"
     "}\n";
-
-const char* STR_HEADER2 =
-    "/* eslint object-curly-newline: [\"error\", \"never\"] */\n"
-    "/* eslint max-len: [\"error\", 160] */\n"
-    "/*\n"
-    " * This file was generated with makeClass --sdk. Do not edit it.\n"
-    " */\n";

@@ -137,7 +137,9 @@ bool COptions::handle_datamodel(void) {
         document.second += substitute(STR_DOCUMENT_TAIL, "[{TYPES}]", tail);
         string_q outFn = getDocsPathContent("data-model/" + substitute(toLower(document.first), " ", "")) + ".md";
         string_q doc = substitute(document.second, "\n\n\n", "\n\n");
-        writeIfDifferent(outFn, doc, Now());
+        if (!contains(outFn, "/.md")) {
+            writeIfDifferent(outFn, doc, Now());
+        }
     }
 
     return true;
