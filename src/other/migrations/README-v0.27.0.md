@@ -77,7 +77,6 @@ tree -d .
 
 you should see something like this:
 
-
 ```
 .
 ├── blooms

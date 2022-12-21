@@ -33,8 +33,8 @@ bool COptions::writeOpenApiFile(void) {
                 params.push_back(option);
         ep.params = &params;
 
-        CStringArray types;
-        string_q returnTypes = getReturnTypes(ep, types);
+        CStringArray unused;
+        string_q returnTypes = getReturnTypes(ep, unused);
         string_q exampleFn = getDocsPathTemplates("api/examples/" + ep.api_route + ".txt");
 
         chifraCmdStream << ep.toChifraCmd() << endl;

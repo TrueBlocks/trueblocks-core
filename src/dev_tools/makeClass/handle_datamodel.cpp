@@ -92,10 +92,6 @@ bool COptions::handle_datamodel(void) {
         }
 
         string_q head = model.Format(STR_YAML_MODELHEADER);
-        if (contains(head, "    config:")) {
-            // hack alert
-            replace(head, "    config:", "    status:");
-        }
         yamlStream << head;
         yamlStream << yamlPropStream.str();
 
@@ -179,9 +175,12 @@ string_q typeFmt(const CParameter& fld) {
     if (fld.type == "blknum" || fld.type == "uint64" || fld.type == "timestamp" || fld.type == "double" ||
         fld.type == "uint32")
         return "[          type: number\n          format: {TYPE}\n]";
+
     if (fld.type == "address" || fld.type == "ipfshash" || fld.type == "hash" || fld.type == "bytes" ||
-        fld.type == "gas" || fld.type == "wei" || fld.type == "int256" || fld.type == "uint256" || fld.type == "date")
+        fld.type == "gas" || fld.type == "wei" || fld.type == "int256" || fld.type == "uint256" || fld.type == "date" ||
+        fld.type == "blockRange" || fld.type == "datetime")
         return "[          type: string\n          format: {TYPE}\n]";
+
     if (fld.type == "bool" || fld.type == "uint8")
         return "[          type: boolean\n]";
 

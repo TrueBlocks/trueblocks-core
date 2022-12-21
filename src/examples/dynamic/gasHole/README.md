@@ -191,7 +191,6 @@ We've stored these results of this traversal in Google Sheets as well for your v
 - [By Month within Address](https://docs.google.com/spreadsheets/d/1l0PQxRcxhACfQfS1lzh7qYKTLTz1pnHn5JZhNWBjUQ8)
 - [By Address](https://docs.google.com/spreadsheets/d/1yxPsj9xkE1AFRysXJIBjMBqleF4G9iFfl9Bn0BRW00Q)
 
-
 Here's a chart a simple chart we produced using the very interesting data contained in the `compressedTx` field which we've not mentioned earlier. This field represents the actual function calls made by during each transaction in the contract's history. We produced this chart with Google Sheets.
 
 ![Function Call Frequency](./img/gasHole.png)

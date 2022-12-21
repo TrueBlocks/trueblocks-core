@@ -21,7 +21,6 @@ Here's a chart we created with [this data](./data.tar.gz):
 
 ![Chart](./img/balances.png)
 
-
 ### Building
 
 See the instructions in the file [./src/examples/README.md](../../README.md) for more information.

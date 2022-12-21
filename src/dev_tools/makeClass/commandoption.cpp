@@ -1011,46 +1011,60 @@ bool visitEnumItem(string_q& item, void* data) {
 string_q CCommandOption::getSchema(void) const {
     string_q lead = "            ";
 
-    if (contains(data_type, "list")) {
-        if (contains(data_type, "enum")) {
-            ostringstream os;
-            forEveryEnum(visitEnumItem, data_type, &os);
-            string_q str_array_enum =
-                "~type: array\n"
-                "~items:\n"
-                "~  type: string\n"
-                "~  enum:\n" +
-                substitute(substitute(trim(os.str(), '\n'), "~", "+    "), "+", "~");
-            return substitute(str_array_enum, "~", lead);
-        }
+    if (contains(data_type, "list") && contains(data_type, "enum")) {
+        ostringstream os;
+        forEveryEnum(visitEnumItem, data_type, &os);
+        string_q str_array_enum =
+            "~type: array\n"
+            "~items:\n"
+            "~  type: string\n"
+            "~  enum:\n" +
+            substitute(substitute(trim(os.str(), '\n'), "~", "+    "), "+", "~");
+        return substitute(str_array_enum, "~", lead);
+    }
 
+    if (contains(data_type, "list")) {
+        string_q type = substitute(substitute(data_type, "list<", ""), ">", "");
+        replace(type, "addr", "address_t");
+        if (endsWith(type, "_t"))
+            replaceReverse(type, "_t", "");
         string_q ret;
         ret += lead + "type: array\n";
         ret += lead + "items:\n";
         ret += lead + "  type: string\n";
-        string_q type = substitute(substitute(data_type, "list<", ""), ">", "");
-        replace(type, "addr", "address_t");
-        if (!endsWith(type, "_t"))
-            type += "_t";
-        string t = type;
-        if (endsWith(t, "_t"))
-            replaceReverse(t, "_t", "");
-        ret += lead + "  format: " + t;
+        ret += lead + "  format: " + type;
         return ret;
     }
 
     if (contains(data_type, "boolean")) {
-        return lead + "type: " + "boolean";
+        string_q ret;
+        ret += lead + "type: boolean";
+        return ret;
+    }
 
-    } else if (contains(data_type, "uint") || contains(data_type, "double") || contains(data_type, "blknum")) {
-        return lead + "type: " + "number";
+    if (contains(data_type, "uint") || contains(data_type, "double") || contains(data_type, "blknum")) {
+        string_q ret;
+        ret += lead + "type: number\n";
+        ret += lead + "format: " + substitute(substitute(data_type, ">", ""), "<", "");
+        return ret;
+    }
 
-    } else if (contains(data_type, "enum")) {
+    if (contains(data_type, "datetime")) {
+        string_q ret;
+        ret += lead + "type: " + "string\n";
+        ret += lead + "format: date";
+        return ret;
+    }
+
+    if (contains(data_type, "enum")) {
         ostringstream os;
         forEveryEnum(visitEnumItem, data_type, &os);
-        string_q str_array_enum = lead + "type: string\n" + lead + "enum:\n";
-        str_array_enum += substitute(substitute(trim(os.str(), '\n'), "~", "+  "), "+", "~");
-        return substitute(str_array_enum, "~", lead);
+
+        string_q ret;
+        ret += lead + "type: string\n";
+        ret += lead + "enum:\n";
+        ret += substitute(substitute(trim(os.str(), '\n'), "~", "+  "), "+", "~");
+        return substitute(ret, "~", lead);
     }
 
     return lead + "type: " + "string";

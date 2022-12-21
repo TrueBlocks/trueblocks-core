@@ -12,7 +12,6 @@ The mirroring (or caching) of the blockchain data is provided by six classes: CB
 
 As has been discussed earlier, the various fields in the CBlock class include a list of transactions. The CTransaction class, the most used class in the system, contains the from, to, value, and timestamp values expected of any transaction in addition to a transaction receipt. The CReceipt class contains, importantly, gasUsed and the logs and traces necessary to determine the outcome of a transaction.
 
-
 ### Parsing of transaction input and event topics
 Given an ABI for a smart contract, we first ensure that the function and event signatures are canonical. Given the canonical signatures we then proceed to encode these signatures so they may be used later to decode the input data fields of each transaction and the indexed topics and data of each receipt log.
 

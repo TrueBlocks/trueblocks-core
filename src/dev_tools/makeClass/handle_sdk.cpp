@@ -27,9 +27,9 @@ bool COptions::handle_sdk(void) {
 
     LOG_INFO(cYellow, "handling sdk generation...", cOff);
 
-    if (!handle_sdk_types()) {
-        return false;
-    }
+    // if (!handle_sdk_types()) {
+    //     return false;
+    // }
 
     if (!handle_sdk_paths()) {
         return false;

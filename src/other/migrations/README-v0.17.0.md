@@ -192,7 +192,6 @@ Here's a table showing which endpoints changed. Previously the API endpoints wer
 |              |              | --to_file      | toFile      |
 
 
-
 ### Breaking Changes in Addition to Above
 
 Changed options for `export` route:

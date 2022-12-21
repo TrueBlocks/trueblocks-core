@@ -57,7 +57,6 @@
     chifra when [flags] < block | date > [ block... | date... ]
 ```
 
-
 ## TxIds
 
 **One of more transaction ids (at least one required)**
