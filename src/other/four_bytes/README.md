@@ -7,9 +7,13 @@ make
 
 It generates the cross-product database of four-bytes from the data already present in TrueBlocks.
 The input files are installed with `chifra`:
-- `abis/known-000/uniq_sigs.tab`
-- `abis/known-000/uniq_funcs.tab`
-- `abis/known-000/uniq_events.tab`
+- `abis/known-000/uniq_sigs.tab` (Set A)
+- `abis/known-000/uniq_funcs.tab` (Set B)
+- `abis/known-000/uniq_events.tab` (Set B)
+
+Set A has 784 items.
+
+Set B has 113,281 items in total.
 
 The produced database is chunked and consists of 65,536 files, with sizes ranging from 100 KB to 176 KB.
 The database takes about 7 GB of disk space in total. Generation can take up to 40 minutes.
