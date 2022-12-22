@@ -103,11 +103,6 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
                 return uint_2_Str(logIndex);
             }
             break;
-        case 'r':
-            if (fieldName % "removed") {
-                return bool_2_Str_t(removed);
-            }
-            break;
         case 't':
             if (fieldName % "topics" || fieldName % "topicsCnt") {
                 size_t cnt = topics.size();
@@ -136,6 +131,11 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
             }
             if (fieldName % "type") {
                 return type;
+            }
+            break;
+        case 'u':
+            if (fieldName % "unused") {
+                return bool_2_Str_t(unused);
             }
             break;
         default:
@@ -227,12 +227,6 @@ bool CLogEntry::setValueByName(const string_q& fieldNameIn, const string_q& fiel
                 return true;
             }
             break;
-        case 'r':
-            if (fieldName % "removed") {
-                removed = str_2_Bool(fieldValue);
-                return true;
-            }
-            break;
         case 't':
             if (fieldName % "topics") {
                 string_q str = fieldValue;
@@ -259,6 +253,12 @@ bool CLogEntry::setValueByName(const string_q& fieldNameIn, const string_q& fiel
             }
             if (fieldName % "type") {
                 type = fieldValue;
+                return true;
+            }
+            break;
+        case 'u':
+            if (fieldName % "unused") {
+                unused = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -301,7 +301,7 @@ bool CLogEntry::Serialize(CArchive& archive) {
     // archive >> transactionLogIndex;
     // archive >> timestamp;
     // archive >> type;
-    // archive >> removed;
+    // archive >> unused;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -328,7 +328,7 @@ bool CLogEntry::SerializeC(CArchive& archive) const {
     // archive << transactionLogIndex;
     // archive << timestamp;
     // archive << type;
-    // archive << removed;
+    // archive << unused;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -399,8 +399,8 @@ void CLogEntry::registerClass(void) {
     HIDE_FIELD(CLogEntry, "timestamp");
     ADD_FIELD(CLogEntry, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CLogEntry, "type");
-    ADD_FIELD(CLogEntry, "removed", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CLogEntry, "removed");
+    ADD_FIELD(CLogEntry, "unused", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CLogEntry, "unused");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CLogEntry, "schema");

@@ -1,0 +1,7 @@
+[settings]
+class = CChunkAddresses
+fields = chunkaddresses.csv
+doc_group = 04-Admin
+doc_descr = address records found in individual chunks
+doc_api = 306-chunkAddresses
+doc_producer = chunks

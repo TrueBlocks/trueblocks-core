@@ -1,5 +1,5 @@
 [settings]
 class = CCacheBase
-base_class = CAccountName
+base_class = CName
 fields = cachebase.csv
 includes = etherlib.h

@@ -4,5 +4,5 @@ fields = status.csv
 includes = etherlib.h|cache.h|chain.h
 doc_group = 04-Admin
 doc_descr = This data model carries information about the TrueBlocks system including both the API server and the local binary caches
-doc_api = 30-config
+doc_api = 300-config
 doc_producer = config

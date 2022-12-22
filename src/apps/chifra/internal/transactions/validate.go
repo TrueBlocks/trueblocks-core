@@ -38,7 +38,7 @@ func (opts *TransactionsOptions) validateTransactions() error {
 		}
 
 		if len(opts.Reconcile) > 0 {
-			return validate.Usage("The --reconcile option has been deprecated. Use --statements instead.")
+			return validate.Usage("The --reconcile option has been deprecated. Use --account_for instead.")
 		}
 
 		if len(opts.AccountFor) > 0 {

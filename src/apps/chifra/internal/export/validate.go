@@ -51,10 +51,6 @@ func (opts *ExportOptions) validateExport() error {
 		}
 	}
 
-	if opts.FirstRecord == 0 {
-		opts.FirstRecord = 1
-	}
-
 	if opts.Count {
 		if opts.Logs || opts.Receipts || opts.Traces || opts.Neighbors {
 			return validate.Usage("The {0} option is only available with transactional options.", "--count")

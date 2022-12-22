@@ -192,12 +192,11 @@ Here's a table showing which endpoints changed. Previously the API endpoints wer
 |              |              | --to_file      | toFile      |
 
 
-
 ### Breaking Changes in Addition to Above
 
 Changed options for `export` route:
 
-```
+```[shell]
 	n_blocks		--> block_cnt
 	n_block_procs	--> block_chan_cnt
 	n_addr_procs	--> addr_chan_cnt
@@ -207,11 +206,11 @@ Changed options for `export` route:
 	the `-a` hotkey is now assigned to the `--articulate` option
 	the `-s` hotkey is now assigned to the `--apps` option
 
-```
+```[shell]
 
 Changed options for `blocks` route:
 
-```
+```[shell]
 	Added options `--logs`, `--emitter`, and `--topics`
 	Previous `--uniq` option removed as redundant
 	Previously named `--uniq_txs` option renamed to `--uniq`
@@ -219,7 +218,7 @@ Changed options for `blocks` route:
 
 Deprecated these options for the `pins` route:
 
-```
+```[shell]
 	`--freshen`, `--remote`, and `--init_all`
 ```
 

@@ -17,6 +17,10 @@
 extern string_q replaceCode(const string_q& orig, const string_q& which, const string_q& new_code);
 //------------------------------------------------------------------------------------------------------------
 bool writeCodeIn(const codewrite_t& cw) {
+    if (contains(cw.fileName, "/other/data-models/")) {
+        return true;
+    }
+
     string_q codeOut = cw.codeOutIn;
     string_q orig;
     asciiFileToString(cw.fileName, orig);
@@ -103,6 +107,10 @@ bool writeCodeIn(const codewrite_t& cw) {
 
 //---------------------------------------------------------------------------------------------------
 bool writeCodeOut(COptions* opts, const string_q& fn) {
+    if (contains(fn, "/other/data-models/")) {
+        return true;
+    }
+
     if (contains(fn, "/stub/") || goPortNewCode(fn))
         return true;
 
@@ -148,10 +156,6 @@ bool writeCodeOut(COptions* opts, const string_q& fn) {
         replace(converted, "[{DESCRIPTION}]", descr);
         replace(converted, "[{COMPONENTS}]", components);
         replace(converted, "[{VERSION}]", getVersionStr(false /* product */, false /* git_hash */));
-        // hack alert
-        if (contains(converted, "$ref: \"#/components/schemas/config\"")) {
-            replace(converted, "$ref: \"#/components/schemas/config\"", "$ref: \"#/components/schemas/status\"");
-        }
 
     } else if (endsWith(fn, ".h")) {
         CStringArray tokens = {"ERROR_DEFINES", "_CODE_DECLARE"};

@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 ## chifra blocks
 
 The `chifra blocks` tool retrieves block data from your Ethereum node or, if previously cached, from the TrueBlocks cache. You may specify multiple blocks per invocation.
@@ -40,6 +41,7 @@ Notes:
   - Large block ranges may crash the node, use --big_range to specify a larger range.
 ```
 
+<!-- markdownlint-disable MD041 -->
 #### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.

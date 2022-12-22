@@ -224,7 +224,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (first_record == 0) {
-        return usage("Should not happen: " + uint_2_Str(first_record) + "  must be at least 1.");
+        first_record = 1;
     }
 
     if (!isApiMode() && (max_records == 250 || max_records == 0))
@@ -582,8 +582,8 @@ bool COptions::setDisplayFormatting(void) {
         SHOW_FIELD(CReceipt, "blockNumber");
         SHOW_FIELD(CReceipt, "transactionIndex");
     } else if (appearances) {
-        manageFields("CAccountName:all", false);
-        manageFields(verbose ? "CAccountName:address,name" : "CAccountName:address,name,timestamp,date", true);
+        manageFields("CName:all", false);
+        manageFields(verbose ? "CName:address,name" : "CName:address,name,timestamp,date", true);
     }
 
     return true;

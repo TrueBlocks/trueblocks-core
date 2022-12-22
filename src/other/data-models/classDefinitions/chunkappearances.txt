@@ -1,0 +1,7 @@
+[settings]
+class = CChunkAppearances
+fields = chunkappearances.csv
+doc_group = 04-Admin
+doc_descr = a single record in the appearance table of an index chunk
+doc_api = 307-chunkAppearances
+doc_producer = chunks

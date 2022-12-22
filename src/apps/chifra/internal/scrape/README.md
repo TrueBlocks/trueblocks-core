@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 ## chifra scrape
 
 The `chifra scrape` application creates TrueBlocks' chunked index of address appearances -- the fundamental data structure of the entire system. It also, optionally, pins each chunk of the index to IPFS.
@@ -63,6 +64,7 @@ Recently, we enabled the ability for the end user to pin these downloaded index 
 Please [see this article](https://trueblocks.io/blog/a-long-winded-explanation-of-trueblocks/) for more information about running the scraper and building and sharing the index of appearances.
 
 
+<!-- markdownlint-disable MD041 -->
 #### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.

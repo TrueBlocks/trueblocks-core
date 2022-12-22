@@ -5,4 +5,4 @@ includes = utillib.h
 cpp_includes =
 doc_group = 04-Admin
 doc_descr = The chain data model carries information about configured chains
-doc_api = 34-chain
+doc_api = 309-chain

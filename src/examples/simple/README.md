@@ -4,7 +4,7 @@ This example shows how to link an application to the TrueBlocks library (see the
 
 The example then queries the blockchain for a blocks and prints each block as it's extracted to the console.
 
-```
+```[shell]
 int main(int argc, const char* argv[]) {
 
     etherlib_init(quickQuitHandler);

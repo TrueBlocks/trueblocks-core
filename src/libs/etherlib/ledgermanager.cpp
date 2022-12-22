@@ -117,7 +117,7 @@ bool CLedgerManager::getTransfers(const CTransaction& trans) {
 
     CTransferArray tmp;
     for (auto& log : trans.receipt.logs) {
-        CAccountName tokenName;
+        CName tokenName;
         findToken(log.address, tokenName);
         if (tokenName.address.empty()) {
             tokenName.address = log.address;

@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 ## chifra traces
 
 The `chifra traces` tool retrieves a transaction's traces. You may specify multiple transaction identifiers per invocation.
@@ -33,6 +34,7 @@ Notes:
   - A state diff trace describes, for each modified address, what changed during that trace.
 ```
 
+<!-- markdownlint-disable MD041 -->
 #### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.

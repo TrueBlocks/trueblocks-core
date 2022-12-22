@@ -40,16 +40,16 @@ func (opts *ListOptions) validateList() error {
 		}
 	}
 
-	if opts.FirstRecord == 0 {
-		opts.FirstRecord = 1
-	}
-
 	if opts.MaxRecords == 0 {
 		opts.MaxRecords = 250
 	}
 
 	if opts.Count && opts.MaxRecords != 250 {
 		return validate.Usage("The {0} option is not available with the {1}-{2} option.", "--count", "--max_records", fmt.Sprintf("%d", opts.MaxRecords))
+	}
+
+	if opts.Count && opts.Appearances {
+		return validate.Usage("Please choose only one of {0} and {1}.", "--count", "--appearances")
 	}
 
 	if len(opts.Globals.File) == 0 {

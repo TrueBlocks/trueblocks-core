@@ -32,7 +32,7 @@ For example: `GROUP_ITEM_NAME`.
 
 A more concrete example might be:
 
-```
+```[shell]
 export SETTINGS_RPCPROVIDER=http://localhost:9876
 chifra blocks 100
 ```

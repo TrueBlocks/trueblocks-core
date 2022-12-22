@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-12-16T23:17:17
+date: 2022-12-21T12:20:58
 lastmod:
   - :git
   - lastmod
@@ -19,7 +19,7 @@ toc: true
 
 The data models produced by the tools in the Admin category relate to scraping the chain, producing the Unchained Index, and querying the configuration of the system. Additional data related to sharing the indexes via IPFS and pinning the same are also produced by tools in this category.
 
-_Each data structure is created by one or more tools which are detailed below_
+Each data structure is created by one or more tools which are detailed below
 
 ## Status
 
@@ -55,7 +55,6 @@ Status data is made of the following data fields:
 | caches            | a collection of information concerning the binary caches | CCachePtrArray |
 | keys              | the list of configured api keys                          | CKeyArray      |
 
-
 ## Cache
 
 The [chifra config <type>](/docs/chifra/admin/#chifra-config) reports on the binary caches. Those reports come in the form of the Cache data type. Each cache data object may carry unique information for the given cache. See the source code for more information.
@@ -76,7 +75,6 @@ Cache data is made of the following data fields:
 | nFolders    | the number of subfolders in the cache                   | uint64           |
 | sizeInBytes | the size of the cache in bytes                          | uint64           |
 | items       | an array of cache items                                 | CCacheEntryArray |
-
 
 ## PinnedChunk
 
@@ -99,7 +97,6 @@ Pinnedchunk data is made of the following data fields:
 | firstApp  | the first appearance in the chunk                           | blknum   |
 | latestApp | the latest appearance in the chunk                          | blknum   |
 
-
 ## Manifest
 
 The Manifest details the index of appearance's PinnedChunks. Each record in the Manifest details the block range represented by the chunk as well as the IPFS hash of the index chunk along with the associated IPFS hash for the Bloom filter of the chunk. The manifest itself is also pushed to IPFS and the IPFS of the hash of the manifest is published periodically to the Unchained Index smart contract.
@@ -121,9 +118,124 @@ Manifest data is made of the following data fields:
 | databases | IPFS cid of file containing CIDs for the various databases            | ipfshash          |
 | chunks    | a list of the IPFS hashes of all of the chunks in the unchained index | CPinnedChunkArray |
 
+## ChunkIndex
+
+The `indexchunk` data model represents internal information about each Unchained Index index chunk. It is used mostly interenally to study the characteristics of the Unchained Index.
+
+The following commands produce and manage chunkindexs:
+
+| Tools                                              |                                                                 |
+| -------------------------------------------------- | --------------------------------------------------------------- |
+| [chifra chunks](/docs/chifra/admin/#chifra-chunks) | manage pinned index of appearances and associated Bloom filters |
+
+Chunkindex data is made of the following data fields:
+
+| Field           | Description                                                        | Type       |
+| --------------- | ------------------------------------------------------------------ | ---------- |
+| range           | The block range (inclusive) covered by this chunk                  | blockRange |
+| magic           | An internal use only magic number to indicate file format          | string     |
+| hash            | The hash of the specification under which this chunk was generated | hash       |
+| addressCount    | The number of addresses in this chunk                              | uint64     |
+| appearanceCount | The number of appearances in this chunk                            | uint64     |
+| size            | The size of the chunk in bytes                                     | uint64     |
+
+## ChunkBlooms
+
+The `blooms` data model represents the bloom filter files that front the Unchained Index index portions. The information here is mostly for internal use only as it includes the size and number of the bloom filters present as well as the number of addresses inserted into the bloom. This information is used to study the characteristics of the Unchained Index.
+
+The following commands produce and manage chunkBlooms:
+
+| Tools                                              |                                                                 |
+| -------------------------------------------------- | --------------------------------------------------------------- |
+| [chifra chunks](/docs/chifra/admin/#chifra-chunks) | manage pinned index of appearances and associated Bloom filters |
+
+Chunkblooms data is made of the following data fields:
+
+| Field     | Description                                                        | Type       |
+| --------- | ------------------------------------------------------------------ | ---------- |
+| range     | The block range (inclusive) covered by this chunk                  | blockRange |
+| magic     | An internal use only magic number to indicate file format          | string     |
+| hash      | The hash of the specification under which this chunk was generated | hash       |
+| count     | The number of individual bloom filters in this bloom file          | uint64     |
+| nInserted | The number of addresses inserted into the bloom file               | uint64     |
+| size      | The size on disc in bytes of this bloom file                       | uint64     |
+| width     | The width of the bloom filter                                      | uint64     |
+
+## ChunkAddresses
+
+The `addresses` data model is produced by `chifra chunks` and represents the records found in the addresses table of each Unchained Index chunk. The `offset` and `count` fields represent the location and number of records in the `appearances` table to which the address table is related.
+
+The following commands produce and manage chunkAddresses:
+
+| Tools                                              |                                                                 |
+| -------------------------------------------------- | --------------------------------------------------------------- |
+| [chifra chunks](/docs/chifra/admin/#chifra-chunks) | manage pinned index of appearances and associated Bloom filters |
+
+Chunkaddresses data is made of the following data fields:
+
+| Field   | Description                                                               | Type       |
+| ------- | ------------------------------------------------------------------------- | ---------- |
+| address | The address in this record                                                | address    |
+| range   | The block range of the chunk from which this address record was taken     | blockRange |
+| offset  | The offset into the appearance table of the first record for this address | uint64     |
+| count   | The number of records in teh appearance table for this address            | uint64     |
+
+## ChunkStats
+
+The `stats` data model is produced by `chifra chunks` and brings together various statistical information such as average number of addresses in an Unchained Index chunk among other information.
+
+The following commands produce and manage chunkStats:
+
+| Tools                                              |                                                                 |
+| -------------------------------------------------- | --------------------------------------------------------------- |
+| [chifra chunks](/docs/chifra/admin/#chifra-chunks) | manage pinned index of appearances and associated Bloom filters |
+
+Chunkstats data is made of the following data fields:
+
+| Field         | Description                                      | Type   |
+| ------------- | ------------------------------------------------ | ------ |
+| start         | the first block in the chunk's range             | uint64 |
+| end           | the last block in the chunk's range              | uint64 |
+| nAddrs        | the number of addresses in the chunk             | uint64 |
+| nApps         | the number of appearances in the chunk           | uint64 |
+| nBlocks       | the number of blocks in the chunk                | uint64 |
+| nBlooms       | the number of bloom filters in the chunk's bloom | uint64 |
+| recWid        | the record width of a single bloom filter        | uint64 |
+| bloomSz       | the size of the bloom filters on disc in bytes   | uint64 |
+| chunkSz       | the size of the chunks on disc in bytes          | uint64 |
+| addrsPerBlock | the average number of addresses per block        | double |
+| appsPerBlock  | the average number of appearances per block      | double |
+| appsPerAddr   | the average number of appearances per address    | double |
+| ratio         | the ratio of appearances to addresses            | double |
+
+## ChunkAppearances
+
+The `appearances` data model is the second of two tables inside of the Unchained Index chunks. The other is the `addresses` table which relates the addresses in that table to this table via the `offset` and `count` fields.
+
+The following commands produce and manage chunkAppearances:
+
+| Tools                                              |                                                                 |
+| -------------------------------------------------- | --------------------------------------------------------------- |
+| [chifra chunks](/docs/chifra/admin/#chifra-chunks) | manage pinned index of appearances and associated Bloom filters |
+
+Chunkappearances data is made of the following data fields:
+
+| Field            | Description                              | Type   |
+| ---------------- | ---------------------------------------- | ------ |
+| blockNumber      | The block number of this appearance      | uint64 |
+| transactionIndex | The transaction index of this appearance | uint64 |
 
 ## Chain
 
+The `chain` data model represents the configured chain data found in the `trueBlocks.toml` configuration file.
+
+The following commands produce and manage chains:
+
+| Tools                                              |                                               |
+| -------------------------------------------------- | --------------------------------------------- |
+| [chifra config](/docs/chifra/admin/#chifra-config) | report on the status of the TrueBlocks system |
+
+Chain data is made of the following data fields:
 
 | Field          | Description                                                      | Type   |
 | -------------- | ---------------------------------------------------------------- | ------ |
@@ -138,6 +250,15 @@ Manifest data is made of the following data fields:
 
 ## Key
 
+The `key` field is for keys of various types. It is primarily for internal use only.
+
+The following commands produce and manage keys:
+
+| Tools                                              |                                               |
+| -------------------------------------------------- | --------------------------------------------- |
+| [chifra config](/docs/chifra/admin/#chifra-config) | report on the status of the TrueBlocks system |
+
+Key data is made of the following data fields:
 
 | Field    | Description                  | Type   |
 | -------- | ---------------------------- | ------ |
@@ -148,6 +269,15 @@ Manifest data is made of the following data fields:
 
 ## CacheEntry
 
+The `cacheEntry` data model is used to display various caches displayed from the `chifra config` tool.
+
+The following commands produce and manage cacheentrys:
+
+| Tools                                              |                                               |
+| -------------------------------------------------- | --------------------------------------------- |
+| [chifra config](/docs/chifra/admin/#chifra-config) | report on the status of the TrueBlocks system |
+
+Cacheentry data is made of the following data fields:
 
 | Field   | Description | Type    |
 | ------- | --- | ------- |
@@ -163,6 +293,8 @@ This documentation mentions the following basic data types.
 | address   | a 20-byte hexadecimal string starting with '0x' | lowercase      |
 | blknum    | an alias for a uint64                           |                |
 | bool      | a value either `true`, `false`, `1`, or `0`     |                |
+| double    | a floating point number of double precision     |                |
+| hash      | a 32-byte hexadecimal string starting with '0x' | lowercase      |
 | ipfshash  | a multi-hash produced by IPFS                   | mixed-case     |
 | string    | a normal character string                       |                |
 | timestamp | a 64-bit unsigned integer                       | Unix timestamp |

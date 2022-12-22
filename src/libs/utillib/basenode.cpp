@@ -14,7 +14,7 @@
 #include "biglib.h"
 #include "basenode.h"
 #include "sfarchive.h"
-#include "accountname.h"
+#include "name.h"
 #include "exportcontext.h"
 #include "conversions.h"
 #include "version.h"

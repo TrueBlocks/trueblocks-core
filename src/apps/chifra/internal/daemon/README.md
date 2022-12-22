@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 ## chifra daemon
 
 `chifra daemon` manages chifra's long-running processes include its JSON API server. Each of the `chifra` commands along with all of its options, are provided not only by the command line, but also the API server. We call this process the `flame` server, which is written in Go.
@@ -29,6 +30,7 @@ Notes:
   - See the API documentation (https://trueblocks.io/api) for more information.
 ```
 
+<!-- markdownlint-disable MD041 -->
 #### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.

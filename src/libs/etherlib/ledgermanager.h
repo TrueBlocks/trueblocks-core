@@ -40,7 +40,7 @@ typedef enum { EXTRACT = 0, READ, UPDATE, RECONCILE, SCANNING, SKIPPING, COMPLET
 class CLedgerManager {
   public:
     searchOpType searchOp;
-    CAccountName name;
+    CName name;
     address_t accountedFor;
     blknum_t nextBlock{NOPOS};
     CAppearanceArray_mon appArray;
