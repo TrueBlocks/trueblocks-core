@@ -114,7 +114,7 @@ bool COptions::handle_sdk_types(void) {
             }
         }
 
-        string_q fileName = sdkPath + "src/types/" + firstLower(modelName) + ".ts";
+        string_q fileName = sdkPath + "typescript/src/types/" + firstLower(modelName) + ".ts";
         writeIfDifferent(fileName, contents);
     }
     return true;
@@ -133,7 +133,7 @@ bool COptions::handle_sdk_paths(void) {
 
         if (!ep.api_route.empty()) {
             ostringstream filename;
-            filename << sdkPath << "src/paths/" << ep.api_route << ".ts";
+            filename << sdkPath << "typescript/src/paths/" << ep.api_route << ".ts";
 
             map<string_q, string_q> imports;
             ostringstream rets;
