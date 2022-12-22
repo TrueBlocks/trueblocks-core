@@ -12,6 +12,7 @@ package scrapePkg
 import (
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 
@@ -58,6 +59,15 @@ func (opts *ScrapeOptions) ScrapeInternal() (err error, handled bool) {
 	// EXISTING_CODE
 
 	return
+}
+
+// GetScrapeOptions returns the options for this tool so other tools may use it.
+func GetScrapeOptions(args []string, g *globals.GlobalOptions) *ScrapeOptions {
+	ret := scrapeFinishParse(args)
+	if g != nil {
+		ret.Globals = *g
+	}
+	return ret
 }
 
 // EXISTING_CODE

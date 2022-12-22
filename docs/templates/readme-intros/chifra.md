@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 ## [{NAME}]
 
 `[{NAME}]` is an command line tool that builds [TrueBlocks account monitors](../../monitors/README.md) through a series of interactive questions.

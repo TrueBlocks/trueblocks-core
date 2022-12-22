@@ -1,4 +1,4 @@
-status?modes=caches&types=txs
+config?modes=show&module=caches&types=txs
 {
   "data": [
     {
@@ -27,7 +27,6 @@ status?modes=caches&types=txs
           "isValid": true
         }
       ],
-      "chains": [],
       "date": "--date--"
     }
   ],

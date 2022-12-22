@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 ## chifra export
 
 The `chifra export` tools provides a major part of the functionality of the TrueBlocks system. Using the index of appearances created with `chifra scrape` and the list of transaction identifiers created with `chifra list`, `chifra export` completes the actual extraction of an address's transactional history from the node.
@@ -54,9 +55,10 @@ Notes:
   - For the --logs option, you may optionally specify one or more --emitter, one or more --topics, or both.
   - The --logs option is significantly faster if you provide an --emitter or a --topic.
   - Neighbors include every address that appears in any transaction in which the export address also appears.
-  - If provided, --max_records dominates, also, if provided, --first_block overrides --first_record.
+  - If provided, --max_records dominates, also, if provided, --first_record overrides --first_block.
 ```
 
+<!-- markdownlint-disable MD041 -->
 #### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.

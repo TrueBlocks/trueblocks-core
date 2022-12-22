@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 ## chifra abis
 
 `chifra abis` retrieves ABI files for the given address(es). It searches for the ABI in this order: the current local folder, the TrueBlocks cache, [Etherscan](http://etherscan.io), or (in the future) ENS and Sourcify.
@@ -34,6 +35,7 @@ Notes:
   - Search for either four byte signatures or event signatures with the --find option.
 ```
 
+<!-- markdownlint-disable MD041 -->
 #### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.

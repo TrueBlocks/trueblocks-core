@@ -12,7 +12,7 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "version.h"
-#include "accountname.h"
+#include "name.h"
 #include "filenames.h"
 #include "toml.h"
 #include "exportcontext.h"
@@ -25,7 +25,7 @@
 namespace qblocks {
 
 //-----------------------------------------------------------------------------
-typedef bool (*NAMEFUNC)(CAccountName& name, void* data);
+typedef bool (*NAMEFUNC)(CName& name, void* data);
 typedef bool (*NAMEVALFUNC)(CNameValue& pair, void* data);
 typedef bool (*UINT64VISITFUNC)(uint64_t num, void* data);
 typedef uint64_t (*HASHFINDFUNC)(const hash_t& hash, void* data);
@@ -147,7 +147,7 @@ inline bool listBlocks(uint64_t bn, void* data) {
 class COptionsBlockList {
   public:
     const COptionsBase* opts;
-    CBlockNumArray numList;
+    CBlkNumArray numList;
     CStringArray hashList;
     HASHFINDFUNC hashFind;
     blknum_t start;

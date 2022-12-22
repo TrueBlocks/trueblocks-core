@@ -31,7 +31,7 @@
 #include "performance.h"
 #include "options_base.h"
 #include "filenames.h"
-#include "accountname.h"
+#include "name.h"
 #include "memmap.h"
 #include "rpcresult.h"
 #include "logging.h"
@@ -39,6 +39,7 @@
 #include "markdown.h"
 #include "configenv.h"
 #include "chain.h"
+#include "key.h"
 #include "petname.h"
 
 using namespace qblocks;  // NOLINT

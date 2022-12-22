@@ -38,13 +38,13 @@ class NameOnDisc {
     char petname[40 + 1];
     uint16_t decimals;
     uint16_t flags;
-    bool disc_2_Name(CAccountName& nm) const;
-    bool name_2_Disc(const CAccountName& nm);
+    bool disc_2_Name(CName& nm) const;
+    bool name_2_Disc(const CName& nm);
     string_q Format(void) const;
 };
 
 //-----------------------------------------------------------------------
-typedef bool (*NAMEFUNC)(CAccountName& name, void* data);
+typedef bool (*NAMEFUNC)(CName& name, void* data);
 typedef bool (*NAMEODFUNC)(NameOnDisc* name, void* data);
 extern bool forEveryNameOld(NAMEFUNC func, void* data);
 extern bool forEveryName(NAMEODFUNC func, void* data);
@@ -53,9 +53,9 @@ extern bool forEveryName(NAMEODFUNC func, void* data);
 extern bool loadNames(void);
 extern bool loadNamesWithPrefunds(void);
 extern bool clearNames(void);
-extern bool findName(const address_t& addr, CAccountName& acct);
-extern bool findToken(const address_t& addr, CAccountName& acct);
-extern bool updateName(const CAccountName& target, const string_q& crud);
+extern bool findName(const address_t& addr, CName& acct);
+extern bool findToken(const address_t& addr, CName& acct);
+extern bool updateName(const CName& target, const string_q& crud);
 extern bool hasName(const address_t& addr);
 extern size_t nNames(void);
 

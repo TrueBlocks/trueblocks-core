@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 ## chifra when
 
 The `chifra when` tool answers one of two questions: (1) "At what date and time did a given block occur?" or (2) "What block occurred at or before a given date and time?"

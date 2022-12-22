@@ -17,6 +17,7 @@
  */
 #include "etherlib.h"
 #include "cache.h"
+#include "chain.h"
 
 namespace qblocks {
 
@@ -43,8 +44,9 @@ class CStatus : public CBaseNode {
     bool hasEskey;
     bool hasPinkey;
     timestamp_t ts;
-    CCachePtrArray caches;
     CChainArray chains;
+    CCachePtrArray caches;
+    CKeyArray keys;
 
   public:
     CStatus(void);
@@ -125,8 +127,9 @@ inline void CStatus::initialize(void) {
     hasEskey = false;
     hasPinkey = false;
     ts = date_2_Ts(Now());
-    caches.clear();
     chains.clear();
+    caches.clear();
+    keys.clear();
 
     // EXISTING_CODE
     // convert ts to UTC
@@ -159,8 +162,9 @@ inline void CStatus::duplicate(const CStatus& st) {
     hasEskey = st.hasEskey;
     hasPinkey = st.hasPinkey;
     ts = st.ts;
-    caches = st.caches;
     chains = st.chains;
+    caches = st.caches;
+    keys = st.keys;
 
     // EXISTING_CODE
     // EXISTING_CODE

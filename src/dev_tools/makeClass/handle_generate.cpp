@@ -152,7 +152,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
             replaceAll(fieldGetStr, "[{FIELD}]", fld.name);
             if (fld.name == "topics") {
                 replaceAll(fieldGetStr, "THING", "topic_2_Str");
-            } else if (contains(fld.type, "CBlockNumArray")) {
+            } else if (contains(fld.type, "CBlkNumArray")) {
                 replaceAll(fieldGetStr, "THING", "uint_2_Str");
             } else if (contains(fld.type, "CBigUintArray")) {
                 replaceAll(fieldGetStr, "THING", "bnu_2_Str");
@@ -161,14 +161,20 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
             }
 
         } else if ((fld.is_flags & IS_OBJECT)) {
-            string_q str = STR_GETOBJ_CODE_FIELD;
-            if (!(fld.is_flags & IS_ARRAY))
-                str = STR_GETOBJ_CODE_FIELD_OBJ;
-            replace(str, "[PTR]", ((fld.is_flags & IS_POINTER) ? "" : "&"));
+            bool isArray = fld.is_flags & IS_ARRAY;
+            bool isPointer = fld.is_flags & IS_POINTER;
+            bool isObject = fld.is_flags & IS_OBJECT;
+            bool isObjectPtrArray = isObject && isPointer && isArray;
+
+            string_q str = isArray ? STR_GETOBJ_CODE_FIELD : STR_GETOBJ_CODE_FIELD_OBJ;
+            replace(str, "[PTR]", isPointer ? "" : "&");
+            replace(str, "[{TYPE}] empty;", isObjectPtrArray ? "[{TYPE}] empty = nullptr;" : "[{TYPE}] empty;");
             replaceAll(str, "[{TYPE}]",
                        substitute(substitute(substitute(fld.type, "Array2", ""), "Array", ""), "Ptr", "*"));
             replaceAll(str, "[{FIELD}]", fld.name);
-            fieldGetObj += str;
+            if (!(fld.is_flags & IS_MINIMAL)) {
+                fieldGetObj += str;
+            }
         }
 
         replace(setFmt, "[{DEFB}]", fld.strDefault.empty() ? "false" : fld.strDefault);
@@ -257,8 +263,9 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
 
     //------------------------------------------------------------------------------------------------
     bool hasObjGetter = !fieldGetObj.empty() || toml.getConfigBool("settings", "force_objget", false);
-    if (hasObjGetter)
+    if (hasObjGetter) {
         fieldGetObj = substitute(string_q(STR_GETOBJ_CODE), "[{FIELDS}]", fieldGetObj);
+    }
 
     //------------------------------------------------------------------------------------------------
     bool hasStrGetter = !fieldGetStr.empty();
@@ -632,7 +639,7 @@ string_q getCaseSetCode(const CParameterArray& fieldsIn) {
                 } else if (startsWith(p.type, "bytes")) {
                     outStream << (p.name + " = toLower(fieldValue);\n````return true;");
 
-                } else if (contains(p.type, "CStringArray") || contains(p.type, "CBlockNumArray")) {
+                } else if (contains(p.type, "CStringArray") || contains(p.type, "CBlkNumArray")) {
                     const char* STR_ARRAY_SET =
                         "string_q str = fieldValue;\n"
                         "while (!str.empty()) {\n"
@@ -641,7 +648,7 @@ string_q getCaseSetCode(const CParameterArray& fieldsIn) {
                         "return true;";
                     string_q str = substitute(STR_ARRAY_SET, "\n", "\n````");
                     replaceAll(str, "[{NAME}]", p.name);
-                    if (contains(p.type, "CBlockNumArray"))
+                    if (contains(p.type, "CBlkNumArray"))
                         replaceAll(str, "nextTokenClear(str, ',')", "str_2_Uint(nextTokenClear(str, ','))");
                     outStream << (str);
 

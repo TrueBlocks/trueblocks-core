@@ -71,7 +71,7 @@ void etherlib_init(QUITHANDLER qh) {
     CEthCall::registerClass();
     CAppearance::registerClass();
     CRPCResult::registerClass();
-    CAccountName::registerClass();
+    CName::registerClass();
     CConfigEnv::registerClass();
     CCacheEntry::registerClass();
 

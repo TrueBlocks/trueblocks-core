@@ -33,16 +33,16 @@ make -j2
 
 Once that's done, complete the migration by first doing this:
 
-```
-chifra status --migrate test
+```[shell]
+chifra config --migrate test
 ```
 
 which checks to see if the cache needs to be migrated. If the above command reports that everything is up to date, you are finished.
 
 If the above command reports that some parts of the cache need to be migrated, complete the following command:
 
-```
-chifra status --migrate cache
+```[shell]
+chifra config --migrate cache
 ```
 
 ## What To Do if the Above Doesn't Work

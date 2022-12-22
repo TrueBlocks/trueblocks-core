@@ -32,7 +32,7 @@ In the following instructions, we assume you are working on a Linux installation
 
 - Move -- do not copy -- the old `trueBlocks.toml` configuration file. We will need it later.
 
-```
+```[shell]
 mv $HOME/.local/share/trueblocks/trueBlocks.toml ./trueBlocks.save
 ```
 
@@ -42,7 +42,7 @@ mv $HOME/.local/share/trueblocks/trueBlocks.toml ./trueBlocks.save
 
 Complete the following instructions from the root of the `trueblocks-core` repo:
 
-```
+```[shell]
 cd ./build
 git pull
 git checkout develop
@@ -57,15 +57,15 @@ The above commands will rebuild the TrueBlocks executables and create the new mu
 
 Let's make sure the build worked and that you have the latest version. Run
 
-```
-chifra status --terse
+```[shell]
+chifra config --terse
 ```
 
 Unless you're running your Ethereum node at `http://localhost:8545` (the default location), this will return an error message saying the node could not be found. If that happens, see the next set of instructions below.
 
 The above command may report a message saying that you have not completed the migration. If it does, it should also show the following version (or later):
 
-```
+```[shell]
 chifra version GHC-TrueBlocks//0.25.0-alpha
 ```
 
@@ -77,13 +77,13 @@ Until you've completed the migration, the migration message will continue to dis
 
 Display the values in the old configuration file you saved earlier:
 
-```
+```[shell]
 cat ./trueBlocks.save
 ```
 
 Make note of four values:
 
-```
+```[shell]
 cachePath = "<cache_path>"
 indexPath = "<index_path>"
 etherscan_key = "<etherscan_key>"
@@ -92,7 +92,7 @@ rpcProvider = "<rpc_provider>"
 
 Change the current directory to the TrueBlocks configuration folder:
 
-```
+```[shell]
 cd $HOME/.local/share/trueblocks
 pwd
 ```
@@ -101,7 +101,7 @@ pwd
 
 Edit the `trueBlocks.toml` file you find there and replace the following values with the values you noted above. Note, you may remove the existing `rpcProvider` in this section. We will replace that next. Your `[settings]` section should now look something like this:
 
-```
+```[shell]
 [settings]
 cachePath = "<cache_path>"
 indexPath = "<index_path>"
@@ -116,7 +116,7 @@ Find the section called `[chains.mainnet]`. You should be able to find an item c
 
 The `[chains.mainnet]` section of your file should look something like this:
 
-```
+```[shell]
 [chains.mainnet]
 apiProvider = "http://localhost:8080"
 chainId = "1"
@@ -129,7 +129,7 @@ symbol = "ETH"
 
 If you have values for the rpcProviders for other chains, you may set them now if you wish. Each chain has its own configuration section.
 
-Run `chifra status --terse` again. You should get the same migration message as earlier.
+Run `chifra config --terse` again. You should get the same migration message as earlier.
 
 ### Moving existing cache and unchained index folders
 
@@ -139,7 +139,7 @@ Complete the following steps:
 
 - Move the existing cache folders into the chain-specific `mainnet` cache folder:
 
-```
+```[shell]
 cd $HOME/.local/share/trueblocks/cache
 mkdir -p mainnet
 mv * mainnet
@@ -149,7 +149,7 @@ mv * mainnet
 
 - Move existing unchained index folders into the new chain-specific `mainnet` unchained index folder:
 
-```
+```[shell]
 cd $HOME/.local/share/trueblocks/unchained
 mkdir -p mainnet
 mv * mainnet
@@ -157,7 +157,7 @@ mv * mainnet
 
 *Note: You may get a warning saying you've tried to move a folder into itself. That's okay.*
 
-Run `chifra status --terse` again. You will continue to get the warning message.
+Run `chifra config --terse` again. You will continue to get the warning message.
 
 ### Removing old configuration files
 
@@ -165,7 +165,7 @@ Almost done!
 
 Change back into the root configuration folder:
 
-```
+```[shell]
 cd $HOME/.local/share/trueblocks/
 ls -l
 ```
@@ -180,17 +180,17 @@ When you've completed this step, the root configuration folder should contain a 
 
 **Note:**  You may remove the `[requires]` section from the `blockScrape.toml` file as it is no longer needed.
 
-Continue running `chifra status --terse` until chifra stops complaining. When it does stop complaining, you will be finished. Chifra should tell you what files it needs you to remove until its satisfied.
+Continue running `chifra config --terse` until chifra stops complaining. When it does stop complaining, you will be finished. Chifra should tell you what files it needs you to remove until its satisfied.
 
 ## Are you finished?
 
 If you've completed the above steps, you should be able to run any of the `chifra` commands. If `chifra` continues to complain, review the above steps and/or contact us in discord for help.
 
-Run `chifra status --terse`.
+Run `chifra config --terse`.
 
 If the migration is finished, it will return something similar to this:
 
-```
+```[shell]
 <date-time> Client:       erigon/2021.11.3/linux-amd64/go1.16.3 (archive, tracing)
 <date-time> TrueBlocks:   GHC-TrueBlocks//0.25.0-alpha (eskey, no pinkey)
 <date-time> Config Path:  $HOME/.local/share/trueblocks/
@@ -200,7 +200,7 @@ If the migration is finished, it will return something similar to this:
 <date-time> RPC Provider: http://localhost:8545/
 ```
 
-Try this: `chifra status --terse --chain gnosis`. Does it work? You're multi-chain!
+Try this: `chifra config --terse --chain gnosis`. Does it work? You're multi-chain!
 
 ## Are we finished?
 

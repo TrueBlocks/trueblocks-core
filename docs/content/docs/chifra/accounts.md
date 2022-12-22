@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-12-02T15:08:31
+date: 2022-12-21T12:20:59
 lastmod:
   - :git
   - lastmod
@@ -20,6 +20,7 @@ This group of commands is at the heart of TrueBlocks. They allow you to produce 
 
 You may also name addresses; grab the ABI file for a given address; add, delete, and remove monitors, and, most importantly, export transactional histories to various formats,
 This includes re-directing output to remote or local databases.
+<!-- markdownlint-disable MD041 -->
 ## chifra list
 
 `chifra list` takes one or more addresses, queries the index of appearances, and builds TrueBlocks monitors. A TrueBlocks monitor is a file that contains blockNumber.transactionId pairs (transaction identifiers) representing the history of the address.
@@ -55,6 +56,7 @@ Notes:
 
 **Source code**: [`internal/list`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/list)
 
+<!-- markdownlint-disable MD041 -->
 ## chifra export
 
 The `chifra export` tools provides a major part of the functionality of the TrueBlocks system. Using the index of appearances created with `chifra scrape` and the list of transaction identifiers created with `chifra list`, `chifra export` completes the actual extraction of an address's transactional history from the node.
@@ -111,11 +113,12 @@ Notes:
   - For the --logs option, you may optionally specify one or more --emitter, one or more --topics, or both.
   - The --logs option is significantly faster if you provide an --emitter or a --topic.
   - Neighbors include every address that appears in any transaction in which the export address also appears.
-  - If provided, --max_records dominates, also, if provided, --first_block overrides --first_record.
+  - If provided, --max_records dominates, also, if provided, --first_record overrides --first_block.
 ```
 
 **Source code**: [`internal/export`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/export)
 
+<!-- markdownlint-disable MD041 -->
 ## chifra monitors
 
 A TrueBlocks monitor tool has two purposes. The first is to `--watch` a set of addresses. This function is in its early stages and will be better explained elsewhere. Please see an example of what one may do with `chifra monitors --watch` [here](https://tokenomics.io/).
@@ -157,6 +160,7 @@ Notes:
 
 **Source code**: [`internal/monitors`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/monitors)
 
+<!-- markdownlint-disable MD041 -->
 ## chifra names
 
 `chifra names` is a surprisingly useful tool. It allows one to associate textual names with Ethereum addresses. One may ask why this is necessary given that ENS exists. The answer is a single word: "privacy". ENS names are public. In many cases, users desire to keep personal addresses private. Try to do this on a website.
@@ -197,6 +201,7 @@ Notes:
 
 **Source code**: [`internal/names`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/names)
 
+<!-- markdownlint-disable MD041 -->
 ## chifra abis
 
 `chifra abis` retrieves ABI files for the given address(es). It searches for the ABI in this order: the current local folder, the TrueBlocks cache, [Etherscan](http://etherscan.io), or (in the future) ENS and Sourcify.

@@ -21,6 +21,7 @@ extern bool sortByDataModelName(const CClassDefinition& c1, const CClassDefiniti
 extern bool sortByDoc(const CParameter& c1, const CParameter& c2);
 extern string_q typeFmt(const CParameter& fld);
 extern string_q exFmt(const CParameter& fld);
+extern string_q cleanedAsciiFile(const string_q& inFn);
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_datamodel(void) {
@@ -41,7 +42,13 @@ bool COptions::handle_datamodel(void) {
     for (auto model : dataModels) {
         string_q groupLow = toLower(substitute(model.doc_group, " ", ""));
         string_q groupFn = getDocsPathTemplates("model-groups/" + groupLow + ".md");
+        if (!fileExists(groupFn)) {
+            LOG_WARN("Missing data model intro file: ", bYellow, getPathToTemplates(groupFn), cOff);
+        }
         string_q modelFn = getDocsPathTemplates("model-intros/" + model.doc_api + ".md");
+        if (!fileExists(modelFn)) {
+            LOG_WARN("Missing data model intro file: ", bYellow, getPathToTemplates(modelFn), cOff);
+        }
 
         sort(model.fieldArray.begin(), model.fieldArray.end(), sortByDoc);
 
@@ -65,14 +72,14 @@ bool COptions::handle_datamodel(void) {
             replace(front, "[{M1}]", "data:");
             replace(front, "[{M2}]", "parent: \"collections\"");
             docStream << front << endl;
-            docStream << asciiFileToString(groupFn);
+            docStream << cleanedAsciiFile(groupFn);
             weight += 200;
         }
 
         docStream << endl;
-        docStream << "## " << firstUpper(model.doc_api) << endl;
+        docStream << "## " << substitute(firstUpper(model.doc_api), "Config", "Status") << endl;
         docStream << endl;
-        docStream << asciiFileToString(modelFn) << endl;
+        docStream << cleanedAsciiFile(modelFn) << endl;
 
         ostringstream fieldStream, toolsStream;
         fieldStream << markDownRow("Field", "Description", "Type", widths);
@@ -90,7 +97,8 @@ bool COptions::handle_datamodel(void) {
             }
         }
 
-        yamlStream << model.Format(STR_YAML_MODELHEADER);
+        string_q head = model.Format(STR_YAML_MODELHEADER);
+        yamlStream << head;
         yamlStream << yamlPropStream.str();
 
         string_q thisDoc = docStream.str();
@@ -105,7 +113,6 @@ bool COptions::handle_datamodel(void) {
             replace(thisDoc, "[{TOOLS}]", trim(toolsStream.str(), '\n'));
         else
             thisDoc += toolsStream.str();
-
         documentMap[model.doc_group] = documentMap[model.doc_group] + thisDoc;
     }
 
@@ -129,7 +136,10 @@ bool COptions::handle_datamodel(void) {
         }
         document.second += substitute(STR_DOCUMENT_TAIL, "[{TYPES}]", tail);
         string_q outFn = getDocsPathContent("data-model/" + substitute(toLower(document.first), " ", "")) + ".md";
-        writeIfDifferent(outFn, document.second, Now());
+        string_q doc = substitute(document.second, "\n\n\n", "\n\n");
+        if (!contains(outFn, "/.md")) {
+            writeIfDifferent(outFn, doc, Now());
+        }
     }
 
     return true;
@@ -174,9 +184,12 @@ string_q typeFmt(const CParameter& fld) {
     if (fld.type == "blknum" || fld.type == "uint64" || fld.type == "timestamp" || fld.type == "double" ||
         fld.type == "uint32")
         return "[          type: number\n          format: {TYPE}\n]";
+
     if (fld.type == "address" || fld.type == "ipfshash" || fld.type == "hash" || fld.type == "bytes" ||
-        fld.type == "gas" || fld.type == "wei" || fld.type == "int256" || fld.type == "uint256" || fld.type == "date")
+        fld.type == "gas" || fld.type == "wei" || fld.type == "int256" || fld.type == "uint256" || fld.type == "date" ||
+        fld.type == "blockRange" || fld.type == "datetime")
         return "[          type: string\n          format: {TYPE}\n]";
+
     if (fld.type == "bool" || fld.type == "uint8")
         return "[          type: boolean\n]";
 
@@ -201,6 +214,19 @@ void addToTypeMap(map<string_q, string_q>& map, const string_q& group, const str
     if (existing.length() > 0)
         existing += ",";
     map[toLower(group)] = existing + type;
+}
+
+//------------------------------------------------------------------------------------------------------------
+string_q cleanedAsciiFile(const string_q& inFn) {
+    CStringArray lines;
+    asciiFileToLines(inFn, lines);
+    string_q contents;
+    for (auto line : lines) {
+        if (contains(line, "markdownlint"))
+            continue;
+        contents += line + "\n";
+    }
+    return contents;
 }
 
 //------------------------------------------------------------------------------------------------------------
@@ -235,7 +261,6 @@ const char* STR_YAML_TAIL =
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_DOCUMENT_TAIL =
-    "\n"
     "## Base types\n"
     "\n"
     "This documentation mentions the following basic data types.\n"

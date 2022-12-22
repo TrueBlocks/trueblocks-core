@@ -15,6 +15,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -148,6 +149,15 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 	// EXISTING_CODE
 
 	return
+}
+
+// GetReceiptsOptions returns the options for this tool so other tools may use it.
+func GetReceiptsOptions(args []string, g *globals.GlobalOptions) *ReceiptsOptions {
+	ret := receiptsFinishParse(args)
+	if g != nil {
+		ret.Globals = *g
+	}
+	return ret
 }
 
 // EXISTING_CODE

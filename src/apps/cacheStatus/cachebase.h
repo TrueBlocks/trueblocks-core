@@ -23,7 +23,7 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CCacheBase : public CAccountName {
+class CCacheBase : public CName {
   public:
     blknum_t nApps;
     blknum_t firstApp;
@@ -90,7 +90,7 @@ inline void CCacheBase::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void CCacheBase::initialize(void) {
-    CAccountName::initialize();
+    CName::initialize();
 
     nApps = 0;
     firstApp = 0;
@@ -105,7 +105,7 @@ inline void CCacheBase::initialize(void) {
 //--------------------------------------------------------------------------
 inline void CCacheBase::duplicate(const CCacheBase& ca) {
     clear();
-    CAccountName::duplicate(ca);
+    CName::duplicate(ca);
 
     nApps = ca.nApps;
     firstApp = ca.firstApp;

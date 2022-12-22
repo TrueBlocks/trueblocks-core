@@ -13,6 +13,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -72,6 +73,15 @@ func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
 	// EXISTING_CODE
 
 	return
+}
+
+// GetBlocksOptions returns the options for this tool so other tools may use it.
+func GetBlocksOptions(args []string, g *globals.GlobalOptions) *BlocksOptions {
+	ret := blocksFinishParse(args)
+	if g != nil {
+		ret.Globals = *g
+	}
+	return ret
 }
 
 // EXISTING_CODE

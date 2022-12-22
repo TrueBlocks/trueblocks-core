@@ -2,7 +2,7 @@
 
 `chifra` is an command line tool for accessing the entire collection of TrueBlocks tools. Enter `chifra <tool> --help` for more information.
 
-```
+```[shell]
 Purpose:
   Access to all TrueBlocks tools (chifra <cmd> --help for more).
 
@@ -23,8 +23,8 @@ Purpose:
     state         retrieve account balance(s) for one or more addresses at given block(s)
     tokens        retrieve token balance(s) for one or more addresses at given block(s)
   Admin:
-    status        report on the status of the TrueBlocks system
-    serve         serve the TrueBlocks API using the flame server
+    config        report on the status of the TrueBlocks system
+    daemon        initalize and control long-running processes such as the API and the scrapers
     scrape        scan the chain and update the TrueBlocks index of appearances
     chunks        manage and investigate chunks and bloom filters
     init          initialize the TrueBlocks system by downloading from IPFS

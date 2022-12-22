@@ -224,7 +224,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (first_record == 0) {
-        return usage("Should not happen: " + uint_2_Str(first_record) + "  must be at least 1.");
+        first_record = 1;
     }
 
     if (!isApiMode() && (max_records == 250 || max_records == 0))
@@ -421,7 +421,7 @@ COptions::COptions(void) {
     notes.push_back("For the --logs option, you may optionally specify one or more --emitter, one or more --topics, or both.");  // NOLINT
     notes.push_back("The --logs option is significantly faster if you provide an --emitter or a --topic.");
     notes.push_back("Neighbors include every address that appears in any transaction in which the export address also appears.");  // NOLINT
-    notes.push_back("If provided, --max_records dominates, also, if provided, --first_block overrides --first_record.");
+    notes.push_back("If provided, --max_records dominates, also, if provided, --first_record overrides --first_block.");
     // clang-format on
     // END_CODE_NOTES
 
@@ -582,8 +582,8 @@ bool COptions::setDisplayFormatting(void) {
         SHOW_FIELD(CReceipt, "blockNumber");
         SHOW_FIELD(CReceipt, "transactionIndex");
     } else if (appearances) {
-        manageFields("CAccountName:all", false);
-        manageFields(verbose ? "CAccountName:address,name" : "CAccountName:address,name,timestamp,date", true);
+        manageFields("CName:all", false);
+        manageFields(verbose ? "CName:address,name" : "CName:address,name,timestamp,date", true);
     }
 
     return true;

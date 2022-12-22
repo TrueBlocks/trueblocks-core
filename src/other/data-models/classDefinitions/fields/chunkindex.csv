@@ -1,0 +1,7 @@
+name            ,type       ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
+range           ,blockRange ,           ,       ,      ,        ,          ,        ,      ,         ,  1 ,     ,        ,The block range (inclusive) covered by this chunk                  ,
+magic           ,string     ,           ,       ,      ,        ,          ,        ,      ,         ,  2 ,     ,        ,An internal use only magic number to indicate file format          ,
+hash            ,hash       ,           ,       ,      ,        ,          ,        ,      ,         ,  3 ,     ,        ,The hash of the specification under which this chunk was generated ,
+addressCount    ,uint64     ,           ,       ,      ,        ,          ,        ,      ,         ,  4 ,     ,        ,The number of addresses in this chunk                              ,
+appearanceCount ,uint64     ,           ,       ,      ,        ,          ,        ,      ,         ,  5 ,     ,        ,The number of appearances in this chunk                            ,
+size            ,uint64     ,           ,       ,      ,        ,          ,        ,      ,         ,  6 ,     ,        ,The size of the chunk in bytes                                     ,

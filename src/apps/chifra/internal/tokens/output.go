@@ -12,6 +12,7 @@ package tokensPkg
 import (
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -56,6 +57,15 @@ func (opts *TokensOptions) TokensInternal() (err error, handled bool) {
 	// EXISTING_CODE
 
 	return
+}
+
+// GetTokensOptions returns the options for this tool so other tools may use it.
+func GetTokensOptions(args []string, g *globals.GlobalOptions) *TokensOptions {
+	ret := tokensFinishParse(args)
+	if g != nil {
+		ret.Globals = *g
+	}
+	return ret
 }
 
 // EXISTING_CODE

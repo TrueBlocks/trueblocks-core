@@ -12,6 +12,7 @@ package chunksPkg
 import (
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -108,6 +109,15 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 	// EXISTING_CODE
 
 	return
+}
+
+// GetChunksOptions returns the options for this tool so other tools may use it.
+func GetChunksOptions(args []string, g *globals.GlobalOptions) *ChunksOptions {
+	ret := chunksFinishParse(args)
+	if g != nil {
+		ret.Globals = *g
+	}
+	return ret
 }
 
 // EXISTING_CODE

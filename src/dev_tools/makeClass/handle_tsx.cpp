@@ -23,17 +23,16 @@ extern void loadRoutes(const string_q& fn);
 //------------------------------------------------------------------------------------------------------------
 static CCommandOptionArray routes;
 
-#define explorerPath string_q("/Users/jrush/Development/trueblocks-explorer/")
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_tsx(void) {
     CToml config(rootConfigToml_makeClass);
     bool enabled = config.getConfigBool("enabled", "tsx", false);
     if (isTestMode() || !enabled) {
-        LOG_WARN("Skipping javascript generation...");
+        LOG_WARN("Skipping typescript generation...");
         return true;
     }
 
-    LOG_INFO(cYellow, "handling javascript route generation...", cOff);
+    LOG_INFO(cYellow, "handling typescript route generation...", cOff);
     counter = CCounter();  // reset
 
     string_q routesCSV = explorerPath + "src/ui/Routes.csv";

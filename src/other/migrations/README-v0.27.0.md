@@ -29,20 +29,20 @@ Stop any long running TrueBlocks processes (such as the `chifra scrape` or `chif
 
 Run this command:
 
-```
-chifra status --terse
+```[shell]
+chifra config --terse
 ```
 
 Notice the `indexPath` value (<indexPath>). Change into that directory:
 
-```
+```[shell]
 cd <indexPath>
 tree -d .
 ```
 
 You should see something similar to the following:
 
-```
+```[shell]
 .
 ├── blooms
 ├── finalized
@@ -55,11 +55,11 @@ You should see something similar to the following:
 
 ### Remove incorrect files and sub-folders
 
-Make sure you're in the folder <indexPath> and that you see the above folder tree. `pwd` should report the same folder as `chifra status --terse` does for `indexPath`.
+Make sure you're in the folder <indexPath> and that you see the above folder tree. `pwd` should report the same folder as `chifra config --terse` does for `indexPath`.
 
 Complete the following commands:
 
-```
+```[shell]
 rm -fR blooms/0133*
 rm -fR finalized/0133*
 rm -fR blooms/0139*
@@ -71,14 +71,13 @@ rm -fR maps/ staging/ ripe/ unripe/
 
 Run this command again:
 
-```
+```[shell]
 tree -d .
 ```
 
 you should see something like this:
 
-
-```
+```[shell]
 .
 ├── blooms
 ├── finalized
@@ -89,11 +88,11 @@ you should see something like this:
 
 Finally, we want to freshen your index. You may do that in one of two ways. (Both produce the same results.)
 
-```
+```[shell]
 chifra init --all
 ```
 
-```
+```[shell]
 chifra scrape indexer
 ```
 

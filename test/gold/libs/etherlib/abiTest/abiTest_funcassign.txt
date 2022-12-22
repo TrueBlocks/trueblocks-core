@@ -1,7 +1,7 @@
 abiTest  func_assign
 function assignment test...
 CEthStateArray				a->_val = extract(params, 0*64, 64);
-CBlockNumArray				a->_val = extract(params, 0*64, 64);
+CBlkNumArray				a->_val = extract(params, 0*64, 64);
 CFunctionArray				a->_val = extract(params, 0*64, 64);
 CReconciliation				a->_val = extract(params, 0*64, 64);
 CLogEntryArray				a->_val = extract(params, 0*64, 64);

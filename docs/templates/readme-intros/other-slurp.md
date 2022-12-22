@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 ## [{NAME}]
 
 `[{NAME}]` is the first tool we built in the Ethereum space. It even has its [own website](http://ethslurp.com).

@@ -15,21 +15,21 @@ gasPrice             ,gas            ,           ,       ,      ,        ,      
 maxFeePerGas         ,gas            ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,              ,
 maxPriorityFeePerGas ,gas            ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,              ,
 input                ,bytes          ,           ,       ,      ,        ,          ,        ,      ,         , 12 ,     ,0x3d18b912    ,byte data either containing a message or funcational data for a smart contracts. See the --articulate
-isError              ,uint8          ,           ,       ,      ,        ,          ,        ,      ,         ,    ,  11 ,              ,
+isError              ,uint8          ,           ,       ,      ,        ,          ,        ,      ,         , 20 ,  11 ,              ,`true` if the transaction ended in error&#44; `false` otherwise
 hasToken             ,uint8          ,           ,       ,      ,        ,          ,        ,      ,         , 17 ,     ,              ,`true` if the transaction is token related&#44; `false` otherwise
 cachebits            ,uint8          ,CB_NONE    ,       ,      ,        ,          ,        ,      ,         ,    ,     ,              ,
 reserved2            ,uint8          ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,              ,
-receipt              ,receipt        ,           ,true   ,      ,        ,          ,        ,      ,         , 13 ,     ,              ,
-traces               ,trace          ,           ,true   ,true  ,        ,          ,        ,      ,         ,    ,     ,              ,
-articulatedTx        ,function       ,           ,true   ,      ,        ,          ,        ,      ,         , 15 ,     ,              ,
+receipt              ,Receipt        ,           ,true   ,      ,        ,          ,        ,      ,         , 13 ,     ,              ,
+traces               ,Trace          ,           ,true   ,true  ,        ,          ,        ,      ,         ,    ,     ,              ,
+articulatedTx        ,Function       ,           ,true   ,      ,        ,          ,        ,      ,         , 15 ,     ,              ,
 compressedTx         ,string         ,           ,       ,      ,true    ,          ,        ,      ,         , 16 ,  13 ,0x3d18b912( ) ,truncated&#44; more readable version of the articulation
-statements           ,reconciliation ,           ,true   ,true  ,true    ,          ,        ,      ,         , 14 ,     ,              ,array of reconciliations
+statements           ,Reconciliation ,           ,true   ,true  ,true    ,          ,        ,      ,         , 14 ,     ,              ,array of reconciliations
 finalized            ,bool           ,           ,       ,      ,true    ,true      ,        ,      ,         , 18 ,     ,true          ,flag indicating the system considers this data final
-date                 ,date           ,           ,       ,      ,        ,          ,true    ,      ,true     , 21 ,   3 ,              ,
-fromName             ,string         ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,     ,              ,
-toName               ,string         ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,     ,              ,
+date                 ,datetime       ,           ,       ,      ,        ,          ,true    ,      ,true     , 21 ,   3 ,              ,
+fromName             ,CName          ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,     ,              ,
+toName               ,CName          ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,     ,              ,
 extraData            ,string         ,           ,       ,      ,        ,          ,true    ,      ,true     , 19 ,     ,              ,
-isError              ,bool           ,           ,       ,      ,        ,          ,true    ,      ,true     , 20 ,     ,              ,
+unused               ,bool           ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,     ,              ,
 ether                ,string         ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,   7 ,              ,
 etherGasPrice        ,string         ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,   8 ,              ,
 gasUsed              ,string         ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,   9 ,              ,

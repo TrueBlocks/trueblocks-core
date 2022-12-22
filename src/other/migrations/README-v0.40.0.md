@@ -35,7 +35,7 @@ migration is complete.
 
 ### Make a note of the following folders
 
-You will need the following folder locations to proceed. Run `chifra status --terse` and note these values:
+You will need the following folder locations to proceed. Run `chifra config --terse` and note these values:
 
 1. `$configPath`
 2. `$cachePath`
@@ -48,7 +48,7 @@ your existing scraper that may be ahead of the manifest. If you wish to make a b
 
 Change directory into the `$configPath`:
 
-```
+```[shell]
 cd <configPath>
 ```
 
@@ -68,12 +68,13 @@ defaultGateway = "https://ipfs.unchainedindex.io/ipfs"
 ```
 
 3. Move your Etherscan key to a new section.
-  - Find a key called `[settings]etherscan_key`. Copy its value and then remove this line.
-  - Add three new sections to file. Use the value you copied for Etherscan API key.
-  - Note: The first section, [keys], is intentially left empty.
-  - Note: The Etherscan key is optional. The Pinata keys are needed if you intend to pin the index.
 
-```
+- Find a key called `[settings]etherscan_key`. Copy its value and then remove this line.
+- Add three new sections to file. Use the value you copied for Etherscan API key.
+- Note: The first section, [keys], is intentially left empty.
+- Note: The Etherscan key is optional. The Pinata keys are needed if you intend to pin the index.
+
+```[shell]
 [keys]
 
 [keys.etherscan]
@@ -100,13 +101,13 @@ here. Also add an item called `ipfsGateway` to the appropriate chain section.
 
 Make sure to build against the latest branch. Then run:
 
-```
+```[shell]
 chifra chunks index --check
 ```
 
 You may see a few error reports. Regardless, run this next command:
 
-```
+```[shell]
 chifra init --all            # (If you've don't want all the index portions, use `chifra init` for a minimal installation.)
 ```
 
@@ -114,7 +115,7 @@ This command may take a long time. Allow it to run to completion. If it stops or
 
 Run this command again:
 
-```
+```[shell]
 chifra chunks index --check
 ```
 

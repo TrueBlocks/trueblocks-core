@@ -26,8 +26,8 @@ bool app_Display(CTraverser* trav, void* data) {
 }
 
 //-----------------------------------------------------------------------
-const char* APP_FIELDS_ALL = "CAccountName:all";
-const char* APP_FIELDS_HIDE = "CAccountName:schema,deleted,showing,cname";
+const char* APP_FIELDS_ALL = "CName:all";
+const char* APP_FIELDS_HIDE = "CName:schema,deleted,showing,cname";
 //-----------------------------------------------------------------------
 bool app_Post(CTraverser* trav, void* data) {
     // TODO(tjayrush): Oddly, we show different fields with 'appearances' for account names than we do for other

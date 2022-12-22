@@ -12,6 +12,7 @@ package initPkg
 import (
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -53,6 +54,15 @@ func (opts *InitOptions) InitInternal() (err error, handled bool) {
 	// EXISTING_CODE
 
 	return
+}
+
+// GetInitOptions returns the options for this tool so other tools may use it.
+func GetInitOptions(args []string, g *globals.GlobalOptions) *InitOptions {
+	ret := initFinishParse(args)
+	if g != nil {
+		ret.Globals = *g
+	}
+	return ret
 }
 
 // EXISTING_CODE

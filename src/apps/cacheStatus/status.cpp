@@ -82,19 +82,6 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
             if (fieldName % "cachePath") {
                 return cachePath;
             }
-            if (fieldName % "caches" || fieldName % "cachesCnt") {
-                size_t cnt = caches.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt)
-                    return "";
-                string_q retS;
-                for (size_t i = 0; i < cnt; i++) {
-                    retS += caches[i]->Format();
-                    retS += ((i < cnt - 1) ? ",\n" : "\n");
-                }
-                return retS;
-            }
             if (fieldName % "chains" || fieldName % "chainsCnt") {
                 size_t cnt = chains.size();
                 if (endsWith(toLower(fieldName), "cnt"))
@@ -104,6 +91,19 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
                 string_q retS;
                 for (size_t i = 0; i < cnt; i++) {
                     retS += chains[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            if (fieldName % "caches" || fieldName % "cachesCnt") {
+                size_t cnt = caches.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt)
+                    return "";
+                string_q retS;
+                for (size_t i = 0; i < cnt; i++) {
+                    retS += caches[i]->Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
                 return retS;
@@ -138,6 +138,21 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
             }
             if (fieldName % "isTracing") {
                 return bool_2_Str(isTracing);
+            }
+            break;
+        case 'k':
+            if (fieldName % "keys" || fieldName % "keysCnt") {
+                size_t cnt = keys.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt)
+                    return "";
+                string_q retS;
+                for (size_t i = 0; i < cnt; i++) {
+                    retS += keys[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
             }
             break;
         case 'r':
@@ -190,6 +205,15 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 cachePath = fieldValue;
                 return true;
             }
+            if (fieldName % "chains") {
+                CChain obj;
+                string_q str = fieldValue;
+                while (obj.parseJson3(str)) {
+                    chains.push_back(obj);
+                    obj = CChain();  // reset
+                }
+                return true;
+            }
             if (fieldName % "caches") {
                 // This drops memory, so we comment it out for now
                 // clear();
@@ -199,15 +223,6 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 //     return caches->parseJson3(str);
                 // }
                 return false;
-            }
-            if (fieldName % "chains") {
-                CChain obj;
-                string_q str = fieldValue;
-                while (obj.parseJson3(str)) {
-                    chains.push_back(obj);
-                    obj = CChain();  // reset
-                }
-                return true;
             }
             break;
         case 'h':
@@ -247,6 +262,17 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
             }
             if (fieldName % "isTracing") {
                 isTracing = str_2_Bool(fieldValue);
+                return true;
+            }
+            break;
+        case 'k':
+            if (fieldName % "keys") {
+                CKey obj;
+                string_q str = fieldValue;
+                while (obj.parseJson3(str)) {
+                    keys.push_back(obj);
+                    obj = CKey();  // reset
+                }
                 return true;
             }
             break;
@@ -307,8 +333,9 @@ bool CStatus::Serialize(CArchive& archive) {
     archive >> hasEskey;
     archive >> hasPinkey;
     // archive >> ts;
-    // archive >> caches;
     // archive >> chains;
+    // archive >> caches;
+    // archive >> keys;
     // EXISTING_CODE
     uint64_t nCaches = 0;
     archive >> nCaches;
@@ -351,8 +378,9 @@ bool CStatus::SerializeC(CArchive& archive) const {
     archive << hasEskey;
     archive << hasPinkey;
     // archive << ts;
-    // archive << caches;
     // archive << chains;
+    // archive << caches;
+    // archive << keys;
     // EXISTING_CODE
     archive << (uint64_t)caches.size();
     for (auto cache : caches) {
@@ -425,8 +453,12 @@ void CStatus::registerClass(void) {
     ADD_FIELD(CStatus, "hasPinkey", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "ts", T_TIMESTAMP, ++fieldNum);
     HIDE_FIELD(CStatus, "ts");
-    ADD_FIELD(CStatus, "caches", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "chains", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CStatus, "chains");
+    ADD_FIELD(CStatus, "caches", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CStatus, "caches");
+    ADD_FIELD(CStatus, "keys", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CStatus, "keys");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CStatus, "schema");
@@ -438,6 +470,8 @@ void CStatus::registerClass(void) {
 
     // EXISTING_CODE
     SHOW_FIELD(CStatus, "caches");
+    SHOW_FIELD(CStatus, "chains");
+    SHOW_FIELD(CStatus, "keys");
     HIDE_FIELD(CStatus, "ts");
     ADD_FIELD(CStatus, "date", T_DATE, ++fieldNum);
     SHOW_FIELD(CStatus, "date");
@@ -512,8 +546,9 @@ bool CStatus::readBackLevel(CArchive& archive) {
                 }
             }
         }
+        finishParse();
+        done = true;
     }
-    finishParse();
     // EXISTING_CODE
     return done;
 }
@@ -544,6 +579,15 @@ ostream& operator<<(ostream& os, const CStatus& it) {
 const CBaseNode* CStatus::getObjectAt(const string_q& fieldName, size_t index) const {
     // EXISTING_CODE
     // EXISTING_CODE
+    if (fieldName % "chains") {
+        if (index == NOPOS) {
+            CChain empty;
+            ((CStatus*)this)->chains.push_back(empty);  // NOLINT
+            index = chains.size() - 1;
+        }
+        if (index < chains.size())
+            return &chains[index];
+    }
     if (fieldName % "caches") {
         if (index == NOPOS) {
             CCache* empty = nullptr;
@@ -553,14 +597,14 @@ const CBaseNode* CStatus::getObjectAt(const string_q& fieldName, size_t index) c
         if (index < caches.size())
             return caches[index];
     }
-    if (fieldName % "chains") {
+    if (fieldName % "keys") {
         if (index == NOPOS) {
-            CChain empty;
-            ((CStatus*)this)->chains.push_back(empty);  // NOLINT
-            index = chains.size() - 1;
+            CKey empty;
+            ((CStatus*)this)->keys.push_back(empty);  // NOLINT
+            index = keys.size() - 1;
         }
-        if (index < chains.size())
-            return &chains[index];
+        if (index < keys.size())
+            return &keys[index];
     }
     // EXISTING_CODE
     // EXISTING_CODE

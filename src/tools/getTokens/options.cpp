@@ -116,7 +116,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // We're going to turn some of these fields back on
-    manageFields("CAccountName:isCustom,isPrefund,tags,name,symbol,source,decimals,petname", false);
+    manageFields("CName:isCustom,isPrefund,tags,name,symbol,source,decimals,petname", false);
     manageFields("CMonitor:all", false);
     manageFields("CTokenBalanceRecord:all", false);
 
@@ -130,13 +130,13 @@ bool COptions::parseArguments(string_q& command) {
     if (!(modeBits & TOK_NAME)) {
         replace(format, "[{NAME}]", "");
     } else {
-        UNHIDE_FIELD(CAccountName, "name");
+        UNHIDE_FIELD(CName, "name");
     }
 
     if (!(modeBits & TOK_DECIMALS)) {
         replace(format, "[{DECIMALS}]", "");
     } else {
-        UNHIDE_FIELD(CAccountName, "decimals");
+        UNHIDE_FIELD(CName, "decimals");
     }
 
     if (!(modeBits & TOK_TOTALSUPPLY)) {
@@ -148,7 +148,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!(modeBits & TOK_SYMBOL)) {
         replace(format, "[{SYMBOL}]", "");
     } else {
-        UNHIDE_FIELD(CAccountName, "symbol");
+        UNHIDE_FIELD(CName, "symbol");
     }
 
     if (!(modeBits & TOK_HOLDER)) {

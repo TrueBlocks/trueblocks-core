@@ -46,7 +46,7 @@ class CNameStats {
     bool isContract;
     bool isErc20;
     bool isErc721;
-    explicit CNameStats(const CAccountName& acct, uint64_t c = 0) {
+    explicit CNameStats(const CName& acct, uint64_t c = 0) {
         address = acct.address;
         tags = acct.tags;
         name = acct.name;
@@ -82,7 +82,7 @@ bool doOne(COptions* options, const CAddressUintMap& theMap, const string_q& typ
     CNameStatsArray unnamed;
     CNameStatsArray named;
     for (auto addr : theMap) {
-        CAccountName acct;
+        CName acct;
         acct.address = addr.first;
         acct.petname = addr_2_Petname(acct.address, '-');
         findName(addr.first, acct);

@@ -9,10 +9,10 @@ difficulty      ,uint64      ,           ,       ,      ,        ,          ,   
 finalized       ,bool        ,           ,       ,      ,        ,          ,        ,      ,         ,10  ,11   ,true          ,flag indicating the system considers this data final
 timestamp       ,timestamp   ,           ,       ,      ,        ,          ,        ,      ,         ,7   ,2    ,1438335038    ,the Unix timestamp of the object
 baseFeePerGas   ,wei         ,           ,       ,      ,        ,          ,        ,      ,         ,9   ,6    ,120911        ,the base fee for this block
-transactions    ,transaction ,           ,true   ,true  ,        ,          ,        ,      ,         ,8   ,     ,              ,a possibly empty array of transactions or transaction hashes
+transactions    ,Transaction ,           ,true   ,true  ,        ,          ,        ,      ,         ,8   ,     ,              ,a possibly empty array of transactions or transaction hashes
 tx_hashes       ,string      ,           ,       ,true  ,true    ,          ,        ,      ,         ,    ,     ,              ,a possibly empty array of transactions or transaction hashes
 name            ,string      ,           ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,              ,the name of the block if any (see chifra when)
-date            ,date        ,           ,       ,      ,true    ,          ,        ,true  ,         ,    ,     ,              ,the date of this block as represented by its timestamp
+date            ,datetime    ,           ,       ,      ,true    ,          ,        ,true  ,         ,    ,     ,              ,the date of this block as represented by its timestamp
 unclesCnt       ,uint64      ,           ,       ,      ,true    ,          ,        ,      ,         ,11  ,     ,              ,the number of uncles in this block
 extraData       ,string      ,           ,       ,      ,true    ,          ,        ,true  ,         ,    ,     ,              ,an extra data string for use in the front end only
 transactionsCnt ,uint64      ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,10   ,              ,a possibly empty array of transactions or transaction hashes

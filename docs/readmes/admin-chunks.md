@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 ## chifra chunks
 
 The chifra chunks routine provides tools for interacting with, checking the validity of,

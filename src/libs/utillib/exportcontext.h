@@ -15,11 +15,11 @@
 #include "runtimeclass.h"
 #include "sfos.h"
 #include "conversions.h"
-#include "accountname.h"
+#include "name.h"
 
 namespace qblocks {
 
-typedef map<address_t, CAccountName> CAddressNameMap;
+typedef map<address_t, CName> CAddressNameMap;
 
 //----------------------------------------------------------------------------
 enum format_t { NONE1 = 0, JSON1 = (1 << 1), TXT1 = (1 << 2), CSV1 = (1 << 3) };

@@ -1,4 +1,4 @@
-status?modes=monitors
+config?modes=show&module=monitors
 {
   "data": [
     {
@@ -31,7 +31,6 @@ status?modes=monitors
           "isValid": true
         }
       ],
-      "chains": [],
       "date": "--date--"
     }
   ],

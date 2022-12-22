@@ -17,7 +17,7 @@ indexPath = "--new index Path--/"
 # debug_ethscan = true
 
 [display_strs]
-accountName = "--account name--"
+name = "--account name--"
 block = "--block--"
 ethstate = "--eth state--"
 function = "--function--"
