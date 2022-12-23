@@ -72,9 +72,11 @@ class CCommandOption : public CBaseNode {
     bool isGoOnly;
     bool isDeprecated;
     bool isNote;
+    bool isAlias;
     bool isErr;
     void* params{nullptr};
     void* notes{nullptr};
+    CStringArray aliases;
     explicit CCommandOption(const string_q& line);
     void verifyOptions(CStringArray& warnings);
     void verifyHotkey(CStringArray& warnings, map<string, string>& hotKeys);
@@ -187,6 +189,7 @@ inline void CCommandOption::initialize(void) {
     isGoOnly = false;
     isDeprecated = false;
     isNote = false;
+    isAlias = false;
     isErr = false;
     swagger_descr = "";
     route_list = "";
@@ -236,6 +239,7 @@ inline void CCommandOption::duplicate(const CCommandOption& co) {
     isGoOnly = co.isGoOnly;
     isDeprecated = co.isDeprecated;
     isNote = co.isNote;
+    isAlias = co.isAlias;
     isErr = co.isErr;
     swagger_descr = co.swagger_descr;
     route_list = co.route_list;

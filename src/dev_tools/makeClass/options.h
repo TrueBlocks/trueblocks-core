@@ -132,9 +132,14 @@ class COptions : public COptionsBase {
     bool handle_datamodel(void);
     bool handle_tsx(void);
     bool handle_tsx_type(const CClassDefinition& classDef);
-    bool handle_sdk_paths(void);
-    bool handle_sdk_types(void);
+
     bool handle_sdk(void);
+    bool handle_sdk_ts(void);
+    bool handle_sdk_ts_paths(CStringArray& pathsOut);
+    bool handle_sdk_ts_types(CStringArray& typesOut);
+    bool handle_sdk_py(void);
+    bool handle_sdk_py_paths(CStringArray& pathsOut);
+    bool handle_sdk_py_types(CStringArray& typesOut);
 
     void generate_switch(const CCommandOption& option);
     void generate_toggle(const CCommandOption& option);
