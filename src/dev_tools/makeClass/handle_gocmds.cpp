@@ -14,6 +14,7 @@
 
 extern string_q get_hidden(const CCommandOption& cmd);
 extern string_q get_notes2(const CCommandOption& cmd);
+extern string_q get_aliases(const CCommandOption& cmd);
 extern string_q get_optfields(const CCommandOption& cmd);
 extern string_q get_requestopts(const CCommandOption& cmd);
 extern string_q get_defaults_apis(const CCommandOption& cmd);
@@ -46,6 +47,7 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     replaceAll(source, "[{LOWER}]", toLower(p.api_route));
     replaceAll(source, "[{PROPER}]", toProper(p.api_route));
     replaceAll(source, "[{POSTNOTES}]", get_notes2(p));
+    replaceAll(source, "[{ALIASES}]", get_aliases(p));
     string_q descr = firstLower(p.description);
     if (endsWith(descr, "."))
         replaceReverse(descr, ".", "");
@@ -176,8 +178,13 @@ bool COptions::handle_gocmds(void) {
             if (isOne) {
                 params.push_back(option);
             }
-            if (option.api_route == p.api_route && option.option_type == "note")
-                notes.push_back(option);
+            if (option.api_route == p.api_route) {
+                if (option.isNote) {
+                    notes.push_back(option);
+                } else if (option.isAlias) {
+                    p.aliases.push_back(option.description);
+                }
+            }
         }
         p.params = &params;
         p.notes = &notes;
@@ -268,6 +275,20 @@ string_q get_notes2(const CCommandOption& cmd) {
     }
 
     return trim(substitute(os.str(), "|", "\n    "));
+}
+
+string_q get_aliases(const CCommandOption& cmd) {
+    if (cmd.aliases.size() == 0) {
+        return "";
+    }
+
+    ostringstream os;
+    os << "\tAliases: []string{" << endl;
+    for (auto a : cmd.aliases) {
+        os << "\t\t\"" << a << "\"," << endl;
+    }
+    os << "\t}," << endl;
+    return os.str();
 }
 
 string_q noUnderbars(const string_q& in) {
