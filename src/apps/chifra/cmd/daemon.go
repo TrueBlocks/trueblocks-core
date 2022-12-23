@@ -33,6 +33,9 @@ var daemonCmd = &cobra.Command{
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &daemonPkg.GetOptions().Globals
 	}),
+	Aliases: []string{
+		"serve",
+	},
 }
 
 const usageDaemon = `daemon [flags]`
@@ -45,7 +48,8 @@ const longDaemon = `Purpose:
 const notesDaemon = `
 Notes:
   - To start API open terminal window and run chifra daemon.
-  - See the API documentation (https://trueblocks.io/api) for more information.`
+  - See the API documentation (https://trueblocks.io/api) for more information.
+  - The 'serve' alias is deprecated and will be removed shortly.`
 
 func init() {
 	daemonCmd.Flags().SortFlags = false

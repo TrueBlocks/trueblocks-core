@@ -594,8 +594,8 @@ CCommandOption::CCommandOption(const string_q& lineIn) {
 }
 
 //---------------------------------------------------------------------------------------------------
-static const CStringArray validOptionTypes = {"switch",     "toggle",      "flag",  "deprecated",
-                                              "positional", "description", "error", "note"};
+static const CStringArray validOptionTypes = {"switch",      "toggle", "flag", "deprecated", "positional",
+                                              "description", "error",  "note", "alias"};
 
 //---------------------------------------------------------------------------------------------------
 bool CCommandOption::finishCleanup(void) {
@@ -641,6 +641,7 @@ bool CCommandOption::finishCleanup(void) {
     isDouble = contains(data_type, "double");
     isAddress = contains(data_type, "address");
     isNote = option_type == "note";
+    isAlias = option_type == "alias";
     isErr = option_type == "error";
     isConfig = generate == "config";
     isGoOnly = generate == "gocmd";
@@ -702,7 +703,9 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
         if (startsWith(data_type, "list"))
             valid_type = true;
     }
-    if (!valid_type && (option_type == "description" || option_type == "note" || option_type == "error" || isConfig) &&
+    if (!valid_type &&
+        (option_type == "description" || option_type == "note" || option_type == "alias" || option_type == "error" ||
+         isConfig) &&
         data_type.empty())
         valid_type = true;
     if (!valid_type && startsWith(data_type, "opt_"))
@@ -728,7 +731,7 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
 //---------------------------------------------------------------------------------------------------
 void CCommandOption::verifyHotkey(CStringArray& warnings, map<string, string>& hotKeys) {
     if (hotKey.empty() || contains(option_type, "positional") || contains(option_type, "description") ||
-        contains(option_type, "note") || contains(option_type, "error")) {
+        contains(option_type, "alias") || contains(option_type, "note") || contains(option_type, "error")) {
         return;
     }
 
@@ -774,7 +777,7 @@ bool CCommandOption::isChifraRoute(bool depOk) const {
     if (depOk && option_type == "deprecated")
         return true;
     return (option_type != "deprecated" && option_type != "description" && option_type != "note" &&
-            option_type != "config" && option_type != "error");
+            option_type != "alias" && option_type != "config" && option_type != "error");
 }
 
 //---------------------------------------------------------------------------------------------------

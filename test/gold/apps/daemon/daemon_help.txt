@@ -5,6 +5,9 @@ Purpose:
 Usage:
   chifra daemon [flags]
 
+Aliases:
+  daemon, serve
+
 Flags:
   -p, --port string     specify the server's port (default ":8080")
   -s, --scrape string   start the scraper, initialize it with either just blooms or entire index, generate for new blocks

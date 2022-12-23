@@ -272,6 +272,7 @@ COptions::COptions(void) {
 
     // BEG_CODE_NOTES
     // clang-format off
+    notes.push_back("The 'status' alias is deprecated and will be removed shortly.");
     // clang-format on
     // END_CODE_NOTES
 

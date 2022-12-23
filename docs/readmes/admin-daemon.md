@@ -14,6 +14,9 @@ Purpose:
 Usage:
   chifra daemon [flags]
 
+Aliases:
+  daemon, serve
+
 Flags:
   -p, --port string     specify the server's port (default ":8080")
   -s, --scrape string   start the scraper, initialize it with either just blooms or entire index, generate for new blocks
@@ -28,6 +31,7 @@ Flags:
 Notes:
   - To start API open terminal window and run chifra daemon.
   - See the API documentation (https://trueblocks.io/api) for more information.
+  - The 'serve' alias is deprecated and will be removed shortly.
 ```
 
 **Source code**: [`internal/daemon`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/daemon)
