@@ -2,3 +2,6 @@
 class = CIndexCacheItem
 fields = indexcacheitem.csv
 includes = etherlib.h
+doc_group = 04-Admin
+doc_descr = A single item in the Unchained Index
+doc_api = 312-indexCacheItem
