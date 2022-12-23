@@ -1087,6 +1087,18 @@ components:
           type: number
           format: uint64
           description: "The number of records in teh appearance table for this address"
+    chunkAppearances:
+      description: "a single record in the appearance table of an index chunk"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: uint64
+          description: "The block number of this appearance"
+        transactionIndex:
+          type: number
+          format: uint64
+          description: "The transaction index of this appearance"
     chunkStats:
       description: "summary information about the unchained index"
       type: object
@@ -1143,18 +1155,6 @@ components:
           type: number
           format: double
           description: "the ratio of appearances to addresses"
-    chunkAppearances:
-      description: "a single record in the appearance table of an index chunk"
-      type: object
-      properties:
-        blockNumber:
-          type: number
-          format: uint64
-          description: "The block number of this appearance"
-        transactionIndex:
-          type: number
-          format: uint64
-          description: "The transaction index of this appearance"
     chain:
       description: "The chain data model carries information about configured chains"
       type: object
@@ -1209,6 +1209,57 @@ components:
           format: address
         name:
           type: string
+    indexCacheItem:
+      description: "A single item in the Unchained Index"
+      type: object
+      properties:
+        nAddrs:
+          type: number
+          format: uint32
+          description: "the number of addresses in this chunk"
+        nApps:
+          type: number
+          format: uint32
+          description: "the number of appearances in this chunk"
+        firstApp:
+          type: number
+          format: blknum
+          description: "the first appearance in this chunk"
+        latestApp:
+          type: number
+          format: blknum
+          description: "the last appeaerance in this chunk"
+        firstTs:
+          type: number
+          format: timestamp
+          description: "the first timestamp in this chunk"
+        latestTs:
+          type: number
+          format: timestamp
+          description: "the last timestamp in this chunk"
+        filename:
+          type: string
+          description: "the filename of this chunk"
+        fileDate:
+          type: string
+          format: datetime
+          description: "the file date of this chunk"
+        indexSizeBytes:
+          type: number
+          format: uint32
+          description: "the size in bytes of the index portion of this chunk"
+        indexHash:
+          type: string
+          format: ipfshash
+          description: "the IPFS hash of the index portion of this chunk"
+        bloomSizeBytes:
+          type: number
+          format: uint32
+          description: "the size in bytes of the bloom filter for this chunk"
+        bloomHash:
+          type: string
+          format: ipfshash
+          description: "the IPFS has of the bloom filter for this chunk"
     function:
       description: "a human readable representation of a Solidity function call or event"
       type: object

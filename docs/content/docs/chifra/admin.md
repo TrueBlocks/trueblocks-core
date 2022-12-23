@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-12-21T12:20:59
+date: 2022-12-23T10:14:22
 lastmod:
   - :git
   - lastmod
@@ -42,6 +42,9 @@ Arguments:
   modes - either show or edit the configuration
 	One or more of [ show | edit ]
 
+Aliases:
+  config, status
+
 Flags:
       --module strings   the type of information to show or edit
                          One or more of [ index | monitors | names | abis | caches | some | all ]
@@ -51,6 +54,9 @@ Flags:
   -x, --fmt string       export format, one of [none|json*|txt|csv]
   -v, --verbose          enable verbose (increase detail with --log_level)
   -h, --help             display this help screen
+
+Notes:
+  - The 'status' alias is deprecated and will be removed shortly.
 ```
 
 **Source code**: [`internal/config`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/config)
@@ -71,6 +77,9 @@ Purpose:
 Usage:
   chifra daemon [flags]
 
+Aliases:
+  daemon, serve
+
 Flags:
   -p, --port string     specify the server's port (default ":8080")
   -s, --scrape string   start the scraper, initialize it with either just blooms or entire index, generate for new blocks
@@ -85,6 +94,7 @@ Flags:
 Notes:
   - To start API open terminal window and run chifra daemon.
   - See the API documentation (https://trueblocks.io/api) for more information.
+  - The 'serve' alias is deprecated and will be removed shortly.
 ```
 
 **Source code**: [`internal/daemon`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/daemon)

@@ -33,6 +33,9 @@ var configCmd = &cobra.Command{
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &configPkg.GetOptions().Globals
 	}),
+	Aliases: []string{
+		"status",
+	},
 }
 
 const usageConfig = `config <mode> [mode...] [flags]
@@ -46,7 +49,9 @@ const shortConfig = "report on and edit the configuration of the TrueBlocks syst
 const longConfig = `Purpose:
   Report on and edit the configuration of the TrueBlocks system.`
 
-const notesConfig = ``
+const notesConfig = `
+Notes:
+  - The 'status' alias is deprecated and will be removed shortly.`
 
 func init() {
 	configCmd.Flags().SortFlags = false

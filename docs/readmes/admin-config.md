@@ -16,6 +16,9 @@ Arguments:
   modes - either show or edit the configuration
 	One or more of [ show | edit ]
 
+Aliases:
+  config, status
+
 Flags:
       --module strings   the type of information to show or edit
                          One or more of [ index | monitors | names | abis | caches | some | all ]
@@ -25,6 +28,9 @@ Flags:
   -x, --fmt string       export format, one of [none|json*|txt|csv]
   -v, --verbose          enable verbose (increase detail with --log_level)
   -h, --help             display this help screen
+
+Notes:
+  - The 'status' alias is deprecated and will be removed shortly.
 ```
 
 **Source code**: [`internal/config`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/config)
