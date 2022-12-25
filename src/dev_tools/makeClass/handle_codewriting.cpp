@@ -135,8 +135,6 @@ bool writeCodeOut(COptions* opts, const string_q& fn) {
         converted = replaceCode(converted, "CODE_INIT", opts->initStream.str());
         converted = replaceCode(converted, "CODE_NOTES", opts->notesStream.str());
         converted = replaceCode(converted, "ERROR_STRINGS", opts->errorStrStream.str());
-        converted = replaceCode(converted, "CODE_CHIFRA_CMDMAP", opts->chifraCmdStream.str());
-        converted = replaceCode(converted, "CODE_CHIFRA_PAIRMAP", opts->pairMapStream.str());
         replaceAll(converted, "    // clang-format on\n    // clang-format off\n", "");
 
     } else if (endsWith(fn, ".go.tmpl") || endsWith(fn, ".go")) {

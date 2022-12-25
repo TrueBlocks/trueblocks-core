@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-12-20T20:24:52
+date: 2022-12-25T09:26:39
 lastmod:
   - :git
   - lastmod
@@ -16,14 +16,13 @@ menu:
 weight: 1700
 toc: true
 ---
-
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 The Admin component allows you to query the status of the TrueBlocks system.
 You can query the status; query for information about TrueBlocks caches;
 control the creation, sharing, and pinning of the TrueBlocks index of appearances;
 and even serve the data through an API.
 
 [See the API documentation for all information about using the API](/api).
-
 <!-- markdownlint-disable MD041 -->
 ## chifra config
 

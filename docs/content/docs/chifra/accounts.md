@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-12-20T20:40:22
+date: 2022-12-25T09:26:39
 lastmod:
   - :git
   - lastmod
@@ -16,6 +16,7 @@ menu:
 weight: 1100
 toc: true
 ---
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 This group of commands is at the heart of TrueBlocks. They allow you to produce and analyze transactional histories for a given Ethereum address.
 
 You may also name addresses; grab the ABI file for a given address; add, delete, and remove monitors, and, most importantly, export transactional histories to various formats,

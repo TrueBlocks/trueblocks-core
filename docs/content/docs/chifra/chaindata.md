@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2022-12-20T20:40:22
+date: 2022-12-25T09:26:39
 lastmod:
   - :git
   - lastmod
@@ -16,6 +16,7 @@ menu:
 weight: 1300
 toc: true
 ---
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 The TrueBlocks tools extract raw blockchain data directly from the node.
 You may extract block data, transactional data, receipts, logs, and traces.
 Each tool has it own set of options, allowing you to get exactly the data that

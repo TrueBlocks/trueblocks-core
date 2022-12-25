@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2022-12-21T12:20:58
+date: 2022-12-25T09:26:39
 lastmod:
   - :git
   - lastmod
@@ -19,7 +19,7 @@ toc: true
 
 The following data structures describe the output of various TrueBlocks blockchain queries. These data structures basically mimic the data available directly from the RPC.
 
-Each data structure is created by one or more tools which are detailed below
+Each data structure is created by one or more tools which are detailed below.
 
 ## Block
 

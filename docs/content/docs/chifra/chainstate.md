@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2022-12-20T20:31:10
+date: 2022-12-25T09:26:39
 lastmod:
   - :git
   - lastmod
@@ -16,19 +16,17 @@ menu:
 weight: 1500
 toc: true
 ---
-The two tools in this group deal with the _Chain State_.
-As chain state data concerns balances and byte code.
-it is distinct from Chain Data, which concerns things like blocks, transactions,
-or traces.
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+The two tools in this group deal with the _Chain State_. As chain state data concerns balances and byte code. it is distinct
+from Chain Data, which concerns things like blocks, transactions, or traces.
 
-The two tools are `chifra state` and `chifra tokens`.
-The first allows you to query account balances, the byte code of a smart contract (if available), the nonce, and other information about an address.
-The second tool, `chifra tokens`, deals with ERC20 and ERC721 token balances and other data.
+The two tools are `chifra state` and `chifra tokens`. The first allows you to query account balances, the byte code of a smart
+contract (if available), the nonce, and other information about an address. The second tool, `chifra tokens`, deals with ERC20
+and ERC721 token balances and other data.
 
-{{< alert icon="👉" title="info depends on node"
-text="Note: The amount of information you can retrieve depends on the type of node you run. Archive nodes and tracing allow you to query historical state (that is, all the way back to the genesis block). TrueBlocks works with non-archive nodes, but they are much less informative."
->}}
-<!-- markdownlint-disable MD041 -->
+Note: The amount of information you can retrieve depends on the type of node you run. Archive nodes and tracing allow
+you to query historical state (that is, all the way back to the genesis block). TrueBlocks works with non-archive nodes, but
+they are much less informative.<!-- markdownlint-disable MD041 -->
 ## chifra state
 
 Use this tool to retrieve the balance of an address (or list of addresses) at the given block (or blocks). Specify multiple addresses and/or multiple blocks if you wish, but you must specify at least one address. If no block is specified, the latest block is reported.
