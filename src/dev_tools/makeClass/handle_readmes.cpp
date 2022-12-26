@@ -46,7 +46,6 @@ bool COptions::handle_readmes(void) {
                 weight += 200;
             }
             items[ep.group] += ep.api_route + ",";
-            // cerr << "X: " << ep.group << " " << ep.api_route << " " << ep.tool << endl;
             string_q justTool = ep.tool;
             justTool = nextTokenClear(justTool, ' ');
 
@@ -98,7 +97,6 @@ bool COptions::handle_readmes(void) {
         explode(paths, tool, ',');
         for (auto p : paths) {
             string_q pp = getDocsPathReadmes(group + "-" + p + ".md");
-            cerr << group << "-" << pp << ": " << fileExists(pp) << endl;
             os << asciiFileToString(pp);
         }
 

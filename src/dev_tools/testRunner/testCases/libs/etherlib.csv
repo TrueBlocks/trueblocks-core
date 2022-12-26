@@ -7,8 +7,6 @@ on      ,cmd  ,fast  ,null  ,etherlib/abiTest         ,ethtest_decode   ,n    ,v
 on      ,cmd  ,fast  ,null  ,etherlib/abiTest         ,ethtest_decode2  ,n    ,val = eth_test @ s = 7        
 on      ,cmd  ,fast  ,null  ,etherlib/abiTest         ,ethtest_decode_r ,n    ,val = eth_test @ s = 5        
 on      ,cmd  ,fast  ,null  ,etherlib/abiTest         ,ethtest_tight    ,n    ,val = eth_test @ s = 6        
-on      ,cmd  ,fast  ,null  ,etherlib/abiTest         ,evtassign        ,n    ,val = evt_assign              
-on      ,cmd  ,fast  ,null  ,etherlib/abiTest         ,funcassign       ,n    ,val = func_assign             
 on      ,cmd  ,fast  ,null  ,etherlib/abiTest         ,01               ,n    ,val = ecoding                 
 on      ,cmd  ,slow  ,null  ,etherlib/abiTest         ,02               ,n    ,val = encoding                
 on      ,cmd  ,slow  ,null  ,etherlib/abiTest         ,03               ,n    ,val = generation encoding     

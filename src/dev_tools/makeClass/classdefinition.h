@@ -38,7 +38,6 @@ class CClassDefinition : public CBaseNode {
     string_q base_base;
     string_q head_includes;
     string_q src_includes;
-    string_q field_str;
     string_q display_str;
     string_q sort_str;
     string_q eq_str;
@@ -132,7 +131,6 @@ inline void CClassDefinition::initialize(void) {
     base_base = "";
     head_includes = "";
     src_includes = "";
-    field_str = "";
     display_str = "";
     sort_str = "";
     eq_str = "";
@@ -168,7 +166,6 @@ inline void CClassDefinition::duplicate(const CClassDefinition& cl) {
     base_base = cl.base_base;
     head_includes = cl.head_includes;
     src_includes = cl.src_includes;
-    field_str = cl.field_str;
     display_str = cl.display_str;
     sort_str = cl.sort_str;
     eq_str = cl.eq_str;

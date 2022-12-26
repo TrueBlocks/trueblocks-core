@@ -142,9 +142,6 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'f':
-            if (fieldName % "field_str") {
-                return field_str;
-            }
             if (fieldName % "fieldArray" || fieldName % "fieldArrayCnt") {
                 size_t cnt = fieldArray.size();
                 if (endsWith(toLower(fieldName), "cnt"))
@@ -301,10 +298,6 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
             }
             break;
         case 'f':
-            if (fieldName % "field_str") {
-                field_str = fieldValue;
-                return true;
-            }
             if (fieldName % "fieldArray") {
                 CParameter obj;
                 string_q str = fieldValue;
@@ -385,7 +378,6 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     archive >> base_base;
     archive >> head_includes;
     archive >> src_includes;
-    archive >> field_str;
     archive >> display_str;
     archive >> sort_str;
     archive >> eq_str;
@@ -424,7 +416,6 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     archive << base_base;
     archive << head_includes;
     archive << src_includes;
-    archive << field_str;
     archive << display_str;
     archive << sort_str;
     archive << eq_str;
@@ -499,7 +490,6 @@ void CClassDefinition::registerClass(void) {
     ADD_FIELD(CClassDefinition, "base_base", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "head_includes", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "src_includes", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CClassDefinition, "field_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "display_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "sort_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "eq_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -658,11 +648,11 @@ void checkSorts(const string_q& className, const CStringArray& fields, const CSt
     }
 }
 
+//------------------------------------------------------------------------------------------------
 CClassDefinition::CClassDefinition(const CToml& toml) {
     //------------------------------------------------------------------------------------------------
     class_name = toml.getConfigStr("settings", "class", "");
     base_class = toml.getConfigStr("settings", "base_class", "CBaseNode");
-    field_str = toml.getConfigStr("settings", "fields", "");
     head_includes = toml.getConfigStr("settings", "includes", "");
     src_includes = toml.getConfigStr("settings", "cpp_includes", "");
     contained_by = toml.getConfigStr("settings", "contained_by", "");
@@ -706,7 +696,6 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
             if (contains(isFields, fld))
                 fld = "is_" + fld;
         }
-        field_str.clear();
         CStringArray lines;
         explode(lines, contents, '\n');
         checkSorts(class_name, fields, lines, "doc");
@@ -732,22 +721,7 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
             }
         }
     } else {
-        CParameterArray tmpArray;
-        CStringArray strs;
-        explode(strs, field_str, '|');
-        for (auto str : strs) {
-            replace(str, "~", "|");
-            CParameter param(str);
-            tmpArray.push_back(param);
-        }
-        for (auto tmp : tmpArray) {
-            if (tmp.is_flags & IS_EXTRA) {
-                tmp.is_flags |= IS_MINIMAL;
-                extraArray.push_back(tmp);
-            } else {
-                fieldArray.push_back(tmp);
-            }
-        }
+        LOG_ERR("Cannot find file ", fn);
     }
 }
 // EXISTING_CODE
