@@ -4,5 +4,5 @@ fields = paramter.csv
 includes = utillib.h
 tsx = true
 doc_group = 05-Other
-doc_descr = an input or output paramter to a function
-doc_api = 41-parameter
+doc_descr = an input or output parameter to a Solidity function or event
+doc_api = 502-parameter

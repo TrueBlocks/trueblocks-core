@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-12-25T09:26:39
+date: 2022-12-26T23:08:23
 lastmod:
   - :git
   - lastmod
@@ -263,5 +263,5 @@ This documentation mentions the following basic data types.
 | int256    | a signed big number                             | as a string    |
 | string    | a normal character string                       |                |
 | timestamp | a 64-bit unsigned integer                       | Unix timestamp |
-| uint256   |                                                 |                |
+| uint256   | a 256-bit unsigned integer                      |                |
 | uint64    | a 64-bit unsigned integer                       |                |
