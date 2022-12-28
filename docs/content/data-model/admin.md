@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-12-25T09:26:39
+date: 2022-12-28T01:35:20
 lastmod:
   - :git
   - lastmod
@@ -290,8 +290,8 @@ The `indexCacheItem` is used to present a single Unchained Index chunk in the Ex
 
 The following commands produce and manage indexcacheitems:
 
-| Tools |     |
-| ----- | --- |
+| Tools                                              |                                                               |
+| -------------------------------------------------- | ------------------------------------------------------------- |
 | [chifra config](/docs/chifra/admin/#chifra-config) | report on and edit the configuration of the TrueBlocks system |
 
 Indexcacheitem data is made of the following data fields:

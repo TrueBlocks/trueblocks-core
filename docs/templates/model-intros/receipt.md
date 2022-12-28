@@ -5,9 +5,10 @@ If the `to` address of a transaction is `0x0`, the `input` data is considered to
 
 The following commands produce and manage [{PLURAL}]:
 
-| Tools                                                      |                                                |
-| ---------------------------------------------------------- | ---------------------------------------------- |
-| [chifra receipts](/docs/chifra/chaindata/#chifra-receipts) | retrieve receipts for the given transaction(s) |
+| Tools                                                      |                                                              |
+| ---------------------------------------------------------- | ------------------------------------------------------------ |
+| [chifra receipts](/docs/chifra/chaindata/#chifra-receipts) | retrieve receipts for the given transaction(s)               |
+| [chifra export](/docs/chifra/accounts/#chifra-export)      | export full detail of transactions for one or more addresses |
 
 [{PROPER}] data is made of the following data fields:
 

@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2022-12-25T09:26:39
+date: 2022-12-28T01:35:20
 lastmod:
   - :git
   - lastmod
@@ -61,7 +61,9 @@ The following commands produce and manage transactions:
 
 | Tools                                                              |                                                                 |
 | ------------------------------------------------------------------ | --------------------------------------------------------------- |
-| [chifra transactions](/docs/chifra/chaindata/#chifra-transactions) | Retrieve one or more transactions from the chain or local cache |
+| [chifra transactions](/docs/chifra/chaindata/#chifra-transactions) | retrieve one or more transactions from the chain or local cache |
+| [chifra slurp](/docs/chifra/other/#chifra-slurp)                   | fetch data from EtherScan for any address                       |
+| [chifra export](/docs/chifra/accounts/#chifra-export)              | export full detail of transactions for one or more addresses    |
 
 Transaction data is made of the following data fields:
 
@@ -97,9 +99,10 @@ If the `to` address of a transaction is `0x0`, the `input` data is considered to
 
 The following commands produce and manage receipts:
 
-| Tools                                                      |                                                |
-| ---------------------------------------------------------- | ---------------------------------------------- |
-| [chifra receipts](/docs/chifra/chaindata/#chifra-receipts) | retrieve receipts for the given transaction(s) |
+| Tools                                                      |                                                              |
+| ---------------------------------------------------------- | ------------------------------------------------------------ |
+| [chifra receipts](/docs/chifra/chaindata/#chifra-receipts) | retrieve receipts for the given transaction(s)               |
+| [chifra export](/docs/chifra/accounts/#chifra-export)      | export full detail of transactions for one or more addresses |
 
 Receipt data is made of the following data fields:
 
@@ -116,9 +119,10 @@ Logs appear in a possibly empty array in the transaction's receipt. They are onl
 
 The following commands produce and manage logs:
 
-| Tools                                              |                                            |
-| -------------------------------------------------- | ------------------------------------------ |
-| [chifra logs](/docs/chifra/chaindata/#chifra-logs) | retrieve logs for the given transaction(s) |
+| Tools                                                 |                                                              |
+| ----------------------------------------------------- | ------------------------------------------------------------ |
+| [chifra logs](/docs/chifra/chaindata/#chifra-logs)    | retrieve logs for the given transaction(s)                   |
+| [chifra export](/docs/chifra/accounts/#chifra-export) | export full detail of transactions for one or more addresses |
 
 Log data is made of the following data fields:
 
@@ -143,9 +147,10 @@ Traces may be arbitrarily deep (up to the gasLimit) and ultimately represent a t
 
 The following commands produce and manage traces:
 
-| Tools                                                  |                                              |
-| ------------------------------------------------------ | -------------------------------------------- |
-| [chifra traces](/docs/chifra/chaindata/#chifra-traces) | retrieve traces for the given transaction(s) |
+| Tools                                                  |                                                              |
+| ------------------------------------------------------ | ------------------------------------------------------------ |
+| [chifra traces](/docs/chifra/chaindata/#chifra-traces) | retrieve traces for the given transaction(s)                 |
+| [chifra export](/docs/chifra/accounts/#chifra-export)  | export full detail of transactions for one or more addresses |
 
 Trace data is made of the following data fields:
 
@@ -170,9 +175,10 @@ Other than the first trace which is the trace of the transaction itself, traces 
 
 The following commands produce and manage traceactions:
 
-| Tools                                                  |                                              |
-| ------------------------------------------------------ | -------------------------------------------- |
-| [chifra traces](/docs/chifra/chaindata/#chifra-traces) | retrieve traces for the given transaction(s) |
+| Tools                                                  |                                                              |
+| ------------------------------------------------------ | ------------------------------------------------------------ |
+| [chifra traces](/docs/chifra/chaindata/#chifra-traces) | retrieve traces for the given transaction(s)                 |
+| [chifra export](/docs/chifra/accounts/#chifra-export)  | export full detail of transactions for one or more addresses |
 
 Traceaction data is made of the following data fields:
 
@@ -191,9 +197,10 @@ As mentioned above, other than the first trace, traces represent calls into othe
 
 The following commands produce and manage traceresults:
 
-| Tools                                                  |                                              |
-| ------------------------------------------------------ | -------------------------------------------- |
-| [chifra traces](/docs/chifra/chaindata/#chifra-traces) | retrieve traces for the given transaction(s) |
+| Tools                                                  |                                                              |
+| ------------------------------------------------------ | ------------------------------------------------------------ |
+| [chifra traces](/docs/chifra/chaindata/#chifra-traces) | retrieve traces for the given transaction(s)                 |
+| [chifra export](/docs/chifra/accounts/#chifra-export)  | export full detail of transactions for one or more addresses |
 
 Traceresult data is made of the following data fields:
 

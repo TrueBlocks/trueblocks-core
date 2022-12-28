@@ -3,8 +3,8 @@ The `indexCacheItem` is used to present a single Unchained Index chunk in the Ex
 
 The following commands produce and manage [{PLURAL}]:
 
-| Tools |     |
-| ----- | --- |
+| Tools                                              |                                                               |
+| -------------------------------------------------- | ------------------------------------------------------------- |
 | [chifra config](/docs/chifra/admin/#chifra-config) | report on and edit the configuration of the TrueBlocks system |
 
 [{PROPER}] data is made of the following data fields:
