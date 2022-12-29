@@ -21,7 +21,7 @@ string_q get_usage(const string_q& route) {
 extern const char* STR_CONFIG;
 //------------------------------------------------------------------------------------------------------------
 string_q get_config_usage(const CCommandOption& ep) {
-    string_q docFn = getDocsPathReadmes(substitute(toLower(ep.group), " ", "") + "-" + ep.api_route + ".config");
+    string_q docFn = getDocsPathTemplates(substitute(toLower(ep.group), " ", "") + "-" + ep.api_route + ".config.md");
     return substitute(STR_CONFIG, "[{CONFIGS}]", asciiFileToString(docFn));
 }
 
