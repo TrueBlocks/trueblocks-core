@@ -14,26 +14,26 @@
  * Parts of this file were generated with makeClass --run. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
-#include "tokenbalancerecord.h"
+#include "tokenbalance.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CTokenBalanceRecord, CMonitor);
+IMPLEMENT_NODE(CTokenBalance, CMonitor);
 
 //---------------------------------------------------------------------------
-extern string_q nextTokenbalancerecordChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextTokenbalancerecordChunk_custom(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextTokenbalanceChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextTokenbalanceChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CTokenBalanceRecord::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CTokenBalance::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["tokenbalancerecord_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["tokenbalance_fmt"] : fmtIn);
     if (fmt.empty()) {
         toJson(ctx);
         return;
@@ -43,13 +43,13 @@ void CTokenBalanceRecord::Format(ostream& ctx, const string_q& fmtIn, void* data
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextTokenbalancerecordChunk, this);
+        ctx << getNextChunk(fmt, nextTokenbalanceChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextTokenbalancerecordChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextTokenbalanceChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CTokenBalanceRecord*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CTokenBalance*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -58,9 +58,9 @@ string_q nextTokenbalancerecordChunk(const string_q& fieldIn, const void* dataPt
 }
 
 //---------------------------------------------------------------------------
-string_q CTokenBalanceRecord::getValueByName(const string_q& fieldName) const {
+string_q CTokenBalance::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextTokenbalancerecordChunk_custom(fieldName, this);
+    string_q ret = nextTokenbalanceChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -115,7 +115,7 @@ string_q CTokenBalanceRecord::getValueByName(const string_q& fieldName) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTokenBalanceRecord::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CTokenBalance::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
@@ -178,7 +178,7 @@ bool CTokenBalanceRecord::setValueByName(const string_q& fieldNameIn, const stri
 }
 
 //---------------------------------------------------------------------------------------------------
-void CTokenBalanceRecord::finishParse() {
+void CTokenBalance::finishParse() {
     // EXISTING_CODE
     if (!decimals)
         decimals = 18;
@@ -186,7 +186,7 @@ void CTokenBalanceRecord::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTokenBalanceRecord::Serialize(CArchive& archive) {
+bool CTokenBalance::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -213,7 +213,7 @@ bool CTokenBalanceRecord::Serialize(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTokenBalanceRecord::SerializeC(CArchive& archive) const {
+bool CTokenBalance::SerializeC(CArchive& archive) const {
     // Writing always writes the latest version of the data
     CMonitor::SerializeC(archive);
 
@@ -233,10 +233,10 @@ bool CTokenBalanceRecord::SerializeC(CArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTokenBalanceRecord::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+bool CTokenBalance::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
     ASSERT(archiveIn.isReading());
     ASSERT(archiveOut.isWriting());
-    CTokenBalanceRecord copy;
+    CTokenBalance copy;
     // EXISTING_CODE
     // EXISTING_CODE
     copy.Serialize(archiveIn);
@@ -245,7 +245,7 @@ bool CTokenBalanceRecord::Migrate(CArchive& archiveIn, CArchive& archiveOut) con
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CTokenBalanceRecordArray& array) {
+CArchive& operator>>(CArchive& archive, CTokenBalanceArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -257,7 +257,7 @@ CArchive& operator>>(CArchive& archive, CTokenBalanceRecordArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CTokenBalanceRecordArray& array) {
+CArchive& operator<<(CArchive& archive, const CTokenBalanceArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -266,43 +266,43 @@ CArchive& operator<<(CArchive& archive, const CTokenBalanceRecordArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CTokenBalanceRecord::registerClass(void) {
+void CTokenBalance::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CTokenBalanceRecord, "schema"))
+    if (HAS_FIELD(CTokenBalance, "schema"))
         return;
 
     CMonitor::registerClass();
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CTokenBalanceRecord, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTokenBalanceRecord, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CTokenBalanceRecord, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CTokenBalanceRecord, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTokenBalanceRecord, "blockNumber", T_BLOCKNUM, ++fieldNum);
-    ADD_FIELD(CTokenBalanceRecord, "date", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CTokenBalanceRecord, "totalSupply", T_WEI, ++fieldNum);
-    ADD_FIELD(CTokenBalanceRecord, "transactionIndex", T_BLOCKNUM, ++fieldNum);
-    ADD_FIELD(CTokenBalanceRecord, "holder", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CTokenBalanceRecord, "holder");
-    ADD_FIELD(CTokenBalanceRecord, "priorBalance", T_WEI, ++fieldNum);
-    ADD_FIELD(CTokenBalanceRecord, "balance", T_WEI, ++fieldNum);
-    ADD_FIELD(CTokenBalanceRecord, "diff", T_INT256, ++fieldNum);
+    ADD_FIELD(CTokenBalance, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTokenBalance, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CTokenBalance, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CTokenBalance, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTokenBalance, "blockNumber", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CTokenBalance, "date", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CTokenBalance, "totalSupply", T_WEI, ++fieldNum);
+    ADD_FIELD(CTokenBalance, "transactionIndex", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CTokenBalance, "holder", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CTokenBalance, "holder");
+    ADD_FIELD(CTokenBalance, "priorBalance", T_WEI, ++fieldNum);
+    ADD_FIELD(CTokenBalance, "balance", T_WEI, ++fieldNum);
+    ADD_FIELD(CTokenBalance, "diff", T_INT256, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CTokenBalanceRecord, "schema");
-    HIDE_FIELD(CTokenBalanceRecord, "deleted");
-    HIDE_FIELD(CTokenBalanceRecord, "showing");
-    HIDE_FIELD(CTokenBalanceRecord, "cname");
+    HIDE_FIELD(CTokenBalance, "schema");
+    HIDE_FIELD(CTokenBalance, "deleted");
+    HIDE_FIELD(CTokenBalance, "showing");
+    HIDE_FIELD(CTokenBalance, "cname");
 
-    builtIns.push_back(_biCTokenBalanceRecord);
+    builtIns.push_back(_biCTokenBalance);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextTokenbalancerecordChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CTokenBalanceRecord* tok = reinterpret_cast<const CTokenBalanceRecord*>(dataPtr);
+string_q nextTokenbalanceChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CTokenBalance* tok = reinterpret_cast<const CTokenBalance*>(dataPtr);
     if (tok) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -353,7 +353,7 @@ string_q nextTokenbalancerecordChunk_custom(const string_q& fieldIn, const void*
 // EXISTING_CODE
 
 //---------------------------------------------------------------------------
-bool CTokenBalanceRecord::readBackLevel(CArchive& archive) {
+bool CTokenBalance::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -361,19 +361,19 @@ bool CTokenBalanceRecord::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CTokenBalanceRecord& tok) {
+CArchive& operator<<(CArchive& archive, const CTokenBalance& tok) {
     tok.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CTokenBalanceRecord& tok) {
+CArchive& operator>>(CArchive& archive, CTokenBalance& tok) {
     tok.Serialize(archive);
     return archive;
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CTokenBalanceRecord& it) {
+ostream& operator<<(ostream& os, const CTokenBalance& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -383,7 +383,7 @@ ostream& operator<<(ostream& os, const CTokenBalanceRecord& it) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_TOKENBALANCERECORD =
+const char* STR_DISPLAY_TOKENBALANCE =
     "[{BLOCKNUMBER}]\t"
     "[{HOLDER}]\t"
     "[{ADDRESS}]\t"

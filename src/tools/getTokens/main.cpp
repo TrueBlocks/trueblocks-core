@@ -27,7 +27,7 @@ int main(int argc, const char* argv[]) {
             continue;
 
         if (once)
-            cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CTokenBalanceRecord));
+            cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CTokenBalance));
 
         for (auto holder : options.holders) {
             for (auto token : options.tokens) {

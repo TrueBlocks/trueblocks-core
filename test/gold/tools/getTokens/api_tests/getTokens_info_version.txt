@@ -9,7 +9,7 @@
   ],
   "types": [
     {
-      "type": "CTokenBalanceRecord",
+      "type": "CTokenBalance",
       "fields": [
         {
           "name": "address",
