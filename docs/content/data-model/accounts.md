@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-12-30T16:18:20
+date: 2022-12-30T17:27:24
 lastmod:
   - :git
   - lastmod
@@ -165,6 +165,12 @@ Reconciliation data is made of the following data fields:
 | endBalDiff          | a calculated field -- endBal - endBalCalc, if non-zero, the reconciliation failed                                                              | int256    |
 | endBalCalc          | a calculated field -- begBal + amountNet                                                                                                       | int256    |
 
+### Notes
+
+**Intra-block transactions**: In many cases two or more transactions requiring a reconciliation may occur in a single block. Because the Ethereum blockchain only provides balance queries at the end of blocks, it is not possible to query for the balance of an asset at the end of transactions for which there are other following transactions in the block nor for the beginning balance for which there are transactions prior to the given transaction in the same block. In these cases, TrueBlocks simulates the beginning and ending balance as needed and adds `partial` to the `reconciliationType`.
+
+**Spot Price**: If the `spotPrice` is available from an on-chain source (such as UniSwap), then it represents the ETH/DAI value at the time of the transaction if the reconciliation is for ETH. For other assets, the `spotPrice` represents the asset's value relative to `ETH`, so to price a non-ETH asset in US dollars, one would need to convert first to `ETH` then to dollars. If a price is not available on-chain, the `spotPrice` will be zero and the caller is encouraged to get the price for the asset from other sources.
+
 ## Name
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
@@ -284,20 +290,24 @@ Abi data is made of the following data fields:
 | address    | the smart contract that implements this abi  | address        |
 | interfaces | the list of events and functions on this abi | CFunctionArray |
 
+### Notes
+
+See the `chifra abis` command line for information about getting an EtherScan key.
+
 ## Base types
 
 This documentation mentions the following basic data types.
 
-| Type      | Description                                     | Notes          |
-| --------- | ----------------------------------------------- | -------------- |
-| address   | a 20-byte hexadecimal string starting with '0x' | lowercase      |
-| blknum    | an alias for a uint64                           |                |
-| bool      | a value either `true`, `false`, `1`, or `0`     |                |
-| datetime  | a JSON formatted date                           | as a string    |
-| double    | a floating point number of double precision     |                |
-| hash      | a 32-byte hexadecimal string starting with '0x' | lowercase      |
-| int256    | a signed big number                             | as a string    |
-| string    | a normal character string                       |                |
-| timestamp | a 64-bit unsigned integer                       | Unix timestamp |
-| uint256   | a 256-bit unsigned integer                      |                |
-| uint64    | a 64-bit unsigned integer                       |                |
+| Type      | Description                         | Notes          |
+| --------- | ----------------------------------- | -------------- |
+| address   | an '0x'-prefixed 20-byte hex string | lowercase      |
+| blknum    | an alias for a uint64               |                |
+| bool      | either `true`, `false`, `1`, or `0` |                |
+| datetime  | a JSON formatted date               | as a string    |
+| double    | a double precision float            | 64 bits        |
+| hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
+| int256    | a signed big number                 | as a string    |
+| string    | a normal character string           |                |
+| timestamp | a 64-bit unsigned integer           | Unix timestamp |
+| uint256   | a 256-bit unsigned integer          |                |
+| uint64    | a 64-bit unsigned integer           |                |

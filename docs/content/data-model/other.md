@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2022-12-30T16:18:20
+date: 2022-12-30T17:27:24
 lastmod:
   - :git
   - lastmod
@@ -84,7 +84,7 @@ Parameter data is made of the following data fields:
 
 This documentation mentions the following basic data types.
 
-| Type      | Description                                     | Notes          |
-| --------- | ----------------------------------------------- | -------------- |
-| bool      | a value either `true`, `false`, `1`, or `0`     |                |
-| string    | a normal character string                       |                |
+| Type      | Description                         | Notes          |
+| --------- | ----------------------------------- | -------------- |
+| bool      | either `true`, `false`, `1`, or `0` |                |
+| string    | a normal character string           |                |

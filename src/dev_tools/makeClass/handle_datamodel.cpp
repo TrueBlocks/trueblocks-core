@@ -96,6 +96,10 @@ bool COptions::handle_datamodel(void) {
         } else {
             docStream << STR_MODEL_HEADER << asciiFileToString(modelFn) << get_producer_table(model, endpointArray)
                       << STR_MODEL_FOOTER << endl;
+            string_q notesFn = getDocsPathTemplates("model-intros/" + model.doc_api + ".notes.md");
+            if (fileExists(notesFn)) {
+                docStream << "### Notes\n\n" << asciiFileToString(notesFn) << endl;
+            }
         }
 
         ostringstream fieldStream, toolsStream;
@@ -146,7 +150,7 @@ bool COptions::handle_datamodel(void) {
         size_t wids[5];
         bzero(wids, sizeof(size_t) * 5);
         wids[0] = 9;
-        wids[1] = 47;
+        wids[1] = 35;
         wids[2] = 14;
         for (auto type : docTypes) {
             string_q notes = types[type];
@@ -293,8 +297,8 @@ const char* STR_DOCUMENT_TAIL =
     "\n"
     "This documentation mentions the following basic data types.\n"
     "\n"
-    "| Type      | Description                                     | Notes          |\n"
-    "| --------- | ----------------------------------------------- | -------------- |\n"
+    "| Type      | Description                         | Notes          |\n"
+    "| --------- | ----------------------------------- | -------------- |\n"
     "[{TYPES}]";
 
 //------------------------------------------------------------------------------------------------------------

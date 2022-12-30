@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-12-30T16:18:20
+date: 2022-12-30T17:29:12
 lastmod:
   - :git
   - lastmod
@@ -337,16 +337,16 @@ Indexcacheitem data is made of the following data fields:
 
 This documentation mentions the following basic data types.
 
-| Type      | Description                                     | Notes          |
-| --------- | ----------------------------------------------- | -------------- |
-| address   | a 20-byte hexadecimal string starting with '0x' | lowercase      |
-| blknum    | an alias for a uint64                           |                |
-| bool      | a value either `true`, `false`, `1`, or `0`     |                |
-| datetime  | a JSON formatted date                           | as a string    |
-| double    | a floating point number of double precision     |                |
-| hash      | a 32-byte hexadecimal string starting with '0x' | lowercase      |
-| ipfshash  | a multi-hash produced by IPFS                   | mixed-case     |
-| string    | a normal character string                       |                |
-| timestamp | a 64-bit unsigned integer                       | Unix timestamp |
-| uint32    | a 32-bit unsigned integer                       |                |
-| uint64    | a 64-bit unsigned integer                       |                |
+| Type      | Description                         | Notes          |
+| --------- | ----------------------------------- | -------------- |
+| address   | an '0x'-prefixed 20-byte hex string | lowercase      |
+| blknum    | an alias for a uint64               |                |
+| bool      | either `true`, `false`, `1`, or `0` |                |
+| datetime  | a JSON formatted date               | as a string    |
+| double    | a double precision float            | 64 bits        |
+| hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
+| ipfshash  | a multi-hash produced by IPFS       | mixed-case     |
+| string    | a normal character string           |                |
+| timestamp | a 64-bit unsigned integer           | Unix timestamp |
+| uint32    | a 32-bit unsigned integer           |                |
+| uint64    | a 64-bit unsigned integer           |                |
