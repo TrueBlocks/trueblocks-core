@@ -3,9 +3,10 @@ Other than the first trace which is the trace of the transaction itself, traces 
 
 The following commands produce and manage [{PLURAL}]:
 
-| Tools                                                  |                                              |
-| ------------------------------------------------------ | -------------------------------------------- |
-| [chifra traces](/docs/chifra/chaindata/#chifra-traces) | retrieve traces for the given transaction(s) |
+| Tools                                                  |                                                              |
+| ------------------------------------------------------ | ------------------------------------------------------------ |
+| [chifra traces](/docs/chifra/chaindata/#chifra-traces) | retrieve traces for the given transaction(s)                 |
+| [chifra export](/docs/chifra/accounts/#chifra-export)  | export full detail of transactions for one or more addresses |
 
 [{PROPER}] data is made of the following data fields:
 

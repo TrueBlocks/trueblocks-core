@@ -4,5 +4,5 @@ fields = key.csv
 includes = utillib.h
 cpp_includes =
 doc_group = 04-Admin
-doc_descr = The api key that carries information about configured apis
-doc_api = 310-key
+doc_descr = an unsupported data item used for debugging only
+doc_api = 411-key

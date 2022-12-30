@@ -3,9 +3,10 @@ Logs appear in a possibly empty array in the transaction's receipt. They are onl
 
 The following commands produce and manage [{PLURAL}]:
 
-| Tools                                              |                                            |
-| -------------------------------------------------- | ------------------------------------------ |
-| [chifra logs](/docs/chifra/chaindata/#chifra-logs) | retrieve logs for the given transaction(s) |
+| Tools                                                 |                                                              |
+| ----------------------------------------------------- | ------------------------------------------------------------ |
+| [chifra logs](/docs/chifra/chaindata/#chifra-logs)    | retrieve logs for the given transaction(s)                   |
+| [chifra export](/docs/chifra/accounts/#chifra-export) | export full detail of transactions for one or more addresses |
 
 [{PROPER}] data is made of the following data fields:
 

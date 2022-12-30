@@ -1,7 +1,7 @@
 components:
   schemas:
     monitor:
-      description: "A local file indicating a user's interest in an address. Includes caches for reconicilations, transactions and appearances as well as an optional association to named account"
+      description: "a local file indicating a user's interest in an address. Includes caches for reconicilations, transactions, and appearances as well as an optional association to named account"
       type: object
       properties:
         nApps:
@@ -46,7 +46,7 @@ components:
         isContract:
           type: boolean
     appearance:
-      description: "data of the appropriate type from a single appearance of an address or the count of same"
+      description: "an appearance (`<blockNumber,transactionIndex>`) of an address anywhere on the chain"
       type: object
       properties:
         blockNumber:
@@ -74,7 +74,7 @@ components:
           type: string
           description: "the date represented by the timestamp"
     reconciliation:
-      description: "a reconiciliation of all inflows and outflows to a given account at a given transaction"
+      description: "a reconiciliation, including all inflows and outflows, for a single transfer of an asset (including ETH) to or from a given address"
       type: object
       properties:
         blockNumber:
@@ -248,7 +248,7 @@ components:
           format: int256
           description: "a calculated field -- begBal + amountNet"
     name:
-      description: "an association between a name and address for use throughout TrueBlocks"
+      description: "an association between a human-readable name and an address used throughout TrueBlocks"
       type: object
       properties:
         tags:
@@ -300,7 +300,7 @@ components:
           type: boolean
           description: "`true` if the address is an ERC720, `false` otherwise"
     transfer:
-      description: "a representation of an ERC-20 token transfer"
+      description: "the representation of a token transfer"
       type: object
       properties:
         blockNumber:
@@ -368,7 +368,7 @@ components:
           type: string
           description: "The four-byte encoding of the transaction's function call"
     appearanceCount:
-      description: "data of the appropriate type from a single appearance of an address or the count of same"
+      description: "the number of records, file size, and last visited block for a given monitor"
       type: object
       properties:
         address:
@@ -384,7 +384,7 @@ components:
           format: uint64
           description: "the size of the monitor file containing those appearances"
     abi:
-      description: "a human readable representation of a Solidity function call or event"
+      description: "a JSON object describing the functions and events in an Ethereum smart contract"
       type: object
       properties:
         address:
@@ -397,7 +397,7 @@ components:
             $ref: "#/components/schemas/function"
           description: "the list of events and functions on this abi"
     block:
-      description: "block data directly from the blockchain"
+      description: "block data as returned from the RPC ( with slight enhancements)"
       type: object
       properties:
         gasLimit:
@@ -454,7 +454,7 @@ components:
           format: uint64
           description: "the number of uncles in this block"
     transaction:
-      description: "the transaction data for a given transaction directly from the blockchain"
+      description: "transaction data as returned from the RPC (with slight enhancements)"
       type: object
       properties:
         hash:
@@ -548,7 +548,7 @@ components:
           type: string
           format: datetime
     receipt:
-      description: "receipt data for a given transaction directly from the blockchain"
+      description: "receipt data as returned from the RPC (with slight enhancements)"
       type: object
       properties:
         status:
@@ -569,7 +569,7 @@ components:
             $ref: "#/components/schemas/log"
           description: "a possibly empty array of logs"
     log:
-      description: "log data for a given transaction directly from the blockchain"
+      description: "log data as returned from the RPC (with slight enhancements)"
       type: object
       properties:
         blockNumber:
@@ -620,7 +620,7 @@ components:
           example: "Transfer(0xcfa...9f54..."
           description: "a truncated, more readable version of the articulation"
     trace:
-      description: "trace data for a given transaction directly from the blockchain"
+      description: "trace data as returned from the RPC (with slight enhancements)"
       type: object
       properties:
         blockHash:
@@ -677,7 +677,7 @@ components:
           type: string
           description: "a compressed string version of the articulated trace"
     traceAction:
-      description: "the trace action data for a given trace directly from the blockchain"
+      description: "trace action data as returned from the RPC (with slight enhancements)"
       type: object
       properties:
         from:
@@ -706,7 +706,7 @@ components:
           example: "0xf503...179b"
           description: "if the call type is self-destruct, the address to which the refund is sent"
     traceResult:
-      description: "the trace result data for a given trace directly from the blockchain"
+      description: "trace result data as returned from the RPC (with slight enhancements)"
       type: object
       properties:
         newContract:
@@ -727,7 +727,7 @@ components:
           format: bytes
           description: "the result of the call of this trace"
     datedBlock:
-      description: "An indentified block named for convienience"
+      description: "a block that has been given a particular name such as `first` or `latest`"
       type: object
       properties:
         blockNumber:
@@ -746,7 +746,7 @@ components:
           example: "2015-07-30 15:34:53 UTC"
           description: "Human readable version of timestamp"
     ethState:
-      description: "the on-chain state of a given address"
+      description: "the on-chain state of a given address including ETH balance, nonce, and smart contract byte code if present"
       type: object
       properties:
         blockNumber:
@@ -789,7 +789,7 @@ components:
           example: "one of 'EOA' or 'Contract'"
           description: "the type of the address at the given block"
     ethCall:
-      description: "the result of a call to a smart contract"
+      description: "the result (articulated if possible, as bytes otherwise) of a call to a smart contract"
       type: object
       properties:
         blockNumber:
@@ -866,7 +866,7 @@ components:
           type: boolean
           description: "`true` if the address is an ERC720, `false` otherwise"
     config:
-      description: "This data model carries information about the TrueBlocks system including both the API server and the local binary caches"
+      description: "status-related data about the TrueBlocks system including the server and local binary caches"
       type: object
       properties:
         clientVersion:
@@ -934,7 +934,7 @@ components:
             $ref: "#/components/schemas/key"
           description: "the list of configured api keys"
     cache:
-      description: "The cache data model carries information about the various local binary caches"
+      description: "the base data model for each of the type-specific local binary caches"
       type: object
       properties:
         type:
@@ -961,7 +961,7 @@ components:
             $ref: "#/components/schemas/cacheEntry"
           description: "an array of cache items"
     pinnedChunk:
-      description: "the IPFS hashes of the index chunk and its associated Bloom filter for the given block range"
+      description: "a single record in the manifest detailing the IPFS hases and file sizes for each bloom filter and index chunk"
       type: object
       properties:
         range:
@@ -987,7 +987,7 @@ components:
           format: blknum
           description: "the latest appearance in the chunk"
     manifest:
-      description: "a manifest of the IPFS hashes created for the unchained index"
+      description: "a JSON object containing records for each bloom filter and index chunk in the Unchained Index"
       type: object
       properties:
         version:
@@ -1010,7 +1010,7 @@ components:
             $ref: "#/components/schemas/pinnedChunk"
           description: "a list of the IPFS hashes of all of the chunks in the unchained index"
     chunkIndex:
-      description: "the internal data of the unchained index chunks"
+      description: "internal-use only data model detailing a single index chunk file"
       type: object
       properties:
         range:
@@ -1037,7 +1037,7 @@ components:
           format: uint64
           description: "The size of the chunk in bytes"
     chunkBlooms:
-      description: "information about a single bloom filter file"
+      description: "internal-use only data model detailing a single bloom filter file"
       type: object
       properties:
         range:
@@ -1068,7 +1068,7 @@ components:
           format: uint64
           description: "The width of the bloom filter"
     chunkAddresses:
-      description: "address records found in individual chunks"
+      description: "internal-use only data model detailing a single address record in the address table of an index chunk"
       type: object
       properties:
         address:
@@ -1088,7 +1088,7 @@ components:
           format: uint64
           description: "The number of records in teh appearance table for this address"
     chunkAppearances:
-      description: "a single record in the appearance table of an index chunk"
+      description: "internal-use only data model detailing a single appearance record in the appearance table of an index chunk"
       type: object
       properties:
         blockNumber:
@@ -1100,7 +1100,7 @@ components:
           format: uint64
           description: "The transaction index of this appearance"
     chunkStats:
-      description: "summary information about the unchained index"
+      description: "summary statistics about an Unchained Index bloom filter and index chunk"
       type: object
       properties:
         start:
@@ -1156,7 +1156,7 @@ components:
           format: double
           description: "the ratio of appearances to addresses"
     chain:
-      description: "The chain data model carries information about configured chains"
+      description: "a configuration item carrying information about a single chain"
       type: object
       properties:
         chain:
@@ -1185,7 +1185,7 @@ components:
           type: string
           description: "An IPFS gateway for pinning the index if enabled"
     key:
-      description: "The api key that carries information about configured apis"
+      description: "an unsupported data item used for debugging only"
       type: object
       properties:
         provider:
@@ -1201,7 +1201,7 @@ components:
           type: string
           description: "A secret used for an API"
     cacheEntry:
-      description: "an entry in one of the caches"
+      description: "a single entry in the results of a status query when `--verbose` is enabled"
       type: object
       properties:
         address:
@@ -1210,7 +1210,7 @@ components:
         name:
           type: string
     indexCacheItem:
-      description: "A single item in the Unchained Index"
+      description: "an item in the Unchained Index cache"
       type: object
       properties:
         nAddrs:
@@ -1261,7 +1261,7 @@ components:
           format: ipfshash
           description: "the IPFS has of the bloom filter for this chunk"
     function:
-      description: "a human readable representation of a Solidity function call or event"
+      description: "a human-readable representation of a Solidity function call or event"
       type: object
       properties:
         name:
@@ -1287,7 +1287,7 @@ components:
             $ref: "#/components/schemas/parameter"
           description: "the output parameters to the function, if any"
     parameter:
-      description: "an input or output paramter to a function"
+      description: "an input or output parameter to a Solidity function or event"
       type: object
       properties:
         type:

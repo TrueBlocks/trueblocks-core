@@ -4,5 +4,5 @@ fields = chain.csv
 includes = utillib.h
 cpp_includes =
 doc_group = 04-Admin
-doc_descr = The chain data model carries information about configured chains
-doc_api = 309-chain
+doc_descr = a configuration item carrying information about a single chain
+doc_api = 410-chain

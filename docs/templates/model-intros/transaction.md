@@ -10,7 +10,9 @@ The following commands produce and manage [{PLURAL}]:
 
 | Tools                                                              |                                                                 |
 | ------------------------------------------------------------------ | --------------------------------------------------------------- |
-| [chifra transactions](/docs/chifra/chaindata/#chifra-transactions) | Retrieve one or more transactions from the chain or local cache |
+| [chifra transactions](/docs/chifra/chaindata/#chifra-transactions) | retrieve one or more transactions from the chain or local cache |
+| [chifra slurp](/docs/chifra/other/#chifra-slurp)                   | fetch data from EtherScan for any address                       |
+| [chifra export](/docs/chifra/accounts/#chifra-export)              | export full detail of transactions for one or more addresses    |
 
 [{PROPER}] data is made of the following data fields:
 
