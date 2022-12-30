@@ -36,8 +36,16 @@ bool COptions::handle_readmes(void) {
 
     LOG_INFO(cYellow, "handling readmes...", cOff);
 
+    map<string_q, string_q> items;
+    map<string_q, uint64_t> weights;
+    uint32_t weight = 1100;
     for (auto ep : endpointArray) {
         if (!ep.api_route.empty()) {
+            if (weights[ep.group] == 0) {
+                weights[ep.group] = weight;
+                weight += 200;
+            }
+            items[ep.group] += ep.api_route + ",";
             string_q justTool = ep.tool;
             justTool = nextTokenClear(justTool, ' ');
 
@@ -70,20 +78,13 @@ bool COptions::handle_readmes(void) {
         }
     }
 
-    // TODO: this should be generated from the data
-    CStringArray items = {"Accounts:list,export,monitors,names,abis",
-                          "Chain Data:blocks,transactions,receipts,logs,traces,when", "Chain State:state,result,tokens",
-                          "Admin:config,daemon,scrape,chunks,init", "Other:explore,ethslurp"};
-    uint32_t weight = 1100;
     for (auto item : items) {
-        CStringArray parts;
-        explode(parts, item, ':');
-        string_q group = parts[0];
-        string_q tool = parts[1];
+        string_q group = item.first;
+        string_q tool = item.second;
 
         string_q front = STR_YAML_FRONTMATTER;
         replace(front, "[{TITLE}]", firstUpper(toLower(group)));
-        replace(front, "[{WEIGHT}]", uint_2_Str(weight));
+        replace(front, "[{WEIGHT}]", uint_2_Str(weights[group]));
         replace(front, "[{M1}]", "docs:");
         replace(front, "[{M2}]", "parent: \"chifra\"");
         group = substitute(toLower(group), " ", "");
@@ -100,10 +101,7 @@ bool COptions::handle_readmes(void) {
         }
 
         string_q outFn = getDocsPathContent("docs/chifra/" + group + ".md");
-        // cerr << "Out: " << fileExists(outFn) << endl;
         writeIfDifferent(outFn, os.str(), Now());
-
-        weight += 200;
     }
 
     LOG_INFO(cYellow, "makeClass --readmes", cOff, " processed ", counter.nVisited, " files (changed ",
