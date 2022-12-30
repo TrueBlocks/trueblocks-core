@@ -19,11 +19,20 @@ string_q get_usage(const string_q& route) {
 }
 
 extern const char* STR_CONFIG;
+extern const char* STR_README_BEGPARTS;
+extern const char* STR_README_ENDPARTS;
 //------------------------------------------------------------------------------------------------------------
 string_q get_config_usage(const CCommandOption& ep) {
     string_q n = "readme-intros/" + substitute(toLower(ep.group), " ", "") + "-" + ep.api_route + ".config.md";
     string_q docFn = getDocsPathTemplates(n);
-    return substitute(STR_CONFIG, "[{CONFIGS}]", asciiFileToString(docFn));
+    return fileExists(docFn) ? substitute(STR_CONFIG, "[{CONFIGS}]", asciiFileToString(docFn)) : "";
+}
+
+//------------------------------------------------------------------------------------------------------------
+string_q get_readme_notes(const CCommandOption& ep) {
+    string_q n = "readme-intros/" + substitute(toLower(ep.group), " ", "") + "-" + ep.api_route + ".notes.md";
+    string_q docFn = getDocsPathTemplates(n);
+    return fileExists(docFn) ? "\n\n" + trim(asciiFileToString(docFn), '\n') : "";
 }
 
 //------------------------------------------------------------------------------------------------------------
@@ -37,51 +46,46 @@ bool COptions::handle_readmes(void) {
 
     LOG_INFO(cYellow, "handling readmes...", cOff);
 
-    map<string_q, string_q> items;
+    map<string_q, string_q> groupParts;
     map<string_q, uint64_t> weights;
     uint32_t weight = 1100;
     for (auto ep : endpointArray) {
         if (!ep.api_route.empty()) {
-            if (weights[ep.group] == 0) {
-                weights[ep.group] = weight;
-                weight += 200;
-            }
-            items[ep.group] += ep.api_route + ",";
-            string_q justTool = ep.tool;
-            justTool = nextTokenClear(justTool, ' ');
-
-            string_q docFn = substitute(toLower(ep.group), " ", "") + "-" + ep.api_route + ".md";
-            string_q dSource = getDocsPathTemplates("readme-intros/" + docFn);
-            string_q contents = asciiFileToString(dSource);
-
-            replaceAll(contents, "[{NAME}]", "chifra " + ep.api_route);
-            replaceAll(contents, "[{USAGE}]", get_usage(ep.api_route));
-            replaceAll(contents, "[{CONFIG}]", get_config_usage(ep));
-
-            string_q dFooter;
-            dFooter =
-                "\n**Source code**: "
-                "[`[{FILE}]`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/"
-                "[{FILE}])\n";
-            replaceAll(dFooter, "[{FILE}]", "internal/" + ep.api_route);
-            string_q dReadme = getDocsPathReadmes(docFn);
-            string_q dContents = substitute(contents, "[{FOOTER}]", dFooter);
-            writeIfDifferent(dReadme, dContents);
-
-            string_q sFooter;
-            sFooter = "\n" + trim(asciiFileToString(getDocsPathTemplates("readme-intros/README.footer.md")), '\n');
             if (ep.is_visible_docs) {
-                string_q sContents = substitute(contents, "[{FOOTER}]", sFooter);
-                string_q tReadme = getPathToSource("apps/chifra/internal/" + ep.api_route + "/README.md");
-                replaceAll(tReadme, "//", "/");
-                writeIfDifferent(tReadme, sContents);
+                if (weights[ep.group] == 0) {
+                    weights[ep.group] = weight;
+                    weight += 200;
+                }
+                groupParts[ep.group] += ep.api_route + ",";
+
+                string_q docFn = substitute(toLower(ep.group), " ", "") + "-" + ep.api_route + ".md";
+                string_q docSource = getDocsPathTemplates("readme-intros/" + docFn);
+                string_q docContents = STR_README_BEGPARTS + asciiFileToString(docSource) + STR_README_ENDPARTS;
+
+                replaceAll(docContents, "[{USAGE}]", get_usage(ep.api_route));
+                replaceAll(docContents, "[{CONFIG}]", get_config_usage(ep));
+                replaceAll(docContents, "[{NOTES}]", get_readme_notes(ep));
+                replaceAll(docContents, "[{NAME}]", "chifra " + ep.api_route);
+
+                string_q docsFooter =
+                    "\n\n**Source code**: "
+                    "[`[{FILE}]`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/"
+                    "[{FILE}])\n";
+                replaceAll(docsFooter, "[{FILE}]", "internal/" + ep.api_route);
+                writeIfDifferent(getDocsPathReadmes(docFn), substitute(docContents, "[{FOOTER}]", docsFooter));
+
+                docsFooter = getDocsPathTemplates("readme-intros/README.footer.md");
+                string_q sourceFooter = "\n\n" + trim(asciiFileToString(docsFooter), '\n') + "\n";
+                string_q sourceReadme =
+                    substitute(getPathToSource("apps/chifra/internal/" + ep.api_route + "/README.md"), "//", "/");
+                writeIfDifferent(sourceReadme, substitute(docContents, "[{FOOTER}]", sourceFooter));
             }
         }
     }
 
-    for (auto item : items) {
-        string_q group = item.first;
-        string_q tool = item.second;
+    for (auto part : groupParts) {
+        string_q group = part.first;
+        string_q tool = part.second;
 
         string_q front = STR_YAML_FRONTMATTER;
         replace(front, "[{TITLE}]", firstUpper(toLower(group)));
@@ -107,6 +111,7 @@ bool COptions::handle_readmes(void) {
 
     LOG_INFO(cYellow, "makeClass --readmes", cOff, " processed ", counter.nVisited, " files (changed ",
              counter.nProcessed, ").", string_q(40, ' '));
+
     return true;
 }
 
@@ -149,3 +154,6 @@ const char* STR_CONFIG =
     "-- in the environment by exporting the configuration item as UPPER&lowbar;CASE, without "
     "underbars, and prepended with TB_SETTINGS&lowbar;, or  \n"
     "-- on the command line using the configuration item with leading dashes (i.e., `--name`).  ";
+
+const char* STR_README_BEGPARTS = "## [{NAME}]\n\n";
+const char* STR_README_ENDPARTS = "\n[{USAGE}][{CONFIG}][{NOTES}][{FOOTER}]\n";

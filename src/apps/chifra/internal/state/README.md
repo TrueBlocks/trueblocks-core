@@ -1,9 +1,12 @@
-<!-- markdownlint-disable MD041 -->
 ## chifra state
 
-Use this tool to retrieve the balance of an address (or list of addresses) at the given block (or blocks). Specify multiple addresses and/or multiple blocks if you wish, but you must specify at least one address. If no block is specified, the latest block is reported.
+<!-- markdownlint-disable MD041 -->
+The `chifra state` tool retrieves the balance of an address (or list of addresses) at the given block
+(or blocks). Specify multiple addresses and/or multiple blocks if you wish, but you must specify
+at least one address. If no block is specified, the latest block is reported.
 
-You may also query to see if an address is a smart contract as well as retrieve a contract's byte code.
+You may also query to see if an address is a smart contract as well as retrieve a contract's
+byte code.
 
 ```[plaintext]
 Purpose:
@@ -35,7 +38,7 @@ Notes:
 ```
 
 <!-- markdownlint-disable MD041 -->
-#### Other Options
+### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.
 
@@ -50,4 +53,7 @@ All tools accept the following additional flags, although in some cases, they ha
       --file string     specify multiple sets of command line options in a file
 ```
 
-*For the `--file string` option, you may place a series of valid command lines in a file using any valid flags. In some cases, this may significantly improve performance. A semi-colon at the start of any line makes it a comment.*
+*For the `--file string` option, you may place a series of valid command lines in a file using any
+valid flags. In some cases, this may significantly improve performance. A semi-colon at the start
+of any line makes it a comment.*
+

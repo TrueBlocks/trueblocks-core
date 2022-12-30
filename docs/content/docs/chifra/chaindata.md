@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2022-12-30T03:51:21
+date: 2022-12-30T16:19:37
 lastmod:
   - :git
   - lastmod
@@ -17,18 +17,22 @@ weight: 1300
 toc: true
 ---
 <!-- markdownlint-disable MD033 MD036 MD041 -->
-The TrueBlocks tools extract raw blockchain data directly from the node.
-You may extract block data, transactional data, receipts, logs, and traces.
-Each tool has it own set of options, allowing you to get exactly the data that
-you want.
-<!-- markdownlint-disable MD041 -->
+The TrueBlocks tools extract raw blockchain data directly from the node. You may extract block
+data, transactional data, receipts, logs, and traces. Each tool has it own set of options,
+allowing you to get exactly the data that you want.
 ## chifra blocks
 
-The `chifra blocks` tool retrieves block data from your Ethereum node or, if previously cached, from the TrueBlocks cache. You may specify multiple blocks per invocation.
+<!-- markdownlint-disable MD041 -->
+The `chifra blocks` tool retrieves block data from your Ethereum node or, if previously cached, from the
+TrueBlocks cache. You may specify multiple blocks per invocation.
 
-By default, `chifra blocks` queries the full transactional details of the block (including receipts). You may optionally retrieve only the transaction hashes in the block (which is significantly faster). Additionally, you may also use this tool to retrieve uncle blocks at a give height.
+By default, `chifra blocks` queries the full transactional details of the block (including receipts).
+You may optionally retrieve only the transaction hashes in the block (which is significantly faster).
+Additionally, you may also use this tool to retrieve uncle blocks at a give height.
 
-Another useful feature of `chifra blocks` is the ability to extract address appearances from a block. TrueBlocks uses a similar feature internally to build its index of appearances. This type of data is very insightful when studying end user behavior and chain-wide adoption analysis.
+Another useful feature of `chifra blocks` is the ability to extract address appearances from a block.
+TrueBlocks uses a similar feature internally to build its index of appearances. This type of data
+is very insightful when studying end user behavior and chain-wide adoption analysis.
 
 ```[plaintext]
 Purpose:
@@ -66,14 +70,20 @@ Notes:
 
 **Source code**: [`internal/blocks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/blocks)
 
-<!-- markdownlint-disable MD041 -->
 ## chifra transactions
 
-The `chifra transactions` tool retrieves transactions directly from the Ethereum node (using the `--raw` option) or from the TrueBlocks cache (if present). You may specify multiple transaction identifiers per invocation. Unlike the Ethereum RPC, the reported transactions include the transaction's receipt and generated logs.
+<!-- markdownlint-disable MD041 -->
+The `chifra transactions` tool retrieves transactions directly from the Ethereum node (using the `--raw`
+option) or from the TrueBlocks cache (if present). You may specify multiple transaction identifiers
+per invocation. Unlike the Ethereum RPC, the reported transactions include the transaction's receipt
+and generated logs.
 
-The `--articulate` option fetches the ABI from each encountered smart contract (including those encountered in a trace--if the `--trace` option is enabled) to better describe the reported data.
+The `--articulate` option fetches the ABI from each encountered smart contract (including those
+encountered in a trace--if the `--trace` option is enabled) to better describe the reported data.
 
-The `--trace` option attaches an array transaction traces to the output (if the node you're querying has --tracing enabled), while the `--uniq` option displays a list of uniq address appearances instead of the underlying data (including uniq addresses in traces if enabled).
+The `--trace` option attaches an array transaction traces to the output (if the node you're querying
+has --tracing enabled), while the `--uniq` option displays a list of uniq address appearances
+instead of the underlying data (including uniq addresses in traces if enabled).
 
 ```[plaintext]
 Purpose:
@@ -105,14 +115,18 @@ Notes:
 
 **Source code**: [`internal/transactions`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/transactions)
 
-<!-- markdownlint-disable MD041 -->
 ## chifra receipts
 
-`chifra receipts` returns the given transaction's receipt. You may specify multiple transaction identifiers per invocation.
+<!-- markdownlint-disable MD041 -->
+`chifra receipts` returns the given transaction's receipt. You may specify multiple transaction identifiers
+per invocation.
 
-The `--articulate` option fetches the ABI from each encountered smart contract (including those encountered in a trace--if the `--trace` option is enabled) to better describe the reported data.
+The `--articulate` option fetches the ABI from each encountered smart contract (including those
+encountered in a trace--if the `--trace` option is enabled) to better describe the reported data.
 
-Generally speaking, this tool is less useful than others as you may report the same data using `chifra transactions` and more focused data using `chifra logs`. It is included here for completeness, as the `receipt` is a fundamental data structure in Ethereum.
+Generally speaking, this tool is less useful than others as you may report the same data using
+`chifra transactions` and more focused data using `chifra logs`. It is included here for
+completeness, as the `receipt` is a fundamental data structure in Ethereum.
 
 ```[plaintext]
 Purpose:
@@ -138,12 +152,14 @@ Notes:
 
 **Source code**: [`internal/receipts`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/receipts)
 
-<!-- markdownlint-disable MD041 -->
 ## chifra logs
 
-`chifra logs` returns the given transaction's logs. You may specify multiple transaction identifiers per invocation.
+<!-- markdownlint-disable MD041 -->
+`chifra logs` returns the given transaction's logs. You may specify multiple transaction identifiers
+per invocation.
 
-The `--articulate` option fetches the ABI from each encountered smart contract to better describe the reported data. The `--topic` and `--source` options allow you to filter your results.
+The `--articulate` option fetches the ABI from each encountered smart contract to better describe
+the reported data. The `--topic` and `--source` options allow you to filter your results.
 
 ```[plaintext]
 Purpose:
@@ -170,14 +186,17 @@ Notes:
 
 **Source code**: [`internal/logs`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/logs)
 
-<!-- markdownlint-disable MD041 -->
 ## chifra traces
 
-The `chifra traces` tool retrieves a transaction's traces. You may specify multiple transaction identifiers per invocation.
+<!-- markdownlint-disable MD041 -->
+The `chifra traces` tool retrieves a transaction's traces. You may specify multiple transaction
+identifiers per invocation.
 
-The `--articulate` option fetches the ABI from each encountered smart contract to better describe the reported data.
+The `--articulate` option fetches the ABI from each encountered smart contract to better describe
+the reported data.
 
-The `--filter` option calls your node's `trace_filter` routine (if available) using a bang-separated string of the same values used by `trace_fitler`.
+The `--filter` option calls your node's `trace_filter` routine (if available) using a bang-separated
+string of the same values used by `trace_fitler`.
 
 ```[plaintext]
 Purpose:
@@ -208,14 +227,20 @@ Notes:
 
 **Source code**: [`internal/traces`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/traces)
 
-<!-- markdownlint-disable MD041 -->
 ## chifra when
 
-The `chifra when` tool answers one of two questions: (1) "At what date and time did a given block occur?" or (2) "What block occurred at or before a given date and time?"
+<!-- markdownlint-disable MD041 -->
+The `chifra when` tool answers one of two questions: (1) "At what date and time did a given block
+occur?" or (2) "What block occurred at or before a given date and time?"
 
-In the first case, supply a block number or hash and the date and time of that block are displayed. In the later case, supply a date (and optionally a time) and the block number that occurred at or just prior to that date is displayed.
+In the first case, supply a block number or hash and the date and time of that block are displayed.
+In the later case, supply a date (and optionally a time) and the block number that occurred at or
+just prior to that date is displayed.
 
-The values for `date` and `time` are specified in JSON format. `hour`/`minute`/`second` are optional, and if omitted, default to zero in each case. Block numbers may be specified as either integers or hexadecimal number or block hashes. You may specify any number of dates and/or blocks per invocation.
+The values for `date` and `time` are specified in JSON format. `hour`/`minute`/`second` are
+optional, and if omitted, default to zero in each case. Block numbers may be specified as either
+integers or hexadecimal number or block hashes. You may specify any number of dates and/or blocks
+per invocation.
 
 ```[plaintext]
 Purpose:

@@ -1,9 +1,11 @@
-<!-- markdownlint-disable MD041 -->
 ## chifra logs
 
-`chifra logs` returns the given transaction's logs. You may specify multiple transaction identifiers per invocation.
+<!-- markdownlint-disable MD041 -->
+`chifra logs` returns the given transaction's logs. You may specify multiple transaction identifiers
+per invocation.
 
-The `--articulate` option fetches the ABI from each encountered smart contract to better describe the reported data. The `--topic` and `--source` options allow you to filter your results.
+The `--articulate` option fetches the ABI from each encountered smart contract to better describe
+the reported data. The `--topic` and `--source` options allow you to filter your results.
 
 ```[plaintext]
 Purpose:
@@ -29,7 +31,7 @@ Notes:
 ```
 
 <!-- markdownlint-disable MD041 -->
-#### Other Options
+### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.
 
@@ -44,4 +46,7 @@ All tools accept the following additional flags, although in some cases, they ha
       --file string     specify multiple sets of command line options in a file
 ```
 
-*For the `--file string` option, you may place a series of valid command lines in a file using any valid flags. In some cases, this may significantly improve performance. A semi-colon at the start of any line makes it a comment.*
+*For the `--file string` option, you may place a series of valid command lines in a file using any
+valid flags. In some cases, this may significantly improve performance. A semi-colon at the start
+of any line makes it a comment.*
+

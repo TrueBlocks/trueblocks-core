@@ -1,11 +1,16 @@
-<!-- markdownlint-disable MD041 -->
 ## chifra slurp
 
+<!-- markdownlint-disable MD041 -->
 `chifra slurp` is the first tool we built in the Ethereum space. It even has its [own website](http://ethslurp.com).
 
-While it's useful, it has two shortcomings. First, it is fully centralized, pulling its data from [http://etherscan.io](http://etherscan.io). Second, is that it does not report every transaction for a given account. This is actually a shortcoming with EtherScan. It's too complicated to explain here, but see our blog.
+While it's useful, it has two shortcomings. First, it is fully centralized, pulling its data from
+[http://etherscan.io](http://etherscan.io). Second, is that it does not report every transaction
+for a given account. This is actually a shortcoming with EtherScan. It's too complicated to explain
+here, but see our blog.
 
-While `chifra slurp` has its shortcomings, it does provides some nice features. You may use it to pull any transaction initiated by an EOA for example or to explore mining rewards. Visit the above referenced website for more information.
+While `chifra slurp` has its shortcomings, it does provides some nice features. You may use it to pull
+any transaction initiated by an EOA for example or to explore mining rewards. Visit the above
+referenced website for more information.
 
 ```[plaintext]
 Purpose:
@@ -31,7 +36,7 @@ Notes:
 ```
 
 <!-- markdownlint-disable MD041 -->
-#### Other Options
+### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.
 
@@ -46,4 +51,7 @@ All tools accept the following additional flags, although in some cases, they ha
       --file string     specify multiple sets of command line options in a file
 ```
 
-*For the `--file string` option, you may place a series of valid command lines in a file using any valid flags. In some cases, this may significantly improve performance. A semi-colon at the start of any line makes it a comment.*
+*For the `--file string` option, you may place a series of valid command lines in a file using any
+valid flags. In some cases, this may significantly improve performance. A semi-colon at the start
+of any line makes it a comment.*
+

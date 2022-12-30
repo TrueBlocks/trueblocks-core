@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-12-30T03:51:21
+date: 2022-12-30T16:18:20
 lastmod:
   - :git
   - lastmod
@@ -17,19 +17,30 @@ weight: 1700
 toc: true
 ---
 
-The data models produced by the tools in the Admin category relate to scraping the chain, producing the Unchained Index, and querying the configuration of the system. Additional data related to sharing the indexes via IPFS and pinning the same are also produced by tools in this category.
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+The data models produced by the tools in the Admin category relate to scraping the chain, producing
+the Unchained Index, and querying the configuration of the system. Additional data related to
+sharing the indexes via IPFS and pinning the same are also produced by tools in this category.
 
 Each data structure is created by one or more tools which are detailed below.
 
 ## Status
 
-The [chifra config](/docs/chifra/admin/#chifra-config) tool reports on the state (and size) of the various TrueBlocks local binary caches. TrueBlocks produces nine difference caches: `abis`, `blocks`, `monitors`, `names`, `objs`, `recons`, `slurps`, `traces`, `txs`. In general practice, these caches may take up a few GB of hard drive space, however, for very popular smart contract the size of the caches may grow rather large. Keep an eye on it.
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+The [chifra config](/docs/chifra/admin/#chifra-config) tool reports on the state (and size) of the
+various TrueBlocks local binary caches. TrueBlocks produces nine difference caches: `abis`, `blocks`,
+`monitors`, `names`, `objs`, `recons`, `slurps`, `traces`, `txs`. In general practice, these caches
+may take up a few GB of hard drive space, however, for very popular smart contract the size of the
+caches may grow rather large. Keep an eye on it.
 
-The following commands produce and manage status:
+The `status` data model is a complex beast. It contains various information including a list of
+registered chains, information about many of the internal binary caches maintained by `chifra`
+as well as current status information about the system including version information for both
+`chifra` and the node it's running against.
 
-| Tools                                              |                                               |
-| -------------------------------------------------- | --------------------------------------------- |
-| [chifra config](/docs/chifra/admin/#chifra-config) | report on the status of the TrueBlocks system |
+The following commands produce and manage `Statuses`:
+
+- [chifra config](/docs/chifra/admin/#chifra-config)
 
 Status data is made of the following data fields:
 
@@ -57,13 +68,14 @@ Status data is made of the following data fields:
 
 ## Cache
 
-The [chifra config <type>](/docs/chifra/admin/#chifra-config) reports on the binary caches. Those reports come in the form of the Cache data type. Each cache data object may carry unique information for the given cache. See the source code for more information.
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+The [chifra config <type>](/docs/chifra/admin/#chifra-config) reports on the binary caches. Those
+reports come in the form of the Cache data type. Each cache data object may carry unique
+information for the given cache. See the source code for more information.
 
-The following commands produce and manage caches:
+The following commands produce and manage `Caches`:
 
-| Tools                                              |                                               |
-| -------------------------------------------------- | --------------------------------------------- |
-| [chifra config](/docs/chifra/admin/#chifra-config) | report on the status of the TrueBlocks system |
+- [chifra config](/docs/chifra/admin/#chifra-config)
 
 Cache data is made of the following data fields:
 
@@ -78,14 +90,18 @@ Cache data is made of the following data fields:
 
 ## PinnedChunk
 
-The TrueBlocks index scraper periodically creates a chunked portion of the index so that it can be more easily stored in a content-addresable data store such as IPFS. We call these periodically-created chunks, PinnedChunks. The format of said item is described here. A pinned chunk is effectively a relational table relating all of the addresses appearing in the chunk with a list of appearances appearing in the chunk.
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+The TrueBlocks index scraper periodically creates a chunked portion of the index so that it can
+be more easily stored in a content-addresable data store such as IPFS. We call these
+periodically-created chunks, PinnedChunks. The format of said item is described here. A pinned
+chunk is effectively a relational table relating all of the addresses appearing in the chunk
+with a list of appearances appearing in the chunk.
 
-The following commands produce and manage pinnedchunks:
+The following commands produce and manage `PinnedChunks`:
 
-| Tools                                              |                                                                 |
-| -------------------------------------------------- | --------------------------------------------------------------- |
-| [chifra scrape](/docs/chifra/admin/#chifra-scrape) | scan the chain and update the TrueBlocks index of appearances   |
-| [chifra chunks](/docs/chifra/admin/#chifra-chunks) | manage pinned index of appearances and associated Bloom filters |
+- [chifra chunks](/docs/chifra/admin/#chifra-chunks)
+- [chifra init](/docs/chifra/admin/#chifra-init)
+- [chifra scrape](/docs/chifra/admin/#chifra-scrape)
 
 Pinnedchunk data is made of the following data fields:
 
@@ -99,14 +115,18 @@ Pinnedchunk data is made of the following data fields:
 
 ## Manifest
 
-The Manifest details the index of appearance's PinnedChunks. Each record in the Manifest details the block range represented by the chunk as well as the IPFS hash of the index chunk along with the associated IPFS hash for the Bloom filter of the chunk. The manifest itself is also pushed to IPFS and the IPFS of the hash of the manifest is published periodically to the Unchained Index smart contract.
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+The Manifest details the index of appearance's PinnedChunks. Each record in the Manifest details
+the block range represented by the chunk as well as the IPFS hash of the index chunk along with
+the associated IPFS hash for the Bloom filter of the chunk. The manifest itself is also pushed
+to IPFS and the IPFS of the hash of the manifest is published periodically to the Unchained Index
+smart contract.
 
-The following commands produce and manage manifests:
+The following commands produce and manage `Manifests`:
 
-| Tools                                              |                                                                 |
-| -------------------------------------------------- | --------------------------------------------------------------- |
-| [chifra scrape](/docs/chifra/admin/#chifra-scrape) | scan the chain and update the TrueBlocks index of appearances   |
-| [chifra chunks](/docs/chifra/admin/#chifra-chunks) | manage pinned index of appearances and associated Bloom filters |
+- [chifra chunks](/docs/chifra/admin/#chifra-chunks)
+- [chifra init](/docs/chifra/admin/#chifra-init)
+- [chifra scrape](/docs/chifra/admin/#chifra-scrape)
 
 Manifest data is made of the following data fields:
 
@@ -120,13 +140,13 @@ Manifest data is made of the following data fields:
 
 ## ChunkIndex
 
-The `indexchunk` data model represents internal information about each Unchained Index index chunk. It is used mostly interenally to study the characteristics of the Unchained Index.
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+The `indexchunk` data model represents internal information about each Unchained Index index chunk.
+It is used mostly interenally to study the characteristics of the Unchained Index.
 
-The following commands produce and manage chunkindexs:
+The following commands produce and manage `ChunkIndexes`:
 
-| Tools                                              |                                                                 |
-| -------------------------------------------------- | --------------------------------------------------------------- |
-| [chifra chunks](/docs/chifra/admin/#chifra-chunks) | manage pinned index of appearances and associated Bloom filters |
+- [chifra chunks](/docs/chifra/admin/#chifra-chunks)
 
 Chunkindex data is made of the following data fields:
 
@@ -141,13 +161,15 @@ Chunkindex data is made of the following data fields:
 
 ## ChunkBlooms
 
-The `blooms` data model represents the bloom filter files that front the Unchained Index index portions. The information here is mostly for internal use only as it includes the size and number of the bloom filters present as well as the number of addresses inserted into the bloom. This information is used to study the characteristics of the Unchained Index.
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+The `blooms` data model represents the bloom filter files that front the Unchained Index index
+portions. The information here is mostly for internal use only as it includes the size and number
+of the bloom filters present as well as the number of addresses inserted into the bloom. This
+information is used to study the characteristics of the Unchained Index.
 
-The following commands produce and manage chunkBlooms:
+The following commands produce and manage `ChunkBlooms`:
 
-| Tools                                              |                                                                 |
-| -------------------------------------------------- | --------------------------------------------------------------- |
-| [chifra chunks](/docs/chifra/admin/#chifra-chunks) | manage pinned index of appearances and associated Bloom filters |
+- [chifra chunks](/docs/chifra/admin/#chifra-chunks)
 
 Chunkblooms data is made of the following data fields:
 
@@ -163,13 +185,14 @@ Chunkblooms data is made of the following data fields:
 
 ## ChunkAddresses
 
-The `addresses` data model is produced by `chifra chunks` and represents the records found in the addresses table of each Unchained Index chunk. The `offset` and `count` fields represent the location and number of records in the `appearances` table to which the address table is related.
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+The `addresses` data model is produced by `chifra chunks` and represents the records found in the
+addresses table of each Unchained Index chunk. The `offset` and `count` fields represent the
+location and number of records in the `appearances` table to which the address table is related.
 
-The following commands produce and manage chunkAddresses:
+The following commands produce and manage `ChunkAddresses`:
 
-| Tools                                              |                                                                 |
-| -------------------------------------------------- | --------------------------------------------------------------- |
-| [chifra chunks](/docs/chifra/admin/#chifra-chunks) | manage pinned index of appearances and associated Bloom filters |
+- [chifra chunks](/docs/chifra/admin/#chifra-chunks)
 
 Chunkaddresses data is made of the following data fields:
 
@@ -182,13 +205,14 @@ Chunkaddresses data is made of the following data fields:
 
 ## ChunkAppearances
 
-The `appearances` data model is the second of two tables inside of the Unchained Index chunks. The other is the `addresses` table which relates the addresses in that table to this table via the `offset` and `count` fields.
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+The `appearances` data model is the second of two tables inside of the Unchained Index chunks. The
+other is the `addresses` table which relates the addresses in that table to this table via the
+`offset` and `count` fields.
 
-The following commands produce and manage chunkAppearances:
+The following commands produce and manage `ChunkAppearances`:
 
-| Tools                                              |                                                                 |
-| -------------------------------------------------- | --------------------------------------------------------------- |
-| [chifra chunks](/docs/chifra/admin/#chifra-chunks) | manage pinned index of appearances and associated Bloom filters |
+- [chifra chunks](/docs/chifra/admin/#chifra-chunks)
 
 Chunkappearances data is made of the following data fields:
 
@@ -199,13 +223,13 @@ Chunkappearances data is made of the following data fields:
 
 ## ChunkStats
 
-The `stats` data model is produced by `chifra chunks` and brings together various statistical information such as average number of addresses in an Unchained Index chunk among other information.
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+The `stats` data model is produced by `chifra chunks` and brings together various statistical
+information such as average number of addresses in an Unchained Index chunk among other information.
 
-The following commands produce and manage chunkStats:
+The following commands produce and manage `ChunkStats`:
 
-| Tools                                              |                                                                 |
-| -------------------------------------------------- | --------------------------------------------------------------- |
-| [chifra chunks](/docs/chifra/admin/#chifra-chunks) | manage pinned index of appearances and associated Bloom filters |
+- [chifra chunks](/docs/chifra/admin/#chifra-chunks)
 
 Chunkstats data is made of the following data fields:
 
@@ -227,13 +251,13 @@ Chunkstats data is made of the following data fields:
 
 ## Chain
 
-The `chain` data model represents the configured chain data found in the `trueBlocks.toml` configuration file.
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+The `chain` data model represents the configured chain data found in the `trueBlocks.toml`
+configuration file.
 
-The following commands produce and manage chains:
+The following commands produce and manage `Chains`:
 
-| Tools                                              |                                               |
-| -------------------------------------------------- | --------------------------------------------- |
-| [chifra config](/docs/chifra/admin/#chifra-config) | report on the status of the TrueBlocks system |
+- [chifra config](/docs/chifra/admin/#chifra-config)
 
 Chain data is made of the following data fields:
 
@@ -250,13 +274,12 @@ Chain data is made of the following data fields:
 
 ## Key
 
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 The `key` field is for keys of various types. It is primarily for internal use only.
 
-The following commands produce and manage keys:
+The following commands produce and manage `Keys`:
 
-| Tools                                              |                                               |
-| -------------------------------------------------- | --------------------------------------------- |
-| [chifra config](/docs/chifra/admin/#chifra-config) | report on the status of the TrueBlocks system |
+- [chifra config](/docs/chifra/admin/#chifra-config)
 
 Key data is made of the following data fields:
 
@@ -269,13 +292,13 @@ Key data is made of the following data fields:
 
 ## CacheEntry
 
-The `cacheEntry` data model is used to display various caches displayed from the `chifra config` tool.
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+The `cacheEntry` data model is used to display various caches displayed from the `chifra config`
+tool.
 
-The following commands produce and manage cacheentrys:
+The following commands produce and manage `CacheEntries`:
 
-| Tools                                              |                                               |
-| -------------------------------------------------- | --------------------------------------------- |
-| [chifra config](/docs/chifra/admin/#chifra-config) | report on the status of the TrueBlocks system |
+- [chifra config](/docs/chifra/admin/#chifra-config)
 
 Cacheentry data is made of the following data fields:
 
@@ -286,13 +309,12 @@ Cacheentry data is made of the following data fields:
 
 ## IndexCacheItem
 
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 The `indexCacheItem` is used to present a single Unchained Index chunk in the Explorer app.
 
-The following commands produce and manage indexcacheitems:
+The following commands produce and manage `IndexCacheItems`:
 
-| Tools                                              |                                                               |
-| -------------------------------------------------- | ------------------------------------------------------------- |
-| [chifra config](/docs/chifra/admin/#chifra-config) | report on and edit the configuration of the TrueBlocks system |
+- [chifra config](/docs/chifra/admin/#chifra-config)
 
 Indexcacheitem data is made of the following data fields:
 

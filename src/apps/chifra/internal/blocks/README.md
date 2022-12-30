@@ -1,11 +1,16 @@
-<!-- markdownlint-disable MD041 -->
 ## chifra blocks
 
-The `chifra blocks` tool retrieves block data from your Ethereum node or, if previously cached, from the TrueBlocks cache. You may specify multiple blocks per invocation.
+<!-- markdownlint-disable MD041 -->
+The `chifra blocks` tool retrieves block data from your Ethereum node or, if previously cached, from the
+TrueBlocks cache. You may specify multiple blocks per invocation.
 
-By default, `chifra blocks` queries the full transactional details of the block (including receipts). You may optionally retrieve only the transaction hashes in the block (which is significantly faster). Additionally, you may also use this tool to retrieve uncle blocks at a give height.
+By default, `chifra blocks` queries the full transactional details of the block (including receipts).
+You may optionally retrieve only the transaction hashes in the block (which is significantly faster).
+Additionally, you may also use this tool to retrieve uncle blocks at a give height.
 
-Another useful feature of `chifra blocks` is the ability to extract address appearances from a block. TrueBlocks uses a similar feature internally to build its index of appearances. This type of data is very insightful when studying end user behavior and chain-wide adoption analysis.
+Another useful feature of `chifra blocks` is the ability to extract address appearances from a block.
+TrueBlocks uses a similar feature internally to build its index of appearances. This type of data
+is very insightful when studying end user behavior and chain-wide adoption analysis.
 
 ```[plaintext]
 Purpose:
@@ -42,7 +47,7 @@ Notes:
 ```
 
 <!-- markdownlint-disable MD041 -->
-#### Other Options
+### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.
 
@@ -57,4 +62,7 @@ All tools accept the following additional flags, although in some cases, they ha
       --file string     specify multiple sets of command line options in a file
 ```
 
-*For the `--file string` option, you may place a series of valid command lines in a file using any valid flags. In some cases, this may significantly improve performance. A semi-colon at the start of any line makes it a comment.*
+*For the `--file string` option, you may place a series of valid command lines in a file using any
+valid flags. In some cases, this may significantly improve performance. A semi-colon at the start
+of any line makes it a comment.*
+

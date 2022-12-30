@@ -174,30 +174,28 @@ paths:
               schema:
                 properties:
                   data:
-                    description: an appearance (`<blockNumber,transactionIndex>`) of an address anywhere on the chain
+                    description: One of the data types listed below.
                     type: array
                     items:
                       oneOf:
+                        - $ref: "#/components/schemas/monitor"
                         - $ref: "#/components/schemas/appearance"
                         - $ref: "#/components/schemas/appearanceCount"
                 example:
                   {
-                    "data":
-                      [
-                        {
-                          "blockNumber": 8854723,
-                          "transactionIndex": 61,
-                          "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-                          "name": "TrueBlocks 2020 Wallet 0xf503",
-                        },
-                        {
-                          "blockNumber": 8855603,
-                          "transactionIndex": 121,
-                          "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-                          "name": "TrueBlocks 2020 Wallet 0xf503",
-                        },
-                        { "...": "..." },
-                      ],
+                    "data": [
+                      {
+                        "address": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
+                        "blockNumber": 4037786,
+                        "transactionIndex": 47
+                      },
+                      {
+                        "address": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
+                        "blockNumber": 4037800,
+                        "transactionIndex": 77
+                      },
+                      { "...": "..." },
+                    ]
                   }
         "400":
           description: bad input parameter
@@ -440,10 +438,11 @@ paths:
               schema:
                 properties:
                   data:
-                    description: an appearance (`<blockNumber,transactionIndex>`) of an address anywhere on the chain
+                    description: One of the data types listed below.
                     type: array
                     items:
                       oneOf:
+                        - $ref: "#/components/schemas/monitor"
                         - $ref: "#/components/schemas/appearance"
                         - $ref: "#/components/schemas/reconciliation"
                         - $ref: "#/components/schemas/transfer"
@@ -452,39 +451,42 @@ paths:
                         - $ref: "#/components/schemas/receipt"
                         - $ref: "#/components/schemas/log"
                         - $ref: "#/components/schemas/trace"
+                        - $ref: "#/components/schemas/traceAction"
+                        - $ref: "#/components/schemas/traceResult"
+                        - $ref: "#/components/schemas/function"
+                        - $ref: "#/components/schemas/parameter"
                 example:
                   {
-                    "data":
-                      [
-                        {
-                          "hash": "0x1a898c5448b37f693343917ea40b7ad1c43b28a4ddd37af1bd6d0bb4a0c99891",
-                          "blockHash": "0x1d7f60b34bad8ce0ba5e49e3845c7a62ba8db440b81f8df98ec6349c4d28ca8e",
-                          "blockNumber": 8854723,
-                          "transactionIndex": 61,
-                          "timestamp": 1572639538,
-                          "from": "0xbb984f85bd52d78eb2fbf2c5598bae7abb98c5bc",
-                          "to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-                          "value": 5e+18,
-                          "gas": 21000,
-                          "gasPrice": 10000000000,
-                          "maxFeePerGas": 0,
-                          "maxPriorityFeePerGas": 0,
-                          "isError": 0,
-                          "hasToken": 0,
-                          "receipt":
-                            {
-                              "contractAddress": "0x0",
-                              "gasUsed": 21000,
-                              "effectiveGasPrice": 10000000000,
-                              "status": 1,
-                            },
-                          "compressedTx": "0x ( )",
-                          "gasCost": 210000000000000,
+                    "data": [
+                      {
+                        "hash": "0x78a17b79e638190d72a3030a79645c32cf3420a133ea2835206778e5ab63fdc7",
+                        "blockHash": "0xdf551eb24dd5275c22d497b9076f1111f483b71ca37002bee51d5db55d20d2fa",
+                        "blockNumber": 4037786,
+                        "transactionIndex": 47,
+                        "timestamp": 1500352888,
+                        "from": "0x29205869522cc9d1f84b0ad5279a8e74a7c66c15",
+                        "to": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
+                        "value": 84353870000000000,
+                        "gas": 90000,
+                        "gasPrice": 20000000000,
+                        "maxFeePerGas": 0,
+                        "maxPriorityFeePerGas": 0,
+                        "isError": 0,
+                        "hasToken": 0,
+                        "receipt": {
+                          "contractAddress": "0x0",
                           "gasUsed": 21000,
-                          "date": "2019-11-01 20:18:58 UTC",
-                          "ether": 5,
+                          "effectiveGasPrice": 20000000000,
+                          "status": null
                         },
-                      ],
+                        "compressedTx": "0x()",
+                        "gasCost": 420000000000000,
+                        "gasUsed": 21000,
+                        "date": "2017-07-18 04:41:28 UTC",
+                        "ether": 0.08435387
+                      },
+                      { "...": "..." }
+                    ]
                   }
         "400":
           description: bad input parameter
@@ -777,10 +779,13 @@ paths:
               schema:
                 properties:
                   data:
-                    description: a human-readable representation of a Solidity function call or event
+                    description: One of the data types listed below.
                     type: array
                     items:
-                      $ref: "#/components/schemas/function"
+                      oneOf:
+                        - $ref: "#/components/schemas/abi"
+                        - $ref: "#/components/schemas/function"
+                        - $ref: "#/components/schemas/parameter"
                 example:
                  {
                    "data": [
@@ -1059,7 +1064,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: the representation of a token transfer
+                    description: One of the data types listed below.
                     type: array
                     items:
                       oneOf:
@@ -1208,10 +1213,13 @@ paths:
               schema:
                 properties:
                   data:
-                    description: trace data as returned from the RPC (with slight enhancements)
+                    description: One of the data types listed below.
                     type: array
                     items:
-                      $ref: "#/components/schemas/trace"
+                      oneOf:
+                        - $ref: "#/components/schemas/trace"
+                        - $ref: "#/components/schemas/traceAction"
+                        - $ref: "#/components/schemas/traceResult"
         "400":
           description: bad input parameter
   /when:
@@ -1380,7 +1388,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: the on-chain state of a given address including ETH balance, nonce, and smart contract byte code if present
+                    description: One of the data types listed below.
                     type: array
                     items:
                       oneOf:
@@ -1566,10 +1574,17 @@ paths:
               schema:
                 properties:
                   data:
-                    description: status-related data about the TrueBlocks system including the server and local binary caches
+                    description: One of the data types listed below.
                     type: array
                     items:
-                      $ref: "#/components/schemas/config"
+                      oneOf:
+                        - $ref: "#/components/schemas/monitor"
+                        - $ref: "#/components/schemas/config"
+                        - $ref: "#/components/schemas/cache"
+                        - $ref: "#/components/schemas/chain"
+                        - $ref: "#/components/schemas/key"
+                        - $ref: "#/components/schemas/cacheEntry"
+                        - $ref: "#/components/schemas/indexCacheItem"
                 example:
                   {
                     "data":
@@ -1642,7 +1657,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: a single record in the manifest detailing the IPFS hases and file sizes for each bloom filter and index chunk
+                    description: One of the data types listed below.
                     type: array
                     items:
                       oneOf:
@@ -1747,7 +1762,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: a single record in the manifest detailing the IPFS hases and file sizes for each bloom filter and index chunk
+                    description: One of the data types listed below.
                     type: array
                     items:
                       oneOf:
@@ -1758,6 +1773,24 @@ paths:
                         - $ref: "#/components/schemas/chunkAddresses"
                         - $ref: "#/components/schemas/chunkAppearances"
                         - $ref: "#/components/schemas/chunkStats"
+                example:
+                  {
+                    "data": [
+                      {
+                        "fileName": "000000000-000000000",
+                        "bloomHash": "QmbCQaYmfTR3sGNAvASoVjPynaY9UD31Hfxv7dGtzsptkb",
+                        "indexHash": "QmPmfSrYT5HDpfjj4uYSycaFECo9EqPSuADQ3YPbVp3yu4"
+                      },
+                      {
+                        "fileName": "000000001-000590501",
+                        "bloomHash": "QmSGuSQHgK4S9yiZQ3dKrykQVpLTmdFettY9sAwa537gPL",
+                        "indexHash": "QmSaoxc3XA9DEaA3inhLW5ZKsk5C5LWvowSXpHwVHsMjQp"
+                      },
+                      {
+                        "...": "..."
+                      }
+                    ]
+                  }
         "400":
           description: bad input parameter
   /init:
@@ -1793,7 +1826,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: a single record in the manifest detailing the IPFS hases and file sizes for each bloom filter and index chunk
+                    description: One of the data types listed below.
                     type: array
                     items:
                       oneOf:

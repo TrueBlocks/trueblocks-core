@@ -6,3 +6,4 @@ cpp_includes =
 doc_group = 04-Admin
 doc_descr = an unsupported data item used for debugging only
 doc_api = 411-key
+doc_producer = config

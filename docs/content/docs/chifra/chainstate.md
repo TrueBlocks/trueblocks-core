@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2022-12-30T03:51:21
+date: 2022-12-30T16:19:37
 lastmod:
   - :git
   - lastmod
@@ -17,21 +17,27 @@ weight: 1500
 toc: true
 ---
 <!-- markdownlint-disable MD033 MD036 MD041 -->
-The two tools in this group deal with the _Chain State_. As chain state data concerns balances and byte code. it is distinct
-from Chain Data, which concerns things like blocks, transactions, or traces.
+The two tools in this group deal with the _Chain State_. As chain state data concerns balances and
+byte code. it is distinct from Chain Data, which concerns things like blocks, transactions, or
+traces.
 
-The two tools are `chifra state` and `chifra tokens`. The first allows you to query account balances, the byte code of a smart
-contract (if available), the nonce, and other information about an address. The second tool, `chifra tokens`, deals with ERC20
-and ERC721 token balances and other data.
+The two tools are `chifra state` and `chifra tokens`. The first allows you to query account
+balances, the byte code of a smart contract (if available), the nonce, and other information about
+an address. The second tool, `chifra tokens`, deals with ERC20 and ERC721 token balances and
+other data.
 
-Note: The amount of information you can retrieve depends on the type of node you run. Archive nodes and tracing allow
-you to query historical state (that is, all the way back to the genesis block). TrueBlocks works with non-archive nodes, but
-they are much less informative.<!-- markdownlint-disable MD041 -->
+Note: The amount of information you can retrieve depends on the type of node you run. Archive nodes
+and tracing allow you to query historical state (that is, all the way back to the genesis block).
+TrueBlocks works with non-archive nodes, but they are much less informative.
 ## chifra state
 
-Use this tool to retrieve the balance of an address (or list of addresses) at the given block (or blocks). Specify multiple addresses and/or multiple blocks if you wish, but you must specify at least one address. If no block is specified, the latest block is reported.
+<!-- markdownlint-disable MD041 -->
+The `chifra state` tool retrieves the balance of an address (or list of addresses) at the given block
+(or blocks). Specify multiple addresses and/or multiple blocks if you wish, but you must specify
+at least one address. If no block is specified, the latest block is reported.
 
-You may also query to see if an address is a smart contract as well as retrieve a contract's byte code.
+You may also query to see if an address is a smart contract as well as retrieve a contract's
+byte code.
 
 ```[plaintext]
 Purpose:
@@ -64,16 +70,22 @@ Notes:
 
 **Source code**: [`internal/state`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/state)
 
-<!-- markdownlint-disable MD041 -->
 ## chifra tokens
 
-Given the address of an ERC20 token contract, this tool reports token balances for one or more additional addresses. Alternatively, the tool can report the token balances for multiple ERC20 tokens for a single addresses.
+<!-- markdownlint-disable MD041 -->
+Given the address of an ERC20 token contract, the `chifra tokens` tool reports token balances for one or
+more additional addresses. Alternatively, the tool can report the token balances for multiple ERC20
+tokens for a single addresses.
 
-In normal operation the **first item** in the `address_list` is assumed to be an ERC20 token contract whose balances are being queried, whereas the remainder of the list is assumed to be addresses on which to report.
+In normal operation the **first item** in the `address_list` is assumed to be an ERC20 token
+contract whose balances are being queried, whereas the remainder of the list is assumed to be
+addresses on which to report.
 
-In `--byAcct` mode, **all addresses** in the `address_list` are assumed to be ERC20 token contracts, except the final one which is the account whose token balances are reported.
+In `--byAcct` mode, **all addresses** in the `address_list` are assumed to be ERC20 token contracts,
+except the final one which is the account whose token balances are reported.
 
-You may optionally specify one or more blocks at which to report. If no block is specified, the latest block is assumed. You may also optionally specify which parts of the token data to extract.
+You may optionally specify one or more blocks at which to report. If no block is specified, the
+latest block is assumed. You may also optionally specify which parts of the token data to extract.
 
 ```[plaintext]
 Purpose:

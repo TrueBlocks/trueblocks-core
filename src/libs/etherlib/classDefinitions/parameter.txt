@@ -6,3 +6,4 @@ tsx = true
 doc_group = 05-Other
 doc_descr = an input or output parameter to a Solidity function or event
 doc_api = 502-parameter
+doc_producer = abis, export

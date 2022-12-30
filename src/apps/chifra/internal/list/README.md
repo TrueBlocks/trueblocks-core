@@ -1,11 +1,16 @@
-<!-- markdownlint-disable MD041 -->
 ## chifra list
 
-`chifra list` takes one or more addresses, queries the index of appearances, and builds TrueBlocks monitors. A TrueBlocks monitor is a file that contains blockNumber.transactionId pairs (transaction identifiers) representing the history of the address.
+<!-- markdownlint-disable MD041 -->
+`chifra list` takes one or more addresses, queries the index of appearances, and builds TrueBlocks
+monitors. A TrueBlocks monitor is a file that contains blockNumber.transactionId pairs (transaction
+identifiers) representing the history of the address.
 
-Because TrueBlocks only extracts data from the Ethereum node when it's requested, the first time you list an address it takes about a minute. Subsequent queries are much faster because TrueBlocks caches the results.
+Because TrueBlocks only extracts data from the Ethereum node when it's requested, the first time
+you list an address it takes about a minute. Subsequent queries are much faster because TrueBlocks
+caches the results.
 
-Note that `chifra list` only queries the index, it does not extract the full transactional details. You may use `chifra export` for that.
+Note that `chifra list` only queries the index, it does not extract the full transactional details.
+You may use `chifra export` for that.
 
 ```[plaintext]
 Purpose:
@@ -33,7 +38,7 @@ Notes:
 ```
 
 <!-- markdownlint-disable MD041 -->
-#### Other Options
+### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.
 
@@ -48,4 +53,7 @@ All tools accept the following additional flags, although in some cases, they ha
       --file string     specify multiple sets of command line options in a file
 ```
 
-*For the `--file string` option, you may place a series of valid command lines in a file using any valid flags. In some cases, this may significantly improve performance. A semi-colon at the start of any line makes it a comment.*
+*For the `--file string` option, you may place a series of valid command lines in a file using any
+valid flags. In some cases, this may significantly improve performance. A semi-colon at the start
+of any line makes it a comment.*
+

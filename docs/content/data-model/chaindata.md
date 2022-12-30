@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2022-12-30T03:51:21
+date: 2022-12-30T16:18:20
 lastmod:
   - :git
   - lastmod
@@ -17,20 +17,21 @@ weight: 1200
 toc: true
 ---
 
-The following data structures describe the output of various TrueBlocks blockchain queries. These data structures basically mimic the data available directly from the RPC.
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+The following data structures describe the output of various TrueBlocks blockchain queries. These
+data structures basically mimic the data available directly from the RPC.
 
 Each data structure is created by one or more tools which are detailed below.
 
 ## Block
 
-`chifra blocks` returns top level data specified block. You can also include
-an array for the blocks' transactions.
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+`chifra blocks` returns top level data specified block. You can also include an array for the
+blocks' transactions.
 
-The following commands produce and manage blocks:
+The following commands produce and manage `Blocks`:
 
-| Tools                                                  |                                                           |
-| ------------------------------------------------------ | --------------------------------------------------------- |
-| [chifra blocks](/docs/chifra/chaindata/#chifra-blocks) | retrieve one or more blocks from the chain or local cache |
+- [chifra blocks](/docs/chifra/chaindata/#chifra-blocks)
 
 Block data is made of the following data fields:
 
@@ -50,20 +51,19 @@ Block data is made of the following data fields:
 
 ## Transaction
 
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 Transactions represent eth transfers to and from other addresses.
 
-Most of the fields that TrueBlocks returns are standard to all eth transaction.
-However, one field is very interesting: `articulatedTx` provides a human readable output of the `input` field.
+Most of the fields that TrueBlocks returns are standard to all eth transaction. However, one field
+is very interesting: `articulatedTx` provides a human readable output of the `input` field.
 
 This is a very powerful way to understand the story behind a smart contract.
 
-The following commands produce and manage transactions:
+The following commands produce and manage `Transactions`:
 
-| Tools                                                              |                                                                 |
-| ------------------------------------------------------------------ | --------------------------------------------------------------- |
-| [chifra transactions](/docs/chifra/chaindata/#chifra-transactions) | retrieve one or more transactions from the chain or local cache |
-| [chifra slurp](/docs/chifra/other/#chifra-slurp)                   | fetch data from EtherScan for any address                       |
-| [chifra export](/docs/chifra/accounts/#chifra-export)              | export full detail of transactions for one or more addresses    |
+- [chifra transactions](/docs/chifra/chaindata/#chifra-transactions)
+- [chifra slurp](/docs/chifra/other/#chifra-slurp)
+- [chifra export](/docs/chifra/accounts/#chifra-export)
 
 Transaction data is made of the following data fields:
 
@@ -93,16 +93,18 @@ Transaction data is made of the following data fields:
 
 ## Receipt
 
-Receipts record the amount of gas used for a transaction among other things. If the transaction succeeded, a receipt might also have logs.
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+Receipts record the amount of gas used for a transaction among other things. If the transaction
+succeeded, a receipt might also have logs.
 
-If the `to` address of a transaction is `0x0`, the `input` data is considered to be the source code (byte code) of a smart contract. In this case, if the creation of the contract succeeds, the `contractAddress` field of the receipt carries the address of the newly created contract.
+If the `to` address of a transaction is `0x0`, the `input` data is considered to be the source
+code (byte code) of a smart contract. In this case, if the creation of the contract succeeds,
+the `contractAddress` field of the receipt carries the address of the newly created contract.
 
-The following commands produce and manage receipts:
+The following commands produce and manage `Receipts`:
 
-| Tools                                                      |                                                              |
-| ---------------------------------------------------------- | ------------------------------------------------------------ |
-| [chifra receipts](/docs/chifra/chaindata/#chifra-receipts) | retrieve receipts for the given transaction(s)               |
-| [chifra export](/docs/chifra/accounts/#chifra-export)      | export full detail of transactions for one or more addresses |
+- [chifra receipts](/docs/chifra/chaindata/#chifra-receipts)
+- [chifra export](/docs/chifra/accounts/#chifra-export)
 
 Receipt data is made of the following data fields:
 
@@ -115,14 +117,16 @@ Receipt data is made of the following data fields:
 
 ## Log
 
-Logs appear in a possibly empty array in the transaction's receipt. They are only created if the underlying transaction suceeded. In the case where the transaction failed, no logs will appear in the receipt. Logs are only ever generated during transactions whose `to` address is a smart contract.
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+Logs appear in a possibly empty array in the transaction's receipt. They are only created if the
+underlying transaction suceeded. In the case where the transaction failed, no logs will appear in
+the receipt. Logs are only ever generated during transactions whose `to` address is a smart
+contract.
 
-The following commands produce and manage logs:
+The following commands produce and manage `Logs`:
 
-| Tools                                                 |                                                              |
-| ----------------------------------------------------- | ------------------------------------------------------------ |
-| [chifra logs](/docs/chifra/chaindata/#chifra-logs)    | retrieve logs for the given transaction(s)                   |
-| [chifra export](/docs/chifra/accounts/#chifra-export) | export full detail of transactions for one or more addresses |
+- [chifra logs](/docs/chifra/chaindata/#chifra-logs)
+- [chifra export](/docs/chifra/accounts/#chifra-export)
 
 Log data is made of the following data fields:
 
@@ -141,16 +145,20 @@ Log data is made of the following data fields:
 
 ## Trace
 
-The deepest layer of the Ethereum data is the trace. Every transaction has at least one trace which is itself a record of the transaction. If the `to` address of the transaction is a smart contract, other traces may appear, if, for example, that smart contract calls other smart contracts.
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+The deepest layer of the Ethereum data is the trace. Every transaction has at least one trace which
+is itself a record of the transaction. If the `to` address of the transaction is a smart contract,
+other traces may appear, if, for example, that smart contract calls other smart contracts.
 
-Traces may be arbitrarily deep (up to the gasLimit) and ultimately represent a tree of function calls. Some transactions have 100s of traces. The format of the trace is similar to the transaction itself have a trace `action` (which contains `from`, `to`, `value` like the transaction) and the trace `result` (containing `gasUsed` like the receipt).
+Traces may be arbitrarily deep (up to the gasLimit) and ultimately represent a tree of function
+calls. Some transactions have 100s of traces. The format of the trace is similar to the transaction
+itself have a trace `action` (which contains `from`, `to`, `value` like the transaction) and the
+trace `result` (containing `gasUsed` like the receipt).
 
-The following commands produce and manage traces:
+The following commands produce and manage `Traces`:
 
-| Tools                                                  |                                                              |
-| ------------------------------------------------------ | ------------------------------------------------------------ |
-| [chifra traces](/docs/chifra/chaindata/#chifra-traces) | retrieve traces for the given transaction(s)                 |
-| [chifra export](/docs/chifra/accounts/#chifra-export)  | export full detail of transactions for one or more addresses |
+- [chifra traces](/docs/chifra/chaindata/#chifra-traces)
+- [chifra export](/docs/chifra/accounts/#chifra-export)
 
 Trace data is made of the following data fields:
 
@@ -171,14 +179,15 @@ Trace data is made of the following data fields:
 
 ## TraceAction
 
-Other than the first trace which is the trace of the transaction itself, traces represent calls into smart contracts. Because of this, `trace actions` closely resemble the fields of the [transaction](#transactions).
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+Other than the first trace which is the trace of the transaction itself, traces represent calls
+into smart contracts. Because of this, `trace actions` closely resemble the fields of the
+[transaction](#transactions).
 
-The following commands produce and manage traceactions:
+The following commands produce and manage `TraceActions`:
 
-| Tools                                                  |                                                              |
-| ------------------------------------------------------ | ------------------------------------------------------------ |
-| [chifra traces](/docs/chifra/chaindata/#chifra-traces) | retrieve traces for the given transaction(s)                 |
-| [chifra export](/docs/chifra/accounts/#chifra-export)  | export full detail of transactions for one or more addresses |
+- [chifra traces](/docs/chifra/chaindata/#chifra-traces)
+- [chifra export](/docs/chifra/accounts/#chifra-export)
 
 Traceaction data is made of the following data fields:
 
@@ -193,14 +202,14 @@ Traceaction data is made of the following data fields:
 
 ## TraceResult
 
-As mentioned above, other than the first trace, traces represent calls into other smart contracts. Because of this, the trace results closely resembles the fields of the [receipt](#receipts).
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+As mentioned above, other than the first trace, traces represent calls into other smart contracts.
+Because of this, the trace results closely resembles the fields of the [receipt](#receipts).
 
-The following commands produce and manage traceresults:
+The following commands produce and manage `TraceResults`:
 
-| Tools                                                  |                                                              |
-| ------------------------------------------------------ | ------------------------------------------------------------ |
-| [chifra traces](/docs/chifra/chaindata/#chifra-traces) | retrieve traces for the given transaction(s)                 |
-| [chifra export](/docs/chifra/accounts/#chifra-export)  | export full detail of transactions for one or more addresses |
+- [chifra traces](/docs/chifra/chaindata/#chifra-traces)
+- [chifra export](/docs/chifra/accounts/#chifra-export)
 
 Traceresult data is made of the following data fields:
 
@@ -213,13 +222,17 @@ Traceresult data is made of the following data fields:
 
 ## DatedBlock
 
-Left to its own devices, the blockchain would try to convince us that only hashes and bytes are important, but being human beings we know that this is not true. TrueBlocks `articulates` various types of data with [chifra names](/docs/chifra/accounts/#chifra-names) detailing the names for addresses, `-articulate` describing the Functions and Events of a transaction, and [chifra when](/docs/chifra/chaindata/#chifra-when) describing dated blocks. Dated blocks assign a human-readable date to blocks given block numbers or timestamps and visa versa.
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+Left to its own devices, the blockchain would try to convince us that only hashes and bytes are
+important, but being human beings we know that this is not true. TrueBlocks `articulates` various
+types of data with [chifra names](/docs/chifra/accounts/#chifra-names) detailing the names for
+addresses, `-articulate` describing the Functions and Events of a transaction, and
+[chifra when](/docs/chifra/chaindata/#chifra-when) describing dated blocks. Dated blocks assign a
+human-readable date to blocks given block numbers or timestamps and visa versa.
 
-The following commands produce and manage datedblocks:
+The following commands produce and manage `DatedBlocks`:
 
-| Tools                                              |                                                                |
-| -------------------------------------------------- | -------------------------------------------------------------- |
-| [chifra when](/docs/chifra/chaindata/#chifra-when) | find block(s) based on date, blockNum, timestamp, or 'special' |
+- [chifra when](/docs/chifra/chaindata/#chifra-when)
 
 Datedblock data is made of the following data fields:
 

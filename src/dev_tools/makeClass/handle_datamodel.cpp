@@ -16,12 +16,30 @@
 extern const char* STR_YAML_TAIL;
 extern const char* STR_DOCUMENT_TAIL;
 extern const char* STR_YAML_MODELHEADER;
+extern const char* STR_MODEL_PRODUCERS;
+extern const char* STR_MODEL_FOOTER;
+extern const char* STR_MODEL_HEADER;
 extern void addToTypeMap(map<string_q, string_q>& map, const string_q& group, const string& type);
 extern bool sortByDataModelName(const CClassDefinition& c1, const CClassDefinition& c2);
 extern bool sortByDoc(const CParameter& c1, const CParameter& c2);
 extern string_q typeFmt(const CParameter& fld);
 extern string_q exFmt(const CParameter& fld);
-extern string_q cleanedAsciiFile(const string_q& inFn);
+extern string_q get_producer_table(const CClassDefinition& model, const CCommandOptionArray& endpoints);
+
+//--------------------------------------------------------------------------------
+static string_q plural(const string_q& in) {
+    string_q ret = firstUpper(in);
+    if (ret == "Config") {
+        ret = "Statuses";
+    } else if (ret == "CacheEntry") {
+        ret = "CacheEntries";
+    } else if (ret == "ChunkIndex") {
+        ret = "ChunkIndexes";
+    } else if (!endsWith(in, "s")) {
+        ret += "s";
+    }
+    return ret;
+}
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_datamodel(void) {
@@ -45,21 +63,17 @@ bool COptions::handle_datamodel(void) {
         if (!fileExists(groupFn)) {
             LOG_WARN("Missing data model intro file: ", bYellow, getPathToTemplates(groupFn), cOff);
         }
-        string_q modelFn = getDocsPathTemplates("model-intros/" + model.doc_api + ".md");
-        if (!fileExists(modelFn)) {
-            LOG_WARN("Missing data model intro file: ", bYellow, getPathToTemplates(modelFn), cOff);
-        }
 
         sort(model.fieldArray.begin(), model.fieldArray.end(), sortByDoc);
 
-        size_t widths[5];
-        bzero(widths, sizeof(widths));
+        size_t fieldWidths[5];
+        bzero(fieldWidths, sizeof(fieldWidths));
         for (auto& fld : model.fieldArray) {
             if (fld.doc) {
                 replaceAll(fld.description, "&#44;", ",");
-                widths[0] = max(size_t(3), max(widths[0], fld.name.length()));
-                widths[1] = max(size_t(3), max(widths[1], fld.description.length()));
-                widths[2] = max(size_t(3), max(widths[2], fld.type.length()));
+                fieldWidths[0] = max(size_t(3), max(fieldWidths[0], fld.name.length()));
+                fieldWidths[1] = max(size_t(3), max(fieldWidths[1], fld.description.length()));
+                fieldWidths[2] = max(size_t(3), max(fieldWidths[2], fld.type.length()));
             }
         }
 
@@ -72,18 +86,21 @@ bool COptions::handle_datamodel(void) {
             replace(front, "[{M1}]", "data:");
             replace(front, "[{M2}]", "parent: \"collections\"");
             docStream << front << endl;
-            docStream << cleanedAsciiFile(groupFn);
+            docStream << asciiFileToString(groupFn);
             weight += 200;
         }
 
-        docStream << endl;
-        docStream << "## " << substitute(firstUpper(model.doc_api), "Config", "Status") << endl;
-        docStream << endl;
-        docStream << cleanedAsciiFile(modelFn) << endl;
+        string_q modelFn = getDocsPathTemplates("model-intros/" + model.doc_api + ".md");
+        if (!fileExists(modelFn)) {
+            LOG_WARN("Missing data model intro file: ", bYellow, getPathToTemplates(modelFn), cOff);
+        } else {
+            docStream << STR_MODEL_HEADER << asciiFileToString(modelFn) << get_producer_table(model, endpointArray)
+                      << STR_MODEL_FOOTER << endl;
+        }
 
         ostringstream fieldStream, toolsStream;
-        fieldStream << markDownRow("Field", "Description", "Type", widths);
-        fieldStream << markDownRow("-", "", "", widths);
+        fieldStream << markDownRow("Field", "Description", "Type", fieldWidths);
+        fieldStream << markDownRow("-", "", "", fieldWidths);
 
         ostringstream yamlPropStream;
         for (auto fld : model.fieldArray) {
@@ -92,7 +109,7 @@ bool COptions::handle_datamodel(void) {
                 yamlPropStream << fld.Format(typeFmt(fld));
                 yamlPropStream << fld.Format(exFmt(fld));
                 yamlPropStream << fld.Format("[          description: \"{DESCRIPTION}\"\n]");
-                fieldStream << markDownRow(fld.name, fld.description, fld.type, widths);
+                fieldStream << markDownRow(fld.name, fld.description, fld.type, fieldWidths);
                 addToTypeMap(typeMaps, model.doc_group, fld.type);
             }
         }
@@ -103,7 +120,9 @@ bool COptions::handle_datamodel(void) {
 
         string_q thisDoc = docStream.str();
         replaceAll(thisDoc, "[{TYPE}]", model.doc_api);
-        replaceAll(thisDoc, "[{PLURAL}]", plural(model.doc_api, 0));
+        replaceAll(thisDoc, "[{FIRST_UPPER}]", substitute(firstUpper(model.doc_api), "Config", "Status"));
+        replaceAll(thisDoc, "[{PLURAL}]", plural(model.doc_api));
+        replaceAll(thisDoc, "[{ALIAS}]", model.doc_alias.empty() ? "[{PROPER}]" : model.doc_alias);
         replaceAll(thisDoc, "[{PROPER}]", toProper(model.doc_api));
         if (contains(thisDoc, "[{FIELDS}]"))
             replace(thisDoc, "[{FIELDS}]", trim(fieldStream.str(), '\n'));
@@ -217,16 +236,25 @@ void addToTypeMap(map<string_q, string_q>& map, const string_q& group, const str
 }
 
 //------------------------------------------------------------------------------------------------------------
-string_q cleanedAsciiFile(const string_q& inFn) {
-    CStringArray lines;
-    asciiFileToLines(inFn, lines);
-    string_q contents;
-    for (auto line : lines) {
-        if (contains(line, "markdownlint"))
-            continue;
-        contents += line + "\n";
+string_q get_producer_group(const string_q& p, const CCommandOptionArray& endpoints) {
+    for (auto ep : endpoints) {
+        if (ep.api_route == p) {
+            return substitute(toLower(ep.group), " ", "");
+        }
     }
-    return contents;
+    return "unknown";
+}
+
+//------------------------------------------------------------------------------------------------------------
+string_q get_producer_table(const CClassDefinition& model, const CCommandOptionArray& endpoints) {
+    CStringArray producers;
+    explode(producers, substitute(model.doc_producer, " ", ""), ',');
+    ostringstream prodStream;
+    for (auto p : producers) {
+        string_q g = get_producer_group(p, endpoints);
+        prodStream << "- [chifra " << p << "](/docs/chifra/" << g << "/#chifra-" << p << ")" << endl;
+    }
+    return STR_MODEL_PRODUCERS + prodStream.str();
 }
 
 //------------------------------------------------------------------------------------------------------------
@@ -275,3 +303,22 @@ const char* STR_YAML_MODELHEADER =
     "[      description: \"{DOC_DESCR}\"\n]"
     "[      type: object\n]"
     "[      properties:\n]";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_MODEL_FOOTER =
+    "\n"
+    "[{ALIAS}] data is made of the following data fields:\n"
+    "\n"
+    "[{FIELDS}]\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_MODEL_PRODUCERS =
+    "\n"
+    "The following commands produce and manage `[{PLURAL}]`:\n"
+    "\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_MODEL_HEADER =
+    "\n"
+    "## [{FIRST_UPPER}]\n"
+    "\n";

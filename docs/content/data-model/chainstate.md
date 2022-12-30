@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2022-12-30T03:51:21
+date: 2022-12-30T16:18:20
 lastmod:
   - :git
   - lastmod
@@ -17,23 +17,24 @@ weight: 1400
 toc: true
 ---
 
-The data structures produced by tools in the Chain State category provide details on the balances (ERC20 or ETH) of an address against a particular token or block. Additionally, direct access to a smart contract's state may be queries with the `chirfa state` tool. Data structures in that case are specific to the particular smart contract.
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+The data structures produced by tools in the Chain State category provide details on the balances
+(ERC20 or ETH) of an address against a particular token or block. Additionally, direct access to
+a smart contract's state may be queries with the `chirfa state` tool. Data structures in that case
+are specific to the particular smart contract.
 
 Each data structure is created by one or more tools which are detailed below.
 
 ## EthState
 
-The `state` object displays information about the type of account associated with an address, the block the address first appeared on the chain, the proxy address if the address is a proxied smart contract as well as account balance and a few other things.
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+The `state` object displays information about the type of account associated with an address, the
+block the address first appeared on the chain, the proxy address if the address is a proxied smart
+contract as well as account balance and a few other things.
 
-The following commands produce and manage ethstates:
+The following commands produce and manage `EthStates`:
 
-| Tools |     |
-| ----- | --- |
-
-The balance of an address at a given block.
-
-* CLI: [chifra state](/docs/chifra/chainstate/#chifra-state)
-* [API](/api#operation/chainstate-state)
+- [chifra state](/docs/chifra/chainstate/#chifra-state)
 
 Ethstate data is made of the following data fields:
 
@@ -50,13 +51,13 @@ Ethstate data is made of the following data fields:
 
 ## EthCall
 
-For the `chifra state --call` tool, the `result` is the result returned by the call to the smart contract. This is the decoded `output` value of the smart contract call.
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+For the `chifra state --call` tool, the `result` is the result returned by the call to the smart
+contract. This is the decoded `output` value of the smart contract call.
 
-The following commands produce and manage ethcalls:
+The following commands produce and manage `EthCalls`:
 
-| Tools                                                 |                                                                         |
-| ----------------------------------------------------- | ----------------------------------------------------------------------- |
-| [chifra state](/docs/chifra/chainstate/#chifra-state) | retrieve account balance(s) for one or more addresses at given block(s) |
+- [chifra state](/docs/chifra/chainstate/#chifra-state)
 
 Ethcall data is made of the following data fields:
 
@@ -73,13 +74,12 @@ Ethcall data is made of the following data fields:
 
 ## TokenBalance
 
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 The data model displays the token balance records for the `chifra tokens` tool.
 
-The following commands produce and manage tokenbalances:
+The following commands produce and manage `TokenBalances`:
 
-| Tools                                                 |                                                                       |
-| ----------------------------------------------------- | --------------------------------------------------------------------- |
-| [chifra tokens](/docs/chifra/accounts/#chifra-tokens) | retrieve token balance(s) for one or more addresses at given block(s) |
+- [chifra tokens](/docs/chifra/chainstate/#chifra-tokens)
 
 Tokenbalance data is made of the following data fields:
 

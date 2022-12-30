@@ -6,3 +6,4 @@ cpp_includes = status.h
 doc_group = 04-Admin
 doc_descr = the base data model for each of the type-specific local binary caches
 doc_api = 402-cache
+doc_producer = config

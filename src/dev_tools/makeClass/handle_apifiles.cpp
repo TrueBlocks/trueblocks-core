@@ -113,7 +113,9 @@ string_q COptions::getReturnTypes(const CCommandOption& ep, CStringArray& return
         replace(p, "cachePtr", "cache");
         prods += "$ref: \"#/components/schemas/" + p + "\"\n";
     }
+
     if (returnTypes.size() > 1) {
+        descr = "One of the data types listed below.";
         prods = "oneOf:\n" + prods;
         replaceAll(prods, "$ref:", "      - $ref:");
     }

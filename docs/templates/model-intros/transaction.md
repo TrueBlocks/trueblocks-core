@@ -1,19 +1,7 @@
 <!-- markdownlint-disable MD033 MD036 MD041 -->
 Transactions represent eth transfers to and from other addresses.
 
-Most of the fields that TrueBlocks returns are standard to all eth transaction.
-However, one field is very interesting: `articulatedTx` provides a human readable output of the `input` field.
+Most of the fields that TrueBlocks returns are standard to all eth transaction. However, one field
+is very interesting: `articulatedTx` provides a human readable output of the `input` field.
 
 This is a very powerful way to understand the story behind a smart contract.
-
-The following commands produce and manage [{PLURAL}]:
-
-| Tools                                                              |                                                                 |
-| ------------------------------------------------------------------ | --------------------------------------------------------------- |
-| [chifra transactions](/docs/chifra/chaindata/#chifra-transactions) | retrieve one or more transactions from the chain or local cache |
-| [chifra slurp](/docs/chifra/other/#chifra-slurp)                   | fetch data from EtherScan for any address                       |
-| [chifra export](/docs/chifra/accounts/#chifra-export)              | export full detail of transactions for one or more addresses    |
-
-[{PROPER}] data is made of the following data fields:
-
-[{FIELDS}]
