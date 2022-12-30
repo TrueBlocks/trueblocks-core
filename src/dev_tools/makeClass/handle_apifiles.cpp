@@ -37,8 +37,6 @@ bool COptions::writeOpenApiFile(void) {
         string_q returnTypes = getReturnTypes(ep, unused);
         string_q exampleFn = getDocsPathTemplates("api/examples/" + ep.api_route + ".txt");
 
-        chifraCmdStream << ep.toChifraCmd() << endl;
-        pairMapStream << ep.toPairMap() << endl;
         apiTagStream << ep.toApiTag();
         goCallStream << ep.toGoCall();
         goRouteStream << ep.toGoRoute();

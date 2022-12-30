@@ -563,46 +563,6 @@ const char* STR_DISPLAY_PARAMETER =
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-CParameter::CParameter(string_q& textIn) {
-    initialize();
-
-    replaceAll(textIn, " *", "* ");                    // cleanup
-    replaceAll(textIn, "address[]", "CAddressArray");  // cleanup
-
-    if (contains(textIn, "(extra)"))
-        is_flags |= IS_EXTRA;
-    if (contains(textIn, "omitempty"))
-        is_flags |= IS_OMITEMPTY;
-    if (contains(textIn, "noaddfld"))
-        is_flags |= IS_NOADDFLD;
-    if (contains(textIn, "nowrite")) {
-        is_flags |= IS_NOWRITE;
-        if (contains(textIn, "-min"))
-            is_flags |= IS_MINIMAL;
-    }
-   
-    replace(textIn, " (nowrite)", "");
-    replace(textIn, " (nowrite-min)", "");
-    replace(textIn, " (nowrite,omitempty)", "");
-    replace(textIn, " (omitempty)", "");
-    replace(textIn, " (extra)", "");
-    if (contains(textIn, "(")) {
-        cerr << "Invalid data in " << textIn <<endl;
-        quickQuitHandler(0);
-    }
-
-    if (contains(textIn, "=")) {
-        strDefault = textIn;
-        textIn = nextTokenClear(strDefault, '=');
-        strDefault = trim(strDefault);
-    }
-
-    type = nextTokenClear(textIn, ' ');
-    postProcessType();
-    name = trim(textIn);
-}
-
-//-----------------------------------------------------------------------
 void CParameter::postProcessType(void) {
     if (startsWith(type, "double")) {
         precision = str_2_Uint(substitute(type, "double", "") == "" ? "5" : substitute(type, "double", ""));
@@ -672,71 +632,6 @@ CParameter::CParameter(const string_q& n, const string_q& t, const CStringArray&
     type = t;
     for (auto s : array)
         value += (s + "|");
-}
-
-//-----------------------------------------------------------------------
-string_q CParameter::getFunctionAssign(uint64_t which) const {
-    string_q ass;
-    if (contains(type, "[") && contains(type, "]")) {
-        const char* STR_ASSIGNARRAY =
-            "\t\t\twhile (!params.empty()) {\n"
-            "\t\t\t\tstring_q val = extract(params, 0, 64);\n"
-            "\t\t\t\tparams = extract(params, 64);\n"
-            "\t\t\t\ta->[{NAME}].push_back(val);\n"
-            "\t\t\t}\n";
-        return Format(STR_ASSIGNARRAY);
-    }
-
-    // clang-format off
-           if (         type == "uint")    { ass = "str_2_Wei(\"0x\" + [{VAL}]);";
-    } else if (         type == "uint256") { ass = "str_2_Wei(\"0x\" + [{VAL}]);";
-    } else if (contains(type, "gas"))      { ass = "str_2_Gas([{VAL}]);";
-    } else if (contains(type, "uint64"))   { ass = "str_2_Uint([{VAL}]);";
-    } else if (contains(type, "uint"))     { ass = "(uint32_t)str_2_Uint([{VAL}]);";
-    } else if (contains(type, "int"))      { ass = "str_2_Int([{VAL}]);";
-    } else if (contains(type, "bool"))     { ass = "str_2_Int([{VAL}]);";
-    } else if (contains(type, "address"))  { ass = "str_2_Addr([{VAL}]);";
-    } else                                 { ass = "[{VAL}];";
-    }
-    // clang-format on
-
-    replace(ass, "[{VAL}]", "extract(params, " + uint_2_Str(which) + "*64" + (type == "bytes" ? "" : ", 64") + ")");
-    return Format("\t\t\ta->[{NAME}] = " + ass + "\n");
-}
-
-//-----------------------------------------------------------------------
-string_q CParameter::getEventAssign(uint64_t which, uint64_t nIndexed) const {
-    string_q ass;
-
-    // clang-format off
-           if (         type == "uint")    { ass = "str_2_Wei([{VAL}]);";
-    } else if (         type == "uint256") { ass = "str_2_Wei([{VAL}]);";
-    } else if (contains(type, "gas"))      { ass = "str_2_Gas([{VAL}]);";
-    } else if (contains(type, "uint64"))   { ass = "str_2_Uint([{VAL}]);";
-    } else if (contains(type, "uint"))     { ass = "(uint32_t)str_2_Uint([{VAL}]);";
-    } else if (contains(type, "int"))      { ass = "str_2_Int([{VAL}]);";
-    } else if (contains(type, "bool"))     { ass = "str_2_Int([{VAL}]);";
-    } else if (contains(type, "address"))  { ass = "str_2_Addr([{VAL}]);";
-    } else                                 { ass = "[{VAL}];";
-    }
-    // clang-format on
-
-    if (indexed) {
-        replace(ass, "[{VAL}]", "nTops > [{WHICH}] ? topic_2_Str(p->topics[{IDX}]) : \"\"");
-
-    } else if (type == "bytes") {
-        replace(ass, "[{VAL}]", "\"0x\" + extract(data, [{WHICH}]*64)");
-        which -= (nIndexed + 1);
-
-    } else {
-        replace(ass, "[{VAL}]", string_q(type == "address" ? "" : "\"0x\" + ") + "extract(data, [{WHICH}]*64, 64)");
-        which -= (nIndexed + 1);
-    }
-
-    replace(ass, "[{IDX}]", "++" + uint_2_Str(which) + "++");
-    replace(ass, "[{WHICH}]", uint_2_Str(which));
-    string_q fmt = "\t\t\ta->[{NAME}] = " + ass + "\n";
-    return Format(fmt);
 }
 
 //-----------------------------------------------------------------------
