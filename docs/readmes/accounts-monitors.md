@@ -52,5 +52,5 @@ Data models produced by this tool:
 
 - [monitor](/data-model/accounts/#monitor)
 
-**Source code**: [`internal/monitors`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/monitors)
+Github source: [`internal/monitors`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/monitors)
 

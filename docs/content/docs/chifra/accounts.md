@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-12-31T00:20:05
+date: 2022-12-31T13:17:35
 lastmod:
   - :git
   - lastmod
@@ -68,7 +68,7 @@ Data models produced by this tool:
 - [monitor](/data-model/accounts/#monitor)
 - [appearancecount](/data-model/accounts/#appearancecount)
 
-**Source code**: [`internal/list`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/list)
+Github source: [`internal/list`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/list)
 
 ## chifra export
 
@@ -153,7 +153,7 @@ Data models produced by this tool:
 - [function](/data-model/other/#function)
 - [parameter](/data-model/other/#parameter)
 
-**Source code**: [`internal/export`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/export)
+Github source: [`internal/export`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/export)
 
 ## chifra monitors
 
@@ -209,7 +209,7 @@ Data models produced by this tool:
 
 - [monitor](/data-model/accounts/#monitor)
 
-**Source code**: [`internal/monitors`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/monitors)
+Github source: [`internal/monitors`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/monitors)
 
 ## chifra names
 
@@ -260,7 +260,7 @@ Data models produced by this tool:
 
 - [name](/data-model/accounts/#name)
 
-**Source code**: [`internal/names`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/names)
+Github source: [`internal/names`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/names)
 
 ## chifra abis
 
@@ -315,5 +315,5 @@ Data models produced by this tool:
 - [function](/data-model/other/#function)
 - [parameter](/data-model/other/#parameter)
 
-**Source code**: [`internal/abis`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/abis)
+Github source: [`internal/abis`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/abis)
 

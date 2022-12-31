@@ -47,5 +47,5 @@ Data models produced by this tool:
 
 - [name](/data-model/accounts/#name)
 
-**Source code**: [`internal/names`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/names)
+Github source: [`internal/names`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/names)
 

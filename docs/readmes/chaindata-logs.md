@@ -34,5 +34,5 @@ Data models produced by this tool:
 
 - [log](/data-model/chaindata/#log)
 
-**Source code**: [`internal/logs`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/logs)
+Github source: [`internal/logs`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/logs)
 

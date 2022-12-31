@@ -44,5 +44,5 @@ Data models produced by this tool:
 
 - [datedblock](/data-model/chaindata/#datedblock)
 
-**Source code**: [`internal/when`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/when)
+Github source: [`internal/when`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/when)
 

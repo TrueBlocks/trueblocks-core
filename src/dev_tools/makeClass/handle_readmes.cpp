@@ -84,7 +84,7 @@ bool COptions::handle_readmes(void) {
                 replaceAll(docContents, "[{NAME}]", "chifra " + ep.api_route);
 
                 string_q docsFooter =
-                    "\n\n**Source code**: "
+                    "\n\nGithub source: "
                     "[`[{FILE}]`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/"
                     "[{FILE}])\n";
                 replaceAll(docsFooter, "[{FILE}]", "internal/" + ep.api_route);

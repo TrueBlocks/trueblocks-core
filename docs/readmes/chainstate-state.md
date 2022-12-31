@@ -42,5 +42,5 @@ Data models produced by this tool:
 - [ethstate](/data-model/chainstate/#ethstate)
 - [ethcall](/data-model/chainstate/#ethcall)
 
-**Source code**: [`internal/state`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/state)
+Github source: [`internal/state`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/state)
 
