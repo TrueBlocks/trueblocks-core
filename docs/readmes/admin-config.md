@@ -36,5 +36,15 @@ Notes:
   - The 'status' alias is deprecated and will be removed shortly.
 ```
 
+Data models produced by this tool:
+
+- [monitor](/data-model/accounts/#monitor)
+- [status](/data-model/admin/#status)
+- [cache](/data-model/admin/#cache)
+- [cacheentry](/data-model/admin/#cacheentry)
+- [indexcacheitem](/data-model/admin/#indexcacheitem)
+- [chain](/data-model/admin/#chain)
+- [key](/data-model/admin/#key)
+
 **Source code**: [`internal/config`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/config)
 

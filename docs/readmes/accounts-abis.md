@@ -45,5 +45,11 @@ Notes:
   - Search for either four byte signatures or event signatures with the --find option.
 ```
 
+Data models produced by this tool:
+
+- [abi](/data-model/accounts/#abi)
+- [function](/data-model/other/#function)
+- [parameter](/data-model/other/#parameter)
+
 **Source code**: [`internal/abis`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/abis)
 

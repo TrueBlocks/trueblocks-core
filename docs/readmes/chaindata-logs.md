@@ -30,5 +30,9 @@ Notes:
   - If you specify a 32-byte hash, it will be assumed to be a transaction hash, if the transaction is not found, it will be used as a topic.
 ```
 
+Data models produced by this tool:
+
+- [log](/data-model/chaindata/#log)
+
 **Source code**: [`internal/logs`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/logs)
 

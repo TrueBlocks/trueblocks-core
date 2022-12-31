@@ -40,6 +40,16 @@ Notes:
   - The --belongs option is only available in the index mode.
 ```
 
+Data models produced by this tool:
+
+- [manifest](/data-model/admin/#manifest)
+- [pinnedchunk](/data-model/admin/#pinnedchunk)
+- [chunkindex](/data-model/admin/#chunkindex)
+- [chunkblooms](/data-model/admin/#chunkblooms)
+- [chunkaddresses](/data-model/admin/#chunkaddresses)
+- [chunkappearances](/data-model/admin/#chunkappearances)
+- [chunkstats](/data-model/admin/#chunkstats)
+
 <!-- markdownlint-disable MD041 -->
 ### Other Options
 

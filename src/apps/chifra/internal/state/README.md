@@ -37,6 +37,11 @@ Notes:
   - You may specify multiple modes on a single line.
 ```
 
+Data models produced by this tool:
+
+- [ethstate](/data-model/chainstate/#ethstate)
+- [ethcall](/data-model/chainstate/#ethcall)
+
 <!-- markdownlint-disable MD041 -->
 ### Other Options
 

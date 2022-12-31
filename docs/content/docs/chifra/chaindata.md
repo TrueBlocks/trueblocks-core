@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2022-12-30T16:19:37
+date: 2022-12-31T00:20:05
 lastmod:
   - :git
   - lastmod
@@ -68,6 +68,10 @@ Notes:
   - Large block ranges may crash the node, use --big_range to specify a larger range.
 ```
 
+Data models produced by this tool:
+
+- [block](/data-model/chaindata/#block)
+
 **Source code**: [`internal/blocks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/blocks)
 
 ## chifra transactions
@@ -113,6 +117,11 @@ Notes:
   - If the queried node does not store historical state, the results for most older transactions are undefined.
 ```
 
+Data models produced by this tool:
+
+- [transaction](/data-model/chaindata/#transaction)
+- [transfer](/data-model/chaindata/#transfer)
+
 **Source code**: [`internal/transactions`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/transactions)
 
 ## chifra receipts
@@ -150,6 +159,10 @@ Notes:
   - If the queried node does not store historical state, the results for most older transactions are undefined.
 ```
 
+Data models produced by this tool:
+
+- [receipt](/data-model/chaindata/#receipt)
+
 **Source code**: [`internal/receipts`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/receipts)
 
 ## chifra logs
@@ -183,6 +196,10 @@ Notes:
   - If the queried node does not store historical state, the results for most older transactions are undefined.
   - If you specify a 32-byte hash, it will be assumed to be a transaction hash, if the transaction is not found, it will be used as a topic.
 ```
+
+Data models produced by this tool:
+
+- [log](/data-model/chaindata/#log)
 
 **Source code**: [`internal/logs`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/logs)
 
@@ -224,6 +241,12 @@ Notes:
   - A bang separated filter has the following fields (at least one of which is required) and is separated with a bang (!): fromBlk, toBlk, fromAddr, toAddr, after, count.
   - A state diff trace describes, for each modified address, what changed during that trace.
 ```
+
+Data models produced by this tool:
+
+- [trace](/data-model/chaindata/#trace)
+- [traceaction](/data-model/chaindata/#traceaction)
+- [traceresult](/data-model/chaindata/#traceresult)
 
 **Source code**: [`internal/traces`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/traces)
 
@@ -268,6 +291,10 @@ Notes:
   - Block numbers, timestamps, or dates in the future are estimated with 13 second blocks.
   - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
 ```
+
+Data models produced by this tool:
+
+- [datedblock](/data-model/chaindata/#datedblock)
 
 **Source code**: [`internal/when`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/when)
 

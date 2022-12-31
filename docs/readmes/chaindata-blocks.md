@@ -46,5 +46,9 @@ Notes:
   - Large block ranges may crash the node, use --big_range to specify a larger range.
 ```
 
+Data models produced by this tool:
+
+- [block](/data-model/chaindata/#block)
+
 **Source code**: [`internal/blocks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/blocks)
 

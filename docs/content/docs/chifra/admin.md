@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-12-30T16:19:37
+date: 2022-12-31T00:08:07
 lastmod:
   - :git
   - lastmod
@@ -60,6 +60,16 @@ Notes:
   - The 'status' alias is deprecated and will be removed shortly.
 ```
 
+Data models produced by this tool:
+
+- [monitor](/data-model/accounts/#monitor)
+- [status](/data-model/admin/#status)
+- [cache](/data-model/admin/#cache)
+- [cacheentry](/data-model/admin/#cacheentry)
+- [indexcacheitem](/data-model/admin/#indexcacheitem)
+- [chain](/data-model/admin/#chain)
+- [key](/data-model/admin/#key)
+
 **Source code**: [`internal/config`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/config)
 
 ## chifra daemon
@@ -103,6 +113,10 @@ Notes:
   - The 'serve' alias is deprecated and will be removed shortly.
 ```
 
+Data models produced by this tool:
+
+- none
+
 **Source code**: [`internal/daemon`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/daemon)
 
 ## chifra scrape
@@ -142,6 +156,11 @@ Flags:
   -v, --verbose          enable verbose (increase detail with --log_level)
   -h, --help             display this help screen
 ```
+
+Data models produced by this tool:
+
+- [manifest](/data-model/admin/#manifest)
+- [pinnedchunk](/data-model/admin/#pinnedchunk)
 
 ### configuration
 
@@ -247,6 +266,16 @@ Notes:
   - The --belongs option is only available in the index mode.
 ```
 
+Data models produced by this tool:
+
+- [manifest](/data-model/admin/#manifest)
+- [pinnedchunk](/data-model/admin/#pinnedchunk)
+- [chunkindex](/data-model/admin/#chunkindex)
+- [chunkblooms](/data-model/admin/#chunkblooms)
+- [chunkaddresses](/data-model/admin/#chunkaddresses)
+- [chunkappearances](/data-model/admin/#chunkappearances)
+- [chunkstats](/data-model/admin/#chunkstats)
+
 **Source code**: [`internal/chunks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/chunks)
 
 ## chifra init
@@ -290,6 +319,11 @@ Flags:
 Notes:
   - Re-run chifra init as often as you wish. It will repair or freshen the index.
 ```
+
+Data models produced by this tool:
+
+- [manifest](/data-model/admin/#manifest)
+- [pinnedchunk](/data-model/admin/#pinnedchunk)
 
 **Source code**: [`internal/init`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/init)
 

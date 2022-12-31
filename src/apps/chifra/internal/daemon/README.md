@@ -39,6 +39,10 @@ Notes:
   - The 'serve' alias is deprecated and will be removed shortly.
 ```
 
+Data models produced by this tool:
+
+- none
+
 <!-- markdownlint-disable MD041 -->
 ### Other Options
 

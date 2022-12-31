@@ -35,6 +35,10 @@ Notes:
   - Portions of this software are Powered by Etherscan.io APIs.
 ```
 
+Data models produced by this tool:
+
+- [transaction](/data-model/chaindata/#transaction)
+
 <!-- markdownlint-disable MD041 -->
 ### Other Options
 

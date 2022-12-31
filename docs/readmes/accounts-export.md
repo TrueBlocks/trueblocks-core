@@ -65,5 +65,21 @@ Notes:
   - If provided, --max_records dominates, also, if provided, --first_record overrides --first_block.
 ```
 
+Data models produced by this tool:
+
+- [appearance](/data-model/accounts/#appearance)
+- [reconciliation](/data-model/accounts/#reconciliation)
+- [monitor](/data-model/accounts/#monitor)
+- [appearancecount](/data-model/accounts/#appearancecount)
+- [transaction](/data-model/chaindata/#transaction)
+- [transfer](/data-model/chaindata/#transfer)
+- [receipt](/data-model/chaindata/#receipt)
+- [log](/data-model/chaindata/#log)
+- [trace](/data-model/chaindata/#trace)
+- [traceaction](/data-model/chaindata/#traceaction)
+- [traceresult](/data-model/chaindata/#traceresult)
+- [function](/data-model/other/#function)
+- [parameter](/data-model/other/#parameter)
+
 **Source code**: [`internal/export`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/export)
 

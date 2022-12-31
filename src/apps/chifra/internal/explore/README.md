@@ -21,6 +21,10 @@ Flags:
   -h, --help     display this help screen
 ```
 
+Data models produced by this tool:
+
+- none
+
 <!-- markdownlint-disable MD041 -->
 ### Other Options
 

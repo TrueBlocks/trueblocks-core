@@ -36,6 +36,21 @@ string_q get_readme_notes(const CCommandOption& ep) {
 }
 
 //------------------------------------------------------------------------------------------------------------
+string_q get_models(const CClassDefinitionArray& models, const string_q& route) {
+    ostringstream os;
+    for (auto model : models) {
+        if (contains(model.doc_producer, toLower(route))) {
+            string_q type = toLower(model.base_name);
+            replace(type, "appearancedisplay", "appearance");
+            replace(type, "logentry", "log");
+            os << "- [" << type << "](/data-model/" << substitute(toLower(model.doc_group), " ", "") << "/#" << type
+               << ")" << endl;
+        }
+    }
+    return "\n\nData models produced by this tool:\n\n" + (os.str().empty() ? "- none" : trim(os.str(), '\n'));
+}
+
+//------------------------------------------------------------------------------------------------------------
 bool COptions::handle_readmes(void) {
     CToml config(rootConfigToml_makeClass);
     bool enabled = config.getConfigBool("enabled", "readmes", false);
@@ -65,6 +80,7 @@ bool COptions::handle_readmes(void) {
                 replaceAll(docContents, "[{USAGE}]", get_usage(ep.api_route));
                 replaceAll(docContents, "[{CONFIG}]", get_config_usage(ep));
                 replaceAll(docContents, "[{NOTES}]", get_readme_notes(ep));
+                replaceAll(docContents, "[{MODELS}]", get_models(dataModels, ep.api_route));
                 replaceAll(docContents, "[{NAME}]", "chifra " + ep.api_route);
 
                 string_q docsFooter =
@@ -156,4 +172,4 @@ const char* STR_CONFIG =
     "-- on the command line using the configuration item with leading dashes (i.e., `--name`).  ";
 
 const char* STR_README_BEGPARTS = "## [{NAME}]\n\n";
-const char* STR_README_ENDPARTS = "\n[{USAGE}][{CONFIG}][{NOTES}][{FOOTER}]\n";
+const char* STR_README_ENDPARTS = "\n[{USAGE}][{MODELS}][{CONFIG}][{NOTES}][{FOOTER}]\n";

@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2022-12-30T16:19:37
+date: 2022-12-31T00:08:07
 lastmod:
   - :git
   - lastmod
@@ -68,6 +68,11 @@ Notes:
   - You may specify multiple modes on a single line.
 ```
 
+Data models produced by this tool:
+
+- [ethstate](/data-model/chainstate/#ethstate)
+- [ethcall](/data-model/chainstate/#ethcall)
+
 **Source code**: [`internal/state`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/state)
 
 ## chifra tokens
@@ -114,6 +119,10 @@ Notes:
   - If the queried node does not store historical state, the results are undefined.
   - Special blocks are detailed under chifra when --list.
 ```
+
+Data models produced by this tool:
+
+- [tokenbalance](/data-model/chainstate/#tokenbalance)
 
 **Source code**: [`internal/tokens`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/tokens)
 

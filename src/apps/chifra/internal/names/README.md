@@ -43,6 +43,10 @@ Notes:
   - The --match_case option enables case sensitive matching.
 ```
 
+Data models produced by this tool:
+
+- [name](/data-model/accounts/#name)
+
 <!-- markdownlint-disable MD041 -->
 ### Other Options
 

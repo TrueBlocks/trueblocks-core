@@ -40,6 +40,10 @@ Notes:
   - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
 ```
 
+Data models produced by this tool:
+
+- [datedblock](/data-model/chaindata/#datedblock)
+
 <!-- markdownlint-disable MD041 -->
 ### Other Options
 

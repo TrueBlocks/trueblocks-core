@@ -46,6 +46,10 @@ Notes:
   - Large block ranges may crash the node, use --big_range to specify a larger range.
 ```
 
+Data models produced by this tool:
+
+- [block](/data-model/chaindata/#block)
+
 <!-- markdownlint-disable MD041 -->
 ### Other Options
 

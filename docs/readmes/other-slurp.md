@@ -35,5 +35,9 @@ Notes:
   - Portions of this software are Powered by Etherscan.io APIs.
 ```
 
+Data models produced by this tool:
+
+- [transaction](/data-model/chaindata/#transaction)
+
 **Source code**: [`internal/slurp`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/slurp)
 

@@ -36,6 +36,11 @@ Flags:
   -h, --help             display this help screen
 ```
 
+Data models produced by this tool:
+
+- [manifest](/data-model/admin/#manifest)
+- [pinnedchunk](/data-model/admin/#pinnedchunk)
+
 ### configuration
 
 Each of the following additional configurable command line options are available.

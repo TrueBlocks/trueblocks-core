@@ -43,5 +43,9 @@ Notes:
   - Special blocks are detailed under chifra when --list.
 ```
 
+Data models produced by this tool:
+
+- [tokenbalance](/data-model/chainstate/#tokenbalance)
+
 **Source code**: [`internal/tokens`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/tokens)
 

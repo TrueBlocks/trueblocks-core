@@ -37,5 +37,11 @@ Notes:
   - No other options are permitted when --silent is selected.
 ```
 
+Data models produced by this tool:
+
+- [appearance](/data-model/accounts/#appearance)
+- [monitor](/data-model/accounts/#monitor)
+- [appearancecount](/data-model/accounts/#appearancecount)
+
 **Source code**: [`internal/list`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/list)
 

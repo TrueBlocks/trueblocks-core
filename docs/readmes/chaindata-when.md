@@ -40,5 +40,9 @@ Notes:
   - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
 ```
 
+Data models produced by this tool:
+
+- [datedblock](/data-model/chaindata/#datedblock)
+
 **Source code**: [`internal/when`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/when)
 

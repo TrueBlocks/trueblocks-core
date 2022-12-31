@@ -48,6 +48,10 @@ Notes:
   - The --decache option will remove all cache items (blocks, txs, traces, recons) for the given address(es).
 ```
 
+Data models produced by this tool:
+
+- [monitor](/data-model/accounts/#monitor)
+
 <!-- markdownlint-disable MD041 -->
 ### Other Options
 

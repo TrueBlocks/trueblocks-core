@@ -40,5 +40,10 @@ Notes:
   - Re-run chifra init as often as you wish. It will repair or freshen the index.
 ```
 
+Data models produced by this tool:
+
+- [manifest](/data-model/admin/#manifest)
+- [pinnedchunk](/data-model/admin/#pinnedchunk)
+
 **Source code**: [`internal/init`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/init)
 

@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2022-12-30T16:18:20
+date: 2022-12-31T00:08:07
 lastmod:
   - :git
   - lastmod
@@ -49,6 +49,10 @@ Flags:
   -h, --help     display this help screen
 ```
 
+Data models produced by this tool:
+
+- none
+
 **Source code**: [`internal/explore`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/explore)
 
 ## chifra slurp
@@ -87,6 +91,10 @@ Flags:
 Notes:
   - Portions of this software are Powered by Etherscan.io APIs.
 ```
+
+Data models produced by this tool:
+
+- [transaction](/data-model/chaindata/#transaction)
 
 **Source code**: [`internal/slurp`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/slurp)
 

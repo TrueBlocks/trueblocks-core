@@ -33,5 +33,9 @@ Notes:
   - If the queried node does not store historical state, the results for most older transactions are undefined.
 ```
 
+Data models produced by this tool:
+
+- [receipt](/data-model/chaindata/#receipt)
+
 **Source code**: [`internal/receipts`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/receipts)
 

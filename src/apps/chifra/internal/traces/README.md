@@ -37,6 +37,12 @@ Notes:
   - A state diff trace describes, for each modified address, what changed during that trace.
 ```
 
+Data models produced by this tool:
+
+- [trace](/data-model/chaindata/#trace)
+- [traceaction](/data-model/chaindata/#traceaction)
+- [traceresult](/data-model/chaindata/#traceresult)
+
 <!-- markdownlint-disable MD041 -->
 ### Other Options
 

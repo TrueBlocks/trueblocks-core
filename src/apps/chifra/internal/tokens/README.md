@@ -43,6 +43,10 @@ Notes:
   - Special blocks are detailed under chifra when --list.
 ```
 
+Data models produced by this tool:
+
+- [tokenbalance](/data-model/chainstate/#tokenbalance)
+
 <!-- markdownlint-disable MD041 -->
 ### Other Options
 

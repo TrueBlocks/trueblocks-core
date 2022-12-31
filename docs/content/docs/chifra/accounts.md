@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-12-30T18:45:42
+date: 2022-12-31T00:20:05
 lastmod:
   - :git
   - lastmod
@@ -61,6 +61,12 @@ Flags:
 Notes:
   - No other options are permitted when --silent is selected.
 ```
+
+Data models produced by this tool:
+
+- [appearance](/data-model/accounts/#appearance)
+- [monitor](/data-model/accounts/#monitor)
+- [appearancecount](/data-model/accounts/#appearancecount)
 
 **Source code**: [`internal/list`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/list)
 
@@ -131,6 +137,22 @@ Notes:
   - If provided, --max_records dominates, also, if provided, --first_record overrides --first_block.
 ```
 
+Data models produced by this tool:
+
+- [appearance](/data-model/accounts/#appearance)
+- [reconciliation](/data-model/accounts/#reconciliation)
+- [monitor](/data-model/accounts/#monitor)
+- [appearancecount](/data-model/accounts/#appearancecount)
+- [transaction](/data-model/chaindata/#transaction)
+- [transfer](/data-model/chaindata/#transfer)
+- [receipt](/data-model/chaindata/#receipt)
+- [log](/data-model/chaindata/#log)
+- [trace](/data-model/chaindata/#trace)
+- [traceaction](/data-model/chaindata/#traceaction)
+- [traceresult](/data-model/chaindata/#traceresult)
+- [function](/data-model/other/#function)
+- [parameter](/data-model/other/#parameter)
+
 **Source code**: [`internal/export`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/export)
 
 ## chifra monitors
@@ -183,6 +205,10 @@ Notes:
   - The --decache option will remove all cache items (blocks, txs, traces, recons) for the given address(es).
 ```
 
+Data models produced by this tool:
+
+- [monitor](/data-model/accounts/#monitor)
+
 **Source code**: [`internal/monitors`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/monitors)
 
 ## chifra names
@@ -229,6 +255,10 @@ Notes:
   - The tool will accept up to three terms, each of which must match against any field in the database.
   - The --match_case option enables case sensitive matching.
 ```
+
+Data models produced by this tool:
+
+- [name](/data-model/accounts/#name)
 
 **Source code**: [`internal/names`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/names)
 
@@ -278,6 +308,12 @@ Notes:
   - For the --sol option, place the solidity files in the current working folder.
   - Search for either four byte signatures or event signatures with the --find option.
 ```
+
+Data models produced by this tool:
+
+- [abi](/data-model/accounts/#abi)
+- [function](/data-model/other/#function)
+- [parameter](/data-model/other/#parameter)
 
 **Source code**: [`internal/abis`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/abis)
 
