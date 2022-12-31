@@ -1,11 +1,15 @@
-<!-- markdownlint-disable MD041 -->
 ## chifra receipts
 
-`chifra receipts` returns the given transaction's receipt. You may specify multiple transaction identifiers per invocation.
+<!-- markdownlint-disable MD041 -->
+`chifra receipts` returns the given transaction's receipt. You may specify multiple transaction identifiers
+per invocation.
 
-The `--articulate` option fetches the ABI from each encountered smart contract (including those encountered in a trace--if the `--trace` option is enabled) to better describe the reported data.
+The `--articulate` option fetches the ABI from each encountered smart contract (including those
+encountered in a trace--if the `--trace` option is enabled) to better describe the reported data.
 
-Generally speaking, this tool is less useful than others as you may report the same data using `chifra transactions` and more focused data using `chifra logs`. It is included here for completeness, as the `receipt` is a fundamental data structure in Ethereum.
+Generally speaking, this tool is less useful than others as you may report the same data using
+`chifra transactions` and more focused data using `chifra logs`. It is included here for
+completeness, as the `receipt` is a fundamental data structure in Ethereum.
 
 ```[plaintext]
 Purpose:
@@ -29,8 +33,12 @@ Notes:
   - If the queried node does not store historical state, the results for most older transactions are undefined.
 ```
 
+Data models produced by this tool:
+
+- [receipt](/data-model/chaindata/#receipt)
+
 <!-- markdownlint-disable MD041 -->
-#### Other Options
+### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.
 
@@ -45,4 +53,7 @@ All tools accept the following additional flags, although in some cases, they ha
       --file string     specify multiple sets of command line options in a file
 ```
 
-*For the `--file string` option, you may place a series of valid command lines in a file using any valid flags. In some cases, this may significantly improve performance. A semi-colon at the start of any line makes it a comment.*
+*For the `--file string` option, you may place a series of valid command lines in a file using any
+valid flags. In some cases, this may significantly improve performance. A semi-colon at the start
+of any line makes it a comment.*
+

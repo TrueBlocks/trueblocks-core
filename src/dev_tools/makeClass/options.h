@@ -61,7 +61,7 @@ class COptions : public COptionsBase {
 
     ostringstream optionStream, initStream, localStream, autoStream, headerStream, configStream;
     ostringstream notesStream, errorStrStream, errorDefStream, goCallStream, goPkgStream, goConvertStream;
-    ostringstream goRouteStream, chifraCmdStream, chifraHelpStream, pairMapStream;
+    ostringstream goRouteStream, chifraHelpStream;
     ostringstream apiTagStream, apiPathStream;
     ostringstream jsLocationStream, jsTemplateStream, jsHotkeyStream, jsRouteStream;
     ostringstream goStream;
@@ -80,9 +80,7 @@ class COptions : public COptionsBase {
         goConvertStream.str("");
         goPkgStream.str("");
         goRouteStream.str("");
-        chifraCmdStream.str("");
         chifraHelpStream.str("");
-        pairMapStream.str("");
         apiTagStream.str("");
         apiPathStream.str("");
         jsLocationStream.str("");
@@ -104,9 +102,7 @@ class COptions : public COptionsBase {
         goConvertStream.clear();
         goPkgStream.clear();
         goRouteStream.clear();
-        chifraCmdStream.clear();
         chifraHelpStream.clear();
-        pairMapStream.clear();
         apiTagStream.clear();
         apiPathStream.clear();
         jsLocationStream.clear();

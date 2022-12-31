@@ -16,11 +16,13 @@ menu:
 weight: 2100
 toc: true
 ---
-Many of the `chifra` commands allow you to customize their behaviour through configuration files and/or environment variables. These options are documented here.
+Many of the `chifra` commands allow you to customize their behaviour through configuration files
+and/or environment variables. These options are documented here.
 
 ### Environment Variables
 
-Each command-line option may be overridden by exporting an environment variable in your shell prior to running a `chifra` command.
+Each command-line option may be overridden by exporting an environment variable in your shell prior
+to running a `chifra` command.
 
 The name of those environment variables is as follows:
 
@@ -37,7 +39,8 @@ export SETTINGS_RPCPROVIDER=http://localhost:9876
 chifra blocks 100
 ```
 
-which would cause `chifra` to use an alternate rpcProvider without having to edit the configuration file.
+which would cause `chifra` to use an alternate rpcProvider without having to edit the
+configuration file.
 
 This feature comes in handy when build shell scripts to automate various tasks with `chifra`.
 
@@ -47,17 +50,24 @@ Please see [TODO: PLACE_HODLER](#) for more information.
 
 ### Separate Files
 
-A single global configuration, called `trueBlocks.toml`, is stored at the root of the configuration folder.
+A single global configuration, called `trueBlocks.toml`, is stored at the root of the configuration
+folder.
 
-In addition, each individual tool has its own configuration file with items peculuar to that tool. If a configuration item is found in a particular file, it applies only to that tool.
+In addition, each individual tool has its own configuration file with items peculuar to that tool.
+If a configuration item is found in a particular file, it applies only to that tool.
 
-If, however, one of the items documented below under `trueBlocks.toml` is found in a tool's individual config, it will override that value for that tool only.
+If, however, one of the items documented below under `trueBlocks.toml` is found in a tool's
+individual config, it will override that value for that tool only.
 
-For historical reasons, the configuration files are names based on old tool names. Please see the table below for the name of each tool's config file.
+For historical reasons, the configuration files are names based on old tool names. Please see
+the table below for the name of each tool's config file.
 
 ### Multichain
 
-If you're running against mutliple chains, you may place any of these files in the root of the chain's configuration folder, and the values found there will replace any values found at the top level. In this way, you may configure all chains for certain values, but customize your configuration per chain.
+If you're running against mutliple chains, you may place any of these files in the root of the
+chain's configuration folder, and the values found there will replace any values found at the
+top level. In this way, you may configure all chains for certain values, but customize your
+configuration per chain.
 
 ### Configuration Files
 

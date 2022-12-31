@@ -6,7 +6,7 @@ transactionHash     ,hash      ,           ,       ,      ,        ,          , 
 timestamp           ,timestamp ,           ,       ,      ,        ,          ,        ,      ,         ,  5 ,   5 ,1438335038    ,the Unix timestamp of the object
 date                ,datetime  ,           ,       ,      ,true    ,          ,true    ,      ,         ,  6 ,   6 ,              ,a calculated field -- the date of this transaction
 
-assetAddr           ,address   ,           ,       ,      ,        ,          ,        ,      ,         ,  7 ,   7 ,0x6b17...1d0f ,0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for ETH reconciliations&#44; the token address otherwise
+assetAddr           ,address   ,           ,       ,      ,        ,          ,        ,      ,         ,  7 ,   7 ,0x6b17...1d0f ,0xeeee...eeee for ETH reconciliations&#44; the token address otherwise
 assetSymbol         ,string    ,           ,       ,      ,        ,          ,        ,      ,         ,  8 ,   8 ,              ,either ETH&#44; WEI&#44; or the symbol of the asset being reconciled as extracted from the chain
 decimals            ,uint64    ,      18   ,       ,      ,        ,          ,        ,      ,         ,  9 ,   9 ,              ,The value of `decimals` from an ERC20 contract or&#44; if ETH or WEI&#44; then 18
 spotPrice           ,double    ,       1.0 ,       ,      ,        ,          ,        ,      ,         , 10 ,  10 ,              ,The on-chain price in USD (or if a token in ETH&#44; or zero) at the time of the transaction

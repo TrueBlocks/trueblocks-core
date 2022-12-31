@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-12-20T20:40:22
+date: 2022-12-31T00:20:05
 lastmod:
   - :git
   - lastmod
@@ -16,18 +16,26 @@ menu:
 weight: 1100
 toc: true
 ---
-This group of commands is at the heart of TrueBlocks. They allow you to produce and analyze transactional histories for a given Ethereum address.
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+This group of commands is at the heart of TrueBlocks. They allow you to produce and analyze
+transactional histories for a given Ethereum address.
 
-You may also name addresses; grab the ABI file for a given address; add, delete, and remove monitors, and, most importantly, export transactional histories to various formats,
-This includes re-directing output to remote or local databases.
-<!-- markdownlint-disable MD041 -->
+You may also name addresses; grab the ABI file for a given address; add, delete, and remove
+monitors, and, most importantly, export transactional histories to various formats, This
+includes re-directing output to remote or local databases.
 ## chifra list
 
-`chifra list` takes one or more addresses, queries the index of appearances, and builds TrueBlocks monitors. A TrueBlocks monitor is a file that contains blockNumber.transactionId pairs (transaction identifiers) representing the history of the address.
+<!-- markdownlint-disable MD041 -->
+`chifra list` takes one or more addresses, queries the index of appearances, and builds TrueBlocks
+monitors. A TrueBlocks monitor is a file that contains blockNumber.transactionId pairs (transaction
+identifiers) representing the history of the address.
 
-Because TrueBlocks only extracts data from the Ethereum node when it's requested, the first time you list an address it takes about a minute. Subsequent queries are much faster because TrueBlocks caches the results.
+Because TrueBlocks only extracts data from the Ethereum node when it's requested, the first time
+you list an address it takes about a minute. Subsequent queries are much faster because TrueBlocks
+caches the results.
 
-Note that `chifra list` only queries the index, it does not extract the full transactional details. You may use `chifra export` for that.
+Note that `chifra list` only queries the index, it does not extract the full transactional details.
+You may use `chifra export` for that.
 
 ```[plaintext]
 Purpose:
@@ -54,18 +62,31 @@ Notes:
   - No other options are permitted when --silent is selected.
 ```
 
+Data models produced by this tool:
+
+- [appearance](/data-model/accounts/#appearance)
+- [monitor](/data-model/accounts/#monitor)
+- [appearancecount](/data-model/accounts/#appearancecount)
+
 **Source code**: [`internal/list`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/list)
 
-<!-- markdownlint-disable MD041 -->
 ## chifra export
 
-The `chifra export` tools provides a major part of the functionality of the TrueBlocks system. Using the index of appearances created with `chifra scrape` and the list of transaction identifiers created with `chifra list`, `chifra export` completes the actual extraction of an address's transactional history from the node.
+<!-- markdownlint-disable MD041 -->
+The `chifra export` tools provides a major part of the functionality of the TrueBlocks system. Using
+the index of appearances created with `chifra scrape` and the list of transaction identifiers
+created with `chifra list`, `chifra export` completes the actual extraction of an address's transactional
+history from the node.
 
-You may use `topics`, `fourbyte` values at the start of a transaction's input data, and/or a log's `source address` or `emitter` to filter the results.
+You may use `topics`, `fourbyte` values at the start of a transaction's input data, and/or a log's
+`source address` or `emitter` to filter the results.
 
-You may also choose which portions of the Ethereum data structures (`--transactions`, `--logs`, `--traces`, etc.) as you wish.
+You may also choose which portions of the Ethereum data structures (`--transactions`, `--logs`,
+`--traces`, etc.) as you wish.
 
-By default, the results of the extraction are delivered to your console, however, you may export the results to any database (with a little bit of work). The format of the data, its content and its destination are up to you.
+By default, the results of the extraction are delivered to your console, however, you may export
+the results to any database (with a little bit of work). The format of the data, its content and
+its destination are up to you.
 
 ```[plaintext]
 Purpose:
@@ -116,18 +137,44 @@ Notes:
   - If provided, --max_records dominates, also, if provided, --first_record overrides --first_block.
 ```
 
+Data models produced by this tool:
+
+- [appearance](/data-model/accounts/#appearance)
+- [reconciliation](/data-model/accounts/#reconciliation)
+- [monitor](/data-model/accounts/#monitor)
+- [appearancecount](/data-model/accounts/#appearancecount)
+- [transaction](/data-model/chaindata/#transaction)
+- [transfer](/data-model/chaindata/#transfer)
+- [receipt](/data-model/chaindata/#receipt)
+- [log](/data-model/chaindata/#log)
+- [trace](/data-model/chaindata/#trace)
+- [traceaction](/data-model/chaindata/#traceaction)
+- [traceresult](/data-model/chaindata/#traceresult)
+- [function](/data-model/other/#function)
+- [parameter](/data-model/other/#parameter)
+
 **Source code**: [`internal/export`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/export)
 
-<!-- markdownlint-disable MD041 -->
 ## chifra monitors
 
-A TrueBlocks monitor tool has two purposes. The first is to `--watch` a set of addresses. This function is in its early stages and will be better explained elsewhere. Please see an example of what one may do with `chifra monitors --watch` [here](https://tokenomics.io/).
+<!-- markdownlint-disable MD041 -->
+`chifra monitors`` has two purposes: (1) to `--watch` a set of addresses. This function is in its early
+stages and will be better explained elsewhere. Please see an example of what one may do with
+`chifra monitors --watch` [here](https://tokenomics.io/), and (2) allows one to manage existing
+monitored addresses.
 
-A "monitor" is simply a file on a hard drive that represents the transactional history of a given Ethereum address. Monitors are very small, being only the `<block_no><tx_id>` pair representing each appearance of an address. Monitor files are only created when a user expresses interest in a particular address. In this way, TrueBlock is able to continue to work on small desktop or even laptop computers. (See `chifra list`.)
+A "monitor" is simply a file on a hard drive that represents the transactional history of a given
+Ethereum address. Monitors are very small, being only the `<block_no><tx_id>` pair representing each
+appearance of an address. Monitor files are only created when a user expresses interest in a
+particular address. In this way, TrueBlock is able to continue to work on small desktop or even
+laptop computers. (See `chifra list`.)
 
-You may use the `--delete` command to delete (or `--undelete` if already deleted) an address. The monitor is not removed from your computer if you delete it. It is just marked as being deleted making it invisible to the TrueBlocks explorer.
+You may use the `--delete` command to delete (or `--undelete` if already deleted) an address. The
+monitor is not removed from your computer if you delete it. It is just marked as being deleted
+making it invisible to the TrueBlocks explorer.
 
-Use the `--remove` command to permanently remove a monitor from your computer. This is an irreversible operation and requires the monitor to have been previously deleted.
+Use the `--remove` command to permanently remove a monitor from your computer. This is an
+irreversible operation and requires the monitor to have been previously deleted.
 
 ```[plaintext]
 Purpose:
@@ -158,16 +205,26 @@ Notes:
   - The --decache option will remove all cache items (blocks, txs, traces, recons) for the given address(es).
 ```
 
+Data models produced by this tool:
+
+- [monitor](/data-model/accounts/#monitor)
+
 **Source code**: [`internal/monitors`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/monitors)
 
-<!-- markdownlint-disable MD041 -->
 ## chifra names
 
-`chifra names` is a surprisingly useful tool. It allows one to associate textual names with Ethereum addresses. One may ask why this is necessary given that ENS exists. The answer is a single word: "privacy". ENS names are public. In many cases, users desire to keep personal addresses private. Try to do this on a website.
+<!-- markdownlint-disable MD041 -->
+`chifra names` is a surprisingly useful tool. It allows one to associate textual names with Ethereum
+addresses. One may ask why this is necessary given that ENS exists. The answer is a single
+word: "privacy". ENS names are public. In many cases, users desire to keep personal addresses
+private. Try to do this on a website.
 
-Like `chifra abis`, this tool is useful from the command line but is primarily used in support of other tools, especially `chifra export` where naming addresses becomes the single best way to turn unintelligible blockchain data into understandable information.
+Like `chifra abis`, this tool is useful from the command line but is primarily used in support of
+other tools, especially `chifra export` where naming addresses becomes the single best way to
+turn unintelligible blockchain data into understandable information.
 
-The various options allow you to search and filter the results. The `tags` option is used primarily by the TrueBlocks explorer.
+The various options allow you to search and filter the results. The `tags` option is used primarily
+by the TrueBlocks explorer.
 
 You may use the TrueBlocks explorer to manage (add, edit, delete) address-name associations.
 
@@ -199,20 +256,34 @@ Notes:
   - The --match_case option enables case sensitive matching.
 ```
 
+Data models produced by this tool:
+
+- [name](/data-model/accounts/#name)
+
 **Source code**: [`internal/names`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/names)
 
-<!-- markdownlint-disable MD041 -->
 ## chifra abis
 
-`chifra abis` retrieves ABI files for the given address(es). It searches for the ABI in this order: the current local folder, the TrueBlocks cache, [Etherscan](http://etherscan.io), or (in the future) ENS and Sourcify.
+<!-- markdownlint-disable MD041 -->
+`chifra abis` retrieves ABI files for the given address(es). It searches for the ABI in this order:
+the current local folder, the TrueBlocks cache, [Etherscan](http://etherscan.io), or (in the
+future) ENS and Sourcify.
 
-While this tool may be used from the command line and the API, its primary purpose is in support of tools such as `chifra export` to support the `--articulate` option.
+While this tool may be used from the command line and the API, its primary purpose is in support of
+tools such as `chifra export` to support the `--articulate` option.
 
-The `--known` option prints a list of semi-standard function signatures such as the ERC20 standard, 721 standard, various functions from OpenZeppelin, various Uniswap functions, etc. As an optimization, the `known` signatures are searched first during articulation.
+The `--known` option prints a list of semi-standard function signatures such as the ERC20 standard,
+ERC 721 standard, various functions from OpenZeppelin, various Uniswap functions, etc. As an
+optimization, the `known` signatures are searched first during articulation.
 
-The `--sol` option converts the provided Solidity file into an ABI json file. The results are dropped into the current working folder.
+The `--sol` option converts the provided Solidity file into an ABI json file. The results are
+dropped into the current working folder.
 
-The `--find` option is experimental. It scans the cross product of two sets. The first set contains more than 100,000 function and event names. The second set contains approximately 700 function signatures. The cross product of these two sets creates 70,000,000 combinations of `name(signature)` each of which is hashed to create either a four-byte or a 32-byte hash. Very infrequently, the tool will find matches for an otherwise unknown signatures.
+The `--find` option is experimental. It scans the cross product of two sets. The first set contains
+more than 100,000 function and event names. The second set contains approximately 700 function
+signatures. The cross product of these two sets creates 70,000,000 combinations of `name(signature)`
+each of which is hashed to create either a four-byte or a 32-byte hash. Very infrequently, the tool
+will find matches for an otherwise unknown signatures.
 
 ```[plaintext]
 Purpose:
@@ -237,6 +308,12 @@ Notes:
   - For the --sol option, place the solidity files in the current working folder.
   - Search for either four byte signatures or event signatures with the --find option.
 ```
+
+Data models produced by this tool:
+
+- [abi](/data-model/accounts/#abi)
+- [function](/data-model/other/#function)
+- [parameter](/data-model/other/#parameter)
 
 **Source code**: [`internal/abis`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/abis)
 

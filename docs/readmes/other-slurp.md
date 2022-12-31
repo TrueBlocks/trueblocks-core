@@ -1,11 +1,16 @@
-<!-- markdownlint-disable MD041 -->
 ## chifra slurp
 
+<!-- markdownlint-disable MD041 -->
 `chifra slurp` is the first tool we built in the Ethereum space. It even has its [own website](http://ethslurp.com).
 
-While it's useful, it has two shortcomings. First, it is fully centralized, pulling its data from [http://etherscan.io](http://etherscan.io). Second, is that it does not report every transaction for a given account. This is actually a shortcoming with EtherScan. It's too complicated to explain here, but see our blog.
+While it's useful, it has two shortcomings. First, it is fully centralized, pulling its data from
+[http://etherscan.io](http://etherscan.io). Second, is that it does not report every transaction
+for a given account. This is actually a shortcoming with EtherScan. It's too complicated to explain
+here, but see our blog.
 
-While `chifra slurp` has its shortcomings, it does provides some nice features. You may use it to pull any transaction initiated by an EOA for example or to explore mining rewards. Visit the above referenced website for more information.
+While `chifra slurp` has its shortcomings, it does provides some nice features. You may use it to pull
+any transaction initiated by an EOA for example or to explore mining rewards. Visit the above
+referenced website for more information.
 
 ```[plaintext]
 Purpose:
@@ -29,6 +34,10 @@ Flags:
 Notes:
   - Portions of this software are Powered by Etherscan.io APIs.
 ```
+
+Data models produced by this tool:
+
+- [transaction](/data-model/chaindata/#transaction)
 
 **Source code**: [`internal/slurp`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/slurp)
 

@@ -1,11 +1,17 @@
-<!-- markdownlint-disable MD041 -->
 ## chifra names
 
-`chifra names` is a surprisingly useful tool. It allows one to associate textual names with Ethereum addresses. One may ask why this is necessary given that ENS exists. The answer is a single word: "privacy". ENS names are public. In many cases, users desire to keep personal addresses private. Try to do this on a website.
+<!-- markdownlint-disable MD041 -->
+`chifra names` is a surprisingly useful tool. It allows one to associate textual names with Ethereum
+addresses. One may ask why this is necessary given that ENS exists. The answer is a single
+word: "privacy". ENS names are public. In many cases, users desire to keep personal addresses
+private. Try to do this on a website.
 
-Like `chifra abis`, this tool is useful from the command line but is primarily used in support of other tools, especially `chifra export` where naming addresses becomes the single best way to turn unintelligible blockchain data into understandable information.
+Like `chifra abis`, this tool is useful from the command line but is primarily used in support of
+other tools, especially `chifra export` where naming addresses becomes the single best way to
+turn unintelligible blockchain data into understandable information.
 
-The various options allow you to search and filter the results. The `tags` option is used primarily by the TrueBlocks explorer.
+The various options allow you to search and filter the results. The `tags` option is used primarily
+by the TrueBlocks explorer.
 
 You may use the TrueBlocks explorer to manage (add, edit, delete) address-name associations.
 
@@ -37,8 +43,12 @@ Notes:
   - The --match_case option enables case sensitive matching.
 ```
 
+Data models produced by this tool:
+
+- [name](/data-model/accounts/#name)
+
 <!-- markdownlint-disable MD041 -->
-#### Other Options
+### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.
 
@@ -53,4 +63,7 @@ All tools accept the following additional flags, although in some cases, they ha
       --file string     specify multiple sets of command line options in a file
 ```
 
-*For the `--file string` option, you may place a series of valid command lines in a file using any valid flags. In some cases, this may significantly improve performance. A semi-colon at the start of any line makes it a comment.*
+*For the `--file string` option, you may place a series of valid command lines in a file using any
+valid flags. In some cases, this may significantly improve performance. A semi-colon at the start
+of any line makes it a comment.*
+

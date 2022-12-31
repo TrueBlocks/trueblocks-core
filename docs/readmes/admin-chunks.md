@@ -1,11 +1,11 @@
-<!-- markdownlint-disable MD041 -->
 ## chifra chunks
 
-The chifra chunks routine provides tools for interacting with, checking the validity of,
-cleaning up, and analyizing the Unchained Index. It provides options to list pins,
-the Manifest, summary data on the index, Bloom filters, addresses, and appearances.
-While still in its early stages, this tool will eventually allow users to clean
-their local index, clean their remote index, study the indexes, etc. Stay tuned.
+<!-- markdownlint-disable MD041 -->
+The chifra chunks routine provides tools for interacting with, checking the validity of, cleaning up,
+and analyizing the Unchained Index. It provides options to list pins, the Manifest, summary data
+on the index, Bloom filters, addresses, and appearances. While still in its early stages, this
+tool will eventually allow users to clean their local index, clean their remote index, study
+the indexes, etc. Stay tuned.
 
 ```[plaintext]
 Purpose:
@@ -39,6 +39,16 @@ Notes:
   - You may combine the --pin and --publish options.
   - The --belongs option is only available in the index mode.
 ```
+
+Data models produced by this tool:
+
+- [manifest](/data-model/admin/#manifest)
+- [pinnedchunk](/data-model/admin/#pinnedchunk)
+- [chunkindex](/data-model/admin/#chunkindex)
+- [chunkblooms](/data-model/admin/#chunkblooms)
+- [chunkaddresses](/data-model/admin/#chunkaddresses)
+- [chunkappearances](/data-model/admin/#chunkappearances)
+- [chunkstats](/data-model/admin/#chunkstats)
 
 **Source code**: [`internal/chunks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/chunks)
 

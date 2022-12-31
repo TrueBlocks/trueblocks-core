@@ -1,12 +1,3 @@
 <!-- markdownlint-disable MD033 MD036 MD041 -->
-For the `chifra state --call` tool, the `result` is the result returned by the call to the smart contract. This is the decoded `output` value of the smart contract call.
-
-The following commands produce and manage [{PLURAL}]:
-
-| Tools                                                 |                                                                         |
-| ----------------------------------------------------- | ----------------------------------------------------------------------- |
-| [chifra state](/docs/chifra/chainstate/#chifra-state) | retrieve account balance(s) for one or more addresses at given block(s) |
-
-[{PROPER}] data is made of the following data fields:
-
-[{FIELDS}]
+For the `chifra state --call` tool, the `result` is the result returned by the call to the smart
+contract. This is the decoded `output` value of the smart contract call.

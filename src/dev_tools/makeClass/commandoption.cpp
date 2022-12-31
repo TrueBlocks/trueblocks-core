@@ -781,13 +781,6 @@ bool CCommandOption::isChifraRoute(bool depOk) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-string_q CCommandOption::toChifraCmd(void) const {
-    if (api_route.empty())
-        return Format("    // -- [{GROUP}]");
-    return Format("    {\"[{API_ROUTE}]\", \"[{TOOL}]\"},");
-}
-
-//---------------------------------------------------------------------------------------------------
 string_q CCommandOption::toChifraHelp(void) const {
     if ((description.empty() && !api_route.empty()) || api_route == "blaze")
         return "";
@@ -798,22 +791,6 @@ string_q CCommandOption::toChifraHelp(void) const {
     if (api_route.empty())
         return toProper(ret.Format("  [{GROUP}]:")) + "\n";
     return ret.Format("    [{w:14:API_ROUTE}][{DESCRIPTION}]") + "\n";
-}
-
-//---------------------------------------------------------------------------------------------------
-string_q CCommandOption::toPairMap(void) const {
-    if (is_visible || api_route == "explore") {
-        if (!contains(tool, " "))
-            return Format("    make_pair(\"[{TOOL}]\", \"chifra [{API_ROUTE}]\"),");
-        return Format("    // [{API_ROUTE}]");
-
-    } else {
-        if (api_route.empty())
-            return Format("    // -- [{GROUP}]");
-        return Format("    // [{API_ROUTE}]");
-    }
-
-    return "";
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -868,6 +845,7 @@ const char* STR_ONEROUTE2 =
     "}";
 
 //---------------------------------------------------------------------------------------------------
+// go-port
 bool isFullyPorted(const string_q& a) {
     CStringArray tools = {"when", "list", "monitors", "chunks", "init", "scrape"};
     for (auto tool : tools) {

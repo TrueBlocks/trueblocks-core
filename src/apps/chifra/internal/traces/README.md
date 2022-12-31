@@ -1,11 +1,14 @@
-<!-- markdownlint-disable MD041 -->
 ## chifra traces
 
-The `chifra traces` tool retrieves a transaction's traces. You may specify multiple transaction identifiers per invocation.
+<!-- markdownlint-disable MD041 -->
+The `chifra traces` tool retrieves a transaction's traces. You may specify multiple transaction
+identifiers per invocation.
 
-The `--articulate` option fetches the ABI from each encountered smart contract to better describe the reported data.
+The `--articulate` option fetches the ABI from each encountered smart contract to better describe
+the reported data.
 
-The `--filter` option calls your node's `trace_filter` routine (if available) using a bang-separated string of the same values used by `trace_fitler`.
+The `--filter` option calls your node's `trace_filter` routine (if available) using a bang-separated
+string of the same values used by `trace_fitler`.
 
 ```[plaintext]
 Purpose:
@@ -34,8 +37,14 @@ Notes:
   - A state diff trace describes, for each modified address, what changed during that trace.
 ```
 
+Data models produced by this tool:
+
+- [trace](/data-model/chaindata/#trace)
+- [traceaction](/data-model/chaindata/#traceaction)
+- [traceresult](/data-model/chaindata/#traceresult)
+
 <!-- markdownlint-disable MD041 -->
-#### Other Options
+### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.
 
@@ -50,4 +59,7 @@ All tools accept the following additional flags, although in some cases, they ha
       --file string     specify multiple sets of command line options in a file
 ```
 
-*For the `--file string` option, you may place a series of valid command lines in a file using any valid flags. In some cases, this may significantly improve performance. A semi-colon at the start of any line makes it a comment.*
+*For the `--file string` option, you may place a series of valid command lines in a file using any
+valid flags. In some cases, this may significantly improve performance. A semi-colon at the start
+of any line makes it a comment.*
+
