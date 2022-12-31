@@ -13,7 +13,6 @@
 #include "acctlib.h"
 #include "options.h"
 
-#define forceWrite false
 extern string_q replaceCode(const string_q& orig, const string_q& which, const string_q& new_code);
 //------------------------------------------------------------------------------------------------------------
 bool writeCodeIn(const codewrite_t& cw) {
@@ -89,7 +88,7 @@ bool writeCodeIn(const codewrite_t& cw) {
     }
 
     bool testing = isTestMode();
-    if (codeOut != orig || forceWrite) {
+    if (codeOut != orig) {
         // Do the actual writing of the data only if we're not testing or the user has told us not to
         if (!testing) {
             LOG_INFO("Writing: ", cTeal, cw.fileName, cOff);
@@ -181,7 +180,7 @@ bool writeCodeOut(COptions* opts, const string_q& fn) {
     ostringstream out;
     out << "Writing: " << cTeal << fn << " " << cOff;
     opts->counter.nVisited++;
-    if (converted != orig || forceWrite) {
+    if (converted != orig) {
         LOG_INFO(out.str(), "wrote ", cGreen, converted.size(), " bytes...", cOff);
         stringToAsciiFile(fn, converted);
         opts->counter.nProcessed++;
@@ -205,7 +204,7 @@ bool writeIfDifferent(const string_q& outFn, const string_q& codeIn, const time_
         }
     }
 
-    if (existing.str() != orig || forceWrite) {
+    if (existing.str() != orig) {
         string_q out = substitute(codeIn, "$DATE", now.Format(FMT_EXPORT));
         stringToAsciiFile(outFn, out);
         LOG_INFO("Writing: ", cTeal, outFn, cOff);
@@ -217,7 +216,7 @@ bool writeIfDifferent(const string_q& outFn, const string_q& codeIn, const time_
 //------------------------------------------------------------------------------------------------------------
 bool writeIfDifferent(const string_q& outFn, const string_q& orig) {
     string_q existing = asciiFileToString(outFn);
-    if (existing != orig || forceWrite) {
+    if (existing != orig) {
         stringToAsciiFile(outFn, orig);
         LOG_INFO("Writing: ", cTeal, outFn, cOff);
         return true;

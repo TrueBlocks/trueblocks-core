@@ -206,6 +206,7 @@ extern string_q getDocsPathContent(const string_q& _part);
 extern string_q getDocsPathTemplates(const string_q& _part);
 extern string_q getDocsPathReadmes(const string_q& _part);
 extern string_q getPathToTemplates(const string_q& part);
+extern string_q getDocsRepoPathContent(const string_q& part);
 
 extern bool parseEndpointsFile(const char* str, void* data);
 extern bool parseOptionsFile(const char* str, void* data);

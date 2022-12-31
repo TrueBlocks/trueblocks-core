@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-12-31T00:08:07
+date: 2022-12-31T13:10:17
 lastmod:
   - :git
   - lastmod
@@ -68,7 +68,6 @@ Data models produced by this tool:
 - [cacheentry](/data-model/admin/#cacheentry)
 - [indexcacheitem](/data-model/admin/#indexcacheitem)
 - [chain](/data-model/admin/#chain)
-- [key](/data-model/admin/#key)
 
 **Source code**: [`internal/config`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/config)
 

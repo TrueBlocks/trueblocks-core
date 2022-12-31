@@ -206,5 +206,5 @@ The follow values are defined for each classDefinition file
 | tsx          | (deprecated)<br />false                                            |
 | doc_group    | The documentation group this class belongs to                      |
 | doc_descr    | The description of the class for the documentation                 |
-| doc_api      | The API something or other for something or other                  |
+| doc_route    | The command line tool and/or the API route                         |
 | force_objget | Some flag for some reason<br />false                               |

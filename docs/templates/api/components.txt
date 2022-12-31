@@ -1244,22 +1244,6 @@ components:
         ipfsGateway:
           type: string
           description: "An IPFS gateway for pinning the index if enabled"
-    key:
-      description: "an unsupported data item used for debugging only"
-      type: object
-      properties:
-        provider:
-          type: string
-          description: "The api provider"
-        apiKey:
-          type: string
-          description: "An api key"
-        jwt:
-          type: string
-          description: "An jwt token used for an API"
-        secret:
-          type: string
-          description: "A secret used for an API"
     function:
       description: "a human-readable representation of a Solidity function call or event"
       type: object
