@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-12-30T16:19:37
+date: 2022-12-30T18:45:42
 lastmod:
   - :git
   - lastmod
@@ -235,7 +235,6 @@ Notes:
 ## chifra abis
 
 <!-- markdownlint-disable MD041 -->
-+---------+---------+---------+---------+---------+---------+---------+---------+---------
 `chifra abis` retrieves ABI files for the given address(es). It searches for the ABI in this order:
 the current local folder, the TrueBlocks cache, [Etherscan](http://etherscan.io), or (in the
 future) ENS and Sourcify.

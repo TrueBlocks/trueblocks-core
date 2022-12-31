@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2022-12-30T17:27:24
+date: 2022-12-30T19:05:18
 lastmod:
   - :git
   - lastmod
@@ -38,21 +38,21 @@ blockchain only deals with byte data, TrueBlocks needs a way to decode the bytes
 human-readable function and event signatures. We call this process `--articulate`. Most TrueBlocks
 commands provide an `--articulate` option. See the commands themselves for more information.
 
-The following commands produce and manage `Functions`:
+The following commands produce and manage functions:
 
 - [chifra abis](/docs/chifra/accounts/#chifra-abis)
 - [chifra export](/docs/chifra/accounts/#chifra-export)
 
-Function data is made of the following data fields:
+Function data is made of the following fields:
 
-| Field     | Description                                             | Type            |
-| --------- | ------------------------------------------------------- | --------------- |
-| name      | the name of the interface                               | string          |
-| type      | the type of the interface, either 'event' or 'function' | string          |
-| signature | the canonical signature of the interface                | string          |
-| encoding  | the signature encoded with keccak                       | string          |
-| inputs    | the input parameters to the function, if any            | CParameterArray |
-| outputs   | the output parameters to the function, if any           | CParameterArray |
+| Field     | Description                                             | Type                                        |
+| --------- | ------------------------------------------------------- | ------------------------------------------- |
+| name      | the name of the interface                               | string                                      |
+| type      | the type of the interface, either 'event' or 'function' | string                                      |
+| signature | the canonical signature of the interface                | string                                      |
+| encoding  | the signature encoded with keccak                       | string                                      |
+| inputs    | the input parameters to the function, if any            | [Parameter[]](/data-model/other/#parameter) |
+| outputs   | the output parameters to the function, if any           | [Parameter[]](/data-model/other/#parameter) |
 
 ## Parameter
 
@@ -64,21 +64,21 @@ byte signature (or an event's 32-byte signature). Parameters are important to Tr
 we use them as part of the ABI decoding and the `--articulate` process to conver the blockchain's
 bytes into human-readable text.
 
-The following commands produce and manage `Parameters`:
+The following commands produce and manage parameters:
 
 - [chifra abis](/docs/chifra/accounts/#chifra-abis)
 - [chifra export](/docs/chifra/accounts/#chifra-export)
 
-Parameter data is made of the following data fields:
+Parameter data is made of the following fields:
 
-| Field        | Description                                                 | Type            |
-| ------------ | ----------------------------------------------------------- | --------------- |
-| type         | the type of this parameter                                  | string          |
-| name         | the name of this parameter                                  | string          |
-| strDefault   | the default value of this parameter, if any                 | string          |
-| indexed      | `true` if this parameter is indexed                         | bool            |
-| internalType | for composite types, the internal type of the parameter     | string          |
-| components   | for composite types, the parameters making up the composite | CParameterArray |
+| Field        | Description                                                 | Type                                        |
+| ------------ | ----------------------------------------------------------- | ------------------------------------------- |
+| type         | the type of this parameter                                  | string                                      |
+| name         | the name of this parameter                                  | string                                      |
+| strDefault   | the default value of this parameter, if any                 | string                                      |
+| indexed      | `true` if this parameter is indexed                         | bool                                        |
+| internalType | for composite types, the internal type of the parameter     | string                                      |
+| components   | for composite types, the parameters making up the composite | [Parameter[]](/data-model/other/#parameter) |
 
 ## Base types
 

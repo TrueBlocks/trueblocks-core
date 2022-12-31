@@ -7,5 +7,5 @@ equals = ((newContract == it.newContract) && (code == it.code) && (gasUsed == it
 tsx = true
 doc_group = 02-Chain Data
 doc_descr = trace result data as returned from the RPC (with slight enhancements)
-doc_api = 207-traceResult
+doc_api = 208-traceResult
 doc_producer = traces, export

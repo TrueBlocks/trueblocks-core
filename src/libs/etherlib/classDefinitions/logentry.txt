@@ -7,5 +7,5 @@ contained_by = Receipt
 tsx = true
 doc_group = 02-Chain Data
 doc_descr = log data as returned from the RPC (with slight enhancements)
-doc_api = 204-log
+doc_api = 205-log
 doc_producer = logs, export

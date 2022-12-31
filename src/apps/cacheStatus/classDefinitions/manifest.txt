@@ -5,5 +5,5 @@ includes = etherlib.h|pinnedchunk.h
 disabled = true
 doc_group = 04-Admin
 doc_descr = a JSON object containing records for each bloom filter and index chunk in the Unchained Index
-doc_api = 404-manifest
+doc_api = 402-manifest
 doc_producer = chunks, init, scrape

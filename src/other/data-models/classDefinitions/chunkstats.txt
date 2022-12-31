@@ -3,5 +3,5 @@ class = CChunkStats
 fields = chunkstats.csv
 doc_group = 04-Admin
 doc_descr = summary statistics about an Unchained Index bloom filter and index chunk
-doc_api = 409-chunkStats
+doc_api = 408-chunkStats
 doc_producer = chunks

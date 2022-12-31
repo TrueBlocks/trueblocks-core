@@ -25,6 +25,7 @@ extern bool sortByDoc(const CParameter& c1, const CParameter& c2);
 extern string_q typeFmt(const CParameter& fld);
 extern string_q exFmt(const CParameter& fld);
 extern string_q get_producer_table(const CClassDefinition& model, const CCommandOptionArray& endpoints);
+extern string_q type_2_Link(const CClassDefinitionArray& dataModels, const CParameter& param);
 
 //--------------------------------------------------------------------------------
 static string_q plural(const string_q& in) {
@@ -69,11 +70,14 @@ bool COptions::handle_datamodel(void) {
         size_t fieldWidths[5];
         bzero(fieldWidths, sizeof(fieldWidths));
         for (auto& fld : model.fieldArray) {
+            if (containsI(fld.name, "log")) {
+                cerr << "I AM HERE: " << fld.name << "\t" << fld.type << "\t" << fld.doc << endl;
+            }
             if (fld.doc) {
                 replaceAll(fld.description, "&#44;", ",");
                 fieldWidths[0] = max(size_t(3), max(fieldWidths[0], fld.name.length()));
                 fieldWidths[1] = max(size_t(3), max(fieldWidths[1], fld.description.length()));
-                fieldWidths[2] = max(size_t(3), max(fieldWidths[2], fld.type.length()));
+                fieldWidths[2] = max(size_t(3), max(fieldWidths[2], type_2_Link(dataModels, fld).length()));
             }
         }
 
@@ -113,7 +117,7 @@ bool COptions::handle_datamodel(void) {
                 yamlPropStream << fld.Format(typeFmt(fld));
                 yamlPropStream << fld.Format(exFmt(fld));
                 yamlPropStream << fld.Format("[          description: \"{DESCRIPTION}\"\n]");
-                fieldStream << markDownRow(fld.name, fld.description, fld.type, fieldWidths);
+                fieldStream << markDownRow(fld.name, fld.description, type_2_Link(dataModels, fld), fieldWidths);
                 addToTypeMap(typeMaps, model.doc_group, fld.type);
             }
         }
@@ -125,7 +129,7 @@ bool COptions::handle_datamodel(void) {
         string_q thisDoc = docStream.str();
         replaceAll(thisDoc, "[{TYPE}]", model.doc_api);
         replaceAll(thisDoc, "[{FIRST_UPPER}]", substitute(firstUpper(model.doc_api), "Config", "Status"));
-        replaceAll(thisDoc, "[{PLURAL}]", plural(model.doc_api));
+        replaceAll(thisDoc, "[{PLURAL}]", toLower(plural(model.doc_api)));
         replaceAll(thisDoc, "[{ALIAS}]", model.doc_alias.empty() ? "[{PROPER}]" : model.doc_alias);
         replaceAll(thisDoc, "[{PROPER}]", toProper(model.doc_api));
         if (contains(thisDoc, "[{FIELDS}]"))
@@ -262,6 +266,60 @@ string_q get_producer_table(const CClassDefinition& model, const CCommandOptionA
 }
 
 //------------------------------------------------------------------------------------------------------------
+string_q findGroup(const CClassDefinitionArray& dataModels, const string_q& type) {
+    for (auto model : dataModels) {
+        if (containsI(type, "log")) {
+            cerr << model.base_lower << " " << toLower(type) << endl;
+        }
+        if (model.base_lower == toLower(type)) {
+            if (containsI(type, "log")) {
+                cerr << "Found: " << toLower(type) << endl;
+            }
+            return model.doc_group;
+        }
+    }
+    return "";
+}
+
+//------------------------------------------------------------------------------------------------------------
+string_q type_2_Link(const CClassDefinitionArray& dataModels, const CParameter& param) {
+    string_q type = param.type;
+    if (containsI(type, "log")) {
+        cerr << param.type << " --> " << type << endl;
+    }
+
+    if (!startsWith(type, "C")) {
+        return type;
+    } else if (type == "CStringArray") {
+        return "string[]";
+    } else if (type == "CTopicArray") {
+        return "topic[]";
+    }
+
+    if (containsI(type, "log")) {
+        cerr << param.type << " --> " << type << endl;
+    }
+
+    bool isArray = contains(type, "Array");
+    replace(type, "C", "");
+    replace(type, "Array", "");
+    replace(type, "Ptr", "");
+
+    string_q group = findGroup(dataModels, type);
+    if (containsI(type, "log")) {
+        cerr << param.type << " ++> " << group << " " << type << endl;
+    }
+
+    if (group.empty()) {
+        return param.type;
+    }
+    type = substitute(type, "LogEntry", "Log");
+
+    return "[" + type + (isArray ? "[]" : "") + "](/data-model/" + toLower(substitute(group, " ", "")) + "/#" +
+           toLower(type) + ")";
+}
+
+//------------------------------------------------------------------------------------------------------------
 const char* STR_YAML_TAIL =
     "    response:\n"
     "      required:\n"
@@ -311,14 +369,14 @@ const char* STR_YAML_MODELHEADER =
 //------------------------------------------------------------------------------------------------------------
 const char* STR_MODEL_FOOTER =
     "\n"
-    "[{ALIAS}] data is made of the following data fields:\n"
+    "[{ALIAS}] data is made of the following fields:\n"
     "\n"
     "[{FIELDS}]\n";
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_MODEL_PRODUCERS =
     "\n"
-    "The following commands produce and manage `[{PLURAL}]`:\n"
+    "The following commands produce and manage [{PLURAL}]:\n"
     "\n";
 
 //------------------------------------------------------------------------------------------------------------

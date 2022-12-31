@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2022-12-30T17:27:24
+date: 2022-12-30T22:51:50
 lastmod:
   - :git
   - lastmod
@@ -29,25 +29,25 @@ Each data structure is created by one or more tools which are detailed below.
 `chifra blocks` returns top level data specified block. You can also include an array for the
 blocks' transactions.
 
-The following commands produce and manage `Blocks`:
+The following commands produce and manage blocks:
 
 - [chifra blocks](/docs/chifra/chaindata/#chifra-blocks)
 
-Block data is made of the following data fields:
+Block data is made of the following fields:
 
-| Field         | Description                                                   | Type              |
-| ------------- | ------------------------------------------------------------- | ----------------- |
-| gasLimit      | the system-wide maximum amount of gas permitted in this block | gas               |
-| hash          | the hash of the current block                                 | hash              |
-| blockNumber   | the number of the block                                       | blknum            |
-| parentHash    | hash of previous block                                        | hash              |
-| miner         | Address of block's winning miner                              | address           |
-| difficulty    | the computational difficulty at this block                    | uint64            |
-| timestamp     | the Unix timestamp of the object                              | timestamp         |
-| transactions  | a possibly empty array of transactions or transaction hashes  | CTransactionArray |
-| baseFeePerGas | the base fee for this block                                   | wei               |
-| finalized     | flag indicating the system considers this data final          | bool              |
-| unclesCnt     | the number of uncles in this block                            | uint64            |
+| Field         | Description                                                   | Type                                                |
+| ------------- | ------------------------------------------------------------- | --------------------------------------------------- |
+| gasLimit      | the system-wide maximum amount of gas permitted in this block | gas                                                 |
+| hash          | the hash of the current block                                 | hash                                                |
+| blockNumber   | the number of the block                                       | blknum                                              |
+| parentHash    | hash of previous block                                        | hash                                                |
+| miner         | Address of block's winning miner                              | address                                             |
+| difficulty    | the computational difficulty at this block                    | uint64                                              |
+| timestamp     | the Unix timestamp of the object                              | timestamp                                           |
+| transactions  | a possibly empty array of transactions or transaction hashes  | [Transaction[]](/data-model/chaindata/#transaction) |
+| baseFeePerGas | the base fee for this block                                   | wei                                                 |
+| finalized     | flag indicating the system considers this data final          | bool                                                |
+| unclesCnt     | the number of uncles in this block                            | uint64                                              |
 
 ## Transaction
 
@@ -59,37 +59,73 @@ is very interesting: `articulatedTx` provides a human readable output of the `in
 
 This is a very powerful way to understand the story behind a smart contract.
 
-The following commands produce and manage `Transactions`:
+The following commands produce and manage transactions:
 
 - [chifra transactions](/docs/chifra/chaindata/#chifra-transactions)
 - [chifra slurp](/docs/chifra/other/#chifra-slurp)
 - [chifra export](/docs/chifra/accounts/#chifra-export)
 
-Transaction data is made of the following data fields:
+Transaction data is made of the following fields:
 
-| Field            | Description                                                                                           | Type                 |
-| ---------------- | ----------------------------------------------------------------------------------------------------- | -------------------- |
-| hash             | The hash of the transaction                                                                           | hash                 |
-| blockHash        | The hash of the block containing this transaction                                                     | hash                 |
-| blockNumber      | the number of the block                                                                               | blknum               |
-| transactionIndex | the zero-indexed position of the transaction in the block                                             | blknum               |
-| nonce            | sequence number of the transactions sent by the sender                                                | uint64               |
-| timestamp        | the Unix timestamp of the object                                                                      | timestamp            |
-| from             | address from which the transaction was sent                                                           | address              |
-| to               | address to which the transaction was sent                                                             | address              |
-| value            | the amount of wei sent with this transactions                                                         | wei                  |
-| gas              | the maximum number of gas allowed for this transaction                                                | gas                  |
-| gasPrice         | the number of wei per unit of gas the sender is willing to spend                                      | gas                  |
-| input            | byte data either containing a message or funcational data for a smart contracts. See the --articulate | bytes                |
-| receipt          |                                                                                                       | CReceipt             |
-| statements       | array of reconciliations                                                                              | CReconciliationArray |
-| articulatedTx    |                                                                                                       | CFunction            |
-| compressedTx     | truncated, more readable version of the articulation                                                  | string               |
-| hasToken         | `true` if the transaction is token related, `false` otherwise                                         | uint8                |
-| finalized        | flag indicating the system considers this data final                                                  | bool                 |
-| extraData        |                                                                                                       | string               |
-| isError          | `true` if the transaction ended in error, `false` otherwise                                           | uint8                |
-| date             |                                                                                                       | datetime             |
+| Field            | Description                                                                                           | Type                                                     |
+| ---------------- | ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| hash             | The hash of the transaction                                                                           | hash                                                     |
+| blockHash        | The hash of the block containing this transaction                                                     | hash                                                     |
+| blockNumber      | the number of the block                                                                               | blknum                                                   |
+| transactionIndex | the zero-indexed position of the transaction in the block                                             | blknum                                                   |
+| nonce            | sequence number of the transactions sent by the sender                                                | uint64                                                   |
+| timestamp        | the Unix timestamp of the object                                                                      | timestamp                                                |
+| from             | address from which the transaction was sent                                                           | address                                                  |
+| to               | address to which the transaction was sent                                                             | address                                                  |
+| value            | the amount of wei sent with this transactions                                                         | wei                                                      |
+| gas              | the maximum number of gas allowed for this transaction                                                | gas                                                      |
+| gasPrice         | the number of wei per unit of gas the sender is willing to spend                                      | gas                                                      |
+| input            | byte data either containing a message or funcational data for a smart contracts. See the --articulate | bytes                                                    |
+| receipt          |                                                                                                       | [Receipt](/data-model/chaindata/#receipt)                |
+| statements       | array of reconciliations                                                                              | [Reconciliation[]](/data-model/accounts/#reconciliation) |
+| articulatedTx    |                                                                                                       | [Function](/data-model/other/#function)                  |
+| compressedTx     | truncated, more readable version of the articulation                                                  | string                                                   |
+| hasToken         | `true` if the transaction is token related, `false` otherwise                                         | uint8                                                    |
+| finalized        | flag indicating the system considers this data final                                                  | bool                                                     |
+| extraData        |                                                                                                       | string                                                   |
+| isError          | `true` if the transaction ended in error, `false` otherwise                                           | uint8                                                    |
+| date             |                                                                                                       | datetime                                                 |
+
+## Transfer
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+The `transfer` data model is produced by the reconciliation process of `chifra export`. It
+represents, for all intents and purposes, the asset value transfer produced by nearly all value
+transfers on any blockchain. While the details of various token transfers are varied, the
+underlying mechanism is through token transfers. In our accounting, we focus on the token transfers
+and label each such transfer on the `input` data or `event topic` data. In this way, our accounting
+remains relatively easy (we only reconcile tokens and ETH), but we cover every conceivable token
+asset transfer of any type.
+
+The following commands produce and manage transfers:
+
+- [chifra transactions](/docs/chifra/chaindata/#chifra-transactions)
+- [chifra export](/docs/chifra/accounts/#chifra-export)
+
+Transfer data is made of the following fields:
+
+| Field            | Description                                                                                    | Type      |
+| ---------------- | ---------------------------------------------------------------------------------------------- | --------- |
+| blockNumber      | the number of the block                                                                        | blknum    |
+| transactionIndex | the zero-indexed position of the transaction in the block                                      | blknum    |
+| logIndex         | the zero-indexed position of the log in the transaction                                        | blknum    |
+| transactionHash  | the hash of the transaction that triggered this reconciliation                                 | hash      |
+| timestamp        | the Unix timestamp of the object                                                               | timestamp |
+| date             | a calculated field -- the date of this transaction                                             | datetime  |
+| sender           | the initiator of the transfer (the sender)                                                     | address   |
+| recipient        | the receiver of the transfer (the recipient)                                                   | address   |
+| assetAddr        | 0xeeee...eeee for ETH reconcilations, the token address otherwise                              | address   |
+| assetSymbol      | either ETH, WEI or the symbol of the asset being reconciled as queried from the chain          | string    |
+| decimals         | Equivalent to the queried value of `decimals` from an ERC20 contract or, if ETH or WEI then 18 | uint64    |
+| amount           | the amount of the transfer in the units of the asset                                           | uint256   |
+| spotPrice        | The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction       | double    |
+| priceSource      | The on-chain source from which the spot price was taken                                        | string    |
+| encoding         | The four-byte encoding of the transaction's function call                                      | string    |
 
 ## Receipt
 
@@ -101,19 +137,19 @@ If the `to` address of a transaction is `0x0`, the `input` data is considered to
 code (byte code) of a smart contract. In this case, if the creation of the contract succeeds,
 the `contractAddress` field of the receipt carries the address of the newly created contract.
 
-The following commands produce and manage `Receipts`:
+The following commands produce and manage receipts:
 
 - [chifra receipts](/docs/chifra/chaindata/#chifra-receipts)
 - [chifra export](/docs/chifra/accounts/#chifra-export)
 
-Receipt data is made of the following data fields:
+Receipt data is made of the following fields:
 
-| Field           | Description                                                                | Type           |
-| --------------- | -------------------------------------------------------------------------- | -------------- |
-| status          | `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise | uint32         |
-| contractAddress | the address of the newly created contract, if any                          | address        |
-| gasUsed         | the amount of gas actually used by the transaction                         | gas            |
-| logs            | a possibly empty array of logs                                             | CLogEntryArray |
+| Field           | Description                                                                | Type                                |
+| --------------- | -------------------------------------------------------------------------- | ----------------------------------- |
+| status          | `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise | uint32                              |
+| contractAddress | the address of the newly created contract, if any                          | address                             |
+| gasUsed         | the amount of gas actually used by the transaction                         | gas                                 |
+| logs            | a possibly empty array of logs                                             | [Log[]](/data-model/chaindata/#log) |
 
 ## Log
 
@@ -123,25 +159,25 @@ underlying transaction suceeded. In the case where the transaction failed, no lo
 the receipt. Logs are only ever generated during transactions whose `to` address is a smart
 contract.
 
-The following commands produce and manage `Logs`:
+The following commands produce and manage logs:
 
 - [chifra logs](/docs/chifra/chaindata/#chifra-logs)
 - [chifra export](/docs/chifra/accounts/#chifra-export)
 
-Log data is made of the following data fields:
+Log data is made of the following fields:
 
-| Field            | Description                                                                                       | Type        |
-| ---------------- | ------------------------------------------------------------------------------------------------- | ----------- |
-| blockNumber      | the number of the block                                                                           | blknum      |
-| transactionIndex | the zero-indexed position of the transaction in the block                                         | blknum      |
-| logIndex         | the zero-indexed position of this log relative to the block                                       | blknum      |
-| transactionHash  | the hash of the transction                                                                        | hash        |
-| timestamp        | the timestamp of the block this log appears in                                                    | timestamp   |
-| address          | the smart contract that emitted this log                                                          | address     |
-| topics           | The first topic hashes event signature of the log, up to 3 additional index parameters may appear | CTopicArray |
-| data             | any remaining un-indexed parameters to the event                                                  | bytes       |
-| articulatedLog   | a human-readable version of the topic and data fields                                             | CFunction   |
-| compressedLog    | a truncated, more readable version of the articulation                                            | string      |
+| Field            | Description                                                                                       | Type                                    |
+| ---------------- | ------------------------------------------------------------------------------------------------- | --------------------------------------- |
+| blockNumber      | the number of the block                                                                           | blknum                                  |
+| transactionIndex | the zero-indexed position of the transaction in the block                                         | blknum                                  |
+| logIndex         | the zero-indexed position of this log relative to the block                                       | blknum                                  |
+| transactionHash  | the hash of the transction                                                                        | hash                                    |
+| timestamp        | the timestamp of the block this log appears in                                                    | timestamp                               |
+| address          | the smart contract that emitted this log                                                          | address                                 |
+| topics           | The first topic hashes event signature of the log, up to 3 additional index parameters may appear | topic[]                                 |
+| data             | any remaining un-indexed parameters to the event                                                  | bytes                                   |
+| articulatedLog   | a human-readable version of the topic and data fields                                             | [Function](/data-model/other/#function) |
+| compressedLog    | a truncated, more readable version of the articulation                                            | string                                  |
 
 ## Trace
 
@@ -155,27 +191,27 @@ calls. Some transactions have 100s of traces. The format of the trace is similar
 itself have a trace `action` (which contains `from`, `to`, `value` like the transaction) and the
 trace `result` (containing `gasUsed` like the receipt).
 
-The following commands produce and manage `Traces`:
+The following commands produce and manage traces:
 
 - [chifra traces](/docs/chifra/chaindata/#chifra-traces)
 - [chifra export](/docs/chifra/accounts/#chifra-export)
 
-Trace data is made of the following data fields:
+Trace data is made of the following fields:
 
-| Field            | Description                                               | Type         |
-| ---------------- | --------------------------------------------------------- | ------------ |
-| blockHash        | The hash of the block containing this trace               | hash         |
-| blockNumber      | the number of the block                                   | blknum       |
-| timestamp        | the timestamp of the block                                | timestamp    |
-| transactionHash  | the transaction's hash containing this trace              | hash         |
-| transactionIndex | the zero-indexed position of the transaction in the block | blknum       |
-| traceAddress     | a particular trace's address in the trace tree            | CStringArray |
-| subtraces        | the number of children traces that the trace hash         | uint64       |
-| type             | the type of the trace                                     | string       |
-| action           | the trace action for this trace                           | CTraceAction |
-| result           | the trace result of this trace                            | CTraceResult |
-| articulatedTrace | human readable version of the trace action input data     | CFunction    |
-| compressedTrace  | a compressed string version of the articulated trace      | string       |
+| Field            | Description                                               | Type                                              |
+| ---------------- | --------------------------------------------------------- | ------------------------------------------------- |
+| blockHash        | The hash of the block containing this trace               | hash                                              |
+| blockNumber      | the number of the block                                   | blknum                                            |
+| timestamp        | the timestamp of the block                                | timestamp                                         |
+| transactionHash  | the transaction's hash containing this trace              | hash                                              |
+| transactionIndex | the zero-indexed position of the transaction in the block | blknum                                            |
+| traceAddress     | a particular trace's address in the trace tree            | string[]                                          |
+| subtraces        | the number of children traces that the trace hash         | uint64                                            |
+| type             | the type of the trace                                     | string                                            |
+| action           | the trace action for this trace                           | [TraceAction](/data-model/chaindata/#traceaction) |
+| result           | the trace result of this trace                            | [TraceResult](/data-model/chaindata/#traceresult) |
+| articulatedTrace | human readable version of the trace action input data     | [Function](/data-model/other/#function)           |
+| compressedTrace  | a compressed string version of the articulated trace      | string                                            |
 
 ## TraceAction
 
@@ -184,12 +220,12 @@ Other than the first trace which is the trace of the transaction itself, traces 
 into smart contracts. Because of this, `trace actions` closely resemble the fields of the
 [transaction](#transactions).
 
-The following commands produce and manage `TraceActions`:
+The following commands produce and manage traceactions:
 
 - [chifra traces](/docs/chifra/chaindata/#chifra-traces)
 - [chifra export](/docs/chifra/accounts/#chifra-export)
 
-Traceaction data is made of the following data fields:
+Traceaction data is made of the following fields:
 
 | Field         | Description                                                                | Type    |
 | ------------- | -------------------------------------------------------------------------- | ------- |
@@ -206,12 +242,12 @@ Traceaction data is made of the following data fields:
 As mentioned above, other than the first trace, traces represent calls into other smart contracts.
 Because of this, the trace results closely resembles the fields of the [receipt](#receipts).
 
-The following commands produce and manage `TraceResults`:
+The following commands produce and manage traceresults:
 
 - [chifra traces](/docs/chifra/chaindata/#chifra-traces)
 - [chifra export](/docs/chifra/accounts/#chifra-export)
 
-Traceresult data is made of the following data fields:
+Traceresult data is made of the following fields:
 
 | Field       | Description                                                                    | Type    |
 | ----------- | ------------------------------------------------------------------------------ | ------- |
@@ -230,11 +266,11 @@ addresses, `-articulate` describing the Functions and Events of a transaction, a
 [chifra when](/docs/chifra/chaindata/#chifra-when) describing dated blocks. Dated blocks assign a
 human-readable date to blocks given block numbers or timestamps and visa versa.
 
-The following commands produce and manage `DatedBlocks`:
+The following commands produce and manage datedblocks:
 
 - [chifra when](/docs/chifra/chaindata/#chifra-when)
 
-Datedblock data is made of the following data fields:
+Datedblock data is made of the following fields:
 
 | Field       | Description                         | Type      |
 | ----------- | ----------------------------------- | --------- |
@@ -253,10 +289,12 @@ This documentation mentions the following basic data types.
 | bool      | either `true`, `false`, `1`, or `0` |                |
 | bytes     | an arbitrarily long string of bytes |                |
 | datetime  | a JSON formatted date               | as a string    |
+| double    | a double precision float            | 64 bits        |
 | gas       | an unsigned big number              | as a string    |
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
+| uint256   | a 256-bit unsigned integer          |                |
 | uint32    | a 32-bit unsigned integer           |                |
 | uint64    | a 64-bit unsigned integer           |                |
 | uint8     | an alias for the boolean type       |                |

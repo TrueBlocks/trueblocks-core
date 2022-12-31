@@ -5,5 +5,5 @@ fields = appearancedisplay.csv
 includes = etherlib.h
 doc_group = 01-Accounts
 doc_descr = an appearance (`<blockNumber,transactionIndex>`) of an address anywhere on the chain
-doc_api = 102-appearance
+doc_api = 101-appearance
 doc_producer = list, export

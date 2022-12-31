@@ -7,5 +7,5 @@ equals = ((blockNumber == it.blockNumber) && (assetAddr == it.assetAddr))
 tsx = true
 doc_group = 01-Accounts
 doc_descr = a reconiciliation, including all inflows and outflows, for a single transfer of an asset (including ETH) to or from a given address
-doc_api = 103-reconciliation
+doc_api = 102-reconciliation
 doc_producer = export

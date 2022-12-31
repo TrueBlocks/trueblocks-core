@@ -4,5 +4,5 @@ fields = indexcacheitem.csv
 includes = etherlib.h
 doc_group = 04-Admin
 doc_descr = an item in the Unchained Index cache
-doc_api = 413-indexCacheItem
+doc_api = 411-indexCacheItem
 doc_producer = config

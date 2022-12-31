@@ -5,7 +5,7 @@ includes = utillib.h|logentry.h
 equals = compare(it) == 0
 sort = v1.compare(v2) < 0
 cpp_includes = etherlib.h
-doc_group = 01-Accounts
+doc_group = 02-Chain Data
 doc_descr = the representation of a token transfer
-doc_api = 105-transfer
+doc_api = 203-transfer
 doc_producer = transactions, export
