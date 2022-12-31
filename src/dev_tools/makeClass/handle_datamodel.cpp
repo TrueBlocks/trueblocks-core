@@ -70,9 +70,6 @@ bool COptions::handle_datamodel(void) {
         size_t fieldWidths[5];
         bzero(fieldWidths, sizeof(fieldWidths));
         for (auto& fld : model.fieldArray) {
-            if (containsI(fld.name, "log")) {
-                cerr << "I AM HERE: " << fld.name << "\t" << fld.type << "\t" << fld.doc << endl;
-            }
             if (fld.doc) {
                 replaceAll(fld.description, "&#44;", ",");
                 fieldWidths[0] = max(size_t(3), max(fieldWidths[0], fld.name.length()));
@@ -268,13 +265,7 @@ string_q get_producer_table(const CClassDefinition& model, const CCommandOptionA
 //------------------------------------------------------------------------------------------------------------
 string_q findGroup(const CClassDefinitionArray& dataModels, const string_q& type) {
     for (auto model : dataModels) {
-        if (containsI(type, "log")) {
-            cerr << model.base_lower << " " << toLower(type) << endl;
-        }
         if (model.base_lower == toLower(type)) {
-            if (containsI(type, "log")) {
-                cerr << "Found: " << toLower(type) << endl;
-            }
             return model.doc_group;
         }
     }
@@ -284,10 +275,6 @@ string_q findGroup(const CClassDefinitionArray& dataModels, const string_q& type
 //------------------------------------------------------------------------------------------------------------
 string_q type_2_Link(const CClassDefinitionArray& dataModels, const CParameter& param) {
     string_q type = param.type;
-    if (containsI(type, "log")) {
-        cerr << param.type << " --> " << type << endl;
-    }
-
     if (!startsWith(type, "C")) {
         return type;
     } else if (type == "CStringArray") {
@@ -296,20 +283,12 @@ string_q type_2_Link(const CClassDefinitionArray& dataModels, const CParameter& 
         return "topic[]";
     }
 
-    if (containsI(type, "log")) {
-        cerr << param.type << " --> " << type << endl;
-    }
-
     bool isArray = contains(type, "Array");
     replace(type, "C", "");
     replace(type, "Array", "");
     replace(type, "Ptr", "");
 
     string_q group = findGroup(dataModels, type);
-    if (containsI(type, "log")) {
-        cerr << param.type << " ++> " << group << " " << type << endl;
-    }
-
     if (group.empty()) {
         return param.type;
     }
