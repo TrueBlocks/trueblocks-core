@@ -101,7 +101,7 @@ string_q COptions::getReturnTypes(const CCommandOption& ep, CStringArray& return
     string_q descr;
     for (auto model : dataModels) {
         if (contains(model.doc_producer, ep.api_route)) {
-            returnTypes.push_back(model.doc_api);
+            returnTypes.push_back(model.doc_route);
             if (descr.empty()) {
                 descr = model.doc_descr;
             }

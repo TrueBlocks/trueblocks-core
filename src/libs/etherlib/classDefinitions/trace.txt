@@ -6,5 +6,5 @@ cpp_includes = transaction.h|node.h
 tsx = true
 doc_group = 02-Chain Data
 doc_descr = trace data as returned from the RPC (with slight enhancements)
-doc_api = 206-trace
+doc_route = 206-trace
 doc_producer = traces, export

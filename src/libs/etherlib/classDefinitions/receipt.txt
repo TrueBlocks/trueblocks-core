@@ -8,5 +8,5 @@ contained_by = Transaction
 tsx = true
 doc_group = 02-Chain Data
 doc_descr = receipt data as returned from the RPC (with slight enhancements)
-doc_api = 204-receipt
+doc_route = 204-receipt
 doc_producer = receipts, export

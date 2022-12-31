@@ -7,5 +7,5 @@ sort = v1.blockNumber < v2.blockNumber
 equals = blockNumber == it.blockNumber
 doc_group = 03-Chain State
 doc_descr = the on-chain state of a given address including ETH balance, nonce, and smart contract byte code if present
-doc_api = 301-ethState
+doc_route = 301-ethState
 doc_producer = state

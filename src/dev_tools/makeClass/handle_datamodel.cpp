@@ -91,13 +91,13 @@ bool COptions::handle_datamodel(void) {
             weight += 200;
         }
 
-        string_q modelFn = getDocsPathTemplates("model-intros/" + model.doc_api + ".md");
+        string_q modelFn = getDocsPathTemplates("model-intros/" + model.doc_route + ".md");
         if (!fileExists(modelFn)) {
             LOG_WARN("Missing data model intro file: ", bYellow, getPathToTemplates(modelFn), cOff);
         } else {
             docStream << STR_MODEL_HEADER << asciiFileToString(modelFn) << get_producer_table(model, endpointArray)
                       << STR_MODEL_FOOTER << endl;
-            string_q notesFn = getDocsPathTemplates("model-intros/" + model.doc_api + ".notes.md");
+            string_q notesFn = getDocsPathTemplates("model-intros/" + model.doc_route + ".notes.md");
             if (fileExists(notesFn)) {
                 docStream << "### Notes\n\n" << asciiFileToString(notesFn) << endl;
             }
@@ -124,11 +124,11 @@ bool COptions::handle_datamodel(void) {
         yamlStream << yamlPropStream.str();
 
         string_q thisDoc = docStream.str();
-        replaceAll(thisDoc, "[{TYPE}]", model.doc_api);
-        replaceAll(thisDoc, "[{FIRST_UPPER}]", substitute(firstUpper(model.doc_api), "Config", "Status"));
-        replaceAll(thisDoc, "[{PLURAL}]", toLower(plural(model.doc_api)));
+        replaceAll(thisDoc, "[{TYPE}]", model.doc_route);
+        replaceAll(thisDoc, "[{FIRST_UPPER}]", substitute(firstUpper(model.doc_route), "Config", "Status"));
+        replaceAll(thisDoc, "[{PLURAL}]", toLower(plural(model.doc_route)));
         replaceAll(thisDoc, "[{ALIAS}]", model.doc_alias.empty() ? "[{PROPER}]" : model.doc_alias);
-        replaceAll(thisDoc, "[{PROPER}]", toProper(model.doc_api));
+        replaceAll(thisDoc, "[{PROPER}]", toProper(model.doc_route));
         if (contains(thisDoc, "[{FIELDS}]"))
             replace(thisDoc, "[{FIELDS}]", trim(fieldStream.str(), '\n'));
         else
@@ -340,7 +340,7 @@ const char* STR_DOCUMENT_TAIL =
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_YAML_MODELHEADER =
-    "[    {DOC_API}:\n]"
+    "[    {DOC_ROUTE}:\n]"
     "[      description: \"{DOC_DESCR}\"\n]"
     "[      type: object\n]"
     "[      properties:\n]";

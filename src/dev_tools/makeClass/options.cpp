@@ -175,7 +175,7 @@ bool COptions::parseArguments(string_q& command) {
         CClassDefinition classDef(toml);
         classDef.short_fn = classDefIn.short_fn;
         classDef.input_path = classDefIn.input_path;
-        if (!classDef.doc_api.empty())
+        if (!classDef.doc_route.empty())
             dataModels.push_back(classDef);
     }
 
