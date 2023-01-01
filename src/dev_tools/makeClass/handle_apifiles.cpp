@@ -82,11 +82,35 @@ namespace qblocks {
 extern bool isApiRoute(const string_q& route);
 }
 
+void get_models(const CClassDefinitionArray& models, CStringArray& result, const string_q& route);
 //---------------------------------------------------------------------------------------------------
-string_q get_api_text(const string_q& textIn, const string_q& toolGroup, const string_q& toolRoute) {
-    string_q ret = textIn;
+string_q get_api_text(const CClassDefinitionArray& models, const CClassDefinition& model, const string_q& toolGroup,
+                      const string_q& toolRoute) {
+    string_q ret = firstUpper(model.doc_descr) + (endsWith(model.doc_descr, ".") ? "" : ".");
+
+    CStringArray types;
+    get_models(models, types, toolRoute);
+    ostringstream os;
+    for (auto type : types) {
+        string_q group = nextTokenClear(type, '|');
+        if (!os.str().empty()) {
+            os << ", ";
+        }
+        os << "<a href=\""
+           << "/data-model/" << group << "/#" << type << "\">" << firstUpper(type) << "</a>";
+    }
+    if (types.size() > 1) {
+        ret = "Produces " + os.str() + " data.";
+    } else {
+        ret += " Produces " + os.str() + " data.";
+    }
+    if (contains(ret, "</a>, <a href")) {
+        replaceReverse(ret, "</a>, <a href", "</a>, and/or <a href");
+    }
+
     ret += (" Corresponds to the <a href=\"/docs/chifra/" + toolGroup + "/#chifra-" + toolRoute + "\">chifra " +
             toolRoute + "</a> command line.");
+
     return ret;
 }
 
@@ -97,19 +121,14 @@ string_q COptions::getReturnTypes(const CCommandOption& ep, CStringArray& return
         return "";
     }
 
-    bool isDefault = true;
     string_q descr;
     for (auto model : dataModels) {
         if (contains(model.doc_producer, ep.api_route)) {
             returnTypes.push_back(model.doc_route);
             if (descr.empty()) {
-                string_q text = model.doc_apitxt.empty() ? model.doc_descr : model.doc_apitxt;
                 string_q group = get_producer_group(ep.api_route, endpointArray);
                 string_q route = ep.api_route;
-                descr = get_api_text(text, group, route);
-                if (!model.doc_apitxt.empty()) {
-                    isDefault = false;
-                }
+                descr = get_api_text(dataModels, model, group, route);
             }
         }
     }
@@ -121,9 +140,6 @@ string_q COptions::getReturnTypes(const CCommandOption& ep, CStringArray& return
     }
 
     if (returnTypes.size() > 1) {
-        if (isDefault) {
-            descr = "One of the data types listed below.";
-        }
         prods = "oneOf:\n" + prods;
         replaceAll(prods, "$ref:", "      - $ref:");
     }

@@ -329,7 +329,7 @@ components:
           format: uint64
           description: "the size of the monitor file containing those appearances"
     block:
-      description: "block data as returned from the RPC ( with slight enhancements)"
+      description: "block data as returned from the RPC (with slight enhancements)"
       type: object
       properties:
         gasLimit:
