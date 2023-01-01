@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-12-31T00:08:07
+date: 2022-12-31T13:17:35
 lastmod:
   - :git
   - lastmod
@@ -68,9 +68,8 @@ Data models produced by this tool:
 - [cacheentry](/data-model/admin/#cacheentry)
 - [indexcacheitem](/data-model/admin/#indexcacheitem)
 - [chain](/data-model/admin/#chain)
-- [key](/data-model/admin/#key)
 
-**Source code**: [`internal/config`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/config)
+Github source: [`internal/config`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/config)
 
 ## chifra daemon
 
@@ -117,7 +116,7 @@ Data models produced by this tool:
 
 - none
 
-**Source code**: [`internal/daemon`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/daemon)
+Github source: [`internal/daemon`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/daemon)
 
 ## chifra scrape
 
@@ -222,7 +221,7 @@ node and its support of the required `trace_` endpoint routines, is highly recom
 Please [see this article](https://trueblocks.io/blog/a-long-winded-explanation-of-trueblocks/) for
 more information about running the scraper and building and sharing the index of appearances.
 
-**Source code**: [`internal/scrape`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/scrape)
+Github source: [`internal/scrape`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/scrape)
 
 ## chifra chunks
 
@@ -276,7 +275,7 @@ Data models produced by this tool:
 - [chunkappearances](/data-model/admin/#chunkappearances)
 - [chunkstats](/data-model/admin/#chunkstats)
 
-**Source code**: [`internal/chunks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/chunks)
+Github source: [`internal/chunks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/chunks)
 
 ## chifra init
 
@@ -325,5 +324,5 @@ Data models produced by this tool:
 - [manifest](/data-model/admin/#manifest)
 - [pinnedchunk](/data-model/admin/#pinnedchunk)
 
-**Source code**: [`internal/init`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/init)
+Github source: [`internal/init`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/init)
 

@@ -174,7 +174,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: One of the data types listed below.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, and/or <a href="/data-model/accounts/#appearancecount">Appearancecount</a> data. Corresponds to the <a href="/docs/chifra/accounts/#chifra-list">chifra list</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -438,7 +438,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: One of the data types listed below.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/accounts/#reconciliation">Reconciliation</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/accounts/#appearancecount">Appearancecount</a>, <a href="/data-model/chaindata/#transaction">Transaction</a>, <a href="/data-model/chaindata/#transfer">Transfer</a>, <a href="/data-model/chaindata/#receipt">Receipt</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">Traceaction</a>, <a href="/data-model/chaindata/#traceresult">Traceresult</a>, <a href="/data-model/other/#function">Function</a>, and/or <a href="/data-model/other/#parameter">Parameter</a> data. Corresponds to the <a href="/docs/chifra/accounts/#chifra-export">chifra export</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -574,7 +574,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: a local file indicating a user's interest in an address. Includes caches for reconicilations, transactions, and appearances as well as an optional association to named account
+                    description: A local file indicating a user's interest in an address. Includes caches for reconicilations, transactions, and appearances as well as an optional association to named account. Produces <a href="/data-model/accounts/#monitor">Monitor</a> data. Corresponds to the <a href="/docs/chifra/accounts/#chifra-monitors">chifra monitors</a> command line.
                     type: array
                     items:
                       $ref: "#/components/schemas/monitor"
@@ -696,7 +696,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: an association between a human-readable name and an address used throughout TrueBlocks
+                    description: An association between a human-readable name and an address used throughout TrueBlocks. Produces <a href="/data-model/accounts/#name">Name</a> data. Corresponds to the <a href="/docs/chifra/accounts/#chifra-names">chifra names</a> command line.
                     type: array
                     items:
                       $ref: "#/components/schemas/name"
@@ -779,7 +779,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: One of the data types listed below.
+                    description: Produces <a href="/data-model/accounts/#abi">Abi</a>, <a href="/data-model/other/#function">Function</a>, and/or <a href="/data-model/other/#parameter">Parameter</a> data. Corresponds to the <a href="/docs/chifra/accounts/#chifra-abis">chifra abis</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -971,7 +971,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: block data as returned from the RPC ( with slight enhancements)
+                    description: Block data as returned from the RPC (with slight enhancements). Produces <a href="/data-model/chaindata/#block">Block</a> data. Corresponds to the <a href="/docs/chifra/chaindata/#chifra-blocks">chifra blocks</a> command line.
                     type: array
                     items:
                       $ref: "#/components/schemas/block"
@@ -1064,7 +1064,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: One of the data types listed below.
+                    description: Produces <a href="/data-model/chaindata/#transaction">Transaction</a>, and/or <a href="/data-model/chaindata/#transfer">Transfer</a> data. Corresponds to the <a href="/docs/chifra/chaindata/#chifra-transactions">chifra transactions</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -1107,7 +1107,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: receipt data as returned from the RPC (with slight enhancements)
+                    description: Receipt data as returned from the RPC (with slight enhancements). Produces <a href="/data-model/chaindata/#receipt">Receipt</a> data. Corresponds to the <a href="/docs/chifra/chaindata/#chifra-receipts">chifra receipts</a> command line.
                     type: array
                     items:
                       $ref: "#/components/schemas/receipt"
@@ -1148,7 +1148,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: log data as returned from the RPC (with slight enhancements)
+                    description: Log data as returned from the RPC (with slight enhancements). Produces <a href="/data-model/chaindata/#log">Log</a> data. Corresponds to the <a href="/docs/chifra/chaindata/#chifra-logs">chifra logs</a> command line.
                     type: array
                     items:
                       $ref: "#/components/schemas/log"
@@ -1213,7 +1213,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: One of the data types listed below.
+                    description: Produces <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">Traceaction</a>, and/or <a href="/data-model/chaindata/#traceresult">Traceresult</a> data. Corresponds to the <a href="/docs/chifra/chaindata/#chifra-traces">chifra traces</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -1291,7 +1291,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: a block that has been given a particular name such as `first` or `latest`
+                    description: A block that has been given a particular name such as `first` or `latest`. Produces <a href="/data-model/chaindata/#datedblock">Datedblock</a> data. Corresponds to the <a href="/docs/chifra/chaindata/#chifra-when">chifra when</a> command line.
                     type: array
                     items:
                       $ref: "#/components/schemas/datedBlock"
@@ -1388,7 +1388,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: One of the data types listed below.
+                    description: Produces <a href="/data-model/chainstate/#ethstate">Ethstate</a>, and/or <a href="/data-model/chainstate/#ethcall">Ethcall</a> data. Corresponds to the <a href="/docs/chifra/chainstate/#chifra-state">chifra state</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -1489,7 +1489,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: on-chain token-related data such as totalSupply, symbol, decimals, and individual balances for a given address at a given block
+                    description: On-chain token-related data such as totalSupply, symbol, decimals, and individual balances for a given address at a given block. Produces <a href="/data-model/chainstate/#tokenbalance">Tokenbalance</a> data. Corresponds to the <a href="/docs/chifra/chainstate/#chifra-tokens">chifra tokens</a> command line.
                     type: array
                     items:
                       $ref: "#/components/schemas/tokenBalance"
@@ -1574,7 +1574,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: One of the data types listed below.
+                    description: Produces <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/admin/#status">Status</a>, <a href="/data-model/admin/#cache">Cache</a>, <a href="/data-model/admin/#cacheentry">Cacheentry</a>, <a href="/data-model/admin/#indexcacheitem">Indexcacheitem</a>, and/or <a href="/data-model/admin/#chain">Chain</a> data. Corresponds to the <a href="/docs/chifra/admin/#chifra-config">chifra config</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -1584,7 +1584,6 @@ paths:
                         - $ref: "#/components/schemas/cacheEntry"
                         - $ref: "#/components/schemas/indexCacheItem"
                         - $ref: "#/components/schemas/chain"
-                        - $ref: "#/components/schemas/key"
                 example:
                   {
                     "data":
@@ -1657,7 +1656,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: One of the data types listed below.
+                    description: Produces <a href="/data-model/admin/#manifest">Manifest</a>, and/or <a href="/data-model/admin/#pinnedchunk">Pinnedchunk</a> data. Corresponds to the <a href="/docs/chifra/admin/#chifra-scrape">chifra scrape</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -1762,7 +1761,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: One of the data types listed below.
+                    description: Produces <a href="/data-model/admin/#manifest">Manifest</a>, <a href="/data-model/admin/#pinnedchunk">Pinnedchunk</a>, <a href="/data-model/admin/#chunkindex">Chunkindex</a>, <a href="/data-model/admin/#chunkblooms">Chunkblooms</a>, <a href="/data-model/admin/#chunkaddresses">Chunkaddresses</a>, <a href="/data-model/admin/#chunkappearances">Chunkappearances</a>, and/or <a href="/data-model/admin/#chunkstats">Chunkstats</a> data. Corresponds to the <a href="/docs/chifra/admin/#chifra-chunks">chifra chunks</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -1826,7 +1825,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: One of the data types listed below.
+                    description: Produces <a href="/data-model/admin/#manifest">Manifest</a>, and/or <a href="/data-model/admin/#pinnedchunk">Pinnedchunk</a> data. Corresponds to the <a href="/docs/chifra/admin/#chifra-init">chifra init</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -1898,7 +1897,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: transaction data as returned from the RPC (with slight enhancements)
+                    description: Transaction data as returned from the RPC (with slight enhancements). Produces <a href="/data-model/chaindata/#transaction">Transaction</a> data. Corresponds to the <a href="/docs/chifra/other/#chifra-slurp">chifra slurp</a> command line.
                     type: array
                     items:
                       $ref: "#/components/schemas/transaction"
@@ -2259,7 +2258,7 @@ components:
           format: uint64
           description: "the size of the monitor file containing those appearances"
     block:
-      description: "block data as returned from the RPC ( with slight enhancements)"
+      description: "block data as returned from the RPC (with slight enhancements)"
       type: object
       properties:
         gasLimit:
@@ -2858,11 +2857,6 @@ components:
           items:
             $ref: "#/components/schemas/cache"
           description: "a collection of information concerning the binary caches"
-        keys:
-          type: array
-          items:
-            $ref: "#/components/schemas/key"
-          description: "the list of configured api keys"
     manifest:
       description: "a JSON object containing records for each bloom filter and index chunk in the Unchained Index"
       type: object
@@ -3174,22 +3168,6 @@ components:
         ipfsGateway:
           type: string
           description: "An IPFS gateway for pinning the index if enabled"
-    key:
-      description: "an unsupported data item used for debugging only"
-      type: object
-      properties:
-        provider:
-          type: string
-          description: "The api provider"
-        apiKey:
-          type: string
-          description: "An api key"
-        jwt:
-          type: string
-          description: "An jwt token used for an API"
-        secret:
-          type: string
-          description: "A secret used for an API"
     function:
       description: "a human-readable representation of a Solidity function call or event"
       type: object

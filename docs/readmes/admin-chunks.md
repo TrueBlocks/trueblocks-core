@@ -50,5 +50,5 @@ Data models produced by this tool:
 - [chunkappearances](/data-model/admin/#chunkappearances)
 - [chunkstats](/data-model/admin/#chunkstats)
 
-**Source code**: [`internal/chunks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/chunks)
+Github source: [`internal/chunks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/chunks)
 

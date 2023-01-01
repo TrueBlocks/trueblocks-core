@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-12-30T19:05:18
+date: 2022-12-31T13:28:57
 lastmod:
   - :git
   - lastmod
@@ -64,7 +64,6 @@ Status data is made of the following fields:
 | ts                | the timestamp when this status data was produced         | timestamp                           |
 | chains            | the list of configured chains                            | [Chain[]](/data-model/admin/#chain) |
 | caches            | a collection of information concerning the binary caches | [Cache[]](/data-model/admin/#cache) |
-| keys              | the list of configured api keys                          | [Key[]](/data-model/admin/#key)     |
 
 ## Manifest
 
@@ -314,24 +313,6 @@ Chain data is made of the following fields:
 | remoteExplorer | A remote explorer for the chain such as EtherScan                | string |
 | localExplorer  | The local explorer for the chain (typically TrueBlocks Explorer) | string |
 | ipfsGateway    | An IPFS gateway for pinning the index if enabled                 | string |
-
-## Key
-
-<!-- markdownlint-disable MD033 MD036 MD041 -->
-The `key` field is for keys of various types. It is primarily for internal use only.
-
-The following commands produce and manage keys:
-
-- [chifra config](/docs/chifra/admin/#chifra-config)
-
-Key data is made of the following fields:
-
-| Field    | Description                  | Type   |
-| -------- | ---------------------------- | ------ |
-| provider | The api provider             | string |
-| apiKey   | An api key                   | string |
-| jwt      | An jwt token used for an API | string |
-| secret   | A secret used for an API     | string |
 
 ## Base types
 

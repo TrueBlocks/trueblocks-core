@@ -329,7 +329,7 @@ components:
           format: uint64
           description: "the size of the monitor file containing those appearances"
     block:
-      description: "block data as returned from the RPC ( with slight enhancements)"
+      description: "block data as returned from the RPC (with slight enhancements)"
       type: object
       properties:
         gasLimit:
@@ -928,11 +928,6 @@ components:
           items:
             $ref: "#/components/schemas/cache"
           description: "a collection of information concerning the binary caches"
-        keys:
-          type: array
-          items:
-            $ref: "#/components/schemas/key"
-          description: "the list of configured api keys"
     manifest:
       description: "a JSON object containing records for each bloom filter and index chunk in the Unchained Index"
       type: object
@@ -1244,22 +1239,6 @@ components:
         ipfsGateway:
           type: string
           description: "An IPFS gateway for pinning the index if enabled"
-    key:
-      description: "an unsupported data item used for debugging only"
-      type: object
-      properties:
-        provider:
-          type: string
-          description: "The api provider"
-        apiKey:
-          type: string
-          description: "An api key"
-        jwt:
-          type: string
-          description: "An jwt token used for an API"
-        secret:
-          type: string
-          description: "A secret used for an API"
     function:
       description: "a human-readable representation of a Solidity function call or event"
       type: object

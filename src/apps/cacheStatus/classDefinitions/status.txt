@@ -4,6 +4,6 @@ fields = status.csv
 includes = etherlib.h|cache.h|chain.h
 doc_group = 04-Admin
 doc_descr = status-related data about the TrueBlocks system including the server and local binary caches
-doc_api = 401-config
+doc_route = 401-config
 doc_alias = Status
 doc_producer = config

@@ -36,17 +36,31 @@ string_q get_readme_notes(const CCommandOption& ep) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-string_q get_models(const CClassDefinitionArray& models, const string_q& route) {
+void get_models(const CClassDefinitionArray& models, CStringArray& result, const string_q& route) {
     ostringstream os;
     for (auto model : models) {
         if (contains(model.doc_producer, toLower(route))) {
             string_q type = toLower(model.base_name);
             replace(type, "appearancedisplay", "appearance");
             replace(type, "logentry", "log");
-            os << "- [" << type << "](/data-model/" << substitute(toLower(model.doc_group), " ", "") << "/#" << type
-               << ")" << endl;
+            string_q item = substitute(toLower(model.doc_group), " ", "") + "|" + type;
+            result.push_back(item);
         }
     }
+    return;
+}
+
+//------------------------------------------------------------------------------------------------------------
+string_q get_models(const CClassDefinitionArray& models, const string_q& route) {
+    CStringArray types;
+    get_models(models, types, route);
+
+    ostringstream os;
+    for (auto type : types) {
+        string_q group = nextTokenClear(type, '|');
+        os << "- [" << type << "](/data-model/" << group << "/#" << type << ")" << endl;
+    }
+
     return "\n\nData models produced by this tool:\n\n" + (os.str().empty() ? "- none" : trim(os.str(), '\n'));
 }
 
@@ -84,7 +98,7 @@ bool COptions::handle_readmes(void) {
                 replaceAll(docContents, "[{NAME}]", "chifra " + ep.api_route);
 
                 string_q docsFooter =
-                    "\n\n**Source code**: "
+                    "\n\nGithub source: "
                     "[`[{FILE}]`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/"
                     "[{FILE}])\n";
                 replaceAll(docsFooter, "[{FILE}]", "internal/" + ep.api_route);
@@ -122,7 +136,7 @@ bool COptions::handle_readmes(void) {
         }
 
         string_q outFn = getDocsPathContent("docs/chifra/" + group + ".md");
-        writeIfDifferent(outFn, os.str(), Now());
+        writeIfDifferent(outFn, os.str());
     }
 
     LOG_INFO(cYellow, "makeClass --readmes", cOff, " processed ", counter.nVisited, " files (changed ",

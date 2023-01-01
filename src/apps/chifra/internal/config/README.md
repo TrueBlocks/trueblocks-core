@@ -44,7 +44,6 @@ Data models produced by this tool:
 - [cacheentry](/data-model/admin/#cacheentry)
 - [indexcacheitem](/data-model/admin/#indexcacheitem)
 - [chain](/data-model/admin/#chain)
-- [key](/data-model/admin/#key)
 
 <!-- markdownlint-disable MD041 -->
 ### Other Options

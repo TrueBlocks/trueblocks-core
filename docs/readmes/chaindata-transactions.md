@@ -46,5 +46,5 @@ Data models produced by this tool:
 - [transaction](/data-model/chaindata/#transaction)
 - [transfer](/data-model/chaindata/#transfer)
 
-**Source code**: [`internal/transactions`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/transactions)
+Github source: [`internal/transactions`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/transactions)
 

@@ -116,8 +116,8 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
             if (fieldName % "doc_descr") {
                 return doc_descr;
             }
-            if (fieldName % "doc_api") {
-                return doc_api;
+            if (fieldName % "doc_route") {
+                return doc_route;
             }
             if (fieldName % "doc_alias") {
                 return doc_alias;
@@ -207,7 +207,7 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
         if (doc_order.length() < 4)
             doc_order = num + doc_order;
     }
-    if (fieldName == "doc_api") {
+    if (fieldName == "doc_route") {
         string_q num = nextTokenClear(fieldValue, '-');
         if (doc_order.length() < 4)
             doc_order = doc_order + num;
@@ -276,8 +276,8 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
                 doc_descr = fieldValue;
                 return true;
             }
-            if (fieldName % "doc_api") {
-                doc_api = fieldValue;
+            if (fieldName % "doc_route") {
+                doc_route = fieldValue;
                 return true;
             }
             if (fieldName % "doc_alias") {
@@ -395,7 +395,7 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     archive >> doc_group;
     archive >> doc_order;
     archive >> doc_descr;
-    archive >> doc_api;
+    archive >> doc_route;
     archive >> doc_alias;
     archive >> doc_producer;
     // EXISTING_CODE
@@ -434,7 +434,7 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     archive << doc_group;
     archive << doc_order;
     archive << doc_descr;
-    archive << doc_api;
+    archive << doc_route;
     archive << doc_alias;
     archive << doc_producer;
     // EXISTING_CODE
@@ -511,7 +511,7 @@ void CClassDefinition::registerClass(void) {
     ADD_FIELD(CClassDefinition, "doc_group", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "doc_order", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "doc_descr", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CClassDefinition, "doc_api", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CClassDefinition, "doc_route", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "doc_alias", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "doc_producer", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
@@ -680,9 +680,9 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
     tsx = toml.getConfigBool("settings", "tsx", false);
     doc_group = toml.getConfigStr("settings", "doc_group", "");
     doc_descr = toml.getConfigStr("settings", "doc_descr", "");
-    doc_api = toml.getConfigStr("settings", "doc_api", "");
+    doc_route = toml.getConfigStr("settings", "doc_route", "");
     doc_alias = toml.getConfigStr("settings", "doc_alias", "");
-    doc_order = nextTokenClear(doc_group, '-') + nextTokenClear(doc_api, '-');
+    doc_order = nextTokenClear(doc_group, '-') + nextTokenClear(doc_route, '-');
 
     //------------------------------------------------------------------------------------------------
     class_base = toProper(extract(class_name, 1));

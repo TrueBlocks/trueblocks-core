@@ -81,5 +81,5 @@ Data models produced by this tool:
 - [function](/data-model/other/#function)
 - [parameter](/data-model/other/#parameter)
 
-**Source code**: [`internal/export`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/export)
+Github source: [`internal/export`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/export)
 
