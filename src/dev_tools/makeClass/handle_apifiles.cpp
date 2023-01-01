@@ -83,6 +83,15 @@ extern bool isApiRoute(const string_q& route);
 }
 
 //---------------------------------------------------------------------------------------------------
+string_q get_api_text(const string_q& textIn, const string_q& toolGroup, const string_q& toolRoute) {
+    string_q ret = textIn;
+    ret += (" Corresponds to the <a href=\"/docs/chifra/" + toolGroup + "/#chifra-" + toolRoute + "\">chifra " +
+            toolRoute + "</a> command line.");
+    return ret;
+}
+
+extern string_q get_producer_group(const string_q& p, const CCommandOptionArray& endpoints);
+//---------------------------------------------------------------------------------------------------
 string_q COptions::getReturnTypes(const CCommandOption& ep, CStringArray& returnTypes) {
     if (!isApiRoute(ep.api_route) || contains(ep.api_route, "explore")) {
         return "";
@@ -94,10 +103,11 @@ string_q COptions::getReturnTypes(const CCommandOption& ep, CStringArray& return
         if (contains(model.doc_producer, ep.api_route)) {
             returnTypes.push_back(model.doc_route);
             if (descr.empty()) {
-                if (model.doc_apitxt.empty()) {
-                    descr = model.doc_descr;
-                } else {
-                    descr = model.doc_apitxt;
+                string_q text = model.doc_apitxt.empty() ? model.doc_descr : model.doc_apitxt;
+                string_q group = get_producer_group(ep.api_route, endpointArray);
+                string_q route = ep.api_route;
+                descr = get_api_text(text, group, route);
+                if (!model.doc_apitxt.empty()) {
                     isDefault = false;
                 }
             }

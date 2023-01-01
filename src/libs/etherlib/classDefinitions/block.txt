@@ -6,7 +6,8 @@ cpp_includes = appearance.h
 tsx = true
 doc_group = 02-Chain Data
 doc_descr = block data as returned from the RPC ( with slight enhancements)
-doc_apitxt = Produces <a href=/data-model/chaindata/#block>Block</a> data. Corresponds \
-    to the <a href=/docs/chifra/chaindata/#chifra-blocks>chifra blocks</a> command line.
+doc_apitxt = Produces \
+    <a href="/data-model/chaindata/#block">Block</a> \
+    data.
 doc_route = 201-block
 doc_producer = blocks
