@@ -61,7 +61,7 @@ class COptions : public COptionsBase {
 
     ostringstream optionStream, initStream, localStream, autoStream, headerStream, configStream;
     ostringstream notesStream, errorStrStream, errorDefStream, goCallStream, goPkgStream, goConvertStream;
-    ostringstream goRouteStream, chifraCmdStream, chifraHelpStream, pairMapStream;
+    ostringstream goRouteStream, chifraHelpStream;
     ostringstream apiTagStream, apiPathStream;
     ostringstream jsLocationStream, jsTemplateStream, jsHotkeyStream, jsRouteStream;
     ostringstream goStream;
@@ -80,9 +80,7 @@ class COptions : public COptionsBase {
         goConvertStream.str("");
         goPkgStream.str("");
         goRouteStream.str("");
-        chifraCmdStream.str("");
         chifraHelpStream.str("");
-        pairMapStream.str("");
         apiTagStream.str("");
         apiPathStream.str("");
         jsLocationStream.str("");
@@ -104,9 +102,7 @@ class COptions : public COptionsBase {
         goConvertStream.clear();
         goPkgStream.clear();
         goRouteStream.clear();
-        chifraCmdStream.clear();
         chifraHelpStream.clear();
-        pairMapStream.clear();
         apiTagStream.clear();
         apiPathStream.clear();
         jsLocationStream.clear();
@@ -190,10 +186,9 @@ inline string_q short3(const string_q& str) {
 
 //------------------------------------------------------------------------------------------------------------
 extern void doReplace(string_q& str, const string_q& type, const string_q& rep, const string_q& spaces);
-extern bool writeCodeIn(const codewrite_t& cw);
+extern bool writeCodeIn(COptions* opts, const codewrite_t& cw);
 extern bool writeCodeOut(COptions* opts, const string_q& fn);
 extern bool writeIfDifferent(const string_q& path, const string_q& code);
-extern bool writeIfDifferent(const string_q& path, const string_q& code, const time_q& now);
 
 //---------------------------------------------------------------------------------------------------
 extern const char* STR_YAML_FRONTMATTER;
@@ -215,6 +210,4 @@ extern bool parseEndpointsFile(const char* str, void* data);
 extern bool parseOptionsFile(const char* str, void* data);
 
 //---------------------------------------------------------------------------------------------------
-#define explorerPath string_q("/Users/jrush/Development/trueblocks-explorer/")
 #define sdkPath string_q("/Users/jrush/Development/trueblocks-sdk/")
-#define coreDocsPath string_q("/Users/jrush/Development/trueblocks-core/docs/content/api/openapi.yaml")

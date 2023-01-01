@@ -35,7 +35,7 @@ typedef enum {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CTokenBalanceRecord : public CMonitor {
+class CTokenBalance : public CMonitor {
   public:
     blknum_t blockNumber;
     string_q date;
@@ -47,26 +47,26 @@ class CTokenBalanceRecord : public CMonitor {
     bigint_t diff;
 
   public:
-    CTokenBalanceRecord(void);
-    CTokenBalanceRecord(const CTokenBalanceRecord& to);
-    virtual ~CTokenBalanceRecord(void);
-    CTokenBalanceRecord& operator=(const CTokenBalanceRecord& to);
+    CTokenBalance(void);
+    CTokenBalance(const CTokenBalance& to);
+    virtual ~CTokenBalance(void);
+    CTokenBalance& operator=(const CTokenBalance& to);
 
-    DECLARE_NODE(CTokenBalanceRecord);
+    DECLARE_NODE(CTokenBalance);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CTokenBalanceRecord& it) const;
-    bool operator!=(const CTokenBalanceRecord& it) const {
+    bool operator==(const CTokenBalance& it) const;
+    bool operator!=(const CTokenBalance& it) const {
         return !operator==(it);
     }
-    friend bool operator<(const CTokenBalanceRecord& v1, const CTokenBalanceRecord& v2);
-    friend ostream& operator<<(ostream& os, const CTokenBalanceRecord& it);
+    friend bool operator<(const CTokenBalance& v1, const CTokenBalance& v2);
+    friend ostream& operator<<(ostream& os, const CTokenBalance& it);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CTokenBalanceRecord& to);
+    void duplicate(const CTokenBalance& to);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -74,14 +74,14 @@ class CTokenBalanceRecord : public CMonitor {
 };
 
 //--------------------------------------------------------------------------
-inline CTokenBalanceRecord::CTokenBalanceRecord(void) {
+inline CTokenBalance::CTokenBalance(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CTokenBalanceRecord::CTokenBalanceRecord(const CTokenBalanceRecord& to) {
+inline CTokenBalance::CTokenBalance(const CTokenBalance& to) {
     // EXISTING_CODE
     // EXISTING_CODE
     duplicate(to);
@@ -91,20 +91,20 @@ inline CTokenBalanceRecord::CTokenBalanceRecord(const CTokenBalanceRecord& to) {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CTokenBalanceRecord::~CTokenBalanceRecord(void) {
+inline CTokenBalance::~CTokenBalance(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTokenBalanceRecord::clear(void) {
+inline void CTokenBalance::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTokenBalanceRecord::initialize(void) {
+inline void CTokenBalance::initialize(void) {
     CMonitor::initialize();
 
     blockNumber = 0;
@@ -121,7 +121,7 @@ inline void CTokenBalanceRecord::initialize(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CTokenBalanceRecord::duplicate(const CTokenBalanceRecord& to) {
+inline void CTokenBalance::duplicate(const CTokenBalance& to) {
     clear();
     CMonitor::duplicate(to);
 
@@ -139,7 +139,7 @@ inline void CTokenBalanceRecord::duplicate(const CTokenBalanceRecord& to) {
 }
 
 //--------------------------------------------------------------------------
-inline CTokenBalanceRecord& CTokenBalanceRecord::operator=(const CTokenBalanceRecord& to) {
+inline CTokenBalance& CTokenBalance::operator=(const CTokenBalance& to) {
     duplicate(to);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -147,7 +147,7 @@ inline CTokenBalanceRecord& CTokenBalanceRecord::operator=(const CTokenBalanceRe
 }
 
 //-------------------------------------------------------------------------
-inline bool CTokenBalanceRecord::operator==(const CTokenBalanceRecord& it) const {
+inline bool CTokenBalance::operator==(const CTokenBalance& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
@@ -155,7 +155,7 @@ inline bool CTokenBalanceRecord::operator==(const CTokenBalanceRecord& it) const
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CTokenBalanceRecord& v1, const CTokenBalanceRecord& v2) {
+inline bool operator<(const CTokenBalance& v1, const CTokenBalance& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // Default sort as defined in class definition
@@ -163,16 +163,16 @@ inline bool operator<(const CTokenBalanceRecord& v1, const CTokenBalanceRecord& 
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CTokenBalanceRecord> CTokenBalanceRecordArray;
-extern CArchive& operator>>(CArchive& archive, CTokenBalanceRecordArray& array);
-extern CArchive& operator<<(CArchive& archive, const CTokenBalanceRecordArray& array);
+typedef vector<CTokenBalance> CTokenBalanceArray;
+extern CArchive& operator>>(CArchive& archive, CTokenBalanceArray& array);
+extern CArchive& operator<<(CArchive& archive, const CTokenBalanceArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CTokenBalanceRecord& tok);
-extern CArchive& operator>>(CArchive& archive, CTokenBalanceRecord& tok);
+extern CArchive& operator<<(CArchive& archive, const CTokenBalance& tok);
+extern CArchive& operator>>(CArchive& archive, CTokenBalance& tok);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_TOKENBALANCERECORD;
+extern const char* STR_DISPLAY_TOKENBALANCE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

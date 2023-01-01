@@ -1,9 +1,12 @@
-<!-- markdownlint-disable MD041 -->
 ## chifra state
 
-Use this tool to retrieve the balance of an address (or list of addresses) at the given block (or blocks). Specify multiple addresses and/or multiple blocks if you wish, but you must specify at least one address. If no block is specified, the latest block is reported.
+<!-- markdownlint-disable MD041 -->
+The `chifra state` tool retrieves the balance of an address (or list of addresses) at the given block
+(or blocks). Specify multiple addresses and/or multiple blocks if you wish, but you must specify
+at least one address. If no block is specified, the latest block is reported.
 
-You may also query to see if an address is a smart contract as well as retrieve a contract's byte code.
+You may also query to see if an address is a smart contract as well as retrieve a contract's
+byte code.
 
 ```[plaintext]
 Purpose:
@@ -34,5 +37,10 @@ Notes:
   - You may specify multiple modes on a single line.
 ```
 
-**Source code**: [`internal/state`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/state)
+Data models produced by this tool:
+
+- [ethstate](/data-model/chainstate/#ethstate)
+- [ethcall](/data-model/chainstate/#ethcall)
+
+Github source: [`internal/state`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/state)
 

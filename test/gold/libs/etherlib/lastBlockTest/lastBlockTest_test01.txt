@@ -1,6 +1,6 @@
 lastBlockTest  recurse
 Recursive from ../
-Found 117 (117) files
+Found 115 (115) files
 ../abiTest/abiTest_01.txt
 ../abiTest/abiTest_02.txt
 ../abiTest/abiTest_03.txt
@@ -15,8 +15,6 @@ Found 117 (117) files
 ../abiTest/abiTest_ethtest_encode_r.txt
 ../abiTest/abiTest_ethtest_sigs.txt
 ../abiTest/abiTest_ethtest_tight.txt
-../abiTest/abiTest_evtassign.txt
-../abiTest/abiTest_funcassign.txt
 ../abiTest/decode.txt
 ../abiTest/decode2.txt
 ../abiTest/decode_raw.txt

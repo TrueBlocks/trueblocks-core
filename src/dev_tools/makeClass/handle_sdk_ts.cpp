@@ -59,10 +59,10 @@ bool COptions::handle_sdk_ts_types(CStringArray& typesOut) {
         }
 
         map<string_q, string_q> imports;
-        ostringstream fields;
+        ostringstream fieldStream;
         for (auto field : model.fieldArray) {
-            if (endsWith(field.type, "Map") || field.type == "Value" || field.type == "topic" ||
-                startsWith(field.name, "unused") || contains(field.name, "::")) {
+            if (endsWith(field.type, "Map") || field.type == "CKeyArray" || field.type == "Value" ||
+                field.type == "topic" || startsWith(field.name, "unused") || contains(field.name, "::")) {
                 continue;
             }
             bool isArray = contains(field.type, "Array");
@@ -82,7 +82,7 @@ bool COptions::handle_sdk_ts_types(CStringArray& typesOut) {
             if (field.name == "fromName" || field.name == "toName") {
                 isOptional = true;
             }
-            fields << "  " << field.name << (isOptional ? "?" : "") << ": " << ft << endl;
+            fieldStream << "  " << field.name << (isOptional ? "?" : "") << ": " << ft << endl;
             replace(ft, "[]", "");
 
             if (ft != modelName) {
@@ -100,7 +100,7 @@ bool COptions::handle_sdk_ts_types(CStringArray& typesOut) {
         ostringstream os;
         os << STR_HEADER1;
         os << "export type " << modelName << " = {" << endl;
-        os << fields.str();
+        os << fieldStream.str();
         os << "}" << endl;
         string_q contents = os.str();
 
@@ -145,13 +145,18 @@ bool COptions::handle_sdk_ts_paths(CStringArray& pathsOut) {
         ep.params = &params;
 
         if (!ep.api_route.empty()) {
-            ostringstream filename;
-            filename << sdkPath << "typescript/src/paths/" << ep.api_route << ".ts";
-
             map<string_q, string_q> imports;
             ostringstream rets;
             CStringArray types;
             getReturnTypes(ep, types);
+            if (types.empty()) {
+                // LOG_WARN("Skipping " + ep.api_route + " because it has no return types.");
+                continue;
+            }
+
+            ostringstream filename;
+            filename << sdkPath << "typescript/src/paths/" << ep.api_route << ".ts";
+
             for (auto type : types) {
                 if (rets.str() != "" && rets.str() != "void") {
                     rets << " | ";

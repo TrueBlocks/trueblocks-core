@@ -2,6 +2,6 @@
 class = CChunkStats
 fields = chunkstats.csv
 doc_group = 04-Admin
-doc_descr = summary information about the unchained index
-doc_api = 308-chunkStats
+doc_descr = summary statistics about an Unchained Index bloom filter and index chunk
+doc_route = 408-chunkStats
 doc_producer = chunks

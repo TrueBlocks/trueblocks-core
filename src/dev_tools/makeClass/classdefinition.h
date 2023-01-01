@@ -38,7 +38,6 @@ class CClassDefinition : public CBaseNode {
     string_q base_base;
     string_q head_includes;
     string_q src_includes;
-    string_q field_str;
     string_q display_str;
     string_q sort_str;
     string_q eq_str;
@@ -49,7 +48,8 @@ class CClassDefinition : public CBaseNode {
     string_q doc_group;
     string_q doc_order;
     string_q doc_descr;
-    string_q doc_api;
+    string_q doc_route;
+    string_q doc_alias;
     string_q doc_producer;
 
   public:
@@ -132,7 +132,6 @@ inline void CClassDefinition::initialize(void) {
     base_base = "";
     head_includes = "";
     src_includes = "";
-    field_str = "";
     display_str = "";
     sort_str = "";
     eq_str = "";
@@ -143,7 +142,8 @@ inline void CClassDefinition::initialize(void) {
     doc_group = "";
     doc_order = "";
     doc_descr = "";
-    doc_api = "";
+    doc_route = "";
+    doc_alias = "";
     doc_producer = "";
 
     // EXISTING_CODE
@@ -168,7 +168,6 @@ inline void CClassDefinition::duplicate(const CClassDefinition& cl) {
     base_base = cl.base_base;
     head_includes = cl.head_includes;
     src_includes = cl.src_includes;
-    field_str = cl.field_str;
     display_str = cl.display_str;
     sort_str = cl.sort_str;
     eq_str = cl.eq_str;
@@ -179,7 +178,8 @@ inline void CClassDefinition::duplicate(const CClassDefinition& cl) {
     doc_group = cl.doc_group;
     doc_order = cl.doc_order;
     doc_descr = cl.doc_descr;
-    doc_api = cl.doc_api;
+    doc_route = cl.doc_route;
+    doc_alias = cl.doc_alias;
     doc_producer = cl.doc_producer;
 
     // EXISTING_CODE

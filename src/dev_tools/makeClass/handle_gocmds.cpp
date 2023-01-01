@@ -57,7 +57,7 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     codewrite_t cw(fn, source);
     cw.nSpaces = 0;
     cw.stripEOFNL = false;
-    counter.nProcessed += writeCodeIn(cw);
+    counter.nProcessed += writeCodeIn(this, cw);
     counter.nVisited++;
     return true;
 }
@@ -127,7 +127,7 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     codewrite_t cw(fn, source);
     cw.nSpaces = 0;
     cw.stripEOFNL = false;
-    counter.nProcessed += writeCodeIn(cw);
+    counter.nProcessed += writeCodeIn(this, cw);
     counter.nVisited++;
 
     return true;
@@ -154,7 +154,7 @@ bool COptions::handle_gocmds_output(const CCommandOption& p) {
     codewrite_t cw(fn, source);
     cw.nSpaces = 0;
     cw.stripEOFNL = false;
-    counter.nProcessed += writeCodeIn(cw);
+    counter.nProcessed += writeCodeIn(this, cw);
     counter.nVisited++;
 
     return true;
@@ -380,7 +380,8 @@ string_q get_testlogs(const CCommandOption& cmd) {
 }
 
 string_q get_optfields(const CCommandOption& cmd) {
-    string_q configDocs = getDocsPathReadmes(substitute(toLower(cmd.group), " ", "") + "-" + cmd.api_route + ".config");
+    string_q n = "readme-intros/" + substitute(toLower(cmd.group), " ", "") + "-" + cmd.api_route + ".config.md";
+    string_q configDocs = getDocsPathTemplates(n);
     ::remove(configDocs.c_str());
 
     bool hasConfig = 0;

@@ -37,8 +37,6 @@ bool COptions::writeOpenApiFile(void) {
         string_q returnTypes = getReturnTypes(ep, unused);
         string_q exampleFn = getDocsPathTemplates("api/examples/" + ep.api_route + ".txt");
 
-        chifraCmdStream << ep.toChifraCmd() << endl;
-        pairMapStream << ep.toPairMap() << endl;
         apiTagStream << ep.toApiTag();
         goCallStream << ep.toGoCall();
         goRouteStream << ep.toGoRoute();
@@ -72,17 +70,7 @@ bool COptions::writeOpenApiFile(void) {
 
     writeCodeOut(this, getPathToSource("apps/chifra/internal/daemon/routes.go"));
     writeCodeOut(this, getPathToSource("apps/chifra/internal/daemon/handle_calls.go"));
-
-    if (getEnvStr("GENERATE_YAML") != "false") {
-        writeCodeOut(this, getDocsPathContent("api/openapi.yaml"));
-    }
-    if (getEnvStr("GENERATE_SDK") == "true") {
-        ostringstream tsos;
-        tsos << "cd " << explorerPath << " ; ";
-        tsos << "URL=" << coreDocsPath << " yarn generate:sdk";
-        if (system(tsos.str().c_str()) != 0) {
-        }
-    }
+    writeCodeOut(this, getDocsPathContent("api/openapi.yaml"));
 
     LOG_INFO(cYellow, "makeClass --openapi", cOff, " processed ", counter.routeCount, "/", counter.cmdCount,
              " routes/cmds ", " (changed ", counter.nProcessed, ").", string_q(40, ' '));
@@ -94,6 +82,39 @@ namespace qblocks {
 extern bool isApiRoute(const string_q& route);
 }
 
+void get_models(const CClassDefinitionArray& models, CStringArray& result, const string_q& route);
+//---------------------------------------------------------------------------------------------------
+string_q get_api_text(const CClassDefinitionArray& models, const CClassDefinition& model, const string_q& toolGroup,
+                      const string_q& toolRoute) {
+    string_q ret = firstUpper(model.doc_descr) + (endsWith(model.doc_descr, ".") ? "" : ".");
+
+    CStringArray types;
+    get_models(models, types, toolRoute);
+    ostringstream os;
+    for (auto type : types) {
+        string_q group = nextTokenClear(type, '|');
+        if (!os.str().empty()) {
+            os << ", ";
+        }
+        os << "<a href=\""
+           << "/data-model/" << group << "/#" << type << "\">" << firstUpper(type) << "</a>";
+    }
+    if (types.size() > 1) {
+        ret = "Produces " + os.str() + " data.";
+    } else {
+        ret += " Produces " + os.str() + " data.";
+    }
+    if (contains(ret, "</a>, <a href")) {
+        replaceReverse(ret, "</a>, <a href", "</a>, and/or <a href");
+    }
+
+    ret += (" Corresponds to the <a href=\"/docs/chifra/" + toolGroup + "/#chifra-" + toolRoute + "\">chifra " +
+            toolRoute + "</a> command line.");
+
+    return ret;
+}
+
+extern string_q get_producer_group(const string_q& p, const CCommandOptionArray& endpoints);
 //---------------------------------------------------------------------------------------------------
 string_q COptions::getReturnTypes(const CCommandOption& ep, CStringArray& returnTypes) {
     if (!isApiRoute(ep.api_route) || contains(ep.api_route, "explore")) {
@@ -103,9 +124,11 @@ string_q COptions::getReturnTypes(const CCommandOption& ep, CStringArray& return
     string_q descr;
     for (auto model : dataModels) {
         if (contains(model.doc_producer, ep.api_route)) {
-            returnTypes.push_back(model.doc_api);
+            returnTypes.push_back(model.doc_route);
             if (descr.empty()) {
-                descr = model.doc_descr;
+                string_q group = get_producer_group(ep.api_route, endpointArray);
+                string_q route = ep.api_route;
+                descr = get_api_text(dataModels, model, group, route);
             }
         }
     }
@@ -115,6 +138,7 @@ string_q COptions::getReturnTypes(const CCommandOption& ep, CStringArray& return
         replace(p, "cachePtr", "cache");
         prods += "$ref: \"#/components/schemas/" + p + "\"\n";
     }
+
     if (returnTypes.size() > 1) {
         prods = "oneOf:\n" + prods;
         replaceAll(prods, "$ref:", "      - $ref:");

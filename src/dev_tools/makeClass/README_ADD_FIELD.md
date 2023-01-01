@@ -1,5 +1,7 @@
 # Instructions for Adding a Field to a C++ Class
 
+THIS IS QUITE OUT OF DATE
+
 We use a home grown tool called `makeClass` to generate a large amount of boilerplate code for many of the C++ classes in this repo.
 
 Each class is described with a class definition file. You can find these classes by running this command from the `./src` folder:

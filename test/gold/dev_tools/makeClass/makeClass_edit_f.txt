@@ -1,5 +1,8 @@
 makeClass  --dump -a
 TIME ~ CLOCK - <INFO>  : Processing 3 class definition files.
+TIME ~ CLOCK - <EROR> : Cannot find file ./classDefinitions/fields/block.csv
+TIME ~ CLOCK - <EROR> : Cannot find file ./classDefinitions/fields/function.csv
+TIME ~ CLOCK - <EROR> : Cannot find file ./classDefinitions/fields/status.csv
 ------------------------------------------------------------------------------------------------------------------------
 ./classDefinitions/block.txt
 ------------------------------------------------------------------------------------------------------------------------
@@ -64,4 +67,7 @@ serialize = true
 enabled = false
 
 TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <EROR> : Cannot find file ./classDefinitions/fields/block.csv
+TIME ~ CLOCK - <EROR> : Cannot find file ./classDefinitions/fields/function.csv
+TIME ~ CLOCK - <EROR> : Cannot find file ./classDefinitions/fields/status.csv
 TIME ~ CLOCK - <INFO>  : makeClass --run processed 3 files (changed 6).                                        

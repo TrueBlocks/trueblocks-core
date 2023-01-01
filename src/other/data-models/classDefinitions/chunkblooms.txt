@@ -2,6 +2,6 @@
 class = CChunkBlooms
 fields = chunkblooms.csv
 doc_group = 04-Admin
-doc_descr = information about a single bloom filter file
-doc_api = 305-chunkBlooms
+doc_descr = internal-use only data model detailing a single bloom filter file
+doc_route = 405-chunkBlooms
 doc_producer = chunks

@@ -1,5 +1,7 @@
 makeClass  --dump function --verbose
 TIME ~ CLOCK - <INFO>  : Processing 1 class definition files.
+TIME ~ CLOCK - <EROR> : Cannot find file ./classDefinitions/fields/function.csv
+TIME ~ CLOCK - <EROR> : Cannot find file ./classDefinitions/fields/function.csv
 {
   "class_name": "CFunction",
   "class_base": "Function",
@@ -9,48 +11,6 @@ TIME ~ CLOCK - <INFO>  : Processing 1 class definition files.
   "base_lower": "function",
   "base_upper": "FUNCTION",
   "base_base": "Basenode",
-  "head_includes": "utillib.h|parameter.h",
-  "fieldArray": [
-    {
-      "type": "string",
-      "name": "name"
-    },
-    {
-      "type": "string",
-      "name": "type"
-    },
-    {
-      "type": "bool",
-      "name": "anonymous"
-    },
-    {
-      "type": "bool",
-      "name": "constant"
-    },
-    {
-      "type": "bool",
-      "name": "payable"
-    },
-    {
-      "type": "string",
-      "name": "signature"
-    },
-    {
-      "type": "string",
-      "name": "encoding"
-    },
-    {
-      "type": "CParameterArray",
-      "name": "inputs",
-      "is_array": true,
-      "is_object": true
-    },
-    {
-      "type": "CParameterArray",
-      "name": "outputs",
-      "is_array": true,
-      "is_object": true
-    }
-  ]
+  "head_includes": "utillib.h|parameter.h"
 }
 
