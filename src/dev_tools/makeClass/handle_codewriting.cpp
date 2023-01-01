@@ -19,9 +19,6 @@ bool writeCodeIn(COptions* opts, const codewrite_t& cw) {
     if (contains(cw.fileName, "/other/data-models/")) {
         return true;
     }
-    if (contains(cw.fileName, getDocsPathContent(""))) {
-        LOG_WARN(bTeal, "Writing to docs folder 1: ", cw.fileName, cOff);
-    }
 
     string_q codeOut = cw.codeOutIn;
     string_q orig;
@@ -102,9 +99,6 @@ bool writeCodeIn(COptions* opts, const codewrite_t& cw) {
 bool writeCodeOut(COptions* opts, const string_q& fn) {
     if (contains(fn, "/other/data-models/")) {
         return true;
-    }
-    if (contains(fn, getDocsPathContent(""))) {
-        LOG_WARN(bTeal, "Writing to docs folder 2: ", fn, cOff);
     }
     if (contains(fn, "/stub/") || goPortNewCode(fn))
         return true;

@@ -88,12 +88,18 @@ string_q COptions::getReturnTypes(const CCommandOption& ep, CStringArray& return
         return "";
     }
 
+    bool isDefault = true;
     string_q descr;
     for (auto model : dataModels) {
         if (contains(model.doc_producer, ep.api_route)) {
             returnTypes.push_back(model.doc_route);
             if (descr.empty()) {
-                descr = model.doc_descr;
+                if (model.doc_apitxt.empty()) {
+                    descr = model.doc_descr;
+                } else {
+                    descr = model.doc_apitxt;
+                    isDefault = false;
+                }
             }
         }
     }
@@ -105,7 +111,9 @@ string_q COptions::getReturnTypes(const CCommandOption& ep, CStringArray& return
     }
 
     if (returnTypes.size() > 1) {
-        descr = "One of the data types listed below.";
+        if (isDefault) {
+            descr = "One of the data types listed below.";
+        }
         prods = "oneOf:\n" + prods;
         replaceAll(prods, "$ref:", "      - $ref:");
     }

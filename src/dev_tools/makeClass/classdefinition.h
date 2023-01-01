@@ -48,6 +48,7 @@ class CClassDefinition : public CBaseNode {
     string_q doc_group;
     string_q doc_order;
     string_q doc_descr;
+    string_q doc_apitxt;
     string_q doc_route;
     string_q doc_alias;
     string_q doc_producer;
@@ -142,6 +143,7 @@ inline void CClassDefinition::initialize(void) {
     doc_group = "";
     doc_order = "";
     doc_descr = "";
+    doc_apitxt = "";
     doc_route = "";
     doc_alias = "";
     doc_producer = "";
@@ -178,6 +180,7 @@ inline void CClassDefinition::duplicate(const CClassDefinition& cl) {
     doc_group = cl.doc_group;
     doc_order = cl.doc_order;
     doc_descr = cl.doc_descr;
+    doc_apitxt = cl.doc_apitxt;
     doc_route = cl.doc_route;
     doc_alias = cl.doc_alias;
     doc_producer = cl.doc_producer;

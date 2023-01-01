@@ -116,6 +116,9 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
             if (fieldName % "doc_descr") {
                 return doc_descr;
             }
+            if (fieldName % "doc_apitxt") {
+                return doc_apitxt;
+            }
             if (fieldName % "doc_route") {
                 return doc_route;
             }
@@ -276,6 +279,10 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
                 doc_descr = fieldValue;
                 return true;
             }
+            if (fieldName % "doc_apitxt") {
+                doc_apitxt = fieldValue;
+                return true;
+            }
             if (fieldName % "doc_route") {
                 doc_route = fieldValue;
                 return true;
@@ -395,6 +402,7 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     archive >> doc_group;
     archive >> doc_order;
     archive >> doc_descr;
+    archive >> doc_apitxt;
     archive >> doc_route;
     archive >> doc_alias;
     archive >> doc_producer;
@@ -434,6 +442,7 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     archive << doc_group;
     archive << doc_order;
     archive << doc_descr;
+    archive << doc_apitxt;
     archive << doc_route;
     archive << doc_alias;
     archive << doc_producer;
@@ -511,6 +520,7 @@ void CClassDefinition::registerClass(void) {
     ADD_FIELD(CClassDefinition, "doc_group", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "doc_order", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "doc_descr", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CClassDefinition, "doc_apitxt", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "doc_route", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "doc_alias", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "doc_producer", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -680,6 +690,7 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
     tsx = toml.getConfigBool("settings", "tsx", false);
     doc_group = toml.getConfigStr("settings", "doc_group", "");
     doc_descr = toml.getConfigStr("settings", "doc_descr", "");
+    doc_apitxt = toml.getConfigStr("settings", "doc_apitxt", "");
     doc_route = toml.getConfigStr("settings", "doc_route", "");
     doc_alias = toml.getConfigStr("settings", "doc_alias", "");
     doc_order = nextTokenClear(doc_group, '-') + nextTokenClear(doc_route, '-');

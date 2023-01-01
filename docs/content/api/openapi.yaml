@@ -779,7 +779,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#abi">Abi</a>, <a href="/data-model/other/#function">Function</a>, and/or <a href="/data-model/other/#parameter">Parameter</a> data. Corresponds to the <a href="/docs/chifra/accounts/#chifra-abis">chifra abis</a> command line.
+                    description: Produces <a href=/data-model/accounts/#abi>Abi</a>, <a href=/data-model/other/#function>Function</a>, and/or <a href=data-model/other/#parameter>Parameter</a> data. Corresponds to the <a href=/docs/chifra/accounts/#chifra-abis>chifra abis</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -971,7 +971,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/chaindata/#block">Block</a> data. Corresponds to the <a href="/docs/chifra/chaindata/#chifra-blocks">chifra blocks</a> command line.
+                    description: Produces <a href=/data-model/chaindata/#block>Block</a> data. Corresponds to the <a href=/docs/chifra/chaindata/#chifra-blocks>chifra blocks</a> command line.
                     type: array
                     items:
                       $ref: "#/components/schemas/block"
