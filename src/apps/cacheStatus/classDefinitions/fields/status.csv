@@ -17,4 +17,4 @@ hasPinkey         ,bool      ,                 ,       ,      ,        ,        
 ts                ,timestamp ,date_2_Ts(Now()) ,       ,      ,true    ,          ,        ,      ,         , 16 ,     ,        ,the timestamp when this status data was produced
 chains            ,Chain     ,                 ,true   ,true  ,true    ,          ,        ,      ,         , 17 ,     ,        ,the list of configured chains
 caches            ,CachePtr  ,                 ,true   ,true  ,true    ,          ,        ,      ,         , 18 ,     ,        ,a collection of information concerning the binary caches
-keys              ,Key       ,                 ,true   ,true  ,true    ,          ,        ,      ,         , 19 ,     ,        ,the list of configured api keys
+keys              ,Key       ,                 ,true   ,true  ,true    ,          ,        ,      ,         ,    ,     ,        ,the list of configured api keys

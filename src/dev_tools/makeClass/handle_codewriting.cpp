@@ -15,9 +15,12 @@
 
 extern string_q replaceCode(const string_q& orig, const string_q& which, const string_q& new_code);
 //------------------------------------------------------------------------------------------------------------
-bool writeCodeIn(const codewrite_t& cw) {
+bool writeCodeIn(COptions* opts, const codewrite_t& cw) {
     if (contains(cw.fileName, "/other/data-models/")) {
         return true;
+    }
+    if (contains(cw.fileName, getDocsPathContent(""))) {
+        LOG_WARN(bTeal, "Writing to docs folder 1: ", cw.fileName, cOff);
     }
 
     string_q codeOut = cw.codeOutIn;
@@ -87,20 +90,11 @@ bool writeCodeIn(const codewrite_t& cw) {
         replace(codeOut, "::virtual ~Q", "::~Q");
     }
 
-    bool testing = isTestMode();
-    if (codeOut != orig) {
-        // Do the actual writing of the data only if we're not testing or the user has told us not to
-        if (!testing) {
-            LOG_INFO("Writing: ", cTeal, cw.fileName, cOff);
-            stringToAsciiFile(cw.fileName, codeOut);
-        } else {
-            LOG8("Not writing: ", cw.fileName);
-        }
-        // We return 'true' if we WOULD HAVE have written the file (even if we didn't).
+    opts->counter.nVisited++;
+    if (writeIfDifferent(cw.fileName, codeOut)) {
+        opts->counter.nProcessed++;
         return true;
     }
-
-    // We return 'false' if we would NOT have written the file (not if we actually did).
     return false;
 }
 
@@ -109,12 +103,14 @@ bool writeCodeOut(COptions* opts, const string_q& fn) {
     if (contains(fn, "/other/data-models/")) {
         return true;
     }
-
+    if (contains(fn, getDocsPathContent(""))) {
+        LOG_WARN(bTeal, "Writing to docs folder 2: ", fn, cOff);
+    }
     if (contains(fn, "/stub/") || goPortNewCode(fn))
         return true;
 
     string_q orig = asciiFileToString(fn);
-    string_q converted = orig;
+    string_q codeOut = orig;
     if (endsWith(fn, ".cpp")) {
         CStringArray tokens = {"_CODE_AUTO", "_CODE_OPTIONS", "_CODE_LOCAL_INIT",
                                "_CODE_INIT", "_CODE_NOTES",   "ERROR_STRINGS"};
@@ -128,31 +124,31 @@ bool writeCodeOut(COptions* opts, const string_q& fn) {
             }
         }
 
-        converted = replaceCode(converted, "CODE_AUTO", opts->autoStream.str());
-        converted = replaceCode(converted, "CODE_OPTIONS", opts->optionStream.str());
-        converted = replaceCode(converted, "CODE_LOCAL_INIT", opts->localStream.str());
-        converted = replaceCode(converted, "CODE_INIT", opts->initStream.str());
-        converted = replaceCode(converted, "CODE_NOTES", opts->notesStream.str());
-        converted = replaceCode(converted, "ERROR_STRINGS", opts->errorStrStream.str());
-        replaceAll(converted, "    // clang-format on\n    // clang-format off\n", "");
+        codeOut = replaceCode(codeOut, "CODE_AUTO", opts->autoStream.str());
+        codeOut = replaceCode(codeOut, "CODE_OPTIONS", opts->optionStream.str());
+        codeOut = replaceCode(codeOut, "CODE_LOCAL_INIT", opts->localStream.str());
+        codeOut = replaceCode(codeOut, "CODE_INIT", opts->initStream.str());
+        codeOut = replaceCode(codeOut, "CODE_NOTES", opts->notesStream.str());
+        codeOut = replaceCode(codeOut, "ERROR_STRINGS", opts->errorStrStream.str());
+        replaceAll(codeOut, "    // clang-format on\n    // clang-format off\n", "");
 
     } else if (endsWith(fn, ".go.tmpl") || endsWith(fn, ".go")) {
-        converted = replaceCode(converted, "ROUTE_PKGS", trim(opts->goPkgStream.str(), '\n') + "\n");
-        converted = replaceCode(converted, "ROUTE_CODE", opts->goCallStream.str());
-        converted = replaceCode(converted, "ROUTE_ITEMS", opts->goRouteStream.str());
-        converted = replaceCode(converted, "CONVERT_CODE", opts->goConvertStream.str());
+        codeOut = replaceCode(codeOut, "ROUTE_PKGS", trim(opts->goPkgStream.str(), '\n') + "\n");
+        codeOut = replaceCode(codeOut, "ROUTE_CODE", opts->goCallStream.str());
+        codeOut = replaceCode(codeOut, "ROUTE_ITEMS", opts->goRouteStream.str());
+        codeOut = replaceCode(codeOut, "CONVERT_CODE", opts->goConvertStream.str());
 
     } else if (endsWith(fn, ".yaml")) {
         string_q components = trim(asciiFileToString(getDocsPathTemplates("api/components.txt")), '\n');
         string_q descr = asciiFileToString(getDocsPathTemplates("api/description.txt"));
         replaceAll(descr, "~~~~", "    ");
 
-        converted = asciiFileToString(getPathToTemplates("blank.yaml"));
-        replace(converted, "[{TAGS}]", opts->apiTagStream.str());
-        replace(converted, "[{PATHS}]", opts->apiPathStream.str());
-        replace(converted, "[{DESCRIPTION}]", descr);
-        replace(converted, "[{COMPONENTS}]", components);
-        replace(converted, "[{VERSION}]", getVersionStr(false /* product */, false /* git_hash */));
+        codeOut = asciiFileToString(getPathToTemplates("blank.yaml"));
+        replace(codeOut, "[{TAGS}]", opts->apiTagStream.str());
+        replace(codeOut, "[{PATHS}]", opts->apiPathStream.str());
+        replace(codeOut, "[{DESCRIPTION}]", descr);
+        replace(codeOut, "[{COMPONENTS}]", components);
+        replace(codeOut, "[{VERSION}]", getVersionStr(false /* product */, false /* git_hash */));
 
     } else if (endsWith(fn, ".h")) {
         CStringArray tokens = {"ERROR_DEFINES", "_CODE_DECLARE"};
@@ -164,37 +160,37 @@ bool writeCodeOut(COptions* opts, const string_q& fn) {
                 LOG_WARN(fn, " does not contain token ", tok);
             }
         }
-        converted = replaceCode(converted, "CODE_DECLARE", opts->headerStream.str());
-        converted = replaceCode(converted, "ERROR_DEFINES", opts->errorDefStream.str());
+        codeOut = replaceCode(codeOut, "CODE_DECLARE", opts->headerStream.str());
+        codeOut = replaceCode(codeOut, "ERROR_DEFINES", opts->errorDefStream.str());
 
     } else if (endsWith(fn, "Routes.tsx")) {
-        converted = replaceCode(converted, "CODE_LOCATIONS", opts->jsLocationStream.str());
-        // converted = replaceCode(converted, "CODE_TEMPLATES", jsTemplateStream.str());
-        converted = replaceCode(converted, "CODE_ROUTES", opts->jsRouteStream.str());
-        converted = replaceCode(converted, "CODE_KEYS", opts->jsHotkeyStream.str());
+        codeOut = replaceCode(codeOut, "CODE_LOCATIONS", opts->jsLocationStream.str());
+        // codeOut = replaceCode(codeOut, "CODE_TEMPLATES", jsTemplateStream.str());
+        codeOut = replaceCode(codeOut, "CODE_ROUTES", opts->jsRouteStream.str());
+        codeOut = replaceCode(codeOut, "CODE_KEYS", opts->jsHotkeyStream.str());
 
     } else {
         cerr << "Unkown file type for " << fn << endl;
     }
 
-    ostringstream out;
-    out << "Writing: " << cTeal << fn << " " << cOff;
     opts->counter.nVisited++;
-    if (converted != orig) {
-        LOG_INFO(out.str(), "wrote ", cGreen, converted.size(), " bytes...", cOff);
-        stringToAsciiFile(fn, converted);
+    if (writeIfDifferent(fn, codeOut)) {
         opts->counter.nProcessed++;
         return true;
     }
-    cerr << cTeal << "no changes..." << cOff << "\r";
-    cerr.flush();
     return false;
 }
 
+//--------------------------------------------------------------------------------
+string_q getDocsRepoPathContent(const string_q& _part) {
+#define docsRepoPath string_q("/Users/jrush/Development/trueblocks-docs/content/")
+    return docsRepoPath + _part;
+}
+
 //------------------------------------------------------------------------------------------------------------
-bool writeIfDifferent(const string_q& outFn, const string_q& codeIn, const time_q& now) {
+bool isDifferent(const string_q& fn, const string_q& codeIn) {
     string_q orig = substitute(codeIn, "date: $DATE\n", "");
-    string_q existingIn = asciiFileToString(outFn);
+    string_q existingIn = asciiFileToString(fn);
     CStringArray lines;
     explode(lines, existingIn, '\n', false);
     ostringstream existing;
@@ -203,43 +199,47 @@ bool writeIfDifferent(const string_q& outFn, const string_q& codeIn, const time_
             existing << line << endl;
         }
     }
-
-    if (existing.str() != orig) {
-        string_q out = substitute(codeIn, "$DATE", now.Format(FMT_EXPORT));
-        stringToAsciiFile(outFn, out);
-        LOG_INFO("Writing: ", cTeal, outFn, cOff);
-        return true;
-    }
-    return false;
+    return trim(existing.str(), '\n') != trim(orig, '\n');
 }
 
 //------------------------------------------------------------------------------------------------------------
 bool writeIfDifferent(const string_q& outFn, const string_q& orig) {
-    string_q existing = asciiFileToString(outFn);
-    if (existing != orig) {
-        stringToAsciiFile(outFn, orig);
-        LOG_INFO("Writing: ", cTeal, outFn, cOff);
-        return true;
+    if (!isDifferent(outFn, orig)) {
+        return false;
     }
-    return false;
+
+    time_q now = Now();
+    string_q timedCode = substitute(orig, "$DATE", now.Format(FMT_EXPORT));  // May not hit which is okay
+
+    LOG_INFO("Writing: ", cTeal, outFn, cOff);
+    stringToAsciiFile(outFn, timedCode);
+
+    if (contains(outFn, "/docs/")) {
+        string_q docsFn = substitute(outFn, getDocsPathContent(""), getDocsRepoPathContent(""));
+        docsFn = substitute(docsFn, "../docs/", getDocsRepoPathContent(""));
+        LOG_INFO("Writing: ", cTeal, docsFn, cOff);
+        stringToAsciiFile(docsFn, timedCode);
+    }
+
+    return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 string_q replaceCode(const string_q& orig, const string_q& which, const string_q& new_code) {
-    string_q converted = orig;
-    converted = substitute(converted, "// BEG_" + which, "// BEG_" + which + "\n[{NEW_CODE}]\n<remove>");
-    converted = substitute(converted, "\n// END_" + which, "</remove>\nX// END_" + which);
-    converted = substitute(converted, "\n\t// END_" + which, "</remove>\nY// END_" + which);
-    converted = substitute(converted, "\n    // END_" + which, "</remove>\n+// END_" + which);
-    converted = substitute(converted, "\n        // END_" + which, "</remove>\n-// END_" + which);
-    converted = substitute(converted, "\n            // END_" + which, "</remove>\n-// END_" + which);
-    snagFieldClear(converted, "remove");
-    replace(converted, "[{NEW_CODE}]\n\n", new_code);
-    replaceAll(converted, "X//", "//");
-    replaceAll(converted, "Y//", "\t//");
-    replaceAll(converted, "+//", "    //");
-    replaceAll(converted, "-//", "            //");
-    return converted;
+    string_q codeOut = orig;
+    codeOut = substitute(codeOut, "// BEG_" + which, "// BEG_" + which + "\n[{NEW_CODE}]\n<remove>");
+    codeOut = substitute(codeOut, "\n// END_" + which, "</remove>\nX// END_" + which);
+    codeOut = substitute(codeOut, "\n\t// END_" + which, "</remove>\nY// END_" + which);
+    codeOut = substitute(codeOut, "\n    // END_" + which, "</remove>\n+// END_" + which);
+    codeOut = substitute(codeOut, "\n        // END_" + which, "</remove>\n-// END_" + which);
+    codeOut = substitute(codeOut, "\n            // END_" + which, "</remove>\n-// END_" + which);
+    snagFieldClear(codeOut, "remove");
+    replace(codeOut, "[{NEW_CODE}]\n\n", new_code);
+    replaceAll(codeOut, "X//", "//");
+    replaceAll(codeOut, "Y//", "\t//");
+    replaceAll(codeOut, "+//", "    //");
+    replaceAll(codeOut, "-//", "            //");
+    return codeOut;
 }
 
 //------------------------------------------------------------------------------------------------------------

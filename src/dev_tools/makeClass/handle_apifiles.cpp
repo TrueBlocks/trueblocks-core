@@ -70,17 +70,7 @@ bool COptions::writeOpenApiFile(void) {
 
     writeCodeOut(this, getPathToSource("apps/chifra/internal/daemon/routes.go"));
     writeCodeOut(this, getPathToSource("apps/chifra/internal/daemon/handle_calls.go"));
-
-    if (getEnvStr("GENERATE_YAML") != "false") {
-        writeCodeOut(this, getDocsPathContent("api/openapi.yaml"));
-    }
-    if (getEnvStr("GENERATE_SDK") == "true") {
-        ostringstream tsos;
-        tsos << "cd " << explorerPath << " ; ";
-        tsos << "URL=" << coreDocsPath << " yarn generate:sdk";
-        if (system(tsos.str().c_str()) != 0) {
-        }
-    }
+    writeCodeOut(this, getDocsPathContent("api/openapi.yaml"));
 
     LOG_INFO(cYellow, "makeClass --openapi", cOff, " processed ", counter.routeCount, "/", counter.cmdCount,
              " routes/cmds ", " (changed ", counter.nProcessed, ").", string_q(40, ' '));

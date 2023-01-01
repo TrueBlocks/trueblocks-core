@@ -928,11 +928,6 @@ components:
           items:
             $ref: "#/components/schemas/cache"
           description: "a collection of information concerning the binary caches"
-        keys:
-          type: array
-          items:
-            $ref: "#/components/schemas/key"
-          description: "the list of configured api keys"
     manifest:
       description: "a JSON object containing records for each bloom filter and index chunk in the Unchained Index"
       type: object

@@ -122,7 +122,7 @@ bool COptions::handle_readmes(void) {
         }
 
         string_q outFn = getDocsPathContent("docs/chifra/" + group + ".md");
-        writeIfDifferent(outFn, os.str(), Now());
+        writeIfDifferent(outFn, os.str());
     }
 
     LOG_INFO(cYellow, "makeClass --readmes", cOff, " processed ", counter.nVisited, " files (changed ",
