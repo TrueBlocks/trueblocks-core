@@ -37,7 +37,7 @@ bool COptions::handle_sdk_py_paths(CStringArray& pathsOut) {
     for (auto ep : endpointArray) {
         CCommandOptionArray params;
         for (auto option : routeOptionArray) {
-            if (option.api_route == ep.api_route && option.isChifraRoute(false)) {
+            if (option.api_route == ep.api_route && isChifraRoute(option, false)) {
                 params.push_back(option);
             }
         }

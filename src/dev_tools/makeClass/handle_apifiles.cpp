@@ -17,6 +17,323 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
+bool isApiRoute(const string_q& route) {
+    if (route == "daemon" || route == "blaze")
+        return false;
+    return !route.empty();
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q toApiTag(const CCommandOption& cmd) {
+    if ((isApiRoute(cmd.tool) && !contains(cmd.tool, "explore")) || !cmd.is_visible_docs)
+        return "";
+    const char* STR_TAG_YAML =
+        "  - name: [{GROUP}]\n"
+        "    description: [{DESCRIPTION}]\n";
+    return cmd.Format(STR_TAG_YAML);
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q toGoCall(const CCommandOption& cmd) {
+    if (!isApiRoute(cmd.api_route))
+        return "";
+
+    const char* STR_ONEROUTE =
+        "// [{GOROUTEFUNC}] [{DESCRIPTION}]\n"
+        "func [{GOROUTEFUNC}](w http.ResponseWriter, r *http.Request) {\n"
+        "\tif err, handled := [{API_ROUTE}]Pkg.Serve[{PROPER}](w, r); err != nil {\n"
+        "\t\tRespondWithError(w, http.StatusInternalServerError, err)\n"
+        "\t} else if !handled {\n"
+        "\t\tCallOne(w, r, config.GetPathToCommands(\"[{TOOL}]\"), \"\", \"[{API_ROUTE}]\")\n"
+        "\t}\n"
+        "}";
+
+    const char* STR_ONEROUTE2 =
+        "// [{GOROUTEFUNC}] [{DESCRIPTION}]\n"
+        "func [{GOROUTEFUNC}](w http.ResponseWriter, r *http.Request) {\n"
+        "\tif err, _ := [{API_ROUTE}]Pkg.Serve[{PROPER}](w, r); err != nil {\n"
+        "\t\tRespondWithError(w, http.StatusInternalServerError, err)\n"
+        "\t}\n"
+        "}";
+
+    string_q format = STR_ONEROUTE;
+    if (isFullyPorted(cmd.api_route)) {
+        format = STR_ONEROUTE2;
+    }
+
+    if (goPortNewCode(cmd.api_route) || (cmd.tool.empty() || contains(cmd.tool, " "))) {
+        format = substitute(format, "CallOne(w, r, config.GetPathToCommands(\"[{TOOL}]\"), \"\", \"[{API_ROUTE}]\")",
+                            "CallOne(w, r, \"chifra\", \"[{API_ROUTE}]\", \"[{API_ROUTE}]\")");
+    }
+
+    ostringstream os;
+    os << endl;
+    os << cmd.Format(format) << endl;
+    return os.str();
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q toGoPackage(const CCommandOption& cmd) {
+    if (!isApiRoute(cmd.api_route))
+        return "";
+
+    const char* STR_NEW_CHIFRA_ROUTE =
+        "\t[{API_ROUTE}]Pkg \"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/[{API_ROUTE}]\"";
+
+    ostringstream os;
+    os << cmd.Format(STR_NEW_CHIFRA_ROUTE) << endl;
+    return os.str();
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q toGoRoute(const CCommandOption& cmd) {
+    if (!isApiRoute(cmd.api_route))
+        return "";
+
+    ostringstream out;
+    out << cmd.Format("\tRoute{\"[{GOROUTEFUNC}]\", \"GET\", \"/[{API_ROUTE}]\", [{GOROUTEFUNC}]},") << endl;
+    return out.str();
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q prepareDescr(const string_q& in) {
+    if (in.length() < 75)
+        return in;
+    return ">\n            " + substitute(in, "\n         ", "");
+}
+
+//---------------------------------------------------------------------------------------------------
+bool isCrud(const string_q& cmd) {
+    return cmd == "create" || cmd == "delete" || cmd == "update" || cmd == "remove" || cmd == "undelete";
+}
+
+//---------------------------------------------------------------------------------------------------
+bool visitEnumItem(string_q& item, void* data) {
+    ostringstream* osp = (ostringstream*)data;
+    if (isNumeral(item)) {
+        *osp << substitute("~- \"[{VAL}]\"\n", "[{VAL}]", item);
+    } else {
+        *osp << substitute("~- [{VAL}]\n", "[{VAL}]", item);
+    }
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
+bool forEveryEnum(APPLYFUNC func, const string_q& enumStr, void* data) {
+    string_q es = substitute(substitute(enumStr, "list<", ""), ">", "");
+    string_q cleaned = substitute(substitute(substitute(es, "*", ""), "enum[", ""), "]", "");
+    CStringArray items;
+    explode(items, cleaned, '|');
+    for (auto item : items) {
+        if (func) {
+            if (!(*func)(item, data))
+                return false;
+        }
+    }
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q getSchema(const CCommandOption& cmd) {
+    string_q lead = "            ";
+
+    if (contains(cmd.data_type, "list") && contains(cmd.data_type, "enum")) {
+        ostringstream os;
+        forEveryEnum(visitEnumItem, cmd.data_type, &os);
+        string_q str_array_enum =
+            "~type: array\n"
+            "~items:\n"
+            "~  type: string\n"
+            "~  enum:\n" +
+            substitute(substitute(trim(os.str(), '\n'), "~", "+    "), "+", "~");
+        return substitute(str_array_enum, "~", lead);
+    }
+
+    if (contains(cmd.data_type, "list")) {
+        string_q type = substitute(substitute(cmd.data_type, "list<", ""), ">", "");
+        replace(type, "addr", "address_t");
+        if (endsWith(type, "_t"))
+            replaceReverse(type, "_t", "");
+        string_q ret;
+        ret += lead + "type: array\n";
+        ret += lead + "items:\n";
+        ret += lead + "  type: string\n";
+        ret += lead + "  format: " + type;
+        return ret;
+    }
+
+    if (contains(cmd.data_type, "boolean")) {
+        string_q ret;
+        ret += lead + "type: boolean";
+        return ret;
+    }
+
+    if (contains(cmd.data_type, "uint") || contains(cmd.data_type, "double") || contains(cmd.data_type, "blknum")) {
+        string_q ret;
+        ret += lead + "type: number\n";
+        ret += lead + "format: " + substitute(substitute(cmd.data_type, ">", ""), "<", "");
+        return ret;
+    }
+
+    if (contains(cmd.data_type, "datetime")) {
+        string_q ret;
+        ret += lead + "type: " + "string\n";
+        ret += lead + "format: date";
+        return ret;
+    }
+
+    if (contains(cmd.data_type, "enum")) {
+        ostringstream os;
+        forEveryEnum(visitEnumItem, cmd.data_type, &os);
+
+        string_q ret;
+        ret += lead + "type: string\n";
+        ret += lead + "enum:\n";
+        ret += substitute(substitute(trim(os.str(), '\n'), "~", "+  "), "+", "~");
+        return substitute(ret, "~", lead);
+    }
+
+    return lead + "type: " + "string";
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q toApiPath(const CCommandOption& cmd, const string_q& returnTypesIn, const string_q& corresponds,
+                   const string_q& exampleFn) {
+    if (!isApiRoute(cmd.api_route) || contains(cmd.api_route, "explore"))
+        return "";
+
+    //---------------------------------------------------------------------------------------------------
+    const char* STR_PARAM_YAML =
+        "        - name: [{NAME}]\n"
+        "          description: [{DESCR}]\n"
+        "          required: [{REQ}]\n"
+        "          style: form\n"
+        "          in: query\n"
+        "          explode: true\n"
+        "          schema:\n"
+        "[{SCHEMA}]";
+
+    bool hasDelete = false;
+    ostringstream paramStream;
+    for (auto param : *(CCommandOptionArray*)cmd.params) {
+        bool needsTwoAddrs = containsI(param.description, "two or more addresses");
+        hasDelete |= contains(param.longName, "deleteMe");
+        replace(param.longName, "deleteMe", "delete");
+        if (param.longName.empty() || !param.is_visible_docs)
+            continue;
+        if (!isCrud(param.longName)) {
+            string_q yp = STR_PARAM_YAML;
+            replace(yp, "[{NAME}]", toCamelCase(param.longName));
+            replace(yp, "[{DESCR}]", prepareDescr(param.swagger_descr));
+            replace(yp, "[{REQ}]", param.is_required ? "true" : "false");
+            replace(yp, "[{SCHEMA}]", param.getSchema());
+            if (needsTwoAddrs) {
+                replace(yp, "            type: array\n", "            type: array\n            minItems: 2\n");
+            }
+            if (paramStream.str().empty())
+                paramStream << "      parameters:\n";
+            paramStream << yp << endl;
+        }
+    }
+
+    ostringstream example;
+    if (fileExists(exampleFn)) {
+        string_q content = trim(asciiFileToString(exampleFn), '\n');
+        if (!content.empty()) {
+            if (!contains(content, string_q(18, ' '))) {
+                replaceAll(content, "\n", "\n" + string_q(18, ' '));
+                content = string_q(18, ' ') + content;
+            }
+            example << string_q(16, ' ') << "example:" << endl << content << endl;
+        }
+    }
+
+    string_q content;
+    ostringstream properties;
+    string_q descr = returnTypesIn;
+    string_q returnTypes = nextTokenClear(descr, '|');
+    const char* STR_PROPERTIES =
+        "data:\n"
+        "  description: [{DESCR}]\n"
+        "  type: array\n"
+        "  items:\n"
+        "    [{RETTYPES}]";
+    content = substitute(substitute(STR_PROPERTIES, "[{RETTYPES}]", returnTypes), "[{DESCR}]", descr);
+
+    if (!content.empty()) {
+        if (!contains(content, string_q(18, ' '))) {
+            replaceAll(content, "\n", "\n" + string_q(18, ' '));
+            content = string_q(18, ' ') + content;
+        }
+        properties << string_q(16, ' ') << "properties:" << endl << content << endl;
+
+    } else {
+        if (!fileExists(exampleFn))
+            properties << string_q(16, ' ') << "items:\n                  $ref: \"#/components/schemas/response\"\n";
+    }
+
+    string_q grp = substitute(substitute(cmd.group, "ChainData", "Chain Data"), "ChainState", "Chain State");
+
+    //---------------------------------------------------------------------------------------------------
+    const char* STR_PATH_YAML =
+        "  /[{PATH}]:\n"
+        "    get:\n"
+        "      tags:\n"
+        "        - [{TAGS}]\n"
+        "      summary: [{SUMMARY}]\n"
+        "      description: [{DESCR}]\n"
+        "      operationId: [{ID}]\n"
+        "[{PARAMS}][{DELETE}]"
+        "      responses:\n"
+        "        \"200\":\n"
+        "          description: returns the requested data\n"
+        "          content:\n"
+        "            application/json:\n"
+        "              schema:\n"
+        "[{PROPERTIES}][{EXAMPLE}]        \"400\":\n"
+        "          description: bad input parameter\n";
+
+    //---------------------------------------------------------------------------------------------------
+    const char* STR_DELETE_OPTS =
+        "        - name: delete\n"
+        "          description: delete the item, but do not remove it\n"
+        "          required: false\n"
+        "          style: form\n"
+        "          in: query\n"
+        "          explode: true\n"
+        "          schema:\n"
+        "            type: boolean\n"
+        "        - name: undelete\n"
+        "          description: undelete a previously deleted item\n"
+        "          required: false\n"
+        "          style: form\n"
+        "          in: query\n"
+        "          explode: true\n"
+        "          schema:\n"
+        "            type: boolean\n"
+        "        - name: remove\n"
+        "          description: remove a previously deleted item\n"
+        "          required: false\n"
+        "          style: form\n"
+        "          in: query\n"
+        "          explode: true\n"
+        "          schema:\n"
+        "            type: boolean\n";
+
+    string_q ret = STR_PATH_YAML;
+    replaceAll(ret, "[{TAGS}]", grp);
+    replaceAll(ret, "[{PROPERTIES}]", properties.str());
+    replaceAll(ret, "[{EXAMPLE}]", example.str());
+    replaceAll(ret, "[{PATH}]", cmd.api_route);
+    replaceAll(ret, "[{PARAMS}]", paramStream.str());
+    replaceAll(ret, "[{SUMMARY}]", cmd.summary);
+    replaceAll(ret, "[{DESCR}]", cmd.description + corresponds);
+    replaceAll(ret, "[{DELETE}]", hasDelete ? STR_DELETE_OPTS : "");
+    replaceAll(ret, "[{ID}]", toLower(substitute(grp, " ", "") + "-" + cmd.api_route));
+    return ret;
+}
+
+//---------------------------------------------------------------------------------------------------
 bool COptions::writeOpenApiFile(void) {
     if (!openapi)
         return true;
@@ -29,7 +346,7 @@ bool COptions::writeOpenApiFile(void) {
     for (auto ep : endpointArray) {
         CCommandOptionArray params;
         for (auto option : routeOptionArray)
-            if (option.api_route == ep.api_route && option.isChifraRoute(false))
+            if (option.api_route == ep.api_route && isChifraRoute(option, false))
                 params.push_back(option);
         ep.params = &params;
 
@@ -37,14 +354,13 @@ bool COptions::writeOpenApiFile(void) {
         string_q returnTypes = getReturnTypes(ep, unused);
         string_q exampleFn = getDocsPathTemplates("api/examples/" + ep.api_route + ".txt");
 
-        apiTagStream << ep.toApiTag();
-        goCallStream << ep.toGoCall();
-        goRouteStream << ep.toGoRoute();
+        apiTagStream << toApiTag(ep);
+        goCallStream << toGoCall(ep);
+        goRouteStream << toGoRoute(ep);
+        apiPathStream << toApiPath(
+            ep, returnTypes, get_corresponds_link(toLower(substitute(ep.group, " ", "")), ep.api_route), exampleFn);
 
-        apiPathStream << ep.toApiPath(
-            returnTypes, get_corresponds_link(toLower(substitute(ep.group, " ", "")), ep.api_route), exampleFn);
-
-        string_q pkg = ep.toGoPackage();
+        string_q pkg = toGoPackage(ep);
         string_q nick = nextTokenClear(pkg, ' ');
         pkgs[nick] = substitute(pkg, "\n", "");
 
@@ -78,10 +394,6 @@ bool COptions::writeOpenApiFile(void) {
              " routes/cmds ", " (changed ", counter.nProcessed, ").", string_q(40, ' '));
 
     return true;
-}
-
-namespace qblocks {
-extern bool isApiRoute(const string_q& route);
 }
 
 //------------------------------------------------------------------------------------------------------------
