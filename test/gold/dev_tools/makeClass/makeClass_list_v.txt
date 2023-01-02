@@ -1,7 +1,5 @@
 makeClass  --dump function --verbose
 TIME ~ CLOCK - <INFO>  : Processing 1 class definition files.
-TIME ~ CLOCK - <EROR> : Cannot find file ./classDefinitions/fields/function.csv
-TIME ~ CLOCK - <EROR> : Cannot find file ./classDefinitions/fields/function.csv
 {
   "class_name": "CFunction",
   "class_base": "Function",
@@ -11,6 +9,80 @@ TIME ~ CLOCK - <EROR> : Cannot find file ./classDefinitions/fields/function.csv
   "base_lower": "function",
   "base_upper": "FUNCTION",
   "base_base": "Basenode",
-  "head_includes": "utillib.h|parameter.h"
+  "head_includes": "utillib.h|parameter.h",
+  "fieldArray": [
+    {
+      "type": "string",
+      "name": "name",
+      "internalType": "string"
+    },
+    {
+      "type": "string",
+      "name": "type",
+      "internalType": "string"
+    },
+    {
+      "type": "string",
+      "name": "abi_source",
+      "internalType": "string"
+    },
+    {
+      "type": "bool",
+      "name": "anonymous",
+      "internalType": "bool"
+    },
+    {
+      "type": "bool",
+      "name": "constant",
+      "internalType": "bool"
+    },
+    {
+      "type": "string",
+      "name": "stateMutability",
+      "internalType": "string"
+    },
+    {
+      "type": "string",
+      "name": "signature",
+      "internalType": "string"
+    },
+    {
+      "type": "string",
+      "name": "encoding",
+      "internalType": "string"
+    },
+    {
+      "type": "string",
+      "name": "message",
+      "internalType": "string",
+      "is_nowrite": true
+    },
+    {
+      "type": "CParameterArray",
+      "name": "inputs",
+      "internalType": "Parameter",
+      "is_array": true,
+      "is_object": true
+    },
+    {
+      "type": "CParameterArray",
+      "name": "outputs",
+      "internalType": "Parameter",
+      "is_array": true,
+      "is_object": true
+    },
+    {
+      "type": "Value",
+      "name": "inputs_dict",
+      "internalType": "Value",
+      "is_nowrite": true
+    },
+    {
+      "type": "Value",
+      "name": "outputs_dict",
+      "internalType": "Value",
+      "is_nowrite": true
+    }
+  ]
 }
 

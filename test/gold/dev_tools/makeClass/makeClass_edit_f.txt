@@ -1,8 +1,5 @@
 makeClass  --dump -a
 TIME ~ CLOCK - <INFO>  : Processing 3 class definition files.
-TIME ~ CLOCK - <EROR> : Cannot find file ./classDefinitions/fields/block.csv
-TIME ~ CLOCK - <EROR> : Cannot find file ./classDefinitions/fields/function.csv
-TIME ~ CLOCK - <EROR> : Cannot find file ./classDefinitions/fields/status.csv
 ------------------------------------------------------------------------------------------------------------------------
 ./classDefinitions/block.txt
 ------------------------------------------------------------------------------------------------------------------------
@@ -54,20 +51,23 @@ fields = "string name|string type|bool anonymous|bool constant|bool payable|stri
 includes = "utillib.h|parameter.h"
 
 ------------------------------------------------------------------------------------------------------------------------
-./classDefinitions/status.txt
+./classDefinitions/transaction.txt
 ------------------------------------------------------------------------------------------------------------------------
 [version]
 current = "vers-beta"
 
 [settings]
-class = "CStatus"
-fields = "string clientVersion|string trueblocksVersion|string rpcProvider|string apiProvider|string host|sbool isScraping|CCachePtrArray caches"
-includes = "etherlib.h|cache.h"
-serialize = true
-enabled = false
+class = "CTransaction"
+fields = "transactions.csv"
+includes = "utillib.h|abi.h|receipt.h|trace.h|ethstate.h|ledgermanager.h"
+cpp_includes = "etherlib.h"
+equals = "(hash == it.hash)"
+contained_by = "Block"
+tsx = true
+doc_group = "02-Chain Data"
+doc_descr = "transaction data as returned from the RPC (with slight enhancements)"
+doc_route = "202-transaction"
+doc_producer = "transactions, slurp, export"
 
 TIME ~ CLOCK - <INFO>  : handling generate...
-TIME ~ CLOCK - <EROR> : Cannot find file ./classDefinitions/fields/block.csv
-TIME ~ CLOCK - <EROR> : Cannot find file ./classDefinitions/fields/function.csv
-TIME ~ CLOCK - <EROR> : Cannot find file ./classDefinitions/fields/status.csv
-TIME ~ CLOCK - <INFO>  : makeClass --run processed 3 files (changed 6).                                        
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 9 files (changed 0).                                        

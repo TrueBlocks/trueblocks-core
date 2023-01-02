@@ -1,0 +1,505 @@
+/*-------------------------------------------------------------------------------------------
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
+ *
+ * This program is free software: you may redistribute it and/or modify it under the terms
+ * of the GNU General Public License as published by the Free Software Foundation, either
+ * version 3 of the License, or (at your option) any later version. This program is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details. You should have received a copy of the GNU General
+ * Public License along with this program. If not, see http://www.gnu.org/licenses/.
+ *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
+ */
+#include "function.h"
+
+namespace qblocks {
+
+//---------------------------------------------------------------------------
+IMPLEMENT_NODE(CFunction, CBaseNode);
+
+//---------------------------------------------------------------------------
+extern string_q nextFunctionChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextFunctionChunk_custom(const string_q& fieldIn, const void* dataPtr);
+
+//---------------------------------------------------------------------------
+void CFunction::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+    if (!m_showing)
+        return;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["function_fmt"] : fmtIn);
+    if (fmt.empty()) {
+        toJson(ctx);
+        return;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    while (!fmt.empty())
+        ctx << getNextChunk(fmt, nextFunctionChunk, this);
+}
+
+//---------------------------------------------------------------------------
+string_q nextFunctionChunk(const string_q& fieldIn, const void* dataPtr) {
+    if (dataPtr)
+        return reinterpret_cast<const CFunction*>(dataPtr)->getValueByName(fieldIn);
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    return fldNotFound(fieldIn);
+}
+
+//---------------------------------------------------------------------------
+string_q CFunction::getValueByName(const string_q& fieldName) const {
+    // Give customized code a chance to override first
+    string_q ret = nextFunctionChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'a':
+            if (fieldName % "abi_source") {
+                return abi_source;
+            }
+            if (fieldName % "anonymous") {
+                return bool_2_Str(anonymous);
+            }
+            break;
+        case 'c':
+            if (fieldName % "constant") {
+                return bool_2_Str(constant);
+            }
+            break;
+        case 'e':
+            if (fieldName % "encoding") {
+                return encoding;
+            }
+            break;
+        case 'i':
+            if (fieldName % "inputs" || fieldName % "inputsCnt") {
+                size_t cnt = inputs.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt)
+                    return "";
+                string_q retS;
+                for (size_t i = 0; i < cnt; i++) {
+                    retS += inputs[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            if (fieldName % "inputs_dict") {
+                for (size_t i = 0; i < inputs.size(); i++)
+                    ((CFunction*)this)->inputs_dict[inputs[i].name] = inputs[i].value;
+                ostringstream os;
+                JsonWriter writer;
+                writer.writeJson(os, inputs_dict);
+                string_q str = os.str();
+                while (startsWith(str, '\n') || startsWith(str, ' '))
+                    str = trim(trim(str, '\n'), ' ');
+                return str;
+            }
+            break;
+        case 'm':
+            if (fieldName % "message") {
+                return message;
+            }
+            break;
+        case 'n':
+            if (fieldName % "name") {
+                return name;
+            }
+            break;
+        case 'o':
+            if (fieldName % "outputs" || fieldName % "outputsCnt") {
+                size_t cnt = outputs.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt)
+                    return "";
+                string_q retS;
+                for (size_t i = 0; i < cnt; i++) {
+                    retS += outputs[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            if (fieldName % "outputs_dict") {
+                for (size_t i = 0; i < outputs.size(); i++)
+                    ((CFunction*)this)->outputs_dict[outputs[i].name] = outputs[i].value;
+                ostringstream os;
+                JsonWriter writer;
+                writer.writeJson(os, outputs_dict);
+                string_q str = os.str();
+                while (startsWith(str, '\n') || startsWith(str, ' '))
+                    str = trim(trim(str, '\n'), ' ');
+                return str;
+            }
+            break;
+        case 's':
+            if (fieldName % "stateMutability") {
+                return stateMutability;
+            }
+            if (fieldName % "signature") {
+                return signature;
+            }
+            break;
+        case 't':
+            if (fieldName % "type") {
+                return type;
+            }
+            break;
+        default:
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
+}
+
+//---------------------------------------------------------------------------------------------------
+bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+    string_q fieldName = fieldNameIn;
+    string_q fieldValue = fieldValueIn;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    switch (tolower(fieldName[0])) {
+        case 'a':
+            if (fieldName % "abi_source") {
+                abi_source = fieldValue;
+                return true;
+            }
+            if (fieldName % "anonymous") {
+                anonymous = str_2_Bool(fieldValue);
+                return true;
+            }
+            break;
+        case 'c':
+            if (fieldName % "constant") {
+                constant = str_2_Bool(fieldValue);
+                return true;
+            }
+            break;
+        case 'e':
+            if (fieldName % "encoding") {
+                encoding = fieldValue;
+                return true;
+            }
+            break;
+        case 'i':
+            if (fieldName % "inputs") {
+                CParameter obj;
+                string_q str = fieldValue;
+                while (obj.parseJson3(str)) {
+                    inputs.push_back(obj);
+                    obj = CParameter();  // reset
+                }
+                return true;
+            }
+            if (fieldName % "inputs_dict") {
+                inputs_dict = fieldValue;
+                return true;
+            }
+            break;
+        case 'm':
+            if (fieldName % "message") {
+                message = fieldValue;
+                return true;
+            }
+            break;
+        case 'n':
+            if (fieldName % "name") {
+                name = fieldValue;
+                return true;
+            }
+            break;
+        case 'o':
+            if (fieldName % "outputs") {
+                CParameter obj;
+                string_q str = fieldValue;
+                while (obj.parseJson3(str)) {
+                    outputs.push_back(obj);
+                    obj = CParameter();  // reset
+                }
+                return true;
+            }
+            if (fieldName % "outputs_dict") {
+                outputs_dict = fieldValue;
+                return true;
+            }
+            break;
+        case 's':
+            if (fieldName % "stateMutability") {
+                stateMutability = fieldValue;
+                return true;
+            }
+            if (fieldName % "signature") {
+                signature = fieldValue;
+                return true;
+            }
+            break;
+        case 't':
+            if (fieldName % "type") {
+                type = fieldValue;
+                return true;
+            }
+            break;
+        default:
+            break;
+    }
+    return false;
+}
+
+//---------------------------------------------------------------------------------------------------
+void CFunction::finishParse() {
+    // EXISTING_CODE
+    // EXISTING_CODE
+}
+
+//---------------------------------------------------------------------------------------------------
+bool CFunction::Serialize(CArchive& archive) {
+    if (archive.isWriting())
+        return SerializeC(archive);
+
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CBaseNode::Serialize(archive);
+    if (readBackLevel(archive))
+        return true;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+    archive >> name;
+    archive >> type;
+    archive >> abi_source;
+    archive >> anonymous;
+    archive >> constant;
+    archive >> stateMutability;
+    archive >> signature;
+    archive >> encoding;
+    // archive >> message;
+    archive >> inputs;
+    archive >> outputs;
+    // archive >> inputs_dict;
+    // archive >> outputs_dict;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    finishParse();
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
+bool CFunction::SerializeC(CArchive& archive) const {
+    // Writing always writes the latest version of the data
+    CBaseNode::SerializeC(archive);
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+    archive << name;
+    archive << type;
+    archive << abi_source;
+    archive << anonymous;
+    archive << constant;
+    archive << stateMutability;
+    archive << signature;
+    archive << encoding;
+    // archive << message;
+    archive << inputs;
+    archive << outputs;
+    // archive << inputs_dict;
+    // archive << outputs_dict;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
+bool CFunction::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    CFunction copy;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
+    return true;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CFunctionArray& array) {
+    uint64_t count;
+    archive >> count;
+    array.resize(count);
+    for (size_t i = 0; i < count; i++) {
+        ASSERT(i < array.capacity());
+        array.at(i).Serialize(archive);
+    }
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CFunctionArray& array) {
+    uint64_t count = array.size();
+    archive << count;
+    for (size_t i = 0; i < array.size(); i++)
+        array[i].SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+void CFunction::registerClass(void) {
+    // only do this once
+    if (HAS_FIELD(CFunction, "schema"))
+        return;
+
+    size_t fieldNum = 1000;
+    ADD_FIELD(CFunction, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CFunction, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CFunction, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CFunction, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CFunction, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CFunction, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CFunction, "abi_source", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CFunction, "anonymous", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CFunction, "constant", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CFunction, "stateMutability", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CFunction, "signature", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CFunction, "encoding", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CFunction, "message", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CFunction, "message");
+    ADD_FIELD(CFunction, "inputs", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CFunction, "outputs", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CFunction, "inputs_dict", T_JSONVAL | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CFunction, "inputs_dict");
+    ADD_FIELD(CFunction, "outputs_dict", T_JSONVAL | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CFunction, "outputs_dict");
+
+    // Hide our internal fields, user can turn them on if they like
+    HIDE_FIELD(CFunction, "schema");
+    HIDE_FIELD(CFunction, "deleted");
+    HIDE_FIELD(CFunction, "showing");
+    HIDE_FIELD(CFunction, "cname");
+
+    builtIns.push_back(_biCFunction);
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+}
+
+//---------------------------------------------------------------------------
+string_q nextFunctionChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CFunction* fun = reinterpret_cast<const CFunction*>(dataPtr);
+    if (fun) {
+        switch (tolower(fieldIn[0])) {
+            // EXISTING_CODE
+            // EXISTING_CODE
+            case 'p':
+                // Display only the fields of this node, not it's parent type
+                if (fieldIn % "parsed")
+                    return nextBasenodeChunk(fieldIn, fun);
+                // EXISTING_CODE
+                // EXISTING_CODE
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    return "";
+}
+
+// EXISTING_CODE
+// EXISTING_CODE
+
+//---------------------------------------------------------------------------
+bool CFunction::readBackLevel(CArchive& archive) {
+    bool done = false;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CFunction& fun) {
+    fun.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CFunction& fun) {
+    fun.Serialize(archive);
+    return archive;
+}
+
+//-------------------------------------------------------------------------
+ostream& operator<<(ostream& os, const CFunction& it) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    it.Format(os, "", nullptr);
+    os << "\n";
+    return os;
+}
+
+//---------------------------------------------------------------------------
+const CBaseNode* CFunction::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    if (fieldName % "inputs") {
+        if (index == NOPOS) {
+            CParameter empty;
+            ((CFunction*)this)->inputs.push_back(empty);  // NOLINT
+            index = inputs.size() - 1;
+        }
+        if (index < inputs.size())
+            return &inputs[index];
+    }
+    if (fieldName % "outputs") {
+        if (index == NOPOS) {
+            CParameter empty;
+            ((CFunction*)this)->outputs.push_back(empty);  // NOLINT
+            index = outputs.size() - 1;
+        }
+        if (index < outputs.size())
+            return &outputs[index];
+    }
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    return NULL;
+}
+
+//---------------------------------------------------------------------------
+const char* STR_DISPLAY_FUNCTION =
+    "[{ABI_SOURCE}]\t"
+    "[{NAME}]\t"
+    "[{TYPE}]\t"
+    "[{STATEMUTABILITY}]\t"
+    "[{SIGNATURE}]\t"
+    "[{ENCODING}]\t"
+    "[{INPUTS}]\t"
+    "[{OUTPUTS}]";
+
+//---------------------------------------------------------------------------
+// EXISTING_CODE
+// EXISTING_CODE
+}  // namespace qblocks
