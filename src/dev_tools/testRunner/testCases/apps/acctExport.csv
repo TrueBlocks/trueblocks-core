@@ -129,7 +129,6 @@ on      ,both ,fast  ,export   ,apps/acctExport ,statement_3_accounting   ,y    
 junk    ,both ,fast  ,export   ,apps/acctExport ,statement_token_ibt      ,n    ,addrs = 0xec3ef464bf821c3b10a18adf9ac7177a628e87cc & accounting & statements & first_block = 7005600 & last_block = 7005780 & ether & fmt = json
 junk    ,both ,fast  ,export   ,apps/acctExport ,statement_token_ibt_2    ,n    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & statements & first_block = 12704456 & last_block = 12705893 & ether & fmt = csv & max_records = 4000
 
-on      ,both ,fast  ,export   ,apps/acctExport ,ens_test_export          ,y    ,addrs = rhyslindmark.eth & first_block = 4037786 & last_block = 4081450
 on      ,both ,fast  ,export   ,apps/acctExport ,monitors_data2           ,n    ,addrs = 0x1234567890123456789012345678901234567890 & addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 3000000 & last_block = 3375498 & fmt = csv & no_header
 
 on      ,both ,fast  ,monitors ,apps/acctExport ,accounting_cleanup_1     ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete & remove & fmt = json
@@ -155,9 +154,12 @@ on      ,both ,fast  ,export   ,apps/acctExport ,old_bug2_336             ,y    
 
 on      ,both ,fast  ,export   ,apps/acctExport ,transfer_fourbytes       ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & max_records = 10 & fourbytes = 0xa9059cbb & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,transfer_fourbytes_trace ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & max_records = 10 & fourbytes = 0xa9059cbb & traces & fmt = json
-on      ,both ,fast  ,export   ,apps/acctExport ,transfer_no_topics       ,y    ,addrs = 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 & max_records = 5 & logs
-on      ,both ,fast  ,export   ,apps/acctExport ,transfer_topics          ,y    ,addrs = 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 & max_records = 5 & topics = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & logs
 on      ,both ,fast  ,export   ,apps/acctExport ,accounting_intra_tokens  ,y    ,addrs = 0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E & max_records = 3 & first_record = 684 & accounting & fmt = json & log_level = 10
+
+# these tests fail because they articulate transactions locally but do not articulate them on the testing server
+local   ,both ,fast  ,export   ,apps/acctExport ,ens_test_export          ,y    ,addrs = rhyslindmark.eth & first_block = 4037786 & last_block = 4081450
+local   ,both ,fast  ,export   ,apps/acctExport ,transfer_no_topics       ,y    ,addrs = 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 & max_records = 5 & logs
+local   ,both ,fast  ,export   ,apps/acctExport ,transfer_topics          ,y    ,addrs = 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 & max_records = 5 & topics = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & logs
 
 # these tests cover the issue noted but solutions are not implemented (gold tests are incorrect)
 local   ,both ,fast  ,export   ,apps/acctExport ,failed_statement_2572_1  ,y    ,addrs = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & accounting & statements & ether & fmt = json & first_block = 15549161 & last_block = 15549163 & asset = 0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 & max_records = 10000

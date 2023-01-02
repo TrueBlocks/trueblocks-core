@@ -309,7 +309,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             // clang-format on
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", replaceFile, NULL);
-            forEveryFileInFolder(test.workPath + "*", postCleanup, NULL);
+            forEveryFileInFolder(test.goldPath + "*", postCleanup, NULL);
 
             string_q contents = asciiFileToString(test.workPath + test.fileName);
             if (!prepender.str().empty()) {

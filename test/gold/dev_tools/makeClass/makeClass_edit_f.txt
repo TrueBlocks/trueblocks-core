@@ -70,4 +70,10 @@ doc_route = "202-transaction"
 doc_producer = "transactions, slurp, export"
 
 TIME ~ CLOCK - <INFO>  : handling generate...
-TIME ~ CLOCK - <INFO>  : makeClass --run processed 9 files (changed 0).                                        
+TIME ~ CLOCK - <INFO>  : Writing: ./block.h
+TIME ~ CLOCK - <INFO>  : Writing: ./block.cpp
+TIME ~ CLOCK - <INFO>  : Writing: ./function.h
+TIME ~ CLOCK - <INFO>  : Writing: ./function.cpp
+TIME ~ CLOCK - <INFO>  : Writing: ./transaction.h
+TIME ~ CLOCK - <INFO>  : Writing: ./transaction.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 9 files (changed 12).                                        
