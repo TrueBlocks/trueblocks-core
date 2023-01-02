@@ -7,7 +7,7 @@ func (opts *ChunksOptions) HandleDump(blockNums []uint64) error {
 }
 
 /*
-chifra chunks addresses --details --chain sepolia --to_file --output ten
+chifra chunks addresses --details --chain sepolia --output ten
 
 echo
 echo "Timestamps..."

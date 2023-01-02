@@ -379,7 +379,6 @@ bool COptions::writeOpenApiFile(void) {
 
     converts["logLevel"] = "log_level";
     converts["noHeader"] = "no_header";
-    converts["toFile"] = "to_file";
     goConvertStream << "\tswitch in {" << endl;
     for (auto item : converts) {
         goConvertStream << "\tcase \"" << item.first << "\":\n\t\treturn \"" << item.second << "\"" << endl;

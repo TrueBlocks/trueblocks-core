@@ -85,6 +85,5 @@ on       ,both ,fast  ,blocks ,tools/getBlocks ,terse_yes_raw         ,y    ,blo
 file_cmd ,cmd  ,fast  ,blocks ,tools/getBlocks ,cmd_file1             ,n    ,file = cmd_file1 & cache
 file_cmd ,cmd  ,fast  ,blocks ,tools/getBlocks ,cmd_file2             ,n    ,file = cmd_file2 & cache
 
-on       ,both ,fast  ,blocks ,tools/getBlocks ,to_file               ,y    ,blocks = 2222222 2332332 & fmt = json & to_file
 on       ,both ,fast  ,blocks ,tools/getBlocks ,redir_output          ,n    ,blocks = 1001001-1001005 & fmt = csv & output = output_test_file
 on       ,both ,fast  ,blocks ,tools/getBlocks ,redir_output_append   ,n    ,blocks = 1001005-1001010 & fmt = csv & output = output_test_file & no_header & append

@@ -1,5 +1,0 @@
-chifra blocks  2222222 2332332 --fmt json --to_file
-TEST[DATE|TIME] Blocks:  [2222222 2332332]
-TEST[DATE|TIME] ToFile:  true
-TEST[DATE|TIME] Format:  json
-{ "outputFilename": "--output_filename--" }

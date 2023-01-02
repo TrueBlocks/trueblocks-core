@@ -51,6 +51,5 @@ local   ,both ,fast  ,abis  ,tools/grabABI ,findSig_event       ,y    ,find = 0x
 local   ,both ,fast  ,abis  ,tools/grabABI ,findSig             ,y    ,find = 0x1aa3a008
 local   ,both ,fast  ,abis  ,tools/grabABI ,findSig1            ,y    ,find = 0x1aa3a008 & find = 0x3ccfd60b & find = 0xad7a672f
 
-on      ,both ,fast  ,abis  ,tools/grabABI ,to_file             ,y    ,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = json & to_file
 on      ,both ,fast  ,abis  ,tools/grabABI ,redir_output        ,y    ,addrs = 0xdac17f958d2ee523a2206206994597c13d831ec7 & fmt = csv & output = output_test_file
 on      ,both ,fast  ,abis  ,tools/grabABI ,redir_output_append ,n    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & fmt = txt & output = output_test_file & append

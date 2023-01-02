@@ -1,4 +1,0 @@
-traces?transactions=2222222.0%202332332.0&fmt=json&toFile
-{
-  "outputFilename": "--output_filename--"
-}

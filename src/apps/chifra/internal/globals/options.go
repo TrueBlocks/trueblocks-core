@@ -37,7 +37,6 @@ func (opts *GlobalOptions) TestLog() {
 	logger.TestLog(opts.Ether, "Ether: ", opts.Ether)
 	logger.TestLog(opts.Help, "Help: ", opts.Help)
 	logger.TestLog(opts.ShowRaw, "ShowRaw: ", opts.ShowRaw)
-	logger.TestLog(opts.ToFile, "ToFile: ", opts.ToFile)
 	logger.TestLog(len(opts.File) > 0, "File: ", opts.File)
 	logger.TestLog(opts.Version, "Version: ", opts.Version)
 	logger.TestLog(opts.Noop, "Noop: ", opts.Noop)
@@ -75,7 +74,6 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	cmd.Flags().BoolVarP(&opts.Wei, "wei", "", false, "specify value in wei (the default)")
 	cmd.Flags().BoolVarP(&opts.Ether, "ether", "", false, "specify value in ether")
 	cmd.Flags().StringVarP(&opts.File, "file", "", "", "specify multiple command line options in a file")
-	cmd.Flags().BoolVarP(&opts.ToFile, "to_file", "", false, "write the results to a temporary file and return the filename")
 	cmd.Flags().StringVarP(&opts.OutputFn, "output", "", "", "redirect results from stdout to the given file, create if not present")
 	cmd.Flags().BoolVarP(&opts.Append, "append", "", false, "if true, open OutputFn for append (truncate otherwise)")
 
@@ -88,7 +86,6 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	cmd.Flags().MarkHidden("no_header")
 	cmd.Flags().MarkHidden("wei")
 	cmd.Flags().MarkHidden("ether")
-	cmd.Flags().MarkHidden("to_file")
 	cmd.Flags().MarkHidden("file")
 	cmd.Flags().MarkHidden("output")
 	cmd.Flags().MarkHidden("append")
@@ -129,9 +126,6 @@ func (opts *GlobalOptions) toCmdLine() string {
 	if opts.Ether {
 		options += " --ether"
 	}
-	if opts.ToFile {
-		options += " --to_file"
-	}
 
 	return options
 }
@@ -165,8 +159,6 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 			opts.Wei = true
 		case "ether":
 			opts.Ether = true
-		case "toFile":
-			opts.ToFile = true
 		case "file":
 			opts.File = value[0]
 		case "output":
@@ -221,7 +213,6 @@ func IsGlobalOption(key string) bool {
 		"chain",
 		"wei",
 		"ether",
-		"toFile",
 		"file",
 		"output",
 		"append",

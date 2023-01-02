@@ -61,7 +61,7 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 				Offset:  obj.Offset,
 				Count:   obj.Count,
 			}
-			if !opts.Globals.ToFile {
+			if !opts.Globals.SaveAddrs {
 				err = opts.Globals.RenderObject(r, first && cnt == 0)
 				if err != nil {
 					return false, err
@@ -94,7 +94,7 @@ func (opts *ChunksOptions) handleDetails(indexChunk *index.ChunkData, record *in
 		return false, err
 	}
 
-	if !opts.Globals.ToFile {
+	if !opts.Globals.SaveAddrs {
 		for _, app := range apps {
 			err = opts.Globals.RenderObject(app, false)
 			if err != nil {

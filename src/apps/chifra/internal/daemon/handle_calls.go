@@ -229,8 +229,6 @@ func convertToCommandLine(in string) string {
 		return "start_block"
 	case "toCustom":
 		return "to_custom"
-	case "toFile":
-		return "to_file"
 	case "unripeDist":
 		return "unripe_dist"
 	}

@@ -45,6 +45,5 @@ on      ,both ,fast  ,chunks ,apps/chunkMan ,pin_data_bad2           ,y    ,mode
 
 local   ,both ,fast  ,chunks ,apps/chunkMan ,check_okay              ,y    ,mode = manifest & check
 
-on      ,both ,fast  ,chunks ,apps/chunkMan ,to_file                 ,y    ,mode = index & to_file
 on      ,both ,fast  ,chunks ,apps/chunkMan ,redir_output            ,y    ,mode = index & blocks = 2000000 & output = output_test_file
 on      ,both ,fast  ,chunks ,apps/chunkMan ,redir_output_append     ,n    ,mode = index & blocks = 3000000 & output = output_test_file & no_header & append
