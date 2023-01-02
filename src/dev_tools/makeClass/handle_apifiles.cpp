@@ -226,7 +226,7 @@ string_q toApiPath(const CCommandOption& cmd, const string_q& returnTypesIn, con
             replace(yp, "[{NAME}]", toCamelCase(param.longName));
             replace(yp, "[{DESCR}]", prepareDescr(param.swagger_descr));
             replace(yp, "[{REQ}]", param.is_required ? "true" : "false");
-            replace(yp, "[{SCHEMA}]", param.getSchema());
+            replace(yp, "[{SCHEMA}]", getSchema(param));
             if (needsTwoAddrs) {
                 replace(yp, "            type: array\n", "            type: array\n            minItems: 2\n");
             }
