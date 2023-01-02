@@ -106,6 +106,5 @@ on       ,cmd  ,fast  ,transactions ,tools/getTrans ,by_file_1                ,n
 file_cmd ,cmd  ,fast  ,transactions ,tools/getTrans ,mulit_line_mulit_txs     ,n    ,file = cmd_file_1 & fmt = json
 file_cmd ,cmd  ,fast  ,transactions ,tools/getTrans ,by_file_v                ,n    ,file = cmd_file_2 & fmt = json
 
-on       ,both ,fast  ,transactions ,tools/getTrans ,to_file                  ,y    ,transactions = 2222222.0 2332332.0 & fmt = json & to_file
 on       ,both ,fast  ,transactions ,tools/getTrans ,redir_output             ,y    ,transactions = 3657480.12 & verbose & fmt = csv & output = output_test_file
 on       ,both ,fast  ,transactions ,tools/getTrans ,redir_output_append      ,n    ,transactions = 3657480.9 & fmt = csv & output = output_test_file & no_header & append

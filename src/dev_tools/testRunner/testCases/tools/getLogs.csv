@@ -40,6 +40,5 @@ on       ,cmd  ,fast  ,logs  ,tools/getLogs ,by_filebad          ,y    ,file = c
 on       ,cmd  ,slow  ,logs  ,tools/getLogs ,by_file             ,y    ,file = cmd_file
 file_cmd ,cmd  ,fast  ,logs  ,tools/getLogs ,by_file_v           ,y    ,file = cmd_file & verbose & fmt = json
 
-on       ,both ,fast  ,logs  ,tools/getLogs ,to_file             ,y    ,transactions = 2222222.0 2332332.0 & fmt = json & to_file
 on       ,both ,fast  ,logs  ,tools/getLogs ,redir_output        ,y    ,transactions = 3657480.12 3657480.09 & output = output_test_file
 on       ,both ,fast  ,logs  ,tools/getLogs ,redir_output_append ,y    ,transactions = 3657480.11 3657480.10 & output = output_test_file & no_header & append

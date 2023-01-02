@@ -258,14 +258,6 @@ bool isValidName(const string_q& fn) {
 
 //--------------------------------------------------------------------------------
 bool COptionsBase::standardOptions(string_q& cmdLine) {
-    if (contains(cmdLine, "--to_file")) {
-        ostringstream rep;
-        rep << "--output:"
-            << "/tmp/" + makeValidName(Now().Format(FMT_EXPORT));
-        rep << (expContext().exportFmt == CSV1 ? ".csv" : expContext().exportFmt == TXT1 ? ".txt" : ".json");
-        replaceAll(cmdLine, "--to_file", rep.str());
-    }
-
     bool append = false;
     if (contains(cmdLine, "--append")) {
         append = true;

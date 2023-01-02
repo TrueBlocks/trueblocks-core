@@ -67,6 +67,5 @@ on      ,cmd  ,fast  ,receipts ,tools/getReceipts ,by_filebad             ,n    
 on      ,cmd  ,fast  ,receipts ,tools/getReceipts ,by_file                ,n    ,file = cmd_file
 on      ,cmd  ,fast  ,receipts ,tools/getReceipts ,by_file_v              ,n    ,file = cmd_file & fmt = json & verbose
 
-local   ,both ,fast  ,receipts ,tools/getReceipts ,to_file                ,y    ,transactions = 2222222.0 2332332.0 & fmt = json & to_file
 on      ,both ,fast  ,receipts ,tools/getReceipts ,redir_output           ,y    ,transactions = 2222222.0 2332332.0 & output = output_test_file
 on      ,both ,fast  ,receipts ,tools/getReceipts ,redir_output_append    ,n    ,transactions = 5123123.0 & no_header & output = output_test_file & append

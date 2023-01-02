@@ -105,7 +105,7 @@ Changes in this release are in support of [the docker version](https://github.co
 ### System-Wide Changes
 
 - Bump version to v0.43.0
-- Better support for `--file`, `--to_file`, and `--output` options for all tools.
+- Better support for `--file`, `--to_file` (since removed), and `--output` options for all tools.
 - Use of improved `StreamMany` routines to allow for concurrent rendering of data structures in GoLang code (thanks Dawid)
 - Large number of addition test cases for all tools. Better debugging tools and testing environment.
 - *Breaking change:* removes `--dollars` option from all tools. (Users may use `spot_price` value where available.)
@@ -139,7 +139,7 @@ Changes in this release are in support of [the docker version](https://github.co
 ### System-Wide Changes
 
 - *Breaking change:* removes `--fmt api` option from all tools. (Users must change to `--fmt json` instead.)
-- Better support for `--file`, `--to_file`, and `--output` options for all tools.
+- Better support for `--file`, `--to_file` (since removed), and `--output` options for all tools.
 - Improvements to `--fmt` options to better support customized display strings in the near future.
 - Better support for overriding command line options with environment variables.
 

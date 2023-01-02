@@ -35,7 +35,6 @@ on      ,both ,fast  ,config ,apps/cacheStatus ,items_scrap_mon     ,y    ,detai
 on      ,both ,fast  ,config ,apps/cacheStatus ,report              ,n    ,report & fmt = txt
 on      ,both ,fast  ,config ,apps/cacheStatus ,report_json         ,y    ,report & fmt = json
 on      ,both ,fast  ,config ,apps/cacheStatus ,terse               ,y    ,terse
-on      ,both ,slow  ,config ,apps/cacheStatus ,to_file             ,y    ,modes = show & module = names & to_file
 on      ,both ,slow  ,config ,apps/cacheStatus ,redir_output        ,y    ,modes = show & module = names & output = output_test_file
 on      ,both ,slow  ,config ,apps/cacheStatus ,redir_output_append ,n    ,modes = show & module = index & output = output_test_file & no_header & append
 
