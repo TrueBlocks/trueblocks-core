@@ -11,7 +11,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x00000000000000000000000077385d988c8587e824c3fc05fdaa9988cff975b2"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0x77385d988c8587e824c3fc05fdaa9988cff975b2"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0x77385d988c8587e824c3fc05fdaa9988cff975b2}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -25,7 +33,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x000000000000000000000000430d24aab60a677a9dbe9879bb1505cd02aa1c0d"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0x430d24aab60a677a9dbe9879bb1505cd02aa1c0d"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0x430d24aab60a677a9dbe9879bb1505cd02aa1c0d}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -39,7 +55,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x000000000000000000000000786c950c63d9cd4fe021a1320cd2a07f1a6a04a4"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0x786c950c63d9cd4fe021a1320cd2a07f1a6a04a4"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0x786c950c63d9cd4fe021a1320cd2a07f1a6a04a4}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -53,7 +77,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x000000000000000000000000601c6d9eff76ae8cd7bff5fc4900f20f6f80734f"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0x601c6d9eff76ae8cd7bff5fc4900f20f6f80734f"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0x601c6d9eff76ae8cd7bff5fc4900f20f6f80734f}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -67,7 +99,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x000000000000000000000000aa97fca4429b6872572f08a1fa0f4129808a4e5d"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0xaa97fca4429b6872572f08a1fa0f4129808a4e5d"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0xaa97fca4429b6872572f08a1fa0f4129808a4e5d}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -81,7 +121,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x00000000000000000000000003d7326f53715d4a042bd1fa12669eb420e87b5b"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0x03d7326f53715d4a042bd1fa12669eb420e87b5b"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0x03d7326f53715d4a042bd1fa12669eb420e87b5b}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -95,7 +143,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x000000000000000000000000155f177f2b2709fbe5c4b15a6e07c9cb94824dc0"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0x155f177f2b2709fbe5c4b15a6e07c9cb94824dc0"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0x155f177f2b2709fbe5c4b15a6e07c9cb94824dc0}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -109,7 +165,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x00000000000000000000000000c45ccdaf969d3209231cb3b36e1862dfa81a4f"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0x00c45ccdaf969d3209231cb3b36e1862dfa81a4f"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0x00c45ccdaf969d3209231cb3b36e1862dfa81a4f}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -123,7 +187,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x0000000000000000000000000197ea7ec2767aa4e65b5ed6049cbd2315f28143"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0x0197ea7ec2767aa4e65b5ed6049cbd2315f28143"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0x0197ea7ec2767aa4e65b5ed6049cbd2315f28143}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -137,7 +209,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x00000000000000000000000062a1eed26c04cb8c9a79247f84551f42786f758a"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0x62a1eed26c04cb8c9a79247f84551f42786f758a"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0x62a1eed26c04cb8c9a79247f84551f42786f758a}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -151,7 +231,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x00000000000000000000000031954ddebc3ca69251c05703b8f26a76397ac391"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0x31954ddebc3ca69251c05703b8f26a76397ac391"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0x31954ddebc3ca69251c05703b8f26a76397ac391}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -165,7 +253,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x000000000000000000000000589e3aa599784f3b5338a975b8f09cfa66ba084a"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0x589e3aa599784f3b5338a975b8f09cfa66ba084a"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0x589e3aa599784f3b5338a975b8f09cfa66ba084a}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -179,7 +275,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x000000000000000000000000ff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -193,7 +297,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x000000000000000000000000c59b83ff69f2c02f53d0a29aaa28b4a896d9e76e"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0xc59b83ff69f2c02f53d0a29aaa28b4a896d9e76e"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0xc59b83ff69f2c02f53d0a29aaa28b4a896d9e76e}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -207,7 +319,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x0000000000000000000000008aea1a980caf8ca0392beec550161427bb085df4"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0x8aea1a980caf8ca0392beec550161427bb085df4"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0x8aea1a980caf8ca0392beec550161427bb085df4}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -221,7 +341,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x000000000000000000000000255be3947a4186a7735d18665adeed38d1cb94aa"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0x255be3947a4186a7735d18665adeed38d1cb94aa"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0x255be3947a4186a7735d18665adeed38d1cb94aa}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -235,7 +363,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x00000000000000000000000015092dd802a221aeb8f5958a44e0253fcc03d7f4"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0x15092dd802a221aeb8f5958a44e0253fcc03d7f4"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0x15092dd802a221aeb8f5958a44e0253fcc03d7f4}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -249,7 +385,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x0000000000000000000000009025a781f5fed98144023c535543a46572344dda"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0x9025a781f5fed98144023c535543a46572344dda"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0x9025a781f5fed98144023c535543a46572344dda}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -263,7 +407,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x000000000000000000000000877a49bea75c77a0f9b67b21032b9d79849ca4bd"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0x877a49bea75c77a0f9b67b21032b9d79849ca4bd"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0x877a49bea75c77a0f9b67b21032b9d79849ca4bd}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -277,7 +429,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x00000000000000000000000010fb4d0664e27992cf70929ecdbaeb88a93d42cb"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0x10fb4d0664e27992cf70929ecdbaeb88a93d42cb"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0x10fb4d0664e27992cf70929ecdbaeb88a93d42cb}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -291,7 +451,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x0000000000000000000000009266837521e3f589d51875081e6bcee081d6ccfd"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0x9266837521e3f589d51875081e6bcee081d6ccfd"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0x9266837521e3f589d51875081e6bcee081d6ccfd}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -305,7 +473,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x00000000000000000000000087bdb4879138276e241116d54c7f67c3bb375593"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0x87bdb4879138276e241116d54c7f67c3bb375593"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0x87bdb4879138276e241116d54c7f67c3bb375593}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -319,7 +495,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x000000000000000000000000b60120599ce317803d9d9a85039e000f7f045d17"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0xb60120599ce317803d9d9a85039e000f7f045d17"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0xb60120599ce317803d9d9a85039e000f7f045d17}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -333,7 +517,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x000000000000000000000000db90857799167ae1f87e722e6c410a79327a49b7"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0xdb90857799167ae1f87e722e6c410a79327a49b7"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0xdb90857799167ae1f87e722e6c410a79327a49b7}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -347,7 +539,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x000000000000000000000000b00910e4a31e7079bc2453dc0bd3727d40416d60"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0xb00910e4a31e7079bc2453dc0bd3727d40416d60"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0xb00910e4a31e7079bc2453dc0bd3727d40416d60}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -361,7 +561,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x000000000000000000000000fd2e24cbdd8974b55b5608797031c6ba8fcdeba1"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0xfd2e24cbdd8974b55b5608797031c6ba8fcdeba1"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0xfd2e24cbdd8974b55b5608797031c6ba8fcdeba1}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -375,7 +583,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x000000000000000000000000b1f6c97f4d2feba6b128f7b6d364e1ed1dca0b99"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0xb1f6c97f4d2feba6b128f7b6d364e1ed1dca0b99"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0xb1f6c97f4d2feba6b128f7b6d364e1ed1dca0b99}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -389,7 +605,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x00000000000000000000000094e8e81dc65881f39ae20042f6f7cce4f5c83d5e"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0x94e8e81dc65881f39ae20042f6f7cce4f5c83d5e"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0x94e8e81dc65881f39ae20042f6f7cce4f5c83d5e}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -403,7 +627,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x000000000000000000000000c6f6c89f7f297b5230d2fd028ac06f0677c1857b"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0xc6f6c89f7f297b5230d2fd028ac06f0677c1857b"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0xc6f6c89f7f297b5230d2fd028ac06f0677c1857b}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     },
@@ -417,7 +649,15 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
         "0x00000000000000000000000029a1b54de799771d642adaddd4e833902acf9cd9"
       ],
       "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-      "compressedLog": "",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": {
+          "_amount": "1",
+          "_from": "0x0",
+          "_to": "0x29a1b54de799771d642adaddd4e833902acf9cd9"
+        }
+      },
+      "compressedLog": "{name:Transfer|inputs:{_amount:1|_from:0x0|_to:0x29a1b54de799771d642adaddd4e833902acf9cd9}}",
       "transactionHash": "0x63dce6a287731f788da8cebe368a6f17dab69c10589fb9328563a828403fd9a9",
       "transactionIndex": 4
     }
