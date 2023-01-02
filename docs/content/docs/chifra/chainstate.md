@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2022-12-31T13:17:35
+date: 2023-01-01T20:44:05
 lastmod:
   - :git
   - lastmod
@@ -73,7 +73,10 @@ Data models produced by this tool:
 - [ethstate](/data-model/chainstate/#ethstate)
 - [ethcall](/data-model/chainstate/#ethcall)
 
-Github source: [`internal/state`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/state)
+Links:
+
+- [api docs](/api/#operation/chainstate-state)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/state)
 
 ## chifra tokens
 
@@ -124,5 +127,8 @@ Data models produced by this tool:
 
 - [tokenbalance](/data-model/chainstate/#tokenbalance)
 
-Github source: [`internal/tokens`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/tokens)
+Links:
+
+- [api docs](/api/#operation/chainstate-tokens)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/tokens)
 

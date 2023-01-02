@@ -39,5 +39,8 @@ Data models produced by this tool:
 
 - [transaction](/data-model/chaindata/#transaction)
 
-Github source: [`internal/slurp`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/slurp)
+Links:
+
+- [api docs](/api/#operation/other-slurp)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/slurp)
 

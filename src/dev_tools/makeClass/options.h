@@ -208,6 +208,9 @@ extern string_q getPathToTemplates(const string_q& part);
 
 extern bool parseEndpointsFile(const char* str, void* data);
 extern bool parseOptionsFile(const char* str, void* data);
+extern bool isChifraRoute(const CCommandOption& cmd, bool depOk);
+extern bool isApiRoute(const string_q& route);
+extern bool forEveryEnum(APPLYFUNC func, const string_q& enumStr, void* data);
 
 //---------------------------------------------------------------------------------------------------
 #define sdkPath string_q("/Users/jrush/Development/trueblocks-sdk/")

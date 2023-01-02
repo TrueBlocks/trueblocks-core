@@ -36,6 +36,18 @@ string_q get_readme_notes(const CCommandOption& ep) {
 }
 
 //------------------------------------------------------------------------------------------------------------
+string_q get_links(const CCommandOption& ep) {
+    bool noApi = !(ep.api_route != "daemon" && ep.api_route != "explore");
+    string_q url = "https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/";
+
+    string_q ret = "\n\nLinks:\n\n[{API}]\n- [source code](" + url + "[{ROUTE}])";
+    replace(ret, "[{API}]", noApi ? "- no api for this command" : "- [api docs](/api/#operation/[{GROUP}]-[{ROUTE}])");
+    replaceAll(ret, "[{GROUP}]", toLower(substitute(ep.group, " ", "")));
+    replaceAll(ret, "[{ROUTE}]", ep.api_route);
+    return ret;
+}
+
+//------------------------------------------------------------------------------------------------------------
 void get_models(const CClassDefinitionArray& models, CStringArray& result, const string_q& route) {
     ostringstream os;
     for (auto model : models) {
@@ -96,19 +108,15 @@ bool COptions::handle_readmes(void) {
                 replaceAll(docContents, "[{NOTES}]", get_readme_notes(ep));
                 replaceAll(docContents, "[{MODELS}]", get_models(dataModels, ep.api_route));
                 replaceAll(docContents, "[{NAME}]", "chifra " + ep.api_route);
+                writeIfDifferent(getDocsPathReadmes(docFn),
+                                 substitute(substitute(docContents, "[{LINKS}]", get_links(ep)), "[{FOOTER}]", "\n"));
 
-                string_q docsFooter =
-                    "\n\nGithub source: "
-                    "[`[{FILE}]`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/"
-                    "[{FILE}])\n";
-                replaceAll(docsFooter, "[{FILE}]", "internal/" + ep.api_route);
-                writeIfDifferent(getDocsPathReadmes(docFn), substitute(docContents, "[{FOOTER}]", docsFooter));
-
-                docsFooter = getDocsPathTemplates("readme-intros/README.footer.md");
-                string_q sourceFooter = "\n\n" + trim(asciiFileToString(docsFooter), '\n') + "\n";
+                string_q footerFn = getDocsPathTemplates("readme-intros/README.footer.md");
+                string_q sourceFooter = "\n\n" + trim(asciiFileToString(footerFn), '\n') + "\n";
                 string_q sourceReadme =
                     substitute(getPathToSource("apps/chifra/internal/" + ep.api_route + "/README.md"), "//", "/");
-                writeIfDifferent(sourceReadme, substitute(docContents, "[{FOOTER}]", sourceFooter));
+                writeIfDifferent(sourceReadme,
+                                 substitute(substitute(docContents, "[{FOOTER}]", sourceFooter), "[{LINKS}]", ""));
             }
         }
     }
@@ -186,4 +194,4 @@ const char* STR_CONFIG =
     "-- on the command line using the configuration item with leading dashes (i.e., `--name`).  ";
 
 const char* STR_README_BEGPARTS = "## [{NAME}]\n\n";
-const char* STR_README_ENDPARTS = "\n[{USAGE}][{MODELS}][{CONFIG}][{NOTES}][{FOOTER}]\n";
+const char* STR_README_ENDPARTS = "\n[{USAGE}][{MODELS}][{LINKS}][{CONFIG}][{NOTES}][{FOOTER}]\n";

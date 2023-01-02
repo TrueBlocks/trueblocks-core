@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2022-12-31T13:17:35
+date: 2023-01-01T20:44:05
 lastmod:
   - :git
   - lastmod
@@ -72,7 +72,10 @@ Data models produced by this tool:
 
 - [block](/data-model/chaindata/#block)
 
-Github source: [`internal/blocks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/blocks)
+Links:
+
+- [api docs](/api/#operation/chaindata-blocks)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/blocks)
 
 ## chifra transactions
 
@@ -122,7 +125,10 @@ Data models produced by this tool:
 - [transaction](/data-model/chaindata/#transaction)
 - [transfer](/data-model/chaindata/#transfer)
 
-Github source: [`internal/transactions`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/transactions)
+Links:
+
+- [api docs](/api/#operation/chaindata-transactions)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/transactions)
 
 ## chifra receipts
 
@@ -163,7 +169,10 @@ Data models produced by this tool:
 
 - [receipt](/data-model/chaindata/#receipt)
 
-Github source: [`internal/receipts`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/receipts)
+Links:
+
+- [api docs](/api/#operation/chaindata-receipts)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/receipts)
 
 ## chifra logs
 
@@ -201,7 +210,10 @@ Data models produced by this tool:
 
 - [log](/data-model/chaindata/#log)
 
-Github source: [`internal/logs`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/logs)
+Links:
+
+- [api docs](/api/#operation/chaindata-logs)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/logs)
 
 ## chifra traces
 
@@ -248,7 +260,10 @@ Data models produced by this tool:
 - [traceaction](/data-model/chaindata/#traceaction)
 - [traceresult](/data-model/chaindata/#traceresult)
 
-Github source: [`internal/traces`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/traces)
+Links:
+
+- [api docs](/api/#operation/chaindata-traces)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/traces)
 
 ## chifra when
 
@@ -296,5 +311,8 @@ Data models produced by this tool:
 
 - [datedblock](/data-model/chaindata/#datedblock)
 
-Github source: [`internal/when`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/when)
+Links:
+
+- [api docs](/api/#operation/chaindata-when)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/when)
 

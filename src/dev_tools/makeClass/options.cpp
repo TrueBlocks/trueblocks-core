@@ -440,3 +440,11 @@ void COptions::verifyDescriptions(void) {
         }
     }
 }
+
+//---------------------------------------------------------------------------------------------------
+bool isChifraRoute(const CCommandOption& cmd, bool depOk) {
+    if (depOk && cmd.option_type == "deprecated")
+        return true;
+    return (cmd.option_type != "deprecated" && cmd.option_type != "description" && cmd.option_type != "note" &&
+            cmd.option_type != "alias" && cmd.option_type != "config" && cmd.option_type != "error");
+}
