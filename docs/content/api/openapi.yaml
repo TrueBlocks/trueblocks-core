@@ -84,7 +84,7 @@ paths:
       tags:
         - Accounts
       summary: List transactions
-      description: List every appearance of an address anywhere on the chain.
+      description: List every appearance of an address anywhere on the chain. Corresponds to the <a href="/docs/chifra/accounts/#chifra-list">chifra list</a> command line.
       operationId: accounts-list
       parameters:
         - name: addrs
@@ -204,7 +204,7 @@ paths:
       tags:
         - Accounts
       summary: Export details
-      description: Export full detail of transactions for one or more addresses.
+      description: Export full detail of transactions for one or more addresses. Corresponds to the <a href="/docs/chifra/accounts/#chifra-export">chifra export</a> command line.
       operationId: accounts-export
       parameters:
         - name: addrs
@@ -495,7 +495,7 @@ paths:
       tags:
         - Accounts
       summary: Manage monitors
-      description: Add, remove, clean, and list address monitors.
+      description: Add, remove, clean, and list address monitors. Corresponds to the <a href="/docs/chifra/accounts/#chifra-monitors">chifra monitors</a> command line.
       operationId: accounts-monitors
       parameters:
         - name: addrs
@@ -585,7 +585,7 @@ paths:
       tags:
         - Accounts
       summary: Names
-      description: Query addresses or names of well known accounts.
+      description: Query addresses or names of well known accounts. Corresponds to the <a href="/docs/chifra/accounts/#chifra-names">chifra names</a> command line.
       operationId: accounts-names
       parameters:
         - name: terms
@@ -719,7 +719,7 @@ paths:
       tags:
         - Accounts
       summary: ABIs
-      description: Fetches the ABI for a smart contract.
+      description: Fetches the ABI for a smart contract. Corresponds to the <a href="/docs/chifra/accounts/#chifra-abis">chifra abis</a> command line.
       operationId: accounts-abis
       parameters:
         - name: addrs
@@ -829,7 +829,7 @@ paths:
       tags:
         - Chain Data
       summary: Get blocks
-      description: Retrieve one or more blocks from the chain or local cache.
+      description: Retrieve one or more blocks from the chain or local cache. Corresponds to the <a href="/docs/chifra/chaindata/#chifra-blocks">chifra blocks</a> command line.
       operationId: chaindata-blocks
       parameters:
         - name: blocks
@@ -989,7 +989,7 @@ paths:
       tags:
         - Chain Data
       summary: Get transactions
-      description: Retrieve one or more transactions from the chain or local cache.
+      description: Retrieve one or more transactions from the chain or local cache. Corresponds to the <a href="/docs/chifra/chaindata/#chifra-transactions">chifra transactions</a> command line.
       operationId: chaindata-transactions
       parameters:
         - name: transactions
@@ -1077,7 +1077,7 @@ paths:
       tags:
         - Chain Data
       summary: Get receipts
-      description: Retrieve receipts for the given transaction(s).
+      description: Retrieve receipts for the given transaction(s). Corresponds to the <a href="/docs/chifra/chaindata/#chifra-receipts">chifra receipts</a> command line.
       operationId: chaindata-receipts
       parameters:
         - name: transactions
@@ -1118,7 +1118,7 @@ paths:
       tags:
         - Chain Data
       summary: Get logs
-      description: Retrieve logs for the given transaction(s).
+      description: Retrieve logs for the given transaction(s). Corresponds to the <a href="/docs/chifra/chaindata/#chifra-logs">chifra logs</a> command line.
       operationId: chaindata-logs
       parameters:
         - name: transactions
@@ -1159,7 +1159,7 @@ paths:
       tags:
         - Chain Data
       summary: Get traces
-      description: Retrieve traces for the given transaction(s).
+      description: Retrieve traces for the given transaction(s). Corresponds to the <a href="/docs/chifra/chaindata/#chifra-traces">chifra traces</a> command line.
       operationId: chaindata-traces
       parameters:
         - name: transactions
@@ -1227,7 +1227,7 @@ paths:
       tags:
         - Chain Data
       summary: Get block dates
-      description: Find block(s) based on date, blockNum, timestamp, or 'special'.
+      description: Find block(s) based on date, blockNum, timestamp, or 'special'. Corresponds to the <a href="/docs/chifra/chaindata/#chifra-when">chifra when</a> command line.
       operationId: chaindata-when
       parameters:
         - name: blocks
@@ -1302,7 +1302,7 @@ paths:
       tags:
         - Chain State
       summary: Get balance(s)
-      description: Retrieve account balance(s) for one or more addresses at given block(s).
+      description: Retrieve account balance(s) for one or more addresses at given block(s). Corresponds to the <a href="/docs/chifra/chainstate/#chifra-state">chifra state</a> command line.
       operationId: chainstate-state
       parameters:
         - name: addrs
@@ -1418,7 +1418,7 @@ paths:
       tags:
         - Chain State
       summary: Get token balance(s)
-      description: Retrieve token balance(s) for one or more addresses at given block(s).
+      description: Retrieve token balance(s) for one or more addresses at given block(s). Corresponds to the <a href="/docs/chifra/chainstate/#chifra-tokens">chifra tokens</a> command line.
       operationId: chainstate-tokens
       parameters:
         - name: addrs
@@ -1515,7 +1515,7 @@ paths:
       tags:
         - Admin
       summary: Manage config
-      description: Report on and edit the configuration of the TrueBlocks system.
+      description: Report on and edit the configuration of the TrueBlocks system. Corresponds to the <a href="/docs/chifra/admin/#chifra-config">chifra config</a> command line.
       operationId: admin-config
       parameters:
         - name: modes
@@ -1611,7 +1611,7 @@ paths:
       tags:
         - Admin
       summary: Scrape index
-      description: Scan the chain and update the TrueBlocks index of appearances.
+      description: Scan the chain and update the TrueBlocks index of appearances. Corresponds to the <a href="/docs/chifra/admin/#chifra-scrape">chifra scrape</a> command line.
       operationId: admin-scrape
       parameters:
         - name: blockCnt
@@ -1669,7 +1669,7 @@ paths:
       tags:
         - Admin
       summary: Manage chunks
-      description: Manage, investigate, and display the Unchained Index.
+      description: Manage, investigate, and display the Unchained Index. Corresponds to the <a href="/docs/chifra/admin/#chifra-chunks">chifra chunks</a> command line.
       operationId: admin-chunks
       parameters:
         - name: mode
@@ -1797,7 +1797,7 @@ paths:
       tags:
         - Admin
       summary: Initialize index
-      description: Initialize the TrueBlocks system by downloading from IPFS.
+      description: Initialize the TrueBlocks system by downloading from IPFS. Corresponds to the <a href="/docs/chifra/admin/#chifra-init">chifra init</a> command line.
       operationId: admin-init
       parameters:
         - name: all
@@ -1838,7 +1838,7 @@ paths:
       tags:
         - Other
       summary: Slurp Etherscan
-      description: Fetch data from EtherScan for any address.
+      description: Fetch data from EtherScan for any address. Corresponds to the <a href="/docs/chifra/other/#chifra-slurp">chifra slurp</a> command line.
       operationId: other-slurp
       parameters:
         - name: addrs

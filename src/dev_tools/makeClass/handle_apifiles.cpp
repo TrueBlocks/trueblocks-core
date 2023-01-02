@@ -40,7 +40,9 @@ bool COptions::writeOpenApiFile(void) {
         apiTagStream << ep.toApiTag();
         goCallStream << ep.toGoCall();
         goRouteStream << ep.toGoRoute();
-        apiPathStream << ep.toApiPath(returnTypes, exampleFn);
+
+        apiPathStream << ep.toApiPath(
+            returnTypes, get_corresponds_link(toLower(substitute(ep.group, " ", "")), ep.api_route), exampleFn);
 
         string_q pkg = ep.toGoPackage();
         string_q nick = nextTokenClear(pkg, ' ');
@@ -82,6 +84,15 @@ namespace qblocks {
 extern bool isApiRoute(const string_q& route);
 }
 
+//------------------------------------------------------------------------------------------------------------
+string_q get_model_group(const CClassDefinitionArray& models, const string_q& route) {
+    for (auto model : models) {
+        if (contains(model.doc_producer, toLower(route)))
+            return toLower(substitute(model.doc_group, " ", ""));
+    }
+    return "unknown";
+}
+
 void get_models(const CClassDefinitionArray& models, CStringArray& result, const string_q& route);
 //---------------------------------------------------------------------------------------------------
 string_q get_api_text(const CClassDefinitionArray& models, const CClassDefinition& model, const string_q& toolGroup,
@@ -108,8 +119,7 @@ string_q get_api_text(const CClassDefinitionArray& models, const CClassDefinitio
         replaceReverse(ret, "</a>, <a href", "</a>, and/or <a href");
     }
 
-    ret += (" Corresponds to the <a href=\"/docs/chifra/" + toolGroup + "/#chifra-" + toolRoute + "\">chifra " +
-            toolRoute + "</a> command line.");
+    ret += get_corresponds_link(toolGroup, toolRoute);
 
     return ret;
 }

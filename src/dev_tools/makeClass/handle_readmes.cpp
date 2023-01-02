@@ -97,11 +97,13 @@ bool COptions::handle_readmes(void) {
                 replaceAll(docContents, "[{MODELS}]", get_models(dataModels, ep.api_route));
                 replaceAll(docContents, "[{NAME}]", "chifra " + ep.api_route);
 
-                string_q docsFooter =
-                    "\n\nGithub source: "
-                    "[`[{FILE}]`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/"
-                    "[{FILE}])\n";
-                replaceAll(docsFooter, "[{FILE}]", "internal/" + ep.api_route);
+                bool noApi = !(ep.api_route != "daemon" && ep.api_route != "explore");
+                string_q url = "https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/";
+                string_q docsFooter = "\n\nLinks:\n\n[{API}]\n- [source code](" + url + "[{ROUTE}])\n";
+                replace(docsFooter, "[{API}]",
+                        noApi ? "- no api for this command" : "- [api docs](/api/#operation/[{GROUP}]-[{ROUTE}])");
+                replaceAll(docsFooter, "[{GROUP}]", toLower(substitute(ep.group, " ", "")));
+                replaceAll(docsFooter, "[{ROUTE}]", ep.api_route);
                 writeIfDifferent(getDocsPathReadmes(docFn), substitute(docContents, "[{FOOTER}]", docsFooter));
 
                 docsFooter = getDocsPathTemplates("readme-intros/README.footer.md");

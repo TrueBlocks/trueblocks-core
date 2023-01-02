@@ -87,7 +87,7 @@ class CCommandOption : public CBaseNode {
     string_q toGoCall(void) const;
     string_q toGoPackage(void) const;
     string_q toGoRoute(void) const;
-    string_q toApiPath(const string_q& inStr, const string_q& exampleFn) const;
+    string_q toApiPath(const string_q& inStr, const string_q& corresponds, const string_q& exampleFn) const;
     bool isChifraRoute(bool depOk) const;
     string_q getSchema(void) const;
     bool isStringType(void) const {
@@ -288,5 +288,6 @@ extern bool forEveryEnum(APPLYFUNC func, const string_q& enumStr, void* data);
 extern bool goPortNewCode(const string_q& a);
 extern bool isApiRoute(const string_q& route);
 extern bool isFullyPorted(const string_q& a);
+extern string_q get_corresponds_link(const string_q& toolGroup, const string_q& toolRoute);
 // EXISTING_CODE
 }  // namespace qblocks

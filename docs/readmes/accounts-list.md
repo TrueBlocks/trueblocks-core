@@ -43,5 +43,8 @@ Data models produced by this tool:
 - [monitor](/data-model/accounts/#monitor)
 - [appearancecount](/data-model/accounts/#appearancecount)
 
-Github source: [`internal/list`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/list)
+Links:
+
+- [api docs](/api/#operation/accounts-list)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/list)
 

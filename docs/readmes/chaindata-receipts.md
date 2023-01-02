@@ -37,5 +37,8 @@ Data models produced by this tool:
 
 - [receipt](/data-model/chaindata/#receipt)
 
-Github source: [`internal/receipts`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/receipts)
+Links:
+
+- [api docs](/api/#operation/chaindata-receipts)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/receipts)
 

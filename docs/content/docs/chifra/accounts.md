@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-12-31T13:17:35
+date: 2023-01-01T20:44:05
 lastmod:
   - :git
   - lastmod
@@ -68,7 +68,10 @@ Data models produced by this tool:
 - [monitor](/data-model/accounts/#monitor)
 - [appearancecount](/data-model/accounts/#appearancecount)
 
-Github source: [`internal/list`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/list)
+Links:
+
+- [api docs](/api/#operation/accounts-list)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/list)
 
 ## chifra export
 
@@ -153,7 +156,10 @@ Data models produced by this tool:
 - [function](/data-model/other/#function)
 - [parameter](/data-model/other/#parameter)
 
-Github source: [`internal/export`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/export)
+Links:
+
+- [api docs](/api/#operation/accounts-export)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/export)
 
 ## chifra monitors
 
@@ -209,7 +215,10 @@ Data models produced by this tool:
 
 - [monitor](/data-model/accounts/#monitor)
 
-Github source: [`internal/monitors`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/monitors)
+Links:
+
+- [api docs](/api/#operation/accounts-monitors)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/monitors)
 
 ## chifra names
 
@@ -260,7 +269,10 @@ Data models produced by this tool:
 
 - [name](/data-model/accounts/#name)
 
-Github source: [`internal/names`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/names)
+Links:
+
+- [api docs](/api/#operation/accounts-names)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/names)
 
 ## chifra abis
 
@@ -315,5 +327,8 @@ Data models produced by this tool:
 - [function](/data-model/other/#function)
 - [parameter](/data-model/other/#parameter)
 
-Github source: [`internal/abis`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/abis)
+Links:
+
+- [api docs](/api/#operation/accounts-abis)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/abis)
 

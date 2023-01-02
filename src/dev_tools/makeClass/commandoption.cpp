@@ -899,7 +899,8 @@ bool isCrud(const string_q& cmd) {
 }
 
 //---------------------------------------------------------------------------------------------------
-string_q CCommandOption::toApiPath(const string_q& returnTypesIn, const string_q& exampleFn) const {
+string_q CCommandOption::toApiPath(const string_q& returnTypesIn, const string_q& corresponds,
+                                   const string_q& exampleFn) const {
     if (!isApiRoute(api_route) || contains(api_route, "explore"))
         return "";
 
@@ -971,7 +972,7 @@ string_q CCommandOption::toApiPath(const string_q& returnTypesIn, const string_q
     replaceAll(ret, "[{PATH}]", api_route);
     replaceAll(ret, "[{PARAMS}]", paramStream.str());
     replaceAll(ret, "[{SUMMARY}]", summary);
-    replaceAll(ret, "[{DESCR}]", description);
+    replaceAll(ret, "[{DESCR}]", description + corresponds);
     replaceAll(ret, "[{DELETE}]", hasDelete ? STR_DELETE_OPTS : "");
     replaceAll(ret, "[{ID}]", toLower(substitute(grp, " ", "") + "-" + api_route));
     return ret;
@@ -1131,6 +1132,12 @@ bool goPortNewCode(const string_q& a) {
             return true;
     }
     return false;
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q get_corresponds_link(const string_q& toolGroup, const string_q& toolRoute) {
+    return (" Corresponds to the <a href=\"/docs/chifra/" + toolGroup + "/#chifra-" + toolRoute + "\">chifra " +
+            toolRoute + "</a> command line.");
 }
 // EXISTING_CODE
 }  // namespace qblocks

@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-12-31T13:17:35
+date: 2023-01-01T20:47:55
 lastmod:
   - :git
   - lastmod
@@ -69,7 +69,10 @@ Data models produced by this tool:
 - [indexcacheitem](/data-model/admin/#indexcacheitem)
 - [chain](/data-model/admin/#chain)
 
-Github source: [`internal/config`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/config)
+Links:
+
+- [api docs](/api/#operation/admin-config)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/config)
 
 ## chifra daemon
 
@@ -116,7 +119,10 @@ Data models produced by this tool:
 
 - none
 
-Github source: [`internal/daemon`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/daemon)
+Links:
+
+- no api for this command
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/daemon)
 
 ## chifra scrape
 
@@ -221,7 +227,10 @@ node and its support of the required `trace_` endpoint routines, is highly recom
 Please [see this article](https://trueblocks.io/blog/a-long-winded-explanation-of-trueblocks/) for
 more information about running the scraper and building and sharing the index of appearances.
 
-Github source: [`internal/scrape`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/scrape)
+Links:
+
+- [api docs](/api/#operation/admin-scrape)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/scrape)
 
 ## chifra chunks
 
@@ -275,7 +284,10 @@ Data models produced by this tool:
 - [chunkappearances](/data-model/admin/#chunkappearances)
 - [chunkstats](/data-model/admin/#chunkstats)
 
-Github source: [`internal/chunks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/chunks)
+Links:
+
+- [api docs](/api/#operation/admin-chunks)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/chunks)
 
 ## chifra init
 
@@ -324,5 +336,8 @@ Data models produced by this tool:
 - [manifest](/data-model/admin/#manifest)
 - [pinnedchunk](/data-model/admin/#pinnedchunk)
 
-Github source: [`internal/init`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/init)
+Links:
+
+- [api docs](/api/#operation/admin-init)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/init)
 
