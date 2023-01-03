@@ -157,7 +157,7 @@ bool visitBlock(uint64_t num, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
     if (!opt->firstOut) {
-        if (!isText && opt->filterType.empty())
+        if ((!isText && opt->filterType.empty()) || opt->count)
             cout << ",";
         cout << endl;
     }
