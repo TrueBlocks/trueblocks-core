@@ -29,9 +29,11 @@ static blknum_t getLatestBlock_cache_final(void) {
 //--------------------------------------------------------------------------
 static blknum_t getLatestBlock_cache_staging(void) {
     string_q stageLast = getLastFileInFolder(indexFolder_staging, false);
-    // Files in this folder are n.txt, if empty, we fall back on finalized folder
+    // Files in this folder are first-last.txt, if empty, we fall back on finalized folder
     if (!stageLast.empty() && stageLast != (indexFolder_staging + "000000000.txt")) {
-        return path_2_Bn(stageLast);
+        blknum_t staging;
+        path_2_Bn(stageLast, staging);
+        return staging;
     }
     return getLatestBlock_cache_final();
 }
