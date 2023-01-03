@@ -47,5 +47,8 @@ Data models produced by this tool:
 
 - [tokenbalance](/data-model/chainstate/#tokenbalance)
 
-Github source: [`internal/tokens`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/tokens)
+Links:
+
+- [api docs](/api/#operation/chainstate-tokens)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/tokens)
 

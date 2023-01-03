@@ -43,5 +43,8 @@ Data models produced by this tool:
 
 - none
 
-Github source: [`internal/daemon`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/daemon)
+Links:
+
+- no api for this command
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/daemon)
 

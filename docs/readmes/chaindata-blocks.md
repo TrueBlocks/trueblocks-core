@@ -50,5 +50,8 @@ Data models produced by this tool:
 
 - [block](/data-model/chaindata/#block)
 
-Github source: [`internal/blocks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/blocks)
+Links:
+
+- [api docs](/api/#operation/chaindata-blocks)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/blocks)
 

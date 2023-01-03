@@ -138,7 +138,7 @@ bool COptions::handle_sdk_ts_paths(CStringArray& pathsOut) {
     for (auto ep : endpointArray) {
         CCommandOptionArray params;
         for (auto option : routeOptionArray) {
-            if (option.api_route == ep.api_route && option.isChifraRoute(false)) {
+            if (option.api_route == ep.api_route && isChifraRoute(option, false)) {
                 params.push_back(option);
             }
         }
@@ -295,7 +295,6 @@ const char* STR_PATH_FILE =
     "    ether?: boolean,\n"
     "    dollars?: boolean,\n"
     "    raw?: boolean,\n"
-    "    toFile?: boolean,\n"
     "  },\n"
     "  options?: RequestInit,\n"
     ") {\n"

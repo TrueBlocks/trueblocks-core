@@ -161,6 +161,19 @@ bool COptions::handle_gocmds_output(const CCommandOption& p) {
 }
 
 //---------------------------------------------------------------------------------------------------
+string_q toChifraHelp(const CCommandOption& cmd) {
+    if ((cmd.description.empty() && !cmd.api_route.empty()) || cmd.api_route == "blaze")
+        return "";
+
+    CCommandOption ret = cmd;
+    replaceAll(ret.description, ".", "");
+    ret.description = firstLower(ret.description);
+    if (cmd.api_route.empty())
+        return toProper(ret.Format("  [{GROUP}]:")) + "\n";
+    return ret.Format("    [{w:14:API_ROUTE}][{DESCRIPTION}]") + "\n";
+}
+
+//---------------------------------------------------------------------------------------------------
 bool COptions::handle_gocmds(void) {
     LOG_INFO(cYellow, "handling go commands...", string_q(50, ' '), cOff);
     counter = CCounter();  // reset
@@ -168,13 +181,13 @@ bool COptions::handle_gocmds(void) {
     for (auto p : endpointArray) {
         if (!p.is_visible) {
             if (!p.group.empty())
-                chifraHelpStream << p.toChifraHelp();
+                chifraHelpStream << toChifraHelp(p);
             continue;
         }
         CCommandOptionArray params;
         CCommandOptionArray notes;
         for (auto option : routeOptionArray) {
-            bool isOne = option.api_route == p.api_route && option.isChifraRoute(true);
+            bool isOne = option.api_route == p.api_route && isChifraRoute(option, true);
             if (isOne) {
                 params.push_back(option);
             }
@@ -192,7 +205,7 @@ bool COptions::handle_gocmds(void) {
         handle_gocmds_cmd(p);
         handle_gocmds_options(p);
         handle_gocmds_output(p);
-        chifraHelpStream << p.toChifraHelp();
+        chifraHelpStream << toChifraHelp(p);
     }
     chifraHelpStream << STR_CHIFRA_HELP_END;
 

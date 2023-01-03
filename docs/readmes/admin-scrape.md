@@ -41,6 +41,11 @@ Data models produced by this tool:
 - [manifest](/data-model/admin/#manifest)
 - [pinnedchunk](/data-model/admin/#pinnedchunk)
 
+Links:
+
+- [api docs](/api/#operation/admin-scrape)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/scrape)
+
 ### configuration
 
 Each of the following additional configurable command line options are available.
@@ -100,6 +105,4 @@ node and its support of the required `trace_` endpoint routines, is highly recom
 
 Please [see this article](https://trueblocks.io/blog/a-long-winded-explanation-of-trueblocks/) for
 more information about running the scraper and building and sharing the index of appearances.
-
-Github source: [`internal/scrape`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/scrape)
 

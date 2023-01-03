@@ -311,6 +311,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             // clang-format on
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", replaceFile, NULL);
+            forEveryFileInFolder(test.goldPath + "*", postCleanup, NULL);
 
             string_q contents = asciiFileToString(test.workPath + test.fileName);
             if (!prepender.str().empty()) {
@@ -513,6 +514,14 @@ bool replaceFile(const string_q& customFile, void* data) {
     string_q saveFile = cacheFolder_tmp + parts[parts.size() - 1] + ".save";
     copyFile(saveFile, destFile);
     ::remove(saveFile.c_str());
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool postCleanup(const string_q& path, void* data) {
+    if (contains(path, "makeClass") && (endsWith(path, ".cpp") || endsWith(path, ".h"))) {
+        ::remove(path.c_str());
+    }
     return true;
 }
 

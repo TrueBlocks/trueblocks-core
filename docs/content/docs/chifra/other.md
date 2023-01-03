@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2022-12-31T00:08:07
+date: 2023-01-01T20:44:05
 lastmod:
   - :git
   - lastmod
@@ -53,7 +53,10 @@ Data models produced by this tool:
 
 - none
 
-Github source: [`internal/explore`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/explore)
+Links:
+
+- no api for this command
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/explore)
 
 ## chifra slurp
 
@@ -96,5 +99,8 @@ Data models produced by this tool:
 
 - [transaction](/data-model/chaindata/#transaction)
 
-Github source: [`internal/slurp`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/slurp)
+Links:
+
+- [api docs](/api/#operation/other-slurp)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/slurp)
 

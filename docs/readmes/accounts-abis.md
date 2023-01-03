@@ -51,5 +51,8 @@ Data models produced by this tool:
 - [function](/data-model/other/#function)
 - [parameter](/data-model/other/#parameter)
 
-Github source: [`internal/abis`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/abis)
+Links:
+
+- [api docs](/api/#operation/accounts-abis)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/abis)
 
