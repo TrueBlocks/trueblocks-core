@@ -1,6 +1,0 @@
-chifra names  --named --custom --fmt json --to_file
-TEST[DATE|TIME] Custom:  true
-TEST[DATE|TIME] Named:  true
-TEST[DATE|TIME] ToFile:  true
-TEST[DATE|TIME] Format:  json
-{ "outputFilename": "--output_filename--" }

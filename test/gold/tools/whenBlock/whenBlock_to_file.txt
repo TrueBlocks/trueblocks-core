@@ -1,2 +1,0 @@
-chifra when  1001001 --fmt json --to_file
-{ "outputFilename": "--output_filename--" }

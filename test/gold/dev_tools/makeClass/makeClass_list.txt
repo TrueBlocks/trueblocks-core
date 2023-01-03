@@ -1,6 +1,5 @@
 makeClass  --dump function
 TIME ~ CLOCK - <INFO>  : Processing 1 class definition files.
-TIME ~ CLOCK - <EROR> : Cannot find file ./classDefinitions/fields/function.csv
 ------------------------------------------------------------------------------------------------------------------------
 ./classDefinitions/function.txt
 ------------------------------------------------------------------------------------------------------------------------
