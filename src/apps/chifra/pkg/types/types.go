@@ -53,7 +53,7 @@ type SimpleFunction struct {
 	Encoding        string            `json:"encoding,omitempty"`
 	Signature       string            `json:"signature,omitempty"`
 	Name            string            `json:"name"`
-	FunctionType    string            `json:"functionType"`
+	FunctionType    string            `json:"type"`
 	AbiSource       string            `json:"abi_source"`
 	Anonymous       bool              `json:"anonymous"`
 	Constant        bool              `json:"constant"`
