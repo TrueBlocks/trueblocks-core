@@ -61,5 +61,8 @@ func (opts *BlocksOptions) HandleShowBlocks() error {
 		OutputFn:   opts.Globals.OutputFn,
 		Append:     opts.Globals.Append,
 		JsonIndent: "  ",
+		ModelExtraOptions: map[string]interface{}{
+			"hashesOnly": opts.Hashes,
+		},
 	})
 }

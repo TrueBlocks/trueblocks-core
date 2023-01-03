@@ -38,6 +38,8 @@ type OutputOptions struct {
 	Append bool
 	// The writer
 	Writer io.Writer
+	// Extra options passed to model, for example command-specific output formatting flags
+	ModelExtraOptions map[string]interface{}
 }
 
 var formatToSeparator = map[string]rune{
@@ -67,8 +69,13 @@ func StreamModel(w io.Writer, model types.Model, options OutputOptions) error {
 
 	// Store map items as strings. All formats other than JSON need string data
 	strs := make([]string, 0, len(model.Order))
-	for _, key := range model.Order {
-		strs = append(strs, fmt.Sprint(model.Data[key]))
+	switch value := model.Data.(type) {
+	case map[string]interface{}:
+		for _, key := range model.Order {
+			strs = append(strs, fmt.Sprint(value[key]))
+		}
+	default:
+		strs = append(strs, fmt.Sprint(value))
 	}
 
 	var separator rune
@@ -165,7 +172,7 @@ func StreamMany[Raw types.RawData](ctx context.Context, fetchData fetchDataFunc[
 			if options.ShowRaw {
 				err = StreamRaw(options.Writer, model.Raw())
 			} else {
-				modelValue := model.Model(options.Verbose, options.Format)
+				modelValue := model.Model(options.Verbose, options.Format, options.ModelExtraOptions)
 				if customFormat {
 					err = StreamWithTemplate(options.Writer, modelValue, tmpl)
 				} else {

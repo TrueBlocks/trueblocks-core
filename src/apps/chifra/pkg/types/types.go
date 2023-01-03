@@ -9,7 +9,7 @@ import (
 )
 
 type Modeler[Raw RawData] interface {
-	Model(showHidden bool, format string) Model
+	Model(showHidden bool, format string, extraOptions map[string]any) Model
 	Raw() *Raw
 }
 
@@ -18,7 +18,7 @@ type RawData interface {
 }
 
 type Model struct {
-	Data  map[string]interface{}
+	Data  any
 	Order []string
 }
 

@@ -54,7 +54,14 @@ func (s *SimpleBlock) SetRaw(rawBlock RawBlock) {
 	s.raw = &rawBlock
 }
 
-func (s *SimpleBlock) Model(showHidden bool, format string) Model {
+func (s *SimpleBlock) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+	if extraOptions["hashesOnly"] == true {
+		return Model{
+			Data:  s.Hash,
+			Order: []string{"hash"},
+		}
+	}
+
 	model := map[string]interface{}{
 		"blockNumber":   s.BlockNumber,
 		"timestamp":     s.Timestamp,
