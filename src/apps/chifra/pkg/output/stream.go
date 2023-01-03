@@ -39,7 +39,7 @@ type OutputOptions struct {
 	// The writer
 	Writer io.Writer
 	// Extra options passed to model, for example command-specific output formatting flags
-	ModelExtraOptions map[string]interface{}
+	Extra map[string]interface{}
 }
 
 var formatToSeparator = map[string]rune{
@@ -172,7 +172,7 @@ func StreamMany[Raw types.RawData](ctx context.Context, fetchData fetchDataFunc[
 			if options.ShowRaw {
 				err = StreamRaw(options.Writer, model.Raw())
 			} else {
-				modelValue := model.Model(options.Verbose, options.Format, options.ModelExtraOptions)
+				modelValue := model.Model(options.Verbose, options.Format, options.Extra)
 				if customFormat {
 					err = StreamWithTemplate(options.Writer, modelValue, tmpl)
 				} else {

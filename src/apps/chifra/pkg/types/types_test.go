@@ -1,6 +1,7 @@
 package types
 
 import (
+	"log"
 	"testing"
 
 	"github.com/ethereum/go-ethereum/common"
@@ -21,6 +22,9 @@ func TestTypes(t *testing.T) {
 	if data["blockNumber"] == nil {
 		t.Fatal("visible field missing")
 	}
+
+	data = r.Model(true, "json", nil).Data.(map[string]interface{})
+	log.Println(data)
 
 	if data["blockHash"] == nil {
 		t.Fatal("hidden field missing when showHidden = true")
