@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2023-01-03T21:42:38
+date: 2023-01-04T06:02:09
 lastmod:
   - :git
   - lastmod
@@ -36,7 +36,7 @@ The following commands produce and manage EthStates:
 
 - [chifra state](/docs/chifra/chainstate/#chifra-state)
 
-Ethstate data is made of the following fields:
+EthStates consist of the following fields:
 
 | Field       | Description                                                                     | Type    |
 | ----------- | ------------------------------------------------------------------------------- | ------- |
@@ -59,7 +59,7 @@ The following commands produce and manage EthCalls:
 
 - [chifra state](/docs/chifra/chainstate/#chifra-state)
 
-Ethcall data is made of the following fields:
+EthCalls consist of the following fields:
 
 | Field            | Description                                                                     | Type                                    |
 | ---------------- | ------------------------------------------------------------------------------- | --------------------------------------- |
@@ -81,7 +81,7 @@ The following commands produce and manage TokenBalances:
 
 - [chifra tokens](/docs/chifra/chainstate/#chifra-tokens)
 
-Tokenbalance data is made of the following fields:
+TokenBalances consist of the following fields:
 
 | Field      | Description                                                  | Type    |
 | ---------- | ------------------------------------------------------------ | ------- |
@@ -99,12 +99,12 @@ Tokenbalance data is made of the following fields:
 
 This documentation mentions the following basic data types.
 
-| Type      | Description                         | Notes          |
-| --------- | ----------------------------------- | -------------- |
-| address   | an '0x'-prefixed 20-byte hex string | lowercase      |
-| blknum    | an alias for a uint64               |                |
-| bool      | either `true`, `false`, `1`, or `0` |                |
-| bytes     | an arbitrarily long string of bytes |                |
-| string    | a normal character string           |                |
-| uint64    | a 64-bit unsigned integer           |                |
-| wei       | an unsigned big number              | as a string    |
+| Type    | Description                         | Notes       |
+| ------- | ----------------------------------- | ----------- |
+| address | an '0x'-prefixed 20-byte hex string | lowercase   |
+| blknum  | an alias for a uint64               |             |
+| bool    | either `true`, `false`, `1`, or `0` |             |
+| bytes   | an arbitrarily long string of bytes |             |
+| string  | a normal character string           |             |
+| uint64  | a 64-bit unsigned integer           |             |
+| wei     | an unsigned big number              | as a string |

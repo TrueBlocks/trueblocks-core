@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2023-01-03T21:42:38
+date: 2023-01-04T06:02:09
 lastmod:
   - :git
   - lastmod
@@ -48,7 +48,7 @@ The following commands produce and manage Appearances:
 - [chifra list](/docs/chifra/accounts/#chifra-list)
 - [chifra export](/docs/chifra/accounts/#chifra-export)
 
-Appearance data is made of the following fields:
+Appearances consist of the following fields:
 
 | Field            | Description                                               | Type      |
 | ---------------- | --------------------------------------------------------- | --------- |
@@ -81,7 +81,7 @@ The following commands produce and manage Reconciliations:
 
 - [chifra export](/docs/chifra/accounts/#chifra-export)
 
-Reconciliation data is made of the following fields:
+Reconciliations consist of the following fields:
 
 | Field               | Description                                                                                                                                    | Type      |
 | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
@@ -153,7 +153,7 @@ The following commands produce and manage Monitors:
 - [chifra export](/docs/chifra/accounts/#chifra-export)
 - [chifra config](/docs/chifra/admin/#chifra-config)
 
-Monitor data is made of the following fields:
+Monitors consist of the following fields:
 
 | Field       | Description                                    | Type    |
 | ----------- | ---------------------------------------------- | ------- |
@@ -193,7 +193,7 @@ The following commands produce and manage Names:
 
 - [chifra names](/docs/chifra/accounts/#chifra-names)
 
-Name data is made of the following fields:
+Names consist of the following fields:
 
 | Field      | Description                                                                         | Type    |
 | ---------- | ----------------------------------------------------------------------------------- | ------- |
@@ -228,7 +228,7 @@ The following commands produce and manage Abis:
 
 - [chifra abis](/docs/chifra/accounts/#chifra-abis)
 
-Abi data is made of the following fields:
+Abis consist of the following fields:
 
 | Field      | Description                                  | Type                                      |
 | ---------- | -------------------------------------------- | ----------------------------------------- |
@@ -250,7 +250,7 @@ The following commands produce and manage AppearanceCounts:
 - [chifra list](/docs/chifra/accounts/#chifra-list)
 - [chifra export](/docs/chifra/accounts/#chifra-export)
 
-Appearancecount data is made of the following fields:
+AppearanceCounts consist of the following fields:
 
 | Field    | Description                                               | Type    |
 | -------- | --------------------------------------------------------- | ------- |

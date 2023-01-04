@@ -1291,10 +1291,10 @@ paths:
               schema:
                 properties:
                   data:
-                    description: A block that has been given a particular name such as `first` or `latest`. Produces <a href="/data-model/chaindata/#datedblock">Datedblock</a> data. Corresponds to the <a href="/docs/chifra/chaindata/#chifra-when">chifra when</a> command line.
+                    description: A block that has been given a particular name such as `first` or `latest`. Produces <a href="/data-model/chaindata/#namedblock">Namedblock</a> data. Corresponds to the <a href="/docs/chifra/chaindata/#chifra-when">chifra when</a> command line.
                     type: array
                     items:
-                      $ref: "#/components/schemas/datedBlock"
+                      $ref: "#/components/schemas/namedBlock"
         "400":
           description: bad input parameter
   /state:
@@ -2655,25 +2655,29 @@ components:
           type: string
           format: bytes
           description: "the result of the call of this trace"
-    datedBlock:
+    namedBlock:
       description: "a block that has been given a particular name such as `first` or `latest`"
       type: object
       properties:
         blockNumber:
           type: number
           format: blknum
-          example: 10021
+          example: 4370000
           description: "the number of the block"
         timestamp:
           type: number
           format: timestamp
-          example: 1438335038
+          example: 1508131331
           description: "the Unix timestamp of the block"
         date:
           type: string
           format: datetime
-          example: "2015-07-30 15:34:53 UTC"
+          example: "2017-10-16 05:22:11 UTC"
           description: "Human readable version of timestamp"
+        name:
+          type: string
+          example: "byzantium"
+          description: "an optional name for the block"
     ethState:
       description: "the on-chain state of a given address including ETH balance, nonce, and smart contract byte code if present"
       type: object

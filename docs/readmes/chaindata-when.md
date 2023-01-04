@@ -42,7 +42,7 @@ Notes:
 
 Data models produced by this tool:
 
-- [datedblock](/data-model/chaindata/#datedblock)
+- [namedblock](/data-model/chaindata/#namedblock)
 
 Links:
 
