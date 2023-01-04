@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-12-30T19:05:18
+date: 2023-01-03T21:42:38
 lastmod:
   - :git
   - lastmod
@@ -43,7 +43,7 @@ The primary goal of TrueBlocks is to identify every appearance for any address o
 The TrueBlocks [index of appearances](/data-model/the-index/) (created by [chifra scrape](/docs/chifra/admin/#chifra-scrape))
 makes the production of such a list possible. Appearances are stored in [Monitors](/data-model/accounts/#monitor).
 
-The following commands produce and manage appearances:
+The following commands produce and manage Appearances:
 
 - [chifra list](/docs/chifra/accounts/#chifra-list)
 - [chifra export](/docs/chifra/accounts/#chifra-export)
@@ -77,7 +77,7 @@ simple transfer of ETH from one address to another. Obviously, the sender's and 
 reconciliations will differ (in opposite proportion to each other). The `accountedFor` address
 is always present as the `assetAddress` in the first reconciliation of the statements array.
 
-The following commands produce and manage reconciliations:
+The following commands produce and manage Reconciliations:
 
 - [chifra export](/docs/chifra/accounts/#chifra-export)
 
@@ -146,7 +146,7 @@ export`, however, it is also possible to freshen a monitor continually with
 [chifra scrape --monitors](/docs/chifra/admin/#chifra-scrape). This tool watches the front of the
 chain and repeatedly calls `chifra list`.
 
-The following commands produce and manage monitors:
+The following commands produce and manage Monitors:
 
 - [chifra monitors](/docs/chifra/accounts/#chifra-monitors)
 - [chifra list](/docs/chifra/accounts/#chifra-list)
@@ -189,7 +189,7 @@ command line. For example, every time people say "Show me your address, and we w
 tokens" on Twitter, we copy and paste all those addresses. We figure if you're going to DOX
 yourselves, we might as well take advantage of it. Sorry...not sorry.
 
-The following commands produce and manage names:
+The following commands produce and manage Names:
 
 - [chifra names](/docs/chifra/accounts/#chifra-names)
 
@@ -224,7 +224,7 @@ is not a good place to store this very important information. For this reason, T
 EtherScan to acquire ABI files and therefor one needs to get an EtherScan API key to use this
 function.
 
-The following commands produce and manage abis:
+The following commands produce and manage Abis:
 
 - [chifra abis](/docs/chifra/accounts/#chifra-abis)
 
@@ -245,7 +245,7 @@ See the [chifra abis](/docs/chifra/accounts/#chifra-abis) command line for infor
 The `appearanceCount` data model is used mostly by the frontend explorer application. It carries
 various information about the monitor data for an address.
 
-The following commands produce and manage appearancecounts:
+The following commands produce and manage AppearanceCounts:
 
 - [chifra list](/docs/chifra/accounts/#chifra-list)
 - [chifra export](/docs/chifra/accounts/#chifra-export)
