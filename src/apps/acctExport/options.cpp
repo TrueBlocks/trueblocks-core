@@ -483,7 +483,7 @@ bool COptions::setDisplayFormatting(void) {
                 expContext().fmtMap["header"] = noHeader ? "" : cleanFmt(format);
 
             format = getGlobalConfig("acctExport")->getConfigStr("display", "neighbor", STR_DISPLAY_APPEARANCE);
-            replace(format, "[{TC}]\t", "");
+            replace(format, "[{TRACEINDEX}]\t", "");
             expContext().fmtMap["appearance_fmt"] = cleanFmt(format);
             manageFields("CAppearance:" + format);
             if (neighbors)
@@ -508,7 +508,7 @@ bool COptions::setDisplayFormatting(void) {
             HIDE_FIELD(CAppearanceDisplay, "isErc20");
             HIDE_FIELD(CAppearanceDisplay, "isErc721");
             if (!verbose) {
-                replace(format, "\t[{TIMESTAMP}]\t[{DATE}]\t[{NAME}]", "");
+                replace(format, "\t[{NAME}]\t[{TIMESTAMP}]\t[{DATE}]", "");
             } else {
                 SHOW_FIELD(CAppearanceDisplay, "timestamp");
                 SHOW_FIELD(CAppearanceDisplay, "date");

@@ -296,9 +296,9 @@ const char* STR_DISPLAY_APPEARANCEDISPLAY =
     "[{ADDRESS}]\t"
     "[{BLOCKNUMBER}]\t"
     "[{TRANSACTIONINDEX}]\t"
+    "[{NAME}]\t"
     "[{TIMESTAMP}]\t"
-    "[{DATE}]\t"
-    "[{NAME}]";
+    "[{DATE}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

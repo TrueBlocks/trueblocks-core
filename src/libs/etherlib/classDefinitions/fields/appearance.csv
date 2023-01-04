@@ -1,6 +1,6 @@
-name   ,type    ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
-bn     ,blknum  ,           ,       ,      ,        ,          ,        ,      ,         ,1   ,1    ,        ,
-tx     ,blknum  ,           ,       ,      ,        ,          ,        ,      ,         ,2   ,2    ,        ,
-tc     ,blknum  ,           ,       ,      ,        ,          ,        ,      ,         ,3   ,3    ,        ,
-addr   ,address ,           ,       ,      ,        ,          ,        ,      ,         ,4   ,4    ,        ,
-reason ,string  ,           ,       ,      ,        ,          ,        ,      ,         ,5   ,5    ,        ,
+name             ,type    ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
+blockNumber      ,blknum  ,           ,       ,      ,        ,          ,        ,      ,         ,  1 ,   1 ,        ,
+transactionIndex ,blknum  ,           ,       ,      ,        ,          ,        ,      ,         ,  2 ,   2 ,        ,
+traceIndex       ,blknum  ,           ,       ,      ,        ,          ,        ,      ,         ,  3 ,   3 ,        ,
+address          ,address ,           ,       ,      ,        ,          ,        ,      ,         ,  4 ,   4 ,        ,
+reason           ,string  ,           ,       ,      ,        ,          ,        ,      ,         ,  5 ,   5 ,        ,

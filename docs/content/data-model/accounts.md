@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2023-01-04T06:02:09
+date: 2023-01-04T07:47:55
 lastmod:
   - :git
   - lastmod
@@ -52,9 +52,9 @@ Appearances consist of the following fields:
 
 | Field            | Description                                               | Type      |
 | ---------------- | --------------------------------------------------------- | --------- |
+| address          | the address of the appearance                             | address   |
 | blockNumber      | the number of the block                                   | blknum    |
 | transactionIndex | the zero-indexed position of the transaction in the block | blknum    |
-| address          | the address of the appearance                             | address   |
 | name             | the name of the address, if found                         | string    |
 | timestamp        | the timestamp for this appearance                         | timestamp |
 | date             | the date represented by the timestamp                     | string    |

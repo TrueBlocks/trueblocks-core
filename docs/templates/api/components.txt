@@ -4,6 +4,10 @@ components:
       description: "an appearance (`<blockNumber,transactionIndex>`) of an address anywhere on the chain"
       type: object
       properties:
+        address:
+          type: string
+          format: address
+          description: "the address of the appearance"
         blockNumber:
           type: number
           format: blknum
@@ -14,10 +18,6 @@ components:
           format: blknum
           example: 305
           description: "the zero-indexed position of the transaction in the block"
-        address:
-          type: string
-          format: address
-          description: "the address of the appearance"
         name:
           type: string
           description: "the name of the address, if found"

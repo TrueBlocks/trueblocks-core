@@ -3,5 +3,5 @@ TEST[DATE|TIME] Transactions:  [4102000.0]
 TEST[DATE|TIME] Uniq:  true
 TEST[DATE|TIME] Flow:  to
 TEST[DATE|TIME] Format:  txt
-bn	tx	tc	addr	reason
+blockNumber	transactionIndex	traceIndex	address	reason
 4102000	0		0x8d12a197cb00d4747a1fe03395095ce2a5cc6819	to
