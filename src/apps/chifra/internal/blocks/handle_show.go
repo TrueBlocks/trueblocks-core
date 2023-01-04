@@ -62,7 +62,7 @@ func (opts *BlocksOptions) HandleShowBlocks() error {
 		Append:     opts.Globals.Append,
 		JsonIndent: "  ",
 		Extra: map[string]interface{}{
-			"hashesOnly": opts.Hashes,
+			"txHashes": opts.Hashes,
 		},
 	})
 }

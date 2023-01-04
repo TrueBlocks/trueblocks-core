@@ -46,7 +46,7 @@ func helperStreamFormats(w csv.Writer, outputBuffer *bytes.Buffer, format string
 	result := buffer.String()
 
 	var expectedItems []string
-	data := input.Model(false, format, nil).Data.(map[string]interface{})
+	data := input.Model(false, format, nil).Data
 	for _, key := range input.Model(false, format, nil).Order {
 		expectedItems = append(expectedItems, fmt.Sprint(data[key]))
 	}
@@ -184,70 +184,6 @@ func TestStreamMany(t *testing.T) {
 		t.Fatal("mismatched data")
 	}
 	if result.Data[1].BlockNumber != uint64(124) {
-		t.Fatal("mismatched data")
-	}
-}
-
-type TestModeler struct {
-	Hash string
-	raw  interface{}
-}
-
-func (t *TestModeler) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
-	return types.Model{
-		Data:  t.Hash,
-		Order: []string{"hash"},
-	}
-}
-
-func (t *TestModeler) Raw() *interface{} {
-	return nil
-}
-
-func (t *TestModeler) SetRaw(rawBlock interface{}) {
-	t.raw = nil
-}
-
-func TestStreamManyStrings(t *testing.T) {
-	buffer := &bytes.Buffer{}
-	jw := NewJsonWriter(buffer)
-	jw.DefaultField = DefaultField{
-		Key:       "data",
-		FieldType: FieldArray,
-	}
-
-	renderData := func(models chan types.Modeler[interface{}], errors chan error) {
-		models <- &TestModeler{
-			Hash: "0xdeadbeef",
-		}
-
-		models <- &TestModeler{
-			Hash: "0xbeefdead",
-		}
-	}
-
-	// Print the values and try to re-parse them to check if
-	// we get the same data
-	StreamMany(context.Background(), renderData, OutputOptions{
-		Writer: jw,
-		Format: "json",
-	})
-	jw.Close()
-
-	type R = struct {
-		Data []string `json:"data"`
-	}
-	var result R
-	err := json.Unmarshal(buffer.Bytes(), &result)
-	if err != nil {
-		log.Println(buffer.String())
-		t.Fatal(err)
-	}
-
-	if result.Data[0] != "0xdeadbeef" {
-		t.Fatal("mismatched data")
-	}
-	if result.Data[1] != "0xbeefdead" {
 		t.Fatal("mismatched data")
 	}
 }

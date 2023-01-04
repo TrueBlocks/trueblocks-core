@@ -55,10 +55,26 @@ func (s *SimpleBlock) SetRaw(rawBlock RawBlock) {
 }
 
 func (s *SimpleBlock) Model(showHidden bool, format string, extraOptions map[string]any) Model {
-	if extraOptions["hashesOnly"] == true {
+	if extraOptions["txHashes"] == true {
+		txHashes := make([]string, 0, len(s.Transactions))
+		for _, tx := range s.Transactions {
+			txHashes = append(txHashes, tx.Hash.String())
+		}
 		return Model{
-			Data:  s.Hash,
-			Order: []string{"hash"},
+			Data: map[string]interface{}{
+				"hash":        s.Hash,
+				"blockNumber": s.BlockNumber,
+				"parentHash":  s.ParentHash,
+				"timestamp":   s.Timestamp,
+				"tx_hashes":   txHashes,
+			},
+			Order: []string{
+				"hash",
+				"blockNumber",
+				"parentHash",
+				"timestamp",
+				"tx_hashes",
+			},
 		}
 	}
 

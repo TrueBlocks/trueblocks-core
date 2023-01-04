@@ -18,7 +18,7 @@ type RawData interface {
 }
 
 type Model struct {
-	Data  any
+	Data  map[string]any
 	Order []string
 }
 
