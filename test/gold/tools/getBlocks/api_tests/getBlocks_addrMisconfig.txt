@@ -2,11 +2,14 @@ blocks?blocks=32279&uniq
 {
   "data": [
     {
+      "address": "0x0000000000000000000000000000000000000000",
       "blockNumber": 32279,
       "transactionIndex": 99999,
       "traceIndex": "",
-      "address": "0x0000000000000000000000000000000000000000",
-      "reason": "miner"
+      "reason": "miner",
+      "name": "",
+      "timestamp": 1438688098,
+      "date": "2015-08-04 11:34:58 UTC"
     }
   ],
   "meta": {

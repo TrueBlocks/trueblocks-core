@@ -85,6 +85,16 @@ string_q CAppearance::getValueByName(const string_q& fieldName) const {
                 return uint_2_Str(blockNumber);
             }
             break;
+        case 'd':
+            if (fieldName % "date") {
+                return date;
+            }
+            break;
+        case 'n':
+            if (fieldName % "name") {
+                return name;
+            }
+            break;
         case 'r':
             if (fieldName % "reason") {
                 return reason;
@@ -96,6 +106,9 @@ string_q CAppearance::getValueByName(const string_q& fieldName) const {
             }
             if (fieldName % "traceIndex") {
                 return uint_2_Str(traceIndex);
+            }
+            if (fieldName % "timestamp") {
+                return ts_2_Str(timestamp);
             }
             break;
         default:
@@ -130,6 +143,18 @@ bool CAppearance::setValueByName(const string_q& fieldNameIn, const string_q& fi
                 return true;
             }
             break;
+        case 'd':
+            if (fieldName % "date") {
+                date = fieldValue;
+                return true;
+            }
+            break;
+        case 'n':
+            if (fieldName % "name") {
+                name = fieldValue;
+                return true;
+            }
+            break;
         case 'r':
             if (fieldName % "reason") {
                 reason = fieldValue;
@@ -143,6 +168,10 @@ bool CAppearance::setValueByName(const string_q& fieldNameIn, const string_q& fi
             }
             if (fieldName % "traceIndex") {
                 traceIndex = str_2_Uint(fieldValue);
+                return true;
+            }
+            if (fieldName % "timestamp") {
+                timestamp = str_2_Ts(fieldValue);
                 return true;
             }
             break;
@@ -171,11 +200,14 @@ bool CAppearance::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive >> address;
     archive >> blockNumber;
     archive >> transactionIndex;
     archive >> traceIndex;
-    archive >> address;
     archive >> reason;
+    archive >> name;
+    archive >> timestamp;
+    archive >> date;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -189,11 +221,14 @@ bool CAppearance::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive << address;
     archive << blockNumber;
     archive << transactionIndex;
     archive << traceIndex;
-    archive << address;
     archive << reason;
+    archive << name;
+    archive << timestamp;
+    archive << date;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -243,11 +278,14 @@ void CAppearance::registerClass(void) {
     ADD_FIELD(CAppearance, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CAppearance, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CAppearance, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAppearance, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAppearance, "blockNumber", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CAppearance, "transactionIndex", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CAppearance, "traceIndex", T_BLOCKNUM, ++fieldNum);
-    ADD_FIELD(CAppearance, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAppearance, "reason", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CAppearance, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CAppearance, "timestamp", T_TIMESTAMP, ++fieldNum);
+    ADD_FIELD(CAppearance, "date", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAppearance, "schema");
@@ -267,6 +305,16 @@ string_q nextAppearanceChunk_custom(const string_q& fieldIn, const void* dataPtr
     if (app) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'd':
+                if (fieldIn % "date") {
+                    timestamp_t ts = bn_2_Timestamp(app->blockNumber);
+                    return ts_2_Date(ts).Format(FMT_JSON);
+                }
+                break;
+            case 't':
+                if (fieldIn % "timestamp")
+                    return ts_2_Str(bn_2_Timestamp(app->blockNumber));
+                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
@@ -319,11 +367,14 @@ ostream& operator<<(ostream& os, const CAppearance& it) {
 
 //---------------------------------------------------------------------------
 const char* STR_DISPLAY_APPEARANCE =
+    "[{ADDRESS}]\t"
     "[{BLOCKNUMBER}]\t"
     "[{TRANSACTIONINDEX}]\t"
     "[{TRACEINDEX}]\t"
-    "[{ADDRESS}]\t"
-    "[{REASON}]";
+    "[{REASON}]\t"
+    "[{NAME}]\t"
+    "[{TIMESTAMP}]\t"
+    "[{DATE}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

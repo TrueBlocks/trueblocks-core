@@ -411,9 +411,6 @@ void COptions::Init(void) {
 COptions::COptions(void) {
     Init();
 
-    CMonitorCount::registerClass();
-    CAppearanceDisplay::registerClass();
-
     // BEG_CODE_NOTES
     // clang-format off
     notes.push_back("An `address` must start with '0x' and be forty-two characters long.");
@@ -482,40 +479,35 @@ bool COptions::setDisplayFormatting(void) {
             if (statements)
                 expContext().fmtMap["header"] = noHeader ? "" : cleanFmt(format);
 
-            format = getGlobalConfig("acctExport")->getConfigStr("display", "neighbor", STR_DISPLAY_APPEARANCE);
-            replace(format, "[{TRACEINDEX}]\t", "");
+            if (neighbors) {
+                format = getGlobalConfig("acctExport")->getConfigStr("display", "neighbor", STR_DISPLAY_APPEARANCE);
+                replace(format, "\t[{NAME}]\t[{TIMESTAMP}]\t[{DATE}]", "");
+            } else {
+                format = getGlobalConfig("acctExport")->getConfigStr("display", "appearances", STR_DISPLAY_APPEARANCE);
+                if (!verbose) {
+                    replace(format, "\t[{NAME}]\t[{TIMESTAMP}]\t[{DATE}]", "");
+                }
+                replace(format, "[{TRACEINDEX}]", "");
+                replace(format, "[{REASON}]", "");
+            }
+            replaceAll(format, "\t\t", "\t");
+            format = trim(format, '\t');
             expContext().fmtMap["appearance_fmt"] = cleanFmt(format);
             manageFields("CAppearance:" + format);
-            if (neighbors)
-                expContext().fmtMap["header"] = noHeader ? "" : cleanFmt(format);
+            expContext().fmtMap["header"] = noHeader ? "" : cleanFmt(format);
 
             format = getGlobalConfig("acctExport")->getConfigStr("display", "trace", STR_DISPLAY_TRACE);
             expContext().fmtMap["trace_fmt"] = cleanFmt(format);
             manageFields("CTrace:" + format);
-
-            // This doesn't really work because CAppearance_mon is not a subclass of CBaseNode. We phony it here
-            // for future reference.
-            format =
-                getGlobalConfig("acctExport")->getConfigStr("display", "appearances", STR_DISPLAY_APPEARANCEDISPLAY);
-            HIDE_FIELD(CAppearanceDisplay, "tags");
-            HIDE_FIELD(CAppearanceDisplay, "symbol");
-            HIDE_FIELD(CAppearanceDisplay, "source");
-            HIDE_FIELD(CAppearanceDisplay, "decimals");
-            HIDE_FIELD(CAppearanceDisplay, "petname");
-            HIDE_FIELD(CAppearanceDisplay, "isCustom");
-            HIDE_FIELD(CAppearanceDisplay, "isPrefund");
-            HIDE_FIELD(CAppearanceDisplay, "isContract");
-            HIDE_FIELD(CAppearanceDisplay, "isErc20");
-            HIDE_FIELD(CAppearanceDisplay, "isErc721");
-            if (!verbose) {
-                replace(format, "\t[{NAME}]\t[{TIMESTAMP}]\t[{DATE}]", "");
+        } else {
+            if (neighbors) {
+                HIDE_FIELD(CAppearance, "name");
+                HIDE_FIELD(CAppearance, "timestamp");
+                HIDE_FIELD(CAppearance, "date");
             } else {
-                SHOW_FIELD(CAppearanceDisplay, "timestamp");
-                SHOW_FIELD(CAppearanceDisplay, "date");
-                SHOW_FIELD(CAppearanceDisplay, "name");
+                HIDE_FIELD(CAppearance, "traceIndex");
+                HIDE_FIELD(CAppearance, "reason");
             }
-            expContext().fmtMap["appearancedisplay_fmt"] = cleanFmt(format);
-            manageFields("CAppearanceDisplay:" + format);
         }
         HIDE_FIELD(CFunction, "stateMutability");
         HIDE_FIELD(CParameter, "strDefault");
@@ -539,7 +531,7 @@ bool COptions::setDisplayFormatting(void) {
             } else if (logs) {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["logentry_fmt"]);
             } else if (appearances) {
-                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["appearancedisplay_fmt"]);
+                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["appearance_fmt"]);
             } else {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["transaction_fmt"]);
             }

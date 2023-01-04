@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2023-01-04T07:47:55
+date: 2023-01-04T18:42:40
 lastmod:
   - :git
   - lastmod
@@ -50,14 +50,16 @@ The following commands produce and manage Appearances:
 
 Appearances consist of the following fields:
 
-| Field            | Description                                               | Type      |
-| ---------------- | --------------------------------------------------------- | --------- |
-| address          | the address of the appearance                             | address   |
-| blockNumber      | the number of the block                                   | blknum    |
-| transactionIndex | the zero-indexed position of the transaction in the block | blknum    |
-| name             | the name of the address, if found                         | string    |
-| timestamp        | the timestamp for this appearance                         | timestamp |
-| date             | the date represented by the timestamp                     | string    |
+| Field            | Description                                             | Type      |
+| ---------------- | ------------------------------------------------------- | --------- |
+| address          | the address of the appearance                           | address   |
+| blockNumber      | the number of the block                                 | blknum    |
+| transactionIndex | the index of the transaction in the block               | blknum    |
+| traceIndex       | the zero-based index of the trace in the transaction    | blknum    |
+| reason           | the location in the data where the appearance was found | string    |
+| name             | the name of the address, if found                       | string    |
+| timestamp        | the timestamp for this appearance                       | timestamp |
+| date             | the date represented by the timestamp                   | string    |
 
 ## Reconciliation
 

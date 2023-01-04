@@ -1940,13 +1940,18 @@ components:
         blockNumber:
           type: number
           format: blknum
-          example: 10021
           description: "the number of the block"
         transactionIndex:
           type: number
           format: blknum
-          example: 305
-          description: "the zero-indexed position of the transaction in the block"
+          description: "the index of the transaction in the block"
+        traceIndex:
+          type: number
+          format: blknum
+          description: "the zero-based index of the trace in the transaction"
+        reason:
+          type: string
+          description: "the location in the data where the appearance was found"
         name:
           type: string
           description: "the name of the address, if found"

@@ -40,11 +40,14 @@ This is the width of an ascii version of an appearance stored in flat files:
 //--------------------------------------------------------------------------
 class CAppearance : public CBaseNode {
   public:
+    address_t address;
     blknum_t blockNumber;
     blknum_t transactionIndex;
     blknum_t traceIndex;
-    address_t address;
     string_q reason;
+    string_q name;
+    timestamp_t timestamp;
+    string_q date;
 
   public:
     CAppearance(void);
@@ -56,7 +59,10 @@ class CAppearance : public CBaseNode {
 
     // EXISTING_CODE
     CAppearance(blknum_t b, blknum_t x, blknum_t c, const address_t& a, const string_q r)
-        : blockNumber(b), transactionIndex(x), traceIndex(c), address(a), reason(r) {
+        : address(a), blockNumber(b), transactionIndex(x), traceIndex(c), reason(r) {
+    }
+    CAppearance(const address_t& a, const string_q& n, blknum_t b, blknum_t t)
+        : address(a), blockNumber(b), transactionIndex(t), name(n) {
     }
     // string_q Format(const string_q& fmt) const;
     // EXISTING_CODE
@@ -111,11 +117,14 @@ inline void CAppearance::clear(void) {
 inline void CAppearance::initialize(void) {
     CBaseNode::initialize();
 
+    address = "";
     blockNumber = 0;
     transactionIndex = 0;
     traceIndex = 0;
-    address = "";
     reason = "";
+    name = "";
+    timestamp = 0;
+    date = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -126,11 +135,14 @@ inline void CAppearance::duplicate(const CAppearance& ap) {
     clear();
     CBaseNode::duplicate(ap);
 
+    address = ap.address;
     blockNumber = ap.blockNumber;
     transactionIndex = ap.transactionIndex;
     traceIndex = ap.traceIndex;
-    address = ap.address;
     reason = ap.reason;
+    name = ap.name;
+    timestamp = ap.timestamp;
+    date = ap.date;
 
     // EXISTING_CODE
     // EXISTING_CODE

@@ -110,7 +110,7 @@ configuration per chain.
 | receipt             | Display format when exporting receipts<br />STR_DISPLAY_RECEIPT                                                                     |
 | log                 | Display format when exporting logs<br />STR_DISPLAY_LOGENTRY                                                                        |
 | trace               | Display format when exporting traces<br />STR_DISPLAY_TRACE                                                                         |
-| appearances         | Display format when exporting appearances<br />STR_DISPLAY_APPEARANCEDISPLAY                                                        |
+| appearances         | Display format when exporting appearances<br />STR_DISPLAY_APPEARANCE                                                               |
 | neighbor            | Display format when exporting neighbors<br />STR_DISPLAY_APPEARANCE                                                                 |
 | statement           | Display format when exporting statements<br />STR_DISPLAY_RECONCILIATION                                                            |
 |                     |                                                                                                                                     |
