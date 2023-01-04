@@ -1,0 +1,40 @@
+// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
+ */
+
+package types
+
+// EXISTING_CODE
+// EXISTING_CODE
+
+type Raw[{CLASS_NAME}] interface{}
+
+type Simple[{CLASS_NAME}] struct {
+[{FIELDS}]}
+
+func (s *Simple[{CLASS_NAME}]) Raw() *Raw[{CLASS_NAME}] {
+	return nil
+}
+
+func (s *Simple[{CLASS_NAME}]) Model(showHidden bool, format string) Model {
+	model := map[string]interface{}{
+[{FIELD_COPY}]	}
+
+	order := []string{
+[{FIELD_DISPLAY}]	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// EXISTING_CODE
+// EXISTING_CODE
