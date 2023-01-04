@@ -41,59 +41,7 @@ contract or view all ERC-20 holdings for an account, etc.,
 
 ## Installing
 
-These instructions assume you know how to use the command line. If you need help, see the [installation's troubleshooting section](https://trueblocks.io/docs/install/install-trueblocks/#troubleshooting) or consult Google.
-
-TrueBlocks runs on Linux and Mac. There is no support for Windows.
-
-**Install dependencies**
-
-TrueBlocks requires Go version 1.18 or later. Install the [latest Go version](https://golang.org/doc/install). Verify the version you're running with:
-
-```[shell]
-go version
-```
-
-Install the following required dependencies for your operating system:
-
-`build-essential git cmake ninja python3 libcurl3-dev clang-format jq`
-
-Adjust this for the particulars for your operating system (probably `apt-get` on linux and `brew install` on Mac).
-
-**Building the repo**
-
-Download and build the repo using these commands:
-
-```[shell]
-git clone -b develop https://github.com/trueblocks/trueblocks-core
-cd trueblocks-core
-mkdir build && cd build
-cmake ../src
-make
-```
-
-**Note:** Speed up the build with `make -j <ncores>` where `ncores` represents the number of cores to use.
-
-**Add `./trueblocks-core/bin` to your $PATH**
-
-Add the executable's folder to you path. Consult Google if you don't know how. The following instructions assume you've set the $PATH properly so that `chifra --help` works.
-
-**Edit the configuration**
-
-If you've sucessfully built the executable and set the `$PATH`, you should be able to run:
-
-```[shell]
-chifra config --terse
-```
-
-and get results. If you get an error, the most likely cause is an incomplete configuration. The error message will report the location of the config file:
-
-- `~/.local/share/trueblocks/trueBlocks.toml`, or
-- `~/Library/Application Support/TrueBlocks/trueBlocks.toml`, or
-- `$XDG_CONFIG_HOME` if set.
-
-Edit the `trueblocks.toml` file and set the `rpcProvider` to point to a valid RPC endpoint for your chain.
-
-The configuration file is reasonably-well documented. Review other settins, most of which are self-explanitory.
+Please see [the installation instructions](https://trueblocks.io/docs/install/install-trueblocks) on our website.
 
 **Searching account histories**
 
