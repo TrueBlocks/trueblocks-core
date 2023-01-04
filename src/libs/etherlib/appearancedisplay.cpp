@@ -19,7 +19,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CAppearanceDisplay, CName);
+IMPLEMENT_NODE(CAppearanceDisplay, CBaseNode);
 
 //---------------------------------------------------------------------------
 extern string_q nextAppearancedisplayChunk(const string_q& fieldIn, const void* dataPtr);
@@ -69,14 +69,32 @@ string_q CAppearanceDisplay::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
+        case 'a':
+            if (fieldName % "address") {
+                return addr_2_Str(address);
+            }
+            break;
         case 'b':
             if (fieldName % "blockNumber") {
                 return uint_2_Str(blockNumber);
             }
             break;
+        case 'd':
+            if (fieldName % "date") {
+                return date;
+            }
+            break;
+        case 'n':
+            if (fieldName % "name") {
+                return name;
+            }
+            break;
         case 't':
             if (fieldName % "transactionIndex") {
                 return uint_2_Str(transactionIndex);
+            }
+            if (fieldName % "timestamp") {
+                return ts_2_Str(timestamp);
             }
             break;
         default:
@@ -87,7 +105,7 @@ string_q CAppearanceDisplay::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     // Finally, give the parent class a chance
-    return CName::getValueByName(fieldName);
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -98,18 +116,38 @@ bool CAppearanceDisplay::setValueByName(const string_q& fieldNameIn, const strin
     // EXISTING_CODE
     // EXISTING_CODE
 
-    if (CName::setValueByName(fieldName, fieldValue))
-        return true;
     switch (tolower(fieldName[0])) {
+        case 'a':
+            if (fieldName % "address") {
+                address = str_2_Addr(fieldValue);
+                return true;
+            }
+            break;
         case 'b':
             if (fieldName % "blockNumber") {
                 blockNumber = str_2_Uint(fieldValue);
                 return true;
             }
             break;
+        case 'd':
+            if (fieldName % "date") {
+                date = fieldValue;
+                return true;
+            }
+            break;
+        case 'n':
+            if (fieldName % "name") {
+                name = fieldValue;
+                return true;
+            }
+            break;
         case 't':
             if (fieldName % "transactionIndex") {
                 transactionIndex = str_2_Uint(fieldValue);
+                return true;
+            }
+            if (fieldName % "timestamp") {
+                timestamp = str_2_Ts(fieldValue);
                 return true;
             }
             break;
@@ -132,14 +170,18 @@ bool CAppearanceDisplay::Serialize(CArchive& archive) {
 
     // Always read the base class (it will handle its own backLevels if any, then
     // read this object's back level (if any) or the current version.
-    CName::Serialize(archive);
+    CBaseNode::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive >> address;
     archive >> blockNumber;
     archive >> transactionIndex;
+    archive >> name;
+    archive >> timestamp;
+    archive >> date;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -149,12 +191,16 @@ bool CAppearanceDisplay::Serialize(CArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CAppearanceDisplay::SerializeC(CArchive& archive) const {
     // Writing always writes the latest version of the data
-    CName::SerializeC(archive);
+    CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive << address;
     archive << blockNumber;
     archive << transactionIndex;
+    archive << name;
+    archive << timestamp;
+    archive << date;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -199,15 +245,17 @@ void CAppearanceDisplay::registerClass(void) {
     if (HAS_FIELD(CAppearanceDisplay, "schema"))
         return;
 
-    CName::registerClass();
-
     size_t fieldNum = 1000;
     ADD_FIELD(CAppearanceDisplay, "schema", T_NUMBER, ++fieldNum);
     ADD_FIELD(CAppearanceDisplay, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CAppearanceDisplay, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CAppearanceDisplay, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAppearanceDisplay, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAppearanceDisplay, "blockNumber", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CAppearanceDisplay, "transactionIndex", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CAppearanceDisplay, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CAppearanceDisplay, "timestamp", T_TIMESTAMP, ++fieldNum);
+    ADD_FIELD(CAppearanceDisplay, "date", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAppearanceDisplay, "schema");
@@ -218,8 +266,6 @@ void CAppearanceDisplay::registerClass(void) {
     builtIns.push_back(_biCAppearanceDisplay);
 
     // EXISTING_CODE
-    ADD_FIELD(CAppearanceDisplay, "timestamp", T_TIMESTAMP, ++fieldNum);
-    ADD_FIELD(CAppearanceDisplay, "date", T_DATE, ++fieldNum);
     HIDE_FIELD(CAppearanceDisplay, "timestamp");
     HIDE_FIELD(CAppearanceDisplay, "date");
     // EXISTING_CODE

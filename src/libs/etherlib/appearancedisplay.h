@@ -23,10 +23,14 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CAppearanceDisplay : public CName {
+class CAppearanceDisplay : public CBaseNode {
   public:
+    address_t address;
     blknum_t blockNumber;
     blknum_t transactionIndex;
+    string_q name;
+    timestamp_t timestamp;
+    string_q date;
 
   public:
     CAppearanceDisplay(void);
@@ -41,7 +45,7 @@ class CAppearanceDisplay : public CName {
         : blockNumber(b), transactionIndex(t) {
         name = n;
         address = a;
-        petname = addr_2_Petname(address, '-');
+        // petname = addr_2_Petname(address, '-');
     }
     // EXISTING_CODE
     bool operator==(const CAppearanceDisplay& it) const;
@@ -93,10 +97,14 @@ inline void CAppearanceDisplay::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void CAppearanceDisplay::initialize(void) {
-    CName::initialize();
+    CBaseNode::initialize();
 
+    address = "";
     blockNumber = 0;
     transactionIndex = 0;
+    name = "";
+    timestamp = 0;
+    date = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -105,10 +113,14 @@ inline void CAppearanceDisplay::initialize(void) {
 //--------------------------------------------------------------------------
 inline void CAppearanceDisplay::duplicate(const CAppearanceDisplay& ap) {
     clear();
-    CName::duplicate(ap);
+    CBaseNode::duplicate(ap);
 
+    address = ap.address;
     blockNumber = ap.blockNumber;
     transactionIndex = ap.transactionIndex;
+    name = ap.name;
+    timestamp = ap.timestamp;
+    date = ap.date;
 
     // EXISTING_CODE
     // EXISTING_CODE
