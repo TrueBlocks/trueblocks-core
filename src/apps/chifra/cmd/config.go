@@ -63,11 +63,13 @@ One or more of [ index | monitors | names | abis | caches | some | all ]`)
 One or more of [ blocks | txs | traces | slurps | all ]`)
 	configCmd.Flags().Uint64VarP(&configPkg.GetOptions().Depth, "depth", "p", 0, "for caches module only, number of levels deep to report (hidden)")
 	configCmd.Flags().BoolVarP(&configPkg.GetOptions().Terse, "terse", "e", false, "show a terse summary report for mode show (hidden)")
+	configCmd.Flags().BoolVarP(&configPkg.GetOptions().Paths, "paths", "a", false, "show the configuration paths for the system (hidden)")
 	configCmd.Flags().Uint64VarP(&configPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to process (inclusive -- testing only) (hidden)")
 	configCmd.Flags().Uint64VarP(&configPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to process (inclusive -- testing only) (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
 		configCmd.Flags().MarkHidden("depth")
 		configCmd.Flags().MarkHidden("terse")
+		configCmd.Flags().MarkHidden("paths")
 		configCmd.Flags().MarkHidden("first_block")
 		configCmd.Flags().MarkHidden("last_block")
 	}

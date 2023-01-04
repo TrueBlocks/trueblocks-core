@@ -126,7 +126,7 @@ bool COptions::handle_datamodel(void) {
         string_q thisDoc = docStream.str();
         replaceAll(thisDoc, "[{TYPE}]", model.doc_route);
         replaceAll(thisDoc, "[{FIRST_UPPER}]", substitute(firstUpper(model.doc_route), "Config", "Status"));
-        replaceAll(thisDoc, "[{PLURAL}]", toLower(plural(model.doc_route)));
+        replaceAll(thisDoc, "[{PLURAL}]", plural(model.doc_route));
         replaceAll(thisDoc, "[{ALIAS}]", model.doc_alias.empty() ? "[{PROPER}]" : model.doc_alias);
         replaceAll(thisDoc, "[{PROPER}]", toProper(model.doc_route));
         if (contains(thisDoc, "[{FIELDS}]"))

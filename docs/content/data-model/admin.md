@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-12-31T13:28:57
+date: 2023-01-03T21:42:38
 lastmod:
   - :git
   - lastmod
@@ -38,7 +38,7 @@ registered chains, information about many of the internal binary caches maintain
 as well as current status information about the system including version information for both
 `chifra` and the node it's running against.
 
-The following commands produce and manage statuses:
+The following commands produce and manage Statuses:
 
 - [chifra config](/docs/chifra/admin/#chifra-config)
 
@@ -74,7 +74,7 @@ the associated IPFS hash for the Bloom filter of the chunk. The manifest itself 
 to IPFS and the IPFS of the hash of the manifest is published periodically to the Unchained Index
 smart contract.
 
-The following commands produce and manage manifests:
+The following commands produce and manage Manifests:
 
 - [chifra chunks](/docs/chifra/admin/#chifra-chunks)
 - [chifra init](/docs/chifra/admin/#chifra-init)
@@ -99,7 +99,7 @@ periodically-created chunks, PinnedChunks. The format of said item is described 
 chunk is effectively a relational table relating all of the addresses appearing in the chunk
 with a list of appearances appearing in the chunk.
 
-The following commands produce and manage pinnedchunks:
+The following commands produce and manage PinnedChunks:
 
 - [chifra chunks](/docs/chifra/admin/#chifra-chunks)
 - [chifra init](/docs/chifra/admin/#chifra-init)
@@ -121,7 +121,7 @@ Pinnedchunk data is made of the following fields:
 The `indexchunk` data model represents internal information about each Unchained Index index chunk.
 It is used mostly interenally to study the characteristics of the Unchained Index.
 
-The following commands produce and manage chunkindexes:
+The following commands produce and manage ChunkIndexes:
 
 - [chifra chunks](/docs/chifra/admin/#chifra-chunks)
 
@@ -144,7 +144,7 @@ portions. The information here is mostly for internal use only as it includes th
 of the bloom filters present as well as the number of addresses inserted into the bloom. This
 information is used to study the characteristics of the Unchained Index.
 
-The following commands produce and manage chunkblooms:
+The following commands produce and manage ChunkBlooms:
 
 - [chifra chunks](/docs/chifra/admin/#chifra-chunks)
 
@@ -167,7 +167,7 @@ The `addresses` data model is produced by `chifra chunks` and represents the rec
 addresses table of each Unchained Index chunk. The `offset` and `count` fields represent the
 location and number of records in the `appearances` table to which the address table is related.
 
-The following commands produce and manage chunkaddresses:
+The following commands produce and manage ChunkAddresses:
 
 - [chifra chunks](/docs/chifra/admin/#chifra-chunks)
 
@@ -187,7 +187,7 @@ The `appearances` data model is the second of two tables inside of the Unchained
 other is the `addresses` table which relates the addresses in that table to this table via the
 `offset` and `count` fields.
 
-The following commands produce and manage chunkappearances:
+The following commands produce and manage ChunkAppearances:
 
 - [chifra chunks](/docs/chifra/admin/#chifra-chunks)
 
@@ -204,7 +204,7 @@ Chunkappearances data is made of the following fields:
 The `stats` data model is produced by `chifra chunks` and brings together various statistical
 information such as average number of addresses in an Unchained Index chunk among other information.
 
-The following commands produce and manage chunkstats:
+The following commands produce and manage ChunkStats:
 
 - [chifra chunks](/docs/chifra/admin/#chifra-chunks)
 
@@ -233,7 +233,7 @@ The [chifra config <type>](/docs/chifra/admin/#chifra-config) reports on the bin
 reports come in the form of the Cache data type. Each cache data object may carry unique
 information for the given cache. See the source code for more information.
 
-The following commands produce and manage caches:
+The following commands produce and manage Caches:
 
 - [chifra config](/docs/chifra/admin/#chifra-config)
 
@@ -254,7 +254,7 @@ Cache data is made of the following fields:
 The `cacheEntry` data model is used to display various caches displayed from the `chifra config`
 tool.
 
-The following commands produce and manage cacheentries:
+The following commands produce and manage CacheEntries:
 
 - [chifra config](/docs/chifra/admin/#chifra-config)
 
@@ -270,7 +270,7 @@ Cacheentry data is made of the following fields:
 <!-- markdownlint-disable MD033 MD036 MD041 -->
 The `indexCacheItem` is used to present a single Unchained Index chunk in the Explorer app.
 
-The following commands produce and manage indexcacheitems:
+The following commands produce and manage IndexCacheItems:
 
 - [chifra config](/docs/chifra/admin/#chifra-config)
 
@@ -297,7 +297,7 @@ Indexcacheitem data is made of the following fields:
 The `chain` data model represents the configured chain data found in the `trueBlocks.toml`
 configuration file.
 
-The following commands produce and manage chains:
+The following commands produce and manage Chains:
 
 - [chifra config](/docs/chifra/admin/#chifra-config)
 
