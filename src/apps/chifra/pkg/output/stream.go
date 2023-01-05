@@ -69,13 +69,8 @@ func StreamModel(w io.Writer, model types.Model, options OutputOptions) error {
 
 	// Store map items as strings. All formats other than JSON need string data
 	strs := make([]string, 0, len(model.Order))
-	switch value := model.Data.(type) {
-	case map[string]interface{}:
-		for _, key := range model.Order {
-			strs = append(strs, fmt.Sprint(value[key]))
-		}
-	default:
-		strs = append(strs, fmt.Sprint(value))
+	for _, key := range model.Order {
+		strs = append(strs, fmt.Sprint(model.Data[key]))
 	}
 
 	var separator rune

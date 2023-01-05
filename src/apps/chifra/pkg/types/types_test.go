@@ -13,7 +13,7 @@ func TestTypes(t *testing.T) {
 		BlockNumber: 100,
 	}
 
-	data := r.Model(false, "csv", nil).Data.(map[string]interface{})
+	data := r.Model(false, "csv", nil).Data
 
 	if data["blockHash"] != nil {
 		t.Fatal("hidden field leaked")
@@ -23,7 +23,7 @@ func TestTypes(t *testing.T) {
 		t.Fatal("visible field missing")
 	}
 
-	data = r.Model(true, "json", nil).Data.(map[string]interface{})
+	data = r.Model(true, "json", nil).Data
 	log.Println(data)
 
 	if data["blockHash"] == nil {

@@ -6,59 +6,99 @@ import (
 )
 
 type RawBlock struct {
-	Author           string        `json:"author,omitempty"`
-	Difficulty       string        `json:"difficulty"`
-	ExtraData        string        `json:"extraData,omitempty"`
-	GasLimit         string        `json:"gasLimit"`
-	GasUsed          string        `json:"gasUsed"`
-	Hash             string        `json:"hash"`
-	LogsBloom        string        `json:"logsBloom,omitempty"`
-	Miner            string        `json:"miner"`
-	MixHash          string        `json:"mixHash"`
-	Nonce            string        `json:"nonce"`
-	Number           string        `json:"number"`
-	ParentHash       string        `json:"parentHash"`
-	ReceiptsRoot     string        `json:"receiptsRoot"`
-	Sha3Uncles       string        `json:"sha3Uncles"`
-	Size             string        `json:"size"`
-	StateRoot        string        `json:"stateRoot"`
-	Timestamp        string        `json:"timestamp"`
-	TransactionsRoot string        `json:"transactionsRoot"`
-	TotalDifficulty  string        `json:"totalDifficulty"`
-	Transactions     []interface{} `json:"transactions"`
-	Uncles           []string      `json:"uncles"`
+	Author           string   `json:"author,omitempty"`
+	Difficulty       string   `json:"difficulty"`
+	ExtraData        string   `json:"extraData,omitempty"`
+	GasLimit         string   `json:"gasLimit"`
+	GasUsed          string   `json:"gasUsed"`
+	Hash             string   `json:"hash"`
+	LogsBloom        string   `json:"logsBloom,omitempty"`
+	Miner            string   `json:"miner"`
+	MixHash          string   `json:"mixHash"`
+	Nonce            string   `json:"nonce"`
+	Number           string   `json:"number"`
+	ParentHash       string   `json:"parentHash"`
+	ReceiptsRoot     string   `json:"receiptsRoot"`
+	Sha3Uncles       string   `json:"sha3Uncles"`
+	Size             string   `json:"size"`
+	StateRoot        string   `json:"stateRoot"`
+	Timestamp        string   `json:"timestamp"`
+	TransactionsRoot string   `json:"transactionsRoot"`
+	TotalDifficulty  string   `json:"totalDifficulty"`
+	Transactions     []any    `json:"transactions"`
+	Uncles           []string `json:"uncles"`
 	// SealFields       []string      `json:"sealFields"`
 }
 
-type SimpleBlock struct {
-	GasLimit      uint64              `json:"gasLimit"`
-	GasUsed       uint64              `json:"gasUsed"`
-	Hash          common.Hash         `json:"hash"`
-	BlockNumber   Blknum              `json:"blockNumber"`
-	ParentHash    common.Hash         `json:"parentHash"`
-	Miner         common.Address      `json:"miner"`
-	Difficulty    uint64              `json:"difficulty"`
-	Finalized     bool                `json:"finalized"`
-	Timestamp     int64               `json:"timestamp"`
-	BaseFeePerGas Wei                 `json:"baseFeePerGas"`
-	Transactions  []SimpleTransaction `json:"transactions"`
-	Uncles        []common.Hash       `json:"uncles"`
+type BlockTransaction interface {
+	string | SimpleTransaction
+}
+
+type SimpleBlock[Tx BlockTransaction] struct {
+	GasLimit      uint64         `json:"gasLimit"`
+	GasUsed       uint64         `json:"gasUsed"`
+	Hash          common.Hash    `json:"hash"`
+	BlockNumber   Blknum         `json:"blockNumber"`
+	ParentHash    common.Hash    `json:"parentHash"`
+	Miner         common.Address `json:"miner"`
+	Difficulty    uint64         `json:"difficulty"`
+	Finalized     bool           `json:"finalized"`
+	Timestamp     int64          `json:"timestamp"`
+	BaseFeePerGas Wei            `json:"baseFeePerGas"`
+	Transactions  []Tx           `json:"transactions"`
+	Uncles        []common.Hash  `json:"uncles"`
 	raw           *RawBlock
 }
 
-func (s *SimpleBlock) Raw() *RawBlock {
+func (s *SimpleBlock[Tx]) Raw() *RawBlock {
 	return s.raw
 }
 
-func (s *SimpleBlock) SetRaw(rawBlock RawBlock) {
+func (s *SimpleBlock[Tx]) SetRaw(rawBlock RawBlock) {
 	s.raw = &rawBlock
 }
 
-func (s *SimpleBlock) Model(showHidden bool, format string, extraOptions map[string]any) Model {
-	if extraOptions["hashesOnly"] == true {
+func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+	if extraOptions["count"] == true {
 		return Model{
-			Data:  s.Hash,
-			Order: []string{"hash"},
+			Data: map[string]interface{}{
+				"blockNumber":     s.BlockNumber,
+				"transactionsCnt": len(s.Transactions),
+			},
+			Order: []string{
+				"blockNumber",
+				"transactionsCnt",
+			},
+		}
+	}
+
+	if extraOptions["txHashes"] == true {
+		txHashes := make([]string, 0, len(s.Transactions))
+		// Check what type Tx is
+		switch txs := any(s.Transactions).(type) {
+		case []SimpleTransaction:
+			for _, tx := range txs {
+				txHashes = append(txHashes, tx.Hash.String())
+			}
+		case []string:
+			txHashes = append(txHashes, txs...)
+			// TODO: no error if can't cast?
+		}
+		return Model{
+			Data: map[string]interface{}{
+				"hash":        s.Hash,
+				"blockNumber": s.BlockNumber,
+				"parentHash":  s.ParentHash,
+				"timestamp":   s.Timestamp,
+				"tx_hashes":   txHashes,
+			},
+			Order: []string{
+				"hash",
+				"blockNumber",
+				"parentHash",
+				"timestamp",
+				"tx_hashes",
+			},
 		}
 	}
 
@@ -89,7 +129,19 @@ func (s *SimpleBlock) Model(showHidden bool, format string, extraOptions map[str
 	}
 
 	if format == "json" {
-		model["transactions"] = s.Transactions
+		// If we wanted just transactions' hashes, we would return earlier. So here we know that we
+		// have transactions as objects and want to load models for them to be able to display them
+		txs, ok := any(s.Transactions).([]SimpleTransaction)
+		if ok {
+			items := make([]map[string]interface{}, 0, len(txs))
+			for _, txObject := range txs {
+				items = append(items, txObject.Model(showHidden, format, extraOptions).Data)
+			}
+			model["transactions"] = items
+		} else {
+			model["transactions"] = s.Transactions
+		}
+
 		order = append(order, "transactions")
 		if len(s.Uncles) > 0 {
 			model["uncles"] = s.Uncles
@@ -108,6 +160,6 @@ func (s *SimpleBlock) Model(showHidden bool, format string, extraOptions map[str
 	}
 }
 
-func (s *SimpleBlock) GetTimestamp() uint64 {
+func (s *SimpleBlock[Tx]) GetTimestamp() uint64 {
 	return uint64(s.Timestamp)
 }
