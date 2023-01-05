@@ -53,7 +53,6 @@ void get_models(const CClassDefinitionArray& models, CStringArray& result, const
     for (auto model : models) {
         if (contains(model.doc_producer, toLower(route))) {
             string_q type = toLower(model.base_name);
-            replace(type, "appearancedisplay", "appearance");
             replace(type, "logentry", "log");
             string_q item = substitute(toLower(model.doc_group), " ", "") + "|" + type;
             result.push_back(item);

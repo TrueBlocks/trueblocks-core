@@ -688,23 +688,27 @@ bool getTracesAndVisit(const hash_t& hash, CAppearance& item, APPEARANCEFUNC fun
     CTrace trace;
     while (trace.parseJson3(generic.result)) {
         string_q trID = "trace_" + uint_2_Str(traceID) + "_" + stringy(trace.traceAddress);
-        if (!foundOne(funcy, data, item.bn, item.tx, traceID + 10, trace.action.from, trID + "from"))
+        if (!foundOne(funcy, data, item.blockNumber, item.transactionIndex, traceID + 10, trace.action.from,
+                      trID + "from"))
             return false;
-        if (!foundOne(funcy, data, item.bn, item.tx, traceID + 10, trace.action.to, trID + "to"))
+        if (!foundOne(funcy, data, item.blockNumber, item.transactionIndex, traceID + 10, trace.action.to, trID + "to"))
             return false;
-        if (!foundOne(funcy, data, item.bn, item.tx, traceID + 10, trace.action.refundAddress, trID + "refundAddr"))
+        if (!foundOne(funcy, data, item.blockNumber, item.transactionIndex, traceID + 10, trace.action.refundAddress,
+                      trID + "refundAddr"))
             return false;
-        if (!foundOne(funcy, data, item.bn, item.tx, traceID + 10, trace.action.selfDestructed, trID + "self-destruct"))
+        if (!foundOne(funcy, data, item.blockNumber, item.transactionIndex, traceID + 10, trace.action.selfDestructed,
+                      trID + "self-destruct"))
             return false;
-        if (!foundOne(funcy, data, item.bn, item.tx, traceID + 10, trace.result.newContract, trID + "self-destruct"))
+        if (!foundOne(funcy, data, item.blockNumber, item.transactionIndex, traceID + 10, trace.result.newContract,
+                      trID + "self-destruct"))
             return false;
         string_q inpt = extract(trace.action.input, 10);
         if (!inpt.empty())
-            if (!foundPot(funcy, data, item.bn, item.tx, traceID + 10, inpt, trID + "input"))
+            if (!foundPot(funcy, data, item.blockNumber, item.transactionIndex, traceID + 10, inpt, trID + "input"))
                 return false;
         string_q outpt = extract(trace.result.output, 2);
         if (!outpt.empty())
-            if (!foundPot(funcy, data, item.bn, item.tx, traceID + 10, outpt, trID + "output"))
+            if (!foundPot(funcy, data, item.blockNumber, item.transactionIndex, traceID + 10, outpt, trID + "output"))
                 return false;
         traceID++;
         trace = CTrace();  // reset

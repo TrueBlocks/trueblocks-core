@@ -1,0 +1,5 @@
+name        ,type      ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example                 ,description
+blockNumber ,blknum    ,           ,       ,      ,        ,          ,        ,      ,         ,  1 ,     ,4370000                 ,the number of the block
+timestamp   ,timestamp ,           ,       ,      ,        ,          ,        ,      ,         ,  2 ,     ,1508131331              ,the Unix timestamp of the block
+date        ,datetime  ,           ,       ,      ,        ,          ,        ,      ,         ,  3 ,     ,2017-10-16 05:22:11 UTC ,Human readable version of timestamp
+name        ,string    ,           ,       ,      ,        ,true      ,        ,      ,         ,  4 ,     ,byzantium               ,an optional name for the block

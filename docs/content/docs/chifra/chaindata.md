@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2023-01-01T20:44:05
+date: 2023-01-04T05:46:09
 lastmod:
   - :git
   - lastmod
@@ -309,7 +309,7 @@ Notes:
 
 Data models produced by this tool:
 
-- [datedblock](/data-model/chaindata/#datedblock)
+- [namedblock](/data-model/chaindata/#namedblock)
 
 Links:
 

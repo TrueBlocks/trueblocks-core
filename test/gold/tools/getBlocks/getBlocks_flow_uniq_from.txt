@@ -3,7 +3,7 @@ TEST[DATE|TIME] Blocks:  [4102000]
 TEST[DATE|TIME] Uniq:  true
 TEST[DATE|TIME] Flow:  from
 TEST[DATE|TIME] Format:  txt
-blockNumber	transactionIndex	traceId	address	reason
+blockNumber	transactionIndex	traceIndex	address	reason
 4102000	0		0xca88207e34b1bb8fc5c3d8e55465295930d1289d	from
 4102000	1		0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98	from
 4102000	2		0x1151314c646ce4e0efd76d1af4760ae66a9fe30f	from

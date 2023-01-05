@@ -39,7 +39,7 @@ int main(int argc, const char* argv[]) {
                   : (options.statements
                   ? GETRUNTIME_CLASS(CReconciliation)->m_ClassName
                     : (options.neighbors
-                    ? GETRUNTIME_CLASS(CAppearanceDisplay)->m_ClassName
+                    ? GETRUNTIME_CLASS(CAppearance)->m_ClassName
                       : (options.logs
                       ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
                         : GETRUNTIME_CLASS(CTransaction)->m_ClassName))))));

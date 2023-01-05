@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2023-01-03T21:42:38
+date: 2023-01-04T06:02:09
 lastmod:
   - :git
   - lastmod
@@ -42,7 +42,7 @@ The following commands produce and manage Statuses:
 
 - [chifra config](/docs/chifra/admin/#chifra-config)
 
-Status data is made of the following fields:
+Statuses consist of the following fields:
 
 | Field             | Description                                              | Type                                |
 | ----------------- | -------------------------------------------------------- | ----------------------------------- |
@@ -80,7 +80,7 @@ The following commands produce and manage Manifests:
 - [chifra init](/docs/chifra/admin/#chifra-init)
 - [chifra scrape](/docs/chifra/admin/#chifra-scrape)
 
-Manifest data is made of the following fields:
+Manifests consist of the following fields:
 
 | Field     | Description                                                           | Type                                            |
 | --------- | --------------------------------------------------------------------- | ----------------------------------------------- |
@@ -105,7 +105,7 @@ The following commands produce and manage PinnedChunks:
 - [chifra init](/docs/chifra/admin/#chifra-init)
 - [chifra scrape](/docs/chifra/admin/#chifra-scrape)
 
-Pinnedchunk data is made of the following fields:
+PinnedChunks consist of the following fields:
 
 | Field     | Description                                                 | Type     |
 | --------- | ----------------------------------------------------------- | -------- |
@@ -125,7 +125,7 @@ The following commands produce and manage ChunkIndexes:
 
 - [chifra chunks](/docs/chifra/admin/#chifra-chunks)
 
-Chunkindex data is made of the following fields:
+ChunkIndexes consist of the following fields:
 
 | Field           | Description                                                        | Type       |
 | --------------- | ------------------------------------------------------------------ | ---------- |
@@ -148,7 +148,7 @@ The following commands produce and manage ChunkBlooms:
 
 - [chifra chunks](/docs/chifra/admin/#chifra-chunks)
 
-Chunkblooms data is made of the following fields:
+ChunkBlooms consist of the following fields:
 
 | Field     | Description                                                        | Type       |
 | --------- | ------------------------------------------------------------------ | ---------- |
@@ -171,7 +171,7 @@ The following commands produce and manage ChunkAddresses:
 
 - [chifra chunks](/docs/chifra/admin/#chifra-chunks)
 
-Chunkaddresses data is made of the following fields:
+ChunkAddresses consist of the following fields:
 
 | Field   | Description                                                               | Type       |
 | ------- | ------------------------------------------------------------------------- | ---------- |
@@ -191,7 +191,7 @@ The following commands produce and manage ChunkAppearances:
 
 - [chifra chunks](/docs/chifra/admin/#chifra-chunks)
 
-Chunkappearances data is made of the following fields:
+ChunkAppearances consist of the following fields:
 
 | Field            | Description                              | Type   |
 | ---------------- | ---------------------------------------- | ------ |
@@ -208,7 +208,7 @@ The following commands produce and manage ChunkStats:
 
 - [chifra chunks](/docs/chifra/admin/#chifra-chunks)
 
-Chunkstats data is made of the following fields:
+ChunkStats consist of the following fields:
 
 | Field         | Description                                      | Type   |
 | ------------- | ------------------------------------------------ | ------ |
@@ -237,7 +237,7 @@ The following commands produce and manage Caches:
 
 - [chifra config](/docs/chifra/admin/#chifra-config)
 
-Cache data is made of the following fields:
+Caches consist of the following fields:
 
 | Field       | Description                                             | Type                                          |
 | ----------- | ------------------------------------------------------- | --------------------------------------------- |
@@ -258,7 +258,7 @@ The following commands produce and manage CacheEntries:
 
 - [chifra config](/docs/chifra/admin/#chifra-config)
 
-Cacheentry data is made of the following fields:
+CacheEntries consist of the following fields:
 
 | Field   | Description | Type    |
 | ------- | --- | ------- |
@@ -274,7 +274,7 @@ The following commands produce and manage IndexCacheItems:
 
 - [chifra config](/docs/chifra/admin/#chifra-config)
 
-Indexcacheitem data is made of the following fields:
+IndexCacheItems consist of the following fields:
 
 | Field          | Description                                          | Type      |
 | -------------- | ---------------------------------------------------- | --------- |
@@ -301,7 +301,7 @@ The following commands produce and manage Chains:
 
 - [chifra config](/docs/chifra/admin/#chifra-config)
 
-Chain data is made of the following fields:
+Chains consist of the following fields:
 
 | Field          | Description                                                      | Type   |
 | -------------- | ---------------------------------------------------------------- | ------ |

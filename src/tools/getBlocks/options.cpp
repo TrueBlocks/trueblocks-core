@@ -323,15 +323,15 @@ const char* STR_FORMAT_COUNT_TXT_VERBOSE =
 //--------------------------------------------------------------------------------
 const char* STR_FORMAT_FILTER_JSON =
     "{\n"
-    " \"bn\": \"[{BN}]\",\n"
-    " \"tx\": \"[{TX}]\",\n"
-    " \"tc\": \"[{TC}]\",\n"
-    " \"addr\": \"[{ADDR}]\",\n"
+    " \"bn\": \"[{BLOCKNUMBER}]\",\n"
+    " \"tx\": \"[{TRANSACTIONINDEX}]\",\n"
+    " \"tc\": \"[{TRACEINDEX}]\",\n"
+    " \"addr\": \"[{ADDRESS}]\",\n"
     " \"reason\": \"[{REASON}]\"\n"
     "}\n";
 
 //--------------------------------------------------------------------------------
-const char* STR_FORMAT_FILTER_TXT = "[{BN}]\t[{TX}]\t[{TC}]\t[{ADDR}]\t[{REASON}]";
+const char* STR_FORMAT_FILTER_TXT = "[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{TRACEINDEX}]\t[{ADDRESS}]\t[{REASON}]";
 
 //--------------------------------------------------------------------------------
 const char* STR_FORMAT_LIST_JSON =

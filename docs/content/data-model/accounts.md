@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2023-01-03T21:42:38
+date: 2023-01-04T18:42:40
 lastmod:
   - :git
   - lastmod
@@ -48,16 +48,18 @@ The following commands produce and manage Appearances:
 - [chifra list](/docs/chifra/accounts/#chifra-list)
 - [chifra export](/docs/chifra/accounts/#chifra-export)
 
-Appearance data is made of the following fields:
+Appearances consist of the following fields:
 
-| Field            | Description                                               | Type      |
-| ---------------- | --------------------------------------------------------- | --------- |
-| blockNumber      | the number of the block                                   | blknum    |
-| transactionIndex | the zero-indexed position of the transaction in the block | blknum    |
-| address          | the address of the appearance                             | address   |
-| name             | the name of the address, if found                         | string    |
-| timestamp        | the timestamp for this appearance                         | timestamp |
-| date             | the date represented by the timestamp                     | string    |
+| Field            | Description                                             | Type      |
+| ---------------- | ------------------------------------------------------- | --------- |
+| address          | the address of the appearance                           | address   |
+| blockNumber      | the number of the block                                 | blknum    |
+| transactionIndex | the index of the transaction in the block               | blknum    |
+| traceIndex       | the zero-based index of the trace in the transaction    | blknum    |
+| reason           | the location in the data where the appearance was found | string    |
+| name             | the name of the address, if found                       | string    |
+| timestamp        | the timestamp for this appearance                       | timestamp |
+| date             | the date represented by the timestamp                   | string    |
 
 ## Reconciliation
 
@@ -81,7 +83,7 @@ The following commands produce and manage Reconciliations:
 
 - [chifra export](/docs/chifra/accounts/#chifra-export)
 
-Reconciliation data is made of the following fields:
+Reconciliations consist of the following fields:
 
 | Field               | Description                                                                                                                                    | Type      |
 | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
@@ -153,7 +155,7 @@ The following commands produce and manage Monitors:
 - [chifra export](/docs/chifra/accounts/#chifra-export)
 - [chifra config](/docs/chifra/admin/#chifra-config)
 
-Monitor data is made of the following fields:
+Monitors consist of the following fields:
 
 | Field       | Description                                    | Type    |
 | ----------- | ---------------------------------------------- | ------- |
@@ -193,7 +195,7 @@ The following commands produce and manage Names:
 
 - [chifra names](/docs/chifra/accounts/#chifra-names)
 
-Name data is made of the following fields:
+Names consist of the following fields:
 
 | Field      | Description                                                                         | Type    |
 | ---------- | ----------------------------------------------------------------------------------- | ------- |
@@ -228,7 +230,7 @@ The following commands produce and manage Abis:
 
 - [chifra abis](/docs/chifra/accounts/#chifra-abis)
 
-Abi data is made of the following fields:
+Abis consist of the following fields:
 
 | Field      | Description                                  | Type                                      |
 | ---------- | -------------------------------------------- | ----------------------------------------- |
@@ -250,7 +252,7 @@ The following commands produce and manage AppearanceCounts:
 - [chifra list](/docs/chifra/accounts/#chifra-list)
 - [chifra export](/docs/chifra/accounts/#chifra-export)
 
-Appearancecount data is made of the following fields:
+AppearanceCounts consist of the following fields:
 
 | Field    | Description                                               | Type    |
 | -------- | --------------------------------------------------------- | ------- |

@@ -52,7 +52,7 @@ bool COptions::handle_sdk_ts(void) {
 bool COptions::handle_sdk_ts_types(CStringArray& typesOut) {
     for (auto model : dataModels) {
         string_q modelName = substitute(model.class_name, "Array", "");
-        modelName = firstUpper(substitute(substitute(modelName, "AppearanceDisplay", "Appearance"), "LogEntry", "Log"));
+        modelName = firstUpper(substitute(modelName, "LogEntry", "Log"));
         replace(modelName, "C", "");
         if (modelName == "Status") {
             modelName = "Config";

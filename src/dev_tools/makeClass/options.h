@@ -211,6 +211,7 @@ extern bool parseOptionsFile(const char* str, void* data);
 extern bool isChifraRoute(const CCommandOption& cmd, bool depOk);
 extern bool isApiRoute(const string_q& route);
 extern bool forEveryEnum(APPLYFUNC func, const string_q& enumStr, void* data);
+extern string_q type_2_ModelName(const string_q& type, bool fL);
 
 //---------------------------------------------------------------------------------------------------
 #define sdkPath string_q("/Users/jrush/Development/trueblocks-sdk/")
