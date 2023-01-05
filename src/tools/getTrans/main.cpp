@@ -65,7 +65,7 @@ bool shouldShow(const COptions* opt, const string_q& val) {
 bool visitAddrs(const CAppearance& item, void* data) {
     // We do not account for zero addresses or the addresses found in the zeroth trace since
     // it's identical to the transaction itself
-    if (item.tc == 10 || isZeroAddr(item.addr))
+    if (item.traceIndex == 10 || isZeroAddr(item.address))
         return !shouldQuit();
     COptions* opt = reinterpret_cast<COptions*>(data);
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));

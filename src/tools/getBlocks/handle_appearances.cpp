@@ -45,9 +45,9 @@ bool COptions::handle_appearances(blknum_t num) {
         } else {
             // found no addresses -- i.e. early node software allowed misconfiguration of zero address miner
             CAppearance item;
-            item.bn = num;
-            item.tx = 99999;
-            item.addr = "0x0000000000000000000000000000000000000000";
+            item.blockNumber = num;
+            item.transactionIndex = 99999;
+            item.address = "0x0000000000000000000000000000000000000000";
             item.reason = "miner";
             oneAppearance(item, this);
         }
@@ -102,7 +102,7 @@ void oneAppearance(const CAppearance& item, void* data) {
 bool visitAddrs(const CAppearance& item, void* data) {
     // We do not account for zero addresses or the addresses found in the zeroth trace since
     // it's identical to the transaction itself
-    if (item.tc == 10 || isZeroAddr(item.addr))
+    if (item.traceIndex == 10 || isZeroAddr(item.address))
         return !shouldQuit();
 
     COptions* opt = reinterpret_cast<COptions*>(data);
@@ -128,9 +128,9 @@ bool transFilter(const CTransaction* trans, void* data) {
 //-----------------------------------------------------------------------
 bool visitPrefund(const Allocation& prefund, void* data) {
     CAppearance item;
-    item.bn = 0;
-    item.tx = ((COptions*)data)->nPrefunds++;
-    item.addr = prefund.address;
+    item.blockNumber = 0;
+    item.transactionIndex = ((COptions*)data)->nPrefunds++;
+    item.address = prefund.address;
     item.reason = "genesis";
     oneAppearance(item, data);
     return true;

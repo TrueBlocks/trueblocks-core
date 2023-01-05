@@ -20,6 +20,7 @@ Flags:
                            One or more of [ blocks | txs | traces | slurps | all ]
   -p, --depth uint         for caches module only, number of levels deep to report (hidden)
   -e, --terse              show a terse summary report for mode show (hidden)
+  -a, --paths              show the configuration paths for the system (hidden)
   -F, --first_block uint   first block to process (inclusive -- testing only) (hidden)
   -L, --last_block uint    last block to process (inclusive -- testing only) (hidden)
   -x, --fmt string         export format, one of [none|json*|txt|csv]

@@ -48,27 +48,27 @@ bool isSame(const CReverseAppMapEntry* a, const CReverseAppMapEntry* b) {
 
 //-----------------------------------------------------------------------
 bool assignReason(const CName& accountedFor, CAppearance& app, const CTransaction& trans) {
-    if (app.tx > 99996) {  // leave this here for searching: 99999
+    if (app.transactionIndex > 99996) {  // leave this here for searching: 99999
         app.reason = "miner";
         return true;
     }
-    if (app.addr == trans.from) {
+    if (app.address == trans.from) {
         app.reason = "from";
         return true;
     }
-    if (app.addr == trans.to) {
+    if (app.address == trans.to) {
         app.reason = "to";
         return true;
     }
-    if (app.addr == trans.receipt.contractAddress) {
+    if (app.address == trans.receipt.contractAddress) {
         app.reason = "creation";
         return true;
     }
     bool junk = false;
-    string_q ss = substitute(app.addr, "0x", "");
+    string_q ss = substitute(app.address, "0x", "");
     if (contains(trans.input, ss)) {
         app.reason = "input";
-        if (accountedFor.address == app.addr) {
+        if (accountedFor.address == app.address) {
             return true;
         }
         junk = true;
@@ -76,7 +76,7 @@ bool assignReason(const CName& accountedFor, CAppearance& app, const CTransactio
 
     for (size_t i = 0; i < trans.receipt.logs.size(); i++) {
         const CLogEntry* l = &trans.receipt.logs[i];
-        if (l->address == app.addr) {
+        if (l->address == app.address) {
             app.reason = "log_" + uint_2_Str(i) + "_generator";
             return true;
         }
@@ -87,7 +87,7 @@ bool assignReason(const CName& accountedFor, CAppearance& app, const CTransactio
         for (size_t j = 1; j < l->topics.size(); j++) {
             if (contains(l->topics[j], ss)) {
                 app.reason = "log_" + uint_2_Str(i) + "_topic_" + uint_2_Str(j);
-                if (accountedFor.address == app.addr) {
+                if (accountedFor.address == app.address) {
                     return true;
                 }
                 junk = true;
@@ -95,7 +95,7 @@ bool assignReason(const CName& accountedFor, CAppearance& app, const CTransactio
         }
         if (contains(l->data, ss)) {
             app.reason = "log_" + uint_2_Str(i) + "_data";
-            if (accountedFor.address == app.addr) {
+            if (accountedFor.address == app.address) {
                 return true;
             }
             junk = true;
@@ -237,9 +237,9 @@ bool COptions::showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CA
                 blkrange_t* r = &theIndex->reverseAddrRanges[i];
                 if (inRange(found->n, *r)) {
                     CAppearance appHere;
-                    appHere.bn = found->blk;
-                    appHere.tx = found->tx;
-                    appHere.addr = bytes_2_Addr(theIndex->getAddressAt(i)->bytes);
+                    appHere.blockNumber = found->blk;
+                    appHere.transactionIndex = found->tx;
+                    appHere.address = bytes_2_Addr(theIndex->getAddressAt(i)->bytes);
                     if (assignReason(ledgerManager.name, appHere, trav->trans)) {
                         trav->nProcessed++;
                         if (!prog_Log(trav, this))

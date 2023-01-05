@@ -1,9 +1,0 @@
-[settings]
-class = CAppearanceDisplay
-base_class = CName
-fields = appearancedisplay.csv
-includes = etherlib.h
-doc_group = 01-Accounts
-doc_descr = an appearance (`<blockNumber,transactionIndex>`) of an address anywhere on the chain
-doc_route = 101-appearance
-doc_producer = list, export

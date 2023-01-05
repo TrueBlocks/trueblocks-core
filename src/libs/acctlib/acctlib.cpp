@@ -17,6 +17,7 @@
 void acctlib_init(QUITHANDLER qh) {
     etherlib_init(qh);
 
+    CMonitorCount::registerClass();
     CMonitor::registerClass();
     CApiSpec::registerClass();
 

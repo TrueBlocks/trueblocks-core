@@ -48,6 +48,10 @@ func (opts *ConfigOptions) ConfigInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
+	if opts.Paths && opts.Globals.Format != "json" {
+		return opts.HandlePaths()
+	}
+
 	if opts.Globals.IsApiMode() {
 		return nil, false
 	}

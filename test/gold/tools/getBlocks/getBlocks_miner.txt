@@ -4,9 +4,11 @@ TEST[DATE|TIME] Uniq:  true
 TEST[DATE|TIME] Format:  json
 { "data": [
   {
-    "bn": 1,
-    "tx": 99999,
-    "tc": "",
-    "addr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-    "reason": "miner"
+    "address": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+    "blockNumber": 1,
+    "transactionIndex": 99999,
+    "traceIndex": "",
+    "reason": "miner",
+    "timestamp": 1438269988,
+    "date": "2015-07-30 15:26:28 UTC"
   }] }

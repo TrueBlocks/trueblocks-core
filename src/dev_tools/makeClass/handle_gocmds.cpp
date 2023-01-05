@@ -395,7 +395,7 @@ string_q get_testlogs(const CCommandOption& cmd) {
 string_q get_optfields(const CCommandOption& cmd) {
     string_q n = "readme-intros/" + substitute(toLower(cmd.group), " ", "") + "-" + cmd.api_route + ".config.md";
     string_q configDocs = getDocsPathTemplates(n);
-    ::remove(configDocs.c_str());
+    ::remove(configDocs.c_str());  // remove it if it exists, we will replace it
 
     bool hasConfig = 0;
     size_t varWidth = 0, typeWidth = 0;

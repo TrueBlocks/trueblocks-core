@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2022-12-30T19:05:18
+date: 2023-01-04T06:02:09
 lastmod:
   - :git
   - lastmod
@@ -38,12 +38,12 @@ blockchain only deals with byte data, TrueBlocks needs a way to decode the bytes
 human-readable function and event signatures. We call this process `--articulate`. Most TrueBlocks
 commands provide an `--articulate` option. See the commands themselves for more information.
 
-The following commands produce and manage functions:
+The following commands produce and manage Functions:
 
 - [chifra abis](/docs/chifra/accounts/#chifra-abis)
 - [chifra export](/docs/chifra/accounts/#chifra-export)
 
-Function data is made of the following fields:
+Functions consist of the following fields:
 
 | Field     | Description                                             | Type                                        |
 | --------- | ------------------------------------------------------- | ------------------------------------------- |
@@ -64,12 +64,12 @@ byte signature (or an event's 32-byte signature). Parameters are important to Tr
 we use them as part of the ABI decoding and the `--articulate` process to conver the blockchain's
 bytes into human-readable text.
 
-The following commands produce and manage parameters:
+The following commands produce and manage Parameters:
 
 - [chifra abis](/docs/chifra/accounts/#chifra-abis)
 - [chifra export](/docs/chifra/accounts/#chifra-export)
 
-Parameter data is made of the following fields:
+Parameters consist of the following fields:
 
 | Field        | Description                                                 | Type                                        |
 | ------------ | ----------------------------------------------------------- | ------------------------------------------- |
@@ -84,7 +84,7 @@ Parameter data is made of the following fields:
 
 This documentation mentions the following basic data types.
 
-| Type      | Description                         | Notes          |
-| --------- | ----------------------------------- | -------------- |
-| bool      | either `true`, `false`, `1`, or `0` |                |
-| string    | a normal character string           |                |
+| Type   | Description                         | Notes |
+| ------ | ----------------------------------- | ----- |
+| bool   | either `true`, `false`, `1`, or `0` |       |
+| string | a normal character string           |       |

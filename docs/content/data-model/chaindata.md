@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2022-12-30T22:51:50
+date: 2023-01-04T06:02:09
 lastmod:
   - :git
   - lastmod
@@ -29,11 +29,11 @@ Each data structure is created by one or more tools which are detailed below.
 `chifra blocks` returns top level data specified block. You can also include an array for the
 blocks' transactions.
 
-The following commands produce and manage blocks:
+The following commands produce and manage Blocks:
 
 - [chifra blocks](/docs/chifra/chaindata/#chifra-blocks)
 
-Block data is made of the following fields:
+Blocks consist of the following fields:
 
 | Field         | Description                                                   | Type                                                |
 | ------------- | ------------------------------------------------------------- | --------------------------------------------------- |
@@ -59,13 +59,13 @@ is very interesting: `articulatedTx` provides a human readable output of the `in
 
 This is a very powerful way to understand the story behind a smart contract.
 
-The following commands produce and manage transactions:
+The following commands produce and manage Transactions:
 
 - [chifra transactions](/docs/chifra/chaindata/#chifra-transactions)
 - [chifra slurp](/docs/chifra/other/#chifra-slurp)
 - [chifra export](/docs/chifra/accounts/#chifra-export)
 
-Transaction data is made of the following fields:
+Transactions consist of the following fields:
 
 | Field            | Description                                                                                           | Type                                                     |
 | ---------------- | ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
@@ -102,12 +102,12 @@ and label each such transfer on the `input` data or `event topic` data. In this 
 remains relatively easy (we only reconcile tokens and ETH), but we cover every conceivable token
 asset transfer of any type.
 
-The following commands produce and manage transfers:
+The following commands produce and manage Transfers:
 
 - [chifra transactions](/docs/chifra/chaindata/#chifra-transactions)
 - [chifra export](/docs/chifra/accounts/#chifra-export)
 
-Transfer data is made of the following fields:
+Transfers consist of the following fields:
 
 | Field            | Description                                                                                    | Type      |
 | ---------------- | ---------------------------------------------------------------------------------------------- | --------- |
@@ -137,12 +137,12 @@ If the `to` address of a transaction is `0x0`, the `input` data is considered to
 code (byte code) of a smart contract. In this case, if the creation of the contract succeeds,
 the `contractAddress` field of the receipt carries the address of the newly created contract.
 
-The following commands produce and manage receipts:
+The following commands produce and manage Receipts:
 
 - [chifra receipts](/docs/chifra/chaindata/#chifra-receipts)
 - [chifra export](/docs/chifra/accounts/#chifra-export)
 
-Receipt data is made of the following fields:
+Receipts consist of the following fields:
 
 | Field           | Description                                                                | Type                                |
 | --------------- | -------------------------------------------------------------------------- | ----------------------------------- |
@@ -159,12 +159,12 @@ underlying transaction suceeded. In the case where the transaction failed, no lo
 the receipt. Logs are only ever generated during transactions whose `to` address is a smart
 contract.
 
-The following commands produce and manage logs:
+The following commands produce and manage Logs:
 
 - [chifra logs](/docs/chifra/chaindata/#chifra-logs)
 - [chifra export](/docs/chifra/accounts/#chifra-export)
 
-Log data is made of the following fields:
+Logs consist of the following fields:
 
 | Field            | Description                                                                                       | Type                                    |
 | ---------------- | ------------------------------------------------------------------------------------------------- | --------------------------------------- |
@@ -191,12 +191,12 @@ calls. Some transactions have 100s of traces. The format of the trace is similar
 itself have a trace `action` (which contains `from`, `to`, `value` like the transaction) and the
 trace `result` (containing `gasUsed` like the receipt).
 
-The following commands produce and manage traces:
+The following commands produce and manage Traces:
 
 - [chifra traces](/docs/chifra/chaindata/#chifra-traces)
 - [chifra export](/docs/chifra/accounts/#chifra-export)
 
-Trace data is made of the following fields:
+Traces consist of the following fields:
 
 | Field            | Description                                               | Type                                              |
 | ---------------- | --------------------------------------------------------- | ------------------------------------------------- |
@@ -220,12 +220,12 @@ Other than the first trace which is the trace of the transaction itself, traces 
 into smart contracts. Because of this, `trace actions` closely resemble the fields of the
 [transaction](#transactions).
 
-The following commands produce and manage traceactions:
+The following commands produce and manage TraceActions:
 
 - [chifra traces](/docs/chifra/chaindata/#chifra-traces)
 - [chifra export](/docs/chifra/accounts/#chifra-export)
 
-Traceaction data is made of the following fields:
+TraceActions consist of the following fields:
 
 | Field         | Description                                                                | Type    |
 | ------------- | -------------------------------------------------------------------------- | ------- |
@@ -242,12 +242,12 @@ Traceaction data is made of the following fields:
 As mentioned above, other than the first trace, traces represent calls into other smart contracts.
 Because of this, the trace results closely resembles the fields of the [receipt](#receipts).
 
-The following commands produce and manage traceresults:
+The following commands produce and manage TraceResults:
 
 - [chifra traces](/docs/chifra/chaindata/#chifra-traces)
 - [chifra export](/docs/chifra/accounts/#chifra-export)
 
-Traceresult data is made of the following fields:
+TraceResults consist of the following fields:
 
 | Field       | Description                                                                    | Type    |
 | ----------- | ------------------------------------------------------------------------------ | ------- |
@@ -256,7 +256,7 @@ Traceresult data is made of the following fields:
 | gasUsed     | the amount of gas used by this trace                                           | gas     |
 | output      | the result of the call of this trace                                           | bytes   |
 
-## DatedBlock
+## NamedBlock
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
 Left to its own devices, the blockchain would try to convince us that only hashes and bytes are
@@ -266,17 +266,18 @@ addresses, `-articulate` describing the Functions and Events of a transaction, a
 [chifra when](/docs/chifra/chaindata/#chifra-when) describing dated blocks. Dated blocks assign a
 human-readable date to blocks given block numbers or timestamps and visa versa.
 
-The following commands produce and manage datedblocks:
+The following commands produce and manage NamedBlocks:
 
 - [chifra when](/docs/chifra/chaindata/#chifra-when)
 
-Datedblock data is made of the following fields:
+NamedBlocks consist of the following fields:
 
 | Field       | Description                         | Type      |
 | ----------- | ----------------------------------- | --------- |
 | blockNumber | the number of the block             | blknum    |
 | timestamp   | the Unix timestamp of the block     | timestamp |
 | date        | Human readable version of timestamp | datetime  |
+| name        | an optional name for the block      | string    |
 
 ## Base types
 

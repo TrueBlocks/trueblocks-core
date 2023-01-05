@@ -19,6 +19,7 @@ extern const char* STR_YAML_MODELHEADER;
 extern const char* STR_MODEL_PRODUCERS;
 extern const char* STR_MODEL_FOOTER;
 extern const char* STR_MODEL_HEADER;
+extern void generate_go_code(COptions* opts, const CClassDefinition& model);
 extern void addToTypeMap(map<string_q, string_q>& map, const string_q& group, const string& type);
 extern bool sortByDataModelName(const CClassDefinition& c1, const CClassDefinition& c2);
 extern bool sortByDoc(const CParameter& c1, const CParameter& c2);
@@ -26,21 +27,7 @@ extern string_q typeFmt(const CParameter& fld);
 extern string_q exFmt(const CParameter& fld);
 extern string_q get_producer_table(const CClassDefinition& model, const CCommandOptionArray& endpoints);
 extern string_q type_2_Link(const CClassDefinitionArray& dataModels, const CParameter& param);
-
-//--------------------------------------------------------------------------------
-static string_q plural(const string_q& in) {
-    string_q ret = firstUpper(in);
-    if (ret == "Config") {
-        ret = "Statuses";
-    } else if (ret == "CacheEntry") {
-        ret = "CacheEntries";
-    } else if (ret == "ChunkIndex") {
-        ret = "ChunkIndexes";
-    } else if (!endsWith(in, "s")) {
-        ret += "s";
-    }
-    return ret;
-}
+extern string_q plural(const string_q& in);
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_datamodel(void) {
@@ -51,8 +38,8 @@ bool COptions::handle_datamodel(void) {
     map<string_q, string_q> documentMap;
     map<string_q, string_q> typeMaps;
     map<string_q, bool> frontMatterMap;
-    CNameValueMap types;
-    asciiFileToMap(getDocsPathTemplates("base-types.csv"), types);
+    CNameValueMap baseTypes;
+    asciiFileToMap(getDocsPathTemplates("base-types.csv"), baseTypes);
 
     ostringstream yamlStream;
     yamlStream << "components:" << endl;
@@ -126,8 +113,7 @@ bool COptions::handle_datamodel(void) {
         string_q thisDoc = docStream.str();
         replaceAll(thisDoc, "[{TYPE}]", model.doc_route);
         replaceAll(thisDoc, "[{FIRST_UPPER}]", substitute(firstUpper(model.doc_route), "Config", "Status"));
-        replaceAll(thisDoc, "[{PLURAL}]", toLower(plural(model.doc_route)));
-        replaceAll(thisDoc, "[{ALIAS}]", model.doc_alias.empty() ? "[{PROPER}]" : model.doc_alias);
+        replaceAll(thisDoc, "[{PLURAL}]", plural(model.doc_alias.empty() ? model.doc_route : model.doc_alias));
         replaceAll(thisDoc, "[{PROPER}]", toProper(model.doc_route));
         if (contains(thisDoc, "[{FIELDS}]"))
             replace(thisDoc, "[{FIELDS}]", trim(fieldStream.str(), '\n'));
@@ -138,27 +124,43 @@ bool COptions::handle_datamodel(void) {
         else
             thisDoc += toolsStream.str();
         documentMap[model.doc_group] = documentMap[model.doc_group] + thisDoc;
+
+        if (model.go_code) {
+            generate_go_code(this, model);
+        }
     }
 
     yamlStream << STR_YAML_TAIL;
     writeIfDifferent(getDocsPathTemplates("api/components.txt"), substitute(yamlStream.str(), "&#44;", ","));
 
     for (auto document : documentMap) {
-        string_q tail;
+        ostringstream tailStream;
         CStringArray docTypes;
         explode(docTypes, typeMaps[toLower(document.first)], ',');
         sort(docTypes.begin(), docTypes.end());
+
         size_t wids[5];
         bzero(wids, sizeof(size_t) * 5);
-        wids[0] = 9;
-        wids[1] = 35;
-        wids[2] = 14;
+        wids[0] = max(size_t(3), max(wids[0], string_q("Type").length()));
+        wids[1] = max(size_t(3), max(wids[1], string_q("Description").length()));
+        wids[2] = max(size_t(3), max(wids[2], string_q("Notes").length()));
         for (auto type : docTypes) {
-            string_q notes = types[type];
+            string_q notes = baseTypes[type];
             string_q descr = substitute(nextTokenClear(notes, ','), "&#44;", ",");
-            tail += markDownRow(type, descr, notes, wids);
+            wids[0] = max(size_t(3), max(wids[0], type.length()));
+            wids[1] = max(size_t(3), max(wids[1], descr.length()));
+            wids[2] = max(size_t(3), max(wids[2], notes.length()));
         }
-        document.second += substitute(STR_DOCUMENT_TAIL, "[{TYPES}]", tail);
+
+        tailStream << markDownRow("Type", "Description", "Notes", wids);
+        tailStream << markDownRow("-", "", "", wids);
+        for (auto type : docTypes) {
+            string_q notes = baseTypes[type];
+            string_q descr = substitute(nextTokenClear(notes, ','), "&#44;", ",");
+            tailStream << markDownRow(type, descr, notes, wids);
+        }
+
+        document.second += substitute(STR_DOCUMENT_TAIL, "[{TYPES}]", tailStream.str());
         string_q outFn = getDocsPathContent("data-model/" + substitute(toLower(document.first), " ", "")) + ".md";
         string_q doc = substitute(document.second, "\n\n\n", "\n\n");
         if (!contains(outFn, "/.md")) {
@@ -180,28 +182,30 @@ bool sortByDoc(const CParameter& c1, const CParameter& c2) {
 }
 
 //------------------------------------------------------------------------------------------------------------
+string_q type_2_ModelName(const string_q& type, bool fL) {
+    string_q ret = type;
+    if (startsWith(ret, "C"))
+        replace(ret, "C", "");
+    replace(ret, "Array", "");
+    replace(ret, "CachePtr", "Cache");
+    replace(ret, "LogEntry", "Log");
+    if (fL) {
+        ret = firstLower(ret);
+    }
+    return ret;
+}
+
+//------------------------------------------------------------------------------------------------------------
 string_q typeFmt(const CParameter& fld) {
     if (fld.is_flags & IS_ARRAY) {
         string_q ret = "          type: array\n          items:\n            $ref: \"#/components/schemas/++X++\"\n";
-        string_q t = fld.type;
-        if (startsWith(t, "C"))
-            replace(t, "C", "");
-        replace(t, "Array", "");
-        replace(ret, "++X++", firstLower(t));
-        replace(ret, "cachePtr", "cache");
-        replace(ret, "logEntry", "log");
+        replace(ret, "++X++", type_2_ModelName(fld.type, true));
         return ret;
     }
 
     if (fld.is_flags & IS_OBJECT) {
         string_q ret = "          type: object\n          items:\n            $ref: \"#/components/schemas/++X++\"\n";
-        string_q t = fld.type;
-        if (startsWith(t, "C"))
-            replace(t, "C", "");
-        replace(t, "Array", "");
-        replace(ret, "++X++", firstLower(t));
-        replace(ret, "logEntry", "log");
-        replace(ret, "cachePtr", "cache");
+        replace(ret, "++X++", type_2_ModelName(fld.type, true));
         return ret;
     }
 
@@ -238,6 +242,48 @@ void addToTypeMap(map<string_q, string_q>& map, const string_q& group, const str
     if (existing.length() > 0)
         existing += ",";
     map[toLower(group)] = existing + type;
+}
+
+//------------------------------------------------------------------------------------------------------------
+string_q type_2_GoType(const string_q& type) {
+    if (type == "blknum" || type == "timestamp")
+        return "uint64";
+    if (type == "datetime")
+        return "string";
+    return type;
+}
+
+//------------------------------------------------------------------------------------------------------------
+void generate_go_code(COptions* opts, const CClassDefinition& model) {
+    string_q fn = getPathToSource("apps/chifra/pkg/types/types_" + toLower(model.base_name) + ".go");
+    string_q contents = asciiFileToString(getPathToTemplates("blank_type.go.tmpl"));
+    replaceAll(contents, "[{CLASS_NAME}]", type_2_ModelName(model.class_name, false));
+
+    ostringstream fieldStream, copyStream, displayStream;
+    for (auto field : model.fieldArray) {
+        string_q type = type_2_GoType(field.type);
+        // if (field.is_flags & IS_ARRAY) {
+        //     type = "[]" + type_2_ModelName(type, false);
+        // } else if (field.is_flags & IS_OBJECT) {
+        //     type = "*" + type_2_ModelName(type, false);
+        // }
+        bool isOmitEmpty = (field.is_flags & IS_OMITEMPTY);
+        fieldStream << "\t" << firstUpper(field.name) << " " << type << " `json:\"" << field.name
+                    << (isOmitEmpty ? ",omitempty" : "") << "\"`" << endl;
+        if (!isOmitEmpty) {
+            copyStream << "\t\t\"" << field.name << "\": s." << firstUpper(field.name) << "," << endl;
+            displayStream << "\t\t\"" << field.name << "\""
+                          << "," << endl;
+        }
+    }
+    replaceAll(contents, "[{FIELDS}]", fieldStream.str());
+    replaceAll(contents, "[{FIELD_COPY}]", copyStream.str());
+    replaceAll(contents, "[{FIELD_DISPLAY}]", displayStream.str());
+
+    codewrite_t cw(fn, contents);
+    cw.nSpaces = 0;
+    writeCodeIn(opts, cw);
+    // cerr << fn << endl;
 }
 
 //------------------------------------------------------------------------------------------------------------
@@ -298,6 +344,21 @@ string_q type_2_Link(const CClassDefinitionArray& dataModels, const CParameter& 
            toLower(type) + ")";
 }
 
+//--------------------------------------------------------------------------------
+string_q plural(const string_q& in) {
+    string_q ret = firstUpper(in);
+    if (ret == "Status") {
+        ret = "Statuses";
+    } else if (ret == "CacheEntry") {
+        ret = "CacheEntries";
+    } else if (ret == "ChunkIndex") {
+        ret = "ChunkIndexes";
+    } else if (!endsWith(in, "s")) {
+        ret += "s";
+    }
+    return ret;
+}
+
 //------------------------------------------------------------------------------------------------------------
 const char* STR_YAML_TAIL =
     "    response:\n"
@@ -334,8 +395,6 @@ const char* STR_DOCUMENT_TAIL =
     "\n"
     "This documentation mentions the following basic data types.\n"
     "\n"
-    "| Type      | Description                         | Notes          |\n"
-    "| --------- | ----------------------------------- | -------------- |\n"
     "[{TYPES}]";
 
 //------------------------------------------------------------------------------------------------------------
@@ -348,7 +407,7 @@ const char* STR_YAML_MODELHEADER =
 //------------------------------------------------------------------------------------------------------------
 const char* STR_MODEL_FOOTER =
     "\n"
-    "[{ALIAS}] data is made of the following fields:\n"
+    "[{PLURAL}] consist of the following fields:\n"
     "\n"
     "[{FIELDS}]\n";
 
