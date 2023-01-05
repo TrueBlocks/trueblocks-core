@@ -59,6 +59,19 @@ func (s *SimpleBlock[Tx]) SetRaw(rawBlock RawBlock) {
 }
 
 func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+	if extraOptions["count"] == true {
+		return Model{
+			Data: map[string]interface{}{
+				"blockNumber":     s.BlockNumber,
+				"transactionsCnt": len(s.Transactions),
+			},
+			Order: []string{
+				"blockNumber",
+				"transactionsCnt",
+			},
+		}
+	}
+
 	if extraOptions["txHashes"] == true {
 		txHashes := make([]string, 0, len(s.Transactions))
 		// Check what type Tx is

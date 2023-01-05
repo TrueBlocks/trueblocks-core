@@ -76,6 +76,7 @@ func (opts *BlocksOptions) HandleShowBlocks() error {
 		JsonIndent: "  ",
 		Extra: map[string]interface{}{
 			"txHashes": opts.Hashes,
+			"count":    opts.Count,
 		},
 	})
 }
