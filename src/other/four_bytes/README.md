@@ -15,8 +15,14 @@ Set A has 784 items.
 
 Set B has 113,281 items in total.
 
+Taking the cross-product (784 x 113,281) of these two sets produces 88,812,304 four-byte signatures, which is about 88 times bigger than the four-byte directory. It's a vanishingly small precentage of the 2^32 data set of four-byte encodings, though.
+
 The produced database is chunked and consists of 65,536 files, with sizes ranging from 100 KB to 176 KB.
 The database takes about 7 GB of disk space in total. Generation can take up to 40 minutes.
+
+## A Second Set of Sets A and B
+
+We have a second set B with more than 616,287 function and events names and a second set A with 41,531 signatures. The cross produce of these two sets would produce about 25,595,015,397 results. Since this is larger than the space that needs to be covered (2^32 == 4,294,967,296) it would cover the entire space with an eight times over redundancy. Someone could produce this database, publish it on some content addressable store (such as IPFS -- it is immutable after all and perfectly reproducible). Over time, people might go to that IPFS hash to find four-bytes. We could build a TCR (Hi Auryn!) to sort out which of the 25 redundant functions are the right ones.
 
 ## Chunk format
 
