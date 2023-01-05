@@ -6,39 +6,44 @@ package blocksPkg
 
 import (
 	"context"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *BlocksOptions) HandleList() error {
+func (opts *BlocksOptions) HandleShowBlocks() error {
 	// Don't do this in the loop
 	meta, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 	if err != nil {
 		return err
-	}
-	if opts.Globals.TestMode {
-		meta.Latest = 2000100
-	}
-	start := meta.Latest - opts.List
-	end := start - opts.ListCount
-	if start < opts.ListCount {
-		end = 0
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 
 	// Note: Make sure to add an entry to enabledForCmd in src/apps/chifra/pkg/output/helpers.go
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
-		for bn := start; bn > end; bn-- {
-			finalized := meta.Age(bn) > 28
-			block, err := rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, finalized, false)
+		for _, br := range opts.BlockIds {
+			blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
 			if err != nil {
 				errorChan <- err
 				cancel()
 				return
-			} else {
+			}
+			for _, bn := range blockNums {
+				finalized := meta.Age(bn) > 28
+				block, err := rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, finalized, !opts.Hashes)
+				// TODO: rpcClient should return a custom type of error in this case
+				if err != nil && strings.Contains(err.Error(), "not found") {
+					errorChan <- err
+					continue
+				}
+				if err != nil {
+					errorChan <- err
+					cancel()
+					return
+				}
 				modelChan <- &block
 			}
 		}

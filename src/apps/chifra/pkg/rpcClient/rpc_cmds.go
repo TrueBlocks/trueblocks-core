@@ -54,33 +54,6 @@ func FromRpc(rpcProvider string, payload *RPCPayload, ret interface{}) error {
 	return json.Unmarshal(theBytes, ret)
 }
 
-// BlockHeader carries values returned by the `eth_getBlockByNumber` RPC command
-type BlockHeader struct {
-	Jsonrpc string `json:"jsonrpc"`
-	Result  struct {
-		Author           string   `json:"author"`
-		Difficulty       string   `json:"difficulty"`
-		ExtraData        string   `json:"extraData"`
-		GasLimit         string   `json:"gasLimit"`
-		GasUsed          string   `json:"gasUsed"`
-		Hash             string   `json:"hash"`
-		LogsBloom        string   `json:"logsBloom"`
-		Miner            string   `json:"miner"`
-		MixHash          string   `json:"mixHash"`
-		Nonce            string   `json:"nonce"`
-		Number           string   `json:"number"`
-		ParentHash       string   `json:"parentHash"`
-		ReceiptsRoot     string   `json:"receiptsRoot"`
-		SealFields       []string `json:"sealFields"`
-		Sha3Uncles       string   `json:"sha3Uncles"`
-		Size             string   `json:"size"`
-		StateRoot        string   `json:"stateRoot"`
-		Timestamp        string   `json:"timestamp"`
-		TransactionsRoot string   `json:"transactionsRoot"`
-	} `json:"result"`
-	ID int `json:"id"`
-}
-
 // Traces carries values returned the `trace_block` RPC command
 type Traces struct {
 	Jsonrpc string `json:"jsonrpc"`
@@ -131,27 +104,6 @@ type Logs struct {
 		TransactionIndex    string   `json:"transactionIndex"`
 		TransactionLogIndex string   `json:"transactionLogIndex"`
 		Type                string   `json:"type"`
-	} `json:"result"`
-	ID int `json:"id"`
-}
-
-// Receipt carries values returned by the eth_getReceipt RPC call
-type Receipt struct {
-	Jsonrpc string `json:"jsonrpc"`
-	Result  struct {
-		BlockHash         string        `json:"blockHash"`
-		BlockNumber       string        `json:"blockNumber"`
-		ContractAddress   string        `json:"contractAddress"`
-		CumulativeGasUsed string        `json:"cumulativeGasUsed"`
-		From              string        `json:"from"`
-		GasUsed           string        `json:"gasUsed"`
-		Logs              []interface{} `json:"logs"`
-		LogsBloom         string        `json:"logsBloom"`
-		Root              string        `json:"root"`
-		Status            interface{}   `json:"status"`
-		To                interface{}   `json:"to"`
-		TransactionHash   string        `json:"transactionHash"`
-		TransactionIndex  string        `json:"transactionIndex"`
 	} `json:"result"`
 	ID int `json:"id"`
 }

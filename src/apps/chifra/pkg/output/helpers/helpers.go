@@ -11,6 +11,7 @@ import (
 )
 
 var enabledForCmds = map[string]bool{
+	"blocks":   os.Getenv("TEST_TEST_ONLY") == "true",
 	"receipts": true,
 	"when":     true,
 }
@@ -62,8 +63,11 @@ func SetWriterForCommand(cmdName string, opts *globals.GlobalOptions) {
 	}
 
 	// Run only in --file mode. Without --file, the default setup is OK.
-	if opts.File == "" {
-		return
+	// TODO: BOGUS - THIS WILL BE REMOVED TEST_TEST_ONLY
+	if os.Getenv("TEST_TEST_ONLY") != "true" {
+		if opts.File == "" {
+			return
+		}
 	}
 
 	// Try to cast the default writer to JsonWriter

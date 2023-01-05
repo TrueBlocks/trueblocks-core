@@ -773,7 +773,6 @@ bool COptionsBase::findSpecial(CNameValue& pair, const string_q& arg) {
 COptionsBase::COptionsBase(void) {
     minArgs = 1;
     isRaw = false;
-    isVeryRaw = false;
     firstOut = true;
     noHeader = false;
     enableBits = OPT_DEFAULT;

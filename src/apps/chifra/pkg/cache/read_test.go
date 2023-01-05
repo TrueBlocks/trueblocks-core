@@ -8,7 +8,6 @@ import (
 	"os"
 	"strings"
 	"testing"
-	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common"
@@ -142,7 +141,7 @@ func TestReadBlock(t *testing.T) {
 		t.Fatal("invalid finalized")
 
 	}
-	if block.Timestamp.Unix() != 1508131303 {
+	if block.Timestamp != 1508131303 {
 		t.Fatal("invalid timestamp")
 
 	}
@@ -156,7 +155,7 @@ func TestReadBlock(t *testing.T) {
 		BlockNumber:          4369999,
 		TransactionIndex:     0,
 		Nonce:                175,
-		Timestamp:            time.Unix(0, 0),
+		Timestamp:            0,
 		From:                 common.HexToAddress("0x53871c23523453988ebd6524fcb0ea29241ca4d2"),
 		To:                   common.HexToAddress("0x8d12a197cb00d4747a1fe03395095ce2a5cc6819"),
 		Value:                *big.NewInt(0),
@@ -202,7 +201,7 @@ func TestReadBlock(t *testing.T) {
 		BlockNumber:          4369999,
 		TransactionIndex:     8,
 		Nonce:                254,
-		Timestamp:            time.Unix(0, 0),
+		Timestamp:            0,
 		From:                 common.HexToAddress("0x1366a2ca67594ffd5174d0216d60d9ea8deb511f"),
 		To:                   common.HexToAddress("0xb4a68dfdfb56184930c3a84e9244919823c3a2b4"),
 		Value:                *expectedValue,

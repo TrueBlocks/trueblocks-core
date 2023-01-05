@@ -5,7 +5,6 @@ import (
 	"encoding/binary"
 	"errors"
 	"math/big"
-	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common"
@@ -182,15 +181,16 @@ func makeArrayItemRead[Item ArrayItem](
 	}
 }
 
-func readTimestamp(read readBytes, target *time.Time) (err error) {
-	var rawTimestamp int64
-	err = read(&rawTimestamp)
-	if err != nil {
-		return
-	}
-	*target = time.Unix(rawTimestamp, 0)
-	return
-}
+// TODO: this can probably be removed
+// func readTimestamp(read readBytes, target *time.Time) (err error) {
+// 	var rawTimestamp int64
+// 	err = read(&rawTimestamp)
+// 	if err != nil {
+// 		return
+// 	}
+// 	*target = time.Unix(rawTimestamp, 0)
+// 	return
+// }
 
 func readUintAsBool(read readBytes, target *bool) (err error) {
 	var raw uint8
@@ -286,7 +286,7 @@ func ReadBlock(reader *bufio.Reader) (block *types.SimpleBlock, err error) {
 		return
 	}
 
-	err = readTimestamp(read, &block.Timestamp)
+	err = read(&block.Timestamp)
 	if err != nil {
 		return
 	}
@@ -343,7 +343,7 @@ func ReadTransaction(reader *bufio.Reader) (tx *types.SimpleTransaction, err err
 		return
 	}
 
-	err = readTimestamp(read, &tx.Timestamp)
+	err = read(&tx.Timestamp)
 	if err != nil {
 		return
 	}

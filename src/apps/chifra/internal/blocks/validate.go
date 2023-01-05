@@ -72,6 +72,10 @@ func (opts *BlocksOptions) validateBlocks() error {
 			}
 
 		} else {
+			if opts.ListCount > 0 {
+				return validate.Usage("You must supply a non-zero value for the --list option with --list_count.")
+			}
+
 			if len(opts.Blocks) == 0 && opts.ListCount == 0 {
 				return validate.Usage("Please supply one or more block identifiers or the --list_count option.")
 			}

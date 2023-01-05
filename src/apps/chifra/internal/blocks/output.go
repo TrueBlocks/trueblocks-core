@@ -11,6 +11,7 @@ package blocksPkg
 // EXISTING_CODE
 import (
 	"net/http"
+	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -48,17 +49,27 @@ func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if false && opts.List > 0 {
-		// return opts.HandleList(), true
-		opts.HandleList()
-	}
+	if opts.IsPorted() {
+		handled = true
+		if opts.List > 0 {
+			err = opts.HandleList()
 
-	if opts.Globals.IsApiMode() {
-		return nil, false
-	}
+		} else if opts.Uncles {
+			err = opts.HandleShowUncles()
 
-	handled = true
-	err = opts.Globals.PassItOn("getBlocks", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
+		} else {
+			err = opts.HandleShowBlocks()
+
+		}
+
+	} else {
+		if opts.Globals.IsApiMode() {
+			return nil, false
+		}
+
+		handled = true
+		err = opts.Globals.PassItOn("getBlocks", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
+	}
 	// EXISTING_CODE
 
 	return
@@ -74,4 +85,8 @@ func GetBlocksOptions(args []string, g *globals.GlobalOptions) *BlocksOptions {
 }
 
 // EXISTING_CODE
+func (opts *BlocksOptions) IsPorted() bool {
+	return os.Getenv("TEST_TEST_ONLY") == "true" && !opts.Uniq && !opts.Apps // && (opts.List > 0 || opts.Globals.ShowRaw)
+}
+
 // EXISTING_CODE
