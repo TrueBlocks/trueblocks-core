@@ -72,10 +72,6 @@ func (r *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[s
 		model["contractAddress"] = r.ContractAddress
 		order = append(order, "contractAddress")
 	}
-	if r.EffectiveGasPrice > 0 {
-		model["effectiveGasPrice"] = r.EffectiveGasPrice
-		order = append(order, "effectiveGasPrice")
-	}
 
 	if showHidden && format == "json" {
 		// TODO: The tests in this section of code are basically implementing `omitempty`
