@@ -17,15 +17,21 @@ The input files are installed with `chifra` and appear here:
 
 Set A has 784 items. Set B has 113,281 items in total. Taking the cross-product of those two sets (784 x 113,281) produces 88,812,304 four-byte signatures. This is about 88 times bigger than the four-byte directory, but it is a vanishingly small precentage of the 2^32 (4,294,967,296) possible four byte encodings.
 
-The database produced from these sets is "chunked" similar to the Unchained Index producing around 65,536 files. The size of the files ranges between 100  and 200 KB. The full database takes about 7 GB of disk space in total. Generating the database takes about 40 minutes.
+The database produced from these sets is "chunked" by the first two bytes in the four-byte. Similar to the Unchained Index. This produces 65,536 files. Files can be downloaded by end users from IPFS and pinned, making the file increasingly available to others.
+
+The size of the files ranges between 100  and 200 KB. The full database takes about 7 GB of disk space in total, but most users would store much less data than that. Generating the database takes about 40 minutes.
 
 ## A Second Set of Sets
 
 We have another set of sets. In this other set, Set A has 41,531 signatures. Set B has 616,287 function and events names.
 
-The cross produce of these two sets would produce about 25,595,015,397 results. Because this number is larger than the space we need to cover. This second cross product would produce eight times over redundancy. Eight signatures for each of the four billion four-byte encodings.
+The cross product of these two sets produces 25,595,015,397 results. This second cross product is eight times larger than it needs to be. Eight signatures for each of the four billion four-byte encodings. We could filter out many of the less frequently used functions and signature types producing much smaller data.
 
-In some future world, someone could produce this database, publish it (chunked) to a content-addressable store (such as IPFS), and over time, people might learn to go to that IPFS hash to find four-bytes encodings. We could even build a TCR (hi Auryn!) to help us sort out which of the 25 redundant encodings is the right one.
+In some future world, someone could produce this database, publish it (in a chunked manner) to a content-addressable store (such as IPFS), and over time, people would learn to go to this well-known IPFS hash to find four-bytes encodings. The more people use it, the better it would get.
+
+We could even build a TCR (hi Auryn!) to help us sort out which of the 25 redundant encodings is the right one.
+
+A simple linear extrapolation of the above sizes suggests about it would take about 288 times longer or about eight days. (But it would be done once and for all.)
 
 ## Chunk format
 
