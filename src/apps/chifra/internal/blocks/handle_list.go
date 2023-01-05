@@ -33,7 +33,7 @@ func (opts *BlocksOptions) HandleList() error {
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
 		for bn := start; bn > end; bn-- {
 			finalized := meta.Age(bn) > 28
-			block, err := rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, finalized, false)
+			block, err := rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, finalized)
 			if err != nil {
 				errorChan <- err
 				cancel()

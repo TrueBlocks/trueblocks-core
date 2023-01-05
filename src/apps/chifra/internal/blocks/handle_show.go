@@ -33,7 +33,20 @@ func (opts *BlocksOptions) HandleShowBlocks() error {
 			}
 			for _, bn := range blockNums {
 				finalized := meta.Age(bn) > 28
-				block, err := rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, finalized, !opts.Hashes)
+
+				// Decide on the concrete type of block.Transactions and set values
+				var block types.Modeler[types.RawBlock]
+				var err error
+				if !opts.Hashes {
+					var b types.SimpleBlock[types.SimpleTransaction]
+					b, err = rpcClient.GetBlockByNumberWithTxs(opts.Globals.Chain, bn, finalized)
+					block = &b
+				} else {
+					var b types.SimpleBlock[string]
+					b, err = rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, finalized)
+					block = &b
+				}
+
 				// TODO: rpcClient should return a custom type of error in this case
 				if err != nil && strings.Contains(err.Error(), "not found") {
 					errorChan <- err
@@ -44,7 +57,7 @@ func (opts *BlocksOptions) HandleShowBlocks() error {
 					cancel()
 					return
 				}
-				modelChan <- &block
+				modelChan <- block
 			}
 		}
 	}
