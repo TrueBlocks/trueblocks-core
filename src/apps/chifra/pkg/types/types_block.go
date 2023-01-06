@@ -122,7 +122,7 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 		"parentHash",
 		"miner",
 		"difficulty",
-		"finalized",
+		// "finalized",
 		"baseFeePerGas",
 		"gasLimit",
 		"gasUsed",

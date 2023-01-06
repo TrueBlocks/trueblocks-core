@@ -1,6 +1,10 @@
 package types
 
-import "github.com/ethereum/go-ethereum/common"
+import (
+	"strings"
+
+	"github.com/ethereum/go-ethereum/common"
+)
 
 type RawTransaction struct {
 	Hash             common.Hash `json:"hash"`
@@ -54,6 +58,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		"to":               s.To,
 		"gasUsed":          s.GasUsed,
 		"hash":             s.Hash,
+		"isError":          s.IsError,
 	}
 
 	if format == "json" {
@@ -83,12 +88,26 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 			if s.BlockNumber < byzantiumBlock || *status == 4294967295-1 {
 				status = nil
 			}
-			model["receipt"] = map[string]any{
+			receiptModel := map[string]any{
 				"contractAddress":   contractAddress,
 				"effectiveGasPrice": s.Receipt.EffectiveGasPrice,
 				"gasUsed":           s.Receipt.GasUsed,
 				"status":            status,
 			}
+
+			if len(s.Receipt.Logs) > 0 {
+				logs := make([]map[string]any, 0, len(s.Receipt.Logs))
+				for _, log := range s.Receipt.Logs {
+					logs = append(logs, map[string]any{
+						"address":  strings.ToLower(log.Address.Hex()),
+						"logIndex": log.LogIndex,
+						"topics":   log.Topics,
+						"data":     log.Data,
+					})
+				}
+				receiptModel["logs"] = logs
+			}
+			model["receipt"] = receiptModel
 		}
 
 		return Model{
@@ -100,7 +119,6 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 	// "date": s.Date,
 	// "ether": s.Ether,
 	// "ethGasPrice": s.EthGasPrice,
-	model["isError"] = s.IsError
 	// "encoding": s.Encoding,
 	// "compressedTx": s.CompressedTx,
 
