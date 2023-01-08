@@ -9,7 +9,7 @@ TrueBlocks allows you to name addresses of interest to you and either share thos
 an on-chain mechanism) or keep them private if you so desire.
 
 Over the years, we've paid careful attention to the 'airwaves' and have collected together a
-'starter-set' of named addresses which is available through the [chifra names](/docs/chifra/accounts/#chifra-names)
+'starter-set' of named addresses which is available through the [chifra names](/chifra/accounts/#chifra-names)
 command line. For example, every time people say "Show me your address, and we will airdrop some
 tokens" on Twitter, we copy and paste all those addresses. We figure if you're going to DOX
 yourselves, we might as well take advantage of it. Sorry...not sorry.

@@ -2,18 +2,15 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2023-01-01T20:44:05
 lastmod:
   - :git
   - lastmod
-  - date
   - publishDate
 draft: false
-images: []
 menu:
-  docs:
-    parent: "chifra"
-weight: 1500
+  chifra:
+    parent: commands
+weight: 1400
 toc: true
 ---
 <!-- markdownlint-disable MD033 MD036 MD041 -->

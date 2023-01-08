@@ -2,18 +2,15 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2023-01-04T05:46:09
 lastmod:
   - :git
   - lastmod
-  - date
   - publishDate
 draft: false
-images: []
 menu:
-  docs:
-    parent: "chifra"
-weight: 1300
+  chifra:
+    parent: commands
+weight: 1200
 toc: true
 ---
 <!-- markdownlint-disable MD033 MD036 MD041 -->

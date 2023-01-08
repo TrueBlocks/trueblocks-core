@@ -791,8 +791,8 @@ bool goPortNewCode(const string_q& a) {
 
 //---------------------------------------------------------------------------------------------------
 string_q get_corresponds_link(const string_q& toolGroup, const string_q& toolRoute) {
-    return (" Corresponds to the <a href=\"/docs/chifra/" + toolGroup + "/#chifra-" + toolRoute + "\">chifra " +
-            toolRoute + "</a> command line.");
+    return (" Corresponds to the <a href=\"/chifra/" + toolGroup + "/#chifra-" + toolRoute + "\">chifra " + toolRoute +
+            "</a> command line.");
 }
 // EXISTING_CODE
 }  // namespace qblocks

@@ -2,18 +2,15 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2023-01-01T22:18:16
 lastmod:
   - :git
   - lastmod
-  - date
   - publishDate
 draft: false
-images: []
 menu:
-  docs:
-    parent: "chifra"
-weight: 1700
+  chifra:
+    parent: commands
+weight: 1600
 toc: true
 ---
 <!-- markdownlint-disable MD033 MD036 MD041 -->

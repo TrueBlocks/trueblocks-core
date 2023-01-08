@@ -2,14 +2,11 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2023-01-04T18:42:40
 lastmod:
   - :git
   - lastmod
-  - date
   - publishDate
 draft: false
-images: []
 menu:
   data:
     parent: "collections"
@@ -40,13 +37,13 @@ particular address appears. This includes obvious locations such as `to` or `fro
 as esoteric locations such as deep inside a tenth-level trace or as the miner of an uncle block.
 The primary goal of TrueBlocks is to identify every appearance for any address on the chain.
 
-The TrueBlocks [index of appearances](/data-model/the-index/) (created by [chifra scrape](/docs/chifra/admin/#chifra-scrape))
+The TrueBlocks [index of appearances](/data-model/the-index/) (created by [chifra scrape](/chifra/admin/#chifra-scrape))
 makes the production of such a list possible. Appearances are stored in [Monitors](/data-model/accounts/#monitor).
 
 The following commands produce and manage Appearances:
 
-- [chifra list](/docs/chifra/accounts/#chifra-list)
-- [chifra export](/docs/chifra/accounts/#chifra-export)
+- [chifra list](/chifra/accounts/#chifra-list)
+- [chifra export](/chifra/accounts/#chifra-export)
 
 Appearances consist of the following fields:
 
@@ -81,7 +78,7 @@ is always present as the `assetAddress` in the first reconciliation of the state
 
 The following commands produce and manage Reconciliations:
 
-- [chifra export](/docs/chifra/accounts/#chifra-export)
+- [chifra export](/chifra/accounts/#chifra-export)
 
 Reconciliations consist of the following fields:
 
@@ -140,20 +137,20 @@ Reconciliations consist of the following fields:
 <!-- markdownlint-disable MD033 MD036 MD041 -->
 A Monitor is a list of [Appearances](/data-model/accounts/#appearance) associated with a given
 address along with various details about those appearances. A monitor is created when a user
-expresses interest in an address by calling either [chifra list](/docs/chifra/accounts/#chifra-list)
-or [chifra export](/docs/chifra/accounts/#chifra-export) tool (or querying thier associated APIs).
+expresses interest in an address by calling either [chifra list](/chifra/accounts/#chifra-list)
+or [chifra export](/chifra/accounts/#chifra-export) tool (or querying thier associated APIs).
 
 Once created, a monitor may be periodically *freshened* by calling either `chifra list` or `chifra
 export`, however, it is also possible to freshen a monitor continually with
-[chifra scrape --monitors](/docs/chifra/admin/#chifra-scrape). This tool watches the front of the
+[chifra scrape --monitors](/chifra/admin/#chifra-scrape). This tool watches the front of the
 chain and repeatedly calls `chifra list`.
 
 The following commands produce and manage Monitors:
 
-- [chifra monitors](/docs/chifra/accounts/#chifra-monitors)
-- [chifra list](/docs/chifra/accounts/#chifra-list)
-- [chifra export](/docs/chifra/accounts/#chifra-export)
-- [chifra config](/docs/chifra/admin/#chifra-config)
+- [chifra monitors](/chifra/accounts/#chifra-monitors)
+- [chifra list](/chifra/accounts/#chifra-list)
+- [chifra export](/chifra/accounts/#chifra-export)
+- [chifra config](/chifra/admin/#chifra-config)
 
 Monitors consist of the following fields:
 
@@ -186,14 +183,14 @@ TrueBlocks allows you to name addresses of interest to you and either share thos
 an on-chain mechanism) or keep them private if you so desire.
 
 Over the years, we've paid careful attention to the 'airwaves' and have collected together a
-'starter-set' of named addresses which is available through the [chifra names](/docs/chifra/accounts/#chifra-names)
+'starter-set' of named addresses which is available through the [chifra names](/chifra/accounts/#chifra-names)
 command line. For example, every time people say "Show me your address, and we will airdrop some
 tokens" on Twitter, we copy and paste all those addresses. We figure if you're going to DOX
 yourselves, we might as well take advantage of it. Sorry...not sorry.
 
 The following commands produce and manage Names:
 
-- [chifra names](/docs/chifra/accounts/#chifra-names)
+- [chifra names](/chifra/accounts/#chifra-names)
 
 Names consist of the following fields:
 
@@ -228,7 +225,7 @@ function.
 
 The following commands produce and manage Abis:
 
-- [chifra abis](/docs/chifra/accounts/#chifra-abis)
+- [chifra abis](/chifra/accounts/#chifra-abis)
 
 Abis consist of the following fields:
 
@@ -239,7 +236,7 @@ Abis consist of the following fields:
 
 ### Notes
 
-See the [chifra abis](/docs/chifra/accounts/#chifra-abis) command line for information about getting an EtherScan key.
+See the [chifra abis](/chifra/accounts/#chifra-abis) command line for information about getting an EtherScan key.
 
 ## AppearanceCount
 
@@ -249,8 +246,8 @@ various information about the monitor data for an address.
 
 The following commands produce and manage AppearanceCounts:
 
-- [chifra list](/docs/chifra/accounts/#chifra-list)
-- [chifra export](/docs/chifra/accounts/#chifra-export)
+- [chifra list](/chifra/accounts/#chifra-list)
+- [chifra export](/chifra/accounts/#chifra-export)
 
 AppearanceCounts consist of the following fields:
 

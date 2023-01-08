@@ -11,7 +11,7 @@ These are the two articles:
 
 ## Building and Using the Code
 
-To get started, you must download, build and get running the [TrueBlocks core libraries and tools](https://trueblocks.io/docs/install/install-trueblocks/). Do that now, and return when you're done.
+To get started, you must download, build and get running the [TrueBlocks core libraries and tools](https://trueblocks.io/docs/install/install-core/). Do that now, and return when you're done.
 
 Next, follow these instructions to build the code in this repo (from the ./build folder):
 

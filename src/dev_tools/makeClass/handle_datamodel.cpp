@@ -303,7 +303,7 @@ string_q get_producer_table(const CClassDefinition& model, const CCommandOptionA
     ostringstream prodStream;
     for (auto p : producers) {
         string_q g = get_producer_group(p, endpoints);
-        prodStream << "- [chifra " << p << "](/docs/chifra/" << g << "/#chifra-" << p << ")" << endl;
+        prodStream << "- [chifra " << p << "](/chifra/" << g << "/#chifra-" << p << ")" << endl;
     }
     return STR_MODEL_PRODUCERS + prodStream.str();
 }

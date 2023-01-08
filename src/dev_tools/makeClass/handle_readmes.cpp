@@ -88,7 +88,7 @@ bool COptions::handle_readmes(void) {
 
     map<string_q, string_q> groupParts;
     map<string_q, uint64_t> weights;
-    uint32_t weight = 1100;
+    uint32_t weight = 1000;
     for (auto ep : endpointArray) {
         if (!ep.api_route.empty()) {
             if (ep.is_visible_docs) {
@@ -127,8 +127,8 @@ bool COptions::handle_readmes(void) {
         string_q front = STR_YAML_FRONTMATTER;
         replace(front, "[{TITLE}]", firstUpper(toLower(group)));
         replace(front, "[{WEIGHT}]", uint_2_Str(weights[group]));
-        replace(front, "[{M1}]", "docs:");
-        replace(front, "[{M2}]", "parent: \"chifra\"");
+        replace(front, "[{M1}]", "chifra:");
+        replace(front, "[{M2}]", "parent: commands");
         group = substitute(toLower(group), " ", "");
 
         ostringstream os;
@@ -142,7 +142,7 @@ bool COptions::handle_readmes(void) {
             os << asciiFileToString(pp);
         }
 
-        string_q outFn = getDocsPathContent("docs/chifra/" + group + ".md");
+        string_q outFn = getDocsPathContent("chifra/" + group + ".md");
         writeIfDifferent(outFn, os.str());
     }
 
@@ -158,14 +158,11 @@ const char* STR_YAML_FRONTMATTER =
     "title: \"[{TITLE}]\"\n"
     "description: \"\"\n"
     "lead: \"\"\n"
-    "date: $DATE\n"
     "lastmod:\n"
     "  - :git\n"
     "  - lastmod\n"
-    "  - date\n"
     "  - publishDate\n"
     "draft: false\n"
-    "images: []\n"
     "menu:\n"
     "  [{M1}]\n"
     "    [{M2}]\n"

@@ -2,18 +2,15 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2023-01-01T20:44:05
 lastmod:
   - :git
   - lastmod
-  - date
   - publishDate
 draft: false
-images: []
 menu:
-  docs:
-    parent: "chifra"
-weight: 1100
+  chifra:
+    parent: commands
+weight: 1000
 toc: true
 ---
 <!-- markdownlint-disable MD033 MD036 MD041 -->

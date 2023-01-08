@@ -56,7 +56,7 @@ Our hope is that the GitCoin DAO (or any other DAO -- or any other smart contrac
 
 [THIS SECTION WILL BE FLESHED OUR FURTHER SHORTLY]
 
-First, you need to download, build and install TrueBlocks. Instructions for that are here: https://trueblocks.io/docs/install/install-trueblocks/. (We're working on a docker version that will make this much easier.)
+First, you need to download, build and install TrueBlocks. Instructions for that are here: https://trueblocks.io/docs/install/install-core/. (We're working on a docker version that will make this much easier.)
 
 Next, change into the current folder and type `make`.
 

@@ -108,7 +108,7 @@ bool COptions::parseArguments(string_q& command) {
         establishFolder(getDocsPathContent("api/"));
         establishFolder(getDocsPathContent("data-model/"));
         establishFolder(getDocsPathContent("docs/"));
-        establishFolder(getDocsPathContent("docs/chifra/"));
+        establishFolder(getDocsPathContent("chifra/"));
     }
 
     string_q endpointsFile = getPathToSource("cmd-line-endpoints.csv");

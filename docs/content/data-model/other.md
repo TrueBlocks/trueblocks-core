@@ -2,14 +2,11 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2023-01-04T06:02:09
 lastmod:
   - :git
   - lastmod
-  - date
   - publishDate
 draft: false
-images: []
 menu:
   data:
     parent: "collections"
@@ -24,7 +21,7 @@ The following commands provide useful miscellaneous tools:
 - `ethslurp` an older tool that lets you call data from EtherScan. (This has issues of centralization and data quality, see explanation in its section).
 
 Note: some of these tools, such as `ethslurp`, require an EtherScan key. [Follow these instructions
-to add a key to your config](/docs/install/install-trueblocks/#3-update-the-configs-for-your-rpc-and-api-keys).
+to add a key to your config](/docs/install/install-core/#3-update-the-configs-for-your-rpc-and-api-keys).
 
 Each data structure is created by one or more tools which are detailed below.
 
@@ -40,8 +37,8 @@ commands provide an `--articulate` option. See the commands themselves for more 
 
 The following commands produce and manage Functions:
 
-- [chifra abis](/docs/chifra/accounts/#chifra-abis)
-- [chifra export](/docs/chifra/accounts/#chifra-export)
+- [chifra abis](/chifra/accounts/#chifra-abis)
+- [chifra export](/chifra/accounts/#chifra-export)
 
 Functions consist of the following fields:
 
@@ -66,8 +63,8 @@ bytes into human-readable text.
 
 The following commands produce and manage Parameters:
 
-- [chifra abis](/docs/chifra/accounts/#chifra-abis)
-- [chifra export](/docs/chifra/accounts/#chifra-export)
+- [chifra abis](/chifra/accounts/#chifra-abis)
+- [chifra export](/chifra/accounts/#chifra-export)
 
 Parameters consist of the following fields:
 

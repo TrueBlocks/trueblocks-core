@@ -2,14 +2,11 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2023-01-04T06:02:09
 lastmod:
   - :git
   - lastmod
-  - date
   - publishDate
 draft: false
-images: []
 menu:
   data:
     parent: "collections"
@@ -34,20 +31,20 @@ contract as well as account balance and a few other things.
 
 The following commands produce and manage EthStates:
 
-- [chifra state](/docs/chifra/chainstate/#chifra-state)
+- [chifra state](/chifra/chainstate/#chifra-state)
 
 EthStates consist of the following fields:
 
-| Field       | Description                                                                     | Type    |
-| ----------- | ------------------------------------------------------------------------------- | ------- |
-| blockNumber | the block number at which this state was taken                                  | blknum  |
-| address     | the address of the state being queried                                          | address |
-| proxy       | if this is a proxy, this is the proxied-to address                              | address |
-| balance     | the balance at the address at the given block height                            | wei     |
-| nonce       | the nonce of the address at the given block height                              | uint64  |
-| code        | the byte code at the address (if this is a smart contract)                      | bytes   |
-| deployed    | the block number at which this smart contract was deployed (if a smart contact) | blknum  |
-| accttype    | the type of the address at the given block                                      | string  |
+| Field       | Description                                                                      | Type    |
+| ----------- | -------------------------------------------------------------------------------- | ------- |
+| blockNumber | the block number at which this state was taken                                   | blknum  |
+| address     | the address of the state being queried                                           | address |
+| proxy       | if this is a proxy, this is the proxied-to address                               | address |
+| balance     | the balance at the address at the given block height                             | wei     |
+| nonce       | the nonce of the address at the given block height                               | uint64  |
+| code        | the byte code at the address (if this is a smart contract)                       | bytes   |
+| deployed    | the block number at which this smart contract was deployed (if a smart contract) | blknum  |
+| accttype    | the type of the address at the given block                                       | string  |
 
 ## EthCall
 
@@ -57,20 +54,20 @@ contract. This is the decoded `output` value of the smart contract call.
 
 The following commands produce and manage EthCalls:
 
-- [chifra state](/docs/chifra/chainstate/#chifra-state)
+- [chifra state](/chifra/chainstate/#chifra-state)
 
 EthCalls consist of the following fields:
 
-| Field            | Description                                                                     | Type                                    |
-| ---------------- | ------------------------------------------------------------------------------- | --------------------------------------- |
-| blockNumber      | the block number at which this call was made                                    | blknum                                  |
-| address          | the address of contract being called                                            | address                                 |
-| signature        | the canonical signature of the interface                                        | string                                  |
-| encoding         | the encoding for the function call                                              | string                                  |
-| bytes            | the bytes data following the encoding of the call                               | string                                  |
-| callResult       | the result of the call to the contract                                          | [Function](/data-model/other/#function) |
-| compressedResult | the compressed version of the result of the call to the contract                | string                                  |
-| deployed         | the block number at which this smart contract was deployed (if a smart contact) | blknum                                  |
+| Field            | Description                                                                      | Type                                    |
+| ---------------- | -------------------------------------------------------------------------------- | --------------------------------------- |
+| blockNumber      | the block number at which this call was made                                     | blknum                                  |
+| address          | the address of contract being called                                             | address                                 |
+| signature        | the canonical signature of the interface                                         | string                                  |
+| encoding         | the encoding for the function call                                               | string                                  |
+| bytes            | the bytes data following the encoding of the call                                | string                                  |
+| callResult       | the result of the call to the contract                                           | [Function](/data-model/other/#function) |
+| compressedResult | the compressed version of the result of the call to the contract                 | string                                  |
+| deployed         | the block number at which this smart contract was deployed (if a smart contract) | blknum                                  |
 
 ## TokenBalance
 
@@ -79,7 +76,7 @@ The data model displays the token balance records for the `chifra tokens` tool.
 
 The following commands produce and manage TokenBalances:
 
-- [chifra tokens](/docs/chifra/chainstate/#chifra-tokens)
+- [chifra tokens](/chifra/chainstate/#chifra-tokens)
 
 TokenBalances consist of the following fields:
 

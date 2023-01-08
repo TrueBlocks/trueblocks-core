@@ -2,18 +2,15 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2023-01-01T20:44:05
 lastmod:
   - :git
   - lastmod
-  - date
   - publishDate
 draft: false
-images: []
 menu:
-  docs:
-    parent: "chifra"
-weight: 1900
+  chifra:
+    parent: commands
+weight: 1800
 toc: true
 ---
 <!-- markdownlint-disable MD033 MD036 MD041 -->
@@ -24,7 +21,7 @@ These commands call some useful miscellaneous tools:
 centralization and data quality, see explanation in its section).
 
 Note: some of these tools, like `ethslurp`, require an EtherScan key. [Follow these instructions
-to add a key to your config](/docs/install/install-trueblocks/#3-update-the-configs-for-your-rpc-and-api-keys).
+to add a key to your config](/docs/install/install-core/#3-update-the-configs-for-your-rpc-and-api-keys).
 
 ## chifra explore
 
