@@ -103,6 +103,20 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    string_q aliasesFn = getDocsPathTemplates("aliases.csv");
+    if (fileExists(aliasesFn)) {
+        CStringArray lines;
+        asciiFileToLines(aliasesFn, lines);
+        for (auto line : lines) {
+            CStringArray parts;
+            explode(parts, line, ',');
+            // cerr << line << " --> " << parts[0] << " --> " << parts[1] << endl;
+            if (parts.size() == 2) {
+                hugoAliasMap[parts[0]] = parts[1];
+            }
+        }
+    }
+
     if (readmes || openapi) {
         establishFolder(getDocsPathContent(""));
         establishFolder(getDocsPathContent("api/"));

@@ -58,6 +58,7 @@ class COptions : public COptionsBase {
     timestamp_t lastFormat;
     timestamp_t lastLint;
     CCommandOptionArray endpointArray;
+    map<string_q, string_q> hugoAliasMap;
 
     ostringstream optionStream, initStream, localStream, autoStream, headerStream, configStream;
     ostringstream notesStream, errorStrStream, errorDefStream, goCallStream, goPkgStream, goConvertStream;

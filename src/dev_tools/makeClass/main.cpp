@@ -43,5 +43,10 @@ int main(int argc, const char* argv[]) {
     }
 
     acctlib_cleanup();
+
+    // for (auto entry : options.hugoAliasMap) {
+    //     cout << "alias " << entry.first << "=\"" << entry.second << "\"" << endl;
+    // }
+
     return 0;
 }
