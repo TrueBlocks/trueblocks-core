@@ -21,9 +21,9 @@ import (
 // DaemonOptions provides all command options for the chifra daemon command.
 type DaemonOptions struct {
 	Port    string                `json:"port,omitempty"`    // Specify the server's port
+	Api     string                `json:"api,omitempty"`     // Instruct the node to start the API server
 	Scrape  string                `json:"scrape,omitempty"`  // Start the scraper, initialize it with either just blooms or entire index, generate for new blocks
 	Monitor bool                  `json:"monitor,omitempty"` // Instruct the node to start the monitors tool
-	Api     string                `json:"api,omitempty"`     // Instruct the node to start the API server
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 }
@@ -36,9 +36,9 @@ var defaultDaemonOptions = DaemonOptions{
 // testLog is used only during testing to export the options for this test case.
 func (opts *DaemonOptions) testLog() {
 	logger.TestLog(len(opts.Port) > 0, "Port: ", opts.Port)
+	logger.TestLog(len(opts.Api) > 0, "Api: ", opts.Api)
 	logger.TestLog(len(opts.Scrape) > 0, "Scrape: ", opts.Scrape)
 	logger.TestLog(opts.Monitor, "Monitor: ", opts.Monitor)
-	logger.TestLog(len(opts.Api) > 0, "Api: ", opts.Api)
 	opts.Globals.TestLog()
 }
 
@@ -77,12 +77,12 @@ func daemonFinishParseApi(w http.ResponseWriter, r *http.Request) *DaemonOptions
 		switch key {
 		case "port":
 			opts.Port = value[0]
+		case "api":
+			opts.Api = value[0]
 		case "scrape":
 			opts.Scrape = value[0]
 		case "monitor":
 			opts.Monitor = true
-		case "api":
-			opts.Api = value[0]
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "daemon")

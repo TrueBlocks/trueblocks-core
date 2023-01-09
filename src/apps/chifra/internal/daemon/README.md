@@ -24,11 +24,11 @@ Aliases:
 
 Flags:
   -p, --port string     specify the server's port (default ":8080")
+  -a, --api string      instruct the node to start the API server
+                        One of [ off | on ] (default "on")
   -s, --scrape string   start the scraper, initialize it with either just blooms or entire index, generate for new blocks
                         One of [ off | blooms | full-index ]
   -m, --monitor         instruct the node to start the monitors tool
-  -a, --api string      instruct the node to start the API server
-                        One of [ off | on ] (default "on")
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)
   -h, --help            display this help screen
@@ -56,9 +56,16 @@ All tools accept the following additional flags, although in some cases, they ha
       --output string   write the results to file 'fn' and return the filename
       --append          for --output command only append to instead of replace contents of file
       --file string     specify multiple sets of command line options in a file
-```
+  -x, --fmt string      export format, one of [none|json*|txt|csv]
+  -v, --verbose         enable verbose (increase detail with --log_level)
+  -h, --help            display this help screen
+  ```
 
-*For the `--file string` option, you may place a series of valid command lines in a file using any
+**Note:** For the `--file string` option, you may place a series of valid command lines in a file using any
 valid flags. In some cases, this may significantly improve performance. A semi-colon at the start
-of any line makes it a comment.*
+of any line makes it a comment.
+
+**Note:** If you use `--output --append` option and at the same time the `--file` option, you may not switch
+export formats in the command file. For example, a command file with two different commands, one with `--fmt csv`
+and the other with `--fmt json` will produce both invalid CSV and invalid JSON.
 

@@ -65,7 +65,7 @@ These items may be set in three ways, each overridding the preceeding method:
 -- on the command line using the configuration item with leading dashes (i.e., `--name`).  
 
 <!-- markdownlint-disable MD041 -->
-### Further information
+### further information
 
 Each time `chifra scrape` runs, it begins at the last block it completed processing (plus one). With
 each pass, the scraper descends as deeply as is possible into each block's data. (This is why
@@ -92,7 +92,7 @@ on their own machines. The user needs the data for the software to operate--shar
 minimal effort and makes the data available to other people. Everyone is better off. A
 naturally-occuring network effect.
 
-### Prerequisites
+### prerequisites
 
 `chifra scrape` works with any EVM-based blockchain, but does not currently work without a "tracing,
 archive" RPC endpoint. The Erigon blockchain node, given its minimal disc footprint for an archive
@@ -114,9 +114,16 @@ All tools accept the following additional flags, although in some cases, they ha
       --output string   write the results to file 'fn' and return the filename
       --append          for --output command only append to instead of replace contents of file
       --file string     specify multiple sets of command line options in a file
-```
+  -x, --fmt string      export format, one of [none|json*|txt|csv]
+  -v, --verbose         enable verbose (increase detail with --log_level)
+  -h, --help            display this help screen
+  ```
 
-*For the `--file string` option, you may place a series of valid command lines in a file using any
+**Note:** For the `--file string` option, you may place a series of valid command lines in a file using any
 valid flags. In some cases, this may significantly improve performance. A semi-colon at the start
-of any line makes it a comment.*
+of any line makes it a comment.
+
+**Note:** If you use `--output --append` option and at the same time the `--file` option, you may not switch
+export formats in the command file. For example, a command file with two different commands, one with `--fmt csv`
+and the other with `--fmt json` will produce both invalid CSV and invalid JSON.
 

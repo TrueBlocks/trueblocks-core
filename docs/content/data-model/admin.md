@@ -2,14 +2,11 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2023-01-04T06:02:09
 lastmod:
   - :git
   - lastmod
-  - date
   - publishDate
 draft: false
-images: []
 menu:
   data:
     parent: "collections"
@@ -27,7 +24,7 @@ Each data structure is created by one or more tools which are detailed below.
 ## Status
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
-The [chifra config](/docs/chifra/admin/#chifra-config) tool reports on the state (and size) of the
+The [chifra config](/chifra/admin/#chifra-config) tool reports on the state (and size) of the
 various TrueBlocks local binary caches. TrueBlocks produces nine difference caches: `abis`, `blocks`,
 `monitors`, `names`, `objs`, `recons`, `slurps`, `traces`, `txs`. In general practice, these caches
 may take up a few GB of hard drive space, however, for very popular smart contract the size of the
@@ -40,7 +37,7 @@ as well as current status information about the system including version informa
 
 The following commands produce and manage Statuses:
 
-- [chifra config](/docs/chifra/admin/#chifra-config)
+- [chifra config](/chifra/admin/#chifra-config)
 
 Statuses consist of the following fields:
 
@@ -76,9 +73,9 @@ smart contract.
 
 The following commands produce and manage Manifests:
 
-- [chifra chunks](/docs/chifra/admin/#chifra-chunks)
-- [chifra init](/docs/chifra/admin/#chifra-init)
-- [chifra scrape](/docs/chifra/admin/#chifra-scrape)
+- [chifra chunks](/chifra/admin/#chifra-chunks)
+- [chifra init](/chifra/admin/#chifra-init)
+- [chifra scrape](/chifra/admin/#chifra-scrape)
 
 Manifests consist of the following fields:
 
@@ -101,9 +98,9 @@ with a list of appearances appearing in the chunk.
 
 The following commands produce and manage PinnedChunks:
 
-- [chifra chunks](/docs/chifra/admin/#chifra-chunks)
-- [chifra init](/docs/chifra/admin/#chifra-init)
-- [chifra scrape](/docs/chifra/admin/#chifra-scrape)
+- [chifra chunks](/chifra/admin/#chifra-chunks)
+- [chifra init](/chifra/admin/#chifra-init)
+- [chifra scrape](/chifra/admin/#chifra-scrape)
 
 PinnedChunks consist of the following fields:
 
@@ -123,7 +120,7 @@ It is used mostly interenally to study the characteristics of the Unchained Inde
 
 The following commands produce and manage ChunkIndexes:
 
-- [chifra chunks](/docs/chifra/admin/#chifra-chunks)
+- [chifra chunks](/chifra/admin/#chifra-chunks)
 
 ChunkIndexes consist of the following fields:
 
@@ -146,7 +143,7 @@ information is used to study the characteristics of the Unchained Index.
 
 The following commands produce and manage ChunkBlooms:
 
-- [chifra chunks](/docs/chifra/admin/#chifra-chunks)
+- [chifra chunks](/chifra/admin/#chifra-chunks)
 
 ChunkBlooms consist of the following fields:
 
@@ -169,7 +166,7 @@ location and number of records in the `appearances` table to which the address t
 
 The following commands produce and manage ChunkAddresses:
 
-- [chifra chunks](/docs/chifra/admin/#chifra-chunks)
+- [chifra chunks](/chifra/admin/#chifra-chunks)
 
 ChunkAddresses consist of the following fields:
 
@@ -189,7 +186,7 @@ other is the `addresses` table which relates the addresses in that table to this
 
 The following commands produce and manage ChunkAppearances:
 
-- [chifra chunks](/docs/chifra/admin/#chifra-chunks)
+- [chifra chunks](/chifra/admin/#chifra-chunks)
 
 ChunkAppearances consist of the following fields:
 
@@ -206,7 +203,7 @@ information such as average number of addresses in an Unchained Index chunk amon
 
 The following commands produce and manage ChunkStats:
 
-- [chifra chunks](/docs/chifra/admin/#chifra-chunks)
+- [chifra chunks](/chifra/admin/#chifra-chunks)
 
 ChunkStats consist of the following fields:
 
@@ -229,13 +226,13 @@ ChunkStats consist of the following fields:
 ## Cache
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
-The [chifra config <type>](/docs/chifra/admin/#chifra-config) reports on the binary caches. Those
+The [chifra config <type>](/chifra/admin/#chifra-config) reports on the binary caches. Those
 reports come in the form of the Cache data type. Each cache data object may carry unique
 information for the given cache. See the source code for more information.
 
 The following commands produce and manage Caches:
 
-- [chifra config](/docs/chifra/admin/#chifra-config)
+- [chifra config](/chifra/admin/#chifra-config)
 
 Caches consist of the following fields:
 
@@ -256,7 +253,7 @@ tool.
 
 The following commands produce and manage CacheEntries:
 
-- [chifra config](/docs/chifra/admin/#chifra-config)
+- [chifra config](/chifra/admin/#chifra-config)
 
 CacheEntries consist of the following fields:
 
@@ -272,7 +269,7 @@ The `indexCacheItem` is used to present a single Unchained Index chunk in the Ex
 
 The following commands produce and manage IndexCacheItems:
 
-- [chifra config](/docs/chifra/admin/#chifra-config)
+- [chifra config](/chifra/admin/#chifra-config)
 
 IndexCacheItems consist of the following fields:
 
@@ -299,7 +296,7 @@ configuration file.
 
 The following commands produce and manage Chains:
 
-- [chifra config](/docs/chifra/admin/#chifra-config)
+- [chifra config](/chifra/admin/#chifra-config)
 
 Chains consist of the following fields:
 

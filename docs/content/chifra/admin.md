@@ -2,26 +2,28 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2023-01-01T22:18:16
 lastmod:
   - :git
   - lastmod
-  - date
   - publishDate
 draft: false
-images: []
+aliases:
+ - "/docs/chifra/admin"
 menu:
-  docs:
-    parent: "chifra"
-weight: 1700
+  chifra:
+    parent: commands
+weight: 1600
 toc: true
 ---
 <!-- markdownlint-disable MD033 MD036 MD041 -->
-The Admin component allows you to query the status of the TrueBlocks system. You can query the
-status; query for information about TrueBlocks caches; control the creation, sharing, and pinning
-of the TrueBlocks index of appearances; and even serve the data through an API.
+The Admin gourp of commands allows you to query the status of the TrueBlocks system and
+manage various apects including the Unchained Index. You may query the status; query for information
+about TrueBlocks caches; control the creation, sharing, and pinning of the Unchained Index; and even
+serve the data through an API.
 
-[See the API documentation for all information about using the API](/api).
+See [the API documentation](/api) for all information about using the API.
+
+To the right is a list of commands in this group. Click on a command to see its full documentation.
 ## chifra config
 
 <!-- markdownlint-disable MD041 -->
@@ -100,11 +102,11 @@ Aliases:
 
 Flags:
   -p, --port string     specify the server's port (default ":8080")
+  -a, --api string      instruct the node to start the API server
+                        One of [ off | on ] (default "on")
   -s, --scrape string   start the scraper, initialize it with either just blooms or entire index, generate for new blocks
                         One of [ off | blooms | full-index ]
   -m, --monitor         instruct the node to start the monitors tool
-  -a, --api string      instruct the node to start the API server
-                        One of [ off | on ] (default "on")
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)
   -h, --help            display this help screen
@@ -196,7 +198,7 @@ These items may be set in three ways, each overridding the preceeding method:
 -- on the command line using the configuration item with leading dashes (i.e., `--name`).  
 
 <!-- markdownlint-disable MD041 -->
-### Further information
+### further information
 
 Each time `chifra scrape` runs, it begins at the last block it completed processing (plus one). With
 each pass, the scraper descends as deeply as is possible into each block's data. (This is why
@@ -223,7 +225,7 @@ on their own machines. The user needs the data for the software to operate--shar
 minimal effort and makes the data available to other people. Everyone is better off. A
 naturally-occuring network effect.
 
-### Prerequisites
+### prerequisites
 
 `chifra scrape` works with any EVM-based blockchain, but does not currently work without a "tracing,
 archive" RPC endpoint. The Erigon blockchain node, given its minimal disc footprint for an archive

@@ -7,4 +7,4 @@ bytes            ,string   ,           ,       ,      ,        ,          ,     
 abi_spec         ,Abi      ,           ,true   ,      ,        ,          ,        ,      ,         ,    ,     ,              ,
 callResult       ,Function ,           ,true   ,      ,true    ,          ,        ,      ,         ,6   ,     ,              ,the result of the call to the contract
 compressedResult ,string   ,           ,       ,      ,true    ,          ,        ,      ,         ,7   ,6    ,              ,the compressed version of the result of the call to the contract
-deployed         ,blknum   ,           ,       ,      ,true    ,          ,        ,      ,         ,8   ,     ,8901011       ,the block number at which this smart contract was deployed (if a smart contact)
+deployed         ,blknum   ,           ,       ,      ,true    ,          ,        ,      ,         ,8   ,     ,8901011       ,the block number at which this smart contract was deployed (if a smart contract)
