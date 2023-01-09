@@ -2,17 +2,17 @@
 title: "Configurations"
 description: ""
 lead: ""
-date: 2021-11-22T19:18:35
 lastmod:
   - :git
   - lastmod
-  - date
   - publishDate
 draft: false
 images: []
+aliases:
+ - "/docs/chifra/configs"
 menu:
-  docs:
-    parent: "chifra"
+  chifra:
+    parent: commands
 weight: 2100
 toc: true
 ---

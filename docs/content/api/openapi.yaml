@@ -17,13 +17,13 @@ info:
 
     This API's endpoints are exact translations of the commands used by the chifra
     CLI application, and the query parameters mirror the commands' options and
-    flags. If you want details, [the commands have their own documentation page](/docs/using/introducing-chifra/).
+    flags. If you want details, [the commands have their own documentation page](/chifra/introduction/).
 
     For detailed descriptions of fields, see [the data model reference](/data-model/intro/).
 
       ### Before you begin
 
-    1. [Install the trueblocks-core application](/docs/install/install-trueblocks/)
+    1. [Install the trueblocks-core application](/docs/install/install-core/)
       on your machine, change your configs as needed.
     2. Run `chifra daemon`
 
@@ -84,7 +84,7 @@ paths:
       tags:
         - Accounts
       summary: List transactions
-      description: List every appearance of an address anywhere on the chain. Corresponds to the <a href="/docs/chifra/accounts/#chifra-list">chifra list</a> command line.
+      description: List every appearance of an address anywhere on the chain. Corresponds to the <a href="/chifra/accounts/#chifra-list">chifra list</a> command line.
       operationId: accounts-list
       parameters:
         - name: addrs
@@ -174,7 +174,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, and/or <a href="/data-model/accounts/#appearancecount">Appearancecount</a> data. Corresponds to the <a href="/docs/chifra/accounts/#chifra-list">chifra list</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, and/or <a href="/data-model/accounts/#appearancecount">Appearancecount</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-list">chifra list</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -204,7 +204,7 @@ paths:
       tags:
         - Accounts
       summary: Export details
-      description: Export full detail of transactions for one or more addresses. Corresponds to the <a href="/docs/chifra/accounts/#chifra-export">chifra export</a> command line.
+      description: Export full detail of transactions for one or more addresses. Corresponds to the <a href="/chifra/accounts/#chifra-export">chifra export</a> command line.
       operationId: accounts-export
       parameters:
         - name: addrs
@@ -438,7 +438,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/accounts/#reconciliation">Reconciliation</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/accounts/#appearancecount">Appearancecount</a>, <a href="/data-model/chaindata/#transaction">Transaction</a>, <a href="/data-model/chaindata/#transfer">Transfer</a>, <a href="/data-model/chaindata/#receipt">Receipt</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">Traceaction</a>, <a href="/data-model/chaindata/#traceresult">Traceresult</a>, <a href="/data-model/other/#function">Function</a>, and/or <a href="/data-model/other/#parameter">Parameter</a> data. Corresponds to the <a href="/docs/chifra/accounts/#chifra-export">chifra export</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/accounts/#reconciliation">Reconciliation</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/accounts/#appearancecount">Appearancecount</a>, <a href="/data-model/chaindata/#transaction">Transaction</a>, <a href="/data-model/chaindata/#transfer">Transfer</a>, <a href="/data-model/chaindata/#receipt">Receipt</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">Traceaction</a>, <a href="/data-model/chaindata/#traceresult">Traceresult</a>, <a href="/data-model/other/#function">Function</a>, and/or <a href="/data-model/other/#parameter">Parameter</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-export">chifra export</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -495,7 +495,7 @@ paths:
       tags:
         - Accounts
       summary: Manage monitors
-      description: Add, remove, clean, and list address monitors. Corresponds to the <a href="/docs/chifra/accounts/#chifra-monitors">chifra monitors</a> command line.
+      description: Add, remove, clean, and list address monitors. Corresponds to the <a href="/chifra/accounts/#chifra-monitors">chifra monitors</a> command line.
       operationId: accounts-monitors
       parameters:
         - name: addrs
@@ -574,7 +574,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: A local file indicating a user's interest in an address. Includes caches for reconicilations, transactions, and appearances as well as an optional association to named account. Produces <a href="/data-model/accounts/#monitor">Monitor</a> data. Corresponds to the <a href="/docs/chifra/accounts/#chifra-monitors">chifra monitors</a> command line.
+                    description: A local file indicating a user's interest in an address. Includes caches for reconicilations, transactions, and appearances as well as an optional association to named account. Produces <a href="/data-model/accounts/#monitor">Monitor</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-monitors">chifra monitors</a> command line.
                     type: array
                     items:
                       $ref: "#/components/schemas/monitor"
@@ -585,7 +585,7 @@ paths:
       tags:
         - Accounts
       summary: Names
-      description: Query addresses or names of well known accounts. Corresponds to the <a href="/docs/chifra/accounts/#chifra-names">chifra names</a> command line.
+      description: Query addresses or names of well known accounts. Corresponds to the <a href="/chifra/accounts/#chifra-names">chifra names</a> command line.
       operationId: accounts-names
       parameters:
         - name: terms
@@ -696,7 +696,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: An association between a human-readable name and an address used throughout TrueBlocks. Produces <a href="/data-model/accounts/#name">Name</a> data. Corresponds to the <a href="/docs/chifra/accounts/#chifra-names">chifra names</a> command line.
+                    description: An association between a human-readable name and an address used throughout TrueBlocks. Produces <a href="/data-model/accounts/#name">Name</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-names">chifra names</a> command line.
                     type: array
                     items:
                       $ref: "#/components/schemas/name"
@@ -719,7 +719,7 @@ paths:
       tags:
         - Accounts
       summary: ABIs
-      description: Fetches the ABI for a smart contract. Corresponds to the <a href="/docs/chifra/accounts/#chifra-abis">chifra abis</a> command line.
+      description: Fetches the ABI for a smart contract. Corresponds to the <a href="/chifra/accounts/#chifra-abis">chifra abis</a> command line.
       operationId: accounts-abis
       parameters:
         - name: addrs
@@ -779,7 +779,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#abi">Abi</a>, <a href="/data-model/other/#function">Function</a>, and/or <a href="/data-model/other/#parameter">Parameter</a> data. Corresponds to the <a href="/docs/chifra/accounts/#chifra-abis">chifra abis</a> command line.
+                    description: Produces <a href="/data-model/accounts/#abi">Abi</a>, <a href="/data-model/other/#function">Function</a>, and/or <a href="/data-model/other/#parameter">Parameter</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-abis">chifra abis</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -829,7 +829,7 @@ paths:
       tags:
         - Chain Data
       summary: Get blocks
-      description: Retrieve one or more blocks from the chain or local cache. Corresponds to the <a href="/docs/chifra/chaindata/#chifra-blocks">chifra blocks</a> command line.
+      description: Retrieve one or more blocks from the chain or local cache. Corresponds to the <a href="/chifra/chaindata/#chifra-blocks">chifra blocks</a> command line.
       operationId: chaindata-blocks
       parameters:
         - name: blocks
@@ -971,7 +971,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Block data as returned from the RPC (with slight enhancements). Produces <a href="/data-model/chaindata/#block">Block</a> data. Corresponds to the <a href="/docs/chifra/chaindata/#chifra-blocks">chifra blocks</a> command line.
+                    description: Block data as returned from the RPC (with slight enhancements). Produces <a href="/data-model/chaindata/#block">Block</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-blocks">chifra blocks</a> command line.
                     type: array
                     items:
                       $ref: "#/components/schemas/block"
@@ -989,7 +989,7 @@ paths:
       tags:
         - Chain Data
       summary: Get transactions
-      description: Retrieve one or more transactions from the chain or local cache. Corresponds to the <a href="/docs/chifra/chaindata/#chifra-transactions">chifra transactions</a> command line.
+      description: Retrieve one or more transactions from the chain or local cache. Corresponds to the <a href="/chifra/chaindata/#chifra-transactions">chifra transactions</a> command line.
       operationId: chaindata-transactions
       parameters:
         - name: transactions
@@ -1064,7 +1064,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/chaindata/#transaction">Transaction</a>, and/or <a href="/data-model/chaindata/#transfer">Transfer</a> data. Corresponds to the <a href="/docs/chifra/chaindata/#chifra-transactions">chifra transactions</a> command line.
+                    description: Produces <a href="/data-model/chaindata/#transaction">Transaction</a>, and/or <a href="/data-model/chaindata/#transfer">Transfer</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-transactions">chifra transactions</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -1077,7 +1077,7 @@ paths:
       tags:
         - Chain Data
       summary: Get receipts
-      description: Retrieve receipts for the given transaction(s). Corresponds to the <a href="/docs/chifra/chaindata/#chifra-receipts">chifra receipts</a> command line.
+      description: Retrieve receipts for the given transaction(s). Corresponds to the <a href="/chifra/chaindata/#chifra-receipts">chifra receipts</a> command line.
       operationId: chaindata-receipts
       parameters:
         - name: transactions
@@ -1107,7 +1107,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Receipt data as returned from the RPC (with slight enhancements). Produces <a href="/data-model/chaindata/#receipt">Receipt</a> data. Corresponds to the <a href="/docs/chifra/chaindata/#chifra-receipts">chifra receipts</a> command line.
+                    description: Receipt data as returned from the RPC (with slight enhancements). Produces <a href="/data-model/chaindata/#receipt">Receipt</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-receipts">chifra receipts</a> command line.
                     type: array
                     items:
                       $ref: "#/components/schemas/receipt"
@@ -1118,7 +1118,7 @@ paths:
       tags:
         - Chain Data
       summary: Get logs
-      description: Retrieve logs for the given transaction(s). Corresponds to the <a href="/docs/chifra/chaindata/#chifra-logs">chifra logs</a> command line.
+      description: Retrieve logs for the given transaction(s). Corresponds to the <a href="/chifra/chaindata/#chifra-logs">chifra logs</a> command line.
       operationId: chaindata-logs
       parameters:
         - name: transactions
@@ -1148,7 +1148,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Log data as returned from the RPC (with slight enhancements). Produces <a href="/data-model/chaindata/#log">Log</a> data. Corresponds to the <a href="/docs/chifra/chaindata/#chifra-logs">chifra logs</a> command line.
+                    description: Log data as returned from the RPC (with slight enhancements). Produces <a href="/data-model/chaindata/#log">Log</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-logs">chifra logs</a> command line.
                     type: array
                     items:
                       $ref: "#/components/schemas/log"
@@ -1159,7 +1159,7 @@ paths:
       tags:
         - Chain Data
       summary: Get traces
-      description: Retrieve traces for the given transaction(s). Corresponds to the <a href="/docs/chifra/chaindata/#chifra-traces">chifra traces</a> command line.
+      description: Retrieve traces for the given transaction(s). Corresponds to the <a href="/chifra/chaindata/#chifra-traces">chifra traces</a> command line.
       operationId: chaindata-traces
       parameters:
         - name: transactions
@@ -1213,7 +1213,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">Traceaction</a>, and/or <a href="/data-model/chaindata/#traceresult">Traceresult</a> data. Corresponds to the <a href="/docs/chifra/chaindata/#chifra-traces">chifra traces</a> command line.
+                    description: Produces <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">Traceaction</a>, and/or <a href="/data-model/chaindata/#traceresult">Traceresult</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-traces">chifra traces</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -1227,7 +1227,7 @@ paths:
       tags:
         - Chain Data
       summary: Get block dates
-      description: Find block(s) based on date, blockNum, timestamp, or 'special'. Corresponds to the <a href="/docs/chifra/chaindata/#chifra-when">chifra when</a> command line.
+      description: Find block(s) based on date, blockNum, timestamp, or 'special'. Corresponds to the <a href="/chifra/chaindata/#chifra-when">chifra when</a> command line.
       operationId: chaindata-when
       parameters:
         - name: blocks
@@ -1291,7 +1291,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: A block that has been given a particular name such as `first` or `latest`. Produces <a href="/data-model/chaindata/#namedblock">Namedblock</a> data. Corresponds to the <a href="/docs/chifra/chaindata/#chifra-when">chifra when</a> command line.
+                    description: A block that has been given a particular name such as `first` or `latest`. Produces <a href="/data-model/chaindata/#namedblock">Namedblock</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-when">chifra when</a> command line.
                     type: array
                     items:
                       $ref: "#/components/schemas/namedBlock"
@@ -1302,7 +1302,7 @@ paths:
       tags:
         - Chain State
       summary: Get balance(s)
-      description: Retrieve account balance(s) for one or more addresses at given block(s). Corresponds to the <a href="/docs/chifra/chainstate/#chifra-state">chifra state</a> command line.
+      description: Retrieve account balance(s) for one or more addresses at given block(s). Corresponds to the <a href="/chifra/chainstate/#chifra-state">chifra state</a> command line.
       operationId: chainstate-state
       parameters:
         - name: addrs
@@ -1388,7 +1388,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/chainstate/#ethstate">Ethstate</a>, and/or <a href="/data-model/chainstate/#ethcall">Ethcall</a> data. Corresponds to the <a href="/docs/chifra/chainstate/#chifra-state">chifra state</a> command line.
+                    description: Produces <a href="/data-model/chainstate/#ethstate">Ethstate</a>, and/or <a href="/data-model/chainstate/#ethcall">Ethcall</a> data. Corresponds to the <a href="/chifra/chainstate/#chifra-state">chifra state</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -1418,7 +1418,7 @@ paths:
       tags:
         - Chain State
       summary: Get token balance(s)
-      description: Retrieve token balance(s) for one or more addresses at given block(s). Corresponds to the <a href="/docs/chifra/chainstate/#chifra-tokens">chifra tokens</a> command line.
+      description: Retrieve token balance(s) for one or more addresses at given block(s). Corresponds to the <a href="/chifra/chainstate/#chifra-tokens">chifra tokens</a> command line.
       operationId: chainstate-tokens
       parameters:
         - name: addrs
@@ -1489,7 +1489,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: On-chain token-related data such as totalSupply, symbol, decimals, and individual balances for a given address at a given block. Produces <a href="/data-model/chainstate/#tokenbalance">Tokenbalance</a> data. Corresponds to the <a href="/docs/chifra/chainstate/#chifra-tokens">chifra tokens</a> command line.
+                    description: On-chain token-related data such as totalSupply, symbol, decimals, and individual balances for a given address at a given block. Produces <a href="/data-model/chainstate/#tokenbalance">Tokenbalance</a> data. Corresponds to the <a href="/chifra/chainstate/#chifra-tokens">chifra tokens</a> command line.
                     type: array
                     items:
                       $ref: "#/components/schemas/tokenBalance"
@@ -1515,7 +1515,7 @@ paths:
       tags:
         - Admin
       summary: Manage config
-      description: Report on and edit the configuration of the TrueBlocks system. Corresponds to the <a href="/docs/chifra/admin/#chifra-config">chifra config</a> command line.
+      description: Report on and edit the configuration of the TrueBlocks system. Corresponds to the <a href="/chifra/admin/#chifra-config">chifra config</a> command line.
       operationId: admin-config
       parameters:
         - name: modes
@@ -1574,7 +1574,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/admin/#status">Status</a>, <a href="/data-model/admin/#cache">Cache</a>, <a href="/data-model/admin/#cacheentry">Cacheentry</a>, <a href="/data-model/admin/#indexcacheitem">Indexcacheitem</a>, and/or <a href="/data-model/admin/#chain">Chain</a> data. Corresponds to the <a href="/docs/chifra/admin/#chifra-config">chifra config</a> command line.
+                    description: Produces <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/admin/#status">Status</a>, <a href="/data-model/admin/#cache">Cache</a>, <a href="/data-model/admin/#cacheentry">Cacheentry</a>, <a href="/data-model/admin/#indexcacheitem">Indexcacheitem</a>, and/or <a href="/data-model/admin/#chain">Chain</a> data. Corresponds to the <a href="/chifra/admin/#chifra-config">chifra config</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -1611,7 +1611,7 @@ paths:
       tags:
         - Admin
       summary: Scrape index
-      description: Scan the chain and update the TrueBlocks index of appearances. Corresponds to the <a href="/docs/chifra/admin/#chifra-scrape">chifra scrape</a> command line.
+      description: Scan the chain and update the TrueBlocks index of appearances. Corresponds to the <a href="/chifra/admin/#chifra-scrape">chifra scrape</a> command line.
       operationId: admin-scrape
       parameters:
         - name: blockCnt
@@ -1656,7 +1656,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/admin/#manifest">Manifest</a>, and/or <a href="/data-model/admin/#pinnedchunk">Pinnedchunk</a> data. Corresponds to the <a href="/docs/chifra/admin/#chifra-scrape">chifra scrape</a> command line.
+                    description: Produces <a href="/data-model/admin/#manifest">Manifest</a>, and/or <a href="/data-model/admin/#pinnedchunk">Pinnedchunk</a> data. Corresponds to the <a href="/chifra/admin/#chifra-scrape">chifra scrape</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -1669,7 +1669,7 @@ paths:
       tags:
         - Admin
       summary: Manage chunks
-      description: Manage, investigate, and display the Unchained Index. Corresponds to the <a href="/docs/chifra/admin/#chifra-chunks">chifra chunks</a> command line.
+      description: Manage, investigate, and display the Unchained Index. Corresponds to the <a href="/chifra/admin/#chifra-chunks">chifra chunks</a> command line.
       operationId: admin-chunks
       parameters:
         - name: mode
@@ -1761,7 +1761,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/admin/#manifest">Manifest</a>, <a href="/data-model/admin/#pinnedchunk">Pinnedchunk</a>, <a href="/data-model/admin/#chunkindex">Chunkindex</a>, <a href="/data-model/admin/#chunkblooms">Chunkblooms</a>, <a href="/data-model/admin/#chunkaddresses">Chunkaddresses</a>, <a href="/data-model/admin/#chunkappearances">Chunkappearances</a>, and/or <a href="/data-model/admin/#chunkstats">Chunkstats</a> data. Corresponds to the <a href="/docs/chifra/admin/#chifra-chunks">chifra chunks</a> command line.
+                    description: Produces <a href="/data-model/admin/#manifest">Manifest</a>, <a href="/data-model/admin/#pinnedchunk">Pinnedchunk</a>, <a href="/data-model/admin/#chunkindex">Chunkindex</a>, <a href="/data-model/admin/#chunkblooms">Chunkblooms</a>, <a href="/data-model/admin/#chunkaddresses">Chunkaddresses</a>, <a href="/data-model/admin/#chunkappearances">Chunkappearances</a>, and/or <a href="/data-model/admin/#chunkstats">Chunkstats</a> data. Corresponds to the <a href="/chifra/admin/#chifra-chunks">chifra chunks</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -1797,7 +1797,7 @@ paths:
       tags:
         - Admin
       summary: Initialize index
-      description: Initialize the TrueBlocks system by downloading from IPFS. Corresponds to the <a href="/docs/chifra/admin/#chifra-init">chifra init</a> command line.
+      description: Initialize the TrueBlocks system by downloading from IPFS. Corresponds to the <a href="/chifra/admin/#chifra-init">chifra init</a> command line.
       operationId: admin-init
       parameters:
         - name: all
@@ -1825,7 +1825,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/admin/#manifest">Manifest</a>, and/or <a href="/data-model/admin/#pinnedchunk">Pinnedchunk</a> data. Corresponds to the <a href="/docs/chifra/admin/#chifra-init">chifra init</a> command line.
+                    description: Produces <a href="/data-model/admin/#manifest">Manifest</a>, and/or <a href="/data-model/admin/#pinnedchunk">Pinnedchunk</a> data. Corresponds to the <a href="/chifra/admin/#chifra-init">chifra init</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -1838,7 +1838,7 @@ paths:
       tags:
         - Other
       summary: Slurp Etherscan
-      description: Fetch data from EtherScan for any address. Corresponds to the <a href="/docs/chifra/other/#chifra-slurp">chifra slurp</a> command line.
+      description: Fetch data from EtherScan for any address. Corresponds to the <a href="/chifra/other/#chifra-slurp">chifra slurp</a> command line.
       operationId: other-slurp
       parameters:
         - name: addrs
@@ -1897,7 +1897,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Transaction data as returned from the RPC (with slight enhancements). Produces <a href="/data-model/chaindata/#transaction">Transaction</a> data. Corresponds to the <a href="/docs/chifra/other/#chifra-slurp">chifra slurp</a> command line.
+                    description: Transaction data as returned from the RPC (with slight enhancements). Produces <a href="/data-model/chaindata/#transaction">Transaction</a> data. Corresponds to the <a href="/chifra/other/#chifra-slurp">chifra slurp</a> command line.
                     type: array
                     items:
                       $ref: "#/components/schemas/transaction"
@@ -2721,7 +2721,7 @@ components:
           type: number
           format: blknum
           example: 8901011
-          description: "the block number at which this smart contract was deployed (if a smart contact)"
+          description: "the block number at which this smart contract was deployed (if a smart contract)"
         accttype:
           type: string
           example: "one of 'EOA' or 'Contract'"
@@ -2761,7 +2761,7 @@ components:
           type: number
           format: blknum
           example: 8901011
-          description: "the block number at which this smart contract was deployed (if a smart contact)"
+          description: "the block number at which this smart contract was deployed (if a smart contract)"
     tokenBalance:
       description: "on-chain token-related data such as totalSupply, symbol, decimals, and individual balances for a given address at a given block"
       type: object

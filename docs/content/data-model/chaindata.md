@@ -2,14 +2,11 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2023-01-04T06:02:09
 lastmod:
   - :git
   - lastmod
-  - date
   - publishDate
 draft: false
-images: []
 menu:
   data:
     parent: "collections"
@@ -31,7 +28,7 @@ blocks' transactions.
 
 The following commands produce and manage Blocks:
 
-- [chifra blocks](/docs/chifra/chaindata/#chifra-blocks)
+- [chifra blocks](/chifra/chaindata/#chifra-blocks)
 
 Blocks consist of the following fields:
 
@@ -61,9 +58,9 @@ This is a very powerful way to understand the story behind a smart contract.
 
 The following commands produce and manage Transactions:
 
-- [chifra transactions](/docs/chifra/chaindata/#chifra-transactions)
-- [chifra slurp](/docs/chifra/other/#chifra-slurp)
-- [chifra export](/docs/chifra/accounts/#chifra-export)
+- [chifra transactions](/chifra/chaindata/#chifra-transactions)
+- [chifra slurp](/chifra/other/#chifra-slurp)
+- [chifra export](/chifra/accounts/#chifra-export)
 
 Transactions consist of the following fields:
 
@@ -104,8 +101,8 @@ asset transfer of any type.
 
 The following commands produce and manage Transfers:
 
-- [chifra transactions](/docs/chifra/chaindata/#chifra-transactions)
-- [chifra export](/docs/chifra/accounts/#chifra-export)
+- [chifra transactions](/chifra/chaindata/#chifra-transactions)
+- [chifra export](/chifra/accounts/#chifra-export)
 
 Transfers consist of the following fields:
 
@@ -139,8 +136,8 @@ the `contractAddress` field of the receipt carries the address of the newly crea
 
 The following commands produce and manage Receipts:
 
-- [chifra receipts](/docs/chifra/chaindata/#chifra-receipts)
-- [chifra export](/docs/chifra/accounts/#chifra-export)
+- [chifra receipts](/chifra/chaindata/#chifra-receipts)
+- [chifra export](/chifra/accounts/#chifra-export)
 
 Receipts consist of the following fields:
 
@@ -161,8 +158,8 @@ contract.
 
 The following commands produce and manage Logs:
 
-- [chifra logs](/docs/chifra/chaindata/#chifra-logs)
-- [chifra export](/docs/chifra/accounts/#chifra-export)
+- [chifra logs](/chifra/chaindata/#chifra-logs)
+- [chifra export](/chifra/accounts/#chifra-export)
 
 Logs consist of the following fields:
 
@@ -193,8 +190,8 @@ trace `result` (containing `gasUsed` like the receipt).
 
 The following commands produce and manage Traces:
 
-- [chifra traces](/docs/chifra/chaindata/#chifra-traces)
-- [chifra export](/docs/chifra/accounts/#chifra-export)
+- [chifra traces](/chifra/chaindata/#chifra-traces)
+- [chifra export](/chifra/accounts/#chifra-export)
 
 Traces consist of the following fields:
 
@@ -222,8 +219,8 @@ into smart contracts. Because of this, `trace actions` closely resemble the fiel
 
 The following commands produce and manage TraceActions:
 
-- [chifra traces](/docs/chifra/chaindata/#chifra-traces)
-- [chifra export](/docs/chifra/accounts/#chifra-export)
+- [chifra traces](/chifra/chaindata/#chifra-traces)
+- [chifra export](/chifra/accounts/#chifra-export)
 
 TraceActions consist of the following fields:
 
@@ -244,8 +241,8 @@ Because of this, the trace results closely resembles the fields of the [receipt]
 
 The following commands produce and manage TraceResults:
 
-- [chifra traces](/docs/chifra/chaindata/#chifra-traces)
-- [chifra export](/docs/chifra/accounts/#chifra-export)
+- [chifra traces](/chifra/chaindata/#chifra-traces)
+- [chifra export](/chifra/accounts/#chifra-export)
 
 TraceResults consist of the following fields:
 
@@ -261,14 +258,14 @@ TraceResults consist of the following fields:
 <!-- markdownlint-disable MD033 MD036 MD041 -->
 Left to its own devices, the blockchain would try to convince us that only hashes and bytes are
 important, but being human beings we know that this is not true. TrueBlocks `articulates` various
-types of data with [chifra names](/docs/chifra/accounts/#chifra-names) detailing the names for
+types of data with [chifra names](/chifra/accounts/#chifra-names) detailing the names for
 addresses, `-articulate` describing the Functions and Events of a transaction, and
-[chifra when](/docs/chifra/chaindata/#chifra-when) describing dated blocks. Dated blocks assign a
+[chifra when](/chifra/chaindata/#chifra-when) describing dated blocks. Dated blocks assign a
 human-readable date to blocks given block numbers or timestamps and visa versa.
 
 The following commands produce and manage NamedBlocks:
 
-- [chifra when](/docs/chifra/chaindata/#chifra-when)
+- [chifra when](/chifra/chaindata/#chifra-when)
 
 NamedBlocks consist of the following fields:
 

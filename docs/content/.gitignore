@@ -1,5 +1,3 @@
-blog
-contact
 api/index.html
 
 data-model/_index.md
@@ -11,10 +9,16 @@ docs/img/
 docs/install/
 docs/prologue/
 docs/using/
-explorer
 
+blog
+contact
+explorer
+docker
+sdks
 drafts
-privacy-policy
 tags
+
+privacy-policy
+
 _index.md
 trueblocks.png

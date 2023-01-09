@@ -103,12 +103,29 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    string_q aliasesFn = getDocsPathTemplates("aliases.csv");
+    if (fileExists(aliasesFn)) {
+        CStringArray lines;
+        asciiFileToLines(aliasesFn, lines);
+        for (auto line : lines) {
+            CStringArray parts;
+            explode(parts, line, ',');
+            // cerr << line << " --> " << parts[0] << " --> " << parts[1] << endl;
+            if (parts.size() == 2) {
+                if (!hugoAliasMap[parts[0]].empty()) {
+                    hugoAliasMap[parts[0]] += ",";
+                }
+                hugoAliasMap[parts[0]] += parts[1];
+            }
+        }
+    }
+
     if (readmes || openapi) {
         establishFolder(getDocsPathContent(""));
         establishFolder(getDocsPathContent("api/"));
         establishFolder(getDocsPathContent("data-model/"));
         establishFolder(getDocsPathContent("docs/"));
-        establishFolder(getDocsPathContent("docs/chifra/"));
+        establishFolder(getDocsPathContent("chifra/"));
     }
 
     string_q endpointsFile = getPathToSource("cmd-line-endpoints.csv");
