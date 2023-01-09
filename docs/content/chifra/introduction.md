@@ -3,6 +3,8 @@ title: "Using chifra"
 description: "A first introduction to chifra"
 draft: false
 url: "/chifra/introduction"
+aliases:
+ - "/docs/using/introducing-chifra"
 menu: 
   chifra:
     parent: introduction

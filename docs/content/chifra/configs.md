@@ -8,6 +8,8 @@ lastmod:
   - publishDate
 draft: false
 images: []
+aliases:
+ - "/docs/chifra/configs"
 menu:
   chifra:
     parent: commands

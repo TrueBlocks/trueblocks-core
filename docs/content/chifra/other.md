@@ -7,6 +7,8 @@ lastmod:
   - lastmod
   - publishDate
 draft: false
+aliases:
+ - "/docs/chifra/other"
 menu:
   chifra:
     parent: commands
