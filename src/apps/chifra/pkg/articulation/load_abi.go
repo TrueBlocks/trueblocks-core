@@ -13,7 +13,7 @@ import (
 )
 
 var knownAbiSubdirectories = []string{
-	"000", "005", "010", "015",
+	"known-000", "known-005", "known-010", "known-015",
 }
 
 // !!!
