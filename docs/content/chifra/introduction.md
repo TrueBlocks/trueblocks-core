@@ -57,7 +57,7 @@ You will see a long list of commands similar to this
 ---
 You may get more help on any command by typing `chifra <cmd> --help`.
 
-### Getting status
+## Getting status
 
 Let's look at an easy command to get started called `config`.
 
@@ -67,7 +67,7 @@ chifra config
 
 If you get a valid response, congratulations, your installation is working. You may skip ahead to the 'Using TrueBlocks' section below.
 
-### -- Troubleshooting
+### Troubleshooting
 
 Depending on your setup, you may get the following error message when you run some `chifra` commands:
 
