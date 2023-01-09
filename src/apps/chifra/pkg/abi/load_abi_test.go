@@ -1,4 +1,4 @@
-package articulation
+package abi
 
 import (
 	"testing"
