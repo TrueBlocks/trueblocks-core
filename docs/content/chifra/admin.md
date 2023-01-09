@@ -16,11 +16,14 @@ weight: 1600
 toc: true
 ---
 <!-- markdownlint-disable MD033 MD036 MD041 -->
-The Admin component allows you to query the status of the TrueBlocks system. You can query the
-status; query for information about TrueBlocks caches; control the creation, sharing, and pinning
-of the TrueBlocks index of appearances; and even serve the data through an API.
+The Admin gourp of commands allows you to query the status of the TrueBlocks system and
+manage various apects including the Unchained Index. You may query the status; query for information
+about TrueBlocks caches; control the creation, sharing, and pinning of the Unchained Index; and even
+serve the data through an API.
 
-[See the API documentation for all information about using the API](/api).
+See [the API documentation](/api) for all information about using the API.
+
+To the right is a list of commands in this group. Click on a command to see its full documentation.
 ## chifra config
 
 <!-- markdownlint-disable MD041 -->
