@@ -16,15 +16,14 @@ weight: 1800
 toc: true
 ---
 <!-- markdownlint-disable MD033 MD036 MD041 -->
-These commands call some useful miscellaneous tools:
+The commands in the Other group provide useful miscellaneous features.
 
-- `chifra explore` a quick way to open a blockchain explorer,
-- `ethslurp` an older tool that lets you call data from EtherScan. (This has issues of
-centralization and data quality, see explanation in its section).
+- `chifra explore` provides a quick way to open the configured blockchain explorer,
+- `ethslurp` (an older tool) allows you call extract data from EtherScan.
 
-Note: some of these tools, like `ethslurp`, require an EtherScan key. [Follow these instructions
-to add a key to your config](/docs/install/install-core/#3-update-the-configs-for-your-rpc-and-api-keys).
+To the right is a list of commands in this group. Click on a command to see its full documentation.
 
+Note: Some of these tools, such as `ethslurp`, require an API key. [Follow these instructions](/docs/install/install-core/#3-update-the-configs-for-your-rpc-and-api-keys) to add a key to your config.
 ## chifra explore
 
 <!-- markdownlint-disable MD041 -->
