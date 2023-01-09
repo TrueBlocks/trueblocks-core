@@ -129,6 +129,7 @@ bool COptions::handle_readmes(void) {
         replace(front, "[{WEIGHT}]", uint_2_Str(weights[group]));
         replace(front, "[{M1}]", "chifra:");
         replace(front, "[{M2}]", "parent: commands");
+        replace(front, "[{HUGO_ALIASES}]", getAliases(this, "chifra", group));
         group = substitute(toLower(group), " ", "");
 
         ostringstream os;
@@ -153,6 +154,23 @@ bool COptions::handle_readmes(void) {
 }
 
 //------------------------------------------------------------------------------------------------------------
+string_q getAliases(COptions* opts, const string_q& group, const string_q& route) {
+    string_q path = toLower(substitute("/" + group + "/" + route, " ", ""));
+    string_q value = opts->hugoAliasMap[path];
+    if (value.empty())
+        return "";
+
+    string_q ret = "aliases:\n[{LIST}]";
+    ostringstream os;
+    CStringArray parts;
+    explode(parts, value, ',');
+    for (auto part : parts) {
+        os << " - \"" << part << "\"" << endl;
+    }
+    return substitute(ret, "[{LIST}]", os.str());
+}
+
+//------------------------------------------------------------------------------------------------------------
 const char* STR_YAML_FRONTMATTER =
     "---\n"
     "title: \"[{TITLE}]\"\n"
@@ -163,7 +181,7 @@ const char* STR_YAML_FRONTMATTER =
     "  - lastmod\n"
     "  - publishDate\n"
     "draft: false\n"
-    "menu:\n"
+    "[{HUGO_ALIASES}]menu:\n"
     "  [{M1}]\n"
     "    [{M2}]\n"
     "weight: [{WEIGHT}]\n"

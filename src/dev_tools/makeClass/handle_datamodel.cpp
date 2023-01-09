@@ -73,6 +73,7 @@ bool COptions::handle_datamodel(void) {
             replace(front, "[{WEIGHT}]", uint_2_Str(model.doc_group == "Admin" ? 1700 : weight));
             replace(front, "[{M1}]", "data:");
             replace(front, "[{M2}]", "parent: \"collections\"");
+            replace(front, "[{HUGO_ALIASES}]", getAliases(this, "data-model", model.doc_group));
             docStream << front << endl;
             docStream << asciiFileToString(groupFn);
             weight += 200;

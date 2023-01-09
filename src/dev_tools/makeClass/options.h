@@ -213,6 +213,7 @@ extern bool isChifraRoute(const CCommandOption& cmd, bool depOk);
 extern bool isApiRoute(const string_q& route);
 extern bool forEveryEnum(APPLYFUNC func, const string_q& enumStr, void* data);
 extern string_q type_2_ModelName(const string_q& type, bool fL);
+extern string_q getAliases(COptions* opts, const string_q& group, const string_q& route);
 
 //---------------------------------------------------------------------------------------------------
 #define sdkPath string_q("/Users/jrush/Development/trueblocks-sdk/")

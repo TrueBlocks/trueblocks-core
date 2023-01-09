@@ -112,7 +112,10 @@ bool COptions::parseArguments(string_q& command) {
             explode(parts, line, ',');
             // cerr << line << " --> " << parts[0] << " --> " << parts[1] << endl;
             if (parts.size() == 2) {
-                hugoAliasMap[parts[0]] = parts[1];
+                if (!hugoAliasMap[parts[0]].empty()) {
+                    hugoAliasMap[parts[0]] += ",";
+                }
+                hugoAliasMap[parts[0]] += parts[1];
             }
         }
     }
