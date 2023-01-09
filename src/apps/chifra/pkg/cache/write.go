@@ -142,7 +142,7 @@ func writeDefaultHeader(writer *bufio.Writer, className string) (err error) {
 	return
 }
 
-func WriteBlock(writer *bufio.Writer, block *types.SimpleBlock) (err error) {
+func WriteBlock(writer *bufio.Writer, block *types.SimpleBlock[types.SimpleTransaction]) (err error) {
 	// TODO(cache): It's not all clear to me why we need this "complication." I'd prefer seeing exactly
 	// TODO(cache): that we are writing LittleEndian. Plus, remember, all of the data-related code will
 	// TODO(cache): be auto-generated as soon as we get around to it. So, it doesn't save keystrokes, even.

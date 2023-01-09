@@ -327,7 +327,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 			if traces.Result[i].Action.To == "" {
 				if traces.Result[i].Result.Address == "" {
 					if traces.Result[i].Error != "" {
-						receipt, err := rpcClient.GetTransactionReceipt(opts.Chain, uint64(bn), uint64(txid))
+						receipt, err := rpcClient.GetTransactionReceipt(opts.Chain, uint64(bn), uint64(txid), nil, 0)
 						if err != nil {
 							// fmt.Println("rpcCall failed at block", traces.Result[i].TransactionHash, err)
 							return err

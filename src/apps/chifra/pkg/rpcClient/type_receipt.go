@@ -7,11 +7,14 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
+	ethTypes "github.com/ethereum/go-ethereum/core/types"
 )
 
-func GetTransactionReceipt(chain string, bn uint64, txid uint64) (receipt types.SimpleReceipt, err error) {
+// GetTransactionReceipt fetches receipt from the RPC. If txGasPrice is provided, it will be used for
+// receipts in blocks before London
+func GetTransactionReceipt(chain string, bn uint64, txid uint64, txHash *common.Hash, txGasPrice uint64) (receipt types.SimpleReceipt, err error) {
 	// First, get raw receipt directly from RPC
-	rawReceipt, err := getRawTransactionReceipt(chain, bn, txid)
+	rawReceipt, tx, err := getRawTransactionReceipt(chain, bn, txid, txHash)
 	if err != nil {
 		return
 	}
@@ -94,13 +97,38 @@ func GetTransactionReceipt(chain string, bn uint64, txid uint64) (receipt types.
 	}
 	receipt.SetRaw(*rawReceipt)
 
+	// TODO: this should not be hardcoded here. We have tslib.GetSpecials(), but there
+	// TODO: are 2 issues with it: 1. circular dependency with types package, 2. every
+	// TODO: call to GetSpecials parses CSV file, so we need to call it once and cache
+	londonBlock := uint64(12965000)
+
+	if chain == "mainnet" {
+		if blockNumber < londonBlock {
+			gasPrice := txGasPrice
+			if gasPrice == 0 {
+				bn := tx.GasPrice()
+				if bn != nil {
+					gasPrice = bn.Uint64()
+				}
+			}
+			receipt.EffectiveGasPrice = gasPrice
+		}
+	}
 	return
 }
 
-func getRawTransactionReceipt(chain string, bn uint64, txid uint64) (receipt *types.RawReceipt, err error) {
-	tx, err := TxFromNumberAndId(chain, bn, txid)
-	if err != nil {
-		return
+// getRawTransactionReceipt fetches raw transaction. If txHash is provided, the function
+// will not fetch the transaction (we may have already loaded it)
+func getRawTransactionReceipt(chain string, bn uint64, txid uint64, txHash *common.Hash) (receipt *types.RawReceipt, tx ethTypes.Transaction, err error) {
+	var txHashString string
+	if txHash != nil {
+		txHashString = txHash.Hex()
+	} else {
+		tx, err = TxFromNumberAndId(chain, bn, txid)
+		if err != nil {
+			return
+		}
+		txHashString = tx.Hash().Hex()
 	}
 
 	var response struct {
@@ -110,7 +138,7 @@ func getRawTransactionReceipt(chain string, bn uint64, txid uint64) (receipt *ty
 		config.GetRpcProvider(chain),
 		&RPCPayload{
 			Method:    "eth_getTransactionReceipt",
-			RPCParams: RPCParams{tx.Hash().Hex()},
+			RPCParams: RPCParams{txHashString},
 		},
 		&response,
 	)

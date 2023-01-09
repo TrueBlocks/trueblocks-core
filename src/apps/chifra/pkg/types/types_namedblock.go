@@ -24,7 +24,7 @@ func (s *SimpleNamedBlock) Raw() *RawNamedBlock {
 	return nil
 }
 
-func (s *SimpleNamedBlock) Model(showHidden bool, format string) Model {
+func (s *SimpleNamedBlock) Model(showHidden bool, format string, extraOptions map[string]any) Model {
 	model := map[string]interface{}{
 		"blockNumber": s.BlockNumber,
 		"timestamp": s.Timestamp,
