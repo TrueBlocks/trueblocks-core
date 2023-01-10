@@ -14,8 +14,9 @@ import (
 
 // Any data structure that we know how to cache
 type cacheable interface {
-	types.SimpleBlock[types.SimpleTransaction] |
-		types.SimpleTransaction
+	*types.SimpleBlock[types.SimpleTransaction] |
+		*types.SimpleTransaction |
+		[]types.SimpleFunction
 }
 
 // getCacheAndChainPath returns path to cache for given chain
@@ -71,8 +72,8 @@ func remove(chain string, filePath string) (err error) {
 func setItem[Data cacheable](
 	chain string,
 	filePath string,
-	value *Data,
-	write func(w *bufio.Writer, d *Data) error,
+	value Data,
+	write func(w *bufio.Writer, d Data) error,
 ) (err error) {
 	buf := bytes.Buffer{}
 	writer := bufio.NewWriter(&buf)
@@ -89,8 +90,8 @@ func setItem[Data cacheable](
 func getItem[Data cacheable](
 	chain string,
 	filePath string,
-	read func(w *bufio.Reader) (*Data, error),
-) (value *Data, err error) {
+	read func(w *bufio.Reader) (Data, error),
+) (value Data, err error) {
 	file, err := load(chain, filePath)
 	if err != nil {
 		return
@@ -143,7 +144,7 @@ func SetTransaction(chain string, tx *types.SimpleTransaction) (err error) {
 	)
 }
 
-// GetTransaction reads transactiono from the cache
+// GetTransaction reads transaction from the cache
 func GetTransaction(chain string, blockNumber types.Blknum, txIndex uint64) (tx *types.SimpleTransaction, err error) {
 	filePath := getPathByBlockAndTransactionIndex(ItemTransaction, blockNumber, txIndex)
 
@@ -151,5 +152,39 @@ func GetTransaction(chain string, blockNumber types.Blknum, txIndex uint64) (tx 
 		chain,
 		filePath,
 		ReadTransaction,
+	)
+}
+
+var abisFilePath = "abis/known.bin"
+
+// GetAbis reads all ABIs stored in the cache
+func GetAbis(chain string) (abis []types.SimpleFunction, err error) {
+	// file, err := load(chain, abisFilePath)
+	// if err != nil {
+	// 	return
+	// }
+	// defer file.Close()
+
+	// bufReader := bufio.NewReader(file)
+	// abis, err = ReadAbis(bufReader)
+	// if err != nil && !os.IsNotExist(err) {
+	// 	// Ignore the error, we will re-try next time
+	// 	remove(chain, abisFilePath)
+	// }
+	// return
+	return getItem(
+		chain,
+		abisFilePath,
+		ReadAbis,
+	)
+}
+
+// SetAbis writes ABIs to the cache
+func SetAbis(chain string, abis []types.SimpleFunction) (err error) {
+	return setItem(
+		chain,
+		abisFilePath,
+		abis,
+		WriteAbis,
 	)
 }
