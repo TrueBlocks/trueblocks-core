@@ -13,6 +13,10 @@ func GetNewstInDirectory(directory string) (fileInfo os.FileInfo, err error) {
 	}
 
 	for _, file := range files {
+		if file.IsDir() {
+			continue
+		}
+
 		var currentFileInfo os.FileInfo
 		currentFileInfo, err = file.Info()
 		if err != nil {
