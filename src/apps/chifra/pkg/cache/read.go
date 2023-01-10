@@ -41,7 +41,8 @@ type ArrayItem interface {
 		types.SimpleTransaction |
 		types.SimpleTrace |
 		types.SimpleParameter |
-		types.SimpleLog
+		types.SimpleLog |
+		types.SimpleFunction
 }
 
 // readFromArray converts binary array into slice of type Item
@@ -812,6 +813,26 @@ func readTraceResult(reader *bufio.Reader) (result *types.SimpleTraceResult, err
 	if err != nil {
 		return
 	}
+
+	return
+}
+
+// WriteAbis reads ABI cache (known.bin)
+func ReadAbis(reader *bufio.Reader) (result []types.SimpleFunction, err error) {
+	header := &cacheHeader{}
+	if err = readCacheHeader(reader, header); err != nil {
+		return
+	}
+	if err = validateHeader(header); err != nil {
+		return
+	}
+
+	// This address is always empty
+	var address common.Address
+	if err = readAddress(reader, &address); err != nil {
+		return
+	}
+	err = readFromArray(reader, &result, ReadFunction)
 
 	return
 }
