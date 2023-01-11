@@ -88,6 +88,7 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 			Data: map[string]interface{}{
 				"hash":        s.Hash,
 				"blockNumber": s.BlockNumber,
+				"finalized":   s.Finalized,
 				"parentHash":  s.ParentHash,
 				"timestamp":   s.Timestamp,
 				"tx_hashes":   txHashes,
@@ -129,29 +130,37 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 	}
 
 	if format == "json" {
-		// If we wanted just transactions' hashes, we would return earlier. So here we know that we
-		// have transactions as objects and want to load models for them to be able to display them
-		txs, ok := any(s.Transactions).([]SimpleTransaction)
-		if ok {
-			items := make([]map[string]interface{}, 0, len(txs))
-			for _, txObject := range txs {
-				items = append(items, txObject.Model(showHidden, format, extraOptions).Data)
-			}
-			model["transactions"] = items
+		if extraOptions["list"] == true {
+			model["transactionsCnt"] = len(s.Transactions)
+			model["unclesCnt"] = len(s.Uncles)
 		} else {
-			model["transactions"] = s.Transactions
-		}
-
-		order = append(order, "transactions")
-		if len(s.Uncles) > 0 {
+			// If we wanted just transactions' hashes, we would return earlier. So here we know that we
+			// have transactions as objects and want to load models for them to be able to display them
+			txs, ok := any(s.Transactions).([]SimpleTransaction)
+			if ok {
+				items := make([]map[string]interface{}, 0, len(txs))
+				for _, txObject := range txs {
+					extraOptions["finalized"] = s.Finalized
+					items = append(items, txObject.Model(showHidden, format, extraOptions).Data)
+				}
+				model["transactions"] = items
+			} else {
+				model["transactions"] = s.Transactions
+			}
+			order = append(order, "transactions")
 			model["uncles"] = s.Uncles
 			order = append(order, "uncles")
 		}
 	} else {
 		model["transactionsCnt"] = len(s.Transactions)
 		order = append(order, "transactionsCnt")
-		model["unclesCnt"] = len(s.Uncles)
-		order = append(order, "unclesCnt")
+		if extraOptions["list"] == true {
+			model["unclesCnt"] = len(s.Uncles)
+			order = append(order, "unclesCnt")
+		} else {
+			model["finalized"] = s.Finalized
+			order = append(order, "finalized")
+		}
 	}
 
 	return Model{

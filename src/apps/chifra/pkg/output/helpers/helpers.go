@@ -11,7 +11,7 @@ import (
 )
 
 var enabledForCmds = map[string]bool{
-	"blocks":   os.Getenv("TEST_TEST_ONLY") == "true",
+	"blocks":   true,
 	"receipts": true,
 	"when":     true,
 }
@@ -66,13 +66,13 @@ func SetWriterForCommand(cmdName string, opts *globals.GlobalOptions) {
 		return
 	}
 
-	// Run only in --file mode. Without --file, the default setup is OK.
-	// TODO: BOGUS - THIS WILL BE REMOVED TEST_TEST_ONLY
-	if os.Getenv("TEST_TEST_ONLY") != "true" {
-		if opts.File == "" {
-			return
-		}
-	}
+	// TODO: This comment can be removed. Previously, there was a short cut here that
+	// TODO: left early if the `--file` option was not on, but this was removed because
+	// TODO: It was causing problems with partially ported code. We can put it back
+	// TODO: if we find we need it. The code seems to run fine without it.
+	// if opts.File == "" {
+	// 	return
+	// }
 
 	// Try to cast the default writer to JsonWriter
 	jw, ok := opts.Writer.(*output.JsonWriter)
