@@ -22,6 +22,7 @@ import (
 // RunInit handles the init command for the command line. Returns error only as per cobra.
 func RunInit(cmd *cobra.Command, args []string) (err error) {
 	opts := initFinishParse(args)
+	outputHelpers.SetEnabledForCmds("init", opts.IsPorted())
 	outputHelpers.SetWriterForCommand("init", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -32,6 +33,7 @@ func RunInit(cmd *cobra.Command, args []string) (err error) {
 // ServeInit handles the init command for the API. Returns error and a bool if handled
 func ServeInit(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := initFinishParseApi(w, r)
+	outputHelpers.SetEnabledForCmds("init", opts.IsPorted())
 	outputHelpers.InitJsonWriterApi("init", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -63,6 +65,12 @@ func GetInitOptions(args []string, g *globals.GlobalOptions) *InitOptions {
 		ret.Globals = *g
 	}
 	return ret
+}
+
+func (opts *InitOptions) IsPorted() (ported bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
 }
 
 // EXISTING_CODE
