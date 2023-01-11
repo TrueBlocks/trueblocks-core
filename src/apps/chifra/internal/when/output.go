@@ -23,6 +23,7 @@ import (
 // RunWhen handles the when command for the command line. Returns error only as per cobra.
 func RunWhen(cmd *cobra.Command, args []string) (err error) {
 	opts := whenFinishParse(args)
+	outputHelpers.SetEnabledForCmds("when", opts.IsPorted())
 	outputHelpers.SetWriterForCommand("when", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -33,6 +34,7 @@ func RunWhen(cmd *cobra.Command, args []string) (err error) {
 // ServeWhen handles the when command for the API. Returns error and a bool if handled
 func ServeWhen(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := whenFinishParseApi(w, r)
+	outputHelpers.SetEnabledForCmds("when", opts.IsPorted())
 	outputHelpers.InitJsonWriterApi("when", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -93,6 +95,12 @@ func GetWhenOptions(args []string, g *globals.GlobalOptions) *WhenOptions {
 		ret.Globals = *g
 	}
 	return ret
+}
+
+func (opts *WhenOptions) IsPorted() (ported bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
 }
 
 // EXISTING_CODE

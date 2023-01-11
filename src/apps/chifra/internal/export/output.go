@@ -22,6 +22,7 @@ import (
 // RunExport handles the export command for the command line. Returns error only as per cobra.
 func RunExport(cmd *cobra.Command, args []string) (err error) {
 	opts := exportFinishParse(args)
+	outputHelpers.SetEnabledForCmds("export", opts.IsPorted())
 	outputHelpers.SetWriterForCommand("export", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -32,6 +33,7 @@ func RunExport(cmd *cobra.Command, args []string) (err error) {
 // ServeExport handles the export command for the API. Returns error and a bool if handled
 func ServeExport(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := exportFinishParseApi(w, r)
+	outputHelpers.SetEnabledForCmds("export", opts.IsPorted())
 	outputHelpers.InitJsonWriterApi("export", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -72,6 +74,12 @@ func GetExportOptions(args []string, g *globals.GlobalOptions) *ExportOptions {
 		ret.Globals = *g
 	}
 	return ret
+}
+
+func (opts *ExportOptions) IsPorted() (ported bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
 }
 
 // EXISTING_CODE

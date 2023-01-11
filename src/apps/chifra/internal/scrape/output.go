@@ -24,6 +24,7 @@ import (
 // RunScrape handles the scrape command for the command line. Returns error only as per cobra.
 func RunScrape(cmd *cobra.Command, args []string) (err error) {
 	opts := scrapeFinishParse(args)
+	outputHelpers.SetEnabledForCmds("scrape", opts.IsPorted())
 	outputHelpers.SetWriterForCommand("scrape", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -34,6 +35,7 @@ func RunScrape(cmd *cobra.Command, args []string) (err error) {
 // ServeScrape handles the scrape command for the API. Returns error and a bool if handled
 func ServeScrape(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := scrapeFinishParseApi(w, r)
+	outputHelpers.SetEnabledForCmds("scrape", opts.IsPorted())
 	outputHelpers.InitJsonWriterApi("scrape", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -68,6 +70,12 @@ func GetScrapeOptions(args []string, g *globals.GlobalOptions) *ScrapeOptions {
 		ret.Globals = *g
 	}
 	return ret
+}
+
+func (opts *ScrapeOptions) IsPorted() (ported bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
 }
 
 // EXISTING_CODE

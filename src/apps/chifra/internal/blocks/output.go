@@ -23,6 +23,7 @@ import (
 // RunBlocks handles the blocks command for the command line. Returns error only as per cobra.
 func RunBlocks(cmd *cobra.Command, args []string) (err error) {
 	opts := blocksFinishParse(args)
+	outputHelpers.SetEnabledForCmds("blocks", opts.IsPorted())
 	outputHelpers.SetWriterForCommand("blocks", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -33,6 +34,7 @@ func RunBlocks(cmd *cobra.Command, args []string) (err error) {
 // ServeBlocks handles the blocks command for the API. Returns error and a bool if handled
 func ServeBlocks(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := blocksFinishParseApi(w, r)
+	outputHelpers.SetEnabledForCmds("blocks", opts.IsPorted())
 	outputHelpers.InitJsonWriterApi("blocks", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -84,9 +86,12 @@ func GetBlocksOptions(args []string, g *globals.GlobalOptions) *BlocksOptions {
 	return ret
 }
 
-// EXISTING_CODE
-func (opts *BlocksOptions) IsPorted() bool {
+func (opts *BlocksOptions) IsPorted() (ported bool) {
+	// EXISTING_CODE
 	return os.Getenv("TEST_TEST_ONLY") == "true" && !opts.Uniq && !opts.Apps // && (opts.List > 0 || opts.Globals.ShowRaw)
+	// EXISTING_CODE
+	return
 }
 
+// EXISTING_CODE
 // EXISTING_CODE
