@@ -1,4 +1,4 @@
-chifra blocks  --list 1030000 --list_count 2 10010
+chifra blocks  --list_count 2 --list 1030000 10010
 TEST[DATE|TIME] Blocks:  [10010]
 TEST[DATE|TIME] List:  1030000
 TEST[DATE|TIME] ListCount:  2
