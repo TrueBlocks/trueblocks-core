@@ -56,5 +56,8 @@ func (opts *BlocksOptions) HandleList() error {
 		OutputFn:   opts.Globals.OutputFn,
 		Append:     opts.Globals.Append,
 		JsonIndent: "  ",
+		Extra: map[string]interface{}{
+			"list": true,
+		},
 	})
 }

@@ -11,7 +11,6 @@ package blocksPkg
 // EXISTING_CODE
 import (
 	"net/http"
-	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -56,8 +55,8 @@ func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
 		if opts.List > 0 {
 			err = opts.HandleList()
 
-		} else if opts.Uncles {
-			err = opts.HandleShowUncles()
+			// } else if opts.Uncles {
+			// 	err = opts.HandleShowUncles()
 
 		} else {
 			err = opts.HandleShowBlocks()
@@ -71,6 +70,9 @@ func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
 
 		handled = true
 		err = opts.Globals.PassItOn("getBlocks", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
+		// TODO: BOGUS -- this is a hack to prevent the output from being written twice. It will be
+		// TODO: removed when the etnire command is ported
+		opts.Globals.Writer = nil
 	}
 	// EXISTING_CODE
 
@@ -88,13 +90,10 @@ func GetBlocksOptions(args []string, g *globals.GlobalOptions) *BlocksOptions {
 
 func (opts *BlocksOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
+	ported = !opts.Apps && !opts.Uniq && !opts.Trace && !opts.Uncles && !opts.Logs
 	// EXISTING_CODE
 	return
 }
 
 // EXISTING_CODE
-func (opts *BlocksOptions) IsPorted() bool {
-	return os.Getenv("TEST_TEST_ONLY") == "true" && !opts.Uniq && !opts.Apps // && (opts.List > 0 || opts.Globals.ShowRaw)
-}
-
 // EXISTING_CODE
