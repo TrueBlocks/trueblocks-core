@@ -140,6 +140,7 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 			if ok {
 				items := make([]map[string]interface{}, 0, len(txs))
 				for _, txObject := range txs {
+					extraOptions["finalized"] = s.Finalized
 					items = append(items, txObject.Model(showHidden, format, extraOptions).Data)
 				}
 				model["transactions"] = items
@@ -147,10 +148,8 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 				model["transactions"] = s.Transactions
 			}
 			order = append(order, "transactions")
-			if len(s.Uncles) > 0 {
-				model["uncles"] = s.Uncles
-				order = append(order, "uncles")
-			}
+			model["uncles"] = s.Uncles
+			order = append(order, "uncles")
 		}
 	} else {
 		model["transactionsCnt"] = len(s.Transactions)
