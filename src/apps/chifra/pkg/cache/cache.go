@@ -77,8 +77,10 @@ func setItem[Data cacheable](
 ) (err error) {
 	buf := bytes.Buffer{}
 	writer := bufio.NewWriter(&buf)
-	err = write(writer, value)
-	if err != nil {
+	if err = write(writer, value); err != nil {
+		return
+	}
+	if err = writer.Flush(); err != nil {
 		return
 	}
 	reader := bytes.NewReader(buf.Bytes())
@@ -159,19 +161,6 @@ var abisFilePath = "abis/known.bin"
 
 // GetAbis reads all ABIs stored in the cache
 func GetAbis(chain string) (abis []types.SimpleFunction, err error) {
-	// file, err := load(chain, abisFilePath)
-	// if err != nil {
-	// 	return
-	// }
-	// defer file.Close()
-
-	// bufReader := bufio.NewReader(file)
-	// abis, err = ReadAbis(bufReader)
-	// if err != nil && !os.IsNotExist(err) {
-	// 	// Ignore the error, we will re-try next time
-	// 	remove(chain, abisFilePath)
-	// }
-	// return
 	return getItem(
 		chain,
 		abisFilePath,

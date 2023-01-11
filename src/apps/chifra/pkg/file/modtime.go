@@ -4,29 +4,29 @@
 
 package file
 
-import "os"
+import (
+	"io/fs"
+	"os"
+	"path/filepath"
+)
 
-func GetNewstInDirectory(directory string) (fileInfo os.FileInfo, err error) {
-	files, err := os.ReadDir(directory)
-	if err != nil {
-		return
-	}
-
-	for _, file := range files {
-		if file.IsDir() {
-			continue
-		}
-
-		var currentFileInfo os.FileInfo
-		currentFileInfo, err = file.Info()
+func GetNewestInDirectory(directory string) (fileInfo os.FileInfo, err error) {
+	err = filepath.WalkDir(directory, func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
-			return
+			return err
 		}
-
+		if entry.IsDir() {
+			return nil
+		}
+		currentFileInfo, err := entry.Info()
+		if err != nil {
+			return err
+		}
 		if fileInfo == nil || currentFileInfo.ModTime().After(fileInfo.ModTime()) {
 			fileInfo = currentFileInfo
 		}
-	}
+		return nil
+	})
 	return
 }
 

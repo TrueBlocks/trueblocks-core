@@ -3,9 +3,11 @@ package abi
 import (
 	"errors"
 	"fmt"
+	"io/fs"
 	"log"
 	"os"
 	"path"
+	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
@@ -51,7 +53,7 @@ func LoadAbiFromJsonFile(filePath string, destination AbiInterfaceMap) (err erro
 			Signature:    method.Sig,
 			Name:         method.Name,
 			FunctionType: "function",
-			AbiSource:    file.Name(),
+			AbiSource:    path.Base(file.Name()),
 			// TODO: check if this is correct
 			Anonymous:       method.Name != "",
 			Constant:        method.Constant,
@@ -131,45 +133,17 @@ func PreloadKnownAbis(chain string, destination AbiInterfaceMap, tokensOnly bool
 		return
 	}
 
-	// Use cache .json files and freshen binary cache
-	cachePath := path.Join(
-		config.GetPathToCache(chain),
-		"abis",
-	)
-	files, err := os.ReadDir(cachePath)
+	// Use known .json files and freshen binary cache
+	paths, err := getKnownAbiPaths()
 	if err != nil {
 		return
 	}
 	fileCount := 0
 
-	for _, file := range files {
-		if file.IsDir() {
-			continue
-		}
-		if path.Ext(file.Name()) != ".json" {
-			continue
-		}
-		var info os.FileInfo
-		info, err = file.Info()
-		if err != nil {
-			return
-		}
-		if info.Size() == 0 {
-			continue
-		}
-
-		filePath := path.Join(
-			cachePath,
-			file.Name(),
-		)
+	for _, filePath := range paths {
 		loadErr := LoadAbiFromJsonFile(filePath, destination)
-		if loadErr != nil && errors.Is(loadErr, errInvalidJson) {
-			log.Println("deleting invalid JSON file:", file.Name())
-			_ = os.Remove(filePath)
-			continue
-		}
 		if loadErr != nil {
-			return fmt.Errorf("%s: %w", file.Name(), loadErr)
+			return fmt.Errorf("%s: %w", filePath, loadErr)
 		}
 		fileCount++
 	}
@@ -198,5 +172,32 @@ func findKnownAbi(name string) (filePath string) {
 			return
 		}
 	}
+	return
+}
+
+func getKnownAbiPaths() (filePaths []string, err error) {
+	knownDirPath := path.Join(config.GetPathToRootConfig(), "abis")
+	err = filepath.WalkDir(knownDirPath, func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+
+		if d.IsDir() {
+			return nil
+		}
+		if filepath.Ext(d.Name()) != ".json" {
+			return nil
+		}
+		info, err := d.Info()
+		if err != nil {
+			return err
+		}
+		if info.Size() == 0 {
+			return nil
+		}
+
+		filePaths = append(filePaths, path)
+		return nil
+	})
 	return
 }
