@@ -1,6 +1,8 @@
-enabled  ,mode ,speed ,route  ,path/tool       ,filename              ,post ,options                                                                                                                                                                                   ,opt_cmd
-on       ,cmd  ,fast  ,blocks ,tools/getBlocks ,force_01              ,y    ,blocks = 2768801 1995314 1958017 & cache                                                                                                                                                  ,getBlocks
-on       ,cmd  ,fast  ,blocks ,tools/getBlocks ,force_03              ,y    ,blocks = 4369999 & cache                                                                                                                                                                  ,getBlocks
+enabled  ,mode ,speed ,route  ,path/tool       ,filename              ,post ,options
+on       ,cmd  ,fast  ,blocks ,tools/getBlocks ,force_01              ,y    ,blocks = 2768801 1995314 1958017 & cache
+on       ,cmd  ,fast  ,blocks ,tools/getBlocks ,force_02              ,y    ,blocks = 2769609 2799895 2872831 3076260 & cache
+on       ,cmd  ,fast  ,blocks ,tools/getBlocks ,force_03              ,y    ,blocks = 4369999 1001001 1234567 1590000 4000001-4000004 & cache
+on       ,cmd  ,fast  ,blocks ,tools/getBlocks ,force_04              ,y    ,blocks = stateclear daofork & cache
 on       ,cmd  ,fast  ,blocks ,tools/getBlocks ,help                  ,n    ,@h
 on       ,cmd  ,fast  ,blocks ,tools/getBlocks ,help_long             ,n    ,help
 on       ,both ,fast  ,blocks ,tools/getBlocks ,no_params             ,y    ,
@@ -12,20 +14,19 @@ on       ,both ,fast  ,blocks ,tools/getBlocks ,uncles                ,y    ,blo
 on       ,both ,fast  ,blocks ,tools/getBlocks ,uncles2               ,y    ,blocks = 0x3d6122660cc824376f11ee842f83addc3525e2dd6756b9bcf0affa6aa88cf741 0x753bd45eb11dfe6bd3dcec5147b2365b046c2f02bfdff595c0b091c3f91e7627 & uncles
 on       ,both ,fast  ,blocks ,tools/getBlocks ,uncles_old_bug        ,y    ,blocks = 3 12 469 & uncles
 on       ,both ,fast  ,blocks ,tools/getBlocks ,byhash                ,y    ,blocks = 0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39
-on       ,both ,fast  ,blocks ,tools/getBlocks ,blooms                ,y    ,blocks = 1590000 4000001 4000002 & cache
-on       ,both ,fast  ,blocks ,tools/getBlocks ,range                 ,y    ,blocks = 4000001-4000003 & cache
-on       ,both ,fast  ,blocks ,tools/getBlocks ,special_1             ,y    ,blocks = stateclear & cache
-on       ,both ,fast  ,blocks ,tools/getBlocks ,special_2             ,y    ,blocks = daofork & cache
-on       ,both ,fast  ,blocks ,tools/getBlocks ,combo_one_range       ,y    ,blocks = 1590000 4000001-4000002 1001001 1234567 & cache
+on       ,both ,fast  ,blocks ,tools/getBlocks ,blooms                ,y    ,blocks = 1590000 4000001 4000002
+on       ,both ,fast  ,blocks ,tools/getBlocks ,range                 ,y    ,blocks = 4000001-4000003
+on       ,both ,fast  ,blocks ,tools/getBlocks ,special_1             ,y    ,blocks = stateclear
+on       ,both ,fast  ,blocks ,tools/getBlocks ,special_2             ,y    ,blocks = daofork
+on       ,both ,fast  ,blocks ,tools/getBlocks ,combo_one_range       ,y    ,blocks = 1590000 4000001-4000002 1001001 1234567
 on       ,both ,fast  ,blocks ,tools/getBlocks ,combo_two_range       ,y    ,blocks = 1590000 4000001-4000002 1001001-1001100 1234567
-on       ,both ,fast  ,blocks ,tools/getBlocks ,force_02              ,y    ,blocks = 2769609 2799895 2872831 3076260 & cache
-on       ,both ,fast  ,blocks ,tools/getBlocks ,force_fail            ,y    ,blocks = 2769609 2799895 2872831 3076260 & cache & apps
+on       ,both ,fast  ,blocks ,tools/getBlocks ,force_fail            ,y    ,blocks = 2769609 2799895 2872831 3076260 & apps & cache
 on       ,both ,medi  ,blocks ,tools/getBlocks ,hashes_1              ,y    ,blocks = 4001001 & hashes
 on       ,both ,medi  ,blocks ,tools/getBlocks ,address_addrs1        ,n    ,blocks = 3982128 & apps & fmt = csv
 on       ,both ,medi  ,blocks ,tools/getBlocks ,address_addrsv        ,n    ,blocks = 3982128 & apps & verbose = 1 & fmt = txt
 on       ,both ,medi  ,blocks ,tools/getBlocks ,address_uniqTx1       ,n    ,blocks = 3982128 & uniq
 on       ,both ,medi  ,blocks ,tools/getBlocks ,mulitBlock_uniq_2630  ,y    ,blocks = 3982128-3982133 & uniq & fmt = json
-on       ,both ,slow  ,blocks ,tools/getBlocks ,byzantium_1           ,y    ,blocks = 4369999 4370000 4380101 & cache
+on       ,both ,slow  ,blocks ,tools/getBlocks ,byzantium_1           ,y    ,blocks = 4369999 4370000 4380101
 on       ,both ,fast  ,blocks ,tools/getBlocks ,blockByHash           ,y    ,blocks = 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
 on       ,both ,fast  ,blocks ,tools/getBlocks ,miner                 ,y    ,blocks = 1 & uniq & fmt = json
 on       ,both ,medi  ,blocks ,tools/getBlocks ,addrsCnt1             ,n    ,blocks = 3982128 & apps & count & fmt = csv
@@ -53,6 +54,7 @@ on       ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_topic       ,y    ,blo
 on       ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_topic2      ,y    ,blocks = 4012000-4012001 & logs & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & topic = 0x0000000000000000000000008d71cd37bc1c715f6d4e9b5d68aa17a8b42cac87
 on       ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_emitter     ,y    ,blocks = 4012000-4012001 & logs & emitter = 0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0
 on       ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_both        ,y    ,blocks = 4012000-4012001 & logs & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & emitter = 0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0
+# These actually may suceed but they may be slow or outdated gold files
 local    ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_art         ,y    ,blocks = 4012000-4012001 & logs & articulate
 local    ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_csv_art     ,n    ,blocks = 4012000-4012001 & logs & fmt = csv & articulate
 on       ,both ,fast  ,blocks ,tools/getBlocks ,no_uniq_uncles        ,y    ,blocks = 4012000-4012001 & uniq & uncles
@@ -83,6 +85,7 @@ on       ,both ,fast  ,blocks ,tools/getBlocks ,raw_01                ,y    ,blo
 on       ,both ,slow  ,blocks ,tools/getBlocks ,terse_no_raw          ,y    ,blocks = 4001001-4001003 & hashes
 on       ,both ,fast  ,blocks ,tools/getBlocks ,terse_yes_raw         ,y    ,blocks = 4001001 & hashes & raw
 
+# These fail because they do not create value JSON
 file_cmd ,cmd  ,fast  ,blocks ,tools/getBlocks ,cmd_file1             ,n    ,file = cmd_file1 & cache
 file_cmd ,cmd  ,fast  ,blocks ,tools/getBlocks ,cmd_file2             ,n    ,file = cmd_file2 & cache
 

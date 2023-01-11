@@ -90,7 +90,7 @@ func GetBlocksOptions(args []string, g *globals.GlobalOptions) *BlocksOptions {
 
 func (opts *BlocksOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	ported = !opts.Apps && !opts.Uniq && !opts.Trace && !opts.Uncles && !opts.Logs
+	ported = !opts.Apps && !opts.Uniq && !opts.Trace && !opts.Uncles && !opts.Logs && !opts.Articulate && !opts.Cache
 	// EXISTING_CODE
 	return
 }
