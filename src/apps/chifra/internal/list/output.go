@@ -23,6 +23,7 @@ import (
 // RunList handles the list command for the command line. Returns error only as per cobra.
 func RunList(cmd *cobra.Command, args []string) (err error) {
 	opts := listFinishParse(args)
+	outputHelpers.SetEnabledForCmds("list", opts.IsPorted())
 	outputHelpers.SetWriterForCommand("list", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -33,6 +34,7 @@ func RunList(cmd *cobra.Command, args []string) (err error) {
 // ServeList handles the list command for the API. Returns error and a bool if handled
 func ServeList(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := listFinishParseApi(w, r)
+	outputHelpers.SetEnabledForCmds("list", opts.IsPorted())
 	outputHelpers.InitJsonWriterApi("list", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -81,6 +83,12 @@ func GetListOptions(args []string, g *globals.GlobalOptions) *ListOptions {
 		ret.Globals = *g
 	}
 	return ret
+}
+
+func (opts *ListOptions) IsPorted() (ported bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
 }
 
 // EXISTING_CODE

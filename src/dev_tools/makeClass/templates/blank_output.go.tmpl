@@ -14,6 +14,7 @@ package [{API_ROUTE}]Pkg
 // Run[{PROPER}] handles the [{ROUTE}] command for the command line. Returns error only as per cobra.
 func Run[{PROPER}](cmd *cobra.Command, args []string) (err error) {
 	opts := [{LOWER}]FinishParse(args)
+	outputHelpers.SetEnabledForCmds("[{ROUTE}]", opts.IsPorted())
 	outputHelpers.SetWriterForCommand("[{ROUTE}]", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -24,6 +25,7 @@ func Run[{PROPER}](cmd *cobra.Command, args []string) (err error) {
 // Serve[{PROPER}] handles the [{ROUTE}] command for the API. Returns error and a bool if handled
 func Serve[{PROPER}](w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := [{LOWER}]FinishParseApi(w, r)
+	outputHelpers.SetEnabledForCmds("[{ROUTE}]", opts.IsPorted())
 	outputHelpers.InitJsonWriterApi("[{ROUTE}]", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -52,6 +54,12 @@ func Get[{PROPER}]Options(args []string, g *globals.GlobalOptions) *[{PROPER}]Op
 		ret.Globals = *g
 	}
 	return ret
+}
+
+func (opts *[{PROPER}]Options) IsPorted() (ported bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
 }
 
 // EXISTING_CODE
