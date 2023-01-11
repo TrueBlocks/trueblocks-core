@@ -22,6 +22,7 @@ import (
 // RunTransactions handles the transactions command for the command line. Returns error only as per cobra.
 func RunTransactions(cmd *cobra.Command, args []string) (err error) {
 	opts := transactionsFinishParse(args)
+	outputHelpers.SetEnabledForCmds("transactions", opts.IsPorted())
 	outputHelpers.SetWriterForCommand("transactions", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -32,6 +33,7 @@ func RunTransactions(cmd *cobra.Command, args []string) (err error) {
 // ServeTransactions handles the transactions command for the API. Returns error and a bool if handled
 func ServeTransactions(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := transactionsFinishParseApi(w, r)
+	outputHelpers.SetEnabledForCmds("transactions", opts.IsPorted())
 	outputHelpers.InitJsonWriterApi("transactions", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -66,6 +68,12 @@ func GetTransactionsOptions(args []string, g *globals.GlobalOptions) *Transactio
 		ret.Globals = *g
 	}
 	return ret
+}
+
+func (opts *TransactionsOptions) IsPorted() (ported bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
 }
 
 // EXISTING_CODE

@@ -30,6 +30,7 @@ import (
 // RunReceipts handles the receipts command for the command line. Returns error only as per cobra.
 func RunReceipts(cmd *cobra.Command, args []string) (err error) {
 	opts := receiptsFinishParse(args)
+	outputHelpers.SetEnabledForCmds("receipts", opts.IsPorted())
 	outputHelpers.SetWriterForCommand("receipts", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -40,6 +41,7 @@ func RunReceipts(cmd *cobra.Command, args []string) (err error) {
 // ServeReceipts handles the receipts command for the API. Returns error and a bool if handled
 func ServeReceipts(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := receiptsFinishParseApi(w, r)
+	outputHelpers.SetEnabledForCmds("receipts", opts.IsPorted())
 	outputHelpers.InitJsonWriterApi("receipts", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -56,7 +58,7 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.Articulate {
+	if !opts.IsPorted() {
 		if opts.Globals.IsApiMode() {
 			return nil, false
 		}
@@ -71,6 +73,7 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 
+	// Note: Make sure to add an entry to enabledForCmd in src/apps/chifra/pkg/output/helpers.go
 	fetchTransactionData := func(modelChan chan types.Modeler[types.RawReceipt], errorChan chan error) {
 		// TODO: stream transaction identifiers
 		for idIndex, rng := range opts.TransactionIds {
@@ -157,6 +160,13 @@ func GetReceiptsOptions(args []string, g *globals.GlobalOptions) *ReceiptsOption
 		ret.Globals = *g
 	}
 	return ret
+}
+
+func (opts *ReceiptsOptions) IsPorted() (ported bool) {
+	// EXISTING_CODE
+	ported = !opts.Articulate
+	// EXISTING_CODE
+	return
 }
 
 // EXISTING_CODE

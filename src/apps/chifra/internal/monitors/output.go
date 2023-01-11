@@ -26,6 +26,7 @@ import (
 // RunMonitors handles the monitors command for the command line. Returns error only as per cobra.
 func RunMonitors(cmd *cobra.Command, args []string) (err error) {
 	opts := monitorsFinishParse(args)
+	outputHelpers.SetEnabledForCmds("monitors", opts.IsPorted())
 	outputHelpers.SetWriterForCommand("monitors", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -36,6 +37,7 @@ func RunMonitors(cmd *cobra.Command, args []string) (err error) {
 // ServeMonitors handles the monitors command for the API. Returns error and a bool if handled
 func ServeMonitors(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := monitorsFinishParseApi(w, r)
+	outputHelpers.SetEnabledForCmds("monitors", opts.IsPorted())
 	outputHelpers.InitJsonWriterApi("monitors", w, &opts.Globals)
 	// EXISTING_CODE
 	if !opts.Globals.TestMode { // our test harness does not use DELETE
@@ -102,6 +104,12 @@ func GetMonitorsOptions(args []string, g *globals.GlobalOptions) *MonitorsOption
 		ret.Globals = *g
 	}
 	return ret
+}
+
+func (opts *MonitorsOptions) IsPorted() (ported bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
 }
 
 // EXISTING_CODE

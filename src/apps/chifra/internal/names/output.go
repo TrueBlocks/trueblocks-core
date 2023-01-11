@@ -22,6 +22,7 @@ import (
 // RunNames handles the names command for the command line. Returns error only as per cobra.
 func RunNames(cmd *cobra.Command, args []string) (err error) {
 	opts := namesFinishParse(args)
+	outputHelpers.SetEnabledForCmds("names", opts.IsPorted())
 	outputHelpers.SetWriterForCommand("names", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -32,6 +33,7 @@ func RunNames(cmd *cobra.Command, args []string) (err error) {
 // ServeNames handles the names command for the API. Returns error and a bool if handled
 func ServeNames(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := namesFinishParseApi(w, r)
+	outputHelpers.SetEnabledForCmds("names", opts.IsPorted())
 	outputHelpers.InitJsonWriterApi("names", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -72,6 +74,12 @@ func GetNamesOptions(args []string, g *globals.GlobalOptions) *NamesOptions {
 		ret.Globals = *g
 	}
 	return ret
+}
+
+func (opts *NamesOptions) IsPorted() (ported bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
 }
 
 // EXISTING_CODE

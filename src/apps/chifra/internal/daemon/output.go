@@ -31,6 +31,7 @@ import (
 // RunDaemon handles the daemon command for the command line. Returns error only as per cobra.
 func RunDaemon(cmd *cobra.Command, args []string) (err error) {
 	opts := daemonFinishParse(args)
+	outputHelpers.SetEnabledForCmds("daemon", opts.IsPorted())
 	outputHelpers.SetWriterForCommand("daemon", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -41,6 +42,7 @@ func RunDaemon(cmd *cobra.Command, args []string) (err error) {
 // ServeDaemon handles the daemon command for the API. Returns error and a bool if handled
 func ServeDaemon(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := daemonFinishParseApi(w, r)
+	outputHelpers.SetEnabledForCmds("daemon", opts.IsPorted())
 	outputHelpers.InitJsonWriterApi("daemon", w, &opts.Globals)
 	// EXISTING_CODE
 	log.Fatal("Should not happen. Daemon is an invalid route for server")
@@ -106,6 +108,12 @@ func GetDaemonOptions(args []string, g *globals.GlobalOptions) *DaemonOptions {
 		ret.Globals = *g
 	}
 	return ret
+}
+
+func (opts *DaemonOptions) IsPorted() (ported bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
 }
 
 // EXISTING_CODE
