@@ -4,7 +4,7 @@ blocks?list=1000&listCount=10
     {
       "baseFeePerGas": 0,
       "blockNumber": 1999100,
-      "difficulty": "50175511434372",
+      "difficulty": 50175511434372,
       "finalized": true,
       "gasLimit": 4712388,
       "gasUsed": 21000,
@@ -18,7 +18,7 @@ blocks?list=1000&listCount=10
     {
       "baseFeePerGas": 0,
       "blockNumber": 1999099,
-      "difficulty": "50151023498858",
+      "difficulty": 50151023498858,
       "finalized": true,
       "gasLimit": 4712388,
       "gasUsed": 199298,
@@ -32,7 +32,7 @@ blocks?list=1000&listCount=10
     {
       "baseFeePerGas": 0,
       "blockNumber": 1999098,
-      "difficulty": "50151023367786",
+      "difficulty": 50151023367786,
       "finalized": true,
       "gasLimit": 4712388,
       "gasUsed": 0,
@@ -46,7 +46,7 @@ blocks?list=1000&listCount=10
     {
       "baseFeePerGas": 0,
       "blockNumber": 1999097,
-      "difficulty": "50126547383500",
+      "difficulty": 50126547383500,
       "finalized": true,
       "gasLimit": 4712388,
       "gasUsed": 163298,
@@ -60,7 +60,7 @@ blocks?list=1000&listCount=10
     {
       "baseFeePerGas": 0,
       "blockNumber": 1999096,
-      "difficulty": "50102083344545",
+      "difficulty": 50102083344545,
       "finalized": true,
       "gasLimit": 4712388,
       "gasUsed": 42000,
@@ -74,7 +74,7 @@ blocks?list=1000&listCount=10
     {
       "baseFeePerGas": 0,
       "blockNumber": 1999095,
-      "difficulty": "50077631245092",
+      "difficulty": 50077631245092,
       "finalized": true,
       "gasLimit": 4712388,
       "gasUsed": 537716,
@@ -88,7 +88,7 @@ blocks?list=1000&listCount=10
     {
       "baseFeePerGas": 0,
       "blockNumber": 1999094,
-      "difficulty": "50077631114020",
+      "difficulty": 50077631114020,
       "finalized": true,
       "gasLimit": 4712388,
       "gasUsed": 21000,
@@ -102,7 +102,7 @@ blocks?list=1000&listCount=10
     {
       "baseFeePerGas": 0,
       "blockNumber": 1999093,
-      "difficulty": "50053190948306",
+      "difficulty": 50053190948306,
       "finalized": true,
       "gasLimit": 4712384,
       "gasUsed": 273000,
@@ -116,7 +116,7 @@ blocks?list=1000&listCount=10
     {
       "baseFeePerGas": 0,
       "blockNumber": 1999092,
-      "difficulty": "50126618481024",
+      "difficulty": 50126618481024,
       "finalized": true,
       "gasLimit": 4707788,
       "gasUsed": 21000,
@@ -130,7 +130,7 @@ blocks?list=1000&listCount=10
     {
       "baseFeePerGas": 0,
       "blockNumber": 1999091,
-      "difficulty": "50126618349952",
+      "difficulty": 50126618349952,
       "finalized": true,
       "gasLimit": 4712388,
       "gasUsed": 93468,

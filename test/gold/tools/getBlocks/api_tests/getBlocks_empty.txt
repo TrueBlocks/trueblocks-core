@@ -18,7 +18,8 @@ blocks?blocks=1001001
           "blockNumber": 1001001,
           "date": "2016-02-14 03:51:23 UTC",
           "datesh": "2016-02-14",
-          "ether": 1.17450113,
+          "ether": "1.17450113",
+          "finalized": true,
           "from": "0x68795c4aa09d6f4ed3e5deddf8c2ad3049a601da",
           "gas": 90000,
           "gasPrice": 50000000000,
@@ -37,7 +38,7 @@ blocks?blocks=1001001
             "logs": [],
             "status": null
           },
-          "time": "3:51:23 UTC",
+          "time": "03:51:23 UTC",
           "timestamp": 1455421883,
           "to": "0x789f40d61bb6436254d5b5f9cbb8cefb76916d46",
           "transactionIndex": 0,
@@ -48,7 +49,8 @@ blocks?blocks=1001001
           "blockNumber": 1001001,
           "date": "2016-02-14 03:51:23 UTC",
           "datesh": "2016-02-14",
-          "ether": 2.14841535,
+          "ether": "2.14841535",
+          "finalized": true,
           "from": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
           "gas": 90000,
           "gasPrice": 50000000000,
@@ -67,7 +69,7 @@ blocks?blocks=1001001
             "logs": [],
             "status": null
           },
-          "time": "3:51:23 UTC",
+          "time": "03:51:23 UTC",
           "timestamp": 1455421883,
           "to": "0xd77ba7ef37f87d5246f35de898133e09c92ecaca",
           "transactionIndex": 1,
@@ -78,7 +80,8 @@ blocks?blocks=1001001
           "blockNumber": 1001001,
           "date": "2016-02-14 03:51:23 UTC",
           "datesh": "2016-02-14",
-          "ether": 38.12,
+          "ether": "38.12",
+          "finalized": true,
           "from": "0x9d72354fda3e2bcb4d23d1cf9d0c0385d1ab08fd",
           "gas": 21000,
           "gasPrice": 50000000000,
@@ -97,7 +100,7 @@ blocks?blocks=1001001
             "logs": [],
             "status": null
           },
-          "time": "3:51:23 UTC",
+          "time": "03:51:23 UTC",
           "timestamp": 1455421883,
           "to": "0x8ce45c9dd072be275a9ab6c3736b086702d77413",
           "transactionIndex": 2,
@@ -108,7 +111,8 @@ blocks?blocks=1001001
           "blockNumber": 1001001,
           "date": "2016-02-14 03:51:23 UTC",
           "datesh": "2016-02-14",
-          "ether": 0.06184823264726908,
+          "ether": "0.061848232647269079",
+          "finalized": true,
           "from": "0x30d285941dfb8bbbe4ec72b02c8d166be01322d2",
           "gas": 21000,
           "gasPrice": 50000000000,
@@ -127,13 +131,14 @@ blocks?blocks=1001001
             "logs": [],
             "status": null
           },
-          "time": "3:51:23 UTC",
+          "time": "03:51:23 UTC",
           "timestamp": 1455421883,
           "to": "0x9b0a028eafdecde3afc0fd00b7937098388b7c8a",
           "transactionIndex": 3,
           "value": "61848232647269079"
         }
-      ]
+      ],
+      "uncles": []
     }
   ],
   "meta": {

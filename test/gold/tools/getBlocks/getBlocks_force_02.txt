@@ -19,6 +19,10 @@ TEST[DATE|TIME] Format:  json
         {
           "blockHash": "0x549eb23a472504a498b07a122b8461121cec1a25a8b5ee8831917b426a99e3d7",
           "blockNumber": 2769609,
+          "date": "2016-12-08 09:47:04 UTC",
+          "datesh": "2016-12-08",
+          "ether": "1.052",
+          "finalized": true,
           "from": "0xaaca7b76ab966e336b4cd359ae8d8dc8dac1b4d5",
           "gas": 21000,
           "gasPrice": 50000000000,
@@ -34,8 +38,10 @@ TEST[DATE|TIME] Format:  json
             "contractAddress": "0x0",
             "effectiveGasPrice": 50000000000,
             "gasUsed": 21000,
+            "logs": [],
             "status": null
           },
+          "time": "09:47:04 UTC",
           "timestamp": 1481190424,
           "to": "0x8335db4288a6d98d49f7db2e415f7c0652ee4fb5",
           "transactionIndex": 0,
@@ -44,6 +50,10 @@ TEST[DATE|TIME] Format:  json
         {
           "blockHash": "0x549eb23a472504a498b07a122b8461121cec1a25a8b5ee8831917b426a99e3d7",
           "blockNumber": 2769609,
+          "date": "2016-12-08 09:47:04 UTC",
+          "datesh": "2016-12-08",
+          "ether": "0.09429917884213053",
+          "finalized": true,
           "from": "0x648e0835b0eacf62ee6ff579d8fc40421eea5bef",
           "gas": 21000,
           "gasPrice": 40000000000,
@@ -59,8 +69,10 @@ TEST[DATE|TIME] Format:  json
             "contractAddress": "0x0",
             "effectiveGasPrice": 40000000000,
             "gasUsed": 21000,
+            "logs": [],
             "status": null
           },
+          "time": "09:47:04 UTC",
           "timestamp": 1481190424,
           "to": "0x7ed1e469fcb3ee19c0366d829e291451be638e59",
           "transactionIndex": 1,
@@ -69,6 +81,10 @@ TEST[DATE|TIME] Format:  json
         {
           "blockHash": "0x549eb23a472504a498b07a122b8461121cec1a25a8b5ee8831917b426a99e3d7",
           "blockNumber": 2769609,
+          "date": "2016-12-08 09:47:04 UTC",
+          "datesh": "2016-12-08",
+          "ether": "0",
+          "finalized": true,
           "from": "0x9e0b9ddba97dd4f7addab0b5f67036eebe687606",
           "gas": 135000,
           "gasPrice": 20000000000,
@@ -98,6 +114,7 @@ TEST[DATE|TIME] Format:  json
             ],
             "status": null
           },
+          "time": "09:47:04 UTC",
           "timestamp": 1481190424,
           "to": "0x37a9679c41e99db270bda88de8ff50c0cd23f326",
           "transactionIndex": 2,
@@ -106,6 +123,10 @@ TEST[DATE|TIME] Format:  json
         {
           "blockHash": "0x549eb23a472504a498b07a122b8461121cec1a25a8b5ee8831917b426a99e3d7",
           "blockNumber": 2769609,
+          "date": "2016-12-08 09:47:04 UTC",
+          "datesh": "2016-12-08",
+          "ether": "1.0091374320037231",
+          "finalized": true,
           "from": "0x1e9939daaad6924ad004c2560e90804164900341",
           "gas": 39000,
           "gasPrice": 20000000000,
@@ -121,8 +142,10 @@ TEST[DATE|TIME] Format:  json
             "contractAddress": "0x0",
             "effectiveGasPrice": 20000000000,
             "gasUsed": 21000,
+            "logs": [],
             "status": null
           },
+          "time": "09:47:04 UTC",
           "timestamp": 1481190424,
           "to": "0x2c23f3487d476da262189d2659df7225745e5a97",
           "transactionIndex": 3,
@@ -131,6 +154,10 @@ TEST[DATE|TIME] Format:  json
         {
           "blockHash": "0x549eb23a472504a498b07a122b8461121cec1a25a8b5ee8831917b426a99e3d7",
           "blockNumber": 2769609,
+          "date": "2016-12-08 09:47:04 UTC",
+          "datesh": "2016-12-08",
+          "ether": "90.567",
+          "finalized": true,
           "from": "0x8b2232c5006a7c9bcb7b52d07ad429bb71ae2c1c",
           "gas": 21000,
           "gasPrice": 20000000000,
@@ -146,8 +173,10 @@ TEST[DATE|TIME] Format:  json
             "contractAddress": "0x0",
             "effectiveGasPrice": 20000000000,
             "gasUsed": 21000,
+            "logs": [],
             "status": null
           },
+          "time": "09:47:04 UTC",
           "timestamp": 1481190424,
           "to": "0x5c70eb0e8923cc0c416e8fa002ad165c9cfcfb24",
           "transactionIndex": 4,
@@ -156,6 +185,10 @@ TEST[DATE|TIME] Format:  json
         {
           "blockHash": "0x549eb23a472504a498b07a122b8461121cec1a25a8b5ee8831917b426a99e3d7",
           "blockNumber": 2769609,
+          "date": "2016-12-08 09:47:04 UTC",
+          "datesh": "2016-12-08",
+          "ether": "60.122",
+          "finalized": true,
           "from": "0x1151314c646ce4e0efd76d1af4760ae66a9fe30f",
           "gas": 90000,
           "gasPrice": 20000000000,
@@ -171,8 +204,10 @@ TEST[DATE|TIME] Format:  json
             "contractAddress": "0x0",
             "effectiveGasPrice": 20000000000,
             "gasUsed": 21000,
+            "logs": [],
             "status": null
           },
+          "time": "09:47:04 UTC",
           "timestamp": 1481190424,
           "to": "0x5c70eb0e8923cc0c416e8fa002ad165c9cfcfb24",
           "transactionIndex": 5,
@@ -181,6 +216,10 @@ TEST[DATE|TIME] Format:  json
         {
           "blockHash": "0x549eb23a472504a498b07a122b8461121cec1a25a8b5ee8831917b426a99e3d7",
           "blockNumber": 2769609,
+          "date": "2016-12-08 09:47:04 UTC",
+          "datesh": "2016-12-08",
+          "ether": "1.0028272601309894",
+          "finalized": true,
           "from": "0x1e9939daaad6924ad004c2560e90804164900341",
           "gas": 39000,
           "gasPrice": 20000000000,
@@ -210,12 +249,14 @@ TEST[DATE|TIME] Format:  json
             ],
             "status": null
           },
+          "time": "09:47:04 UTC",
           "timestamp": 1481190424,
           "to": "0x3d5fb40d096ff8327ba7b8885ad3b6bb3c1c4533",
           "transactionIndex": 6,
           "value": "1002827260130989400"
         }
-      ]
+      ],
+      "uncles": []
     },
     {
       "baseFeePerGas": 0,
@@ -228,7 +269,8 @@ TEST[DATE|TIME] Format:  json
       "miner": "0x61c808d82a3ac53231750dadc13c777b59310bd9",
       "parentHash": "0x906210a8d171cef355632314ac1e8f196b17bc9a4875e9df311ab2aec5791339",
       "timestamp": 1481621074,
-      "transactions": []
+      "transactions": [],
+      "uncles": []
     },
     {
       "baseFeePerGas": 0,
@@ -241,7 +283,8 @@ TEST[DATE|TIME] Format:  json
       "miner": "0x4bb96091ee9d802ed039c4d1a5f6216f90f81b01",
       "parentHash": "0x206a8a664c2d026e5301accac15cf1a12b623da1cd16dbccb0557152a076279d",
       "timestamp": 1482663926,
-      "transactions": []
+      "transactions": [],
+      "uncles": []
     },
     {
       "baseFeePerGas": 0,
@@ -254,7 +297,8 @@ TEST[DATE|TIME] Format:  json
       "miner": "0x61c808d82a3ac53231750dadc13c777b59310bd9",
       "parentHash": "0x3ab4b421b943b5401a40a2fcad52782194d6f788afed587a3d9518bec57f50e9",
       "timestamp": 1485564456,
-      "transactions": []
+      "transactions": [],
+      "uncles": []
     }
   ]
 }

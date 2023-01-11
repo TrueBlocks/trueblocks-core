@@ -4,7 +4,7 @@ blocks?listCount=2&list=1030000&blocks=10010
     {
       "baseFeePerGas": 0,
       "blockNumber": 970100,
-      "difficulty": "11467093517127",
+      "difficulty": 11467093517127,
       "finalized": true,
       "gasLimit": 3141592,
       "gasUsed": 21000,
@@ -18,7 +18,7 @@ blocks?listCount=2&list=1030000&blocks=10010
     {
       "baseFeePerGas": 0,
       "blockNumber": 970099,
-      "difficulty": "11461497082877",
+      "difficulty": 11461497082877,
       "finalized": true,
       "gasLimit": 3141592,
       "gasUsed": 0,
