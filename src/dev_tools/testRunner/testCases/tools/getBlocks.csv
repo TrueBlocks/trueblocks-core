@@ -11,6 +11,7 @@ on       ,both ,fast  ,blocks ,tools/getBlocks ,baddata               ,y    ,blo
 on       ,both ,fast  ,blocks ,tools/getBlocks ,empty                 ,y    ,blocks = 1001001
 on       ,both ,fast  ,blocks ,tools/getBlocks ,bloom                 ,y    ,blocks = 4000001
 on       ,both ,fast  ,blocks ,tools/getBlocks ,uncles                ,y    ,blocks = 3 469 & uncles
+on       ,both ,fast  ,blocks ,tools/getBlocks ,uncles_count          ,y    ,blocks = 3 469 & uncles & count
 on       ,both ,fast  ,blocks ,tools/getBlocks ,uncles2               ,y    ,blocks = 0x3d6122660cc824376f11ee842f83addc3525e2dd6756b9bcf0affa6aa88cf741 0x753bd45eb11dfe6bd3dcec5147b2365b046c2f02bfdff595c0b091c3f91e7627 & uncles
 on       ,both ,fast  ,blocks ,tools/getBlocks ,uncles_old_bug        ,y    ,blocks = 3 12 469 & uncles
 on       ,both ,fast  ,blocks ,tools/getBlocks ,byhash                ,y    ,blocks = 0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39
@@ -35,6 +36,10 @@ on       ,both ,fast  ,blocks ,tools/getBlocks ,addrCntFail           ,y    ,blo
 on       ,both ,fast  ,blocks ,tools/getBlocks ,addrMisconfig         ,y    ,blocks = 32279 & uniq
 on       ,both ,fast  ,blocks ,tools/getBlocks ,addrBlockZero         ,y    ,blocks = 0 & uniq
 on       ,both ,medi  ,blocks ,tools/getBlocks ,uniqTxCnt2            ,y    ,blocks = 1301011-1312011:313 & uniq & count & fmt = json
+on       ,both ,medi  ,blocks ,tools/getBlocks ,count1                ,y    ,blocks = 3 & fmt = json & count
+on       ,both ,medi  ,blocks ,tools/getBlocks ,count2                ,y    ,blocks = 3 & fmt = json & count & uncles
+on       ,both ,medi  ,blocks ,tools/getBlocks ,count3                ,y    ,blocks = 3 & fmt = json & count & apps
+on       ,both ,medi  ,blocks ,tools/getBlocks ,count4                ,y    ,blocks = 3 & fmt = json & count & uncles & apps
 
 on       ,both ,fast  ,blocks ,tools/getBlocks ,fmt_default           ,y    ,blocks = 2222222 2332332
 on       ,both ,fast  ,blocks ,tools/getBlocks ,fmt_txt               ,n    ,blocks = 2222222 2332332 & fmt = txt

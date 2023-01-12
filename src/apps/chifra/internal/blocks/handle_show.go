@@ -77,6 +77,7 @@ func (opts *BlocksOptions) HandleShowBlocks() error {
 		Extra: map[string]interface{}{
 			"txHashes": opts.Hashes,
 			"count":    opts.Count,
+			"uncles":   opts.Uncles,
 		},
 	})
 }

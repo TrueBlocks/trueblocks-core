@@ -47,6 +47,7 @@ string_q renameExportFields(const string_q& className, const string_q& inStr) {
             make_pair("basefeepergas", "baseFeePerGas"),
             make_pair("parenthash", "parentHash"),
             make_pair("transactionscnt", "transactionsCnt"),
+            make_pair("unclescnt", "unclesCnt"),
             make_pair("addr_count", "addrCount"),
             make_pair("address_count", "addrCount"),
         };

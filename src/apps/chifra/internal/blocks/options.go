@@ -123,12 +123,6 @@ func (opts *BlocksOptions) toCmdLine() string {
 	if opts.Cache {
 		options += " --cache"
 	}
-	if opts.List != 0 {
-		options += (" --list " + fmt.Sprintf("%d", opts.List))
-	}
-	if opts.ListCount != 0 {
-		options += (" --list_count " + fmt.Sprintf("%d", opts.ListCount))
-	}
 	options += " " + strings.Join(opts.Blocks, " ")
 	// EXISTING_CODE
 	// EXISTING_CODE

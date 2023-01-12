@@ -34,6 +34,7 @@ func (opts *BlocksOptions) HandleShowUncles() error {
 			for _, bn := range blockNums {
 				finalized := meta.Age(bn) > 28
 
+				// Decide on the concrete type of block.Transactions and set values
 				var block types.Modeler[types.RawBlock]
 				var err error
 				if !opts.Hashes {
@@ -73,5 +74,10 @@ func (opts *BlocksOptions) HandleShowUncles() error {
 		OutputFn:   opts.Globals.OutputFn,
 		Append:     opts.Globals.Append,
 		JsonIndent: "  ",
+		Extra: map[string]interface{}{
+			"txHashes": opts.Hashes,
+			"count":    opts.Count,
+			"uncles":   opts.Uncles,
+		},
 	})
 }
