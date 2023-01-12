@@ -971,10 +971,17 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Block data as returned from the RPC (with slight enhancements). Produces <a href="/data-model/chaindata/#block">Block</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-blocks">chifra blocks</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/chaindata/#block">Block</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">Traceaction</a>, <a href="/data-model/chaindata/#traceresult">Traceresult</a>, and/or <a href="/data-model/chaindata/#blockcount">Blockcount</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-blocks">chifra blocks</a> command line.
                     type: array
                     items:
-                      $ref: "#/components/schemas/block"
+                      oneOf:
+                        - $ref: "#/components/schemas/appearance"
+                        - $ref: "#/components/schemas/block"
+                        - $ref: "#/components/schemas/log"
+                        - $ref: "#/components/schemas/trace"
+                        - $ref: "#/components/schemas/traceAction"
+                        - $ref: "#/components/schemas/traceResult"
+                        - $ref: "#/components/schemas/blockCount"
                 example:
                   {
                     "blockNumber": 3141592,
@@ -2660,6 +2667,29 @@ components:
           type: string
           format: bytes
           description: "the result of the call of this trace"
+    blockCount:
+      description: "counts of various parts of the block data such as tx_count, trace_count, etc."
+      type: object
+      properties:
+        transactionCnt:
+          type: number
+          format: uint64
+          example: 10
+          description: "the number transactions in the block"
+        uncleCnt:
+          type: number
+          format: uint64
+          example: 20
+          description: "the number of uncles in the block"
+        traceCnt:
+          type: number
+          format: uint64
+          example: 30
+          description: "the number of traces in the block"
+        addressCnt:
+          type: number
+          format: uint64
+          example: 40
     namedBlock:
       description: "a block that has been given a particular name such as `first` or `latest`"
       type: object

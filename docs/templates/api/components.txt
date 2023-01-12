@@ -731,6 +731,29 @@ components:
           type: string
           format: bytes
           description: "the result of the call of this trace"
+    blockCount:
+      description: "counts of various parts of the block data such as tx_count, trace_count, etc."
+      type: object
+      properties:
+        transactionCnt:
+          type: number
+          format: uint64
+          example: 10
+          description: "the number transactions in the block"
+        uncleCnt:
+          type: number
+          format: uint64
+          example: 20
+          description: "the number of uncles in the block"
+        traceCnt:
+          type: number
+          format: uint64
+          example: 30
+          description: "the number of traces in the block"
+        addressCnt:
+          type: number
+          format: uint64
+          example: 40
     namedBlock:
       description: "a block that has been given a particular name such as `first` or `latest`"
       type: object

@@ -160,6 +160,7 @@ The following commands produce and manage Logs:
 
 - [chifra logs](/chifra/chaindata/#chifra-logs)
 - [chifra export](/chifra/accounts/#chifra-export)
+- [chifra blocks](/chifra/chaindata/#chifra-blocks)
 
 Logs consist of the following fields:
 
@@ -192,6 +193,7 @@ The following commands produce and manage Traces:
 
 - [chifra traces](/chifra/chaindata/#chifra-traces)
 - [chifra export](/chifra/accounts/#chifra-export)
+- [chifra blocks](/chifra/chaindata/#chifra-blocks)
 
 Traces consist of the following fields:
 
@@ -221,6 +223,7 @@ The following commands produce and manage TraceActions:
 
 - [chifra traces](/chifra/chaindata/#chifra-traces)
 - [chifra export](/chifra/accounts/#chifra-export)
+- [chifra blocks](/chifra/chaindata/#chifra-blocks)
 
 TraceActions consist of the following fields:
 
@@ -243,6 +246,7 @@ The following commands produce and manage TraceResults:
 
 - [chifra traces](/chifra/chaindata/#chifra-traces)
 - [chifra export](/chifra/accounts/#chifra-export)
+- [chifra blocks](/chifra/chaindata/#chifra-blocks)
 
 TraceResults consist of the following fields:
 
@@ -252,6 +256,25 @@ TraceResults consist of the following fields:
 | code        | if this trace is creating a new smart contract, the byte code of that contract | bytes   |
 | gasUsed     | the amount of gas used by this trace                                           | gas     |
 | output      | the result of the call of this trace                                           | bytes   |
+
+## BlockCount
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+`chifra blocks --count` returns the number of various types of data in a block. For example, `transactionCnt` is the number of transactions in the block, 
+and so on.
+
+The following commands produce and manage BlockCounts:
+
+- [chifra blocks](/chifra/chaindata/#chifra-blocks)
+
+BlockCounts consist of the following fields:
+
+| Field          | Description                          | Type   |
+| -------------- | ------------------------------------ | ------ |
+| transactionCnt | the number transactions in the block | uint64 |
+| uncleCnt       | the number of uncles in the block    | uint64 |
+| traceCnt       | the number of traces in the block    | uint64 |
+| addressCnt     |                                      | uint64 |
 
 ## NamedBlock
 

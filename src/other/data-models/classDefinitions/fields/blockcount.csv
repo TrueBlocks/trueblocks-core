@@ -1,0 +1,5 @@
+name           ,type   ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
+transactionCnt ,uint64 ,           ,       ,      ,        ,          ,        ,      ,         ,  1 ,     ,     10 ,the number transactions in the block
+uncleCnt       ,uint64 ,           ,       ,      ,        ,true      ,        ,      ,         ,  2 ,     ,     20 ,the number of uncles in the block
+traceCnt       ,uint64 ,           ,       ,      ,        ,true      ,        ,      ,         ,  3 ,     ,     30 ,the number of traces in the block
+addressCnt     ,uint64 ,           ,       ,      ,        ,true      ,        ,      ,         ,  4 ,     ,     40 ,
