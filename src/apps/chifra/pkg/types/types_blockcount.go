@@ -15,7 +15,7 @@ type RawBlockCount interface{}
 
 type SimpleBlockCount struct {
 	BlockNumber uint64 `json:"blockNumber"`
-	Timestamp uint64 `json:"timestamp"`
+	Timestamp int64 `json:"timestamp"`
 	TransactionsCnt uint64 `json:"transactionsCnt"`
 	UnclesCnt uint64 `json:"unclesCnt,omitempty"`
 	LogsCnt uint64 `json:"logsCnt,omitempty"`

@@ -246,48 +246,6 @@ void addToTypeMap(map<string_q, string_q>& map, const string_q& group, const str
 }
 
 //------------------------------------------------------------------------------------------------------------
-string_q type_2_GoType(const string_q& type) {
-    if (type == "blknum" || type == "timestamp")
-        return "uint64";
-    if (type == "datetime")
-        return "string";
-    return type;
-}
-
-//------------------------------------------------------------------------------------------------------------
-void generate_go_code(COptions* opts, const CClassDefinition& model) {
-    string_q fn = getPathToSource("apps/chifra/pkg/types/types_" + toLower(model.base_name) + ".go");
-    string_q contents = asciiFileToString(getPathToTemplates("blank_type.go.tmpl"));
-    replaceAll(contents, "[{CLASS_NAME}]", type_2_ModelName(model.class_name, false));
-
-    ostringstream fieldStream, copyStream, displayStream;
-    for (auto field : model.fieldArray) {
-        string_q type = type_2_GoType(field.type);
-        // if (field.is_flags & IS_ARRAY) {
-        //     type = "[]" + type_2_ModelName(type, false);
-        // } else if (field.is_flags & IS_OBJECT) {
-        //     type = "*" + type_2_ModelName(type, false);
-        // }
-        bool isOmitEmpty = (field.is_flags & IS_OMITEMPTY);
-        fieldStream << "\t" << firstUpper(field.name) << " " << type << " `json:\"" << field.name
-                    << (isOmitEmpty ? ",omitempty" : "") << "\"`" << endl;
-        if (!isOmitEmpty) {
-            copyStream << "\t\t\"" << field.name << "\": s." << firstUpper(field.name) << "," << endl;
-            displayStream << "\t\t\"" << field.name << "\""
-                          << "," << endl;
-        }
-    }
-    replaceAll(contents, "[{FIELDS}]", fieldStream.str());
-    replaceAll(contents, "[{FIELD_COPY}]", copyStream.str());
-    replaceAll(contents, "[{FIELD_DISPLAY}]", displayStream.str());
-
-    codewrite_t cw(fn, contents);
-    cw.nSpaces = 0;
-    writeCodeIn(opts, cw);
-    // cerr << fn << endl;
-}
-
-//------------------------------------------------------------------------------------------------------------
 string_q get_producer_group(const string_q& p, const CCommandOptionArray& endpoints) {
     for (auto ep : endpoints) {
         if (ep.api_route == p) {

@@ -50,7 +50,7 @@ func GetSpecials(chain string) (specials []types.SimpleNamedBlock, err error) {
 					specials = append(specials, types.SimpleNamedBlock{
 						BlockNumber: bn,
 						Name:        record[1],
-						Timestamp:   ts,
+						Timestamp:   int64(ts),
 						Date:        record[3],
 					})
 				}

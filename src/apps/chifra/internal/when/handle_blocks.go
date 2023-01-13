@@ -44,7 +44,7 @@ func (opts *WhenOptions) HandleShowBlocks() error {
 				nm, _ := tslib.FromBnToName(opts.Globals.Chain, block.BlockNumber)
 				modelChan <- &types.SimpleNamedBlock{
 					BlockNumber: block.BlockNumber,
-					Timestamp:   block.GetTimestamp(),
+					Timestamp:   int64(block.GetTimestamp()),
 					Date:        d.Format("YYYY-MM-DD HH:mm:ss UTC"),
 					Name:        nm,
 				}
