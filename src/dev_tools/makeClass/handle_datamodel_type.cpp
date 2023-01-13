@@ -30,6 +30,13 @@ void generate_go_code(COptions* opts, const CClassDefinition& model) {
     string_q contents = asciiFileToString(getPathToTemplates("blank_type.go.tmpl"));
     replaceAll(contents, "[{CLASS_NAME}]", type_2_ModelName(model.class_name, false));
 
+    size_t maxNameWid = 0, maxTypeWid = 0;
+    for (auto field : model.fieldArray) {
+        string_q type = type_2_GoType(field.type);
+        maxNameWid = max(maxNameWid, field.name.length());
+        maxTypeWid = max(maxTypeWid, type.length());
+    }
+
     ostringstream fieldStream, copyStream, displayStream;
     for (auto field : model.fieldArray) {
         string_q type = type_2_GoType(field.type);
@@ -39,10 +46,11 @@ void generate_go_code(COptions* opts, const CClassDefinition& model) {
         //     type = "*" + type_2_ModelName(type, false);
         // }
         bool isOmitEmpty = (field.is_flags & IS_OMITEMPTY);
-        fieldStream << "\t" << firstUpper(field.name) << " " << type << " `json:\"" << field.name
-                    << (isOmitEmpty ? ",omitempty" : "") << "\"`" << endl;
+        fieldStream << "\t" << padRight(firstUpper(field.name), maxNameWid) << " " << padRight(type, maxTypeWid)
+                    << " `json:\"" << field.name << (isOmitEmpty ? ",omitempty" : "") << "\"`" << endl;
         if (!isOmitEmpty) {
-            copyStream << "\t\t\"" << field.name << "\": s." << firstUpper(field.name) << "," << endl;
+            copyStream << "\t\t" << padRight("\"" + field.name + "\":", maxNameWid + 3) << " s."
+                       << firstUpper(field.name) << "," << endl;
             displayStream << "\t\t\"" << field.name << "\""
                           << "," << endl;
         }

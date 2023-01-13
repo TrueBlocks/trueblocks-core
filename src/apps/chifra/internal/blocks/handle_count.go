@@ -57,7 +57,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 					}
 				}
 
-				if opts.Trace {
+				if opts.Traces {
 					if blockCount.TracesCnt, err = rpcClient.GetTraceCountByNumber(opts.Globals.Chain, bn); err != nil {
 						errorChan <- err
 						cancel()
@@ -91,11 +91,12 @@ func (opts *BlocksOptions) HandleCounts() error {
 		Append:     opts.Globals.Append,
 		JsonIndent: "  ",
 		Extra: map[string]interface{}{
-			"count":     opts.Count,
-			"uncles":    opts.Uncles,
-			"logs":      opts.Logs,
-			"traces":    opts.Trace,
-			"addresses": opts.Uniq || opts.Apps,
+			"count":  opts.Count,
+			"uncles": opts.Uncles,
+			"logs":   opts.Logs,
+			"traces": opts.Traces,
+			"apps":   opts.Apps,
+			"uniqs":  opts.Uniq,
 		},
 	})
 }

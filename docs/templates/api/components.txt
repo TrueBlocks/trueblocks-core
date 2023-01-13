@@ -765,11 +765,16 @@ components:
           format: uint64
           example: 30
           description: "the number of traces in the block"
-        appearancesCnt:
+        appsCnt:
           type: number
           format: uint64
           example: 40
           description: "the number of address appearances in the block"
+        uniqsCnt:
+          type: number
+          format: uint64
+          example: 40
+          description: "the number of address appearances in the block per transaction"
     namedBlock:
       description: "a block that has been given a particular name such as `first` or `latest`"
       type: object

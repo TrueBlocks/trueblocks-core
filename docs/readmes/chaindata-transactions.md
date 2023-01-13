@@ -25,7 +25,7 @@ Arguments:
 
 Flags:
   -a, --articulate           articulate the retrieved data if ABIs can be found
-  -t, --trace                include the transaction's traces in the results
+  -t, --traces               include the transaction's traces in the results
   -u, --uniq                 display a list of uniq addresses found in the transaction
   -f, --flow string          for the uniq option only, export only from or to (including trace from or to)
                              One of [ from | to ]

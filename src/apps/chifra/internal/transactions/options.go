@@ -25,10 +25,11 @@ type TransactionsOptions struct {
 	Transactions   []string                 `json:"transactions,omitempty"`   // A space-separated list of one or more transaction identifiers
 	TransactionIds []identifiers.Identifier `json:"transactionIds,omitempty"` // Transaction identifiers
 	Articulate     bool                     `json:"articulate,omitempty"`     // Articulate the retrieved data if ABIs can be found
-	Trace          bool                     `json:"trace,omitempty"`          // Include the transaction's traces in the results
+	Traces         bool                     `json:"traces,omitempty"`         // Include the transaction's traces in the results
+	Trace          bool                     `json:"trace,omitempty"`          // Please use traces option instead
 	Uniq           bool                     `json:"uniq,omitempty"`           // Display a list of uniq addresses found in the transaction
 	Flow           string                   `json:"flow,omitempty"`           // For the uniq option only, export only from or to (including trace from or to)
-	Reconcile      string                   `json:"reconcile,omitempty"`      // Please use statements option instead
+	Reconcile      string                   `json:"reconcile,omitempty"`      // Please use account_for option instead
 	AccountFor     string                   `json:"accountFor,omitempty"`     // Reconcile the transaction as per the provided address
 	Cache          bool                     `json:"cache,omitempty"`          // Force the results of the query into the tx cache (and the trace cache if applicable)
 	Source         bool                     `json:"source,omitempty"`         // Find the source of the funds sent to the receiver
@@ -42,7 +43,7 @@ var defaultTransactionsOptions = TransactionsOptions{}
 func (opts *TransactionsOptions) testLog() {
 	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
-	logger.TestLog(opts.Trace, "Trace: ", opts.Trace)
+	logger.TestLog(opts.Traces, "Traces: ", opts.Traces)
 	logger.TestLog(opts.Uniq, "Uniq: ", opts.Uniq)
 	logger.TestLog(len(opts.Flow) > 0, "Flow: ", opts.Flow)
 	logger.TestLog(len(opts.AccountFor) > 0, "AccountFor: ", opts.AccountFor)
@@ -71,8 +72,8 @@ func (opts *TransactionsOptions) toCmdLine() string {
 	if opts.Articulate {
 		options += " --articulate"
 	}
-	if opts.Trace {
-		options += " --trace"
+	if opts.Traces {
+		options += " --traces"
 	}
 	if opts.Uniq {
 		options += " --uniq"
@@ -109,6 +110,8 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 			}
 		case "articulate":
 			opts.Articulate = true
+		case "traces":
+			opts.Traces = true
 		case "trace":
 			opts.Trace = true
 		case "uniq":

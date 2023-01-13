@@ -12,11 +12,11 @@ func GetLogCountByNumber(chain string, bn uint64) (uint64, error) {
 		return 0, nil
 	}
 	var logs Logs
-	tracePayload := RPCPayload{
+	logsPayload := RPCPayload{
 		Method:    "eth_getLogs",
-		RPCParams: RPCParams{fmt.Sprintf("0x%x", bn)},
+		RPCParams: RPCParams{LogFilter{Fromblock: fmt.Sprintf("0x%x", bn), Toblock: fmt.Sprintf("0x%x", bn)}},
 	}
-	err := FromRpc(config.GetRpcProvider(chain), &tracePayload, &logs)
+	err := FromRpc(config.GetRpcProvider(chain), &logsPayload, &logs)
 	if err != nil {
 		return utils.NOPOS, err
 	}

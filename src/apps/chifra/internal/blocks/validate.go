@@ -89,8 +89,8 @@ func (opts *BlocksOptions) validateBlocks() error {
 			if opts.Cache && opts.Uncles {
 				return validate.Usage("The {0} option is not available{1}.", "--cache", " with the --uncles option")
 			}
-			if opts.Trace && opts.Hashes {
-				return validate.Usage("The {0} option is not available{1}.", "--trace", " with the --hashes option")
+			if opts.Traces && opts.Hashes {
+				return validate.Usage("The {0} option is not available{1}.", "--traces", " with the --hashes option")
 			}
 			if !validate.CanArticulate(opts.Articulate) {
 				return validate.Usage("The {0} option requires an EtherScan API key.", "--articulate")
@@ -99,8 +99,8 @@ func (opts *BlocksOptions) validateBlocks() error {
 				return validate.Usage("The {0} option is available only with {1}.", "--articulate", "the --logs option")
 			}
 			if opts.Uniq {
-				if opts.Trace {
-					return validate.Usage("The {0} option is not available{1}.", "--trace", " with the --uniq option")
+				if opts.Traces {
+					return validate.Usage("The {0} option is not available{1}.", "--traces", " with the --uniq option")
 				}
 				if opts.Cache {
 					return validate.Usage("The {0} option is not available{1}.", "--cache", " with the --uniq option")
@@ -110,8 +110,8 @@ func (opts *BlocksOptions) validateBlocks() error {
 				}
 			}
 			if opts.Apps {
-				if opts.Trace {
-					return validate.Usage("The {0} option is not available{1}.", "--trace", " with the --apps option")
+				if opts.Traces {
+					return validate.Usage("The {0} option is not available{1}.", "--traces", " with the --apps option")
 				}
 				if opts.Cache {
 					return validate.Usage("The {0} option is not available{1}.", "--cache", " with the --apps option")
@@ -121,7 +121,7 @@ func (opts *BlocksOptions) validateBlocks() error {
 				return validate.Usage("The {0} option is only available with the {1} option.", "--big_range", "--logs")
 			}
 
-			if opts.Trace && !rpcClient.IsTracingNode(opts.Globals.TestMode, opts.Globals.Chain) {
+			if opts.Traces && !rpcClient.IsTracingNode(opts.Globals.TestMode, opts.Globals.Chain) {
 				return validate.Usage("Tracing is required for this program to work properly.")
 			}
 		}

@@ -14,13 +14,14 @@ package types
 type RawBlockCount interface{}
 
 type SimpleBlockCount struct {
-	BlockNumber uint64 `json:"blockNumber"`
-	Timestamp int64 `json:"timestamp"`
+	BlockNumber     uint64 `json:"blockNumber"`
+	Timestamp       int64  `json:"timestamp"`
 	TransactionsCnt uint64 `json:"transactionsCnt"`
-	UnclesCnt uint64 `json:"unclesCnt,omitempty"`
-	LogsCnt uint64 `json:"logsCnt,omitempty"`
-	TracesCnt uint64 `json:"tracesCnt,omitempty"`
-	AppearancesCnt uint64 `json:"appearancesCnt,omitempty"`
+	UnclesCnt       uint64 `json:"unclesCnt,omitempty"`
+	LogsCnt         uint64 `json:"logsCnt,omitempty"`
+	TracesCnt       uint64 `json:"tracesCnt,omitempty"`
+	AppsCnt         uint64 `json:"appsCnt,omitempty"`
+	UniqsCnt        uint64 `json:"uniqsCnt,omitempty"`
 }
 
 func (s *SimpleBlockCount) Raw() *RawBlockCount {
@@ -29,8 +30,8 @@ func (s *SimpleBlockCount) Raw() *RawBlockCount {
 
 func (s *SimpleBlockCount) Model(showHidden bool, format string, extraOptions map[string]any) Model {
 	model := map[string]interface{}{
-		"blockNumber": s.BlockNumber,
-		"timestamp": s.Timestamp,
+		"blockNumber":     s.BlockNumber,
+		"timestamp":       s.Timestamp,
 		"transactionsCnt": s.TransactionsCnt,
 	}
 
@@ -41,41 +42,58 @@ func (s *SimpleBlockCount) Model(showHidden bool, format string, extraOptions ma
 	}
 
 	// EXISTING_CODE
-	if format == "json" {
-		wantsUncles := extraOptions["uncles"] == true
-		wantsLogs := extraOptions["logs"] == true
-		wantsTraces := extraOptions["trace"] == true
-		wantsApps := extraOptions["apps"] == true || extraOptions["uniq"] == true
+	wantsUncles := extraOptions["uncles"] == true
+	wantsLogs := extraOptions["logs"] == true
+	wantsTraces := extraOptions["traces"] == true
+	wantsApps := extraOptions["apps"] == true
+	wantsUniqs := extraOptions["uniqs"] == true
 
-		if s.UnclesCnt == 0 || !wantsUncles {
-			delete(model, "unclesCnt")
-		} else {
+	if format == "json" {
+		if wantsUncles && s.UnclesCnt > 0 {
+			model["unclesCnt"] = s.UnclesCnt
 			order = append(order, "unclesCnt")
 		}
 
-		if s.LogsCnt == 0 || !wantsLogs {
-			delete(model, "logsCnt")
-		} else {
+		if wantsLogs && s.LogsCnt > 0 {
+			model["logsCnt"] = s.LogsCnt
 			order = append(order, "logsCnt")
 		}
 
-		if s.TracesCnt == 0 || !wantsTraces {
-			delete(model, "tracesCnt")
-		} else {
+		if wantsTraces && s.TracesCnt > 0 {
+			model["tracesCnt"] = s.TracesCnt
 			order = append(order, "tracesCnt")
 		}
 
-		if s.AppearancesCnt == 0 || !wantsApps {
-			delete(model, "appearancesCnt")
-		} else {
-			order = append(order, "appearancesCnt")
+		if wantsApps && s.AppsCnt > 0 {
+			model["appsCnt"] = s.AppsCnt
+			order = append(order, "appsCnt")
 		}
 
+		if wantsUniqs && s.UniqsCnt > 0 {
+			model["uniqsCnt"] = s.UniqsCnt
+			order = append(order, "uniqsCnt")
+		}
 	} else {
-		order = append(order, "unclesCnt")
-		order = append(order, "logsCnt")
-		order = append(order, "tracesCnt")
-		order = append(order, "appearancesCnt")
+		if wantsUncles {
+			model["unclesCnt"] = s.UnclesCnt
+			order = append(order, "unclesCnt")
+		}
+		if wantsLogs {
+			model["logsCnt"] = s.LogsCnt
+			order = append(order, "logsCnt")
+		}
+		if wantsTraces {
+			model["tracesCnt"] = s.TracesCnt
+			order = append(order, "tracesCnt")
+		}
+		if wantsApps {
+			model["appsCnt"] = s.AppsCnt
+			order = append(order, "appsCnt")
+		}
+		if wantsUniqs {
+			model["uniqsCnt"] = s.UniqsCnt
+			order = append(order, "uniqsCnt")
+		}
 	}
 	// EXISTING_CODE
 
