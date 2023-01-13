@@ -1,5 +1,7 @@
-name           ,type   ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
-transactionCnt ,uint64 ,           ,       ,      ,        ,          ,        ,      ,         ,  1 ,     ,     10 ,the number transactions in the block
-uncleCnt       ,uint64 ,           ,       ,      ,        ,true      ,        ,      ,         ,  2 ,     ,     20 ,the number of uncles in the block
-traceCnt       ,uint64 ,           ,       ,      ,        ,true      ,        ,      ,         ,  3 ,     ,     30 ,the number of traces in the block
-addressCnt     ,uint64 ,           ,       ,      ,        ,true      ,        ,      ,         ,  4 ,     ,     40 ,
+name            ,type      ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
+blockNumber     ,blknum    ,           ,       ,      ,        ,          ,        ,      ,         ,  1 ,   1 ,     10 ,the block's block number
+timestamp       ,timestamp ,           ,       ,      ,        ,          ,        ,      ,         ,  2 ,   2 ,     10 ,the timestamp of the block
+transactionsCnt ,uint64    ,           ,       ,      ,        ,          ,        ,      ,         ,  3 ,   3 ,     10 ,the number transactions in the block
+unclesCnt       ,uint64    ,           ,       ,      ,        ,          ,        ,      ,         ,  4 ,   4 ,     20 ,the number of uncles in the block
+tracesCnt       ,uint64    ,           ,       ,      ,        ,          ,        ,      ,         ,  5 ,   5 ,     30 ,the number of traces in the block
+appearancesCnt  ,uint64    ,           ,       ,      ,        ,          ,        ,      ,         ,  6 ,   6 ,     40 ,the number of address appearances in the block
