@@ -1,9 +1,11 @@
-chifra blocks  12 --traces --chain non-tracing
-TEST[DATE|TIME] Blocks:  [12]
+chifra blocks  3 --fmt json --count --traces --uncles --apps --fmt txt
+TEST[DATE|TIME] Blocks:  [3]
+TEST[DATE|TIME] Uncles:  true
 TEST[DATE|TIME] Traces:  true
-TEST[DATE|TIME] Chain:  non-tracing
-TEST[DATE|TIME] Format:  json
-Error: Tracing is required for this program to work properly.
+TEST[DATE|TIME] Apps:  true
+TEST[DATE|TIME] Count:  true
+TEST[DATE|TIME] Format:  txt
+Error: The --traces option is not available with the --apps option.
 Usage:
   chifra blocks [flags] <block> [block...]
 

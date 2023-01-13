@@ -1,4 +1,4 @@
-blocks?blocks=4012000-4012001&traces&apps
+blocks?blocks=3&fmt=json&count&traces&uncles&apps&fmt=txt
 {
   "errors": [
     "The --traces option is not available with the --apps option."
