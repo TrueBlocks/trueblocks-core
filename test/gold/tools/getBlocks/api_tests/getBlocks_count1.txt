@@ -3,6 +3,7 @@ blocks?blocks=3&fmt=json&count
   "data": [
     {
       "blockNumber": 3,
+      "timestamp": 1438270048,
       "transactionsCnt": 0
     }
   ],
