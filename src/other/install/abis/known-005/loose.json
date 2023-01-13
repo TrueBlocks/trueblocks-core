@@ -910,17 +910,17 @@
     "inputs": [
       {
         "type": "address",
-        "name": "targetFork",
+        "name": "targetFork"
       },
       {
         "type": "address",
-        "name": "targetNoFork",
+        "name": "targetNoFork"
       }
     ],
     "outputs": [
       {
         "type": "bool",
-        "name": "ret_0",
+        "name": "ret_0"
       }
     ]
   },
