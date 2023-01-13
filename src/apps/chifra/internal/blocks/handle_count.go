@@ -65,6 +65,14 @@ func (opts *BlocksOptions) HandleCounts() error {
 					}
 				}
 
+				if opts.Logs {
+					if blockCount.LogsCnt, err = rpcClient.GetLogCountByNumber(opts.Globals.Chain, bn); err != nil {
+						errorChan <- err
+						cancel()
+						return
+					}
+				}
+
 				modelChan <- &blockCount
 			}
 		}
@@ -85,23 +93,9 @@ func (opts *BlocksOptions) HandleCounts() error {
 		Extra: map[string]interface{}{
 			"count":     opts.Count,
 			"uncles":    opts.Uncles,
+			"logs":      opts.Logs,
 			"traces":    opts.Trace,
 			"addresses": opts.Uniq || opts.Apps,
 		},
 	})
 }
-
-// // getTraceCount
-// func getTraceCount(bn uint64) (uint64, error) {
-// 	var traces rpcClient.Traces
-// 	tracePayload := rpcClient.RPCPayload{
-// 		Method:    "trace_block",
-// 		RPCParams: rpcClient.RPCParams{fmt.Sprintf("0x%x", bn)},
-// 	}
-// 	err := rpcClient.FromRpc("http://localhost:23456", &tracePayload, &traces)
-// 	if err != nil {
-// 		// fmt.Println("rpcCall failed at block", blockNum, err)
-// 		return utils.NOPOS, err
-// 	}
-// 	return uint64(len(traces.Result)), nil
-// }

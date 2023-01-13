@@ -17,9 +17,10 @@ type SimpleBlockCount struct {
 	BlockNumber uint64 `json:"blockNumber"`
 	Timestamp uint64 `json:"timestamp"`
 	TransactionsCnt uint64 `json:"transactionsCnt"`
-	UnclesCnt uint64 `json:"unclesCnt"`
-	TracesCnt uint64 `json:"tracesCnt"`
-	AppearancesCnt uint64 `json:"appearancesCnt"`
+	UnclesCnt uint64 `json:"unclesCnt,omitempty"`
+	LogsCnt uint64 `json:"logsCnt,omitempty"`
+	TracesCnt uint64 `json:"tracesCnt,omitempty"`
+	AppearancesCnt uint64 `json:"appearancesCnt,omitempty"`
 }
 
 func (s *SimpleBlockCount) Raw() *RawBlockCount {
@@ -31,23 +32,18 @@ func (s *SimpleBlockCount) Model(showHidden bool, format string, extraOptions ma
 		"blockNumber": s.BlockNumber,
 		"timestamp": s.Timestamp,
 		"transactionsCnt": s.TransactionsCnt,
-		"unclesCnt": s.UnclesCnt,
-		"tracesCnt": s.TracesCnt,
-		"appearancesCnt": s.AppearancesCnt,
 	}
 
 	order := []string{
 		"blockNumber",
 		"timestamp",
 		"transactionsCnt",
-		"unclesCnt",
-		"tracesCnt",
-		"appearancesCnt",
 	}
 
 	// EXISTING_CODE
 	if format == "json" {
 		wantsUncles := extraOptions["uncles"] == true
+		wantsLogs := extraOptions["logs"] == true
 		wantsTraces := extraOptions["trace"] == true
 		wantsApps := extraOptions["apps"] == true || extraOptions["uniq"] == true
 
@@ -57,10 +53,10 @@ func (s *SimpleBlockCount) Model(showHidden bool, format string, extraOptions ma
 			order = append(order, "unclesCnt")
 		}
 
-		if s.AppearancesCnt == 0 || !wantsApps {
-			delete(model, "appearancesCnt")
+		if s.LogsCnt == 0 || !wantsLogs {
+			delete(model, "logsCnt")
 		} else {
-			order = append(order, "appearancesCnt")
+			order = append(order, "logsCnt")
 		}
 
 		if s.TracesCnt == 0 || !wantsTraces {
@@ -69,8 +65,15 @@ func (s *SimpleBlockCount) Model(showHidden bool, format string, extraOptions ma
 			order = append(order, "tracesCnt")
 		}
 
+		if s.AppearancesCnt == 0 || !wantsApps {
+			delete(model, "appearancesCnt")
+		} else {
+			order = append(order, "appearancesCnt")
+		}
+
 	} else {
 		order = append(order, "unclesCnt")
+		order = append(order, "logsCnt")
 		order = append(order, "tracesCnt")
 		order = append(order, "appearancesCnt")
 	}

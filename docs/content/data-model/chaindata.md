@@ -275,6 +275,7 @@ BlockCounts consist of the following fields:
 | timestamp       | the timestamp of the block                     | timestamp |
 | transactionsCnt | the number transactions in the block           | uint64    |
 | unclesCnt       | the number of uncles in the block              | uint64    |
+| logsCnt         | the number of logs in the block                | uint64    |
 | tracesCnt       | the number of traces in the block              | uint64    |
 | appearancesCnt  | the number of address appearances in the block | uint64    |
 

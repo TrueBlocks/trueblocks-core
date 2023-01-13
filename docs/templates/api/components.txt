@@ -755,6 +755,11 @@ components:
           format: uint64
           example: 20
           description: "the number of uncles in the block"
+        logsCnt:
+          type: number
+          format: uint64
+          example: 30
+          description: "the number of logs in the block"
         tracesCnt:
           type: number
           format: uint64

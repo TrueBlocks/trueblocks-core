@@ -55,6 +55,9 @@ func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
 		if opts.Count {
 			err = opts.HandleCounts()
 
+		} else if opts.Trace {
+			err = opts.HandleTrace()
+
 		} else if opts.List > 0 {
 			err = opts.HandleList()
 
@@ -92,10 +95,14 @@ func GetBlocksOptions(args []string, g *globals.GlobalOptions) *BlocksOptions {
 
 func (opts *BlocksOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
+	if opts.Articulate || opts.Cache {
+		return false
+	}
+
 	if opts.Count {
 		ported = (!opts.Apps && !opts.Uniq)
 	} else {
-		ported = !opts.Uncles && !opts.Logs && !opts.Trace && !opts.Apps && !opts.Uniq && !opts.Articulate && !opts.Cache
+		ported = !opts.Uncles && !opts.Logs && !opts.Apps && !opts.Uniq && !opts.Trace
 	}
 	// EXISTING_CODE
 	return
