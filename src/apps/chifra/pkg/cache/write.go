@@ -457,6 +457,7 @@ func WriteFunction(writer *bufio.Writer, function *types.SimpleFunction) (err er
 
 func WriteParameter(writer *bufio.Writer, param *types.SimpleParameter) (err error) {
 	write := createWriteFn(writer)
+	err = writeDefaultHeader(writer, "CParameter")
 	if err != nil {
 		return
 	}
@@ -674,7 +675,7 @@ func WriteAbis(writer *bufio.Writer, abis []types.SimpleFunction) (err error) {
 	}
 
 	// This address is always empty
-	var address common.Address
+	address := common.Address{}
 	if err = writeAddress(writer, &address); err != nil {
 		return
 	}

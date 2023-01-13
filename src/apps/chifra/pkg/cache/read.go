@@ -817,7 +817,7 @@ func readTraceResult(reader *bufio.Reader) (result *types.SimpleTraceResult, err
 	return
 }
 
-// WriteAbis reads ABI cache (known.bin)
+// ReadAbis reads ABI cache (known.bin)
 func ReadAbis(reader *bufio.Reader) (result []types.SimpleFunction, err error) {
 	header := &cacheHeader{}
 	if err = readCacheHeader(reader, header); err != nil {

@@ -1,7 +1,7 @@
 package abi
 
 import (
-	"errors"
+	"encoding/json"
 	"fmt"
 	"io/fs"
 	"log"
@@ -31,8 +31,6 @@ func getMapKey(encoding string) string {
 	return strings.ToLower(encoding)
 }
 
-var errInvalidJson = errors.New("parsing JSON failed")
-
 func LoadAbiFromJsonFile(filePath string, destination AbiInterfaceMap) (err error) {
 	file, err := os.OpenFile(filePath, os.O_RDONLY, 0)
 	if err != nil {
@@ -49,11 +47,11 @@ func LoadAbiFromJsonFile(filePath string, destination AbiInterfaceMap) (err erro
 		fourByte := string(common.Bytes2Hex(method.ID))
 		log.Println("Read", fourByte, method.Name)
 		destination[fourByte] = &types.SimpleFunction{
-			Encoding:     fourByte,
-			Signature:    method.Sig,
-			Name:         method.Name,
-			FunctionType: "function",
-			AbiSource:    path.Base(file.Name()),
+			Encoding:  fourByte,
+			Signature: method.Sig,
+			Name:      method.Name,
+			// FunctionType: "function",
+			AbiSource: path.Base(file.Name()),
 			// TODO: check if this is correct
 			Anonymous:       method.Name != "",
 			Constant:        method.Constant,
@@ -62,12 +60,44 @@ func LoadAbiFromJsonFile(filePath string, destination AbiInterfaceMap) (err erro
 			// Inputs:
 			// Outputs:
 		}
+		var functionType string
+		switch method.Type {
+		case abi.Constructor:
+			functionType = "constructor"
+		case abi.Fallback:
+			functionType = "fallback"
+		case abi.Receive:
+			functionType = "receive"
+		default:
+			functionType = "function"
+		}
+		destination[fourByte].FunctionType = functionType
 	}
 
 	return
 }
 
-func LoadAbiFromKnownFile(name string, destination AbiInterfaceMap) (err error) {
+func LoadAbiFromKnownFile(filePath string, destination AbiInterfaceMap) (err error) {
+	file, err := os.OpenFile(filePath, os.O_RDONLY, 0)
+	if err != nil {
+		return
+	}
+
+	var functions []types.SimpleFunction
+	decoder := json.NewDecoder(file)
+	err = decoder.Decode(&functions)
+	if err != nil {
+		return
+	}
+
+	for _, function := range functions {
+		destination[function.Encoding] = &function
+	}
+
+	return
+}
+
+func LoadKnownAbiByName(name string, destination AbiInterfaceMap) (err error) {
 	var filePath string
 	if filePath = findKnownAbi(name); filePath == "" {
 		err = fmt.Errorf("known abi file not found: %s", name)
@@ -141,7 +171,7 @@ func PreloadKnownAbis(chain string, destination AbiInterfaceMap, tokensOnly bool
 	fileCount := 0
 
 	for _, filePath := range paths {
-		loadErr := LoadAbiFromJsonFile(filePath, destination)
+		loadErr := LoadAbiFromKnownFile(filePath, destination)
 		if loadErr != nil {
 			return fmt.Errorf("%s: %w", filePath, loadErr)
 		}
