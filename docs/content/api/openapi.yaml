@@ -2671,25 +2671,36 @@ components:
       description: "counts of various parts of the block data such as tx_count, trace_count, etc."
       type: object
       properties:
-        transactionCnt:
+        blockNumber:
+          type: number
+          format: blknum
+          example: 10
+          description: "the block's block number"
+        timestamp:
+          type: number
+          format: timestamp
+          example: 10
+          description: "the timestamp of the block"
+        transactionsCnt:
           type: number
           format: uint64
           example: 10
           description: "the number transactions in the block"
-        uncleCnt:
+        unclesCnt:
           type: number
           format: uint64
           example: 20
           description: "the number of uncles in the block"
-        traceCnt:
+        tracesCnt:
           type: number
           format: uint64
           example: 30
           description: "the number of traces in the block"
-        addressCnt:
+        appearancesCnt:
           type: number
           format: uint64
           example: 40
+          description: "the number of address appearances in the block"
     namedBlock:
       description: "a block that has been given a particular name such as `first` or `latest`"
       type: object
