@@ -44,7 +44,6 @@ class COptionsBase {
     uint64_t minArgs;
     uint32_t enableBits;
     bool isRaw;
-    bool isVeryRaw;
     bool noHeader;
     bool firstOut;
 
