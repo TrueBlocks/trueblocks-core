@@ -70,12 +70,10 @@ int main(int argc, const char* argv[]) {
             explode(lines, contents, '\n');
 
             map<string_q, CTestCase> testMap;
-            bool testTestOnly = getEnvStr("TEST_TEST_ONLY") == "true";
             for (auto line : lines) {
-                if (testTestOnly) {
+                if (getEnvStr("TEST_TEST_ONLY") == "true") {
                     if (startsWith(line, "test,")) {
                         replace(line, "test,", "on,");
-                        replace(line, "both,", "cmd,");
                     } else {
                         replace(line, "on,", "local,");
                     }
@@ -142,8 +140,8 @@ int main(int argc, const char* argv[]) {
 
             expContext().exportFmt = CSV1;
             perf_fmt = substitute(cleanFmt(STR_DISPLAY_MEASURE), "\"", "");
-            options.doTests(total, testArray, path, testName, API, !testTestOnly);
-            options.doTests(total, testArray, path, testName, CMD, !testTestOnly);
+            options.doTests(total, testArray, path, testName, API);
+            options.doTests(total, testArray, path, testName, CMD);
             if (shouldQuit())
                 break;
 
@@ -200,7 +198,7 @@ int main(int argc, const char* argv[]) {
 
 //-----------------------------------------------------------------------
 void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_q& testPath, const string_q& testName,
-                       int whichTest, bool doRemove) {
+                       int whichTest) {
     if (!(modes & whichTest))
         return;
 
@@ -215,7 +213,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             continue;
         if (verbose)
             cerr << string_q(120, '=') << endl << test << endl << string_q(120, '=') << endl;
-        test.prepareTest(cmdTests, skip > 0 && doRemove);
+        test.prepareTest(cmdTests, skip > 0);
         if ((!cmdTests && test.mode == "cmd") || (cmdTests && test.mode == "api")) {
             // do nothing - wrong mode
 

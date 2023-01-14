@@ -10,7 +10,7 @@ func (s *SimpleWhenCount) Raw() *RawWhenCount {
 	return nil
 }
 
-func (s *SimpleWhenCount) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleWhenCount) Model(showHidden bool, format string) Model {
 	model := map[string]interface{}{
 		"count": s.Count,
 	}

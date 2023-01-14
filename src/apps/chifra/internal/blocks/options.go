@@ -206,7 +206,7 @@ func blocksFinishParse(args []string) *BlocksOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	// EXISTING_CODE
-	if !opts.Uniq && opts.List == 0 {
+	if !opts.Uniq {
 		defFmt = "json"
 	}
 	opts.Blocks = args

@@ -11,8 +11,6 @@ import (
 func (opts *WhenOptions) HandleList() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
-
-	// Note: Make sure to add an entry to enabledForCmd in src/apps/chifra/pkg/output/helpers.go
 	fetchData := func(modelChan chan types.Modeler[types.RawNamedBlock], errorChan chan error) {
 		results, err := tslib.GetSpecials(opts.Globals.Chain)
 		if err != nil {

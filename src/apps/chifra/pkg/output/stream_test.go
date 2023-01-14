@@ -39,19 +39,18 @@ var input = types.SimpleReceipt{
 
 func helperStreamFormats(w csv.Writer, outputBuffer *bytes.Buffer, format string, expectKeys bool) error {
 	buffer := new(bytes.Buffer)
-	StreamModel(buffer, input.Model(false, format, nil), OutputOptions{
+	StreamModel(buffer, input.Model(false, format), OutputOptions{
 		Format:   format,
 		NoHeader: !expectKeys,
 	})
 	result := buffer.String()
 
 	var expectedItems []string
-	data := input.Model(false, format, nil).Data
-	for _, key := range input.Model(false, format, nil).Order {
-		expectedItems = append(expectedItems, fmt.Sprint(data[key]))
+	for _, key := range input.Model(false, format).Order {
+		expectedItems = append(expectedItems, fmt.Sprint(input.Model(false, format).Data[key]))
 	}
 	if expectKeys {
-		w.Write(input.Model(false, format, nil).Order)
+		w.Write(input.Model(false, format).Order)
 	}
 	w.Write(expectedItems)
 	w.Flush()
@@ -91,7 +90,7 @@ func TestStreamJson(t *testing.T) {
 	outputBuffer := &bytes.Buffer{}
 	w := NewJsonWriter(outputBuffer)
 	w.DefaultField = DefaultField{Key: "Data", FieldType: FieldArray}
-	StreamModel(w, input.Model(false, "json", nil), OutputOptions{
+	StreamModel(w, input.Model(false, "json"), OutputOptions{
 		Format:     "json",
 		JsonIndent: "  ",
 	})
@@ -100,7 +99,7 @@ func TestStreamJson(t *testing.T) {
 	expected, err := json.MarshalIndent(struct {
 		Data []interface{}
 	}{
-		Data: []interface{}{input.Model(false, "json", nil).Data},
+		Data: []interface{}{input.Model(false, "json").Data},
 	}, "", "  ")
 
 	if err != nil {
@@ -125,7 +124,7 @@ func TestStreamTemplate(t *testing.T) {
 	tmpl := template.Must(template.New("").Parse("{{.blockNumber}} used {{.gasUsed}}{{if .Nonexistent}}111{{else}}.{{end}}"))
 	outputBuffer := &bytes.Buffer{}
 
-	err := StreamWithTemplate(outputBuffer, input.Model(false, "", nil), tmpl)
+	err := StreamWithTemplate(outputBuffer, input.Model(false, ""), tmpl)
 	if err != nil {
 		t.Fatal(err)
 	}

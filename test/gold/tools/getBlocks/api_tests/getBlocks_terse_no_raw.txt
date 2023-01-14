@@ -2,9 +2,8 @@ blocks?blocks=4001001-4001003&hashes
 {
   "data": [
     {
-      "blockNumber": 4001001,
-      "finalized": true,
       "hash": "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f",
+      "blockNumber": 4001001,
       "parentHash": "0x7721d6149047de2b5ab2cfcf0204a7a3dcdc563635003926f8f76cd652b173cb",
       "timestamp": 1499651592,
       "tx_hashes": [
@@ -104,9 +103,8 @@ blocks?blocks=4001001-4001003&hashes
       ]
     },
     {
-      "blockNumber": 4001002,
-      "finalized": true,
       "hash": "0x96f1a23f2170bf2684a876b7d88229f3904c3a43773775554ebd37f86cdfa852",
+      "blockNumber": 4001002,
       "parentHash": "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f",
       "timestamp": 1499651625,
       "tx_hashes": [
@@ -414,13 +412,10 @@ blocks?blocks=4001001-4001003&hashes
     }
   ],
   "meta": {
-    "client": "0xdeadbeef",
-    "finalized": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
     "unripe": "0xdeadbeef",
-    "chainId": 1,
-    "networkId": 1,
-    "chain": "mainnet"
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
   }
 }

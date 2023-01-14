@@ -151,7 +151,7 @@ bool visitTransaction(CTransaction& trans, void* data) {
         return true;
     }
 
-    if (opt->isRaw) {
+    if (opt->isRaw || opt->isVeryRaw) {
         string_q result;
         queryRawTransaction(result, trans.getValueByName("hash"));
         if (!isText && !opt->firstOut)

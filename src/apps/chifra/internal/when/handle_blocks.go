@@ -17,8 +17,6 @@ import (
 func (opts *WhenOptions) HandleShowBlocks() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
-
-	// Note: Make sure to add an entry to enabledForCmd in src/apps/chifra/pkg/output/helpers.go
 	fetchData := func(modelChan chan types.Modeler[types.RawNamedBlock], errorChan chan error) {
 		for _, br := range opts.BlockIds {
 			blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
@@ -27,9 +25,8 @@ func (opts *WhenOptions) HandleShowBlocks() error {
 				cancel()
 				return
 			}
-
 			for _, bn := range blockNums {
-				block, err := rpcClient.GetBlockHeaderByNumber(opts.Globals.Chain, bn)
+				block, err := rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, false)
 				// TODO: rpcClient should return a custom type of error in this case
 				if err != nil && strings.Contains(err.Error(), "not found") {
 					errorChan <- err

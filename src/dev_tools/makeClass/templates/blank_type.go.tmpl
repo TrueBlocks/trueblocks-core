@@ -20,7 +20,7 @@ func (s *Simple[{CLASS_NAME}]) Raw() *Raw[{CLASS_NAME}] {
 	return nil
 }
 
-func (s *Simple[{CLASS_NAME}]) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+func (s *Simple[{CLASS_NAME}]) Model(showHidden bool, format string) Model {
 	model := map[string]interface{}{
 [{FIELD_COPY}]	}
 

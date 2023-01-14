@@ -49,7 +49,7 @@ func (r *SimpleReceipt) SetRaw(rawReceipt RawReceipt) {
 }
 
 // To support custom format: just execute template on the output of Model
-func (r *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+func (r *SimpleReceipt) Model(showHidden bool, format string) Model {
 	model := map[string]interface{}{
 		"blockNumber":      r.BlockNumber,
 		"transactionIndex": r.TransactionIndex,
@@ -71,6 +71,10 @@ func (r *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[s
 	if r.ContractAddress != common.HexToAddress("0x0") {
 		model["contractAddress"] = r.ContractAddress
 		order = append(order, "contractAddress")
+	}
+	if r.EffectiveGasPrice > 0 {
+		model["effectiveGasPrice"] = r.EffectiveGasPrice
+		order = append(order, "effectiveGasPrice")
 	}
 
 	if showHidden && format == "json" {

@@ -65,7 +65,7 @@ These items may be set in three ways, each overridding the preceeding method:
 -- on the command line using the configuration item with leading dashes (i.e., `--name`).  
 
 <!-- markdownlint-disable MD041 -->
-### further information
+### Further information
 
 Each time `chifra scrape` runs, it begins at the last block it completed processing (plus one). With
 each pass, the scraper descends as deeply as is possible into each block's data. (This is why
@@ -92,7 +92,7 @@ on their own machines. The user needs the data for the software to operate--shar
 minimal effort and makes the data available to other people. Everyone is better off. A
 naturally-occuring network effect.
 
-### prerequisites
+### Prerequisites
 
 `chifra scrape` works with any EVM-based blockchain, but does not currently work without a "tracing,
 archive" RPC endpoint. The Erigon blockchain node, given its minimal disc footprint for an archive

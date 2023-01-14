@@ -2,6 +2,7 @@ package types
 
 import (
 	"math/big"
+	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/bykof/gostradamus"
@@ -9,16 +10,16 @@ import (
 )
 
 type Modeler[Raw RawData] interface {
-	Model(showHidden bool, format string, extraOptions map[string]any) Model
+	Model(showHidden bool, format string) Model
 	Raw() *Raw
 }
 
 type RawData interface {
-	RawReceipt | RawWhenCount | RawNamedBlock | RawBlock
+	RawReceipt | RawWhenCount | RawNamedBlock
 }
 
 type Model struct {
-	Data  map[string]any
+	Data  map[string]interface{}
 	Order []string
 }
 
@@ -127,6 +128,18 @@ type SimpleIndexAddressBelongs struct {
 	Apps    []SimpleIndexAppearance `json:"apps"`
 }
 
+type SimpleLog struct {
+	Address          common.Address  `json:"address"`
+	LogIndex         uint64          `json:"logIndex"`
+	BlockNumber      uint64          `json:"blockNumber"`
+	TransactionIndex uint32          `json:"transactionIndex"`
+	Timestamp        uint64          `json:"timestamp,omitempty"`
+	Topics           []common.Hash   `json:"topics,omitempty"`
+	Data             string          `json:"data,omitempty"`
+	CompressedLog    string          `json:"compressedLog,omitempty"`
+	ArticulatedLog   *SimpleFunction `json:"-"`
+}
+
 type SimpleName struct {
 	Tags     string `json:"tags"`
 	Address  string `json:"address"`
@@ -141,6 +154,32 @@ type Wei = big.Int
 type Gas = uint64
 type Blknum = uint64
 type Topic = string
+
+type SimpleTransaction struct {
+	Hash                 common.Hash     `json:"hash"`
+	BlockHash            common.Hash     `json:"blockHash"`
+	BlockNumber          Blknum          `json:"blockNumber"`
+	TransactionIndex     uint64          `json:"transactionIndex"`
+	Nonce                uint64          `json:"nonce"`
+	Timestamp            time.Time       `json:"timestamp"`
+	From                 common.Address  `json:"from"`
+	To                   common.Address  `json:"to"`
+	Value                Wei             `json:"value"`
+	ExtraValue1          Wei             `json:"extraValue1"`
+	ExtraValue2          Wei             `json:"extraValue2"`
+	Gas                  Gas             `json:"gas"`
+	GasPrice             Gas             `json:"gasPrice"`
+	MaxFeePerGas         Gas             `json:"maxFeePerGas"`
+	MaxPriorityFeePerGas Gas             `json:"maxPriorityFeePerGas"`
+	Input                string          `json:"input"`
+	IsError              bool            `json:"isError"`
+	HasToken             bool            `json:"hasToken"`
+	Cachebits            uint8           `json:"cachebits"`
+	Reserved2            uint8           `json:"reserved2"`
+	Receipt              *SimpleReceipt  `json:"receipt"`
+	Traces               []SimpleTrace   `json:"traces"`
+	ArticulatedTx        *SimpleFunction `json:"articulatedTx"`
+}
 
 type SimpleTrace struct {
 	BlockHash        common.Hash        `json:"blockHash"`
