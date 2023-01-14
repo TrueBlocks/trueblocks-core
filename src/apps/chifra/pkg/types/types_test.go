@@ -12,19 +12,22 @@ func TestTypes(t *testing.T) {
 		BlockNumber: 100,
 	}
 
-	if r.Model(false, "csv").Data["blockHash"] != nil {
+	data := r.Model(false, "csv", nil).Data
+
+	if data["blockHash"] != nil {
 		t.Fatal("hidden field leaked")
 	}
 
-	if r.Model(false, "csv").Data["blockNumber"] == nil {
+	if data["blockNumber"] == nil {
 		t.Fatal("visible field missing")
 	}
 
-	if r.Model(true, "json").Data["blockHash"] == nil {
+	data = r.Model(true, "json", nil).Data
+	if data["blockHash"] == nil {
 		t.Fatal("hidden field missing when showHidden = true")
 	}
 
-	if r.Model(true, "csv").Data["blockNumber"] == nil {
+	if data["blockNumber"] == nil {
 		t.Fatal("visible field missing when showHidden = true")
 	}
 }

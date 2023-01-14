@@ -28,7 +28,7 @@ func (s *SimpleBlockCount) Raw() *RawBlockCount {
 	return nil
 }
 
-func (s *SimpleBlockCount) Model(showHidden bool, format string) Model {
+func (s *SimpleBlockCount) Model(showHidden bool, format string, extraOptions map[string]any) Model {
 	model := map[string]interface{}{
 		"blockNumber":     s.BlockNumber,
 		"timestamp":       s.Timestamp,

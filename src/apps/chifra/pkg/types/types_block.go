@@ -25,7 +25,7 @@ func (s *SimpleBlock) Raw() *RawBlock {
 	return nil
 }
 
-func (s *SimpleBlock) Model(showHidden bool, format string) Model {
+func (s *SimpleBlock) Model(showHidden bool, format string, extraOptions map[string]any) Model {
 	model := map[string]interface{}{
 		"hash":            s.Hash,
 		"blockNumber":     s.BlockNumber,

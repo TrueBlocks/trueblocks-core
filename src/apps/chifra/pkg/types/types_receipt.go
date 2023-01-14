@@ -49,7 +49,7 @@ func (r *SimpleReceipt) SetRaw(rawReceipt RawReceipt) {
 }
 
 // To support custom format: just execute template on the output of Model
-func (r *SimpleReceipt) Model(showHidden bool, format string) Model {
+func (r *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[string]any) Model {
 	model := map[string]interface{}{
 		"blockNumber":      r.BlockNumber,
 		"transactionIndex": r.TransactionIndex,
