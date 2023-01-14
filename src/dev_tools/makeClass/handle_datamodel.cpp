@@ -19,7 +19,7 @@ extern const char* STR_YAML_MODELHEADER;
 extern const char* STR_MODEL_PRODUCERS;
 extern const char* STR_MODEL_FOOTER;
 extern const char* STR_MODEL_HEADER;
-extern void generate_go_code(COptions* opts, const CClassDefinition& model);
+extern void generate_go_type_code(COptions* opts, const CClassDefinition& model);
 extern void addToTypeMap(map<string_q, string_q>& map, const string_q& group, const string& type);
 extern bool sortByDataModelName(const CClassDefinition& c1, const CClassDefinition& c2);
 extern bool sortByDoc(const CParameter& c1, const CParameter& c2);
@@ -127,7 +127,7 @@ bool COptions::handle_datamodel(void) {
         documentMap[model.doc_group] = documentMap[model.doc_group] + thisDoc;
 
         if (model.go_code) {
-            generate_go_code(this, model);
+            generate_go_type_code(this, model);
         }
     }
 
@@ -243,48 +243,6 @@ void addToTypeMap(map<string_q, string_q>& map, const string_q& group, const str
     if (existing.length() > 0)
         existing += ",";
     map[toLower(group)] = existing + type;
-}
-
-//------------------------------------------------------------------------------------------------------------
-string_q type_2_GoType(const string_q& type) {
-    if (type == "blknum" || type == "timestamp")
-        return "uint64";
-    if (type == "datetime")
-        return "string";
-    return type;
-}
-
-//------------------------------------------------------------------------------------------------------------
-void generate_go_code(COptions* opts, const CClassDefinition& model) {
-    string_q fn = getPathToSource("apps/chifra/pkg/types/types_" + toLower(model.base_name) + ".go");
-    string_q contents = asciiFileToString(getPathToTemplates("blank_type.go.tmpl"));
-    replaceAll(contents, "[{CLASS_NAME}]", type_2_ModelName(model.class_name, false));
-
-    ostringstream fieldStream, copyStream, displayStream;
-    for (auto field : model.fieldArray) {
-        string_q type = type_2_GoType(field.type);
-        // if (field.is_flags & IS_ARRAY) {
-        //     type = "[]" + type_2_ModelName(type, false);
-        // } else if (field.is_flags & IS_OBJECT) {
-        //     type = "*" + type_2_ModelName(type, false);
-        // }
-        bool isOmitEmpty = (field.is_flags & IS_OMITEMPTY);
-        fieldStream << "\t" << firstUpper(field.name) << " " << type << " `json:\"" << field.name
-                    << (isOmitEmpty ? ",omitempty" : "") << "\"`" << endl;
-        if (!isOmitEmpty) {
-            copyStream << "\t\t\"" << field.name << "\": s." << firstUpper(field.name) << "," << endl;
-            displayStream << "\t\t\"" << field.name << "\""
-                          << "," << endl;
-        }
-    }
-    replaceAll(contents, "[{FIELDS}]", fieldStream.str());
-    replaceAll(contents, "[{FIELD_COPY}]", copyStream.str());
-    replaceAll(contents, "[{FIELD_DISPLAY}]", displayStream.str());
-
-    codewrite_t cw(fn, contents);
-    cw.nSpaces = 0;
-    writeCodeIn(opts, cw);
-    // cerr << fn << endl;
 }
 
 //------------------------------------------------------------------------------------------------------------
