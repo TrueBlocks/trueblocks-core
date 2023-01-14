@@ -5,7 +5,7 @@ TEST[DATE|TIME] Format:  txt
 blockNumber	transactionIndex	date	timestamp	from	to	ether	ethGasPrice	gasUsed	hash	isError	encoding	compressedTx
 3657480	78	2017-05-06 00:43:39 UTC	1494031419	0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5	0x8c222fb428f9f44715cf85349f79a18761c8e53c	0.233602441535478432	0.000000020000000000	21000	0x1e4e4d62951733dea1cce59eca0ffaf89a7881f13c9bb8558d61f6a9e0928c4b	0	0x	0x()
 TEST[DATE|TIME] Transactions:  [3657480.78]
-TEST[DATE|TIME] Trace:  true
+TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] File:  cmd_file
 TEST[DATE|TIME] Format:  csv
 "blockNumber","transactionIndex","date","timestamp","from","to","ether","ethGasPrice","gasUsed","hash","isError","encoding","compressedTx","tracescnt"
@@ -27,7 +27,7 @@ Arguments:
 
 Flags:
   -a, --articulate           articulate the retrieved data if ABIs can be found
-  -t, --trace                include the transaction's traces in the results
+  -t, --traces               include the transaction's traces in the results
   -u, --uniq                 display a list of uniq addresses found in the transaction
   -f, --flow string          for the uniq option only, export only from or to (including trace from or to)
                              One of [ from | to ]
