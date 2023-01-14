@@ -4,14 +4,6 @@
 
 package rpcClient
 
-import (
-	"bytes"
-	"encoding/json"
-	"io"
-	"net/http"
-	"sync/atomic"
-)
-
 // Traces carries values returned the `trace_block` RPC command
 type Traces struct {
 	Jsonrpc string `json:"jsonrpc"`
@@ -95,55 +87,4 @@ type Transaction struct {
 type LogFilter struct {
 	Fromblock string `json:"fromBlock"`
 	Toblock   string `json:"toBlock"`
-}
-
-var rpcCounter uint32
-
-// FromRpc Returns all traces for a given block.
-func FromRpc(rpcProvider string, payload *RPCPayload, ret interface{}) error {
-	type rpcPayload struct {
-		Jsonrpc   string `json:"jsonrpc"`
-		Method    string `json:"method"`
-		RPCParams `json:"params"`
-		ID        int `json:"id"`
-	}
-	payloadToSend := rpcPayload{
-		Jsonrpc:   "2.0",
-		Method:    payload.Method,
-		RPCParams: payload.RPCParams,
-		ID:        int(atomic.AddUint32(&rpcCounter, 1)),
-	}
-	plBytes, err := json.Marshal(payloadToSend)
-	if err != nil {
-		return err
-	}
-
-	body := bytes.NewReader(plBytes)
-	req, err := http.NewRequest("POST", rpcProvider, body)
-	if err != nil {
-		return err
-	}
-
-	req.Header.Set("Content-Type", "application/json")
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-
-	theBytes, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return err
-	}
-
-	return json.Unmarshal(theBytes, ret)
-}
-
-// RPCParams are used during calls to the RPC.
-type RPCParams []interface{}
-
-// RPCPayload is used during to make calls to the RPC.
-type RPCPayload struct {
-	Method    string `json:"method"`
-	RPCParams `json:"params"`
 }

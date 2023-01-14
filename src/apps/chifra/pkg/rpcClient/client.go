@@ -16,6 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	ethTypes "github.com/ethereum/go-ethereum/core/types"
@@ -104,12 +105,12 @@ func GetVersion(chain string) (version string, err error) {
 	var response struct {
 		Result string `json:"result"`
 	}
-	payload := RPCPayload{
-		Method:    "web3_clientVersion",
-		RPCParams: RPCParams{},
+	payload := rpc.Payload{
+		Method: "web3_clientVersion",
+		Params: rpc.Params{},
 	}
 
-	err = FromRpc(config.GetRpcProvider(chain), &payload, &response)
+	err = rpc.FromRpc(config.GetRpcProvider(chain), &payload, &response)
 	if err != nil {
 		return
 	}
@@ -182,11 +183,11 @@ func TxHashFromNumberAndId(provider string, blkNum, txId uint64) (string, error)
 // TxNumberAndIdFromHash returns a transaction's blockNum and tx_id given its hash
 func TxNumberAndIdFromHash(provider string, hash string) (uint64, uint64, error) {
 	var trans Transaction
-	transPayload := RPCPayload{
-		Method:    "eth_getTransactionByHash",
-		RPCParams: RPCParams{hash},
+	transPayload := rpc.Payload{
+		Method: "eth_getTransactionByHash",
+		Params: rpc.Params{hash},
 	}
-	err := FromRpc(provider, &transPayload, &trans)
+	err := rpc.FromRpc(provider, &transPayload, &trans)
 	if err != nil {
 		fmt.Println("FromRpc(traces) returned error")
 		log.Fatal(err)

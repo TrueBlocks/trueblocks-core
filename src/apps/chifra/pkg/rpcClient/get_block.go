@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common"
 )
@@ -39,12 +40,12 @@ func GetBlockHeaderByNumber(chain string, bn uint64) (types.SimpleBlock, error) 
 // GetBlockByNumber fetches the block with only transactions' hashes from the RPC
 func GetBlockByNumber(chain string, bn uint64, withTxs bool) (types.SimpleBlock, error) {
 	var block types.BlockHeader
-	var payload = RPCPayload{
-		Method:    "eth_getBlockByNumber",
-		RPCParams: RPCParams{fmt.Sprintf("0x%x", bn), withTxs},
+	var payload = rpc.Payload{
+		Method: "eth_getBlockByNumber",
+		Params: rpc.Params{fmt.Sprintf("0x%x", bn), withTxs},
 	}
 	rpcProvider := config.GetRpcProvider(chain)
-	err := FromRpc(rpcProvider, &payload, &block)
+	err := rpc.FromRpc(rpcProvider, &payload, &block)
 	if err != nil {
 		return types.SimpleBlock{}, err
 	}
