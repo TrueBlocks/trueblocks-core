@@ -125,7 +125,7 @@ bool visitTransaction(CTransaction& trans, void* data) {
     }
 
     //////////////////////////////////////////////////////
-    if (opt->trace) {
+    if (opt->traces) {
         if (!trans.pBlock) {
             getBlockLight(block, trans.blockNumber);
             trans.timestamp = block.timestamp;

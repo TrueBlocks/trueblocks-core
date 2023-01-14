@@ -860,7 +860,7 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: trace
+        - name: traces
           description: export the traces from the block as opposed to the block data
           required: false
           style: form
@@ -1011,7 +1011,7 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: trace
+        - name: traces
           description: include the transaction's traces in the results
           required: false
           style: form

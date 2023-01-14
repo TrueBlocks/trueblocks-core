@@ -34,7 +34,7 @@ class COptions : public CBlockOptions {
     // BEG_CODE_DECLARE
     bool hashes;
     bool uncles;
-    bool trace;
+    bool traces;
     string_q flow;
     bool logs;
     bool articulate;
