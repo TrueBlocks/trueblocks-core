@@ -16,7 +16,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	ethTypes "github.com/ethereum/go-ethereum/core/types"
@@ -102,23 +101,19 @@ func GetIDs(provider string) (uint64, uint64, error) {
 
 // TODO: C++ code used to cache version info
 func GetVersion(chain string) (version string, err error) {
-	provider := config.GetRpcProvider(chain)
 	var response struct {
 		Result string `json:"result"`
 	}
-	err = FromRpc(
-		provider,
-		&RPCPayload{
-			Method:    "web3_clientVersion",
-			RPCParams: RPCParams{},
-		},
-		&response,
-	)
+	payload := RPCPayload{
+		Method:    "web3_clientVersion",
+		RPCParams: RPCParams{},
+	}
+
+	err = FromRpc(config.GetRpcProvider(chain), &payload, &response)
 	if err != nil {
 		return
 	}
-	version = response.Result
-	return
+	return response.Result, err
 }
 
 // TxHashFromHash returns a transaction's hash if it's a valid transaction
@@ -221,7 +216,7 @@ func TxCountByBlockNumber(provider string, blkNum uint64) (uint64, error) {
 	}
 
 	cnt, err := ec.TransactionCount(context.Background(), block.Hash())
-	return uint64(cnt), nil
+	return uint64(cnt), err
 }
 
 // BlockHashFromHash returns a block's hash if it's a valid block
@@ -316,44 +311,6 @@ func GetBlockTimestamp(provider string, bn uint64) uint64 {
 // DecodeHex decodes a string with hex into a slice of bytes
 func DecodeHex(hex string) []byte {
 	return hexutil.MustDecode(hex)
-}
-
-func GetBlockByNumber(chain string, bn uint64, withTxs bool) (types.SimpleBlock, error) {
-	var block BlockHeader
-	var payload = RPCPayload{
-		Method:    "eth_getBlockByNumber",
-		RPCParams: RPCParams{fmt.Sprintf("0x%x", bn), withTxs},
-	}
-	rpcProvider := config.GetRpcProvider(chain)
-	err := FromRpc(rpcProvider, &payload, &block)
-	if err != nil {
-		return types.SimpleBlock{}, err
-	}
-	if len(block.Result.Number) == 0 || len(block.Result.Timestamp) == 0 {
-		msg := fmt.Sprintf("block number or timestamp for %d not found", bn)
-		return types.SimpleBlock{}, fmt.Errorf(msg)
-	}
-	n, _ := strconv.ParseUint(block.Result.Number[2:], 16, 64)
-	ts, _ := strconv.ParseUint(block.Result.Timestamp[2:], 16, 64)
-	gl, _ := strconv.ParseUint(block.Result.GasLimit[2:], 16, 64)
-	gu, _ := strconv.ParseUint(block.Result.GasUsed[2:], 16, 64)
-	d, _ := strconv.ParseUint(block.Result.Difficulty[2:], 16, 64)
-	if n == 0 {
-		ts, err = GetBlockZeroTs(chain)
-		if err != nil {
-			return types.SimpleBlock{}, err
-		}
-	}
-	return types.SimpleBlock{
-		BlockNumber: n,
-		Timestamp:   int64(ts),
-		Hash:        common.HexToHash(block.Result.Hash),
-		ParentHash:  common.HexToHash(block.Result.ParentHash),
-		GasLimit:    gl,
-		GasUsed:     gu,
-		Miner:       common.HexToAddress(block.Result.Miner),
-		Difficulty:  d,
-	}, nil
 }
 
 // GetBlockZeroTs for some reason block zero does not return a timestamp, so we assign block one's ts minus 14 seconds
