@@ -16,6 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	ethTypes "github.com/ethereum/go-ethereum/core/types"
@@ -101,24 +102,30 @@ func GetIDs(provider string) (uint64, uint64, error) {
 
 // TODO: C++ code used to cache version info
 func GetVersion(chain string) (version string, err error) {
-	provider := config.GetRpcProvider(chain)
 	var response struct {
 		Result string `json:"result"`
 	}
-	err = FromRpc(
-		provider,
-		&RPCPayload{
-			Method:    "web3_clientVersion",
-			RPCParams: RPCParams{},
-		},
-		&response,
-	)
+	payload := rpc.Payload{
+		Method: "web3_clientVersion",
+		Params: rpc.Params{},
+	}
+
+	err = rpc.FromRpc(config.GetRpcProvider(chain), &payload, &response)
 	if err != nil {
 		return
 	}
-	version = response.Result
-	return
+	return response.Result, err
 }
+
+// func GetVersion(chain string) (string, error) {
+// 	method := "web3_clientVersion"
+// 	params := rpc.Params{}
+// 	ret, err := rpc.Query[string](config.GetRpcProvider(chain), method, params)
+// 	if err != nil {
+// 		return "", err
+// 	}
+// 	return *ret, err
+// }
 
 // TxHashFromHash returns a transaction's hash if it's a valid transaction
 func TxHashFromHash(provider, hash string) (string, error) {
@@ -186,13 +193,13 @@ func TxHashFromNumberAndId(provider string, blkNum, txId uint64) (string, error)
 // TxNumberAndIdFromHash returns a transaction's blockNum and tx_id given its hash
 func TxNumberAndIdFromHash(provider string, hash string) (uint64, uint64, error) {
 	var trans Transaction
-	transPayload := RPCPayload{
-		Method:    "eth_getTransactionByHash",
-		RPCParams: RPCParams{hash},
+	transPayload := rpc.Payload{
+		Method: "eth_getTransactionByHash",
+		Params: rpc.Params{hash},
 	}
-	err := FromRpc(provider, &transPayload, &trans)
+	err := rpc.FromRpc(provider, &transPayload, &trans)
 	if err != nil {
-		fmt.Println("FromRpc(traces) returned error")
+		fmt.Println("rpc.FromRpc(traces) returned error")
 		log.Fatal(err)
 	}
 	if trans.Result.BlockNumber == "" {

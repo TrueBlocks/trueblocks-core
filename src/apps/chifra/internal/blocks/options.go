@@ -192,6 +192,9 @@ func blocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
+	if !opts.Traces {
+		opts.Traces = opts.Trace
+	}
 	// EXISTING_CODE
 
 	return opts
@@ -207,6 +210,9 @@ func blocksFinishParse(args []string) *BlocksOptions {
 		defFmt = "json"
 	}
 	opts.Blocks = args
+	if !opts.Traces {
+		opts.Traces = opts.Trace
+	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

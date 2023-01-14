@@ -136,6 +136,12 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
 	opts.AccountFor = ens.ConvertOneEns(opts.Globals.Chain, opts.AccountFor)
+	if len(opts.AccountFor) == 0 && len(opts.Reconcile) > 0 {
+		opts.AccountFor = opts.Reconcile
+	}
+	if !opts.Traces {
+		opts.Traces = opts.Trace
+	}
 	// EXISTING_CODE
 
 	return opts
@@ -149,6 +155,12 @@ func transactionsFinishParse(args []string) *TransactionsOptions {
 	// EXISTING_CODE
 	opts.Transactions = args
 	opts.AccountFor = ens.ConvertOneEns(opts.Globals.Chain, opts.AccountFor)
+	if len(opts.AccountFor) == 0 && len(opts.Reconcile) > 0 {
+		opts.AccountFor = opts.Reconcile
+	}
+	if !opts.Traces {
+		opts.Traces = opts.Trace
+	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

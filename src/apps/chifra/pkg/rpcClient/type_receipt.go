@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
@@ -134,11 +135,11 @@ func getRawTransactionReceipt(chain string, bn uint64, txid uint64, txHash *comm
 	var response struct {
 		Result types.RawReceipt `json:"result"`
 	}
-	err = FromRpc(
+	err = rpc.FromRpc(
 		config.GetRpcProvider(chain),
-		&RPCPayload{
-			Method:    "eth_getTransactionReceipt",
-			RPCParams: RPCParams{txHashString},
+		&rpc.Payload{
+			Method: "eth_getTransactionReceipt",
+			Params: rpc.Params{txHashString},
 		},
 		&response,
 	)

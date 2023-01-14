@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -12,11 +13,11 @@ func GetLogCountByNumber(chain string, bn uint64) (uint64, error) {
 		return 0, nil
 	}
 	var logs Logs
-	logsPayload := RPCPayload{
-		Method:    "eth_getLogs",
-		RPCParams: RPCParams{LogFilter{Fromblock: fmt.Sprintf("0x%x", bn), Toblock: fmt.Sprintf("0x%x", bn)}},
+	logsPayload := rpc.Payload{
+		Method: "eth_getLogs",
+		Params: rpc.Params{LogFilter{Fromblock: fmt.Sprintf("0x%x", bn), Toblock: fmt.Sprintf("0x%x", bn)}},
 	}
-	err := FromRpc(config.GetRpcProvider(chain), &logsPayload, &logs)
+	err := rpc.FromRpc(config.GetRpcProvider(chain), &logsPayload, &logs)
 	if err != nil {
 		return utils.NOPOS, err
 	}

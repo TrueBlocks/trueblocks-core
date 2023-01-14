@@ -2,31 +2,19 @@ package rpcClient
 
 import (
 	"fmt"
+	"strconv"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 )
 
+// GetUncleCountByNumber returns the number of uncles in a block.
 func GetUncleCountByNumber(chain string, bn uint64) (uint64, error) {
-	if bn == 0 {
-		return 0, nil
-	}
+	method := "eth_getUncleCountByBlockNumber"
+	params := rpc.Params{fmt.Sprintf("0x%x", bn)}
 
-	var response struct {
-		Result string `json:"result"`
+	if result, err := rpc.Query[string](chain, method, params); err != nil {
+		return 0, err
+	} else {
+		return strconv.ParseUint(fmt.Sprint(*result), 0, 64)
 	}
-
-	payload := RPCPayload{
-		Method:    "eth_getUncleCountByBlockNumber",
-		RPCParams: RPCParams{fmt.Sprintf("0x%x", bn)},
-	}
-
-	err := FromRpc(config.GetRpcProvider(chain), &payload, &response)
-	if err != nil {
-		return utils.NOPOS, err
-	}
-
-	val, _ := hexutil.DecodeUint64(response.Result)
-	return val, err
 }
