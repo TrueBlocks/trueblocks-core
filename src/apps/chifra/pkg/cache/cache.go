@@ -121,8 +121,8 @@ func SetBlock(chain string, block *types.SimpleBlock) (err error) {
 }
 
 // GetBlock reads block from the cache
-func GetBlock(chain string) (block *types.SimpleBlock, err error) {
-	filePath := getPathByBlock(ItemBlock, block.BlockNumber)
+func GetBlock(chain string, blockNumber types.Blknum) (block *types.SimpleBlock, err error) {
+	filePath := getPathByBlock(ItemBlock, blockNumber)
 
 	return getItem(
 		chain,
