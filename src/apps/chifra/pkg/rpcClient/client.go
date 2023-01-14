@@ -110,6 +110,7 @@ func GetVersion(chain string) (version string, err error) {
 		Params: rpc.Params{},
 	}
 
+	// TODO: Use rpc.Query
 	err = rpc.FromRpc(config.GetRpcProvider(chain), &payload, &response)
 	if err != nil {
 		return
@@ -187,6 +188,7 @@ func TxNumberAndIdFromHash(provider string, hash string) (uint64, uint64, error)
 		Method: "eth_getTransactionByHash",
 		Params: rpc.Params{hash},
 	}
+	// TODO: Use rpc.Query
 	err := rpc.FromRpc(provider, &transPayload, &trans)
 	if err != nil {
 		fmt.Println("rpc.FromRpc(traces) returned error")
