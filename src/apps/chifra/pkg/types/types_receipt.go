@@ -44,8 +44,8 @@ func (r *SimpleReceipt) Raw() *RawReceipt {
 	return r.raw
 }
 
-func (r *SimpleReceipt) SetRaw(rawReceipt RawReceipt) {
-	r.raw = &rawReceipt
+func (r *SimpleReceipt) SetRaw(rawReceipt *RawReceipt) {
+	r.raw = rawReceipt
 }
 
 // To support custom format: just execute template on the output of Model

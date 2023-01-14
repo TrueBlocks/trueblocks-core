@@ -32,7 +32,7 @@ func GetBlockHeaderByNumber(chain string, bn uint64) (types.SimpleBlock, error) 
 	// 	BlockNumber: blockNumber,
 	// 	Timestamp:   int64(timestamp),
 	// }
-	// block.SetRaw(*rawBlock)
+	// block.SetRaw(rawBlock)
 
 	// return block, nil
 }

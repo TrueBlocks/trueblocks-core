@@ -11,20 +11,33 @@ package types
 // EXISTING_CODE
 // EXISTING_CODE
 
-type RawNamedBlock interface{}
+type RawNamedBlock struct {
+	BlockNumber string `json:"blockNumber"`
+	Timestamp   string `json:"timestamp"`
+	Date        string `json:"date"`
+	Name        string `json:"name"`
+}
 
 type SimpleNamedBlock struct {
 	BlockNumber uint64 `json:"blockNumber"`
 	Timestamp   int64  `json:"timestamp"`
 	Date        string `json:"date"`
 	Name        string `json:"name,omitempty"`
+	raw         *RawNamedBlock
 }
 
 func (s *SimpleNamedBlock) Raw() *RawNamedBlock {
-	return nil
+	return s.raw
+}
+
+func (s *SimpleNamedBlock) SetRaw(raw *RawNamedBlock) {
+	s.raw = raw
 }
 
 func (s *SimpleNamedBlock) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	model := map[string]interface{}{
 		"blockNumber": s.BlockNumber,
 		"timestamp":   s.Timestamp,

@@ -96,7 +96,7 @@ func GetTransactionReceipt(chain string, bn uint64, txid uint64, txHash *common.
 		// To:
 		// EffectiveGasPrice
 	}
-	receipt.SetRaw(*rawReceipt)
+	receipt.SetRaw(rawReceipt)
 
 	return
 }

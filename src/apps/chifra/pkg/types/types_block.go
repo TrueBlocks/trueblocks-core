@@ -4,8 +4,64 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-// TODO: Will need to spell this out when we implement --raw
-type RawBlock interface{}
+// EXISTING_CODE
+type BlockTransaction interface {
+	string | SimpleTransaction
+}
+
+// BlockHeader carries values returned by the `eth_getBlockByNumber` RPC command
+type BlockHeader struct {
+	Jsonrpc string `json:"jsonrpc"`
+	Result  struct {
+		Author           string   `json:"author"`
+		Difficulty       string   `json:"difficulty"`
+		ExtraData        string   `json:"extraData"`
+		GasLimit         string   `json:"gasLimit"`
+		GasUsed          string   `json:"gasUsed"`
+		Hash             string   `json:"hash"`
+		LogsBloom        string   `json:"logsBloom"`
+		Miner            string   `json:"miner"`
+		MixHash          string   `json:"mixHash"`
+		Nonce            string   `json:"nonce"`
+		Number           string   `json:"number"`
+		ParentHash       string   `json:"parentHash"`
+		ReceiptsRoot     string   `json:"receiptsRoot"`
+		SealFields       []string `json:"sealFields"`
+		Sha3Uncles       string   `json:"sha3Uncles"`
+		Size             string   `json:"size"`
+		StateRoot        string   `json:"stateRoot"`
+		Timestamp        string   `json:"timestamp"`
+		TransactionsRoot string   `json:"transactionsRoot"`
+	} `json:"result"`
+	ID int `json:"id"`
+}
+
+// EXISTING_CODE
+
+type RawBlock struct {
+	Author           string   `json:"author,omitempty"`
+	Difficulty       string   `json:"difficulty"`
+	ExtraData        string   `json:"extraData,omitempty"`
+	GasLimit         string   `json:"gasLimit"`
+	GasUsed          string   `json:"gasUsed"`
+	Hash             string   `json:"hash"`
+	LogsBloom        string   `json:"logsBloom,omitempty"`
+	Miner            string   `json:"miner"`
+	MixHash          string   `json:"mixHash"`
+	Nonce            string   `json:"nonce"`
+	Number           string   `json:"number"`
+	ParentHash       string   `json:"parentHash"`
+	ReceiptsRoot     string   `json:"receiptsRoot"`
+	Sha3Uncles       string   `json:"sha3Uncles"`
+	Size             string   `json:"size"`
+	StateRoot        string   `json:"stateRoot"`
+	Timestamp        string   `json:"timestamp"`
+	TransactionsRoot string   `json:"transactionsRoot"`
+	TotalDifficulty  string   `json:"totalDifficulty"`
+	Transactions     []any    `json:"transactions"`
+	Uncles           []string `json:"uncles"`
+	// SealFields       []string      `json:"sealFields"`
+}
 
 type SimpleBlock struct {
 	GasLimit      uint64              `json:"gasLimit"`
@@ -19,10 +75,15 @@ type SimpleBlock struct {
 	Timestamp     int64               `json:"timestamp"`
 	BaseFeePerGas Wei                 `json:"baseFeePerGas"`
 	Transactions  []SimpleTransaction `json:"transactions"`
+	raw           *RawBlock
 }
 
 func (s *SimpleBlock) Raw() *RawBlock {
-	return nil
+	return s.raw
+}
+
+func (s *SimpleBlock) SetRaw(rawBlock *RawBlock) {
+	s.raw = rawBlock
 }
 
 func (s *SimpleBlock) Model(showHidden bool, format string, extraOptions map[string]any) Model {

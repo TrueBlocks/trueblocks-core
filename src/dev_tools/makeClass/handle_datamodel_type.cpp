@@ -19,45 +19,74 @@ string_q type_2_GoType(const string_q& type) {
         return "uint64";
     if (type == "timestamp")
         return "int64";
-    if (type == "datetime")
+    if (type == "datetime" || type == "bytes")
         return "string";
+    if (type == "address")
+        return "common.Address";
+    if (type == "gas")
+        return "Gas";
+    if (type == "wei")
+        return "Wei";
     return type;
 }
 
 //------------------------------------------------------------------------------------------------------------
-void generate_go_type_code(COptions* opts, const CClassDefinition& model) {
+void generate_go_type_code(COptions* opts, const CClassDefinition& modelIn) {
+    CClassDefinition model = modelIn;
+
     string_q fn = getPathToSource("apps/chifra/pkg/types/types_" + toLower(model.base_name) + ".go");
     string_q contents = asciiFileToString(getPathToTemplates("blank_type.go.tmpl"));
     replaceAll(contents, "[{CLASS_NAME}]", type_2_ModelName(model.class_name, false));
 
+    CParameter raw;
+    raw.type = "*Raw" + type_2_ModelName(model.class_name, false);
+    raw.name = "raw";
+    model.fieldArray.push_back(raw);
+
     size_t maxNameWid = 0, maxTypeWid = 0;
-    for (auto field : model.fieldArray) {
+    for (auto& field : model.fieldArray) {
         string_q type = type_2_GoType(field.type);
         maxNameWid = max(maxNameWid, field.name.length());
-        maxTypeWid = max(maxTypeWid, type.length());
+        if (field.name != "raw") {
+            maxTypeWid = max(maxTypeWid, type.length());
+            field.name = firstUpper(field.name);
+        }
+        field.type = type_2_GoType(field.type);
     }
 
-    ostringstream fieldStream, copyStream, displayStream;
+    ostringstream fieldStream, rawStream, modelStream, orderStream;
     for (auto field : model.fieldArray) {
-        string_q type = type_2_GoType(field.type);
         // if (field.is_flags & IS_ARRAY) {
         //     type = "[]" + type_2_ModelName(type, false);
         // } else if (field.is_flags & IS_OBJECT) {
         //     type = "*" + type_2_ModelName(type, false);
         // }
-        bool isOmitEmpty = (field.is_flags & IS_OMITEMPTY);
-        fieldStream << "\t" << padRight(firstUpper(field.name), maxNameWid) << " " << padRight(type, maxTypeWid)
-                    << " `json:\"" << field.name << (isOmitEmpty ? ",omitempty" : "") << "\"`" << endl;
-        if (!isOmitEmpty) {
-            copyStream << "\t\t" << padRight("\"" + field.name + "\":", maxNameWid + 3) << " s."
-                       << firstUpper(field.name) << "," << endl;
-            displayStream << "\t\t\"" << field.name << "\""
-                          << "," << endl;
+        string_q type = (field.name % "raw") ? field.type : padRight(field.type, maxTypeWid);
+        string_q name = padRight(field.name, maxNameWid);
+        fieldStream << "\t" << name << " " << type;
+        if (!(field.name % "raw")) {
+            rawStream << "\t" << name << " string";
+            bool isOmitEmpty = (field.is_flags & IS_OMITEMPTY);
+            fieldStream << " `json:\"" << firstLower(field.name);
+            rawStream << " `json:\"" << firstLower(field.name);
+            if (!isOmitEmpty) {
+                modelStream << "\t\t" << padRight("\"" + firstLower(field.name) + "\":", maxNameWid + 3) << " s."
+                            << firstUpper(field.name) << "," << endl;
+                orderStream << "\t\t\"" << firstLower(field.name) << "\""
+                            << "," << endl;
+            } else {
+                fieldStream << ",omitempty";
+            }
+            fieldStream << "\"`";
+            rawStream << "\"`" << endl;
         }
+        fieldStream << endl;
     }
+
     replaceAll(contents, "[{FIELDS}]", fieldStream.str());
-    replaceAll(contents, "[{FIELD_COPY}]", copyStream.str());
-    replaceAll(contents, "[{FIELD_DISPLAY}]", displayStream.str());
+    replaceAll(contents, "[{RAWFIELDS}]", rawStream.str());
+    replaceAll(contents, "[{MODEL_FIELDS}]", modelStream.str());
+    replaceAll(contents, "[{ORDER_FIELDS}]", orderStream.str());
 
     codewrite_t cw(fn, contents);
     cw.nSpaces = 0;

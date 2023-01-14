@@ -189,7 +189,7 @@ func TxNumberAndIdFromHash(provider string, hash string) (uint64, uint64, error)
 	}
 	err := rpc.FromRpc(provider, &transPayload, &trans)
 	if err != nil {
-		fmt.Println("FromRpc(traces) returned error")
+		fmt.Println("rpc.FromRpc(traces) returned error")
 		log.Fatal(err)
 	}
 	if trans.Result.BlockNumber == "" {
@@ -384,3 +384,8 @@ func Id_2_BlockHash(chain, arg string, isBlockHash func(arg string) bool) (strin
 	}
 	return BlockHashFromNumber(provider, blockNum)
 }
+
+// func mustParseUint(input any) (result uint64) {
+// 	result, _ = strconv.ParseUint(fmt.Sprint(input), 0, 64)
+// 	return
+// }
