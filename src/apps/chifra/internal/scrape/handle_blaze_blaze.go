@@ -327,17 +327,13 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 			if traces.Result[i].Action.To == "" {
 				if traces.Result[i].Result.Address == "" {
 					if traces.Result[i].Error != "" {
-						var receipt rpcClient.Receipt
-						var txReceiptPl = rpcClient.RPCPayload{
-							Method:    "eth_getTransactionReceipt",
-							RPCParams: rpcClient.RPCParams{traces.Result[i].TransactionHash},
-						}
-						err = rpcClient.FromRpc(opts.RpcProvider, &txReceiptPl, &receipt)
+						// TODO: Why does this interface always accept nil and zero at the end?
+						receipt, err := rpcClient.GetTransactionReceipt(opts.Chain, uint64(bn), uint64(txid), nil, 0)
 						if err != nil {
 							// fmt.Println("rpcCall failed at block", traces.Result[i].TransactionHash, err)
 							return err
 						}
-						addr := receipt.Result.ContractAddress
+						addr := hexutil.Encode(receipt.ContractAddress.Bytes())
 						if isAddress(addr) {
 							opts.AddToMaps(addr, bn, txid, addressMap)
 						}

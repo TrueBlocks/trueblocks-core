@@ -7,11 +7,14 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
+	ethTypes "github.com/ethereum/go-ethereum/core/types"
 )
 
-func GetTransactionReceipt(chain string, bn uint64, txid uint64) (receipt types.SimpleReceipt, err error) {
+// GetTransactionReceipt fetches receipt from the RPC. If txGasPrice is provided, it will be used for
+// receipts in blocks before London
+func GetTransactionReceipt(chain string, bn uint64, txid uint64, txHash *common.Hash, txGasPrice uint64) (receipt types.SimpleReceipt, err error) {
 	// First, get raw receipt directly from RPC
-	rawReceipt, err := getRawTransactionReceipt(chain, bn, txid)
+	rawReceipt, _, err := getRawTransactionReceipt(chain, bn, txid, txHash)
 	if err != nil {
 		return
 	}
@@ -97,13 +100,19 @@ func GetTransactionReceipt(chain string, bn uint64, txid uint64) (receipt types.
 	return
 }
 
-func getRawTransactionReceipt(chain string, bn uint64, txid uint64) (receipt *types.RawReceipt, err error) {
+// getRawTransactionReceipt fetches raw transaction. If txHash is provided, the function
+// will not fetch the transaction (we may have already loaded it)
+func getRawTransactionReceipt(chain string, bn uint64, txid uint64, txHash *common.Hash) (receipt *types.RawReceipt, tx ethTypes.Transaction, err error) {
 	var txHashString string
-	tx, err := TxFromNumberAndId(chain, bn, txid)
-	if err != nil {
-		return
+	if txHash != nil {
+		txHashString = txHash.Hex()
+	} else {
+		tx, err = TxFromNumberAndId(chain, bn, txid)
+		if err != nil {
+			return
+		}
+		txHashString = tx.Hash().Hex()
 	}
-    txHashString = tx.Hash().Hex()
 
 	var response struct {
 		Result types.RawReceipt `json:"result"`
