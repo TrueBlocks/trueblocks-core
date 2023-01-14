@@ -75,11 +75,11 @@ make
 
 **Add `./trueblocks-core/bin` to your $PATH**
 
-Add the executable's folder to you path. Consult Google if you don't know how. The following instructions assume you've set the $PATH properly so that `chifra --help` works.
+Add the executable's folder to your path. Consult Google if you don't know how. The following instructions assume you've set the $PATH properly so that `chifra --help` works.
 
 **Edit the configuration**
 
-If you've sucessfully built the executable and set the `$PATH`, you should be able to run:
+If you've successfully built the executable and set the `$PATH`, you should be able to run:
 
 ```[shell]
 chifra config --terse
@@ -93,7 +93,7 @@ and get results. If you get an error, the most likely cause is an incomplete con
 
 Edit the `trueblocks.toml` file and set the `rpcProvider` to point to a valid RPC endpoint for your chain.
 
-The configuration file is reasonably-well documented. Review other settins, most of which are self-explanitory.
+The configuration file is reasonably well documented. Review other settings, most of which are self-explanatory.
 
 **Searching account histories**
 
@@ -149,13 +149,13 @@ Depending on your setup, you may get the following error message when you run so
 
 Edit the file as instructed. You may find helpful [answers on our FAQ](https://trueblocks.io/blog/faq/).
 
-See [our blog](https://trueblocks.io/blog/) for a lot of usful articles on getting started and using TrueBlocks.
+See [our blog](https://trueblocks.io/blog/) for a lot of useful articles on getting started and using TrueBlocks.
 
 If you continue to have trouble, join our [discord discussion](https://discord.gg/kAFcZH2x7K)
 
 ## The unchained index
 
-The primary data structure produced by TrueBlocks is an index of address appearances called the Unchained Index. This index provides very quick access to transaction histories for a any address.
+The primary data structure produced by TrueBlocks is an index of address appearances called the Unchained Index. This index provides very quick access to transaction histories for any address.
 
 You may either build the entire index from scratch (requires an EVM-compatible tracing/archive node) or you may download a snapshot of the index build from there.
 
@@ -175,7 +175,7 @@ A chart showing the number of stars on our repo over time.
 
 [![Stargazers over time](https://starchart.cc/TrueBlocks/trueblocks-core.svg)](https://starchart.cc/TrueBlocks/trueblocks-core)
 
-We love contributors. Please see information about our [work flow](https://github.com/TrueBlocks/trueblocks-core/blob/develop/docs/BRANCHING.md) before proceeding.
+We love contributors. Please see information about our [workflow](https://github.com/TrueBlocks/trueblocks-core/blob/develop/docs/BRANCHING.md) before proceeding.
 
 1. Fork this repository into your own repo.
 2. Create a branch: `git checkout -b <branch_name>`.
