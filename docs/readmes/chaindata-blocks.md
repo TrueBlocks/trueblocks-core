@@ -25,7 +25,7 @@ Arguments:
 Flags:
   -e, --hashes        display only transaction hashes, default is to display full transaction detail
   -c, --uncles        display uncle blocks (if any) instead of the requested block
-  -t, --trace         export the traces from the block as opposed to the block data
+  -t, --traces        export the traces from the block as opposed to the block data
   -s, --apps          display a list of uniq address appearances in the block
   -u, --uniq          display a list of uniq address appearances per transaction
   -f, --flow string   for the uniq and apps options only, export only from or to (including trace from or to)
@@ -48,7 +48,13 @@ Notes:
 
 Data models produced by this tool:
 
+- [appearance](/data-model/accounts/#appearance)
 - [block](/data-model/chaindata/#block)
+- [log](/data-model/chaindata/#log)
+- [trace](/data-model/chaindata/#trace)
+- [traceaction](/data-model/chaindata/#traceaction)
+- [traceresult](/data-model/chaindata/#traceresult)
+- [blockcount](/data-model/chaindata/#blockcount)
 
 Links:
 

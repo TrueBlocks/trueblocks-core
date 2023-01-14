@@ -30,13 +30,13 @@ int main(int argc, const char* argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        string_q className = (options.trace ? GETRUNTIME_CLASS(CTrace)->m_ClassName
-                                            : (options.logs ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
-                                                            : GETRUNTIME_CLASS(CBlock)->m_ClassName));
+        string_q className = (options.traces ? GETRUNTIME_CLASS(CTrace)->m_ClassName
+                                             : (options.logs ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
+                                                             : GETRUNTIME_CLASS(CBlock)->m_ClassName));
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], className);
 
-        if (options.trace) {
+        if (options.traces) {
             options.blocks.forEveryBlockNumber(traceBlock, &options);
 
         } else if (options.listOffset != NOPOS) {
@@ -97,7 +97,7 @@ string_q doOneBlock(blknum_t num, COptions& opt) {
     CBlock gold;
     gold.blockNumber = num;
     string_q result;
-    if (opt.isRaw || opt.isVeryRaw) {
+    if (opt.isRaw) {
         if (!queryRawBlock(result, uint_2_Str(num), true, opt.hashes)) {
             result = "Could not query raw block " + uint_2_Str(num) + ". Is an Ethereum node running?";
 

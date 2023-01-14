@@ -292,11 +292,7 @@ optimization, the `known` signatures are searched first during articulation.
 The `--sol` option converts the provided Solidity file into an ABI json file. The results are
 dropped into the current working folder.
 
-The `--find` option is experimental. It scans the cross product of two sets. The first set contains
-more than 100,000 function and event names. The second set contains approximately 700 function
-signatures. The cross product of these two sets creates 70,000,000 combinations of `name(signature)`
-each of which is hashed to create either a four-byte or a 32-byte hash. Very infrequently, the tool
-will find matches for an otherwise unknown signatures.
+The `--find` option is experimental. Please see the notes below for more information.
 
 ```[plaintext]
 Purpose:
@@ -332,4 +328,12 @@ Links:
 
 - [api docs](/api/#operation/accounts-abis)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/abis)
+
+<!-- markdownlint-disable MD041 -->
+### notes
+
+The `chifra abis --find` option scans the cross product of two sets. The first set contains more than 100,000 function and event
+names. The second set contains approximately 700 function signatures. The cross product of these two sets creates 70,000,000
+combinations of name(signature) each of which is hashed to create either a four-byte or a 32-byte hash. Very infrequently,
+the tool will find matches for an otherwise unknown signatures.
 

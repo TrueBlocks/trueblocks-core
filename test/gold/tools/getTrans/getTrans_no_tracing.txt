@@ -1,6 +1,6 @@
-chifra transactions  0x0f0171122023385b433a766e70c65928ea9f9e29e6a6c82a7330cb46b63334e7e9ba7a35c3 --trace --chain non-tracing
+chifra transactions  0x0f0171122023385b433a766e70c65928ea9f9e29e6a6c82a7330cb46b63334e7e9ba7a35c3 --traces --chain non-tracing
 TEST[DATE|TIME] Transactions:  [0x0f0171122023385b433a766e70c65928ea9f9e29e6a6c82a7330cb46b63334e7e9ba7a35c3]
-TEST[DATE|TIME] Trace:  true
+TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] Chain:  non-tracing
 TEST[DATE|TIME] Format:  txt
 Error: Tracing is required for this program to work properly.
@@ -12,7 +12,7 @@ Arguments:
 
 Flags:
   -a, --articulate           articulate the retrieved data if ABIs can be found
-  -t, --trace                include the transaction's traces in the results
+  -t, --traces               include the transaction's traces in the results
   -u, --uniq                 display a list of uniq addresses found in the transaction
   -f, --flow string          for the uniq option only, export only from or to (including trace from or to)
                              One of [ from | to ]

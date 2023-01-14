@@ -30,7 +30,7 @@ func (opts *AbisOptions) HandleAbiFind() error {
 	scanBar := progress.NewScanBar(uint64(len(opts.Find)), 13919, 50000000, .5)
 
 	// TODO: SimpleFunctionOutput is a temporary fix for outputing ABIs, we can remove it
-	// once we start using StreamMany in this code
+	// TODO: once we start using StreamMany in this code
 	var results []types.SimpleFunctionOutput
 
 	var wg sync.WaitGroup
