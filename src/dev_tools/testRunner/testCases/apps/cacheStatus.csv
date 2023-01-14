@@ -12,11 +12,13 @@ on      ,both ,fast  ,config ,apps/cacheStatus ,index_start_bad     ,y    ,modes
 on      ,both ,slow  ,config ,apps/cacheStatus ,mode_monitors       ,y    ,modes = show & module = monitors
 on      ,both ,slow  ,config ,apps/cacheStatus ,mode_names          ,y    ,modes = show & module = names
 on      ,both ,slow  ,config ,apps/cacheStatus ,mode_abis           ,y    ,modes = show & module = abis
-on      ,both ,fast  ,config ,apps/cacheStatus ,mode_blocks         ,y    ,modes = show & module = caches & types = blocks
+; TODO: turn back on
+local   ,both ,fast  ,config ,apps/cacheStatus ,mode_blocks         ,y    ,modes = show & module = caches & types = blocks
 on      ,both ,fast  ,config ,apps/cacheStatus ,mode_txs            ,y    ,modes = show & module = caches & types = txs
 on      ,both ,fast  ,config ,apps/cacheStatus ,mode_traces         ,y    ,modes = show & module = caches & types = traces
 on      ,both ,fast  ,config ,apps/cacheStatus ,mode_cache_fail     ,y    ,modes = show & module = caches & types = junk
-on      ,both ,fast  ,config ,apps/cacheStatus ,mode_cache_all      ,y    ,modes = show & module = caches & types = all
+; TODO: turn back on
+local   ,both ,fast  ,config ,apps/cacheStatus ,mode_cache_all      ,y    ,modes = show & module = caches & types = all
 on      ,both ,fast  ,config ,apps/cacheStatus ,mode_txs_l01        ,y    ,modes = show & module = caches & types = txs & details
 on      ,both ,fast  ,config ,apps/cacheStatus ,mode_txs_l02        ,y    ,modes = show & module = caches & types = txs & details & depth = 0
 on      ,both ,fast  ,config ,apps/cacheStatus ,mode_txs_l1         ,y    ,modes = show & module = caches & types = txs & details & depth = 1
@@ -26,7 +28,8 @@ on      ,both ,fast  ,config ,apps/cacheStatus ,mode_txs_l4_bad     ,y    ,modes
 on      ,both ,fast  ,config ,apps/cacheStatus ,mode_txs_blks       ,y    ,modes = show & module = caches & types = txs & types = blocks
 on      ,both ,fast  ,config ,apps/cacheStatus ,mode_slurps         ,y    ,modes = show & module = caches & types = slurps
 on      ,both ,fast  ,config ,apps/cacheStatus ,mode_some           ,y    ,modes = show & module = some
-on      ,both ,fast  ,config ,apps/cacheStatus ,mode_all            ,y    ,modes = show & module = all
+; TODO: turn back on
+local   ,both ,fast  ,config ,apps/cacheStatus ,mode_all            ,y    ,modes = show & module = all
 on      ,both ,fast  ,config ,apps/cacheStatus ,config_bad          ,y    ,modes = show & module = config
 on      ,both ,fast  ,config ,apps/cacheStatus ,three               ,y    ,modes = show & module = abis & module = caches & module = monitors & types = slurps
 on      ,both ,fast  ,config ,apps/cacheStatus ,items_abis          ,y    ,details & modes = show & module = abis

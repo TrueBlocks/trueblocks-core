@@ -31,6 +31,7 @@ string_q renameExportFields(const string_q& className, const string_q& inStr) {
     if (className == "CTransaction") {
         map<string_q, string_q> renames = {
             make_pair("ethergasprice", "ethGasPrice"),
+            make_pair("tracecnt", "traceCnt"),
             make_pair("gasused", "gasUsed"),
             make_pair("iserror", "isError"),
             make_pair("compressedtx", "compressedTx"),
@@ -47,6 +48,7 @@ string_q renameExportFields(const string_q& className, const string_q& inStr) {
             make_pair("basefeepergas", "baseFeePerGas"),
             make_pair("parenthash", "parentHash"),
             make_pair("transactionscnt", "transactionsCnt"),
+            make_pair("unclescnt", "unclesCnt"),
             make_pair("addr_count", "addrCount"),
             make_pair("address_count", "addrCount"),
         };
