@@ -85,7 +85,7 @@ Here's a table showing which endpoints changed. Previously the API endpoints wer
 | blocks       | blocks       |                           |             |
 |              |              | --hashes                  |             |
 |              |              | --uncles                  |             |
-|              |              | --trace                   |             |
+|              |              | --traces                  |             |
 |              |              | --apps                    |             |
 |              |              | --uniq                    |             |
 |              |              | --logs                    |             |
@@ -100,7 +100,7 @@ Here's a table showing which endpoints changed. Previously the API endpoints wer
 |              |              |                           |             |
 | transactions | transactions |                           |             |
 |              |              | --articulate              |             |
-|              |              | --trace                   |             |
+|              |              | --traces                  |             |
 |              |              | --uniq                    |             |
 |              |              | --reconcile               |             |
 |              |              | --cache                   |             |
