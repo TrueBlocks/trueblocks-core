@@ -14,7 +14,7 @@ toc: true
 
 A few more examples in more detail.
 
-## Getting Help
+## Getting help
 
 Every `chifra` sub-command comes with an associated help page. To get help for `chifra` itself, simply type
 
@@ -36,7 +36,7 @@ To get more detailed help, type
 chifra <cmd> --help --verbose 2
 ```
 
-## Getting System Status
+## Getting system status
 
 The `chifra` command gives you access to all of TrueBlocks' functionality. Get system status by typing
 
@@ -44,7 +44,7 @@ The `chifra` command gives you access to all of TrueBlocks' functionality. Get s
 chifra config
 ```
 
-## Getting Blockchain Data
+## Getting blockchain data
 
 Let's see if we can get some actual blockchain data.
 
@@ -82,7 +82,7 @@ chifra blocks 2002 --fmt csv    # comma separated values
 
 These options are available for all `chifra` commands. (Although in some cases, they are ignored.) One might wish to use the `csv` and `txt` options if one is engaged in data science for example.
 
-## More Data Commands
+## More data commands
 
 Below, we present a few of the other `chifra` commands without a lot of description.
 

@@ -19,7 +19,7 @@ toc: true
 Many of the `chifra` commands allow you to customize their behaviour through configuration files
 and/or environment variables. These options are documented here.
 
-### Environment Variables
+## Environment variables
 
 Each command-line option may be overridden by exporting an environment variable in your shell prior
 to running a `chifra` command.
@@ -44,11 +44,11 @@ configuration file.
 
 This feature comes in handy when build shell scripts to automate various tasks with `chifra`.
 
-### Where Are Configuration Files Stored?
+## Where are configs stored?
 
 Please see [TODO: PLACE_HODLER](#) for more information.
 
-### Separate Files
+## Separate files
 
 A single global configuration, called `trueBlocks.toml`, is stored at the root of the configuration
 folder.
@@ -62,14 +62,14 @@ individual config, it will override that value for that tool only.
 For historical reasons, the configuration files are names based on old tool names. Please see
 the table below for the name of each tool's config file.
 
-### Multichain
+## Multichain
 
 If you're running against mutliple chains, you may place any of these files in the root of the
 chain's configuration folder, and the values found there will replace any values found at the
 top level. In this way, you may configure all chains for certain values, but customize your
 configuration per chain.
 
-### Configuration Files
+## Configuration files
 
 <div style="padding:2px;padding-left:10px;background-color:green;color:white">trueBlocks.toml (all tools)</div>
 
@@ -155,7 +155,7 @@ configuration per chain.
 
 *See the source code for information on customizing this tool -- this legacy code does not comply with other tools.*
 
-### Other tools
+## Other tools
 
 The following tools are documented, but customizing them is not supported. If you change something here, and you break your installation, please don't tell us we didn't warn you.
 
