@@ -9,6 +9,33 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
+// SimpleBlockHeader remove
+func GetBlockHeaderByNumber(chain string, bn uint64) (types.SimpleBlock, error) {
+	return GetBlockByNumber(chain, bn, false)
+	// rawBlock, err := getRawBlock(chain, bn, false)
+	// if err != nil {
+	// 	return types.SimpleBlockHeader{}, err
+	// }
+
+	// timestamp, err := hexutil.DecodeUint64(rawBlock.Timestamp)
+	// if err != nil {
+	// 	return types.SimpleBlockHeader{}, err
+	// }
+
+	// blockNumber, err := hexutil.DecodeUint64(rawBlock.Number)
+	// if err != nil {
+	// 	return types.SimpleBlockHeader{}, err
+	// }
+
+	// block := types.SimpleBlockHeader{
+	// 	BlockNumber: blockNumber,
+	// 	Timestamp:   int64(timestamp),
+	// }
+	// block.SetRaw(*rawBlock)
+
+	// return block, nil
+}
+
 // GetBlockByNumber fetches the block with only transactions' hashes from the RPC
 func GetBlockByNumber(chain string, bn uint64, withTxs bool) (types.SimpleBlock, error) {
 	var block types.BlockHeader
