@@ -125,7 +125,7 @@ bool visitTransaction(CTransaction& trans, void* data) {
     }
 
     //////////////////////////////////////////////////////
-    if (opt->trace) {
+    if (opt->traces) {
         if (!trans.pBlock) {
             getBlockLight(block, trans.blockNumber);
             trans.timestamp = block.timestamp;
@@ -151,7 +151,7 @@ bool visitTransaction(CTransaction& trans, void* data) {
         return true;
     }
 
-    if (opt->isRaw || opt->isVeryRaw) {
+    if (opt->isRaw) {
         string_q result;
         queryRawTransaction(result, trans.getValueByName("hash"));
         if (!isText && !opt->firstOut)

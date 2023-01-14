@@ -22,7 +22,7 @@ static const COption params[] = {
     // clang-format off
     COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers"),  // NOLINT
     COption("articulate", "a", "", OPT_SWITCH, "articulate the retrieved data if ABIs can be found"),
-    COption("trace", "t", "", OPT_SWITCH, "include the transaction's traces in the results"),
+    COption("traces", "t", "", OPT_SWITCH, "include the transaction's traces in the results"),
     COption("uniq", "u", "", OPT_SWITCH, "display a list of uniq addresses found in the transaction"),
     COption("flow", "f", "enum[from|to]", OPT_FLAG, "for the uniq option only, export only from or to (including trace from or to)"),  // NOLINT
     COption("account_for", "A", "<address>", OPT_FLAG, "reconcile the transaction as per the provided address"),
@@ -52,8 +52,13 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
 
-        } else if (arg == "-t" || arg == "--trace") {
-            trace = true;
+        } else if (arg == "-t" || arg == "--traces") {
+            traces = true;
+
+        } else if (arg == "--trace") {
+            // clang-format off
+            return usage("the --trace option is deprecated, please use traces option instead");  // NOLINT
+            // clang-format on
 
         } else if (arg == "-u" || arg == "--uniq") {
             uniq = true;
@@ -66,7 +71,7 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-r" || arg == "--reconcile") {
             // clang-format off
-            return usage("the --reconcile option is deprecated, please use statements option instead");  // NOLINT
+            return usage("the --reconcile option is deprecated, please use account_for option instead");  // NOLINT
             // clang-format on
 
         } else if (startsWith(arg, "-A:") || startsWith(arg, "--account_for:")) {
@@ -100,7 +105,7 @@ bool COptions::parseArguments(string_q& command) {
         expContext().exportFmt = JSON1;
     }
 
-    if (trace && !isTracingNode()) {
+    if (traces && !isTracingNode()) {
         return usage("Tracing is required for this program to work properly.");
     }
 
@@ -120,7 +125,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // order matters
-    if (trace) {
+    if (traces) {
         SHOW_FIELD(CTransaction, "traces");
     } else {
         HIDE_FIELD(CTransaction, "traces");
@@ -142,7 +147,7 @@ bool COptions::parseArguments(string_q& command) {
         }
         configureDisplay("getTrans", "CReconciliation", fmt);
     } else {
-        string_q fmt = STR_DISPLAY_TRANSACTION + string_q(trace ? "\t[{TRACESCNT}]" : "");
+        string_q fmt = STR_DISPLAY_TRANSACTION + string_q(traces ? "\t[{TRACESCNT}]" : "");
         configureDisplay("getTrans", "CTransaction", fmt);
     }
 
@@ -166,7 +171,7 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     articulate = false;
-    trace = false;
+    traces = false;
     uniq = false;
     flow = "";
     cache = false;

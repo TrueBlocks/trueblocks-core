@@ -1,6 +1,6 @@
-blocks?blocks=4012000-4012001&trace&hashes
+blocks?blocks=4012000-4012001&traces&hashes
 {
   "errors": [
-    "The --trace option is not available with the --hashes option."
+    "The --traces option is not available with the --hashes option."
   ]
 }

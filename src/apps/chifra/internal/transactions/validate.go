@@ -53,7 +53,7 @@ func (opts *TransactionsOptions) validateTransactions() error {
 			}
 		}
 
-		if opts.Trace && !rpcClient.IsTracingNode(opts.Globals.TestMode, opts.Globals.Chain) {
+		if opts.Traces && !rpcClient.IsTracingNode(opts.Globals.TestMode, opts.Globals.Chain) {
 			return validate.Usage("Tracing is required for this program to work properly.")
 		}
 
