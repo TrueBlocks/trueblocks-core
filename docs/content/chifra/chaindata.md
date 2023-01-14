@@ -71,7 +71,13 @@ Notes:
 
 Data models produced by this tool:
 
+- [appearance](/data-model/accounts/#appearance)
 - [block](/data-model/chaindata/#block)
+- [log](/data-model/chaindata/#log)
+- [trace](/data-model/chaindata/#trace)
+- [traceaction](/data-model/chaindata/#traceaction)
+- [traceresult](/data-model/chaindata/#traceresult)
+- [blockcount](/data-model/chaindata/#blockcount)
 
 Links:
 
