@@ -1,8 +1,6 @@
 package types
 
 import (
-	"time"
-
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -18,7 +16,7 @@ type SimpleBlock struct {
 	Miner         common.Address      `json:"miner"`
 	Difficulty    uint64              `json:"difficulty"`
 	Finalized     bool                `json:"finalized"`
-	Timestamp     time.Time           `json:"timestamp"`
+	Timestamp     int64               `json:"timestamp"`
 	BaseFeePerGas Wei                 `json:"baseFeePerGas"`
 	Transactions  []SimpleTransaction `json:"transactions"`
 }
@@ -59,5 +57,5 @@ func (s *SimpleBlock) Model(showHidden bool, format string) Model {
 }
 
 func (s *SimpleBlock) GetTimestamp() uint64 {
-	return uint64(s.Timestamp.Unix())
+	return uint64(s.Timestamp)
 }
