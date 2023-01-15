@@ -11,6 +11,7 @@ package types
 // EXISTING_CODE
 import (
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 type BlockTransaction interface {
@@ -71,58 +72,141 @@ type RawBlock struct {
 	// SealFields       []string      `json:"sealFields"`
 }
 
-type SimpleBlock struct {
-	GasLimit      uint64              `json:"gasLimit"`
-	GasUsed       uint64              `json:"gasUsed"`
-	Hash          common.Hash         `json:"hash"`
-	BlockNumber   Blknum              `json:"blockNumber"`
-	ParentHash    common.Hash         `json:"parentHash"`
-	Miner         common.Address      `json:"miner"`
-	Difficulty    uint64              `json:"difficulty"`
-	Finalized     bool                `json:"finalized"`
-	Timestamp     int64               `json:"timestamp"`
-	BaseFeePerGas Wei                 `json:"baseFeePerGas"`
-	Transactions  []SimpleTransaction `json:"transactions"`
+type SimpleBlock[Tx BlockTransaction] struct {
+	GasLimit      uint64         `json:"gasLimit"`
+	GasUsed       uint64         `json:"gasUsed"`
+	Hash          common.Hash    `json:"hash"`
+	BlockNumber   Blknum         `json:"blockNumber"`
+	ParentHash    common.Hash    `json:"parentHash"`
+	Miner         common.Address `json:"miner"`
+	Difficulty    uint64         `json:"difficulty"`
+	Finalized     bool           `json:"finalized"`
+	Timestamp     int64          `json:"timestamp"`
+	BaseFeePerGas Wei            `json:"baseFeePerGas"`
+	Transactions  []Tx           `json:"transactions"`
+	Uncles        []common.Hash  `json:"uncles"`
 	raw           *RawBlock
 }
 
-func (s *SimpleBlock) Raw() *RawBlock {
+func (s *SimpleBlock[Tx]) Raw() *RawBlock {
 	return s.raw
 }
 
-func (s *SimpleBlock) SetRaw(raw *RawBlock) {
+func (s *SimpleBlock[Tx]) SetRaw(raw *RawBlock) {
 	s.raw = raw
 }
 
-func (s *SimpleBlock) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map[string]any) Model {
 	// EXISTING_CODE
+	if extraOptions["count"] == true {
+		return Model{
+			Data: map[string]interface{}{
+				"blockNumber":     s.BlockNumber,
+				"transactionsCnt": len(s.Transactions),
+			},
+			Order: []string{
+				"blockNumber",
+				"transactionsCnt",
+			},
+		}
+	}
+
+	if extraOptions["txHashes"] == true {
+		txHashes := make([]string, 0, len(s.Transactions))
+		// Check what type Tx is
+		switch txs := any(s.Transactions).(type) {
+		case []SimpleTransaction:
+			for _, tx := range txs {
+				txHashes = append(txHashes, tx.Hash.String())
+			}
+		case []string:
+			txHashes = append(txHashes, txs...)
+			// TODO: no error if can't cast?
+		}
+		return Model{
+			Data: map[string]interface{}{
+				"hash":        s.Hash,
+				"blockNumber": s.BlockNumber,
+				"finalized":   s.Finalized,
+				"parentHash":  s.ParentHash,
+				"timestamp":   s.Timestamp,
+				"tx_hashes":   txHashes,
+			},
+			Order: []string{
+				"hash",
+				"blockNumber",
+				"parentHash",
+				"timestamp",
+				"tx_hashes",
+			},
+		}
+	}
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
-		"hash":            s.Hash,
 		"blockNumber":     s.BlockNumber,
 		"timestamp":       s.Timestamp,
+		"hash":            s.Hash,
+		"parentHash":      s.ParentHash,
+		"miner":           hexutil.Encode(s.Miner.Bytes()),
 		"difficulty":      s.Difficulty,
-		"miner":           s.Miner,
-		"transactionsCnt": 12,
-		"uncle_count":     13,
+		"finalized":       s.Finalized,
+		"baseFeePerGas":   s.BaseFeePerGas.Uint64(),
 		"gasLimit":        s.GasLimit,
 		"gasUsed":         s.GasUsed,
+		"transactionsCnt": 12,
+		"uncleCnt":        13,
 	}
 
 	order := []string{
-		"hash",
 		"blockNumber",
 		"timestamp",
-		"difficulty",
+		"hash",
+		"parentHash",
 		"miner",
-		"transactionsCnt",
-		"uncle_count",
+		"difficulty",
+		"finalized",
+		"baseFeePerGas",
 		"gasLimit",
 		"gasUsed",
+		"transactionsCnt",
+		"uncleCnt",
 	}
 
 	// EXISTING_CODE
+	if format == "json" {
+		if extraOptions["list"] == true {
+			model["transactionsCnt"] = len(s.Transactions)
+			model["unclesCnt"] = len(s.Uncles)
+		} else {
+			// If we wanted just transactions' hashes, we would return earlier. So here we know that we
+			// have transactions as objects and want to load models for them to be able to display them
+			txs, ok := any(s.Transactions).([]SimpleTransaction)
+			if ok {
+				items := make([]map[string]interface{}, 0, len(txs))
+				for _, txObject := range txs {
+					extraOptions["finalized"] = s.Finalized
+					items = append(items, txObject.Model(showHidden, format, extraOptions).Data)
+				}
+				model["transactions"] = items
+			} else {
+				model["transactions"] = s.Transactions
+			}
+			order = append(order, "transactions")
+			model["uncles"] = s.Uncles
+			order = append(order, "uncles")
+		}
+	} else {
+		model["transactionsCnt"] = len(s.Transactions)
+		order = append(order, "transactionsCnt")
+		if extraOptions["list"] == true {
+			model["unclesCnt"] = len(s.Uncles)
+			order = append(order, "unclesCnt")
+		} else {
+			model["finalized"] = s.Finalized
+			order = append(order, "finalized")
+		}
+	}
 	// EXISTING_CODE
 
 	return Model{
@@ -132,7 +216,7 @@ func (s *SimpleBlock) Model(showHidden bool, format string, extraOptions map[str
 }
 
 // EXISTING_CODE
-func (s *SimpleBlock) GetTimestamp() uint64 {
+func (s *SimpleBlock[Tx]) GetTimestamp() uint64 {
 	return uint64(s.Timestamp)
 }
 // EXISTING_CODE

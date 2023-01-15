@@ -28,8 +28,8 @@ bool COptions::handle_appearances(blknum_t num) {
         string_q fmt = expContext().fmtMap["format"];
         fmt = substitute(fmt, "[{ADDR_COUNT}]", uint_2_Str(addrCounter));
         fmt = substitute(fmt, "[{FILTER_TYPE}]", filterType);
+        fmt = substitute(fmt, "[{UNCLESCNT}]", uint_2_Str(getUncleCount(num)));
         if (verbose) {
-            fmt = substitute(fmt, "[{UNCLE_COUNT}]", uint_2_Str(getUncleCount(num)));
             if (verbose > 2) {
                 uint64_t cnt = 0;
                 for (auto trans : block.transactions)

@@ -57,7 +57,7 @@ int main(int argc, const char* argv[]) {
 }
 
 //------------------------------------------------------------
-string_q doOneLightBlock(blknum_t num) {
+string_q doOneLightBlock(blknum_t num, const COptions& opt) {
     CBlock gold;
     getBlockLight(gold, num);
     if (gold.blockNumber == 0 && gold.timestamp == 0)
@@ -67,8 +67,12 @@ string_q doOneLightBlock(blknum_t num) {
     HIDE_FIELD(CTransaction, "date");
     HIDE_FIELD(CTransaction, "age");
     HIDE_FIELD(CTransaction, "ether");
-    for (auto trans : gold.transactions)
+    for (auto trans : gold.transactions) {
         gold.tx_hashes.push_back(trans.hash);
+    }
+    if (opt.uncles) {
+        gold.unclesCnt = getUncleCount(num);
+    }
     return gold.Format(expContext().fmtMap["format"]);
 }
 
@@ -92,7 +96,6 @@ string_q doOneUncle(blknum_t num, blknum_t index, const COptions& opt) {
 //------------------------------------------------------------
 string_q doOneBlock(blknum_t num, COptions& opt) {
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
-
     string_q fileName = getBinaryCacheFilename(CT_BLOCKS, num);
     CBlock gold;
     gold.blockNumber = num;
@@ -118,26 +121,30 @@ string_q doOneBlock(blknum_t num, COptions& opt) {
         }
         opt.firstOut = false;
 
-    } else if (opt.uncles) {
+    } else if (opt.uncles && !opt.count) {
         uint64_t nUncles = getUncleCount(num);
-        if (nUncles == 0) {
-            // If we don't do this, we get extra commas
-            opt.firstOut = true;
+        if (opt.count) {
+            result = uint_2_Str(nUncles);
         } else {
-            for (size_t i = 0; i < nUncles; i++) {
-                result += doOneUncle(num, i, opt);
-                if (i != (nUncles - 1)) {
-                    if (!isText)
-                        result += ",";
-                    result += "\n";
+            if (nUncles == 0) {
+                // If we don't do this, we get extra commas
+                opt.firstOut = true;
+            } else {
+                for (size_t i = 0; i < nUncles; i++) {
+                    result += doOneUncle(num, i, opt);
+                    if (i != (nUncles - 1)) {
+                        if (!isText)
+                            result += ",";
+                        result += "\n";
+                    }
+                    opt.firstOut = false;
                 }
                 opt.firstOut = false;
             }
-            opt.firstOut = false;
         }
     } else {
-        if (opt.hashes) {
-            result = doOneLightBlock(num);
+        if (opt.hashes || opt.count) {
+            result = doOneLightBlock(num, opt);
         } else {
             result = doOneHeavyBlock(gold, num, opt);
             if (opt.cache) {  // turn this on to force a write of the block to the disc

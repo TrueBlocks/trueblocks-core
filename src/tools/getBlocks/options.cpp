@@ -188,11 +188,15 @@ bool COptions::parseArguments(string_q& command) {
     // Display formatting
     if (count) {
         string_q ff = verbose ? STR_FORMAT_COUNT_TXT_VERBOSE : STR_FORMAT_COUNT_TXT;
-        if (verbose <= 2)
+        if (verbose <= 2) {
             ff = substitute(ff, "\t[{TRACE_COUNT}]", "");
+        }
         if (filterType.empty()) {
             replace(ff, "\"[{FILTER_TYPE}]\": [{ADDR_COUNT}]", "");
             replace(ff, "\t[{ADDR_COUNT}]", "");
+        }
+        if (!uncles) {
+            replace(ff, "\t[{UNCLESCNT}]", "");
         }
         configureDisplay("", "CBlock", ff);
 
@@ -230,6 +234,10 @@ bool COptions::parseArguments(string_q& command) {
                 replace(ff, ",\n \"[{FILTER_TYPE}]\": [{ADDR_COUNT}]", "");
                 replace(ff, "\t[{ADDR_COUNT}]", "");
             }
+            if (!uncles) {
+                replace(ff, "\n \"unclesCnt\": [{UNCLESCNT}]", "");
+            }
+            replaceAll(ff, ",,", ",");
             expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(ff);
 
         } else if (listOffset != NOPOS) {
@@ -317,13 +325,14 @@ const char* STR_FORMAT_COUNT_JSON =
     "{\n"
     " \"blockNumber\": [{BLOCKNUMBER}],\n"
     " \"transactionsCnt\": [{TRANSACTIONSCNT}],\n"
+    " \"unclesCnt\": [{UNCLESCNT}],\n"
     " \"[{FILTER_TYPE}]\": [{ADDR_COUNT}]"
     "}\n";
 
 //--------------------------------------------------------------------------------
-const char* STR_FORMAT_COUNT_TXT = "[{BLOCKNUMBER}]\t[{TRANSACTIONSCNT}]\t[{ADDR_COUNT}]";
+const char* STR_FORMAT_COUNT_TXT = "[{BLOCKNUMBER}]\t[{TRANSACTIONSCNT}]\t[{UNCLESCNT}]\t[{ADDR_COUNT}]";
 const char* STR_FORMAT_COUNT_TXT_VERBOSE =
-    "[{BLOCKNUMBER}]\t[{UNCLE_COUNT}]\t[{TRANSACTIONSCNT}]\t[{TRACE_COUNT}]\t[{ADDR_COUNT}]";
+    "[{BLOCKNUMBER}]\t[{TRANSACTIONSCNT}]\t[{UNCLESCNT}]\t[{TRACE_COUNT}]\t[{ADDR_COUNT}]";
 
 //--------------------------------------------------------------------------------
 const char* STR_FORMAT_FILTER_JSON =

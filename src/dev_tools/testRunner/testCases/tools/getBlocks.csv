@@ -32,7 +32,7 @@ on       ,both ,fast  ,blocks ,tools/getBlocks ,addrBlockZero         ,y    ,blo
 
 on       ,both ,medi  ,blocks ,tools/getBlocks ,addrsCnt1             ,n    ,blocks = 3982128 & apps & count & fmt = csv
 on       ,both ,medi  ,blocks ,tools/getBlocks ,uniqTxCnt1            ,y    ,blocks = 3982128 & uniq & count & fmt = json
-on       ,both ,fast  ,blocks ,tools/getBlocks ,addrCntFail           ,y    ,blocks = 3982128 & count
+local    ,both ,fast  ,blocks ,tools/getBlocks ,addrCntFail           ,y    ,blocks = 3982128 & count
 
 on       ,both ,medi  ,blocks ,tools/getBlocks ,uniqTxCnt2            ,y    ,blocks = 1301011-1312011:313 & uniq & count & fmt = json
 on       ,both ,fast  ,blocks ,tools/getBlocks ,fmt_default           ,y    ,blocks = 2222222 2332332
