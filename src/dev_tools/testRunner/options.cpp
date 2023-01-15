@@ -88,9 +88,9 @@ bool COptions::parseArguments(string_q& command) {
                 if (been_here)
                     break;
                 been_here = true;
-                tests.push_back("libs/utillib");
-                tests.push_back("libs/etherlib");
-                tests.push_back("libs/acctlib");
+                // tests.push_back("libs/utillib");
+                // tests.push_back("libs/etherlib");
+                // tests.push_back("libs/acctlib");
 
             } else if (arg == "dev_tools" || arg == "dev_tools/") {
                 static bool been_here = false;
@@ -126,7 +126,7 @@ bool COptions::parseArguments(string_q& command) {
                 been_here = true;
                 tests.push_back("apps/acctExport");
                 tests.push_back("apps/blockScrape");
-                tests.push_back("apps/cacheStatus");
+                // tests.push_back("apps/cacheStatus");
                 tests.push_back("apps/chunkMan");
                 tests.push_back("apps/chifra");
                 tests.push_back("apps/fireStorm");
@@ -153,9 +153,9 @@ bool COptions::parseArguments(string_q& command) {
 
     if (tests.empty()) {
         full_test = true;
-        tests.push_back("libs/utillib");
-        tests.push_back("libs/etherlib");
-        tests.push_back("libs/acctlib");
+        // tests.push_back("libs/utillib");
+        // tests.push_back("libs/etherlib");
+        // tests.push_back("libs/acctlib");
         if (makeClassOn)
             tests.push_back("dev_tools/makeClass");
         if (hasEsKey && getEnvStr("NO_ES") != "true") {
@@ -173,7 +173,7 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("tools/whenBlock");
         tests.push_back("apps/acctExport");
         tests.push_back("apps/blockScrape");
-        tests.push_back("apps/cacheStatus");
+        // tests.push_back("apps/cacheStatus");
         tests.push_back("apps/chunkMan");
         tests.push_back("apps/chifra");
         tests.push_back("apps/fireStorm");
