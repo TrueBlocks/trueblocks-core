@@ -10,8 +10,9 @@ TEST[DATE|TIME] Format:  json
       "blockNumber": 3657480,
       "cumulativeGasUsed": "3603320",
       "gasUsed": 21000,
-      "hash": "0x1e4e4d62951733dea1cce59eca0ffaf89a7881f13c9bb8558d61f6a9e0928c4b",
+      "logs": [],
       "status": 1,
+      "transactionHash": "0x1e4e4d62951733dea1cce59eca0ffaf89a7881f13c9bb8558d61f6a9e0928c4b",
       "transactionIndex": 78
     }TEST[DATE|TIME] Transactions:  [3657480.78]
 TEST[DATE|TIME] Verbose:  true
@@ -24,8 +25,9 @@ TEST[DATE|TIME] Format:  json
       "blockNumber": 3657480,
       "cumulativeGasUsed": "3603320",
       "gasUsed": 21000,
-      "hash": "0x1e4e4d62951733dea1cce59eca0ffaf89a7881f13c9bb8558d61f6a9e0928c4b",
+      "logs": [],
       "status": 1,
+      "transactionHash": "0x1e4e4d62951733dea1cce59eca0ffaf89a7881f13c9bb8558d61f6a9e0928c4b",
       "transactionIndex": 78
     }TEST[DATE|TIME] Transactions:  [0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad]
 TEST[DATE|TIME] Verbose:  true
@@ -38,8 +40,9 @@ TEST[DATE|TIME] Format:  json
       "blockNumber": 3657480,
       "cumulativeGasUsed": "3624320",
       "gasUsed": 21000,
-      "hash": "0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad",
+      "logs": [],
       "status": 1,
+      "transactionHash": "0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad",
       "transactionIndex": 79
     }
   ]

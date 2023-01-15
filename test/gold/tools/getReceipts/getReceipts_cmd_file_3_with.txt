@@ -8,14 +8,14 @@ TEST[DATE|TIME] Format:  json
     {
       "blockNumber": 5644782,
       "gasUsed": 21000,
-      "hash": "0x785b88bfb800c34f0972bd2a1b02fb4bd03abc72dce675d00c2e4ae99f7aff96",
+      "logs": [],
       "status": 1,
+      "transactionHash": "0x785b88bfb800c34f0972bd2a1b02fb4bd03abc72dce675d00c2e4ae99f7aff96",
       "transactionIndex": 0
     },
     {
       "blockNumber": 5644882,
       "gasUsed": 52053,
-      "hash": "0xb440bb9522672cdee57b447f406a22feec453764be784c6bd1b1f3188fa677be",
       "logs": [
         {
           "address": "0xfe5f141bf94fe84bc28ded0ab966c16b17490657",
@@ -31,6 +31,7 @@ TEST[DATE|TIME] Format:  json
         }
       ],
       "status": 1,
+      "transactionHash": "0xb440bb9522672cdee57b447f406a22feec453764be784c6bd1b1f3188fa677be",
       "transactionIndex": 0
     }
   ]
