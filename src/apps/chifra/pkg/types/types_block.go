@@ -144,18 +144,16 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
-		"blockNumber":     s.BlockNumber,
-		"timestamp":       s.Timestamp,
-		"hash":            s.Hash,
-		"parentHash":      s.ParentHash,
-		"miner":           hexutil.Encode(s.Miner.Bytes()),
-		"difficulty":      s.Difficulty,
-		"finalized":       s.Finalized,
-		"baseFeePerGas":   s.BaseFeePerGas.Uint64(),
-		"gasLimit":        s.GasLimit,
-		"gasUsed":         s.GasUsed,
-		"transactionsCnt": 12,
-		"uncleCnt":        13,
+		"blockNumber":   s.BlockNumber,
+		"timestamp":     s.Timestamp,
+		"hash":          s.Hash,
+		"parentHash":    s.ParentHash,
+		"miner":         hexutil.Encode(s.Miner.Bytes()),
+		"difficulty":    s.Difficulty,
+		"finalized":     s.Finalized,
+		"baseFeePerGas": s.BaseFeePerGas.Uint64(),
+		"gasLimit":      s.GasLimit,
+		"gasUsed":       s.GasUsed,
 	}
 
 	order := []string{
@@ -169,8 +167,6 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 		"baseFeePerGas",
 		"gasLimit",
 		"gasUsed",
-		"transactionsCnt",
-		"uncleCnt",
 	}
 
 	// EXISTING_CODE
@@ -219,4 +215,5 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 func (s *SimpleBlock[Tx]) GetTimestamp() uint64 {
 	return uint64(s.Timestamp)
 }
+
 // EXISTING_CODE

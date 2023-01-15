@@ -1,0 +1,7 @@
+chifra blocks  3 --fmt json --count --traces --fmt txt
+TEST[DATE|TIME] Blocks:  [3]
+TEST[DATE|TIME] Traces:  true
+TEST[DATE|TIME] Count:  true
+TEST[DATE|TIME] Format:  txt
+blockNumber	timestamp	transactionsCnt	tracesCnt
+3	1438270048	0	2

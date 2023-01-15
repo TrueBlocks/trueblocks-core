@@ -1,4 +1,4 @@
-chifra blocks  2769609 2799895 2872831 3076260 --cache --apps
+chifra blocks  2769609 2799895 2872831 3076260 --apps --cache
 TEST[DATE|TIME] Blocks:  [2769609 2799895 2872831 3076260]
 TEST[DATE|TIME] Apps:  true
 TEST[DATE|TIME] Cache:  true

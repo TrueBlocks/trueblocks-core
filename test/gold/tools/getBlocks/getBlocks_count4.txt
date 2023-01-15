@@ -1,0 +1,8 @@
+chifra blocks  3 --fmt json --count --uncles --apps
+TEST[DATE|TIME] Blocks:  [3]
+TEST[DATE|TIME] Uncles:  true
+TEST[DATE|TIME] Apps:  true
+TEST[DATE|TIME] Count:  true
+TEST[DATE|TIME] Format:  json
+{ "data": [
+{ "blockNumber": 3, "transactionsCnt": 0, "unclesCnt": 1, "apps": 2}] }

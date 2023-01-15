@@ -40,13 +40,21 @@ type SimpleTrace struct {
 	Action           *SimpleTraceAction `json:"action"`
 	Result           *SimpleTraceResult `json:"result"`
 	ArticulatedTrace *SimpleFunction    `json:"articulatedTrace"`
+	raw              *RawTrace
 }
 
 func (s *SimpleTrace) Raw() *RawTrace {
-	return nil
+	return s.raw
+}
+
+func (s *SimpleTrace) SetRaw(raw *RawTrace) {
+	s.raw = raw
 }
 
 func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	model := map[string]interface{}{
 		"error":            s.Error,
 		"blockHash":        s.BlockHash,

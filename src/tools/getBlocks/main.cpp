@@ -39,9 +39,6 @@ int main(int argc, const char* argv[]) {
         if (options.traces) {
             options.blocks.forEveryBlockNumber(traceBlock, &options);
 
-        } else if (options.listOffset != NOPOS) {
-            options.handle_block_summaries();
-
         } else if (options.logs) {
             options.handle_logs();
 
