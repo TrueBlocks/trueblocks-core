@@ -15,14 +15,14 @@ import "github.com/ethereum/go-ethereum/common"
 
 type RawTrace struct {
 	BlockHash        string         `json:"blockHash"`
-	BlockNumber      string         `json:"blockNumber"`
-	Timestamp        string         `json:"timestamp"`
-	Subtraces        string         `json:"subtraces"`
+	BlockNumber      uint64         `json:"blockNumber"`
+	Timestamp        int64          `json:"timestamp"`
+	Subtraces        uint64         `json:"subtraces"`
 	TraceAddress     []string       `json:"traceAddress"`
 	TransactionHash  string         `json:"transactionHash"`
-	TransactionIndex string         `json:"transactionIndex"`
+	TransactionIndex uint64         `json:"transactionIndex"`
 	TraceType        string         `json:"traceType"`
-	Error            string         `json:"error"`
+	Error            bool           `json:"error"`
 	Action           RawTraceAction `json:"action"`
 	Result           RawTraceResult `json:"result"`
 }

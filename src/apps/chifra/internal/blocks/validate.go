@@ -55,6 +55,13 @@ func (opts *BlocksOptions) validateBlocks() error {
 
 			return err
 		}
+		if opts.List > 0 {
+			return validate.Usage("You must supply a non-zero value for the {0} option with {1}.", "--list_count", "--list")
+		}
+	} else {
+		if opts.List == 0 {
+			return validate.Usage("You must supply a non-zero value for the {0} option with {1}.", "--list", "--list_count")
+		}
 	}
 
 	if len(opts.Flow) > 0 {
@@ -70,12 +77,7 @@ func (opts *BlocksOptions) validateBlocks() error {
 	if len(opts.Globals.File) > 0 {
 		// Do nothing
 	} else {
-		if opts.List > 0 {
-			if opts.ListCount == 0 {
-				return validate.Usage("You must supply a non-zero value for the --list_count option with --list.")
-			}
-
-		} else {
+		if opts.List == 0 {
 			if len(opts.Blocks) == 0 && opts.ListCount == 0 {
 				return validate.Usage("Please supply one or more block identifiers or the --list_count option.")
 			}
