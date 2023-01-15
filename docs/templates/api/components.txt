@@ -556,18 +556,26 @@ components:
       description: "receipt data as returned from the RPC (with slight enhancements)"
       type: object
       properties:
+        blockNumber:
+          type: number
+          format: blknum
+        transactionIndex:
+          type: number
+          format: blknum
         status:
           type: number
           format: uint32
           description: "`1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise"
-        contractAddress:
-          type: string
-          format: address
-          description: "the address of the newly created contract, if any"
         gasUsed:
           type: string
           format: gas
           description: "the amount of gas actually used by the transaction"
+        contractAddress:
+          type: string
+          format: address
+          description: "the address of the newly created contract, if any"
+        isError:
+          type: boolean
         logs:
           type: array
           items:

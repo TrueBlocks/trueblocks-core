@@ -17,36 +17,40 @@ import (
 // EXISTING_CODE
 
 type RawReceipt struct {
-	BlockHash         string   `json:"blockHash"`
+	BlockHash         string   `json:"blockHash,omitempty"`
 	BlockNumber       string   `json:"blockNumber"`
 	ContractAddress   string   `json:"contractAddress,omitempty"`
 	CumulativeGasUsed string   `json:"cumulativeGasUsed,omitempty"`
-	EffectiveGasPrice string   `json:"effectiveGasPrice"`
-	From              string   `json:"from"`
+	EffectiveGasPrice string   `json:"effectiveGasPrice,omitempty"`
+	From              string   `json:"from,omitempty"`
 	IsError           string   `json:"isError,omitempty"`
 	GasUsed           string   `json:"gasUsed"`
 	Logs              []RawLog `json:"logs"`
 	Status            string   `json:"status"`
-	To                string   `json:"to"`
+	To                string   `json:"to,omitempty"`
 	TransactionHash   string   `json:"transactionHash"`
 	TransactionIndex  string   `json:"transactionIndex"`
+	// Root              string   `json:"root,omitempty"`
+	// Hash              string   `json:"hash,omitempty"`
 }
 
 type SimpleReceipt struct {
-	BlockHash         common.Hash    `json:"blockHash"`
+	BlockHash         common.Hash    `json:"blockHash,omitempty"`
 	BlockNumber       uint64         `json:"blockNumber"`
 	ContractAddress   common.Address `json:"contractAddress,omitempty"`
 	CumulativeGasUsed string         `json:"cumulativeGasUsed,omitempty"`
-	EffectiveGasPrice Gas            `json:"effectiveGasPrice"`
-	From              common.Address `json:"from"`
+	EffectiveGasPrice Gas            `json:"effectiveGasPrice,omitempty"`
+	From              common.Address `json:"from,omitempty"`
 	GasUsed           Gas            `json:"gasUsed"`
 	IsError           bool           `json:"isError,omitempty"`
 	Logs              []SimpleLog    `json:"logs"`
 	Status            uint32         `json:"status"`
-	To                common.Address `json:"to"`
+	To                common.Address `json:"to,omitempty"`
 	TransactionHash   common.Hash    `json:"transactionHash"`
 	TransactionIndex  uint64         `json:"transactionIndex"`
 	raw               *RawReceipt
+	// Root              common.Hash    `json:"root,omitempty"`
+	// Hash              string         `json:"hash,omitempty"`
 }
 
 func (s *SimpleReceipt) Raw() *RawReceipt {
@@ -108,6 +112,9 @@ func (s *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[s
 			}
 		}
 	} else {
+		model["logsCnt"] = len(s.Logs)
+		order = append(order, "logsCnt")
+
 		model["isError"] = s.IsError
 		order = append(order, "isError")
 

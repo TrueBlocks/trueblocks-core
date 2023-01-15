@@ -141,12 +141,15 @@ The following commands produce and manage Receipts:
 
 Receipts consist of the following fields:
 
-| Field           | Description                                                                | Type                                |
-| --------------- | -------------------------------------------------------------------------- | ----------------------------------- |
-| status          | `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise | uint32                              |
-| contractAddress | the address of the newly created contract, if any                          | address                             |
-| gasUsed         | the amount of gas actually used by the transaction                         | gas                                 |
-| logs            | a possibly empty array of logs                                             | [Log[]](/data-model/chaindata/#log) |
+| Field            | Description                                                                | Type                                |
+| ---------------- | -------------------------------------------------------------------------- | ----------------------------------- |
+| blockNumber      |                                                                            | blknum                              |
+| transactionIndex |                                                                            | blknum                              |
+| status           | `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise | uint32                              |
+| gasUsed          | the amount of gas actually used by the transaction                         | gas                                 |
+| contractAddress  | the address of the newly created contract, if any                          | address                             |
+| isError          |                                                                            | bool                                |
+| logs             | a possibly empty array of logs                                             | [Log[]](/data-model/chaindata/#log) |
 
 ## Log
 

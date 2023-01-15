@@ -80,7 +80,7 @@ string_q CReceipt::getValueByName(const string_q& fieldName) const {
             break;
         case 'e':
             if (fieldName % "effectiveGasPrice") {
-                return gas_2_Str(effectiveGasPrice);
+                return effectiveGasPrice == 0 ? "" : gas_2_Str(effectiveGasPrice);
             }
             break;
         case 'g':
@@ -314,12 +314,12 @@ void CReceipt::registerClass(void) {
     ADD_FIELD(CReceipt, "blockNumber", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CReceipt, "blockNumber");
     ADD_FIELD(CReceipt, "contractAddress", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CReceipt, "cumulativeGasUsed", T_WEI, ++fieldNum);
+    ADD_FIELD(CReceipt, "cumulativeGasUsed", T_WEI | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CReceipt, "cumulativeGasUsed");
     ADD_FIELD(CReceipt, "from", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CReceipt, "from");
     ADD_FIELD(CReceipt, "gasUsed", T_GAS, ++fieldNum);
-    ADD_FIELD(CReceipt, "effectiveGasPrice", T_GAS, ++fieldNum);
+    ADD_FIELD(CReceipt, "effectiveGasPrice", T_GAS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReceipt, "logs", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReceipt, "root", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CReceipt, "root");
@@ -476,9 +476,9 @@ const CBaseNode* CReceipt::getObjectAt(const string_q& fieldName, size_t index) 
 const char* STR_DISPLAY_RECEIPT =
     "[{BLOCKNUMBER}]\t"
     "[{TRANSACTIONINDEX}]\t"
-    "[{HASH}]\t"
-    "[{GASUSED}]\t"
+    "[{TRANSACTIONHASH}]\t"
     "[{STATUS}]\t"
+    "[{GASUSED}]\t"
     "[{ISERROR}]";
 
 //---------------------------------------------------------------------------

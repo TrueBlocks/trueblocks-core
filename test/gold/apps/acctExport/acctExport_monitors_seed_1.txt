@@ -18,6 +18,12 @@ TEST[DATE|TIME] Format:  json
   "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
+  "receipt": {
+    "contractAddress": "0x0",
+    "gasUsed": 0,
+    "effectiveGasPrice": 0,
+    "status": null
+  },
   "gasCost": 0,
   "gasUsed": 0,
   "date": "2015-07-30 15:26:15 UTC",

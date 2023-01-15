@@ -36,16 +36,25 @@ string_q type_2_GoType(const CParameter& field) {
     return type;
 }
 
+string_q debug(const CParameter& field) {
+    ostringstream os;
+    // os << " //";
+    // os << " doc: " << field.doc;
+    // os << " disp: " << field.disp;
+    // os << " omit: " << (field.is_flags & IS_OMITEMPTY);
+    return os.str();
+}
+
 //------------------------------------------------------------------------------------------------------------
 void generate_go_type_code(COptions* opts, const CClassDefinition& modelIn) {
     CClassDefinition model = modelIn;
 
     string_q fn = getPathToSource("apps/chifra/pkg/types/types_" + toLower(model.base_name) + ".go");
     string_q contents = asciiFileToString(getPathToTemplates("blank_type.go.tmpl"));
-    replaceAll(contents, "[{CLASS_NAME}]", type_2_ModelName(model.class_name, false));
+    replaceAll(contents, "[{CLASS_NAME}]", type_2_ModelName(model.gogen, false));
 
     CParameter raw;
-    raw.type = "*Raw" + type_2_ModelName(model.class_name, false);
+    raw.type = "*Raw" + type_2_ModelName(model.gogen, false);
     raw.name = "raw";
     model.fieldArray.push_back(raw);
 
@@ -70,23 +79,23 @@ void generate_go_type_code(COptions* opts, const CClassDefinition& modelIn) {
         string_q type = (field.name % "raw") ? field.type : padRight(field.type, maxTypeWid);
         string_q name = padRight(field.name, maxNameWid);
         fieldStream << "\t" << name << " " << type;
+        bool isOmitEmpty = (field.is_flags & IS_OMITEMPTY);
         if (!(field.name % "raw")) {
-            bool isOmitEmpty = (field.is_flags & IS_OMITEMPTY);
             rawStream << "\t" << name << " string";
             fieldStream << " `json:\"" << firstLower(field.name);
             rawStream << " `json:\"" << firstLower(field.name);
             if (!isOmitEmpty) {
                 modelStream << "\t\t" << padRight("\"" + firstLower(field.name) + "\":", maxNameWid + 3) << " s."
-                            << firstUpper(field.name) << "," << endl;
+                            << firstUpper(field.name) << "," << debug(field) << endl;
                 orderStream << "\t\t\"" << firstLower(field.name) << "\""
-                            << "," << endl;
+                            << "," << debug(field) << endl;
             } else {
                 fieldStream << ",omitempty";
             }
             fieldStream << "\"`";
-            rawStream << "\"`" << endl;
+            rawStream << "\"`" << debug(field) << endl;
         }
-        fieldStream << endl;
+        fieldStream << debug(field) << endl;
     }
 
     replaceAll(contents, "[{FIELDS}]", fieldStream.str());
