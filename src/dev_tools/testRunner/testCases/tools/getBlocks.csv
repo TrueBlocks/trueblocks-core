@@ -36,6 +36,8 @@ on       ,both ,medi  ,blocks ,tools/getBlocks ,addrsCnt1             ,n    ,blo
 on       ,both ,medi  ,blocks ,tools/getBlocks ,uniqTxCnt1            ,y    ,blocks = 3982128 & uniq & count & fmt = json
 on       ,both ,fast  ,blocks ,tools/getBlocks ,addrCntFail           ,y    ,blocks = 3982128 & count
 on       ,both ,fast  ,blocks ,tools/getBlocks ,uncles_count          ,y    ,blocks = 3 469 & uncles & count
+on       ,both ,fast  ,blocks ,tools/getBlocks ,addrCntFail           ,y    ,blocks = 3982128 & count
+on       ,both ,medi  ,blocks ,tools/getBlocks ,uniqTxCnt2            ,y    ,blocks = 1301011-1312011:313 & uniq & count & fmt = json
 on       ,both ,medi  ,blocks ,tools/getBlocks ,count1                ,y    ,blocks = 3 & fmt = json & count
 on       ,both ,medi  ,blocks ,tools/getBlocks ,count2                ,y    ,blocks = 3 & fmt = json & count & uncles
 on       ,both ,medi  ,blocks ,tools/getBlocks ,count3                ,y    ,blocks = 3 & fmt = json & count & apps

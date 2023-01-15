@@ -13,6 +13,7 @@ type Modeler[Raw RawData] interface {
 	Raw() *Raw
 }
 
+// TODO: Is this needed since we moved to `any`?
 type RawData interface {
 	RawReceipt | RawWhenCount | RawNamedBlock | RawBlock | RawBlockCount | RawTraceAction | RawTraceResult
 }

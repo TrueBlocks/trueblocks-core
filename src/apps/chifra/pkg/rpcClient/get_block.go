@@ -13,12 +13,10 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
-// ---------------------------------------------------------------------------------------------
 func GetBlockHeaderByNumber(chain string, bn uint64) (types.SimpleBlock[string], error) {
 	return GetBlockByNumber(chain, bn, false)
 }
 
-// ---------------------------------------------------------------------------------------------
 // GetBlockByNumberWithTxs fetches the block with transactions from the RPC.
 func GetBlockByNumberWithTxs(chain string, bn uint64, isFinal bool) (types.SimpleBlock[types.SimpleTransaction], error) {
 	// load from cache if possible
@@ -27,10 +25,6 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, isFinal bool) (types.Simpl
 	// cached, _ := cache.GetBlock(chain, bn)
 	// if cached != nil {
 	// 	block = *cached
-	// 	return
-	// }
-	// mustParseUint := func(input any) (result uint64) {
-	// 	result, _ = strconv.ParseUint(fmt.Sprint(input), 0, 64)
 	// 	return
 	// }
 
@@ -49,11 +43,13 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, isFinal bool) (types.Simpl
 			err = errors.New("cannot cast raw block transaction into map")
 			return block, err
 		}
+
 		txHash := common.HexToHash(fmt.Sprint(t["hash"]))
 		txGasPrice := mustParseUint(t["gasPrice"])
 		input := fmt.Sprint(t["input"])
 		value := big.NewInt(0)
 		value.SetString(fmt.Sprint(t["value"]), 0)
+
 		var hasToken bool
 		if len(input) >= 10 {
 			hasToken = tokenRelated[input[0:9]]
@@ -97,7 +93,6 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, isFinal bool) (types.Simpl
 	return block, nil
 }
 
-// ---------------------------------------------------------------------------------------------
 // GetBlockByNumber fetches the block with only transactions' hashes from the RPC
 func GetBlockByNumber(chain string, bn uint64, isFinal bool) (types.SimpleBlock[string], error) {
 	block, rawBlock, err := loadBlock[string](chain, bn, isFinal, false)
@@ -110,10 +105,10 @@ func GetBlockByNumber(chain string, bn uint64, isFinal bool) (types.SimpleBlock[
 	for _, rawTx := range rawBlock.Transactions {
 		block.Transactions = append(block.Transactions, fmt.Sprint(rawTx))
 	}
+
 	return block, nil
 }
 
-// ---------------------------------------------------------------------------------------------
 // loadBlock fetches block from RPC, but it does not try to fill Transactions field. This is delegated to
 // more specialized functions and makes loadBlock generic.
 func loadBlock[Tx types.BlockTransaction](chain string, bn uint64, isFinal bool, withTxs bool) (block types.SimpleBlock[Tx], rawBlock *types.RawBlock, err error) {
@@ -167,8 +162,6 @@ func loadBlock[Tx types.BlockTransaction](chain string, bn uint64, isFinal bool,
 	return
 }
 
-// ---------------------------------------------------------------------------------------------
-// getRawBlock
 func getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error) {
 	var response struct {
 		Result types.RawBlock `json:"result"`
@@ -178,6 +171,7 @@ func getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error)
 		Method: "eth_getBlockByNumber",
 		Params: rpc.Params{fmt.Sprintf("0x%x", bn), withTxs},
 	}
+
 	err := rpc.FromRpc(config.GetRpcProvider(chain), &payload, &response)
 	if err != nil {
 		return &types.RawBlock{}, err
@@ -198,6 +192,7 @@ func getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error)
 		msg := fmt.Sprintf("block number or timestamp for %d not found", bn)
 		return rawBlock, errors.New(msg)
 	}
+
 	return rawBlock, err
 }
 

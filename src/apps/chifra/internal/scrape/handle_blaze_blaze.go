@@ -128,7 +128,7 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 		//	fmt.Println("Forcing failure for block", blockNum)
 		//	return errors.New("Forcing failure")
 		//}
-		// Payload is used to make calls to the RPC.
+		// rpc.Payload is used during to make calls to the RPC.
 		// TODO: Use rpc.Query
 		var traces rpcClient.Traces
 		tracePayload := rpc.Payload{
