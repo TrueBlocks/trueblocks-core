@@ -98,6 +98,24 @@ func GetTransactionReceipt(chain string, bn uint64, txid uint64, txHash *common.
 	}
 	receipt.SetRaw(rawReceipt)
 
+	// TODO: WE TURNED THIS OFF BECAUSE IT WAS NOT FAILING ANY TEST CASES, BUT IT PROBABLY NEEDS TO BE
+	// TODO: RE-ENABLED. THE TROUBLE IS, WE DO NOT HAVE THE TRANSACTION (tx). NOT SURE WHAT HAPPENED.
+	// TODO: this should not be hardcoded here. We have tslib.GetSpecials(), but there
+	// TODO: are 2 issues with it: 1. circular dependency with types package, 2. every
+	// TODO: call to GetSpecials parses CSV file, so we need to call it once and cache
+	// londonBlock := uint64(12965000)
+	// if chain == "mainnet" {
+	// 	if blockNumber < londonBlock {
+	// 		gasPrice := txGasPrice
+	// 		if gasPrice == 0 {
+	// 			bn := tx.GasPrice()
+	// 			if bn != nil {
+	// 				gasPrice = bn.Uint64()
+	// 			}
+	// 		}
+	// 		receipt.EffectiveGasPrice = gasPrice
+	// 	}
+	// }
 	return
 }
 

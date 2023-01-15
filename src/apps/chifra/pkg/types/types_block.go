@@ -1,10 +1,18 @@
+// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
+ */
+
 package types
 
+// EXISTING_CODE
 import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-// EXISTING_CODE
 type BlockTransaction interface {
 	string | SimpleTransaction
 }
@@ -82,11 +90,14 @@ func (s *SimpleBlock) Raw() *RawBlock {
 	return s.raw
 }
 
-func (s *SimpleBlock) SetRaw(rawBlock *RawBlock) {
-	s.raw = rawBlock
+func (s *SimpleBlock) SetRaw(raw *RawBlock) {
+	s.raw = raw
 }
 
 func (s *SimpleBlock) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	model := map[string]interface{}{
 		"hash":            s.Hash,
 		"blockNumber":     s.BlockNumber,
@@ -111,12 +122,17 @@ func (s *SimpleBlock) Model(showHidden bool, format string, extraOptions map[str
 		"gasUsed",
 	}
 
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	return Model{
 		Data:  model,
 		Order: order,
 	}
 }
 
+// EXISTING_CODE
 func (s *SimpleBlock) GetTimestamp() uint64 {
 	return uint64(s.Timestamp)
 }
+// EXISTING_CODE
