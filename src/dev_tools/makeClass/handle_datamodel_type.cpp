@@ -14,11 +14,17 @@
 #include "options.h"
 
 //------------------------------------------------------------------------------------------------------------
-string_q type_2_GoType(const string_q& type) {
+string_q type_2_GoType(const CParameter& field) {
+    string_q type = field.type;
+    if (startsWith(type, 'C')) {
+        return type_2_ModelName(type, false);
+    }
     if (type == "blknum")
         return "uint64";
     if (type == "timestamp")
         return "int64";
+    if (type == "hash" || type == "bytes32")
+        return "common.Hash";
     if (type == "datetime" || type == "bytes")
         return "string";
     if (type == "address")
@@ -45,13 +51,13 @@ void generate_go_type_code(COptions* opts, const CClassDefinition& modelIn) {
 
     size_t maxNameWid = 0, maxTypeWid = 0;
     for (auto& field : model.fieldArray) {
-        string_q type = type_2_GoType(field.type);
+        string_q type = type_2_GoType(field);
         maxNameWid = max(maxNameWid, field.name.length());
         if (field.name != "raw") {
             maxTypeWid = max(maxTypeWid, type.length());
             field.name = firstUpper(field.name);
         }
-        field.type = type_2_GoType(field.type);
+        field.type = type_2_GoType(field);
     }
 
     ostringstream fieldStream, rawStream, modelStream, orderStream;
@@ -65,8 +71,8 @@ void generate_go_type_code(COptions* opts, const CClassDefinition& modelIn) {
         string_q name = padRight(field.name, maxNameWid);
         fieldStream << "\t" << name << " " << type;
         if (!(field.name % "raw")) {
-            rawStream << "\t" << name << " string";
             bool isOmitEmpty = (field.is_flags & IS_OMITEMPTY);
+            rawStream << "\t" << name << " string";
             fieldStream << " `json:\"" << firstLower(field.name);
             rawStream << " `json:\"" << firstLower(field.name);
             if (!isOmitEmpty) {
@@ -88,7 +94,7 @@ void generate_go_type_code(COptions* opts, const CClassDefinition& modelIn) {
     replaceAll(contents, "[{MODEL_FIELDS}]", modelStream.str());
     replaceAll(contents, "[{ORDER_FIELDS}]", orderStream.str());
 
-    codewrite_t cw(fn, contents);
+    codewrite_t cw(fn, contents + "\n");
     cw.nSpaces = 0;
     writeCodeIn(opts, cw);
     // cerr << fn << endl;

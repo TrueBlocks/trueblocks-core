@@ -23,16 +23,13 @@ type RawReceipt struct {
 	CumulativeGasUsed string   `json:"cumulativeGasUsed,omitempty"`
 	EffectiveGasPrice string   `json:"effectiveGasPrice"`
 	From              string   `json:"from"`
+	IsError           string   `json:"isError,omitempty"`
 	GasUsed           string   `json:"gasUsed"`
 	Logs              []RawLog `json:"logs"`
 	Status            string   `json:"status"`
 	To                string   `json:"to"`
 	TransactionHash   string   `json:"transactionHash"`
 	TransactionIndex  string   `json:"transactionIndex"`
-	IsError           string   `json:"isError,omitempty"`
-	// Type           string   `json:"type,omitempty"`
-	// Root           string   `json:"root"`
-	// LogsBloom      string   `json:"logsBloom"`
 }
 
 type SimpleReceipt struct {
@@ -40,19 +37,16 @@ type SimpleReceipt struct {
 	BlockNumber       uint64         `json:"blockNumber"`
 	ContractAddress   common.Address `json:"contractAddress,omitempty"`
 	CumulativeGasUsed string         `json:"cumulativeGasUsed,omitempty"`
+	EffectiveGasPrice Gas            `json:"effectiveGasPrice"`
 	From              common.Address `json:"from"`
 	GasUsed           Gas            `json:"gasUsed"`
-	EffectiveGasPrice Gas            `json:"effectiveGasPrice"`
+	IsError           bool           `json:"isError,omitempty"`
 	Logs              []SimpleLog    `json:"logs"`
 	Status            uint32         `json:"status"`
-	IsError           bool           `json:"isError,omitempty"`
 	To                common.Address `json:"to"`
 	TransactionHash   common.Hash    `json:"transactionHash"`
 	TransactionIndex  uint64         `json:"transactionIndex"`
 	raw               *RawReceipt
-	// Hash           common.Hash    `json:"-"`
-	// Root           common.Hash    `json:"-"`
-	// LogsBloom      string         `json:"-"`
 }
 
 func (s *SimpleReceipt) Raw() *RawReceipt {
@@ -71,16 +65,16 @@ func (s *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[s
 		"blockNumber":      s.BlockNumber,
 		"transactionIndex": s.TransactionIndex,
 		"transactionHash":  s.TransactionHash,
-		"gasUsed":          s.GasUsed,
 		"status":           s.Status,
+		"gasUsed":          s.GasUsed,
 	}
 
 	order := []string{
 		"blockNumber",
 		"transactionIndex",
 		"transactionHash",
-		"gasUsed",
 		"status",
+		"gasUsed",
 	}
 
 	// EXISTING_CODE

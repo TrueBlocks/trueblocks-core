@@ -2,6 +2,6 @@ chifra receipts  --file cmd_file.2 5644782.0
 TEST[DATE|TIME] Transactions:  [5644782.0 5644882.0]
 TEST[DATE|TIME] File:  cmd_file.2
 TEST[DATE|TIME] Format:  txt
-blockNumber	transactionIndex	transactionHash	gasUsed	status	isError
-5644782	0	0x785b88bfb800c34f0972bd2a1b02fb4bd03abc72dce675d00c2e4ae99f7aff96	21000	1	false
-5644882	0	0xb440bb9522672cdee57b447f406a22feec453764be784c6bd1b1f3188fa677be	52053	1	false
+blockNumber	transactionIndex	transactionHash	status	gasUsed	isError
+5644782	0	0x785b88bfb800c34f0972bd2a1b02fb4bd03abc72dce675d00c2e4ae99f7aff96	1	21000	false
+5644882	0	0xb440bb9522672cdee57b447f406a22feec453764be784c6bd1b1f3188fa677be	1	52053	false
