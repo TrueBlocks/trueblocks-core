@@ -11,21 +11,29 @@ package types
 // EXISTING_CODE
 // EXISTING_CODE
 
-type Raw[{CLASS_NAME}] interface{}
+type Raw[{CLASS_NAME}] struct {
+[{RAWFIELDS}]}
 
 type Simple[{CLASS_NAME}] struct {
 [{FIELDS}]}
 
 func (s *Simple[{CLASS_NAME}]) Raw() *Raw[{CLASS_NAME}] {
-	return nil
+	return s.raw
 }
 
-func (s *Simple[{CLASS_NAME}]) Model(showHidden bool, format string) Model {
+func (s *Simple[{CLASS_NAME}]) SetRaw(raw *Raw[{CLASS_NAME}]) {
+	s.raw = raw
+}
+
+func (s *Simple[{CLASS_NAME}]) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	model := map[string]interface{}{
-[{FIELD_COPY}]	}
+[{MODEL_FIELDS}]	}
 
 	order := []string{
-[{FIELD_DISPLAY}]	}
+[{ORDER_FIELDS}]	}
 
 	// EXISTING_CODE
 	// EXISTING_CODE

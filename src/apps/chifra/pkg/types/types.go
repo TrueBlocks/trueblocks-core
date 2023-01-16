@@ -181,39 +181,6 @@ type SimpleTransaction struct {
 	ArticulatedTx        *SimpleFunction `json:"articulatedTx"`
 }
 
-type SimpleTrace struct {
-	BlockHash        common.Hash        `json:"blockHash"`
-	BlockNumber      Blknum             `json:"blockNumber"`
-	Subtraces        uint64             `json:"subtraces"`
-	TraceAddress     []string           `json:"traceAddress"`
-	TransactionHash  common.Hash        `json:"transactionHash"`
-	TransactionIndex Blknum             `json:"transactionIndex"`
-	TraceType        string             `json:"traceType"`
-	Error            string             `json:"error"`
-	Action           *SimpleTraceAction `json:"action"`
-	Result           *SimpleTraceResult `json:"result"`
-	ArticulatedTrace *SimpleFunction    `json:"articulatedTrace"`
-}
-
-type SimpleTraceAction struct {
-	SelfDestructed common.Address `json:"selfDestructed"`
-	Balance        Wei            `json:"balance"`
-	CallType       string         `json:"callType"`
-	From           common.Address `json:"from"`
-	Gas            Gas            `json:"gas"`
-	Init           string         `json:"init"`
-	Input          string         `json:"input"`
-	RefundAddress  common.Address `json:"refundAddress"`
-	To             common.Address `json:"to"`
-	Value          Wei            `json:"value"`
-}
-type SimpleTraceResult struct {
-	NewContract common.Address `json:"newContract"`
-	Code        string         `json:"code"`
-	GasUsed     Gas            `json:"gasUsed"`
-	Output      string         `json:"output"`
-}
-
 type SimpleParameter struct {
 	ParameterType string            `json:"parameterType"`
 	Name          string            `json:"name"`

@@ -692,7 +692,7 @@ func ReadTrace(reader *bufio.Reader) (trace *types.SimpleTrace, err error) {
 		return
 	}
 
-	err = readString(reader, &trace.TraceType)
+	err = readString(reader, &trace.Type)
 	if err != nil {
 		return
 	}
