@@ -11,10 +11,11 @@ package types
 // EXISTING_CODE
 import "github.com/ethereum/go-ethereum/common"
 
+// TODO: CompressedTrace is not part of the raw trace data
 // EXISTING_CODE
 
 type RawTrace struct {
-	Error            bool           `json:"error"`
+	Error            string         `json:"error"`
 	BlockHash        string         `json:"blockHash"`
 	BlockNumber      uint64         `json:"blockNumber"`
 	Timestamp        int64          `json:"timestamp"`
@@ -25,6 +26,7 @@ type RawTrace struct {
 	Type             string         `json:"type"`
 	Action           RawTraceAction `json:"action"`
 	Result           RawTraceResult `json:"result"`
+	CompressedTrace  string         `json:"compressedTrace"`
 }
 
 type SimpleTrace struct {

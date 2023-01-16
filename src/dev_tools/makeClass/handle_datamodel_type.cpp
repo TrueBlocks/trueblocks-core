@@ -39,25 +39,34 @@ string_q type_2_GoType(const CParameter& field) {
     return type;
 }
 
-string_q specialCase(const string_q& name, const string_q& type, bool isRaw) {
+bool showMe = false;
+//------------------------------------------------------------------------------------------------------------
+string_q specialCase(const CParameter& field, const string_q& name, const string_q& type, bool isRaw) {
+    string ret;
     if (name % "CumulativeGasUsed" && !isRaw) {
-        return "string";
+        ret = "string";
+    } else if (name % "Logs") {
+        ret = isRaw ? "[]RawLog" : "[]SimpleLog";
+    } else if (name % "Action") {
+        ret = isRaw ? "RawTraceAction" : "*SimpleTraceAction";
+    } else if (name % "Result") {
+        ret = isRaw ? "RawTraceResult" : "*SimpleTraceResult";
+    } else if (name % "ArticulatedTrace") {
+        ret = isRaw ? "" : "*SimpleFunction";
+    } else {
+        ret = (type == "CStringArray" ? "[]string"
+               : isRaw                ? showMe && (type != "common.Hash") ? type : "string"
+                                      : type);
     }
-    if (name % "Logs") {
-        return isRaw ? "[]RawLog" : "[]SimpleLog";
+    if (false && showMe) {
+        cerr << "---------------------------- [" << isRaw << ": " << ret << "] --------------------------" << endl;
+        cerr << "specialCase: " << name << " " << type << " " << ret << endl;
+        cerr << field << endl;
     }
-    if (name % "Action") {
-        return isRaw ? "RawTraceAction" : "*SimpleTraceAction";
-    }
-    if (name % "Result") {
-        return isRaw ? "RawTraceResult" : "*SimpleTraceResult";
-    }
-    if (name % "ArticulatedTrace") {
-        return isRaw ? "" : "*Function";
-    }
-    return isRaw ? "string" : type;
+    return ret;
 }
 
+//------------------------------------------------------------------------------------------------------------
 string_q debug(const CParameter& field) {
     ostringstream os;
     // os << " //";
@@ -72,6 +81,7 @@ void generate_go_type_code(COptions* opts, const CClassDefinition& modelIn) {
     CClassDefinition model = modelIn;
 
     string_q fn = getPathToSource("apps/chifra/pkg/types/types_" + toLower(model.base_name) + ".go");
+    showMe = toLower(model.base_name) == "trace";
     string_q contents = asciiFileToString(getPathToTemplates("blank_type.go.tmpl"));
     replaceAll(contents, "[{CLASS_NAME}]", type_2_ModelName(model.gogen));
 
@@ -85,8 +95,8 @@ void generate_go_type_code(COptions* opts, const CClassDefinition& modelIn) {
         if (contains(field.name, "::"))
             continue;
         string_q type = type_2_GoType(field);
-        string_q rawType = specialCase(field.name, type, true);
-        string_q simpType = specialCase(field.name, type, false);
+        string_q rawType = specialCase(field, field.name, type, true);
+        string_q simpType = specialCase(field, field.name, type, false);
         maxNameWid = max(maxNameWid, field.name.length());
         if (field.name != "raw") {
             maxSimpWid = max(maxSimpWid, simpType.length());
@@ -101,8 +111,10 @@ void generate_go_type_code(COptions* opts, const CClassDefinition& modelIn) {
             continue;
         if (!(field.name % "raw")) {
             string_q type = type_2_GoType(field);
-            string_q spec = specialCase(field.name, type, true);
+            string_q spec = specialCase(field, field.name, type, true);
             string_q rawType = field.name % "raw" ? spec : padRight(spec, maxRawWid);
+            if (spec.empty())
+                continue;
             ostringstream os;
             os << "\t";
             os << padRight(field.name, maxNameWid) << " " << rawType;
@@ -116,7 +128,7 @@ void generate_go_type_code(COptions* opts, const CClassDefinition& modelIn) {
         if (contains(field.name, "::"))
             continue;
         string_q type = type_2_GoType(field);
-        string_q spec = specialCase(field.name, type, false);
+        string_q spec = specialCase(field, field.name, type, false);
         string_q simpType = (field.name % "raw") ? spec : padRight(spec, maxSimpWid);
         ostringstream os;
         os << "\t" << padRight(field.name, maxNameWid) << " " << simpType;
