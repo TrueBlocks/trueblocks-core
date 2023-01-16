@@ -1,16 +1,14 @@
 name              ,type     ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
-blockHash         ,hash     ,           ,       ,      ,true    ,true      ,true    ,      ,         ,    ,     ,        ,
+blockHash         ,hash     ,           ,       ,      ,true    ,true      ,true    ,      ,         ,4   ,     ,        ,
 blockNumber       ,blknum   ,           ,       ,      ,true    ,          ,true    ,      ,         ,1   ,1    ,        ,
-contractAddress   ,address  ,           ,       ,      ,        ,true      ,        ,      ,         ,5   ,     ,        ,the address of the newly created contract&#44; if any
+contractAddress   ,address  ,           ,       ,      ,        ,true      ,        ,      ,         ,7   ,     ,        ,the address of the newly created contract&#44; if any
 cumulativeGasUsed ,wei      ,           ,       ,      ,true    ,true      ,        ,      ,         ,    ,     ,        ,
-from              ,address  ,           ,       ,      ,true    ,true      ,true    ,      ,         ,    ,     ,        ,
-gasUsed           ,gas      ,           ,       ,      ,        ,          ,        ,      ,         ,4   ,5    ,        ,the amount of gas actually used by the transaction
+gasUsed           ,gas      ,           ,       ,      ,        ,          ,        ,      ,         ,6   ,5    ,        ,the amount of gas actually used by the transaction
 effectiveGasPrice ,gas      ,           ,       ,      ,        ,true      ,        ,      ,         ,    ,     ,        ,
-logs              ,LogEntry ,           ,true   ,true  ,        ,true      ,        ,      ,         ,7   ,     ,        ,a possibly empty array of logs
-root              ,bytes32  ,           ,       ,      ,true    ,true      ,        ,      ,         ,    ,     ,        ,
-status            ,uint32   ,NO_STATUS  ,       ,      ,        ,          ,        ,      ,         ,3   ,4    ,        ,`1` on transaction suceess&#44; `null` if tx preceeds Byzantium&#44; `0` otherwise
+from              ,address  ,           ,       ,      ,true    ,true      ,true    ,      ,         ,    ,     ,        ,
+logs              ,LogEntry ,           ,true   ,true  ,        ,          ,        ,      ,         ,9   ,     ,        ,a possibly empty array of logs
+status            ,uint32   ,NO_STATUS  ,       ,      ,        ,          ,        ,      ,         ,5   ,4    ,        ,`1` on transaction suceess&#44; `null` if tx preceeds Byzantium&#44; `0` otherwise
 to                ,address  ,           ,       ,      ,true    ,true      ,true    ,      ,         ,    ,     ,        ,
-transactionHash   ,hash     ,           ,       ,      ,true    ,          ,true    ,      ,         ,    ,3    ,        ,
+transactionHash   ,hash     ,           ,       ,      ,true    ,          ,true    ,      ,         ,3   ,3    ,        ,
 transactionIndex  ,blknum   ,           ,       ,      ,true    ,          ,true    ,      ,         ,2   ,2    ,        ,
-hash              ,string   ,           ,       ,      ,        ,true      ,true    ,      ,true     ,    ,     ,        ,
-isError           ,bool     ,           ,       ,      ,        ,true      ,true    ,      ,true     ,6   ,6    ,        ,
+isError           ,bool     ,           ,       ,      ,        ,true      ,true    ,      ,true     ,8   ,6    ,        ,

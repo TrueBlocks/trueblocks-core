@@ -21,7 +21,7 @@ type RawTrace struct {
 	TraceAddress     []string       `json:"traceAddress"`
 	TransactionHash  string         `json:"transactionHash"`
 	TransactionIndex uint64         `json:"transactionIndex"`
-	TraceType        string         `json:"traceType"`
+	Type             string         `json:"type"`
 	Error            bool           `json:"error"`
 	Action           RawTraceAction `json:"action"`
 	Result           RawTraceResult `json:"result"`
@@ -35,7 +35,7 @@ type SimpleTrace struct {
 	TraceAddress     []string           `json:"traceAddress"`
 	TransactionHash  common.Hash        `json:"transactionHash"`
 	TransactionIndex Blknum             `json:"transactionIndex"`
-	TraceType        string             `json:"traceType"`
+	Type             string             `json:"type"`
 	Error            string             `json:"error"`
 	Action           *SimpleTraceAction `json:"action"`
 	Result           *SimpleTraceResult `json:"result"`
@@ -62,9 +62,8 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 		"timestamp":        s.Timestamp,
 		"transactionHash":  s.TransactionHash,
 		"transactionIndex": s.TransactionIndex,
-		"traceAddress":     s.TraceAddress,
 		"subtraces":        s.Subtraces,
-		"type":             s.TraceType,
+		"type":             s.Type,
 		"action":           s.Action,
 		"result":           s.Result,
 		"articulatedTrace": s.ArticulatedTrace,
@@ -78,7 +77,6 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 		"timestamp",
 		"transactionHash",
 		"transactionIndex",
-		"traceAddress",
 		"subtraces",
 		"type",
 		"action",

@@ -36,6 +36,16 @@ string_q type_2_GoType(const CParameter& field) {
     return type;
 }
 
+string_q specialCase(const string_q& name, const string_q& type, bool isRaw) {
+    if (name % "CumulativeGasUsed" && !isRaw) {
+        return "string";
+    }
+    if (name % "Logs") {
+        return isRaw ? "[]RawLog" : "[]SimpleLog";
+    }
+    return isRaw ? "string" : type;
+}
+
 string_q debug(const CParameter& field) {
     ostringstream os;
     // os << " //";
@@ -58,50 +68,71 @@ void generate_go_type_code(COptions* opts, const CClassDefinition& modelIn) {
     raw.name = "raw";
     model.fieldArray.push_back(raw);
 
-    size_t maxNameWid = 0, maxTypeWid = 0;
+    size_t maxNameWid = 0, maxSimpWid = 0, maxRawWid = 0;
     for (auto& field : model.fieldArray) {
         string_q type = type_2_GoType(field);
+        string_q rawType = specialCase(field.name, type, true);
+        string_q simpType = specialCase(field.name, type, false);
         maxNameWid = max(maxNameWid, field.name.length());
         if (field.name != "raw") {
-            maxTypeWid = max(maxTypeWid, type.length());
+            maxSimpWid = max(maxSimpWid, simpType.length());
+            maxRawWid = max(maxRawWid, rawType.length());
             field.name = firstUpper(field.name);
         }
-        field.type = type_2_GoType(field);
     }
 
-    ostringstream fieldStream, rawStream, modelStream, orderStream;
+    string_q rawStr;
     for (auto field : model.fieldArray) {
-        // if (field.is_flags & IS_ARRAY) {
-        //     type = "[]" + type_2_ModelName(type, false);
-        // } else if (field.is_flags & IS_OBJECT) {
-        //     type = "*" + type_2_ModelName(type, false);
-        // }
-        string_q type = (field.name % "raw") ? field.type : padRight(field.type, maxTypeWid);
-        string_q name = padRight(field.name, maxNameWid);
-        fieldStream << "\t" << name << " " << type;
-        bool isOmitEmpty = (field.is_flags & IS_OMITEMPTY);
         if (!(field.name % "raw")) {
-            rawStream << "\t" << name << " string";
-            fieldStream << " `json:\"" << firstLower(field.name);
-            rawStream << " `json:\"" << firstLower(field.name);
-            if (!isOmitEmpty) {
-                modelStream << "\t\t" << padRight("\"" + firstLower(field.name) + "\":", maxNameWid + 3) << " s."
-                            << firstUpper(field.name) << "," << debug(field) << endl;
-                orderStream << "\t\t\"" << firstLower(field.name) << "\""
-                            << "," << debug(field) << endl;
-            } else {
-                fieldStream << ",omitempty";
-            }
-            fieldStream << "\"`";
-            rawStream << "\"`" << debug(field) << endl;
+            string_q type = type_2_GoType(field);
+            string_q spec = specialCase(field.name, type, true);
+            string_q rawType = field.name % "raw" ? spec : padRight(spec, maxRawWid);
+            ostringstream os;
+            os << "\t";
+            os << padRight(field.name, maxNameWid) << " " << rawType;
+            os << " `json:\"" << firstLower(field.name) << "\"`" << debug(field) << endl;
+            rawStr += os.str();
         }
-        fieldStream << debug(field) << endl;
     }
 
-    replaceAll(contents, "[{FIELDS}]", fieldStream.str());
-    replaceAll(contents, "[{RAWFIELDS}]", rawStream.str());
-    replaceAll(contents, "[{MODEL_FIELDS}]", modelStream.str());
-    replaceAll(contents, "[{ORDER_FIELDS}]", orderStream.str());
+    string_q fieldStr;
+    for (auto field : model.fieldArray) {
+        string_q type = type_2_GoType(field);
+        string_q spec = specialCase(field.name, type, false);
+        string_q simpType = (field.name % "raw") ? spec : padRight(spec, maxSimpWid);
+        ostringstream os;
+        os << "\t" << padRight(field.name, maxNameWid) << " " << simpType;
+        if (!(field.name % "raw")) {
+            os << " `json:\"" << firstLower(field.name) << (field.is_flags & IS_OMITEMPTY ? ",omitempty" : "") << "\"`"
+               << debug(field);
+        }
+        os << endl;
+        fieldStr += os.str();
+    }
+
+    string_q modelStr;
+    for (auto field : model.fieldArray) {
+        ostringstream os;
+        if (!(field.name % "raw") && !(field.is_flags & (IS_OMITEMPTY | IS_ARRAY))) {
+            os << "\t\t" << padRight("\"" + firstLower(field.name) + "\":", maxNameWid + 3) << " s."
+               << firstUpper(field.name) << "," << debug(field) << endl;
+        }
+        modelStr += os.str();
+    }
+
+    string_q orderStr;
+    for (auto field : model.fieldArray) {
+        ostringstream os;
+        if (!(field.name % "raw") && !(field.is_flags & (IS_OMITEMPTY | IS_ARRAY))) {
+            os << "\t\t\"" << firstLower(field.name) << "\"," << debug(field) << endl;
+        }
+        orderStr += os.str();
+    }
+
+    replaceAll(contents, "[{RAWFIELDS}]", rawStr);
+    replaceAll(contents, "[{FIELDS}]", fieldStr);
+    replaceAll(contents, "[{MODEL_FIELDS}]", modelStr);
+    replaceAll(contents, "[{ORDER_FIELDS}]", orderStr);
 
     codewrite_t cw(fn, contents + "\n");
     cw.nSpaces = 0;

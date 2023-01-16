@@ -10,4 +10,4 @@ doc_group = 02-Chain Data
 doc_descr = receipt data as returned from the RPC (with slight enhancements)
 doc_route = 204-receipt
 doc_producer = receipts, export
-# gogen = Receipt
+gogen = Receipt

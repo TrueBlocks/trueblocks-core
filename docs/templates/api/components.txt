@@ -562,6 +562,12 @@ components:
         transactionIndex:
           type: number
           format: blknum
+        transactionHash:
+          type: string
+          format: hash
+        blockHash:
+          type: string
+          format: hash
         status:
           type: number
           format: uint32

@@ -145,6 +145,8 @@ Receipts consist of the following fields:
 | ---------------- | -------------------------------------------------------------------------- | ----------------------------------- |
 | blockNumber      |                                                                            | blknum                              |
 | transactionIndex |                                                                            | blknum                              |
+| transactionHash  |                                                                            | hash                                |
+| blockHash        |                                                                            | hash                                |
 | status           | `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise | uint32                              |
 | gasUsed          | the amount of gas actually used by the transaction                         | gas                                 |
 | contractAddress  | the address of the newly created contract, if any                          | address                             |

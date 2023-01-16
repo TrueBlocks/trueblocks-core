@@ -17,40 +17,36 @@ import (
 // EXISTING_CODE
 
 type RawReceipt struct {
-	BlockHash         string   `json:"blockHash,omitempty"`
+	From              string   `json:"from"`
+	To                string   `json:"to"`
+	EffectiveGasPrice string   `json:"effectiveGasPrice"`
+	CumulativeGasUsed string   `json:"cumulativeGasUsed"`
 	BlockNumber       string   `json:"blockNumber"`
-	ContractAddress   string   `json:"contractAddress,omitempty"`
-	CumulativeGasUsed string   `json:"cumulativeGasUsed,omitempty"`
-	EffectiveGasPrice string   `json:"effectiveGasPrice,omitempty"`
-	From              string   `json:"from,omitempty"`
-	IsError           string   `json:"isError,omitempty"`
-	GasUsed           string   `json:"gasUsed"`
-	Logs              []RawLog `json:"logs"`
-	Status            string   `json:"status"`
-	To                string   `json:"to,omitempty"`
-	TransactionHash   string   `json:"transactionHash"`
 	TransactionIndex  string   `json:"transactionIndex"`
-	// Root              string   `json:"root,omitempty"`
-	// Hash              string   `json:"hash,omitempty"`
+	TransactionHash   string   `json:"transactionHash"`
+	BlockHash         string   `json:"blockHash"`
+	Status            string   `json:"status"`
+	GasUsed           string   `json:"gasUsed"`
+	ContractAddress   string   `json:"contractAddress"`
+	IsError           string   `json:"isError"`
+	Logs              []RawLog `json:"logs"`
 }
 
 type SimpleReceipt struct {
-	BlockHash         common.Hash    `json:"blockHash,omitempty"`
-	BlockNumber       uint64         `json:"blockNumber"`
-	ContractAddress   common.Address `json:"contractAddress,omitempty"`
-	CumulativeGasUsed string         `json:"cumulativeGasUsed,omitempty"`
-	EffectiveGasPrice Gas            `json:"effectiveGasPrice,omitempty"`
 	From              common.Address `json:"from,omitempty"`
+	To                common.Address `json:"to,omitempty"`
+	EffectiveGasPrice Gas            `json:"effectiveGasPrice,omitempty"`
+	CumulativeGasUsed string         `json:"cumulativeGasUsed,omitempty"`
+	BlockNumber       uint64         `json:"blockNumber"`
+	TransactionIndex  uint64         `json:"transactionIndex"`
+	TransactionHash   common.Hash    `json:"transactionHash"`
+	BlockHash         common.Hash    `json:"blockHash,omitempty"`
+	Status            uint32         `json:"status"`
 	GasUsed           Gas            `json:"gasUsed"`
+	ContractAddress   common.Address `json:"contractAddress,omitempty"`
 	IsError           bool           `json:"isError,omitempty"`
 	Logs              []SimpleLog    `json:"logs"`
-	Status            uint32         `json:"status"`
-	To                common.Address `json:"to,omitempty"`
-	TransactionHash   common.Hash    `json:"transactionHash"`
-	TransactionIndex  uint64         `json:"transactionIndex"`
 	raw               *RawReceipt
-	// Root              common.Hash    `json:"root,omitempty"`
-	// Hash              string         `json:"hash,omitempty"`
 }
 
 func (s *SimpleReceipt) Raw() *RawReceipt {
@@ -66,11 +62,11 @@ func (s *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[s
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
-		"blockNumber":      s.BlockNumber,
-		"transactionIndex": s.TransactionIndex,
-		"transactionHash":  s.TransactionHash,
-		"status":           s.Status,
-		"gasUsed":          s.GasUsed,
+		"blockNumber":       s.BlockNumber,
+		"transactionIndex":  s.TransactionIndex,
+		"transactionHash":   s.TransactionHash,
+		"status":            s.Status,
+		"gasUsed":           s.GasUsed,
 	}
 
 	order := []string{
