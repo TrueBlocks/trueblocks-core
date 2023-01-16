@@ -11,6 +11,7 @@ package types
 // EXISTING_CODE
 import "github.com/ethereum/go-ethereum/common"
 
+// TODO: CompressedTrace is not part of the raw trace data
 // EXISTING_CODE
 
 type RawTrace struct {

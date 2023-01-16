@@ -128,18 +128,6 @@ type SimpleIndexAddressBelongs struct {
 	Apps    []SimpleIndexAppearance `json:"apps"`
 }
 
-type SimpleLog struct {
-	Address          common.Address  `json:"address"`
-	LogIndex         uint64          `json:"logIndex"`
-	BlockNumber      uint64          `json:"blockNumber"`
-	TransactionIndex uint32          `json:"transactionIndex"`
-	Timestamp        uint64          `json:"timestamp,omitempty"`
-	Topics           []common.Hash   `json:"topics,omitempty"`
-	Data             string          `json:"data,omitempty"`
-	CompressedLog    string          `json:"compressedLog,omitempty"`
-	ArticulatedLog   *SimpleFunction `json:"-"`
-}
-
 type SimpleName struct {
 	Tags     string `json:"tags"`
 	Address  string `json:"address"`
