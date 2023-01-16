@@ -46,20 +46,7 @@ func LoadAbiFromJsonFile(filePath string, destination AbiInterfaceMap) (err erro
 		// method.ID is our "four-byte"
 		fourByte := string(common.Bytes2Hex(method.ID))
 		log.Println("Read", fourByte, method.Name)
-		destination[fourByte] = &types.SimpleFunction{
-			Encoding:  fourByte,
-			Signature: method.Sig,
-			Name:      method.Name,
-			// FunctionType: "function",
-			AbiSource: path.Base(file.Name()),
-			// TODO: check if this is correct
-			Anonymous:       method.Name != "",
-			Constant:        method.Constant,
-			StateMutability: method.StateMutability,
-			// TODO:
-			// Inputs:
-			// Outputs:
-		}
+
 		var functionType string
 		switch method.Type {
 		case abi.Constructor:
@@ -71,7 +58,35 @@ func LoadAbiFromJsonFile(filePath string, destination AbiInterfaceMap) (err erro
 		default:
 			functionType = "function"
 		}
-		destination[fourByte].FunctionType = functionType
+		destination[fourByte] = &types.SimpleFunction{
+			Encoding:        fourByte,
+			Signature:       method.Sig,
+			Name:            method.Name,
+			AbiSource:       path.Base(file.Name()),
+			FunctionType:    functionType,
+			Constant:        method.Constant,
+			StateMutability: method.StateMutability,
+			// TODO:
+			// Inputs:
+			// Outputs:
+		}
+	}
+
+	for _, event := range loadedAbi.Events {
+		// method.ID is our "four-byte"
+		fourByte := event.ID.Hex()
+		log.Println("Read event", fourByte, event.Name)
+		destination[fourByte] = &types.SimpleFunction{
+			Encoding:     fourByte,
+			Signature:    event.Sig,
+			Name:         event.Name,
+			AbiSource:    path.Base(file.Name()),
+			FunctionType: "event",
+			Anonymous:    event.Anonymous,
+			// TODO:
+			// Inputs:
+			// Outputs:
+		}
 	}
 
 	return
@@ -129,15 +144,10 @@ func PreloadTokensAbi(destination AbiInterfaceMap) (err error) {
 	if err != nil {
 		return
 	}
-	err = LoadAbiFromJsonFile(
+	return LoadAbiFromJsonFile(
 		path.Join(config.GetPathToRootConfig(), "abis", "known-000/erc_00721.json"),
 		destination,
 	)
-	if err != nil {
-		return
-	}
-	// mergeMaps(destination, erc721)
-	return
 }
 
 func PreloadKnownAbis(chain string, destination AbiInterfaceMap, tokensOnly bool) (err error) {
@@ -160,6 +170,7 @@ func PreloadKnownAbis(chain string, destination AbiInterfaceMap, tokensOnly bool
 		} else {
 			log.Println("Loaded binary cache")
 		}
+		// TODO: only return if cache was loaded
 		return
 	}
 
@@ -229,5 +240,11 @@ func getKnownAbiPaths() (filePaths []string, err error) {
 		filePaths = append(filePaths, path)
 		return nil
 	})
+	return
+}
+
+func LoadAbiFromAddress(address common.Address) (err error) {
+	if
+
 	return
 }

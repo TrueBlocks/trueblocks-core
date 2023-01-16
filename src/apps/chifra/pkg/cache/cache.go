@@ -3,6 +3,7 @@ package cache
 import (
 	"bufio"
 	"bytes"
+	"encoding/json"
 	"io"
 	"os"
 	"path"
@@ -10,6 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	filePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/ethereum/go-ethereum/common"
 )
 
 // Any data structure that we know how to cache
@@ -157,7 +159,7 @@ func GetTransaction(chain string, blockNumber types.Blknum, txIndex uint64) (tx 
 	)
 }
 
-var abisFilePath = "abis/known.bin"
+var abisFilePath = path.Join(itemToDirectory[ItemABI], "known.bin")
 
 // GetAbis reads all ABIs stored in the cache
 func GetAbis(chain string) (abis []types.SimpleFunction, err error) {
@@ -176,4 +178,57 @@ func SetAbis(chain string, abis []types.SimpleFunction) (err error) {
 		abis,
 		WriteAbis,
 	)
+}
+
+// GetAbi returns single ABI per address. ABI-per-address are stored as JSON, not binary.
+func GetAbi(chain string, address common.Address) (abi *types.SimpleFunction, err error) {
+	abi = &types.SimpleFunction{}
+	filePath := path.Join(
+		itemToDirectory[ItemABI],
+		address.Hex()+".json",
+	)
+	file, err := load(chain, filePath)
+	if err != nil {
+		return
+	}
+	defer file.Close()
+
+	decoder := json.NewDecoder(file)
+	err = decoder.Decode(abi)
+	return
+}
+
+// SetAbi writes single ABI to cache. ABI-per-address are stored as JSON, not binary.
+func SetAbi(chain string, address common.Address, abi *types.SimpleFunction) (err error) {
+	filePath := path.Join(
+		itemToDirectory[ItemABI],
+		address.Hex()+".json",
+	)
+
+	rawBytes, err := json.Marshal(abi)
+	if err != nil {
+		return
+	}
+	reader := bytes.NewReader(rawBytes)
+	return save(chain, filePath, reader)
+}
+
+// InsertAbi copies file (e.g. opened local file) into cache
+func InsertAbi(chain string, address common.Address, inputReader *io.Reader) (err error) {
+	filePath := path.Join(
+		itemToDirectory[ItemABI],
+		address.Hex()+".json",
+	)
+
+	file, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE, 0666)
+	if err != nil {
+		return
+	}
+	defer file.Close()
+
+	if _, err = io.Copy(file, *inputReader); err != nil {
+		return
+	}
+
+	return
 }
