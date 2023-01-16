@@ -1,13 +1,23 @@
-<!-- markdownlint-disable MD041 -->
 ## chifra monitors
 
-A TrueBlocks monitor tool has two purposes. The first is to `--watch` a set of addresses. This function is in its early stages and will be better explained elsewhere. Please see an example of what one may do with `chifra monitors --watch` [here](https://tokenomics.io/).
+<!-- markdownlint-disable MD041 -->
+`chifra monitors`` has two purposes: (1) to `--watch` a set of addresses. This function is in its early
+stages and will be better explained elsewhere. Please see an example of what one may do with
+`chifra monitors --watch` [here](https://tokenomics.io/), and (2) allows one to manage existing
+monitored addresses.
 
-A "monitor" is simply a file on a hard drive that represents the transactional history of a given Ethereum address. Monitors are very small, being only the `<block_no><tx_id>` pair representing each appearance of an address. Monitor files are only created when a user expresses interest in a particular address. In this way, TrueBlock is able to continue to work on small desktop or even laptop computers. (See `chifra list`.)
+A "monitor" is simply a file on a hard drive that represents the transactional history of a given
+Ethereum address. Monitors are very small, being only the `<block_no><tx_id>` pair representing each
+appearance of an address. Monitor files are only created when a user expresses interest in a
+particular address. In this way, TrueBlock is able to continue to work on small desktop or even
+laptop computers. (See `chifra list`.)
 
-You may use the `--delete` command to delete (or `--undelete` if already deleted) an address. The monitor is not removed from your computer if you delete it. It is just marked as being deleted making it invisible to the TrueBlocks explorer.
+You may use the `--delete` command to delete (or `--undelete` if already deleted) an address. The
+monitor is not removed from your computer if you delete it. It is just marked as being deleted
+making it invisible to the TrueBlocks explorer.
 
-Use the `--remove` command to permanently remove a monitor from your computer. This is an irreversible operation and requires the monitor to have been previously deleted.
+Use the `--remove` command to permanently remove a monitor from your computer. This is an
+irreversible operation and requires the monitor to have been previously deleted.
 
 ```[plaintext]
 Purpose:
@@ -38,8 +48,12 @@ Notes:
   - The --decache option will remove all cache items (blocks, txs, traces, recons) for the given address(es).
 ```
 
+Data models produced by this tool:
+
+- [monitor](/data-model/accounts/#monitor)
+
 <!-- markdownlint-disable MD041 -->
-#### Other Options
+### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.
 
@@ -48,10 +62,19 @@ All tools accept the following additional flags, although in some cases, they ha
       --wei             export values in wei (the default)
       --ether           export values in ether
       --raw             pass raw RPC data directly from the node with no processing
-      --to_file         write the results to a temporary file and return the filename
       --output string   write the results to file 'fn' and return the filename
       --append          for --output command only append to instead of replace contents of file
       --file string     specify multiple sets of command line options in a file
-```
+  -x, --fmt string      export format, one of [none|json*|txt|csv]
+  -v, --verbose         enable verbose (increase detail with --log_level)
+  -h, --help            display this help screen
+  ```
 
-*For the `--file string` option, you may place a series of valid command lines in a file using any valid flags. In some cases, this may significantly improve performance. A semi-colon at the start of any line makes it a comment.*
+**Note:** For the `--file string` option, you may place a series of valid command lines in a file using any
+valid flags. In some cases, this may significantly improve performance. A semi-colon at the start
+of any line makes it a comment.
+
+**Note:** If you use `--output --append` option and at the same time the `--file` option, you may not switch
+export formats in the command file. For example, a command file with two different commands, one with `--fmt csv`
+and the other with `--fmt json` will produce both invalid CSV and invalid JSON.
+

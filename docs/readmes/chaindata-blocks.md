@@ -1,11 +1,16 @@
-<!-- markdownlint-disable MD041 -->
 ## chifra blocks
 
-The `chifra blocks` tool retrieves block data from your Ethereum node or, if previously cached, from the TrueBlocks cache. You may specify multiple blocks per invocation.
+<!-- markdownlint-disable MD041 -->
+The `chifra blocks` tool retrieves block data from your Ethereum node or, if previously cached, from the
+TrueBlocks cache. You may specify multiple blocks per invocation.
 
-By default, `chifra blocks` queries the full transactional details of the block (including receipts). You may optionally retrieve only the transaction hashes in the block (which is significantly faster). Additionally, you may also use this tool to retrieve uncle blocks at a give height.
+By default, `chifra blocks` queries the full transactional details of the block (including receipts).
+You may optionally retrieve only the transaction hashes in the block (which is significantly faster).
+Additionally, you may also use this tool to retrieve uncle blocks at a give height.
 
-Another useful feature of `chifra blocks` is the ability to extract address appearances from a block. TrueBlocks uses a similar feature internally to build its index of appearances. This type of data is very insightful when studying end user behavior and chain-wide adoption analysis.
+Another useful feature of `chifra blocks` is the ability to extract address appearances from a block.
+TrueBlocks uses a similar feature internally to build its index of appearances. This type of data
+is very insightful when studying end user behavior and chain-wide adoption analysis.
 
 ```[plaintext]
 Purpose:
@@ -20,7 +25,7 @@ Arguments:
 Flags:
   -e, --hashes        display only transaction hashes, default is to display full transaction detail
   -c, --uncles        display uncle blocks (if any) instead of the requested block
-  -t, --trace         export the traces from the block as opposed to the block data
+  -t, --traces        export the traces from the block as opposed to the block data
   -s, --apps          display a list of uniq address appearances in the block
   -u, --uniq          display a list of uniq address appearances per transaction
   -f, --flow string   for the uniq and apps options only, export only from or to (including trace from or to)
@@ -41,5 +46,18 @@ Notes:
   - Large block ranges may crash the node, use --big_range to specify a larger range.
 ```
 
-**Source code**: [`internal/blocks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/blocks)
+Data models produced by this tool:
+
+- [appearance](/data-model/accounts/#appearance)
+- [block](/data-model/chaindata/#block)
+- [log](/data-model/chaindata/#log)
+- [trace](/data-model/chaindata/#trace)
+- [traceaction](/data-model/chaindata/#traceaction)
+- [traceresult](/data-model/chaindata/#traceresult)
+- [blockcount](/data-model/chaindata/#blockcount)
+
+Links:
+
+- [api docs](/api/#operation/chaindata-blocks)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/blocks)
 

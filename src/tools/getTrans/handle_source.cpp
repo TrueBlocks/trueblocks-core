@@ -241,9 +241,9 @@ bool CSourceSearch::parseAppearances(CAppearanceArray& apps, const string_q& res
 
     for (size_t i = 0; i < appys.size(); i++) {
         CAppearance app;
-        app.bn = appys[i].blk;
-        app.tx = appys[i].txid;
-        LOG_INFO(i, ". Adding again ", uint_2_Str(app.bn), ".", uint_2_Str(app.tx), "\r");
+        app.blockNumber = appys[i].blk;
+        app.transactionIndex = appys[i].txid;
+        LOG_INFO(i, ". Adding again ", uint_2_Str(app.blockNumber), ".", uint_2_Str(app.transactionIndex), "\r");
         apps.push_back(app);
     }
 
@@ -275,8 +275,8 @@ bool writeToCache(CTransaction& trans) {
 bool CSourceSearch::getTransactionAndCache(const address_t& sender, CTransaction& trans, const CAppearanceArray& apps,
                                            size_t which) {
     LOG_PROG(bBlack, "Fetching transaction ", which + 1, " of ", apps.size(), " for sender ", sender, " at ",
-             apps[which].bn, ".", apps[which].tx, cOff, "\r");
-    getTransaction(trans, apps[which].bn, apps[which].tx);
+             apps[which].blockNumber, ".", apps[which].transactionIndex, cOff, "\r");
+    getTransaction(trans, apps[which].blockNumber, apps[which].transactionIndex);
     return writeToCache(trans);
 }
 

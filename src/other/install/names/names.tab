@@ -10319,6 +10319,7 @@ tags	address	name	symbol	source	decimals	petname	deleted	iscustom	isprefund	isco
 50-Tokens:ERC20	0xc0829421c1d260bd3cb3e0f06cfe2d52db2ce315	Ether Token	ETH	On chain	18	logically-helping-wren	false	false	false	true	true	false
 90-Individuals:DevCon2	0xc08e07007e2c58910881918754f6084546fad511	Xin Xu		DevCon2 Token Contract		lovely-diverse-stork	false	false	false	false	false	false
 30-Contracts	0xc095976bd18181f28626c5d48372debd7a8ce8d4	Totle Uniswap Wrapper		0xTracker		wholly-sacred-kid	false	false	false	true	false	false
+90-Individuals:Other	0xc098b2a3aa256d2140208c3de6543aaef5cd3a94	FTX Exchange 2				directly-proper-pup	false	false	false	false	false	false
 91-Early:Addresses	0xc09963a395a22a24d9517d981bf6ec7dc31dfa89	DynamicToken_id316_cnt2_1mo		Ether Camp		uniformly-hip-owl	false	false	false	true	false	false
 30-Contracts	0xc0a1f89bbcaddab4b736e786b6b16c67bc92ed35	White Hat Group Token Controller		TrueBlocks.io		early-ace-dog	false	false	false	true	false	false
 50-Tokens:ERC721	0xc0a302e6ad8eccc4d7a6c1514f8671d6b79269c7	Agora Citizenship S01	AS01	On chain	18	miserably-in-hamster	false	false	false	true	true	true

@@ -23,7 +23,7 @@ static const COption params[] = {
     COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more block identifiers"),  // NOLINT
     COption("hashes", "e", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),  // NOLINT
     COption("uncles", "c", "", OPT_SWITCH, "display uncle blocks (if any) instead of the requested block"),
-    COption("trace", "t", "", OPT_SWITCH, "export the traces from the block as opposed to the block data"),
+    COption("traces", "t", "", OPT_SWITCH, "export the traces from the block as opposed to the block data"),
     COption("apps", "s", "", OPT_SWITCH, "display a list of uniq address appearances in the block"),
     COption("uniq", "u", "", OPT_SWITCH, "display a list of uniq address appearances per transaction"),
     COption("flow", "f", "enum[from|to|reward]", OPT_FLAG, "for the uniq and apps options only, export only from or to (including trace from or to)"),  // NOLINT
@@ -79,8 +79,13 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-c" || arg == "--uncles") {
             uncles = true;
 
-        } else if (arg == "-t" || arg == "--trace") {
-            trace = true;
+        } else if (arg == "-t" || arg == "--traces") {
+            traces = true;
+
+        } else if (arg == "--trace") {
+            // clang-format off
+            return usage("the --trace option is deprecated, please use traces option instead");  // NOLINT
+            // clang-format on
 
         } else if (arg == "-s" || arg == "--apps") {
             apps = true;
@@ -168,7 +173,7 @@ bool COptions::parseArguments(string_q& command) {
 
     big_range = max(big_range, uint64_t(50));
 
-    if (trace && !isTracingNode())
+    if (traces && !isTracingNode())
         return usage(usageErrs[ERR_TRACINGREQUIRED]);
 
     if (hashes) {
@@ -199,7 +204,7 @@ bool COptions::parseArguments(string_q& command) {
     } else if (listOffset != NOPOS) {
         configureDisplay("", "CBlock", STR_FORMAT_LIST);
 
-    } else if (trace) {
+    } else if (traces) {
         configureDisplay("getBlocks", "CTrace", STR_DISPLAY_TRACE);
 
     } else if (logs) {
@@ -249,7 +254,7 @@ void COptions::Init(void) {
     // BEG_CODE_INIT
     hashes = false;
     uncles = false;
-    trace = false;
+    traces = false;
     flow = "";
     logs = false;
     articulate = false;
@@ -288,9 +293,9 @@ COptions::COptions(void) {
     // BEG_ERROR_STRINGS
     usageErrs[ERR_NOCACHEUNCLE] = "The --cache option is not available for uncle blocks.";
     usageErrs[ERR_NOCACHEADDRESS] = "The --cache option is not available when using one of the address options.";
-    usageErrs[ERR_TRACINGREQUIRED] = "A tracing node is required for the --trace options to work properly.";
-    usageErrs[ERR_NOTRACEADDRESS] = "The --trace option is not available when using one of the address options.";
-    usageErrs[ERR_TRACEHASHEXCLUSIVE] = "The --hashes and --trace options are exclusive.";
+    usageErrs[ERR_TRACINGREQUIRED] = "A tracing node is required for the --traces options to work properly.";
+    usageErrs[ERR_NOTRACEADDRESS] = "The --traces option is not available when using one of the address options.";
+    usageErrs[ERR_TRACEHASHEXCLUSIVE] = "The --hashes and --traces options are exclusive.";
     usageErrs[ERR_ATLEASTONEBLOCK] = "You must specify at least one block.";
     usageErrs[ERR_EMTOPONLYWITHLOG] = "The --emitter and --topic options are only available with the --log option.";
     usageErrs[ERR_ARTWITHOUTLOGS] = "The --artcilate option is only available with the --logs option.";
@@ -323,15 +328,15 @@ const char* STR_FORMAT_COUNT_TXT_VERBOSE =
 //--------------------------------------------------------------------------------
 const char* STR_FORMAT_FILTER_JSON =
     "{\n"
-    " \"bn\": \"[{BN}]\",\n"
-    " \"tx\": \"[{TX}]\",\n"
-    " \"tc\": \"[{TC}]\",\n"
-    " \"addr\": \"[{ADDR}]\",\n"
+    " \"bn\": \"[{BLOCKNUMBER}]\",\n"
+    " \"tx\": \"[{TRANSACTIONINDEX}]\",\n"
+    " \"tc\": \"[{TRACEINDEX}]\",\n"
+    " \"addr\": \"[{ADDRESS}]\",\n"
     " \"reason\": \"[{REASON}]\"\n"
     "}\n";
 
 //--------------------------------------------------------------------------------
-const char* STR_FORMAT_FILTER_TXT = "[{BN}]\t[{TX}]\t[{TC}]\t[{ADDR}]\t[{REASON}]";
+const char* STR_FORMAT_FILTER_TXT = "[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{TRACEINDEX}]\t[{ADDRESS}]\t[{REASON}]";
 
 //--------------------------------------------------------------------------------
 const char* STR_FORMAT_LIST_JSON =

@@ -6,5 +6,6 @@ cpp_includes = trace.h
 equals = ((newContract == it.newContract) && (code == it.code) && (gasUsed == it.gasUsed) && (output == it.output))
 tsx = true
 doc_group = 02-Chain Data
-doc_descr = the trace result data for a given trace directly from the blockchain
-doc_api = 16-traceResult
+doc_descr = trace result data as returned from the RPC (with slight enhancements)
+doc_route = 208-traceResult
+doc_producer = traces, export, blocks

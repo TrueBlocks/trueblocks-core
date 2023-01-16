@@ -1,7 +1,7 @@
-chifra transactions  3648669.24 --articulate --verbose --trace --fmt json
+chifra transactions  3648669.24 --articulate --verbose --traces --fmt json
 TEST[DATE|TIME] Transactions:  [3648669.24]
 TEST[DATE|TIME] Articulate:  true
-TEST[DATE|TIME] Trace:  true
+TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Format:  json
 { "data": [

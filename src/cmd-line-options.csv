@@ -96,7 +96,8 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12500,tools,ChainData,blocks,getBlocks,blocks,,,true,false,true,true,local,positional,list<blknum>,a space-separated list of one or more block identifiers
 12510,tools,ChainData,blocks,getBlocks,hashes,e,,false,false,true,true,header,switch,<boolean>,display only transaction hashes&#44; default is to display full transaction detail
 12520,tools,ChainData,blocks,getBlocks,uncles,c,,false,false,true,true,header,switch,<boolean>,display uncle blocks (if any) instead of the requested block
-12530,tools,ChainData,blocks,getBlocks,trace,t,,false,false,true,true,header,switch,<boolean>,export the traces from the block as opposed to the block data
+12530,tools,ChainData,blocks,getBlocks,traces,t,,false,false,true,true,header,switch,<boolean>,export the traces from the block as opposed to the block data
+12532,tools,ChainData,blocks,getBlocks,trace,,,false,false,false,false,local,deprecated,<boolean>,please use traces option instead
 12540,tools,ChainData,blocks,getBlocks,apps,s,,false,false,true,true,local,switch,<boolean>,display a list of uniq address appearances in the block
 12560,tools,ChainData,blocks,getBlocks,uniq,u,,false,false,true,true,local,switch,<boolean>,display a list of uniq address appearances per transaction
 12565,tools,ChainData,blocks,getBlocks,flow,f,,false,false,true,true,header,flag,enum[from|to|reward],for the uniq and apps options only&#44; export only from or to (including trace from or to)
@@ -119,19 +120,20 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12627,tools,ChainData,blocks,getBlocks,n7,,,false,false,false,false,--,note,,Large block ranges may crash the node&#44; use --big_range to specify a larger range.
 12626,tools,ChainData,blocks,getBlocks,ERR_NOCACHEUNCLE,,,false,false,false,false,--,error,,The --cache option is not available for uncle blocks.
 12628,tools,ChainData,blocks,getBlocks,ERR_NOCACHEADDRESS,,,false,false,false,false,--,error,,The --cache option is not available when using one of the address options.
-12630,tools,ChainData,blocks,getBlocks,ERR_TRACINGREQUIRED,,,false,false,false,false,--,error,,A tracing node is required for the --trace options to work properly.
-12632,tools,ChainData,blocks,getBlocks,ERR_NOTRACEADDRESS,,,false,false,false,false,--,error,,The --trace option is not available when using one of the address options.
-12634,tools,ChainData,blocks,getBlocks,ERR_TRACEHASHEXCLUSIVE,,,false,false,false,false,--,error,,The --hashes and --trace options are exclusive.
+12630,tools,ChainData,blocks,getBlocks,ERR_TRACINGREQUIRED,,,false,false,false,false,--,error,,A tracing node is required for the --traces options to work properly.
+12632,tools,ChainData,blocks,getBlocks,ERR_NOTRACEADDRESS,,,false,false,false,false,--,error,,The --traces option is not available when using one of the address options.
+12634,tools,ChainData,blocks,getBlocks,ERR_TRACEHASHEXCLUSIVE,,,false,false,false,false,--,error,,The --hashes and --traces options are exclusive.
 12636,tools,ChainData,blocks,getBlocks,ERR_ATLEASTONEBLOCK,,,false,false,false,false,--,error,,You must specify at least one block.
 12638,tools,ChainData,blocks,getBlocks,ERR_EMTOPONLYWITHLOG,,,false,false,false,false,--,error,,The --emitter and --topic options are only available with the --log option.
 12640,tools,ChainData,blocks,getBlocks,ERR_ARTWITHOUTLOGS,,,false,false,false,false,--,error,,The --artcilate option is only available with the --logs option.
 
 13540,tools,ChainData,transactions,getTrans,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
 13560,tools,ChainData,transactions,getTrans,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the retrieved data if ABIs can be found
-13580,tools,ChainData,transactions,getTrans,trace,t,,false,false,true,true,header,switch,<boolean>,include the transaction's traces in the results
+13580,tools,ChainData,transactions,getTrans,traces,t,,false,false,true,true,header,switch,<boolean>,include the transaction's traces in the results
+13682,tools,ChainData,transactions,getTrans,trace,,,false,false,false,false,local,deprecated,<boolean>,please use traces option instead
 13605,tools,ChainData,transactions,getTrans,uniq,u,,false,false,true,true,header,switch,<boolean>,display a list of uniq addresses found in the transaction
 13610,tools,ChainData,transactions,getTrans,flow,f,,false,false,true,true,header,flag,enum[from|to],for the uniq option only&#44; export only from or to (including trace from or to)
-13615,tools,ChainData,transactions,getTrans,reconcile,r,,false,false,true,true,header,deprecated,<address>,please use statements option instead
+13615,tools,ChainData,transactions,getTrans,reconcile,r,,false,false,true,true,local,deprecated,<address>,please use account_for option instead
 13617,tools,ChainData,transactions,getTrans,account_for,A,,false,false,true,true,local,flag,<address>,reconcile the transaction as per the provided address
 13620,tools,ChainData,transactions,getTrans,cache,o,,false,false,true,true,header,switch,<boolean>,force the results of the query into the tx cache (and the trace cache if applicable)
 13620,tools,ChainData,transactions,getTrans,source,s,,false,false,false,false,header,switch,<boolean>,find the source of the funds sent to the receiver
@@ -224,12 +226,14 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12195,apps,Admin,scrape,blockScrape,,,,false,false,true,true,--,description,,Scan the chain and update the TrueBlocks index of appearances.
 
 13111,apps,Admin,daemon,flame,port,p,:8080,false,false,true,true,header,flag,<string>,specify the server's port
+13114,apps,Admin,daemon,flame,api,a,on,false,false,true,false,gocmd,flag,enum[off|on*]>,instruct the node to start the API server
 13112,apps,Admin,daemon,flame,scrape,s,,false,false,true,false,gocmd,flag,enum[off|blooms|full-index]>,start the scraper&#44; initialize it with either just blooms or entire index&#44; generate for new blocks
 13113,apps,Admin,daemon,flame,monitor,m,,false,false,true,false,gocmd,switch,<boolean>,instruct the node to start the monitors tool
-13114,apps,Admin,daemon,flame,api,a,on,false,false,true,false,gocmd,flag,enum[off|on*]>,instruct the node to start the API server
 13115,apps,Admin,daemon,flame,,,,false,false,true,true,--,description,,Initalize and control long-running processes such as the API and the scrapers.
 13116,apps,Admin,daemon,flame,n1,,,false,false,false,false,--,note,,To start API open terminal window and run chifra daemon.
 13117,apps,Admin,daemon,flame,n2,,,false,false,false,false,--,note,,See the API documentation (https://trueblocks.io/api) for more information.
+13118,apps,Admin,daemon,flame,n3,,,false,false,false,false,--,note,,The 'serve' alias is deprecated and will be removed shortly.
+13119,apps,Admin,daemon,flame,a1,,,false,false,false,false,--,alias,,serve
 
 10700,apps,Admin,config,cacheStatus,modes,,,false,false,true,true,local,positional,list<enum[show*|edit]>,either show or edit the configuration
 10710,apps,Admin,config,cacheStatus,module,,,false,false,true,true,local,flag,list<enum[index|monitors|names|abis|caches|some*|all]>,the type of information to show or edit
@@ -237,9 +241,12 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10730,apps,Admin,config,cacheStatus,types,t,,false,false,true,false,local,flag,list<enum[blocks|txs|traces|slurps|all*]>,for caches module only&#44; which type(s) of cache to report
 10735,apps,Admin,config,cacheStatus,depth,p,NOPOS,false,false,false,false,header,flag,<uint64>,for caches module only&#44; number of levels deep to report
 10770,apps,Admin,config,cacheStatus,terse,e,,false,false,false,true,header,switch,<boolean>,show a terse summary report for mode show
+10770,apps,Admin,config,cacheStatus,paths,a,,false,false,false,false,gocmd,switch,<boolean>,show the configuration paths for the system
 10820,apps,Admin,config,cacheStatus,first_block,F,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive -- testing only)
 10840,apps,Admin,config,cacheStatus,last_block,L,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive -- testing only)
 10860,apps,Admin,config,cacheStatus,,,,false,false,true,true,--,description,,Report on and edit the configuration of the TrueBlocks system.
+10862,apps,Admin,config,cacheStatus,n1,,,false,false,false,false,--,note,,The 'status' alias is deprecated and will be removed shortly.
+10865,apps,Admin,config,cacheStatus,a1,,,false,false,false,false,--,alias,,status
 
 31900,apps,Admin,chunks,chunkMan,mode,,,true,false,true,true,local,positional,enum[status|manifest|index|blooms|addresses|appearances|stats],the type of data to process
 31905,apps,Admin,chunks,chunkMan,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of blocks to intersect with chunk ranges
@@ -249,6 +256,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 31925,apps,Admin,chunks,chunkMan,truncate,n,,false,false,true,false,gocmd,flag,<blknum>,truncate the entire index at this block (requires a block identifier)
 31945,apps,Admin,chunks,chunkMan,remote,m,,false,false,true,true,gocmd,switch,<boolean>,prior to processing&#44; retreive the manifest from the Unchained Index smart contract
 31950,apps,Admin,chunks,chunkMan,belongs,b,,false,false,true,true,gocmd,flag,list<addr>,in index mode only&#44; checks the address(es) for inclusion in the given index chunk
+31951,apps,Admin,chunks,chunkMan,save_addrs,a,,false,false,false,false,gocmd,switch,<boolean>,write addresses to a file during presentation - warning takes forever
 31952,apps,Admin,chunks,chunkMan,sleep,s,0.0,false,false,true,true,gocmd,flag,<double>,for --remote pinning only&#44; seconds to sleep between API calls
 31955,apps,Admin,chunks,chunkMan,,,,false,false,true,true,--,description,,Manage&#44; investigate&#44; and display the Unchained Index.
 31960,apps,Admin,chunks,chunkMan,n1,,,false,false,false,false,--,note,,Mode determines which type of data to display or process.

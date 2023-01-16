@@ -1,9 +1,12 @@
-<!-- markdownlint-disable MD041 -->
 ## chifra state
 
-Use this tool to retrieve the balance of an address (or list of addresses) at the given block (or blocks). Specify multiple addresses and/or multiple blocks if you wish, but you must specify at least one address. If no block is specified, the latest block is reported.
+<!-- markdownlint-disable MD041 -->
+The `chifra state` tool retrieves the balance of an address (or list of addresses) at the given block
+(or blocks). Specify multiple addresses and/or multiple blocks if you wish, but you must specify
+at least one address. If no block is specified, the latest block is reported.
 
-You may also query to see if an address is a smart contract as well as retrieve a contract's byte code.
+You may also query to see if an address is a smart contract as well as retrieve a contract's
+byte code.
 
 ```[plaintext]
 Purpose:
@@ -34,8 +37,13 @@ Notes:
   - You may specify multiple modes on a single line.
 ```
 
+Data models produced by this tool:
+
+- [ethstate](/data-model/chainstate/#ethstate)
+- [ethcall](/data-model/chainstate/#ethcall)
+
 <!-- markdownlint-disable MD041 -->
-#### Other Options
+### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.
 
@@ -44,10 +52,19 @@ All tools accept the following additional flags, although in some cases, they ha
       --wei             export values in wei (the default)
       --ether           export values in ether
       --raw             pass raw RPC data directly from the node with no processing
-      --to_file         write the results to a temporary file and return the filename
       --output string   write the results to file 'fn' and return the filename
       --append          for --output command only append to instead of replace contents of file
       --file string     specify multiple sets of command line options in a file
-```
+  -x, --fmt string      export format, one of [none|json*|txt|csv]
+  -v, --verbose         enable verbose (increase detail with --log_level)
+  -h, --help            display this help screen
+  ```
 
-*For the `--file string` option, you may place a series of valid command lines in a file using any valid flags. In some cases, this may significantly improve performance. A semi-colon at the start of any line makes it a comment.*
+**Note:** For the `--file string` option, you may place a series of valid command lines in a file using any
+valid flags. In some cases, this may significantly improve performance. A semi-colon at the start
+of any line makes it a comment.
+
+**Note:** If you use `--output --append` option and at the same time the `--file` option, you may not switch
+export formats in the command file. For example, a command file with two different commands, one with `--fmt csv`
+and the other with `--fmt json` will produce both invalid CSV and invalid JSON.
+

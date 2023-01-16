@@ -72,24 +72,16 @@ class CCommandOption : public CBaseNode {
     bool isGoOnly;
     bool isDeprecated;
     bool isNote;
+    bool isAlias;
     bool isErr;
     void* params{nullptr};
     void* notes{nullptr};
+    CStringArray aliases;
     explicit CCommandOption(const string_q& line);
     void verifyOptions(CStringArray& warnings);
     void verifyHotkey(CStringArray& warnings, map<string, string>& hotKeys);
     string_q swagger_descr;
     string_q route_list;
-    string_q toChifraCmd(void) const;
-    string_q toChifraHelp(void) const;
-    string_q toPairMap(void) const;
-    string_q toApiTag(void) const;
-    string_q toGoCall(void) const;
-    string_q toGoPackage(void) const;
-    string_q toGoRoute(void) const;
-    string_q toApiPath(const string_q& inStr, const string_q& exampleFn) const;
-    bool isChifraRoute(bool depOk) const;
-    string_q getSchema(void) const;
     bool isStringType(void) const {
         return (isEnum || isEnumList || isStringList || isAddressList || isTopicList);
     }
@@ -187,6 +179,7 @@ inline void CCommandOption::initialize(void) {
     isGoOnly = false;
     isDeprecated = false;
     isNote = false;
+    isAlias = false;
     isErr = false;
     swagger_descr = "";
     route_list = "";
@@ -236,6 +229,7 @@ inline void CCommandOption::duplicate(const CCommandOption& co) {
     isGoOnly = co.isGoOnly;
     isDeprecated = co.isDeprecated;
     isNote = co.isNote;
+    isAlias = co.isAlias;
     isErr = co.isErr;
     swagger_descr = co.swagger_descr;
     route_list = co.route_list;
@@ -281,10 +275,9 @@ extern const char* STR_DISPLAY_COMMANDOPTION;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------------------------------
-extern bool forEveryEnum(APPLYFUNC func, const string_q& enumStr, void* data);
 // TODO: search for go-port
 extern bool goPortNewCode(const string_q& a);
-extern bool isApiRoute(const string_q& route);
 extern bool isFullyPorted(const string_q& a);
+extern string_q get_corresponds_link(const string_q& toolGroup, const string_q& toolRoute);
 // EXISTING_CODE
 }  // namespace qblocks

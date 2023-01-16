@@ -1,6 +1,9 @@
-name   ,type    ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
-bn     ,blknum  ,           ,       ,      ,        ,          ,        ,      ,         ,1   ,1    ,        ,
-tx     ,blknum  ,           ,       ,      ,        ,          ,        ,      ,         ,2   ,2    ,        ,
-tc     ,blknum  ,           ,       ,      ,        ,          ,        ,      ,         ,3   ,3    ,        ,
-addr   ,address ,           ,       ,      ,        ,          ,        ,      ,         ,4   ,4    ,        ,
-reason ,string  ,           ,       ,      ,        ,          ,        ,      ,         ,5   ,5    ,        ,
+name             ,type      ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
+address          ,address   ,           ,       ,      ,        ,          ,        ,      ,         ,  1 ,   1 ,        ,the address of the appearance
+blockNumber      ,blknum    ,           ,       ,      ,        ,          ,        ,      ,         ,  2 ,   2 ,        ,the number of the block
+transactionIndex ,blknum    ,           ,       ,      ,        ,          ,        ,      ,         ,  3 ,   3 ,        ,the index of the transaction in the block
+traceIndex       ,blknum    ,           ,       ,      ,        ,          ,        ,      ,         ,  4 ,   4 ,        ,the zero-based index of the trace in the transaction
+reason           ,string    ,           ,       ,      ,        ,          ,        ,      ,         ,  5 ,   5 ,        ,the location in the data where the appearance was found
+name             ,string    ,           ,       ,      ,        ,          ,        ,      ,         ,  6 ,   6 ,        ,the name of the address&#44; if found
+timestamp        ,timestamp ,           ,       ,      ,        ,          ,        ,      ,         ,  7 ,   7 ,        ,the timestamp for this appearance
+date             ,string    ,           ,       ,      ,        ,          ,        ,      ,         ,  8 ,   8 ,        ,the date represented by the timestamp

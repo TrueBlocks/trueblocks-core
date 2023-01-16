@@ -65,7 +65,7 @@ bool shouldShow(const COptions* opt, const string_q& val) {
 bool visitAddrs(const CAppearance& item, void* data) {
     // We do not account for zero addresses or the addresses found in the zeroth trace since
     // it's identical to the transaction itself
-    if (item.tc == 10 || isZeroAddr(item.addr))
+    if (item.traceIndex == 10 || isZeroAddr(item.address))
         return !shouldQuit();
     COptions* opt = reinterpret_cast<COptions*>(data);
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
@@ -125,7 +125,7 @@ bool visitTransaction(CTransaction& trans, void* data) {
     }
 
     //////////////////////////////////////////////////////
-    if (opt->trace) {
+    if (opt->traces) {
         if (!trans.pBlock) {
             getBlockLight(block, trans.blockNumber);
             trans.timestamp = block.timestamp;
@@ -151,7 +151,7 @@ bool visitTransaction(CTransaction& trans, void* data) {
         return true;
     }
 
-    if (opt->isRaw || opt->isVeryRaw) {
+    if (opt->isRaw) {
         string_q result;
         queryRawTransaction(result, trans.getValueByName("hash"));
         if (!isText && !opt->firstOut)

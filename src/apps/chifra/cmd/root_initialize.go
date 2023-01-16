@@ -59,7 +59,7 @@ const shouldNotExist string = `
 const notExist string = `
 
 	The configuration file or folder ({0})
-	does not exist. See https://trueblocks.io/docs/install/install-trueblocks/.
+	does not exist. See https://trueblocks.io/docs/install/install-core/.
 
 	[{VERSION}]
 

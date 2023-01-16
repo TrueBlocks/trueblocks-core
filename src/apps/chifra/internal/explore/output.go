@@ -27,6 +27,7 @@ import (
 // RunExplore handles the explore command for the command line. Returns error only as per cobra.
 func RunExplore(cmd *cobra.Command, args []string) (err error) {
 	opts := exploreFinishParse(args)
+	outputHelpers.SetEnabledForCmds("explore", opts.IsPorted())
 	outputHelpers.SetWriterForCommand("explore", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -37,6 +38,7 @@ func RunExplore(cmd *cobra.Command, args []string) (err error) {
 // ServeExplore handles the explore command for the API. Returns error and a bool if handled
 func ServeExplore(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := exploreFinishParseApi(w, r)
+	outputHelpers.SetEnabledForCmds("explore", opts.IsPorted())
 	outputHelpers.InitJsonWriterApi("explore", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -76,6 +78,12 @@ func GetExploreOptions(args []string, g *globals.GlobalOptions) *ExploreOptions 
 		ret.Globals = *g
 	}
 	return ret
+}
+
+func (opts *ExploreOptions) IsPorted() (ported bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
 }
 
 // EXISTING_CODE

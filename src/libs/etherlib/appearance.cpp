@@ -66,23 +66,33 @@ string_q CAppearance::getValueByName(const string_q& fieldName) const {
         return ret;
 
     // EXISTING_CODE
-    if (fieldName % "tc") {
-        if (tc < 10)
+    if (fieldName % "traceIndex") {
+        if (traceIndex < 10)
             return (expContext().exportFmt == JSON1 || expContext().exportFmt == JSON1 ? "\"\"" : "");
-        return uint_2_Str(tc - 10);
+        return uint_2_Str(traceIndex - 10);
     }
     // EXISTING_CODE
 
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if (fieldName % "addr") {
-                return addr_2_Str(addr);
+            if (fieldName % "address") {
+                return addr_2_Str(address);
             }
             break;
         case 'b':
-            if (fieldName % "bn") {
-                return uint_2_Str(bn);
+            if (fieldName % "blockNumber") {
+                return uint_2_Str(blockNumber);
+            }
+            break;
+        case 'd':
+            if (fieldName % "date") {
+                return date;
+            }
+            break;
+        case 'n':
+            if (fieldName % "name") {
+                return name;
             }
             break;
         case 'r':
@@ -91,11 +101,14 @@ string_q CAppearance::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 't':
-            if (fieldName % "tx") {
-                return uint_2_Str(tx);
+            if (fieldName % "transactionIndex") {
+                return uint_2_Str(transactionIndex);
             }
-            if (fieldName % "tc") {
-                return uint_2_Str(tc);
+            if (fieldName % "traceIndex") {
+                return uint_2_Str(traceIndex);
+            }
+            if (fieldName % "timestamp") {
+                return ts_2_Str(timestamp);
             }
             break;
         default:
@@ -119,14 +132,26 @@ bool CAppearance::setValueByName(const string_q& fieldNameIn, const string_q& fi
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if (fieldName % "addr") {
-                addr = str_2_Addr(fieldValue);
+            if (fieldName % "address") {
+                address = str_2_Addr(fieldValue);
                 return true;
             }
             break;
         case 'b':
-            if (fieldName % "bn") {
-                bn = str_2_Uint(fieldValue);
+            if (fieldName % "blockNumber") {
+                blockNumber = str_2_Uint(fieldValue);
+                return true;
+            }
+            break;
+        case 'd':
+            if (fieldName % "date") {
+                date = fieldValue;
+                return true;
+            }
+            break;
+        case 'n':
+            if (fieldName % "name") {
+                name = fieldValue;
                 return true;
             }
             break;
@@ -137,12 +162,16 @@ bool CAppearance::setValueByName(const string_q& fieldNameIn, const string_q& fi
             }
             break;
         case 't':
-            if (fieldName % "tx") {
-                tx = str_2_Uint(fieldValue);
+            if (fieldName % "transactionIndex") {
+                transactionIndex = str_2_Uint(fieldValue);
                 return true;
             }
-            if (fieldName % "tc") {
-                tc = str_2_Uint(fieldValue);
+            if (fieldName % "traceIndex") {
+                traceIndex = str_2_Uint(fieldValue);
+                return true;
+            }
+            if (fieldName % "timestamp") {
+                timestamp = str_2_Ts(fieldValue);
                 return true;
             }
             break;
@@ -171,11 +200,14 @@ bool CAppearance::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> bn;
-    archive >> tx;
-    archive >> tc;
-    archive >> addr;
+    archive >> address;
+    archive >> blockNumber;
+    archive >> transactionIndex;
+    archive >> traceIndex;
     archive >> reason;
+    archive >> name;
+    archive >> timestamp;
+    archive >> date;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -189,11 +221,14 @@ bool CAppearance::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << bn;
-    archive << tx;
-    archive << tc;
-    archive << addr;
+    archive << address;
+    archive << blockNumber;
+    archive << transactionIndex;
+    archive << traceIndex;
     archive << reason;
+    archive << name;
+    archive << timestamp;
+    archive << date;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -243,11 +278,14 @@ void CAppearance::registerClass(void) {
     ADD_FIELD(CAppearance, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CAppearance, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CAppearance, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CAppearance, "bn", T_BLOCKNUM, ++fieldNum);
-    ADD_FIELD(CAppearance, "tx", T_BLOCKNUM, ++fieldNum);
-    ADD_FIELD(CAppearance, "tc", T_BLOCKNUM, ++fieldNum);
-    ADD_FIELD(CAppearance, "addr", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CAppearance, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CAppearance, "blockNumber", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CAppearance, "transactionIndex", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CAppearance, "traceIndex", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CAppearance, "reason", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CAppearance, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CAppearance, "timestamp", T_TIMESTAMP, ++fieldNum);
+    ADD_FIELD(CAppearance, "date", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAppearance, "schema");
@@ -267,6 +305,16 @@ string_q nextAppearanceChunk_custom(const string_q& fieldIn, const void* dataPtr
     if (app) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'd':
+                if (fieldIn % "date") {
+                    timestamp_t ts = bn_2_Timestamp(app->blockNumber);
+                    return ts_2_Date(ts).Format(FMT_JSON);
+                }
+                break;
+            case 't':
+                if (fieldIn % "timestamp")
+                    return ts_2_Str(bn_2_Timestamp(app->blockNumber));
+                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
@@ -319,11 +367,14 @@ ostream& operator<<(ostream& os, const CAppearance& it) {
 
 //---------------------------------------------------------------------------
 const char* STR_DISPLAY_APPEARANCE =
-    "[{BN}]\t"
-    "[{TX}]\t"
-    "[{TC}]\t"
-    "[{ADDR}]\t"
-    "[{REASON}]";
+    "[{ADDRESS}]\t"
+    "[{BLOCKNUMBER}]\t"
+    "[{TRANSACTIONINDEX}]\t"
+    "[{TRACEINDEX}]\t"
+    "[{REASON}]\t"
+    "[{NAME}]\t"
+    "[{TIMESTAMP}]\t"
+    "[{DATE}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
@@ -352,10 +403,10 @@ bool CUniqueState::insertUnique(const CAppearance& _value) {
 
 //---------------------------------------------------------------------------
 bool accumulateAddresses(const CAppearance& item, void* data) {
-    if (isZeroAddr(item.addr))
+    if (isZeroAddr(item.address))
         return true;
     CUniqueState* state = (CUniqueState*)data;  // NOLINT
-    CAppearance search(item.bn, item.tx, item.tc, item.addr, item.reason);
+    CAppearance search(item.blockNumber, item.transactionIndex, item.traceIndex, item.address, item.reason);
     return state->insertUnique(search);  // NOLINT
 }
 
@@ -402,7 +453,7 @@ bool potentialAddr(APPEARANCEFUNC func, void* data, const CAppearance& item, con
         biguint_t test = str_2_Wei("0x" + extract(potList, s * 64, 64));
         if (isPotentialAddr(test, addr)) {
             CAppearance it(item);
-            it.addr = addr;
+            it.address = addr;
             if (!(*func)(it, data))
                 return false;
         }

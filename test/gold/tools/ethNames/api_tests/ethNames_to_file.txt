@@ -1,2 +1,0 @@
-names?named&custom&fmt=json&toFile
-{ "outputFilename": "--output_filename--" }

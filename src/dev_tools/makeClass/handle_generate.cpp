@@ -311,7 +311,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(headSource, "[{NAMESPACE2}]", "}  // namespace qblocks\n");
     replaceAll(headSource, "public:\n\n  public:", "public:");
     expandTabbys(headSource);
-    counter.nProcessed += writeCodeIn(codewrite_t(headerFile, headSource));
+    counter.nProcessed += writeCodeIn(this, codewrite_t(headerFile, headSource));
 
     //------------------------------------------------------------------------------------------------
     string_q srcFile = classDef.outputPath(".cpp");
@@ -353,7 +353,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(srcSource, "[{NAMESPACE2}]", "}  // namespace qblocks\n");
     replaceAll(srcSource, "[{FN}]", classDef.short_fn);
     expandTabbys(srcSource);
-    counter.nProcessed += writeCodeIn(codewrite_t(srcFile, srcSource));
+    counter.nProcessed += writeCodeIn(this, codewrite_t(srcFile, srcSource));
 
     if (tsx && classDef.tsx)
         handle_tsx_type(classDef);

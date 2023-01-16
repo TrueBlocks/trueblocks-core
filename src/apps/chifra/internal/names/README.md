@@ -1,11 +1,17 @@
-<!-- markdownlint-disable MD041 -->
 ## chifra names
 
-`chifra names` is a surprisingly useful tool. It allows one to associate textual names with Ethereum addresses. One may ask why this is necessary given that ENS exists. The answer is a single word: "privacy". ENS names are public. In many cases, users desire to keep personal addresses private. Try to do this on a website.
+<!-- markdownlint-disable MD041 -->
+`chifra names` is a surprisingly useful tool. It allows one to associate textual names with Ethereum
+addresses. One may ask why this is necessary given that ENS exists. The answer is a single
+word: "privacy". ENS names are public. In many cases, users desire to keep personal addresses
+private. Try to do this on a website.
 
-Like `chifra abis`, this tool is useful from the command line but is primarily used in support of other tools, especially `chifra export` where naming addresses becomes the single best way to turn unintelligible blockchain data into understandable information.
+Like `chifra abis`, this tool is useful from the command line but is primarily used in support of
+other tools, especially `chifra export` where naming addresses becomes the single best way to
+turn unintelligible blockchain data into understandable information.
 
-The various options allow you to search and filter the results. The `tags` option is used primarily by the TrueBlocks explorer.
+The various options allow you to search and filter the results. The `tags` option is used primarily
+by the TrueBlocks explorer.
 
 You may use the TrueBlocks explorer to manage (add, edit, delete) address-name associations.
 
@@ -37,8 +43,12 @@ Notes:
   - The --match_case option enables case sensitive matching.
 ```
 
+Data models produced by this tool:
+
+- [name](/data-model/accounts/#name)
+
 <!-- markdownlint-disable MD041 -->
-#### Other Options
+### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.
 
@@ -47,10 +57,19 @@ All tools accept the following additional flags, although in some cases, they ha
       --wei             export values in wei (the default)
       --ether           export values in ether
       --raw             pass raw RPC data directly from the node with no processing
-      --to_file         write the results to a temporary file and return the filename
       --output string   write the results to file 'fn' and return the filename
       --append          for --output command only append to instead of replace contents of file
       --file string     specify multiple sets of command line options in a file
-```
+  -x, --fmt string      export format, one of [none|json*|txt|csv]
+  -v, --verbose         enable verbose (increase detail with --log_level)
+  -h, --help            display this help screen
+  ```
 
-*For the `--file string` option, you may place a series of valid command lines in a file using any valid flags. In some cases, this may significantly improve performance. A semi-colon at the start of any line makes it a comment.*
+**Note:** For the `--file string` option, you may place a series of valid command lines in a file using any
+valid flags. In some cases, this may significantly improve performance. A semi-colon at the start
+of any line makes it a comment.
+
+**Note:** If you use `--output --append` option and at the same time the `--file` option, you may not switch
+export formats in the command file. For example, a command file with two different commands, one with `--fmt csv`
+and the other with `--fmt json` will produce both invalid CSV and invalid JSON.
+

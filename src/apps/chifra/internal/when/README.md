@@ -1,11 +1,17 @@
-<!-- markdownlint-disable MD041 -->
 ## chifra when
 
-The `chifra when` tool answers one of two questions: (1) "At what date and time did a given block occur?" or (2) "What block occurred at or before a given date and time?"
+<!-- markdownlint-disable MD041 -->
+The `chifra when` tool answers one of two questions: (1) "At what date and time did a given block
+occur?" or (2) "What block occurred at or before a given date and time?"
 
-In the first case, supply a block number or hash and the date and time of that block are displayed. In the later case, supply a date (and optionally a time) and the block number that occurred at or just prior to that date is displayed.
+In the first case, supply a block number or hash and the date and time of that block are displayed.
+In the later case, supply a date (and optionally a time) and the block number that occurred at or
+just prior to that date is displayed.
 
-The values for `date` and `time` are specified in JSON format. `hour`/`minute`/`second` are optional, and if omitted, default to zero in each case. Block numbers may be specified as either integers or hexadecimal number or block hashes. You may specify any number of dates and/or blocks per invocation.
+The values for `date` and `time` are specified in JSON format. `hour`/`minute`/`second` are
+optional, and if omitted, default to zero in each case. Block numbers may be specified as either
+integers or hexadecimal number or block hashes. You may specify any number of dates and/or blocks
+per invocation.
 
 ```[plaintext]
 Purpose:
@@ -34,8 +40,12 @@ Notes:
   - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
 ```
 
+Data models produced by this tool:
+
+- [namedblock](/data-model/chaindata/#namedblock)
+
 <!-- markdownlint-disable MD041 -->
-#### Other Options
+### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.
 
@@ -44,10 +54,19 @@ All tools accept the following additional flags, although in some cases, they ha
       --wei             export values in wei (the default)
       --ether           export values in ether
       --raw             pass raw RPC data directly from the node with no processing
-      --to_file         write the results to a temporary file and return the filename
       --output string   write the results to file 'fn' and return the filename
       --append          for --output command only append to instead of replace contents of file
       --file string     specify multiple sets of command line options in a file
-```
+  -x, --fmt string      export format, one of [none|json*|txt|csv]
+  -v, --verbose         enable verbose (increase detail with --log_level)
+  -h, --help            display this help screen
+  ```
 
-*For the `--file string` option, you may place a series of valid command lines in a file using any valid flags. In some cases, this may significantly improve performance. A semi-colon at the start of any line makes it a comment.*
+**Note:** For the `--file string` option, you may place a series of valid command lines in a file using any
+valid flags. In some cases, this may significantly improve performance. A semi-colon at the start
+of any line makes it a comment.
+
+**Note:** If you use `--output --append` option and at the same time the `--file` option, you may not switch
+export formats in the command file. For example, a command file with two different commands, one with `--fmt csv`
+and the other with `--fmt json` will produce both invalid CSV and invalid JSON.
+

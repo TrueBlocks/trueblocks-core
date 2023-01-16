@@ -1,4 +1,0 @@
-config?modes=show&module=names&toFile
-{
-  "outputFilename": "--output_filename--"
-}

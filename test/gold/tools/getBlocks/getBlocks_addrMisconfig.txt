@@ -2,5 +2,5 @@ chifra blocks  32279 --uniq
 TEST[DATE|TIME] Blocks:  [32279]
 TEST[DATE|TIME] Uniq:  true
 TEST[DATE|TIME] Format:  txt
-blockNumber	transactionIndex	traceId	address	reason
+blockNumber	transactionIndex	traceIndex	address	reason
 32279	99999		0x0000000000000000000000000000000000000000	miner

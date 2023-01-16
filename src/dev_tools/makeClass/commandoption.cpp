@@ -594,8 +594,8 @@ CCommandOption::CCommandOption(const string_q& lineIn) {
 }
 
 //---------------------------------------------------------------------------------------------------
-static const CStringArray validOptionTypes = {"switch",     "toggle",      "flag",  "deprecated",
-                                              "positional", "description", "error", "note"};
+static const CStringArray validOptionTypes = {"switch",      "toggle", "flag", "deprecated", "positional",
+                                              "description", "error",  "note", "alias"};
 
 //---------------------------------------------------------------------------------------------------
 bool CCommandOption::finishCleanup(void) {
@@ -641,6 +641,7 @@ bool CCommandOption::finishCleanup(void) {
     isDouble = contains(data_type, "double");
     isAddress = contains(data_type, "address");
     isNote = option_type == "note";
+    isAlias = option_type == "alias";
     isErr = option_type == "error";
     isConfig = generate == "config";
     isGoOnly = generate == "gocmd";
@@ -702,7 +703,9 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
         if (startsWith(data_type, "list"))
             valid_type = true;
     }
-    if (!valid_type && (option_type == "description" || option_type == "note" || option_type == "error" || isConfig) &&
+    if (!valid_type &&
+        (option_type == "description" || option_type == "note" || option_type == "alias" || option_type == "error" ||
+         isConfig) &&
         data_type.empty())
         valid_type = true;
     if (!valid_type && startsWith(data_type, "opt_"))
@@ -728,7 +731,7 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
 //---------------------------------------------------------------------------------------------------
 void CCommandOption::verifyHotkey(CStringArray& warnings, map<string, string>& hotKeys) {
     if (hotKey.empty() || contains(option_type, "positional") || contains(option_type, "description") ||
-        contains(option_type, "note") || contains(option_type, "error")) {
+        contains(option_type, "alias") || contains(option_type, "note") || contains(option_type, "error")) {
         return;
     }
 
@@ -765,106 +768,7 @@ void CCommandOption::verifyHotkey(CStringArray& warnings, map<string, string>& h
 }
 
 //---------------------------------------------------------------------------------------------------
-extern const char* STR_PATH_YAML;
-extern const char* STR_PARAM_YAML;
-extern const char* STR_DELETE_OPTS;
-
-//---------------------------------------------------------------------------------------------------
-bool CCommandOption::isChifraRoute(bool depOk) const {
-    if (depOk && option_type == "deprecated")
-        return true;
-    return (option_type != "deprecated" && option_type != "description" && option_type != "note" &&
-            option_type != "config" && option_type != "error");
-}
-
-//---------------------------------------------------------------------------------------------------
-string_q CCommandOption::toChifraCmd(void) const {
-    if (api_route.empty())
-        return Format("    // -- [{GROUP}]");
-    return Format("    {\"[{API_ROUTE}]\", \"[{TOOL}]\"},");
-}
-
-//---------------------------------------------------------------------------------------------------
-string_q CCommandOption::toChifraHelp(void) const {
-    if ((description.empty() && !api_route.empty()) || api_route == "blaze")
-        return "";
-
-    CCommandOption ret = *this;
-    replaceAll(ret.description, ".", "");
-    ret.description = firstLower(ret.description);
-    if (api_route.empty())
-        return toProper(ret.Format("  [{GROUP}]:")) + "\n";
-    return ret.Format("    [{w:14:API_ROUTE}][{DESCRIPTION}]") + "\n";
-}
-
-//---------------------------------------------------------------------------------------------------
-string_q CCommandOption::toPairMap(void) const {
-    if (is_visible || api_route == "explore") {
-        if (!contains(tool, " "))
-            return Format("    make_pair(\"[{TOOL}]\", \"chifra [{API_ROUTE}]\"),");
-        return Format("    // [{API_ROUTE}]");
-
-    } else {
-        if (api_route.empty())
-            return Format("    // -- [{GROUP}]");
-        return Format("    // [{API_ROUTE}]");
-    }
-
-    return "";
-}
-
-//---------------------------------------------------------------------------------------------------
-bool isApiRoute(const string_q& route) {
-    if (route == "daemon" || route == "blaze")
-        return false;
-    return !route.empty();
-}
-
-//---------------------------------------------------------------------------------------------------
-string_q CCommandOption::toApiTag(void) const {
-    if ((isApiRoute(tool) && !contains(tool, "explore")) || !is_visible_docs)
-        return "";
-    const char* STR_TAG_YAML =
-        "  - name: [{GROUP}]\n"
-        "    description: [{DESCRIPTION}]\n";
-    return Format(STR_TAG_YAML);
-}
-
-//---------------------------------------------------------------------------------------------------
-const char* STR_NEW_CHIFRA_ROUTE =
-    "\t[{API_ROUTE}]Pkg \"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/[{API_ROUTE}]\"";
-
-//---------------------------------------------------------------------------------------------------
-string_q CCommandOption::toGoPackage(void) const {
-    if (!isApiRoute(api_route))
-        return "";
-
-    ostringstream os;
-    os << Format(STR_NEW_CHIFRA_ROUTE) << endl;
-    return os.str();
-}
-
-//---------------------------------------------------------------------------------------------------
-const char* STR_ONEROUTE =
-    "// [{GOROUTEFUNC}] [{DESCRIPTION}]\n"
-    "func [{GOROUTEFUNC}](w http.ResponseWriter, r *http.Request) {\n"
-    "\tif err, handled := [{API_ROUTE}]Pkg.Serve[{PROPER}](w, r); err != nil {\n"
-    "\t\tRespondWithError(w, http.StatusInternalServerError, err)\n"
-    "\t} else if !handled {\n"
-    "\t\tCallOne(w, r, config.GetPathToCommands(\"[{TOOL}]\"), \"\", \"[{API_ROUTE}]\")\n"
-    "\t}\n"
-    "}";
-
-//---------------------------------------------------------------------------------------------------
-const char* STR_ONEROUTE2 =
-    "// [{GOROUTEFUNC}] [{DESCRIPTION}]\n"
-    "func [{GOROUTEFUNC}](w http.ResponseWriter, r *http.Request) {\n"
-    "\tif err, _ := [{API_ROUTE}]Pkg.Serve[{PROPER}](w, r); err != nil {\n"
-    "\t\tRespondWithError(w, http.StatusInternalServerError, err)\n"
-    "\t}\n"
-    "}";
-
-//---------------------------------------------------------------------------------------------------
+// go-port
 bool isFullyPorted(const string_q& a) {
     CStringArray tools = {"when", "list", "monitors", "chunks", "init", "scrape"};
     for (auto tool : tools) {
@@ -874,275 +778,8 @@ bool isFullyPorted(const string_q& a) {
     return false;
 }
 
-//---------------------------------------------------------------------------------------------------
-string_q CCommandOption::toGoCall(void) const {
-    if (!isApiRoute(api_route))
-        return "";
-
-    string_q format = STR_ONEROUTE;
-    if (isFullyPorted(api_route)) {
-        format = STR_ONEROUTE2;
-    }
-
-    if (goPortNewCode(api_route) || (tool.empty() || contains(tool, " "))) {
-        format = substitute(format, "CallOne(w, r, config.GetPathToCommands(\"[{TOOL}]\"), \"\", \"[{API_ROUTE}]\")",
-                            "CallOne(w, r, \"chifra\", \"[{API_ROUTE}]\", \"[{API_ROUTE}]\")");
-    }
-
-    ostringstream os;
-    os << endl;
-    os << Format(format) << endl;
-    return os.str();
-}
-
-//---------------------------------------------------------------------------------------------------
-string_q CCommandOption::toGoRoute(void) const {
-    if (!isApiRoute(api_route))
-        return "";
-
-    ostringstream out;
-    out << Format("\tRoute{\"[{GOROUTEFUNC}]\", \"GET\", \"/[{API_ROUTE}]\", [{GOROUTEFUNC}]},") << endl;
-    return out.str();
-}
-
-//---------------------------------------------------------------------------------------------------
-string_q prepareDescr(const string_q& in) {
-    if (in.length() < 75)
-        return in;
-    return ">\n            " + substitute(in, "\n         ", "");
-}
-
-//---------------------------------------------------------------------------------------------------
-bool isCrud(const string_q& cmd) {
-    return cmd == "create" || cmd == "delete" || cmd == "update" || cmd == "remove" || cmd == "undelete";
-}
-
-//---------------------------------------------------------------------------------------------------
-string_q CCommandOption::toApiPath(const string_q& returnTypesIn, const string_q& exampleFn) const {
-    if (!isApiRoute(api_route) || contains(api_route, "explore"))
-        return "";
-
-    bool hasDelete = false;
-    ostringstream paramStream;
-    for (auto param : *(CCommandOptionArray*)params) {
-        bool needsTwoAddrs = containsI(param.description, "two or more addresses");
-        hasDelete |= contains(param.longName, "deleteMe");
-        replace(param.longName, "deleteMe", "delete");
-        if (param.longName.empty() || !param.is_visible_docs)
-            continue;
-        if (!isCrud(param.longName)) {
-            string_q yp = STR_PARAM_YAML;
-            replace(yp, "[{NAME}]", toCamelCase(param.longName));
-            replace(yp, "[{DESCR}]", prepareDescr(param.swagger_descr));
-            replace(yp, "[{REQ}]", param.is_required ? "true" : "false");
-            replace(yp, "[{SCHEMA}]", param.getSchema());
-            if (needsTwoAddrs) {
-                replace(yp, "            type: array\n", "            type: array\n            minItems: 2\n");
-            }
-            if (paramStream.str().empty())
-                paramStream << "      parameters:\n";
-            paramStream << yp << endl;
-        }
-    }
-
-    ostringstream example;
-    if (fileExists(exampleFn)) {
-        string_q content = trim(asciiFileToString(exampleFn), '\n');
-        if (!content.empty()) {
-            if (!contains(content, string_q(18, ' '))) {
-                replaceAll(content, "\n", "\n" + string_q(18, ' '));
-                content = string_q(18, ' ') + content;
-            }
-            example << string_q(16, ' ') << "example:" << endl << content << endl;
-        }
-    }
-
-    string_q content;
-    ostringstream properties;
-    string_q descr = returnTypesIn;
-    string_q returnTypes = nextTokenClear(descr, '|');
-    const char* STR_PROPERTIES =
-        "data:\n"
-        "  description: [{DESCR}]\n"
-        "  type: array\n"
-        "  items:\n"
-        "    [{RETTYPES}]";
-    content = substitute(substitute(STR_PROPERTIES, "[{RETTYPES}]", returnTypes), "[{DESCR}]", descr);
-
-    if (!content.empty()) {
-        if (!contains(content, string_q(18, ' '))) {
-            replaceAll(content, "\n", "\n" + string_q(18, ' '));
-            content = string_q(18, ' ') + content;
-        }
-        properties << string_q(16, ' ') << "properties:" << endl << content << endl;
-
-    } else {
-        if (!fileExists(exampleFn))
-            properties << string_q(16, ' ') << "items:\n                  $ref: \"#/components/schemas/response\"\n";
-    }
-
-    string_q grp = substitute(substitute(group, "ChainData", "Chain Data"), "ChainState", "Chain State");
-
-    string_q ret = STR_PATH_YAML;
-    replaceAll(ret, "[{TAGS}]", grp);
-    replaceAll(ret, "[{PROPERTIES}]", properties.str());
-    replaceAll(ret, "[{EXAMPLE}]", example.str());
-    replaceAll(ret, "[{PATH}]", api_route);
-    replaceAll(ret, "[{PARAMS}]", paramStream.str());
-    replaceAll(ret, "[{SUMMARY}]", summary);
-    replaceAll(ret, "[{DESCR}]", description);
-    replaceAll(ret, "[{DELETE}]", hasDelete ? STR_DELETE_OPTS : "");
-    replaceAll(ret, "[{ID}]", toLower(substitute(grp, " ", "") + "-" + api_route));
-    return ret;
-}
-
-//---------------------------------------------------------------------------------------------------
-bool visitEnumItem(string_q& item, void* data) {
-    ostringstream* osp = (ostringstream*)data;
-    if (isNumeral(item)) {
-        *osp << substitute("~- \"[{VAL}]\"\n", "[{VAL}]", item);
-    } else {
-        *osp << substitute("~- [{VAL}]\n", "[{VAL}]", item);
-    }
-    return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-string_q CCommandOption::getSchema(void) const {
-    string_q lead = "            ";
-
-    if (contains(data_type, "list") && contains(data_type, "enum")) {
-        ostringstream os;
-        forEveryEnum(visitEnumItem, data_type, &os);
-        string_q str_array_enum =
-            "~type: array\n"
-            "~items:\n"
-            "~  type: string\n"
-            "~  enum:\n" +
-            substitute(substitute(trim(os.str(), '\n'), "~", "+    "), "+", "~");
-        return substitute(str_array_enum, "~", lead);
-    }
-
-    if (contains(data_type, "list")) {
-        string_q type = substitute(substitute(data_type, "list<", ""), ">", "");
-        replace(type, "addr", "address_t");
-        if (endsWith(type, "_t"))
-            replaceReverse(type, "_t", "");
-        string_q ret;
-        ret += lead + "type: array\n";
-        ret += lead + "items:\n";
-        ret += lead + "  type: string\n";
-        ret += lead + "  format: " + type;
-        return ret;
-    }
-
-    if (contains(data_type, "boolean")) {
-        string_q ret;
-        ret += lead + "type: boolean";
-        return ret;
-    }
-
-    if (contains(data_type, "uint") || contains(data_type, "double") || contains(data_type, "blknum")) {
-        string_q ret;
-        ret += lead + "type: number\n";
-        ret += lead + "format: " + substitute(substitute(data_type, ">", ""), "<", "");
-        return ret;
-    }
-
-    if (contains(data_type, "datetime")) {
-        string_q ret;
-        ret += lead + "type: " + "string\n";
-        ret += lead + "format: date";
-        return ret;
-    }
-
-    if (contains(data_type, "enum")) {
-        ostringstream os;
-        forEveryEnum(visitEnumItem, data_type, &os);
-
-        string_q ret;
-        ret += lead + "type: string\n";
-        ret += lead + "enum:\n";
-        ret += substitute(substitute(trim(os.str(), '\n'), "~", "+  "), "+", "~");
-        return substitute(ret, "~", lead);
-    }
-
-    return lead + "type: " + "string";
-}
-
-//---------------------------------------------------------------------------------------------------
-bool forEveryEnum(APPLYFUNC func, const string_q& enumStr, void* data) {
-    string_q es = substitute(substitute(enumStr, "list<", ""), ">", "");
-    string_q cleaned = substitute(substitute(substitute(es, "*", ""), "enum[", ""), "]", "");
-    CStringArray items;
-    explode(items, cleaned, '|');
-    for (auto item : items) {
-        if (func) {
-            if (!(*func)(item, data))
-                return false;
-        }
-    }
-    return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-const char* STR_PATH_YAML =
-    "  /[{PATH}]:\n"
-    "    get:\n"
-    "      tags:\n"
-    "        - [{TAGS}]\n"
-    "      summary: [{SUMMARY}]\n"
-    "      description: [{DESCR}]\n"
-    "      operationId: [{ID}]\n"
-    "[{PARAMS}][{DELETE}]"
-    "      responses:\n"
-    "        \"200\":\n"
-    "          description: returns the requested data\n"
-    "          content:\n"
-    "            application/json:\n"
-    "              schema:\n"
-    "[{PROPERTIES}][{EXAMPLE}]        \"400\":\n"
-    "          description: bad input parameter\n";
-
-//---------------------------------------------------------------------------------------------------
-const char* STR_PARAM_YAML =
-    "        - name: [{NAME}]\n"
-    "          description: [{DESCR}]\n"
-    "          required: [{REQ}]\n"
-    "          style: form\n"
-    "          in: query\n"
-    "          explode: true\n"
-    "          schema:\n"
-    "[{SCHEMA}]";
-
-//---------------------------------------------------------------------------------------------------
-const char* STR_DELETE_OPTS =
-    "        - name: delete\n"
-    "          description: delete the item, but do not remove it\n"
-    "          required: false\n"
-    "          style: form\n"
-    "          in: query\n"
-    "          explode: true\n"
-    "          schema:\n"
-    "            type: boolean\n"
-    "        - name: undelete\n"
-    "          description: undelete a previously deleted item\n"
-    "          required: false\n"
-    "          style: form\n"
-    "          in: query\n"
-    "          explode: true\n"
-    "          schema:\n"
-    "            type: boolean\n"
-    "        - name: remove\n"
-    "          description: remove a previously deleted item\n"
-    "          required: false\n"
-    "          style: form\n"
-    "          in: query\n"
-    "          explode: true\n"
-    "          schema:\n"
-    "            type: boolean\n";
-
 // TODO: search for go-port
+//---------------------------------------------------------------------------------------------------
 bool goPortNewCode(const string_q& a) {
     CStringArray tools = {"chunkMan", "fireStorm", "init", "flame", "explore", "daemon"};
     for (auto tool : tools) {
@@ -1150,6 +787,12 @@ bool goPortNewCode(const string_q& a) {
             return true;
     }
     return false;
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q get_corresponds_link(const string_q& toolGroup, const string_q& toolRoute) {
+    return (" Corresponds to the <a href=\"/chifra/" + toolGroup + "/#chifra-" + toolRoute + "\">chifra " + toolRoute +
+            "</a> command line.");
 }
 // EXISTING_CODE
 }  // namespace qblocks

@@ -25,11 +25,13 @@ string_q renameExportFields(const string_q& className, const string_q& inStr) {
     replace(ret, "blockhash", "blockHash");
     replace(ret, "transactionhash", "transactionHash");
     replace(ret, "transactionindex", "transactionIndex");
+    replace(ret, "traceindex", "traceIndex");
 
     // clang-format off
     if (className == "CTransaction") {
         map<string_q, string_q> renames = {
             make_pair("ethergasprice", "ethGasPrice"),
+            make_pair("tracecnt", "traceCnt"),
             make_pair("gasused", "gasUsed"),
             make_pair("iserror", "isError"),
             make_pair("compressedtx", "compressedTx"),
@@ -39,30 +41,15 @@ string_q renameExportFields(const string_q& className, const string_q& inStr) {
         return ret;
     }
 
-    if (className == "CAppearanceDisplay") {
-        map<string_q, string_q> renames = {
-            make_pair("bn", "blockNumber"),
-            make_pair("tx", "transactionIndex"),
-            make_pair("tc", "traceId"),
-            make_pair("addr", "neighbor"),
-        };
-        for (auto item : renames)
-            replace(ret, item.first, item.second);
-        return ret;
-    }
-
     if (className == "CBlock") {
         map<string_q, string_q> renames = {
-            make_pair("bn", "blockNumber"),
-            make_pair("tx", "transactionIndex"),
-            make_pair("tc", "traceId"),
-            make_pair("addr", "address"),
             make_pair("gasused", "gasUsed"),
             make_pair("gaslimit", "gasLimit"),
             make_pair("basefeepergas", "baseFeePerGas"),
             make_pair("parenthash", "parentHash"),
             make_pair("transactionscnt", "transactionsCnt"),
-            // make_pair("addr_count", "addrCount"),
+            make_pair("unclescnt", "unclesCnt"),
+            make_pair("addr_count", "addrCount"),
             make_pair("address_count", "addrCount"),
         };
         for (auto item : renames)

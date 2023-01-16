@@ -1,11 +1,14 @@
-<!-- markdownlint-disable MD041 -->
 ## chifra traces
 
-The `chifra traces` tool retrieves a transaction's traces. You may specify multiple transaction identifiers per invocation.
+<!-- markdownlint-disable MD041 -->
+The `chifra traces` tool retrieves a transaction's traces. You may specify multiple transaction
+identifiers per invocation.
 
-The `--articulate` option fetches the ABI from each encountered smart contract to better describe the reported data.
+The `--articulate` option fetches the ABI from each encountered smart contract to better describe
+the reported data.
 
-The `--filter` option calls your node's `trace_filter` routine (if available) using a bang-separated string of the same values used by `trace_fitler`.
+The `--filter` option calls your node's `trace_filter` routine (if available) using a bang-separated
+string of the same values used by `trace_fitler`.
 
 ```[plaintext]
 Purpose:
@@ -34,8 +37,14 @@ Notes:
   - A state diff trace describes, for each modified address, what changed during that trace.
 ```
 
+Data models produced by this tool:
+
+- [trace](/data-model/chaindata/#trace)
+- [traceaction](/data-model/chaindata/#traceaction)
+- [traceresult](/data-model/chaindata/#traceresult)
+
 <!-- markdownlint-disable MD041 -->
-#### Other Options
+### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.
 
@@ -44,10 +53,19 @@ All tools accept the following additional flags, although in some cases, they ha
       --wei             export values in wei (the default)
       --ether           export values in ether
       --raw             pass raw RPC data directly from the node with no processing
-      --to_file         write the results to a temporary file and return the filename
       --output string   write the results to file 'fn' and return the filename
       --append          for --output command only append to instead of replace contents of file
       --file string     specify multiple sets of command line options in a file
-```
+  -x, --fmt string      export format, one of [none|json*|txt|csv]
+  -v, --verbose         enable verbose (increase detail with --log_level)
+  -h, --help            display this help screen
+  ```
 
-*For the `--file string` option, you may place a series of valid command lines in a file using any valid flags. In some cases, this may significantly improve performance. A semi-colon at the start of any line makes it a comment.*
+**Note:** For the `--file string` option, you may place a series of valid command lines in a file using any
+valid flags. In some cases, this may significantly improve performance. A semi-colon at the start
+of any line makes it a comment.
+
+**Note:** If you use `--output --append` option and at the same time the `--file` option, you may not switch
+export formats in the command file. For example, a command file with two different commands, one with `--fmt csv`
+and the other with `--fmt json` will produce both invalid CSV and invalid JSON.
+

@@ -14,6 +14,7 @@
 
 extern string_q get_hidden(const CCommandOption& cmd);
 extern string_q get_notes2(const CCommandOption& cmd);
+extern string_q get_aliases(const CCommandOption& cmd);
 extern string_q get_optfields(const CCommandOption& cmd);
 extern string_q get_requestopts(const CCommandOption& cmd);
 extern string_q get_defaults_apis(const CCommandOption& cmd);
@@ -46,6 +47,7 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     replaceAll(source, "[{LOWER}]", toLower(p.api_route));
     replaceAll(source, "[{PROPER}]", toProper(p.api_route));
     replaceAll(source, "[{POSTNOTES}]", get_notes2(p));
+    replaceAll(source, "[{ALIASES}]", get_aliases(p));
     string_q descr = firstLower(p.description);
     if (endsWith(descr, "."))
         replaceReverse(descr, ".", "");
@@ -55,7 +57,7 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     codewrite_t cw(fn, source);
     cw.nSpaces = 0;
     cw.stripEOFNL = false;
-    counter.nProcessed += writeCodeIn(cw);
+    counter.nProcessed += writeCodeIn(this, cw);
     counter.nVisited++;
     return true;
 }
@@ -125,7 +127,7 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     codewrite_t cw(fn, source);
     cw.nSpaces = 0;
     cw.stripEOFNL = false;
-    counter.nProcessed += writeCodeIn(cw);
+    counter.nProcessed += writeCodeIn(this, cw);
     counter.nVisited++;
 
     return true;
@@ -152,10 +154,23 @@ bool COptions::handle_gocmds_output(const CCommandOption& p) {
     codewrite_t cw(fn, source);
     cw.nSpaces = 0;
     cw.stripEOFNL = false;
-    counter.nProcessed += writeCodeIn(cw);
+    counter.nProcessed += writeCodeIn(this, cw);
     counter.nVisited++;
 
     return true;
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q toChifraHelp(const CCommandOption& cmd) {
+    if ((cmd.description.empty() && !cmd.api_route.empty()) || cmd.api_route == "blaze")
+        return "";
+
+    CCommandOption ret = cmd;
+    replaceAll(ret.description, ".", "");
+    ret.description = firstLower(ret.description);
+    if (cmd.api_route.empty())
+        return toProper(ret.Format("  [{GROUP}]:")) + "\n";
+    return ret.Format("    [{w:14:API_ROUTE}][{DESCRIPTION}]") + "\n";
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -166,18 +181,23 @@ bool COptions::handle_gocmds(void) {
     for (auto p : endpointArray) {
         if (!p.is_visible) {
             if (!p.group.empty())
-                chifraHelpStream << p.toChifraHelp();
+                chifraHelpStream << toChifraHelp(p);
             continue;
         }
         CCommandOptionArray params;
         CCommandOptionArray notes;
         for (auto option : routeOptionArray) {
-            bool isOne = option.api_route == p.api_route && option.isChifraRoute(true);
+            bool isOne = option.api_route == p.api_route && isChifraRoute(option, true);
             if (isOne) {
                 params.push_back(option);
             }
-            if (option.api_route == p.api_route && option.option_type == "note")
-                notes.push_back(option);
+            if (option.api_route == p.api_route) {
+                if (option.isNote) {
+                    notes.push_back(option);
+                } else if (option.isAlias) {
+                    p.aliases.push_back(option.description);
+                }
+            }
         }
         p.params = &params;
         p.notes = &notes;
@@ -185,7 +205,7 @@ bool COptions::handle_gocmds(void) {
         handle_gocmds_cmd(p);
         handle_gocmds_options(p);
         handle_gocmds_output(p);
-        chifraHelpStream << p.toChifraHelp();
+        chifraHelpStream << toChifraHelp(p);
     }
     chifraHelpStream << STR_CHIFRA_HELP_END;
 
@@ -268,6 +288,20 @@ string_q get_notes2(const CCommandOption& cmd) {
     }
 
     return trim(substitute(os.str(), "|", "\n    "));
+}
+
+string_q get_aliases(const CCommandOption& cmd) {
+    if (cmd.aliases.size() == 0) {
+        return "";
+    }
+
+    ostringstream os;
+    os << "\tAliases: []string{" << endl;
+    for (auto a : cmd.aliases) {
+        os << "\t\t\"" << a << "\"," << endl;
+    }
+    os << "\t}," << endl;
+    return os.str();
 }
 
 string_q noUnderbars(const string_q& in) {
@@ -359,8 +393,9 @@ string_q get_testlogs(const CCommandOption& cmd) {
 }
 
 string_q get_optfields(const CCommandOption& cmd) {
-    string_q configDocs = getDocsPathReadmes(substitute(toLower(cmd.group), " ", "") + "-" + cmd.api_route + ".config");
-    ::remove(configDocs.c_str());
+    string_q n = "readme-intros/" + substitute(toLower(cmd.group), " ", "") + "-" + cmd.api_route + ".config.md";
+    string_q configDocs = getDocsPathTemplates(n);
+    ::remove(configDocs.c_str());  // remove it if it exists, we will replace it
 
     bool hasConfig = 0;
     size_t varWidth = 0, typeWidth = 0;

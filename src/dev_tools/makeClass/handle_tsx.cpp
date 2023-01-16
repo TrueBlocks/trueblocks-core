@@ -1,3 +1,4 @@
+// TODO: One day we can remove this code, but there may be some interesting stuff here, particularly the MOUSETRAP stuff
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -19,6 +20,9 @@ extern const char* STR_LOCATION;
 extern const char* STR_ROUTE;
 extern const char* STR_TYPE_FILE;
 extern void loadRoutes(const string_q& fn);
+
+//------------------------------------------------------------------------------------------------------------
+#define explorerPath string_q("/Users/jrush/Development/trueblocks-explorer/")
 
 //------------------------------------------------------------------------------------------------------------
 static CCommandOptionArray routes;

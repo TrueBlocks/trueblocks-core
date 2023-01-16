@@ -65,7 +65,7 @@ bool COptions::handle_options(void) {
                 if (option.tool == "chifra")
                     allAuto = false;
 
-                if (option.isDeprecated) {
+                if (option.isDeprecated || option.isAlias) {
                     // do nothing
 
                 } else if (option.isNote) {

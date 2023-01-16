@@ -27,6 +27,7 @@ type ConfigOptions struct {
 	Types      []string              `json:"types,omitempty"`      // For caches module only, which type(s) of cache to report
 	Depth      uint64                `json:"depth,omitempty"`      // For caches module only, number of levels deep to report
 	Terse      bool                  `json:"terse,omitempty"`      // Show a terse summary report for mode show
+	Paths      bool                  `json:"paths,omitempty"`      // Show the configuration paths for the system
 	FirstBlock uint64                `json:"firstBlock,omitempty"` // First block to process (inclusive -- testing only)
 	LastBlock  uint64                `json:"lastBlock,omitempty"`  // Last block to process (inclusive -- testing only)
 	Globals    globals.GlobalOptions `json:"globals,omitempty"`    // The global options
@@ -46,6 +47,7 @@ func (opts *ConfigOptions) testLog() {
 	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
 	logger.TestLog(opts.Depth != utils.NOPOS, "Depth: ", opts.Depth)
 	logger.TestLog(opts.Terse, "Terse: ", opts.Terse)
+	logger.TestLog(opts.Paths, "Paths: ", opts.Paths)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 	opts.Globals.TestLog()
@@ -126,6 +128,8 @@ func configFinishParseApi(w http.ResponseWriter, r *http.Request) *ConfigOptions
 			opts.Depth = globals.ToUint64(value[0])
 		case "terse":
 			opts.Terse = true
+		case "paths":
+			opts.Paths = true
 		case "firstBlock":
 			opts.FirstBlock = globals.ToUint64(value[0])
 		case "lastBlock":

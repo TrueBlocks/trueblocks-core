@@ -58,10 +58,11 @@ class COptions : public COptionsBase {
     timestamp_t lastFormat;
     timestamp_t lastLint;
     CCommandOptionArray endpointArray;
+    map<string_q, string_q> hugoAliasMap;
 
     ostringstream optionStream, initStream, localStream, autoStream, headerStream, configStream;
     ostringstream notesStream, errorStrStream, errorDefStream, goCallStream, goPkgStream, goConvertStream;
-    ostringstream goRouteStream, chifraCmdStream, chifraHelpStream, pairMapStream;
+    ostringstream goRouteStream, chifraHelpStream;
     ostringstream apiTagStream, apiPathStream;
     ostringstream jsLocationStream, jsTemplateStream, jsHotkeyStream, jsRouteStream;
     ostringstream goStream;
@@ -80,9 +81,7 @@ class COptions : public COptionsBase {
         goConvertStream.str("");
         goPkgStream.str("");
         goRouteStream.str("");
-        chifraCmdStream.str("");
         chifraHelpStream.str("");
-        pairMapStream.str("");
         apiTagStream.str("");
         apiPathStream.str("");
         jsLocationStream.str("");
@@ -104,9 +103,7 @@ class COptions : public COptionsBase {
         goConvertStream.clear();
         goPkgStream.clear();
         goRouteStream.clear();
-        chifraCmdStream.clear();
         chifraHelpStream.clear();
-        pairMapStream.clear();
         apiTagStream.clear();
         apiPathStream.clear();
         jsLocationStream.clear();
@@ -132,9 +129,14 @@ class COptions : public COptionsBase {
     bool handle_datamodel(void);
     bool handle_tsx(void);
     bool handle_tsx_type(const CClassDefinition& classDef);
-    bool handle_sdk_paths(void);
-    bool handle_sdk_types(void);
+
     bool handle_sdk(void);
+    bool handle_sdk_ts(void);
+    bool handle_sdk_ts_paths(CStringArray& pathsOut);
+    bool handle_sdk_ts_types(CStringArray& typesOut);
+    bool handle_sdk_py(void);
+    bool handle_sdk_py_paths(CStringArray& pathsOut);
+    bool handle_sdk_py_types(CStringArray& typesOut);
 
     void generate_switch(const CCommandOption& option);
     void generate_toggle(const CCommandOption& option);
@@ -185,10 +187,9 @@ inline string_q short3(const string_q& str) {
 
 //------------------------------------------------------------------------------------------------------------
 extern void doReplace(string_q& str, const string_q& type, const string_q& rep, const string_q& spaces);
-extern bool writeCodeIn(const codewrite_t& cw);
+extern bool writeCodeIn(COptions* opts, const codewrite_t& cw);
 extern bool writeCodeOut(COptions* opts, const string_q& fn);
 extern bool writeIfDifferent(const string_q& path, const string_q& code);
-extern bool writeIfDifferent(const string_q& path, const string_q& code, const time_q& now);
 
 //---------------------------------------------------------------------------------------------------
 extern const char* STR_YAML_FRONTMATTER;
@@ -208,8 +209,11 @@ extern string_q getPathToTemplates(const string_q& part);
 
 extern bool parseEndpointsFile(const char* str, void* data);
 extern bool parseOptionsFile(const char* str, void* data);
+extern bool isChifraRoute(const CCommandOption& cmd, bool depOk);
+extern bool isApiRoute(const string_q& route);
+extern bool forEveryEnum(APPLYFUNC func, const string_q& enumStr, void* data);
+extern string_q type_2_ModelName(const string_q& type, bool fL);
+extern string_q getAliases(COptions* opts, const string_q& group, const string_q& route);
 
 //---------------------------------------------------------------------------------------------------
-#define explorerPath string_q("/Users/jrush/Development/trueblocks-explorer/")
 #define sdkPath string_q("/Users/jrush/Development/trueblocks-sdk/")
-#define coreDocsPath string_q("/Users/jrush/Development/trueblocks-core/docs/content/api/openapi.yaml")

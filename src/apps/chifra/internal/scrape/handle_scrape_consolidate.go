@@ -30,23 +30,36 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 	if err != nil {
 		return true, err
 	}
+
+	stageFolder := filepath.Join(config.GetPathToIndex(blazeOpts.Chain), "staging")
 	if len(ripeFileList) == 0 {
+		// On active chains, this most likely never happens, but on some less used or private chains, this is a frequent occurrence.
+		// return a message, but don't do anything about it.
 		msg := fmt.Sprintf("No new blocks at block %d (%d away from head)%s", progressThen.Latest, (progressThen.Latest - progressThen.Ripe), spaces)
 		logger.Log(logger.Info, msg)
+
+		// we need to move the file to the end of the scraped range so we show progress
+		stageFn, _ := file.LatestFileInFolder(stageFolder) // it may not exist...
+		stageRange := paths.RangeFromFilename(stageFn)
+		newRange := paths.FileRange{First: stageRange.First, Last: blazeOpts.StartBlock + opts.BlockCnt - 1}
+		newFilename := filepath.Join(stageFolder, newRange.String()+".txt")
+		os.Rename(stageFn, newFilename)
+		os.Remove(stageFn) // seems redundant, but may not be on some operating systems
 		return true, nil
 	}
 
-	// If we didn't get as many ripe files as we were looking for...
+	// Check to see if we got as many ripe files as we were expecting. In the case when AllowMissing is true, we
+	// can't really know, but if AllowMissing is false, then the number of files should be the same as the range width
 	ripeCnt := len(ripeFileList)
 	if uint64(ripeCnt) < (blazeOpts.BlockCount - blazeOpts.UnripeDist) {
 		// Then, if they are not at least sequential, clean up and try again...
-		if err := isListSequential(blazeOpts.Chain, ripeFileList); err != nil {
+		allowMissing := scrapeCfg.AllowMissing(blazeOpts.Chain)
+		if err := isListSequential(blazeOpts.Chain, ripeFileList, allowMissing); err != nil {
 			index.CleanTemporaryFolders(config.GetPathToCache(blazeOpts.Chain), false)
 			return true, err
 		}
 	}
 
-	stageFolder := filepath.Join(config.GetPathToIndex(blazeOpts.Chain), "staging")
 	stageFn, _ := file.LatestFileInFolder(stageFolder) // it may not exist...
 	nAppsThen := int(file.FileSize(stageFn) / asciiAppearanceSize)
 
@@ -125,6 +138,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		Last := uint64(0)
 		if len(parts) > 1 {
 			Last, _ = strconv.ParseUint(parts[1], 10, 32)
+			Last = utils.Max(blazeOpts.StartBlock + opts.BlockCnt - 1, Last)
 		} else {
 			return true, errors.New("Cannot find last block number at lineLast in consolidate: " + lineLast)
 		}
@@ -166,9 +180,8 @@ func (opts *ScrapeOptions) Report(nAppsThen, nAppsNow int) {
 	logger.Log(logger.Info, fmt.Sprintf(msg, height, nAppsNow, opts.Settings.Apps_per_chunk, pct*100, need, seen, pBlk))
 }
 
-func isListSequential(chain string, ripeFileList []os.DirEntry) error {
+func isListSequential(chain string, ripeFileList []os.DirEntry, allowMissing bool) error {
 	prev := paths.NotARange
-	allowMissing := scrapeCfg.AllowMissing(chain)
 	for _, file := range ripeFileList {
 		fileRange := paths.RangeFromFilename(file.Name())
 		if prev != paths.NotARange && prev != fileRange {

@@ -27,6 +27,7 @@ import (
 // RunChunks handles the chunks command for the command line. Returns error only as per cobra.
 func RunChunks(cmd *cobra.Command, args []string) (err error) {
 	opts := chunksFinishParse(args)
+	outputHelpers.SetEnabledForCmds("chunks", opts.IsPorted())
 	outputHelpers.SetWriterForCommand("chunks", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -37,6 +38,7 @@ func RunChunks(cmd *cobra.Command, args []string) (err error) {
 // ServeChunks handles the chunks command for the API. Returns error and a bool if handled
 func ServeChunks(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := chunksFinishParseApi(w, r)
+	outputHelpers.SetEnabledForCmds("chunks", opts.IsPorted())
 	outputHelpers.InitJsonWriterApi("chunks", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -118,6 +120,12 @@ func GetChunksOptions(args []string, g *globals.GlobalOptions) *ChunksOptions {
 		ret.Globals = *g
 	}
 	return ret
+}
+
+func (opts *ChunksOptions) IsPorted() (ported bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
 }
 
 // EXISTING_CODE

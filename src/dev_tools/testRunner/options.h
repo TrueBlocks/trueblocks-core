@@ -49,13 +49,14 @@ class COptions : public COptionsBase {
     void Init(void) override;
 
     void doTests(CMeasure& total, CTestCaseArray& testArray, const string_q& testPath, const string_q& testName,
-                 int which);
+                 int which, bool doRemove);
     bool cleanTest(const string_q& path, const string_q& testName);
 };
 
 //-----------------------------------------------------------------------
 extern bool saveAndCopy(const string_q& path, void* data);
 extern bool replaceFile(const string_q& path, void* data);
+extern bool postCleanup(const string_q& path, void* data);
 extern double verySlow;
 extern double tooSlow;
 extern double fastEnough;

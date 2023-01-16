@@ -1,5 +1,7 @@
 makeClass  --tsx CBlock
 TIME ~ CLOCK - <WARN> : Skipping typescript generation...
 TIME ~ CLOCK - <INFO>  : Processing 1 class definition files.
+TIME ~ CLOCK - <EROR> : Cannot find file ./classDefinitions/fields/CBlock.csv
 TIME ~ CLOCK - <INFO>  : handling generate...
-TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <EROR> : Cannot find file ./classDefinitions/fields/CBlock.csv
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 3 files (changed 0).                                        
