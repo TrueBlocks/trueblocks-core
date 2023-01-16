@@ -17,7 +17,10 @@
 string_q type_2_GoType(const CParameter& field) {
     string_q type = field.type;
     if (startsWith(type, 'C')) {
-        return type_2_ModelName(type, false);
+        string_q ret = type_2_ModelName(type);
+        if (field.is_flags & IS_ARRAY) {
+            ret = "[]" + ret;
+        }
     }
     if (type == "blknum")
         return "uint64";
@@ -43,6 +46,15 @@ string_q specialCase(const string_q& name, const string_q& type, bool isRaw) {
     if (name % "Logs") {
         return isRaw ? "[]RawLog" : "[]SimpleLog";
     }
+    if (name % "Action") {
+        return isRaw ? "RawTraceAction" : "*SimpleTraceAction";
+    }
+    if (name % "Result") {
+        return isRaw ? "RawTraceResult" : "*SimpleTraceResult";
+    }
+    if (name % "ArticulatedTrace") {
+        return isRaw ? "" : "*Function";
+    }
     return isRaw ? "string" : type;
 }
 
@@ -61,15 +73,17 @@ void generate_go_type_code(COptions* opts, const CClassDefinition& modelIn) {
 
     string_q fn = getPathToSource("apps/chifra/pkg/types/types_" + toLower(model.base_name) + ".go");
     string_q contents = asciiFileToString(getPathToTemplates("blank_type.go.tmpl"));
-    replaceAll(contents, "[{CLASS_NAME}]", type_2_ModelName(model.gogen, false));
+    replaceAll(contents, "[{CLASS_NAME}]", type_2_ModelName(model.gogen));
 
     CParameter raw;
-    raw.type = "*Raw" + type_2_ModelName(model.gogen, false);
+    raw.type = "*Raw" + type_2_ModelName(model.gogen);
     raw.name = "raw";
     model.fieldArray.push_back(raw);
 
     size_t maxNameWid = 0, maxSimpWid = 0, maxRawWid = 0;
     for (auto& field : model.fieldArray) {
+        if (contains(field.name, "::"))
+            continue;
         string_q type = type_2_GoType(field);
         string_q rawType = specialCase(field.name, type, true);
         string_q simpType = specialCase(field.name, type, false);
@@ -83,6 +97,8 @@ void generate_go_type_code(COptions* opts, const CClassDefinition& modelIn) {
 
     string_q rawStr;
     for (auto field : model.fieldArray) {
+        if (contains(field.name, "::"))
+            continue;
         if (!(field.name % "raw")) {
             string_q type = type_2_GoType(field);
             string_q spec = specialCase(field.name, type, true);
@@ -97,6 +113,8 @@ void generate_go_type_code(COptions* opts, const CClassDefinition& modelIn) {
 
     string_q fieldStr;
     for (auto field : model.fieldArray) {
+        if (contains(field.name, "::"))
+            continue;
         string_q type = type_2_GoType(field);
         string_q spec = specialCase(field.name, type, false);
         string_q simpType = (field.name % "raw") ? spec : padRight(spec, maxSimpWid);
@@ -112,6 +130,8 @@ void generate_go_type_code(COptions* opts, const CClassDefinition& modelIn) {
 
     string_q modelStr;
     for (auto field : model.fieldArray) {
+        if (contains(field.name, "::"))
+            continue;
         ostringstream os;
         if (!(field.name % "raw") && !(field.is_flags & (IS_OMITEMPTY | IS_ARRAY))) {
             os << "\t\t" << padRight("\"" + firstLower(field.name) + "\":", maxNameWid + 3) << " s."
@@ -122,6 +142,8 @@ void generate_go_type_code(COptions* opts, const CClassDefinition& modelIn) {
 
     string_q orderStr;
     for (auto field : model.fieldArray) {
+        if (contains(field.name, "::"))
+            continue;
         ostringstream os;
         if (!(field.name % "raw") && !(field.is_flags & (IS_OMITEMPTY | IS_ARRAY))) {
             os << "\t\t\"" << firstLower(field.name) << "\"," << debug(field) << endl;
@@ -137,5 +159,4 @@ void generate_go_type_code(COptions* opts, const CClassDefinition& modelIn) {
     codewrite_t cw(fn, contents + "\n");
     cw.nSpaces = 0;
     writeCodeIn(opts, cw);
-    // cerr << fn << endl;
 }

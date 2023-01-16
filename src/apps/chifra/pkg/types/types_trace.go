@@ -14,32 +14,33 @@ import "github.com/ethereum/go-ethereum/common"
 // EXISTING_CODE
 
 type RawTrace struct {
+	Error            bool           `json:"error"`
 	BlockHash        string         `json:"blockHash"`
 	BlockNumber      uint64         `json:"blockNumber"`
 	Timestamp        int64          `json:"timestamp"`
-	Subtraces        uint64         `json:"subtraces"`
-	TraceAddress     []string       `json:"traceAddress"`
 	TransactionHash  string         `json:"transactionHash"`
 	TransactionIndex uint64         `json:"transactionIndex"`
+	TraceAddress     []string       `json:"traceAddress"`
+	Subtraces        uint64         `json:"subtraces"`
 	Type             string         `json:"type"`
-	Error            bool           `json:"error"`
 	Action           RawTraceAction `json:"action"`
 	Result           RawTraceResult `json:"result"`
 }
 
 type SimpleTrace struct {
-	BlockHash        common.Hash        `json:"blockHash"`
-	BlockNumber      Blknum             `json:"blockNumber"`
-	Timestamp        int64              `json:"timestamp"`
-	Subtraces        uint64             `json:"subtraces"`
-	TraceAddress     []string           `json:"traceAddress"`
-	TransactionHash  common.Hash        `json:"transactionHash"`
-	TransactionIndex Blknum             `json:"transactionIndex"`
-	Type             string             `json:"type"`
 	Error            string             `json:"error"`
+	BlockHash        common.Hash        `json:"blockHash"`
+	BlockNumber      uint64             `json:"blockNumber"`
+	Timestamp        int64              `json:"timestamp"`
+	TransactionHash  common.Hash        `json:"transactionHash"`
+	TransactionIndex uint64             `json:"transactionIndex"`
+	TraceAddress     []string           `json:"traceAddress"`
+	Subtraces        uint64             `json:"subtraces"`
+	Type             string             `json:"type"`
 	Action           *SimpleTraceAction `json:"action"`
 	Result           *SimpleTraceResult `json:"result"`
 	ArticulatedTrace *SimpleFunction    `json:"articulatedTrace"`
+	CompressedTrace  string             `json:"compressedTrace"`
 	raw              *RawTrace
 }
 
@@ -67,7 +68,7 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 		"action":           s.Action,
 		"result":           s.Result,
 		"articulatedTrace": s.ArticulatedTrace,
-		// "compressedTrace":  s.CompressedTrace,
+		"compressedTrace":  s.CompressedTrace,
 	}
 
 	order := []string{
