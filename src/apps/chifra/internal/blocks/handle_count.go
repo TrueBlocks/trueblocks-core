@@ -58,7 +58,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 				}
 
 				if opts.Traces {
-					if blockCount.TracesCnt, err = rpcClient.GetTraceCountByNumber(opts.Globals.Chain, bn); err != nil {
+					if blockCount.TracesCnt, err = rpcClient.GetTraceCountByBlockNumber(opts.Globals.Chain, bn); err != nil {
 						errorChan <- err
 						cancel()
 						return

@@ -36,7 +36,7 @@ func (opts *BlocksOptions) HandleTrace() error {
 
 			for _, bn := range blockNums {
 				var traces []types.SimpleTrace
-				if traces, err = rpcClient.GetTracesByNumber(opts.Globals.Chain, bn); err != nil {
+				if traces, err = rpcClient.GetTracesByBlockNumber(opts.Globals.Chain, bn); err != nil {
 					errorChan <- err
 					cancel()
 					return
