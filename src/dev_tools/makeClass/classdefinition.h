@@ -45,7 +45,7 @@ class CClassDefinition : public CBaseNode {
     CParameterArray fieldArray;
     CParameterArray extraArray;
     string_q contained_by;
-    bool go_code;
+    string_q gogen;
     string_q doc_group;
     string_q doc_order;
     string_q doc_descr;
@@ -140,7 +140,7 @@ inline void CClassDefinition::initialize(void) {
     fieldArray.clear();
     extraArray.clear();
     contained_by = "";
-    go_code = false;
+    gogen = "";
     doc_group = "";
     doc_order = "";
     doc_descr = "";
@@ -177,7 +177,7 @@ inline void CClassDefinition::duplicate(const CClassDefinition& cl) {
     fieldArray = cl.fieldArray;
     extraArray = cl.extraArray;
     contained_by = cl.contained_by;
-    go_code = cl.go_code;
+    gogen = cl.gogen;
     doc_group = cl.doc_group;
     doc_order = cl.doc_order;
     doc_descr = cl.doc_descr;

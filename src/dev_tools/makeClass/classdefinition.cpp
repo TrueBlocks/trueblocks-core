@@ -160,8 +160,8 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'g':
-            if (fieldName % "go_code") {
-                return bool_2_Str(go_code);
+            if (fieldName % "gogen") {
+                return gogen;
             }
             break;
         case 'h':
@@ -321,8 +321,8 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
             }
             break;
         case 'g':
-            if (fieldName % "go_code") {
-                go_code = str_2_Bool(fieldValue);
+            if (fieldName % "gogen") {
+                gogen = fieldValue;
                 return true;
             }
             break;
@@ -403,7 +403,7 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     // archive >> fieldArray;
     // archive >> extraArray;
     archive >> contained_by;
-    archive >> go_code;
+    archive >> gogen;
     archive >> doc_group;
     archive >> doc_order;
     archive >> doc_descr;
@@ -443,7 +443,7 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     // archive << fieldArray;
     // archive << extraArray;
     archive << contained_by;
-    archive << go_code;
+    archive << gogen;
     archive << doc_group;
     archive << doc_order;
     archive << doc_descr;
@@ -521,7 +521,7 @@ void CClassDefinition::registerClass(void) {
     ADD_FIELD(CClassDefinition, "extraArray", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CClassDefinition, "extraArray");
     ADD_FIELD(CClassDefinition, "contained_by", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CClassDefinition, "go_code", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CClassDefinition, "gogen", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "doc_group", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "doc_order", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "doc_descr", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -697,7 +697,7 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
     doc_route = toml.getConfigStr("settings", "doc_route", "");
     doc_alias = toml.getConfigStr("settings", "doc_alias", "");
     doc_order = nextTokenClear(doc_group, '-') + nextTokenClear(doc_route, '-');
-    go_code = toml.getConfigBool("settings", "go_code", false);
+    gogen = toml.getConfigStr("settings", "gogen", "");
 
     //------------------------------------------------------------------------------------------------
     class_base = toProper(extract(class_name, 1));

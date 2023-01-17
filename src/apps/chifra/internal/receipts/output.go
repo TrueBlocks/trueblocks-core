@@ -117,7 +117,8 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 					continue
 				}
 
-				receipt, err := rpcClient.GetTransactionReceipt(opts.Globals.Chain, uint64(tx.BlockNumber), uint64(tx.TransactionIndex))
+				// TODO: Why does this interface always accept nil and zero at the end?
+				receipt, err := rpcClient.GetTransactionReceipt(opts.Globals.Chain, uint64(tx.BlockNumber), uint64(tx.TransactionIndex), nil, 0)
 				if err != nil && err.Error() == "not found" {
 					errorChan <- fmt.Errorf("transaction %s not found", opts.Transactions[idIndex])
 					continue

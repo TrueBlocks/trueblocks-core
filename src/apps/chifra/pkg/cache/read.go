@@ -5,7 +5,6 @@ import (
 	"encoding/binary"
 	"errors"
 	"math/big"
-	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common"
@@ -182,16 +181,6 @@ func makeArrayItemRead[Item ArrayItem](
 	}
 }
 
-func readTimestamp(read readBytes, target *time.Time) (err error) {
-	var rawTimestamp int64
-	err = read(&rawTimestamp)
-	if err != nil {
-		return
-	}
-	*target = time.Unix(rawTimestamp, 0)
-	return
-}
-
 func readUintAsBool(read readBytes, target *bool) (err error) {
 	var raw uint8
 	err = read(&raw)
@@ -232,8 +221,8 @@ func readCacheHeader(reader *bufio.Reader, target *cacheHeader) (err error) {
 // TODO(cache): (see https://github.com/TrueBlocks/trueblocks-core/pull/2584#discussion_r1031564867)
 // TODO(cache): Eventually much of this code will be auto-generated.
 // (applies to the rest of "Read[DataType]" functions below as well)
-func ReadBlock(reader *bufio.Reader) (block *types.SimpleBlock, err error) {
-	block = &types.SimpleBlock{}
+func ReadBlock(reader *bufio.Reader) (block *types.SimpleBlock[types.SimpleTransaction], err error) {
+	block = &types.SimpleBlock[types.SimpleTransaction]{}
 	read := createReadFn(reader)
 
 	header := &cacheHeader{}
@@ -286,7 +275,7 @@ func ReadBlock(reader *bufio.Reader) (block *types.SimpleBlock, err error) {
 		return
 	}
 
-	err = readTimestamp(read, &block.Timestamp)
+	err = read(&block.Timestamp)
 	if err != nil {
 		return
 	}
@@ -343,7 +332,7 @@ func ReadTransaction(reader *bufio.Reader) (tx *types.SimpleTransaction, err err
 		return
 	}
 
-	err = readTimestamp(read, &tx.Timestamp)
+	err = read(&tx.Timestamp)
 	if err != nil {
 		return
 	}
@@ -692,7 +681,7 @@ func ReadTrace(reader *bufio.Reader) (trace *types.SimpleTrace, err error) {
 		return
 	}
 
-	err = readString(reader, &trace.TraceType)
+	err = readString(reader, &trace.Type)
 	if err != nil {
 		return
 	}

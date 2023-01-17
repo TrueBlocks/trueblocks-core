@@ -36,7 +36,7 @@ func LoadPrefunds(chain string) ([]Allocation, error) {
 		if common.IsHexAddress(record[0]) {
 			allocs = append(allocs, Allocation{
 				Address: common.HexToAddress(record[0]),
-				Balance: utils.ToBigInt(record[1]),
+				Balance: utils.Str_2_BigInt(record[1]),
 				Petname: AddrToPetname(record[0], "-"),
 			})
 		}
@@ -46,7 +46,7 @@ func LoadPrefunds(chain string) ([]Allocation, error) {
 		// We want at least one...
 		allocs = append(allocs, Allocation{
 			Address: common.HexToAddress("0x0"),
-			Balance: utils.ToBigInt("0"),
+			Balance: utils.Str_2_BigInt("0"),
 			Petname: AddrToPetname("0x0000000000000000000000000000000000000000", "-"),
 		})
 	}

@@ -141,12 +141,17 @@ The following commands produce and manage Receipts:
 
 Receipts consist of the following fields:
 
-| Field           | Description                                                                | Type                                |
-| --------------- | -------------------------------------------------------------------------- | ----------------------------------- |
-| status          | `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise | uint32                              |
-| contractAddress | the address of the newly created contract, if any                          | address                             |
-| gasUsed         | the amount of gas actually used by the transaction                         | gas                                 |
-| logs            | a possibly empty array of logs                                             | [Log[]](/data-model/chaindata/#log) |
+| Field            | Description                                                                | Type                                |
+| ---------------- | -------------------------------------------------------------------------- | ----------------------------------- |
+| blockNumber      |                                                                            | blknum                              |
+| transactionIndex |                                                                            | blknum                              |
+| transactionHash  |                                                                            | hash                                |
+| blockHash        |                                                                            | hash                                |
+| status           | `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise | uint32                              |
+| gasUsed          | the amount of gas actually used by the transaction                         | gas                                 |
+| contractAddress  | the address of the newly created contract, if any                          | address                             |
+| isError          |                                                                            | bool                                |
+| logs             | a possibly empty array of logs                                             | [Log[]](/data-model/chaindata/#log) |
 
 ## Log
 
@@ -260,7 +265,8 @@ TraceResults consist of the following fields:
 ## BlockCount
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
-The BlockCount data model carries information about counts for various parts of the Block data structure.
+`chifra blocks --count` returns the number of various types of data in a block. For example, `transactionCnt` is the number of transactions in the block, 
+and so on.
 
 The following commands produce and manage BlockCounts:
 

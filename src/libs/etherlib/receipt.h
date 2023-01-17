@@ -34,7 +34,6 @@ class CReceipt : public CBaseNode {
     gas_t gasUsed;
     gas_t effectiveGasPrice;
     CLogEntryArray logs;
-    string_q root;
     uint32_t status;
 
   public:
@@ -109,7 +108,6 @@ inline void CReceipt::initialize(void) {
     gasUsed = 0;
     effectiveGasPrice = 0;
     logs.clear();
-    root = "";
     status = NO_STATUS;
 
     // EXISTING_CODE
@@ -127,7 +125,6 @@ inline void CReceipt::duplicate(const CReceipt& re) {
     gasUsed = re.gasUsed;
     effectiveGasPrice = re.effectiveGasPrice;
     logs = re.logs;
-    root = re.root;
     status = re.status;
 
     // EXISTING_CODE

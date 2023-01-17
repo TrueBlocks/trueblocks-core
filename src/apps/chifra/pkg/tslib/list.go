@@ -46,7 +46,7 @@ func GetSpecials(chain string) (specials []types.SimpleNamedBlock, err error) {
 		}
 		if len(record) == 4 {
 			if bn, err := strconv.ParseUint(record[0], 10, 64); err == nil {
-				if ts, err := strconv.ParseUint(record[2], 10, 64); err == nil {
+				if ts, err := strconv.ParseInt(record[2], 10, 64); err == nil {
 					specials = append(specials, types.SimpleNamedBlock{
 						BlockNumber: bn,
 						Name:        record[1],

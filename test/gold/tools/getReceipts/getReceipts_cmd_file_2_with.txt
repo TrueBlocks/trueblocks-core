@@ -6,13 +6,18 @@ TEST[DATE|TIME] Format:  txt
 {
   "data": [
     {
-      "blockHash": "0xccff406c95943cebea30307dd06824423f91240bd6aab7029d8003655ae7f23e",
-      "blockNumber": "0x562252",
-      "contractAddress": "",
-      "cumulativeGasUsed": "0xcb55",
-      "effectiveGasPrice": "0x170cdc1e00",
       "from": "0x2bd36c4eb60f9a412b9dd1d12c1ea23e6ee09e30",
+      "to": "0xfe5f141bf94fe84bc28ded0ab966c16b17490657",
+      "effectiveGasPrice": "0x170cdc1e00",
+      "cumulativeGasUsed": "0xcb55",
+      "blockNumber": "0x562252",
+      "transactionIndex": "0x0",
+      "transactionHash": "0xb440bb9522672cdee57b447f406a22feec453764be784c6bd1b1f3188fa677be",
+      "blockHash": "0xccff406c95943cebea30307dd06824423f91240bd6aab7029d8003655ae7f23e",
+      "status": "0x1",
       "gasUsed": "0xcb55",
+      "contractAddress": "",
+      "isError": "",
       "logs": [
         {
           "address": "0xfe5f141bf94fe84bc28ded0ab966c16b17490657",
@@ -29,13 +34,7 @@ TEST[DATE|TIME] Format:  txt
           "logIndex": "0x0",
           "removed": false
         }
-      ],
-      "logsBloom": "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000800000000000000000000000000000000000080000000000000000000000000a000000000000000000000000000000010004000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000020000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000000000000000000000004000000000000000400000000000000000000",
-      "status": "0x1",
-      "to": "0xfe5f141bf94fe84bc28ded0ab966c16b17490657",
-      "transactionHash": "0xb440bb9522672cdee57b447f406a22feec453764be784c6bd1b1f3188fa677be",
-      "transactionIndex": "0x0",
-      "type": "0x0"
+      ]
     }
   ]
 }

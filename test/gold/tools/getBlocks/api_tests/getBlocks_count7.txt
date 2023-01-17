@@ -1,0 +1,6 @@
+blocks?blocks=3&fmt=json&count&traces&uncles&apps&fmt=txt
+{
+  "errors": [
+    "The --traces option is not available with the --apps option."
+  ]
+}

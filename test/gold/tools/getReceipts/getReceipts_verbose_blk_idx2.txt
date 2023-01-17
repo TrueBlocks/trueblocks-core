@@ -9,8 +9,9 @@ TEST[DATE|TIME] Format:  json
       "blockNumber": 3657480,
       "cumulativeGasUsed": "84000",
       "gasUsed": 21000,
-      "hash": "0xc62d9410b73b18d767fe32df91e6336c5d563eceee49c55c56df65bfeb4b966d",
+      "logs": [],
       "status": 1,
+      "transactionHash": "0xc62d9410b73b18d767fe32df91e6336c5d563eceee49c55c56df65bfeb4b966d",
       "transactionIndex": 3
     }
   ]

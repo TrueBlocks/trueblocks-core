@@ -4,83 +4,6 @@
 
 package rpcClient
 
-import (
-	"bytes"
-	"encoding/json"
-	"io"
-	"net/http"
-	"sync/atomic"
-)
-
-var rpcCounter uint32
-
-// FromRpc Returns all traces for a given block.
-func FromRpc(rpcProvider string, payload *RPCPayload, ret interface{}) error {
-	type rpcPayload struct {
-		Jsonrpc   string `json:"jsonrpc"`
-		Method    string `json:"method"`
-		RPCParams `json:"params"`
-		ID        int `json:"id"`
-	}
-	payloadToSend := rpcPayload{
-		Jsonrpc:   "2.0",
-		Method:    payload.Method,
-		RPCParams: payload.RPCParams,
-		ID:        int(atomic.AddUint32(&rpcCounter, 1)),
-	}
-	plBytes, err := json.Marshal(payloadToSend)
-	if err != nil {
-		return err
-	}
-
-	body := bytes.NewReader(plBytes)
-	req, err := http.NewRequest("POST", rpcProvider, body)
-	if err != nil {
-		return err
-	}
-
-	req.Header.Set("Content-Type", "application/json")
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-
-	theBytes, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return err
-	}
-
-	return json.Unmarshal(theBytes, ret)
-}
-
-// BlockHeader carries values returned by the `eth_getBlockByNumber` RPC command
-type BlockHeader struct {
-	Jsonrpc string `json:"jsonrpc"`
-	Result  struct {
-		Author           string   `json:"author"`
-		Difficulty       string   `json:"difficulty"`
-		ExtraData        string   `json:"extraData"`
-		GasLimit         string   `json:"gasLimit"`
-		GasUsed          string   `json:"gasUsed"`
-		Hash             string   `json:"hash"`
-		LogsBloom        string   `json:"logsBloom"`
-		Miner            string   `json:"miner"`
-		MixHash          string   `json:"mixHash"`
-		Nonce            string   `json:"nonce"`
-		Number           string   `json:"number"`
-		ParentHash       string   `json:"parentHash"`
-		ReceiptsRoot     string   `json:"receiptsRoot"`
-		SealFields       []string `json:"sealFields"`
-		Sha3Uncles       string   `json:"sha3Uncles"`
-		Size             string   `json:"size"`
-		StateRoot        string   `json:"stateRoot"`
-		Timestamp        string   `json:"timestamp"`
-		TransactionsRoot string   `json:"transactionsRoot"`
-	} `json:"result"`
-	ID int `json:"id"`
-}
-
 // Traces carries values returned the `trace_block` RPC command
 type Traces struct {
 	Jsonrpc string `json:"jsonrpc"`
@@ -135,27 +58,6 @@ type Logs struct {
 	ID int `json:"id"`
 }
 
-// Receipt carries values returned by the eth_getReceipt RPC call
-type Receipt struct {
-	Jsonrpc string `json:"jsonrpc"`
-	Result  struct {
-		BlockHash         string        `json:"blockHash"`
-		BlockNumber       string        `json:"blockNumber"`
-		ContractAddress   string        `json:"contractAddress"`
-		CumulativeGasUsed string        `json:"cumulativeGasUsed"`
-		From              string        `json:"from"`
-		GasUsed           string        `json:"gasUsed"`
-		Logs              []interface{} `json:"logs"`
-		LogsBloom         string        `json:"logsBloom"`
-		Root              string        `json:"root"`
-		Status            interface{}   `json:"status"`
-		To                interface{}   `json:"to"`
-		TransactionHash   string        `json:"transactionHash"`
-		TransactionIndex  string        `json:"transactionIndex"`
-	} `json:"result"`
-	ID int `json:"id"`
-}
-
 // Transaction carries values returned by the eth_getTransacction RPC calls
 type Transaction struct {
 	Jsonrpc string `json:"jsonrpc"`
@@ -179,15 +81,6 @@ type Transaction struct {
 		Chainid          string
 	} `json:"result"`
 	ID int `json:"id"`
-}
-
-// RPCParams are used during calls to the RPC.
-type RPCParams []interface{}
-
-// RPCPayload is used during to make calls to the RPC.
-type RPCPayload struct {
-	Method    string `json:"method"`
-	RPCParams `json:"params"`
 }
 
 // LogFilter is used the eth_getLogs RPC call to identify the block range to query

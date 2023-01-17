@@ -13,6 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -127,24 +128,26 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 		//	fmt.Println("Forcing failure for block", blockNum)
 		//	return errors.New("Forcing failure")
 		//}
-		// RPCPayload is used during to make calls to the RPC.
+		// rpc.Payload is used during to make calls to the RPC.
+		// TODO: Use rpc.Query
 		var traces rpcClient.Traces
-		tracePayload := rpcClient.RPCPayload{
-			Method:    "trace_block",
-			RPCParams: rpcClient.RPCParams{fmt.Sprintf("0x%x", blockNum)},
+		tracePayload := rpc.Payload{
+			Method: "trace_block",
+			Params: rpc.Params{fmt.Sprintf("0x%x", blockNum)},
 		}
-		err = rpcClient.FromRpc(opts.RpcProvider, &tracePayload, &traces)
+		err = rpc.FromRpc(opts.RpcProvider, &tracePayload, &traces)
 		if err != nil {
 			// fmt.Println("rpcCall failed at block", blockNum, err)
 			return err
 		}
 
 		var logs rpcClient.Logs
-		logsPayload := rpcClient.RPCPayload{
-			Method:    "eth_getLogs",
-			RPCParams: rpcClient.RPCParams{rpcClient.LogFilter{Fromblock: fmt.Sprintf("0x%x", blockNum), Toblock: fmt.Sprintf("0x%x", blockNum)}},
+		// TODO: Use rpc.Query
+		logsPayload := rpc.Payload{
+			Method: "eth_getLogs",
+			Params: rpc.Params{rpcClient.LogFilter{Fromblock: fmt.Sprintf("0x%x", blockNum), Toblock: fmt.Sprintf("0x%x", blockNum)}},
 		}
-		err = rpcClient.FromRpc(opts.RpcProvider, &logsPayload, &logs)
+		err = rpc.FromRpc(opts.RpcProvider, &logsPayload, &logs)
 		if err != nil {
 			// fmt.Println("rpcCall failed at block", blockNum, err)
 			return err
@@ -327,17 +330,13 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 			if traces.Result[i].Action.To == "" {
 				if traces.Result[i].Result.Address == "" {
 					if traces.Result[i].Error != "" {
-						var receipt rpcClient.Receipt
-						var txReceiptPl = rpcClient.RPCPayload{
-							Method:    "eth_getTransactionReceipt",
-							RPCParams: rpcClient.RPCParams{traces.Result[i].TransactionHash},
-						}
-						err = rpcClient.FromRpc(opts.RpcProvider, &txReceiptPl, &receipt)
+						// TODO: Why does this interface always accept nil and zero at the end?
+						receipt, err := rpcClient.GetTransactionReceipt(opts.Chain, uint64(bn), uint64(txid), nil, 0)
 						if err != nil {
 							// fmt.Println("rpcCall failed at block", traces.Result[i].TransactionHash, err)
 							return err
 						}
-						addr := receipt.Result.ContractAddress
+						addr := hexutil.Encode(receipt.ContractAddress.Bytes())
 						if isAddress(addr) {
 							opts.AddToMaps(addr, bn, txid, addressMap)
 						}

@@ -6,7 +6,6 @@ import (
 	"math"
 	"math/big"
 	"strings"
-	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common"
@@ -51,12 +50,6 @@ func writeAddress(writer *bufio.Writer, address *common.Address) (err error) {
 		return writeString(writer, &value)
 	}
 	return writeString(writer, &value)
-}
-
-func writeTimestamp(writer *bufio.Writer, value *time.Time) (err error) {
-	write := createWriteFn(writer)
-	sec := value.Unix()
-	return write(sec)
 }
 
 func writeBigUint(writer *bufio.Writer, value *big.Int) (err error) {
@@ -142,7 +135,7 @@ func writeDefaultHeader(writer *bufio.Writer, className string) (err error) {
 	return
 }
 
-func WriteBlock(writer *bufio.Writer, block *types.SimpleBlock) (err error) {
+func WriteBlock(writer *bufio.Writer, block *types.SimpleBlock[types.SimpleTransaction]) (err error) {
 	// TODO(cache): It's not all clear to me why we need this "complication." I'd prefer seeing exactly
 	// TODO(cache): that we are writing LittleEndian. Plus, remember, all of the data-related code will
 	// TODO(cache): be auto-generated as soon as we get around to it. So, it doesn't save keystrokes, even.
@@ -198,7 +191,7 @@ func WriteBlock(writer *bufio.Writer, block *types.SimpleBlock) (err error) {
 		return
 	}
 
-	err = writeTimestamp(writer, &block.Timestamp)
+	err = write(&block.Timestamp)
 	if err != nil {
 		return
 	}
@@ -248,7 +241,7 @@ func WriteTransaction(writer *bufio.Writer, tx *types.SimpleTransaction) (err er
 		return
 	}
 
-	err = writeTimestamp(writer, &tx.Timestamp)
+	err = write(&tx.Timestamp)
 	if err != nil {
 		return
 	}
@@ -562,7 +555,7 @@ func WriteTrace(writer *bufio.Writer, trace *types.SimpleTrace) (err error) {
 		return
 	}
 
-	err = writeString(writer, &trace.TraceType)
+	err = writeString(writer, &trace.Type)
 	if err != nil {
 		return
 	}

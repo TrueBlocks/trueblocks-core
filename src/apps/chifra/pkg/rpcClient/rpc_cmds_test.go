@@ -9,6 +9,8 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 )
 
 func TestFromRpcCounter(t *testing.T) {
@@ -28,9 +30,10 @@ func TestFromRpcCounter(t *testing.T) {
 
 	var result map[string]string
 	for i := 0; i < 20; i++ {
-		err := FromRpc(
+		// TODO: Use rpc.Query
+		err := rpc.FromRpc(
 			server.URL,
-			&RPCPayload{},
+			&rpc.Payload{},
 			&result,
 		)
 		if err != nil {
