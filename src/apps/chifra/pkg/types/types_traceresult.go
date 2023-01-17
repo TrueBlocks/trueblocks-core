@@ -9,7 +9,10 @@
 package types
 
 // EXISTING_CODE
-import "github.com/ethereum/go-ethereum/common"
+import (
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
+)
 
 // EXISTING_CODE
 
@@ -21,10 +24,10 @@ type RawTraceResult struct {
 }
 
 type SimpleTraceResult struct {
-	NewContract common.Address `json:"newContract"`
-	Code        string         `json:"code"`
+	NewContract common.Address `json:"newContract,omitempty"`
+	Code        string         `json:"code,omitempty"`
 	GasUsed     Gas            `json:"gasUsed"`
-	Output      string         `json:"output"`
+	Output      string         `json:"output,omitempty"`
 	raw         *RawTraceResult
 }
 
@@ -41,20 +44,27 @@ func (s *SimpleTraceResult) Model(showHidden bool, format string, extraOptions m
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
-		"newContract": s.NewContract,
-		"code":        s.Code,
 		"gasUsed":     s.GasUsed,
-		"output":      s.Output,
 	}
 
 	order := []string{
-		"newContract",
-		"code",
 		"gasUsed",
-		"output",
 	}
 
 	// EXISTING_CODE
+	if format == "json" {
+		if len(s.NewContract) > 0 && s.NewContract != common.HexToAddress("0x0") {
+			model["newContract"] = s.NewContract
+			order = append(order, "newContract")
+		}
+	} else {
+		if len(s.NewContract) > 0 && s.NewContract == common.HexToAddress("0x0") {
+			model["newContract"] = "0x"
+		} else {
+			model["newContract"] = hexutil.Encode(s.NewContract.Bytes())
+		}
+		order = append(order, "newContract")
+	}
 	// EXISTING_CODE
 
 	return Model{

@@ -30,7 +30,7 @@ type RawTrace struct {
 }
 
 type SimpleTrace struct {
-	Error            string             `json:"error"`
+	Error            string             `json:"error,omitempty"`
 	BlockHash        common.Hash        `json:"blockHash"`
 	BlockNumber      uint64             `json:"blockNumber"`
 	Timestamp        int64              `json:"timestamp"`
@@ -38,11 +38,11 @@ type SimpleTrace struct {
 	TransactionIndex uint64             `json:"transactionIndex"`
 	TraceAddress     []string           `json:"traceAddress"`
 	Subtraces        uint64             `json:"subtraces"`
-	Type             string             `json:"type"`
+	Type             string             `json:"type,omitempty"`
 	Action           *SimpleTraceAction `json:"action"`
 	Result           *SimpleTraceResult `json:"result"`
 	ArticulatedTrace *SimpleFunction    `json:"articulatedTrace"`
-	CompressedTrace  string             `json:"compressedTrace"`
+	CompressedTrace  string             `json:"compressedTrace,omitempty"`
 	raw              *RawTrace
 }
 
@@ -59,36 +59,31 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
-		"error":            s.Error,
 		"blockHash":        s.BlockHash,
 		"blockNumber":      s.BlockNumber,
 		"timestamp":        s.Timestamp,
 		"transactionHash":  s.TransactionHash,
 		"transactionIndex": s.TransactionIndex,
 		"subtraces":        s.Subtraces,
-		"type":             s.Type,
 		"action":           s.Action,
 		"result":           s.Result,
 		"articulatedTrace": s.ArticulatedTrace,
-		"compressedTrace":  s.CompressedTrace,
 	}
 
 	order := []string{
-		"error",
 		"blockHash",
 		"blockNumber",
 		"timestamp",
 		"transactionHash",
 		"transactionIndex",
 		"subtraces",
-		"type",
 		"action",
 		"result",
 		"articulatedTrace",
-		"compressedTrace",
 	}
 
 	// EXISTING_CODE
+	// TODO: BOGUS - HANDLE OMITEMPTY HERE
 	// EXISTING_CODE
 
 	return Model{

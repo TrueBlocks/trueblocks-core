@@ -30,13 +30,13 @@ type SimpleTraceAction struct {
 	SelfDestructed common.Address `json:"selfDestructed,omitempty"`
 	Balance        Wei            `json:"balance,omitempty"`
 	Value          Wei            `json:"value"`
-	Init           string         `json:"init"`
+	Init           string         `json:"init,omitempty"`
 	From           common.Address `json:"from"`
 	To             common.Address `json:"to"`
 	Gas            Gas            `json:"gas"`
-	Input          string         `json:"input"`
+	Input          string         `json:"input,omitempty"`
 	CallType       string         `json:"callType"`
-	RefundAddress  common.Address `json:"refundAddress"`
+	RefundAddress  common.Address `json:"refundAddress,omitempty"`
 	raw            *RawTraceAction
 }
 
@@ -54,27 +54,22 @@ func (s *SimpleTraceAction) Model(showHidden bool, format string, extraOptions m
 
 	model := map[string]interface{}{
 		"value":          s.Value,
-		"init":           s.Init,
 		"from":           s.From,
 		"to":             s.To,
 		"gas":            s.Gas,
-		"input":          s.Input,
 		"callType":       s.CallType,
-		"refundAddress":  s.RefundAddress,
 	}
 
 	order := []string{
 		"value",
-		"init",
 		"from",
 		"to",
 		"gas",
-		"input",
 		"callType",
-		"refundAddress",
 	}
 
 	// EXISTING_CODE
+	// TODO: BOGUS - HANDLE OMITEMPTY FIELDS HERE
 	// EXISTING_CODE
 
 	return Model{
