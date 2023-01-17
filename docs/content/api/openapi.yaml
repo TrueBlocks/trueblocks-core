@@ -1196,14 +1196,6 @@ paths:
           explode: true
           schema:
             type: string
-        - name: statediff
-          description: export state diff traces (not implemented)
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: count
           description: show the number of traces for the transaction only (fast)
           required: false

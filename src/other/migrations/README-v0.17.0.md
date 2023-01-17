@@ -114,7 +114,7 @@ Here's a table showing which endpoints changed. Previously the API endpoints wer
 | traces       | transactions |                           |             |
 |              |              | --articulate              |             |
 |              |              | --filter                  |             |
-|              |              | --statediff               |             |
+|              |              | --statediff (removed)     |             |
 |              |              | --count                   |             |
 |              |              | --skip_ddos               | skipDdos    |
 |              |              | --max                     |             |

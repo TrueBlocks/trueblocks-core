@@ -62,12 +62,6 @@ params.size: 0
   "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
   "statements": [
     {
       "blockNumber": 1,
@@ -171,12 +165,6 @@ params.size: 0
   "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
   "statements": [
     {
       "blockNumber": 5,
@@ -280,12 +268,6 @@ params.size: 0
   "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
   "statements": [
     {
       "blockNumber": 56,
@@ -389,12 +371,6 @@ params.size: 0
   "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
   "statements": [
     {
       "blockNumber": 235,
@@ -498,12 +474,6 @@ params.size: 0
   "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
   "statements": [
     {
       "blockNumber": 247,
@@ -607,12 +577,6 @@ params.size: 0
   "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
   "statements": [
     {
       "blockNumber": 348,
@@ -716,12 +680,6 @@ params.size: 0
   "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
   "statements": [
     {
       "blockNumber": 500,
@@ -825,12 +783,6 @@ params.size: 0
   "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
   "statements": [
     {
       "blockNumber": 563,
@@ -934,12 +886,6 @@ params.size: 0
   "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
   "statements": [
     {
       "blockNumber": 987,
@@ -1045,12 +991,6 @@ params.size: 0
   "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
   "statements": [
     {
       "blockNumber": 1450,
@@ -1154,12 +1094,6 @@ params.size: 0
   "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
   "statements": [
     {
       "blockNumber": 1580,
@@ -1263,12 +1197,6 @@ params.size: 0
   "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
   "statements": [
     {
       "blockNumber": 1586,
@@ -1372,12 +1300,6 @@ params.size: 0
   "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
   "statements": [
     {
       "blockNumber": 1861,
@@ -1481,12 +1403,6 @@ params.size: 0
   "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
   "statements": [
     {
       "blockNumber": 1912,
@@ -1590,12 +1506,6 @@ params.size: 0
   "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
   "statements": [
     {
       "blockNumber": 2057,
