@@ -61,6 +61,12 @@ params.size: 0
   "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
+  "receipt": {
+    "contractAddress": "0x0",
+    "gasUsed": 0,
+    "effectiveGasPrice": 0,
+    "status": null
+  },
   "statements": [
     {
       "blockNumber": 0,
