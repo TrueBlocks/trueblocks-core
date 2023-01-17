@@ -812,6 +812,35 @@ components:
           type: string
           example: "byzantium"
           description: "an optional name for the block"
+    traceCount:
+      description: "counts the number of traces in a transaction"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          example: 10
+          description: "the block number"
+        transactionIndex:
+          type: number
+          format: blknum
+          example: 10
+          description: "the transaction index"
+        transactionHash:
+          type: string
+          format: hash
+          example: "10"
+          description: "the transaction's hash"
+        timestamp:
+          type: number
+          format: timestamp
+          example: 10
+          description: "the timestamp of the block"
+        tracesCnt:
+          type: number
+          format: uint64
+          example: 30
+          description: "the number of traces in the transaction"
     ethState:
       description: "the on-chain state of a given address including ETH balance, nonce, and smart contract byte code if present"
       type: object

@@ -50,6 +50,14 @@ func (opts *TracesOptions) TracesInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
+	if opts.IsPorted() {
+		if opts.Count {
+			return opts.HandleCounts(), true
+		} else {
+			return opts.HandleShowTraces(), true
+		}
+	}
+
 	if opts.Globals.IsApiMode() {
 		return nil, false
 	}
@@ -72,6 +80,13 @@ func GetTracesOptions(args []string, g *globals.GlobalOptions) *TracesOptions {
 
 func (opts *TracesOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
+	if opts.Articulate {
+		return false
+	} else if opts.Count {
+		ported = false
+	} else {
+		ported = false // opts.Globals.ShowRaw // && !opts.Articulate && len(opts.Filter) == 0 && !opts.Statediff && !opts.Count
+	}
 	// EXISTING_CODE
 	return
 }

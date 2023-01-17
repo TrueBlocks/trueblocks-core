@@ -108,7 +108,7 @@ func GetTraceCountByBlockNumber(chain string, bn uint64) (uint64, error) {
 	}
 }
 
-// GetTracesByBlockNumber returns a slice of traces in a block
+// GetTracesByBlockNumber returns a slice of traces in the given block
 func GetTracesByBlockNumber(chain string, bn uint64) ([]SimpleTrace, error) {
 	method := "trace_block"
 	params := rpc.Params{fmt.Sprintf("0x%x", bn)}
@@ -135,6 +135,21 @@ func GetTracesByBlockNumber(chain string, bn uint64) ([]SimpleTrace, error) {
 		}
 		return ret, nil
 	}
+}
+
+// GetTracesByTransactionId returns a slice of traces in a given transaction
+func GetTracesByTransactionId(chain string, bn, txid uint64) ([]SimpleTrace, error) {
+	traces, err := GetTracesByBlockNumber(chain, bn)
+	if err != nil {
+		return []SimpleTrace{}, err
+	}
+	var ret []SimpleTrace
+	for _, trace := range traces {
+		if trace.TransactionIndex == txid {
+			ret = append(ret, trace)
+		}
+	}
+	return ret, nil
 }
 
 // func mustParseUint(input any) (result uint64) {

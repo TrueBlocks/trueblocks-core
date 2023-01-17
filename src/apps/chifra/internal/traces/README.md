@@ -40,6 +40,7 @@ Data models produced by this tool:
 - [trace](/data-model/chaindata/#trace)
 - [traceaction](/data-model/chaindata/#traceaction)
 - [traceresult](/data-model/chaindata/#traceresult)
+- [tracecount](/data-model/chaindata/#tracecount)
 
 <!-- markdownlint-disable MD041 -->
 ### Other Options
