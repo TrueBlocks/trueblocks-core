@@ -83,9 +83,9 @@ func (opts *TracesOptions) IsPorted() (ported bool) {
 	if opts.Articulate {
 		return false
 	} else if opts.Count {
-		ported = false
+		ported = true
 	} else {
-		ported = false // opts.Globals.ShowRaw // && !opts.Articulate && len(opts.Filter) == 0 && !opts.Statediff && !opts.Count
+		ported = false // !opts.Globals.ShowRaw && !opts.Articulate && len(opts.Filter) == 0 && !opts.Count
 	}
 	// EXISTING_CODE
 	return

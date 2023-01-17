@@ -16,7 +16,7 @@ func (opts *TracesOptions) HandleCounts() error {
 	ctx, cancel := context.WithCancel(context.Background())
 
 	// Note: Make sure to add an entry to enabledForCmd in src/apps/chifra/pkg/output/helpers.go
-	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawTraceCount], errorChan chan error) {
 		for _, ids := range opts.TransactionIds {
 			txIds, err := ids.ResolveTxs(opts.Globals.Chain)
 			if err != nil {
@@ -26,7 +26,7 @@ func (opts *TracesOptions) HandleCounts() error {
 			}
 			for _, id := range txIds {
 				// Decide on the concrete type of block.Transactions and set values
-				traces, err := types.GetTracesByTransactionId(opts.Globals.Chain, uint64(id.BlockNumber), uint64(id.TransactionIndex))
+				cnt, err := types.GetTracesCountByTransactionId(opts.Globals.Chain, uint64(id.BlockNumber), uint64(id.TransactionIndex))
 				if err != nil && strings.Contains(err.Error(), "not found") {
 					errorChan <- err
 					continue
@@ -36,9 +36,14 @@ func (opts *TracesOptions) HandleCounts() error {
 					cancel()
 					return
 				}
-				for _, trace := range traces {
-					modelChan <- &trace
+				counter := types.SimpleTraceCount{
+					BlockNumber:      uint64(id.BlockNumber),
+					TransactionIndex: uint64(id.TransactionIndex),
+					// TransactionHash: "0x0",
+					Timestamp: 0,
+					TracesCnt: cnt,
 				}
+				modelChan <- &counter
 			}
 		}
 	}

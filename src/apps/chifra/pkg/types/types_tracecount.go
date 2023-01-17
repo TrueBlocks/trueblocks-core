@@ -9,6 +9,8 @@
 package types
 
 // EXISTING_CODE
+import "github.com/ethereum/go-ethereum/common"
+
 // EXISTING_CODE
 
 type RawTraceCount struct {
