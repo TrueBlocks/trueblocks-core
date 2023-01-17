@@ -8,7 +8,6 @@ func TestLoadAbiFromFile(t *testing.T) {
 	inputFile := "../../../../other/install/abis/known-015/moloch.json"
 	abi := make(AbiInterfaceMap)
 	err := LoadAbiFromJsonFile(inputFile, abi)
-
 	if err != nil {
 		t.Fatal(err)
 	}

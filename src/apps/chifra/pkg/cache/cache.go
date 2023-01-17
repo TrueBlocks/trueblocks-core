@@ -214,7 +214,7 @@ func SetAbi(chain string, address common.Address, abi *types.SimpleFunction) (er
 }
 
 // InsertAbi copies file (e.g. opened local file) into cache
-func InsertAbi(chain string, address common.Address, inputReader *io.Reader) (err error) {
+func InsertAbi(chain string, address common.Address, inputReader io.Reader) (err error) {
 	filePath := path.Join(
 		itemToDirectory[ItemABI],
 		address.Hex()+".json",
@@ -226,7 +226,7 @@ func InsertAbi(chain string, address common.Address, inputReader *io.Reader) (er
 	}
 	defer file.Close()
 
-	if _, err = io.Copy(file, *inputReader); err != nil {
+	if _, err = io.Copy(file, inputReader); err != nil {
 		return
 	}
 
