@@ -9,7 +9,13 @@
 package types
 
 // EXISTING_CODE
-import "github.com/ethereum/go-ethereum/common"
+import (
+	"fmt"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/ethereum/go-ethereum/common"
+)
 
 // TODO: CompressedTrace is not part of the raw trace data
 // EXISTING_CODE
@@ -93,4 +99,47 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 }
 
 // EXISTING_CODE
+// GetTraceCountByBlockNumber returns the number of traces in a block
+func GetTraceCountByBlockNumber(chain string, bn uint64) (uint64, error) {
+	if traces, err := GetTracesByBlockNumber(chain, bn); err != nil {
+		return utils.NOPOS, err
+	} else {
+		return uint64(len(traces)), nil
+	}
+}
+
+// GetTracesByBlockNumber returns a slice of traces in a block
+func GetTracesByBlockNumber(chain string, bn uint64) ([]SimpleTrace, error) {
+	method := "trace_block"
+	params := rpc.Params{fmt.Sprintf("0x%x", bn)}
+
+	if rawTraces, err := rpc.QuerySlice[RawTrace](chain, method, params); err != nil {
+		return []SimpleTrace{}, err
+	} else {
+		var ret []SimpleTrace
+		for _, rawTrace := range rawTraces {
+			ret = append(ret, SimpleTrace{
+				Error:            rawTrace.Error,
+				BlockHash:        common.HexToHash(rawTrace.BlockHash),
+				BlockNumber:      rawTrace.BlockNumber,
+				Timestamp:        rawTrace.Timestamp,
+				TransactionHash:  common.HexToHash(rawTrace.TransactionHash),
+				TransactionIndex: rawTrace.TransactionIndex,
+				TraceAddress:     rawTrace.TraceAddress,
+				Subtraces:        rawTrace.Subtraces,
+				Type:             rawTrace.Type,
+				// Action:           rawTrace.Action,
+				// Result:           rawTrace.Result,
+				CompressedTrace: rawTrace.CompressedTrace,
+			})
+		}
+		return ret, nil
+	}
+}
+
+// func mustParseUint(input any) (result uint64) {
+// 	result, _ = strconv.ParseUint(fmt.Sprint(input), 0, 64)
+// 	return
+// }
+
 // EXISTING_CODE
