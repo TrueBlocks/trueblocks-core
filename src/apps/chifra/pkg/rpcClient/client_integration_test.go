@@ -60,7 +60,7 @@ func Test_Client(t *testing.T) {
 		t.Error("couldn't get known transaction hash from block hash and tx id")
 	}
 
-	_, err = TxHashFromNumberAndId(provider, 1001001, 0)
+	_, err = TxHashFromNumberAndId("mainnet", 1001001, 0)
 	if err != nil {
 		t.Error("couldn't get known transaction hash from block number and tx id")
 	}

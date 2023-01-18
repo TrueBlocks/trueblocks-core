@@ -9,7 +9,10 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/ethereum/go-ethereum/common"
 )
 
 func (opts *TracesOptions) HandleCounts() error {
@@ -25,8 +28,7 @@ func (opts *TracesOptions) HandleCounts() error {
 				return
 			}
 			for _, id := range txIds {
-				// Decide on the concrete type of block.Transactions and set values
-				cnt, err := types.GetTracesCountByTransactionId(opts.Globals.Chain, uint64(id.BlockNumber), uint64(id.TransactionIndex))
+				tx, err := rpc.TxFromNumberAndId(opts.Globals.Chain, uint64(id.BlockNumber), uint64(id.TransactionIndex))
 				if err != nil && strings.Contains(err.Error(), "not found") {
 					errorChan <- err
 					continue
@@ -36,12 +38,28 @@ func (opts *TracesOptions) HandleCounts() error {
 					cancel()
 					return
 				}
+				txHash := tx.Hash().Hex()
+
+				cnt, err := types.GetTracesCountByTransactionHash(opts.Globals.Chain, txHash)
+				if err != nil {
+					errorChan <- err
+					cancel()
+					return
+				}
+
+				ts, err := tslib.FromBnToTs(opts.Globals.Chain, uint64(id.BlockNumber))
+				if err != nil {
+					errorChan <- err
+					cancel()
+					return
+				}
+
 				counter := types.SimpleTraceCount{
 					BlockNumber:      uint64(id.BlockNumber),
 					TransactionIndex: uint64(id.TransactionIndex),
-					// TransactionHash: "0x0",
-					Timestamp: 0,
-					TracesCnt: cnt,
+					TransactionHash:  common.HexToHash(txHash),
+					Timestamp:        int64(ts),
+					TracesCnt:        cnt,
 				}
 				modelChan <- &counter
 			}

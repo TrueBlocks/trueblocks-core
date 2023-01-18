@@ -164,7 +164,8 @@ func TxFromNumberAndId(chain string, blkNum, txId uint64) (ethTypes.Transaction,
 }
 
 // TxHashFromNumberAndId returns a transaction's hash if it's a valid transaction
-func TxHashFromNumberAndId(provider string, blkNum, txId uint64) (string, error) {
+func TxHashFromNumberAndId(chain string, blkNum, txId uint64) (string, error) {
+	provider := config.GetRpcProvider(chain)
 	ec := GetClient(provider)
 	defer ec.Close()
 
@@ -369,7 +370,7 @@ func Id_2_TxHash(chain, arg string, isBlockHash func(arg string) bool) (string, 
 		return "", nil
 	}
 
-	return TxHashFromNumberAndId(provider, blockNum, txId)
+	return TxHashFromNumberAndId(chain, blockNum, txId)
 }
 
 func Id_2_BlockHash(chain, arg string, isBlockHash func(arg string) bool) (string, error) {

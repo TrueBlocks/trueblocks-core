@@ -150,52 +150,51 @@ func GetTracesCountByTransactionId(chain string, bn, txid uint64) (uint64, error
 func GetTracesByTransactionId(chain string, bn, txid uint64) ([]SimpleTrace, error) {
 	var ret []SimpleTrace
 
-	// txHash, err := rpcClient.TxHashFromNumberAndId(chain, arg, validate.IsBlockHash)
-	// if err != nil {
-	return ret, err
-	// }
+	txHash, err := rpc.TxHashFromNumberAndId(chain, bn, txid)
+	if err != nil {
+		return ret, nil
+	}
 
-	// method := "trace_transaction"
-	// params := rpc.Params{fmt.Sprintf("0x%s", txHash)}
+	return GetTracesByTransactionHash(chain, txHash)
+}
 
-	// if rawTraces, err := rpc.QuerySlice[RawTrace](chain, method, params); err != nil {
-	// 	return ret, err
+// GetTracesCountByTransactionHash returns the number of traces in a given transaction
+func GetTracesCountByTransactionHash(chain string, txHash string) (uint64, error) {
+	traces, err := GetTracesByTransactionHash(chain, txHash)
+	if err != nil {
+		return 0, err
+	}
+	return uint64(len(traces)), nil
+}
 
-	// } else {
-	// 	for _, rawTrace := range rawTraces {
-	// 		ret = append(ret, SimpleTrace{
-	// 			Error:            rawTrace.Error,
-	// 			BlockHash:        common.HexToHash(rawTrace.BlockHash),
-	// 			BlockNumber:      rawTrace.BlockNumber,
-	// 			Timestamp:        rawTrace.Timestamp,
-	// 			TransactionHash:  common.HexToHash(rawTrace.TransactionHash),
-	// 			TransactionIndex: rawTrace.TransactionIndex,
-	// 			TraceAddress:     rawTrace.TraceAddress,
-	// 			Subtraces:        rawTrace.Subtraces,
-	// 			Type:             rawTrace.Type,
-	// 			// Action:           rawTrace.Action,
-	// 			// Result:           rawTrace.Result,
-	// 			CompressedTrace: rawTrace.CompressedTrace,
-	// 		})
-	// 	}
-	// 	return ret, nil
-	// }
+// GetTracesByTransactionHash returns a slice of traces in a given transaction's hash
+func GetTracesByTransactionHash(chain string, txHash string) ([]SimpleTrace, error) {
+	method := "trace_transaction"
+	params := rpc.Params{txHash}
 
-	// params := , "[\""+str_2_Hash(hashIn)+"\"]", true) + "]"
-	// return true
+	var ret []SimpleTrace
+	if rawTraces, err := rpc.QuerySlice[RawTrace](chain, method, params); err != nil {
+		return ret, err
 
-	// traces, err := GetTracesByBlockNumber(chain, bn)
-	// if err != nil {
-	// 	return []SimpleTrace{}, err
-	// }
-	// var ret []SimpleTrace
-	// for _, trace := range traces {
-	// 	// fmt.Println(trace.TransactionIndex)
-	// 	if trace.TransactionIndex == txid {
-	// 		ret = append(ret, trace)
-	// 	}
-	// }
-	// return ret, nil
+	} else {
+		for _, rawTrace := range rawTraces {
+			ret = append(ret, SimpleTrace{
+				Error:            rawTrace.Error,
+				BlockHash:        common.HexToHash(rawTrace.BlockHash),
+				BlockNumber:      rawTrace.BlockNumber,
+				Timestamp:        rawTrace.Timestamp,
+				TransactionHash:  common.HexToHash(rawTrace.TransactionHash),
+				TransactionIndex: rawTrace.TransactionIndex,
+				TraceAddress:     rawTrace.TraceAddress,
+				Subtraces:        rawTrace.Subtraces,
+				Type:             rawTrace.Type,
+				// Action:           rawTrace.Action,
+				// Result:           rawTrace.Result,
+				CompressedTrace: rawTrace.CompressedTrace,
+			})
+		}
+		return ret, nil
+	}
 }
 
 // func mustParseUint(input any) (result uint64) {

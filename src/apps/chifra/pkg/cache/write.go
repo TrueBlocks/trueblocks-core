@@ -540,6 +540,7 @@ func WriteTrace(writer *bufio.Writer, trace *types.SimpleTrace) (err error) {
 		return
 	}
 
+	// TODO - re-enable this
 	var junk []string
 	err = writeArray(writer, junk, writeString)
 	if err != nil {
