@@ -15,7 +15,7 @@ type Modeler[Raw RawData] interface {
 
 // TODO: BOGUS - The auto code generation should check that all auto generated fields are included here
 type RawData interface {
-	RawReceipt | RawWhenCount | RawNamedBlock | RawBlock | RawBlockCount | RawTraceAction | RawTraceResult | RawTrace | RawTraceCount
+	RawReceipt | RawWhenCount | RawNamedBlock | RawBlock | RawBlockCount | RawTraceAction | RawTraceResult | RawTrace | RawTraceCount | RawFunction
 }
 
 type Model struct {
@@ -47,25 +47,6 @@ type VerboseAppearance struct {
 	TransactionIndex uint32               `json:"transactionIndex"`
 	Timestamp        uint64               `json:"timestamp"`
 	Date             gostradamus.DateTime `json:"date"`
-}
-
-type SimpleFunction struct {
-	Encoding        string            `json:"encoding,omitempty"`
-	Signature       string            `json:"signature,omitempty"`
-	Name            string            `json:"name"`
-	FunctionType    string            `json:"type"`
-	AbiSource       string            `json:"abi_source"`
-	Anonymous       bool              `json:"anonymous"`
-	Constant        bool              `json:"constant"`
-	StateMutability string            `json:"stateMutability"`
-	Inputs          []SimpleParameter `json:"inputs"`
-	Outputs         []SimpleParameter `json:"outputs"`
-}
-
-// TODO: remove this type when we move ABI output to StreamMany
-type SimpleFunctionOutput struct {
-	Encoding  string `json:"encoding,omitempty"`
-	Signature string `json:"signature,omitempty"`
 }
 
 type SimpleMonitor struct {

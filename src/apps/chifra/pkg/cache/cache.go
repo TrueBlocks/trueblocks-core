@@ -3,7 +3,6 @@ package cache
 import (
 	"bufio"
 	"bytes"
-	"encoding/json"
 	"io"
 	"os"
 	"path"
@@ -11,6 +10,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	filePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -181,11 +181,11 @@ func SetAbis(chain string, abis []types.SimpleFunction) (err error) {
 }
 
 // GetAbi returns single ABI per address. ABI-per-address are stored as JSON, not binary.
-func GetAbi(chain string, address common.Address) (abi *types.SimpleFunction, err error) {
-	abi = &types.SimpleFunction{}
+func GetAbi(chain string, address common.Address) (simpleAbis []types.SimpleFunction, err error) {
+	fileName := address.Hex() + ".json"
 	filePath := path.Join(
 		itemToDirectory[ItemABI],
-		address.Hex()+".json",
+		fileName,
 	)
 	file, err := load(chain, filePath)
 	if err != nil {
@@ -193,25 +193,40 @@ func GetAbi(chain string, address common.Address) (abi *types.SimpleFunction, er
 	}
 	defer file.Close()
 
-	decoder := json.NewDecoder(file)
-	err = decoder.Decode(abi)
+	ethAbi, err := abi.JSON(file)
+	if err != nil {
+		return
+	}
+
+	functions := make([]types.SimpleFunction, 0, len(ethAbi.Methods))
+	for _, method := range ethAbi.Methods {
+		functions = append(functions, *types.FunctionFromAbiMethod(&method, fileName))
+	}
+
+	events := make([]types.SimpleFunction, 0, len(ethAbi.Events))
+	for _, event := range ethAbi.Events {
+		events = append(events, *types.FunctionFromAbiEvent(&event, fileName))
+	}
+
+	simpleAbis = append(functions, events...)
 	return
 }
 
 // SetAbi writes single ABI to cache. ABI-per-address are stored as JSON, not binary.
-func SetAbi(chain string, address common.Address, abi *types.SimpleFunction) (err error) {
-	filePath := path.Join(
-		itemToDirectory[ItemABI],
-		address.Hex()+".json",
-	)
+// TODO: we cache abi.ABI, not types.SimpleFunction
+// func SetAbi(chain string, address common.Address, abi []types.SimpleFunction) (err error) {
+// 	filePath := path.Join(
+// 		itemToDirectory[ItemABI],
+// 		address.Hex()+".json",
+// 	)
 
-	rawBytes, err := json.Marshal(abi)
-	if err != nil {
-		return
-	}
-	reader := bytes.NewReader(rawBytes)
-	return save(chain, filePath, reader)
-}
+// 	rawBytes, err := json.Marshal(abi)
+// 	if err != nil {
+// 		return
+// 	}
+// 	reader := bytes.NewReader(rawBytes)
+// 	return save(chain, filePath, reader)
+// }
 
 // InsertAbi copies file (e.g. opened local file) into cache
 func InsertAbi(chain string, address common.Address, inputReader io.Reader) (err error) {

@@ -41,32 +41,6 @@ func LoadAbiFromJsonFile(filePath string, destination AbiInterfaceMap) (err erro
 	return fromJson(file, path.Base(file.Name()), destination)
 }
 
-func argumentTypesToSimpleParameters(argTypes []*abi.Type) (result []types.SimpleParameter) {
-	result = make([]types.SimpleParameter, len(argTypes))
-	for index, argType := range argTypes {
-		result[index] = types.SimpleParameter{
-			ParameterType: argType.String(),
-			InternalType:  argType.TupleRawName,
-			Components:    argumentTypesToSimpleParameters(argType.TupleElems),
-		}
-	}
-	return
-}
-
-func argumentsToSimpleParameters(args []abi.Argument) (result []types.SimpleParameter) {
-	result = make([]types.SimpleParameter, len(args))
-	for index, arg := range args {
-		result[index] = types.SimpleParameter{
-			ParameterType: arg.Type.String(),
-			Name:          arg.Name,
-			Indexed:       arg.Indexed,
-			InternalType:  arg.Type.TupleRawName,
-			Components:    argumentTypesToSimpleParameters(arg.Type.TupleElems),
-		}
-	}
-	return
-}
-
 func fromJson(reader io.Reader, abiSource string, destination AbiInterfaceMap) (err error) {
 	loadedAbi, err := abi.JSON(reader)
 	if err != nil {
@@ -74,50 +48,13 @@ func fromJson(reader io.Reader, abiSource string, destination AbiInterfaceMap) (
 	}
 
 	for _, method := range loadedAbi.Methods {
-		// method.ID is our "four-byte"
-		fourByte := "0x" + string(common.Bytes2Hex(method.ID))
-		log.Println("Read", fourByte, method.Name)
-
-		var functionType string
-		switch method.Type {
-		case abi.Constructor:
-			functionType = "constructor"
-		case abi.Fallback:
-			functionType = "fallback"
-		case abi.Receive:
-			functionType = "receive"
-		default:
-			functionType = "function"
-		}
-
-		inputs := argumentsToSimpleParameters(method.Inputs)
-		outputs := argumentsToSimpleParameters(method.Outputs)
-		destination[fourByte] = &types.SimpleFunction{
-			Encoding:        fourByte,
-			Signature:       method.Sig,
-			Name:            method.Name,
-			AbiSource:       abiSource,
-			FunctionType:    functionType,
-			Constant:        method.Constant,
-			StateMutability: method.StateMutability,
-			Inputs:          inputs,
-			Outputs:         outputs,
-		}
+		function := types.FunctionFromAbiMethod(&method, abiSource)
+		destination[function.Encoding] = function
 	}
 
-	for _, event := range loadedAbi.Events {
-		// ID is encoded signature
-		sig := event.ID.Hex()
-		inputs := argumentsToSimpleParameters(event.Inputs)
-		destination[sig] = &types.SimpleFunction{
-			Encoding:     sig,
-			Signature:    event.Sig,
-			Name:         event.Name,
-			AbiSource:    abiSource,
-			FunctionType: "event",
-			Anonymous:    event.Anonymous,
-			Inputs:       inputs,
-		}
+	for _, ethEvent := range loadedAbi.Events {
+		event := types.FunctionFromAbiEvent(&ethEvent, abiSource)
+		destination[event.Encoding] = event
 	}
 
 	return
@@ -274,19 +211,22 @@ func getKnownAbiPaths() (filePaths []string, err error) {
 	return
 }
 
-func LoadAbiFromAddress(chain string, address common.Address, destination AbiInterfaceMap) (abi *types.SimpleFunction, err error) {
-	abi = &types.SimpleFunction{}
-	localFileName := address.Hex() + ".json"
+func LoadAbiFromAddress(chain string, address common.Address, destination AbiInterfaceMap) (err error) {
+	localFileName := strings.ToLower(address.Hex()) + ".json"
 	localFile, err := os.OpenFile(localFileName, os.O_RDONLY, 0)
-	if err != nil {
+	if os.IsNotExist(err) {
 		// There's no local file, so we try to load one from cache
-		if os.IsNotExist(err) {
-			loaded, err := cache.GetAbi(chain, address)
-			if err == nil {
-				destination[loaded.Encoding] = loaded
-			}
+		loadedAbis, err := cache.GetAbi(chain, address)
+		if err != nil {
+			return err
 		}
-
+		for _, loadedAbi := range loadedAbis {
+			loadedAbi := loadedAbi
+			destination[loadedAbi.Encoding] = &loadedAbi
+		}
+		return nil
+	}
+	if err != nil {
 		// There was different error, we may want to report it
 		return
 	}
