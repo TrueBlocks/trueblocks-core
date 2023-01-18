@@ -14,16 +14,17 @@ import "github.com/ethereum/go-ethereum/common"
 // EXISTING_CODE
 
 type RawTraceAction struct {
-	SelfDestructed string `json:"selfDestructed"`
-	Balance        string `json:"balance"`
-	Value          string `json:"value"`
-	Init           string `json:"init"`
-	From           string `json:"from"`
-	To             string `json:"to"`
-	Gas            string `json:"gas"`
-	Input          string `json:"input"`
-	CallType       string `json:"callType"`
-	RefundAddress  string `json:"refundAddress"`
+	Address        string `json:"address,omitempty"`
+	From           string `json:"from,omitempty"`
+	CallType       string `json:"callType,omitempty"`
+	Gas            string `json:"gas,omitempty"`
+	Init           string `json:"init,omitempty"`
+	Input          string `json:"input,omitempty"`
+	RefundAddress  string `json:"refundAddress,omitempty"`
+	SelfDestructed string `json:"selfDestructed,omitempty"`
+	To             string `json:"to,omitempty"`
+	Value          string `json:"value,omitempty"`
+	Balance        string `json:"balance,omitempty"`
 }
 
 type SimpleTraceAction struct {
@@ -53,11 +54,11 @@ func (s *SimpleTraceAction) Model(showHidden bool, format string, extraOptions m
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
-		"value":          s.Value,
-		"from":           s.From,
-		"to":             s.To,
-		"gas":            s.Gas,
-		"callType":       s.CallType,
+		"value":    s.Value,
+		"from":     s.From,
+		"to":       s.To,
+		"gas":      s.Gas,
+		"callType": s.CallType,
 	}
 
 	order := []string{

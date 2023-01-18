@@ -17,13 +17,15 @@ import (
 // EXISTING_CODE
 
 type RawTraceResult struct {
-	NewContract string `json:"newContract"`
-	Code        string `json:"code"`
-	GasUsed     string `json:"gasUsed"`
-	Output      string `json:"output"`
+	Address     string `json:"address,omitempty"`
+	Code        string `json:"code,omitempty"`
+	GasUsed     string `json:"gasUsed,omitempty"`
+	NewContract string `json:"newContract,omitempty"`
+	Output      string `json:"output,omitempty"`
 }
 
 type SimpleTraceResult struct {
+	Address     common.Address `json:"address,omitempty"`
 	NewContract common.Address `json:"newContract,omitempty"`
 	Code        string         `json:"code,omitempty"`
 	GasUsed     Gas            `json:"gasUsed"`
@@ -44,7 +46,7 @@ func (s *SimpleTraceResult) Model(showHidden bool, format string, extraOptions m
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
-		"gasUsed":     s.GasUsed,
+		"gasUsed": s.GasUsed,
 	}
 
 	order := []string{

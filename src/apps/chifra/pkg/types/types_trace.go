@@ -11,6 +11,7 @@ package types
 // EXISTING_CODE
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -21,18 +22,16 @@ import (
 // EXISTING_CODE
 
 type RawTrace struct {
-	Error            string         `json:"error"`
-	BlockHash        string         `json:"blockHash"`
-	BlockNumber      uint64         `json:"blockNumber"`
-	Timestamp        int64          `json:"timestamp"`
-	TransactionHash  string         `json:"transactionHash"`
-	TransactionIndex uint64         `json:"transactionIndex"`
-	TraceAddress     []uint64       `json:"traceAddress"`
-	Subtraces        uint64         `json:"subtraces"`
-	Type             string         `json:"type"`
-	Action           RawTraceAction `json:"action"`
-	Result           RawTraceResult `json:"result"`
-	CompressedTrace  string         `json:"compressedTrace"`
+	Action           RawTraceAction  `json:"action"`
+	BlockHash        string          `json:"blockHash"`
+	BlockNumber      uint64          `json:"blockNumber"`
+	Error            string          `json:"error,omitempty"`
+	Result           *RawTraceResult `json:"result"`
+	Subtraces        uint64          `json:"subtraces"`
+	TraceAddress     []uint64        `json:"traceAddress"`
+	TransactionHash  string          `json:"transactionHash"`
+	TransactionIndex uint64          `json:"transactionPosition"`
+	Type             string          `json:"type"`
 }
 
 type SimpleTrace struct {
@@ -118,20 +117,20 @@ func GetTracesByBlockNumber(chain string, bn uint64) ([]SimpleTrace, error) {
 	} else {
 		var ret []SimpleTrace
 		for _, rawTrace := range rawTraces {
-			ret = append(ret, SimpleTrace{
+			trace := SimpleTrace{
 				Error:            rawTrace.Error,
 				BlockHash:        common.HexToHash(rawTrace.BlockHash),
 				BlockNumber:      rawTrace.BlockNumber,
-				Timestamp:        rawTrace.Timestamp,
 				TransactionHash:  common.HexToHash(rawTrace.TransactionHash),
 				TransactionIndex: rawTrace.TransactionIndex,
 				TraceAddress:     rawTrace.TraceAddress,
 				Subtraces:        rawTrace.Subtraces,
 				Type:             rawTrace.Type,
+				raw:              &rawTrace,
 				// Action:           rawTrace.Action,
 				// Result:           rawTrace.Result,
-				CompressedTrace: rawTrace.CompressedTrace,
-			})
+			}
+			ret = append(ret, trace)
 		}
 		return ret, nil
 	}
@@ -152,7 +151,7 @@ func GetTracesByTransactionId(chain string, bn, txid uint64) ([]SimpleTrace, err
 
 	txHash, err := rpc.TxHashFromNumberAndId(chain, bn, txid)
 	if err != nil {
-		return ret, nil
+		return ret, err
 	}
 
 	return GetTracesByTransactionHash(chain, txHash)
@@ -178,28 +177,47 @@ func GetTracesByTransactionHash(chain string, txHash string) ([]SimpleTrace, err
 
 	} else {
 		for _, rawTrace := range rawTraces {
-			ret = append(ret, SimpleTrace{
+			action := SimpleTraceAction{
+				CallType: rawTrace.Action.CallType,
+				From:     common.HexToAddress(rawTrace.Action.From),
+				Gas:      mustParseUint(rawTrace.Action.Gas),
+				Input:    rawTrace.Action.Input,
+				To:       common.HexToAddress(rawTrace.Action.To),
+				// Value:    rawTrace.Action.Value,
+			}
+			action.SetRaw(&rawTrace.Action)
+
+			var result *SimpleTraceResult
+			if rawTrace.Result != nil {
+				result = &SimpleTraceResult{
+					GasUsed: mustParseUint(rawTrace.Result.GasUsed),
+					Output:  rawTrace.Result.Output,
+				}
+				result.SetRaw(rawTrace.Result)
+			}
+
+			trace := SimpleTrace{
 				Error:            rawTrace.Error,
 				BlockHash:        common.HexToHash(rawTrace.BlockHash),
 				BlockNumber:      rawTrace.BlockNumber,
-				Timestamp:        rawTrace.Timestamp,
 				TransactionHash:  common.HexToHash(rawTrace.TransactionHash),
 				TransactionIndex: rawTrace.TransactionIndex,
 				TraceAddress:     rawTrace.TraceAddress,
 				Subtraces:        rawTrace.Subtraces,
 				Type:             rawTrace.Type,
-				// Action:           rawTrace.Action,
-				// Result:           rawTrace.Result,
-				CompressedTrace: rawTrace.CompressedTrace,
-			})
+				Action:           &action,
+				Result:           result,
+			}
+			trace.SetRaw(&rawTrace)
+			ret = append(ret, trace)
 		}
 		return ret, nil
 	}
 }
 
-// func mustParseUint(input any) (result uint64) {
-// 	result, _ = strconv.ParseUint(fmt.Sprint(input), 0, 64)
-// 	return
-// }
+func mustParseUint(input any) (result uint64) {
+	result, _ = strconv.ParseUint(fmt.Sprint(input), 0, 64)
+	return
+}
 
 // EXISTING_CODE

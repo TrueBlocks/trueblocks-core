@@ -19,6 +19,10 @@ func (opts *TracesOptions) HandleShowTraces() error {
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
 		for _, ids := range opts.TransactionIds {
 			txIds, err := ids.ResolveTxs(opts.Globals.Chain)
+			if err != nil && strings.Contains(err.Error(), "not found") {
+				errorChan <- err
+				continue
+			}
 			if err != nil {
 				errorChan <- err
 				cancel()

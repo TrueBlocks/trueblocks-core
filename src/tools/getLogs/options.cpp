@@ -115,7 +115,7 @@ COptions::COptions(void) {
     notes.push_back("The `transactions` list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.");  // NOLINT
     notes.push_back("This tool checks for valid input syntax, but does not check that the transaction requested actually exists.");  // NOLINT
     notes.push_back("If the queried node does not store historical state, the results for most older transactions are undefined.");  // NOLINT
-    notes.push_back("If you specify a 32-byte hash, it will be assumed to be a transaction hash, if the transaction is not found, it will be used as a topic.");  // NOLINT
+    notes.push_back("If you specify a 32-byte hash, it will be assumed to be a transaction hash, if the transaction is invalid, the hash will be used as a topic.");  // NOLINT
     // clang-format on
     // END_CODE_NOTES
 
