@@ -94,6 +94,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		"hash":             s.Hash,
 		"isError":          s.IsError,
 		"finalized":        extraOptions["finalized"],
+		"value":            s.Value.String(),
 	}
 
 	order := []string{
@@ -110,6 +111,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		"isError",
 		"encoding",
 		"compressedTx",
+		"value",
 	}
 
 	// EXISTING_CODE
@@ -127,8 +129,8 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		model["input"] = s.Input
 		model["hasToken"] = s.HasToken
 		model["receipt"] = s.Receipt
-		model["value"] = s.Value.String()
-		model["receipt"] = nil
+		model["value"] = s.Value.String() // TODO: Why twice?
+		model["receipt"] = nil            // TODO: Why twice?
 
 		// TODO: these date-related values could be done when RPC is queried and cached
 		model["date"] = date.Format("2006-01-02 15:04:05") + " UTC"

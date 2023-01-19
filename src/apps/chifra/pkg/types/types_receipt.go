@@ -84,7 +84,7 @@ func (s *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[s
 
 		if len(s.ContractAddress) > 0 && s.ContractAddress != common.HexToAddress("0x0") {
 			model["contractAddress"] = s.ContractAddress
-			order = append(order, "contractAddress")
+			// order = append(order, "contractAddress")
 		}
 
 		if s.IsError {

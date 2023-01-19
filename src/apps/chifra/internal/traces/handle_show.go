@@ -9,6 +9,7 @@ import (
 	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
 )
@@ -20,6 +21,17 @@ func (opts *TracesOptions) HandleShowTraces() error {
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
 		for _, ids := range opts.TransactionIds {
 			txIds, err := ids.ResolveTxs(opts.Globals.Chain)
+			if err != nil {
+				errorChan <- err
+				if errors.Is(err, ethereum.NotFound) {
+					continue
+				}
+				cancel()
+				return
+			}
+
+			// Timestamp is not part of the raw trace data so we need to get it separately
+			ts, err := tslib.FromBnToTs(opts.Globals.Chain, uint64(txIds[0].BlockNumber))
 			if err != nil {
 				errorChan <- err
 				if errors.Is(err, ethereum.NotFound) {
@@ -44,6 +56,7 @@ func (opts *TracesOptions) HandleShowTraces() error {
 				for _, trace := range traces {
 					// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
 					trace := trace
+					trace.Timestamp = int64(ts)
 					modelChan <- &trace
 				}
 			}

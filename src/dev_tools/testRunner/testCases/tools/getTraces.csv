@@ -64,8 +64,8 @@ on       ,both ,fast  ,traces ,tools/getTraces ,bad_blkhash_msg_raw ,y    ,trans
 on       ,both ,medi  ,traces ,tools/getTraces ,prev_bug2_2         ,y    ,transactions = 4279119.46 & raw
 on       ,both ,fast  ,traces ,tools/getTraces ,from_raw            ,y    ,transactions = 4000000.5 & raw
 
-on       ,both ,fast  ,traces ,tools/getTraces ,04_01               ,y    ,transactions = 0x3d762e5f4c2a5c4ed3f4678d81f9078ff68e9d236d87dbcf3eee024dbb11f497 & fmt = json
-local    ,both ,medi  ,traces ,tools/getTraces ,25_01               ,y    ,transactions = 0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328
+on       ,cmd  ,fast  ,traces ,tools/getTraces ,04_01               ,y    ,transactions = 0x3d762e5f4c2a5c4ed3f4678d81f9078ff68e9d236d87dbcf3eee024dbb11f497 & fmt = json
+on       ,cmd  ,medi  ,traces ,tools/getTraces ,25_01               ,y    ,transactions = 0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328 & fmt = json
 
 local    ,both ,fast  ,traces ,tools/getTraces ,articulated         ,y    ,transactions = 0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33 & fmt = json & articulate
 local    ,both ,fast  ,traces ,tools/getTraces ,first               ,y    ,transactions = 40500.0:next

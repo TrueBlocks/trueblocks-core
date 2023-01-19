@@ -26,9 +26,9 @@ type RawTraceResult struct {
 
 type SimpleTraceResult struct {
 	Address     common.Address `json:"address,omitempty"`
-	NewContract common.Address `json:"newContract,omitempty"`
 	Code        string         `json:"code,omitempty"`
 	GasUsed     Gas            `json:"gasUsed"`
+	NewContract common.Address `json:"newContract,omitempty"`
 	Output      string         `json:"output,omitempty"`
 	raw         *RawTraceResult
 }
@@ -47,10 +47,12 @@ func (s *SimpleTraceResult) Model(showHidden bool, format string, extraOptions m
 
 	model := map[string]interface{}{
 		"gasUsed": s.GasUsed,
+		"output":  s.Output,
 	}
 
 	order := []string{
 		"gasUsed",
+		"output",
 	}
 
 	// EXISTING_CODE

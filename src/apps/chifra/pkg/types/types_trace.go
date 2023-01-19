@@ -11,6 +11,7 @@ package types
 // EXISTING_CODE
 import (
 	"fmt"
+	"math/big"
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
@@ -36,19 +37,19 @@ type RawTrace struct {
 }
 
 type SimpleTrace struct {
-	Error            string             `json:"error,omitempty"`
+	Action           *SimpleTraceAction `json:"action"`
+	ArticulatedTrace *SimpleFunction    `json:"articulatedTrace"`
 	BlockHash        common.Hash        `json:"blockHash"`
 	BlockNumber      uint64             `json:"blockNumber"`
+	CompressedTrace  string             `json:"compressedTrace,omitempty"`
+	Error            string             `json:"error,omitempty"`
+	Result           *SimpleTraceResult `json:"result"`
+	Subtraces        uint64             `json:"subtraces"`
 	Timestamp        int64              `json:"timestamp"`
+	TraceAddress     []uint64           `json:"traceAddress"`
 	TransactionHash  common.Hash        `json:"transactionHash"`
 	TransactionIndex uint64             `json:"transactionIndex"`
-	TraceAddress     []uint64           `json:"traceAddress"`
-	Subtraces        uint64             `json:"subtraces"`
 	Type             string             `json:"type,omitempty"`
-	Action           *SimpleTraceAction `json:"action"`
-	Result           *SimpleTraceResult `json:"result"`
-	ArticulatedTrace *SimpleFunction    `json:"articulatedTrace"`
-	CompressedTrace  string             `json:"compressedTrace,omitempty"`
 	raw              *RawTrace
 }
 
@@ -65,31 +66,44 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
+		"articulatedTrace": s.ArticulatedTrace,
 		"blockHash":        s.BlockHash,
 		"blockNumber":      s.BlockNumber,
+		"result":           s.Result,
+		"subtraces":        s.Subtraces,
 		"timestamp":        s.Timestamp,
+		"traceAddress":     s.TraceAddress,
 		"transactionHash":  s.TransactionHash,
 		"transactionIndex": s.TransactionIndex,
-		"subtraces":        s.Subtraces,
-		"action":           s.Action,
-		"result":           s.Result,
-		"articulatedTrace": s.ArticulatedTrace,
 	}
 
 	order := []string{
+		"articulatedTrace",
 		"blockHash",
 		"blockNumber",
+		"result",
+		"subtraces",
 		"timestamp",
+		"traceAddress",
 		"transactionHash",
 		"transactionIndex",
-		"subtraces",
-		"action",
-		"result",
-		"articulatedTrace",
 	}
 
 	// EXISTING_CODE
-	// TODO: BOGUS - HANDLE OMITEMPTY HERE
+	if format == "json" {
+		if len(s.Error) > 0 {
+			model["error"] = s.Error
+		}
+		if len(s.Type) > 0 {
+			model["type"] = s.Type
+		}
+		if s.Action != nil {
+			model["action"] = s.Action.Model(showHidden, format, extraOptions).Data
+		}
+		if s.Result != nil {
+			model["result"] = s.Result.Model(showHidden, format, extraOptions).Data
+		}
+	}
 	// EXISTING_CODE
 
 	return Model{
@@ -180,13 +194,24 @@ func GetTracesByTransactionHash(chain string, txHash string) ([]SimpleTrace, err
 		for _, rawTrace := range rawTraces {
 			// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
 			rawTrace := rawTrace
+
+			value := big.NewInt(0)
+			value.SetString(rawTrace.Action.Value, 0)
+			balance := big.NewInt(0)
+			balance.SetString(rawTrace.Action.Balance, 0)
+
 			action := SimpleTraceAction{
-				CallType: rawTrace.Action.CallType,
-				From:     common.HexToAddress(rawTrace.Action.From),
-				Gas:      mustParseUint(rawTrace.Action.Gas),
-				Input:    rawTrace.Action.Input,
-				To:       common.HexToAddress(rawTrace.Action.To),
-				// Value:    rawTrace.Action.Value,
+				CallType:       rawTrace.Action.CallType,
+				From:           common.HexToAddress(rawTrace.Action.From),
+				Gas:            mustParseUint(rawTrace.Action.Gas),
+				Input:          rawTrace.Action.Input,
+				To:             common.HexToAddress(rawTrace.Action.To),
+				Value:          *value,
+				Balance:        *balance,
+				Address:        common.HexToAddress(rawTrace.Action.Address),
+				RefundAddress:  common.HexToAddress(rawTrace.Action.RefundAddress),
+				SelfDestructed: common.HexToAddress(rawTrace.Action.SelfDestructed),
+				Init:           rawTrace.Action.Init,
 			}
 			action.SetRaw(&rawTrace.Action)
 
