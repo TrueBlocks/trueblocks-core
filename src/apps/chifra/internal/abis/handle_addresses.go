@@ -54,7 +54,7 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 			}
 
 			// We didn't find the file
-			// TODO: this check can be moved into FetchFromProvider
+			// Check if the address is a contract
 			contract, err := account.IsContractAt(
 				opts.Globals.Chain,
 				address,
@@ -68,7 +68,29 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 				logger.Log(logger.Info, "Address", address, "is not a smart contract. Skipping...")
 				continue
 			}
-			// TODO: Fetch ABI from a provider
+			// Fetch ABI from a provider
+			if err = abi.DownloadAbi(opts.Globals.Chain, address, result); err != nil {
+				errorChan <- err
+			}
+			// TODO: This code is duplicated
+			if testMode {
+				// Tests expect sorted map, because maps in C++ are sorted.
+				keys := make([]string, 0, len(result))
+
+				for k := range result {
+					keys = append(keys, k)
+				}
+				sort.Strings(keys)
+
+				for _, k := range keys {
+					modelChan <- result[k]
+				}
+				continue
+			}
+			for _, function := range result {
+				modelChan <- function
+			}
+			// end of duplicated code
 		}
 	}
 

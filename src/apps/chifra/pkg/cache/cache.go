@@ -6,6 +6,7 @@ import (
 	"io"
 	"os"
 	"path"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	filePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -232,10 +233,12 @@ func GetAbi(chain string, address common.Address) (simpleAbis []types.SimpleFunc
 func InsertAbi(chain string, address common.Address, inputReader io.Reader) (err error) {
 	filePath := path.Join(
 		itemToDirectory[ItemABI],
-		address.Hex()+".json",
+		strings.ToLower(address.Hex())+".json",
 	)
+	cacheDir := getCacheAndChainPath(chain)
+	fullPath := path.Join(cacheDir, filePath)
 
-	file, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE, 0666)
+	file, err := os.OpenFile(fullPath, os.O_WRONLY|os.O_CREATE, 0666)
 	if err != nil {
 		return
 	}
