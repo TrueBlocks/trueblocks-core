@@ -62,10 +62,10 @@ TEST[DATE|TIME] Format:  json
     }
   ],
   "errors": [
-    "transaction 1.0 not found",
-    "transaction 1.0 not found",
-    "transaction 1.0 not found",
-    "transaction 1.0 not found",
-    "transaction 1.0 not found"
+    "transaction at 1.0 returned an error: not found",
+    "transaction at 1.0 returned an error: not found",
+    "transaction at 1.0 returned an error: not found",
+    "transaction at 1.0 returned an error: not found",
+    "transaction at 1.0 returned an error: not found"
   ]
 }

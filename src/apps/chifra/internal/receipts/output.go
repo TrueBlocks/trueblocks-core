@@ -22,6 +22,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/ethereum/go-ethereum"
 	"github.com/spf13/cobra"
 )
 
@@ -119,8 +120,8 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 
 				// TODO: Why does this interface always accept nil and zero at the end?
 				receipt, err := rpcClient.GetTransactionReceipt(opts.Globals.Chain, uint64(tx.BlockNumber), uint64(tx.TransactionIndex), nil, 0)
-				if err != nil && err.Error() == "not found" {
-					errorChan <- fmt.Errorf("transaction %s not found", opts.Transactions[idIndex])
+				if err != nil && strings.Contains(err.Error(), "not found") {
+					errorChan <- fmt.Errorf("transaction at %s returned an error: %s", opts.Transactions[idIndex], ethereum.NotFound)
 					continue
 				}
 				if err != nil {

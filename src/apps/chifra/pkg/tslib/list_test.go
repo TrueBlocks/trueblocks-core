@@ -5,10 +5,12 @@
 package tslib
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/ethereum/go-ethereum"
 )
 
 func TestLoadSpecials(t *testing.T) {
@@ -39,7 +41,7 @@ func TestIsStringSpecialBlock(t *testing.T) {
 func TestGetNameByValue(t *testing.T) {
 	name, err := FromBnToName(utils.GetTestChain(), 2463000)
 	if err != nil {
-		t.Error("Block name not found")
+		t.Error(fmt.Errorf("block at %d returned an error: %s", 2463000, ethereum.NotFound))
 	}
 	if name != "tangerine" {
 		t.Errorf("Wrong name: %s", name)
@@ -49,7 +51,7 @@ func TestGetNameByValue(t *testing.T) {
 func TestGetValueByName(t *testing.T) {
 	value, err := FromNameToBn(utils.GetTestChain(), "tangerine")
 	if err != nil {
-		t.Error("Block not found by name")
+		t.Error(fmt.Errorf("block at %s returned an error: %s", "tangerine", ethereum.NotFound))
 	}
 	if value != 2463000 {
 		t.Errorf("Wrong value: %d", value)
@@ -57,7 +59,7 @@ func TestGetValueByName(t *testing.T) {
 
 	// _, found = FromNameToBn(utils.GetTestChain(), "latest")
 	// if !found {
-	// 	t.Error("Latest block not found")
+	// 	t.Error(fmt.Errorf("block at %s returned an error: %s", "latest", ethereum.NotFound))
 	// }
 	// TODO: Turn off go testing that requires connection to a node
 	// if value == 0 {
