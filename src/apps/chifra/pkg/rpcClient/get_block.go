@@ -190,7 +190,7 @@ func getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error)
 
 	rawBlock := &response.Result
 	if len(response.Result.Timestamp) == 0 {
-		return rawBlock, fmt.Errorf("block at %d returned an error: %s", bn, ethereum.NotFound)
+		return rawBlock, fmt.Errorf("block at %s returned an error: %s", fmt.Sprintf("%d", bn), ethereum.NotFound)
 	}
 
 	return rawBlock, err

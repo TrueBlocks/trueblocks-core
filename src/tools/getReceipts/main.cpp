@@ -42,7 +42,7 @@ bool visitTransaction(CTransaction& trans, void* data) {
 
     if (contains(trans.hash, "invalid")) {
         string_q hash = nextTokenClear(trans.hash, ' ');
-        opt->errors.push_back("transaction " + hash + " not found");
+        opt->errors.push_back("transaction at " + hash + " returned an error: not found");
         return true;  // continue even with an invalid item
     }
 

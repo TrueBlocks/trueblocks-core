@@ -41,7 +41,7 @@ func TestIsStringSpecialBlock(t *testing.T) {
 func TestGetNameByValue(t *testing.T) {
 	name, err := FromBnToName(utils.GetTestChain(), 2463000)
 	if err != nil {
-		t.Error(fmt.Errorf("block at %d returned an error: %s", 2463000, ethereum.NotFound))
+		t.Error(fmt.Errorf("block at %s returned an error: %s", "2463000", ethereum.NotFound))
 	}
 	if name != "tangerine" {
 		t.Errorf("Wrong name: %s", name)
