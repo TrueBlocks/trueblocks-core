@@ -196,7 +196,7 @@ func TxNumberAndIdFromHash(provider string, hash string) (uint64, uint64, error)
 		log.Fatal(err)
 	}
 	if trans.Result.BlockNumber == "" {
-		return 0, 0, fmt.Errorf("transaction at %s reported an error: %s", hash, ethereum.NotFound)
+		return 0, 0, fmt.Errorf("transaction at %s reported an error: %w", hash, ethereum.NotFound)
 	}
 	bn, err := strconv.ParseUint(trans.Result.BlockNumber[2:], 16, 32)
 	if err != nil {

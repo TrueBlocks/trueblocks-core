@@ -18,14 +18,14 @@ import (
 func TestGetValueByName2(t *testing.T) {
 	value, err := FromNameToBn(utils.GetTestChain(), "tangerine")
 	if err != nil {
-		t.Error(fmt.Errorf("block at %s returned an error: %s", "tangerine", ethereum.NotFound))
+		t.Error(fmt.Errorf("block at %s returned an error: %w", "tangerine", ethereum.NotFound))
 	}
 	if value != 2463000 {
 		t.Errorf("Wrong value: %d", value)
 	}
 	_, err = FromNameToBn(utils.GetTestChain(), "latest")
 	if err != nil {
-		t.Error(fmt.Errorf("block at %s returned an error: %s", "latest", ethereum.NotFound))
+		t.Error(fmt.Errorf("block at %s returned an error: %w", "latest", ethereum.NotFound))
 	}
 	if value == 0 {
 		t.Error("Latest block not set")

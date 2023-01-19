@@ -6,12 +6,13 @@ package whenPkg
 
 import (
 	"context"
-	"strings"
+	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/ethereum/go-ethereum"
 )
 
 func (opts *WhenOptions) HandleShowBlocks() error {
@@ -24,22 +25,24 @@ func (opts *WhenOptions) HandleShowBlocks() error {
 			blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
 			if err != nil {
 				errorChan <- err
+				if errors.Is(err, ethereum.NotFound) {
+					continue
+				}
 				cancel()
 				return
 			}
 
 			for _, bn := range blockNums {
 				block, err := rpcClient.GetBlockHeaderByNumber(opts.Globals.Chain, bn)
-				// TODO: rpcClient should return a custom type of error in this case
-				if err != nil && strings.Contains(err.Error(), "not found") {
-					errorChan <- err
-					continue
-				}
 				if err != nil {
 					errorChan <- err
+					if errors.Is(err, ethereum.NotFound) {
+						continue
+					}
 					cancel()
 					return
 				}
+
 				d, _ := tslib.FromTsToDate(block.GetTimestamp())
 				nm, _ := tslib.FromBnToName(opts.Globals.Chain, block.BlockNumber)
 				modelChan <- &types.SimpleNamedBlock{

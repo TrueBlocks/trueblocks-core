@@ -41,7 +41,7 @@ func TestIsStringSpecialBlock(t *testing.T) {
 func TestGetNameByValue(t *testing.T) {
 	name, err := FromBnToName(utils.GetTestChain(), 2463000)
 	if err != nil {
-		t.Error(fmt.Errorf("block at %s returned an error: %s", "2463000", ethereum.NotFound))
+		t.Error(fmt.Errorf("block at %s returned an error: %w", "2463000", ethereum.NotFound))
 	}
 	if name != "tangerine" {
 		t.Errorf("Wrong name: %s", name)
@@ -51,7 +51,7 @@ func TestGetNameByValue(t *testing.T) {
 func TestGetValueByName(t *testing.T) {
 	value, err := FromNameToBn(utils.GetTestChain(), "tangerine")
 	if err != nil {
-		t.Error(fmt.Errorf("block at %s returned an error: %s", "tangerine", ethereum.NotFound))
+		t.Error(fmt.Errorf("block at %s returned an error: %w", "tangerine", ethereum.NotFound))
 	}
 	if value != 2463000 {
 		t.Errorf("Wrong value: %d", value)
@@ -59,7 +59,7 @@ func TestGetValueByName(t *testing.T) {
 
 	// _, found = FromNameToBn(utils.GetTestChain(), "latest")
 	// if !found {
-	// 	t.Error(fmt.Errorf("block at %s returned an error: %s", "latest", ethereum.NotFound))
+	// 	t.Error(fmt.Errorf("block at %s returned an error: %w", "latest", ethereum.NotFound))
 	// }
 	// TODO: Turn off go testing that requires connection to a node
 	// if value == 0 {

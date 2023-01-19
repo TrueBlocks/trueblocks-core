@@ -2,10 +2,12 @@ package whenPkg
 
 import (
 	"context"
+	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/ethereum/go-ethereum"
 )
 
 func (opts *WhenOptions) HandleList() error {
@@ -17,6 +19,9 @@ func (opts *WhenOptions) HandleList() error {
 		results, err := tslib.GetSpecials(opts.Globals.Chain)
 		if err != nil {
 			errorChan <- err
+			if errors.Is(err, ethereum.NotFound) {
+				return
+			}
 			cancel()
 			return
 		}

@@ -80,7 +80,7 @@ func (opts *ExploreOptions) validateExplore() error {
 			}
 			// An error here is not okay because we have a valid hash but it's not a valid on-chain
 			// thingy, so we must have been told why by the node
-			return fmt.Errorf("block at %s returned an error: %s", arg, ethereum.NotFound)
+			return fmt.Errorf("block at %s returned an error: %w", arg, ethereum.NotFound)
 		}
 
 		if validate.IsValidFourByte(arg) {

@@ -18,10 +18,12 @@ func (opts *WhenOptions) HandleTimestampCount() error {
 
 	// Note: Make sure to add an entry to enabledForCmd in src/apps/chifra/pkg/output/helpers.go
 	fetchData := func(modelChan chan types.Modeler[types.RawWhenCount], errorChan chan error) {
-		if count, err := tslib.NTimestamps(opts.Globals.Chain); err != nil {
+		count, err := tslib.NTimestamps(opts.Globals.Chain)
+		if err != nil {
 			errorChan <- err
 			cancel()
 			return
+
 		} else {
 			if opts.Globals.TestMode {
 				count = 5000000

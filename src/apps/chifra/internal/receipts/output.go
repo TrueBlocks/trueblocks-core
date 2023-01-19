@@ -11,6 +11,7 @@ package receiptsPkg
 // EXISTING_CODE
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"strings"
@@ -79,16 +80,15 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 		// TODO: stream transaction identifiers
 		for idIndex, rng := range opts.TransactionIds {
 			txList, err := rng.ResolveTxs(opts.Globals.Chain)
-			// TODO: rpcClient should return a custom type of error in this case
-			if err != nil && strings.Contains(err.Error(), "not found") {
-				errorChan <- err
-				continue
-			}
 			if err != nil {
 				errorChan <- err
+				if errors.Is(err, ethereum.NotFound) {
+					continue
+				}
 				cancel()
 				return
 			}
+
 			for _, tx := range txList {
 				if tx.BlockNumber < uint32(byzantiumBlockNumber) && !erigonUsed {
 					err = opts.Globals.PassItOn("getReceipts", opts.Globals.Chain, getReceiptsCmdLine(opts, []string{rng.Orig}), opts.getEnvStr())
@@ -109,6 +109,7 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 					uint64(tx.BlockNumber),
 					uint64(tx.TransactionIndex),
 				)
+
 				if transaction != nil && transaction.Receipt != nil {
 					// Some values are not cached
 					transaction.Receipt.BlockNumber = uint64(tx.BlockNumber)
@@ -120,11 +121,11 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 
 				// TODO: Why does this interface always accept nil and zero at the end?
 				receipt, err := rpcClient.GetTransactionReceipt(opts.Globals.Chain, uint64(tx.BlockNumber), uint64(tx.TransactionIndex), nil, 0)
-				if err != nil && strings.Contains(err.Error(), "not found") {
-					errorChan <- fmt.Errorf("transaction at %s returned an error: %s", opts.Transactions[idIndex], ethereum.NotFound)
-					continue
-				}
 				if err != nil {
+					if errors.Is(err, ethereum.NotFound) {
+						errorChan <- fmt.Errorf("transaction at %s returned an error: %s", opts.Transactions[idIndex], ethereum.NotFound)
+						continue
+					}
 					errorChan <- err
 					cancel()
 					return
