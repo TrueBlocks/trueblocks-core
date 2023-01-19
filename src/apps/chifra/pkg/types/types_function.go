@@ -126,6 +126,17 @@ func joinParametersNames(params []SimpleParameter) (result string) {
 }
 
 func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+	// Used by chifra abis --find
+	if extraOptions["encodingSignatureOnly"] == true {
+		return Model{
+			Data: map[string]any{
+				"encoding":  s.Encoding,
+				"signature": s.Signature,
+			},
+			Order: []string{"encoding", "signature"},
+		}
+	}
+
 	model := map[string]interface{}{
 		"name":            s.Name,
 		"type":            s.FunctionType,
@@ -171,10 +182,4 @@ func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[
 		Data:  model,
 		Order: order,
 	}
-}
-
-// TODO: remove this type when we move ABI output to StreamMany
-type SimpleFunctionOutput struct {
-	Encoding  string `json:"encoding,omitempty"`
-	Signature string `json:"signature,omitempty"`
 }

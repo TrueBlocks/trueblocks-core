@@ -13,9 +13,8 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-var testMode = os.Getenv("TEST_MODE") == "true"
-
 func (opts *AbisOptions) HandleAddresses() (err error) {
+	testMode := opts.Globals.TestMode
 	result := make(abi.AbiInterfaceMap)
 	if opts.Known {
 		if err = abi.PreloadKnownAbis(opts.Globals.Chain, result, false); err != nil {

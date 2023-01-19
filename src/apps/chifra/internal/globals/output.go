@@ -22,7 +22,6 @@ func RenderSlice[
 		types.ReportClean |
 		types.ReportCheck |
 		types.SimpleFunction |
-		types.SimpleFunctionOutput |
 		types.SimpleMonitor |
 		types.SimpleChunkRecord |
 		types.SimpleAppearance |
