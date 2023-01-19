@@ -6,10 +6,11 @@ package tracesPkg
 
 import (
 	"context"
-	"strings"
+	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/ethereum/go-ethereum"
 )
 
 func (opts *TracesOptions) HandleShowTraces() error {
@@ -19,27 +20,27 @@ func (opts *TracesOptions) HandleShowTraces() error {
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
 		for _, ids := range opts.TransactionIds {
 			txIds, err := ids.ResolveTxs(opts.Globals.Chain)
-			if err != nil && strings.Contains(err.Error(), "not found") {
-				errorChan <- err
-				continue
-			}
 			if err != nil {
 				errorChan <- err
+				if errors.Is(err, ethereum.NotFound) {
+					continue
+				}
 				cancel()
 				return
 			}
+
 			for _, id := range txIds {
 				// Decide on the concrete type of block.Transactions and set values
 				traces, err := types.GetTracesByTransactionId(opts.Globals.Chain, uint64(id.BlockNumber), uint64(id.TransactionIndex))
-				if err != nil && strings.Contains(err.Error(), "not found") {
-					errorChan <- err
-					continue
-				}
 				if err != nil {
 					errorChan <- err
+					if errors.Is(err, ethereum.NotFound) {
+						continue
+					}
 					cancel()
 					return
 				}
+
 				for _, trace := range traces {
 					// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
 					trace := trace

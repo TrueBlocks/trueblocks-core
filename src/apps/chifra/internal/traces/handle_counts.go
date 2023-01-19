@@ -6,12 +6,13 @@ package tracesPkg
 
 import (
 	"context"
-	"strings"
+	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -24,25 +25,31 @@ func (opts *TracesOptions) HandleCounts() error {
 			txIds, err := ids.ResolveTxs(opts.Globals.Chain)
 			if err != nil {
 				errorChan <- err
+				if errors.Is(err, ethereum.NotFound) {
+					continue
+				}
 				cancel()
 				return
 			}
+
 			for _, id := range txIds {
 				tx, err := rpc.TxFromNumberAndId(opts.Globals.Chain, uint64(id.BlockNumber), uint64(id.TransactionIndex))
-				if err != nil && strings.Contains(err.Error(), "not found") {
-					errorChan <- err
-					continue
-				}
 				if err != nil {
 					errorChan <- err
+					if errors.Is(err, ethereum.NotFound) {
+						continue
+					}
 					cancel()
 					return
 				}
-				txHash := tx.Hash().Hex()
 
+				txHash := tx.Hash().Hex()
 				cnt, err := types.GetTracesCountByTransactionHash(opts.Globals.Chain, txHash)
 				if err != nil {
 					errorChan <- err
+					if errors.Is(err, ethereum.NotFound) {
+						continue
+					}
 					cancel()
 					return
 				}
@@ -50,6 +57,9 @@ func (opts *TracesOptions) HandleCounts() error {
 				ts, err := tslib.FromBnToTs(opts.Globals.Chain, uint64(id.BlockNumber))
 				if err != nil {
 					errorChan <- err
+					if errors.Is(err, ethereum.NotFound) {
+						continue
+					}
 					cancel()
 					return
 				}

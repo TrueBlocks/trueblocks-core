@@ -84,6 +84,7 @@ func (opts *TracesOptions) IsPorted() (ported bool) {
 		return true
 	}
 	ported = false // opts.Globals.Format != "json" || !opts.Articulate && len(opts.Filter) == 0
+	// ported = !opts.Articulate && len(opts.Filter) == 0
 	// EXISTING_CODE
 	return
 }

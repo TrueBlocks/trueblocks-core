@@ -217,6 +217,10 @@ Traces consist of the following fields:
 | articulatedTrace | human readable version of the trace action input data     | [Function](/data-model/other/#function)           |
 | compressedTrace  | a compressed string version of the articulated trace      | string                                            |
 
+### Notes
+
+When produced using the `--raw` option, this data model uses `transactionPosition` instead of `transactionIndex`. When produced without `--raw`, the model uses `transactionIndex` to be consistent with all other models.
+
 ## TraceAction
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->

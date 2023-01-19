@@ -15,6 +15,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -173,7 +174,7 @@ func GetTracesByTransactionHash(chain string, txHash string) ([]SimpleTrace, err
 
 	var ret []SimpleTrace
 	if rawTraces, err := rpc.QuerySlice[RawTrace](chain, method, params); err != nil {
-		return ret, err
+		return ret, fmt.Errorf("transaction at %s returned an error: %w", txHash, ethereum.NotFound)
 
 	} else {
 		for _, rawTrace := range rawTraces {

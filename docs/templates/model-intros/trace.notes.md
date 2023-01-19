@@ -1,0 +1,1 @@
+When produced using the `--raw` option, this data model uses `transactionPosition` instead of `transactionIndex`. When produced without `--raw`, the model uses `transactionIndex` to be consistent with all other models.
