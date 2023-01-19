@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io"
 	"io/fs"
-	"log"
 	"os"
 	"path"
 	"path/filepath"
@@ -19,19 +18,21 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
+// Where to find know ABI files
 var knownAbiSubdirectories = []string{
 	"known-000", "known-005", "known-010", "known-015",
 }
 
-// !!!
-// https://pkg.go.dev/github.com/ethereum/go-ethereum/accounts/abi#pkg-overview
-
 type AbiInterfaceMap = map[string]*types.SimpleFunction
 
+// getMapKey turns encoding into lower case, which can be used
+// as a key in AbiInterfaceMap
 func getMapKey(encoding string) string {
 	return strings.ToLower(encoding)
 }
 
+// LoadAbiFromJsonFile loads _standard_ JSON ABI, that is the one without encodings
+// and signatures. We compute these values.
 func LoadAbiFromJsonFile(filePath string, destination AbiInterfaceMap) (err error) {
 	file, err := os.OpenFile(filePath, os.O_RDONLY, 0)
 	if err != nil {
@@ -42,6 +43,7 @@ func LoadAbiFromJsonFile(filePath string, destination AbiInterfaceMap) (err erro
 }
 
 func fromJson(reader io.Reader, abiSource string, destination AbiInterfaceMap) (err error) {
+	// Compute encodings, signatures and parse file
 	loadedAbi, err := abi.JSON(reader)
 	if err != nil {
 		return
@@ -60,6 +62,8 @@ func fromJson(reader io.Reader, abiSource string, destination AbiInterfaceMap) (
 	return
 }
 
+// LoadAbiFromKnownFile loads data from _known_ ABI file, which has encodings and
+// signatures.
 func LoadAbiFromKnownFile(filePath string, destination AbiInterfaceMap) (err error) {
 	file, err := os.OpenFile(filePath, os.O_RDONLY, 0)
 	if err != nil {
@@ -80,6 +84,7 @@ func LoadAbiFromKnownFile(filePath string, destination AbiInterfaceMap) (err err
 	return
 }
 
+// LoadKnownAbiByName finds known ABI by name
 func LoadKnownAbiByName(name string, destination AbiInterfaceMap) (err error) {
 	var filePath string
 	if filePath = findKnownAbi(name); filePath == "" {
@@ -89,11 +94,11 @@ func LoadKnownAbiByName(name string, destination AbiInterfaceMap) (err error) {
 	return LoadAbiFromKnownFile(filePath, destination)
 }
 
+// LoadCache loads binary cache of known ABIs
 func LoadCache(chain string, destination AbiInterfaceMap) (loaded bool) {
 	functions, cacheErr := cache.GetAbis(chain)
 	// We can ignore cache error
 	if cacheErr != nil {
-		log.Println("error while loading from cache:", cacheErr)
 		return
 	}
 
@@ -118,6 +123,7 @@ func PreloadTokensAbi(destination AbiInterfaceMap) (err error) {
 	)
 }
 
+// PreloadKnownAbis loads known ABI files into destination, refreshing binary cache if needed
 func PreloadKnownAbis(chain string, destination AbiInterfaceMap, tokensOnly bool) (err error) {
 	if tokensOnly {
 		return PreloadTokensAbi(destination)
@@ -128,18 +134,11 @@ func PreloadKnownAbis(chain string, destination AbiInterfaceMap, tokensOnly bool
 	if err != nil {
 		return
 	}
-	log.Println("ABI cache up-to-date", useCache)
-
 	// Use cache file
 	if useCache {
-		loaded := LoadCache(chain, destination)
-		if !loaded {
-			log.Println("Could not load binary cache")
-		} else {
-			log.Println("Loaded binary cache")
+		if loaded := LoadCache(chain, destination); loaded {
+			return
 		}
-		// TODO: only return if cache was loaded
-		return
 	}
 
 	// Use known .json files and freshen binary cache
@@ -147,32 +146,23 @@ func PreloadKnownAbis(chain string, destination AbiInterfaceMap, tokensOnly bool
 	if err != nil {
 		return
 	}
-	fileCount := 0
 
 	for _, filePath := range paths {
 		loadErr := LoadAbiFromKnownFile(filePath, destination)
 		if loadErr != nil {
 			return fmt.Errorf("%s: %w", filePath, loadErr)
 		}
-		fileCount++
 	}
-
-	log.Println("Loaded", len(destination), "interfaces from", fileCount, "JSON files")
-	log.Println("Freshening abi cache")
 
 	toCache := make([]types.SimpleFunction, 0, len(destination))
 	for _, function := range destination {
 		function := function
 		toCache = append(toCache, *function)
 	}
-	err = cache.SetAbis(chain, toCache)
-	if err == nil {
-		log.Printf("Saved %d interfaces in binary cache", len(toCache))
-	}
-
-	return
+	return cache.SetAbis(chain, toCache)
 }
 
+// findKnownAbi finds known ABI by name in known-* directories
 func findKnownAbi(name string) (filePath string) {
 	for _, subdirName := range knownAbiSubdirectories {
 		testPath := path.Join(config.GetPathToRootConfig(), "abis", subdirName, name+".json")
@@ -211,6 +201,7 @@ func getKnownAbiPaths() (filePaths []string, err error) {
 	return
 }
 
+// LoadAbiFromAddress loads ABI from local file or cache
 func LoadAbiFromAddress(chain string, address common.Address, destination AbiInterfaceMap) (err error) {
 	localFileName := strings.ToLower(address.Hex()) + ".json"
 	localFile, err := os.OpenFile(localFileName, os.O_RDONLY, 0)

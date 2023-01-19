@@ -16,16 +16,16 @@ import (
 var testMode = os.Getenv("TEST_MODE") == "true"
 
 func (opts *AbisOptions) HandleAddresses() (err error) {
-	// result := make(abi.AbiInterfaceMap)
-	// if opts.Known {
-	// 	if err = abi.PreloadKnownAbis(opts.Globals.Chain, result, false); err != nil {
-	// 		return
-	// 	}
-	// }
+	result := make(abi.AbiInterfaceMap)
+	if opts.Known {
+		if err = abi.PreloadKnownAbis(opts.Globals.Chain, result, false); err != nil {
+			return
+		}
+	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawFunction], errorChan chan error) {
-		result := make(abi.AbiInterfaceMap)
+		// result := make(abi.AbiInterfaceMap)
 		for _, addr := range opts.Addrs {
 			address := common.HexToAddress(addr)
 			err = abi.LoadAbiFromAddress(opts.Globals.Chain, address, result)
@@ -85,5 +85,8 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 		OutputFn:   opts.Globals.OutputFn,
 		Append:     opts.Globals.Append,
 		JsonIndent: "  ",
+		Extra: map[string]interface{}{
+			"verbose": opts.Globals.Verbose,
+		},
 	})
 }

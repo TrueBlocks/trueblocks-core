@@ -1,7 +1,6 @@
 package types
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/ethereum/go-ethereum/accounts/abi"
@@ -38,8 +37,7 @@ func FunctionFromAbiEvent(ethEvent *abi.Event, abiSource string) *SimpleFunction
 	}
 }
 
-// TODO: abi.cpp:570 if ethMethod.Name == "" && ethMethod.Type != abi.Constructor { return }
-// TODO: abi.cpp:580 if ethMethod.Type == abi.Constructor { return }
+// FunctionFromAbiMethod converts go-ethereum's abi.Method to our SimpleFunction
 func FunctionFromAbiMethod(ethMethod *abi.Method, abiSource string) *SimpleFunction {
 	// method.ID is our "four-byte"
 	fourByte := "0x" + strings.ToLower(string(common.Bytes2Hex(ethMethod.ID)))
@@ -75,18 +73,8 @@ func FunctionFromAbiMethod(ethMethod *abi.Method, abiSource string) *SimpleFunct
 	}
 }
 
-func argumentTypesToSimpleParameters(argTypes []*abi.Type) (result []SimpleParameter) {
-	result = make([]SimpleParameter, len(argTypes))
-	for index, argType := range argTypes {
-		result[index] = SimpleParameter{
-			ParameterType: argType.String(),
-			InternalType:  argType.TupleRawName,
-			Components:    argumentTypesToSimpleParameters(argType.TupleElems),
-		}
-	}
-	return
-}
-
+// argumentsToSimpleParameters converts slice of go-ethereum's Argument to slice of
+// SimpleParameter
 func argumentsToSimpleParameters(args []abi.Argument) (result []SimpleParameter) {
 	result = make([]SimpleParameter, len(args))
 	for index, arg := range args {
@@ -94,8 +82,30 @@ func argumentsToSimpleParameters(args []abi.Argument) (result []SimpleParameter)
 			ParameterType: arg.Type.String(),
 			Name:          arg.Name,
 			Indexed:       arg.Indexed,
-			InternalType:  arg.Type.TupleRawName,
+			InternalType:  getInternalType(&arg.Type),
 			Components:    argumentTypesToSimpleParameters(arg.Type.TupleElems),
+		}
+	}
+	return
+}
+
+func getInternalType(abiType *abi.Type) (result string) {
+	result = abiType.TupleRawName
+	if result == "" {
+		result = abiType.String()
+	}
+	return
+}
+
+// argumentTypesToSimpleParameters is similar to argumentsToSimpleParameters, but for
+// recursive types
+func argumentTypesToSimpleParameters(argTypes []*abi.Type) (result []SimpleParameter) {
+	result = make([]SimpleParameter, len(argTypes))
+	for index, argType := range argTypes {
+		result[index] = SimpleParameter{
+			ParameterType: argType.String(),
+			InternalType:  getInternalType(argType),
+			Components:    argumentTypesToSimpleParameters(argType.TupleElems),
 		}
 	}
 	return
@@ -110,11 +120,7 @@ func joinParametersNames(params []SimpleParameter) (result string) {
 		if index > 0 {
 			result += ","
 		}
-		var name string = param.Name
-		if param.Name == "" {
-			name = fmt.Sprintf("val_%d", index)
-		}
-		result += name
+		result += param.DisplayName(index)
 	}
 	return
 }
@@ -126,11 +132,26 @@ func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[
 		"stateMutability": s.StateMutability,
 		"signature":       s.Signature,
 		"encoding":        s.Encoding,
-		"input_names":     joinParametersNames(s.Inputs),
-		"output_names":    joinParametersNames(s.Outputs),
+	}
+
+	if format != "json" || extraOptions["verbose"] != true {
+		model["input_names"] = joinParametersNames(s.Inputs)
+		model["output_names"] = joinParametersNames(s.Outputs)
 	}
 
 	if format == "json" {
+		getParameterModels := func(params []SimpleParameter) []map[string]any {
+			result := make([]map[string]any, len(params))
+			for index, param := range params {
+				result[index] = param.Model(showHidden, format, extraOptions).Data
+				result[index]["name"] = param.DisplayName(index)
+			}
+			return result
+		}
+		if extraOptions["verbose"] == true {
+			model["inputs"] = getParameterModels(s.Inputs)
+			model["outputs"] = getParameterModels(s.Outputs)
+		}
 		return Model{
 			Data:  model,
 			Order: []string{},
