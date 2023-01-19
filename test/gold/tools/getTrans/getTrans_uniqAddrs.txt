@@ -36,5 +36,5 @@ TEST[DATE|TIME] Format:  json
     "timestamp": 1460156189,
     "date": "2016-04-08 22:56:29 UTC"
   }], "errors": [
-"transaction 1301324.0 not found"
+"transaction at 1301324.0 returned an error: not found"
 ] }

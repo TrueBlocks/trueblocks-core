@@ -6,11 +6,12 @@ package blocksPkg
 
 import (
 	"context"
-	"strings"
+	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/ethereum/go-ethereum"
 )
 
 func (opts *BlocksOptions) HandleShowBlocks() error {
@@ -28,9 +29,13 @@ func (opts *BlocksOptions) HandleShowBlocks() error {
 			blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
 			if err != nil {
 				errorChan <- err
+				if errors.Is(err, ethereum.NotFound) {
+					continue
+				}
 				cancel()
 				return
 			}
+
 			for _, bn := range blockNums {
 				finalized := meta.Age(bn) > 28
 
@@ -47,16 +52,15 @@ func (opts *BlocksOptions) HandleShowBlocks() error {
 					block = &b
 				}
 
-				// TODO: rpcClient should return a custom type of error in this case
-				if err != nil && strings.Contains(err.Error(), "not found") {
-					errorChan <- err
-					continue
-				}
 				if err != nil {
 					errorChan <- err
+					if errors.Is(err, ethereum.NotFound) {
+						continue
+					}
 					cancel()
 					return
 				}
+
 				modelChan <- block
 			}
 		}

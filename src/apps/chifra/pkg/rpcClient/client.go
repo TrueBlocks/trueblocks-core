@@ -17,6 +17,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	ethTypes "github.com/ethereum/go-ethereum/core/types"
@@ -61,7 +62,7 @@ func BlockNumber(provider string) uint64 {
 
 var noProvider string = `
 
-  {R}Warning{O}: The RPC server ([{PROVIDER}]) was not found. Either start it, or edit the {T}rpcProvider{O}
+  {R}Warning{O}: The RPC server ([{PROVIDER}]) was not available. Either start it, or edit the {T}rpcProvider{O}
   value in the file {T}[{FILE}]{O}. Quitting...
 `
 
@@ -196,7 +197,7 @@ func TxNumberAndIdFromHash(provider string, hash string) (uint64, uint64, error)
 		log.Fatal(err)
 	}
 	if trans.Result.BlockNumber == "" {
-		return 0, 0, fmt.Errorf("transaction %s not found", hash)
+		return 0, 0, fmt.Errorf("transaction at %s reported an error: %w", hash, ethereum.NotFound)
 	}
 	bn, err := strconv.ParseUint(trans.Result.BlockNumber[2:], 16, 32)
 	if err != nil {

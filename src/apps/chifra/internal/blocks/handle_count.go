@@ -6,10 +6,12 @@ package blocksPkg
 
 import (
 	"context"
+	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/ethereum/go-ethereum"
 )
 
 func (opts *BlocksOptions) HandleCounts() error {
@@ -30,6 +32,9 @@ func (opts *BlocksOptions) HandleCounts() error {
 			blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
 			if err != nil {
 				errorChan <- err
+				if errors.Is(err, ethereum.NotFound) {
+					continue
+				}
 				cancel()
 				return
 			}
@@ -39,6 +44,9 @@ func (opts *BlocksOptions) HandleCounts() error {
 				var block types.SimpleBlock[string]
 				if block, err = rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, finalized); err != nil {
 					errorChan <- err
+					if errors.Is(err, ethereum.NotFound) {
+						continue
+					}
 					cancel()
 					return
 				}
@@ -52,6 +60,9 @@ func (opts *BlocksOptions) HandleCounts() error {
 				if opts.Uncles {
 					if blockCount.UnclesCnt, err = rpcClient.GetUncleCountByNumber(opts.Globals.Chain, bn); err != nil {
 						errorChan <- err
+						if errors.Is(err, ethereum.NotFound) {
+							continue
+						}
 						cancel()
 						return
 					}
@@ -60,6 +71,9 @@ func (opts *BlocksOptions) HandleCounts() error {
 				if opts.Traces {
 					if blockCount.TracesCnt, err = types.GetTraceCountByBlockNumber(opts.Globals.Chain, bn); err != nil {
 						errorChan <- err
+						if errors.Is(err, ethereum.NotFound) {
+							continue
+						}
 						cancel()
 						return
 					}
@@ -68,6 +82,9 @@ func (opts *BlocksOptions) HandleCounts() error {
 				if opts.Logs {
 					if blockCount.LogsCnt, err = rpcClient.GetLogCountByNumber(opts.Globals.Chain, bn); err != nil {
 						errorChan <- err
+						if errors.Is(err, ethereum.NotFound) {
+							continue
+						}
 						cancel()
 						return
 					}

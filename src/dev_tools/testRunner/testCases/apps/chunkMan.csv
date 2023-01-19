@@ -43,6 +43,9 @@ on      ,both ,fast  ,chunks ,apps/chunkMan ,clean_bad               ,y    ,mode
 on      ,both ,fast  ,chunks ,apps/chunkMan ,pin_chunks_bad2         ,y    ,mode = addresses & pin
 on      ,both ,fast  ,chunks ,apps/chunkMan ,pin_data_bad2           ,y    ,mode = addresses & publish
 
+# fails because it does not report an error in API mode
+local   ,both ,fast  ,chunks ,apps/chunkMan ,block_not_found         ,y    ,mode = index & belongs = 0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9 & blocks = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
+
 # this test case is disabled because it takes way too long
 local   ,both ,fast  ,chunks ,apps/chunkMan ,save_addrs              ,y    ,mode = addresses & save_addrs
 

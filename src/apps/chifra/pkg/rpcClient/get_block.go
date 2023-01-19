@@ -9,6 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
@@ -189,8 +190,7 @@ func getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error)
 
 	rawBlock := &response.Result
 	if len(response.Result.Timestamp) == 0 {
-		msg := fmt.Sprintf("block number or timestamp for %d not found", bn)
-		return rawBlock, errors.New(msg)
+		return rawBlock, fmt.Errorf("block at %s returned an error: %w", fmt.Sprintf("%d", bn), ethereum.NotFound)
 	}
 
 	return rawBlock, err

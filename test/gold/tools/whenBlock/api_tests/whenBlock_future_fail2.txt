@@ -18,6 +18,6 @@ when?blocks=1000000-50000000:35000000
     "chain": "mainnet"
   },
   "errors": [
-    "block number or timestamp for 36000000 not found"
+    "block at 36000000 returned an error: not found"
   ]
 }
