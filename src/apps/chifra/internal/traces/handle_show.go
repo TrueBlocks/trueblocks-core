@@ -41,6 +41,8 @@ func (opts *TracesOptions) HandleShowTraces() error {
 					return
 				}
 				for _, trace := range traces {
+					// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
+					trace := trace
 					modelChan <- &trace
 				}
 			}

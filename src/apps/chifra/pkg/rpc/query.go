@@ -2,6 +2,7 @@ package rpc
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"math/big"
 	"sync"
@@ -44,7 +45,6 @@ func GetClient(provider string) *ethclient.Client {
 	return perProviderClientMap[provider]
 }
 
-// TODO: DUPLICATED DUE TO CYCLICAL IMPORT
 // TxHashFromNumberAndId returns a transaction's hash if it's a valid transaction
 func TxHashFromNumberAndId(chain string, blkNum, txId uint64) (string, error) {
 	provider := config.GetRpcProvider(chain)
@@ -53,12 +53,12 @@ func TxHashFromNumberAndId(chain string, blkNum, txId uint64) (string, error) {
 
 	block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(blkNum))
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("error at block %s: %w", fmt.Sprintf("%d", blkNum), err)
 	}
 
 	tx, err := ec.TransactionInBlock(context.Background(), block.Hash(), uint(txId))
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("error at transaction %s: %w", fmt.Sprintf("%s.%d", block.Hash(), txId), err)
 	}
 
 	return tx.Hash().Hex(), nil

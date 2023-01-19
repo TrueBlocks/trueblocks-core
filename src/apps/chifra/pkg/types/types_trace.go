@@ -177,6 +177,7 @@ func GetTracesByTransactionHash(chain string, txHash string) ([]SimpleTrace, err
 
 	} else {
 		for _, rawTrace := range rawTraces {
+			rawTrace := rawTrace
 			action := SimpleTraceAction{
 				CallType: rawTrace.Action.CallType,
 				From:     common.HexToAddress(rawTrace.Action.From),
