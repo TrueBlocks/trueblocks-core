@@ -177,6 +177,7 @@ func GetTracesByTransactionHash(chain string, txHash string) ([]SimpleTrace, err
 
 	} else {
 		for _, rawTrace := range rawTraces {
+			// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
 			rawTrace := rawTrace
 			action := SimpleTraceAction{
 				CallType: rawTrace.Action.CallType,
