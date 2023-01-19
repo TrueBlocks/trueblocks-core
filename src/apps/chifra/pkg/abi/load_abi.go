@@ -32,6 +32,10 @@ func getMapKey(encoding string) string {
 	return strings.ToLower(encoding)
 }
 
+func isConstructor(method *abi.Method) bool {
+	return method.Type == abi.Constructor
+}
+
 func LoadAbiFromJsonFile(filePath string, destination AbiInterfaceMap) (err error) {
 	file, err := os.OpenFile(filePath, os.O_RDONLY, 0)
 	if err != nil {
@@ -48,13 +52,17 @@ func fromJson(reader io.Reader, abiSource string, destination AbiInterfaceMap) (
 	}
 
 	for _, method := range loadedAbi.Methods {
+		// We don't want constructors or anonymous functions
+		if isConstructor(&method) || method.Name == "" {
+			continue
+		}
 		function := types.FunctionFromAbiMethod(&method, abiSource)
-		destination[function.Encoding] = function
+		destination[getMapKey(function.Encoding)] = function
 	}
 
 	for _, ethEvent := range loadedAbi.Events {
 		event := types.FunctionFromAbiEvent(&ethEvent, abiSource)
-		destination[event.Encoding] = event
+		destination[getMapKey(event.Encoding)] = event
 	}
 
 	return
@@ -74,7 +82,7 @@ func LoadAbiFromKnownFile(filePath string, destination AbiInterfaceMap) (err err
 	}
 
 	for _, function := range functions {
-		destination[function.Encoding] = &function
+		destination[getMapKey(function.Encoding)] = &function
 	}
 
 	return
@@ -222,7 +230,7 @@ func LoadAbiFromAddress(chain string, address common.Address, destination AbiInt
 		}
 		for _, loadedAbi := range loadedAbis {
 			loadedAbi := loadedAbi
-			destination[loadedAbi.Encoding] = &loadedAbi
+			destination[getMapKey(loadedAbi.Encoding)] = &loadedAbi
 		}
 		return nil
 	}

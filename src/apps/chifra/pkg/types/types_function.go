@@ -58,6 +58,10 @@ func FunctionFromAbiMethod(ethMethod *abi.Method, abiSource string) *SimpleFunct
 
 	inputs := argumentsToSimpleParameters(ethMethod.Inputs)
 	outputs := argumentsToSimpleParameters(ethMethod.Outputs)
+	stateMutability := "nonpayable"
+	if ethMethod.StateMutability != "" {
+		stateMutability = ethMethod.StateMutability
+	}
 	return &SimpleFunction{
 		Encoding:        fourByte,
 		Signature:       ethMethod.Sig,
@@ -65,7 +69,7 @@ func FunctionFromAbiMethod(ethMethod *abi.Method, abiSource string) *SimpleFunct
 		AbiSource:       abiSource,
 		FunctionType:    functionType,
 		Constant:        ethMethod.Constant,
-		StateMutability: ethMethod.StateMutability,
+		StateMutability: stateMutability,
 		Inputs:          inputs,
 		Outputs:         outputs,
 	}
@@ -117,25 +121,29 @@ func joinParametersNames(params []SimpleParameter) (result string) {
 
 func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[string]any) Model {
 	model := map[string]interface{}{
-		"encoding":  s.Encoding,
-		"type":      s.FunctionType,
-		"name":      s.Name,
-		"signature": s.Signature,
+		"name":            s.Name,
+		"type":            s.FunctionType,
+		"stateMutability": s.StateMutability,
+		"signature":       s.Signature,
+		"encoding":        s.Encoding,
+		"input_names":     joinParametersNames(s.Inputs),
+		"output_names":    joinParametersNames(s.Outputs),
 	}
+
+	if format == "json" {
+		return Model{
+			Data:  model,
+			Order: []string{},
+		}
+	}
+
 	order := []string{
 		"encoding",
 		"type",
 		"name",
 		"signature",
-	}
-
-	if format != "json" {
-		model["input_names"] = joinParametersNames(s.Inputs)
-		model["output_names"] = joinParametersNames(s.Outputs)
-		order = append(order, []string{
-			"input_names",
-			"output_names",
-		}...)
+		"input_names",
+		"output_names",
 	}
 
 	return Model{
