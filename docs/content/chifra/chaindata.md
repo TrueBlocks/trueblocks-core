@@ -210,7 +210,7 @@ Notes:
   - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
-  - If you specify a 32-byte hash, it will be assumed to be a transaction hash, if the transaction is not found, it will be used as a topic.
+  - If you specify a 32-byte hash, it will be assumed to be a transaction hash, if it is not, the hash will be used as a topic.
 ```
 
 Data models produced by this tool:

@@ -56,7 +56,7 @@ func Verify(chunks *map[string]mapRecord, outDir string) {
 		// 		}
 		// 	}
 		// 	if !found {
-		// 		logError(filePath, fmt.Sprintf("Signature '%s' not found", sigRecord.Signature.Hex()))
+		// 		logError(filePath, fmt.Sprintf("Signature '%s' missing", sigRecord.Signature.Hex()))
 		// 	}
 		// }
 		// for _, strRecord := range record.strRecords {
@@ -68,7 +68,7 @@ func Verify(chunks *map[string]mapRecord, outDir string) {
 		// 		}
 		// 	}
 		// 	if !found {
-		// 		logError(filePath, fmt.Sprintf("String '%s' not found", strRecord.Value))
+		// 		logError(filePath, fmt.Sprintf("String '%s' missing", strRecord.Value))
 		// 	}
 		// }
 

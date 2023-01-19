@@ -10,6 +10,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/ethereum/go-ethereum"
 )
 
 type ExploreType uint8
@@ -79,12 +80,7 @@ func (opts *ExploreOptions) validateExplore() error {
 			}
 			// An error here is not okay because we have a valid hash but it's not a valid on-chain
 			// thingy, so we must have been told why by the node
-			msg := fmt.Sprintf("%s", err)
-			msgParts := strings.Split(msg, ":")
-			if strings.Contains(msg, "<html") {
-				msg = msgParts[0]
-			}
-			return fmt.Errorf("the node returned an error: %s", msg)
+			return fmt.Errorf("block at %s returned an error: %w", arg, ethereum.NotFound)
 		}
 
 		if validate.IsValidFourByte(arg) {
