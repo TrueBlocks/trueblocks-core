@@ -8,6 +8,7 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	ethTypes "github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
 )
@@ -81,4 +82,19 @@ func TxFromNumberAndId(chain string, blkNum, txId uint64) (ethTypes.Transaction,
 	}
 
 	return *tx, nil
+}
+
+// TODO: DUPLICATED DUE TO CYCLICAL IMPORT
+func GetBlockTimestamp(chain string, bn uint64) int64 {
+	provider := config.GetRpcProvider(chain)
+	ec := GetClient(provider)
+	defer ec.Close()
+
+	r, err := ec.HeaderByNumber(context.Background(), big.NewInt(int64(bn)))
+	if err != nil {
+		logger.Log(logger.Error, "Could not connect to RPC client", err)
+		return 0
+	}
+
+	return int64(r.Time)
 }
