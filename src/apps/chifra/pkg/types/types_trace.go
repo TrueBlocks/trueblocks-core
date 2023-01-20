@@ -220,6 +220,13 @@ func GetTracesByTransactionHash(chain string, txHash string) ([]SimpleTrace, err
 				result = &SimpleTraceResult{
 					GasUsed: mustParseUint(rawTrace.Result.GasUsed),
 					Output:  rawTrace.Result.Output,
+					Code:    rawTrace.Result.Code,
+				}
+				if len(rawTrace.Result.NewContract) > 0 {
+					result.NewContract = common.HexToAddress(rawTrace.Result.NewContract)
+				} else if len(rawTrace.Result.Address) > 0 {
+					result.NewContract = common.HexToAddress(rawTrace.Result.Address)
+					result.NewContract = common.HexToAddress(rawTrace.Result.Address)
 				}
 				result.SetRaw(rawTrace.Result)
 			}

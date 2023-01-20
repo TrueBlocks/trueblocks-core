@@ -58,7 +58,7 @@ func TxHashFromNumberAndId(chain string, blkNum, txId uint64) (string, error) {
 
 	tx, err := ec.TransactionInBlock(context.Background(), block.Hash(), uint(txId))
 	if err != nil {
-		return "", fmt.Errorf("error at transaction %s: %w", fmt.Sprintf("%s.%d", block.Hash(), txId), err)
+		return "", fmt.Errorf("transaction at %s returned an error: %w", fmt.Sprintf("%s.%d", block.Hash(), txId), err)
 	}
 
 	return tx.Hash().Hex(), nil

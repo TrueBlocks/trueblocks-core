@@ -59,7 +59,9 @@ func (s *SimpleTraceResult) Model(showHidden bool, format string, extraOptions m
 	if format == "json" {
 		if len(s.NewContract) > 0 && s.NewContract != common.HexToAddress("0x0") {
 			model["newContract"] = s.NewContract
-			order = append(order, "newContract")
+		}
+		if len(s.Code) > 0 {
+			model["code"] = s.Code
 		}
 	} else {
 		if len(s.NewContract) > 0 && s.NewContract == common.HexToAddress("0x0") {

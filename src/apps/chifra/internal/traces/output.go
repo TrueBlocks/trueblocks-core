@@ -80,6 +80,9 @@ func GetTracesOptions(args []string, g *globals.GlobalOptions) *TracesOptions {
 
 func (opts *TracesOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
+	if opts.Globals.Format == "txt" || opts.Globals.Format == "csv" {
+		return opts.Globals.ShowRaw || opts.Count
+	}
 	ported = !opts.Articulate && len(opts.Filter) == 0
 	// EXISTING_CODE
 	return

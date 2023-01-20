@@ -84,6 +84,11 @@ func (s *SimpleTraceAction) Model(showHidden bool, format string, extraOptions m
 				model["value"] = s.Balance.String()
 			}
 		} else {
+			if s.To == common.HexToAddress("0x0") {
+				model["to"] = "0x0"
+			} else {
+				model["to"] = s.To
+			}
 			model["value"] = s.Value.String()
 		}
 		if len(s.Address) > 0 && s.Address != common.HexToAddress("0x0") {
@@ -95,34 +100,6 @@ func (s *SimpleTraceAction) Model(showHidden bool, format string, extraOptions m
 		if len(s.From) > 0 && s.From != common.HexToAddress("0x0") {
 			model["from"] = s.From
 		}
-		if len(s.To) > 0 && s.To != common.HexToAddress("0x0") {
-			model["to"] = s.To
-		}
-
-		// 	txs, ok := any(s.Transactions).([]SimpleTransaction)
-		// 	if ok {
-		// 		items := make([]map[string]interface{}, 0, len(txs))
-		// 		for _, txObject := range txs {
-		// 			extraOptions["finalized"] = s.Finalized
-		// 			items = append(items, txObject.Model(showHidden, format, extraOptions).Data)
-		// 		}
-		// 		model["transactions"] = items
-		// 	} else {
-		// 		model["transactions"] = s.Transactions
-		// 	}
-		// 	order = append(order, "transactions")
-		// 	model["uncles"] = s.Uncles
-		// 	order = append(order, "uncles")
-	} else {
-		// model["transactionsCnt"] = len(s.Transactions)
-		// order = append(order, "transactionsCnt")
-		// if extraOptions["list"] == true {
-		// 	model["unclesCnt"] = len(s.Uncles)
-		// 	order = append(order, "unclesCnt")
-		// } else {
-		// 	model["finalized"] = s.Finalized
-		// 	order = append(order, "finalized")
-		// }
 	}
 	// EXISTING_CODE
 
