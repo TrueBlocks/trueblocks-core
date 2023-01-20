@@ -28,12 +28,17 @@ on       ,both ,fast  ,traces ,tools/getTraces ,bad_hash_msg        ,n    ,trans
 on       ,both ,fast  ,traces ,tools/getTraces ,bad_blkhash_msg     ,y    ,transactions = 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1
 on       ,both ,medi  ,traces ,tools/getTraces ,prev_bug2_1         ,n    ,transactions = 4279119.46 & fmt = txt
 on       ,both ,fast  ,traces ,tools/getTraces ,fmt_json            ,y    ,transactions = 2222222.0 2332332.0 & fmt = json
-on       ,both ,fast  ,traces ,tools/getTraces ,ddos_supress        ,y    ,transactions = 0x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4 & fmt = json
-on       ,cmd  ,fast  ,traces ,tools/getTraces ,ddos_show           ,n    ,transactions = 0x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4 & fmt = json
-on       ,both ,fast  ,traces ,tools/getTraces ,nav_prev1           ,y    ,transactions = 1001001.1:prev
-on       ,both ,medi  ,traces ,tools/getTraces ,nav_prev2           ,y    ,transactions = 1001001.0:prev
-on       ,both ,fast  ,traces ,tools/getTraces ,nav_next1           ,y    ,transactions = 1001001.2:next
-on       ,both ,fast  ,traces ,tools/getTraces ,nav_next2           ,y    ,transactions = 1001001.3:next
+
+# These don't work because the C++ code used to generate a trace that didn't exist
+local    ,both ,fast  ,traces ,tools/getTraces ,ddos_supress        ,y    ,transactions = 0x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4 & fmt = json
+local    ,both ,fast  ,traces ,tools/getTraces ,not_articulated     ,y    ,transactions = 0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33 & fmt = json
+local    ,cmd  ,fast  ,traces ,tools/getTraces ,ddos_show           ,n    ,transactions = 0x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4 & fmt = json
+
+# These don't work because :next and :prev are not parsed in goLang
+local    ,both ,fast  ,traces ,tools/getTraces ,nav_prev1           ,y    ,transactions = 1001001.1:prev
+local    ,both ,medi  ,traces ,tools/getTraces ,nav_prev2           ,y    ,transactions = 1001001.0:prev
+local    ,both ,fast  ,traces ,tools/getTraces ,nav_next1           ,y    ,transactions = 1001001.2:next
+local    ,both ,fast  ,traces ,tools/getTraces ,nav_next2           ,y    ,transactions = 1001001.3:next
 on       ,both ,fast  ,traces ,tools/getTraces ,star                ,y    ,transactions = 2222221.* & fmt = json
 on       ,both ,fast  ,traces ,tools/getTraces ,fmt_default         ,y    ,transactions = 2222222.0 2332332.0
 on       ,both ,fast  ,traces ,tools/getTraces ,fmt_txt             ,n    ,transactions = 2222222.0 2332332.0 & fmt = txt
@@ -48,7 +53,6 @@ on       ,both ,fast  ,traces ,tools/getTraces ,by_filter7          ,y    ,fmt =
 on       ,both ,fast  ,traces ,tools/getTraces ,by_filter8          ,y    ,fmt = json & filter = 4370000!0x42ae53!0x8c3064d32441f0190e8b3fa1ef9fc81fccb06111!0xc42209accc14029c1012fb5680d95fbd6036e2a0
 on       ,both ,fast  ,traces ,tools/getTraces ,by_filter10         ,y    ,fmt = json & filter = 4370000!4370002!!!!1
 on       ,both ,fast  ,traces ,tools/getTraces ,by_filter11         ,y    ,fmt = json & filter = 4370000!4370002!!!1!2
-on       ,both ,fast  ,traces ,tools/getTraces ,not_articulated     ,y    ,transactions = 0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33 & fmt = json
 
 on       ,both ,medi  ,traces ,tools/getTraces ,by_bnun_and_txid_c  ,y    ,transactions = 4348290.92 & fmt = json & count
 on       ,both ,medi  ,traces ,tools/getTraces ,count_1             ,n    ,transactions = 1001001.0 1001001.0 2462000.* 14000201.0 & fmt = csv & count
@@ -64,8 +68,8 @@ on       ,both ,fast  ,traces ,tools/getTraces ,bad_blkhash_msg_raw ,y    ,trans
 on       ,both ,medi  ,traces ,tools/getTraces ,prev_bug2_2         ,y    ,transactions = 4279119.46 & raw
 on       ,both ,fast  ,traces ,tools/getTraces ,from_raw            ,y    ,transactions = 4000000.5 & raw
 
-on       ,cmd  ,fast  ,traces ,tools/getTraces ,04_01               ,y    ,transactions = 0x3d762e5f4c2a5c4ed3f4678d81f9078ff68e9d236d87dbcf3eee024dbb11f497 & fmt = json
-on       ,cmd  ,medi  ,traces ,tools/getTraces ,25_01               ,y    ,transactions = 0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328 & fmt = json
+on       ,both ,fast  ,traces ,tools/getTraces ,04_01               ,y    ,transactions = 0x3d762e5f4c2a5c4ed3f4678d81f9078ff68e9d236d87dbcf3eee024dbb11f497 & fmt = json
+on       ,both ,medi  ,traces ,tools/getTraces ,25_01               ,y    ,transactions = 0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328 & fmt = json
 
 local    ,both ,fast  ,traces ,tools/getTraces ,articulated         ,y    ,transactions = 0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33 & fmt = json & articulate
 local    ,both ,fast  ,traces ,tools/getTraces ,first               ,y    ,transactions = 40500.0:next
