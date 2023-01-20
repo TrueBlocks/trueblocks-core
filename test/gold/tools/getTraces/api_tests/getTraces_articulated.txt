@@ -30,7 +30,8 @@ traces?transactions=0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47
         "name": "openTrading",
         "stateMutability": "nonpayable"
       },
-      "compressedTrace": "openTrading(); "
+      "compressedTrace": "{name:openTrading}",
+      "timestamp": 1623981210
     },
     {
       "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
@@ -64,7 +65,8 @@ traces?transactions=0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47
           "val_0": "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f"
         }
       },
-      "compressedTrace": "factory(); "
+      "compressedTrace": "{name:factory|outputs:{val_0:0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f}}",
+      "timestamp": 1623981210
     },
     {
       "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
@@ -98,7 +100,8 @@ traces?transactions=0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47
           "val_0": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
         }
       },
-      "compressedTrace": "WETH(); "
+      "compressedTrace": "{name:WETH|outputs:{val_0:0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2}}",
+      "timestamp": 1623981210
     },
     {
       "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
@@ -136,7 +139,8 @@ traces?transactions=0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47
           "pair": "0xea0be20914783d6b538539795069ca333f820bc5"
         }
       },
-      "compressedTrace": "createPair(0xfa247066958637af6b4cc04bccecad2b6b107200 /*tokenA*/, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 /*tokenB*/); "
+      "compressedTrace": "{name:createPair|inputs:{tokenA:0xfa247066958637af6b4cc04bccecad2b6b107200|tokenB:0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2}|outputs:{pair:0xea0be20914783d6b538539795069ca333f820bc5}}",
+      "timestamp": 1623981210
     },
     {
       "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
@@ -163,7 +167,8 @@ traces?transactions=0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47
         "gasUsed": 2327803,
         "output": ""
       },
-      "compressedTrace": ""
+      "compressedTrace": "",
+      "timestamp": 1623981210
     },
     {
       "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
@@ -190,7 +195,8 @@ traces?transactions=0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47
         "gasUsed": 2327803,
         "output": ""
       },
-      "compressedTrace": ""
+      "compressedTrace": "",
+      "timestamp": 1623981210
     },
     {
       "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
@@ -225,7 +231,8 @@ traces?transactions=0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47
           "_tru": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
         }
       },
-      "compressedTrace": "initialize(0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 /*_tru*/, 0xfa247066958637af6b4cc04bccecad2b6b107200 /*_admin*/); "
+      "compressedTrace": "{name:initialize|inputs:{_admin:0xfa247066958637af6b4cc04bccecad2b6b107200|_tru:0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2}}",
+      "timestamp": 1623981210
     },
     {
       "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
@@ -269,7 +276,8 @@ traces?transactions=0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47
           "liquidity": "148323969741913257974"
         }
       },
-      "compressedTrace": "addLiquidityETH(0xfa247066958637af6b4cc04bccecad2b6b107200 /*token*/, 8000000000000000000000 /*amountTokenDesired*/, 0 /*amountTokenMin*/, 0 /*amountETHMin*/, 0x37da92c11a2d5c05077ce41ac2243aa38032d4af /*to*/, 1623981210 /*deadline*/); "
+      "compressedTrace": "{name:addLiquidityETH|stateMutability:payable|inputs:{amountETHMin:0|amountTokenDesired:8000000000000000000000|amountTokenMin:0|deadline:1623981210|to:0x37da92c11a2d5c05077ce41ac2243aa38032d4af|token:0xfa247066958637af6b4cc04bccecad2b6b107200}|outputs:{amountETH:2750000000000000000|amountToken:8000000000000000000000|liquidity:148323969741913257974}}",
+      "timestamp": 1623981210
     },
     {
       "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
@@ -307,7 +315,8 @@ traces?transactions=0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47
           "pair": "0xea0be20914783d6b538539795069ca333f820bc5"
         }
       },
-      "compressedTrace": "getPair(0xfa247066958637af6b4cc04bccecad2b6b107200 /*tokenA*/, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 /*tokenB*/); "
+      "compressedTrace": "{name:getPair|inputs:{tokenA:0xfa247066958637af6b4cc04bccecad2b6b107200|tokenB:0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2}|outputs:{pair:0xea0be20914783d6b538539795069ca333f820bc5}}",
+      "timestamp": 1623981210
     },
     {
       "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
@@ -343,7 +352,8 @@ traces?transactions=0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47
           "_reserve1": "0"
         }
       },
-      "compressedTrace": "getReserves(); "
+      "compressedTrace": "{name:getReserves|outputs:{_blockTimestampLast:0|_reserve0:0|_reserve1:0}}",
+      "timestamp": 1623981210
     },
     {
       "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
@@ -382,7 +392,8 @@ traces?transactions=0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47
           "_success": "true"
         }
       },
-      "compressedTrace": "transferFrom(0xfa247066958637af6b4cc04bccecad2b6b107200 /*_from*/, 0xea0be20914783d6b538539795069ca333f820bc5 /*_to*/, 8000000000000000000000 /*_value*/); "
+      "compressedTrace": "{name:transferFrom|inputs:{_from:0xfa247066958637af6b4cc04bccecad2b6b107200|_to:0xea0be20914783d6b538539795069ca333f820bc5|_value:8000000000000000000000}|outputs:{_success:true}}",
+      "timestamp": 1623981210
     },
     {
       "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
@@ -413,7 +424,8 @@ traces?transactions=0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47
         "name": "deposit",
         "stateMutability": "nonpayable"
       },
-      "compressedTrace": "deposit(); "
+      "compressedTrace": "{name:deposit}",
+      "timestamp": 1623981210
     },
     {
       "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
@@ -451,7 +463,8 @@ traces?transactions=0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47
           "_success": "true"
         }
       },
-      "compressedTrace": "transfer(0xea0be20914783d6b538539795069ca333f820bc5 /*_to*/, 2750000000000000000 /*_value*/); "
+      "compressedTrace": "{name:transfer|inputs:{_to:0xea0be20914783d6b538539795069ca333f820bc5|_value:2750000000000000000}|outputs:{_success:true}}",
+      "timestamp": 1623981210
     },
     {
       "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
@@ -485,7 +498,8 @@ traces?transactions=0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47
           "to": "0x37da92c11a2d5c05077ce41ac2243aa38032d4af"
         }
       },
-      "compressedTrace": "mint(0x37da92c11a2d5c05077ce41ac2243aa38032d4af /*to*/); "
+      "compressedTrace": "{name:mint|inputs:{to:0x37da92c11a2d5c05077ce41ac2243aa38032d4af}}",
+      "timestamp": 1623981210
     },
     {
       "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
@@ -522,7 +536,8 @@ traces?transactions=0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47
           "_balance": "2750000000000000000"
         }
       },
-      "compressedTrace": "balanceOf(0xea0be20914783d6b538539795069ca333f820bc5 /*_owner*/); "
+      "compressedTrace": "{name:balanceOf|inputs:{_owner:0xea0be20914783d6b538539795069ca333f820bc5}|outputs:{_balance:2750000000000000000}}",
+      "timestamp": 1623981210
     },
     {
       "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
@@ -559,7 +574,8 @@ traces?transactions=0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47
           "_balance": "8000000000000000000000"
         }
       },
-      "compressedTrace": "balanceOf(0xea0be20914783d6b538539795069ca333f820bc5 /*_owner*/); "
+      "compressedTrace": "{name:balanceOf|inputs:{_owner:0xea0be20914783d6b538539795069ca333f820bc5}|outputs:{_balance:8000000000000000000000}}",
+      "timestamp": 1623981210
     },
     {
       "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
@@ -593,7 +609,8 @@ traces?transactions=0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47
           "fee": "0x0000000000000000000000000000000000000000"
         }
       },
-      "compressedTrace": "feeTo(); "
+      "compressedTrace": "{name:feeTo|outputs:{fee:0x0000000000000000000000000000000000000000}}",
+      "timestamp": 1623981210
     },
     {
       "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
@@ -631,7 +648,15 @@ traces?transactions=0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47
           "_success": "true"
         }
       },
-      "compressedTrace": "approve(0x7a250d5630b4cf539739df2c5dacb4c659f2488d /*_spender*/, 115792089237316195423570985008687907853269984665640564039457584007913129639935 /*_value*/); "
+      "compressedTrace": "{name:approve|inputs:{_spender:0x7a250d5630b4cf539739df2c5dacb4c659f2488d|_value:115792089237316195423570985008687907853269984665640564039457584007913129639935}|outputs:{_success:true}}",
+      "timestamp": 1623981210
     }
-  ]
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
 }

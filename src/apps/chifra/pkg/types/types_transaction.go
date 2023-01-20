@@ -10,19 +10,13 @@ package types
 
 // EXISTING_CODE
 import (
-	"math/big"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/bykof/gostradamus"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
-	"github.com/ethereum/go-ethereum/params"
 )
-
-// TODO: This can be made a utility
-func weiToEther(wei *big.Int) *big.Float {
-	return new(big.Float).Quo(new(big.Float).SetInt(wei), big.NewFloat(params.Ether))
-}
 
 // EXISTING_CODE
 
@@ -122,7 +116,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		model["gas"] = s.Gas
 
 		// TODO: this value could be created when RPC is queried and cached
-		model["ether"] = weiToEther(&s.Value)
+		model["ether"] = utils.Wei_2_EtherStr(&s.Value)
 		model["gasPrice"] = s.GasPrice
 		model["maxFeePerGas"] = s.MaxPriorityFeePerGas
 		model["maxPriorityFeePerGas"] = s.MaxPriorityFeePerGas

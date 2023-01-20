@@ -215,12 +215,10 @@ func Str_2_BigInt(str string) big.Int {
 	return ret
 }
 
-// func BigInt_2_Str(bi big.Int) (string, error) {
-// 	// ret := big.Int{}
-// 	// if len(str) > 2 && str[:2] == "0x" {
-// 	// 	ret.SetString(str[2:], 16)
-// 	// } else {
-// 	// 	ret.SetString(str, 10)
-// 	// }
-// 	return "ret", nil
-// }
+func Wei_2_EtherStr(amount *big.Int) string {
+	compact_amount := big.NewInt(0)
+	reminder := big.NewInt(0)
+	divisor := big.NewInt(1e18)
+	compact_amount.QuoRem(amount, divisor, reminder)
+	return fmt.Sprintf("%v.%018s", compact_amount.String(), reminder.String())
+}

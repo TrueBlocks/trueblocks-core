@@ -18,6 +18,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // TODO: CompressedTrace is not part of the raw trace data
@@ -72,25 +73,30 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 		"result":           s.Result,
 		"subtraces":        s.Subtraces,
 		"timestamp":        s.Timestamp,
-		"traceAddress":     s.TraceAddress,
 		"transactionHash":  s.TransactionHash,
 		"transactionIndex": s.TransactionIndex,
 	}
 
 	order := []string{
-		"articulatedTrace",
-		"blockHash",
 		"blockNumber",
-		"result",
-		"subtraces",
-		"timestamp",
-		"traceAddress",
-		"transactionHash",
 		"transactionIndex",
+		"action::callType",
+		"error",
+		"action::from",
+		"action::to",
+		"action::value",
+		"action::ether",
+		"action::gas",
+		"result::gasUsed",
+		"action::input",
+		"compressedTrace",
+		"result::output",
+		"timestamp",
 	}
 
 	// EXISTING_CODE
 	if format == "json" {
+		model["traceAddress"] = s.TraceAddress
 		if len(s.Error) > 0 {
 			model["error"] = s.Error
 		}
@@ -102,6 +108,42 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 		}
 		if s.Result != nil {
 			model["result"] = s.Result.Model(showHidden, format, extraOptions).Data
+		}
+	} else {
+		to := hexutil.Encode(s.Action.To.Bytes())
+		if to == "0x0000000000000000000000000000000000000000" {
+			to = "0x0"
+		}
+
+		model["blockNumber"] = s.BlockNumber
+		model["transactionIndex"] = s.TransactionIndex
+		model["error"] = s.Error
+		model["compressedTrace"] = s.CompressedTrace
+		model["timestamp"] = s.Timestamp
+		if s.Action != nil {
+			model["action::callType"] = s.Action.CallType
+			model["action::gas"] = s.Action.Gas
+			model["action::input"] = s.Action.Input
+			if len(s.Action.RefundAddress) > 0 && s.Action.RefundAddress != common.HexToAddress("0x0") {
+				model["action::from"] = hexutil.Encode(s.Action.Address.Bytes())
+				model["action::to"] = hexutil.Encode(s.Action.RefundAddress.Bytes())
+				model["action::value"] = s.Action.Balance.String()
+				model["action::ether"] = utils.Wei_2_EtherStr(&s.Action.Balance)
+				model["action::input"] = "0x"
+				model["action::callType"] = "self-destruct"
+			} else {
+				model["action::from"] = hexutil.Encode(s.Action.From.Bytes())
+				model["action::to"] = to
+				model["action::value"] = s.Action.Value.String()
+				model["action::ether"] = utils.Wei_2_EtherStr(&s.Action.Value)
+			}
+		}
+		if s.Result != nil {
+			model["result::gasUsed"] = s.Result.GasUsed
+			model["result::output"] = s.Result.Output
+		} else {
+			model["result::gasUsed"] = "0"
+			model["result::output"] = ""
 		}
 	}
 	// EXISTING_CODE
