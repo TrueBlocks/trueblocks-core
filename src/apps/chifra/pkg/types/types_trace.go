@@ -128,14 +128,14 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 				model["action::from"] = hexutil.Encode(s.Action.Address.Bytes())
 				model["action::to"] = hexutil.Encode(s.Action.RefundAddress.Bytes())
 				model["action::value"] = s.Action.Balance.String()
-				model["action::ether"] = utils.Wei_2_EtherStr(&s.Action.Balance)
+				model["action::ether"] = utils.WeiToEther(&s.Action.Balance)
 				model["action::input"] = "0x"
 				model["action::callType"] = "self-destruct"
 			} else {
 				model["action::from"] = hexutil.Encode(s.Action.From.Bytes())
 				model["action::to"] = to
 				model["action::value"] = s.Action.Value.String()
-				model["action::ether"] = utils.Wei_2_EtherStr(&s.Action.Value)
+				model["action::ether"] = utils.WeiToEther(&s.Action.Value)
 			}
 		}
 		if s.Result != nil {

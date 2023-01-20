@@ -20,6 +20,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/ethereum/go-ethereum/params"
 	"golang.org/x/term"
 )
 
@@ -215,10 +216,6 @@ func Str_2_BigInt(str string) big.Int {
 	return ret
 }
 
-func Wei_2_EtherStr(amount *big.Int) string {
-	compact_amount := big.NewInt(0)
-	reminder := big.NewInt(0)
-	divisor := big.NewInt(1e18)
-	compact_amount.QuoRem(amount, divisor, reminder)
-	return fmt.Sprintf("%v.%018s", compact_amount.String(), reminder.String())
+func WeiToEther(wei *big.Int) *big.Float {
+	return new(big.Float).Quo(new(big.Float).SetInt(wei), big.NewFloat(params.Ether))
 }

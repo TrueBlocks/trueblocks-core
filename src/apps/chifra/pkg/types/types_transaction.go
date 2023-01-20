@@ -18,6 +18,7 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
+// TODO: This can be made a utility
 // EXISTING_CODE
 
 type RawTransaction struct {
@@ -116,7 +117,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		model["gas"] = s.Gas
 
 		// TODO: this value could be created when RPC is queried and cached
-		model["ether"] = utils.Wei_2_EtherStr(&s.Value)
+		model["ether"] = utils.WeiToEther(&s.Value)
 		model["gasPrice"] = s.GasPrice
 		model["maxFeePerGas"] = s.MaxPriorityFeePerGas
 		model["maxPriorityFeePerGas"] = s.MaxPriorityFeePerGas
