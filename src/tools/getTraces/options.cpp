@@ -116,8 +116,13 @@ bool COptions::parseArguments(string_q& command) {
         return true;
     }
 
-    if (isRaw)
-        expContext().exportFmt = JSON1;
+    if ((!articulate && filter.empty()) || count) {
+        return usage("Should by ported in getTraces.");
+    }
+
+    if (isRaw) {
+        return usage("Should not be --raw in getTraces.");
+    }
 
     if (articulate) {
         // show certain fields and hide others
@@ -153,9 +158,9 @@ bool COptions::parseArguments(string_q& command) {
             break;
     }
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format);
-    if (count) {
-        expContext().fmtMap["format"] = expContext().fmtMap["header"] = "[{HASH}]\t[{TRACESCNT}]";
-    }
+    // if (count) {
+    //     expContext().fmtMap["format"] = expContext().fmtMap["header"] = "[{HASH}]\t[{TRACESCNT}]";
+    // }
 
     if (noHeader)
         expContext().fmtMap["header"] = "";
