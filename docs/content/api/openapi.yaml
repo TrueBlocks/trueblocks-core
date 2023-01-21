@@ -1196,14 +1196,6 @@ paths:
           explode: true
           schema:
             type: string
-        - name: statediff
-          description: export state diff traces (not implemented)
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: count
           description: show the number of traces for the transaction only (fast)
           required: false
@@ -1220,13 +1212,14 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">Traceaction</a>, and/or <a href="/data-model/chaindata/#traceresult">Traceresult</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-traces">chifra traces</a> command line.
+                    description: Produces <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">Traceaction</a>, <a href="/data-model/chaindata/#traceresult">Traceresult</a>, and/or <a href="/data-model/chaindata/#tracecount">Tracecount</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-traces">chifra traces</a> command line.
                     type: array
                     items:
                       oneOf:
                         - $ref: "#/components/schemas/trace"
                         - $ref: "#/components/schemas/traceAction"
                         - $ref: "#/components/schemas/traceResult"
+                        - $ref: "#/components/schemas/traceCount"
         "400":
           description: bad input parameter
   /when:
@@ -2748,6 +2741,35 @@ components:
           type: string
           example: "byzantium"
           description: "an optional name for the block"
+    traceCount:
+      description: "counts the number of traces in a transaction"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          example: 10
+          description: "the block number"
+        transactionIndex:
+          type: number
+          format: blknum
+          example: 10
+          description: "the transaction index"
+        transactionHash:
+          type: string
+          format: hash
+          example: "10"
+          description: "the transaction's hash"
+        timestamp:
+          type: number
+          format: timestamp
+          example: 10
+          description: "the timestamp of the block"
+        tracesCnt:
+          type: number
+          format: uint64
+          example: 30
+          description: "the number of traces in the transaction"
     ethState:
       description: "the on-chain state of a given address including ETH balance, nonce, and smart contract byte code if present"
       type: object

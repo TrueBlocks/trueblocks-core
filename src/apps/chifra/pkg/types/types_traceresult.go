@@ -9,22 +9,27 @@
 package types
 
 // EXISTING_CODE
-import "github.com/ethereum/go-ethereum/common"
+import (
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
+)
 
 // EXISTING_CODE
 
 type RawTraceResult struct {
-	NewContract string `json:"newContract"`
-	Code        string `json:"code"`
-	GasUsed     string `json:"gasUsed"`
-	Output      string `json:"output"`
+	Address     string `json:"address,omitempty"`
+	Code        string `json:"code,omitempty"`
+	GasUsed     string `json:"gasUsed,omitempty"`
+	NewContract string `json:"newContract,omitempty"`
+	Output      string `json:"output,omitempty"`
 }
 
 type SimpleTraceResult struct {
-	NewContract common.Address `json:"newContract"`
-	Code        string         `json:"code"`
+	Address     common.Address `json:"address,omitempty"`
+	Code        string         `json:"code,omitempty"`
 	GasUsed     Gas            `json:"gasUsed"`
-	Output      string         `json:"output"`
+	NewContract common.Address `json:"newContract,omitempty"`
+	Output      string         `json:"output,omitempty"`
 	raw         *RawTraceResult
 }
 
@@ -41,20 +46,31 @@ func (s *SimpleTraceResult) Model(showHidden bool, format string, extraOptions m
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
-		"newContract": s.NewContract,
-		"code":        s.Code,
-		"gasUsed":     s.GasUsed,
-		"output":      s.Output,
+		"gasUsed": s.GasUsed,
+		"output":  s.Output,
 	}
 
 	order := []string{
-		"newContract",
-		"code",
 		"gasUsed",
 		"output",
 	}
 
 	// EXISTING_CODE
+	if format == "json" {
+		if len(s.NewContract) > 0 && s.NewContract != common.HexToAddress("0x0") {
+			model["newContract"] = s.NewContract
+		}
+		if len(s.Code) > 0 {
+			model["code"] = s.Code
+		}
+	} else {
+		if len(s.NewContract) > 0 && s.NewContract == common.HexToAddress("0x0") {
+			model["newContract"] = "0x"
+		} else {
+			model["newContract"] = hexutil.Encode(s.NewContract.Bytes())
+		}
+		order = append(order, "newContract")
+	}
 	// EXISTING_CODE
 
 	return Model{

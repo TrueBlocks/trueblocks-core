@@ -50,15 +50,13 @@ Notes:
   - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
-  - A bang separated filter has the following fields (at least one of which is required) and is separated with a bang (!): fromBlk, toBlk, fromAddr, toAddr, after, count.
-  - A state diff trace describes, for each modified address, what changed during that trace.`
+  - A bang separated filter has the following fields (at least one of which is required) and is separated with a bang (!): fromBlk, toBlk, fromAddr, toAddr, after, count.`
 
 func init() {
 	tracesCmd.Flags().SortFlags = false
 
 	tracesCmd.Flags().BoolVarP(&tracesPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
 	tracesCmd.Flags().StringVarP(&tracesPkg.GetOptions().Filter, "filter", "f", "", "call the node's trace_filter routine with bang-separated filter")
-	tracesCmd.Flags().BoolVarP(&tracesPkg.GetOptions().Statediff, "statediff", "d", false, "export state diff traces (not implemented)")
 	tracesCmd.Flags().BoolVarP(&tracesPkg.GetOptions().Count, "count", "U", false, "show the number of traces for the transaction only (fast)")
 	tracesCmd.Flags().BoolVarP(&tracesPkg.GetOptions().SkipDdos, "skip_ddos", "s", false, "skip over the 2016 ddos during export ('on' by default) (hidden)")
 	tracesCmd.Flags().Uint64VarP(&tracesPkg.GetOptions().Max, "max", "m", 250, "if --skip_ddos is on, this many traces defines what a ddos transaction is (hidden)")

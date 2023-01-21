@@ -1,0 +1,6 @@
+name             ,type      ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
+blockNumber      ,blknum    ,           ,       ,      ,        ,          ,        ,      ,         ,  1 ,   1 ,     10 ,the block number
+transactionIndex ,blknum    ,           ,       ,      ,        ,          ,        ,      ,         ,  2 ,   2 ,     10 ,the transaction index
+transactionHash  ,hash      ,           ,       ,      ,        ,          ,        ,      ,         ,  3 ,   3 ,     10 ,the transaction's hash
+timestamp        ,timestamp ,           ,       ,      ,        ,          ,        ,      ,         ,  4 ,   4 ,     10 ,the timestamp of the block
+tracesCnt        ,uint64    ,           ,       ,      ,        ,          ,        ,      ,         ,  5 ,   5 ,     30 ,the number of traces in the transaction

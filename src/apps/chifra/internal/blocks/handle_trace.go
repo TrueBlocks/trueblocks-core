@@ -41,7 +41,7 @@ func (opts *BlocksOptions) HandleTrace() error {
 
 			for _, bn := range blockNums {
 				var traces []types.SimpleTrace
-				traces, err = rpcClient.GetTracesByNumber(opts.Globals.Chain, bn)
+				traces, err = types.GetTracesByBlockNumber(opts.Globals.Chain, bn)
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
@@ -52,6 +52,7 @@ func (opts *BlocksOptions) HandleTrace() error {
 				}
 
 				for _, trace := range traces {
+					// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
 					trace := trace
 					modelChan <- &trace
 				}

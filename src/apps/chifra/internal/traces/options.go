@@ -25,7 +25,6 @@ type TracesOptions struct {
 	TransactionIds []identifiers.Identifier `json:"transactionIds,omitempty"` // Transaction identifiers
 	Articulate     bool                     `json:"articulate,omitempty"`     // Articulate the retrieved data if ABIs can be found
 	Filter         string                   `json:"filter,omitempty"`         // Call the node's trace_filter routine with bang-separated filter
-	Statediff      bool                     `json:"statediff,omitempty"`      // Export state diff traces (not implemented)
 	Count          bool                     `json:"count,omitempty"`          // Show the number of traces for the transaction only (fast)
 	SkipDdos       bool                     `json:"skipDdos,omitempty"`       // Skip over the 2016 ddos during export ('on' by default)
 	Max            uint64                   `json:"max,omitempty"`            // If --skip_ddos is on, this many traces defines what a ddos transaction is
@@ -43,7 +42,6 @@ func (opts *TracesOptions) testLog() {
 	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(len(opts.Filter) > 0, "Filter: ", opts.Filter)
-	logger.TestLog(opts.Statediff, "Statediff: ", opts.Statediff)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.SkipDdos, "SkipDdos: ", opts.SkipDdos)
 	logger.TestLog(opts.Max != 250, "Max: ", opts.Max)
@@ -72,9 +70,6 @@ func (opts *TracesOptions) toCmdLine() string {
 	}
 	if len(opts.Filter) > 0 {
 		options += " --filter " + opts.Filter
-	}
-	if opts.Statediff {
-		options += " --statediff"
 	}
 	if opts.Count {
 		options += " --count"
@@ -108,8 +103,6 @@ func tracesFinishParseApi(w http.ResponseWriter, r *http.Request) *TracesOptions
 			opts.Articulate = true
 		case "filter":
 			opts.Filter = value[0]
-		case "statediff":
-			opts.Statediff = true
 		case "count":
 			opts.Count = true
 		case "skipDdos":

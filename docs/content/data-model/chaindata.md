@@ -217,6 +217,22 @@ Traces consist of the following fields:
 | articulatedTrace | human readable version of the trace action input data     | [Function](/data-model/other/#function)           |
 | compressedTrace  | a compressed string version of the articulated trace      | string                                            |
 
+### Notes
+
+When produced using the `--raw` option to `chifra traces`, this data model actually produces `transactionPosition` instead of `transactionIndex`. When produced without the `--raw` option, the model uses `transactionIndex` to be consistent with other data models such as the `transaction`.
+
+Traces and TraceActions, when produced during a self-destruct, export different fields when rendered in JSON. In CSV and TXT output, these fields change thier meaning while retaining the header of the original fields. The following table describes these differences:
+
+Fields that change during self-destruct transaction:
+
+| Field         | When rendered in JSON | When rendered in csv/txt |
+| ------------- | --------------------- | ------------------------ |
+| Action.From   |                       | Action.Address           |
+| Action::To    |                       | Action.RefundAddress     |
+| Action::Value |                       | Action.Balance           |
+|               | Action.RefundAddress  |                          |
+|               | Action.Balance        |                          |
+
 ## TraceAction
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
@@ -307,6 +323,25 @@ NamedBlocks consist of the following fields:
 | timestamp   | the Unix timestamp of the block     | timestamp |
 | date        | Human readable version of timestamp | datetime  |
 | name        | an optional name for the block      | string    |
+
+## TraceCount
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+`chifra trace --count` returns the number of traces the given transaction.
+
+The following commands produce and manage TraceCounts:
+
+- [chifra traces](/chifra/chaindata/#chifra-traces)
+
+TraceCounts consist of the following fields:
+
+| Field            | Description                             | Type      |
+| ---------------- | --------------------------------------- | --------- |
+| blockNumber      | the block number                        | blknum    |
+| transactionIndex | the transaction index                   | blknum    |
+| transactionHash  | the transaction's hash                  | hash      |
+| timestamp        | the timestamp of the block              | timestamp |
+| tracesCnt        | the number of traces in the transaction | uint64    |
 
 ## Base types
 

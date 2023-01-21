@@ -643,7 +643,7 @@ extern bool foundPot(APPEARANCEFUNC func, void* data, blknum_t bn, blknum_t tx, 
                      const string_q& reason);  // NOLINT
 
 //---------------------------------------------------------------------------
-string_q stringy(const CStringArray& array) {
+string_q toStringList(const CStringArray& array) {
     bool first = true;
     string_q ret;
     for (auto elem : array) {
@@ -687,7 +687,7 @@ bool getTracesAndVisit(const hash_t& hash, CAppearance& item, APPEARANCEFUNC fun
     blknum_t traceID = 0;
     CTrace trace;
     while (trace.parseJson3(generic.result)) {
-        string_q trID = "trace_" + uint_2_Str(traceID) + "_" + stringy(trace.traceAddress);
+        string_q trID = "trace_" + uint_2_Str(traceID) + "_" + toStringList(trace.traceAddress);
         if (!foundOne(funcy, data, item.blockNumber, item.transactionIndex, traceID + 10, trace.action.from,
                       trID + "from"))
             return false;

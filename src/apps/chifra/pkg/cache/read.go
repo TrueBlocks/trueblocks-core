@@ -666,7 +666,9 @@ func ReadTrace(reader *bufio.Reader) (trace *types.SimpleTrace, err error) {
 		return
 	}
 
-	err = readFromArray(reader, &trace.TraceAddress, makeArrayItemRead(reader, readString))
+	// TODO - re-enable this
+	var junk []string
+	err = readFromArray(reader, &junk, makeArrayItemRead(reader, readString))
 	if err != nil {
 		return
 	}

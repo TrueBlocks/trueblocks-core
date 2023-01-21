@@ -10,20 +10,15 @@ package types
 
 // EXISTING_CODE
 import (
-	"math/big"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/bykof/gostradamus"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
-	"github.com/ethereum/go-ethereum/params"
 )
 
 // TODO: This can be made a utility
-func weiToEther(wei *big.Int) *big.Float {
-	return new(big.Float).Quo(new(big.Float).SetInt(wei), big.NewFloat(params.Ether))
-}
-
 // EXISTING_CODE
 
 type RawTransaction struct {
@@ -94,6 +89,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		"hash":             s.Hash,
 		"isError":          s.IsError,
 		"finalized":        extraOptions["finalized"],
+		"value":            s.Value.String(),
 	}
 
 	order := []string{
@@ -110,6 +106,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		"isError",
 		"encoding",
 		"compressedTx",
+		"value",
 	}
 
 	// EXISTING_CODE
@@ -120,15 +117,15 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		model["gas"] = s.Gas
 
 		// TODO: this value could be created when RPC is queried and cached
-		model["ether"] = weiToEther(&s.Value)
+		model["ether"] = utils.WeiToEther(&s.Value)
 		model["gasPrice"] = s.GasPrice
 		model["maxFeePerGas"] = s.MaxPriorityFeePerGas
 		model["maxPriorityFeePerGas"] = s.MaxPriorityFeePerGas
 		model["input"] = s.Input
 		model["hasToken"] = s.HasToken
 		model["receipt"] = s.Receipt
-		model["value"] = s.Value.String()
-		model["receipt"] = nil
+		model["value"] = s.Value.String() // TODO: Why twice?
+		model["receipt"] = nil            // TODO: Why twice?
 
 		// TODO: these date-related values could be done when RPC is queried and cached
 		model["date"] = date.Format("2006-01-02 15:04:05") + " UTC"

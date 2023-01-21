@@ -5,12 +5,12 @@ subtraces        ,uint64      ,           ,       ,      ,        ,          ,  
 traceAddress     ,string      ,           ,       ,true  ,        ,          ,        ,      ,         ,6   ,3    ,              ,a particular trace's address in the trace tree
 transactionHash  ,hash        ,           ,       ,      ,        ,          ,        ,      ,         ,4   ,     ,              ,the transaction's hash containing this trace
 transactionIndex ,blknum      ,           ,       ,      ,        ,          ,        ,      ,         ,5   ,2    ,305           ,the zero-indexed position of the transaction in the block
-type             ,string      ,           ,       ,      ,        ,          ,        ,      ,         ,8   ,     ,              ,the type of the trace
-error            ,string      ,           ,       ,      ,        ,          ,        ,      ,         ,    ,5    ,              ,
+type             ,string      ,           ,       ,      ,        ,true      ,        ,      ,         ,8   ,     ,              ,the type of the trace
+error            ,string      ,           ,       ,      ,        ,true      ,        ,      ,         ,    ,5    ,              ,
 action           ,TraceAction ,           ,true   ,      ,        ,          ,        ,      ,         ,9   ,     ,              ,the trace action for this trace
 result           ,TraceResult ,           ,true   ,      ,        ,          ,        ,      ,         ,10  ,     ,              ,the trace result of this trace
 articulatedTrace ,Function    ,           ,true   ,      ,        ,          ,        ,      ,         ,11  ,     ,              ,human readable version of the trace action input data
-compressedTrace  ,string      ,           ,       ,      ,true    ,          ,        ,      ,         ,12  ,13   ,              ,a compressed string version of the articulated trace
+compressedTrace  ,string      ,           ,       ,      ,true    ,true      ,        ,      ,         ,12  ,13   ,              ,a compressed string version of the articulated trace
 action::callType ,string      ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,4    ,              ,
 action::from     ,string      ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,6    ,              ,
 action::to       ,string      ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,7    ,              ,

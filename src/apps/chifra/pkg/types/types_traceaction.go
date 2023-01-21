@@ -9,34 +9,38 @@
 package types
 
 // EXISTING_CODE
-import "github.com/ethereum/go-ethereum/common"
+import (
+	"github.com/ethereum/go-ethereum/common"
+)
 
 // EXISTING_CODE
 
 type RawTraceAction struct {
-	SelfDestructed string `json:"selfDestructed"`
-	Balance        string `json:"balance"`
-	Value          string `json:"value"`
-	Init           string `json:"init"`
-	From           string `json:"from"`
-	To             string `json:"to"`
-	Gas            string `json:"gas"`
-	Input          string `json:"input"`
-	CallType       string `json:"callType"`
-	RefundAddress  string `json:"refundAddress"`
+	Address        string `json:"address,omitempty"`
+	From           string `json:"from,omitempty"`
+	CallType       string `json:"callType,omitempty"`
+	Gas            string `json:"gas,omitempty"`
+	Init           string `json:"init,omitempty"`
+	Input          string `json:"input,omitempty"`
+	RefundAddress  string `json:"refundAddress,omitempty"`
+	SelfDestructed string `json:"selfDestructed,omitempty"`
+	To             string `json:"to,omitempty"`
+	Value          string `json:"value,omitempty"`
+	Balance        string `json:"balance,omitempty"`
 }
 
 type SimpleTraceAction struct {
-	SelfDestructed common.Address `json:"selfDestructed,omitempty"`
+	Address        common.Address `json:"address,omitempty"`
 	Balance        Wei            `json:"balance,omitempty"`
-	Value          Wei            `json:"value"`
-	Init           string         `json:"init"`
-	From           common.Address `json:"from"`
-	To             common.Address `json:"to"`
+	CallType       string         `json:"callType,omitempty"`
+	From           common.Address `json:"from,omitempty"`
 	Gas            Gas            `json:"gas"`
-	Input          string         `json:"input"`
-	CallType       string         `json:"callType"`
-	RefundAddress  common.Address `json:"refundAddress"`
+	Init           string         `json:"init,omitempty"`
+	Input          string         `json:"input,omitempty"`
+	RefundAddress  common.Address `json:"refundAddress,omitempty"`
+	SelfDestructed common.Address `json:"selfDestructed,omitempty"`
+	To             common.Address `json:"to,omitempty"`
+	Value          Wei            `json:"value"`
 	raw            *RawTraceAction
 }
 
@@ -52,29 +56,51 @@ func (s *SimpleTraceAction) Model(showHidden bool, format string, extraOptions m
 	// EXISTING_CODE
 	// EXISTING_CODE
 
-	model := map[string]interface{}{
-		"value":          s.Value,
-		"init":           s.Init,
-		"from":           s.From,
-		"to":             s.To,
-		"gas":            s.Gas,
-		"input":          s.Input,
-		"callType":       s.CallType,
-		"refundAddress":  s.RefundAddress,
-	}
-
-	order := []string{
-		"value",
-		"init",
-		"from",
-		"to",
-		"gas",
-		"input",
-		"callType",
-		"refundAddress",
-	}
+	model := map[string]interface{}{}
+	order := []string{}
 
 	// EXISTING_CODE
+	if format == "json" {
+		// TODO: this should be a utility (and used above as well). May be available in go-ethereum. We should check.
+		if s.Value.String() != "0" {
+			model["value"] = s.Value.String()
+		}
+		if len(s.Init) > 0 {
+			model["init"] = s.Init
+		}
+		if len(s.SelfDestructed) > 0 && s.SelfDestructed != common.HexToAddress("0x0") {
+			model["selfDestructed"] = s.SelfDestructed
+		}
+		if s.Gas != 0 {
+			model["gas"] = s.Gas
+		}
+		if len(s.Input) > 0 {
+			model["input"] = s.Input
+		}
+		if len(s.RefundAddress) > 0 && s.RefundAddress != common.HexToAddress("0x0") {
+			model["refundAddress"] = s.RefundAddress
+			model["balance"] = s.Balance.String()
+			if s.Value.String() != "0" {
+				model["value"] = s.Balance.String()
+			}
+		} else {
+			if s.To == common.HexToAddress("0x0") {
+				model["to"] = "0x0"
+			} else {
+				model["to"] = s.To
+			}
+			model["value"] = s.Value.String()
+		}
+		if len(s.Address) > 0 && s.Address != common.HexToAddress("0x0") {
+			model["address"] = s.Address
+		}
+		if len(s.CallType) > 0 {
+			model["callType"] = s.CallType
+		}
+		if len(s.From) > 0 && s.From != common.HexToAddress("0x0") {
+			model["from"] = s.From
+		}
+	}
 	// EXISTING_CODE
 
 	return Model{

@@ -15,7 +15,7 @@ type Modeler[Raw RawData] interface {
 
 // TODO: Is this needed since we moved to `any`?
 type RawData interface {
-	RawReceipt | RawWhenCount | RawNamedBlock | RawBlock | RawBlockCount | RawTraceAction | RawTraceResult
+	RawReceipt | RawWhenCount | RawNamedBlock | RawBlock | RawBlockCount | RawTraceAction | RawTraceResult | RawTrace | RawTraceCount
 }
 
 type Model struct {

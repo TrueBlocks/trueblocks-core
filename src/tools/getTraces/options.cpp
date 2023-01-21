@@ -23,7 +23,6 @@ static const COption params[] = {
     COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers"),  // NOLINT
     COption("articulate", "a", "", OPT_SWITCH, "articulate the retrieved data if ABIs can be found"),
     COption("filter", "f", "<string>", OPT_FLAG, "call the node's trace_filter routine with bang-separated filter"),
-    COption("statediff", "d", "", OPT_SWITCH, "export state diff traces (not implemented)"),
     COption("count", "U", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
     COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "skip over the 2016 ddos during export ('on' by default)"),
     COption("max", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is"),  // NOLINT
@@ -54,9 +53,6 @@ bool COptions::parseArguments(string_q& command) {
             filter = substitute(substitute(arg, "-f:", ""), "--filter:", "");
         } else if (arg == "-f" || arg == "--filter") {
             return flag_required("filter");
-
-        } else if (arg == "-d" || arg == "--statediff") {
-            statediff = true;
 
         } else if (arg == "-U" || arg == "--count") {
             count = true;
@@ -120,8 +116,13 @@ bool COptions::parseArguments(string_q& command) {
         return true;
     }
 
-    if (isRaw)
-        expContext().exportFmt = JSON1;
+    if ((!articulate && filter.empty()) || count) {
+        return usage("Should by ported in getTraces.");
+    }
+
+    if (isRaw) {
+        return usage("Should not be --raw in getTraces.");
+    }
 
     if (articulate) {
         // show certain fields and hide others
@@ -157,9 +158,9 @@ bool COptions::parseArguments(string_q& command) {
             break;
     }
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format);
-    if (count) {
-        expContext().fmtMap["format"] = expContext().fmtMap["header"] = "[{HASH}]\t[{TRACESCNT}]";
-    }
+    // if (count) {
+    //     expContext().fmtMap["format"] = expContext().fmtMap["header"] = "[{HASH}]\t[{TRACESCNT}]";
+    // }
 
     if (noHeader)
         expContext().fmtMap["header"] = "";
@@ -176,7 +177,6 @@ void COptions::Init(void) {
     // BEG_CODE_INIT
     articulate = false;
     filter = "";
-    statediff = false;
     count = false;
     // clang-format off
     skip_ddos = getGlobalConfig("getTraces")->getConfigBool("settings", "skip_ddos", true);
@@ -197,7 +197,6 @@ COptions::COptions(void) {
     notes.push_back("This tool checks for valid input syntax, but does not check that the transaction requested actually exists.");  // NOLINT
     notes.push_back("If the queried node does not store historical state, the results for most older transactions are undefined.");  // NOLINT
     notes.push_back("A bang separated filter has the following fields (at least one of which is required) and is separated with a bang (!): fromBlk, toBlk, fromAddr, toAddr, after, count.");  // NOLINT
-    notes.push_back("A state diff trace describes, for each modified address, what changed during that trace.");
     // clang-format on
     // END_CODE_NOTES
 

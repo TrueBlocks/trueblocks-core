@@ -27,7 +27,7 @@ func (opts *MonitorsOptions) HandleCrudCommands() error {
 	for _, addr := range opts.Addrs {
 		m := monitor.NewMonitor(opts.Globals.Chain, addr, false)
 		if !file.FileExists(m.Path()) {
-			return validate.Usage("No monitor was for address " + addr + ".")
+			return validate.Usage("No monitor was found for address " + addr + ".")
 
 		} else {
 			if opts.Decache {
