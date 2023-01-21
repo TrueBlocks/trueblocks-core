@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.50.0-beta
+  version: 0.55.0-beta
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra daemon`, you can
