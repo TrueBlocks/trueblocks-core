@@ -1,5 +1,6 @@
 package utils
 
+// TODO: Re-enable these tests
 // func TestWei2EtherStr(t *testing.T) {
 // 	type TestCase struct {
 // 		input    *big.Int

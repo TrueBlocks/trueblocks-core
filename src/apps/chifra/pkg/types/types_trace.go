@@ -155,6 +155,7 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 }
 
 // EXISTING_CODE
+// TODO: BOGUS - THE FOLLOWING COULD BE IN A DIFFERENT FILE
 // GetTraceCountByBlockNumber returns the number of traces in a block
 func GetTraceCountByBlockNumber(chain string, bn uint64) (uint64, error) {
 	if traces, err := GetTracesByBlockNumber(chain, bn); err != nil {

@@ -13,7 +13,7 @@ type Modeler[Raw RawData] interface {
 	Raw() *Raw
 }
 
-// TODO: Is this needed since we moved to `any`?
+// TODO: BOGUS - The auto code generation should check that all auto generated fields are included here
 type RawData interface {
 	RawReceipt | RawWhenCount | RawNamedBlock | RawBlock | RawBlockCount | RawTraceAction | RawTraceResult | RawTrace | RawTraceCount
 }

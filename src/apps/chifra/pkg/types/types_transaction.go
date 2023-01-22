@@ -18,7 +18,6 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
-// TODO: This can be made a utility
 // EXISTING_CODE
 
 type RawTransaction struct {
@@ -168,10 +167,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		}
 	}
 
-	// TODO: These fields are ignored
-	// "ethGasPrice": s.EthGasPrice,
-	// "encoding": s.Encoding,
-	// "compressedTx": s.CompressedTx,
+	// TODO: These fields are ignored "ethGasPrice": s.EthGasPrice, "encoding": s.Encoding, "compressedTx": s.CompressedTx,
 	// EXISTING_CODE
 
 	return Model{

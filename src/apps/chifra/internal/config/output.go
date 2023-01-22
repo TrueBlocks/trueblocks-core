@@ -50,7 +50,7 @@ func (opts *ConfigOptions) ConfigInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.Paths && opts.Globals.Format != "json" {
+	if opts.IsPorted() {
 		return opts.HandlePaths()
 	}
 
@@ -76,6 +76,7 @@ func GetConfigOptions(args []string, g *globals.GlobalOptions) *ConfigOptions {
 
 func (opts *ConfigOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
+	ported = opts.Paths && opts.Globals.Format != "json"
 	// EXISTING_CODE
 	return
 }

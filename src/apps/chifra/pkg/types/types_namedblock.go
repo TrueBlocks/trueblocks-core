@@ -52,7 +52,6 @@ func (s *SimpleNamedBlock) Model(showHidden bool, format string, extraOptions ma
 
 	// EXISTING_CODE
 	// TODO: Can we automate omitempty?
-	// omitempty
 	if format != "json" || len(s.Name) > 0 {
 		model["name"] = s.Name
 		order = append(order, "name")

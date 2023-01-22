@@ -4,6 +4,104 @@
 This file details changes made to TrueBlocks per version (starting with version v0.40.0). See the [migration notes](./MIGRATIONS.md) for changes from previous versions.
 
 ## v0.55.0
+
+With this release, we made a lot of improvements to the help file and the code. Three tools have been completely or partially ported to GoLang. In general, the changes in this release are not breaking, however, as we port to GoLang various inconsistencies appear which we have (and will in the future) fix. We've tried to detail things as much as possible below. There are no migrations needed for this release.
+
+## Specifications
+
+- Updated the Specification for the Unchained Index to version 0.55.0. (Note this does not update the actual index chunks as this update does not change any algorithms or data structures used to create the index.)
+
+## Breaking Changes
+- The `--to_file` option has been removed from all tools.
+- Value of the `--callType` field that previously held `suicide` now contain `self-destruct` throughout all tools.
+- The `hash` field in the `Receipt` data model has been changed to `transactionHash`.
+- The `logsBloom` field in various data models is no longer produced by `--raw` option.
+- As some of our tools are only partially ported to Go (such as `chifra blocks` and `chifra traces`), some outputs differ in subtle ways depending on the options chosen.
+
+## Bug Fixes
+- Fixed a bug in `chifra export --neighbors` related to the display of that information.
+- Fixed a bug related to `chifra scrape` that was not allowing forward progress of the scrape in certain situations.
+- Various other small bug fixes.
+
+## System Wide Changes
+
+- Updated version to v0.55.0-alpha.
+- Significant improvement to the help website.
+- First introduction of very rudimentary TypeScript and Python SDKs (currenly pre-alpha and only supported for internal use).
+- Removed a number of outdated or unused README files, other documentation, and source code.
+- Removes rarely used and very confusing `--to_file` option from all tools. Accomplish the same thing with `--output <fn>`.
+- Updated the names, timestamps, and manifest databases and published the same to Unchained Index.
+- Removes a lot of very old addresses from the names database (that is non-core addresses that have not appeared on the chain since the arbitrarily chosen 2022-01-01T00:00:00.)
+
+## Tool Specific Changes
+
+**chifra blocks**
+- The `--trace` option was renamed to `--traces`. `--trace` is deprecated and may be removed in the future.
+- Expanded the `--count` option to produce additional counts for uncles and traces, etc.
+- Partial port to GoLang. See note above.
+
+**chifra traces**
+
+- An attempt was made to improve the data exported from this tool, as it was quite confused previously. There may be unforeseen breaking changes to the expotred data.
+- Removed unused (and previously unimplemented) `--statediff` option.
+- Partial port to GoLang. See note above.
+
+**chifra transactions**
+
+- The `--trace` option was renamed to `--traces`. `--trace` is deprecated and may be removed in the future.
+
+**chifra status**
+
+- Renamed `chifra status` to `chifra config` to make the tool's purpose more clear. `chifra status` is deprecated and may be removed in the future.
+- Added additional support for the docker version of the tools.
+- Made `chifra status --terse` the default output.
+- Added `--path` option to aid with the installation process.
+
+**chifra serve**
+
+- Renamed `chifra serve` to `chifra daemon` to make the tool's purpose more clear. `chifra serve` is deprecated and may be removed in the future.
+
+**chifra chunks**
+
+- Added `--save_addrs` option to export address lists from index database.
+- Improved many features here to enable better exporting of the data in the Unchained Index.
+
+## Data Model Changes
+
+In an effort to produce better, more consistent data from all of our tools (and because we are not yet at version v1.0.0), we choose to modify the following fields and/or data models in a effort to make the data more consistent. Many of these changes are breaking.
+
+**renamed data models**
+
+- Renamed the `datedBlock` data model to `namedBlock` to more closely reflect its meaning.
+- Renamed the `tokenBalanceRecord` data model to `tokenBalance` to be more terse and more clear.
+- Renamed the `appearanceDisplay` data model to `appearance` removing confusing code. Fields within the new data model were changed or added to be more descriptive. (See below.)
+
+**new data models**
+
+- Added the `indexCacheItem` data model, which carries information about a single Unchained Index chunk as produced by `chifra scrape` and `chifra chunks`.
+- Added the `blockCount` data model, which carries statistical information about blocks as produced by `chifra blocks --count`.
+- Added the `traceCount` data model, which reports the number of traces in a transaction as produced by `chifra traces --count`.
+
+**renamed fields**
+
+- Renamed the `hash` field in the `Receipt` data model to `transactionHash`.
+
+**new (or added) fields**
+
+- Added `blockNumber`, `transactionIndex`, `transactionHash`, `blockHash`, and `isError` to `Receipt` data model.
+- Added `traceIndex` and `reason` to the `Appearance` data model.
+- Added `name`, `timeStamp`, and `date` fields to the `NamedBlock` data model.
+
+**removed fields**
+
+ - Removed the `root` field from the `Receipts` data model.
+
+## Other
+
+- Added four-byte cross product tool to produce a massive number of four-byte encodings (pre-alpha).
+- Enabled auto-code generation for GoLang types, Python and Typescript SDKs, and other data models and tools.
+- Improved and/or added test cases for most tools and apps.
+
 ## v0.45.0
 
 Changes in this release are in support of [the docker version](https://github.com/TrueBlocks/trueblocks-docker). The changes are focused on two tools (`serve` and `status`) which have been renamed to `daemon` and `config`, respectively. This change allows these tools to more clearly reflect what they do.

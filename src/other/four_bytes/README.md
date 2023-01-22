@@ -35,9 +35,9 @@ A simple linear extrapolation of the above sizes suggests about it would take ab
 
 ## Chunk format
 
-Chunk format tries to follow Unchained Index file format as close as possible. Each chunk consist of 3 parts:
+The chunks are stored in a binary file with the following format. The chunk format follows Unchained Index file format as closely as possible. Each chunk consist of 3 parts:
 ```
-[ HEADER ]
+[ Header ]
 [ Signature Table ]
 [ String Table ]
 ```
@@ -54,27 +54,34 @@ type Header struct {
 }
 ```
 
-### Signature Table
+### Signature Table (could be called Encoding Table)
 
-is array of
+an array of
+
 ```go
 type SignatureRecord struct {
-	Signature common.Hash
-	// Where the string representation starts in the file?
-	Offset    uint32
-	// How long is the string representation?
-	Len       uint32
+	Signature common.Hash // Where the string representation starts in the file?
+	Offset    uint32      // How long is the string representation?
+	Len       uint32      // The length of the string found at that location
 }
 ```
 
-### String Table
+### String Table (could be called Signature Table)
 
-is strings packed next to each other, e.g.:
+A binary blob of strings packed tightly together, thus:
 
 `islets()tixFounders()reclaimToken(address)partisans(uint256)setPurchaseValues(uint128)`
 
+These strings are indexed by the Offet and Len found in the Signature Table.
+
+## An Algorithm for Searching for Fourbytes
+
+It is assumed that the above files, of which there may be many depending on the number of bytes used to chunk the database, are memory mapped. Upon opening a particular file, the location and length of the Signature Table is known and can be binary searched for the four-byte being queried. Depending on the application and the amount of available memory, the file may remain open for future queries. Upon locating a four-byte, the Offset and Len may be used to retrieve the Function (or Event) signature string.
+
+Note: We do not store the full 32-byte encodings for events. If searching for events, one can search for the first four bytes of the event encoding which will return either one or many signatures. One can easily regenerate the full 32-byte encoding from these strings, thereby identifying the event encoding. In this way, the size of the Signature Table (which should be called the Encoding Table) can be kept smaller.
+
 ## Further improvements
 
-1. We might be able to speed things up with a second database (or actually a "first" database) where we store 'known' encodings. This might speed things up significantly and produce nearly the same results. Some time ago, we looked at about 600,000 functions and about 45,000 uniq type signatures. About 500 of them accounted for about 99% of the entries in the cross product.
+- We may be able to speed things up using a second database (or actually a "first" database) where we store well-known encodings. (as an obvious example, the enoding for Transfer.) This would speed things up significantly and produce identical results. Some time ago, we studied nearly 600,000 function names along with 45,000 type signatures. About 500 of the combinations accounted for more than 90% of the actual four-byte and event encodings found on chain.
 
-2. The cross-product databases will naturally have many entries that ahve never actually shown up on the chain. We could scan the entire history of hte chain and build a database of the frequency of both four-bytes and topic0's. When searching for a four-byte, we could sort the cross product by frequency. Searching 25,000,000,000 signatures, 24,999,999,250 of which have never appeared on-chain seems a bit strange.
+- The cross-product databases naturally has many entries that have never actually appeared on the chain. It should be possible to scan the entire history of the chain and build record the frequency of both four-bytes and event topic0's. When subsequently searching for en encoding, we could sort the resulting cross product by frequency. Searching 25,000,000,000 signatures, 24,999,999,250 of which have never appeared on-chain, as we do now, seems a bit counter productive.

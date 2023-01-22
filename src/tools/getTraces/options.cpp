@@ -158,9 +158,6 @@ bool COptions::parseArguments(string_q& command) {
             break;
     }
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format);
-    // if (count) {
-    //     expContext().fmtMap["format"] = expContext().fmtMap["header"] = "[{HASH}]\t[{TRACESCNT}]";
-    // }
 
     if (noHeader)
         expContext().fmtMap["header"] = "";

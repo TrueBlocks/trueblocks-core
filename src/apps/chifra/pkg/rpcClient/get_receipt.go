@@ -1,3 +1,7 @@
+// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+
 package rpcClient
 
 import (
@@ -52,7 +56,7 @@ func GetTransactionReceipt(chain string, bn uint64, txid uint64, txHash *common.
 			LogIndex:         logIndex,
 			BlockNumber:      logBlockNumber,
 			TransactionIndex: uint32(logTxIndex),
-			Timestamp:        0, // TODO: FIXME
+			Timestamp:        0, // TODO: FIXME #2695
 			Topics:           logTopics,
 			Data:             string(log.Data),
 			CompressedLog:    "", // TODO: FIXME
@@ -134,6 +138,7 @@ func getRawTransactionReceipt(chain string, bn uint64, txid uint64, txHash *comm
 	var response struct {
 		Result types.RawReceipt `json:"result"`
 	}
+	// TODO: Could use the Query stuff here
 	err = rpc.FromRpc(
 		config.GetRpcProvider(chain),
 		&rpc.Payload{
