@@ -6,22 +6,25 @@ TEST[DATE|TIME] Format:  json
     {
       "blockNumber": 3657480,
       "gasUsed": 21000,
-      "hash": "0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad",
+      "logs": [],
       "status": 1,
+      "transactionHash": "0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad",
       "transactionIndex": 79
     },
     {
       "blockNumber": 3657480,
       "gasUsed": 21000,
-      "hash": "0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad",
+      "logs": [],
       "status": 1,
+      "transactionHash": "0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad",
       "transactionIndex": 79
     },
     {
       "blockNumber": 3657480,
       "gasUsed": 21000,
-      "hash": "0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad",
+      "logs": [],
       "status": 1,
+      "transactionHash": "0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad",
       "transactionIndex": 79
     }
   ]

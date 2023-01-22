@@ -93,7 +93,7 @@ bool COptions::parseArguments(string_q& command) {
     if (parts.empty() && addrs.size() < 2)
         return usage("Use either --parts or provide at least one token and one other account.");
 
-    string_q format = STR_DISPLAY_TOKENBALANCERECORD;
+    string_q format = STR_DISPLAY_TOKENBALANCE;
     if (parts.size() > 0) {
         for (auto part : parts) {
             if (part == "none")
@@ -118,11 +118,11 @@ bool COptions::parseArguments(string_q& command) {
     // We're going to turn some of these fields back on
     manageFields("CName:isCustom,isPrefund,tags,name,symbol,source,decimals,petname", false);
     manageFields("CMonitor:all", false);
-    manageFields("CTokenBalanceRecord:all", false);
+    manageFields("CTokenBalance:all", false);
 
     UNHIDE_FIELD(CMonitor, "address");
     if (userBlocks) {
-        UNHIDE_FIELD(CTokenBalanceRecord, "blockNumber");
+        UNHIDE_FIELD(CTokenBalance, "blockNumber");
     } else {
         replace(format, "[{BLOCKNUMBER}]", "");
     }
@@ -142,7 +142,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!(modeBits & TOK_TOTALSUPPLY)) {
         replace(format, "[{TOTALSUPPLY}]", "");
     } else {
-        UNHIDE_FIELD(CTokenBalanceRecord, "totalSupply");
+        UNHIDE_FIELD(CTokenBalance, "totalSupply");
     }
 
     if (!(modeBits & TOK_SYMBOL)) {
@@ -154,20 +154,20 @@ bool COptions::parseArguments(string_q& command) {
     if (!(modeBits & TOK_HOLDER)) {
         replace(format, "[{HOLDER}]", "");
     } else {
-        UNHIDE_FIELD(CTokenBalanceRecord, "holder");
+        UNHIDE_FIELD(CTokenBalance, "holder");
     }
 
     if (!(modeBits & TOK_BALANCE)) {
         replace(format, "[{BALANCE}]", "");
     } else {
-        UNHIDE_FIELD(CTokenBalanceRecord, "balance");
+        UNHIDE_FIELD(CTokenBalance, "balance");
     }
 
     replaceAll(format, "\t\t", "\t");
     format = trim(format, '\t');
 
     // Display formatting
-    configureDisplay("getTokens", "CTokenBalanceRecord", format);
+    configureDisplay("getTokens", "CTokenBalance", format);
 
     if (modeBits != TOK_BALRECORD) {
         holders.push_back("0x0");  // dummy, so the main function loops
@@ -245,7 +245,7 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) : CHistoryOptions() {
-    CTokenBalanceRecord::registerClass();
+    CTokenBalance::registerClass();
 
     Init();
     // BEG_CODE_NOTES

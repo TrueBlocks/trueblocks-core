@@ -8,8 +8,9 @@ TEST[DATE|TIME] Format:  json
     {
       "blockNumber": 5644782,
       "gasUsed": 21000,
-      "hash": "0x785b88bfb800c34f0972bd2a1b02fb4bd03abc72dce675d00c2e4ae99f7aff96",
+      "logs": [],
       "status": 1,
+      "transactionHash": "0x785b88bfb800c34f0972bd2a1b02fb4bd03abc72dce675d00c2e4ae99f7aff96",
       "transactionIndex": 0
     }
   ]
@@ -18,7 +19,7 @@ TEST[DATE|TIME] Transactions:  [5644782.0]
 TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] File:  cmd_file.4
 TEST[DATE|TIME] Format:  csv
-5644782,0,0x785b88bfb800c34f0972bd2a1b02fb4bd03abc72dce675d00c2e4ae99f7aff96,21000,1,false
+5644782,0,0x785b88bfb800c34f0972bd2a1b02fb4bd03abc72dce675d00c2e4ae99f7aff96,1,21000,0,false
 TEST[DATE|TIME] Transactions:  [5644782.0]
 TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] File:  cmd_file.4

@@ -22,6 +22,7 @@ import (
 // RunAbis handles the abis command for the command line. Returns error only as per cobra.
 func RunAbis(cmd *cobra.Command, args []string) (err error) {
 	opts := abisFinishParse(args)
+	outputHelpers.SetEnabledForCmds("abis", opts.IsPorted())
 	outputHelpers.SetWriterForCommand("abis", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -32,6 +33,7 @@ func RunAbis(cmd *cobra.Command, args []string) (err error) {
 // ServeAbis handles the abis command for the API. Returns error and a bool if handled
 func ServeAbis(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := abisFinishParseApi(w, r)
+	outputHelpers.SetEnabledForCmds("abis", opts.IsPorted())
 	outputHelpers.InitJsonWriterApi("abis", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -70,6 +72,12 @@ func GetAbisOptions(args []string, g *globals.GlobalOptions) *AbisOptions {
 		ret.Globals = *g
 	}
 	return ret
+}
+
+func (opts *AbisOptions) IsPorted() (ported bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
 }
 
 // EXISTING_CODE

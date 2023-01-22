@@ -19,7 +19,7 @@ package index
 // 	if file.FileExists(path) {
 // 		return path, nil
 // 	}
-// 	return path, errors.New("file not found for " + path)
+// 	return path, errors.New("file path missing: " + path)
 // }
 
 // func Test_EstablishChunk(t *testing.T) {

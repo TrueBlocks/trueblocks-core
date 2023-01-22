@@ -70,10 +70,12 @@ int main(int argc, const char* argv[]) {
             explode(lines, contents, '\n');
 
             map<string_q, CTestCase> testMap;
+            bool testTestOnly = getEnvStr("TEST_TEST_ONLY") == "true";
             for (auto line : lines) {
-                if (getEnvStr("TEST_TEST_ONLY") == "true") {
+                if (testTestOnly) {
                     if (startsWith(line, "test,")) {
                         replace(line, "test,", "on,");
+                        replace(line, "both,", "cmd,");
                     } else {
                         replace(line, "on,", "local,");
                     }
@@ -140,8 +142,8 @@ int main(int argc, const char* argv[]) {
 
             expContext().exportFmt = CSV1;
             perf_fmt = substitute(cleanFmt(STR_DISPLAY_MEASURE), "\"", "");
-            options.doTests(total, testArray, path, testName, API);
-            options.doTests(total, testArray, path, testName, CMD);
+            options.doTests(total, testArray, path, testName, API, !testTestOnly);
+            options.doTests(total, testArray, path, testName, CMD, !testTestOnly);
             if (shouldQuit())
                 break;
 
@@ -198,7 +200,7 @@ int main(int argc, const char* argv[]) {
 
 //-----------------------------------------------------------------------
 void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_q& testPath, const string_q& testName,
-                       int whichTest) {
+                       int whichTest, bool doRemove) {
     if (!(modes & whichTest))
         return;
 
@@ -213,7 +215,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             continue;
         if (verbose)
             cerr << string_q(120, '=') << endl << test << endl << string_q(120, '=') << endl;
-        test.prepareTest(cmdTests, skip > 0);
+        test.prepareTest(cmdTests, skip > 0 && doRemove);
         if ((!cmdTests && test.mode == "cmd") || (cmdTests && test.mode == "api")) {
             // do nothing - wrong mode
 
@@ -309,6 +311,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             // clang-format on
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", replaceFile, NULL);
+            forEveryFileInFolder(test.goldPath + "*", postCleanup, NULL);
 
             string_q contents = asciiFileToString(test.workPath + test.fileName);
             if (!prepender.str().empty()) {
@@ -511,6 +514,14 @@ bool replaceFile(const string_q& customFile, void* data) {
     string_q saveFile = cacheFolder_tmp + parts[parts.size() - 1] + ".save";
     copyFile(saveFile, destFile);
     ::remove(saveFile.c_str());
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool postCleanup(const string_q& path, void* data) {
+    if (contains(path, "makeClass") && (endsWith(path, ".cpp") || endsWith(path, ".h"))) {
+        ::remove(path.c_str());
+    }
     return true;
 }
 

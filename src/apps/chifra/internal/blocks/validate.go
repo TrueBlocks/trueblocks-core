@@ -32,6 +32,10 @@ func (opts *BlocksOptions) validateBlocks() error {
 		}
 	}
 
+	if opts.Cache && (opts.List > 0 || opts.ListCount > 0) {
+		return validate.Usage("You may not use the {0} option with the {1} options.", "--cache", "--list")
+	}
+
 	if opts.ListCount == 0 {
 		err := validate.ValidateIdentifiers(
 			opts.Globals.Chain,
@@ -51,6 +55,13 @@ func (opts *BlocksOptions) validateBlocks() error {
 
 			return err
 		}
+		if opts.List > 0 {
+			return validate.Usage("You must supply a non-zero value for the {0} option with {1}.", "--list_count", "--list")
+		}
+	} else {
+		if opts.List == 0 {
+			return validate.Usage("You must supply a non-zero value for the {0} option with {1}.", "--list", "--list_count")
+		}
 	}
 
 	if len(opts.Flow) > 0 {
@@ -66,12 +77,7 @@ func (opts *BlocksOptions) validateBlocks() error {
 	if len(opts.Globals.File) > 0 {
 		// Do nothing
 	} else {
-		if opts.List > 0 {
-			if opts.ListCount == 0 {
-				return validate.Usage("You must supply a non-zero value for the --list_count option with --list.")
-			}
-
-		} else {
+		if opts.List == 0 {
 			if len(opts.Blocks) == 0 && opts.ListCount == 0 {
 				return validate.Usage("Please supply one or more block identifiers or the --list_count option.")
 			}
@@ -81,8 +87,8 @@ func (opts *BlocksOptions) validateBlocks() error {
 			if opts.Cache && opts.Uncles {
 				return validate.Usage("The {0} option is not available{1}.", "--cache", " with the --uncles option")
 			}
-			if opts.Trace && opts.Hashes {
-				return validate.Usage("The {0} option is not available{1}.", "--trace", " with the --hashes option")
+			if opts.Traces && opts.Hashes {
+				return validate.Usage("The {0} option is not available{1}.", "--traces", " with the --hashes option")
 			}
 			if !validate.CanArticulate(opts.Articulate) {
 				return validate.Usage("The {0} option requires an EtherScan API key.", "--articulate")
@@ -91,8 +97,8 @@ func (opts *BlocksOptions) validateBlocks() error {
 				return validate.Usage("The {0} option is available only with {1}.", "--articulate", "the --logs option")
 			}
 			if opts.Uniq {
-				if opts.Trace {
-					return validate.Usage("The {0} option is not available{1}.", "--trace", " with the --uniq option")
+				if opts.Traces {
+					return validate.Usage("The {0} option is not available{1}.", "--traces", " with the --uniq option")
 				}
 				if opts.Cache {
 					return validate.Usage("The {0} option is not available{1}.", "--cache", " with the --uniq option")
@@ -102,8 +108,8 @@ func (opts *BlocksOptions) validateBlocks() error {
 				}
 			}
 			if opts.Apps {
-				if opts.Trace {
-					return validate.Usage("The {0} option is not available{1}.", "--trace", " with the --apps option")
+				if opts.Traces {
+					return validate.Usage("The {0} option is not available{1}.", "--traces", " with the --apps option")
 				}
 				if opts.Cache {
 					return validate.Usage("The {0} option is not available{1}.", "--cache", " with the --apps option")
@@ -113,7 +119,7 @@ func (opts *BlocksOptions) validateBlocks() error {
 				return validate.Usage("The {0} option is only available with the {1} option.", "--big_range", "--logs")
 			}
 
-			if opts.Trace && !rpcClient.IsTracingNode(opts.Globals.TestMode, opts.Globals.Chain) {
+			if opts.Traces && !rpcClient.IsTracingNode(opts.Globals.TestMode, opts.Globals.Chain) {
 				return validate.Usage("Tracing is required for this program to work properly.")
 			}
 		}

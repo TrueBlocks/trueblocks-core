@@ -42,7 +42,7 @@ func EstablishIndexChunk(chain string, fileRange paths.FileRange) (bool, error) 
 		}
 	}
 	if matchedPin.Range == "" {
-		return exists, fmt.Errorf("filename not found in chunks: %s", fileRange)
+		return exists, fmt.Errorf("filename path missing in chunks: %s", fileRange)
 	}
 
 	logger.Log(logger.Info, "Bloom filter hit, downloading index portion", (colors.Blue + fileRange.String() + colors.Off), "from IPFS.")

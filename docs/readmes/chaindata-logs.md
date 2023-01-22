@@ -1,9 +1,11 @@
-<!-- markdownlint-disable MD041 -->
 ## chifra logs
 
-`chifra logs` returns the given transaction's logs. You may specify multiple transaction identifiers per invocation.
+<!-- markdownlint-disable MD041 -->
+`chifra logs` returns the given transaction's logs. You may specify multiple transaction identifiers
+per invocation.
 
-The `--articulate` option fetches the ABI from each encountered smart contract to better describe the reported data. The `--topic` and `--source` options allow you to filter your results.
+The `--articulate` option fetches the ABI from each encountered smart contract to better describe
+the reported data. The `--topic` and `--source` options allow you to filter your results.
 
 ```[plaintext]
 Purpose:
@@ -25,8 +27,15 @@ Notes:
   - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
-  - If you specify a 32-byte hash, it will be assumed to be a transaction hash, if the transaction is not found, it will be used as a topic.
+  - If you specify a 32-byte hash, it will be assumed to be a transaction hash, if it is not, the hash will be used as a topic.
 ```
 
-**Source code**: [`internal/logs`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/logs)
+Data models produced by this tool:
+
+- [log](/data-model/chaindata/#log)
+
+Links:
+
+- [api docs](/api/#operation/chaindata-logs)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/logs)
 

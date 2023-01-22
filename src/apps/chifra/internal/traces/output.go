@@ -22,6 +22,7 @@ import (
 // RunTraces handles the traces command for the command line. Returns error only as per cobra.
 func RunTraces(cmd *cobra.Command, args []string) (err error) {
 	opts := tracesFinishParse(args)
+	outputHelpers.SetEnabledForCmds("traces", opts.IsPorted())
 	outputHelpers.SetWriterForCommand("traces", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -32,6 +33,7 @@ func RunTraces(cmd *cobra.Command, args []string) (err error) {
 // ServeTraces handles the traces command for the API. Returns error and a bool if handled
 func ServeTraces(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := tracesFinishParseApi(w, r)
+	outputHelpers.SetEnabledForCmds("traces", opts.IsPorted())
 	outputHelpers.InitJsonWriterApi("traces", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -48,6 +50,14 @@ func (opts *TracesOptions) TracesInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
+	if opts.IsPorted() {
+		if opts.Count {
+			return opts.HandleCounts(), true
+		} else {
+			return opts.HandleShowTraces(), true
+		}
+	}
+
 	if opts.Globals.IsApiMode() {
 		return nil, false
 	}
@@ -66,6 +76,13 @@ func GetTracesOptions(args []string, g *globals.GlobalOptions) *TracesOptions {
 		ret.Globals = *g
 	}
 	return ret
+}
+
+func (opts *TracesOptions) IsPorted() (ported bool) {
+	// EXISTING_CODE
+	ported = !opts.Articulate && len(opts.Filter) == 0
+	// EXISTING_CODE
+	return
 }
 
 // EXISTING_CODE

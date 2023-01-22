@@ -3,7 +3,6 @@ package whenPkg
 import (
 	"fmt"
 	"strings"
-	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -71,10 +70,10 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Si
 		Timestamp:   uint64(itemOnDisc.Ts),
 	}
 
-	expected := types.SimpleBlock{BlockNumber: bn, Timestamp: time.Unix(int64(onDisc.Timestamp), 0)}
+	expected := types.SimpleBlock[string]{BlockNumber: bn, Timestamp: int64(onDisc.Timestamp)}
 	if opts.Deep {
 		// If we're going deep, we need to query the node
-		expected, _ = rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, false)
+		expected, _ = rpcClient.GetBlockHeaderByNumber(opts.Globals.Chain, bn)
 	}
 
 	if prev.Timestamp != utils.NOPOS {

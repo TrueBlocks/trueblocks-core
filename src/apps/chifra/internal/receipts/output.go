@@ -11,6 +11,7 @@ package receiptsPkg
 // EXISTING_CODE
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"strings"
@@ -22,6 +23,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/ethereum/go-ethereum"
 	"github.com/spf13/cobra"
 )
 
@@ -30,6 +32,7 @@ import (
 // RunReceipts handles the receipts command for the command line. Returns error only as per cobra.
 func RunReceipts(cmd *cobra.Command, args []string) (err error) {
 	opts := receiptsFinishParse(args)
+	outputHelpers.SetEnabledForCmds("receipts", opts.IsPorted())
 	outputHelpers.SetWriterForCommand("receipts", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -40,6 +43,7 @@ func RunReceipts(cmd *cobra.Command, args []string) (err error) {
 // ServeReceipts handles the receipts command for the API. Returns error and a bool if handled
 func ServeReceipts(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := receiptsFinishParseApi(w, r)
+	outputHelpers.SetEnabledForCmds("receipts", opts.IsPorted())
 	outputHelpers.InitJsonWriterApi("receipts", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -56,7 +60,7 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.Articulate {
+	if !opts.IsPorted() {
 		if opts.Globals.IsApiMode() {
 			return nil, false
 		}
@@ -71,20 +75,20 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 
+	// Note: Make sure to add an entry to enabledForCmd in src/apps/chifra/pkg/output/helpers.go
 	fetchTransactionData := func(modelChan chan types.Modeler[types.RawReceipt], errorChan chan error) {
 		// TODO: stream transaction identifiers
 		for idIndex, rng := range opts.TransactionIds {
 			txList, err := rng.ResolveTxs(opts.Globals.Chain)
-			// TODO: rpcClient should return a custom type of error in this case
-			if err != nil && strings.Contains(err.Error(), "not found") {
-				errorChan <- err
-				continue
-			}
 			if err != nil {
 				errorChan <- err
+				if errors.Is(err, ethereum.NotFound) {
+					continue
+				}
 				cancel()
 				return
 			}
+
 			for _, tx := range txList {
 				if tx.BlockNumber < uint32(byzantiumBlockNumber) && !erigonUsed {
 					err = opts.Globals.PassItOn("getReceipts", opts.Globals.Chain, getReceiptsCmdLine(opts, []string{rng.Orig}), opts.getEnvStr())
@@ -105,6 +109,7 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 					uint64(tx.BlockNumber),
 					uint64(tx.TransactionIndex),
 				)
+
 				if transaction != nil && transaction.Receipt != nil {
 					// Some values are not cached
 					transaction.Receipt.BlockNumber = uint64(tx.BlockNumber)
@@ -114,12 +119,13 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 					continue
 				}
 
-				receipt, err := rpcClient.GetTransactionReceipt(opts.Globals.Chain, uint64(tx.BlockNumber), uint64(tx.TransactionIndex))
-				if err != nil && err.Error() == "not found" {
-					errorChan <- fmt.Errorf("transaction %s not found", opts.Transactions[idIndex])
-					continue
-				}
+				// TODO: Why does this interface always accept nil and zero at the end?
+				receipt, err := rpcClient.GetTransactionReceipt(opts.Globals.Chain, uint64(tx.BlockNumber), uint64(tx.TransactionIndex), nil, 0)
 				if err != nil {
+					if errors.Is(err, ethereum.NotFound) {
+						errorChan <- fmt.Errorf("transaction at %s returned an error: %s", opts.Transactions[idIndex], ethereum.NotFound)
+						continue
+					}
 					errorChan <- err
 					cancel()
 					return
@@ -157,6 +163,13 @@ func GetReceiptsOptions(args []string, g *globals.GlobalOptions) *ReceiptsOption
 		ret.Globals = *g
 	}
 	return ret
+}
+
+func (opts *ReceiptsOptions) IsPorted() (ported bool) {
+	// EXISTING_CODE
+	ported = !opts.Articulate
+	// EXISTING_CODE
+	return
 }
 
 // EXISTING_CODE

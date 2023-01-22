@@ -16,12 +16,12 @@
  * the code outside of the BEG_CODE/END_CODE sections
  */
 #include "acctlib.h"
-#include "tokenbalancerecord.h"
+#include "tokenbalance.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
 
-typedef bool (*TOKENVISITFUNC)(CTokenBalanceRecord& token, void* data);
+typedef bool (*TOKENVISITFUNC)(CTokenBalance& token, void* data);
 //-----------------------------------------------------------------------------
 class COptions : public CHistoryOptions {
   public:
@@ -34,7 +34,7 @@ class COptions : public CHistoryOptions {
     CAddressArray tokens;
     CAddressArray holders;
 
-    CTokenBalanceRecord curToken;
+    CTokenBalance curToken;
 
     tokstate_t modeBits;
     blknum_t latestBlock;

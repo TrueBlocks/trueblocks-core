@@ -3,7 +3,7 @@ TEST[DATE|TIME] Blocks:  [4102000]
 TEST[DATE|TIME] Apps:  true
 TEST[DATE|TIME] Flow:  to
 TEST[DATE|TIME] Format:  txt
-blockNumber	transactionIndex	traceId	address	reason
+blockNumber	transactionIndex	traceIndex	address	reason
 4102000	0		0x8d12a197cb00d4747a1fe03395095ce2a5cc6819	to
 4102000	1		0x0926b7b935651a9ac3f935a5e20eee782dc63dd7	to
 4102000	2		0x95ddc6d9f8383c4ebdad0e794ec105e0f57e2d08	to

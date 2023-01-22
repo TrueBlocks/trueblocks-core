@@ -1,11 +1,17 @@
-<!-- markdownlint-disable MD041 -->
 ## chifra transactions
 
-The `chifra transactions` tool retrieves transactions directly from the Ethereum node (using the `--raw` option) or from the TrueBlocks cache (if present). You may specify multiple transaction identifiers per invocation. Unlike the Ethereum RPC, the reported transactions include the transaction's receipt and generated logs.
+<!-- markdownlint-disable MD041 -->
+The `chifra transactions` tool retrieves transactions directly from the Ethereum node (using the `--raw`
+option) or from the TrueBlocks cache (if present). You may specify multiple transaction identifiers
+per invocation. Unlike the Ethereum RPC, the reported transactions include the transaction's receipt
+and generated logs.
 
-The `--articulate` option fetches the ABI from each encountered smart contract (including those encountered in a trace--if the `--trace` option is enabled) to better describe the reported data.
+The `--articulate` option fetches the ABI from each encountered smart contract (including those
+encountered in a trace--if the `--trace` option is enabled) to better describe the reported data.
 
-The `--trace` option attaches an array transaction traces to the output (if the node you're querying has --tracing enabled), while the `--uniq` option displays a list of uniq address appearances instead of the underlying data (including uniq addresses in traces if enabled).
+The `--trace` option attaches an array transaction traces to the output (if the node you're querying
+has --tracing enabled), while the `--uniq` option displays a list of uniq address appearances
+instead of the underlying data (including uniq addresses in traces if enabled).
 
 ```[plaintext]
 Purpose:
@@ -19,7 +25,7 @@ Arguments:
 
 Flags:
   -a, --articulate           articulate the retrieved data if ABIs can be found
-  -t, --trace                include the transaction's traces in the results
+  -t, --traces               include the transaction's traces in the results
   -u, --uniq                 display a list of uniq addresses found in the transaction
   -f, --flow string          for the uniq option only, export only from or to (including trace from or to)
                              One of [ from | to ]
@@ -35,8 +41,13 @@ Notes:
   - If the queried node does not store historical state, the results for most older transactions are undefined.
 ```
 
+Data models produced by this tool:
+
+- [transaction](/data-model/chaindata/#transaction)
+- [transfer](/data-model/chaindata/#transfer)
+
 <!-- markdownlint-disable MD041 -->
-#### Other Options
+### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.
 
@@ -45,10 +56,19 @@ All tools accept the following additional flags, although in some cases, they ha
       --wei             export values in wei (the default)
       --ether           export values in ether
       --raw             pass raw RPC data directly from the node with no processing
-      --to_file         write the results to a temporary file and return the filename
       --output string   write the results to file 'fn' and return the filename
       --append          for --output command only append to instead of replace contents of file
       --file string     specify multiple sets of command line options in a file
-```
+  -x, --fmt string      export format, one of [none|json*|txt|csv]
+  -v, --verbose         enable verbose (increase detail with --log_level)
+  -h, --help            display this help screen
+  ```
 
-*For the `--file string` option, you may place a series of valid command lines in a file using any valid flags. In some cases, this may significantly improve performance. A semi-colon at the start of any line makes it a comment.*
+**Note:** For the `--file string` option, you may place a series of valid command lines in a file using any
+valid flags. In some cases, this may significantly improve performance. A semi-colon at the start
+of any line makes it a comment.
+
+**Note:** If you use `--output --append` option and at the same time the `--file` option, you may not switch
+export formats in the command file. For example, a command file with two different commands, one with `--fmt csv`
+and the other with `--fmt json` will produce both invalid CSV and invalid JSON.
+

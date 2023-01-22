@@ -44,7 +44,6 @@ class COptionsBase {
     uint64_t minArgs;
     uint32_t enableBits;
     bool isRaw;
-    bool isVeryRaw;
     bool noHeader;
     bool firstOut;
 
@@ -212,12 +211,10 @@ extern void errorMessage(const string_q& msg);
 inline bool isReserved(const string_q& command) {
     const char* STR_RESERVED =
         "|help|verbose|fmt|output|append|noop|version|nocolor|no_header|raw|"
-        "wei|ether|cmd|api_mode|to_file|file|";
+        "wei|ether|cmd|api_mode|file|";
     return contains(STR_RESERVED, "|" + command + "|");
 }
 
-extern string_q path_2_Cmd(const string_q& path);
-extern string_q cmd_2_Path(const string_q& cmd);
 extern string_q clean_positionals(const string& progName, const string_q& strIn);
 
 }  // namespace qblocks

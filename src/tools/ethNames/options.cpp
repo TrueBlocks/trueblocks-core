@@ -172,8 +172,8 @@ bool COptions::parseArguments(string_q& command) {
     //     if (endsWith(term, ".eth"))
     //         term = addressFromENSName(term);
 
+    latestBlock = isTestMode() ? 10800000 : getLatestBlock_client();
     if (clean) {
-        latestBlock = isTestMode() ? 10800000 : getLatestBlock_client();
         abi_spec.loadAbisFromKnown(true);
         return handle_clean();
     }

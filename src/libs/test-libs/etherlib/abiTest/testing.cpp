@@ -17,8 +17,6 @@
 extern bool test_encodings(void);
 extern bool test_generation(void);
 extern bool test_old_bug(void);
-extern bool test_func_assign(void);
-extern bool test_evt_assign(void);
 extern bool test_eth_tests(uint64_t sub);
 //--------------------------------------------------------------
 int main(int argc, const char* argv[]) {
@@ -47,16 +45,6 @@ int main(int argc, const char* argv[]) {
             } else if (mode == "old_bug") {
                 cout << "Old bug test..." << endl;
                 cout << (test_old_bug() ? "...passed" : "...failed") << endl;
-                cout << endl << "Done..." << endl;
-
-            } else if (mode == "func_assign") {
-                cout << "function assignment test..." << endl;
-                cout << (test_func_assign() ? "...passed" : "...failed") << endl;
-                cout << endl << "Done..." << endl;
-
-            } else if (mode == "evt_assign") {
-                cout << "event assignment test..." << endl;
-                cout << (test_evt_assign() ? "...passed" : "...failed") << endl;
                 cout << endl << "Done..." << endl;
 
             } else if (mode == "eth_test") {
@@ -135,39 +123,6 @@ bool test_old_bug(void) {
     cout << string_q(120, '-') << "\nABI of test2.json" << endl << string_q(120, '-') << endl;
     loadAbiFile("./test2.json", &abi);
     cout << abi << endl;
-    return true;
-}
-
-string_q data12 =
-    "CEthStateArray|CBlkNumArray|CFunctionArray|CReconciliation|CLogEntryArray|CParameterArray|"
-    "CPerson|CReceipt|CNewReceipt|CNewTransactionArray|CBigUintArray|CTopicArray|address[]|bytes4|time|"
-    // note - we leave 'CTreeNode *' here to show it gets fixed - should use 'CTreeNode* ' instead
-    "uint8|CStringArray|CTraceAction|CTraceResult|CTransactionArray|CTreeNode *|CTopicArray|address|"
-    "blknum|bool|bytes|bytes32|double|gas|hash|int256|int64|string|timestamp|uint256|uint32|"
-    "uint64|wei";
-//--------------------------------------------------------------
-bool test_func_assign(void) {
-    string_q types = data12;
-    while (!types.empty()) {
-        string_q type = nextTokenClear(types, '|');
-        type += ((contains(type, "*") ? "" : " ") + string_q("_val"));
-        CParameter param(type);
-        cout << param.type << "\t" << param.getFunctionAssign(0);
-    }
-
-    return true;
-}
-
-//--------------------------------------------------------------
-bool test_evt_assign(void) {
-    string_q types = data12;
-    while (!types.empty()) {
-        string_q type = nextTokenClear(types, '|');
-        type += ((contains(type, "*") ? "" : " ") + string_q("_val"));
-        CParameter param(type);
-        cout << param.type << "\t" << param.getEventAssign(0);
-    }
-
     return true;
 }
 

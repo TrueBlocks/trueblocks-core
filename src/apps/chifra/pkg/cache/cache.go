@@ -14,7 +14,7 @@ import (
 
 // Any data structure that we know how to cache
 type cacheable interface {
-	types.SimpleBlock |
+	types.SimpleBlock[types.SimpleTransaction] |
 		types.SimpleTransaction
 }
 
@@ -109,7 +109,7 @@ func getItem[Data cacheable](
 // SetBlock stores block in the cache
 // TODO: Move to it's own type specific file (see https://github.com/TrueBlocks/trueblocks-core/pull/2584#discussion_r1031564867)
 // TODO: This also applies to Set/GetTransaction
-func SetBlock(chain string, block *types.SimpleBlock) (err error) {
+func SetBlock(chain string, block *types.SimpleBlock[types.SimpleTransaction]) (err error) {
 	filePath := getPathByBlock(ItemBlock, block.BlockNumber)
 
 	return setItem(
@@ -121,8 +121,8 @@ func SetBlock(chain string, block *types.SimpleBlock) (err error) {
 }
 
 // GetBlock reads block from the cache
-func GetBlock(chain string) (block *types.SimpleBlock, err error) {
-	filePath := getPathByBlock(ItemBlock, block.BlockNumber)
+func GetBlock(chain string, blockNumber types.Blknum) (block *types.SimpleBlock[types.SimpleTransaction], err error) {
+	filePath := getPathByBlock(ItemBlock, blockNumber)
 
 	return getItem(
 		chain,

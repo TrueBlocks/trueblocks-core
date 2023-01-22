@@ -40,11 +40,14 @@ This is the width of an ascii version of an appearance stored in flat files:
 //--------------------------------------------------------------------------
 class CAppearance : public CBaseNode {
   public:
-    blknum_t bn;
-    blknum_t tx;
-    blknum_t tc;
-    address_t addr;
+    address_t address;
+    blknum_t blockNumber;
+    blknum_t transactionIndex;
+    blknum_t traceIndex;
     string_q reason;
+    string_q name;
+    timestamp_t timestamp;
+    string_q date;
 
   public:
     CAppearance(void);
@@ -56,7 +59,10 @@ class CAppearance : public CBaseNode {
 
     // EXISTING_CODE
     CAppearance(blknum_t b, blknum_t x, blknum_t c, const address_t& a, const string_q r)
-        : bn(b), tx(x), tc(c), addr(a), reason(r) {
+        : address(a), blockNumber(b), transactionIndex(x), traceIndex(c), reason(r) {
+    }
+    CAppearance(const address_t& a, const string_q& n, blknum_t b, blknum_t t)
+        : address(a), blockNumber(b), transactionIndex(t), name(n) {
     }
     // string_q Format(const string_q& fmt) const;
     // EXISTING_CODE
@@ -111,11 +117,14 @@ inline void CAppearance::clear(void) {
 inline void CAppearance::initialize(void) {
     CBaseNode::initialize();
 
-    bn = 0;
-    tx = 0;
-    tc = 0;
-    addr = "";
+    address = "";
+    blockNumber = 0;
+    transactionIndex = 0;
+    traceIndex = 0;
     reason = "";
+    name = "";
+    timestamp = 0;
+    date = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -126,11 +135,14 @@ inline void CAppearance::duplicate(const CAppearance& ap) {
     clear();
     CBaseNode::duplicate(ap);
 
-    bn = ap.bn;
-    tx = ap.tx;
-    tc = ap.tc;
-    addr = ap.addr;
+    address = ap.address;
+    blockNumber = ap.blockNumber;
+    transactionIndex = ap.transactionIndex;
+    traceIndex = ap.traceIndex;
     reason = ap.reason;
+    name = ap.name;
+    timestamp = ap.timestamp;
+    date = ap.date;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -155,7 +167,8 @@ inline bool CAppearance::operator==(const CAppearance& it) const {
 //-------------------------------------------------------------------------
 inline bool operator<(const CAppearance& v1, const CAppearance& v2) {
     // EXISTING_CODE
-    return ((v1.bn != v2.bn) ? v1.bn < v2.bn : v1.tx < v2.tx);
+    return ((v1.blockNumber != v2.blockNumber) ? v1.blockNumber < v2.blockNumber
+                                               : v1.transactionIndex < v2.transactionIndex);
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
@@ -183,20 +196,20 @@ extern bool potentialAddr(APPEARANCEFUNC func, void* data, const CAppearance& it
 //---------------------------------------------------------------------------
 struct addrOnlyComparator {
     bool operator()(const CAppearance& v1, const CAppearance& v2) const {
-        return v1.addr < v2.addr;
+        return v1.address < v2.address;
     }
 };
 
 //---------------------------------------------------------------------------
 struct addrTxComparator {
     bool operator()(const CAppearance& v1, const CAppearance& v2) const {
-        if (v1.addr < v2.addr)
+        if (v1.address < v2.address)
             return true;
-        if (v1.addr > v2.addr)
+        if (v1.address > v2.address)
             return false;
-        if (v2.tx == NOPOS)
+        if (v2.transactionIndex == NOPOS)
             return false;
-        return v1.tx < v2.tx;
+        return v1.transactionIndex < v2.transactionIndex;
     }
 };
 

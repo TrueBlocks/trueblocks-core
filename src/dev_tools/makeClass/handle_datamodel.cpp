@@ -16,12 +16,18 @@
 extern const char* STR_YAML_TAIL;
 extern const char* STR_DOCUMENT_TAIL;
 extern const char* STR_YAML_MODELHEADER;
+extern const char* STR_MODEL_PRODUCERS;
+extern const char* STR_MODEL_FOOTER;
+extern const char* STR_MODEL_HEADER;
+extern void generate_go_type_code(COptions* opts, const CClassDefinition& model);
 extern void addToTypeMap(map<string_q, string_q>& map, const string_q& group, const string& type);
 extern bool sortByDataModelName(const CClassDefinition& c1, const CClassDefinition& c2);
 extern bool sortByDoc(const CParameter& c1, const CParameter& c2);
 extern string_q typeFmt(const CParameter& fld);
 extern string_q exFmt(const CParameter& fld);
-extern string_q cleanedAsciiFile(const string_q& inFn);
+extern string_q get_producer_table(const CClassDefinition& model, const CCommandOptionArray& endpoints);
+extern string_q type_2_Link(const CClassDefinitionArray& dataModels, const CParameter& param);
+extern string_q plural(const string_q& in);
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_datamodel(void) {
@@ -32,8 +38,8 @@ bool COptions::handle_datamodel(void) {
     map<string_q, string_q> documentMap;
     map<string_q, string_q> typeMaps;
     map<string_q, bool> frontMatterMap;
-    CNameValueMap types;
-    asciiFileToMap(getDocsPathTemplates("base-types.csv"), types);
+    CNameValueMap baseTypes;
+    asciiFileToMap(getDocsPathTemplates("base-types.csv"), baseTypes);
 
     ostringstream yamlStream;
     yamlStream << "components:" << endl;
@@ -45,21 +51,17 @@ bool COptions::handle_datamodel(void) {
         if (!fileExists(groupFn)) {
             LOG_WARN("Missing data model intro file: ", bYellow, getPathToTemplates(groupFn), cOff);
         }
-        string_q modelFn = getDocsPathTemplates("model-intros/" + model.doc_api + ".md");
-        if (!fileExists(modelFn)) {
-            LOG_WARN("Missing data model intro file: ", bYellow, getPathToTemplates(modelFn), cOff);
-        }
 
         sort(model.fieldArray.begin(), model.fieldArray.end(), sortByDoc);
 
-        size_t widths[5];
-        bzero(widths, sizeof(widths));
+        size_t fieldWidths[5];
+        bzero(fieldWidths, sizeof(fieldWidths));
         for (auto& fld : model.fieldArray) {
             if (fld.doc) {
                 replaceAll(fld.description, "&#44;", ",");
-                widths[0] = max(size_t(3), max(widths[0], fld.name.length()));
-                widths[1] = max(size_t(3), max(widths[1], fld.description.length()));
-                widths[2] = max(size_t(3), max(widths[2], fld.type.length()));
+                fieldWidths[0] = max(size_t(3), max(fieldWidths[0], fld.name.length()));
+                fieldWidths[1] = max(size_t(3), max(fieldWidths[1], fld.description.length()));
+                fieldWidths[2] = max(size_t(3), max(fieldWidths[2], type_2_Link(dataModels, fld).length()));
             }
         }
 
@@ -71,19 +73,27 @@ bool COptions::handle_datamodel(void) {
             replace(front, "[{WEIGHT}]", uint_2_Str(model.doc_group == "Admin" ? 1700 : weight));
             replace(front, "[{M1}]", "data:");
             replace(front, "[{M2}]", "parent: \"collections\"");
+            replace(front, "[{HUGO_ALIASES}]", getAliases(this, "data-model", model.doc_group));
             docStream << front << endl;
-            docStream << cleanedAsciiFile(groupFn);
+            docStream << asciiFileToString(groupFn);
             weight += 200;
         }
 
-        docStream << endl;
-        docStream << "## " << substitute(firstUpper(model.doc_api), "Config", "Status") << endl;
-        docStream << endl;
-        docStream << cleanedAsciiFile(modelFn) << endl;
+        string_q modelFn = getDocsPathTemplates("model-intros/" + model.doc_route + ".md");
+        if (!fileExists(modelFn)) {
+            LOG_WARN("Missing data model intro file: ", bYellow, getPathToTemplates(modelFn), cOff);
+        } else {
+            docStream << STR_MODEL_HEADER << asciiFileToString(modelFn) << get_producer_table(model, endpointArray)
+                      << STR_MODEL_FOOTER << endl;
+            string_q notesFn = getDocsPathTemplates("model-intros/" + model.doc_route + ".notes.md");
+            if (fileExists(notesFn)) {
+                docStream << "### Notes\n\n" << asciiFileToString(notesFn) << endl;
+            }
+        }
 
         ostringstream fieldStream, toolsStream;
-        fieldStream << markDownRow("Field", "Description", "Type", widths);
-        fieldStream << markDownRow("-", "", "", widths);
+        fieldStream << markDownRow("Field", "Description", "Type", fieldWidths);
+        fieldStream << markDownRow("-", "", "", fieldWidths);
 
         ostringstream yamlPropStream;
         for (auto fld : model.fieldArray) {
@@ -92,7 +102,7 @@ bool COptions::handle_datamodel(void) {
                 yamlPropStream << fld.Format(typeFmt(fld));
                 yamlPropStream << fld.Format(exFmt(fld));
                 yamlPropStream << fld.Format("[          description: \"{DESCRIPTION}\"\n]");
-                fieldStream << markDownRow(fld.name, fld.description, fld.type, widths);
+                fieldStream << markDownRow(fld.name, fld.description, type_2_Link(dataModels, fld), fieldWidths);
                 addToTypeMap(typeMaps, model.doc_group, fld.type);
             }
         }
@@ -102,9 +112,10 @@ bool COptions::handle_datamodel(void) {
         yamlStream << yamlPropStream.str();
 
         string_q thisDoc = docStream.str();
-        replaceAll(thisDoc, "[{TYPE}]", model.doc_api);
-        replaceAll(thisDoc, "[{PLURAL}]", plural(model.doc_api, 0));
-        replaceAll(thisDoc, "[{PROPER}]", toProper(model.doc_api));
+        replaceAll(thisDoc, "[{TYPE}]", model.doc_route);
+        replaceAll(thisDoc, "[{FIRST_UPPER}]", substitute(firstUpper(model.doc_route), "Config", "Status"));
+        replaceAll(thisDoc, "[{PLURAL}]", plural(model.doc_alias.empty() ? model.doc_route : model.doc_alias));
+        replaceAll(thisDoc, "[{PROPER}]", toProper(model.doc_route));
         if (contains(thisDoc, "[{FIELDS}]"))
             replace(thisDoc, "[{FIELDS}]", trim(fieldStream.str(), '\n'));
         else
@@ -114,31 +125,47 @@ bool COptions::handle_datamodel(void) {
         else
             thisDoc += toolsStream.str();
         documentMap[model.doc_group] = documentMap[model.doc_group] + thisDoc;
+
+        if (!model.gogen.empty()) {
+            generate_go_type_code(this, model);
+        }
     }
 
     yamlStream << STR_YAML_TAIL;
     writeIfDifferent(getDocsPathTemplates("api/components.txt"), substitute(yamlStream.str(), "&#44;", ","));
 
     for (auto document : documentMap) {
-        string_q tail;
+        ostringstream tailStream;
         CStringArray docTypes;
         explode(docTypes, typeMaps[toLower(document.first)], ',');
         sort(docTypes.begin(), docTypes.end());
+
         size_t wids[5];
         bzero(wids, sizeof(size_t) * 5);
-        wids[0] = 9;
-        wids[1] = 47;
-        wids[2] = 14;
+        wids[0] = max(size_t(3), max(wids[0], string_q("Type").length()));
+        wids[1] = max(size_t(3), max(wids[1], string_q("Description").length()));
+        wids[2] = max(size_t(3), max(wids[2], string_q("Notes").length()));
         for (auto type : docTypes) {
-            string_q notes = types[type];
+            string_q notes = baseTypes[type];
             string_q descr = substitute(nextTokenClear(notes, ','), "&#44;", ",");
-            tail += markDownRow(type, descr, notes, wids);
+            wids[0] = max(size_t(3), max(wids[0], type.length()));
+            wids[1] = max(size_t(3), max(wids[1], descr.length()));
+            wids[2] = max(size_t(3), max(wids[2], notes.length()));
         }
-        document.second += substitute(STR_DOCUMENT_TAIL, "[{TYPES}]", tail);
+
+        tailStream << markDownRow("Type", "Description", "Notes", wids);
+        tailStream << markDownRow("-", "", "", wids);
+        for (auto type : docTypes) {
+            string_q notes = baseTypes[type];
+            string_q descr = substitute(nextTokenClear(notes, ','), "&#44;", ",");
+            tailStream << markDownRow(type, descr, notes, wids);
+        }
+
+        document.second += substitute(STR_DOCUMENT_TAIL, "[{TYPES}]", tailStream.str());
         string_q outFn = getDocsPathContent("data-model/" + substitute(toLower(document.first), " ", "")) + ".md";
         string_q doc = substitute(document.second, "\n\n\n", "\n\n");
         if (!contains(outFn, "/.md")) {
-            writeIfDifferent(outFn, doc, Now());
+            writeIfDifferent(outFn, doc);
         }
     }
 
@@ -156,28 +183,27 @@ bool sortByDoc(const CParameter& c1, const CParameter& c2) {
 }
 
 //------------------------------------------------------------------------------------------------------------
+string_q type_2_ModelName(const string_q& type) {
+    string_q ret = type;
+    if (startsWith(ret, "C"))
+        replace(ret, "C", "");
+    replace(ret, "Array", "");
+    replace(ret, "CachePtr", "Cache");
+    replace(ret, "LogEntry", "Log");
+    return ret;
+}
+
+//------------------------------------------------------------------------------------------------------------
 string_q typeFmt(const CParameter& fld) {
     if (fld.is_flags & IS_ARRAY) {
         string_q ret = "          type: array\n          items:\n            $ref: \"#/components/schemas/++X++\"\n";
-        string_q t = fld.type;
-        if (startsWith(t, "C"))
-            replace(t, "C", "");
-        replace(t, "Array", "");
-        replace(ret, "++X++", firstLower(t));
-        replace(ret, "cachePtr", "cache");
-        replace(ret, "logEntry", "log");
+        replace(ret, "++X++", firstLower(type_2_ModelName(fld.type)));
         return ret;
     }
 
     if (fld.is_flags & IS_OBJECT) {
         string_q ret = "          type: object\n          items:\n            $ref: \"#/components/schemas/++X++\"\n";
-        string_q t = fld.type;
-        if (startsWith(t, "C"))
-            replace(t, "C", "");
-        replace(t, "Array", "");
-        replace(ret, "++X++", firstLower(t));
-        replace(ret, "logEntry", "log");
-        replace(ret, "cachePtr", "cache");
+        replace(ret, "++X++", firstLower(type_2_ModelName(fld.type)));
         return ret;
     }
 
@@ -217,16 +243,76 @@ void addToTypeMap(map<string_q, string_q>& map, const string_q& group, const str
 }
 
 //------------------------------------------------------------------------------------------------------------
-string_q cleanedAsciiFile(const string_q& inFn) {
-    CStringArray lines;
-    asciiFileToLines(inFn, lines);
-    string_q contents;
-    for (auto line : lines) {
-        if (contains(line, "markdownlint"))
-            continue;
-        contents += line + "\n";
+string_q get_producer_group(const string_q& p, const CCommandOptionArray& endpoints) {
+    for (auto ep : endpoints) {
+        if (ep.api_route == p) {
+            return substitute(toLower(ep.group), " ", "");
+        }
     }
-    return contents;
+    return "unknown";
+}
+
+//------------------------------------------------------------------------------------------------------------
+string_q get_producer_table(const CClassDefinition& model, const CCommandOptionArray& endpoints) {
+    CStringArray producers;
+    explode(producers, substitute(model.doc_producer, " ", ""), ',');
+    ostringstream prodStream;
+    for (auto p : producers) {
+        string_q g = get_producer_group(p, endpoints);
+        prodStream << "- [chifra " << p << "](/chifra/" << g << "/#chifra-" << p << ")" << endl;
+    }
+    return STR_MODEL_PRODUCERS + prodStream.str();
+}
+
+//------------------------------------------------------------------------------------------------------------
+string_q findGroup(const CClassDefinitionArray& dataModels, const string_q& type) {
+    for (auto model : dataModels) {
+        if (model.base_lower == toLower(type)) {
+            return model.doc_group;
+        }
+    }
+    return "";
+}
+
+//------------------------------------------------------------------------------------------------------------
+string_q type_2_Link(const CClassDefinitionArray& dataModels, const CParameter& param) {
+    string_q type = param.type;
+    if (!startsWith(type, "C")) {
+        return type;
+    } else if (type == "CStringArray") {
+        return "string[]";
+    } else if (type == "CTopicArray") {
+        return "topic[]";
+    }
+
+    bool isArray = contains(type, "Array");
+    replace(type, "C", "");
+    replace(type, "Array", "");
+    replace(type, "Ptr", "");
+
+    string_q group = findGroup(dataModels, type);
+    if (group.empty()) {
+        return param.type;
+    }
+    type = substitute(type, "LogEntry", "Log");
+
+    return "[" + type + (isArray ? "[]" : "") + "](/data-model/" + toLower(substitute(group, " ", "")) + "/#" +
+           toLower(type) + ")";
+}
+
+//--------------------------------------------------------------------------------
+string_q plural(const string_q& in) {
+    string_q ret = firstUpper(in);
+    if (ret == "Status") {
+        ret = "Statuses";
+    } else if (ret == "CacheEntry") {
+        ret = "CacheEntries";
+    } else if (ret == "ChunkIndex") {
+        ret = "ChunkIndexes";
+    } else if (!endsWith(in, "s")) {
+        ret += "s";
+    }
+    return ret;
 }
 
 //------------------------------------------------------------------------------------------------------------
@@ -265,13 +351,30 @@ const char* STR_DOCUMENT_TAIL =
     "\n"
     "This documentation mentions the following basic data types.\n"
     "\n"
-    "| Type      | Description                                     | Notes          |\n"
-    "| --------- | ----------------------------------------------- | -------------- |\n"
     "[{TYPES}]";
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_YAML_MODELHEADER =
-    "[    {DOC_API}:\n]"
+    "[    {DOC_ROUTE}:\n]"
     "[      description: \"{DOC_DESCR}\"\n]"
     "[      type: object\n]"
     "[      properties:\n]";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_MODEL_FOOTER =
+    "\n"
+    "[{PLURAL}] consist of the following fields:\n"
+    "\n"
+    "[{FIELDS}]\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_MODEL_PRODUCERS =
+    "\n"
+    "The following commands produce and manage [{PLURAL}]:\n"
+    "\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_MODEL_HEADER =
+    "\n"
+    "## [{FIRST_UPPER}]\n"
+    "\n";

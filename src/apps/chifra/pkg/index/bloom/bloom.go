@@ -69,7 +69,7 @@ func (bl *ChunkBloom) String() string {
 func NewChunkBloom(path string) (bl ChunkBloom, err error) {
 	path = paths.ToBloomPath(path)
 	if !file.FileExists(path) {
-		return bl, errors.New("required bloom file (" + path + ") not found")
+		return bl, errors.New("required bloom file (" + path + ") missing")
 	}
 
 	bl.SizeOnDisc = file.FileSize(path)

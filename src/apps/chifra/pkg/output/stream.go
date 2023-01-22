@@ -32,14 +32,14 @@ type OutputOptions struct {
 	Chain string
 	// Flag to check if we are in test mode
 	TestMode bool
-	// Instead of specifying an OutputFn, one may allow chifra to create a file name (based on time)
-	ToFile bool
 	// Output file name. If present, we will write output to this file
 	OutputFn string
 	// If true and OutputFn is non-empty, open OutputFn for appending (create if not present)
 	Append bool
 	// The writer
 	Writer io.Writer
+	// Extra options passed to model, for example command-specific output formatting flags
+	Extra map[string]interface{}
 }
 
 var formatToSeparator = map[string]rune{
@@ -167,7 +167,7 @@ func StreamMany[Raw types.RawData](ctx context.Context, fetchData fetchDataFunc[
 			if options.ShowRaw {
 				err = StreamRaw(options.Writer, model.Raw())
 			} else {
-				modelValue := model.Model(options.Verbose, options.Format)
+				modelValue := model.Model(options.Verbose, options.Format, options.Extra)
 				if customFormat {
 					err = StreamWithTemplate(options.Writer, modelValue, tmpl)
 				} else {

@@ -25,7 +25,8 @@ type BlocksOptions struct {
 	BlockIds   []identifiers.Identifier `json:"blockIds,omitempty"`   // Block identifiers
 	Hashes     bool                     `json:"hashes,omitempty"`     // Display only transaction hashes, default is to display full transaction detail
 	Uncles     bool                     `json:"uncles,omitempty"`     // Display uncle blocks (if any) instead of the requested block
-	Trace      bool                     `json:"trace,omitempty"`      // Export the traces from the block as opposed to the block data
+	Traces     bool                     `json:"traces,omitempty"`     // Export the traces from the block as opposed to the block data
+	Trace      bool                     `json:"trace,omitempty"`      // Please use traces option instead
 	Apps       bool                     `json:"apps,omitempty"`       // Display a list of uniq address appearances in the block
 	Uniq       bool                     `json:"uniq,omitempty"`       // Display a list of uniq address appearances per transaction
 	Flow       string                   `json:"flow,omitempty"`       // For the uniq and apps options only, export only from or to (including trace from or to)
@@ -51,7 +52,7 @@ func (opts *BlocksOptions) testLog() {
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(opts.Hashes, "Hashes: ", opts.Hashes)
 	logger.TestLog(opts.Uncles, "Uncles: ", opts.Uncles)
-	logger.TestLog(opts.Trace, "Trace: ", opts.Trace)
+	logger.TestLog(opts.Traces, "Traces: ", opts.Traces)
 	logger.TestLog(opts.Apps, "Apps: ", opts.Apps)
 	logger.TestLog(opts.Uniq, "Uniq: ", opts.Uniq)
 	logger.TestLog(len(opts.Flow) > 0, "Flow: ", opts.Flow)
@@ -90,8 +91,8 @@ func (opts *BlocksOptions) toCmdLine() string {
 	if opts.Uncles {
 		options += " --uncles"
 	}
-	if opts.Trace {
-		options += " --trace"
+	if opts.Traces {
+		options += " --traces"
 	}
 	if opts.Apps {
 		options += " --apps"
@@ -123,12 +124,6 @@ func (opts *BlocksOptions) toCmdLine() string {
 	if opts.Cache {
 		options += " --cache"
 	}
-	if opts.List != 0 {
-		options += (" --list " + fmt.Sprintf("%d", opts.List))
-	}
-	if opts.ListCount != 0 {
-		options += (" --list_count " + fmt.Sprintf("%d", opts.ListCount))
-	}
 	options += " " + strings.Join(opts.Blocks, " ")
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -154,6 +149,8 @@ func blocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions
 			opts.Hashes = true
 		case "uncles":
 			opts.Uncles = true
+		case "traces":
+			opts.Traces = true
 		case "trace":
 			opts.Trace = true
 		case "apps":
@@ -195,6 +192,9 @@ func blocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
+	if !opts.Traces {
+		opts.Traces = opts.Trace
+	}
 	// EXISTING_CODE
 
 	return opts
@@ -206,10 +206,13 @@ func blocksFinishParse(args []string) *BlocksOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	// EXISTING_CODE
-	if !opts.Uniq {
+	if !opts.Uniq && opts.List == 0 {
 		defFmt = "json"
 	}
 	opts.Blocks = args
+	if !opts.Traces {
+		opts.Traces = opts.Trace
+	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

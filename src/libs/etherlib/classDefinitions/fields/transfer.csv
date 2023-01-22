@@ -8,7 +8,7 @@ date             ,datetime  ,           ,       ,      ,        ,          ,    
 
 sender           ,address   ,           ,       ,      ,        ,          ,        ,      ,         ,  7 ,   7 ,0x1bd0...9ce9 ,the initiator of the transfer (the sender)
 recipient        ,address   ,           ,       ,      ,        ,          ,        ,      ,         ,  8 ,   8 ,0x38d1...1310 ,the receiver of the transfer (the recipient)
-assetAddr        ,address   ,           ,       ,      ,        ,          ,        ,      ,         ,  9 ,   9 ,0xf503...179b ,0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for ETH reconcilations&#44; the token address otherwise
+assetAddr        ,address   ,           ,       ,      ,        ,          ,        ,      ,         ,  9 ,   9 ,0xf503...179b ,0xeeee...eeee for ETH reconcilations&#44; the token address otherwise
 assetSymbol      ,string    ,           ,       ,      ,        ,          ,        ,      ,         , 10 ,  10 ,              ,either ETH&#44; WEI or the symbol of the asset being reconciled as queried from the chain
 decimals         ,uint64    ,18         ,       ,      ,        ,          ,        ,      ,         , 11 ,  11 ,              ,Equivalent to the queried value of `decimals` from an ERC20 contract or&#44; if ETH or WEI then 18
 amount           ,uint256   ,           ,       ,      ,        ,          ,        ,      ,         , 12 ,  12 ,              ,the amount of the transfer in the units of the asset

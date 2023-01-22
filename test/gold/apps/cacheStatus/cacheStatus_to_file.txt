@@ -1,5 +1,0 @@
-chifra config  show --module names --to_file
-TEST[DATE|TIME] Modes:  [show]
-TEST[DATE|TIME] Module:  [names]
-TEST[DATE|TIME] Depth:  0
-TEST[DATE|TIME] ToFile:  true

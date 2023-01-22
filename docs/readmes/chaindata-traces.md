@@ -1,11 +1,14 @@
-<!-- markdownlint-disable MD041 -->
 ## chifra traces
 
-The `chifra traces` tool retrieves a transaction's traces. You may specify multiple transaction identifiers per invocation.
+<!-- markdownlint-disable MD041 -->
+The `chifra traces` tool retrieves a transaction's traces. You may specify multiple transaction
+identifiers per invocation.
 
-The `--articulate` option fetches the ABI from each encountered smart contract to better describe the reported data.
+The `--articulate` option fetches the ABI from each encountered smart contract to better describe
+the reported data.
 
-The `--filter` option calls your node's `trace_filter` routine (if available) using a bang-separated string of the same values used by `trace_fitler`.
+The `--filter` option calls your node's `trace_filter` routine (if available) using a bang-separated
+string of the same values used by `trace_fitler`.
 
 ```[plaintext]
 Purpose:
@@ -20,7 +23,6 @@ Arguments:
 Flags:
   -a, --articulate      articulate the retrieved data if ABIs can be found
   -f, --filter string   call the node's trace_filter routine with bang-separated filter
-  -d, --statediff       export state diff traces (not implemented)
   -U, --count           show the number of traces for the transaction only (fast)
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)
@@ -31,8 +33,17 @@ Notes:
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
   - A bang separated filter has the following fields (at least one of which is required) and is separated with a bang (!): fromBlk, toBlk, fromAddr, toAddr, after, count.
-  - A state diff trace describes, for each modified address, what changed during that trace.
 ```
 
-**Source code**: [`internal/traces`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/traces)
+Data models produced by this tool:
+
+- [trace](/data-model/chaindata/#trace)
+- [traceaction](/data-model/chaindata/#traceaction)
+- [traceresult](/data-model/chaindata/#traceresult)
+- [tracecount](/data-model/chaindata/#tracecount)
+
+Links:
+
+- [api docs](/api/#operation/chaindata-traces)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/traces)
 

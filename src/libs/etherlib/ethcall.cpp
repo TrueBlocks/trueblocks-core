@@ -455,7 +455,8 @@ bool doEthCall(CEthCall& theCall, bool checkProxy) {
     blknum_t o = theCall.blockNumber;
     if (isTestMode()) {
         theCall.blockNumber = min(blknum_t(15000000), theCall.blockNumber);
-        LOG_INFO("Calling ", theCall.address, " at block ", theCall.blockNumber, "...: ", getEnvStr("SHIT"));
+        // TODO: "WHAT?"
+        LOG_INFO("Calling ", theCall.address, " at block ", theCall.blockNumber, "...: ", getEnvStr("WHAT?"));
     }
 
     ostringstream cmd;

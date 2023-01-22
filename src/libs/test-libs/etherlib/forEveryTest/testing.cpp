@@ -60,7 +60,7 @@ int main(int argc, const char* argv[]) {
 
 //----------------------------------------------------------------
 bool visitAddrs(const CAppearance& item, void* data) {
-    if (isZeroAddr(item.addr))
+    if (isZeroAddr(item.address))
         return true;
     cout << item.Format(STR_DISPLAY_APPEARANCE) << "\n";
     return true;
@@ -68,7 +68,7 @@ bool visitAddrs(const CAppearance& item, void* data) {
 
 //----------------------------------------------------------------
 bool accumAddrs(const CAppearance& item, void* data) {
-    if (isZeroAddr(item.addr))
+    if (isZeroAddr(item.address))
         return true;
     CAppearanceArray* array = (CAppearanceArray*)data;  // NOLINT
     array->push_back(item);
@@ -83,15 +83,15 @@ bool transFilter(const CTransaction* trans, void* data) {
 
 //----------------------------------------------------------------
 bool sortAddressArray(const CAppearance& v1, const CAppearance& v2) {
-    if (v1.bn != v2.bn)
-        return v1.bn < v2.bn;
-    int64_t vv1 = (int64_t)v1.tx;
-    int64_t vv2 = (int64_t)v2.tx;
+    if (v1.blockNumber != v2.blockNumber)
+        return v1.blockNumber < v2.blockNumber;
+    int64_t vv1 = (int64_t)v1.transactionIndex;
+    int64_t vv2 = (int64_t)v2.transactionIndex;
     if (vv1 != vv2)
         return vv1 < vv2;
-    if (v1.tc != v2.tc)
-        return v1.tc < v2.tc;
-    return v1.addr < v2.addr;
+    if (v1.traceIndex != v2.traceIndex)
+        return v1.traceIndex < v2.traceIndex;
+    return v1.address < v2.address;
 }
 
 //--------------------------------------------------------------

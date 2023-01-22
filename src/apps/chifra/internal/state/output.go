@@ -22,6 +22,7 @@ import (
 // RunState handles the state command for the command line. Returns error only as per cobra.
 func RunState(cmd *cobra.Command, args []string) (err error) {
 	opts := stateFinishParse(args)
+	outputHelpers.SetEnabledForCmds("state", opts.IsPorted())
 	outputHelpers.SetWriterForCommand("state", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -32,6 +33,7 @@ func RunState(cmd *cobra.Command, args []string) (err error) {
 // ServeState handles the state command for the API. Returns error and a bool if handled
 func ServeState(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := stateFinishParseApi(w, r)
+	outputHelpers.SetEnabledForCmds("state", opts.IsPorted())
 	outputHelpers.InitJsonWriterApi("state", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -66,6 +68,12 @@ func GetStateOptions(args []string, g *globals.GlobalOptions) *StateOptions {
 		ret.Globals = *g
 	}
 	return ret
+}
+
+func (opts *StateOptions) IsPorted() (ported bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
 }
 
 // EXISTING_CODE

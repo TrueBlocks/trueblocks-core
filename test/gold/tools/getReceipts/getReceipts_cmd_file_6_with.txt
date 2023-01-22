@@ -18,7 +18,6 @@ TEST[DATE|TIME] Format:  json
     {
       "blockNumber": 5644882,
       "gasUsed": 52053,
-      "hash": "0xb440bb9522672cdee57b447f406a22feec453764be784c6bd1b1f3188fa677be",
       "logs": [
         {
           "address": "0xfe5f141bf94fe84bc28ded0ab966c16b17490657",
@@ -34,6 +33,7 @@ TEST[DATE|TIME] Format:  json
         }
       ],
       "status": 1,
+      "transactionHash": "0xb440bb9522672cdee57b447f406a22feec453764be784c6bd1b1f3188fa677be",
       "transactionIndex": 0
     }TEST[DATE|TIME] Transactions:  [1.0 5644883.0]
 TEST[DATE|TIME] NoHeader:  true
@@ -43,8 +43,9 @@ TEST[DATE|TIME] Format:  json
     {
       "blockNumber": 5644883,
       "gasUsed": 21000,
-      "hash": "0xf3497316e89d3d1346a171213b94e179a49d43f0338621ece2e6a78045a76eea",
+      "logs": [],
       "status": 1,
+      "transactionHash": "0xf3497316e89d3d1346a171213b94e179a49d43f0338621ece2e6a78045a76eea",
       "transactionIndex": 0
     }TEST[DATE|TIME] Transactions:  [1.0 5644886.0]
 TEST[DATE|TIME] NoHeader:  true
@@ -54,16 +55,17 @@ TEST[DATE|TIME] Format:  json
     {
       "blockNumber": 5644886,
       "gasUsed": 21051,
-      "hash": "0xf32719d38cafbfb821d2847bc64ff1250b4abee0926c10258c0c0ab925732093",
+      "logs": [],
       "status": 1,
+      "transactionHash": "0xf32719d38cafbfb821d2847bc64ff1250b4abee0926c10258c0c0ab925732093",
       "transactionIndex": 0
     }
   ],
   "errors": [
-    "transaction 1.0 not found",
-    "transaction 1.0 not found",
-    "transaction 1.0 not found",
-    "transaction 1.0 not found",
-    "transaction 1.0 not found"
+    "transaction at 1.0 returned an error: not found",
+    "transaction at 1.0 returned an error: not found",
+    "transaction at 1.0 returned an error: not found",
+    "transaction at 1.0 returned an error: not found",
+    "transaction at 1.0 returned an error: not found"
   ]
 }

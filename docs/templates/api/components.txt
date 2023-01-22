@@ -1,68 +1,28 @@
 components:
   schemas:
-    monitor:
-      description: "A local file indicating a user's interest in an address. Includes caches for reconicilations, transactions and appearances as well as an optional association to named account"
-      type: object
-      properties:
-        nApps:
-          type: number
-          format: blknum
-          description: "the number of appearances for this monitor"
-        firstApp:
-          type: number
-          format: blknum
-          description: "the first block at which this address appears"
-        latestApp:
-          type: number
-          format: blknum
-          description: "the latest block at which this address appears"
-        sizeInBytes:
-          type: number
-          format: uint64
-          description: "the size of this monitor on disc"
-        tags:
-          type: string
-          description: "the tag given to this address"
-        address:
-          type: string
-          format: address
-          description: "the address being monitored"
-        name:
-          type: string
-          description: "the name given to this address"
-        isCustom:
-          type: boolean
-          description: "`true` if this address is customized"
-        deleted:
-          type: boolean
-          description: "`true` if deleted, `false` otherwise"
-        symbol:
-          type: string
-        source:
-          type: string
-        decimals:
-          type: number
-          format: uint64
-        isContract:
-          type: boolean
     appearance:
-      description: "data of the appropriate type from a single appearance of an address or the count of same"
+      description: "an appearance (`<blockNumber,transactionIndex>`) of an address anywhere on the chain"
       type: object
       properties:
-        blockNumber:
-          type: number
-          format: blknum
-          example: 10021
-          description: "the number of the block"
-        transactionIndex:
-          type: number
-          format: blknum
-          example: 305
-          description: "the zero-indexed position of the transaction in the block"
         address:
           type: string
           format: address
           description: "the address of the appearance"
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the number of the block"
+        transactionIndex:
+          type: number
+          format: blknum
+          description: "the index of the transaction in the block"
+        traceIndex:
+          type: number
+          format: blknum
+          description: "the zero-based index of the trace in the transaction"
+        reason:
+          type: string
+          description: "the location in the data where the appearance was found"
         name:
           type: string
           description: "the name of the address, if found"
@@ -74,7 +34,7 @@ components:
           type: string
           description: "the date represented by the timestamp"
     reconciliation:
-      description: "a reconiciliation of all inflows and outflows to a given account at a given transaction"
+      description: "a reconiciliation, including all inflows and outflows, for a single transfer of an asset (including ETH) to or from a given address"
       type: object
       properties:
         blockNumber:
@@ -109,7 +69,7 @@ components:
           type: string
           format: address
           example: "0x6b17...1d0f"
-          description: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for ETH reconciliations, the token address otherwise"
+          description: "0xeeee...eeee for ETH reconciliations, the token address otherwise"
         assetSymbol:
           type: string
           description: "either ETH, WEI, or the symbol of the asset being reconciled as extracted from the chain"
@@ -247,8 +207,53 @@ components:
           type: string
           format: int256
           description: "a calculated field -- begBal + amountNet"
+    monitor:
+      description: "a local file indicating a user's interest in an address. Includes caches for reconicilations, transactions, and appearances as well as an optional association to named account"
+      type: object
+      properties:
+        nApps:
+          type: number
+          format: blknum
+          description: "the number of appearances for this monitor"
+        firstApp:
+          type: number
+          format: blknum
+          description: "the first block at which this address appears"
+        latestApp:
+          type: number
+          format: blknum
+          description: "the latest block at which this address appears"
+        sizeInBytes:
+          type: number
+          format: uint64
+          description: "the size of this monitor on disc"
+        tags:
+          type: string
+          description: "the tag given to this address"
+        address:
+          type: string
+          format: address
+          description: "the address being monitored"
+        name:
+          type: string
+          description: "the name given to this address"
+        isCustom:
+          type: boolean
+          description: "`true` if this address is customized"
+        deleted:
+          type: boolean
+          description: "`true` if deleted, `false` otherwise"
+        symbol:
+          type: string
+        source:
+          type: string
+        decimals:
+          type: number
+          format: uint64
+        isContract:
+          type: boolean
     name:
-      description: "an association between a name and address for use throughout TrueBlocks"
+      description: "an association between a human-readable name and an address used throughout TrueBlocks"
       type: object
       properties:
         tags:
@@ -299,76 +304,21 @@ components:
         isErc721:
           type: boolean
           description: "`true` if the address is an ERC720, `false` otherwise"
-    transfer:
-      description: "a representation of an ERC-20 token transfer"
+    abi:
+      description: "a JSON object describing the functions and events in an Ethereum smart contract"
       type: object
       properties:
-        blockNumber:
-          type: number
-          format: blknum
-          example: 10021
-          description: "the number of the block"
-        transactionIndex:
-          type: number
-          format: blknum
-          example: 305
-          description: "the zero-indexed position of the transaction in the block"
-        logIndex:
-          type: number
-          format: blknum
-          example: 305
-          description: "the zero-indexed position of the log in the transaction"
-        transactionHash:
-          type: string
-          format: hash
-          description: "the hash of the transaction that triggered this reconciliation"
-        timestamp:
-          type: number
-          format: timestamp
-          example: 1438335038
-          description: "the Unix timestamp of the object"
-        date:
-          type: string
-          format: datetime
-          description: "a calculated field -- the date of this transaction"
-        sender:
+        address:
           type: string
           format: address
-          example: "0x1bd0...9ce9"
-          description: "the initiator of the transfer (the sender)"
-        recipient:
-          type: string
-          format: address
-          example: "0x38d1...1310"
-          description: "the receiver of the transfer (the recipient)"
-        assetAddr:
-          type: string
-          format: address
-          example: "0xf503...179b"
-          description: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for ETH reconcilations, the token address otherwise"
-        assetSymbol:
-          type: string
-          description: "either ETH, WEI or the symbol of the asset being reconciled as queried from the chain"
-        decimals:
-          type: number
-          format: uint64
-          description: "Equivalent to the queried value of `decimals` from an ERC20 contract or, if ETH or WEI then 18"
-        amount:
-          type: string
-          format: uint256
-          description: "the amount of the transfer in the units of the asset"
-        spotPrice:
-          type: number
-          format: double
-          description: "The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction"
-        priceSource:
-          type: string
-          description: "The on-chain source from which the spot price was taken"
-        encoding:
-          type: string
-          description: "The four-byte encoding of the transaction's function call"
+          description: "the smart contract that implements this abi"
+        interfaces:
+          type: array
+          items:
+            $ref: "#/components/schemas/function"
+          description: "the list of events and functions on this abi"
     appearanceCount:
-      description: "data of the appropriate type from a single appearance of an address or the count of same"
+      description: "the number of records, file size, and last visited block for a given monitor"
       type: object
       properties:
         address:
@@ -383,21 +333,8 @@ components:
           type: number
           format: uint64
           description: "the size of the monitor file containing those appearances"
-    abi:
-      description: "a human readable representation of a Solidity function call or event"
-      type: object
-      properties:
-        address:
-          type: string
-          format: address
-          description: "the smart contract that implements this abi"
-        interfaces:
-          type: array
-          items:
-            $ref: "#/components/schemas/function"
-          description: "the list of events and functions on this abi"
     block:
-      description: "block data directly from the blockchain"
+      description: "block data as returned from the RPC (with slight enhancements)"
       type: object
       properties:
         gasLimit:
@@ -454,7 +391,7 @@ components:
           format: uint64
           description: "the number of uncles in this block"
     transaction:
-      description: "the transaction data for a given transaction directly from the blockchain"
+      description: "transaction data as returned from the RPC (with slight enhancements)"
       type: object
       properties:
         hash:
@@ -547,29 +484,111 @@ components:
         date:
           type: string
           format: datetime
-    receipt:
-      description: "receipt data for a given transaction directly from the blockchain"
+    transfer:
+      description: "the representation of a token transfer"
       type: object
       properties:
+        blockNumber:
+          type: number
+          format: blknum
+          example: 10021
+          description: "the number of the block"
+        transactionIndex:
+          type: number
+          format: blknum
+          example: 305
+          description: "the zero-indexed position of the transaction in the block"
+        logIndex:
+          type: number
+          format: blknum
+          example: 305
+          description: "the zero-indexed position of the log in the transaction"
+        transactionHash:
+          type: string
+          format: hash
+          description: "the hash of the transaction that triggered this reconciliation"
+        timestamp:
+          type: number
+          format: timestamp
+          example: 1438335038
+          description: "the Unix timestamp of the object"
+        date:
+          type: string
+          format: datetime
+          description: "a calculated field -- the date of this transaction"
+        sender:
+          type: string
+          format: address
+          example: "0x1bd0...9ce9"
+          description: "the initiator of the transfer (the sender)"
+        recipient:
+          type: string
+          format: address
+          example: "0x38d1...1310"
+          description: "the receiver of the transfer (the recipient)"
+        assetAddr:
+          type: string
+          format: address
+          example: "0xf503...179b"
+          description: "0xeeee...eeee for ETH reconcilations, the token address otherwise"
+        assetSymbol:
+          type: string
+          description: "either ETH, WEI or the symbol of the asset being reconciled as queried from the chain"
+        decimals:
+          type: number
+          format: uint64
+          description: "Equivalent to the queried value of `decimals` from an ERC20 contract or, if ETH or WEI then 18"
+        amount:
+          type: string
+          format: uint256
+          description: "the amount of the transfer in the units of the asset"
+        spotPrice:
+          type: number
+          format: double
+          description: "The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction"
+        priceSource:
+          type: string
+          description: "The on-chain source from which the spot price was taken"
+        encoding:
+          type: string
+          description: "The four-byte encoding of the transaction's function call"
+    receipt:
+      description: "receipt data as returned from the RPC (with slight enhancements)"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+        transactionIndex:
+          type: number
+          format: blknum
+        transactionHash:
+          type: string
+          format: hash
+        blockHash:
+          type: string
+          format: hash
         status:
           type: number
           format: uint32
           description: "`1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise"
-        contractAddress:
-          type: string
-          format: address
-          description: "the address of the newly created contract, if any"
         gasUsed:
           type: string
           format: gas
           description: "the amount of gas actually used by the transaction"
+        contractAddress:
+          type: string
+          format: address
+          description: "the address of the newly created contract, if any"
+        isError:
+          type: boolean
         logs:
           type: array
           items:
             $ref: "#/components/schemas/log"
           description: "a possibly empty array of logs"
     log:
-      description: "log data for a given transaction directly from the blockchain"
+      description: "log data as returned from the RPC (with slight enhancements)"
       type: object
       properties:
         blockNumber:
@@ -620,7 +639,7 @@ components:
           example: "Transfer(0xcfa...9f54..."
           description: "a truncated, more readable version of the articulation"
     trace:
-      description: "trace data for a given transaction directly from the blockchain"
+      description: "trace data as returned from the RPC (with slight enhancements)"
       type: object
       properties:
         blockHash:
@@ -677,7 +696,7 @@ components:
           type: string
           description: "a compressed string version of the articulated trace"
     traceAction:
-      description: "the trace action data for a given trace directly from the blockchain"
+      description: "trace action data as returned from the RPC (with slight enhancements)"
       type: object
       properties:
         from:
@@ -706,7 +725,7 @@ components:
           example: "0xf503...179b"
           description: "if the call type is self-destruct, the address to which the refund is sent"
     traceResult:
-      description: "the trace result data for a given trace directly from the blockchain"
+      description: "trace result data as returned from the RPC (with slight enhancements)"
       type: object
       properties:
         newContract:
@@ -726,27 +745,104 @@ components:
           type: string
           format: bytes
           description: "the result of the call of this trace"
-    datedBlock:
-      description: "An indentified block named for convienience"
+    blockCount:
+      description: "counts of various parts of the block data such as tx_count, trace_count, etc."
       type: object
       properties:
         blockNumber:
           type: number
           format: blknum
-          example: 10021
+          example: 10
+          description: "the block's block number"
+        timestamp:
+          type: number
+          format: timestamp
+          example: 10
+          description: "the timestamp of the block"
+        transactionsCnt:
+          type: number
+          format: uint64
+          example: 10
+          description: "the number transactions in the block"
+        unclesCnt:
+          type: number
+          format: uint64
+          example: 20
+          description: "the number of uncles in the block"
+        logsCnt:
+          type: number
+          format: uint64
+          example: 30
+          description: "the number of logs in the block"
+        tracesCnt:
+          type: number
+          format: uint64
+          example: 30
+          description: "the number of traces in the block"
+        appsCnt:
+          type: number
+          format: uint64
+          example: 40
+          description: "the number of address appearances in the block"
+        uniqsCnt:
+          type: number
+          format: uint64
+          example: 40
+          description: "the number of address appearances in the block per transaction"
+    namedBlock:
+      description: "a block that has been given a particular name such as `first` or `latest`"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          example: 4370000
           description: "the number of the block"
         timestamp:
           type: number
           format: timestamp
-          example: 1438335038
+          example: 1508131331
           description: "the Unix timestamp of the block"
         date:
           type: string
           format: datetime
-          example: "2015-07-30 15:34:53 UTC"
+          example: "2017-10-16 05:22:11 UTC"
           description: "Human readable version of timestamp"
+        name:
+          type: string
+          example: "byzantium"
+          description: "an optional name for the block"
+    traceCount:
+      description: "counts the number of traces in a transaction"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          example: 10
+          description: "the block number"
+        transactionIndex:
+          type: number
+          format: blknum
+          example: 10
+          description: "the transaction index"
+        transactionHash:
+          type: string
+          format: hash
+          example: "10"
+          description: "the transaction's hash"
+        timestamp:
+          type: number
+          format: timestamp
+          example: 10
+          description: "the timestamp of the block"
+        tracesCnt:
+          type: number
+          format: uint64
+          example: 30
+          description: "the number of traces in the transaction"
     ethState:
-      description: "the on-chain state of a given address"
+      description: "the on-chain state of a given address including ETH balance, nonce, and smart contract byte code if present"
       type: object
       properties:
         blockNumber:
@@ -783,13 +879,13 @@ components:
           type: number
           format: blknum
           example: 8901011
-          description: "the block number at which this smart contract was deployed (if a smart contact)"
+          description: "the block number at which this smart contract was deployed (if a smart contract)"
         accttype:
           type: string
           example: "one of 'EOA' or 'Contract'"
           description: "the type of the address at the given block"
     ethCall:
-      description: "the result of a call to a smart contract"
+      description: "the result (articulated if possible, as bytes otherwise) of a call to a smart contract"
       type: object
       properties:
         blockNumber:
@@ -823,9 +919,9 @@ components:
           type: number
           format: blknum
           example: 8901011
-          description: "the block number at which this smart contract was deployed (if a smart contact)"
-    tokenBalanceRecord:
-      description: "on-chain token related data for a give address at a given block height"
+          description: "the block number at which this smart contract was deployed (if a smart contract)"
+    tokenBalance:
+      description: "on-chain token-related data such as totalSupply, symbol, decimals, and individual balances for a given address at a given block"
       type: object
       properties:
         holder:
@@ -866,7 +962,7 @@ components:
           type: boolean
           description: "`true` if the address is an ERC720, `false` otherwise"
     config:
-      description: "This data model carries information about the TrueBlocks system including both the API server and the local binary caches"
+      description: "status-related data about the TrueBlocks system including the server and local binary caches"
       type: object
       properties:
         clientVersion:
@@ -928,40 +1024,31 @@ components:
           items:
             $ref: "#/components/schemas/cache"
           description: "a collection of information concerning the binary caches"
-        keys:
-          type: array
-          items:
-            $ref: "#/components/schemas/key"
-          description: "the list of configured api keys"
-    cache:
-      description: "The cache data model carries information about the various local binary caches"
+    manifest:
+      description: "a JSON object containing records for each bloom filter and index chunk in the Unchained Index"
       type: object
       properties:
-        type:
+        version:
           type: string
-          description: "the type of the cache (one of the nine different types)"
-        path:
+          description: "the version string hashed into the chunk data"
+        chain:
           type: string
-          description: "the physical path to the cache on the hard drive"
-        nFiles:
-          type: number
-          format: uint64
-          description: "the number of files in the cache"
-        nFolders:
-          type: number
-          format: uint64
-          description: "the number of subfolders in the cache"
-        sizeInBytes:
-          type: number
-          format: uint64
-          description: "the size of the cache in bytes"
-        items:
+          description: "the chain to which this manifest belongs"
+        schemas:
+          type: string
+          format: ipfshash
+          description: "IPFS cid of file describing the schemas for the various databases"
+        databases:
+          type: string
+          format: ipfshash
+          description: "IPFS cid of file containing CIDs for the various databases"
+        chunks:
           type: array
           items:
-            $ref: "#/components/schemas/cacheEntry"
-          description: "an array of cache items"
+            $ref: "#/components/schemas/pinnedChunk"
+          description: "a list of the IPFS hashes of all of the chunks in the unchained index"
     pinnedChunk:
-      description: "the IPFS hashes of the index chunk and its associated Bloom filter for the given block range"
+      description: "a single record in the manifest detailing the IPFS hases and file sizes for each bloom filter and index chunk"
       type: object
       properties:
         range:
@@ -986,31 +1073,8 @@ components:
           type: number
           format: blknum
           description: "the latest appearance in the chunk"
-    manifest:
-      description: "a manifest of the IPFS hashes created for the unchained index"
-      type: object
-      properties:
-        version:
-          type: string
-          description: "the version string hashed into the chunk data"
-        chain:
-          type: string
-          description: "the chain to which this manifest belongs"
-        schemas:
-          type: string
-          format: ipfshash
-          description: "IPFS cid of file describing the schemas for the various databases"
-        databases:
-          type: string
-          format: ipfshash
-          description: "IPFS cid of file containing CIDs for the various databases"
-        chunks:
-          type: array
-          items:
-            $ref: "#/components/schemas/pinnedChunk"
-          description: "a list of the IPFS hashes of all of the chunks in the unchained index"
     chunkIndex:
-      description: "the internal data of the unchained index chunks"
+      description: "internal-use only data model detailing a single index chunk file"
       type: object
       properties:
         range:
@@ -1037,7 +1101,7 @@ components:
           format: uint64
           description: "The size of the chunk in bytes"
     chunkBlooms:
-      description: "information about a single bloom filter file"
+      description: "internal-use only data model detailing a single bloom filter file"
       type: object
       properties:
         range:
@@ -1068,7 +1132,7 @@ components:
           format: uint64
           description: "The width of the bloom filter"
     chunkAddresses:
-      description: "address records found in individual chunks"
+      description: "internal-use only data model detailing a single address record in the address table of an index chunk"
       type: object
       properties:
         address:
@@ -1087,8 +1151,20 @@ components:
           type: number
           format: uint64
           description: "The number of records in teh appearance table for this address"
+    chunkAppearances:
+      description: "internal-use only data model detailing a single appearance record in the appearance table of an index chunk"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: uint64
+          description: "The block number of this appearance"
+        transactionIndex:
+          type: number
+          format: uint64
+          description: "The transaction index of this appearance"
     chunkStats:
-      description: "summary information about the unchained index"
+      description: "summary statistics about an Unchained Index bloom filter and index chunk"
       type: object
       properties:
         start:
@@ -1143,20 +1219,95 @@ components:
           type: number
           format: double
           description: "the ratio of appearances to addresses"
-    chunkAppearances:
-      description: "a single record in the appearance table of an index chunk"
+    cache:
+      description: "the base data model for each of the type-specific local binary caches"
       type: object
       properties:
-        blockNumber:
+        type:
+          type: string
+          description: "the type of the cache (one of the nine different types)"
+        path:
+          type: string
+          description: "the physical path to the cache on the hard drive"
+        nFiles:
           type: number
           format: uint64
-          description: "The block number of this appearance"
-        transactionIndex:
+          description: "the number of files in the cache"
+        nFolders:
           type: number
           format: uint64
-          description: "The transaction index of this appearance"
+          description: "the number of subfolders in the cache"
+        sizeInBytes:
+          type: number
+          format: uint64
+          description: "the size of the cache in bytes"
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/cacheEntry"
+          description: "an array of cache items"
+    cacheEntry:
+      description: "a single entry in the results of a status query when `--verbose` is enabled"
+      type: object
+      properties:
+        address:
+          type: string
+          format: address
+        name:
+          type: string
+    indexCacheItem:
+      description: "an item in the Unchained Index cache"
+      type: object
+      properties:
+        nAddrs:
+          type: number
+          format: uint32
+          description: "the number of addresses in this chunk"
+        nApps:
+          type: number
+          format: uint32
+          description: "the number of appearances in this chunk"
+        firstApp:
+          type: number
+          format: blknum
+          description: "the first appearance in this chunk"
+        latestApp:
+          type: number
+          format: blknum
+          description: "the last appeaerance in this chunk"
+        firstTs:
+          type: number
+          format: timestamp
+          description: "the first timestamp in this chunk"
+        latestTs:
+          type: number
+          format: timestamp
+          description: "the last timestamp in this chunk"
+        filename:
+          type: string
+          description: "the filename of this chunk"
+        fileDate:
+          type: string
+          format: datetime
+          description: "the file date of this chunk"
+        indexSizeBytes:
+          type: number
+          format: uint32
+          description: "the size in bytes of the index portion of this chunk"
+        indexHash:
+          type: string
+          format: ipfshash
+          description: "the IPFS hash of the index portion of this chunk"
+        bloomSizeBytes:
+          type: number
+          format: uint32
+          description: "the size in bytes of the bloom filter for this chunk"
+        bloomHash:
+          type: string
+          format: ipfshash
+          description: "the IPFS has of the bloom filter for this chunk"
     chain:
-      description: "The chain data model carries information about configured chains"
+      description: "a configuration item carrying information about a single chain"
       type: object
       properties:
         chain:
@@ -1184,33 +1335,8 @@ components:
         ipfsGateway:
           type: string
           description: "An IPFS gateway for pinning the index if enabled"
-    key:
-      description: "The api key that carries information about configured apis"
-      type: object
-      properties:
-        provider:
-          type: string
-          description: "The api provider"
-        apiKey:
-          type: string
-          description: "An api key"
-        jwt:
-          type: string
-          description: "An jwt token used for an API"
-        secret:
-          type: string
-          description: "A secret used for an API"
-    cacheEntry:
-      description: "an entry in one of the caches"
-      type: object
-      properties:
-        address:
-          type: string
-          format: address
-        name:
-          type: string
     function:
-      description: "a human readable representation of a Solidity function call or event"
+      description: "a human-readable representation of a Solidity function call or event"
       type: object
       properties:
         name:
@@ -1236,7 +1362,7 @@ components:
             $ref: "#/components/schemas/parameter"
           description: "the output parameters to the function, if any"
     parameter:
-      description: "an input or output paramter to a function"
+      description: "an input or output parameter to a Solidity function or event"
       type: object
       properties:
         type:

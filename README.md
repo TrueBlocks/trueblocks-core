@@ -41,59 +41,7 @@ contract or view all ERC-20 holdings for an account, etc.,
 
 ## Installing
 
-These instructions assume you know how to use the command line. If you need help, see the [installation's troubleshooting section](https://trueblocks.io/docs/install/install-trueblocks/#troubleshooting) or consult Google.
-
-TrueBlocks runs on Linux and Mac. There is no support for Windows.
-
-**Install dependencies**
-
-TrueBlocks requires Go version 1.18 or later. Install the [latest Go version](https://golang.org/doc/install). Verify the version you're running with:
-
-```[shell]
-go version
-```
-
-Install the following required dependencies for your operating system:
-
-`build-essential git cmake ninja python3 libcurl3-dev clang-format jq`
-
-Adjust this for the particulars for your operating system (probably `apt-get` on linux and `brew install` on Mac).
-
-**Building the repo**
-
-Download and build the repo using these commands:
-
-```[shell]
-git clone -b develop https://github.com/trueblocks/trueblocks-core
-cd trueblocks-core
-mkdir build && cd build
-cmake ../src
-make
-```
-
-**Note:** Speed up the build with `make -j <ncores>` where `ncores` represents the number of cores to use.
-
-**Add `./trueblocks-core/bin` to your $PATH**
-
-Add the executable's folder to you path. Consult Google if you don't know how. The following instructions assume you've set the $PATH properly so that `chifra --help` works.
-
-**Edit the configuration**
-
-If you've sucessfully built the executable and set the `$PATH`, you should be able to run:
-
-```[shell]
-chifra config --terse
-```
-
-and get results. If you get an error, the most likely cause is an incomplete configuration. The error message will report the location of the config file:
-
-- `~/.local/share/trueblocks/trueBlocks.toml`, or
-- `~/Library/Application Support/TrueBlocks/trueBlocks.toml`, or
-- `$XDG_CONFIG_HOME` if set.
-
-Edit the `trueblocks.toml` file and set the `rpcProvider` to point to a valid RPC endpoint for your chain.
-
-The configuration file is reasonably-well documented. Review other settins, most of which are self-explanitory.
+Please see [the installation instructions](https://trueblocks.io/docs/install/install-trueblocks) on our website.
 
 **Searching account histories**
 
@@ -149,13 +97,13 @@ Depending on your setup, you may get the following error message when you run so
 
 Edit the file as instructed. You may find helpful [answers on our FAQ](https://trueblocks.io/blog/faq/).
 
-See [our blog](https://trueblocks.io/blog/) for a lot of usful articles on getting started and using TrueBlocks.
+See [our blog](https://trueblocks.io/blog/) for a lot of useful articles on getting started and using TrueBlocks.
 
 If you continue to have trouble, join our [discord discussion](https://discord.gg/kAFcZH2x7K)
 
 ## The unchained index
 
-The primary data structure produced by TrueBlocks is an index of address appearances called the Unchained Index. This index provides very quick access to transaction histories for a any address.
+The primary data structure produced by TrueBlocks is an index of address appearances called the Unchained Index. This index provides very quick access to transaction histories for any address.
 
 You may either build the entire index from scratch (requires an EVM-compatible tracing/archive node) or you may download a snapshot of the index build from there.
 
@@ -175,7 +123,7 @@ A chart showing the number of stars on our repo over time.
 
 [![Stargazers over time](https://starchart.cc/TrueBlocks/trueblocks-core.svg)](https://starchart.cc/TrueBlocks/trueblocks-core)
 
-We love contributors. Please see information about our [work flow](https://github.com/TrueBlocks/trueblocks-core/blob/develop/docs/BRANCHING.md) before proceeding.
+We love contributors. Please see information about our [workflow](https://github.com/TrueBlocks/trueblocks-core/blob/develop/docs/BRANCHING.md) before proceeding.
 
 1. Fork this repository into your own repo.
 2. Create a branch: `git checkout -b <branch_name>`.

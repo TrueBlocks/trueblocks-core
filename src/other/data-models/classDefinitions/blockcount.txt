@@ -1,0 +1,9 @@
+[settings]
+class = CBlockCount
+fields = blockcount.csv
+includes = etherlib.h
+doc_group = 02-Chain Data
+doc_descr = counts of various parts of the block data such as tx_count, trace_count, etc.
+doc_route = 209-blockCount
+doc_producer = blocks
+gogen = BlockCount

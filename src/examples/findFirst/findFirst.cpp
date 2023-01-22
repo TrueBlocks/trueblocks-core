@@ -28,16 +28,16 @@
 //-----------------------------------------------------------------------------------------------
 bool visitAddress(const CAppearance& item, void* data) {
     // Have we found the address we're looking for?
-    if (item.addr == *reinterpret_cast<address_t*>(data)) {
+    if (item.address == *reinterpret_cast<address_t*>(data)) {
         cout << "\nFound address at: " << item;
         // Return false to stop the scan
         return false;
     }
 
     // We didn't find it, but let's report progress
-    cerr << item.addr << " ";
-    cerr << padNum9(item.bn) << " ";
-    cerr << padNum5(item.tx) << " ";
+    cerr << item.address << " ";
+    cerr << padNum9(item.blockNumber) << " ";
+    cerr << padNum5(item.transactionIndex) << " ";
     cerr << item.reason << "                \r";
     cerr.flush();
 

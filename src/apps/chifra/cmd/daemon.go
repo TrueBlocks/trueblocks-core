@@ -33,6 +33,9 @@ var daemonCmd = &cobra.Command{
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &daemonPkg.GetOptions().Globals
 	}),
+	Aliases: []string{
+		"serve",
+	},
 }
 
 const usageDaemon = `daemon [flags]`
@@ -45,17 +48,18 @@ const longDaemon = `Purpose:
 const notesDaemon = `
 Notes:
   - To start API open terminal window and run chifra daemon.
-  - See the API documentation (https://trueblocks.io/api) for more information.`
+  - See the API documentation (https://trueblocks.io/api) for more information.
+  - The 'serve' alias is deprecated and will be removed shortly.`
 
 func init() {
 	daemonCmd.Flags().SortFlags = false
 
 	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Port, "port", "p", ":8080", "specify the server's port")
+	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Api, "api", "a", "on", `instruct the node to start the API server
+One of [ off | on ]`)
 	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Scrape, "scrape", "s", "", `start the scraper, initialize it with either just blooms or entire index, generate for new blocks
 One of [ off | blooms | full-index ]`)
 	daemonCmd.Flags().BoolVarP(&daemonPkg.GetOptions().Monitor, "monitor", "m", false, "instruct the node to start the monitors tool")
-	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Api, "api", "a", "on", `instruct the node to start the API server
-One of [ off | on ]`)
 	globals.InitGlobals(daemonCmd, &daemonPkg.GetOptions().Globals)
 
 	daemonCmd.SetUsageTemplate(UsageWithNotes(notesDaemon))

@@ -30,17 +30,14 @@ int main(int argc, const char* argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        string_q className = (options.trace ? GETRUNTIME_CLASS(CTrace)->m_ClassName
-                                            : (options.logs ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
-                                                            : GETRUNTIME_CLASS(CBlock)->m_ClassName));
+        string_q className = (options.traces ? GETRUNTIME_CLASS(CTrace)->m_ClassName
+                                             : (options.logs ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
+                                                             : GETRUNTIME_CLASS(CBlock)->m_ClassName));
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], className);
 
-        if (options.trace) {
+        if (options.traces) {
             options.blocks.forEveryBlockNumber(traceBlock, &options);
-
-        } else if (options.listOffset != NOPOS) {
-            options.handle_block_summaries();
 
         } else if (options.logs) {
             options.handle_logs();
@@ -57,7 +54,7 @@ int main(int argc, const char* argv[]) {
 }
 
 //------------------------------------------------------------
-string_q doOneLightBlock(blknum_t num) {
+string_q doOneLightBlock(blknum_t num, const COptions& opt) {
     CBlock gold;
     getBlockLight(gold, num);
     if (gold.blockNumber == 0 && gold.timestamp == 0)
@@ -67,8 +64,12 @@ string_q doOneLightBlock(blknum_t num) {
     HIDE_FIELD(CTransaction, "date");
     HIDE_FIELD(CTransaction, "age");
     HIDE_FIELD(CTransaction, "ether");
-    for (auto trans : gold.transactions)
+    for (auto trans : gold.transactions) {
         gold.tx_hashes.push_back(trans.hash);
+    }
+    if (opt.uncles) {
+        gold.unclesCnt = getUncleCount(num);
+    }
     return gold.Format(expContext().fmtMap["format"]);
 }
 
@@ -92,12 +93,11 @@ string_q doOneUncle(blknum_t num, blknum_t index, const COptions& opt) {
 //------------------------------------------------------------
 string_q doOneBlock(blknum_t num, COptions& opt) {
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
-
     string_q fileName = getBinaryCacheFilename(CT_BLOCKS, num);
     CBlock gold;
     gold.blockNumber = num;
     string_q result;
-    if (opt.isRaw || opt.isVeryRaw) {
+    if (opt.isRaw) {
         if (!queryRawBlock(result, uint_2_Str(num), true, opt.hashes)) {
             result = "Could not query raw block " + uint_2_Str(num) + ". Is an Ethereum node running?";
 
@@ -118,26 +118,30 @@ string_q doOneBlock(blknum_t num, COptions& opt) {
         }
         opt.firstOut = false;
 
-    } else if (opt.uncles) {
+    } else if (opt.uncles && !opt.count) {
         uint64_t nUncles = getUncleCount(num);
-        if (nUncles == 0) {
-            // If we don't do this, we get extra commas
-            opt.firstOut = true;
+        if (opt.count) {
+            result = uint_2_Str(nUncles);
         } else {
-            for (size_t i = 0; i < nUncles; i++) {
-                result += doOneUncle(num, i, opt);
-                if (i != (nUncles - 1)) {
-                    if (!isText)
-                        result += ",";
-                    result += "\n";
+            if (nUncles == 0) {
+                // If we don't do this, we get extra commas
+                opt.firstOut = true;
+            } else {
+                for (size_t i = 0; i < nUncles; i++) {
+                    result += doOneUncle(num, i, opt);
+                    if (i != (nUncles - 1)) {
+                        if (!isText)
+                            result += ",";
+                        result += "\n";
+                    }
+                    opt.firstOut = false;
                 }
                 opt.firstOut = false;
             }
-            opt.firstOut = false;
         }
     } else {
-        if (opt.hashes) {
-            result = doOneLightBlock(num);
+        if (opt.hashes || opt.count) {
+            result = doOneLightBlock(num, opt);
         } else {
             result = doOneHeavyBlock(gold, num, opt);
             if (opt.cache) {  // turn this on to force a write of the block to the disc
@@ -156,9 +160,8 @@ string_q doOneBlock(blknum_t num, COptions& opt) {
 bool visitBlock(uint64_t num, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
-
     if (!opt->firstOut) {
-        if (!isText)
+        if ((!isText && opt->filterType.empty()) || opt->count)
             cout << ",";
         cout << endl;
     }

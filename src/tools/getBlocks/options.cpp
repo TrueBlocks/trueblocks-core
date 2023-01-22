@@ -23,7 +23,7 @@ static const COption params[] = {
     COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more block identifiers"),  // NOLINT
     COption("hashes", "e", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),  // NOLINT
     COption("uncles", "c", "", OPT_SWITCH, "display uncle blocks (if any) instead of the requested block"),
-    COption("trace", "t", "", OPT_SWITCH, "export the traces from the block as opposed to the block data"),
+    COption("traces", "t", "", OPT_SWITCH, "export the traces from the block as opposed to the block data"),
     COption("apps", "s", "", OPT_SWITCH, "display a list of uniq address appearances in the block"),
     COption("uniq", "u", "", OPT_SWITCH, "display a list of uniq address appearances per transaction"),
     COption("flow", "f", "enum[from|to|reward]", OPT_FLAG, "for the uniq and apps options only, export only from or to (including trace from or to)"),  // NOLINT
@@ -34,8 +34,6 @@ static const COption params[] = {
     COption("big_range", "r", "<uint64>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, allow for block ranges larger than 500"),  // NOLINT
     COption("count", "U", "", OPT_SWITCH, "display the number of the lists of appearances for --addrs or --uniq"),
     COption("cache", "o", "", OPT_SWITCH, "force a write of the block to the cache"),
-    COption("list", "l", "<blknum>", OPT_HIDDEN | OPT_FLAG, "summary list of blocks running backwards from latest block minus num"),  // NOLINT
-    COption("list_count", "C", "<blknum>", OPT_HIDDEN | OPT_FLAG, "the number of blocks to report for --list option"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve one or more blocks from the chain or local cache."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -60,7 +58,6 @@ bool COptions::parseArguments(string_q& command) {
     bool uniq = false;
     CAddressArray emitter;
     CStringArray topic;
-    blknum_t list = 0;
     // END_CODE_LOCAL_INIT
 
     Init();
@@ -79,8 +76,13 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-c" || arg == "--uncles") {
             uncles = true;
 
-        } else if (arg == "-t" || arg == "--trace") {
-            trace = true;
+        } else if (arg == "-t" || arg == "--traces") {
+            traces = true;
+
+        } else if (arg == "--trace") {
+            // clang-format off
+            return usage("the --trace option is deprecated, please use traces option instead");  // NOLINT
+            // clang-format on
 
         } else if (arg == "-s" || arg == "--apps") {
             apps = true;
@@ -126,18 +128,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-o" || arg == "--cache") {
             cache = true;
 
-        } else if (startsWith(arg, "-l:") || startsWith(arg, "--list:")) {
-            if (!confirmBlockNum("list", list, arg, latest))
-                return false;
-        } else if (arg == "-l" || arg == "--list") {
-            return flag_required("list");
-
-        } else if (startsWith(arg, "-C:") || startsWith(arg, "--list_count:")) {
-            if (!confirmBlockNum("list_count", list_count, arg, latest))
-                return false;
-        } else if (arg == "-C" || arg == "--list_count") {
-            return flag_required("list_count");
-
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -152,6 +142,10 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    if (!cache && !articulate && !uncles && !traces && !logs && !apps && !uniq) {
+        return usage("Nope");
+    }
+
     if (cache)
         etherlib_init(defaultQuitHandler);
 
@@ -163,12 +157,11 @@ bool COptions::parseArguments(string_q& command) {
     for (auto e : emitter)
         logFilter.emitters.push_back(e);
 
-    listOffset = contains(command, "list") ? list : NOPOS;
     filterType = (uniq ? "uniq" : (apps ? "apps" : ""));
 
     big_range = max(big_range, uint64_t(50));
 
-    if (trace && !isTracingNode())
+    if (traces && !isTracingNode())
         return usage(usageErrs[ERR_TRACINGREQUIRED]);
 
     if (hashes) {
@@ -183,11 +176,15 @@ bool COptions::parseArguments(string_q& command) {
     // Display formatting
     if (count) {
         string_q ff = verbose ? STR_FORMAT_COUNT_TXT_VERBOSE : STR_FORMAT_COUNT_TXT;
-        if (verbose <= 2)
+        if (verbose <= 2) {
             ff = substitute(ff, "\t[{TRACE_COUNT}]", "");
+        }
         if (filterType.empty()) {
             replace(ff, "\"[{FILTER_TYPE}]\": [{ADDR_COUNT}]", "");
             replace(ff, "\t[{ADDR_COUNT}]", "");
+        }
+        if (!uncles) {
+            replace(ff, "\t[{UNCLESCNT}]", "");
         }
         configureDisplay("", "CBlock", ff);
 
@@ -196,10 +193,7 @@ bool COptions::parseArguments(string_q& command) {
         if (blocks.hasZeroBlock)
             loadPrefundBalances();
 
-    } else if (listOffset != NOPOS) {
-        configureDisplay("", "CBlock", STR_FORMAT_LIST);
-
-    } else if (trace) {
+    } else if (traces) {
         configureDisplay("getBlocks", "CTrace", STR_DISPLAY_TRACE);
 
     } else if (logs) {
@@ -225,10 +219,11 @@ bool COptions::parseArguments(string_q& command) {
                 replace(ff, ",\n \"[{FILTER_TYPE}]\": [{ADDR_COUNT}]", "");
                 replace(ff, "\t[{ADDR_COUNT}]", "");
             }
+            if (!uncles) {
+                replace(ff, "\n \"unclesCnt\": [{UNCLESCNT}]", "");
+            }
+            replaceAll(ff, ",,", ",");
             expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(ff);
-
-        } else if (listOffset != NOPOS) {
-            expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(STR_FORMAT_LIST_JSON);
 
         } else if (!filterType.empty()) {
             expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(STR_FORMAT_FILTER_JSON);
@@ -249,20 +244,18 @@ void COptions::Init(void) {
     // BEG_CODE_INIT
     hashes = false;
     uncles = false;
-    trace = false;
+    traces = false;
     flow = "";
     logs = false;
     articulate = false;
     big_range = 500;
     count = false;
     cache = false;
-    list_count = 0;
     // END_CODE_INIT
 
     filterType = "";
     secsFinal = (60 * 5);  // Used to be configurable, but no longer
     addrCounter = 0;
-    listOffset = NOPOS;
     blocks.Init();
     logFilter = CLogFilter();
     CBlockOptions::Init();
@@ -288,9 +281,9 @@ COptions::COptions(void) {
     // BEG_ERROR_STRINGS
     usageErrs[ERR_NOCACHEUNCLE] = "The --cache option is not available for uncle blocks.";
     usageErrs[ERR_NOCACHEADDRESS] = "The --cache option is not available when using one of the address options.";
-    usageErrs[ERR_TRACINGREQUIRED] = "A tracing node is required for the --trace options to work properly.";
-    usageErrs[ERR_NOTRACEADDRESS] = "The --trace option is not available when using one of the address options.";
-    usageErrs[ERR_TRACEHASHEXCLUSIVE] = "The --hashes and --trace options are exclusive.";
+    usageErrs[ERR_TRACINGREQUIRED] = "A tracing node is required for the --traces options to work properly.";
+    usageErrs[ERR_NOTRACEADDRESS] = "The --traces option is not available when using one of the address options.";
+    usageErrs[ERR_TRACEHASHEXCLUSIVE] = "The --hashes and --traces options are exclusive.";
     usageErrs[ERR_ATLEASTONEBLOCK] = "You must specify at least one block.";
     usageErrs[ERR_EMTOPONLYWITHLOG] = "The --emitter and --topic options are only available with the --log option.";
     usageErrs[ERR_ARTWITHOUTLOGS] = "The --artcilate option is only available with the --logs option.";
@@ -312,52 +305,27 @@ const char* STR_FORMAT_COUNT_JSON =
     "{\n"
     " \"blockNumber\": [{BLOCKNUMBER}],\n"
     " \"transactionsCnt\": [{TRANSACTIONSCNT}],\n"
+    " \"unclesCnt\": [{UNCLESCNT}],\n"
     " \"[{FILTER_TYPE}]\": [{ADDR_COUNT}]"
     "}\n";
 
 //--------------------------------------------------------------------------------
-const char* STR_FORMAT_COUNT_TXT = "[{BLOCKNUMBER}]\t[{TRANSACTIONSCNT}]\t[{ADDR_COUNT}]";
+const char* STR_FORMAT_COUNT_TXT = "[{BLOCKNUMBER}]\t[{TRANSACTIONSCNT}]\t[{UNCLESCNT}]\t[{ADDR_COUNT}]";
 const char* STR_FORMAT_COUNT_TXT_VERBOSE =
-    "[{BLOCKNUMBER}]\t[{UNCLE_COUNT}]\t[{TRANSACTIONSCNT}]\t[{TRACE_COUNT}]\t[{ADDR_COUNT}]";
+    "[{BLOCKNUMBER}]\t[{TRANSACTIONSCNT}]\t[{UNCLESCNT}]\t[{TRACE_COUNT}]\t[{ADDR_COUNT}]";
 
 //--------------------------------------------------------------------------------
 const char* STR_FORMAT_FILTER_JSON =
     "{\n"
-    " \"bn\": \"[{BN}]\",\n"
-    " \"tx\": \"[{TX}]\",\n"
-    " \"tc\": \"[{TC}]\",\n"
-    " \"addr\": \"[{ADDR}]\",\n"
+    " \"bn\": \"[{BLOCKNUMBER}]\",\n"
+    " \"tx\": \"[{TRANSACTIONINDEX}]\",\n"
+    " \"tc\": \"[{TRACEINDEX}]\",\n"
+    " \"addr\": \"[{ADDRESS}]\",\n"
     " \"reason\": \"[{REASON}]\"\n"
     "}\n";
 
 //--------------------------------------------------------------------------------
-const char* STR_FORMAT_FILTER_TXT = "[{BN}]\t[{TX}]\t[{TC}]\t[{ADDR}]\t[{REASON}]";
-
-//--------------------------------------------------------------------------------
-const char* STR_FORMAT_LIST_JSON =
-    "{\n"
-    " \"hash\": \"[{HASH}]\",\n"
-    " \"blockNumber\": [{BLOCKNUMBER}],\n"
-    " \"timestamp\": [{TIMESTAMP}],\n"
-    " \"difficulty\": \"[{DIFFICULTY}]\",\n"
-    " \"miner\": \"[{MINER}]\",\n"
-    " \"transactionsCnt\": [{TRANSACTIONSCNT}],\n"
-    " \"unclesCnt\": [{UNCLE_COUNT}],\n"
-    " \"gasLimit\": [{GASLIMIT}],\n"
-    " \"gasUsed\": [{GASUSED}]\n"
-    "}\n";
-
-//--------------------------------------------------------------------------------
-const char* STR_FORMAT_LIST =
-    "[{HASH}]\t"
-    "[{BLOCKNUMBER}]\t"
-    "[{TIMESTAMP}]\t"
-    "[{DIFFICULTY}]\t"
-    "[{MINER}]\t"
-    "[{TRANSACTIONSCNT}]\t"
-    "[{UNCLE_COUNT}]\t"
-    "[{GASLIMIT}]\t"
-    "[{GASUSED}]";
+const char* STR_FORMAT_FILTER_TXT = "[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{TRACEINDEX}]\t[{ADDRESS}]\t[{REASON}]";
 
 //--------------------------------------------------------------------------------
 const char* STR_FMT_BLOCKLOGS =

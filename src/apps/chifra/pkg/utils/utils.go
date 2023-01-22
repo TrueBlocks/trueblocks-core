@@ -20,6 +20,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/ethereum/go-ethereum/params"
 	"golang.org/x/term"
 )
 
@@ -202,12 +203,19 @@ func GetFields(t *reflect.Type, format string, header bool) (fields []string, se
 	return fields, sep, quote
 }
 
-func ToBigInt(str string) big.Int {
+func Str_2_BigInt(str string) big.Int {
 	ret := big.Int{}
+	if str == "0" || str == "0x0" || str == "" {
+		return ret
+	}
 	if len(str) > 2 && str[:2] == "0x" {
 		ret.SetString(str[2:], 16)
 	} else {
 		ret.SetString(str, 10)
 	}
 	return ret
+}
+
+func WeiToEther(wei *big.Int) *big.Float {
+	return new(big.Float).Quo(new(big.Float).SetInt(wei), big.NewFloat(params.Ether))
 }

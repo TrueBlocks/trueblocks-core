@@ -71,6 +71,9 @@ string_q markDownRow(const string_q& s1, const string_q& s2, const string_q& s3,
     string_q ss1 = (s1 == "-" ? string_q(widths[0], '-') : s1);
     string_q ss2 = (s1 == "-" ? string_q(widths[1], '-') : s2);
     string_q ss3 = (s1 == "-" ? string_q(widths[2], '-') : s3);
+    if (startsWith(ss3, "C") && endsWith(ss3, "Array")) {
+        ss3 = ss3.substr(1, ss3.length() - 6);
+    }
 
     ostringstream os;
     os << "| ";

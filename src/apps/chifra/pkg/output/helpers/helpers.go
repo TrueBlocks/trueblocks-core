@@ -11,8 +11,13 @@ import (
 )
 
 var enabledForCmds = map[string]bool{
+	"blocks":   true,
 	"receipts": true,
 	"when":     true,
+}
+
+func SetEnabledForCmds(cmd string, enabled bool) {
+	enabledForCmds[cmd] = enabled
 }
 
 func PreRunWithJsonWriter(cmdName string, getOptions func() *globals.GlobalOptions) func(cmd *cobra.Command, args []string) {
@@ -58,11 +63,6 @@ func SetWriterForCommand(cmdName string, opts *globals.GlobalOptions) {
 	// This function should be only enabled for commands using output.Stream*
 	// functions for producing their output
 	if !enabledForCmds[cmdName] {
-		return
-	}
-
-	// Run only in --file mode. Without --file, the default setup is OK.
-	if opts.File == "" {
 		return
 	}
 

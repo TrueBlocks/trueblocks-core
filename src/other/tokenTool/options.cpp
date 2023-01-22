@@ -105,7 +105,7 @@ bool COptions::parseArguments(string_q& command) {
     // #endif
 
     // We need to find the cache
-    CMonitor m;
+    // CMonitor m;
     // if (!fileExists(cacheFile))
     //     return usage("Could not find cache file: " + cacheFile);
 

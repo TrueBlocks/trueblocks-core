@@ -22,6 +22,7 @@ import (
 // RunConfig handles the config command for the command line. Returns error only as per cobra.
 func RunConfig(cmd *cobra.Command, args []string) (err error) {
 	opts := configFinishParse(args)
+	outputHelpers.SetEnabledForCmds("config", opts.IsPorted())
 	outputHelpers.SetWriterForCommand("config", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -32,6 +33,7 @@ func RunConfig(cmd *cobra.Command, args []string) (err error) {
 // ServeConfig handles the config command for the API. Returns error and a bool if handled
 func ServeConfig(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := configFinishParseApi(w, r)
+	outputHelpers.SetEnabledForCmds("config", opts.IsPorted())
 	outputHelpers.InitJsonWriterApi("config", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -48,6 +50,10 @@ func (opts *ConfigOptions) ConfigInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
+	if opts.IsPorted() {
+		return opts.HandlePaths()
+	}
+
 	if opts.Globals.IsApiMode() {
 		return nil, false
 	}
@@ -66,6 +72,13 @@ func GetConfigOptions(args []string, g *globals.GlobalOptions) *ConfigOptions {
 		ret.Globals = *g
 	}
 	return ret
+}
+
+func (opts *ConfigOptions) IsPorted() (ported bool) {
+	// EXISTING_CODE
+	ported = opts.Paths && opts.Globals.Format != "json"
+	// EXISTING_CODE
+	return
 }
 
 // EXISTING_CODE

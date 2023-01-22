@@ -116,8 +116,11 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
             if (fieldName % "doc_descr") {
                 return doc_descr;
             }
-            if (fieldName % "doc_api") {
-                return doc_api;
+            if (fieldName % "doc_route") {
+                return doc_route;
+            }
+            if (fieldName % "doc_alias") {
+                return doc_alias;
             }
             if (fieldName % "doc_producer") {
                 return doc_producer;
@@ -142,9 +145,6 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'f':
-            if (fieldName % "field_str") {
-                return field_str;
-            }
             if (fieldName % "fieldArray" || fieldName % "fieldArrayCnt") {
                 size_t cnt = fieldArray.size();
                 if (endsWith(toLower(fieldName), "cnt"))
@@ -157,6 +157,11 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
                 return retS;
+            }
+            break;
+        case 'g':
+            if (fieldName % "gogen") {
+                return gogen;
             }
             break;
         case 'h':
@@ -207,7 +212,7 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
         if (doc_order.length() < 4)
             doc_order = num + doc_order;
     }
-    if (fieldName == "doc_api") {
+    if (fieldName == "doc_route") {
         string_q num = nextTokenClear(fieldValue, '-');
         if (doc_order.length() < 4)
             doc_order = doc_order + num;
@@ -276,8 +281,12 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
                 doc_descr = fieldValue;
                 return true;
             }
-            if (fieldName % "doc_api") {
-                doc_api = fieldValue;
+            if (fieldName % "doc_route") {
+                doc_route = fieldValue;
+                return true;
+            }
+            if (fieldName % "doc_alias") {
+                doc_alias = fieldValue;
                 return true;
             }
             if (fieldName % "doc_producer") {
@@ -301,10 +310,6 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
             }
             break;
         case 'f':
-            if (fieldName % "field_str") {
-                field_str = fieldValue;
-                return true;
-            }
             if (fieldName % "fieldArray") {
                 CParameter obj;
                 string_q str = fieldValue;
@@ -312,6 +317,12 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
                     fieldArray.push_back(obj);
                     obj = CParameter();  // reset
                 }
+                return true;
+            }
+            break;
+        case 'g':
+            if (fieldName % "gogen") {
+                gogen = fieldValue;
                 return true;
             }
             break;
@@ -385,7 +396,6 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     archive >> base_base;
     archive >> head_includes;
     archive >> src_includes;
-    archive >> field_str;
     archive >> display_str;
     archive >> sort_str;
     archive >> eq_str;
@@ -393,10 +403,12 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     // archive >> fieldArray;
     // archive >> extraArray;
     archive >> contained_by;
+    archive >> gogen;
     archive >> doc_group;
     archive >> doc_order;
     archive >> doc_descr;
-    archive >> doc_api;
+    archive >> doc_route;
+    archive >> doc_alias;
     archive >> doc_producer;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -424,7 +436,6 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     archive << base_base;
     archive << head_includes;
     archive << src_includes;
-    archive << field_str;
     archive << display_str;
     archive << sort_str;
     archive << eq_str;
@@ -432,10 +443,12 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     // archive << fieldArray;
     // archive << extraArray;
     archive << contained_by;
+    archive << gogen;
     archive << doc_group;
     archive << doc_order;
     archive << doc_descr;
-    archive << doc_api;
+    archive << doc_route;
+    archive << doc_alias;
     archive << doc_producer;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -499,7 +512,6 @@ void CClassDefinition::registerClass(void) {
     ADD_FIELD(CClassDefinition, "base_base", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "head_includes", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "src_includes", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CClassDefinition, "field_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "display_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "sort_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "eq_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -509,10 +521,12 @@ void CClassDefinition::registerClass(void) {
     ADD_FIELD(CClassDefinition, "extraArray", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CClassDefinition, "extraArray");
     ADD_FIELD(CClassDefinition, "contained_by", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CClassDefinition, "gogen", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "doc_group", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "doc_order", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "doc_descr", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CClassDefinition, "doc_api", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CClassDefinition, "doc_route", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CClassDefinition, "doc_alias", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "doc_producer", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -658,11 +672,11 @@ void checkSorts(const string_q& className, const CStringArray& fields, const CSt
     }
 }
 
+//------------------------------------------------------------------------------------------------
 CClassDefinition::CClassDefinition(const CToml& toml) {
     //------------------------------------------------------------------------------------------------
     class_name = toml.getConfigStr("settings", "class", "");
     base_class = toml.getConfigStr("settings", "base_class", "CBaseNode");
-    field_str = toml.getConfigStr("settings", "fields", "");
     head_includes = toml.getConfigStr("settings", "includes", "");
     src_includes = toml.getConfigStr("settings", "cpp_includes", "");
     contained_by = toml.getConfigStr("settings", "contained_by", "");
@@ -680,8 +694,10 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
     tsx = toml.getConfigBool("settings", "tsx", false);
     doc_group = toml.getConfigStr("settings", "doc_group", "");
     doc_descr = toml.getConfigStr("settings", "doc_descr", "");
-    doc_api = toml.getConfigStr("settings", "doc_api", "");
-    doc_order = nextTokenClear(doc_group, '-') + nextTokenClear(doc_api, '-');
+    doc_route = toml.getConfigStr("settings", "doc_route", "");
+    doc_alias = toml.getConfigStr("settings", "doc_alias", "");
+    doc_order = nextTokenClear(doc_group, '-') + nextTokenClear(doc_route, '-');
+    gogen = toml.getConfigStr("settings", "gogen", "");
 
     //------------------------------------------------------------------------------------------------
     class_base = toProper(extract(class_name, 1));
@@ -706,7 +722,6 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
             if (contains(isFields, fld))
                 fld = "is_" + fld;
         }
-        field_str.clear();
         CStringArray lines;
         explode(lines, contents, '\n');
         checkSorts(class_name, fields, lines, "doc");
@@ -732,22 +747,7 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
             }
         }
     } else {
-        CParameterArray tmpArray;
-        CStringArray strs;
-        explode(strs, field_str, '|');
-        for (auto str : strs) {
-            replace(str, "~", "|");
-            CParameter param(str);
-            tmpArray.push_back(param);
-        }
-        for (auto tmp : tmpArray) {
-            if (tmp.is_flags & IS_EXTRA) {
-                tmp.is_flags |= IS_MINIMAL;
-                extraArray.push_back(tmp);
-            } else {
-                fieldArray.push_back(tmp);
-            }
-        }
+        LOG_ERR("Cannot find file ", fn);
     }
 }
 // EXISTING_CODE

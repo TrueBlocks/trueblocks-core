@@ -22,6 +22,7 @@ import (
 // RunBlocks handles the blocks command for the command line. Returns error only as per cobra.
 func RunBlocks(cmd *cobra.Command, args []string) (err error) {
 	opts := blocksFinishParse(args)
+	outputHelpers.SetEnabledForCmds("blocks", opts.IsPorted())
 	outputHelpers.SetWriterForCommand("blocks", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -32,6 +33,7 @@ func RunBlocks(cmd *cobra.Command, args []string) (err error) {
 // ServeBlocks handles the blocks command for the API. Returns error and a bool if handled
 func ServeBlocks(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := blocksFinishParseApi(w, r)
+	outputHelpers.SetEnabledForCmds("blocks", opts.IsPorted())
 	outputHelpers.InitJsonWriterApi("blocks", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -48,17 +50,35 @@ func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if false && opts.List > 0 {
-		// return opts.HandleList(), true
-		opts.HandleList()
-	}
+	if opts.IsPorted() {
+		handled = true
+		if opts.Count {
+			err = opts.HandleCounts()
 
-	if opts.Globals.IsApiMode() {
-		return nil, false
-	}
+		} else if opts.Traces {
+			err = opts.HandleTrace()
 
-	handled = true
-	err = opts.Globals.PassItOn("getBlocks", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
+		} else if opts.List > 0 {
+			err = opts.HandleList()
+
+		} else if opts.Uncles {
+			err = opts.HandleShowUncles()
+
+		} else {
+			err = opts.HandleShowBlocks()
+		}
+
+	} else {
+		if opts.Globals.IsApiMode() {
+			return nil, false
+		}
+
+		handled = true
+		err = opts.Globals.PassItOn("getBlocks", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
+		// TODO: BOGUS -- this is a hack to prevent the output from being written twice. It will be
+		// TODO: removed when the etnire command is ported
+		opts.Globals.Writer = nil
+	}
 	// EXISTING_CODE
 
 	return
@@ -71,6 +91,21 @@ func GetBlocksOptions(args []string, g *globals.GlobalOptions) *BlocksOptions {
 		ret.Globals = *g
 	}
 	return ret
+}
+
+func (opts *BlocksOptions) IsPorted() (ported bool) {
+	// EXISTING_CODE
+	if opts.Articulate || opts.Cache {
+		return false
+	}
+
+	if opts.Count {
+		ported = (!opts.Apps && !opts.Uniq)
+	} else {
+		ported = !opts.Uncles && !opts.Logs && !opts.Apps && !opts.Uniq && !opts.Traces
+	}
+	// EXISTING_CODE
+	return
 }
 
 // EXISTING_CODE

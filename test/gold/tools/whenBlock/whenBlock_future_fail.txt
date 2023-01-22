@@ -1,4 +1,4 @@
 chifra when  50000000
 TEST[DATE|TIME] Blocks:  [50000000]
 TEST[DATE|TIME] Format:  txt
-EROR[DATE|TIME] block number or timestamp for 50000000 not found
+EROR[DATE|TIME] block at 50000000 returned an error: not found

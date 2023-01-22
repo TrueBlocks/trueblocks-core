@@ -34,14 +34,13 @@ class COptions : public CBlockOptions {
     // BEG_CODE_DECLARE
     bool hashes;
     bool uncles;
-    bool trace;
+    bool traces;
     string_q flow;
     bool logs;
     bool articulate;
     uint64_t big_range;
     bool count;
     bool cache;
-    blknum_t list_count;
     // END_CODE_DECLARE
 
     uint64_t nProcessed{0};
@@ -50,7 +49,6 @@ class COptions : public CBlockOptions {
     uint64_t addrCounter;
     string_q filterType;
     timestamp_t secsFinal;
-    blknum_t listOffset;
     CLogFilter logFilter;
 
     COptions(void);
@@ -60,7 +58,6 @@ class COptions : public CBlockOptions {
     void Init(void) override;
 
     bool handle_appearances(blknum_t num);
-    bool handle_block_summaries(void);
     bool handle_logs(void);
     bool processFastPath(void);
 };

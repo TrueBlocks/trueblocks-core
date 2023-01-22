@@ -31,9 +31,10 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpcClient.MetaData, blaze
 
 	for bn := int(opts.StartBlock); bn < int(opts.StartBlock+opts.BlockCnt); bn++ {
 		if !blazeOpts.ProcessedMap[bn] {
-			// A block was not processed, clean up, report the error and return
+			// At least one block was not processed. This would only happen in the event of an
+			// error, so clean up, report the error and return. The loop will repeat.
 			index.CleanTemporaryFolders(config.GetPathToIndex(opts.Globals.Chain), false)
-			msg := fmt.Sprintf("Block %d was not processed%s", bn, strings.Repeat(" ", 50))
+			msg := fmt.Sprintf("A block %d was not processed%s", bn, strings.Repeat(" ", 50))
 			return errors.New(msg)
 		}
 	}
