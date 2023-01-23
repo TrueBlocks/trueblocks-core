@@ -238,7 +238,7 @@ func InsertAbi(chain string, address common.Address, inputReader io.Reader) (err
 	cacheDir := getCacheAndChainPath(chain)
 	fullPath := path.Join(cacheDir, filePath)
 
-	file, err := os.OpenFile(fullPath, os.O_WRONLY|os.O_CREATE, 0666)
+	file, err := os.OpenFile(fullPath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666)
 	if err != nil {
 		return
 	}

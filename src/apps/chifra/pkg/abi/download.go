@@ -53,6 +53,11 @@ func DownloadAbi(chain string, address common.Address, destination AbiInterfaceM
 	if err = decoder.Decode(&data); err != nil {
 		return err
 	}
+	resp.Body.Close()
+	// Etherscan sends 200 OK responses even if there's an error
+	if data["message"] == "NOTOK" {
+		return fmt.Errorf("provider responsed with NOTOK: %s", data["message"])
+	}
 	reader := strings.NewReader(data["result"])
 	fromJson(reader, address.Hex()+".json", destination)
 	if _, err = reader.Seek(0, io.SeekStart); err != nil {
