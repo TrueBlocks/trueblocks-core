@@ -99,7 +99,6 @@ func helperCheckTransaction(t *testing.T, tr *types.SimpleTransaction, expected 
 func TestReadBlock(t *testing.T) {
 	// TODO(cache): I don't love having this file in the source folder. Can it be moved to the `../test/gold/receipts/ folder or somewhere?
 	f, err := os.Open("./cache_block.bin")
-	// TODO(cache): The linter notes that we should test the return value of os.Open first before deferring. I fixed it.
 	if err != nil {
 		t.Fatal("cannot open file")
 	}

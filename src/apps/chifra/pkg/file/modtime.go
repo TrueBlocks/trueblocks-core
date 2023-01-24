@@ -4,6 +4,32 @@
 
 package file
 
+import (
+	"io/fs"
+	"os"
+	"path/filepath"
+)
+
+func GetNewestInDirectory(directory string) (fileInfo os.FileInfo, err error) {
+	err = filepath.WalkDir(directory, func(path string, entry fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if entry.IsDir() {
+			return nil
+		}
+		currentFileInfo, err := entry.Info()
+		if err != nil {
+			return err
+		}
+		if fileInfo == nil || currentFileInfo.ModTime().After(fileInfo.ModTime()) {
+			fileInfo = currentFileInfo
+		}
+		return nil
+	})
+	return
+}
+
 // func getLastModTs(fileName string) (int64, error) {
 // 	info, err := os.Stat(fileName)
 // 	if err != nil {

@@ -1405,7 +1405,7 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "Vote"
+        "type": "uint8"
       }
     ],
     "signature": "getMemberProposalVote(address,uint256)",
