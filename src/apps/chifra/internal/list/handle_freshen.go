@@ -20,14 +20,13 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // AddressMonitorMap carries arrays of appearances that have not yet been written to the monitor file
-type AddressMonitorMap map[common.Address]*monitor.Monitor
+type AddressMonitorMap map[types.Address]*monitor.Monitor
 
 // MonitorUpdate stores the original 'chifra list' command line options plus
 type MonitorUpdate struct {
@@ -85,7 +84,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 			return err
 		}
 
-		if updater.MonitorMap[common.HexToAddress(addr)] == nil {
+		if updater.MonitorMap[types.HexToAddress(addr)] == nil {
 			mon, _ := monitor.NewStagedMonitor(opts.Globals.Chain, addr)
 			mon.ReadMonitorHeader()
 			if uint64(mon.LastScanned) < updater.FirstBlock {
@@ -176,7 +175,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 					})
 				}
 
-				addrStr := hexutil.Encode(addr.Bytes())
+				addrStr := addr.Hex()
 				found := sort.Search(len(lines), func(i int) bool {
 					return lines[i] >= addrStr
 				})
@@ -316,7 +315,7 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 }
 
 func needsMigration(addr string) error {
-	mon := monitor.Monitor{Address: common.HexToAddress(addr)}
+	mon := monitor.Monitor{Address: types.HexToAddress(addr)}
 	path := strings.Replace(mon.Path(), ".mon.bin", ".acct.bin", -1)
 	if file.FileExists(path) {
 		path = strings.Replace(path, config.GetPathToCache(mon.Chain), "./", -1)

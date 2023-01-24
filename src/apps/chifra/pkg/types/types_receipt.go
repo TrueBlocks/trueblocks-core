@@ -11,7 +11,6 @@ package types
 // EXISTING_CODE
 import (
 	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // EXISTING_CODE
@@ -33,19 +32,19 @@ type RawReceipt struct {
 }
 
 type SimpleReceipt struct {
-	From              common.Address `json:"from,omitempty"`
-	To                common.Address `json:"to,omitempty"`
-	EffectiveGasPrice Gas            `json:"effectiveGasPrice,omitempty"`
-	CumulativeGasUsed string         `json:"cumulativeGasUsed,omitempty"`
-	BlockNumber       uint64         `json:"blockNumber"`
-	TransactionIndex  uint64         `json:"transactionIndex"`
-	TransactionHash   common.Hash    `json:"transactionHash"`
-	BlockHash         common.Hash    `json:"blockHash,omitempty"`
-	Status            uint32         `json:"status"`
-	GasUsed           Gas            `json:"gasUsed"`
-	ContractAddress   common.Address `json:"contractAddress,omitempty"`
-	IsError           bool           `json:"isError,omitempty"`
-	Logs              []SimpleLog    `json:"logs"`
+	From              Address     `json:"from,omitempty"`
+	To                Address     `json:"to,omitempty"`
+	EffectiveGasPrice Gas         `json:"effectiveGasPrice,omitempty"`
+	CumulativeGasUsed string      `json:"cumulativeGasUsed,omitempty"`
+	BlockNumber       uint64      `json:"blockNumber"`
+	TransactionIndex  uint64      `json:"transactionIndex"`
+	TransactionHash   common.Hash `json:"transactionHash"`
+	BlockHash         common.Hash `json:"blockHash,omitempty"`
+	Status            uint32      `json:"status"`
+	GasUsed           Gas         `json:"gasUsed"`
+	ContractAddress   Address     `json:"contractAddress,omitempty"`
+	IsError           bool        `json:"isError,omitempty"`
+	Logs              []SimpleLog `json:"logs"`
 	raw               *RawReceipt
 }
 
@@ -62,11 +61,11 @@ func (s *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[s
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
-		"blockNumber":       s.BlockNumber,
-		"transactionIndex":  s.TransactionIndex,
-		"transactionHash":   s.TransactionHash,
-		"status":            s.Status,
-		"gasUsed":           s.GasUsed,
+		"blockNumber":      s.BlockNumber,
+		"transactionIndex": s.TransactionIndex,
+		"transactionHash":  s.TransactionHash,
+		"status":           s.Status,
+		"gasUsed":          s.GasUsed,
 	}
 
 	order := []string{
@@ -82,7 +81,7 @@ func (s *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[s
 		model["logs"] = s.Logs
 		order = append(order, "logs")
 
-		if len(s.ContractAddress) > 0 && s.ContractAddress != common.HexToAddress("0x0") {
+		if len(s.ContractAddress.Bytes()) > 0 && s.ContractAddress != HexToAddress("0x0") {
 			model["contractAddress"] = s.ContractAddress
 		}
 
@@ -98,11 +97,11 @@ func (s *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[s
 			model["cumulativeGasUsed"] = s.CumulativeGasUsed
 			order = append(order, "cumulativeGasUsed")
 
-			if len(s.From) > 0 && s.From != common.HexToAddress("0x0") {
+			if !s.From.IsZero() {
 				model["from"] = s.From
 			}
 
-			if len(s.To) > 0 && s.To != common.HexToAddress("0x0") {
+			if !s.To.IsZero() {
 				model["to"] = s.To
 			}
 		}
@@ -114,11 +113,7 @@ func (s *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[s
 		order = append(order, "isError")
 
 		if showHidden {
-			if len(s.ContractAddress) > 0 && s.ContractAddress == common.HexToAddress("0x0") {
-				model["contractAddress"] = "0x"
-			} else {
-				model["contractAddress"] = hexutil.Encode(s.ContractAddress.Bytes())
-			}
+			model["contractAddress"] = s.ContractAddress.Hex()
 			order = append(order, "contractAddress")
 		}
 	}

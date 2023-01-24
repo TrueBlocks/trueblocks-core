@@ -13,7 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/ethereum/go-ethereum/common"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // Name is a record in the names database
@@ -53,7 +53,7 @@ type NameOnDisc struct {
 	Padding  byte          `json:"-"`
 }
 
-type NamesMap map[common.Address]Name
+type NamesMap map[types.Address]Name
 
 type NameOnDiscHeader struct {
 	Magic   uint64
@@ -106,7 +106,7 @@ func LoadNamesMap(chain string) (NamesMap, error) {
 				Source:   justChars(v.Source[:]),
 				Petname:  justChars(v.Petname[:]),
 			}
-			ret[common.HexToAddress(justChars(v.Address[:]))] = n
+			ret[types.HexToAddress(justChars(v.Address[:]))] = n
 			// fmt.Println(n)
 			// fmt.Println()
 		}
@@ -128,7 +128,7 @@ func LoadNamesMap(chain string) (NamesMap, error) {
 		if err != nil {
 			log.Fatal(err)
 		}
-		ret[common.HexToAddress(grant.Address)] = grant
+		ret[types.HexToAddress(grant.Address)] = grant
 	}
 
 	return ret, nil

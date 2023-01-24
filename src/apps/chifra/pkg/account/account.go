@@ -12,7 +12,7 @@ import (
 
 // isContractAt checks if an account is/has been a contract at the given block. Block number can be nil,
 // in which case the latest block is used.
-func IsContractAt(chain string, address common.Address, block *types.SimpleNamedBlock) (contract bool, err error) {
+func IsContractAt(chain string, address types.Address, block *types.SimpleNamedBlock) (contract bool, err error) {
 	provider := config.GetRpcProvider(chain)
 	client := rpcClient.GetClient(provider)
 	defer client.Close()
@@ -23,7 +23,7 @@ func IsContractAt(chain string, address common.Address, block *types.SimpleNamed
 	}
 	code, err := client.CodeAt(
 		context.Background(),
-		address,
+		common.HexToAddress(address.Hex()),
 		clientBlockArg,
 	)
 	if err != nil {

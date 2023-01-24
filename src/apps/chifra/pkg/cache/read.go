@@ -37,7 +37,7 @@ func createReadFn(reader *bufio.Reader) readBytes {
 type ArrayItem interface {
 	~string |
 		common.Hash |
-		common.Address |
+		types.Address |
 		types.SimpleTransaction |
 		types.SimpleTrace |
 		types.SimpleParameter |
@@ -98,13 +98,13 @@ func readCString(reader *bufio.Reader, str *cString) (err error) {
 	return
 }
 
-func readAddress(reader *bufio.Reader, target *common.Address) (err error) {
+func readAddress(reader *bufio.Reader, target *types.Address) (err error) {
 	str := &cString{}
 	err = readCString(reader, str)
 	if err != nil {
 		return
 	}
-	addr := common.HexToAddress(string(str.content))
+	addr := types.HexToAddress(string(str.content))
 	*target = addr
 	return
 }
@@ -828,7 +828,7 @@ func ReadAbis(reader *bufio.Reader) (result []types.SimpleFunction, err error) {
 	}
 
 	// This address is always empty
-	var address common.Address
+	var address types.Address
 	if err = readAddress(reader, &address); err != nil {
 		return
 	}

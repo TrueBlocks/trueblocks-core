@@ -21,7 +21,7 @@ type RawLog struct {
 }
 
 type SimpleLog struct {
-	Address          common.Address  `json:"address"`
+	Address          Address         `json:"address"`
 	LogIndex         uint64          `json:"logIndex"`
 	BlockNumber      uint64          `json:"blockNumber"`
 	TransactionIndex uint32          `json:"transactionIndex"`

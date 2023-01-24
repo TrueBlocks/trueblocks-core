@@ -15,6 +15,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/ethereum/go-ethereum/common"
 )
@@ -173,7 +174,7 @@ func (bl *ChunkBloom) ReadBloomHeader() error {
 }
 
 // AddToSet adds an address to a bloom filter
-func (bl *ChunkBloom) AddToSet(addr common.Address) {
+func (bl *ChunkBloom) AddToSet(addr types.Address) {
 	if len(bl.Blooms) == 0 {
 		bl.Blooms = append(bl.Blooms, BloomBytes{})
 		bl.Blooms[bl.Count].Bytes = make([]byte, BLOOM_WIDTH_IN_BYTES)
@@ -201,7 +202,7 @@ func (bl *ChunkBloom) AddToSet(addr common.Address) {
 // WhichBits returns the five bits calculated from an address used to determine if the address is
 // in the bloom filter. We get the five bits by cutting the 20-byte address into five equal four-byte
 // parts, turning those four bytes into an 32-bit integer modulo the width of a bloom array item.
-func (bl *ChunkBloom) WhichBits(addr common.Address) (bits [5]uint32) {
+func (bl *ChunkBloom) WhichBits(addr types.Address) (bits [5]uint32) {
 	slice := addr.Bytes()
 	if len(slice) != 20 {
 		log.Fatal("address is not 20 bytes long - should not happen")

@@ -15,7 +15,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/accounts/abi"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 // Where to find know ABI files
@@ -202,8 +201,8 @@ func getKnownAbiPaths() (filePaths []string, err error) {
 }
 
 // LoadAbiFromAddress loads ABI from local file or cache
-func LoadAbiFromAddress(chain string, address common.Address, destination AbiInterfaceMap) (err error) {
-	localFileName := strings.ToLower(address.Hex()) + ".json"
+func LoadAbiFromAddress(chain string, address types.Address, destination AbiInterfaceMap) (err error) {
+	localFileName := address.Hex() + ".json"
 	localFile, err := os.OpenFile(localFileName, os.O_RDONLY, 0)
 	if os.IsNotExist(err) {
 		// There's no local file, so we try to load one from cache

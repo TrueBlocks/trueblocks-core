@@ -10,17 +10,13 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/ethereum/go-ethereum/common"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
-
-func isZero(address common.Address) bool {
-	return len(address.Bytes()) == 0
-}
 
 // TODO: This function should be easy to replace with "ABI providers" (different services like
 // Sourcify or custom ones configured by the user)
-func DownloadAbi(chain string, address common.Address, destination AbiInterfaceMap) error {
-	if isZero(address) {
+func DownloadAbi(chain string, address types.Address, destination AbiInterfaceMap) error {
+	if address.IsZero() {
 		return errors.New("address is 0x0")
 	}
 
