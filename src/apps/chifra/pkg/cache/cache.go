@@ -183,7 +183,7 @@ func SetAbis(chain string, abis []types.SimpleFunction) (err error) {
 
 // GetAbi returns single ABI per address. ABI-per-address are stored as JSON, not binary.
 func GetAbi(chain string, address common.Address) (simpleAbis []types.SimpleFunction, err error) {
-	fileName := address.Hex() + ".json"
+	fileName := strings.ToLower(address.Hex()) + ".json"
 	filePath := path.Join(
 		itemToDirectory[ItemABI],
 		fileName,
