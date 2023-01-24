@@ -269,7 +269,6 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                 string_q fullCmd = exe + " " + test.options;
                 string_q debugCmd = relativize(fullCmd);
                 string_q redir = test.workPath + test.fileName;
-
                 cmd << "echo \"" << debugCmd << "\" >" << redir + " && ";
                 cmd << env << fullCmd << " >>" << redir << " 2>&1";
 
@@ -307,11 +306,6 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                 forEveryFileInFolder(customized + "/*", saveAndCopy, NULL);
             if (test.mode == "both" || contains(test.tool, "lib"))
                 measure.nTests++;
-
-            // Flush stdout so that we always get whole output from multi-threaded chifra commands
-            // https://en.cppreference.com/w/cpp/utility/program/system (Notes, 3rd paragraph)
-            std::cout.flush();
-
             // clang-format off
             if (system(theCmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
             // clang-format on
