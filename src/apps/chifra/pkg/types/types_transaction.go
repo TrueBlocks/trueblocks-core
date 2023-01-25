@@ -130,11 +130,8 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		model["time"] = date.Format("15:04:05") + " UTC"
 
 		if s.Receipt != nil {
-			// TODO: this should be a utility (and used above as well). May be available in go-ethereum. We should check.
-			contractAddress := hexutil.Encode(s.Receipt.ContractAddress.Bytes())
-			if contractAddress == "0x0000000000000000000000000000000000000000" {
-				contractAddress = "0x0"
-			}
+			contractAddress := s.Receipt.ContractAddress.Hex()
+
 			// TODO: this should not be hardcoded here. We have tslib.GetSpecials(), but there
 			// TODO: are 2 issues with it: 1. circular dependency with types package, 2. every
 			// TODO: call to GetSpecials parses CSV file, so we need to call it once and cache

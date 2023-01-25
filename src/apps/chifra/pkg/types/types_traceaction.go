@@ -65,7 +65,7 @@ func (s *SimpleTraceAction) Model(showHidden bool, format string, extraOptions m
 		if len(s.Init) > 0 {
 			model["init"] = s.Init
 		}
-		if s.SelfDestructed.IsZero() {
+		if !s.SelfDestructed.IsZero() {
 			model["selfDestructed"] = s.SelfDestructed
 		}
 		if s.Gas != 0 {
@@ -74,7 +74,7 @@ func (s *SimpleTraceAction) Model(showHidden bool, format string, extraOptions m
 		if len(s.Input) > 0 {
 			model["input"] = s.Input
 		}
-		if s.RefundAddress.IsZero() {
+		if !s.RefundAddress.IsZero() {
 			model["refundAddress"] = s.RefundAddress
 			model["balance"] = s.Balance.String()
 			if s.Value.String() != "0" {

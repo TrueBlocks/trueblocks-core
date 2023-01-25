@@ -41,6 +41,13 @@ func TestAddress_Hex(t *testing.T) {
 	if result := addr.Hex(); result != expected {
 		t.Fatal("wrong Hex() return value:", result)
 	}
+
+	zero := "0x0000000000000000000000000000000000000000"
+	expected = "0x0"
+	addr = HexToAddress(zero)
+	if result := addr.Hex(); result != expected {
+		t.Fatal("wrong Hex() return value for 0x0:", result)
+	}
 }
 
 func TestAddress_IsZero(t *testing.T) {
