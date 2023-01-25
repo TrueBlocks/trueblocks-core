@@ -6,7 +6,7 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/account"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/contract"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -54,7 +54,7 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 
 			// We didn't find the file
 			// Check if the address is a contract
-			contract, err := account.IsContractAt(
+			contract, err := contract.IsContractAt(
 				opts.Globals.Chain,
 				address,
 				nil, // use latest block number

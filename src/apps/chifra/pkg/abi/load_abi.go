@@ -8,7 +8,6 @@ import (
 	"os"
 	"path"
 	"path/filepath"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -23,12 +22,6 @@ var knownAbiSubdirectories = []string{
 }
 
 type AbiInterfaceMap = map[string]*types.SimpleFunction
-
-// getMapKey turns encoding into lower case, which can be used
-// as a key in AbiInterfaceMap
-func getMapKey(encoding string) string {
-	return strings.ToLower(encoding)
-}
 
 // LoadAbiFromJsonFile loads _standard_ JSON ABI, that is the one without encodings
 // and signatures. We compute these values.
@@ -50,12 +43,15 @@ func fromJson(reader io.Reader, abiSource string, destination AbiInterfaceMap) (
 
 	for _, method := range loadedAbi.Methods {
 		function := types.FunctionFromAbiMethod(&method, abiSource)
-		destination[getMapKey(function.Encoding)] = function
+		// We need to convert Encoding to lowercase, because go-ethereum's abi.JSON will
+		// return uppercase Encodings.
+		destination[function.Encoding] = function
 	}
 
 	for _, ethEvent := range loadedAbi.Events {
 		event := types.FunctionFromAbiEvent(&ethEvent, abiSource)
-		destination[getMapKey(event.Encoding)] = event
+		// Same as above
+		destination[event.Encoding] = event
 	}
 
 	return
@@ -77,7 +73,7 @@ func LoadAbiFromKnownFile(filePath string, destination AbiInterfaceMap) (err err
 	}
 
 	for _, function := range functions {
-		destination[getMapKey(function.Encoding)] = &function
+		destination[function.Encoding] = &function
 	}
 
 	return
@@ -103,7 +99,7 @@ func LoadCache(chain string, destination AbiInterfaceMap) (loaded bool) {
 
 	for _, function := range functions {
 		function := function
-		destination[getMapKey(function.Encoding)] = &function
+		destination[function.Encoding] = &function
 	}
 	return true
 }
@@ -212,7 +208,7 @@ func LoadAbiFromAddress(chain string, address types.Address, destination AbiInte
 		}
 		for _, loadedAbi := range loadedAbis {
 			loadedAbi := loadedAbi
-			destination[getMapKey(loadedAbi.Encoding)] = &loadedAbi
+			destination[loadedAbi.Encoding] = &loadedAbi
 		}
 		return nil
 	}
