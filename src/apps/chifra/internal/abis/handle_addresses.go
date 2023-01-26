@@ -10,7 +10,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 func (opts *AbisOptions) HandleAddresses() (err error) {
@@ -26,7 +25,7 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 	fetchData := func(modelChan chan types.Modeler[types.RawFunction], errorChan chan error) {
 		// result := make(abi.AbiInterfaceMap)
 		for _, addr := range opts.Addrs {
-			address := common.HexToAddress(addr)
+			address := types.HexToAddress(addr)
 			err = abi.LoadAbiFromAddress(opts.Globals.Chain, address, result)
 			if err == nil {
 				if testMode {

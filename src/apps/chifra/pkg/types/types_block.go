@@ -46,18 +46,18 @@ type RawBlock struct {
 }
 
 type SimpleBlock[Tx BlockTransaction] struct {
-	GasLimit      uint64         `json:"gasLimit"`
-	GasUsed       uint64         `json:"gasUsed"`
-	Hash          common.Hash    `json:"hash"`
-	BlockNumber   Blknum         `json:"blockNumber"`
-	ParentHash    common.Hash    `json:"parentHash"`
-	Miner         common.Address `json:"miner"`
-	Difficulty    uint64         `json:"difficulty"`
-	Finalized     bool           `json:"finalized"`
-	Timestamp     int64          `json:"timestamp"`
-	BaseFeePerGas Wei            `json:"baseFeePerGas"`
-	Transactions  []Tx           `json:"transactions"`
-	Uncles        []common.Hash  `json:"uncles"`
+	GasLimit      uint64        `json:"gasLimit"`
+	GasUsed       uint64        `json:"gasUsed"`
+	Hash          common.Hash   `json:"hash"`
+	BlockNumber   Blknum        `json:"blockNumber"`
+	ParentHash    common.Hash   `json:"parentHash"`
+	Miner         Address       `json:"miner"`
+	Difficulty    uint64        `json:"difficulty"`
+	Finalized     bool          `json:"finalized"`
+	Timestamp     int64         `json:"timestamp"`
+	BaseFeePerGas Wei           `json:"baseFeePerGas"`
+	Transactions  []Tx          `json:"transactions"`
+	Uncles        []common.Hash `json:"uncles"`
 	raw           *RawBlock
 }
 

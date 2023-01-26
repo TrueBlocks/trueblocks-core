@@ -7,13 +7,14 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 type Allocation struct {
-	Address common.Address `json:"address"`
+	Address types.Address `json:"address"`
 	Balance big.Int
 	Petname string
 }
@@ -35,7 +36,7 @@ func LoadPrefunds(chain string) ([]Allocation, error) {
 		// silently skip malformed lines
 		if common.IsHexAddress(record[0]) {
 			allocs = append(allocs, Allocation{
-				Address: common.HexToAddress(record[0]),
+				Address: types.HexToAddress(record[0]),
 				Balance: utils.Str_2_BigInt(record[1]),
 				Petname: AddrToPetname(record[0], "-"),
 			})
@@ -45,7 +46,7 @@ func LoadPrefunds(chain string) ([]Allocation, error) {
 	if len(allocs) == 0 {
 		// We want at least one...
 		allocs = append(allocs, Allocation{
-			Address: common.HexToAddress("0x0"),
+			Address: types.HexToAddress("0x0"),
 			Balance: utils.Str_2_BigInt("0"),
 			Petname: AddrToPetname("0x0000000000000000000000000000000000000000", "-"),
 		})

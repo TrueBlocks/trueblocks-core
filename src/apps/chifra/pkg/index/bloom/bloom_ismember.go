@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/ethereum/go-ethereum/common"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (bl *ChunkBloom) isMemberBytes(addr common.Address) bool {
+func (bl *ChunkBloom) isMemberBytes(addr types.Address) bool {
 	whichBits := bl.WhichBits(addr)
 	for _, bb := range bl.Blooms {
 		var tester = bitChecker{bytes: bb.Bytes, whichBits: whichBits}
@@ -19,7 +19,7 @@ func (bl *ChunkBloom) isMemberBytes(addr common.Address) bool {
 	return false
 }
 
-func (bl *ChunkBloom) IsMember(addr common.Address) bool {
+func (bl *ChunkBloom) IsMember(addr types.Address) bool {
 	whichBits := bl.WhichBits(addr)
 	offset := uint32(bl.HeaderSize) + 4 // the end of Count
 	for j := 0; j < int(bl.Count); j++ {

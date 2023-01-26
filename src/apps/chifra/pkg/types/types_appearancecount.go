@@ -9,7 +9,6 @@
 package types
 
 // EXISTING_CODE
-import "github.com/ethereum/go-ethereum/common"
 
 // EXISTING_CODE
 
@@ -20,9 +19,9 @@ type RawAppearanceCount struct {
 }
 
 type SimpleAppearanceCount struct {
-	Address  common.Address `json:"address"`
-	NRecords uint64         `json:"nRecords"`
-	FileSize uint64         `json:"fileSize"`
+	Address  Address `json:"address"`
+	NRecords uint64  `json:"nRecords"`
+	FileSize uint64  `json:"fileSize"`
 	raw      *RawAppearanceCount
 }
 

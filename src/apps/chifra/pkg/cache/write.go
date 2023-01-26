@@ -43,7 +43,7 @@ func writeHash(writer *bufio.Writer, hash *common.Hash) (err error) {
 	return writeString(writer, &value)
 }
 
-func writeAddress(writer *bufio.Writer, address *common.Address) (err error) {
+func writeAddress(writer *bufio.Writer, address *types.Address) (err error) {
 	value := lowercaseHex(address.Hex())
 	if value == "0x0000000000000000000000000000000000000000" {
 		value = "0x0"
@@ -675,7 +675,7 @@ func WriteAbis(writer *bufio.Writer, abis []types.SimpleFunction) (err error) {
 	}
 
 	// This address is always empty
-	address := common.Address{}
+	address := types.Address{}
 	if err = writeAddress(writer, &address); err != nil {
 		return
 	}

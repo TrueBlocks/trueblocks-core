@@ -6,13 +6,11 @@ import (
 	"io"
 	"os"
 	"path"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	filePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/accounts/abi"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 // Any data structure that we know how to cache
@@ -182,8 +180,8 @@ func SetAbis(chain string, abis []types.SimpleFunction) (err error) {
 }
 
 // GetAbi returns single ABI per address. ABI-per-address are stored as JSON, not binary.
-func GetAbi(chain string, address common.Address) (simpleAbis []types.SimpleFunction, err error) {
-	fileName := strings.ToLower(address.Hex()) + ".json"
+func GetAbi(chain string, address types.Address) (simpleAbis []types.SimpleFunction, err error) {
+	fileName := address.Hex() + ".json"
 	filePath := path.Join(
 		itemToDirectory[ItemABI],
 		fileName,
@@ -215,7 +213,7 @@ func GetAbi(chain string, address common.Address) (simpleAbis []types.SimpleFunc
 
 // SetAbi writes single ABI to cache. ABI-per-address are stored as JSON, not binary.
 // TODO: we cache abi.ABI, not types.SimpleFunction
-// func SetAbi(chain string, address common.Address, abi []types.SimpleFunction) (err error) {
+// func SetAbi(chain string, address types.Address, abi []types.SimpleFunction) (err error) {
 // 	filePath := path.Join(
 // 		itemToDirectory[ItemABI],
 // 		address.Hex()+".json",
@@ -230,10 +228,10 @@ func GetAbi(chain string, address common.Address) (simpleAbis []types.SimpleFunc
 // }
 
 // InsertAbi copies file (e.g. opened local file) into cache
-func InsertAbi(chain string, address common.Address, inputReader io.Reader) (err error) {
+func InsertAbi(chain string, address types.Address, inputReader io.Reader) (err error) {
 	filePath := path.Join(
 		itemToDirectory[ItemABI],
-		strings.ToLower(address.Hex())+".json",
+		address.Hex()+".json",
 	)
 	cacheDir := getCacheAndChainPath(chain)
 	fullPath := path.Join(cacheDir, filePath)

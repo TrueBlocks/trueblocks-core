@@ -27,7 +27,7 @@ func GetTransactionReceipt(chain string, bn uint64, txid uint64, txHash *common.
 	// Prepare logs of type []SimpleLog
 	logs := []types.SimpleLog{}
 	for _, log := range rawReceipt.Logs {
-		logAddress := common.HexToAddress(log.Address)
+		logAddress := types.HexToAddress(log.Address)
 		logIndex, parseErr := hexutil.DecodeUint64(log.LogIndex)
 		if parseErr != nil {
 			err = parseErr
@@ -88,7 +88,7 @@ func GetTransactionReceipt(chain string, bn uint64, txid uint64, txHash *common.
 	receipt = types.SimpleReceipt{
 		BlockHash:         common.HexToHash(rawReceipt.BlockHash),
 		BlockNumber:       blockNumber,
-		ContractAddress:   common.HexToAddress(rawReceipt.ContractAddress),
+		ContractAddress:   types.HexToAddress(rawReceipt.ContractAddress),
 		CumulativeGasUsed: fmt.Sprint(cumulativeGasUsed),
 		GasUsed:           gasUsed,
 		Logs:              logs,

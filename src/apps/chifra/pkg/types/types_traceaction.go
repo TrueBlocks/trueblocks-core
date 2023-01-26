@@ -9,9 +9,6 @@
 package types
 
 // EXISTING_CODE
-import (
-	"github.com/ethereum/go-ethereum/common"
-)
 
 // EXISTING_CODE
 
@@ -30,17 +27,17 @@ type RawTraceAction struct {
 }
 
 type SimpleTraceAction struct {
-	Address        common.Address `json:"address,omitempty"`
-	Balance        Wei            `json:"balance,omitempty"`
-	CallType       string         `json:"callType,omitempty"`
-	From           common.Address `json:"from,omitempty"`
-	Gas            Gas            `json:"gas"`
-	Init           string         `json:"init,omitempty"`
-	Input          string         `json:"input,omitempty"`
-	RefundAddress  common.Address `json:"refundAddress,omitempty"`
-	SelfDestructed common.Address `json:"selfDestructed,omitempty"`
-	To             common.Address `json:"to,omitempty"`
-	Value          Wei            `json:"value"`
+	Address        Address `json:"address,omitempty"`
+	Balance        Wei     `json:"balance,omitempty"`
+	CallType       string  `json:"callType,omitempty"`
+	From           Address `json:"from,omitempty"`
+	Gas            Gas     `json:"gas"`
+	Init           string  `json:"init,omitempty"`
+	Input          string  `json:"input,omitempty"`
+	RefundAddress  Address `json:"refundAddress,omitempty"`
+	SelfDestructed Address `json:"selfDestructed,omitempty"`
+	To             Address `json:"to,omitempty"`
+	Value          Wei     `json:"value"`
 	raw            *RawTraceAction
 }
 
@@ -68,7 +65,7 @@ func (s *SimpleTraceAction) Model(showHidden bool, format string, extraOptions m
 		if len(s.Init) > 0 {
 			model["init"] = s.Init
 		}
-		if len(s.SelfDestructed) > 0 && s.SelfDestructed != common.HexToAddress("0x0") {
+		if !s.SelfDestructed.IsZero() {
 			model["selfDestructed"] = s.SelfDestructed
 		}
 		if s.Gas != 0 {
@@ -77,27 +74,23 @@ func (s *SimpleTraceAction) Model(showHidden bool, format string, extraOptions m
 		if len(s.Input) > 0 {
 			model["input"] = s.Input
 		}
-		if len(s.RefundAddress) > 0 && s.RefundAddress != common.HexToAddress("0x0") {
+		if !s.RefundAddress.IsZero() {
 			model["refundAddress"] = s.RefundAddress
 			model["balance"] = s.Balance.String()
 			if s.Value.String() != "0" {
 				model["value"] = s.Balance.String()
 			}
 		} else {
-			if s.To == common.HexToAddress("0x0") {
-				model["to"] = "0x0"
-			} else {
-				model["to"] = s.To
-			}
+			model["to"] = s.To
 			model["value"] = s.Value.String()
 		}
-		if len(s.Address) > 0 && s.Address != common.HexToAddress("0x0") {
+		if !s.Address.IsZero() {
 			model["address"] = s.Address
 		}
 		if len(s.CallType) > 0 {
 			model["callType"] = s.CallType
 		}
-		if len(s.From) > 0 && s.From != common.HexToAddress("0x0") {
+		if !s.From.IsZero() {
 			model["from"] = s.From
 		}
 	}
