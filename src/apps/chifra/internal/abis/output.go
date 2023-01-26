@@ -54,7 +54,7 @@ func (opts *AbisOptions) AbisInternal() (err error, handled bool) {
 		return opts.HandleAbiFind(), true
 	}
 
-	if opts.Sol {
+	if !opts.IsPorted() {
 		handled = true
 		err = opts.Globals.PassItOn("grabABI", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
 		return
