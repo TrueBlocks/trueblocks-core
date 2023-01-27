@@ -74,9 +74,22 @@ func (opts *TransactionsOptions) HandleArticulate() (err error) {
 					trace.ArticulatedTrace = articulate.ArticulateTrace(&trace, abiMap)
 				}
 
-				if len(tx.Input) >= 10 {
-					tx.ArticulatedTx = abiMap[tx.Input[0:10]]
+				// TODO: is it possible to NOT have encoding as input here?
+				// if len(tx.Input) >= 10 {
+				found := abiMap[tx.Input[:10]]
+				if found != nil {
+					tx.ArticulatedTx = found
+					var outputData string
+					if len(tx.Traces) > 0 && len(tx.Traces[0].Result.Output) > 2 {
+						outputData = tx.Traces[0].Result.Output[2:]
+					}
+					if err = articulate.ArticulateFunction(tx.ArticulatedTx, tx.Input[10:], outputData); err != nil {
+						errorChan <- err
+						continue
+					}
 				}
+				// }
+
 				modelChan <- tx
 			}
 		}

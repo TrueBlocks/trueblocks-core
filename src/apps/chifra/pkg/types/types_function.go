@@ -20,13 +20,15 @@ type SimpleFunction struct {
 	StateMutability string            `json:"stateMutability"`
 	Inputs          []SimpleParameter `json:"inputs"`
 	Outputs         []SimpleParameter `json:"outputs"`
+	abiMethod       *abi.Method
+	abiEvent        *abi.Event
 }
 
 func FunctionFromAbiEvent(ethEvent *abi.Event, abiSource string) *SimpleFunction {
 	// ID is encoded signature
 	encSig := strings.ToLower(ethEvent.ID.Hex())
 	inputs := argumentsToSimpleParameters(ethEvent.Inputs)
-	return &SimpleFunction{
+	function := &SimpleFunction{
 		Encoding:     encSig,
 		Signature:    ethEvent.Sig,
 		Name:         ethEvent.Name,
@@ -35,6 +37,8 @@ func FunctionFromAbiEvent(ethEvent *abi.Event, abiSource string) *SimpleFunction
 		Anonymous:    ethEvent.Anonymous,
 		Inputs:       inputs,
 	}
+	function.SetAbiEvent(ethEvent)
+	return function
 }
 
 // FunctionFromAbiMethod converts go-ethereum's abi.Method to our SimpleFunction
@@ -60,7 +64,7 @@ func FunctionFromAbiMethod(ethMethod *abi.Method, abiSource string) *SimpleFunct
 	if ethMethod.StateMutability != "" {
 		stateMutability = ethMethod.StateMutability
 	}
-	return &SimpleFunction{
+	function := &SimpleFunction{
 		Encoding:        fourByte,
 		Signature:       ethMethod.Sig,
 		Name:            ethMethod.Name,
@@ -71,6 +75,8 @@ func FunctionFromAbiMethod(ethMethod *abi.Method, abiSource string) *SimpleFunct
 		Inputs:          inputs,
 		Outputs:         outputs,
 	}
+	function.SetAbiMethod(ethMethod)
+	return function
 }
 
 // argumentsToSimpleParameters converts slice of go-ethereum's Argument to slice of
@@ -109,6 +115,22 @@ func argumentTypesToSimpleParameters(argTypes []*abi.Type) (result []SimpleParam
 		}
 	}
 	return
+}
+
+func (s *SimpleFunction) SetAbiMethod(method *abi.Method) {
+	s.abiMethod = method
+}
+
+func (s *SimpleFunction) GetAbiMethod() *abi.Method {
+	return s.abiMethod
+}
+
+func (s *SimpleFunction) SetAbiEvent(event *abi.Event) {
+	s.abiEvent = event
+}
+
+func (s *SimpleFunction) GetAbiEvent() *abi.Event {
+	return s.abiEvent
 }
 
 func (s *SimpleFunction) Raw() *RawFunction {
