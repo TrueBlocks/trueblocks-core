@@ -13,16 +13,22 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/bykof/gostradamus"
 	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // EXISTING_CODE
 
 type RawTransaction struct {
-	Hash             common.Hash `json:"hash"`
-	BlockHash        common.Hash `json:"blockHash"`
-	BlockNumber      Blknum      `json:"blockNumber"`
-	TransactionIndex uint64      `json:"transactionIndex"`
+	Hash             string `json:"hash"`
+	BlockHash        string `json:"blockHash"`
+	BlockNumber      string `json:"blockNumber"`
+	TransactionIndex string `json:"transactionIndex"`
+	From             string `json:"from"`
+	Gas              string `json:"gas"`
+	GasPrice         string `json:"gasPrice"`
+	Input            string `json:"input"`
+	Nonce            string `json:"nonce"`
+	To               string `json:"to"`
+	Value            string `json:"value"`
 }
 
 type SimpleTransaction struct {
@@ -63,11 +69,6 @@ func (s *SimpleTransaction) SetRaw(raw *RawTransaction) {
 
 func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions map[string]any) Model {
 	// EXISTING_CODE
-	to := hexutil.Encode(s.To.Bytes())
-	if to == "0x0000000000000000000000000000000000000000" {
-		to = "0x0" // weird special case to preserve what RPC does
-	}
-
 	// TODO: these date-related values could be done when RPC is queried and cached
 	date := gostradamus.FromUnixTimestamp(int64(s.Timestamp))
 
@@ -81,7 +82,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		"transactionIndex": s.TransactionIndex,
 		"timestamp":        s.Timestamp,
 		"from":             s.From,
-		"to":               to,
+		"to":               s.To,
 		"gasUsed":          s.GasUsed,
 		"hash":             s.Hash,
 		"isError":          s.IsError,
@@ -150,15 +151,23 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 
 			logs := make([]map[string]any, 0, len(s.Receipt.Logs))
 			for _, log := range s.Receipt.Logs {
-				logs = append(logs, map[string]any{
+				logModel := map[string]any{
 					"address":  log.Address.Hex(),
 					"logIndex": log.LogIndex,
 					"topics":   log.Topics,
 					"data":     log.Data,
-				})
+				}
+				if extraOptions["articulate"] == true {
+					logModel["articulatedLog"] = log.ArticulatedLog
+				}
+				logs = append(logs, logModel)
 			}
 			receiptModel["logs"] = logs
 			model["receipt"] = receiptModel
+		}
+
+		if extraOptions["articulate"] == true {
+			model["articulatedTx"] = s.ArticulatedTx
 		}
 	}
 

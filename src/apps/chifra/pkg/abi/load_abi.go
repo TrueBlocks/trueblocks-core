@@ -11,7 +11,9 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/contract"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 )
@@ -228,4 +230,31 @@ func LoadAbiFromAddress(chain string, address types.Address, destination AbiInte
 	}
 
 	return
+}
+
+// LoadAbi tries to load ABI from any source (local file, cache, download from 3rd party)
+func LoadAbi(chain string, address types.Address, destination AbiInterfaceMap) (err error) {
+	err = LoadAbiFromAddress(chain, address, destination)
+	// return if there's no error (ABI was loaded) or if the error
+	// is not NotExist (something wrong happened)
+	if err == nil || !os.IsNotExist(err) {
+		return
+	}
+
+	// We didn't find the file
+	// Check if the address is a contract
+	contract, err := contract.IsContractAt(
+		chain,
+		address,
+		nil, // use latest block number
+	)
+	if err != nil {
+		return
+	}
+	if !contract {
+		logger.Log(logger.Info, "Address", address, "is not a smart contract. Skipping...")
+		return
+	}
+	// Fetch ABI from a provider
+	return DownloadAbi(chain, address, destination)
 }

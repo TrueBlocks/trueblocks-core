@@ -49,6 +49,10 @@ func (opts *TransactionsOptions) TransactionsInternal() (err error, handled bool
 		return err, true
 	}
 
+	if opts.Articulate {
+		return opts.HandleArticulate(), true
+	}
+
 	// EXISTING_CODE
 	if opts.Globals.IsApiMode() {
 		return nil, false
@@ -72,6 +76,7 @@ func GetTransactionsOptions(args []string, g *globals.GlobalOptions) *Transactio
 
 func (opts *TransactionsOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
+	ported = opts.Articulate
 	// EXISTING_CODE
 	return
 }
