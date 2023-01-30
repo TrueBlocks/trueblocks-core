@@ -44,15 +44,14 @@ func fromJson(reader io.Reader, abiSource string, destination AbiInterfaceMap) (
 	}
 
 	for _, method := range loadedAbi.Methods {
+		method := method
 		function := types.FunctionFromAbiMethod(&method, abiSource)
-		// We need to convert Encoding to lowercase, because go-ethereum's abi.JSON will
-		// return uppercase Encodings.
 		destination[function.Encoding] = function
 	}
 
 	for _, ethEvent := range loadedAbi.Events {
+		ethEvent := ethEvent
 		event := types.FunctionFromAbiEvent(&ethEvent, abiSource)
-		// Same as above
 		destination[event.Encoding] = event
 	}
 
@@ -75,6 +74,7 @@ func LoadAbiFromKnownFile(filePath string, destination AbiInterfaceMap) (err err
 	}
 
 	for _, function := range functions {
+		function := function
 		destination[function.Encoding] = &function
 	}
 

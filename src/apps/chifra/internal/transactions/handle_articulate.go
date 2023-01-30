@@ -27,23 +27,6 @@ func (opts *TransactionsOptions) HandleArticulate() (err error) {
 			}
 
 			for _, appearance := range appearances {
-				// log.Println(">>>", appearance.Address)
-				// if err = abi.LoadAbi(chain, types.HexToAddress(appearance.Address), abiMap); err != nil {
-				// 	errorChan <- err
-				// 	cancel()
-				// }
-				receipt, err := rpcClient.GetTransactionReceipt(
-					chain,
-					uint64(appearance.BlockNumber),
-					uint64(appearance.TransactionIndex),
-					nil,
-					0,
-				)
-				if err != nil {
-					errorChan <- err
-					cancel()
-				}
-
 				tx, err := rpcClient.GetTransactionByAppearance(chain, &appearance)
 				if err != nil {
 					errorChan <- err
@@ -58,35 +41,40 @@ func (opts *TransactionsOptions) HandleArticulate() (err error) {
 					cancel()
 				}
 
-				for _, log := range receipt.Logs {
+				for index, log := range tx.Receipt.Logs {
 					if err = abi.LoadAbi(chain, log.Address, abiMap); err != nil {
 						errorChan <- err
 						cancel()
 					}
-					log.ArticulatedLog = articulate.ArticulateLog(&log, abiMap)
+					tx.Receipt.Logs[index].ArticulatedLog = articulate.ArticulateLog(&log, abiMap)
 				}
 
-				for _, trace := range tx.Traces {
+				for index, trace := range tx.Traces {
 					if err = abi.LoadAbi(chain, trace.Action.To, abiMap); err != nil {
 						errorChan <- err
 						cancel()
 					}
-					trace.ArticulatedTrace = articulate.ArticulateTrace(&trace, abiMap)
+					tx.Traces[index].ArticulatedTrace = articulate.ArticulateTrace(&trace, abiMap)
 				}
 
 				// TODO: is it possible to NOT have encoding as input here?
 				// if len(tx.Input) >= 10 {
-				found := abiMap[tx.Input[:10]]
+				selector := tx.Input[:10]
+				inputData := tx.Input[10:]
+				found := abiMap[selector]
 				if found != nil {
 					tx.ArticulatedTx = found
 					var outputData string
+
 					if len(tx.Traces) > 0 && len(tx.Traces[0].Result.Output) > 2 {
 						outputData = tx.Traces[0].Result.Output[2:]
 					}
-					if err = articulate.ArticulateFunction(tx.ArticulatedTx, tx.Input[10:], outputData); err != nil {
+					if err = articulate.ArticulateFunction(tx.ArticulatedTx, inputData, outputData); err != nil {
 						errorChan <- err
 						continue
 					}
+				} else {
+					logger.Log(logger.Info, "Not found:", selector)
 				}
 				// }
 

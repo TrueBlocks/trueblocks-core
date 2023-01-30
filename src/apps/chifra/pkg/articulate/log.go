@@ -1,6 +1,8 @@
 package articulate
 
 import (
+	"encoding/hex"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -16,7 +18,8 @@ func ArticulateLog(log *types.SimpleLog, abiMap abi.AbiInterfaceMap) (articulate
 		return
 	}
 
-	articulated = abiMap[log.Topics[0].Hex()]
+	selector := hex.EncodeToString(log.Topics[0].Bytes())
+	articulated = abiMap[selector]
 
 	return
 }

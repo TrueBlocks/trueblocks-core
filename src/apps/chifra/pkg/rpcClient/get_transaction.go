@@ -71,7 +71,7 @@ func GetTransactionByAppearance(chain string, appearance *types.SimpleAppearance
 
 	hasToken := false
 	if len(rawTx.Input) >= 10 {
-		IsTokenRelated(rawTx.Input[:9])
+		hasToken = IsTokenRelated(rawTx.Input[:10])
 	}
 	txBlockNumber, err := strconv.ParseUint(rawTx.BlockNumber, 0, 64)
 	if err != nil {

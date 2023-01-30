@@ -14,12 +14,12 @@ func ArticulateFunction(function *types.SimpleFunction, inputData string, output
 
 	if len(inputData) > 0 {
 		if err = ArticulateArguments(abiMethod.Inputs, inputData, function.Inputs); err != nil {
-			return err
+			return fmt.Errorf("error processing inputs of %s: %w", abiMethod.Sig, err)
 		}
 	}
 	if len(outputData) > 0 {
 		if err = ArticulateArguments(abiMethod.Outputs, outputData, function.Outputs); err != nil {
-			return err
+			return fmt.Errorf("error processing output of %s: %w", abiMethod.Sig, err)
 		}
 	}
 
