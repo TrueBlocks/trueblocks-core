@@ -771,6 +771,15 @@ paths:
             items:
               type: string
               format: string
+        - name: generate
+          description: >
+            generate the 32-byte encoding given a cannonical function or event signature
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
       responses:
         "200":
           description: returns the requested data
