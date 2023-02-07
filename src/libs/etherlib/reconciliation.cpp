@@ -977,6 +977,11 @@ CReconciliation::CReconciliation(const address_t& aF, const address_t& asset, co
     accountedFor = aF;
     assetAddr = asset;
     transactionHash = pT->hash;
+    signature = pT->articulatedTx.compressed("");
+    encoding = pT->input.substr(0, 10);
+    if (encoding == "0x") {
+        encoding = "";
+    }
 }
 // EXISTING_CODE
 }  // namespace qblocks
