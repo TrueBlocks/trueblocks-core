@@ -696,8 +696,9 @@ const char* STR_COMPRESSED_INPUT = "[{NAME}]:[{VALUE}]|";
 
 //-----------------------------------------------------------------------
 string_q CFunction::compressed(const string_q& def) const {
-    if (!message.empty())
+    if (!message.empty()) {
         return "message:" + message;
+    }
 
     if (name.empty())
         return compressInput(def);

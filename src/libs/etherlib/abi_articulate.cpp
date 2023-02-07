@@ -279,27 +279,28 @@ bool CAbi::articulateOutputs(const string_q& encoding, const string_q& output, C
 //----------------------------------------------------------------------------
 // If we can reasonably convert this byte input into a string, do so, otherwise bail out
 bool toPrintable(const string_q& inHex, string_q& result) {
-    string_q cleaned;
+    ostringstream os;
+
     string_q nibbles = substitute(inHex, "0x", "");
     while (nibbles.size() >= 2) {
         string_q nibble = extract(nibbles, 0, 2);
         nibbles = extract(nibbles, 2);
+
         char ch = (char)hex_2_Ascii(nibble[0], nibble[1]);  // NOLINT
-        if (ch == '\\') {
-            cleaned += "\\\\";  // we are only exporting printable characters, so escape any escapes
-        } else if (ch == '\"') {
-            cleaned += "\\\"";  // we are only exporting printable characters, so escape any quotes
-        } else if (isalpha(ch) || isdigit(ch) || ispunct(ch) || isblank(ch)) {
-            cleaned += ch;
-        } else if (ch == 0x19) {
-            // do nothing
+        if (isalpha(ch) || isdigit(ch) || ispunct(ch) || isblank(ch)) {
+            os << ch;
         } else {
-            // give up
-            result = inHex;
-            return false;
+            if (ch == '\\' || ch == '\"') {
+                os << "\\" << ch;  // escape it
+            } else if (ch == 0x19) {
+                // do nothing
+            } else {
+                result = inHex;
+                return false;
+            }
         }
     }
-    result = cleaned;
+    result = os.str();
     return true;
 }
 
