@@ -36,6 +36,10 @@ string_q type_2_GoType(const CParameter& field) {
         return "Gas";
     if (type == "wei")
         return "Wei";
+    if (type == "int256")
+        return "big.Int";
+    if (type == "double")
+        return "float64";
     return type;
 }
 
