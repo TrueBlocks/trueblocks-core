@@ -4,6 +4,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"reflect"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -28,71 +29,6 @@ func ArticulateFunction(function *types.SimpleFunction, inputData string, output
 
 	return
 }
-
-// func ArticulateArguments(args abi.Arguments, data string, topics []common.Hash, destination []types.SimpleParameter) (err error) {
-// 	dataBytes, err := hex.DecodeString(data)
-// 	if err != nil {
-// 		return
-// 	}
-// 	unpacked, err := args.UnpackValues(dataBytes)
-// 	nonIndexedArgs := args.NonIndexed()
-// 	// unpacked := make(map[string]any, len(nonIndexedArgs))
-// 	// err = args.UnpackIntoMap(unpacked, dataBytes)
-// 	if err != nil {
-// 		return
-// 	}
-
-// 	destinationArgNameToIndex := make(map[string]int, len(nonIndexedArgs))
-// 	for index, destinationArg := range destination {
-// 		destinationArgNameToIndex[destinationArg.Name] = index
-// 	}
-// 	for index, unpackedArg := range unpacked {
-// 		currentArg := nonIndexedArgs[index]
-// 		var result string
-// 		switch currentArg.Type.T {
-// 		case abi.TupleTy:
-// 			fallthrough
-// 		case abi.ArrayTy:
-// 			fallthrough
-// 		case abi.SliceTy:
-// 			as := articulateSlice(&currentArg.Type, unpackedArg)
-// 			if len(as) == 0 {
-// 				result = fmt.Sprint(unpackedArg)
-// 			} else {
-// 				result = fmt.Sprint(as)
-// 			}
-// 		case abi.StringTy:
-// 			fallthrough
-// 		case abi.IntTy, abi.UintTy:
-// 			fallthrough
-// 		case abi.BoolTy:
-// 			fallthrough
-// 		case abi.BytesTy:
-// 			result = fmt.Sprint(unpackedArg)
-// 		case abi.FunctionTy:
-// 			item, ok := unpackedArg.([]byte)
-// 			if ok {
-// 				result = common.Bytes2Hex(item)
-// 				break
-// 			}
-// 			result = fmt.Sprint(unpackedArg)
-// 		case abi.FixedBytesTy:
-// 			result = articulateFixedBytes(&currentArg.Type, unpackedArg)
-// 		case abi.AddressTy:
-// 			fallthrough
-// 		case abi.HashTy:
-// 			result = strings.ToLower(fmt.Sprint(unpackedArg))
-// 		default:
-// 			return fmt.Errorf("cannot cast type %s", currentArg.Type.String())
-// 		}
-// 		destIndex, ok := destinationArgNameToIndex[currentArg.Name]
-// 		if !ok {
-// 			return fmt.Errorf("cannot find destination index of argument %s", currentArg.Name)
-// 		}
-// 		destination[destIndex].Value = result
-// 	}
-// 	return
-// }
 
 func ArticulateArguments(args abi.Arguments, data string, topics []common.Hash, destination []types.SimpleParameter) (err error) {
 	dataBytes, err := hex.DecodeString(data)
@@ -166,23 +102,47 @@ func ArticulateArguments(args abi.Arguments, data string, topics []common.Hash, 
 }
 
 func valueToString(argType *abi.Type, value any) (result string, err error) {
+	formatted, err := formatValue(argType, value)
+	if err != nil {
+		return
+	}
+	asBytes, err := json.Marshal(&formatted)
+	if err != nil {
+		return "", err
+	}
+	return string(asBytes), nil
+}
+
+func formatValue(argType *abi.Type, value any) (result any, err error) {
 	switch argType.T {
 	case abi.TupleTy:
-		// TODO(articulate): tuples can have elements of different types. Use argType.TupleTypes
-		return articulateTuple(argType, value)
-		// fallthrough
+		tuple := reflect.ValueOf(value)
+		numField := tuple.NumField()
+		articulatedTuple := make(map[string]any, numField)
+		for i := 0; i < numField; i++ {
+			fieldValue := tuple.Field(i).Interface()
+			itemAbiType := argType.TupleElems[i]
+			articulatedItem, err := formatValue(itemAbiType, fieldValue)
+			if err != nil {
+				return "", nil
+			}
+			articulatedTuple[argType.TupleRawNames[i]] = articulatedItem
+		}
+		return articulatedTuple, nil
 	case abi.ArrayTy:
 		fallthrough
 	case abi.SliceTy:
-		articulatedSlice, err := articulateSlice(argType, value)
-		if err != nil {
-			return "", err
+		slice := reflect.ValueOf(value)
+		articulatedSlice := make([]any, 0, slice.Len())
+		for i := 0; i < slice.Len(); i++ {
+			item := slice.Index(i).Interface()
+			articulatedItem, err := formatValue(argType.Elem, item)
+			if err != nil {
+				return "", err
+			}
+			articulatedSlice = append(articulatedSlice, articulatedItem)
 		}
-		if len(articulatedSlice) == 0 {
-			result = fmt.Sprint(value)
-		} else {
-			result = fmt.Sprint(articulatedSlice)
-		}
+		result = articulatedSlice
 	case abi.StringTy:
 		fallthrough
 	case abi.IntTy, abi.UintTy:
@@ -190,14 +150,14 @@ func valueToString(argType *abi.Type, value any) (result string, err error) {
 	case abi.BoolTy:
 		fallthrough
 	case abi.BytesTy:
-		result = fmt.Sprint(value)
+		result = value
 	case abi.FunctionTy:
 		item, ok := value.([]byte)
 		if ok {
 			result = common.Bytes2Hex(item)
 			break
 		}
-		result = fmt.Sprint(value)
+		result = value
 	case abi.FixedBytesTy:
 		result = articulateFixedBytes(argType, value)
 	case abi.AddressTy:
@@ -208,67 +168,6 @@ func valueToString(argType *abi.Type, value any) (result string, err error) {
 		return "", fmt.Errorf("cannot cast type %s", argType.String())
 	}
 
-	return
-}
-
-func articulateTuple(argType *abi.Type, value any) (result string, err error) {
-	asBytes, err := json.Marshal(value)
-	if err == nil {
-		result = string(asBytes)
-	}
-	return
-}
-
-func articulateSlice(sliceType *abi.Type, value interface{}) (result string, err error) {
-	// TODO(articulation)
-	switch sliceType.Elem.T {
-	case abi.TupleTy:
-		return articulateTuple(sliceType, value)
-	// 	fallthrough
-	// case abi.SliceTy:
-	// 	// rec
-	// 	fallthrough
-	// case abi.ArrayTy:
-	// 	// rec
-	// 	fallthrough
-	// case abi.StringTy:
-	// 	fallthrough
-	// case abi.IntTy, abi.UintTy:
-	// 	fallthrough
-	// case abi.BoolTy:
-	// 	fallthrough
-	// case abi.BytesTy:
-	// 	fallthrough
-	// case abi.FunctionTy:
-	// 	fallthrough
-	case abi.FixedBytesTy:
-		if sliceType.Elem.Size == 20 {
-			items, ok := value.([][20]byte)
-			if !ok {
-				return
-			}
-			strItems := make([]string, 0, len(items))
-			for _, item := range items {
-				addr := types.BytesToAddress(item[:])
-				strItems = append(strItems, addr.Hex())
-			}
-			return fmt.Sprint(strItems), nil
-		}
-
-		if sliceType.Elem.Size == 32 {
-			items, ok := value.([][32]byte)
-			if !ok {
-				return
-			}
-			strItems := make([]string, 0, len(items))
-			for _, item := range items {
-				hash := common.BytesToHash(item[:])
-				strItems = append(strItems, strings.ToLower(hash.Hex()))
-			}
-			return fmt.Sprint(strItems), nil
-		}
-		return
-	}
 	return
 }
 
