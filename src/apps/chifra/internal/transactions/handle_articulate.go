@@ -3,6 +3,7 @@ package transactionsPkg
 import (
 	"context"
 	"errors"
+	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
@@ -38,23 +39,34 @@ func (opts *TransactionsOptions) HandleArticulate() (err error) {
 				}
 				if err = abi.LoadAbi(chain, tx.To, abiMap); err != nil {
 					errorChan <- err
-					cancel()
+					// cancel()
 				}
 
 				for index, log := range tx.Receipt.Logs {
 					if err = abi.LoadAbi(chain, log.Address, abiMap); err != nil {
 						errorChan <- err
-						cancel()
+						continue
 					}
-					tx.Receipt.Logs[index].ArticulatedLog = articulate.ArticulateLog(&log, abiMap)
+
+					tx.Receipt.Logs[index].ArticulatedLog, err = articulate.ArticulateLog(&log, abiMap)
+					if err != nil {
+						errorChan <- err
+						continue
+					}
 				}
 
 				for index, trace := range tx.Traces {
 					if err = abi.LoadAbi(chain, trace.Action.To, abiMap); err != nil {
 						errorChan <- err
-						cancel()
+						continue
+						// cancel()
 					}
-					tx.Traces[index].ArticulatedTrace = articulate.ArticulateTrace(&trace, abiMap)
+
+					tx.Traces[index].ArticulatedTrace, err = articulate.ArticulateTrace(&trace, abiMap)
+					if err != nil {
+						errorChan <- err
+						continue
+					}
 				}
 
 				// TODO: is it possible to NOT have encoding as input here?
@@ -66,15 +78,15 @@ func (opts *TransactionsOptions) HandleArticulate() (err error) {
 					tx.ArticulatedTx = found
 					var outputData string
 
-					if len(tx.Traces) > 0 && len(tx.Traces[0].Result.Output) > 2 {
+					if len(tx.Traces) > 0 && tx.Traces[0].Result != nil && len(tx.Traces[0].Result.Output) > 2 {
 						outputData = tx.Traces[0].Result.Output[2:]
 					}
 					if err = articulate.ArticulateFunction(tx.ArticulatedTx, inputData, outputData); err != nil {
 						errorChan <- err
-						continue
+						// continue
 					}
 				} else {
-					logger.Log(logger.Info, "Not found:", selector)
+					errorChan <- fmt.Errorf("not found: %s", selector)
 				}
 				// }
 
@@ -97,6 +109,7 @@ func (opts *TransactionsOptions) HandleArticulate() (err error) {
 		JsonIndent: "  ",
 		Extra: map[string]interface{}{
 			"articulate": true,
+			"traces":     opts.Traces,
 		},
 	})
 }

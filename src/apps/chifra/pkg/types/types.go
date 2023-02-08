@@ -72,6 +72,11 @@ func HexToAddress(hex string) (addr Address) {
 	return
 }
 
+func BytesToAddress(b []byte) (addr Address) {
+	addr.SetBytes(b)
+	return
+}
+
 type SimpleTimestamp struct {
 	BlockNumber uint64 `json:"blockNumber"`
 	Timestamp   uint64 `json:"timestamp"`

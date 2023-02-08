@@ -76,6 +76,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 	// TODO: it is in a block (or at least we know the blockNumber. Also, who's to say what `finalized`
 	// TODO: means? Also, `finalized` has a meaning in post-merge code. See #2667
 	// EXISTING_CODE
+	finalized := extraOptions["finalized"] == true
 
 	model := map[string]interface{}{
 		"blockNumber":      s.BlockNumber,
@@ -86,7 +87,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		"gasUsed":          s.GasUsed,
 		"hash":             s.Hash,
 		"isError":          s.IsError,
-		"finalized":        extraOptions["finalized"],
+		"finalized":        finalized,
 		"value":            s.Value.String(),
 	}
 
@@ -157,8 +158,14 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 					"topics":   log.Topics,
 					"data":     log.Data,
 				}
-				if extraOptions["articulate"] == true {
-					logModel["articulatedLog"] = log.ArticulatedLog
+				if extraOptions["articulate"] == true && log.ArticulatedLog != nil {
+					inputModels := ParametersToMap(log.ArticulatedLog.Inputs)
+					articulatedLog := map[string]any{
+						"name":   log.ArticulatedLog.Name,
+						"inputs": inputModels,
+					}
+					logModel["articulatedLog"] = articulatedLog
+					logModel["compressedLog"], _ = CompressMap(articulatedLog)
 				}
 				logs = append(logs, logModel)
 			}
@@ -166,12 +173,32 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 			model["receipt"] = receiptModel
 		}
 
-		if extraOptions["articulate"] == true {
-			model["articulatedTx"] = s.ArticulatedTx
+		if extraOptions["traces"] == true && len(s.Traces) > 0 {
+			traceModels := make([]map[string]any, 0, len(s.Traces))
+			for _, trace := range s.Traces {
+				traceModels = append(traceModels, trace.Model(showHidden, format, extraOptions).Data)
+			}
+			model["traces"] = traceModels
 		}
 	}
 
-	// TODO: These fields are ignored "ethGasPrice": s.EthGasPrice, "encoding": s.Encoding, "compressedTx": s.CompressedTx,
+	if extraOptions["articulate"] == true && s.ArticulatedTx != nil {
+		inputModels := ParametersToMap(s.ArticulatedTx.Inputs)
+		outputModels := ParametersToMap(s.ArticulatedTx.Outputs)
+		articulated := map[string]any{
+			"name":            s.ArticulatedTx.Name,
+			"stateMutability": s.ArticulatedTx.StateMutability,
+			"inputs":          inputModels,
+			"outputs":         outputModels,
+		}
+
+		if format == "json" {
+			model["articulatedTx"] = articulated
+		}
+		model["compressedTx"], _ = CompressMap(articulated)
+	}
+
+	// TODO: These fields are ignored "ethGasPrice": s.EthGasPrice, "encoding": s.Encoding
 	// EXISTING_CODE
 
 	return Model{

@@ -13,7 +13,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/contract"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 )
@@ -76,6 +75,7 @@ func LoadAbiFromKnownFile(filePath string, destination AbiInterfaceMap) (err err
 	for _, function := range functions {
 		function := function
 		destination[function.Encoding] = &function
+		// TODO(articulation): this items don't have abiMethod or abiEvent
 	}
 
 	return
@@ -102,6 +102,7 @@ func LoadCache(chain string, destination AbiInterfaceMap) (loaded bool) {
 	for _, function := range functions {
 		function := function
 		destination[function.Encoding] = &function
+		//TODO(articulation): missing abiMethod/abiEvent
 	}
 	return true
 }
@@ -237,8 +238,11 @@ func LoadAbi(chain string, address types.Address, destination AbiInterfaceMap) (
 	err = LoadAbiFromAddress(chain, address, destination)
 	// return if there's no error (ABI was loaded) or if the error
 	// is not NotExist (something wrong happened)
-	if err == nil || !os.IsNotExist(err) {
+	if err == nil {
 		return
+	}
+	if !os.IsNotExist(err) {
+		return fmt.Errorf("while reading %s ABI file: %w", address, err)
 	}
 
 	// We didn't find the file
@@ -252,7 +256,7 @@ func LoadAbi(chain string, address types.Address, destination AbiInterfaceMap) (
 		return
 	}
 	if !contract {
-		logger.Log(logger.Info, "Address", address, "is not a smart contract. Skipping...")
+		// logger.Log(logger.Info, "Address", address, "is not a smart contract. Skipping...")
 		return
 	}
 	// Fetch ABI from a provider

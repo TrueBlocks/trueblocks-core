@@ -88,17 +88,17 @@ void prettyPrint(CParameterArray& params, const CStringArray& dataArray, const s
 
 //------------------------------------------------------------------------------------------------
 #define SECTION_START(a, b)                                                                                            \
-    if (isTestMode()) {                                                                                                \
-        cerr << endl;                                                                                                  \
-        cerr << string_q(50, '=') << endl;                                                                             \
-        LOG_TEST(string_q("Section-") + (a) + ":(" + (b) + ")", param.type, false);                                    \
-    }
+    // if (isTestMode()) {                                                                                                \
+    //     cerr << endl;                                                                                                  \
+    //     cerr << string_q(50, '=') << endl;                                                                             \
+    //     LOG_TEST(string_q("Section-") + (a) + ":(" + (b) + ")", param.type, false);                                    \
+    // }
 
 //------------------------------------------------------------------------------------------------
 #define LOG_TEST_PARAMS(p)                                                                                             \
-    if (isTestMode()) {                                                                                                \
-        cerr << prettyPrintParams((p));                                                                                \
-    }
+    // if (isTestMode()) {                                                                                                \
+    //     cerr << prettyPrintParams((p));                                                                                \
+    // }
 
 // TODO: Cleanup this file
 #undef LOG_DECODE_ERR

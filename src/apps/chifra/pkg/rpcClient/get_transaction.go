@@ -60,7 +60,7 @@ func GetTransactionByAppearance(chain string, appearance *types.SimpleAppearance
 		chain,
 		blockNumber,
 		txIndex,
-		&txHash,
+		nil,
 		0,
 	)
 	if err != nil {

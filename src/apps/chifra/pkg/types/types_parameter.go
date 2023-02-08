@@ -39,3 +39,14 @@ func (s *SimpleParameter) DisplayName(index int) string {
 	}
 	return "val_" + fmt.Sprint(index)
 }
+
+func ParametersToMap(params []SimpleParameter) (result map[string]string) {
+	result = make(map[string]string)
+	for index, param := range params {
+		if param.Value == "0x" || param.Value == "0x0" {
+			continue
+		}
+		result[param.DisplayName(index)] = param.Value
+	}
+	return
+}

@@ -109,6 +109,20 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 		if s.Result != nil {
 			model["result"] = s.Result.Model(showHidden, format, extraOptions).Data
 		}
+
+		if s.ArticulatedTrace != nil && extraOptions["articulate"] == true {
+			inputModels := ParametersToMap(s.ArticulatedTrace.Inputs)
+			outputModels := ParametersToMap(s.ArticulatedTrace.Outputs)
+			articulatedTrace := map[string]interface{}{
+				"name":            s.ArticulatedTrace.Name,
+				"stateMutability": s.ArticulatedTrace.StateMutability,
+				// TODO(articulation): this should be nil if empty
+				"inputs":  inputModels,
+				"outputs": outputModels,
+			}
+			model["articulatedTrace"] = articulatedTrace
+			model["compressedTrace"], _ = CompressMap(articulatedTrace)
+		}
 	} else {
 		to := hexutil.Encode(s.Action.To.Bytes())
 		if to == "0x0000000000000000000000000000000000000000" {
