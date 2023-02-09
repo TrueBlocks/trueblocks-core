@@ -2,6 +2,7 @@ package articulate
 
 import (
 	"encoding/json"
+	"math/big"
 	"strings"
 	"testing"
 
@@ -99,6 +100,108 @@ func TestArticulateArgumentsMixedIndexed(t *testing.T) {
 	}
 }
 
+func TestArticulateArgumentsSimpleData(t *testing.T) {
+	parsedAbi, err := abi.JSON(strings.NewReader(ensRegistrar))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	var abiMethod abi.Method
+	var result *types.SimpleFunction
+	var expected any
+	var packed []byte
+
+	// type: hash
+	abiMethod = parsedAbi.Methods["releaseDeed"]
+	result = types.FunctionFromAbiMethod(&abiMethod, "")
+	expected = "0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573"
+	packed, err = abiMethod.Inputs.Pack(expected)
+	if err != nil {
+		return
+	}
+	if err = ArticulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
+		t.Fatal(err)
+	}
+	if value := result.Inputs[0].Value; value != "0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573" {
+		t.Fatal("wrong result value:", value)
+	}
+
+	// type: uint256
+	abiMethod = parsedAbi.Methods["getAllowedTime"]
+	result = types.FunctionFromAbiMethod(&abiMethod, "")
+	expected = big.NewInt(123).String()
+	packed, err = abiMethod.Inputs.Pack(big.NewInt(123))
+	if err != nil {
+		return
+	}
+	if err = ArticulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
+		t.Fatal(err)
+	}
+	if value := result.Inputs[0].Value; value != expected {
+		t.Fatal("wrong result value:", value)
+	}
+
+	// type: string
+	abiMethod = parsedAbi.Methods["invalidateName"]
+	result = types.FunctionFromAbiMethod(&abiMethod, "")
+	expected = "some test string"
+	packed, err = abiMethod.Inputs.Pack(expected)
+	if err != nil {
+		return
+	}
+	if err = ArticulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
+		t.Fatal(err)
+	}
+	if value := result.Inputs[0].Value; value != expected {
+		t.Fatal("wrong result value:", value)
+	}
+
+	// type: address
+	abiMethod = parsedAbi.Methods["cancelBid"]
+	result = types.FunctionFromAbiMethod(&abiMethod, "")
+	expected = "0x95222290dd7278aa3ddd389cc1e1d165cc4bafe5"
+	packed, err = abiMethod.Inputs.Pack(expected)
+	if err != nil {
+		return
+	}
+	if err = ArticulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
+		t.Fatal(err)
+	}
+	if value := result.Inputs[0].Value; value != expected {
+		t.Fatal("wrong result value:", value)
+	}
+
+	// type: uint8
+	abiMethod = parsedAbi.Methods["state"]
+	result = types.FunctionFromAbiMethod(&abiMethod, "")
+	expected = 2
+	packed, err = abiMethod.Inputs.Pack(expected)
+	if err != nil {
+		return
+	}
+	if err = ArticulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
+		t.Fatal(err)
+	}
+	if value := result.Inputs[0].Value; value != expected {
+		t.Fatal("wrong result value:", value)
+	}
+
+	// type: bool
+	abiMethod = parsedAbi.Methods["isAllowed"]
+	result = types.FunctionFromAbiMethod(&abiMethod, "")
+	expected = true
+	packed, err = abiMethod.Inputs.Pack(expected)
+	if err != nil {
+		return
+	}
+	if err = ArticulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
+		t.Fatal(err)
+	}
+	if value := result.Inputs[0].Value; value != expected {
+		t.Fatal("wrong result value:", value)
+	}
+}
+
 func TestArticulateArgumentsSlice(t *testing.T) {
 	abi, err := abi.JSON(strings.NewReader(ensRegistrar))
 	if err != nil {
@@ -192,54 +295,184 @@ func TestArticulateArgumentsTupleWrongType(t *testing.T) {
 }
 
 func TestArticulateArgumentsTupleTuple(t *testing.T) {
-	// TODO: this abi is wrong, because TestStructChild doesn't have
-	// components
-	abiJson := `[{
+	// This ABI comes from https://docs.soliditylang.org/en/latest/abi-spec.html#handling-tuple-types
+	abiJson := `[
+  {
+    "name": "f",
+    "type": "function",
     "inputs": [
       {
+        "name": "s",
+        "type": "tuple",
         "components": [
           {
-            "internalType": "address",
-            "name": "token",
-            "type": "address"
+            "name": "a",
+            "type": "uint256"
           },
           {
-            "internalType": "struct TestStructChild",
-            "name": "nested",
-            "type": "tuple"
+            "name": "b",
+            "type": "uint256[]"
+          },
+          {
+            "name": "c",
+            "type": "tuple[]",
+            "components": [
+              {
+                "name": "x",
+                "type": "uint256"
+              },
+              {
+                "name": "y",
+                "type": "uint256"
+              }
+            ]
           }
-        ],
-        "internalType": "struct TestStructParent",
-        "name": "data",
-        "type": "tuple"
+        ]
+      },
+      {
+        "name": "t",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "x",
+            "type": "uint256"
+          },
+          {
+            "name": "y",
+            "type": "uint256"
+          }
+        ]
+      },
+      {
+        "name": "a",
+        "type": "uint256"
       }
     ],
-    "name": "testFunction",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  }]      `
-	txData := `0x000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000000000000000000000000000100000000000000000000000066215d23b8a247c80c2d1b7bef4befc2ab384bce0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010f0cf064dd59200000000000000000000000000000000000000000000000000000000000000000000300000000000000000000000000000000000000000000000000000000000000020000000000000000000000007a603dc3eb0f4e3883929ee15a3c86d2ac45f4450000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000016000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000045f783cce6b7ff23b2ab2d70e416cdb7d6055f510000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000`
-	abi, err := abi.JSON(strings.NewReader(abiJson))
+    "outputs": []
+  }
+]`
+
+	parsedAbi, err := abi.JSON(strings.NewReader(abiJson))
 	if err != nil {
 		t.Fatal(err)
 	}
-	abiMethod := abi.Methods["operate"]
+	abiMethod := parsedAbi.Methods["f"]
 	result := types.FunctionFromAbiMethod(&abiMethod, "")
 
-	if err = ArticulateArguments(abiMethod.Inputs, txData[2:], nil, result.Inputs); err != nil {
+	first := struct {
+		A *big.Int   `json:"a"`
+		B []*big.Int `json:"b"`
+		C []struct {
+			X *big.Int `json:"x"`
+			Y *big.Int `json:"y"`
+		} `json:"c"`
+	}{
+		A: big.NewInt(1),
+		B: []*big.Int{},
+		C: []struct {
+			X *big.Int `json:"x"`
+			Y *big.Int `json:"y"`
+		}{{
+			X: big.NewInt(1),
+			Y: big.NewInt(2),
+		}},
+	}
+	second := struct {
+		X *big.Int `json:"x"`
+		Y *big.Int `json:"y"`
+	}{
+		X: big.NewInt(1),
+		Y: big.NewInt(2),
+	}
+	third := big.NewInt(3)
+
+	rawPayload, err := abiMethod.Inputs.Pack(first, second, third)
+	if err != nil {
+		t.Fatal(err)
+	}
+	txData := common.Bytes2Hex(rawPayload)
+	if err = ArticulateArguments(abiMethod.Inputs, txData, nil, result.Inputs); err != nil {
 		t.Fatal(err)
 	}
 
-	if inputLength := len(result.Inputs); inputLength != 2 {
+	if inputLength := len(result.Inputs); inputLength != 3 {
 		t.Fatal("wrong input length:", inputLength)
 	}
 
-	first := result.Inputs[0]
+	expected, _ := json.Marshal(first)
+	if value := result.Inputs[0].Value; value != string(expected) {
+		t.Fatal("wrong value of the first input:", value)
+	}
 
-	if value := first.Value; value != `[{"number":0,"owner":"0x00000000000000000000000066215d23b8a247c80c2d1b7bef4befc2ab384bce"}]` {
-		t.Fatal("wrong input #1 value:", value)
+	expected, _ = json.Marshal(second)
+	if value := result.Inputs[1].Value; value != string(expected) {
+		t.Fatal("wrong value of the second input:", value)
+	}
+
+	expected, _ = json.Marshal(third)
+	if value := result.Inputs[2].Value; value != string(expected) {
+		t.Fatal("wrong value of the third input:", value)
 	}
 }
 
-// TODO: write test for multicall (abi.FunctionTy in the input)
+// func TestArticulateArgumentsCalldata(t *testing.T) {
+// 	abiJson := `[
+// 		 {
+//     "inputs": [
+//       {
+//         "name": "_addr",
+//         "type": "address"
+//       },
+//       {
+//         "name": "_calldata",
+//         "type": "bytes"
+//       }
+//     ],
+//     "name": "staticInvoke",
+//     "outputs": [
+//       {
+//         "name": "ret_0",
+//         "type": "bool"
+//       },
+//       {
+//         "name": "ret_1",
+//         "type": "uint256"
+//       }
+//     ],
+//     "signature": "staticInvoke(address,bytes)",
+//     "type": "function"
+//   }
+// ]`
+// 	parsedAbi, err := abi.JSON(strings.NewReader(abiJson))
+// 	if err != nil {
+// 		t.Fatal(err)
+// 	}
+// 	abiMethod := parsedAbi.Methods["staticInvoke"]
+// 	result := types.FunctionFromAbiMethod(&abiMethod, "")
+
+// 	firstArg := common.HexToAddress("0x3A93C17FC82CC33420d1809dDA9Fb715cc89dd37")
+// 	secondArg := common.Hex2Bytes("0xA")
+
+// 	rawPayload, err := abiMethod.Inputs.Pack(firstArg, secondArg)
+// 	if err != nil {
+// 		t.Fatal(err)
+// 	}
+// 	txData := common.Bytes2Hex(rawPayload)
+// 	if err = ArticulateArguments(abiMethod.Inputs, txData, nil, result.Inputs); err != nil {
+// 		t.Fatal(err)
+// 	}
+
+// 	if inputLength := len(result.Inputs); inputLength != 2 {
+// 		t.Fatal("wrong input length:", inputLength)
+// 	}
+
+// 	expected := strings.ToLower(firstArg.Hex())
+// 	if value := result.Inputs[0].Value; value != expected {
+// 		t.Fatal("wrong value of the first input:", value)
+// 	}
+
+// 	expected = strings.ToLower(common.Bytes2Hex(secondArg))
+// 	if value := result.Inputs[1].Value; value != string(expected) {
+// 		t.Fatal("wrong value of the second input:", value)
+// 	}
+// }

@@ -106,6 +106,10 @@ func valueToString(argType *abi.Type, value any) (result string, err error) {
 	if err != nil {
 		return
 	}
+	str, ok := formatted.(string)
+	if ok {
+		return str, nil
+	}
 	asBytes, err := json.Marshal(&formatted)
 	if err != nil {
 		return "", err
