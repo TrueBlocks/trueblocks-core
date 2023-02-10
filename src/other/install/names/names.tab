@@ -1506,6 +1506,7 @@ tags	address	name	symbol	source	decimals	petname	deleted	iscustom	isprefund	isco
 31-Giveth:Project	0x1b0d0b69d2e940c04f85f7d092c183746149edb9	Movers and Shakers		Tokenomics		finally-first-garfish	false	false	false	false	false	false
 50-Tokens:ERC20	0x1b0d5295ffe7b7138a27bc08983b8ac5e3576248	VOOFTALIK BUTERIN	VOOF	On chain	18	really-pleasant-urchin	false	false	false	true	true	false
 31-Giveth:Project	0x1b0e6bdcaffc677c4a9ff6b6f00d44b2e5e05dbc	Foundation for Economic Education		Tokenomics		barely-quality-possum	false	false	false	false	false	false
+31-Gitcoin:Core	0x1b165fe4da6bc58ab8370ddc763d367d29f50ef0	Climate Round 17 Implementation		Dune		repeatedly-game-badger	false	false	false	true	false	false
 50-Tokens:ERC20	0x1b21609d42fa32f371f58df294ed25b2d2e5c8ba	Uniswap V2	UNI-V2	On chain	18	apparently-fond-mullet	false	false	false	true	true	false
 50-Tokens:ERC20	0x1b22c32cd936cb97c28c5690a0695a82abf688e6	MyWish Token		On chain	18	globally-outgoing-werewolf	false	false	false	true	true	false
 90-Individuals:Humanity DAO	0x1b284b6c4fe57194ce5b1979f802b168bdf9fb8c	kennyrowe		https://www.humanitydao.org/humans		sincerely-guiding-mongrel	false	false	false	false	false	false
@@ -6284,6 +6285,7 @@ tags	address	name	symbol	source	decimals	petname	deleted	iscustom	isprefund	isco
 90-Individuals:Gitcoin Grants	0x745aae6b60b55360050dc9a320e6d151e6142b15	joel1794		Gitcoin Website		instantly-expert-gibbon	false	false	false	false	false	false
 50-Tokens:ERC20	0x745daa146934b27e3f0b6bff1a6e36b9b90fb131	DEX.AG: Proxy Contract		EtherScan.io		actively-sharing-sole	false	false	false	true	false	false
 31-Gitcoin:Grants	0x74630370197b4c4795bfeef6645ee14f8cf8997d	Grant 0619 Forum Cp0x - Cozy Forum About Cryptospace in Russian		https://gitcoin.co/grants/619/forum-cp0x-cozy-forum-about-cryptospace-in-russia		likely-engaged-kingfish	false	false	false	false	false	false
+31-Gitcoin:Core	0x746b951fa10a89d6cbe70d4ee23531f907b58bc0	Oss Round 17 Quadratic Funding Voting Strategy Implementation		Dune		literally-polished-polliwog	false	false	false	true	false	false
 90-Individuals:Gitcoin Grants	0x74756b75fc77896a88ba3544572ce1595d78d7d9	garrettian		Gitcoin Website		accurately-optimal-beagle	false	false	false	false	false	false
 30-Contracts	0x74758acfce059f503a7e6b0fc2c8737600f9f2c4	Totle Transfer Proxy		0xTracker		morally-ample-crawdad	false	false	false	true	false	false
 50-Tokens:ERC721	0x747b1606da0adf2a00c3fba0204b0ea6f2047244	HashGarage	HGS	On chain	18	terribly-stable-marmot	false	false	false	true	true	true
@@ -9998,6 +10000,7 @@ tags	address	name	symbol	source	decimals	petname	deleted	iscustom	isprefund	isco
 90-Individuals:Humanity DAO	0xba924f4f456b74840d6dbc32f70ed226eba118d5	anttn_		https://www.humanitydao.org/humans		solely-ready-moth	false	false	false	false	false	false
 50-Tokens:ERC20	0xba9a5e027d24dc433bbb0da2b28a52e148aa4fff	Uniswap V2	UNI-V2	On chain	18	truly-relieved-seasnail	false	false	false	true	true	false
 50-Tokens:ERC20	0xba9d4199fab4f26efe3551d490e3821486f135ba	SwissBorg Token	CHSB	Giveth website	8	absolutely-present-jennet	false	false	false	true	true	false
+31-Gitcoin:Core	0xbaa2f652c7a2228f2e161a615b8a55b359a0a2c8	Climate Round 17 Quadratic Funding Voting Strategy Implementation		Dune		fully-game-sheepdog	false	false	false	true	false	false
 50-Tokens:ERC20	0xbaa48ef52fe0cf3a2682c1247b18d4274a988132	Uniswap V2	UNI-V2	On chain	18	blindly-stunning-mullet	false	false	false	true	true	false
 90-Individuals:Humanity DAO	0xbaab81ea3ab3a5236dea1adb4f5c234f7913ecb9	zhifengcn		https://www.humanitydao.org/humans		tightly-secure-buffalo	false	false	false	false	false	false
 91-Early:Addresses	0xbaabe94c786fe90514dc6fa68499fd93ee583a5c	Tickingbomb		EtherScan.io		previously-subtle-moray	false	false	false	true	false	false
@@ -11588,6 +11591,7 @@ tags	address	name	symbol	source	decimals	petname	deleted	iscustom	isprefund	isco
 50-Tokens:ERC20	0xd9485499499d66b175cf5ed54c0a19f1a6bcb61a	UseChain Token	USE	On chain	18	slightly-driving-piglet	false	false	false	true	true	false
 91-Early:Addresses	0xd94c9ff168dc6aebf9b6cc86deff54f3fb0afc33	Yubi Exchange		CarbonVote		optionally-frank-beetle	false	false	false	false	false	false
 90-Individuals:Humanity DAO	0xd953e24b1433fbcce94b5f5b282aa67b7e6d59fb	divraj		https://www.humanitydao.org/humans		initially-regular-jay	false	false	false	false	false	false
+31-Gitcoin:Core	0xd95a1969c41112cee9a2c931e849bcef36a16f4c	Oss Round 17 Implementation		Dune		really-innocent-zebra	false	false	false	true	false	false
 31-Gitcoin:Grants	0xd95df092c180aaeb8dc9b8a9ae943dea77935d62	Grant 2933 - Gitcoin PuzzleSquare		https://gitcoin.co/grants/2933/gitcoin-puzzlesquare		repeatedly-becoming-terrapin	false	false	false	false	false	false
 90-Individuals:Humanity DAO	0xd966197b3703b886e8f2f7d040207772acee1147	thevward		https://www.humanitydao.org/humans		mainly-on-dolphin	false	false	false	false	false	false
 50-Tokens:ERC20	0xd96b9fd7586d9ea24c950d24399be4fb65372fdd	Bitcoin Silver	BTCS	On chain	18	overly-fancy-corgi	false	false	false	true	true	false
@@ -12234,6 +12238,7 @@ tags	address	name	symbol	source	decimals	petname	deleted	iscustom	isprefund	isco
 50-Tokens:ERC20	0xe55b2166ddf6941e16171fd17bccd5e08ab06563	AIRSHIBA INU	AirSHIB	On chain	18	quickly-wired-jay	false	false	false	true	true	false
 31-Gitcoin:Grants	0xe5610ef687eaabed58b0929c2202ab115b16e884	Grant 1646 Crypto College		https://gitcoin.co/grants/1646/crypto-college		mentally-positive-killdeer	false	false	false	false	false	false
 90-Individuals:Other	0xe570fde16a9e971139ba038aea41f4b0412d3b91	MUXE Sender Airdrop		EtherScan.io		slightly-special-ant	false	false	false	false	false	false
+31-Gitcoin:Core	0xe575282b376e3c9886779a841a2510f1dd8c2ce4	Infra Round 17 Implementation		Dune		happily-related-malamute	false	false	false	true	false	false
 50-Tokens:ERC20	0xe577d43f919e18a719120cedec26f27279f8bcdd	eMaxSWAP	eMaxSWAP	On chain	18	usefully-mint-tahr	false	false	false	true	true	false
 90-Individuals:DAO Curators	0xe578fb92640393b95b53197914bd560b7bc2aac8	Gustav Simonsson		DAO_Curator		uniquely-awaited-bluejay	false	false	false	false	false	false
 31-Gitcoin:Grants	0xe57c9da5c04ad70f1aa33331d6e3628433ec63ef	Grant 1134 Organicblock - Redefining Urban Farming!		https://gitcoin.co/grants/1134/organicblock-redefining-urban-farming		secretly-fit-shad	false	false	false	false	false	false
