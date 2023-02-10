@@ -82,7 +82,7 @@ func GetAbisOptions(args []string, g *globals.GlobalOptions) *AbisOptions {
 
 func (opts *AbisOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	ported = !opts.Sol
+	ported = !opts.Sol && !opts.Known
 	// EXISTING_CODE
 	return
 }
