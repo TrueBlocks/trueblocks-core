@@ -63,7 +63,8 @@ bool CLedgerManager::getStatements(CTransaction& trans) {
 
             statement.prevAppBlk = ledgers[tokenKey].blockNumber;
             statement.prevBal = ledgers[tokenKey].balance;
-            statement.reconcileBalances(isPrevDiff, isNextDiff);
+            bigint_t begBal, endBal;
+            statement.reconcileBalances(isPrevDiff, isNextDiff, begBal, endBal);
             if (statement.amountNet() != 0) {
                 trans.statements.push_back(statement);
                 ledgers[tokenKey] = statement;
