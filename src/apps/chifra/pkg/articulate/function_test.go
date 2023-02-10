@@ -2,6 +2,7 @@ package articulate
 
 import (
 	"encoding/json"
+	"fmt"
 	"math/big"
 	"strings"
 	"testing"
@@ -233,8 +234,12 @@ func TestArticulateArgumentsSlice(t *testing.T) {
 	if inputType := got.ParameterType; inputType != "bytes32[]" {
 		t.Fatal("wrong type", inputType)
 	}
-	if value := got.Value; value != expected {
-		t.Fatal("wrong value", value)
+	value, err := json.Marshal(&got.Value)
+	if err != nil {
+		t.Fatal("error while marshalling JSON:", err)
+	}
+	if string(value) != expected {
+		t.Fatal("wrong value", string(value))
 	}
 }
 
@@ -259,9 +264,17 @@ func TestArticulateArgumentsComplex(t *testing.T) {
 	}
 
 	first := result.Inputs[0]
-
-	if value := first.Value; value != `[{"number":0,"owner":"0x66215d23b8a247c80c2d1b7bef4befc2ab384bce"}]` {
-		t.Fatal("wrong input #1 value:", value)
+	expectedMap := []map[string]any{{
+		"number": "0",
+		"owner":  "0x66215d23b8a247c80c2d1b7bef4befc2ab384bce",
+	}}
+	expected, _ := json.Marshal(&expectedMap)
+	value, err := json.Marshal(&first.Value)
+	if err != nil {
+		t.Fatal("error while marshalling JSON:", err)
+	}
+	if string(value) != string(expected) {
+		t.Fatal("wrong input #1 value:", string(value))
 	}
 }
 
@@ -288,9 +301,17 @@ func TestArticulateArgumentsTupleWrongType(t *testing.T) {
 	}
 
 	first := result.Inputs[0]
-
-	if value := first.Value; value != `[{"number":0,"owner":"0x00000000000000000000000066215d23b8a247c80c2d1b7bef4befc2ab384bce"}]` {
-		t.Fatal("wrong input #1 value:", value)
+	expectedMap := []map[string]any{{
+		"number": "0",
+		"owner":  "0x00000000000000000000000066215d23b8a247c80c2d1b7bef4befc2ab384bce",
+	}}
+	expected, _ := json.Marshal(&expectedMap)
+	value, err := json.Marshal(&first.Value)
+	if err != nil {
+		t.Fatal("error while marshalling JSON:", err)
+	}
+	if string(value) != string(expected) {
+		t.Fatal("wrong input #1 value:", string(value))
 	}
 }
 
@@ -399,13 +420,34 @@ func TestArticulateArgumentsTupleTuple(t *testing.T) {
 		t.Fatal("wrong input length:", inputLength)
 	}
 
-	expected, _ := json.Marshal(first)
-	if value := result.Inputs[0].Value; value != string(expected) {
-		t.Fatal("wrong value of the first input:", value)
+	expected, _ := json.Marshal(map[string]any{
+		"a": "1",
+		"b": []string{},
+		"c": []map[string]string{
+			{
+				"x": "1",
+				"y": "2",
+			},
+		},
+	})
+	value, err := json.Marshal(&result.Inputs[0].Value)
+	if err != nil {
+		t.Fatal("error while marshalling JSON:", err)
+	}
+	if string(value) != string(expected) {
+		fmt.Println(string(expected))
+		t.Fatal("wrong value of the first input:", string(value))
 	}
 
-	expected, _ = json.Marshal(second)
-	if value := result.Inputs[1].Value; value != string(expected) {
+	expected, _ = json.Marshal(map[string]string{
+		"x": "1",
+		"y": "2",
+	})
+	value, err = json.Marshal(&result.Inputs[1].Value)
+	if err != nil {
+		t.Fatal("error while marshalling JSON:", err)
+	}
+	if string(value) != string(expected) {
 		t.Fatal("wrong value of the second input:", value)
 	}
 
@@ -414,65 +456,3 @@ func TestArticulateArgumentsTupleTuple(t *testing.T) {
 		t.Fatal("wrong value of the third input:", value)
 	}
 }
-
-// func TestArticulateArgumentsCalldata(t *testing.T) {
-// 	abiJson := `[
-// 		 {
-//     "inputs": [
-//       {
-//         "name": "_addr",
-//         "type": "address"
-//       },
-//       {
-//         "name": "_calldata",
-//         "type": "bytes"
-//       }
-//     ],
-//     "name": "staticInvoke",
-//     "outputs": [
-//       {
-//         "name": "ret_0",
-//         "type": "bool"
-//       },
-//       {
-//         "name": "ret_1",
-//         "type": "uint256"
-//       }
-//     ],
-//     "signature": "staticInvoke(address,bytes)",
-//     "type": "function"
-//   }
-// ]`
-// 	parsedAbi, err := abi.JSON(strings.NewReader(abiJson))
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	abiMethod := parsedAbi.Methods["staticInvoke"]
-// 	result := types.FunctionFromAbiMethod(&abiMethod, "")
-
-// 	firstArg := common.HexToAddress("0x3A93C17FC82CC33420d1809dDA9Fb715cc89dd37")
-// 	secondArg := common.Hex2Bytes("0xA")
-
-// 	rawPayload, err := abiMethod.Inputs.Pack(firstArg, secondArg)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	txData := common.Bytes2Hex(rawPayload)
-// 	if err = ArticulateArguments(abiMethod.Inputs, txData, nil, result.Inputs); err != nil {
-// 		t.Fatal(err)
-// 	}
-
-// 	if inputLength := len(result.Inputs); inputLength != 2 {
-// 		t.Fatal("wrong input length:", inputLength)
-// 	}
-
-// 	expected := strings.ToLower(firstArg.Hex())
-// 	if value := result.Inputs[0].Value; value != expected {
-// 		t.Fatal("wrong value of the first input:", value)
-// 	}
-
-// 	expected = strings.ToLower(common.Bytes2Hex(secondArg))
-// 	if value := result.Inputs[1].Value; value != string(expected) {
-// 		t.Fatal("wrong value of the second input:", value)
-// 	}
-// }

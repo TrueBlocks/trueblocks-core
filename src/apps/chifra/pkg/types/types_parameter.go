@@ -7,7 +7,7 @@ type SimpleParameter struct {
 	ParameterType string            `json:"parameterType"`
 	Name          string            `json:"name"`
 	StrDefault    string            `json:"strDefault"`
-	Value         string            `json:"value"`
+	Value         any               `json:"value"`
 	Indexed       bool              `json:"indexed"`
 	InternalType  string            `json:"internalType"`
 	Components    []SimpleParameter `json:"components"`
@@ -40,8 +40,8 @@ func (s *SimpleParameter) DisplayName(index int) string {
 	return "val_" + fmt.Sprint(index)
 }
 
-func ParametersToMap(params []SimpleParameter) (result map[string]string) {
-	result = make(map[string]string)
+func ParametersToMap(params []SimpleParameter) (result map[string]any) {
+	result = make(map[string]any)
 	for index, param := range params {
 		if param.Value == "0x" || param.Value == "0x0" {
 			continue

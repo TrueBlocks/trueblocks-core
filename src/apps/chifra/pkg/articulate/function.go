@@ -2,7 +2,6 @@ package articulate
 
 import (
 	"encoding/hex"
-	"encoding/json"
 	"fmt"
 	"reflect"
 	"strings"
@@ -63,7 +62,7 @@ func ArticulateArguments(args abi.Arguments, data string, topics []common.Hash, 
 	// Set values of non-indexed arguments
 	for index, unpackedArg := range unpacked {
 		currentArg := nonIndexed[index]
-		result, err := valueToString(&currentArg.Type, unpackedArg)
+		result, err := formatValue(&currentArg.Type, unpackedArg)
 		if err != nil {
 			return err
 		}
@@ -88,7 +87,7 @@ func ArticulateArguments(args abi.Arguments, data string, topics []common.Hash, 
 		if !ok {
 			return fmt.Errorf("cannot find indexed argument:%s", name)
 		}
-		result, err := valueToString(&currentArg.Type, value)
+		result, err := formatValue(&currentArg.Type, value)
 		if err != nil {
 			return err
 		}
@@ -99,25 +98,6 @@ func ArticulateArguments(args abi.Arguments, data string, topics []common.Hash, 
 		destination[destinationIndex].Value = result
 	}
 	return
-}
-
-func valueToString(argType *abi.Type, value any) (result string, err error) {
-	formatted, err := formatValue(argType, value)
-	if err != nil {
-		return
-	}
-	str, ok := formatted.(string)
-	if ok {
-		return str, nil
-	}
-	if argType.T == abi.SliceTy && argType.Elem.T != abi.TupleTy {
-		return fmt.Sprint(formatted), nil
-	}
-	asBytes, err := json.Marshal(&formatted)
-	if err != nil {
-		return "", err
-	}
-	return string(asBytes), nil
 }
 
 func formatValue(argType *abi.Type, value any) (result any, err error) {
@@ -153,7 +133,14 @@ func formatValue(argType *abi.Type, value any) (result any, err error) {
 	case abi.StringTy:
 		fallthrough
 	case abi.IntTy, abi.UintTy:
-		fallthrough
+		// Because values coming from Ethereum can exceed JSON maximum safe integer, we
+		// return all numbers as strings.
+		// We could return numbers or strings depending on whether or not the value is safe,
+		// but the consumer would then have to check the type of returned value first and only
+		// then try to interpet the actual value.
+		// In at least some languages, strings can be used to create big.Int equivalents, so
+		// using strings only should make it easier for the consumers.
+		result = fmt.Sprint(value)
 	case abi.BoolTy:
 		fallthrough
 	case abi.BytesTy:

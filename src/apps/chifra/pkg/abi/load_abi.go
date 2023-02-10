@@ -102,6 +102,7 @@ func LoadCache(chain string, destination AbiInterfaceMap) (loaded bool) {
 
 	for _, function := range functions {
 		function := function
+		function.Normalize()
 		destination[function.Encoding] = &function
 		//TODO(articulation): missing abiMethod/abiEvent
 	}
@@ -210,8 +211,10 @@ func LoadAbiFromAddress(chain string, address types.Address, destination AbiInte
 		if err != nil {
 			return err
 		}
+
 		for _, loadedAbi := range loadedAbis {
 			loadedAbi := loadedAbi
+			loadedAbi.Normalize()
 			destination[loadedAbi.Encoding] = &loadedAbi
 		}
 		return nil
