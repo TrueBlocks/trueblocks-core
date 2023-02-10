@@ -245,8 +245,12 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                         nBytes = 0;
                 }
                 param.value = "0x" + result.substr(0, maxBytes * 2);
-                if (param.type == "string")
-                    param.value = hex_2_Str("0x" + result.substr(0, maxBytes * 2));
+                if (param.type == "string") {
+                    string_q output;
+                    if (toPrintable("0x" + result, output)) {
+                        param.value = output;
+                    }
+                }
                 LOG_TEST_PARAMS(params);
                 continue;
 

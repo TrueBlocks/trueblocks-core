@@ -61,8 +61,11 @@ func (opts *AbisOptions) AbisInternal() (err error, handled bool) {
 	}
 
 	handled = true
-	err = opts.HandleAddresses()
-
+	if len(opts.Generate) > 0 {
+		err = opts.HandleGenerate()
+	} else {
+		err = opts.HandleAddresses()
+	}
 	// EXISTING_CODE
 
 	return

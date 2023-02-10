@@ -66,8 +66,8 @@ bool CTransaction::readReconsFromCache(const address_t& accountedFor) {
 }
 
 //-----------------------------------------------------------------------
-void CTransaction::cacheIfReconciled(const address_t& accountedFor) const {
-    if (isTestMode() || !isReconciled(accountedFor)) {
+void CTransaction::cacheConditional(const address_t& accountedFor, bool cacheIfReconciled) const {
+    if (isTestMode() || (cacheIfReconciled && !isReconciled(accountedFor))) {
         return;
     }
 

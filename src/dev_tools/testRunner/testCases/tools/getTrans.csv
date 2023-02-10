@@ -110,3 +110,6 @@ file_cmd ,cmd  ,fast  ,transactions ,tools/getTrans ,by_file_v                ,n
 
 on       ,both ,fast  ,transactions ,tools/getTrans ,redir_output             ,y    ,transactions = 3657480.12 & verbose & fmt = csv & output = output_test_file
 on       ,both ,fast  ,transactions ,tools/getTrans ,redir_output_append      ,n    ,transactions = 3657480.9 & fmt = csv & output = output_test_file & no_header & append
+
+on       ,both ,fast  ,transactions ,tools/getTrans ,failed_recon_1           ,y    ,transactions = 0x70c443f1b6e376226a087c2e4512324f135c6ecb2daf6e82e9ea70b597c053fa & fmt = json & account_for = 0x127ac03acfad15f7a49dd037e52d5507260e1425
+on       ,both ,fast  ,transactions ,tools/getTrans ,failed_recon_2           ,y    ,transactions = 0xf9a11aed09a4be208539a261d8c79567ba9918b4c4e577400ac39b64350b45fd & fmt = json & account_for = 0xf503017d7baf7fbc0fff7492b751025c6a78179b

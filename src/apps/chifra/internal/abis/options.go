@@ -21,13 +21,14 @@ import (
 
 // AbisOptions provides all command options for the chifra abis command.
 type AbisOptions struct {
-	Addrs   []string              `json:"addrs,omitempty"`   // A list of one or more smart contracts whose ABIs to display
-	Known   bool                  `json:"known,omitempty"`   // Load common 'known' ABIs from cache
-	Sol     bool                  `json:"sol,omitempty"`     // Extract the abi definition from the provided .sol file(s)
-	Find    []string              `json:"find,omitempty"`    // Search for function or event declarations given a four- or 32-byte code(s)
-	Hint    []string              `json:"hint,omitempty"`    // For the --find option only, provide hints to speed up the search
-	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
-	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
+	Addrs    []string              `json:"addrs,omitempty"`    // A list of one or more smart contracts whose ABIs to display
+	Known    bool                  `json:"known,omitempty"`    // Load common 'known' ABIs from cache
+	Sol      bool                  `json:"sol,omitempty"`      // Extract the abi definition from the provided .sol file(s)
+	Find     []string              `json:"find,omitempty"`     // Search for function or event declarations given a four- or 32-byte code(s)
+	Hint     []string              `json:"hint,omitempty"`     // For the --find option only, provide hints to speed up the search
+	Generate string                `json:"generate,omitempty"` // Generate the 32-byte encoding given a cannonical function or event signature
+	Globals  globals.GlobalOptions `json:"globals,omitempty"`  // The global options
+	BadFlag  error                 `json:"badFlag,omitempty"`  // An error flag if needed
 }
 
 var defaultAbisOptions = AbisOptions{}
@@ -39,6 +40,7 @@ func (opts *AbisOptions) testLog() {
 	logger.TestLog(opts.Sol, "Sol: ", opts.Sol)
 	logger.TestLog(len(opts.Find) > 0, "Find: ", opts.Find)
 	logger.TestLog(len(opts.Hint) > 0, "Hint: ", opts.Hint)
+	logger.TestLog(len(opts.Generate) > 0, "Generate: ", opts.Generate)
 	opts.Globals.TestLog()
 }
 
@@ -97,6 +99,8 @@ func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Hint = append(opts.Hint, s...)
 			}
+		case "generate":
+			opts.Generate = value[0]
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "abis")

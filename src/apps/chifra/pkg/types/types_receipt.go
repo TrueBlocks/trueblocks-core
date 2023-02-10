@@ -61,11 +61,11 @@ func (s *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[s
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
-		"blockNumber":      s.BlockNumber,
-		"transactionIndex": s.TransactionIndex,
-		"transactionHash":  s.TransactionHash,
-		"status":           s.Status,
-		"gasUsed":          s.GasUsed,
+		"blockNumber":       s.BlockNumber,
+		"transactionIndex":  s.TransactionIndex,
+		"transactionHash":   s.TransactionHash,
+		"status":            s.Status,
+		"gasUsed":           s.GasUsed,
 	}
 
 	order := []string{

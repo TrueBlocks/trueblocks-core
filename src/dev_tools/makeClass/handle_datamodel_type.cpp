@@ -31,11 +31,15 @@ string_q type_2_GoType(const CParameter& field) {
     if (type == "datetime" || type == "bytes")
         return "string";
     if (type == "address")
-        return "common.Address";
+        return "Address";
     if (type == "gas")
         return "Gas";
     if (type == "wei")
         return "Wei";
+    if (type == "int256")
+        return "big.Int";
+    if (type == "double")
+        return "float64";
     return type;
 }
 
