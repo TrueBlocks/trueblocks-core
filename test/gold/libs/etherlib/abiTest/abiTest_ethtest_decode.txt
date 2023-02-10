@@ -2748,13 +2748,13 @@ dataArray.size: 3
 
 ==================================================
 params.size: 1
-  0: string val_0 = ethereum számítógép
+  0: string val_0 = 0x657468657265756d20737ac3a16dc3ad74c3b367c3a970
 params.size: 1
-  0: string val_0 = ethereum számítógép
+  0: string val_0 = 0x657468657265756d20737ac3a16dc3ad74c3b367c3a970
 ==================================================
 
 expected: ethereum számítógép ?
-result:   ethereum számítógép ? 1
+result:   0x657468657265756d20737ac3a16dc3ad74c3b367c3a970 ? 0
 testName: should decode latin and extensions
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
@@ -2778,13 +2778,13 @@ dataArray.size: 3
 
 ==================================================
 params.size: 1
-  0: string val_0 = 为什么那么认真？
+  0: string val_0 = 0xe4b8bae4bb80e4b988e982a3e4b988e8aea4e79c9fefbc9f
 params.size: 1
-  0: string val_0 = 为什么那么认真？
+  0: string val_0 = 0xe4b8bae4bb80e4b988e982a3e4b988e8aea4e79c9fefbc9f
 ==================================================
 
 expected: 为什么那么认真？ ?
-result:   为什么那么认真？ ? 1
+result:   0xe4b8bae4bb80e4b988e982a3e4b988e8aea4e79c9fefbc9f ? 0
 testName: should decode non-latin characters
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
