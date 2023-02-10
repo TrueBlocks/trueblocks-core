@@ -18,7 +18,7 @@ func (opts *AbisOptions) validateAbis() error {
 		return opts.BadFlag
 	}
 
-	if len(opts.Find) == 0 && !opts.Known {
+	if len(opts.Globals.File) == 0 && len(opts.Generate) == 0 && len(opts.Find) == 0 && !opts.Known {
 		// If we're not find and not known we better have at least one address
 		err := validate.ValidateAtLeastOneAddr(opts.Addrs)
 		if err != nil {
@@ -28,6 +28,14 @@ func (opts *AbisOptions) validateAbis() error {
 
 	if opts.Sol && len(opts.Find) > 0 {
 		return validate.Usage("Please choose only one of {0}.", "--sol or --find")
+	}
+
+	if opts.Sol && len(opts.Generate) > 0 {
+		return validate.Usage("Please choose only one of {0}.", "--sol or --generate")
+	}
+
+	if len(opts.Find) > 0 && len(opts.Generate) > 0 {
+		return validate.Usage("Please choose only one of {0}.", "--find or --generate")
 	}
 
 	if opts.Sol {
@@ -40,6 +48,7 @@ func (opts *AbisOptions) validateAbis() error {
 				return validate.Usage("The {0} option ({1}) must {2}", "file", cleaned, "exist")
 			}
 		}
+
 	} else {
 		for _, term := range opts.Find {
 			ok1, err1 := validate.IsValidFourByteE(term)
@@ -58,7 +67,6 @@ func (opts *AbisOptions) validateAbis() error {
 				return err1
 			}
 		}
-
 	}
 
 	return opts.Globals.Validate()
