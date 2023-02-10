@@ -1,7 +1,6 @@
 package abi
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 	"io/fs"
@@ -65,21 +64,12 @@ func LoadAbiFromKnownFile(filePath string, destination AbiInterfaceMap) (err err
 		return
 	}
 
-	var functions []types.SimpleFunction
-	decoder := json.NewDecoder(file)
-	err = decoder.Decode(&functions)
-	if err != nil {
-		return
-	}
+	// We still need abi.Method and abi.Event, so will just use fromJson
+	return fromJson(file, getAbiSourceByPath(filePath), destination)
+}
 
-	for _, function := range functions {
-		function := function
-		function.Normalize()
-		destination[function.Encoding] = &function
-		// TODO(articulation): this items don't have abiMethod or abiEvent
-	}
-
-	return
+func getAbiSourceByPath(filePath string) string {
+	return path.Base(filePath)
 }
 
 // LoadKnownAbiByName finds known ABI by name
@@ -226,7 +216,7 @@ func LoadAbiFromAddress(chain string, address types.Address, destination AbiInte
 	defer localFile.Close()
 
 	// Local file found
-	if err = fromJson(localFile, path.Base(localFile.Name()), destination); err != nil {
+	if err = fromJson(localFile, getAbiSourceByPath(localFile.Name()), destination); err != nil {
 		return
 	}
 	// File is correct
