@@ -20,8 +20,11 @@ type SimpleFunction struct {
 	StateMutability string            `json:"stateMutability"`
 	Inputs          []SimpleParameter `json:"inputs"`
 	Outputs         []SimpleParameter `json:"outputs"`
-	abiMethod       *abi.Method
-	abiEvent        *abi.Event
+	// `payable` was present in ABIs before Solidity 0.5.0 and was replaced
+	// by `stateMutability`: https://docs.soliditylang.org/en/develop/050-breaking-changes.html#command-line-and-json-interfaces
+	payable   bool
+	abiMethod *abi.Method
+	abiEvent  *abi.Event
 }
 
 func FunctionFromAbiEvent(ethEvent *abi.Event, abiSource string) *SimpleFunction {
@@ -63,6 +66,9 @@ func FunctionFromAbiMethod(ethMethod *abi.Method, abiSource string) *SimpleFunct
 	stateMutability := "nonpayable"
 	if ethMethod.StateMutability != "" {
 		stateMutability = ethMethod.StateMutability
+	}
+	if ethMethod.Payable {
+		stateMutability = "payable"
 	}
 	function := &SimpleFunction{
 		Encoding:        fourByte,
@@ -204,4 +210,19 @@ func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[
 		Data:  model,
 		Order: order,
 	}
+}
+
+// Normalize sets StateMutability from `payable` field. It is only useful when
+// reading ABIs generated before Solidity 0.5.0, which use `payable` field:
+// https://docs.soliditylang.org/en/develop/050-breaking-changes.html#command-line-and-json-interfaces
+func (s *SimpleFunction) Normalize() {
+	// if StateMutability is already set, we don't have to do anything
+	if s.StateMutability != "nonpayable" {
+		return
+	}
+	if s.payable {
+		s.StateMutability = "payable"
+		return
+	}
+	s.StateMutability = "nonpayable"
 }

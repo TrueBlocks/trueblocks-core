@@ -74,6 +74,7 @@ func LoadAbiFromKnownFile(filePath string, destination AbiInterfaceMap) (err err
 
 	for _, function := range functions {
 		function := function
+		function.Normalize()
 		destination[function.Encoding] = &function
 		// TODO(articulation): this items don't have abiMethod or abiEvent
 	}

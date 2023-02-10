@@ -110,6 +110,9 @@ func valueToString(argType *abi.Type, value any) (result string, err error) {
 	if ok {
 		return str, nil
 	}
+	if argType.T == abi.SliceTy && argType.Elem.T != abi.TupleTy {
+		return fmt.Sprint(formatted), nil
+	}
 	asBytes, err := json.Marshal(&formatted)
 	if err != nil {
 		return "", err
