@@ -121,7 +121,7 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 				"outputs": outputModels,
 			}
 			model["articulatedTrace"] = articulatedTrace
-			model["compressedTrace"], _ = CompressMap(articulatedTrace)
+			model["compressedTrace"] = MakeCompressed(articulatedTrace)
 		}
 	} else {
 		to := hexutil.Encode(s.Action.To.Bytes())

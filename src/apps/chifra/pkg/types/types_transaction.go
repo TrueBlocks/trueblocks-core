@@ -165,7 +165,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 						"inputs": inputModels,
 					}
 					logModel["articulatedLog"] = articulatedLog
-					logModel["compressedLog"], _ = CompressMap(articulatedLog)
+					logModel["compressedLog"] = MakeCompressed(articulatedLog)
 				}
 				logs = append(logs, logModel)
 			}
@@ -195,7 +195,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		if format == "json" {
 			model["articulatedTx"] = articulated
 		}
-		model["compressedTx"], _ = CompressMap(articulated)
+		model["compressedTx"] = MakeCompressed(articulated)
 	}
 
 	// TODO: These fields are ignored "ethGasPrice": s.EthGasPrice, "encoding": s.Encoding
