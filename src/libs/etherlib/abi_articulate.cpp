@@ -287,15 +287,15 @@ bool toPrintable(const string_q& inHex, string_q& result) {
         nibbles = extract(nibbles, 2);
         char ch = (char)hex_2_Ascii(nibble[0], nibble[1]);  // NOLINT
         if (ch == '\\') {
-            os << "\\";
+            os << "";
         } else if (ch == '\"') {
-            os << "\"";
+            os << "'";
         } else if (ch == '\n') {
             os << "\n";
-        } else if (ch == '\r' || ch == '\t') {
-            // give up
-            result = inHex;
-            return false;
+        } else if (ch == '\r') {
+            os << "";
+        } else if (ch == '\t') {
+            os << "\t";
         } else if (isalpha(ch) || isdigit(ch) || ispunct(ch) || isblank(ch)) {
             os << ch;
         } else if (ch == 0x19 || int(ch) < 0 || ch == '\0') {
