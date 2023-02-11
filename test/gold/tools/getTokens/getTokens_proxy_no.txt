@@ -6,22 +6,18 @@ TEST[DATE|TIME] Format:  json
 { "data": [
 TIME ~ CLOCK - <INFO>  : Calling 0x00000000441378008ea67f4284a57932b1c000a5 at block 7442048...: 
 TIME ~ CLOCK - <INFO>  : call to 0x00000000441378008ea67f4284a57932b1c000a5 at block 7442048 at four-byte 0x06fdde03 returned 0x
-params.size: 0
 ==================================================
 
 TIME ~ CLOCK - <INFO>  : Calling 0x00000000441378008ea67f4284a57932b1c000a5 at block 7442048...: 
 TIME ~ CLOCK - <INFO>  : call to 0x00000000441378008ea67f4284a57932b1c000a5 at block 7442048 at four-byte 0x95d89b41 returned 0x
-params.size: 0
 ==================================================
 
 TIME ~ CLOCK - <INFO>  : Calling 0x00000000441378008ea67f4284a57932b1c000a5 at block 7442048...: 
 TIME ~ CLOCK - <INFO>  : call to 0x00000000441378008ea67f4284a57932b1c000a5 at block 7442048 at four-byte 0x313ce567 returned 0x
-params.size: 0
 ==================================================
 
 TIME ~ CLOCK - <INFO>  : Calling 0x00000000441378008ea67f4284a57932b1c000a5 at block 7442048...: 
 TIME ~ CLOCK - <INFO>  : call to 0x00000000441378008ea67f4284a57932b1c000a5 at block 7442048 at four-byte 0x18160ddd returned 0x
-params.size: 0
 ==================================================
 
   {

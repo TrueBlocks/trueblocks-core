@@ -4,10 +4,8 @@ TEST[DATE|TIME] Articulate:  true
 TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] Format:  json
 { "data": [
-params.size: 0
 ==================================================
 
-params.size: 0
 ==================================================
 
   {
