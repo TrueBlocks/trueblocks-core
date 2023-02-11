@@ -278,16 +278,16 @@
     "type": "function"
   },
   {
-    "encoding": "0x379607f5",
     "inputs": [
       {
-        "name": "val_1",
+        "internalType": "uint256",
+        "name": "_poolId",
         "type": "uint256"
       }
     ],
     "name": "claim",
     "outputs": [],
-    "signature": "claim(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {

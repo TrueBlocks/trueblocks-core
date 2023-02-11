@@ -295,11 +295,11 @@ bool toPrintable(const string_q& inHex, string_q& result) {
         } else if (ch == '\"') {
             os << "'";
         } else if (ch == '\n') {
-            os << "\n";
+            os << "[n]";
         } else if (ch == '\r') {
             os << "";
         } else if (ch == '\t') {
-            os << "\t";
+            os << "[t]";
         } else if (isalpha(ch) || isdigit(ch) || ispunct(ch) || isblank(ch)) {
             os << ch;
         } else if (ch == 0x19 || int(ch) < 0 || ch == '\0') {
