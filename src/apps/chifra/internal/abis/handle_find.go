@@ -102,7 +102,7 @@ func (opts *AbisOptions) HandleAbiFind() error {
 				}
 			}
 
-			if scanBar.Satisfied() {
+			if scanBar.Satisfied() && !opts.Globals.Verbose {
 				break
 			}
 		}
