@@ -20,7 +20,8 @@ namespace qblocks {
 extern bool toPrintable(const string_q& inHex, string_q& result);
 //-----------------------------------------------------------------------
 bool CAbi::articulateTransaction(CTransaction* p) const {
-    if (!p)
+    // contract creations are never articulated
+    if (!p || isZeroAddr(p->to))
         return false;
 
     // articulate the events, so we can return with a fully articulated object
@@ -207,8 +208,11 @@ bool CAbi::articulateLog(CLogEntry* p) const {
         for (auto& param : p->articulatedLog.inputs) {
             if (param.indexed && p->topics.size() > which) {
                 string_q top = substitute(topic_2_Str(p->topics[which++]), "0x", "");
-                if (param.type == "string" || param.type == "bytes") {
+                if (param.type == "string") {
                     param.value = parse_by32(top);
+
+                } else if (param.type == "bytes") {
+                    param.value = "0x" + top;
 
                 } else if (contains(param.type, "[")) {
                     param.value = "0x" + top;
