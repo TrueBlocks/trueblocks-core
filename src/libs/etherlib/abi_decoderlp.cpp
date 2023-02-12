@@ -23,7 +23,7 @@ static size_t level = 0;
 
 //------------------------------------------------------------------------------------------------
 string_q prettyPrintParams(const CParameterArray& params) {
-    if (!isTestMode())
+    if (true)  // !isTestMode())
         return "";
 
     ostringstream os;
@@ -48,7 +48,7 @@ string_q prettyPrintParams(const CParameterArray& params) {
 
 //------------------------------------------------------------------------------------------------
 void prettyPrint(CParameterArray& params, const CStringArray& dataArray, const size_t& readOffset, size_t objectStart) {
-    if (!isTestMode())
+    if (true)  // !isTestMode())
         return;
 
     string_q indnt = substitute(string_q(level == 0 ? 0 : level - 1, '\t'), "\t", " ");
@@ -77,7 +77,7 @@ void prettyPrint(CParameterArray& params, const CStringArray& dataArray, const s
 
 //------------------------------------------------------------------------------------------------
 #define LOG_DECODE_ERR(tag, l1, v1, t, l2, v2)                                                                         \
-    if (isTestMode()) {                                                                                                \
+    if (false) { /* isTestMode()) { */                                                                                 \
         ostringstream es;                                                                                              \
         es << "{ \"error" << tag << "\": \"decodeAnObject: " << l1 << "(" << v1 << ") " << t << " " << l2 << "(" << v2 \
            << ")\"},";                                                                                                 \
@@ -86,7 +86,7 @@ void prettyPrint(CParameterArray& params, const CStringArray& dataArray, const s
 
 //------------------------------------------------------------------------------------------------
 #define SECTION_START(a, b)                                                                                            \
-    if (isTestMode()) {                                                                                                \
+    if (false) { /* isTestMode()) { */                                                                                 \
         cerr << endl;                                                                                                  \
         cerr << string_q(50, '=') << endl;                                                                             \
         LOG_TEST(string_q("Section-") + (a) + ":(" + (b) + ")", param.type, false);                                    \
@@ -94,7 +94,7 @@ void prettyPrint(CParameterArray& params, const CStringArray& dataArray, const s
 
 //------------------------------------------------------------------------------------------------
 #define LOG_TEST_PARAMS(p)                                                                                             \
-    if (isTestMode()) {                                                                                                \
+    if (false) { /* isTestMode()) { */                                                                                 \
         cerr << prettyPrintParams((p));                                                                                \
     }
 
@@ -267,7 +267,7 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
 
                 size_t nItems = str_2_Uint("0x" + dataArray[countLoc]);
                 if (nItems == 0) {
-                    LOG_TEST("Zero sized array", param.name, false);
+                    // LOG_TEST("Zero sized array", param.name, false);
                     continue;
                 }
 
