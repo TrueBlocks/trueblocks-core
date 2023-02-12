@@ -8,8 +8,6 @@ testName: decoding (uint[][3], uint) three sets of two
 testSig: function baz(uint[][3],uint) --> baz(uint256[][3],uint256)
 
 --------------------------------------------------
-==================================================
-
 expected: [[1, 2], [3, 4], [5, 6]], 10 ?
 result:   [[1, 2], [3, 4], [5, 6]], 10 ? 1
 testName: decoding (uint[][3], uint) three sets of two
@@ -22,8 +20,6 @@ testName: decoding (uint[3][], uint) two sets of three
 testSig: function baz(uint[3][], uint) --> baz(uint256[3][],uint256)
 
 --------------------------------------------------
-==================================================
-
 expected: [[1, 2, 3], [4, 5, 6]], 10 ?
 result:   [[1, 2, 3], [4, 5, 6]], 10 ? 1
 testName: decoding (uint[3][], uint) two sets of three
@@ -36,8 +32,6 @@ testName: Purposefully bad data used to core dump, now ignores bad data
 testSig: function baz(address _from, address _to, uint256 _value, string _transferData) --> baz(address,address,uint256,string)
 
 --------------------------------------------------
-==================================================
-
 expected: 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999, 0x71d402ac181de4a8739a15f5a56141f64fc522f8, 462000000000000000000, ?
 result:   0xf3c9c5719eb4f26a3ab45cb86771827629f9a999, 0x71d402ac181de4a8739a15f5a56141f64fc522f8, 462000000000000000000, ? 1
 testName: Purposefully bad data used to core dump, now ignores bad data
@@ -50,8 +44,6 @@ testName: Corrected data from above (fifth row was bad above)
 testSig: function baz(address _from, address _to, uint256 _value, string _transferData) --> baz(address,address,uint256,string)
 
 --------------------------------------------------
-==================================================
-
 expected: 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999, 0x71d402ac181de4a8739a15f5a56141f64fc522f8, 462000000000000000000, Hi Bob Glaser-- Here are your tokens! ?
 result:   0xf3c9c5719eb4f26a3ab45cb86771827629f9a999, 0x71d402ac181de4a8739a15f5a56141f64fc522f8, 462000000000000000000, Hi Bob Glaser-- Here are your tokens! ? 1
 testName: Corrected data from above (fifth row was bad above)
@@ -64,8 +56,6 @@ testName: decoding void
 testSig: function baz() --> baz()
 
 --------------------------------------------------
-==================================================
-
 expected:  ?
 result:    ? 1
 testName: decoding void
@@ -114,8 +104,6 @@ testName: decoding int40
 testSig: function baz(int40) --> baz(int40)
 
 --------------------------------------------------
-==================================================
-
 expected: -2 ?
 result:   -2 ? 1
 testName: decoding int40
@@ -128,8 +116,6 @@ testName: decoding int48
 testSig: function baz(int48) --> baz(int48)
 
 --------------------------------------------------
-==================================================
-
 expected: -2 ?
 result:   -2 ? 1
 testName: decoding int48
@@ -142,8 +128,6 @@ testName: decoding int56
 testSig: function baz(int56) --> baz(int56)
 
 --------------------------------------------------
-==================================================
-
 expected: -2 ?
 result:   -2 ? 1
 testName: decoding int56
@@ -204,8 +188,6 @@ testName: decoding int40
 testSig: function baz(int40) --> baz(int40)
 
 --------------------------------------------------
-==================================================
-
 expected: 2 ?
 result:   2 ? 1
 testName: decoding int40
@@ -218,8 +200,6 @@ testName: decoding int48
 testSig: function baz(int48) --> baz(int48)
 
 --------------------------------------------------
-==================================================
-
 expected: 2 ?
 result:   2 ? 1
 testName: decoding int48
@@ -232,8 +212,6 @@ testName: decoding int56
 testSig: function baz(int56) --> baz(int56)
 
 --------------------------------------------------
-==================================================
-
 expected: 2 ?
 result:   2 ? 1
 testName: decoding int56
@@ -258,8 +236,6 @@ testName: decoding int72
 testSig: function baz(int72) --> baz(int72)
 
 --------------------------------------------------
-==================================================
-
 expected: -2 ?
 result:   -2 ? 1
 testName: decoding int72
@@ -272,8 +248,6 @@ testName: decoding int80
 testSig: function baz(int80) --> baz(int80)
 
 --------------------------------------------------
-==================================================
-
 expected: 196383738119422 ?
 result:   196383738119422 ? 1
 testName: decoding int80
@@ -286,8 +260,6 @@ testName: decoding int88
 testSig: function baz(int88) --> baz(int88)
 
 --------------------------------------------------
-==================================================
-
 expected: 2 ?
 result:   2 ? 1
 testName: decoding int88
@@ -300,8 +272,6 @@ testName: decoding int96
 testSig: function baz(int96) --> baz(int96)
 
 --------------------------------------------------
-==================================================
-
 expected: 2 ?
 result:   2 ? 1
 testName: decoding int96
@@ -314,8 +284,6 @@ testName: decoding int104
 testSig: function baz(int104) --> baz(int104)
 
 --------------------------------------------------
-==================================================
-
 expected: 2 ?
 result:   2 ? 1
 testName: decoding int104
@@ -328,8 +296,6 @@ testName: decoding int112
 testSig: function baz(int112) --> baz(int112)
 
 --------------------------------------------------
-==================================================
-
 expected: 2 ?
 result:   2 ? 1
 testName: decoding int112
@@ -342,8 +308,6 @@ testName: decoding int120
 testSig: function baz(int120) --> baz(int120)
 
 --------------------------------------------------
-==================================================
-
 expected: 2 ?
 result:   2 ? 1
 testName: decoding int120
@@ -392,8 +356,6 @@ testName: decoding uint40
 testSig: function baz(uint40) --> baz(uint40)
 
 --------------------------------------------------
-==================================================
-
 expected: 1099511627774 ?
 result:   1099511627774 ? 1
 testName: decoding uint40
@@ -406,8 +368,6 @@ testName: decoding uint48
 testSig: function baz(uint48) --> baz(uint48)
 
 --------------------------------------------------
-==================================================
-
 expected: 281474976710654 ?
 result:   281474976710654 ? 1
 testName: decoding uint48
@@ -420,8 +380,6 @@ testName: decoding uint56
 testSig: function baz(uint56) --> baz(uint56)
 
 --------------------------------------------------
-==================================================
-
 expected: 72057594037927934 ?
 result:   72057594037927934 ? 1
 testName: decoding uint56
@@ -482,8 +440,6 @@ testName: decoding uint40
 testSig: function baz(uint40) --> baz(uint40)
 
 --------------------------------------------------
-==================================================
-
 expected: 2 ?
 result:   2 ? 1
 testName: decoding uint40
@@ -496,8 +452,6 @@ testName: decoding uint48
 testSig: function baz(uint48) --> baz(uint48)
 
 --------------------------------------------------
-==================================================
-
 expected: 2 ?
 result:   2 ? 1
 testName: decoding uint48
@@ -510,8 +464,6 @@ testName: decoding uint56
 testSig: function baz(uint56) --> baz(uint56)
 
 --------------------------------------------------
-==================================================
-
 expected: 2 ?
 result:   2 ? 1
 testName: decoding uint56
@@ -536,8 +488,6 @@ testName: decoding uint72
 testSig: function baz(uint72) --> baz(uint72)
 
 --------------------------------------------------
-==================================================
-
 expected: 2 ?
 result:   2 ? 1
 testName: decoding uint72
@@ -550,8 +500,6 @@ testName: decoding uint80
 testSig: function baz(uint80) --> baz(uint80)
 
 --------------------------------------------------
-==================================================
-
 expected: 196383738119422 ?
 result:   196383738119422 ? 1
 testName: decoding uint80
@@ -564,8 +512,6 @@ testName: decoding uint88
 testSig: function baz(uint88) --> baz(uint88)
 
 --------------------------------------------------
-==================================================
-
 expected: 309485009821345068724781054 ?
 result:   309485009821345068724781054 ? 1
 testName: decoding uint88
@@ -578,8 +524,6 @@ testName: decoding uint96
 testSig: function baz(uint96) --> baz(uint96)
 
 --------------------------------------------------
-==================================================
-
 expected: 2 ?
 result:   2 ? 1
 testName: decoding uint96
@@ -592,8 +536,6 @@ testName: decoding uint104
 testSig: function baz(uint104) --> baz(uint104)
 
 --------------------------------------------------
-==================================================
-
 expected: 2 ?
 result:   2 ? 1
 testName: decoding uint104
@@ -606,8 +548,6 @@ testName: decoding uint112
 testSig: function baz(uint112) --> baz(uint112)
 
 --------------------------------------------------
-==================================================
-
 expected: 2 ?
 result:   2 ? 1
 testName: decoding uint112
@@ -620,8 +560,6 @@ testName: decoding uint120
 testSig: function baz(uint120) --> baz(uint120)
 
 --------------------------------------------------
-==================================================
-
 expected: 2 ?
 result:   2 ? 1
 testName: decoding uint120
@@ -646,8 +584,6 @@ testName: decoding string
 testSig: function baz(string) --> baz(string)
 
 --------------------------------------------------
-==================================================
-
 expected: hello world ?
 result:   hello world ? 1
 testName: decoding string
@@ -660,8 +596,6 @@ testName: decoding bool,uint32
 testSig: function baz(bool,uint32) --> baz(bool,uint32)
 
 --------------------------------------------------
-==================================================
-
 expected: true, 42 ?
 result:   true, 42 ? 1
 testName: decoding bool,uint32
@@ -674,8 +608,6 @@ testName: decoding bytes
 testSig: function baz(bytes) --> baz(bytes)
 
 --------------------------------------------------
-==================================================
-
 expected: 0x68656c6c6f20776f726c6468656c6c6f20776f726c6468656c6c6f20776f726c6468656c6c6f20776f726c64 ?
 result:   0x68656c6c6f20776f726c6468656c6c6f20776f726c6468656c6c6f20776f726c6468656c6c6f20776f726c64 ? 1
 testName: decoding bytes
@@ -688,8 +620,6 @@ testName: decode bytes[] and bytes32 three byte32s in array and extra bytes32
 testSig: function baz(bytes[] a, bytes32 b) --> baz(bytes[],bytes32)
 
 --------------------------------------------------
-==================================================
-
 expected: [0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573], 0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811 ?
 result:   [0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573], 0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811 ? 1
 testName: decode bytes[] and bytes32 three byte32s in array and extra bytes32
@@ -702,8 +632,6 @@ testName: decoding bool, uint256[] one bool and one uint256
 testSig: function bz(bool, uint256[]) --> bz(bool,uint256[])
 
 --------------------------------------------------
-==================================================
-
 expected: true, [42] ?
 result:   true, [42] ? 1
 testName: decoding bool, uint256[] one bool and one uint256
@@ -716,8 +644,6 @@ testName: decoding uint256[], bool one uint256 and one bool
 testSig: function baz(uint256[], bool) --> baz(uint256[],bool)
 
 --------------------------------------------------
-==================================================
-
 expected: [42], true ?
 result:   [42], true ? 1
 testName: decoding uint256[], bool one uint256 and one bool
@@ -730,8 +656,6 @@ testName: decoding uint256[] three uint256s
 testSig: function baz(uint256[]) --> baz(uint256[])
 
 --------------------------------------------------
-==================================================
-
 expected: [1, 2, 3] ?
 result:   [1, 2, 3] ? 1
 testName: decoding uint256[] three uint256s
@@ -744,8 +668,6 @@ testName: decoding uint32 array three uint256s
 testSig: function baz(uint32[3]) --> baz(uint32[3])
 
 --------------------------------------------------
-==================================================
-
 expected: [1, 2, 3] ?
 result:   [1, 2, 3] ? 1
 testName: decoding uint32 array three uint256s
@@ -758,8 +680,6 @@ testName: decoding uint array three uint256s
 testSig: function baz(uint[3]) --> baz(uint256[3])
 
 --------------------------------------------------
-==================================================
-
 expected: [1, 2, 3] ?
 result:   [1, 2, 3] ? 1
 testName: decoding uint array three uint256s
@@ -772,8 +692,6 @@ testName: decoding int32 array three uint32s
 testSig: function baz(int32[3]) --> baz(int32[3])
 
 --------------------------------------------------
-==================================================
-
 expected: [42, 2, 3] ?
 result:   [42, 2, 3] ? 1
 testName: decoding int32 array three uint32s
@@ -786,8 +704,6 @@ testName: decode int[3] three int256s
 testSig: function baz(int[3]) --> baz(int256[3])
 
 --------------------------------------------------
-==================================================
-
 expected: [42, -3, -5] ?
 result:   [42, -3, -5] ? 1
 testName: decode int[3] three int256s
@@ -800,8 +716,6 @@ testName: decoding (uint[2], uint) two uint256s and a uint256
 testSig: function baz(uint[2],       uint) --> baz(uint256[2],uint256)
 
 --------------------------------------------------
-==================================================
-
 expected: [1, 92], 3 ?
 result:   [1, 92], 3 ? 1
 testName: decoding (uint[2], uint) two uint256s and a uint256
@@ -814,8 +728,6 @@ testName: should decode latin and extensions
 testSig: function baz(string) --> baz(string)
 
 --------------------------------------------------
-==================================================
-
 expected: ethereum számítógép ?
 result:   ethereum szmtgp ? 0
 testName: should decode latin and extensions
@@ -828,8 +740,6 @@ testName: should decode non-latin characters
 testSig: function baz(string) --> baz(string)
 
 --------------------------------------------------
-==================================================
-
 expected: 为什么那么认真？ ?
 result:    ? 0
 testName: should decode non-latin characters
@@ -842,8 +752,6 @@ testName: decoding (uint[2][2]) two sets of two
 testSig: function baz(uint[2][2]) --> baz(uint256[2][2])
 
 --------------------------------------------------
-==================================================
-
 expected: [[1, 2], [4, 8]] ?
 result:   [[1, 2], [4, 8]] ? 1
 testName: decoding (uint[2][2]) two sets of two
@@ -856,8 +764,6 @@ testName: decoding (uint128[2]      [3 ], uint) three sets of two
 testSig: function baz(uint128[2  ]       [3],uint) --> baz(uint128[2][3],uint256)
 
 --------------------------------------------------
-==================================================
-
 expected: [[1, 2], [3, 4], [5, 6]], 10 ?
 result:   [[1, 2], [3, 4], [5, 6]], 10 ? 1
 testName: decoding (uint128[2]      [3 ], uint) three sets of two
@@ -870,8 +776,6 @@ testName: decoding (uint128[2][3][2], uint) two sets of three sets of two
 testSig: function baz(uint128[2]  [3][2], uint) --> baz(uint128[2][3][2],uint256)
 
 --------------------------------------------------
-==================================================
-
 expected: [[[1, 2], [3, 4], [5, 6]], [[1, 2], [3, 4], [5, 6]]], 10 ?
 result:   [[[1, 2], [3, 4], [5, 6]], [[1, 2], [3, 4], [5, 6]]], 10 ? 1
 testName: decoding (uint128[2][3][2], uint) two sets of three sets of two
@@ -884,8 +788,6 @@ testName: decoding uint[2] one set of two
 testSig: function baz(uint[2]     ) --> baz(uint256[2])
 
 --------------------------------------------------
-==================================================
-
 expected: [1, 2] ?
 result:   [1, 2] ? 1
 testName: decoding uint[2] one set of two
@@ -922,8 +824,6 @@ testName: decoding address[] one set of two addresses
 testSig: function baz(address[]) --> baz(address[])
 
 --------------------------------------------------
-==================================================
-
 expected: [0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] ?
 result:   [0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] ? 1
 testName: decoding address[] one set of two addresses
@@ -936,8 +836,6 @@ testName: decoding address[2] one set of two addresses
 testSig: function baz(address[2]) --> baz(address[2])
 
 --------------------------------------------------
-==================================================
-
 expected: [0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] ?
 result:   [0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] ? 1
 testName: decoding address[2] one set of two addresses
@@ -950,8 +848,6 @@ testName: decoding uint256[], uint[], uint256[] three sets of two items each
 testSig: function baz(uint256[] a,uint[] b,uint256[] c) --> baz(uint256[],uint256[],uint256[])
 
 --------------------------------------------------
-==================================================
-
 expected: [6, 5], [25000000000000000000, 25000000000000000000], [2000000000000000000, 2000000000000000000] ?
 result:   [6, 5], [25000000000000000000, 25000000000000000000], [2000000000000000000, 2000000000000000000] ? 1
 testName: decoding uint256[], uint[], uint256[] three sets of two items each
@@ -964,8 +860,6 @@ testName: decoding bool[] one set of two
 testSig: function baz(bool[]) --> baz(bool[])
 
 --------------------------------------------------
-==================================================
-
 expected: [false, true] ?
 result:   [false, true] ? 1
 testName: decoding bool[] one set of two
@@ -978,8 +872,6 @@ testName: decoding bool[], address[] one set of two bools and one set of three a
 testSig: function baz(bool[], address[]) --> baz(bool[],address[])
 
 --------------------------------------------------
-==================================================
-
 expected: [false, true], [0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607, 0xbb9bc244d798123fde783fcc1c72d3bb8c189413] ?
 result:   [false, true], [0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607, 0xbb9bc244d798123fde783fcc1c72d3bb8c189413] ? 1
 testName: decoding bool[], address[] one set of two bools and one set of three addrs
@@ -992,8 +884,6 @@ testName: decoding address,address,uint256,string (see issue #1013)
 testSig: function baz(address,address,uint256,string) --> baz(address,address,uint256,string)
 
 --------------------------------------------------
-==================================================
-
 expected: 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999, 0x71d402ac181de4a8739a15f5a56141f64fc522f8, 462000000000000000000, Hi Bob -- Here are your tokens! ?
 result:   0xf3c9c5719eb4f26a3ab45cb86771827629f9a999, 0x71d402ac181de4a8739a15f5a56141f64fc522f8, 462000000000000000000, Hi Bob -- Here are your tokens! ? 1
 testName: decoding address,address,uint256,string (see issue #1013)
@@ -1006,8 +896,6 @@ testName: decode uint8, uint32, uin64, uint128
 testSig: function baz(uint8, uint32, uint64, uint128) --> baz(uint8,uint32,uint64,uint128)
 
 --------------------------------------------------
-==================================================
-
 expected: 254, 4294967294, 18446744073709551614, 340282366920938463463374607431768211454 ?
 result:   254, 4294967294, 18446744073709551614, 340282366920938463463374607431768211454 ? 1
 testName: decode uint8, uint32, uin64, uint128
@@ -1020,8 +908,6 @@ testName: decode int8, int32, int64, int128, int256
 testSig: function baz(int8, int32, int64, int128, int256) --> baz(int8,int32,int64,int128,int256)
 
 --------------------------------------------------
-==================================================
-
 expected: -2, -2, -2, -2, -2 ?
 result:   -2, -2, -2, -2, -2 ? 1
 testName: decode int8, int32, int64, int128, int256
@@ -1034,8 +920,6 @@ testName: decode uint128[2][3], uint three sets of two
 testSig: function baz(uint128[2][3], uint) --> baz(uint128[2][3],uint256)
 
 --------------------------------------------------
-==================================================
-
 expected: [[1, 2], [3, 4], [5, 6]], 10 ?
 result:   [[1, 2], [3, 4], [5, 6]], 10 ? 1
 testName: decode uint128[2][3], uint three sets of two
@@ -1048,8 +932,6 @@ testName: decode uint128[2][3][2], uint two sets of three sets of two
 testSig: function baz(uint128[2][3][2], uint) --> baz(uint128[2][3][2],uint256)
 
 --------------------------------------------------
-==================================================
-
 expected: [[[1, 2], [3, 4], [5, 6]], [[1, 2], [3, 4], [5, 6]]], 10 ?
 result:   [[[1, 2], [3, 4], [5, 6]], [[1, 2], [3, 4], [5, 6]]], 10 ? 1
 testName: decode uint128[2][3][2], uint two sets of three sets of two

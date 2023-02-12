@@ -44,8 +44,6 @@ TIME ~ CLOCK - <INFO>  : Calling a contract (0x5c69bee701ef814a2b6a3edd4b1652cb9
 TIME ~ CLOCK - <INFO>  : doEthCall in CUniPrice::findPair returned false
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1 at four-byte 0x59e02dd7 returned 0x
-==================================================
-
 {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -152,8 +150,6 @@ TIME ~ CLOCK - <INFO>  :
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 5...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 5 at four-byte 0x59e02dd7 returned 0x
-==================================================
-
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -260,8 +256,6 @@ TIME ~ CLOCK - <INFO>  :
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 56...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 56 at four-byte 0x59e02dd7 returned 0x
-==================================================
-
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -368,8 +362,6 @@ TIME ~ CLOCK - <INFO>  :
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 235...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 235 at four-byte 0x59e02dd7 returned 0x
-==================================================
-
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -476,8 +468,6 @@ TIME ~ CLOCK - <INFO>  :
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 247...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 247 at four-byte 0x59e02dd7 returned 0x
-==================================================
-
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -584,8 +574,6 @@ TIME ~ CLOCK - <INFO>  :
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 348...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 348 at four-byte 0x59e02dd7 returned 0x
-==================================================
-
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -692,8 +680,6 @@ TIME ~ CLOCK - <INFO>  :
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 500...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 500 at four-byte 0x59e02dd7 returned 0x
-==================================================
-
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -800,8 +786,6 @@ TIME ~ CLOCK - <INFO>  :
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 563...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 563 at four-byte 0x59e02dd7 returned 0x
-==================================================
-
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -908,8 +892,6 @@ TIME ~ CLOCK - <INFO>  :
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 987...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 987 at four-byte 0x59e02dd7 returned 0x
-==================================================
-
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -1018,8 +1000,6 @@ TIME ~ CLOCK - <INFO>  :
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1450...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1450 at four-byte 0x59e02dd7 returned 0x
-==================================================
-
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -1126,8 +1106,6 @@ TIME ~ CLOCK - <INFO>  :
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1580...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1580 at four-byte 0x59e02dd7 returned 0x
-==================================================
-
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -1234,8 +1212,6 @@ TIME ~ CLOCK - <INFO>  :
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1586...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1586 at four-byte 0x59e02dd7 returned 0x
-==================================================
-
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -1342,8 +1318,6 @@ TIME ~ CLOCK - <INFO>  :
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1861...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1861 at four-byte 0x59e02dd7 returned 0x
-==================================================
-
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -1450,8 +1424,6 @@ TIME ~ CLOCK - <INFO>  :
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1912...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1912 at four-byte 0x59e02dd7 returned 0x
-==================================================
-
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -1558,8 +1530,6 @@ TIME ~ CLOCK - <INFO>  :
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 2057...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 2057 at four-byte 0x59e02dd7 returned 0x
-==================================================
-
 , {
   "hash": "0x0",
   "blockHash": "0x0",

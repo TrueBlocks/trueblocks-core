@@ -417,9 +417,6 @@ string_q parse_u256(const string_q& input, const void* data = NULL) {
     return bnu_2_Str(str_2_BigUint("0x" + middle(input, 0, 64), 256));
 }
 string_q parse_by32(const string_q& input, const void* data = NULL) {
-    string_q ret;
-    if (toPrintable(input, ret))
-        return ret;
     return "0x" + input;
 }
 string_q parse_addr_addr(const string_q& input, const void* data) {
@@ -674,9 +671,6 @@ bool decodeRLP(CParameterArray& params, const string_q& typeListIn, const string
     size_t objectStart = 0;
     auto ret = decodeAnObject(params, inputs, readOffset, objectStart);
     LOG_TEST_PARAMS(params);
-    if (isTestMode()) {
-        cerr << string_q(50, '=') << endl << endl;
-    }
     return ret;
 }
 

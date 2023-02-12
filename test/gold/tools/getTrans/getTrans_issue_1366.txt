@@ -4,10 +4,6 @@ TEST[DATE|TIME] Articulate:  true
 TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] Format:  json
 { "data": [
-==================================================
-
-==================================================
-
   {
     "hash": "0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532ddc717ffd0abe",
     "blockHash": "0x12804134060126a2b62a3db6d37facc47622624dd055e98f309fd624f1a12ae8",

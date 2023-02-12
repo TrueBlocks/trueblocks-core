@@ -5,8 +5,6 @@ TEST[DATE|TIME] FirstRecord:  337
 TEST[DATE|TIME] MaxRecords:  2
 TEST[DATE|TIME] Format:  json
 { "data": [
-==================================================
-
 {
   "hash": "0xc8c39e086c0f77a95995535309a4b3aa3b4c7d89504cbbaeeed013bc793bbd40",
   "blockHash": "0x0f94c3c0aa726155f31b6edf10bb14a2f399c46f455f953a82e2a400775f5da2",
@@ -1562,8 +1560,6 @@ TEST[DATE|TIME] Format:  json
   "date": "2017-07-25 11:52:29 UTC",
   "ether": 0.000000000000000000
 }
-==================================================
-
 , {
   "hash": "0x6f4227f695fb525cc17041211492f1e34e827086d4ee05e312052e63e430e7e3",
   "blockHash": "0xe528036f966e5e46ebe2a288dc1d3e98e262c9316f6a6b7a3def0af94db8f7ce",
