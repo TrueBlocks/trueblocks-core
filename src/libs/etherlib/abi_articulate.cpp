@@ -286,18 +286,18 @@ bool toPrintable(const string_q& inHex, string_q& result) {
         string_q nibble = extract(nibbles, 0, 2);
         nibbles = extract(nibbles, 2);
         char ch = (char)hex_2_Ascii(nibble[0], nibble[1]);  // NOLINT
-        if (isalpha(ch) || isdigit(ch) || ispunct(ch) || isblank(ch)) {
-            os << ch;
-        } else if (ch == '\\') {
-            os << "\\";
+        if (ch == '\\') {
+            os << "";
         } else if (ch == '\"') {
-            os << "\"";
+            os << "'";
         } else if (ch == '\n') {
-            os << "\n";
+            os << "[n]";
         } else if (ch == '\r') {
-            os << "\r";
+            os << "";
         } else if (ch == '\t') {
-            os << "\t";
+            os << "[t]";
+        } else if (isalpha(ch) || isdigit(ch) || ispunct(ch) || isblank(ch)) {
+            os << ch;
         } else if (ch == 0x19 || int(ch) < 0 || ch == '\0') {
             // ignore non-printable characters
         } else {
