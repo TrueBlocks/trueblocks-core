@@ -20,7 +20,8 @@ namespace qblocks {
 extern bool toPrintable(const string_q& inHex, string_q& result);
 //-----------------------------------------------------------------------
 bool CAbi::articulateTransaction(CTransaction* p) const {
-    if (!p)
+    // contract creations are never articulated
+    if (!p || isZeroAddr(p->to))
         return false;
 
     // articulate the events, so we can return with a fully articulated object
@@ -180,10 +181,12 @@ bool parseApprovalEvent(CLogEntry* p) {
 }
 
 extern string_q parse_str(const string_q& input, const void* data);
-extern string_q parse_by32(const string_q& input, const void* data = NULL);
 //-----------------------------------------------------------------------
 bool CAbi::articulateLog(CLogEntry* p) const {
     if (!p || p->topics.size() == 0)
+        return false;
+
+    if (p->pReceipt && p->pReceipt->pTransaction && isZeroAddr(p->pReceipt->pTransaction->to))
         return false;
 
     // Hacky shortcuts are way faster since these three events are about 90% of all events
@@ -207,8 +210,14 @@ bool CAbi::articulateLog(CLogEntry* p) const {
         for (auto& param : p->articulatedLog.inputs) {
             if (param.indexed && p->topics.size() > which) {
                 string_q top = substitute(topic_2_Str(p->topics[which++]), "0x", "");
-                if (param.type == "string" || param.type == "bytes") {
-                    param.value = parse_by32(top);
+                if (param.type == "string") {
+                    // If the call succeeds, the value is set, otherwise it's not
+                    if (!toPrintable(top, param.value)) {
+                        param.value = "0x" + top;
+                    }
+
+                } else if (param.type == "bytes") {
+                    param.value = "0x" + top;
 
                 } else if (contains(param.type, "[")) {
                     param.value = "0x" + top;
@@ -259,6 +268,9 @@ bool CAbi::articulateTrace(CTrace* p) const {
     if (!p)
         return false;
 
+    if (p->pTransaction && isZeroAddr(p->pTransaction->to))
+        return false;
+
     string_q encoding = extract(p->action.input, 0, 10);
     string_q input = extract(p->action.input, 10);
     if (findInterface(encoding, p->articulatedTrace)) {
@@ -286,18 +298,18 @@ bool toPrintable(const string_q& inHex, string_q& result) {
         string_q nibble = extract(nibbles, 0, 2);
         nibbles = extract(nibbles, 2);
         char ch = (char)hex_2_Ascii(nibble[0], nibble[1]);  // NOLINT
-        if (isalpha(ch) || isdigit(ch) || ispunct(ch) || isblank(ch)) {
-            os << ch;
-        } else if (ch == '\\') {
-            os << "\\";
+        if (ch == '\\') {
+            os << "";
         } else if (ch == '\"') {
-            os << "\"";
+            os << "'";
         } else if (ch == '\n') {
-            os << "\n";
+            os << "[n]";
         } else if (ch == '\r') {
-            os << "\r";
+            os << "";
         } else if (ch == '\t') {
-            os << "\t";
+            os << "[t]";
+        } else if (isalpha(ch) || isdigit(ch) || ispunct(ch) || isblank(ch)) {
+            os << ch;
         } else if (ch == 0x19 || int(ch) < 0 || ch == '\0') {
             // ignore non-printable characters
         } else {

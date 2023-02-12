@@ -42,9 +42,6 @@ TIME ~ CLOCK - <INFO>  : Calling a contract (0x5c69bee701ef814a2b6a3edd4b1652cb9
 TIME ~ CLOCK - <INFO>  : doEthCall in CUniPrice::findPair returned false
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 0...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 0 at four-byte 0x59e02dd7 returned 0x
-params.size: 0
-==================================================
-
 {
   "blockNumber": 0,
   "transactionIndex": 270,
@@ -127,9 +124,6 @@ TIME ~ CLOCK - <INFO>  :
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 46685...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 46685 at four-byte 0x59e02dd7 returned 0x
-params.size: 0
-==================================================
-
 , {
   "blockNumber": 46685,
   "transactionIndex": 0,
@@ -213,9 +207,6 @@ TIME ~ CLOCK - <INFO>  :
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 46709...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 46709 at four-byte 0x59e02dd7 returned 0x
-params.size: 0
-==================================================
-
 , {
   "blockNumber": 46709,
   "transactionIndex": 0,
