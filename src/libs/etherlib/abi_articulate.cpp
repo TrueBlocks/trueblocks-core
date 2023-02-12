@@ -211,7 +211,7 @@ bool CAbi::articulateLog(CLogEntry* p) const {
             if (param.indexed && p->topics.size() > which) {
                 string_q top = substitute(topic_2_Str(p->topics[which++]), "0x", "");
                 if (param.type == "string") {
-                    // ignore the return as the value is filled if parsable and set to hex if not
+                    // If the call succeeds, the value is set, otherwise it's not
                     if (!toPrintable(top, param.value)) {
                         param.value = "0x" + top;
                     }
