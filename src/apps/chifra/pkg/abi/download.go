@@ -10,6 +10,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -50,10 +51,22 @@ func DownloadAbi(chain string, address types.Address, destination AbiInterfaceMa
 		return err
 	}
 	resp.Body.Close()
-	// Etherscan sends 200 OK responses even if there's an error
 	if data["message"] == "NOTOK" {
-		return fmt.Errorf("provider responsed with NOTOK: %s", data["message"])
+		// Etherscan sends 200 OK responses even if there's an error. We want to cache the error
+		// response so we don't keep asking Etherscan for the same address.
+		logger.Log(logger.Warning, "provider repsonded with: ", data["message"])
+
+		reader := strings.NewReader("[{\"name\": \"AbiNotFound\",\"type\": \"function\"}]")
+		fromJson(reader, address.Hex()+".json", destination)
+		if _, err = reader.Seek(0, io.SeekStart); err != nil {
+			return err
+		}
+		if err = cache.InsertAbi(chain, address, reader); err != nil {
+			return err
+		}
+		return nil
 	}
+
 	reader := strings.NewReader(data["result"])
 	fromJson(reader, address.Hex()+".json", destination)
 	if _, err = reader.Seek(0, io.SeekStart); err != nil {
