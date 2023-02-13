@@ -18,7 +18,7 @@
 //---------------------------------------------------------------------------
 namespace qblocks {
 
-extern bool toPrintable(const string_q& inHex, string_q& result);
+extern bool toPrintable(const string_q& inHex, string_q& result, bool pureStr);
 static size_t level = 0;
 
 // TODO: Clean up this file
@@ -226,7 +226,7 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                 param.value = "0x" + result.substr(0, maxBytes * 2);
                 if (param.type == "string") {
                     string_q output;
-                    if (toPrintable("0x" + result, output)) {
+                    if (toPrintable("0x" + result, output, false)) {
                         param.value = output;
                     }
                 }
@@ -393,6 +393,9 @@ string_q parse_u256(const string_q& input, const void* data = NULL) {
     return bnu_2_Str(str_2_BigUint("0x" + middle(input, 0, 64), 256));
 }
 string_q parse_by32(const string_q& input, const void* data = NULL) {
+    string ret;
+    if (toPrintable(input, ret, true))
+        return ret;
     return "0x" + input;
 }
 string_q parse_addr_addr(const string_q& input, const void* data) {
