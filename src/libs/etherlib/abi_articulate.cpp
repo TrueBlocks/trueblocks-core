@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------
 namespace qblocks {
 
-extern bool toPrintable(const string_q& inHex, string_q& result);
+extern bool toPrintable(const string_q& inHex, string_q& result, bool pureStr);
 //-----------------------------------------------------------------------
 bool CAbi::articulateTransaction(CTransaction* p) const {
     // contract creations are never articulated
@@ -48,7 +48,7 @@ bool CAbi::articulateTransaction(CTransaction* p) const {
         bool ret2 = (hasTraces ? decodeRLP(p->articulatedTx.outputs, "", p->traces[0].result.output) : false);
         return (ret1 || ret2);
     }
-    if (!toPrintable(p->input, p->articulatedTx.message))
+    if (!toPrintable(p->input, p->articulatedTx.message, false))
         p->articulatedTx.message = "";
 
     return false;
@@ -212,7 +212,7 @@ bool CAbi::articulateLog(CLogEntry* p) const {
                 string_q top = substitute(topic_2_Str(p->topics[which++]), "0x", "");
                 if (param.type == "string") {
                     // If the call succeeds, the value is set, otherwise it's not
-                    if (!toPrintable(top, param.value)) {
+                    if (!toPrintable(top, param.value, false)) {
                         param.value = "0x" + top;
                     }
 
@@ -290,7 +290,7 @@ bool CAbi::articulateOutputs(const string_q& encoding, const string_q& output, C
 
 //----------------------------------------------------------------------------
 // If we can reasonably convert this byte input into a string, do so, otherwise bail out
-bool toPrintable(const string_q& inHex, string_q& result) {
+bool toPrintable(const string_q& inHex, string_q& result, bool pureStr) {
     ostringstream os;
 
     string_q nibbles = substitute(inHex, "0x", "");
@@ -311,6 +311,10 @@ bool toPrintable(const string_q& inHex, string_q& result) {
         } else if (isalpha(ch) || isdigit(ch) || ispunct(ch) || isblank(ch)) {
             os << ch;
         } else if (ch == 0x19 || int(ch) < 0 || ch == '\0') {
+            if (pureStr) {
+                result = inHex;
+                return false;
+            }
             // ignore non-printable characters
         } else {
             // give up
