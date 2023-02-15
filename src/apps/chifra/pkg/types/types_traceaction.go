@@ -62,7 +62,7 @@ func (s *SimpleTraceAction) Model(showHidden bool, format string, extraOptions m
 		if s.Value.String() != "0" {
 			model["value"] = s.Value.String()
 		}
-		if len(s.Init) > 0 {
+		if extraOptions["tracesTransactionsFormat"] != true && len(s.Init) > 0 {
 			model["init"] = s.Init
 		}
 		if !s.SelfDestructed.IsZero() {

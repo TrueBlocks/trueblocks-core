@@ -66,15 +66,26 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 	// EXISTING_CODE
 	// EXISTING_CODE
 
-	model := map[string]interface{}{
-		"articulatedTrace": s.ArticulatedTrace,
-		"blockHash":        s.BlockHash,
-		"blockNumber":      s.BlockNumber,
-		"result":           s.Result,
-		"subtraces":        s.Subtraces,
-		"timestamp":        s.Timestamp,
-		"transactionHash":  s.TransactionHash,
-		"transactionIndex": s.TransactionIndex,
+	var model map[string]interface{}
+
+	if extraOptions["tracesTransactionsFormat"] == true {
+		model = map[string]interface{}{
+			"articulatedTrace": s.ArticulatedTrace,
+			"result":           s.Result,
+			"subtraces":        s.Subtraces,
+			"timestamp":        s.Timestamp,
+		}
+	} else {
+		model = map[string]interface{}{
+			"articulatedTrace": s.ArticulatedTrace,
+			"blockHash":        s.BlockHash,
+			"blockNumber":      s.BlockNumber,
+			"result":           s.Result,
+			"subtraces":        s.Subtraces,
+			"timestamp":        s.Timestamp,
+			"transactionHash":  s.TransactionHash,
+			"transactionIndex": s.TransactionIndex,
+		}
 	}
 
 	order := []string{
@@ -226,12 +237,12 @@ func GetTracesByTransactionId(chain string, bn, txid uint64) ([]SimpleTrace, err
 		return ret, err
 	}
 
-	return GetTracesByTransactionHash(chain, txHash)
+	return GetTracesByTransactionHash(chain, txHash, nil)
 }
 
 // GetTracesCountByTransactionHash returns the number of traces in a given transaction
 func GetTracesCountByTransactionHash(chain string, txHash string) (uint64, error) {
-	traces, err := GetTracesByTransactionHash(chain, txHash)
+	traces, err := GetTracesByTransactionHash(chain, txHash, nil)
 	if err != nil {
 		return 0, err
 	}
@@ -239,7 +250,7 @@ func GetTracesCountByTransactionHash(chain string, txHash string) (uint64, error
 }
 
 // GetTracesByTransactionHash returns a slice of traces in a given transaction's hash
-func GetTracesByTransactionHash(chain string, txHash string) ([]SimpleTrace, error) {
+func GetTracesByTransactionHash(chain string, txHash string, transaction *SimpleTransaction) ([]SimpleTrace, error) {
 	method := "trace_transaction"
 	params := rpc.Params{txHash}
 
@@ -299,6 +310,9 @@ func GetTracesByTransactionHash(chain string, txHash string) ([]SimpleTrace, err
 				Type:             rawTrace.Type,
 				Action:           &action,
 				Result:           result,
+			}
+			if transaction != nil {
+				trace.Timestamp = transaction.Timestamp
 			}
 			trace.SetRaw(&rawTrace)
 			ret = append(ret, trace)

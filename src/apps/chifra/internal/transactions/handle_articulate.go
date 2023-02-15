@@ -108,8 +108,9 @@ func (opts *TransactionsOptions) HandleArticulate() (err error) {
 		Append:     opts.Globals.Append,
 		JsonIndent: "  ",
 		Extra: map[string]interface{}{
-			"articulate": true,
-			"traces":     opts.Traces,
+			"articulate":               true,
+			"traces":                   opts.Traces,
+			"tracesTransactionsFormat": true,
 		},
 	})
 }

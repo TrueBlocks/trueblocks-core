@@ -10,6 +10,42 @@ import (
 const defaultMaxDeep = 10
 const tooDeepMessage = "structure too deep"
 
+// shouldOmitKey returns true if the field is a special case and we want
+// to completely ignore it.
+func shouldOmitKey(key string, reflectValue *reflect.Value) bool {
+	reflectType := reflectValue.Type().Kind()
+
+	if key == "stateMutability" {
+		var str string
+		if reflectType == reflect.String {
+			str = reflectValue.String()
+		}
+		if reflectType == reflect.Interface || reflectType == reflect.Pointer {
+			str = reflectValue.Elem().String()
+		}
+		return str == "nonpayable" || str == "view"
+	}
+	if key == "unused" {
+		if reflectType == reflect.Interface || reflectType == reflect.Pointer {
+			return !(reflectValue.Elem().Bool())
+		}
+		if reflectType == reflect.Bool {
+			return !(reflectValue.Bool())
+		}
+		return false
+	}
+	if key == "components" {
+		if reflectType == reflect.Interface || reflectType == reflect.Pointer {
+			return reflectValue.Elem().Len() == 0
+		}
+		if reflectType == reflect.Slice {
+			return reflectValue.Len() == 0
+		}
+		return false
+	}
+	return false
+}
+
 // serialize builds the compressed string, iterating the given input recursively until
 // `maxDeep` goes to zero. If `maxDeep` is set to -1, `serialize` will use `defaultMaxDeep`
 func serialize(input any, maxDeep int) string {
@@ -45,6 +81,9 @@ func serialize(input any, maxDeep int) string {
 		for i := 0; i < len(keys); i++ {
 			keyString := keys[i].String()
 			itemValue := inputValue.MapIndex(keys[i])
+			if shouldOmitKey(keyString, &itemValue) {
+				continue
+			}
 			if keyString == "name" {
 				name = fmt.Sprint(itemValue.Interface())
 				continue
@@ -84,6 +123,9 @@ func serialize(input any, maxDeep int) string {
 					continue
 				}
 			}
+			if shouldOmitKey(keyString, &itemValue) {
+				continue
+			}
 			if keyString == "name" {
 				name = fmt.Sprint(itemValue.Interface())
 				continue
@@ -100,7 +142,7 @@ func serialize(input any, maxDeep int) string {
 		}
 		return "{" + content + "}"
 	case reflect.Pointer:
-		return serialize(inputValue.Elem(), nextMaxDeep)
+		return serialize(inputValue.Elem().Interface(), nextMaxDeep)
 	}
 
 	return fmt.Sprint(input)

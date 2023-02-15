@@ -11,7 +11,6 @@ package types
 // EXISTING_CODE
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/bykof/gostradamus"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -46,6 +45,7 @@ type SimpleTransaction struct {
 	Gas                  Gas             `json:"gas"`
 	GasPrice             Gas             `json:"gasPrice"`
 	GasUsed              Gas             `json:"gasUsed"`
+	GasCost              Gas             `json:"gasCost"`
 	MaxFeePerGas         Gas             `json:"maxFeePerGas"`
 	MaxPriorityFeePerGas Gas             `json:"maxPriorityFeePerGas"`
 	Input                string          `json:"input"`
@@ -70,13 +70,13 @@ func (s *SimpleTransaction) SetRaw(raw *RawTransaction) {
 func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions map[string]any) Model {
 	// EXISTING_CODE
 	// TODO: these date-related values could be done when RPC is queried and cached
-	date := gostradamus.FromUnixTimestamp(int64(s.Timestamp))
+	// date := gostradamus.FromUnixTimestamp(int64(s.Timestamp))
 
 	// TODO: Imporant note. The `finalized` field creates a dependacy on the transaction model that
 	// TODO: it is in a block (or at least we know the blockNumber. Also, who's to say what `finalized`
 	// TODO: means? Also, `finalized` has a meaning in post-merge code. See #2667
 	// EXISTING_CODE
-	finalized := extraOptions["finalized"] == true
+	// finalized := extraOptions["finalized"] == true
 
 	model := map[string]interface{}{
 		"blockNumber":      s.BlockNumber,
@@ -87,8 +87,8 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		"gasUsed":          s.GasUsed,
 		"hash":             s.Hash,
 		"isError":          s.IsError,
-		"finalized":        finalized,
-		"value":            s.Value.String(),
+		// "finalized":        finalized,
+		"value": s.Value.String(),
 	}
 
 	order := []string{
@@ -111,13 +111,14 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 	// EXISTING_CODE
 	if format == "json" {
 		model["blockHash"] = s.BlockHash
-		model["nonce"] = s.Nonce
+		// model["nonce"] = s.Nonce
 		model["value"] = s.Value
 		model["gas"] = s.Gas
 
 		// TODO: this value could be created when RPC is queried and cached
 		model["ether"] = utils.WeiToEther(&s.Value)
 		model["gasPrice"] = s.GasPrice
+		model["gasCost"] = s.GasCost
 		model["maxFeePerGas"] = s.MaxPriorityFeePerGas
 		model["maxPriorityFeePerGas"] = s.MaxPriorityFeePerGas
 		model["input"] = s.Input
@@ -127,9 +128,9 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		model["receipt"] = nil            // TODO: Why twice?
 
 		// TODO: these date-related values could be done when RPC is queried and cached
-		model["date"] = date.Format("2006-01-02 15:04:05") + " UTC"
-		model["datesh"] = date.Format("2006-01-02")
-		model["time"] = date.Format("15:04:05") + " UTC"
+		// model["date"] = date.Format("2006-01-02 15:04:05") + " UTC"
+		// model["datesh"] = date.Format("2006-01-02")
+		// model["time"] = date.Format("15:04:05") + " UTC"
 
 		if s.Receipt != nil {
 			contractAddress := s.Receipt.ContractAddress.Hex()

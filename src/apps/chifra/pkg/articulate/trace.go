@@ -17,6 +17,18 @@ func ArticulateTrace(trace *types.SimpleTrace, abiMap abi.AbiInterfaceMap) (arti
 		return
 	}
 
+	if len(trace.Action.Input) > 10 {
+		err = ArticulateArguments(
+			articulated.GetAbiMethod().Inputs,
+			trace.Action.Input[10:],
+			nil,
+			articulated.Inputs,
+		)
+		if err != nil {
+			return
+		}
+	}
+
 	err = ArticulateArguments(
 		articulated.GetAbiMethod().Outputs,
 		trace.Result.Output[2:],

@@ -135,6 +135,19 @@ func Test_serialize(t *testing.T) {
 			want: "[{name:first|value:1}|{name:second|value:2}]",
 		},
 		{
+			name: "nested map",
+			args: args{
+				input: map[string]any{
+					"key1": "firstKey",
+					"key2": map[string]any{
+						"map2key1": "secondMapSecondKey",
+						"name":     "someName",
+					},
+				},
+			},
+			want: "{key1:firstKey|key2:{name:someName|map2key1:secondMapSecondKey}}",
+		},
+		{
 			name: "map with nested object",
 			args: args{
 				input: map[string]struct {
@@ -194,5 +207,98 @@ func TestSerializeTooDeep(t *testing.T) {
 
 	if got != "[["+tooDeepMessage+"]]" {
 		t.Fatal("wrong value:", got)
+	}
+}
+
+func TestSerializeOmitSpecialCases(t *testing.T) {
+	var input map[string]any
+	var result string
+
+	input = map[string]any{
+		"stateMutability": "payable",
+		"test":            true,
+	}
+	result = serialize(input, -1)
+	if len(result) != 2 && result != "{stateMutability:payable|test:true}" {
+		t.Fatal("wrong result", result)
+	}
+	input = map[string]any{
+		"stateMutability": "nonpayable",
+		"test":            true,
+	}
+	result = serialize(input, -1)
+	if len(result) != 1 && result != "{test:true}" {
+		t.Fatal("wrong result", result)
+	}
+	input2 := map[string]string{
+		"stateMutability": "nonpayable",
+		"test":            "true",
+	}
+	result = serialize(input2, -1)
+	if len(result) != 1 && result != "{test:true}" {
+		t.Fatal("wrong result", result)
+	}
+	value1 := "view"
+	value2 := "true"
+	input3 := map[string]*string{
+		"stateMutability": &value1,
+		"test":            &value2,
+	}
+	result = serialize(input3, -1)
+	if len(result) != 1 && result != "{test:true}" {
+		t.Fatal("wrong result", result)
+	}
+
+	input = map[string]any{
+		"components": []string{"component1"},
+		"test":       true,
+	}
+	result = serialize(input, -1)
+	if len(result) != 2 && result != "{components:[component1]|test:true}" {
+		t.Fatal("wrong result", result)
+	}
+	input = map[string]any{
+		"components": []string{},
+		"test":       true,
+	}
+	result = serialize(input, -1)
+	if len(result) != 1 && result != "{test:true}" {
+		t.Fatal("wrong result", result)
+	}
+
+	input4 := map[string]*[]string{
+		"components": {},
+		"test":       {"test"},
+	}
+	result = serialize(input4, -1)
+	if len(result) != 1 && result != "{test:[test]}" {
+		t.Fatal("wrong result", result)
+	}
+
+	input = map[string]any{
+		"unused": true,
+		"test":   true,
+	}
+	result = serialize(input, -1)
+	if len(result) != 2 && result != "{test:true|unused:true}" {
+		t.Fatal("wrong result", result)
+	}
+	input = map[string]any{
+		"unused": false,
+		"test":   true,
+	}
+	result = serialize(input, -1)
+	if len(result) != 1 && result != "{test:true}" {
+		t.Fatal("wrong result", result)
+	}
+	boolValue1 := false
+	boolValue2 := true
+	input5 := map[string]*bool{
+		"unused": &boolValue1,
+		"test":   &boolValue2,
+	}
+	result = serialize(input5, -1)
+	if len(result) != 1 && result != "{test:true}" {
+		t.Fatal("wrong result", result)
 	}
 }

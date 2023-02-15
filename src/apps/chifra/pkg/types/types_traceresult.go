@@ -59,7 +59,7 @@ func (s *SimpleTraceResult) Model(showHidden bool, format string, extraOptions m
 		if !s.NewContract.IsZero() {
 			model["newContract"] = s.NewContract
 		}
-		if len(s.Code) > 0 {
+		if extraOptions["tracesTransactionsFormat"] != true && len(s.Code) > 0 {
 			model["code"] = s.Code
 		}
 	} else {
