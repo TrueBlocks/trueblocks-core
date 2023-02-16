@@ -47,23 +47,23 @@ const longAbis = `Purpose:
 
 const notesAbis = `
 Notes:
-  - For the --sol option, place the solidity files in the current working folder.
   - Search for either four byte signatures or event signatures with the --find option.`
 
 func init() {
 	abisCmd.Flags().SortFlags = false
 
 	abisCmd.Flags().BoolVarP(&abisPkg.GetOptions().Known, "known", "k", false, "load common 'known' ABIs from cache")
-	abisCmd.Flags().BoolVarP(&abisPkg.GetOptions().Sol, "sol", "s", false, "extract the abi definition from the provided .sol file(s)")
 	abisCmd.Flags().StringSliceVarP(&abisPkg.GetOptions().Find, "find", "f", nil, "search for function or event declarations given a four- or 32-byte code(s)")
 	abisCmd.Flags().StringSliceVarP(&abisPkg.GetOptions().Hint, "hint", "n", nil, "for the --find option only, provide hints to speed up the search")
 	abisCmd.Flags().StringVarP(&abisPkg.GetOptions().Generate, "generate", "g", "", "generate the 32-byte encoding given a cannonical function or event signature")
+	abisCmd.Flags().BoolVarP(&abisPkg.GetOptions().Sol, "sol", "s", false, "please use the `solc --abi` tool instead")
 	globals.InitGlobals(abisCmd, &abisPkg.GetOptions().Globals)
 
 	abisCmd.SetUsageTemplate(UsageWithNotes(notesAbis))
 	abisCmd.SetOut(os.Stderr)
 
 	// EXISTING_CODE
+	abisCmd.Flags().MarkDeprecated("sol", "please use the `solc --abi` tool instead")
 	// EXISTING_CODE
 
 	chifraCmd.AddCommand(abisCmd)

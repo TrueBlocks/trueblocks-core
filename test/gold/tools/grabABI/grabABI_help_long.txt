@@ -10,7 +10,6 @@ Arguments:
 
 Flags:
   -k, --known             load common 'known' ABIs from cache
-  -s, --sol               extract the abi definition from the provided .sol file(s)
   -f, --find strings      search for function or event declarations given a four- or 32-byte code(s)
   -n, --hint strings      for the --find option only, provide hints to speed up the search
   -g, --generate string   generate the 32-byte encoding given a cannonical function or event signature
@@ -19,5 +18,4 @@ Flags:
   -h, --help              display this help screen
 
 Notes:
-  - For the --sol option, place the solidity files in the current working folder.
   - Search for either four byte signatures or event signatures with the --find option.

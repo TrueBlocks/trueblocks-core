@@ -52,7 +52,6 @@ class CAbi : public CBaseNode {
 
     void loadAbiAddInterface(const CFunction& func);
     bool loadAbiFromEtherscan(const address_t& addr);
-    bool loadAbiFromSolidity(const address_t& addr);
     bool loadAbisFromKnown(bool tokensOnly = false);
     bool loadAbisKnown(const string_q& addrOrName);
 

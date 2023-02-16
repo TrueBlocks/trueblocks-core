@@ -1,6 +1,6 @@
 fileTest  recurse
 Recursive from ../
-Found 129 (129) files
+Found 128 (128) files
 ../arrayTest/arrayTest_Insertion.txt
 ../arrayTest/arrayTest_README.txt
 ../bigIntTest/bigIntTest_00.txt
@@ -65,7 +65,6 @@ Found 129 (129) files
 ../stringTest/solidity_code.sol
 ../stringTest/stringTest_Assignment.txt
 ../stringTest/stringTest_CStr.txt
-../stringTest/stringTest_Clean.txt
 ../stringTest/stringTest_Compare.txt
 ../stringTest/stringTest_Extract.txt
 ../stringTest/stringTest_README.txt

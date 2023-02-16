@@ -33,6 +33,4 @@ class COptions : public CAbiOptions {
 
     bool parseArguments(string_q& command) override;
     void Init(void) override;
-
-    void handle_convertsol(const address_t& a);
 };
