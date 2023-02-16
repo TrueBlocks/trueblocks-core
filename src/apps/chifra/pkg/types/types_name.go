@@ -8,6 +8,8 @@
 
 package types
 
+import "strings"
+
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -35,12 +37,12 @@ type SimpleName struct {
 	Source     string  `json:"source"`
 	Decimals   uint64  `json:"decimals,omitempty"`
 	Petname    string  `json:"petname"`
-	Deleted    bool    `json:"deleted"`
-	IsCustom   bool    `json:"isCustom"`
-	IsPrefund  bool    `json:"isPrefund"`
-	IsContract bool    `json:"isContract"`
-	IsErc20    bool    `json:"isErc20"`
-	IsErc721   bool    `json:"isErc721"`
+	Deleted    bool    `json:"deleted,omitempty"`
+	IsCustom   bool    `json:"isCustom,omitempty"`
+	IsPrefund  bool    `json:"isPrefund,omitempty"`
+	IsContract bool    `json:"isContract,omitempty"`
+	IsErc20    bool    `json:"isErc20,omitempty"`
+	IsErc721   bool    `json:"isErc721,omitempty"`
 	raw        *RawName
 }
 
@@ -57,18 +59,11 @@ func (s *SimpleName) Model(showHidden bool, format string, extraOptions map[stri
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
-		"tags":       s.Tags,
-		"address":    s.Address,
-		"name":       s.Name,
-		"symbol":     s.Symbol,
-		"source":     s.Source,
-		"petname":    s.Petname,
-		"deleted":    s.Deleted,
-		"isCustom":   s.IsCustom,
-		"isPrefund":  s.IsPrefund,
-		"isContract": s.IsContract,
-		"isErc20":    s.IsErc20,
-		"isErc721":   s.IsErc721,
+		"tags":    s.Tags,
+		"address": s.Address,
+		"name":    s.Name,
+		"source":  s.Source,
+		"petname": s.Petname,
 	}
 
 	order := []string{
@@ -77,16 +72,70 @@ func (s *SimpleName) Model(showHidden bool, format string, extraOptions map[stri
 		"name",
 		"symbol",
 		"source",
+		"decimals",
 		"petname",
-		"deleted",
-		"isCustom",
-		"isPrefund",
-		"isContract",
-		"isErc20",
-		"isErc721",
 	}
 
 	// EXISTING_CODE
+	if len(s.Address.Bytes()) > 0 && s.Address != HexToAddress("0x0") {
+		model["address"] = strings.ToLower(s.Address.String())
+	}
+
+	if format == "json" {
+		if len(s.Symbol) == 0 {
+			x := []string{}
+			for _, v := range order {
+				if v != "symbol" {
+					x = append(x, v)
+				}
+			}
+			order = x
+		} else {
+			model["symbol"] = s.Symbol
+		}
+		if s.Decimals == 0 {
+			x := []string{}
+			for _, v := range order {
+				if v != "decimals" {
+					x = append(x, v)
+				}
+			}
+			order = x
+		} else {
+			model["decimals"] = s.Decimals
+		}
+		if s.Deleted {
+			model["deleted"] = true
+			order = append(order, "deleted")
+		}
+		if s.IsCustom {
+			model["isCustom"] = true
+			order = append(order, "isCustom")
+		}
+		if s.IsPrefund {
+			model["isPrefund"] = true
+			order = append(order, "isPrefund")
+		}
+		if s.IsContract {
+			model["isContract"] = true
+			order = append(order, "isContract")
+		}
+		if s.IsErc20 {
+			model["isErc20"] = true
+			order = append(order, "isErc20")
+		}
+		if s.IsErc721 {
+			model["isErc721"] = true
+			order = append(order, "isErc721")
+		}
+	} else {
+		if len(s.Symbol) == 0 {
+			model["symbol"] = ""
+		}
+		if s.Decimals == 0 {
+			model["decimals"] = ""
+		}
+	}
 	// EXISTING_CODE
 
 	return Model{
