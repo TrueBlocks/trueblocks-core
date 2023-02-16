@@ -37,12 +37,12 @@ local   ,both ,fast  ,abis  ,tools/grabABI ,findSig_a_lot       ,n    ,find = 0x
 local   ,both ,fast  ,abis  ,tools/grabABI ,generate_1          ,n    ,generate = signature(string) & fmt = txt
 local   ,both ,fast  ,abis  ,tools/grabABI ,generate_2          ,y    ,generate = signature(string) & fmt = json
 
-local   ,both ,fast  ,abis  ,tools/grabABI ,known_alone         ,y    ,known
-local   ,both ,fast  ,abis  ,tools/grabABI ,known_with          ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & known
+on      ,both ,fast  ,abis  ,tools/grabABI ,known_alone         ,y    ,known
+on      ,both ,fast  ,abis  ,tools/grabABI ,known_with          ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & known
 on      ,both ,fast  ,abis  ,tools/grabABI ,known_trueclasses   ,y    ,addrs = truebit & classes & fmt = json
 
 #       ,     ,      ,      ,              ,                    ,     ,This fails under the API because cobra doesn't give us a chance to report invalid flags
-local   ,both ,fast  ,abis  ,tools/grabABI ,known_trueara       ,y    ,addrs = truebit aragon & fmt = json
+on      ,both ,fast  ,abis  ,tools/grabABI ,known_trueara       ,y    ,addrs = truebit aragon & fmt = json
 
 #       ,     ,      ,      ,              ,                    ,     ,This fails because we never supported searching for event signatures
 local   ,both ,fast  ,abis  ,tools/grabABI ,findSig_event       ,y    ,find = 0x1aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a008

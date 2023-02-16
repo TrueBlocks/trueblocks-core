@@ -1,3 +1,4 @@
+abis?known
 {
   "data": [
     {
@@ -206,6 +207,15 @@
       "encoding": "0x0206e79d",
       "input_names": "_x,",
       "output_names": "b,"
+    },
+    {
+      "name": "swap",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "swap(uint256,uint256,address,bytes)",
+      "encoding": "0x022c0d9f",
+      "input_names": "amount0Out,amount1Out,to,data,",
+      "output_names": ""
     },
     {
       "name": "releaseDeed",
@@ -550,6 +560,15 @@
       "output_names": "_name,"
     },
     {
+      "name": "_setBeacon",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "_setBeacon(address)",
+      "encoding": "0x073d36b4",
+      "input_names": "newBeacon,",
+      "output_names": ""
+    },
+    {
       "name": "deployERC1820Implementer",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -739,6 +758,15 @@
       "output_names": ""
     },
     {
+      "name": "getReserves",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "getReserves()",
+      "encoding": "0x0902f1ac",
+      "input_names": "",
+      "output_names": "_reserve0,_reserve1,_blockTimestampLast,"
+    },
+    {
       "name": "feeToSetter",
       "type": "function",
       "stateMutability": "view",
@@ -772,6 +800,15 @@
       "signature": "burnPermissionManager(address,bytes32)",
       "encoding": "0x09699ff5",
       "input_names": "_app,_role,",
+      "output_names": ""
+    },
+    {
+      "name": "HashPublished",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "HashPublished(address,string,string)",
+      "encoding": "0x09732eb896ea819849e5f867dd547ed8ba539c5d9b68be96055d96f1c85abaa7",
+      "input_names": "publisher,chain,hash,",
       "output_names": ""
     },
     {
@@ -928,6 +965,15 @@
       "output_names": "val_0,"
     },
     {
+      "name": "withdraw",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "withdraw(uint64,address)",
+      "encoding": "0x0c24d5cf",
+      "input_names": "val_1,val_2,",
+      "output_names": ""
+    },
+    {
       "name": "createCloneToken",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -982,6 +1028,15 @@
       "output_names": "val_0,"
     },
     {
+      "name": "depositStake",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "depositStake()",
+      "encoding": "0x0d2d76a2",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
       "name": "PairCreated",
       "type": "event",
       "stateMutability": "nonpayable",
@@ -1025,6 +1080,15 @@
       "encoding": "0x0d922c8a",
       "input_names": "balance,shares,totalShares,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "token0",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "token0()",
+      "encoding": "0x0dfe1681",
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
       "name": "unsafeSubtractFromBalance",
@@ -2071,12 +2135,30 @@
       "output_names": ""
     },
     {
+      "name": "Sync",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "Sync(uint112,uint112)",
+      "encoding": "0x1c411e9a96e071241c2f21f7726b17ae89e3cab4c78be50e062b03a9fffbbad1",
+      "input_names": "reserve0,reserve1,",
+      "output_names": ""
+    },
+    {
       "name": "AdminGranted",
       "type": "event",
       "stateMutability": "nonpayable",
       "signature": "AdminGranted(address)",
       "encoding": "0x1c4e23de8d72c94b22992bd4d7b6786b215ba876af214ff63e6a0ca38fc97af4",
       "input_names": "grantee,",
+      "output_names": ""
+    },
+    {
+      "name": "BeaconUpgraded",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "BeaconUpgraded(address)",
+      "encoding": "0x1cf3b03a6cf19fa2baba4df148e9dcabedea7f8a5c07840e207e5c089be95d3e",
+      "input_names": "beacon,",
       "output_names": ""
     },
     {
@@ -2329,6 +2411,15 @@
       "signature": "register(string,address,bytes)",
       "encoding": "0x1fe0aa9d",
       "input_names": "name,owner,signature,",
+      "output_names": ""
+    },
+    {
+      "name": "publishHash",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "publishHash(string,string)",
+      "encoding": "0x1fee5cd2",
+      "input_names": "chain,hash,",
       "output_names": ""
     },
     {
@@ -2827,6 +2918,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "_upgradeToAndCall",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "_upgradeToAndCall(bytes,bool,address)",
+      "encoding": "0x267b04ae",
+      "input_names": "data,forceCall,newImplementation,",
+      "output_names": ""
+    },
+    {
       "name": "entries",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -2950,6 +3050,15 @@
       "signature": "_send(address,address,uint256,bytes,bytes,bool)",
       "encoding": "0x282ea174",
       "input_names": "from,to,amount,userData,operatorData,requireReceptionAck,",
+      "output_names": ""
+    },
+    {
+      "name": "requestStakingWithdraw",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "requestStakingWithdraw()",
+      "encoding": "0x28449c3a",
+      "input_names": "",
       "output_names": ""
     },
     {
@@ -3142,6 +3251,15 @@
       "output_names": ""
     },
     {
+      "name": "_getBeacon",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "_getBeacon()",
+      "encoding": "0x2bad8ba0",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "decrement",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -3167,6 +3285,15 @@
       "encoding": "0x2bec1547",
       "input_names": "a,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "mintIdleToken",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "mintIdleToken(uint256,bool,address)",
+      "encoding": "0x2befabbf",
+      "input_names": "val_1,val_2,val_3,",
+      "output_names": ""
     },
     {
       "name": "pop",
@@ -3511,6 +3638,15 @@
       "output_names": ""
     },
     {
+      "name": "PERMIT_TYPEHASH",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "PERMIT_TYPEHASH()",
+      "encoding": "0x30adf81f",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
       "name": "currentSet",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -3772,6 +3908,15 @@
       "output_names": "val_0,"
     },
     {
+      "name": "_changeAdmin",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "_changeAdmin(address)",
+      "encoding": "0x353dfc01",
+      "input_names": "newAdmin,",
+      "output_names": ""
+    },
+    {
       "name": "cap",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -3815,6 +3960,15 @@
       "encoding": "0x36187eef",
       "input_names": "_baseAcl,_permissionsCreator,",
       "output_names": ""
+    },
+    {
+      "name": "DOMAIN_SEPARATOR",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "DOMAIN_SEPARATOR()",
+      "encoding": "0x3644e515",
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
       "name": "renounceRole",
@@ -3907,6 +4061,24 @@
       "output_names": ""
     },
     {
+      "name": "claim",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "claim(uint256)",
+      "encoding": "0x379607f5",
+      "input_names": "_poolId,",
+      "output_names": ""
+    },
+    {
+      "name": "getBooleanSlot",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "getBooleanSlot(bytes32)",
+      "encoding": "0x37f4a46d",
+      "input_names": "slot,",
+      "output_names": "storage r,"
+    },
+    {
       "name": "revealIntent",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -3988,6 +4160,15 @@
       "output_names": ""
     },
     {
+      "name": "sendMultiSig",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "sendMultiSig(address,uint256,bytes,uint256,uint256,bytes)",
+      "encoding": "0x39125215",
+      "input_names": "val_1,val_2,val_3,val_4,val_5,val_6,",
+      "output_names": ""
+    },
+    {
       "name": "increaseAllowance",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -4012,6 +4193,15 @@
       "signature": "_makePaymentTransaction(address,address,uint256,uint256,uint64,string)",
       "encoding": "0x396c93cb",
       "input_names": "_token,_receiver,_amount,_paymentId,_paymentExecutionNumber,_reference,",
+      "output_names": ""
+    },
+    {
+      "name": "promo",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "promo(address[])",
+      "encoding": "0x3971ee42",
+      "input_names": "val_1,",
       "output_names": ""
     },
     {
@@ -4210,6 +4400,15 @@
       "signature": "withdraw()",
       "encoding": "0x3ccfd60b",
       "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "SafeReceived",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "SafeReceived(address,uint256)",
+      "encoding": "0x3d0ce9bf",
+      "input_names": "val_1,val_2,",
       "output_names": ""
     },
     {
@@ -4443,7 +4642,7 @@
       "stateMutability": "nonpayable",
       "signature": "mint(address,uint256)",
       "encoding": "0x40c10f19",
-      "input_names": "recipient,amount,",
+      "input_names": "to,tokenId,",
       "output_names": ""
     },
     {
@@ -4499,6 +4698,15 @@
       "encoding": "0x422f1043",
       "input_names": "min_liquidity,max_tokens,deadline,",
       "output_names": "out,"
+    },
+    {
+      "name": "_getImplementation",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "_getImplementation()",
+      "encoding": "0x42404e07",
+      "input_names": "",
+      "output_names": "ret_0,"
     },
     {
       "name": "endRevealIntentPeriod",
@@ -4564,6 +4772,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "withdrawRewards",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "withdrawRewards(address)",
+      "encoding": "0x42d86693",
+      "input_names": "val_1,",
+      "output_names": ""
+    },
+    {
       "name": "setMintAgent",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -4579,6 +4796,15 @@
       "signature": "_withdrawDeposits(uint256,address)",
       "encoding": "0x43401e48",
       "input_names": "amount,payee,",
+      "output_names": ""
+    },
+    {
+      "name": "submitMiningSolution",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "submitMiningSolution(bytes,uint256[5],uint256[5])",
+      "encoding": "0x4350283e",
+      "input_names": "val_1,val_2,val_3,",
       "output_names": ""
     },
     {
@@ -4893,7 +5119,7 @@
       "stateMutability": "nonpayable",
       "signature": "initialize(address,address)",
       "encoding": "0x485cc955",
-      "input_names": "_tru,_admin,",
+      "input_names": "_token0,_token1,",
       "output_names": ""
     },
     {
@@ -5113,6 +5339,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "Mint",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "Mint(address,uint256,uint256)",
+      "encoding": "0x4c209b5fc8ad50758f13e2e1088ba56a560dff690a1c6fef26394f4c03821c4f",
+      "input_names": "sender,amount0,amount1,",
+      "output_names": ""
+    },
+    {
       "name": "checkFileProof",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -5219,6 +5454,15 @@
       "encoding": "0x4cdc9549",
       "input_names": "spender,tokenId,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "tallyVotes",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "tallyVotes(uint256)",
+      "encoding": "0x4d318b0e",
+      "input_names": "val_1,",
+      "output_names": ""
     },
     {
       "name": "RegisterEvent",
@@ -5428,6 +5672,15 @@
       "output_names": ""
     },
     {
+      "name": "depositEtherFor",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "depositEtherFor(address)",
+      "encoding": "0x4faa8a26",
+      "input_names": "val_1,",
+      "output_names": ""
+    },
+    {
       "name": "setRateExpiryTime",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -5470,6 +5723,15 @@
       "signature": "voteOption(uint256,uint256)",
       "encoding": "0x509bd337",
       "input_names": "_surveyId,_optionId,",
+      "output_names": ""
+    },
+    {
+      "name": "_beforeFallback",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "_beforeFallback()",
+      "encoding": "0x50c727ad",
+      "input_names": "",
       "output_names": ""
     },
     {
@@ -5677,6 +5939,15 @@
       "signature": "RelayRemoved(address,uint256)",
       "encoding": "0x5490afc1d818789c8b3d5d63bce3d2a3327d0bba4efb5a7751f783dc977d7d11",
       "input_names": "relay,unstakeTime,",
+      "output_names": ""
+    },
+    {
+      "name": "sendTokensSingleValue",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "sendTokensSingleValue(address[],uint256)",
+      "encoding": "0x54919a6c",
+      "input_names": "val_1,val_2,",
       "output_names": ""
     },
     {
@@ -5905,6 +6176,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "repay",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "repay(address,uint256,uint256,address)",
+      "encoding": "0x573ade81",
+      "input_names": "val_1,val_2,val_3,val_4,",
+      "output_names": ""
+    },
+    {
       "name": "allPairsLength",
       "type": "function",
       "stateMutability": "view",
@@ -6047,6 +6327,15 @@
       "encoding": "0x58e9b208",
       "input_names": "",
       "output_names": ""
+    },
+    {
+      "name": "price0CumulativeLast",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "price0CumulativeLast()",
+      "encoding": "0x5909c0d5",
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
       "name": "submitProposal",
@@ -6218,6 +6507,15 @@
       "encoding": "0x5a3949ffa1f5851afea532ad9d4c7dfb51bf68f7d5964ff77f3bb4c0abedbbe4",
       "input_names": "employeeId,newAccountAddress,oldAccountAddress,",
       "output_names": ""
+    },
+    {
+      "name": "price1CumulativeLast",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "price1CumulativeLast()",
+      "encoding": "0x5a3d5493",
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
       "name": "getVote",
@@ -7138,6 +7436,15 @@
       "output_names": ""
     },
     {
+      "name": "submitMiningSolution",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "submitMiningSolution(bytes,uint256,uint256)",
+      "encoding": "0x68c180d5",
+      "input_names": "val_1,val_1,val_2,",
+      "output_names": ""
+    },
+    {
       "name": "_beforeTokenTransfer",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -7172,6 +7479,15 @@
       "encoding": "0x691f3431",
       "input_names": "node,",
       "output_names": "ret,"
+    },
+    {
+      "name": "withdraw",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "withdraw(address,uint256,address)",
+      "encoding": "0x69328dec",
+      "input_names": "val_1,val_2,val_2,",
+      "output_names": ""
     },
     {
       "name": "Burned",
@@ -7561,6 +7877,15 @@
       "output_names": ""
     },
     {
+      "name": "manifestHashMap",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "manifestHashMap(address,string)",
+      "encoding": "0x7087e4bd",
+      "input_names": "val_0,val_1,",
+      "output_names": "val_0,"
+    },
+    {
       "name": "balanceOf",
       "type": "function",
       "stateMutability": "view",
@@ -7768,6 +8093,15 @@
       "output_names": ""
     },
     {
+      "name": "kLast",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "kLast()",
+      "encoding": "0x7464fc3d",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
       "name": "m_required",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -7801,6 +8135,15 @@
       "signature": "_createPermission(address,address,bytes32,address)",
       "encoding": "0x750a96ac",
       "input_names": "_entity,_app,_role,_manager,",
+      "output_names": ""
+    },
+    {
+      "name": "addTip",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "addTip(uint256,uint256)",
+      "encoding": "0x752d49a1",
+      "input_names": "val_1,val_2,",
       "output_names": ""
     },
     {
@@ -8353,6 +8696,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "nonces",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "nonces(address)",
+      "encoding": "0x7ecebe00",
+      "input_names": "val_0,",
+      "output_names": "val_0,"
+    },
+    {
       "name": "PublicResolver",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -8650,6 +9002,15 @@
       "output_names": "val_0,"
     },
     {
+      "name": "_getAdmin",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "_getAdmin()",
+      "encoding": "0x839f5fb8",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "present",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -8746,6 +9107,24 @@
       "signature": "decrement(Counter)",
       "encoding": "0x854ec98e",
       "input_names": "counter,",
+      "output_names": ""
+    },
+    {
+      "name": "beginDispute",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "beginDispute(uint256,uint256,uint256)",
+      "encoding": "0x8581af19",
+      "input_names": "val_1,val_2,val_3,",
+      "output_names": ""
+    },
+    {
+      "name": "withdrawMany",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "withdrawMany(uint64,address[])",
+      "encoding": "0x8591419e",
+      "input_names": "val_1,val_2,",
       "output_names": ""
     },
     {
@@ -8974,6 +9353,15 @@
       "output_names": "open,startDate,snapshotBlock,minParticipation,votingPower,participation,options,"
     },
     {
+      "name": "burn",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "burn(address)",
+      "encoding": "0x89afcb44",
+      "input_names": "to,",
+      "output_names": "amount0,amount1,"
+    },
+    {
       "name": "get",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -9055,6 +9443,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "redeemIdleToken",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "redeemIdleToken(uint256)",
+      "encoding": "0x8b30b516",
+      "input_names": "val_1,",
+      "output_names": ""
+    },
+    {
       "name": "getInitializationBlock",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -9097,6 +9494,15 @@
       "signature": "setAddr(bytes32,uint256,bytes)",
       "encoding": "0x8b95dd71",
       "input_names": "node,coinType,a,",
+      "output_names": ""
+    },
+    {
+      "name": "depositERC20ForUser",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "depositERC20ForUser(address,address,uint256)",
+      "encoding": "0x8b9e4f93",
+      "input_names": "val_1,val_2,val_3,",
       "output_names": ""
     },
     {
@@ -9187,6 +9593,15 @@
       "signature": "validateMint()",
       "encoding": "0x8d4192dd",
       "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "DonationSent",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "DonationSent(address,uint256,uint256)",
+      "encoding": "0x8d68ee857f05464080096b8fbaa1603c09866dfccd25bb348209b1188e60add2",
+      "input_names": "from,amount,ts,",
       "output_names": ""
     },
     {
@@ -9604,6 +10019,15 @@
       "output_names": "storage ds,"
     },
     {
+      "name": "getUint256Slot",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "getUint256Slot(bytes32)",
+      "encoding": "0x949a352c",
+      "input_names": "slot,",
+      "output_names": "storage r,"
+    },
+    {
       "name": "get",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -9982,6 +10406,15 @@
       "output_names": ""
     },
     {
+      "name": "unlockDisputeFee",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "unlockDisputeFee(uint256)",
+      "encoding": "0x9a01ca13",
+      "input_names": "val_1,",
+      "output_names": ""
+    },
+    {
       "name": "taskTimeout",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -10096,6 +10529,15 @@
       "signature": "NameRenewed(uint256,uint256)",
       "encoding": "0x9b87a00e30f1ac65d898f070f8a3488fe60517182d0a2098e1b4b93a54aa9bd6",
       "input_names": "id,expires,",
+      "output_names": ""
+    },
+    {
+      "name": "_upgradeBeaconToAndCall",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "_upgradeBeaconToAndCall(bytes,bool,address)",
+      "encoding": "0x9ba186fe",
+      "input_names": "data,forceCall,newBeacon,",
       "output_names": ""
     },
     {
@@ -10639,6 +11081,15 @@
       "output_names": ""
     },
     {
+      "name": "borrow",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "borrow(address,uint256,uint256,uint16,address)",
+      "encoding": "0xa415bcad",
+      "input_names": "val_1,val_2,val_3,val_4,val_5,",
+      "output_names": ""
+    },
+    {
       "name": "updateERC165Cache",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -10718,6 +11169,15 @@
       "encoding": "0xa58c3260",
       "input_names": "set,value,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "enter",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "enter(uint256)",
+      "encoding": "0xa59f3e0c",
+      "input_names": "val_1,",
+      "output_names": ""
     },
     {
       "name": "_ownerOfChild",
@@ -11384,6 +11844,15 @@
       "encoding": "0xae90948a",
       "input_names": "_currentSet,_nextSet,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "depositGas",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "depositGas()",
+      "encoding": "0xae9bb692",
+      "input_names": "",
+      "output_names": ""
     },
     {
       "name": "approveAndCall",
@@ -12070,6 +12539,15 @@
       "output_names": "ret_0,memory,"
     },
     {
+      "name": "MINIMUM_LIQUIDITY",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "MINIMUM_LIQUIDITY()",
+      "encoding": "0xba9a7a56",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
       "name": "removeLiquidity",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -12151,6 +12629,15 @@
       "output_names": "val_0,"
     },
     {
+      "name": "skim",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "skim(address)",
+      "encoding": "0xbc25cf77",
+      "input_names": "to,",
+      "output_names": ""
+    },
+    {
       "name": "validateBurn",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -12194,6 +12681,15 @@
       "encoding": "0xbcb6f61d",
       "input_names": "map,key,errorMessage,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "join",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "join(uint64)",
+      "encoding": "0xbd69deac",
+      "input_names": "val_1,",
+      "output_names": ""
     },
     {
       "name": "exchangeRateCurrent",
@@ -12319,6 +12815,15 @@
       "signature": "_callOptionalReturn(IERC20,bytes)",
       "encoding": "0xbecc5a20",
       "input_names": "token,data,",
+      "output_names": ""
+    },
+    {
+      "name": "withdrawStake",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "withdrawStake()",
+      "encoding": "0xbed9d861",
+      "input_names": "",
       "output_names": ""
     },
     {
@@ -12493,6 +12998,15 @@
       "output_names": ""
     },
     {
+      "name": "bid",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "bid(uint256,address,uint256)",
+      "encoding": "0xc0f4ed31",
+      "input_names": "val_1,val_2,val_3,",
+      "output_names": ""
+    },
+    {
       "name": "DisableExecutor",
       "type": "event",
       "stateMutability": "nonpayable",
@@ -12571,6 +13085,15 @@
       "signature": "Execute(address,address,uint256,bytes)",
       "encoding": "0xc25cfed0b22da6a56f0e5ff784979a0b8623eddf2aee4acd33c2adefb09cbab6",
       "input_names": "sender,target,ethValue,data,",
+      "output_names": ""
+    },
+    {
+      "name": "enterMarkets",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "enterMarkets(address[])",
+      "encoding": "0xc2998238",
+      "input_names": "val_1,",
       "output_names": ""
     },
     {
@@ -13033,6 +13556,15 @@
       "output_names": ""
     },
     {
+      "name": "vote",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "vote(uint256,bool)",
+      "encoding": "0xc9d27afe",
+      "input_names": "_proposalID,_supportsProposal,",
+      "output_names": "_voteID,"
+    },
+    {
       "name": "getRoleMemberCount",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -13411,6 +13943,15 @@
       "output_names": ""
     },
     {
+      "name": "_upgradeToAndCallSecure",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "_upgradeToAndCallSecure(bytes,bool,address)",
+      "encoding": "0xce2ea66a",
+      "input_names": "data,forceCall,newImplementation,",
+      "output_names": ""
+    },
+    {
       "name": "BASIC_TIMEOUT",
       "type": "function",
       "stateMutability": "view",
@@ -13618,6 +14159,15 @@
       "output_names": "val_0,"
     },
     {
+      "name": "token1",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "token1()",
+      "encoding": "0xd21220a7",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
       "name": "lessThanExp",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -13651,6 +14201,15 @@
       "signature": "_transferOwnership(address)",
       "encoding": "0xd29d44ee",
       "input_names": "newOwner,",
+      "output_names": ""
+    },
+    {
+      "name": "deposit",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "deposit(address,uint256,uint16)",
+      "encoding": "0xd2d0e066",
+      "input_names": "val_1,val_2,val_3,",
       "output_names": ""
     },
     {
@@ -13760,6 +14319,15 @@
       "encoding": "0xd4e4841d",
       "input_names": "eth_bought,max_tokens,deadline,recipient,",
       "output_names": "out,"
+    },
+    {
+      "name": "permit",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)",
+      "encoding": "0xd505accf",
+      "input_names": "owner,spender,value,deadline,v,r,s,",
+      "output_names": ""
     },
     {
       "name": "MINTER_ROLE",
@@ -13996,6 +14564,15 @@
       "output_names": "val_0,"
     },
     {
+      "name": "Swap",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "Swap(address,uint256,uint256,uint256,uint256,address)",
+      "encoding": "0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822",
+      "input_names": "sender,amount0In,amount1In,amount0Out,amount1Out,to,",
+      "output_names": ""
+    },
+    {
       "name": "setUpgradeAgent",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -14030,6 +14607,15 @@
       "encoding": "0xd8389dc5",
       "input_names": "node,",
       "output_names": "ret,"
+    },
+    {
+      "name": "createStake",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "createStake(address,uint256)",
+      "encoding": "0xd86f5a6b",
+      "input_names": "val_1,val_2,",
+      "output_names": ""
     },
     {
       "name": "_calculateNonVestedTokens",
@@ -14230,6 +14816,15 @@
       "output_names": "val_0,"
     },
     {
+      "name": "Burn",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "Burn(address,uint256,uint256,address)",
+      "encoding": "0xdccd412f0b1252819cb1fd330b93224ca42612892bb3f4f789976e6d81936496",
+      "input_names": "sender,amount0,amount1,to,",
+      "output_names": ""
+    },
+    {
       "name": "discardCToken",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -14237,6 +14832,15 @@
       "encoding": "0xdd219635",
       "input_names": "tokenAddress,",
       "output_names": ""
+    },
+    {
+      "name": "getBytes32Slot",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "getBytes32Slot(bytes32)",
+      "encoding": "0xdd4e2762",
+      "input_names": "slot,",
+      "output_names": "storage r,"
     },
     {
       "name": "allowance",
@@ -14752,6 +15356,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "depositFor",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "depositFor(address,address,bytes)",
+      "encoding": "0xe3dec8fb",
+      "input_names": "val_1,val_2,val_3,",
+      "output_names": ""
+    },
+    {
       "name": "ReceivedJackpot",
       "type": "event",
       "stateMutability": "nonpayable",
@@ -15049,6 +15662,15 @@
       "output_names": "amountA,amountB,liquidity,"
     },
     {
+      "name": "deposit",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "deposit(address,uint256,address,uint16)",
+      "encoding": "0xe8eda9df",
+      "input_names": "val_1,val_2,val_3,val_4,",
+      "output_names": ""
+    },
+    {
       "name": "receiveJackpotPayment",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -15056,6 +15678,15 @@
       "encoding": "0xe8f26b23",
       "input_names": "taskID,index,",
       "output_names": "val_0,"
+    },
+    {
+      "name": "getAddressSlot",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "getAddressSlot(bytes32)",
+      "encoding": "0xe8ff0b1d",
+      "input_names": "slot,",
+      "output_names": "storage r,"
     },
     {
       "name": "canMakePayment",
@@ -15344,6 +15975,15 @@
       "encoding": "0xed81cdda",
       "input_names": "_childContract,_childTokenId,",
       "output_names": "rootOwner,"
+    },
+    {
+      "name": "donate",
+      "type": "function",
+      "stateMutability": "payable",
+      "signature": "donate()",
+      "encoding": "0xed88c68e",
+      "input_names": "",
+      "output_names": ""
     },
     {
       "name": "OperationResult",
@@ -16039,6 +16679,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "sellToLiquidityProvider",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "sellToLiquidityProvider(address,address,address,address,uint256,uint256,bytes)",
+      "encoding": "0xf7fcd384",
+      "input_names": "val_1,val_2,val_3,val_4,val_5,val_6,val_7,",
+      "output_names": ""
+    },
+    {
       "name": "minimumProposalPeriod",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -16568,41 +17217,15 @@
       "encoding": "0xffeb7d75",
       "input_names": "master,",
       "output_names": ""
-    }
-  ],
-  "types": [
+    },
     {
-      "type": "CFunction",
-      "fields": [
-        {
-          "name": "name",
-          "type": "text"
-        },
-        {
-          "name": "type",
-          "type": "text"
-        },
-        {
-          "name": "stateMutability",
-          "type": "text"
-        },
-        {
-          "name": "signature",
-          "type": "text"
-        },
-        {
-          "name": "encoding",
-          "type": "text"
-        },
-        {
-          "name": "input_names",
-          "type": "text"
-        },
-        {
-          "name": "output_names",
-          "type": "text"
-        }
-      ]
+      "name": "sync",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "sync()",
+      "encoding": "0xfff6cae9",
+      "input_names": "",
+      "output_names": ""
     }
   ],
   "meta": {
