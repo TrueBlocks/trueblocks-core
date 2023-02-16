@@ -83,7 +83,6 @@ blocks?blocks=2768801%201995314%201958017&raw
         {
           "blockHash": "0x0a283943a9a99fe706de36a2ac34465f4924cf09e7d917db3b1b6677b3f7cc01",
           "blockNumber": "0x1e7232",
-          "chainId": "0x0",
           "from": "0x2a7f8fa32012ba83e77afa782fbc9267ab0967d5",
           "gas": "0x15f90",
           "gasPrice": "0x4a817c800",
@@ -101,7 +100,6 @@ blocks?blocks=2768801%201995314%201958017&raw
         {
           "blockHash": "0x0a283943a9a99fe706de36a2ac34465f4924cf09e7d917db3b1b6677b3f7cc01",
           "blockNumber": "0x1e7232",
-          "chainId": "0x0",
           "from": "0xea674fdde714fd979de3edf0f56aa9716b898ec8",
           "gas": "0x15f90",
           "gasPrice": "0x4a817c800",
@@ -119,7 +117,6 @@ blocks?blocks=2768801%201995314%201958017&raw
         {
           "blockHash": "0x0a283943a9a99fe706de36a2ac34465f4924cf09e7d917db3b1b6677b3f7cc01",
           "blockNumber": "0x1e7232",
-          "chainId": "0x0",
           "from": "0xfe2b40254ef79cdeb30283ade2d6990cdfee3d77",
           "gas": "0x2dc6c0",
           "gasPrice": "0x4a817c800",
@@ -160,7 +157,6 @@ blocks?blocks=2768801%201995314%201958017&raw
         {
           "blockHash": "0x93ef1e0e47b32163d9cf9bd2e0a5f52b05e04f77fc99c7750b551553eb0c94c3",
           "blockNumber": "0x1de081",
-          "chainId": "0x0",
           "from": "0x7365fe88666f3474fd7631f3ff669c6787a5bf49",
           "gas": "0x5208",
           "gasPrice": "0x4a817c800",
@@ -178,7 +174,6 @@ blocks?blocks=2768801%201995314%201958017&raw
         {
           "blockHash": "0x93ef1e0e47b32163d9cf9bd2e0a5f52b05e04f77fc99c7750b551553eb0c94c3",
           "blockNumber": "0x1de081",
-          "chainId": "0x0",
           "from": "0xea674fdde714fd979de3edf0f56aa9716b898ec8",
           "gas": "0x15f90",
           "gasPrice": "0x4a817c800",

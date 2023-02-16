@@ -92,7 +92,7 @@ TEST[DATE|TIME] Format:  json
   "transactionHash": "0x86f114801efe90b466611a0c8aef86b6f0bd83e624a901741ef1216de36b635f",
   "transactionIndex": 0,
   "type": "call",
-  "error": "Bad jump destination",
+  "error": "invalid jump destination",
   "action": {
     "selfDestructed": "0x0",
     "balance": 0,
