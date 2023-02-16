@@ -9,7 +9,6 @@ package abisPkg
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -47,27 +46,6 @@ func (opts *AbisOptions) testLog() {
 func (opts *AbisOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
-}
-
-// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
-func (opts *AbisOptions) getEnvStr() []string {
-	envStr := []string{}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return envStr
-}
-
-// toCmdLine converts the option to a command line for calling out to the system.
-func (opts *AbisOptions) toCmdLine() string {
-	options := ""
-	if opts.Known {
-		options += " --known"
-	}
-	options += " " + strings.Join(opts.Addrs, " ")
-	// EXISTING_CODE
-	// EXISTING_CODE
-	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
-	return options
 }
 
 // abisFinishParseApi finishes the parsing for server invocations. Returns a new AbisOptions.

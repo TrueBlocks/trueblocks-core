@@ -111,8 +111,8 @@ bool writeCodeOut(COptions* opts, const string_q& fn) {
 
         for (auto tok : tokens) {
             bool missing = !contains(orig, tok);
-            bool ported =
-                contains(orig, "_CHIFRA") || contains(fn, "flame") || contains(fn, "when") || contains(fn, "daemon");
+            bool ported = contains(orig, "_CHIFRA") || contains(fn, "flame") || contains(fn, "abis") ||
+                          contains(fn, "when") || contains(fn, "daemon");
             if (missing && !ported) {
                 LOG_WARN(fn, " does not contain token ", tok);
             }
@@ -148,8 +148,8 @@ bool writeCodeOut(COptions* opts, const string_q& fn) {
         CStringArray tokens = {"ERROR_DEFINES", "_CODE_DECLARE"};
         for (auto tok : tokens) {
             bool missing = !contains(orig, tok);
-            bool ported =
-                contains(orig, "_CHIFRA") || contains(fn, "flame") || contains(fn, "when") || contains(fn, "daemon");
+            bool ported = contains(orig, "_CHIFRA") || contains(fn, "flame") || contains(fn, "abis") ||
+                          contains(fn, "when") || contains(fn, "daemon");
             if (missing && !ported) {
                 LOG_WARN(fn, " does not contain token ", tok);
             }

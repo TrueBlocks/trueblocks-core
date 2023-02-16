@@ -50,24 +50,14 @@ func (opts *AbisOptions) AbisInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.IsPorted() {
-		handled = true
-		if len(opts.Find) > 0 {
-			err = opts.HandleAbiFind()
-		} else if len(opts.Generate) > 0 {
-			err = opts.HandleGenerate()
-		} else {
-			err = opts.HandleAddresses()
-		}
-		return
-	}
-
-	if opts.Globals.IsApiMode() {
-		handled = false
-		return
-	}
 	handled = true
-	err = opts.Globals.PassItOn("grabABI", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
+	if len(opts.Find) > 0 {
+		err = opts.HandleAbiFind()
+	} else if len(opts.Generate) > 0 {
+		err = opts.HandleGenerate()
+	} else {
+		err = opts.HandleAddresses()
+	}
 	// EXISTING_CODE
 
 	return
@@ -84,7 +74,7 @@ func GetAbisOptions(args []string, g *globals.GlobalOptions) *AbisOptions {
 
 func (opts *AbisOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	ported = !opts.Known
+	ported = true
 	// EXISTING_CODE
 	return
 }
