@@ -21,10 +21,10 @@ type Allocation struct {
 
 func LoadPrefunds(chain string) ([]Allocation, error) {
 
-	allocsPath := config.GetPathToChainConfig(chain) + "allocs.csv"
-	lines := file.AsciiFileToLines(allocsPath)
+	prefundPath := config.GetPathToChainConfig(chain) + "allocs.csv"
+	lines := file.AsciiFileToLines(prefundPath)
 
-	allocs := make([]Allocation, 0, len(lines))
+	prefunds := make([]Allocation, 0, len(lines))
 	for _, line := range lines {
 		record := strings.Split(line, ",")
 
@@ -35,7 +35,7 @@ func LoadPrefunds(chain string) ([]Allocation, error) {
 
 		// silently skip malformed lines
 		if common.IsHexAddress(record[0]) {
-			allocs = append(allocs, Allocation{
+			prefunds = append(prefunds, Allocation{
 				Address: types.HexToAddress(record[0]),
 				Balance: utils.Str_2_BigInt(record[1]),
 				Petname: AddrToPetname(record[0], "-"),
@@ -43,9 +43,9 @@ func LoadPrefunds(chain string) ([]Allocation, error) {
 		}
 	}
 
-	if len(allocs) == 0 {
+	if len(prefunds) == 0 {
 		// We want at least one...
-		allocs = append(allocs, Allocation{
+		prefunds = append(prefunds, Allocation{
 			Address: types.HexToAddress("0x0"),
 			Balance: utils.Str_2_BigInt("0"),
 			Petname: AddrToPetname("0x0000000000000000000000000000000000000000", "-"),
@@ -53,11 +53,11 @@ func LoadPrefunds(chain string) ([]Allocation, error) {
 	}
 
 	// sort the results by address
-	sort.Slice(allocs, func(i, j int) bool {
-		iAlloc := hexutil.Encode(allocs[i].Address.Bytes())
-		jAlloc := hexutil.Encode(allocs[j].Address.Bytes())
-		return iAlloc < jAlloc
+	sort.Slice(prefunds, func(i, j int) bool {
+		item := hexutil.Encode(prefunds[i].Address.Bytes())
+		jtem := hexutil.Encode(prefunds[j].Address.Bytes())
+		return item < jtem
 	})
 
-	return allocs, nil
+	return prefunds, nil
 }

@@ -1,54 +1,50 @@
 package namesPkg
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // HandlePrefundOnly handles chifra names --prefund
 func (opts *NamesOptions) HandlePrefundOnly() error {
-	err := opts.Globals.RenderHeader(types.SimpleName{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.NoHeader, true)
-	defer opts.Globals.RenderFooter()
-	if err != nil {
-		return err
-	}
-
 	allocs, err := names.LoadPrefunds(opts.Globals.Chain)
 	if err != nil {
 		return err
 	}
 
-	for i, alloc := range allocs {
-		addr := hexutil.Encode(alloc.Address.Bytes())
-		a := types.SimpleName{
-			Tags:    "80-Prefund",
-			Address: addr,
-			Name:    "Prefund_" + fmt.Sprintf("%04d", i),
-			Source:  "Genesis",
-			Petname: alloc.Petname,
-		}
-		err = opts.Globals.RenderObject(a, i == 0)
-		if err != nil {
-			return err
+	ctx, _ := context.WithCancel(context.Background())
+	fetchData := func(modelChan chan types.Modeler[types.RawName], errorChan chan error) {
+		for i, alloc := range allocs {
+			a := types.SimpleName{
+				Tags:      "80-Prefund",
+				Address:   alloc.Address,
+				Name:      "Prefund_" + fmt.Sprintf("%04d", i),
+				Source:    "Genesis",
+				IsPrefund: true,
+				Petname:   alloc.Petname,
+			}
+			modelChan <- &a
 		}
 	}
-	return nil
-}
 
-// TODO: PrefundOnly is a temporary function used to distinguish chifra names calls with only the --prefund option.
-// Once we are fully ported to GoLang, this will go away.
-func (opts *NamesOptions) PrefundOnly() bool {
-	if !opts.Prefund {
-		return false
-	}
-	if len(opts.Terms) > 0 || opts.Expand || opts.MatchCase || opts.All || opts.Custom || opts.Named ||
-		opts.Addr || opts.Tags || opts.ToCustom ||
-		opts.Clean || len(opts.Autoname) > 0 || opts.Create || opts.Update ||
-		opts.Delete || opts.Undelete || opts.Remove || len(opts.Globals.OutputFn) > 0 {
-		return false
-	}
-	return true
+	return output.StreamMany(ctx, fetchData, output.OutputOptions{
+		Writer:     opts.Globals.Writer,
+		Chain:      opts.Globals.Chain,
+		TestMode:   opts.Globals.TestMode,
+		NoHeader:   opts.Globals.NoHeader,
+		ShowRaw:    opts.Globals.ShowRaw,
+		Verbose:    opts.Globals.Verbose,
+		LogLevel:   opts.Globals.LogLevel,
+		Format:     opts.Globals.Format,
+		OutputFn:   opts.Globals.OutputFn,
+		Append:     opts.Globals.Append,
+		JsonIndent: "  ",
+		Extra: map[string]interface{}{
+			"verbose": opts.Globals.Verbose,
+		},
+	})
 }
