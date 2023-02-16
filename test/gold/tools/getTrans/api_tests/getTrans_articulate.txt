@@ -29,7 +29,7 @@ transactions?transactions=6513870.62%206687987.11%200x5f965cb0a6c3ea59454bc12cce
           "subtraces": 0,
           "traceAddress": null,
           "type": "call",
-          "error": "Bad jump destination",
+          "error": "invalid jump destination",
           "action": {
             "selfDestructed": "0x0",
             "balance": 0,
