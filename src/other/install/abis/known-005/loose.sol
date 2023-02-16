@@ -32,7 +32,6 @@ contract A {
   function tallyVotes(uint256) {}
   function join(uint64) {}
   function depositStake() {}
-  function atInversebrah(int248,uint48[],uint32,bytes20[],bytes30[]) {}
   function withdrawRewards(address) {}
   function submitMiningSolution(bytes,uint256[5],uint256[5]) {}
   function depositETH(uint32,bytes) { }

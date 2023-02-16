@@ -589,35 +589,6 @@
     "type": "function"
   },
   {
-    "encoding": "0x60806040",
-    "inputs": [
-      {
-        "name": "val_1",
-        "type": "int248"
-      },
-      {
-        "name": "val_2",
-        "type": "uint48[]"
-      },
-      {
-        "name": "val_3",
-        "type": "uint32"
-      },
-      {
-        "name": "val_4",
-        "type": "bytes20[]"
-      },
-      {
-        "name": "val_5",
-        "type": "bytes30[]"
-      }
-    ],
-    "name": "atInversebrah",
-    "outputs": [],
-    "signature": "atInversebrah(int248,uint48[],uint32,bytes20[],bytes30[])",
-    "type": "function"
-  },
-  {
     "encoding": "0x42d86693",
     "inputs": [
       {

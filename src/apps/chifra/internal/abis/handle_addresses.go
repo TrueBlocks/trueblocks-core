@@ -13,7 +13,6 @@ import (
 )
 
 func (opts *AbisOptions) HandleAddresses() (err error) {
-	testMode := opts.Globals.TestMode
 	result := make(abi.AbiInterfaceMap)
 	if opts.Known {
 		if err = abi.PreloadKnownAbis(opts.Globals.Chain, result, false); err != nil {
@@ -23,73 +22,40 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawFunction], errorChan chan error) {
-		// result := make(abi.AbiInterfaceMap)
+		// Note here, that known ABIs are not downloaded. They are only loaded from the local cache.
 		for _, addr := range opts.Addrs {
 			address := types.HexToAddress(addr)
-			err = abi.LoadAbiFromAddress(opts.Globals.Chain, address, result)
-			if err == nil {
-				if testMode {
-					// Tests expect sorted map, because maps in C++ are sorted.
-					keys := make([]string, 0, len(result))
-
-					for k := range result {
-						keys = append(keys, k)
-					}
-					sort.Strings(keys)
-
-					for _, k := range keys {
-						modelChan <- result[k]
-					}
+			if err = abi.LoadAbiFromAddress(opts.Globals.Chain, address, result); err != nil {
+				if !os.IsNotExist(err) {
+					// The error was not due to a missing file...
+					errorChan <- err
+					cancel()
+				}
+				// Let's try to download the file from somewhere
+				if contract, err := contract.IsContractAt(opts.Globals.Chain, address, nil); err != nil {
+					errorChan <- err
+					cancel()
+				} else if !contract {
+					logger.Log(logger.Info, "Address", address, "is not a smart contract. Skipping...")
 					continue
+				} else {
+					// It's okay to not find the ABI. We report an error, but do not stop processing
+					if err = abi.DownloadAbi(opts.Globals.Chain, address, result); err != nil {
+						errorChan <- err
+					}
 				}
-				for _, function := range result {
-					modelChan <- function
-				}
-				continue
 			}
-			if !os.IsNotExist(err) {
-				errorChan <- err
-				cancel()
-			}
+		}
 
-			// We didn't find the file
-			// Check if the address is a contract
-			contract, err := contract.IsContractAt(
-				opts.Globals.Chain,
-				address,
-				nil, // use latest block number
-			)
-			if err != nil {
-				errorChan <- err
-				cancel()
-			}
-			if !contract {
-				logger.Log(logger.Info, "Address", address, "is not a smart contract. Skipping...")
-				continue
-			}
-			// Fetch ABI from a provider
-			if err = abi.DownloadAbi(opts.Globals.Chain, address, result); err != nil {
-				errorChan <- err
-			}
-			// TODO: This code is duplicated
-			if testMode {
-				// Tests expect sorted map, because maps in C++ are sorted.
-				keys := make([]string, 0, len(result))
+		keys := make([]string, 0, len(result))
+		for k := range result {
+			keys = append(keys, k)
+		}
+		// We sort by the four-byte and/or event signature
+		sort.Strings(keys)
 
-				for k := range result {
-					keys = append(keys, k)
-				}
-				sort.Strings(keys)
-
-				for _, k := range keys {
-					modelChan <- result[k]
-				}
-				continue
-			}
-			for _, function := range result {
-				modelChan <- function
-			}
-			// end of duplicated code
+		for _, k := range keys {
+			modelChan <- result[k]
 		}
 	}
 
