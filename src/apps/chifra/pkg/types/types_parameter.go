@@ -41,6 +41,10 @@ func (s *SimpleParameter) DisplayName(index int) string {
 }
 
 func ParametersToMap(params []SimpleParameter) (result map[string]any) {
+	// This produces `null` in JSON instead of an empty object (`{}`)
+	if len(params) == 0 {
+		return nil
+	}
 	result = make(map[string]any)
 	for index, param := range params {
 		if param.Value == "0x" || param.Value == "0x0" {
