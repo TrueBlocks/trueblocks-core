@@ -22,7 +22,6 @@ static const COption params[] = {
     // clang-format off
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "a list of one or more smart contracts whose ABIs to display"),  // NOLINT
     COption("known", "k", "", OPT_SWITCH, "load common 'known' ABIs from cache"),
-    COption("sol", "s", "", OPT_SWITCH, "extract the abi definition from the provided .sol file(s)"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches the ABI for a smart contract."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -36,7 +35,6 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_CODE_LOCAL_INIT
     bool known = false;
-    bool sol = false;
     // END_CODE_LOCAL_INIT
 
     Init();
@@ -54,7 +52,9 @@ bool COptions::parseArguments(string_q& command) {
             known = true;
 
         } else if (arg == "-s" || arg == "--sol") {
-            sol = true;
+            // clang-format off
+            return usage("the --sol option is deprecated, please use the `solc --abi` tool instead");  // NOLINT
+            // clang-format on
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -68,15 +68,6 @@ bool COptions::parseArguments(string_q& command) {
 
             // END_CODE_AUTO
         }
-    }
-
-    if (sol) {
-        for (auto s : addrs) {
-            // We've already check that the file exists
-            handle_convertsol(substitute(s, ".sol", ""));
-            cerr << s << " coverted in current folder." << endl;
-        }
-        return false;
     }
 
     if (known)
@@ -137,7 +128,6 @@ COptions::COptions(void) {
 
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("For the --sol option, place the solidity files in the current working folder.");
     notes.push_back("Search for either four byte signatures or event signatures with the --find option.");
     // clang-format on
     // END_CODE_NOTES

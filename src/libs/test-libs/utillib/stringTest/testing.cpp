@@ -263,38 +263,6 @@ TEST_F(CThisTest, TestExtract) {
 }
 }
 
-//------------------------------------------------------------------------
-TEST_F(CThisTest, TestClear) {
-    string_q code;
-    asciiFileToString("./solidity_code.sol", code);
-
-    // show the code we got
-    cout << TESTID("code as read", 15) << code << endl;
-    cout << endl;
-
-    string_q code1 = code;
-    simplifySolidity(code1);
-    cout << TESTID("code with simplifySolidity", 15) << code1 << endl;
-    cout << endl;
-
-    // show the code as cleaned
-    string_q code2 = code;
-    cleanString(code2, true);
-    cout << TESTID("code as cleaned", 15) << code2 << endl;
-    cout << endl;
-
-    // extra test to show removing characters
-    const char* str = "A";
-    string_q str1 = "AaAbAcAdAeAfAgAh";
-    ASSERT_EQ("before removeChars", str1, "AaAbAcAdAeAfAgAh");
-    removeCharacters(str1, 1, str);
-    ASSERT_EQ("removeChars", str1, "abcdefgh");
-    cout << endl;
-
-    return true;
-}
-}
-
 #include "options.h"
 //------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
@@ -323,9 +291,6 @@ int main(int argc, const char* argv[]) {
                 break;
             case 4:
                 LOAD_TEST(TestExtract);
-                break;
-            case 5:
-                LOAD_TEST(TestClear);
                 break;
         }
     }

@@ -23,10 +23,10 @@ import (
 type AbisOptions struct {
 	Addrs    []string              `json:"addrs,omitempty"`    // A list of one or more smart contracts whose ABIs to display
 	Known    bool                  `json:"known,omitempty"`    // Load common 'known' ABIs from cache
-	Sol      bool                  `json:"sol,omitempty"`      // Extract the abi definition from the provided .sol file(s)
 	Find     []string              `json:"find,omitempty"`     // Search for function or event declarations given a four- or 32-byte code(s)
 	Hint     []string              `json:"hint,omitempty"`     // For the --find option only, provide hints to speed up the search
 	Generate string                `json:"generate,omitempty"` // Generate the 32-byte encoding given a cannonical function or event signature
+	Sol      bool                  `json:"sol,omitempty"`      // Please use the `solc --abi` tool instead
 	Globals  globals.GlobalOptions `json:"globals,omitempty"`  // The global options
 	BadFlag  error                 `json:"badFlag,omitempty"`  // An error flag if needed
 }
@@ -37,7 +37,6 @@ var defaultAbisOptions = AbisOptions{}
 func (opts *AbisOptions) testLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(opts.Known, "Known: ", opts.Known)
-	logger.TestLog(opts.Sol, "Sol: ", opts.Sol)
 	logger.TestLog(len(opts.Find) > 0, "Find: ", opts.Find)
 	logger.TestLog(len(opts.Hint) > 0, "Hint: ", opts.Hint)
 	logger.TestLog(len(opts.Generate) > 0, "Generate: ", opts.Generate)
@@ -64,9 +63,6 @@ func (opts *AbisOptions) toCmdLine() string {
 	if opts.Known {
 		options += " --known"
 	}
-	if opts.Sol {
-		options += " --sol"
-	}
 	options += " " + strings.Join(opts.Addrs, " ")
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -87,8 +83,6 @@ func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 			}
 		case "known":
 			opts.Known = true
-		case "sol":
-			opts.Sol = true
 		case "find":
 			for _, val := range value {
 				s := strings.Split(val, " ") // may contain space separated items
@@ -101,6 +95,8 @@ func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 			}
 		case "generate":
 			opts.Generate = value[0]
+		case "sol":
+			opts.Sol = true
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "abis")
