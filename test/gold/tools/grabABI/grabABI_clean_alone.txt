@@ -1,7 +1,7 @@
-chifra abis  --find 0x1aa3a00800
-TEST[DATE|TIME] Find:  [0x1aa3a00800]
+chifra abis  --clean
+TEST[DATE|TIME] Clean:  true
 TEST[DATE|TIME] Format:  txt
-Error: The fourbyte option (0x1aa3a00800) must be 4 bytes long.
+Error: Please specify an address for the --clean option.
 Usage:
   chifra abis [flags] <address> [address...]
 

@@ -11,7 +11,7 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
-func (opts *AbisOptions) HandleGenerate() error {
-	fmt.Println(opts.Generate, "-->", hexutil.Encode(crypto.Keccak256([]byte(opts.Generate))))
+func (opts *AbisOptions) HandleEncode() error {
+	fmt.Println(opts.Encode, "-->", hexutil.Encode(crypto.Keccak256([]byte(opts.Encode))))
 	return nil
 }

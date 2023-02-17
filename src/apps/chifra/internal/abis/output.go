@@ -53,8 +53,10 @@ func (opts *AbisOptions) AbisInternal() (err error, handled bool) {
 	handled = true
 	if len(opts.Find) > 0 {
 		err = opts.HandleAbiFind()
-	} else if len(opts.Generate) > 0 {
-		err = opts.HandleGenerate()
+	} else if len(opts.Encode) > 0 {
+		err = opts.HandleEncode()
+	} else if opts.Clean {
+		err = opts.HandleClean()
 	} else {
 		err = opts.HandleAddresses()
 	}
