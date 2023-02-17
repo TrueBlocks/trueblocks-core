@@ -258,6 +258,21 @@ AppearanceCounts consist of the following fields:
 | nRecords | the number of appearances for the given address           | uint64  |
 | fileSize | the size of the monitor file containing those appearances | uint64  |
 
+## Tag
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+A Tag is a colon separate list of tags used to mark names.
+
+The following commands produce and manage Tags:
+
+- [chifra names](/chifra/accounts/#chifra-names)
+
+Tags consist of the following fields:
+
+| Field | Description                  | Type   |
+| ---- | ---------------------------- | ------ |
+| tags | colon separated list of tags | string |
+
 ## Base types
 
 This documentation mentions the following basic data types.

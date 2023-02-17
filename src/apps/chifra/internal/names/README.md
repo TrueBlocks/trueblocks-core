@@ -46,6 +46,7 @@ Notes:
 Data models produced by this tool:
 
 - [name](/data-model/accounts/#name)
+- [tag](/data-model/accounts/#tag)
 
 <!-- markdownlint-disable MD041 -->
 ### Other Options

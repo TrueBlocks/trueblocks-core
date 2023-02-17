@@ -1,0 +1,11 @@
+[settings]
+class = CTag
+fields = tag.csv
+includes = utillib.h
+cpp_includes =
+disabled = true
+doc_group = 01-Accounts
+doc_descr = a colon separated list of tags
+doc_route = 108-tag
+doc_producer = names
+# gogen = Tag

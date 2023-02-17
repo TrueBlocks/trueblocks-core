@@ -8,6 +8,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"path/filepath"
 	"sort"
 	"strings"
 
@@ -62,9 +63,18 @@ type NameOnDiscHeader struct {
 	Padding [644]byte
 }
 
-func LoadNamesArray(chain string, loadCustom bool) (NamesArray, error) {
+type Component int
+
+const (
+	None    Component = 0x0
+	Regular Component = 0x1
+	Custom  Component = 0x2
+	Prefund Component = 0x4
+)
+
+func LoadNamesArray(chain string, components Component) (NamesArray, error) {
 	names := NamesArray{}
-	if namesMap, err := LoadNamesMap(chain, loadCustom); err != nil {
+	if namesMap, err := LoadNamesMap(chain, components); err != nil {
 		return nil, err
 	} else {
 		for _, name := range namesMap {
@@ -79,7 +89,7 @@ func LoadNamesArray(chain string, loadCustom bool) (NamesArray, error) {
 	return names, nil
 }
 
-func LoadNamesMap(chain string, loadCustom bool) (NamesMap, error) {
+func LoadNamesMap(chain string, components Component) (NamesMap, error) {
 	binPath := config.GetPathToCache(chain) + "names/names.bin"
 	// TODO: Use the names cache if it's present
 	if false && file.FileExists(binPath) {
@@ -114,7 +124,19 @@ func LoadNamesMap(chain string, loadCustom bool) (NamesMap, error) {
 	}
 
 	ret := NamesMap{}
-	namesPath := config.GetPathToChainConfig(chain) + "names.tab"
+	if components&Regular != 0 {
+		nameMapFromFile(chain, &ret, "names.tab")
+	}
+
+	if components&Custom != 0 {
+		nameMapFromFile(chain, &ret, "names_custom.tab")
+	}
+
+	return ret, nil
+}
+
+func nameMapFromFile(chain string, ret *NamesMap, filename string) {
+	namesPath := filepath.Join(config.GetPathToChainConfig(chain), filename)
 	gr, err := NewNameReader(namesPath)
 	if err != nil {
 		log.Fatal(err)
@@ -128,10 +150,8 @@ func LoadNamesMap(chain string, loadCustom bool) (NamesMap, error) {
 		if err != nil {
 			log.Fatal(err)
 		}
-		ret[types.HexToAddress(grant.Address)] = grant
+		(*ret)[types.HexToAddress(grant.Address)] = grant
 	}
-
-	return ret, nil
 }
 
 func justChars(b []byte) string {
