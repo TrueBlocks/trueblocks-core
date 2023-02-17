@@ -84,34 +84,31 @@ func GetNamesOptions(args []string, g *globals.GlobalOptions) *NamesOptions {
 
 func (opts *NamesOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	if opts.Tags {
-		ported = true
-	} else if opts.Addr {
-		ported = false
-	} else if len(opts.Terms) > 0 {
-		ported = false
-	} else if opts.Expand {
-		ported = false
-	} else if opts.MatchCase {
-		ported = false
-	} else if opts.All {
-		ported = false
-	} else if opts.Custom {
-		ported = false
-	} else if opts.Named {
-		ported = false
-	} else if opts.ToCustom {
-		ported = false
-	} else if opts.Clean {
-		ported = false
-	} else if len(opts.Autoname) > 0 {
-		ported = false
-	} else if opts.Create || opts.Update || opts.Delete || opts.Undelete || opts.Remove {
-		ported = false
-	} else if len(opts.Globals.OutputFn) > 0 {
+	if opts.Clean || len(opts.Autoname) > 0 || len(opts.Globals.OutputFn) > 0 ||
+		opts.Create || opts.Update || opts.Delete || opts.Undelete || opts.Remove {
 		ported = false
 	} else {
-		ported = opts.Prefund
+		if opts.Tags {
+			ported = true
+		} else if opts.Addr {
+			ported = false
+		} else if len(opts.Terms) > 0 {
+			ported = false
+		} else if opts.Expand {
+			ported = false
+		} else if opts.MatchCase {
+			ported = false
+		} else if opts.All {
+			ported = false
+		} else if opts.Custom {
+			ported = false
+		} else if opts.Named {
+			ported = false
+		} else if opts.ToCustom {
+			ported = false
+		} else {
+			ported = opts.Prefund
+		}
 	}
 	// EXISTING_CODE
 	return

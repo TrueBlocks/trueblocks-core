@@ -21,7 +21,7 @@
 // END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------
-enum account_t { CUSTOM = (1 << 2), NAMED = (1 << 3), PREFUND = (1 << 4), ALL = (CUSTOM | NAMED) };
+enum account_t { CUSTOM = (1 << 2), REGULAR = (1 << 3), PREFUND = (1 << 4), ALL = (CUSTOM | REGULAR) };
 
 //-----------------------------------------------------------------------------
 class COptions : public CAbiOptions {
@@ -30,7 +30,6 @@ class COptions : public CAbiOptions {
     CStringArray terms;
     bool match_case;
     bool prefund;
-    bool tags;
     bool to_custom;
     // END_CODE_DECLARE
 
