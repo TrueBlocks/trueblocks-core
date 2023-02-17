@@ -1,6 +1,10 @@
 package articulate
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/ethereum/go-ethereum/common"
+)
 
 func Test_toPrintable(t *testing.T) {
 	type args struct {
@@ -27,6 +31,14 @@ func Test_toPrintable(t *testing.T) {
 			},
 			wantResult:  "",
 			wantSuccess: false,
+		},
+		{
+			name: "string with newline",
+			args: args{
+				hex: "0x" + common.Bytes2Hex([]byte("Line1\nLine2")),
+			},
+			wantResult:  "Line1[n]Line2",
+			wantSuccess: true,
 		},
 	}
 	for _, tt := range tests {

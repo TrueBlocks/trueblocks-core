@@ -131,6 +131,10 @@ func formatValue(argType *abi.Type, value any) (result any, err error) {
 		}
 		result = articulatedSlice
 	case abi.StringTy:
+		strValue, ok := value.(string)
+		if ok {
+			return SanitizeString(strValue), nil
+		}
 		fallthrough
 	case abi.IntTy, abi.UintTy:
 		// Because values coming from Ethereum can exceed JSON maximum safe integer, we
