@@ -51,11 +51,12 @@ func DownloadAbi(chain string, address types.Address, destination AbiInterfaceMa
 		return err
 	}
 	resp.Body.Close()
+
 	if data["message"] == "NOTOK" {
 		// Etherscan sends 200 OK responses even if there's an error. We want to cache the error
-		// response so we don't keep asking Etherscan for the same address.
-		logger.Log(logger.Warning, "provider repsonded with: ", data["message"])
-
+		// response so we don't keep asking Etherscan for the same address. The user may later
+		// remove empty ABIs with chifra abis --clean.
+		logger.Log(logger.Warning, "provider responded with: ", data["message"])
 		reader := strings.NewReader("[{\"name\": \"AbiNotFound\",\"type\": \"function\"}]")
 		fromJson(reader, address.Hex()+".json", destination)
 		if _, err = reader.Seek(0, io.SeekStart); err != nil {
@@ -73,7 +74,7 @@ func DownloadAbi(chain string, address types.Address, destination AbiInterfaceMa
 		return err
 	}
 
-	// Writer the body to file
+	// Write the body to file
 	if err = cache.InsertAbi(chain, address, reader); err != nil {
 		return err
 	}

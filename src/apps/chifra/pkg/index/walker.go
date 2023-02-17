@@ -33,7 +33,7 @@ func (walker *IndexWalker) WalkBloomFilters(blockNums []uint64) error {
 	filenameChan := make(chan paths.IndexFileInfo)
 
 	var nRoutines int = 1
-	go paths.WalkCacheFolder(walker.chain, paths.Index_Bloom, filenameChan)
+	go paths.WalkIndexFolder(walker.chain, paths.Index_Bloom, filenameChan)
 
 	cnt := 0
 	for result := range filenameChan {

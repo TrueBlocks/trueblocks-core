@@ -1,4 +1,4 @@
-abis?file=signatures.txt&fmt=json
+abis?clean&file=signatures.txt
 {
   "errors": [
     "The --file option is not available in Api mode"

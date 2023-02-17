@@ -151,16 +151,6 @@ type SimpleIndexAddressBelongs struct {
 	Apps    []SimpleIndexAppearance `json:"apps"`
 }
 
-type SimpleName struct {
-	Tags     string `json:"tags"`
-	Address  string `json:"address"`
-	Name     string `json:"name"`
-	Symbol   string `json:"symbol,omitempty"`
-	Source   string `json:"source,omitempty"`
-	Decimals string `json:"decimals,omitempty"`
-	Petname  string `json:"petname,omitempty"`
-}
-
 type Wei = big.Int
 type Gas = uint64
 type Blknum = uint64

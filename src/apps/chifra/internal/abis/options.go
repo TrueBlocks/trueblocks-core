@@ -20,14 +20,15 @@ import (
 
 // AbisOptions provides all command options for the chifra abis command.
 type AbisOptions struct {
-	Addrs    []string              `json:"addrs,omitempty"`    // A list of one or more smart contracts whose ABIs to display
-	Known    bool                  `json:"known,omitempty"`    // Load common 'known' ABIs from cache
-	Find     []string              `json:"find,omitempty"`     // Search for function or event declarations given a four- or 32-byte code(s)
-	Hint     []string              `json:"hint,omitempty"`     // For the --find option only, provide hints to speed up the search
-	Generate string                `json:"generate,omitempty"` // Generate the 32-byte encoding given a cannonical function or event signature
-	Sol      bool                  `json:"sol,omitempty"`      // Please use the `solc --abi` tool instead
-	Globals  globals.GlobalOptions `json:"globals,omitempty"`  // The global options
-	BadFlag  error                 `json:"badFlag,omitempty"`  // An error flag if needed
+	Addrs   []string              `json:"addrs,omitempty"`   // A list of one or more smart contracts whose ABIs to display
+	Known   bool                  `json:"known,omitempty"`   // Load common 'known' ABIs from cache
+	Find    []string              `json:"find,omitempty"`    // Search for function or event declarations given a four- or 32-byte code(s)
+	Hint    []string              `json:"hint,omitempty"`    // For the --find option only, provide hints to speed up the search
+	Encode  string                `json:"encode,omitempty"`  // Generate the 32-byte encoding for a given cannonical function or event signature
+	Clean   bool                  `json:"clean,omitempty"`   // Remove an abi file for an address or all zero-length files if no addresses is given
+	Sol     bool                  `json:"sol,omitempty"`     // Please use the `solc --abi` tool instead
+	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
+	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 }
 
 var defaultAbisOptions = AbisOptions{}
@@ -38,7 +39,8 @@ func (opts *AbisOptions) testLog() {
 	logger.TestLog(opts.Known, "Known: ", opts.Known)
 	logger.TestLog(len(opts.Find) > 0, "Find: ", opts.Find)
 	logger.TestLog(len(opts.Hint) > 0, "Hint: ", opts.Hint)
-	logger.TestLog(len(opts.Generate) > 0, "Generate: ", opts.Generate)
+	logger.TestLog(len(opts.Encode) > 0, "Encode: ", opts.Encode)
+	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
 	opts.Globals.TestLog()
 }
 
@@ -71,8 +73,10 @@ func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Hint = append(opts.Hint, s...)
 			}
-		case "generate":
-			opts.Generate = value[0]
+		case "encode":
+			opts.Encode = value[0]
+		case "clean":
+			opts.Clean = true
 		case "sol":
 			opts.Sol = true
 		default:

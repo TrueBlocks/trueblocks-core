@@ -763,15 +763,24 @@ paths:
             items:
               type: string
               format: string
-        - name: generate
+        - name: encode
           description: >
-            generate the 32-byte encoding given a cannonical function or event signature
+            generate the 32-byte encoding for a given cannonical function or event signature
           required: false
           style: form
           in: query
           explode: true
           schema:
             type: string
+        - name: clean
+          description: >
+            remove an abi file for an address or all zero-length files if no addresses is given
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data
