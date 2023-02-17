@@ -85,7 +85,7 @@ func GetNamesOptions(args []string, g *globals.GlobalOptions) *NamesOptions {
 func (opts *NamesOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
 	if opts.Tags {
-		ported = false
+		ported = true
 	} else if opts.Addr {
 		ported = false
 	} else if len(opts.Terms) > 0 {
