@@ -24,11 +24,11 @@ type NamesOptions struct {
 	Terms     []string              `json:"terms,omitempty"`     // A space separated list of one or more search terms
 	Expand    bool                  `json:"expand,omitempty"`    // Expand search to include all fields (search name, address, and symbol otherwise)
 	MatchCase bool                  `json:"matchCase,omitempty"` // Do case-sensitive search
-	All       bool                  `json:"all,omitempty"`       // Include all accounts in the search
-	Custom    bool                  `json:"custom,omitempty"`    // Include your custom named accounts
-	Prefund   bool                  `json:"prefund,omitempty"`   // Include prefund accounts
+	All       bool                  `json:"all,omitempty"`       // Include all (including custom) names in the search
+	Custom    bool                  `json:"custom,omitempty"`    // Include only custom named account in the search
+	Prefund   bool                  `json:"prefund,omitempty"`   // Include prefund accounts in the search
 	Named     bool                  `json:"named,omitempty"`     // Include well know token and airdrop addresses in the search
-	Addr      bool                  `json:"addr,omitempty"`      // Display only addresses in the results (useful for scripting)
+	Addr      bool                  `json:"addr,omitempty"`      // Display only addresses in the results (useful for scripting, assumes --no_header)
 	Tags      bool                  `json:"tags,omitempty"`      // Export the list of tags and subtags only
 	ToCustom  bool                  `json:"toCustom,omitempty"`  // For editCmd only, is the edited name a custom name or not
 	Clean     bool                  `json:"clean,omitempty"`     // Clean the data (addrs to lower case, sort by addr)

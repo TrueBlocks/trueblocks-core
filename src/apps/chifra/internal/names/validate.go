@@ -15,8 +15,16 @@ func (opts *NamesOptions) validateNames() error {
 		return opts.BadFlag
 	}
 
-	if opts.Tags && opts.anyBase() {
+	if opts.Tags && (opts.Addr || opts.anyBase()) {
 		return validate.Usage("The {0} option is not available{1}.", "--tags", " with any other option")
+	}
+
+	if opts.Addr && (opts.Tags || opts.anyBase()) {
+		return validate.Usage("The {0} option is not available{1}.", "--addr", " with any other option")
+	}
+
+	if opts.All && opts.Custom {
+		return validate.Usage("Choose only one of {0} and {1}.", "--all", "--custom")
 	}
 
 	return opts.Globals.Validate()
@@ -28,7 +36,5 @@ func (opts *NamesOptions) anyBase() bool {
 		opts.All ||
 		opts.Prefund ||
 		opts.Named ||
-		opts.Addr ||
-		opts.ToCustom ||
 		opts.Clean
 }
