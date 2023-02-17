@@ -29,7 +29,6 @@ static const COption params[] = {
     COption("prefund", "p", "", OPT_SWITCH, "include prefund accounts in the search"),
     COption("named", "n", "", OPT_SWITCH, "include well know token and airdrop addresses in the search"),
     COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting, assumes --no_header)"),  // NOLINT
-    COption("tags", "g", "", OPT_SWITCH, "export the list of tags and subtags only"),
     COption("to_custom", "u", "", OPT_HIDDEN | OPT_SWITCH, "for editCmd only, is the edited name a custom name or not"),
     COption("clean", "C", "", OPT_HIDDEN | OPT_SWITCH, "clean the data (addrs to lower case, sort by addr)"),
     COption("autoname", "A", "<string>", OPT_HIDDEN | OPT_FLAG, "an address assumed to be a token, added automatically to names database if true"),  // NOLINT
@@ -98,9 +97,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-a" || arg == "--addr") {
             addr = true;
-
-        } else if (arg == "-g" || arg == "--tags") {
-            tags = true;
 
         } else if (arg == "-u" || arg == "--to_custom") {
             to_custom = true;
@@ -208,7 +204,6 @@ bool COptions::parseArguments(string_q& command) {
     for (auto term : terms)
         searches.push_back(term);
 
-#define anyBase() (match_case || expand || all || prefund || named || addr || to_custom || clean)
     if (expand) {
         searchFields = STR_DISPLAY_NAME;
         format = searchFields;
@@ -221,7 +216,7 @@ bool COptions::parseArguments(string_q& command) {
             types = 0;
             deflt = false;
         }
-        types |= NAMED;
+        types |= REGULAR;
     }
     if (prefund) {
         if (deflt) {
@@ -248,23 +243,6 @@ bool COptions::parseArguments(string_q& command) {
     if (verbose)
         searchFields += "\t[{SOURCE}]";
 
-    if (tags) {
-        if (anyBase())
-            return usage("Do not use the --tags option with any other option.");
-        manageFields("CName:all", false);
-        manageFields("CName:tags", true);
-        format = "[{TAGS}]";
-        addr_only = false;
-        if (custom) {
-            types = 0;
-            types |= CUSTOM;
-        } else {
-            types |= NAMED;
-            types |= PREFUND;
-            types |= CUSTOM;
-        }
-    }
-
     // Prepare formatting
     string_q str = (format.empty() ? shortenFormat(STR_DISPLAY_NAME) : format);
     if (verbose && !contains(format, "{SOURCE}"))
@@ -273,7 +251,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // Display formatting
     configureDisplay("ethNames", "CName", str, meta);
-    if (!tags && expContext().exportFmt == JSON1)
+    if (expContext().exportFmt == JSON1)
         manageFields("CName:" + cleanFmt(STR_DISPLAY_NAME));
     if (!expand) {
         HIDE_FIELD(CName, "deleted");
@@ -315,7 +293,6 @@ void COptions::Init(void) {
     // BEG_CODE_INIT
     match_case = false;
     prefund = false;
-    tags = false;
     to_custom = false;
     // END_CODE_INIT
 
@@ -323,7 +300,7 @@ void COptions::Init(void) {
     items.clear();
     searches.clear();
     searchFields = getSearchFields(STR_DISPLAY_NAME);
-    types = NAMED;
+    types = REGULAR;
     minArgs = 0;
 }
 
@@ -358,14 +335,6 @@ bool COptions::addIfUnique(const CName& item) {
             return true;
         if ((contains(item.tags, "Kickback") || contains(item.tags, "Humanity")))  // don't expose people during testing
             return true;
-    }
-
-    if (tags) {
-        string_q key = item.tags;
-        if (items[key].tags == key)  // already exists
-            return false;
-        items[key] = item;
-        return true;
     }
 
     address_t key = toLower(item.address);
@@ -461,7 +430,7 @@ void COptions::filterNames() {
         }
     }
 
-    if (types & NAMED) {
+    if (types & REGULAR) {
         forEveryNameOld(addRegular, this);
     }
 
