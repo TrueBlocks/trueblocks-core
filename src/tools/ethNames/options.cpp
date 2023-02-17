@@ -24,11 +24,11 @@ static const COption params[] = {
     COption("terms", "", "list<string>", OPT_REQUIRED | OPT_POSITIONAL, "a space separated list of one or more search terms"),  // NOLINT
     COption("expand", "e", "", OPT_SWITCH, "expand search to include all fields (search name, address, and symbol otherwise)"),  // NOLINT
     COption("match_case", "m", "", OPT_SWITCH, "do case-sensitive search"),
-    COption("all", "l", "", OPT_SWITCH, "include all accounts in the search"),
-    COption("custom", "c", "", OPT_SWITCH, "include your custom named accounts"),
-    COption("prefund", "p", "", OPT_SWITCH, "include prefund accounts"),
+    COption("all", "l", "", OPT_SWITCH, "include all (including custom) names in the search"),
+    COption("custom", "c", "", OPT_SWITCH, "include only custom named account in the search"),
+    COption("prefund", "p", "", OPT_SWITCH, "include prefund accounts in the search"),
     COption("named", "n", "", OPT_SWITCH, "include well know token and airdrop addresses in the search"),
-    COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
+    COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting, assumes --no_header)"),  // NOLINT
     COption("tags", "g", "", OPT_SWITCH, "export the list of tags and subtags only"),
     COption("to_custom", "u", "", OPT_HIDDEN | OPT_SWITCH, "for editCmd only, is the edited name a custom name or not"),
     COption("clean", "C", "", OPT_HIDDEN | OPT_SWITCH, "clean the data (addrs to lower case, sort by addr)"),

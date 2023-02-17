@@ -62,9 +62,9 @@ type NameOnDiscHeader struct {
 	Padding [644]byte
 }
 
-func LoadNamesArray(chain string) (NamesArray, error) {
+func LoadNamesArray(chain string, loadCustom bool) (NamesArray, error) {
 	names := NamesArray{}
-	if namesMap, err := LoadNamesMap(chain); err != nil {
+	if namesMap, err := LoadNamesMap(chain, loadCustom); err != nil {
 		return nil, err
 	} else {
 		for _, name := range namesMap {
@@ -79,7 +79,7 @@ func LoadNamesArray(chain string) (NamesArray, error) {
 	return names, nil
 }
 
-func LoadNamesMap(chain string) (NamesMap, error) {
+func LoadNamesMap(chain string, loadCustom bool) (NamesMap, error) {
 	binPath := config.GetPathToCache(chain) + "names/names.bin"
 	// TODO: Use the names cache if it's present
 	if false && file.FileExists(binPath) {
