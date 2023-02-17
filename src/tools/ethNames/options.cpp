@@ -295,7 +295,7 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CName, "symbol");
         HIDE_FIELD(CName, "petname");
         HIDE_FIELD(CName, "source");
-        HIDE_FIELD(CName, "decimal");
+        HIDE_FIELD(CName, "decimals");
         HIDE_FIELD(CName, "isCustom");
         HIDE_FIELD(CName, "isPrefund");
         HIDE_FIELD(CName, "isContract");

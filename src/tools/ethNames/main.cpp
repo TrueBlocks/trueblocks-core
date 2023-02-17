@@ -31,8 +31,7 @@ int main(int argc, const char* argv[]) {
             cout << "No results for " << (command.empty() ? "\"\"" : command) << endl;
 
         } else if (options.items.size() == 0) {
-            cout << "{ \"data\": [ ";  // TODO: We used to send this, but it probably breaks something to not send it --
-                                       // TODO: {\"results\" \"none\"} ";
+            cout << "{ \"data\": [ ";
 
         } else {
             for (auto item : options.items) {
