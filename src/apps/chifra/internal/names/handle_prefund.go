@@ -9,8 +9,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// HandlePrefundOnly handles chifra names --prefund
-func (opts *NamesOptions) HandlePrefundOnly() error {
+// HandlePrefund handles chifra names --prefund
+func (opts *NamesOptions) HandlePrefund() error {
 	allocs, err := names.LoadPrefunds(opts.Globals.Chain)
 	if err != nil {
 		return err
