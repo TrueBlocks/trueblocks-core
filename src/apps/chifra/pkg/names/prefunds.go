@@ -16,7 +16,6 @@ import (
 type Allocation struct {
 	Address types.Address `json:"address"`
 	Balance big.Int
-	Petname string
 }
 
 func LoadPrefunds(chain string) ([]Allocation, error) {
@@ -38,7 +37,6 @@ func LoadPrefunds(chain string) ([]Allocation, error) {
 			prefunds = append(prefunds, Allocation{
 				Address: types.HexToAddress(record[0]),
 				Balance: utils.Str_2_BigInt(record[1]),
-				Petname: AddrToPetname(record[0], "-"),
 			})
 		}
 	}
@@ -48,7 +46,6 @@ func LoadPrefunds(chain string) ([]Allocation, error) {
 		prefunds = append(prefunds, Allocation{
 			Address: types.HexToAddress("0x0"),
 			Balance: utils.Str_2_BigInt("0"),
-			Petname: AddrToPetname("0x0000000000000000000000000000000000000000", "-"),
 		})
 	}
 
