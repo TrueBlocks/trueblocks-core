@@ -44,16 +44,14 @@ type NamesArray []Name
 
 // NameOnDisc is a record in the names database when stored in the binary backing file
 type NameOnDisc struct {
-x
-	Tags     [30 + 1]byte  `json:"-"` // 30 bytes
-	Address  [42 + 1]byte  `json:"-"` // + 42 bytes = 72 bytes
-	Name     [120 + 1]byte `json:"-"` // + 121 bytes = 193 bytes
-	Symbol   [30 + 1]byte  `json:"-"` // + 31 bytes = 224 bytes
-	Source   [180 + 1]byte `json:"-"` // + 181 bytes = 405 bytes
-	Petname  [40]byte      `json:"-"` // + 41 bytes = 446 bytes
-	Decimals [2]byte       `json:"-"` // + 2 bytes = 448 bytes
-	Flags    [2]byte       `json:"-"` // + 2 bytes = 450 bytes
-	Padding  byte          `json:"-"` // + 1 bytes = 451 bytes
+	Tags     [30 + 1]byte  `json:"-"` // 31 bytes
+	Address  [42 + 1]byte  `json:"-"` // + 43 bytes = 74 bytes
+	Name     [120 + 1]byte `json:"-"` // + 121 bytes = 195 bytes
+	Symbol   [30 + 1]byte  `json:"-"` // + 31 bytes = 226 bytes
+	Source   [180 + 1]byte `json:"-"` // + 181 bytes = 407 bytes
+	Petname  [40 + 1]byte  `json:"-"` // + 41 bytes = 448 bytes
+	Decimals uint16        `json:"-"` // + 2 bytes = 450 bytes
+	Flags    uint16        `json:"-"` // + 2 bytes = 452 bytes
 }
 
 type NamesMap map[types.Address]Name
@@ -62,7 +60,7 @@ type NameOnDiscHeader struct {
 	Magic   uint64    // 8 bytes
 	Version uint64    // + 8 bytes = 16 bytes
 	Count   uint64    // + 8 bytes = 24 bytes
-	Padding [428]byte // 451 - 24 = 427 bytes
+	Padding [428]byte // 452 - 24 = 428 bytes
 }
 
 type Parts int
@@ -144,17 +142,18 @@ func LoadNamesMap(chain string, parts Parts, terms []string) (NamesMap, error) {
 		// fmt.Println(thing)
 
 		ret := NamesMap{}
-		for i := uint64(0); i < thing.Count; i++ {
+		for i := uint64(0); i < header.Count; i++ {
 			v := NameOnDisc{}
 			binary.Read(file, binary.LittleEndian, &v)
 			n := Name{
-				Tags:    asString("tags", v.Tags[:]),
-				Address: asString("address", v.Address[:]),
-				Name:    asString("name", v.Name[:]),
-				Symbol:  asString("symbol", v.Symbol[:]),
-x				// Decimals: asString("decimals", v.Decimals),
-				Source:  asString("source", v.Source[:]),
-				Petname: asString("petname", v.Petname[:]),
+				Tags:     asString("tags", v.Tags[:]),
+				Address:  asString("address", v.Address[:]),
+				Name:     asString("name", v.Name[:]),
+				Symbol:   asString("symbol", v.Symbol[:]),
+				Decimals: fmt.Sprintf("%d", v.Decimals),
+				Source:   asString("source", v.Source[:]),
+				Petname:  asString("petname", v.Petname[:]),
+				// Flags: asString("decimals", v.Decimals),
 			}
 			if doSearch(n, terms, parts) {
 				ret[types.HexToAddress(n.Address)] = n
