@@ -24,7 +24,7 @@
 namespace qblocks {
 
 //-----------------------------------------------------------------------
-struct NameOnDiscHeader {
+struct namesHeaderOnDisc {
   public:
     uint64_t magic;
     uint64_t version;
@@ -62,7 +62,7 @@ static bool readNamesFromBinary(void) {
         return false;
     }
 
-    NameOnDiscHeader* header = (NameOnDiscHeader*)&fake;
+    namesHeaderOnDisc* header = (namesHeaderOnDisc*)&fake;
     archive.Read(&header->magic, sizeof(uint64_t), 1);
     archive.Seek(SEEK_SET, 0);
     if (header->magic != 0xdeadbeef) {
@@ -143,7 +143,7 @@ static bool writeNamesToBinary(void) {
         // nNameRecords = (sizeOfFileInBytes / sizeOfRecord) - 1
         NameOnDisc fake;
         memset(&fake, 0, sizeof(NameOnDisc) * 1);
-        NameOnDiscHeader* header = (NameOnDiscHeader*)&fake;
+        namesHeaderOnDisc* header = (namesHeaderOnDisc*)&fake;
         header->magic = 0xdeadbeef;
         header->version = getVersionNum();
         header->count = nNameRecords;

@@ -34,8 +34,8 @@ type SimpleName struct {
 	Address    Address `json:"address"`
 	Name       string  `json:"name"`
 	Symbol     string  `json:"symbol"`
-	Source     string  `json:"source"`
-	Decimals   uint64  `json:"decimals,omitempty"`
+	Source     string  `json:"source,omitempty"`
+	Decimals   uint64  `json:"decimals"`
 	Petname    string  `json:"petname"`
 	Deleted    bool    `json:"deleted,omitempty"`
 	IsCustom   bool    `json:"isCustom,omitempty"`
@@ -63,8 +63,8 @@ func (s *SimpleName) Model(showHidden bool, format string, extraOptions map[stri
 		"address":  s.Address,
 		"name":     s.Name,
 		"symbol":   s.Symbol,
-		"source":   s.Source,
 		"decimals": s.Decimals,
+		"source":   s.Source,
 		"petname":  s.Petname,
 	}
 
@@ -73,14 +73,25 @@ func (s *SimpleName) Model(showHidden bool, format string, extraOptions map[stri
 		"address",
 		"name",
 		"symbol",
-		"source",
 		"decimals",
+		"source",
 		"petname",
 	}
 
 	// EXISTING_CODE
 	if len(s.Address.Bytes()) > 0 && s.Address != HexToAddress("0x0") {
 		model["address"] = strings.ToLower(s.Address.String())
+	}
+
+	if extraOptions["expand"] != true && extraOptions["prefund"] != true {
+		x := []string{}
+		for _, v := range order {
+			if v != "source" {
+				x = append(x, v)
+			}
+		}
+		order = x
+		delete(model, "source")
 	}
 
 	if format == "json" {
@@ -92,6 +103,7 @@ func (s *SimpleName) Model(showHidden bool, format string, extraOptions map[stri
 				}
 			}
 			order = x
+			delete(model, "symbol")
 		} else {
 			model["symbol"] = s.Symbol
 		}
@@ -103,8 +115,11 @@ func (s *SimpleName) Model(showHidden bool, format string, extraOptions map[stri
 				}
 			}
 			order = x
-		} else {
-			model["decimals"] = s.Decimals
+			delete(model, "decimals")
+		}
+		if len(s.Source) > 0 {
+			model["source"] = s.Source
+			order = append(order, "source")
 		}
 		if s.Deleted {
 			model["deleted"] = true
@@ -136,6 +151,21 @@ func (s *SimpleName) Model(showHidden bool, format string, extraOptions map[stri
 		}
 		if s.Decimals == 0 {
 			model["decimals"] = ""
+		}
+		model["source"] = s.Source
+		if extraOptions["expand"] == true {
+			model["deleted"] = s.Deleted
+			order = append(order, "deleted")
+			model["iscustom"] = s.IsCustom
+			order = append(order, "iscustom")
+			model["isprefund"] = s.IsPrefund
+			order = append(order, "isprefund")
+			model["iscontract"] = s.IsContract
+			order = append(order, "iscontract")
+			model["iserc20"] = s.IsErc20
+			order = append(order, "iserc20")
+			model["iserc721"] = s.IsErc721
+			order = append(order, "iserc721")
 		}
 	}
 	// EXISTING_CODE

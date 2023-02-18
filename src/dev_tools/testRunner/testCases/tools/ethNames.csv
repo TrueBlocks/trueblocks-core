@@ -30,22 +30,24 @@ on      ,both ,fast  ,names ,tools/ethNames ,prefund_custom         ,y    ,prefu
 on      ,both ,fast  ,names ,tools/ethNames ,prefund_custom_search  ,y    ,prefund & custom & terms = 0001 & verbose
 on      ,both ,fast  ,names ,tools/ethNames ,prefund_custom_search2 ,y    ,prefund & custom & terms = 0001 & terms = Genesis & expand
 on      ,both ,fast  ,names ,tools/ethNames ,named                  ,y    ,
-on      ,both ,fast  ,names ,tools/ethNames ,prefund_custom_named   ,y    ,prefund & custom & named
+on      ,both ,fast  ,names ,tools/ethNames ,prefund_custom_named   ,y    ,prefund & custom & all
 on      ,both ,fast  ,names ,tools/ethNames ,all                    ,y    ,all
 on      ,both ,medi  ,names ,tools/ethNames ,upgrade_fail           ,y    ,fmt = json
 on      ,both ,medi  ,names ,tools/ethNames ,name_match             ,n    ,noop & terms = torj & fmt = csv
 on      ,cmd  ,fast  ,names ,tools/ethNames ,show_version           ,n    ,version
+
 on      ,both ,fast  ,names ,tools/ethNames ,edit_invalid           ,y    ,invalid & log_level = 10 & fmt = json & expand
 on      ,both ,fast  ,names ,tools/ethNames ,edit_add               ,y    ,create & log_level = 10 & fmt = json & expand
-on      ,both ,fast  ,names ,tools/ethNames ,show_add               ,y    ,terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = json & expand
+on      ,both ,fast  ,names ,tools/ethNames ,show_add               ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json & expand
 on      ,both ,fast  ,names ,tools/ethNames ,edit_edit              ,y    ,update & log_level = 10 & fmt = json & expand
-on      ,both ,fast  ,names ,tools/ethNames ,show_edit              ,y    ,terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = json & expand
+on      ,both ,fast  ,names ,tools/ethNames ,show_edit              ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json & expand
 on      ,both ,fast  ,names ,tools/ethNames ,edit_delete            ,y    ,delete & terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = json & expand
-on      ,both ,fast  ,names ,tools/ethNames ,show_delete            ,y    ,terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = json & expand
+on      ,both ,fast  ,names ,tools/ethNames ,show_delete            ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json & expand
 on      ,both ,fast  ,names ,tools/ethNames ,edit_undelete          ,y    ,undelete & terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = json & expand
-on      ,both ,fast  ,names ,tools/ethNames ,show_undelete          ,y    ,terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = json & expand
+on      ,both ,fast  ,names ,tools/ethNames ,show_undelete          ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json & expand
 on      ,both ,fast  ,names ,tools/ethNames ,edit_remove            ,y    ,remove & terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = json & expand
-on      ,both ,fast  ,names ,tools/ethNames ,show_remove            ,y    ,terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = json & expand
+on      ,both ,fast  ,names ,tools/ethNames ,show_remove            ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json & expand
+
 on      ,both ,fast  ,names ,tools/ethNames ,ens_test               ,y    ,terms = wildmolasses.eth
 on      ,both ,fast  ,names ,tools/ethNames ,ens_test_fail          ,y    ,terms = notathingy.eth
 
