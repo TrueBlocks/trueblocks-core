@@ -46,7 +46,7 @@ Notes:
 Data models produced by this tool:
 
 - [name](/data-model/accounts/#name)
-- [tag](/data-model/accounts/#tag)
+- [part](/data-model/accounts/#part)
 
 Links:
 

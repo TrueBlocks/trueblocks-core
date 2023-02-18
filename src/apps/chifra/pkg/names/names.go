@@ -70,20 +70,45 @@ const (
 	Regular Component = 0x1
 	Custom  Component = 0x2
 	Prefund Component = 0x4
+	Testing Component = 0x8
 )
 
-func LoadNamesArray(chain string, components Component) (NamesArray, error) {
+type SortBy int
+
+const (
+	SortByAddress SortBy = iota
+	SortByName
+	// SortBySymbol
+	// SortBySource
+	// SortByDecimals
+	SortByTags
+	// SortByPetname
+)
+
+func LoadNamesArray(chain string, components Component, sortBy SortBy) (NamesArray, error) {
 	names := NamesArray{}
 	if namesMap, err := LoadNamesMap(chain, components); err != nil {
 		return nil, err
 	} else {
 		for _, name := range namesMap {
-			names = append(names, name)
+			isTesting := components&Testing != 0
+			if !isTesting || !strings.Contains(name.Tags, "Individual") {
+				names = append(names, name)
+			}
 		}
 	}
 
 	sort.Slice(names, func(i, j int) bool {
-		return names[i].Address < names[j].Address
+		switch sortBy {
+		case SortByName:
+			return names[i].Name < names[j].Name
+		case SortByTags:
+			return names[i].Tags < names[j].Tags
+		case SortByAddress:
+			fallthrough
+		default:
+			return names[i].Address < names[j].Address
+		}
 	})
 
 	return names, nil

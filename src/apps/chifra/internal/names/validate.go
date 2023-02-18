@@ -27,6 +27,10 @@ func (opts *NamesOptions) validateNames() error {
 		return validate.Usage("Choose only one of {0} and {1}.", "--all", "--custom")
 	}
 
+	if opts.MatchCase && len(opts.Terms) == 0 {
+		return validate.Usage("The {0} option requires at least one {1}.", "--match_case", "term")
+	}
+
 	return opts.Globals.Validate()
 }
 
