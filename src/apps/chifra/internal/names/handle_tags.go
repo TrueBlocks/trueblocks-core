@@ -2,7 +2,9 @@ package namesPkg
 
 import (
 	"context"
+	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -13,10 +15,9 @@ func (opts *NamesOptions) HandleTags() error {
 	if err != nil {
 		return err
 	}
-	if opts.Globals.TestMode {
-		if opts.Custom {
-			namesArray = []names.Name{{Tags: "81-Custom"}}
-		}
+	if len(namesArray) == 0 {
+		logger.Log(logger.Warning, "No results for ", os.Args)
+		return nil
 	}
 
 	tagsMap := make(map[string]bool, len(namesArray)/10)
@@ -51,20 +52,4 @@ func (opts *NamesOptions) HandleTags() error {
 			"tags": true,
 		},
 	})
-}
-
-func (opts *NamesOptions) getType() names.Component {
-	var ret names.Component
-	if opts.Globals.TestMode {
-		ret |= names.Testing
-	}
-	if opts.Custom {
-		if opts.All {
-			ret |= names.Regular | names.Custom
-		} else {
-			ret |= names.Custom
-		}
-	}
-	ret |= names.Regular
-	return ret
 }
