@@ -31,14 +31,14 @@ func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData, blaze
 		return true, nil
 	}
 
-	allocs, err := names.LoadPrefunds(opts.Globals.Chain)
+	prefunds, err := names.LoadPrefunds(opts.Globals.Chain)
 	if err != nil {
 		return false, err
 	}
 
-	appMap := make(index.AddressAppearanceMap, len(allocs))
-	for i, alloc := range allocs {
-		addr := hexutil.Encode(alloc.Address.Bytes()) // a lowercase string
+	appMap := make(index.AddressAppearanceMap, len(prefunds))
+	for i, prefund := range prefunds {
+		addr := hexutil.Encode(prefund.Address.Bytes()) // a lowercase string
 		appMap[addr] = append(appMap[addr], index.AppearanceRecord{
 			BlockNumber:   0,
 			TransactionId: uint32(i),
@@ -53,9 +53,9 @@ func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData, blaze
 	})
 	tslib.Append(opts.Globals.Chain, array)
 
-	logger.Log(logger.Info, "Writing block zero allocations for", len(allocs), "allocs, nAddresses:", len(appMap))
+	logger.Log(logger.Info, "Writing block zero allocations for", len(prefunds), "prefunds, nAddresses:", len(appMap))
 	indexPath := paths.ToIndexPath(bloomPath)
-	if report, err := index.WriteChunk(opts.Globals.Chain, indexPath, appMap, len(allocs), opts.Pin, opts.Remote); err != nil {
+	if report, err := index.WriteChunk(opts.Globals.Chain, indexPath, appMap, len(prefunds), opts.Pin, opts.Remote); err != nil {
 		return false, err
 	} else if report == nil {
 		log.Fatal("Should not happen, write chunk returned empty report")

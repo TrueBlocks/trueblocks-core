@@ -11,6 +11,7 @@ displayStrsTest  CMonitor
   "latestAppearance": 4294967295,
   "lastVisitedBlock": 18446744073709551615,
   "address": "0x0",
-  "name": "monitor"
+  "name": "monitor",
+  "decimals": 0
 }
 

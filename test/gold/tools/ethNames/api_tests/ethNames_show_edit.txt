@@ -2,26 +2,23 @@ names?terms=0x0000000000000000000000000000000010101010&logLevel=10&fmt=json&expa
 {
   "data": [
     {
-      "deleted": false,
       "tags": "TAGS_CHANGED",
       "address": "0x0000000000000000000000000000000010101010",
       "name": "NAME_CHANGED",
       "symbol": "SYMBOL_CHANGED",
       "source": "SOURCE_CHANGED",
       "decimals": 13,
-      "petname": "abnormally-able-quetzal",
-      "isCustom": false,
-      "isPrefund": false,
-      "isContract": false,
-      "isErc20": false,
-      "isErc721": false
+      "petname": "abnormally-able-quetzal"
     }
   ],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
+    "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
   }
 }
