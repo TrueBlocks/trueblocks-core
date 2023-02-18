@@ -36,18 +36,6 @@ on      ,both ,medi  ,names ,tools/ethNames ,upgrade_fail           ,y    ,fmt =
 on      ,both ,medi  ,names ,tools/ethNames ,name_match             ,n    ,noop & terms = torj & fmt = csv
 on      ,cmd  ,fast  ,names ,tools/ethNames ,show_version           ,n    ,version
 
-on      ,both ,fast  ,names ,tools/ethNames ,edit_invalid           ,y    ,invalid & log_level = 10 & fmt = json & expand
-on      ,both ,fast  ,names ,tools/ethNames ,edit_add               ,y    ,create & log_level = 10 & fmt = json & expand
-on      ,both ,fast  ,names ,tools/ethNames ,show_add               ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json & expand
-on      ,both ,fast  ,names ,tools/ethNames ,edit_edit              ,y    ,update & log_level = 10 & fmt = json & expand
-on      ,both ,fast  ,names ,tools/ethNames ,show_edit              ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json & expand
-on      ,both ,fast  ,names ,tools/ethNames ,edit_delete            ,y    ,delete & terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = json & expand
-on      ,both ,fast  ,names ,tools/ethNames ,show_delete            ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json & expand
-on      ,both ,fast  ,names ,tools/ethNames ,edit_undelete          ,y    ,undelete & terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = json & expand
-on      ,both ,fast  ,names ,tools/ethNames ,show_undelete          ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json & expand
-on      ,both ,fast  ,names ,tools/ethNames ,edit_remove            ,y    ,remove & terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = json & expand
-on      ,both ,fast  ,names ,tools/ethNames ,show_remove            ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json & expand
-
 on      ,both ,fast  ,names ,tools/ethNames ,ens_test               ,y    ,terms = wildmolasses.eth
 on      ,both ,fast  ,names ,tools/ethNames ,ens_test_fail          ,y    ,terms = notathingy.eth
 
@@ -63,9 +51,6 @@ off     ,both ,medi  ,names ,tools/ethNames ,upgrade_to_067         ,y    ,fmt =
 off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_remove          ,n    ,RMFILE -f $CACHE/names/names.bin
 off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_restore         ,n    ,MOVEFILE -f ./testing_data/backup/names.bin $CACHE/names/
 
-local   ,both ,fast  ,names ,tools/ethNames ,edit_custom_delete     ,y    ,delete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & log_level = 10 & to_custom & all & expand
-local   ,both ,fast  ,names ,tools/ethNames ,edit_custom_undelete   ,y    ,undelete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & log_level = 10 & to_custom & all & expand
-
 on      ,cmd  ,slow  ,names ,tools/ethNames ,fromFile               ,n    ,file = names.txt
 on      ,both ,fast  ,names ,tools/ethNames ,redir_output           ,y    ,prefund & output = output_test_file
 on      ,both ,fast  ,names ,tools/ethNames ,redir_output_append    ,n    ,terms = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & output = output_test_file & no_header & append
@@ -80,3 +65,19 @@ on      ,both ,fast  ,names ,tools/ethNames ,simple_addr_all        ,y    ,addr
 on      ,both ,fast  ,names ,tools/ethNames ,simple_addr_all_custom ,y    ,addr & custom
 on      ,both ,fast  ,names ,tools/ethNames ,simple_addr_only       ,y    ,terms = 0xb6 & addr
 on      ,both ,medi  ,names ,tools/ethNames ,duplicated_option_1    ,n    ,terms = 0xb6 & terms = torj & addr & addr & addr & addr
+
+# Search for TODO: Fix storing and reading names from / to binary cache
+on      ,both ,fast  ,names ,tools/ethNames ,edit_invalid           ,y    ,invalid & log_level = 10 & fmt = json & expand
+on      ,both ,fast  ,names ,tools/ethNames ,edit_add               ,y    ,create & log_level = 10 & fmt = json & expand
+local   ,both ,fast  ,names ,tools/ethNames ,show_add               ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json & expand
+on      ,both ,fast  ,names ,tools/ethNames ,edit_edit              ,y    ,update & log_level = 10 & fmt = json & expand
+local   ,both ,fast  ,names ,tools/ethNames ,show_edit              ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json & expand
+on      ,both ,fast  ,names ,tools/ethNames ,edit_delete            ,y    ,delete & terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = json & expand
+local   ,both ,fast  ,names ,tools/ethNames ,show_delete            ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json & expand
+on      ,both ,fast  ,names ,tools/ethNames ,edit_undelete          ,y    ,undelete & terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = json & expand
+local   ,both ,fast  ,names ,tools/ethNames ,show_undelete          ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json & expand
+on      ,both ,fast  ,names ,tools/ethNames ,edit_remove            ,y    ,remove & terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = json & expand
+local   ,both ,fast  ,names ,tools/ethNames ,show_remove            ,y    ,terms = 0x0000000000000000000000000000000010101010 & fmt = json & expand
+
+local   ,both ,fast  ,names ,tools/ethNames ,edit_custom_delete     ,y    ,delete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & log_level = 10 & to_custom & all & expand
+local   ,both ,fast  ,names ,tools/ethNames ,edit_custom_undelete   ,y    ,undelete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & log_level = 10 & to_custom & all & expand
