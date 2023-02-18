@@ -130,7 +130,8 @@ func LoadNamesArray(chain string, parts Parts, sortBy SortBy, terms []string) (N
 
 func LoadNamesMap(chain string, parts Parts, terms []string) (NamesMap, error) {
 	binPath := config.GetPathToCache(chain) + "names/names.bin"
-	if file.FileExists(binPath) {
+	// TODO: Fix storing and reading names from / to binary cache
+	if false && file.FileExists(binPath) {
 		file, _ := os.OpenFile(binPath, os.O_RDONLY, 0)
 		defer file.Close()
 
