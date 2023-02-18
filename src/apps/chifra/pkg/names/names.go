@@ -170,15 +170,15 @@ func nameMapFromFile(chain string, ret *NamesMap, filename string, terms []strin
 	}
 
 	for {
-		grant, err := gr.Read()
+		n, err := gr.Read()
 		if err == io.EOF {
 			break
 		}
 		if err != nil {
 			log.Fatal(err)
 		}
-		if doSearch(grant, terms) {
-			(*ret)[types.HexToAddress(grant.Address)] = grant
+		if doSearch(n, terms) {
+			(*ret)[types.HexToAddress(n.Address)] = n
 		}
 	}
 }
@@ -228,6 +228,7 @@ func (gr *NameReader) Read() (Name, error) {
 		Name:     record[gr.header["name"]],
 		Decimals: record[gr.header["decimals"]],
 		Symbol:   record[gr.header["symbol"]],
+		Petname:  record[gr.header["petname"]],
 		// IsActive: isActive,
 		// IsCore:   isCore,
 		// IsValid:  isValid,
@@ -289,6 +290,12 @@ func doSearch(name Name, terms []string) bool {
 			cnt++
 		}
 		if strings.Contains(strings.ToLower(name.Petname), strings.ToLower(term)) {
+			cnt++
+		}
+		if strings.Contains(strings.ToLower(name.Tags), strings.ToLower(term)) {
+			cnt++
+		}
+		if strings.Contains(strings.ToLower(name.Source), strings.ToLower(term)) {
 			cnt++
 		}
 	}
