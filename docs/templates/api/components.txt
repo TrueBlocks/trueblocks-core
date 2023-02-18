@@ -333,14 +333,19 @@ components:
           type: number
           format: uint64
           description: "the size of the monitor file containing those appearances"
-    tag:
-      description: "a colon separated list of tags"
+    part:
+      description: "part of a name record"
       type: object
       properties:
         tags:
           type: string
           example: "31-Gitcoin:Core"
           description: "colon separated list of tags"
+        address:
+          type: string
+          format: address
+          example: "0x1234...4321"
+          description: "an address"
     block:
       description: "block data as returned from the RPC (with slight enhancements)"
       type: object

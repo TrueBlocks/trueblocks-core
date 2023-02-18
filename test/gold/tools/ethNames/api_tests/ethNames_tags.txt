@@ -119,36 +119,6 @@ names?tags
       "tags": "80-Malicious:Shanghai"
     },
     {
-      "tags": "90-Individuals"
-    },
-    {
-      "tags": "90-Individuals:DAO Curators"
-    },
-    {
-      "tags": "90-Individuals:DAO Whales"
-    },
-    {
-      "tags": "90-Individuals:DevCon2"
-    },
-    {
-      "tags": "90-Individuals:Gitcoin Grants"
-    },
-    {
-      "tags": "90-Individuals:Humanity DAO"
-    },
-    {
-      "tags": "90-Individuals:Kickback"
-    },
-    {
-      "tags": "90-Individuals:Other"
-    },
-    {
-      "tags": "90-Individuals:TheCyber"
-    },
-    {
-      "tags": "90-Individuals:Twitter"
-    },
-    {
       "tags": "91-Early:Addresses"
     },
     {

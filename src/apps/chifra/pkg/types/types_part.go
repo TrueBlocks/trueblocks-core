@@ -11,36 +11,43 @@ package types
 // EXISTING_CODE
 // EXISTING_CODE
 
-type RawTag struct {
-	Tags string `json:"tags"`
+type RawPart struct {
+	Tags    string `json:"tags"`
+	Address string `json:"address"`
 }
 
-type SimpleTag struct {
-	Tags string `json:"tags"`
-	raw  *RawTag
+type SimplePart struct {
+	Tags    string  `json:"tags,omitempty"`
+	Address Address `json:"address,omitempty"`
+	raw     *RawPart
 }
 
-func (s *SimpleTag) Raw() *RawTag {
+func (s *SimplePart) Raw() *RawPart {
 	return s.raw
 }
 
-func (s *SimpleTag) SetRaw(raw *RawTag) {
+func (s *SimplePart) SetRaw(raw *RawPart) {
 	s.raw = raw
 }
 
-func (s *SimpleTag) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+func (s *SimplePart) Model(showHidden bool, format string, extraOptions map[string]any) Model {
 	// EXISTING_CODE
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
-		"tags": s.Tags,
 	}
 
 	order := []string{
-		"tags",
 	}
 
 	// EXISTING_CODE
+	if extraOptions["tags"] == true {
+		model["tags"] = s.Tags
+		order = append(order, "tags")
+	} else if extraOptions["address"] == true {
+		model["address"] = s.Address.Hex()
+		order = append(order, "address")
+	}
 	// EXISTING_CODE
 
 	return Model{

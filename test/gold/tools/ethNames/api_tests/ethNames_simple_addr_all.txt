@@ -59,13 +59,7 @@ names?addr
       "address": "0x00000100f2a2bd000715001920eb70d229700085"
     },
     {
-      "address": "0x000001f568875f378bf6d170b790967fe429c81a"
-    },
-    {
       "address": "0x000005edbbc1f258302add96b5e20d3442e5dd89"
-    },
-    {
-      "address": "0x00000b46508882a135b4933b82a07df8f24a0068"
     },
     {
       "address": "0x00006100f7090010005f1bd7ae6122c3c2cf0090"
@@ -89,15 +83,6 @@ names?addr
       "address": "0x000983ba1a675327f0940b56c2d49cd9c042dfbf"
     },
     {
-      "address": "0x000ee67d5bec37ad37292da18516cc96d81e0242"
-    },
-    {
-      "address": "0x00158a74921620b39e5c3afe4dca79feb2c2c143"
-    },
-    {
-      "address": "0x0015f3c39221b20016cebdbf8b19eb5acedca901"
-    },
-    {
       "address": "0x001a589dda0d6be37632925eaf1256986b2c6ad0"
     },
     {
@@ -113,15 +98,6 @@ names?addr
       "address": "0x00216505799d9e3117b40b94a24dc0fa286a57a4"
     },
     {
-      "address": "0x0029218e1dab069656bfb8a75947825e7989b987"
-    },
-    {
-      "address": "0x0029dc8d8ef8c287ad395732dbe5d5bf951da820"
-    },
-    {
-      "address": "0x002c83ebc32d18ff4f74852565402cf7bde35ccc"
-    },
-    {
       "address": "0x00319f722bd546182cb2c701ca254146d3f084fc"
     },
     {
@@ -131,31 +107,16 @@ names?addr
       "address": "0x0035cc37599241d007d0aba1fb931c5fa757f7a1"
     },
     {
-      "address": "0x0035fc5208ef989c28d47e552e92b0c507d2b318"
-    },
-    {
-      "address": "0x0037a6b811ffeb6e072da21179d11b1406371c63"
-    },
-    {
       "address": "0x0037ce3d4b7f8729c8607d8d0248252be68202c0"
     },
     {
       "address": "0x0038eb9084ea8aa63dcb8fbdd63d8862f5bbb3a0"
     },
     {
-      "address": "0x003f6b20bfa4b5cab701960ecf73859cb3c095fc"
-    },
-    {
       "address": "0x0040a2cebc65894bc2cfb57565f9acfa33fab137"
     },
     {
       "address": "0x004375dff511095cc5a197a54140a24efef3a416"
-    },
-    {
-      "address": "0x00476aecb24edfed50aaf2e2361badbd8d3efdc2"
-    },
-    {
-      "address": "0x004efb233c8d26ccc063061bee54f0be9302e6ed"
     },
     {
       "address": "0x004f5683e183908d0f6b688239e3e2d5bbb066ca"
@@ -206,19 +167,10 @@ names?addr
       "address": "0x0087a081a9b430fd8f688c6ac5dd24421bfb060d"
     },
     {
-      "address": "0x008b1ffe244bf31896c833bff4ad9009e7a0f4eb"
-    },
-    {
-      "address": "0x008f82676a606a6783716037c256a7df23746145"
-    },
-    {
       "address": "0x0093e5f2a850268c0ca3093c7ea53731296487eb"
     },
     {
       "address": "0x0096800019bf4eca0bed5a714a553ecf844884c5"
-    },
-    {
-      "address": "0x00995ae79d60365b2a0c52a5ad19140dfb8d45f2"
     },
     {
       "address": "0x009a82e5762189384bf2880a2d21f75e209eee12"
@@ -236,22 +188,13 @@ names?addr
       "address": "0x00a33c8379b03085ad0c0b4f6fb38c63deba8475"
     },
     {
-      "address": "0x00aa972319ddf819140ffe2a991c49a1bff54bad"
-    },
-    {
       "address": "0x00b491d250b9bcce482b6e70321b0a5339d183a6"
     },
     {
       "address": "0x00c396383400a1ef2eb401052dbf5d989b2da481"
     },
     {
-      "address": "0x00c4734f88e8da8e24bf9085d60bb34690957ee1"
-    },
-    {
       "address": "0x00c4b398500645eb5da00a1a379a88b11683ba01"
-    },
-    {
-      "address": "0x00c50c2f356130b1f65ac3e60afe40a6c348f1c9"
     },
     {
       "address": "0x00c83aecc790e8a4453e5dd3b0b4b3680501a7a7"
@@ -263,31 +206,16 @@ names?addr
       "address": "0x00cf36853aa4024fb5bf5cc377dfd85844b411a0"
     },
     {
-      "address": "0x00cfbbaf7ddb3a1476767101c12a0162e241fbad"
-    },
-    {
       "address": "0x00d0f137b51692d0ac708bde7b367a373865cffe"
     },
     {
       "address": "0x00d7e52cb140df6ab91291e289318ad62a18f80c"
     },
     {
-      "address": "0x00dc74ce5d346b14b913071a032b7e2d29b0f2a6"
-    },
-    {
       "address": "0x00de4b13153673bcae2616b67bf822500d325fc3"
     },
     {
       "address": "0x00e4f5f746242e4d115bd65aac7c08fe5d38fb21"
-    },
-    {
-      "address": "0x00eb925836b163a4e5608e3bbd891a7cfab6bde9"
-    },
-    {
-      "address": "0x00ee337d1aa5229d92889ac27fc3841573590289"
-    },
-    {
-      "address": "0x00f78d023dd008c6e8bd3e16327466d58fb6b576"
     },
     {
       "address": "0x00fe460a15b49d09f39b057d0f1a7b9444f4f2be"
@@ -306,9 +234,6 @@ names?addr
     },
     {
       "address": "0x0109c0faae3f358bce232dff482e2d6eca1f4dab"
-    },
-    {
-      "address": "0x010afb8548a5d1a3a3d62f58ca0a5a1329974206"
     },
     {
       "address": "0x010f0c8b31ba0cefe2764c373fa23e8635becb60"
@@ -362,9 +287,6 @@ names?addr
       "address": "0x015f2ec49adc333cd4e0f348c39c506eb3b1837f"
     },
     {
-      "address": "0x015f9e50dc7b2a41ab8cc0b2b58763287dd3dd81"
-    },
-    {
       "address": "0x016396044709eb3edc69c44f4d5fa6996917e4e8"
     },
     {
@@ -393,12 +315,6 @@ names?addr
     },
     {
       "address": "0x0199fd07389c5277c922af2736542e95e24ee689"
-    },
-    {
-      "address": "0x01a23fd30aabf5ad53bab3093dcd4948e15cec80"
-    },
-    {
-      "address": "0x01a24c6a87ee7a19d54c98ffae76755f24fdf637"
     },
     {
       "address": "0x01afc37f4f85babc47c0e2d0eababc7fb49793c8"
@@ -440,19 +356,10 @@ names?addr
       "address": "0x01ddc27a46027cb45e39e47cf9204e2e6b0c92cd"
     },
     {
-      "address": "0x01e6fd0ae73d9194b19f9b376065577927a0d5f5"
-    },
-    {
       "address": "0x01f1e9319982ab828203c0276727cf48065434d3"
     },
     {
-      "address": "0x01f7700c13707eee8349f9800e70a940168812e3"
-    },
-    {
       "address": "0x01f7919634ba8146755b617d7bf24076cecfedef"
-    },
-    {
-      "address": "0x01feb5003fbbd3cae8da33de679cf2e2d07102b3"
     },
     {
       "address": "0x01ff50f8b7f74e4f00580d9596cd3d0d6d6e326f"
@@ -465,9 +372,6 @@ names?addr
     },
     {
       "address": "0x0208fb0af6652bdbc3ea010d5026ed92ff252a53"
-    },
-    {
-      "address": "0x020ca66c30bec2c4fe3861a94e4db4a498a35872"
     },
     {
       "address": "0x0223fc70574214f65813fe336d870ac47e147fae"
@@ -483,9 +387,6 @@ names?addr
     },
     {
       "address": "0x022fc445fd3ec66cc48e0975265ec825245cd7a9"
-    },
-    {
-      "address": "0x0230c6dd5db1d3f871386a3ce1a5a836b2590044"
     },
     {
       "address": "0x02330084a717e4c4a0f08feb1e0bf1ed865b5940"
@@ -542,9 +443,6 @@ names?addr
       "address": "0x02b2101903eb6a51518e63e84b785180859fda9d"
     },
     {
-      "address": "0x02bbea9326048fb2bd96664adc3ef47bbe3e02b6"
-    },
-    {
       "address": "0x02bcb9675727ade60243c3d467a3bf152142698b"
     },
     {
@@ -564,12 +462,6 @@ names?addr
     },
     {
       "address": "0x02d7703097c9bdf0d973470239df3b9cc1589b01"
-    },
-    {
-      "address": "0x02d9cc72bc796d2128e58c04b6e50a4e101c0be1"
-    },
-    {
-      "address": "0x02dbd1aa375c7d00ecf1de198158ffa332110d47"
     },
     {
       "address": "0x02ddbc11e2447108dd983e60fa0a7d5a7d7b563a"
@@ -603,14 +495,121 @@ names?addr
     },
     {
       "address": "0x0306e522cefd3cdc3ce63a60686eb1a0c0e6f467"
+    },
+    {
+      "address": "0x030ba81f1c18d280636f32af80b9aad02cf0854e"
+    },
+    {
+      "address": "0x0312855bb6e548578a36fa8de63b8f0d3d7d7dc2"
+    },
+    {
+      "address": "0x0318179601a70085aeb488f178b081295b65ecc9"
+    },
+    {
+      "address": "0x031920cc2d9f5c10b444fd44009cd64f829e7be2"
+    },
+    {
+      "address": "0x0327112423f3a68efdf1fcf402f6c5cb9f7c33fd"
+    },
+    {
+      "address": "0x032747313c4e914b5fce356ab8dc4df551972dcd"
+    },
+    {
+      "address": "0x032dd2a3c6d234aa9620d65eb618fcdc72be3dbb"
+    },
+    {
+      "address": "0x033030feebd93e3178487c35a9c8ca80874353c9"
+    },
+    {
+      "address": "0x033618a08649300184ec221c6d825416dbee8f92"
+    },
+    {
+      "address": "0x035032655b5b3784d359b56eb82c803bd971c582"
+    },
+    {
+      "address": "0x035495b687850f79cb1652f416ea7ec19907557c"
+    },
+    {
+      "address": "0x03552d005d0f4262bf2d85fa2a3263541d4059c1"
+    },
+    {
+      "address": "0x0358629bd27fa559b88d0f41ea3da28d057c3414"
+    },
+    {
+      "address": "0x0360b415b56bd77def7ffd64ab9c0a9f63a84e4f"
+    },
+    {
+      "address": "0x036407f23d5e1c1486f7488332cf54bf06e5f09f"
+    },
+    {
+      "address": "0x036ea7048a4c1f28b299b9dd9e3c9fe9022e2a2a"
+    },
+    {
+      "address": "0x0371a82e4a9d0a4312f3ee2ac9c6958512891372"
+    },
+    {
+      "address": "0x03798c0d62e6a0b0548114fb6241efa07ca4122d"
+    },
+    {
+      "address": "0x037e414abacc799a598314153509b6b967608bf9"
+    },
+    {
+      "address": "0x037e8f2125bf532f3e228991e051c8a7253b642c"
+    },
+    {
+      "address": "0x0384610bf8e9292ec499145cb126e32a17e7ccd6"
+    },
+    {
+      "address": "0x03893a7c7463ae47d46bc7f091665f1893656003"
+    },
+    {
+      "address": "0x0389836416d1d46724f0913eeee42622950b20c1"
+    },
+    {
+      "address": "0x0389a06b028526b05966c287370bebefa0082176"
+    },
+    {
+      "address": "0x0391d2021f89dc339f60fff84546ea23e337750f"
+    },
+    {
+      "address": "0x039ae2898d257f4c9d7e381d478ee1ed042fe2f4"
+    },
+    {
+      "address": "0x039b5649a59967e3e936d7471f9c3700100ee1ab"
+    },
+    {
+      "address": "0x039b739a1e7353878bfb2f2a4ec23502f4885baa"
+    },
+    {
+      "address": "0x03a99d9235732d94a300bf7013acb11020484bf1"
+    },
+    {
+      "address": "0x03ab458634910aad20ef5f1c8ee96f1d6ac54919"
+    },
+    {
+      "address": "0x03b0ffc15a9a03d32a3a7c5839b3faf5174059cf"
+    },
+    {
+      "address": "0x03b904c8b912194464ae97eaa0381e5518446d25"
+    },
+    {
+      "address": "0x03bc0c4b986457b20a0afcedd2537912bc1b0532"
+    },
+    {
+      "address": "0x03c2bc72a3e007179e54ffb4563cc235bec8151a"
+    },
+    {
+      "address": "0x03c780cd554598592b97b7256ddaad759945b125"
     }
   ],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "finalized": "0xdeadbeef",
     "client": "0xdeadbeef",
-    "namePath": "--"
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
   }
 }

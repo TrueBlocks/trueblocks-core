@@ -87,16 +87,12 @@ func (opts *NamesOptions) IsPorted() (ported bool) {
 	if opts.Clean || len(opts.Autoname) > 0 || len(opts.Globals.OutputFn) > 0 ||
 		opts.Create || opts.Update || opts.Delete || opts.Undelete || opts.Remove {
 		ported = false
+	} else if len(opts.Terms) > 0 {
+		ported = false
 	} else {
-		if opts.Tags {
+		if opts.Tags || opts.Addr {
 			ported = true
-		} else if opts.Addr {
-			ported = false
-		} else if len(opts.Terms) > 0 {
-			ported = false
 		} else if opts.Expand {
-			ported = false
-		} else if opts.MatchCase {
 			ported = false
 		} else if opts.All {
 			ported = false

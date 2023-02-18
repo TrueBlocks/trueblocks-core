@@ -2,7 +2,6 @@ package namesPkg
 
 import (
 	"context"
-	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -10,7 +9,7 @@ import (
 )
 
 func (opts *NamesOptions) HandleTags() error {
-	namesArray, err := names.LoadNamesArray(opts.Globals.Chain, opts.getType())
+	namesArray, err := names.LoadNamesArray(opts.Globals.Chain, opts.getType(), names.SortByTags)
 	if err != nil {
 		return err
 	}
@@ -20,18 +19,14 @@ func (opts *NamesOptions) HandleTags() error {
 		}
 	}
 
-	sort.Slice(namesArray, func(i, j int) bool {
-		return namesArray[i].Tags < namesArray[j].Tags
-	})
 	tagsMap := make(map[string]bool, len(namesArray)/10)
-
 	ctx := context.Background()
 
 	// Note: Make sure to add an entry to enabledForCmd in src/apps/chifra/pkg/output/helpers.go
-	fetchData := func(modelChan chan types.Modeler[types.RawTag], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawPart], errorChan chan error) {
 		for _, name := range namesArray {
 			if !tagsMap[name.Tags] {
-				s := types.SimpleTag{
+				s := types.SimplePart{
 					Tags: name.Tags,
 				}
 				modelChan <- &s
@@ -53,18 +48,23 @@ func (opts *NamesOptions) HandleTags() error {
 		Append:     opts.Globals.Append,
 		JsonIndent: "  ",
 		Extra: map[string]interface{}{
-			"list": true,
+			"tags": true,
 		},
 	})
 }
 
 func (opts *NamesOptions) getType() names.Component {
+	var ret names.Component
+	if opts.Globals.TestMode {
+		ret |= names.Testing
+	}
 	if opts.Custom {
 		if opts.All {
-			return names.Regular | names.Custom
+			ret |= names.Regular | names.Custom
 		} else {
-			return names.Custom
+			ret |= names.Custom
 		}
 	}
-	return names.Regular
+	ret |= names.Regular
+	return ret
 }

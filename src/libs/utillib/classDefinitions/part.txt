@@ -1,11 +1,11 @@
 [settings]
-class = CTag
-fields = tag.csv
+class = CPart
+fields = part.csv
 includes = utillib.h
 cpp_includes =
 disabled = true
 doc_group = 01-Accounts
-doc_descr = a colon separated list of tags
-doc_route = 108-tag
+doc_descr = part of a name record
+doc_route = 108-part
 doc_producer = names
-# gogen = Tag
+gogen = Part
