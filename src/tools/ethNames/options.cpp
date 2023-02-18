@@ -42,7 +42,7 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-string_q shortenFormat(const string_q& fmtIn);
+string_q shortenedFormat(void);
 string_q getSearchFields(const string_q& fmtIn);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -231,7 +231,7 @@ bool COptions::parseArguments(string_q& command) {
         searchFields += "\t[{SOURCE}]";
 
     // Prepare formatting
-    string_q str = (format.empty() ? shortenFormat(STR_DISPLAY_NAME) : format);
+    string_q str = (format.empty() ? shortenedFormat() : format);
     if (verbose && !contains(format, "{SOURCE}"))
         str += "\t[{SOURCE}]";
 
@@ -410,15 +410,14 @@ void COptions::filterNames() {
 }
 
 //-----------------------------------------------------------------------
-string_q shortenFormat(const string_q& fmtIn) {
-    string_q ret = toUpper(fmtIn);
-    replace(ret, "[{SOURCE}]", "");
-    replace(ret, "[{DECIMAL}]", "");
-    replace(ret, "[{DELETED}]", "");
-    replace(ret, "[{ISCUSTOM}]", "");
-    replace(ret, "[{ISPREFUND}]", "");
-    replace(ret, "[{ISCONTRACT}]", "");
-    replace(ret, "[{ISERC20}]", "");
+string_q shortenedFormat(void) {
+    string_q ret = toUpper(STR_DISPLAY_NAME);
+    replace(ret, "[{SOURCE}]\t", "");
+    replace(ret, "[{DELETED}]\t", "");
+    replace(ret, "[{ISCUSTOM}]\t", "");
+    replace(ret, "[{ISPREFUND}]\t", "");
+    replace(ret, "[{ISCONTRACT}]\t", "");
+    replace(ret, "[{ISERC20}]\t", "");
     replace(ret, "[{ISERC721}]", "");
     return trim(ret, '\t');
 }
@@ -427,7 +426,7 @@ string_q shortenFormat(const string_q& fmtIn) {
 string_q getSearchFields(const string_q& fmtIn) {
     string_q ret = toUpper(fmtIn);
     replace(ret, "[{SOURCE}]", "");
-    replace(ret, "[{DECIMAL}]", "");
+    replace(ret, "[{DECIMALS}]", "");
     replace(ret, "[{DELETED}]", "");
     replace(ret, "[{ISCUSTOM}]", "");
     replace(ret, "[{ISPREFUND}]", "");
