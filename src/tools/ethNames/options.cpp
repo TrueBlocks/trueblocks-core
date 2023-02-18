@@ -234,10 +234,9 @@ bool COptions::parseArguments(string_q& command) {
     string_q str = (format.empty() ? shortenFormat(STR_DISPLAY_NAME) : format);
     if (verbose && !contains(format, "{SOURCE}"))
         str += "\t[{SOURCE}]";
-    string_q meta = ", \"namePath\": \"" + (isTestMode() ? "--" : cacheFolder_names) + "\"";
 
     // Display formatting
-    configureDisplay("ethNames", "CName", str, meta);
+    configureDisplay("ethNames", "CName", str, "");
     if (expContext().exportFmt == JSON1)
         manageFields("CName:" + cleanFmt(STR_DISPLAY_NAME));
     if (!expand) {

@@ -16,7 +16,6 @@ names?custom&terms=Account_1
     "ripe": "0xdeadbeef",
     "staging": "0xdeadbeef",
     "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef",
-    "namePath": "--"
+    "client": "0xdeadbeef"
   }
 }
