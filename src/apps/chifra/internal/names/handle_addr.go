@@ -6,15 +6,16 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *NamesOptions) HandleAddr() error {
-	namesArray, err := names.LoadNamesArray(opts.Globals.Chain, opts.getType(), names.SortByAddress)
+	namesArray, err := names.LoadNamesArray(opts.Globals.Chain, opts.getType(), names.SortByAddress, opts.Terms)
 	if err != nil {
 		return err
 	}
 	if opts.Globals.TestMode {
-		namesArray = namesArray[:200]
+		namesArray = namesArray[:utils.Min(200, len(namesArray))]
 		if opts.Custom {
 			namesArray = []names.Name{}
 			namesArray = append(namesArray, names.Name{Address: "0x1"})

@@ -88,7 +88,7 @@ func (opts *NamesOptions) IsPorted() (ported bool) {
 		opts.Create || opts.Update || opts.Delete || opts.Undelete || opts.Remove {
 		ported = false
 	} else if len(opts.Terms) > 0 {
-		ported = false
+		ported = opts.Tags || opts.Addr
 	} else {
 		if opts.Tags || opts.Addr {
 			ported = true

@@ -9,7 +9,7 @@ import (
 )
 
 func (opts *NamesOptions) HandleTags() error {
-	namesArray, err := names.LoadNamesArray(opts.Globals.Chain, opts.getType(), names.SortByTags)
+	namesArray, err := names.LoadNamesArray(opts.Globals.Chain, opts.getType(), names.SortByTags, opts.Terms)
 	if err != nil {
 		return err
 	}

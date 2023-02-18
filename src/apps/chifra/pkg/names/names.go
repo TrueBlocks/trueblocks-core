@@ -85,9 +85,9 @@ const (
 	// SortByPetname
 )
 
-func LoadNamesArray(chain string, components Component, sortBy SortBy) (NamesArray, error) {
+func LoadNamesArray(chain string, components Component, sortBy SortBy, terms []string) (NamesArray, error) {
 	names := NamesArray{}
-	if namesMap, err := LoadNamesMap(chain, components); err != nil {
+	if namesMap, err := LoadNamesMap(chain, components, terms); err != nil {
 		return nil, err
 	} else {
 		for _, name := range namesMap {
@@ -114,7 +114,7 @@ func LoadNamesArray(chain string, components Component, sortBy SortBy) (NamesArr
 	return names, nil
 }
 
-func LoadNamesMap(chain string, components Component) (NamesMap, error) {
+func LoadNamesMap(chain string, components Component, terms []string) (NamesMap, error) {
 	binPath := config.GetPathToCache(chain) + "names/names.bin"
 	// TODO: Use the names cache if it's present
 	if false && file.FileExists(binPath) {
@@ -141,7 +141,9 @@ func LoadNamesMap(chain string, components Component) (NamesMap, error) {
 				Source:   justChars(v.Source[:]),
 				Petname:  justChars(v.Petname[:]),
 			}
-			ret[types.HexToAddress(justChars(v.Address[:]))] = n
+			if doSearch(n, terms) {
+				ret[types.HexToAddress(justChars(v.Address[:]))] = n
+			}
 			// fmt.Println(n)
 			// fmt.Println()
 		}
@@ -150,17 +152,17 @@ func LoadNamesMap(chain string, components Component) (NamesMap, error) {
 
 	ret := NamesMap{}
 	if components&Regular != 0 {
-		nameMapFromFile(chain, &ret, "names.tab")
+		nameMapFromFile(chain, &ret, "names.tab", terms)
 	}
 
 	if components&Custom != 0 {
-		nameMapFromFile(chain, &ret, "names_custom.tab")
+		nameMapFromFile(chain, &ret, "names_custom.tab", terms)
 	}
 
 	return ret, nil
 }
 
-func nameMapFromFile(chain string, ret *NamesMap, filename string) {
+func nameMapFromFile(chain string, ret *NamesMap, filename string, terms []string) {
 	namesPath := filepath.Join(config.GetPathToChainConfig(chain), filename)
 	gr, err := NewNameReader(namesPath)
 	if err != nil {
@@ -175,7 +177,9 @@ func nameMapFromFile(chain string, ret *NamesMap, filename string) {
 		if err != nil {
 			log.Fatal(err)
 		}
-		(*ret)[types.HexToAddress(grant.Address)] = grant
+		if doSearch(grant, terms) {
+			(*ret)[types.HexToAddress(grant.Address)] = grant
+		}
 	}
 }
 
@@ -266,4 +270,30 @@ func NewNameReader(path string) (NameReader, error) {
 	}
 
 	return gr, nil
+}
+
+func doSearch(name Name, terms []string) bool {
+	if len(terms) == 0 {
+		return true
+	}
+
+	cnt := 0
+	for _, term := range terms {
+		if strings.Contains(strings.ToLower(name.Name), strings.ToLower(term)) {
+			cnt++
+		}
+		if strings.Contains(strings.ToLower(name.Symbol), strings.ToLower(term)) {
+			cnt++
+		}
+		if strings.Contains(strings.ToLower(name.Address), strings.ToLower(term)) {
+			cnt++
+		}
+		if strings.Contains(strings.ToLower(name.Petname), strings.ToLower(term)) {
+			cnt++
+		}
+	}
+	// if cnt > 0 {
+	// fmt.Println(name.Address, name.Name, terms, len(terms), cnt, len(terms) == cnt)
+	// }
+	return len(terms) <= cnt
 }
