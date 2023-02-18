@@ -23,9 +23,6 @@ names?terms=0xb6&addr
       "address": "0xb6259685685235c1ef4b8529e7105f00bd42b9f8"
     },
     {
-      "address": "0xb6277cb5a2abd2b296c1d7f61a8f24c2d4942f9f"
-    },
-    {
       "address": "0xb62b6b192524f6b220a08f0d5d0eb748a8cbaa1b"
     },
     {
@@ -41,9 +38,6 @@ names?terms=0xb6&addr
       "address": "0xb63b606ac810a52cca15e44bb630fd42d8d1d83d"
     },
     {
-      "address": "0xb63bb45b2ef614ce087dc01c98013d87fd757896"
-    },
-    {
       "address": "0xb6458aedc6145f46f1df3f60a4bb9bfc3da6463d"
     },
     {
@@ -57,9 +51,6 @@ names?terms=0xb6&addr
     },
     {
       "address": "0xb6568dc090302196ec8edf56d99c3484cee94e6a"
-    },
-    {
-      "address": "0xb656b2a9c3b2416437a811e07466ca712f5a5b5a"
     },
     {
       "address": "0xb656cd9e370f0be5a02a85bb70bca7bc25f03c07"
@@ -78,9 +69,6 @@ names?terms=0xb6&addr
     },
     {
       "address": "0xb66d6eb682dcebb57b0fc56d7143ab52e43d32a5"
-    },
-    {
-      "address": "0xb66db713a90e5afdd22c5830f2141eaa05134661"
     },
     {
       "address": "0xb671c3883307cf05bb3dff77a9754e87b4347195"
@@ -107,9 +95,6 @@ names?terms=0xb6&addr
       "address": "0xb67fecf7af733b16cd08a7959eae2d8554d246af"
     },
     {
-      "address": "0xb682fd6a16c409594bc49c7874e4ca383033d7a5"
-    },
-    {
       "address": "0xb683d83a532e2cb7dfa5275eed3698436371cc9f"
     },
     {
@@ -129,12 +114,6 @@ names?terms=0xb6&addr
     },
     {
       "address": "0xb6989f472bef8931e6ca882b1f875539b7d5da19"
-    },
-    {
-      "address": "0xb69fa0ba7f4cf765c94a9ced37310327191ac949"
-    },
-    {
-      "address": "0xb6a312b525de98cbd6c73a63e46a1e9acb835c64"
     },
     {
       "address": "0xb6a398d36381a2370d9522de023b5bce5000ae9d"
@@ -170,9 +149,6 @@ names?terms=0xb6&addr
       "address": "0xb6e040c9ecaae172a89bd561c5f73e1c48d28cd9"
     },
     {
-      "address": "0xb6e32c75a2083a38f6cce6e65756c0bf86d84200"
-    },
-    {
       "address": "0xb6e41bab6fcc63967d84e30f57b818ff3cb91df3"
     },
     {
@@ -194,21 +170,17 @@ names?terms=0xb6&addr
       "address": "0xb6f947eed973bc0072bd0fbe2c44594f8d62b332"
     },
     {
-      "address": "0xb6fab2c9e391ad3af57567e22bf3eb792079f55c"
-    },
-    {
       "address": "0xb6fb5bd626feaae090e5f5b46a6438ad7fe452f5"
-    },
-    {
-      "address": "0xb6fee4df663addc0081b51385a6195d52d1c2001"
     }
   ],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "finalized": "0xdeadbeef",
     "client": "0xdeadbeef",
-    "namePath": "--"
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
   }
 }

@@ -101,9 +101,6 @@ func (opts *NamesOptions) toCmdLine() string {
 	if opts.Named {
 		options += " --named"
 	}
-	if opts.Addr {
-		options += " --addr"
-	}
 	if opts.ToCustom {
 		options += " --to_custom"
 	}

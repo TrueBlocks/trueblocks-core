@@ -28,7 +28,6 @@ static const COption params[] = {
     COption("custom", "c", "", OPT_SWITCH, "include only custom named account in the search"),
     COption("prefund", "p", "", OPT_SWITCH, "include prefund accounts in the search"),
     COption("named", "n", "", OPT_SWITCH, "include well know token and airdrop addresses in the search"),
-    COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting, assumes --no_header)"),  // NOLINT
     COption("to_custom", "u", "", OPT_HIDDEN | OPT_SWITCH, "for editCmd only, is the edited name a custom name or not"),
     COption("clean", "C", "", OPT_HIDDEN | OPT_SWITCH, "clean the data (addrs to lower case, sort by addr)"),
     COption("autoname", "A", "<string>", OPT_HIDDEN | OPT_FLAG, "an address assumed to be a token, added automatically to names database if true"),  // NOLINT
@@ -57,7 +56,6 @@ bool COptions::parseArguments(string_q& command) {
     bool all = false;
     bool custom = false;
     bool named = false;
-    bool addr = false;
     bool clean = false;
     string_q autoname = "";
     bool create = false;
@@ -69,7 +67,6 @@ bool COptions::parseArguments(string_q& command) {
 
     string_q format;
     bool deflt = true;
-    bool addr_only = false;
 
     Init();
     explode(arguments, command, ' ');
@@ -94,9 +91,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-n" || arg == "--named") {
             named = true;
-
-        } else if (arg == "-a" || arg == "--addr") {
-            addr = true;
 
         } else if (arg == "-u" || arg == "--to_custom") {
             to_custom = true;
@@ -233,13 +227,6 @@ bool COptions::parseArguments(string_q& command) {
         types |= CUSTOM;
     }
 
-    if (addr) {
-        addr_only = true;
-        noHeader = true;
-        format = "[{ADDRESS}]";
-        searchFields = "[{ADDRESS}]\t[{NAME}]";
-    }
-
     if (verbose)
         searchFields += "\t[{SOURCE}]";
 
@@ -264,22 +251,6 @@ bool COptions::parseArguments(string_q& command) {
 
     // Collect results for later display
     filterNames();
-
-    // Data wrangling
-    if (addr_only) {
-        HIDE_FIELD(CName, "deleted");
-        HIDE_FIELD(CName, "tags");
-        HIDE_FIELD(CName, "name");
-        HIDE_FIELD(CName, "symbol");
-        HIDE_FIELD(CName, "petname");
-        HIDE_FIELD(CName, "source");
-        HIDE_FIELD(CName, "decimals");
-        HIDE_FIELD(CName, "isCustom");
-        HIDE_FIELD(CName, "isPrefund");
-        HIDE_FIELD(CName, "isContract");
-        HIDE_FIELD(CName, "isErc20");
-        HIDE_FIELD(CName, "isErc721");
-    }
 
     return true;
 }
