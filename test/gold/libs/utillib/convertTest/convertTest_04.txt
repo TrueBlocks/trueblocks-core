@@ -47,3 +47,8 @@ convertTest  4
 	000.044 hex_2_Ascii3                     ==> passed 'hex_2_Ascii(2 + 'a', 3 + 'a')' is equal to '0xCD'
 	000.045 hex_2_Ascii3                     ==> passed 'hex_2_Ascii('9' - 2, '9' - 3)' is equal to '0x76'
 	000.046 addr_2_Bytes                     ==> passed 'addr' is equal to 'os.str()'
+	000.047 addr_2_Petname                   ==> passed 'addr_2_Petname("0xecfd004d02f36cd4d8b4a8c1a9533b6af85cd716", '-')' is equal to '"briefly-easy-labrador"'
+	000.048 addr_2_Petname                   ==> passed 'addr_2_Petname("0xed16ce39feef3bd7f5d162045e0f67c0f00046bb", '-')' is equal to '"firmly-noble-cobra"'
+	000.049 addr_2_Petname                   ==> passed 'addr_2_Petname("0xfcfc3a5004d678613f0b36a642269a7f371c3f6a", '-')' is equal to '"initially-closing-egret"'
+	000.050 addr_2_Petname                   ==> passed 'addr_2_Petname("0xfd191a35157d781373fb411bf9f25290047c5eef", '-')' is equal to '"promptly-fitting-shrimp"'
+	000.051 addr_2_Petname                   ==> passed 'addr_2_Petname("0xfe80e9232deaff19baf99869883a4bdf0004e53c", '-')' is equal to '"adequately-ethical-ocelot"'

@@ -2,65 +2,61 @@ names?prefund&custom&terms=0001&verbose
 {
   "data": [
     {
-      "tags": "81-Custom",
       "address": "0x0000000000000000000000000000000000000001",
       "name": "Account_1",
-      "symbol": "",
+      "petname": "abnormally-able-ant",
       "source": "Testing",
-      "decimals": 0,
-      "petname": "abnormally-able-ant"
+      "tags": "81-Custom"
     },
     {
-      "tags": "80-Prefund",
       "address": "0x001762430ea9c3a26e5749afdb70da5f78ddbb8c",
+      "isPrefund": true,
       "name": "Prefund_0001",
-      "symbol": "",
+      "petname": "blatantly-distinct-crow",
       "source": "Genesis",
-      "decimals": 0,
-      "petname": "blatantly-distinct-crow"
+      "tags": "80-Prefund"
     },
     {
-      "tags": "80-Prefund",
       "address": "0x28818e18b610001321b31df6fe7d2815cdadc9f5",
+      "isPrefund": true,
       "name": "Prefund_1377",
-      "symbol": "",
+      "petname": "nicely-famous-liger",
       "source": "Genesis",
-      "decimals": 0,
-      "petname": "nicely-famous-liger"
+      "tags": "80-Prefund"
     },
     {
-      "tags": "80-Prefund",
       "address": "0x6ca5de00817de0cedce5fd000128dede12648b3c",
+      "isPrefund": true,
       "name": "Prefund_3718",
-      "symbol": "",
+      "petname": "explicitly-true-fawn",
       "source": "Genesis",
-      "decimals": 0,
-      "petname": "explicitly-true-fawn"
+      "tags": "80-Prefund"
     },
     {
-      "tags": "80-Prefund",
       "address": "0x936dcf000194e3bff50ac5b4243a3ba014d661d8",
+      "isPrefund": true,
       "name": "Prefund_5047",
-      "symbol": "",
+      "petname": "utterly-magical-jackal",
       "source": "Genesis",
-      "decimals": 0,
-      "petname": "utterly-magical-jackal"
+      "tags": "80-Prefund"
     },
     {
-      "tags": "80-Prefund",
       "address": "0xc1b500011cfba95d7cd636e95e6cbf6167464b25",
+      "isPrefund": true,
       "name": "Prefund_6662",
-      "symbol": "",
+      "petname": "basically-cool-treefrog",
       "source": "Genesis",
-      "decimals": 0,
-      "petname": "basically-cool-treefrog"
+      "tags": "80-Prefund"
     }
   ],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
+    "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
   }
 }
