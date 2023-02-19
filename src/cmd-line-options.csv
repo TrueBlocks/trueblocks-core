@@ -65,7 +65,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 12260,tools,Accounts,names,ethNames,terms,,,true,false,true,true,header,positional,list<string>,a space separated list of one or more search terms
 12265,tools,Accounts,names,ethNames,expand,e,,false,false,true,true,local,switch,<boolean>,expand search to include all fields (search name&#44; address&#44; and symbol otherwise)
-12270,tools,Accounts,names,ethNames,match_case,m,,false,false,true,true,header,switch,<boolean>,do case-sensitive search
+12270,tools,Accounts,names,ethNames,match_case,m,,false,false,true,true,gocmd,switch,<boolean>,do case-sensitive search
 12275,tools,Accounts,names,ethNames,all,l,,false,false,true,true,local,switch,<boolean>,include all (including custom) names in the search
 12280,tools,Accounts,names,ethNames,custom,c,,false,false,true,true,local,switch,<boolean>,include only custom named account in the search
 12285,tools,Accounts,names,ethNames,prefund,p,,false,false,true,true,header,switch,<boolean>,include prefund accounts in the search

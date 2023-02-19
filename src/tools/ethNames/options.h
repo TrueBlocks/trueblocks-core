@@ -28,7 +28,6 @@ class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
     CStringArray terms;
-    bool match_case;
     bool prefund;
     bool to_custom;
     // END_CODE_DECLARE

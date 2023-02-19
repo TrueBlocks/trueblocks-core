@@ -86,9 +86,6 @@ func (opts *NamesOptions) toCmdLine() string {
 	if opts.Expand {
 		options += " --expand"
 	}
-	if opts.MatchCase {
-		options += " --match_case"
-	}
 	if opts.All {
 		options += " --all"
 	}
