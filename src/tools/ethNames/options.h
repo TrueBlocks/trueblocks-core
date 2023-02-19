@@ -21,14 +21,10 @@
 // END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------
-enum account_t { REGULAR = (1 << 3), PREFUND = (1 << 4) };
-
-//-----------------------------------------------------------------------------
 class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
     CStringArray terms;
-    bool prefund;
     bool to_custom;
     // END_CODE_DECLARE
 
@@ -44,7 +40,6 @@ class COptions : public CAbiOptions {
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
-    void filterNames(void);
     bool addIfUnique(const CName& item);
     bool handle_clean(void);
 

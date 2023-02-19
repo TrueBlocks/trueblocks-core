@@ -281,7 +281,7 @@ size_t nNames(void) {
 }
 
 //-----------------------------------------------------------------------
-bool forEveryNameOld(NAMEFUNC func, void* data) {
+bool forEveryName(NAMEFUNC func, void* data) {
     if (!func)
         return false;
 
@@ -291,19 +291,6 @@ bool forEveryNameOld(NAMEFUNC func, void* data) {
         CName acct;
         name.second->disc_2_Name(acct);
         if (!(*func)(acct, data))
-            return false;
-    }
-
-    return true;
-}
-
-//-----------------------------------------------------------------------
-bool forEveryName(NAMEODFUNC func, void* data) {
-    if (!func)
-        return false;
-
-    for (auto name : namePtrMap) {
-        if (!(*func)(name.second, data))
             return false;
     }
 

@@ -45,9 +45,7 @@ class NameOnDisc {
 
 //-----------------------------------------------------------------------
 typedef bool (*NAMEFUNC)(CName& name, void* data);
-typedef bool (*NAMEODFUNC)(NameOnDisc* name, void* data);
-extern bool forEveryNameOld(NAMEFUNC func, void* data);
-extern bool forEveryName(NAMEODFUNC func, void* data);
+extern bool forEveryName(NAMEFUNC func, void* data);
 
 //-----------------------------------------------------------------------
 extern bool loadNames(void);

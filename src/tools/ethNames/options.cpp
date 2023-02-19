@@ -23,7 +23,6 @@ static const COption params[] = {
     // clang-format off
     COption("terms", "", "list<string>", OPT_REQUIRED | OPT_POSITIONAL, "a space separated list of one or more search terms"),  // NOLINT
     COption("expand", "e", "", OPT_SWITCH, "expand search to include all fields (search name, address, and symbol otherwise)"),  // NOLINT
-    COption("prefund", "p", "", OPT_SWITCH, "include prefund accounts in the search"),
     COption("clean", "C", "", OPT_HIDDEN | OPT_SWITCH, "clean the data (addrs to lower case, sort by addr)"),
     COption("autoname", "A", "<string>", OPT_HIDDEN | OPT_FLAG, "an address assumed to be a token, added automatically to names database if true"),  // NOLINT
     COption("create", "", "", OPT_HIDDEN | OPT_SWITCH, "create a new name record"),
@@ -39,8 +38,9 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-string_q shortenedFormat(void);
-string_q getSearchFields(const string_q& fmtIn);
+extern string_q shortenedFormat(void);
+extern string_q getSearchFields(const string_q& fmtIn);
+extern bool addRegular(CName& item, void* data);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
@@ -60,7 +60,6 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
 
     string_q format;
-    bool deflt = true;
 
     Init();
     explode(arguments, command, ' ');
@@ -70,9 +69,6 @@ bool COptions::parseArguments(string_q& command) {
             // BEG_CODE_AUTO
         } else if (arg == "-e" || arg == "--expand") {
             expand = true;
-
-        } else if (arg == "-p" || arg == "--prefund") {
-            prefund = true;
 
         } else if (arg == "-C" || arg == "--clean") {
             clean = true;
@@ -129,13 +125,8 @@ bool COptions::parseArguments(string_q& command) {
     if (remove)
         crudCommands.push_back("remove");
 
-    if (prefund) {
-        if (!loadNamesWithPrefunds())
-            return usage("Could not load names database.");
-    } else {
-        if (!loadNames())
-            return usage("Could not load names database.");
-    }
+    if (!loadNames())
+        return usage("Could not load names database.");
 
     if (!autoname.empty() && (!isAddress(autoname) || isZeroAddr(autoname)))
         return usage("You must provide an address to the --autoname option.");
@@ -146,8 +137,6 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (isCrudCommand()) {
-        if (prefund)
-            return usage("You may not use the --prefund option when editing names.");
         abi_spec.loadAbisFromKnown(true);
         address_t address = toLower(trim(getEnvStr("TB_NAME_ADDRESS"), '\"'));
         if (address.empty() && !terms.empty())
@@ -180,14 +169,6 @@ bool COptions::parseArguments(string_q& command) {
         format = searchFields;
     }
 
-    if (prefund) {
-        if (deflt) {
-            types = 0;
-            deflt = false;
-        }
-        types |= PREFUND;
-    }
-
     if (verbose)
         searchFields += "\t[{SOURCE}]";
 
@@ -210,7 +191,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // Collect results for later display
-    filterNames();
+    forEveryName(addRegular, this);
 
     return true;
 }
@@ -222,7 +203,6 @@ void COptions::Init(void) {
     // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT
-    prefund = false;
     to_custom = false;
     // END_CODE_INIT
 
@@ -230,7 +210,6 @@ void COptions::Init(void) {
     items.clear();
     searches.clear();
     searchFields = getSearchFields(STR_DISPLAY_NAME);
-    types = REGULAR;
     minArgs = 0;
 }
 
@@ -304,29 +283,6 @@ bool addRegular(CName& item, void* data) {
     if (!item.isCustom && !item.isPrefund)
         opts->addIfUnique(item);
     return true;
-}
-
-//-----------------------------------------------------------------------
-bool addPrefund(NameOnDisc* item, void* data) {
-    COptions* opts = (COptions*)data;
-    if (item->flags & IS_PREFUND) {
-        CName name;
-        item->disc_2_Name(name);
-        opts->addIfUnique(name);
-    }
-    return true;
-}
-
-//-----------------------------------------------------------------------
-// order matters...first in wins...
-void COptions::filterNames() {
-    if (types & REGULAR) {
-        forEveryNameOld(addRegular, this);
-    }
-
-    if (types & PREFUND) {
-        forEveryName(addPrefund, this);
-    }
 }
 
 //-----------------------------------------------------------------------
