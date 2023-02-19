@@ -2,9 +2,9 @@ package abisPkg
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"sort"
-    "fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/contract"
@@ -48,7 +48,28 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 				continue
 			}
 
-            // The address is a contract so let's try to download the ABI
+			proxy, err := contract.IsProxy(opts.Globals.Chain, address, nil)
+			fmt.Println("Address", address, "is a proxy:", proxy)
+			// An unexpected error occurred
+			if err != nil {
+				errorChan <- err
+				cancel()
+			}
+
+			if proxy {
+                proxyAddress, err := contract.GetProxyAddress(opts.Globals.Chain, address, nil)
+
+                if err != nil {
+                    errorChan <- err
+                    cancel()
+                }
+
+                if err = abi.DownloadAbi(opts.Globals.Chain, proxyAddress, result); err != nil {
+                    errorChan <- err
+                }
+			}
+
+			// The address is a contract so let's try to download the ABI
 			// It's okay to not find the ABI. We report an error, but do not stop processing
 			if err = abi.DownloadAbi(opts.Globals.Chain, address, result); err != nil {
 				errorChan <- err
