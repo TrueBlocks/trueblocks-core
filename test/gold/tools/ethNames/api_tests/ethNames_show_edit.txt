@@ -1,14 +1,14 @@
-names?terms=0x0000000000000000000000000000000010101010&logLevel=10&fmt=json&expand
+names?terms=0x0000000000000000000000000000000010101010&fmt=json&expand
 {
   "data": [
     {
-      "tags": "TAGS_CHANGED",
       "address": "0x0000000000000000000000000000000010101010",
-      "name": "NAME_CHANGED",
-      "symbol": "SYMBOL_CHANGED",
-      "source": "SOURCE_CHANGED",
       "decimals": 13,
-      "petname": "abnormally-able-quetzal"
+      "name": "NAME_CHANGED",
+      "petname": "abnormally-able-quetzal",
+      "source": "SOURCE_CHANGED",
+      "symbol": "SYMBOL_CHANGED",
+      "tags": "TAGS_CHANGED"
     }
   ],
   "meta": {
