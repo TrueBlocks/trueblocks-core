@@ -1,60 +1,67 @@
 package names
 
 import (
+	"fmt"
 	"math/big"
-	"sort"
-	"strings"
+	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/gocarina/gocsv"
 )
 
 type Allocation struct {
-	Address types.Address `json:"address"`
-	Balance big.Int
+	Address types.Address `json:"address" csv:"address"`
+	Balance big.Int       `json:"balance" csv:"balance"`
 }
 
+// We want to return at least one valid record
+var emptyAllocs = []Allocation{{Address: types.HexToAddress("0x0"), Balance: *big.NewInt(0)}}
+
 func LoadPrefunds(chain string) ([]Allocation, error) {
-
-	prefundPath := config.GetPathToChainConfig(chain) + "allocs.csv"
-	lines := file.AsciiFileToLines(prefundPath)
-
-	prefunds := make([]Allocation, 0, len(lines))
-	for _, line := range lines {
-		record := strings.Split(line, ",")
-
-		// silently skip errored rows...
-		if len(record) != 2 {
-			continue
-		}
-
-		// silently skip malformed lines
-		if common.IsHexAddress(record[0]) {
-			prefunds = append(prefunds, Allocation{
-				Address: types.HexToAddress(record[0]),
-				Balance: utils.Str_2_BigInt(record[1]),
+	allocations := make([]Allocation, 0, 4000)
+	callbackFunc := func(record Allocation) error {
+		if validate.IsValidAddress(record.Address.Hex()) {
+			allocations = append(allocations, Allocation{
+				Address: record.Address,
+				Balance: record.Balance,
 			})
 		}
+		return nil
 	}
 
-	if len(prefunds) == 0 {
-		// We want at least one...
-		prefunds = append(prefunds, Allocation{
-			Address: types.HexToAddress("0x0"),
-			Balance: utils.Str_2_BigInt("0"),
-		})
+	thePath := config.GetPathToChainConfig(chain) + "allocs.csv"
+	if theFile, err := os.OpenFile(thePath, os.O_RDWR|os.O_CREATE, os.ModePerm); err != nil {
+		return emptyAllocs, err
+
+	} else {
+		defer theFile.Close()
+		if err := gocsv.UnmarshalToCallback(theFile, callbackFunc); err != nil {
+			return emptyAllocs, err
+		}
 	}
 
-	// sort the results by address
-	sort.Slice(prefunds, func(i, j int) bool {
-		item := hexutil.Encode(prefunds[i].Address.Bytes())
-		jtem := hexutil.Encode(prefunds[j].Address.Bytes())
-		return item < jtem
-	})
+	if len(allocations) == 0 {
+		allocations = emptyAllocs
+	}
 
-	return prefunds, nil
+	return allocations, nil
+}
+
+func loadPrefundMap(chain string, ret *NamesMap, terms []string, parts Parts) {
+	prefunds, _ := LoadPrefunds(chain)
+	for i, prefund := range prefunds {
+		n := Name{
+			Tags:      "80-Prefund",
+			Address:   prefund.Address.Hex(),
+			Name:      "Prefund_" + fmt.Sprintf("%04d", i),
+			Source:    "Genesis",
+			Petname:   AddrToPetname(prefund.Address.Hex(), "-"),
+			IsPrefund: true,
+		}
+		if doSearch(n, terms, parts) {
+			(*ret)[types.HexToAddress(n.Address)] = n
+		}
+	}
 }

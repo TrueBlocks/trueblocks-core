@@ -407,12 +407,6 @@ bool updateName(const CName& target, const string_q& crud) {
 
     writeNamesToBinary();
 
-    if (!isTestMode()) {
-        ostringstream editRecord;
-        editRecord << Now().Format(FMT_JSON) << crud << "\t" << target.Format(STR_DISPLAY_NAME) << endl;
-        stringToAsciiFile(cacheFolder_names + "edit_log.txt", editRecord.str());
-    }
-
     return true;
 }
 

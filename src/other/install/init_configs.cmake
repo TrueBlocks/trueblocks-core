@@ -33,7 +33,7 @@ function(CopyAndTouchIgnorePresent FROM_DIR IN_FILE TO_DIR)
 	PrintLine("   ${CColor}Copying ./${IN_FILE} to ${TO_DIR}${COff}")
 	file(TOUCH "${FROM_DIR}/${IN_FILE}")
 	file(COPY "${FROM_DIR}/${IN_FILE}" DESTINATION "${TO_DIR}" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
-endfunction(CopyIgnorePresent)
+endfunction(CopyAndTouchIgnorePresent)
 
 # copy an entire folder, replacing even if existing
 function(CopyFolder FROM_DIR TO_DIR)

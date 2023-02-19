@@ -41,7 +41,10 @@ bool COptions::handle_editcmds(bool autoname) {
     return updateName(target, crud);
 }
 
+//--------------------------------------------------------------------
 static const string_q erc721QueryBytes = "0x" + padRight(substitute(_INTERFACE_ID_ERC721, "0x", ""), 64, '0');
+
+//--------------------------------------------------------------------
 inline bool isErc721(const address_t& addr, const CAbi& abi_spec, blknum_t latest) {
     string_q val = getTokenState(addr, "supportsInterface", abi_spec, latest, erc721QueryBytes);
     return val == "T" || val == "true";
