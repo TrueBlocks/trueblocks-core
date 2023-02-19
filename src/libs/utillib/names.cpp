@@ -33,7 +33,7 @@ struct namesHeaderOnDisc {
 
 //-----------------------------------------------------------------------
 static CAddressNameMap namesMap;
-static map<address_t, NameOnDisc*> namePtrMap;
+map<address_t, NameOnDisc*> namePtrMap;
 static NameOnDisc* namesAllocated = nullptr;
 static uint64_t nNameRecords = 0;
 static uint64_t allocSize = 0;
@@ -278,23 +278,6 @@ bool hasName(const address_t& addr) {
 //-----------------------------------------------------------------------
 size_t nNames(void) {
     return namePtrMap.size();
-}
-
-//-----------------------------------------------------------------------
-bool forEveryName(NAMEFUNC func, void* data) {
-    if (!func)
-        return false;
-
-    for (auto name : namePtrMap) {
-        if (!name.second)
-            continue;
-        CName acct;
-        name.second->disc_2_Name(acct);
-        if (!(*func)(acct, data))
-            return false;
-    }
-
-    return true;
 }
 
 //-----------------------------------------------------------------------

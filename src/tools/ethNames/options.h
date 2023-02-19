@@ -42,7 +42,6 @@ class COptions : public CAbiOptions {
     bool addIfUnique(const CName& item);
     bool handle_clean(void);
 
-    bool finishClean(CName& name);
     bool cleanNames(const string_q& sourceIn, const string_q& destIn);
 
     CStringArray crudCommands;

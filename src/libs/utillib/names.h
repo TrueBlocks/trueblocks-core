@@ -44,10 +44,6 @@ class NameOnDisc {
 };
 
 //-----------------------------------------------------------------------
-typedef bool (*NAMEFUNC)(CName& name, void* data);
-extern bool forEveryName(NAMEFUNC func, void* data);
-
-//-----------------------------------------------------------------------
 extern bool loadNames(void);
 extern bool loadNamesWithPrefunds(void);
 extern bool clearNames(void);
@@ -56,5 +52,6 @@ extern bool findToken(const address_t& addr, CName& acct);
 extern bool updateName(const CName& target, const string_q& crud);
 extern bool hasName(const address_t& addr);
 extern size_t nNames(void);
+extern map<address_t, NameOnDisc*> namePtrMap;
 
 }  // namespace qblocks

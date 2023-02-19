@@ -83,9 +83,6 @@ func (opts *NamesOptions) getEnvStr() []string {
 // toCmdLine converts the option to a command line for calling out to the system.
 func (opts *NamesOptions) toCmdLine() string {
 	options := ""
-	if opts.Expand {
-		options += " --expand"
-	}
 	if opts.Clean {
 		options += " --clean"
 	}

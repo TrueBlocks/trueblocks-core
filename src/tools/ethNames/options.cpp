@@ -22,7 +22,6 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("terms", "", "list<string>", OPT_REQUIRED | OPT_POSITIONAL, "a space separated list of one or more search terms"),  // NOLINT
-    COption("expand", "e", "", OPT_SWITCH, "expand search to include all fields (search name, address, and symbol otherwise)"),  // NOLINT
     COption("clean", "C", "", OPT_HIDDEN | OPT_SWITCH, "clean the data (addrs to lower case, sort by addr)"),
     COption("autoname", "A", "<string>", OPT_HIDDEN | OPT_FLAG, "an address assumed to be a token, added automatically to names database if true"),  // NOLINT
     COption("create", "", "", OPT_HIDDEN | OPT_SWITCH, "create a new name record"),
@@ -38,9 +37,6 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern string_q shortenedFormat(void);
-extern string_q getSearchFields(const string_q& fmtIn);
-extern bool addRegular(CName& item, void* data);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
@@ -49,7 +45,6 @@ bool COptions::parseArguments(string_q& command) {
     replaceAll(command, "--delete", "--deleteMe");
 
     // BEG_CODE_LOCAL_INIT
-    bool expand = false;
     bool clean = false;
     string_q autoname = "";
     bool create = false;
@@ -59,17 +54,12 @@ bool COptions::parseArguments(string_q& command) {
     bool remove = false;
     // END_CODE_LOCAL_INIT
 
-    string_q format;
-
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (arg == "-e" || arg == "--expand") {
-            expand = true;
-
         } else if (arg == "-C" || arg == "--clean") {
             clean = true;
 
@@ -161,34 +151,18 @@ bool COptions::parseArguments(string_q& command) {
     for (auto term : terms)
         searches.push_back(term);
 
-    if (expand) {
-        searchFields = STR_DISPLAY_NAME;
-        format = searchFields;
-    }
-
-    if (verbose)
-        searchFields += "\t[{SOURCE}]";
-
-    // Prepare formatting
-    string_q str = (format.empty() ? shortenedFormat() : format);
-    if (verbose && !contains(format, "{SOURCE}"))
-        str += "\t[{SOURCE}]";
-
-    // Display formatting
-    configureDisplay("ethNames", "CName", str, "");
+    searchFields = STR_DISPLAY_NAME;
+    string_q format = searchFields;
+    configureDisplay("ethNames", "CName", format, "");
     if (expContext().exportFmt == JSON1)
         manageFields("CName:" + cleanFmt(STR_DISPLAY_NAME));
-    if (!expand) {
-        HIDE_FIELD(CName, "deleted");
-        HIDE_FIELD(CName, "isCustom");
-        HIDE_FIELD(CName, "isPrefund");
-        HIDE_FIELD(CName, "isContract");
-        HIDE_FIELD(CName, "isErc20");
-        HIDE_FIELD(CName, "isErc721");
-    }
 
-    // Collect results for later display
-    forEveryName(addRegular, this);
+    for (auto name : namePtrMap) {
+        CName acct;
+        name.second->disc_2_Name(acct);
+        if (!acct.isCustom && !acct.isPrefund)
+            addIfUnique(acct);
+    }
 
     return true;
 }
@@ -206,7 +180,7 @@ void COptions::Init(void) {
     terms.clear();
     items.clear();
     searches.clear();
-    searchFields = getSearchFields(STR_DISPLAY_NAME);
+    searchFields = STR_DISPLAY_NAME;
     minArgs = 0;
 }
 
@@ -264,47 +238,11 @@ bool COptions::addIfUnique(const CName& item) {
     string_q search3 = searches.size() > 2 ? searches[2] : "";
 
     string_q str = item.Format(searchFields);
-    if ((search1.empty() || search1 == "*" || contains(str, search1)) &&
-        (search2.empty() || search2 == "*" || contains(str, search2)) &&
-        (search3.empty() || search3 == "*" || contains(str, search3))) {
+    if ((search1.empty() || contains(str, search1)) && (search2.empty() || contains(str, search2)) &&
+        (search3.empty() || contains(str, search3))) {
         items[key] = item;
         return true;
     }
     items.erase(key);
     return false;
-}
-
-//-----------------------------------------------------------------------
-bool addRegular(CName& item, void* data) {
-    COptions* opts = (COptions*)data;
-    if (!item.isCustom && !item.isPrefund)
-        opts->addIfUnique(item);
-    return true;
-}
-
-//-----------------------------------------------------------------------
-string_q shortenedFormat(void) {
-    string_q ret = toUpper(STR_DISPLAY_NAME);
-    replace(ret, "[{SOURCE}]\t", "");
-    replace(ret, "[{DELETED}]\t", "");
-    replace(ret, "[{ISCUSTOM}]\t", "");
-    replace(ret, "[{ISPREFUND}]\t", "");
-    replace(ret, "[{ISCONTRACT}]\t", "");
-    replace(ret, "[{ISERC20}]\t", "");
-    replace(ret, "[{ISERC721}]", "");
-    return trim(ret, '\t');
-}
-
-//-----------------------------------------------------------------------
-string_q getSearchFields(const string_q& fmtIn) {
-    string_q ret = toUpper(fmtIn);
-    replace(ret, "[{SOURCE}]", "");
-    replace(ret, "[{DECIMALS}]", "");
-    replace(ret, "[{DELETED}]", "");
-    replace(ret, "[{ISCUSTOM}]", "");
-    replace(ret, "[{ISPREFUND}]", "");
-    replace(ret, "[{ISCONTRACT}]", "");
-    replace(ret, "[{ISERC20}]", "");
-    replace(ret, "[{ISERC721}]", "");
-    return trim(ret, '\t');
 }
