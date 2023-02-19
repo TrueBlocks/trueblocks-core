@@ -140,15 +140,16 @@ func LoadNamesArray(chain string, parts Parts, sortBy SortBy, terms []string) (N
 func LoadNamesMap(chain string, parts Parts, terms []string) (NamesMap, error) {
 	ret := NamesMap{}
 	if parts&Prefund != 0 {
-		nameMapFromPrefund(chain, &ret, terms, parts)
+		loadPrefundMap(chain, &ret, terms, parts)
 	}
 
 	binPath := config.GetPathToCache(chain) + "names/names.bin"
 	namesPath := filepath.Join(config.GetPathToChainConfig(chain), "names.tab")
 	customPath := filepath.Join(config.GetPathToChainConfig(chain), "names_custom.tab")
+	enabled := false // os.Getenv("FAST") == "true" // TODO: this isn't right
 
 	if parts&Regular != 0 {
-		if false && file.FileExists(binPath) {
+		if enabled && file.FileExists(binPath) {
 			file, _ := os.OpenFile(binPath, os.O_RDONLY, 0)
 			defer file.Close()
 
@@ -187,30 +188,11 @@ func LoadNamesMap(chain string, parts Parts, terms []string) (NamesMap, error) {
 		}
 	}
 
-	if parts&Custom != 0 && parts&Testing != 0 {
-		getCustomTestNames(&ret, terms, parts)
-	} else if parts&Custom != 0 {
-		nameMapFromFile(chain, &ret, customPath, terms, parts)
+	if parts&Custom != 0 {
+		loadCustomMap(chain, &ret, customPath, terms, parts)
 	}
 
 	return ret, nil
-}
-
-func nameMapFromPrefund(chain string, ret *NamesMap, terms []string, parts Parts) {
-	prefunds, _ := LoadPrefunds(chain)
-	for i, prefund := range prefunds {
-		n := Name{
-			Tags:      "80-Prefund",
-			Address:   prefund.Address.Hex(),
-			Name:      "Prefund_" + fmt.Sprintf("%04d", i),
-			Source:    "Genesis",
-			Petname:   AddrToPetname(prefund.Address.Hex(), "-"),
-			IsPrefund: true,
-		}
-		if doSearch(n, terms, parts) {
-			(*ret)[types.HexToAddress(n.Address)] = n
-		}
-	}
 }
 
 func nameMapFromFile(chain string, ret *NamesMap, filePath string, terms []string, parts Parts) {
@@ -322,51 +304,4 @@ func NewNameReader(path string) (NameReader, error) {
 	}
 
 	return gr, nil
-}
-
-func doSearch(name Name, terms []string, parts Parts) bool {
-	if len(terms) == 0 {
-		return true
-	}
-
-	cnt := 0
-	searchStr := name.Name + "\t" + name.Symbol + "\t" + name.Address + "\t" + name.Petname + "\t" + name.Tags
-	if parts&Expanded != 0 {
-		searchStr += "\t" + name.Source
-	}
-
-	for _, term := range terms {
-		if parts&MatchCase != 0 {
-			if strings.Contains(searchStr, term) {
-				cnt++
-			}
-		} else {
-			x := strings.ToLower(searchStr)
-			y := strings.ToLower(term)
-			if strings.Contains(x, y) {
-				cnt++
-			}
-		}
-	}
-
-	return len(terms) <= cnt
-}
-
-func getCustomTestNames(ret *NamesMap, terms []string, parts Parts) {
-	for i := 1; i < 5; i++ {
-		n := Name{
-			Address: fmt.Sprintf("0x%040d", i),
-			Name:    fmt.Sprintf("Account_%d", i),
-			Tags:    "81-Custom",
-			Source:  "Testing",
-		}
-		if i%2 == 0 {
-			n.Decimals = fmt.Sprintf("%d", i)
-			n.Symbol = fmt.Sprintf("AC_%d", i)
-		}
-		n.Petname = AddrToPetname(n.Address, "-")
-		if doSearch(n, terms, parts) {
-			(*ret)[types.HexToAddress(n.Address)] = n
-		}
-	}
 }

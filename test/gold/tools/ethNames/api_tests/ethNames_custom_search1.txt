@@ -3,9 +3,12 @@ names?custom&terms=Account_1
   "data": [
     {
       "address": "0x0000000000000000000000000000000000000001",
+      "decimals": 1,
+      "isCustom": true,
       "name": "Account_1",
       "petname": "abnormally-able-ant",
       "source": "Testing",
+      "symbol": "SYM_1",
       "tags": "81-Custom"
     }
   ],

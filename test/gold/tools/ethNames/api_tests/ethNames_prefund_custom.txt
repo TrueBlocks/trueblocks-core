@@ -3,34 +3,42 @@ names?prefund&custom
   "data": [
     {
       "address": "0x0000000000000000000000000000000000000001",
+      "decimals": 1,
+      "isCustom": true,
       "name": "Account_1",
       "petname": "abnormally-able-ant",
       "source": "Testing",
+      "symbol": "SYM_1",
       "tags": "81-Custom"
     },
     {
       "address": "0x0000000000000000000000000000000000000002",
       "decimals": 2,
+      "isCustom": true,
       "name": "Account_2",
       "petname": "abnormally-able-ape",
       "source": "Testing",
-      "symbol": "AC_2",
+      "symbol": "SYM_2",
       "tags": "81-Custom"
     },
     {
       "address": "0x0000000000000000000000000000000000000003",
+      "decimals": 3,
+      "isCustom": true,
       "name": "Account_3",
       "petname": "abnormally-able-asp",
       "source": "Testing",
+      "symbol": "SYM_3",
       "tags": "81-Custom"
     },
     {
       "address": "0x0000000000000000000000000000000000000004",
       "decimals": 4,
+      "isCustom": true,
       "name": "Account_4",
       "petname": "abnormally-able-bat",
       "source": "Testing",
-      "symbol": "AC_4",
+      "symbol": "SYM_4",
       "tags": "81-Custom"
     },
     {
