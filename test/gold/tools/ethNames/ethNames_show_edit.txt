@@ -1,16 +1,17 @@
-chifra names  0x0000000000000000000000000000000010101010 --log_level 10 --fmt json --expand
+chifra names  0x0000000000000000000000000000000010101010 --fmt json --expand
 TEST[DATE|TIME] Terms:  [0x0000000000000000000000000000000010101010]
 TEST[DATE|TIME] Expand:  true
-TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  json
-{ "data": [
-  {
-    "deleted": false,
-    "tags": "TAGS_CHANGED",
-    "address": "0x0000000000000000000000000000000010101010",
-    "name": "NAME_CHANGED",
-    "symbol": "SYMBOL_CHANGED",
-    "source": "SOURCE_CHANGED",
-    "decimals": 13,
-    "petname": "abnormally-able-quetzal"
-  }] }
+{
+  "data": [
+    {
+      "address": "0x0000000000000000000000000000000010101010",
+      "decimals": 13,
+      "name": "NAME_CHANGED",
+      "petname": "abnormally-able-quetzal",
+      "source": "SOURCE_CHANGED",
+      "symbol": "SYMBOL_CHANGED",
+      "tags": "TAGS_CHANGED"
+    }
+  ]
+}

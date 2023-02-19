@@ -75,6 +75,15 @@ const (
 	Expanded  Parts = 0x20
 )
 
+const (
+	IsCustom   uint16 = 0x1
+	IsPrefund  uint16 = 0x2
+	IsContract uint16 = 0x4
+	IsErc20    uint16 = 0x8
+	IsErc721   uint16 = 0x10
+	IsDeleted  uint16 = 0x20
+)
+
 type SortBy int
 
 const (
@@ -129,53 +138,59 @@ func LoadNamesArray(chain string, parts Parts, sortBy SortBy, terms []string) (N
 }
 
 func LoadNamesMap(chain string, parts Parts, terms []string) (NamesMap, error) {
-	binPath := config.GetPathToCache(chain) + "names/names.bin"
-	// TODO: Fix storing and reading names from / to binary cache
-	if false && file.FileExists(binPath) {
-		file, _ := os.OpenFile(binPath, os.O_RDONLY, 0)
-		defer file.Close()
-
-		header := NameOnDiscHeader{}
-		err := binary.Read(file, binary.LittleEndian, &header)
-		if err != nil {
-			return nil, err
-		}
-		// fmt.Println(thing)
-
-		ret := NamesMap{}
-		for i := uint64(0); i < header.Count; i++ {
-			v := NameOnDisc{}
-			binary.Read(file, binary.LittleEndian, &v)
-			n := Name{
-				Tags:     asString("tags", v.Tags[:]),
-				Address:  asString("address", v.Address[:]),
-				Name:     asString("name", v.Name[:]),
-				Symbol:   asString("symbol", v.Symbol[:]),
-				Decimals: fmt.Sprintf("%d", v.Decimals),
-				Source:   asString("source", v.Source[:]),
-				Petname:  asString("petname", v.Petname[:]),
-				// Flags: asString("decimals", v.Decimals),
-			}
-			if doSearch(n, terms, parts) {
-				ret[types.HexToAddress(n.Address)] = n
-			}
-		}
-		return ret, nil
+	ret := NamesMap{}
+	if parts&Prefund != 0 {
+		nameMapFromPrefund(chain, &ret, terms, parts)
 	}
 
-	ret := NamesMap{}
+	binPath := config.GetPathToCache(chain) + "names/names.bin"
+	namesPath := filepath.Join(config.GetPathToChainConfig(chain), "names.tab")
+	customPath := filepath.Join(config.GetPathToChainConfig(chain), "names_custom.tab")
+
 	if parts&Regular != 0 {
-		nameMapFromFile(chain, &ret, "names.tab", terms, parts)
+		if false && file.FileExists(binPath) {
+			file, _ := os.OpenFile(binPath, os.O_RDONLY, 0)
+			defer file.Close()
+
+			header := NameOnDiscHeader{}
+			err := binary.Read(file, binary.LittleEndian, &header)
+			if err != nil {
+				return nil, err
+			}
+
+			for i := uint64(0); i < header.Count; i++ {
+				v := NameOnDisc{}
+				binary.Read(file, binary.LittleEndian, &v)
+				n := Name{
+					Tags:       asString("tags", v.Tags[:]),
+					Address:    asString("address", v.Address[:]),
+					Name:       asString("name", v.Name[:]),
+					Symbol:     asString("symbol", v.Symbol[:]),
+					Decimals:   fmt.Sprintf("%d", v.Decimals),
+					Source:     asString("source", v.Source[:]),
+					Petname:    asString("petname", v.Petname[:]),
+					IsCustom:   v.Flags&IsCustom != 0,
+					IsPrefund:  v.Flags&IsPrefund != 0,
+					IsContract: v.Flags&IsContract != 0,
+					IsErc20:    v.Flags&IsErc20 != 0,
+					IsErc721:   v.Flags&IsErc721 != 0,
+					Deleted:    v.Flags&IsDeleted != 0,
+				}
+				if !n.IsCustom {
+					if doSearch(n, terms, parts) {
+						ret[types.HexToAddress(n.Address)] = n
+					}
+				}
+			}
+		} else {
+			nameMapFromFile(chain, &ret, namesPath, terms, parts)
+		}
 	}
 
 	if parts&Custom != 0 && parts&Testing != 0 {
 		getCustomTestNames(&ret, terms, parts)
 	} else if parts&Custom != 0 {
-		nameMapFromFile(chain, &ret, "names_custom.tab", terms, parts)
-	}
-
-	if parts&Prefund != 0 {
-		nameMapFromPrefund(chain, &ret, terms, parts)
+		nameMapFromFile(chain, &ret, customPath, terms, parts)
 	}
 
 	return ret, nil
@@ -198,9 +213,8 @@ func nameMapFromPrefund(chain string, ret *NamesMap, terms []string, parts Parts
 	}
 }
 
-func nameMapFromFile(chain string, ret *NamesMap, filename string, terms []string, parts Parts) {
-	namesPath := filepath.Join(config.GetPathToChainConfig(chain), filename)
-	gr, err := NewNameReader(namesPath)
+func nameMapFromFile(chain string, ret *NamesMap, filePath string, terms []string, parts Parts) {
+	gr, err := NewNameReader(filePath)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -222,12 +236,11 @@ func nameMapFromFile(chain string, ret *NamesMap, filename string, terms []strin
 // asString converts the byte array (not zero-terminated) to a string
 func asString(which string, b []byte) string {
 	ret := ""
-	for i := 0; i < len(b); i++ {
-		if b[i] != 0 {
-			ret += string(b[i])
-		} else {
+	for _, rVal := range string(b) {
+		if rVal == 0 {
 			return ret
 		}
+		ret += string(rVal)
 	}
 	return ret
 }
