@@ -128,9 +128,6 @@ bool COptions::parseArguments(string_q& command) {
     if (!loadNames())
         return usage("Could not load names database.");
 
-    if (!autoname.empty() && (!isAddress(autoname) || isZeroAddr(autoname)))
-        return usage("You must provide an address to the --autoname option.");
-
     if (clean) {
         abi_spec.loadAbisFromKnown(true);
         return handle_clean();
