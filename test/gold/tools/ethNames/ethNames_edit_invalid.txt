@@ -1,4 +1,4 @@
-chifra names  --invalid --log_level 10 --fmt json --expand
+chifra names  --invalid --log_level 10 --fmt json
 Error: 
   unknown flag: --invalid
 

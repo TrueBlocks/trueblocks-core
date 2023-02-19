@@ -13,17 +13,6 @@ names?terms=etwork&terms=one
       "tags": "50-Tokens:ERC20"
     },
     {
-      "address": "0x8ea197328f3d72e148af942d9ea93f9cfb40626b",
-      "decimals": 18,
-      "isContract": true,
-      "isErc20": true,
-      "name": "Not Aragon Network DAO launch council",
-      "petname": "wrongly-honest-terrier",
-      "source": "On chain",
-      "symbol": "NOTANLC",
-      "tags": "50-Tokens:ERC20"
-    },
-    {
       "address": "0xcc1230436557f1250812fabbee5b8524b43250f3",
       "decimals": 18,
       "isContract": true,
