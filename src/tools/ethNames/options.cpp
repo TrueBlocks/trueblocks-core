@@ -123,7 +123,7 @@ bool COptions::parseArguments(string_q& command) {
         return handle_clean();
     }
 
-    if (isCrudCommand()) {
+    if (crudCommands.size() > 0) {
         abi_spec.loadAbisFromKnown(true);
         address_t address = toLower(trim(getEnvStr("TB_NAME_ADDRESS"), '\"'));
         if (address.empty() && !terms.empty())
@@ -151,8 +151,7 @@ bool COptions::parseArguments(string_q& command) {
     for (auto term : terms)
         searches.push_back(term);
 
-    searchFields = STR_DISPLAY_NAME;
-    string_q format = searchFields;
+    string_q format = STR_DISPLAY_NAME;
     configureDisplay("ethNames", "CName", format, "");
     if (expContext().exportFmt == JSON1)
         manageFields("CName:" + cleanFmt(STR_DISPLAY_NAME));
@@ -180,7 +179,6 @@ void COptions::Init(void) {
     terms.clear();
     items.clear();
     searches.clear();
-    searchFields = STR_DISPLAY_NAME;
     minArgs = 0;
 }
 
@@ -210,7 +208,7 @@ bool COptions::addIfUnique(const CName& item) {
     if (isZeroAddr(item.address))
         return false;
 
-    if (isTestMode() && !isCrudCommand()) {
+    if (isTestMode() && crudCommands.size() == 0) {
         if (items.size() > 200)
             return true;
         if ((contains(item.tags, "Kickback") || contains(item.tags, "Humanity")))  // don't expose people during testing
@@ -237,7 +235,7 @@ bool COptions::addIfUnique(const CName& item) {
     string_q search2 = searches.size() > 1 ? searches[1] : "";
     string_q search3 = searches.size() > 2 ? searches[2] : "";
 
-    string_q str = item.Format(searchFields);
+    string_q str = item.Format(STR_DISPLAY_NAME);
     if ((search1.empty() || contains(str, search1)) && (search2.empty() || contains(str, search2)) &&
         (search3.empty() || contains(str, search3))) {
         items[key] = item;
