@@ -27,10 +27,8 @@ type NamesOptions struct {
 	All       bool                  `json:"all,omitempty"`       // Include all (including custom) names in the search
 	Custom    bool                  `json:"custom,omitempty"`    // Include only custom named account in the search
 	Prefund   bool                  `json:"prefund,omitempty"`   // Include prefund accounts in the search
-	Named     bool                  `json:"named,omitempty"`     // Include well know token and airdrop addresses in the search
 	Addr      bool                  `json:"addr,omitempty"`      // Display only addresses in the results (useful for scripting, assumes --no_header)
 	Tags      bool                  `json:"tags,omitempty"`      // Export the list of tags and subtags only
-	ToCustom  bool                  `json:"toCustom,omitempty"`  // For editCmd only, is the edited name a custom name or not
 	Clean     bool                  `json:"clean,omitempty"`     // Clean the data (addrs to lower case, sort by addr)
 	Autoname  string                `json:"autoname,omitempty"`  // An address assumed to be a token, added automatically to names database if true
 	Create    bool                  `json:"create,omitempty"`    // Create a new name record
@@ -38,6 +36,8 @@ type NamesOptions struct {
 	Delete    bool                  `json:"delete,omitempty"`    // Delete a name, but do not remove it
 	Undelete  bool                  `json:"undelete,omitempty"`  // Undelete a previously deleted name
 	Remove    bool                  `json:"remove,omitempty"`    // Remove a previously deleted name
+	ToCustom  bool                  `json:"toCustom,omitempty"`  // For editCmd only, is the edited name a custom name or not
+	Named     bool                  `json:"named,omitempty"`     // Please use the --all option instead
 	Globals   globals.GlobalOptions `json:"globals,omitempty"`   // The global options
 	BadFlag   error                 `json:"badFlag,omitempty"`   // An error flag if needed
 }
@@ -52,10 +52,8 @@ func (opts *NamesOptions) testLog() {
 	logger.TestLog(opts.All, "All: ", opts.All)
 	logger.TestLog(opts.Custom, "Custom: ", opts.Custom)
 	logger.TestLog(opts.Prefund, "Prefund: ", opts.Prefund)
-	logger.TestLog(opts.Named, "Named: ", opts.Named)
 	logger.TestLog(opts.Addr, "Addr: ", opts.Addr)
 	logger.TestLog(opts.Tags, "Tags: ", opts.Tags)
-	logger.TestLog(opts.ToCustom, "ToCustom: ", opts.ToCustom)
 	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
 	logger.TestLog(len(opts.Autoname) > 0, "Autoname: ", opts.Autoname)
 	logger.TestLog(opts.Create, "Create: ", opts.Create)
@@ -63,6 +61,8 @@ func (opts *NamesOptions) testLog() {
 	logger.TestLog(opts.Delete, "Delete: ", opts.Delete)
 	logger.TestLog(opts.Undelete, "Undelete: ", opts.Undelete)
 	logger.TestLog(opts.Remove, "Remove: ", opts.Remove)
+	logger.TestLog(opts.ToCustom, "ToCustom: ", opts.ToCustom)
+	logger.TestLog(opts.Named, "Named: ", opts.Named)
 	opts.Globals.TestLog()
 }
 
@@ -98,12 +98,6 @@ func (opts *NamesOptions) toCmdLine() string {
 	if opts.Prefund {
 		options += " --prefund"
 	}
-	if opts.Named {
-		options += " --named"
-	}
-	if opts.ToCustom {
-		options += " --to_custom"
-	}
 	if opts.Clean {
 		options += " --clean"
 	}
@@ -124,6 +118,9 @@ func (opts *NamesOptions) toCmdLine() string {
 	}
 	if opts.Remove {
 		options += " --remove"
+	}
+	if opts.ToCustom {
+		options += " --to_custom"
 	}
 	options += " " + strings.Join(opts.Terms, " ")
 	// EXISTING_CODE
@@ -153,14 +150,10 @@ func namesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
 			opts.Custom = true
 		case "prefund":
 			opts.Prefund = true
-		case "named":
-			opts.Named = true
 		case "addr":
 			opts.Addr = true
 		case "tags":
 			opts.Tags = true
-		case "toCustom":
-			opts.ToCustom = true
 		case "clean":
 			opts.Clean = true
 		case "autoname":
@@ -175,6 +168,10 @@ func namesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
 			opts.Undelete = true
 		case "remove":
 			opts.Remove = true
+		case "toCustom":
+			opts.ToCustom = true
+		case "named":
+			opts.Named = true
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "names")

@@ -15,10 +15,8 @@ Flags:
   -l, --all               include all (including custom) names in the search
   -c, --custom            include only custom named account in the search
   -p, --prefund           include prefund accounts in the search
-  -n, --named             include well know token and airdrop addresses in the search
   -a, --addr              display only addresses in the results (useful for scripting, assumes --no_header)
   -g, --tags              export the list of tags and subtags only
-  -u, --to_custom         for editCmd only, is the edited name a custom name or not (hidden)
   -C, --clean             clean the data (addrs to lower case, sort by addr) (hidden)
   -A, --autoname string   an address assumed to be a token, added automatically to names database if true (hidden)
       --create            create a new name record (hidden)
@@ -26,6 +24,7 @@ Flags:
       --delete            delete a name, but do not remove it (hidden)
       --undelete          undelete a previously deleted name (hidden)
       --remove            remove a previously deleted name (hidden)
+  -u, --to_custom         for editCmd only, is the edited name a custom name or not (hidden)
   -x, --fmt string        export format, one of [none|json*|txt|csv]
   -v, --verbose           enable verbose (increase detail with --log_level)
   -h, --help              display this help screen

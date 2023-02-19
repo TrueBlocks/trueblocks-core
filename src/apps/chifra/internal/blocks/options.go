@@ -26,7 +26,7 @@ type BlocksOptions struct {
 	Hashes     bool                     `json:"hashes,omitempty"`     // Display only transaction hashes, default is to display full transaction detail
 	Uncles     bool                     `json:"uncles,omitempty"`     // Display uncle blocks (if any) instead of the requested block
 	Traces     bool                     `json:"traces,omitempty"`     // Export the traces from the block as opposed to the block data
-	Trace      bool                     `json:"trace,omitempty"`      // Please use traces option instead
+	Trace      bool                     `json:"trace,omitempty"`      // Please use --traces option instead
 	Apps       bool                     `json:"apps,omitempty"`       // Display a list of uniq address appearances in the block
 	Uniq       bool                     `json:"uniq,omitempty"`       // Display a list of uniq address appearances per transaction
 	Flow       string                   `json:"flow,omitempty"`       // For the uniq and apps options only, export only from or to (including trace from or to)

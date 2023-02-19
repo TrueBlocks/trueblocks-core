@@ -11,6 +11,35 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
+#include "exportcontext.h"
+
+//-----------------------------------------------------------------------
+bool COptions::handle_editcmds(bool autoname) {
+    string_q crud = crudCommands[0];
+    if (!contains("create|update|delete|undelete|remove", crud))
+        return usage("Invalid edit command '" + crud + "'.");
+
+    target.address = toLower(trim(getEnvStr("TB_NAME_ADDRESS"), '\"'));
+    target.petname = addr_2_Petname(target.address, '-');
+    target.name = trim(getEnvStr("TB_NAME_NAME"), '\"');
+    target.tags = trim(getEnvStr("TB_NAME_TAG"), '\"');
+    target.source = trim(getEnvStr("TB_NAME_SOURCE"), '\"');
+    target.symbol = trim(getEnvStr("TB_NAME_SYMBOL"), '\"');
+    target.decimals = str_2_Uint(trim(getEnvStr("TB_NAME_DECIMALS"), '\"'));
+    target.isCustom = str_2_Bool(trim(getEnvStr("TB_NAME_CUSTOM"), '\"')) || to_custom;
+    // for delete and remove, we pick it up from the command line
+    if (target.address.empty()) {
+        if (terms.size() == 0)
+            return false;
+        target.address = terms[0];
+        target.petname = addr_2_Petname(target.address, '-');
+    }
+    finishClean(target);
+    terms.clear();
+    terms.push_back(target.address);  // we only need the address for the search
+
+    return updateName(target, crud);
+}
 
 static const string_q erc721QueryBytes = "0x" + padRight(substitute(_INTERFACE_ID_ERC721, "0x", ""), 64, '0');
 inline bool isErc721(const address_t& addr, const CAbi& abi_spec, blknum_t latest) {
