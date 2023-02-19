@@ -61,7 +61,7 @@ func init() {
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Hashes, "hashes", "e", false, "display only transaction hashes, default is to display full transaction detail")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Uncles, "uncles", "c", false, "display uncle blocks (if any) instead of the requested block")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Traces, "traces", "t", false, "export the traces from the block as opposed to the block data")
-	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Trace, "trace", "", false, "please use traces option instead (hidden)")
+	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Trace, "trace", "", false, "please use --traces option instead (hidden)")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Apps, "apps", "s", false, "display a list of uniq address appearances in the block")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Uniq, "uniq", "u", false, "display a list of uniq address appearances per transaction")
 	blocksCmd.Flags().StringVarP(&blocksPkg.GetOptions().Flow, "flow", "f", "", `for the uniq and apps options only, export only from or to (including trace from or to)

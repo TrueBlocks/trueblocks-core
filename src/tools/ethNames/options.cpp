@@ -27,8 +27,6 @@ static const COption params[] = {
     COption("all", "l", "", OPT_SWITCH, "include all (including custom) names in the search"),
     COption("custom", "c", "", OPT_SWITCH, "include only custom named account in the search"),
     COption("prefund", "p", "", OPT_SWITCH, "include prefund accounts in the search"),
-    COption("named", "n", "", OPT_SWITCH, "include well know token and airdrop addresses in the search"),
-    COption("to_custom", "u", "", OPT_HIDDEN | OPT_SWITCH, "for editCmd only, is the edited name a custom name or not"),
     COption("clean", "C", "", OPT_HIDDEN | OPT_SWITCH, "clean the data (addrs to lower case, sort by addr)"),
     COption("autoname", "A", "<string>", OPT_HIDDEN | OPT_FLAG, "an address assumed to be a token, added automatically to names database if true"),  // NOLINT
     COption("create", "", "", OPT_HIDDEN | OPT_SWITCH, "create a new name record"),
@@ -36,6 +34,8 @@ static const COption params[] = {
     COption("delete", "", "", OPT_HIDDEN | OPT_SWITCH, "delete a name, but do not remove it"),
     COption("undelete", "", "", OPT_HIDDEN | OPT_SWITCH, "undelete a previously deleted name"),
     COption("remove", "", "", OPT_HIDDEN | OPT_SWITCH, "remove a previously deleted name"),
+    COption("to_custom", "u", "", OPT_HIDDEN | OPT_SWITCH, "for editCmd only, is the edited name a custom name or not"),
+    COption("named", "n", "", OPT_SWITCH, "please use the --all option instead"),
     COption("", "", "", OPT_DESCRIPTION, "Query addresses or names of well known accounts."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -55,7 +55,6 @@ bool COptions::parseArguments(string_q& command) {
     bool expand = false;
     bool all = false;
     bool custom = false;
-    bool named = false;
     bool clean = false;
     string_q autoname = "";
     bool create = false;
@@ -89,12 +88,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-p" || arg == "--prefund") {
             prefund = true;
 
-        } else if (arg == "-n" || arg == "--named") {
-            named = true;
-
-        } else if (arg == "-u" || arg == "--to_custom") {
-            to_custom = true;
-
         } else if (arg == "-C" || arg == "--clean") {
             clean = true;
 
@@ -117,6 +110,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "--remove") {
             remove = true;
+
+        } else if (arg == "-u" || arg == "--to_custom") {
+            to_custom = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -157,10 +153,6 @@ bool COptions::parseArguments(string_q& command) {
 
     if (!autoname.empty() && (!isAddress(autoname) || isZeroAddr(autoname)))
         return usage("You must provide an address to the --autoname option.");
-
-    // for (auto& term : terms)
-    //     if (endsWith(term, ".eth"))
-    //         term = addressFromENSName(term);
 
     latestBlock = isTestMode() ? 10800000 : getLatestBlock_client();
     if (clean) {
@@ -205,13 +197,6 @@ bool COptions::parseArguments(string_q& command) {
 
     if (all)
         types = ALL;
-    if (named) {
-        if (deflt) {
-            types = 0;
-            deflt = false;
-        }
-        types |= REGULAR;
-    }
     if (prefund) {
         if (deflt) {
             types = 0;

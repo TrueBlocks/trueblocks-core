@@ -56,11 +56,11 @@ func init() {
 
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Traces, "traces", "t", false, "include the transaction's traces in the results")
-	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Trace, "trace", "", false, "please use traces option instead (hidden)")
+	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Trace, "trace", "", false, "please use the --traces option instead (hidden)")
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Uniq, "uniq", "u", false, "display a list of uniq addresses found in the transaction")
 	transactionsCmd.Flags().StringVarP(&transactionsPkg.GetOptions().Flow, "flow", "f", "", `for the uniq option only, export only from or to (including trace from or to)
 One of [ from | to ]`)
-	transactionsCmd.Flags().StringVarP(&transactionsPkg.GetOptions().Reconcile, "reconcile", "r", "", "please use account_for option instead")
+	transactionsCmd.Flags().StringVarP(&transactionsPkg.GetOptions().Reconcile, "reconcile", "r", "", "please use --account_for option instead")
 	transactionsCmd.Flags().StringVarP(&transactionsPkg.GetOptions().AccountFor, "account_for", "A", "", "reconcile the transaction as per the provided address")
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Cache, "cache", "o", false, "force the results of the query into the tx cache (and the trace cache if applicable)")
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Source, "source", "s", false, "find the source of the funds sent to the receiver (hidden)")

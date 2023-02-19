@@ -64,25 +64,25 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 11097,apps,Accounts,list,acctExport,n1,,,false,false,false,false,--,note,,No other options are permitted when --silent is selected.
 
 12260,tools,Accounts,names,ethNames,terms,,,true,false,true,true,header,positional,list<string>,a space separated list of one or more search terms
-12280,tools,Accounts,names,ethNames,expand,e,,false,false,true,true,local,switch,<boolean>,expand search to include all fields (search name&#44; address&#44; and symbol otherwise)
-12300,tools,Accounts,names,ethNames,match_case,m,,false,false,true,true,header,switch,<boolean>,do case-sensitive search
-12315,tools,Accounts,names,ethNames,all,l,,false,false,true,true,local,switch,<boolean>,include all (including custom) names in the search
-12340,tools,Accounts,names,ethNames,custom,c,,false,false,true,true,local,switch,<boolean>,include only custom named account in the search
-12360,tools,Accounts,names,ethNames,prefund,p,,false,false,true,true,header,switch,<boolean>,include prefund accounts in the search
-12380,tools,Accounts,names,ethNames,named,n,,false,false,true,true,local,switch,<boolean>,include well know token and airdrop addresses in the search
-12420,tools,Accounts,names,ethNames,addr,a,,false,false,true,true,gocmd,switch,<boolean>,display only addresses in the results (useful for scripting&#44; assumes --no_header)
-12445,tools,Accounts,names,ethNames,tags,g,,false,false,true,true,gocmd,switch,<boolean>,export the list of tags and subtags only
-12450,tools,Accounts,names,ethNames,to_custom,u,,false,false,false,false,header,switch,<boolean>,for editCmd only&#44; is the edited name a custom name or not
-12455,tools,Accounts,names,ethNames,clean,C,,false,false,false,false,local,switch,<boolean>,clean the data (addrs to lower case&#44; sort by addr)
-12456,tools,Accounts,names,ethNames,autoname,A,,false,false,false,false,local,flag,<string>,an address assumed to be a token&#44; added automatically to names database if true
-12460,tools,Accounts,names,ethNames,create,,,false,false,false,true,local,switch,<boolean>,create a new name record
-12464,tools,Accounts,names,ethNames,update,,,false,false,false,true,local,switch,<boolean>,edit an existing name
-12462,tools,Accounts,names,ethNames,deleteMe,,,false,false,false,true,local,switch,<boolean>,delete a name&#44; but do not remove it
-12468,tools,Accounts,names,ethNames,undelete,,,false,false,false,true,local,switch,<boolean>,undelete a previously deleted name
-12466,tools,Accounts,names,ethNames,remove,,,false,false,false,true,local,switch,<boolean>,remove a previously deleted name
-12470,tools,Accounts,names,ethNames,,,,false,false,true,true,--,description,,Query addresses or names of well known accounts.
-12472,tools,Accounts,names,ethNames,n1,,,false,false,false,false,--,note,,The tool will accept up to three terms&#44; each of which must match against any field in the database.
-12478,tools,Accounts,names,ethNames,n2,,,false,false,false,false,--,note,,The `--match_case` option enables case sensitive matching.
+12265,tools,Accounts,names,ethNames,expand,e,,false,false,true,true,local,switch,<boolean>,expand search to include all fields (search name&#44; address&#44; and symbol otherwise)
+12270,tools,Accounts,names,ethNames,match_case,m,,false,false,true,true,header,switch,<boolean>,do case-sensitive search
+12275,tools,Accounts,names,ethNames,all,l,,false,false,true,true,local,switch,<boolean>,include all (including custom) names in the search
+12280,tools,Accounts,names,ethNames,custom,c,,false,false,true,true,local,switch,<boolean>,include only custom named account in the search
+12285,tools,Accounts,names,ethNames,prefund,p,,false,false,true,true,header,switch,<boolean>,include prefund accounts in the search
+12290,tools,Accounts,names,ethNames,addr,a,,false,false,true,true,gocmd,switch,<boolean>,display only addresses in the results (useful for scripting&#44; assumes --no_header)
+12295,tools,Accounts,names,ethNames,tags,g,,false,false,true,true,gocmd,switch,<boolean>,export the list of tags and subtags only
+12300,tools,Accounts,names,ethNames,clean,C,,false,false,false,false,local,switch,<boolean>,clean the data (addrs to lower case&#44; sort by addr)
+12305,tools,Accounts,names,ethNames,autoname,A,,false,false,false,false,local,flag,<string>,an address assumed to be a token&#44; added automatically to names database if true
+12310,tools,Accounts,names,ethNames,create,,,false,false,false,true,local,switch,<boolean>,create a new name record
+12315,tools,Accounts,names,ethNames,update,,,false,false,false,true,local,switch,<boolean>,edit an existing name
+12320,tools,Accounts,names,ethNames,deleteMe,,,false,false,false,true,local,switch,<boolean>,delete a name&#44; but do not remove it
+12325,tools,Accounts,names,ethNames,undelete,,,false,false,false,true,local,switch,<boolean>,undelete a previously deleted name
+12330,tools,Accounts,names,ethNames,remove,,,false,false,false,true,local,switch,<boolean>,remove a previously deleted name
+12335,tools,Accounts,names,ethNames,to_custom,u,,false,false,false,false,header,switch,<boolean>,for editCmd only&#44; is the edited name a custom name or not
+12340,tools,Accounts,names,ethNames,named,n,,false,false,true,true,deprecated,switch,<boolean>,please use the --all option instead
+12345,tools,Accounts,names,ethNames,,,,false,false,true,true,--,description,,Query addresses or names of well known accounts.
+12350,tools,Accounts,names,ethNames,n1,,,false,false,false,false,--,note,,The tool will accept up to three terms&#44; each of which must match against any field in the database.
+12355,tools,Accounts,names,ethNames,n2,,,false,false,false,false,--,note,,The `--match_case` option enables case sensitive matching.
 
 13660,tools,Accounts,abis,grabABI,addrs,,,true,false,true,true,header,positional,list<addr>,a list of one or more smart contracts whose ABIs to display
 13850,tools,Accounts,abis,grabABI,known,k,,false,false,true,true,local,switch,<boolean>,load common 'known' ABIs from cache
@@ -98,7 +98,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12510,tools,ChainData,blocks,getBlocks,hashes,e,,false,false,true,true,header,switch,<boolean>,display only transaction hashes&#44; default is to display full transaction detail
 12520,tools,ChainData,blocks,getBlocks,uncles,c,,false,false,true,true,header,switch,<boolean>,display uncle blocks (if any) instead of the requested block
 12530,tools,ChainData,blocks,getBlocks,traces,t,,false,false,true,true,header,switch,<boolean>,export the traces from the block as opposed to the block data
-12532,tools,ChainData,blocks,getBlocks,trace,,,false,false,false,false,local,deprecated,<boolean>,please use traces option instead
+12532,tools,ChainData,blocks,getBlocks,trace,,,false,false,false,false,local,deprecated,<boolean>,please use --traces option instead
 12540,tools,ChainData,blocks,getBlocks,apps,s,,false,false,true,true,local,switch,<boolean>,display a list of uniq address appearances in the block
 12560,tools,ChainData,blocks,getBlocks,uniq,u,,false,false,true,true,local,switch,<boolean>,display a list of uniq address appearances per transaction
 12565,tools,ChainData,blocks,getBlocks,flow,f,,false,false,true,true,header,flag,enum[from|to|reward],for the uniq and apps options only&#44; export only from or to (including trace from or to)
@@ -131,10 +131,10 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13540,tools,ChainData,transactions,getTrans,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
 13560,tools,ChainData,transactions,getTrans,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the retrieved data if ABIs can be found
 13580,tools,ChainData,transactions,getTrans,traces,t,,false,false,true,true,header,switch,<boolean>,include the transaction's traces in the results
-13682,tools,ChainData,transactions,getTrans,trace,,,false,false,false,false,local,deprecated,<boolean>,please use traces option instead
+13682,tools,ChainData,transactions,getTrans,trace,,,false,false,false,false,local,deprecated,<boolean>,please use the --traces option instead
 13605,tools,ChainData,transactions,getTrans,uniq,u,,false,false,true,true,header,switch,<boolean>,display a list of uniq addresses found in the transaction
 13610,tools,ChainData,transactions,getTrans,flow,f,,false,false,true,true,header,flag,enum[from|to],for the uniq option only&#44; export only from or to (including trace from or to)
-13615,tools,ChainData,transactions,getTrans,reconcile,r,,false,false,true,true,local,deprecated,<address>,please use account_for option instead
+13615,tools,ChainData,transactions,getTrans,reconcile,r,,false,false,true,true,local,deprecated,<address>,please use --account_for option instead
 13617,tools,ChainData,transactions,getTrans,account_for,A,,false,false,true,true,local,flag,<address>,reconcile the transaction as per the provided address
 13620,tools,ChainData,transactions,getTrans,cache,o,,false,false,true,true,header,switch,<boolean>,force the results of the query into the tx cache (and the trace cache if applicable)
 13620,tools,ChainData,transactions,getTrans,source,s,,false,false,false,false,header,switch,<boolean>,find the source of the funds sent to the receiver
