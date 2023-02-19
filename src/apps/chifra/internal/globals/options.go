@@ -198,6 +198,16 @@ func (opts *GlobalOptions) FinishParse(args []string) {
 	if err := tslib.EstablishTsFile(opts.Chain); err != nil {
 		logger.Log(logger.Error, "Could not establish ts file:", err)
 	}
+
+	if (len(opts.Format) == 0 || opts.Format == "none") && len(opts.OutputFn) > 0 {
+		parts := strings.Split(opts.OutputFn, ".")
+		if len(parts) > 0 {
+			last := parts[len(parts)-1]
+			if last == "txt" || last == "csv" || last == "json" {
+				opts.Format = last
+			}
+		}
+	}
 }
 
 func IsGlobalOption(key string) bool {

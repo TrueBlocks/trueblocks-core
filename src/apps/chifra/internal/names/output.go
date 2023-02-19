@@ -86,7 +86,7 @@ func GetNamesOptions(args []string, g *globals.GlobalOptions) *NamesOptions {
 
 func (opts *NamesOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	if opts.Clean || len(opts.Autoname) > 0 || len(opts.Globals.OutputFn) > 0 || opts.ToCustom ||
+	if opts.Clean || len(opts.Autoname) > 0 || opts.ToCustom ||
 		opts.Create || opts.Update || opts.Delete || opts.Undelete || opts.Remove {
 		ported = false
 	} else {
