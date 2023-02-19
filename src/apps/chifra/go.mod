@@ -7,6 +7,7 @@ require (
 	github.com/alecthomas/participle/v2 v2.0.0-alpha7
 	github.com/bykof/gostradamus v1.0.4
 	github.com/ethereum/go-ethereum v1.10.25
+	github.com/gocarina/gocsv v0.0.0-20230123225133-763e25b40669
 	github.com/gorilla/mux v1.8.0
 	github.com/gorilla/websocket v1.5.0
 	github.com/ipfs/go-ipfs-api v0.3.0
