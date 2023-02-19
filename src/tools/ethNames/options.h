@@ -30,8 +30,6 @@ class COptions : public CAbiOptions {
 
     CNameMap items;
     CStringArray searches;
-    string_q searchFields;
-    uint64_t types;
 
     COptions(void);
     ~COptions(void);
@@ -39,17 +37,12 @@ class COptions : public CAbiOptions {
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
-    bool addIfUnique(const CName& item);
     bool handle_clean(void);
-
     bool cleanNames(const string_q& sourceIn, const string_q& destIn);
 
-    CStringArray crudCommands;
-    bool isCrudCommand(void) const {
-        return crudCommands.size() > 0;
-    }
-
-    // Crud command handling
     CName target;
+    CStringArray crudCommands;
     bool handle_editcmds(bool autoname);
+
+    bool addIfUnique(const CName& item);
 };
