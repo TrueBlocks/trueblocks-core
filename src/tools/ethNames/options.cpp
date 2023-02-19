@@ -23,7 +23,6 @@ static const COption params[] = {
     // clang-format off
     COption("terms", "", "list<string>", OPT_REQUIRED | OPT_POSITIONAL, "a space separated list of one or more search terms"),  // NOLINT
     COption("expand", "e", "", OPT_SWITCH, "expand search to include all fields (search name, address, and symbol otherwise)"),  // NOLINT
-    COption("match_case", "m", "", OPT_SWITCH, "do case-sensitive search"),
     COption("all", "l", "", OPT_SWITCH, "include all (including custom) names in the search"),
     COption("custom", "c", "", OPT_SWITCH, "include only custom named account in the search"),
     COption("prefund", "p", "", OPT_SWITCH, "include prefund accounts in the search"),
@@ -75,9 +74,6 @@ bool COptions::parseArguments(string_q& command) {
             // BEG_CODE_AUTO
         } else if (arg == "-e" || arg == "--expand") {
             expand = true;
-
-        } else if (arg == "-m" || arg == "--match_case") {
-            match_case = true;
 
         } else if (arg == "-l" || arg == "--all") {
             all = true;
@@ -246,7 +242,6 @@ void COptions::Init(void) {
     // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT
-    match_case = false;
     prefund = false;
     to_custom = false;
     // END_CODE_INIT
@@ -308,20 +303,11 @@ bool COptions::addIfUnique(const CName& item) {
         return true;
     }
 
-    if (!match_case) {
-        for (size_t i = 0; i < searches.size(); i++) {
-            searches[i] = toLower(searches[i]);
-        }
-    }
-
     string_q search1 = searches.size() > 0 ? searches[0] : "";
     string_q search2 = searches.size() > 1 ? searches[1] : "";
     string_q search3 = searches.size() > 2 ? searches[2] : "";
 
     string_q str = item.Format(searchFields);
-    if (!match_case)
-        str = toLower(str);
-
     if ((search1.empty() || search1 == "*" || contains(str, search1)) &&
         (search2.empty() || search2 == "*" || contains(str, search2)) &&
         (search3.empty() || search3 == "*" || contains(str, search3))) {
