@@ -10,9 +10,9 @@ func doSearch(name Name, terms []string, parts Parts) bool {
 	}
 
 	cnt := 0
-	searchStr := name.Name + "\t" + name.Symbol + "\t" + name.Address + "\t" + name.Petname + "\t" + name.Tags
+	searchStr := name.Name + "\t" + name.Symbol + "\t" + name.Address + "\t" + name.Tags
 	if parts&Expanded != 0 {
-		searchStr += "\t" + name.Source
+		searchStr += "\t" + name.Source + "\t" + name.Petname
 	}
 
 	verb := "(?i)"
