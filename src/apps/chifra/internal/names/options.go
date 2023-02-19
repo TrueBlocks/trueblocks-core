@@ -86,9 +86,6 @@ func (opts *NamesOptions) toCmdLine() string {
 	if opts.Expand {
 		options += " --expand"
 	}
-	if opts.All {
-		options += " --all"
-	}
 	if opts.Prefund {
 		options += " --prefund"
 	}

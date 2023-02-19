@@ -21,7 +21,7 @@
 // END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------
-enum account_t { REGULAR = (1 << 3), PREFUND = (1 << 4), ALL = (REGULAR) };
+enum account_t { REGULAR = (1 << 3), PREFUND = (1 << 4) };
 
 //-----------------------------------------------------------------------------
 class COptions : public CAbiOptions {

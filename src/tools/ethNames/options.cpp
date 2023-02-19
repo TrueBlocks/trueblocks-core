@@ -23,7 +23,6 @@ static const COption params[] = {
     // clang-format off
     COption("terms", "", "list<string>", OPT_REQUIRED | OPT_POSITIONAL, "a space separated list of one or more search terms"),  // NOLINT
     COption("expand", "e", "", OPT_SWITCH, "expand search to include all fields (search name, address, and symbol otherwise)"),  // NOLINT
-    COption("all", "l", "", OPT_SWITCH, "include all (including custom) names in the search"),
     COption("prefund", "p", "", OPT_SWITCH, "include prefund accounts in the search"),
     COption("clean", "C", "", OPT_HIDDEN | OPT_SWITCH, "clean the data (addrs to lower case, sort by addr)"),
     COption("autoname", "A", "<string>", OPT_HIDDEN | OPT_FLAG, "an address assumed to be a token, added automatically to names database if true"),  // NOLINT
@@ -51,7 +50,6 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_CODE_LOCAL_INIT
     bool expand = false;
-    bool all = false;
     bool clean = false;
     string_q autoname = "";
     bool create = false;
@@ -72,9 +70,6 @@ bool COptions::parseArguments(string_q& command) {
             // BEG_CODE_AUTO
         } else if (arg == "-e" || arg == "--expand") {
             expand = true;
-
-        } else if (arg == "-l" || arg == "--all") {
-            all = true;
 
         } else if (arg == "-p" || arg == "--prefund") {
             prefund = true;
@@ -145,7 +140,6 @@ bool COptions::parseArguments(string_q& command) {
     if (!autoname.empty() && (!isAddress(autoname) || isZeroAddr(autoname)))
         return usage("You must provide an address to the --autoname option.");
 
-    latestBlock = isTestMode() ? 10800000 : getLatestBlock_client();
     if (clean) {
         abi_spec.loadAbisFromKnown(true);
         return handle_clean();
@@ -186,8 +180,6 @@ bool COptions::parseArguments(string_q& command) {
         format = searchFields;
     }
 
-    if (all)
-        types = ALL;
     if (prefund) {
         if (deflt) {
             types = 0;
