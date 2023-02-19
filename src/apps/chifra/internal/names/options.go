@@ -89,9 +89,6 @@ func (opts *NamesOptions) toCmdLine() string {
 	if opts.All {
 		options += " --all"
 	}
-	if opts.Custom {
-		options += " --custom"
-	}
 	if opts.Prefund {
 		options += " --prefund"
 	}
