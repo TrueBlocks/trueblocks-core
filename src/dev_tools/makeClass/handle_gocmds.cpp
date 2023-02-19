@@ -63,6 +63,18 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
 }
 
 //---------------------------------------------------------------------------------------------------
+bool hasValidator(const string_q& route, const string_q& str) {
+    string_q contents = asciiFileToString(getPathToSource("apps/chifra/internal/" + route + "/validate.go"));
+    CStringArray parts;
+    explode(parts, str, '|');
+    for (auto part : parts) {
+        if (!contains(contents, part))
+            return false;
+    }
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
 void COptions::verifyGoEnumValidators(void) {
     for (auto p : cmdOptionArray) {
         if (contains(p.data_type, "enum") && !p.api_route.empty()) {
@@ -71,12 +83,16 @@ void COptions::verifyGoEnumValidators(void) {
             replace(e, "list", "");
             replaceAny(e, "<[*]>", "");
             e = "[" + e + "]";
-            string_q fn = getPathToSource("apps/chifra/internal/" + p.api_route + "/validate.go");
-            string_q contents = asciiFileToString(fn);
-            if (contains(contents, e)) {
-                // cout << cGreen << "HAS: " << fn << ": " << e << cOff << endl;
-            } else {
+            if (!hasValidator(p.api_route, e)) {
                 LOG_WARN("\t", bRed, p.api_route, " has no enum validator for ", e, cOff);
+            }
+        }
+        if (p.generate == "deprecated") {
+            if (!hasValidator(p.api_route, "deprecated|--" + p.longName)) {
+                ostringstream os;
+                os << "The '" << p.api_route << " --" << p.longName
+                   << "' option is deprecated, but no usage message in validate.go";
+                LOG_WARN("\t", bRed, os.str(), cOff);
             }
         }
     }
