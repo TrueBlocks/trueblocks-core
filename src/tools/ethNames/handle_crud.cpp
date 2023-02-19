@@ -54,9 +54,10 @@ bool startsWithNumber(const string_q& str) {
 
 //--------------------------------------------------------------------
 bool COptions::finishClean(CName& account) {
-    if (startsWithNumber(account.tags) &&
-        account.tags > "799999")  // tags named higher than or equal to 80 are hand edited
+    // tags named higher than or equal to 80 are hand edited
+    if (startsWithNumber(account.tags) && account.tags > "799999") {
         return true;
+    }
 
     // Clean up source
     if (containsI(account.source, "etherscan"))
@@ -70,6 +71,7 @@ bool COptions::finishClean(CName& account) {
 
     // Are we a pre-fund?
     account.isPrefund = prefundAt(account.address) > 0;
+    blknum_t latestBlock = isTestMode() ? 10800000 : getLatestBlock_client();
 
     bool wasContract = account.isContract;
     bool isContract = isContractAt(account.address, latestBlock);

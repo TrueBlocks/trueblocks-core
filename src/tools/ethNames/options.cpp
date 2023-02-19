@@ -24,7 +24,6 @@ static const COption params[] = {
     COption("terms", "", "list<string>", OPT_REQUIRED | OPT_POSITIONAL, "a space separated list of one or more search terms"),  // NOLINT
     COption("expand", "e", "", OPT_SWITCH, "expand search to include all fields (search name, address, and symbol otherwise)"),  // NOLINT
     COption("all", "l", "", OPT_SWITCH, "include all (including custom) names in the search"),
-    COption("custom", "c", "", OPT_SWITCH, "include only custom named account in the search"),
     COption("prefund", "p", "", OPT_SWITCH, "include prefund accounts in the search"),
     COption("clean", "C", "", OPT_HIDDEN | OPT_SWITCH, "clean the data (addrs to lower case, sort by addr)"),
     COption("autoname", "A", "<string>", OPT_HIDDEN | OPT_FLAG, "an address assumed to be a token, added automatically to names database if true"),  // NOLINT
@@ -53,7 +52,6 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_CODE_LOCAL_INIT
     bool expand = false;
     bool all = false;
-    bool custom = false;
     bool clean = false;
     string_q autoname = "";
     bool create = false;
@@ -77,9 +75,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-l" || arg == "--all") {
             all = true;
-
-        } else if (arg == "-c" || arg == "--custom") {
-            custom = true;
 
         } else if (arg == "-p" || arg == "--prefund") {
             prefund = true;
@@ -200,13 +195,6 @@ bool COptions::parseArguments(string_q& command) {
         }
         types |= PREFUND;
     }
-    if (custom) {
-        if (deflt) {
-            types = 0;
-            deflt = false;
-        }
-        types |= CUSTOM;
-    }
 
     if (verbose)
         searchFields += "\t[{SOURCE}]";
@@ -319,17 +307,6 @@ bool COptions::addIfUnique(const CName& item) {
 }
 
 //-----------------------------------------------------------------------
-bool addCustom(NameOnDisc* item, void* data) {
-    COptions* opts = (COptions*)data;
-    if (item->flags & IS_CUSTOM) {
-        CName name;
-        item->disc_2_Name(name);
-        opts->addIfUnique(name);
-    }
-    return true;
-}
-
-//-----------------------------------------------------------------------
 bool addRegular(CName& item, void* data) {
     COptions* opts = (COptions*)data;
     if (!item.isCustom && !item.isPrefund)
@@ -351,26 +328,6 @@ bool addPrefund(NameOnDisc* item, void* data) {
 //-----------------------------------------------------------------------
 // order matters...first in wins...
 void COptions::filterNames() {
-    if (types & CUSTOM) {
-        if (isTestMode() && !isCrudCommand()) {
-            for (uint32_t i = 1; i < 5; i++) {
-                CName item;
-                item.tags = "81-Custom";
-                item.address = "0x000000000000000000000000000000000000000" + uint_2_Str(i);
-                item.petname = addr_2_Petname(item.address, '-');
-                item.name = "Account_" + uint_2_Str(i);
-                if (!(i % 2)) {
-                    item.symbol = "AC_" + uint_2_Str(i);
-                    item.decimals = i;
-                }
-                item.source = "Testing";
-                addIfUnique(item);
-            }
-        } else {
-            forEveryName(addCustom, this);
-        }
-    }
-
     if (types & REGULAR) {
         forEveryNameOld(addRegular, this);
     }

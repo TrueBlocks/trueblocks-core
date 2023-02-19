@@ -21,7 +21,7 @@
 // END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------
-enum account_t { CUSTOM = (1 << 2), REGULAR = (1 << 3), PREFUND = (1 << 4), ALL = (CUSTOM | REGULAR) };
+enum account_t { REGULAR = (1 << 3), PREFUND = (1 << 4), ALL = (REGULAR) };
 
 //-----------------------------------------------------------------------------
 class COptions : public CAbiOptions {
@@ -31,8 +31,6 @@ class COptions : public CAbiOptions {
     bool prefund;
     bool to_custom;
     // END_CODE_DECLARE
-
-    blknum_t latestBlock;
 
     CNameMap items;
     CStringArray searches;
