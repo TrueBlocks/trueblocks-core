@@ -8,9 +8,9 @@
 
 package types
 
+// EXISTING_CODE
 import "strings"
 
-// EXISTING_CODE
 // EXISTING_CODE
 
 type RawName struct {
@@ -59,11 +59,13 @@ func (s *SimpleName) Model(showHidden bool, format string, extraOptions map[stri
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
-		"tags":    s.Tags,
-		"address": s.Address,
-		"name":    s.Name,
-		"source":  s.Source,
-		"petname": s.Petname,
+		"tags":     s.Tags,
+		"address":  s.Address,
+		"name":     s.Name,
+		"symbol":   s.Symbol,
+		"source":   s.Source,
+		"decimals": s.Decimals,
+		"petname":  s.Petname,
 	}
 
 	order := []string{
