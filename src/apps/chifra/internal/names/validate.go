@@ -36,14 +36,26 @@ func (opts *NamesOptions) validateNames() error {
 		return validate.Usage("You may not use the {0} option when editing names.", "--prefund")
 	}
 
+	// Validate some of the simpler curd commands here and the rest in HandleCrud
+	b2I := func(b bool) int {
+		if b {
+			return 1
+		} else {
+			return 0
+		}
+	}
+	if b2I(opts.Undelete)+b2I(opts.Delete)+b2I(opts.Remove) > 1 {
+		return validate.Usage("THe {0} option may not be used with {1} or {2}.", "--undelete", "--delete", "--remove")
+	}
+
 	if opts.anyCrud() {
 		// TODO: BOGUS
-		// err := validate.ValidateAtLeastOneAddr(opts.Terms)
-		// if err != nil {
-		// 	return err
-		// }
+		err := validate.ValidateAtLeastOneAddr(opts.Terms)
+		if err != nil {
+			return err
+		}
 	} else if opts.ToCustom {
-		return validate.Usage("Use the {0} option only when editing names.", "--to_custom")
+		return validate.Usage("The {0} option is only available when editing names.", "--to_custom")
 	}
 
 	addr := types.HexToAddress(opts.Autoname)
