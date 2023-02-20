@@ -335,7 +335,7 @@ string_q NameOnDisc::Format(void) const {
 bool updateName(const CName& target, const string_q& crud) {
     if (!hasName(target.address)) {
         if (nNameRecords == allocSize) {
-            LOG4("Growing names array");
+            LOG_INFO("Growing names array");
             // TODO: This has to grow the array or we will crash. It's a simple
             // TODO: realloc, but then a clearing of the array and reloading
             // growNames(100);
@@ -351,21 +351,21 @@ bool updateName(const CName& target, const string_q& crud) {
     }
 
     if (crud == "create" || crud == "update") {
-        LOG4((crud == "create" ? "Adding " : "Editing "), nod->address);
+        LOG_INFO((crud == "create" ? "Adding " : "Editing "), nod->address);
         // TODO: we could resort here, but it doesn't appear to matter. When we write
         // TODO: the file out, we should sort it
         nod->name_2_Disc(target);
 
     } else if (crud == "delete") {
-        LOG4("Deleting ", nod->address);
+        LOG_INFO("Deleting ", nod->address);
         nod->flags |= IS_DELETED;
 
     } else if (crud == "undelete") {
-        LOG4("Undeleting ", nod->address);
+        LOG_INFO("Undeleting ", nod->address);
         nod->flags &= ~(IS_DELETED);
 
     } else if (crud == "remove") {
-        LOG4("Removing ", nod->address);
+        LOG_INFO("Removing ", nod->address);
         // We can copy the memory from the position one past this record to the
         // end of the array on top of this record to remove it. If this is the
         // last record, just decrement the number of records
