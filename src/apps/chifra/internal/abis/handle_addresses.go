@@ -2,7 +2,6 @@ package abisPkg
 
 import (
 	"context"
-	"fmt"
 	"os"
 	"sort"
 
@@ -48,25 +47,10 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 				continue
 			}
 
-			proxy, err := contract.IsProxy(opts.Globals.Chain, address, nil)
-			fmt.Println("Address", address, "is a proxy:", proxy)
-			// An unexpected error occurred
-			if err != nil {
+			// Add the ABI for the implementation contract if the address is a proxy
+			if err = addABIForImplementationIfProxy(opts.Globals.Chain, address, result); err != nil {
 				errorChan <- err
 				cancel()
-			}
-
-			if proxy {
-                proxyAddress, err := contract.GetProxyAddress(opts.Globals.Chain, address, nil)
-
-                if err != nil {
-                    errorChan <- err
-                    cancel()
-                }
-
-                if err = abi.DownloadAbi(opts.Globals.Chain, proxyAddress, result); err != nil {
-                    errorChan <- err
-                }
 			}
 
 			// The address is a contract so let's try to download the ABI
@@ -104,4 +88,18 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 			"verbose": opts.Globals.Verbose,
 		},
 	})
+}
+
+// Checks if address is a proxy and adds the ABI for the implementation contract
+// to the result. If address isnt't a proxy we do nothing.
+func addABIForImplementationIfProxy(chain string, address types.Address, result map[string]*types.SimpleFunction) (err error) {
+	implementation, err := contract.IsProxy(chain, address, nil)
+	// implementation is empty if the address is not a proxy
+	if err != nil || implementation == (types.Address{}) {
+		return
+	}
+
+	// implementation is not empty if the address is a proxy
+	err = abi.DownloadAbi(chain, implementation, result)
+	return
 }
