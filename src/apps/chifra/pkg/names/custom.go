@@ -9,10 +9,11 @@ import (
 )
 
 // loadCustomMap loads the custom names from the cache
-func loadCustomMap(chain string, thePath string, terms []string, parts Parts, ret *map[types.Address]Name) error {
+func loadCustomMap(chain string, thePath string, terms []string, parts Parts, ret *map[types.Address]types.SimpleName) error {
 	callbackFunc := func(n Name) error {
 		if doSearch(&n, terms, parts) {
-			(*ret)[types.HexToAddress(n.Address)] = n
+			s := n.ToSimpleName()
+			(*ret)[s.Address] = s
 		}
 		return nil
 	}
@@ -31,10 +32,10 @@ func loadCustomMap(chain string, thePath string, terms []string, parts Parts, re
 			addr := fmt.Sprintf("0x%040d", i)
 			num := fmt.Sprintf("%d", i)
 			n := Name{
-				Address:  addr,
+				Address:  types.HexToAddress(addr),
 				Name:     "Account_" + num,
 				Tags:     "81-Custom",
-				Decimals: num,
+				Decimals: uint64(i),
 				Symbol:   "SYM_" + num,
 				Source:   "Testing",
 				Petname:  AddrToPetname(addr, "-"),
