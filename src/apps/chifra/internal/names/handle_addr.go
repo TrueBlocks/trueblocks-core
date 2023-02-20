@@ -26,7 +26,7 @@ func (opts *NamesOptions) HandleAddr() error {
 	fetchData := func(modelChan chan types.Modeler[types.RawPart], errorChan chan error) {
 		for _, name := range namesArray {
 			s := types.SimplePart{
-				Address: types.HexToAddress(name.Address),
+				Address: name.Address,
 			}
 			modelChan <- &s
 		}

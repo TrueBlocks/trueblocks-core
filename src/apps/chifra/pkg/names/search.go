@@ -4,7 +4,7 @@ import (
 	"regexp"
 )
 
-func doSearch(name Name, terms []string, parts Parts) bool {
+func doSearch(name *Name, terms []string, parts Parts) bool {
 	if len(terms) == 0 {
 		return true
 	}

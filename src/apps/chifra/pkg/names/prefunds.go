@@ -12,7 +12,7 @@ import (
 )
 
 // loadPrefundMap loads the prefund names from the cache
-func loadPrefundMap(chain string, ret *map[types.Address]Name, terms []string, parts Parts) {
+func loadPrefundMap(chain string, terms []string, parts Parts, ret *map[types.Address]Name) {
 	prefunds, _ := LoadPrefunds(chain)
 	for i, prefund := range prefunds {
 		n := Name{
@@ -23,7 +23,7 @@ func loadPrefundMap(chain string, ret *map[types.Address]Name, terms []string, p
 			Petname:   AddrToPetname(prefund.Address.Hex(), "-"),
 			IsPrefund: true,
 		}
-		if doSearch(n, terms, parts) {
+		if doSearch(&n, terms, parts) {
 			(*ret)[types.HexToAddress(n.Address)] = n
 		}
 	}

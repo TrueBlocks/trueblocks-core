@@ -11,7 +11,7 @@ import (
 // loadCustomMap loads the custom names from the cache
 func loadCustomMap(chain string, thePath string, terms []string, parts Parts, ret *map[types.Address]Name) error {
 	callbackFunc := func(n Name) error {
-		if doSearch(n, terms, parts) {
+		if doSearch(&n, terms, parts) {
 			(*ret)[types.HexToAddress(n.Address)] = n
 		}
 		return nil

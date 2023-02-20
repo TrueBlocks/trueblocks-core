@@ -19,22 +19,8 @@ func (opts *NamesOptions) HandleCrud() error {
 	// // Note: Make sure to add an entry to enabledForCmd in src/apps/chifra/pkg/output/helpers.go
 	// fetchData := func(modelChan chan types.Modeler[types.RawName], errorChan chan error) {
 	// 	for _, name := range namesArray {
-	// 		s := types.SimpleName{
-	// 			Tags:       name.Tags,
-	// 			Address:    types.HexToAddress(name.Address),
-	// 			Name:       name.Name,
-	// 			Source:     name.Source,
-	// 			Petname:    name.Petname,
-	// 			Symbol:     name.Symbol,
-	// 			Decimals:   globals.ToUint64(name.Decimals),
-	// 			Deleted:    name.Deleted,
-	// 			IsCustom:   name.IsCustom,
-	// 			IsPrefund:  name.IsPrefund,
-	// 			IsContract: name.IsContract,
-	// 			IsErc20:    name.IsErc20,
-	// 			IsErc721:   name.IsErc721,
-	// 		}
-	// 		modelChan <- &s
+	// 		name := name
+	// 		modelChan <- &name
 	// 	}
 	// }
 
