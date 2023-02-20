@@ -6,6 +6,7 @@ package scrapePkg
 
 import (
 	"log"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -31,7 +32,8 @@ func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData, blaze
 		return true, nil
 	}
 
-	prefunds, err := names.LoadPrefunds(opts.Globals.Chain)
+	prefundPath := filepath.Join(config.GetPathToChainConfig(opts.Globals.Chain), "allocs.csv")
+	prefunds, err := names.LoadPrefunds(opts.Globals.Chain, prefundPath)
 	if err != nil {
 		return false, err
 	}

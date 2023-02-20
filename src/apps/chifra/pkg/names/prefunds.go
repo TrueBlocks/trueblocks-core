@@ -5,26 +5,26 @@ import (
 	"math/big"
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/gocarina/gocsv"
 )
 
 // loadPrefundMap loads the prefund names from the cache
-func loadPrefundMap(chain string, terms []string, parts Parts, ret *map[types.Address]Name) {
-	prefunds, _ := LoadPrefunds(chain)
+func loadPrefundMap(chain string, thePath string, terms []string, parts Parts, ret *map[types.Address]types.SimpleName) {
+	prefunds, _ := LoadPrefunds(chain, thePath)
 	for i, prefund := range prefunds {
 		n := Name{
 			Tags:      "80-Prefund",
-			Address:   prefund.Address.Hex(),
+			Address:   prefund.Address,
 			Name:      "Prefund_" + fmt.Sprintf("%04d", i),
 			Source:    "Genesis",
 			Petname:   AddrToPetname(prefund.Address.Hex(), "-"),
 			IsPrefund: true,
 		}
 		if doSearch(&n, terms, parts) {
-			(*ret)[types.HexToAddress(n.Address)] = n
+			s := n.ToSimpleName()
+			(*ret)[s.Address] = s
 		}
 	}
 }
@@ -39,19 +39,20 @@ type Allocation struct {
 var emptyAllocs = []Allocation{{Address: types.HexToAddress("0x0"), Balance: *big.NewInt(0)}}
 
 // LoadPrefunds loads the prefunds from the genesis file
-func LoadPrefunds(chain string) ([]Allocation, error) {
+func LoadPrefunds(chain string, thePath string) ([]Allocation, error) {
 	allocations := make([]Allocation, 0, 4000)
 	callbackFunc := func(record Allocation) error {
 		if validate.IsValidAddress(record.Address.Hex()) {
-			allocations = append(allocations, Allocation{
+			alloc := Allocation{
 				Address: record.Address,
 				Balance: record.Balance,
-			})
+			}
+			// fmt.Println(alloc)
+			allocations = append(allocations, alloc)
 		}
 		return nil
 	}
 
-	thePath := config.GetPathToChainConfig(chain) + "allocs.csv"
 	if theFile, err := os.OpenFile(thePath, os.O_RDWR|os.O_CREATE, os.ModePerm); err != nil {
 		return emptyAllocs, err
 
