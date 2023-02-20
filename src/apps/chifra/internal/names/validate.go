@@ -32,8 +32,18 @@ func (opts *NamesOptions) validateNames() error {
 		return validate.Usage("The --named option has been deprecated. Use --all instead.")
 	}
 
-	if opts.Prefund && opts.anyCrud() {
+	if opts.Prefund && (opts.Clean || len(opts.Autoname) > 0 || opts.anyCrud()) {
 		return validate.Usage("You may not use the {0} option when editing names.", "--prefund")
+	}
+
+	if opts.anyCrud() {
+		// TODO: BOGUS
+		// err := validate.ValidateAtLeastOneAddr(opts.Terms)
+		// if err != nil {
+		// 	return err
+		// }
+	} else if opts.ToCustom {
+		return validate.Usage("Use the {0} option only when editing names.", "--to_custom")
 	}
 
 	addr := types.HexToAddress(opts.Autoname)
@@ -42,23 +52,4 @@ func (opts *NamesOptions) validateNames() error {
 	}
 
 	return opts.Globals.Validate()
-}
-
-func (opts *NamesOptions) anyBase() bool {
-	return opts.Expand ||
-		opts.MatchCase ||
-		opts.All ||
-		opts.Prefund ||
-		opts.Named ||
-		opts.Clean
-}
-
-func (opts *NamesOptions) anyCrud() bool {
-	return opts.Clean ||
-		opts.Create ||
-		opts.Update ||
-		opts.Delete ||
-		opts.Undelete ||
-		opts.Remove ||
-		len(opts.Autoname) > 0
 }

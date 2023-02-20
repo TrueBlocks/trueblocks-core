@@ -53,7 +53,9 @@ func (opts *NamesOptions) NamesInternal() (err error, handled bool) {
 	// EXISTING_CODE
 	if opts.IsPorted() {
 		handled = true
-		if opts.Tags {
+		if opts.anyCrud() {
+			err = opts.HandleCrud()
+		} else if opts.Tags {
 			err = opts.HandleTags()
 		} else if opts.Addr {
 			err = opts.HandleAddr()
@@ -86,8 +88,7 @@ func GetNamesOptions(args []string, g *globals.GlobalOptions) *NamesOptions {
 
 func (opts *NamesOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	if opts.Clean || len(opts.Autoname) > 0 || opts.ToCustom ||
-		opts.Create || opts.Update || opts.Delete || opts.Undelete || opts.Remove {
+	if opts.anyCrud() || opts.Clean || len(opts.Autoname) > 0 {
 		ported = false
 	} else {
 		ported = true
@@ -125,6 +126,23 @@ func (opts *NamesOptions) getType() names.Parts {
 	}
 
 	return ret
+}
+
+func (opts *NamesOptions) anyBase() bool {
+	return opts.Expand ||
+		opts.MatchCase ||
+		opts.All ||
+		opts.Prefund ||
+		opts.Named ||
+		opts.Clean
+}
+
+func (opts *NamesOptions) anyCrud() bool {
+	return opts.Create ||
+		opts.Update ||
+		opts.Delete ||
+		opts.Undelete ||
+		opts.Remove
 }
 
 // EXISTING_CODE
