@@ -18,29 +18,13 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-// Name is a record in the names database
-type Name struct {
-	Tags       string `json:"tags"`
-	Address    string `json:"address"`
-	Name       string `json:"name"`
-	Symbol     string `json:"symbol"`
-	Source     string `json:"source"`
-	Decimals   string `json:"decimals"`
-	Petname    string `json:"petname"`
-	Deleted    bool   `json:"deleted"`
-	IsCustom   bool   `json:"isCustom"`
-	IsPrefund  bool   `json:"isPrefund"`
-	IsContract bool   `json:"isContract"`
-	IsErc20    bool   `json:"isErc20"`
-	IsErc721   bool   `json:"isErc721"`
+// NameOnDiscHeader is the header of the names database when stored in the binary backing file
+type NameOnDiscHeader struct {
+	Magic   uint64    // 8 bytes
+	Version uint64    // + 8 bytes = 16 bytes
+	Count   uint64    // + 8 bytes = 24 bytes
+	Padding [428]byte // 452 - 24 = 428 bytes
 }
-
-func (n Name) String() string {
-	ret, _ := json.MarshalIndent(n, "", "  ")
-	return string(ret)
-}
-
-type NamesArray []Name
 
 // NameOnDisc is a record in the names database when stored in the binary backing file
 type NameOnDisc struct {
@@ -54,17 +38,19 @@ type NameOnDisc struct {
 	Flags    uint16        `json:"-"` // + 2 bytes = 452 bytes
 }
 
-type NamesMap map[types.Address]Name
-
-type NameOnDiscHeader struct {
-	Magic   uint64    // 8 bytes
-	Version uint64    // + 8 bytes = 16 bytes
-	Count   uint64    // + 8 bytes = 24 bytes
-	Padding [428]byte // 452 - 24 = 428 bytes
-}
+// Bitflags for the Flags field
+const (
+	IsCustom   uint16 = 0x1
+	IsPrefund  uint16 = 0x2
+	IsContract uint16 = 0x4
+	IsErc20    uint16 = 0x8
+	IsErc721   uint16 = 0x10
+	IsDeleted  uint16 = 0x20
+)
 
 type Parts int
 
+// Parts is a bitfield that defines what parts of a name to return and other options
 const (
 	None      Parts = 0x0
 	Regular   Parts = 0x1
@@ -75,17 +61,9 @@ const (
 	Expanded  Parts = 0x20
 )
 
-const (
-	IsCustom   uint16 = 0x1
-	IsPrefund  uint16 = 0x2
-	IsContract uint16 = 0x4
-	IsErc20    uint16 = 0x8
-	IsErc721   uint16 = 0x10
-	IsDeleted  uint16 = 0x20
-)
-
 type SortBy int
 
+// SortBy is a bitfield that defines how to sort the names
 const (
 	SortByAddress SortBy = iota
 	SortByName
@@ -96,9 +74,9 @@ const (
 	// SortByPetname
 )
 
-func LoadNamesArray(chain string, parts Parts, sortBy SortBy, terms []string) (NamesArray, error) {
-
-	names := NamesArray{}
+// LoadNamesMap loads the names from the cache and returns an array of names
+func LoadNamesArray(chain string, parts Parts, sortBy SortBy, terms []string) ([]Name, error) {
+	names := []Name{}
 	if namesMap, err := LoadNamesMap(chain, parts, terms); err != nil {
 		return nil, err
 	} else {
@@ -137,8 +115,11 @@ func LoadNamesArray(chain string, parts Parts, sortBy SortBy, terms []string) (N
 	return names, nil
 }
 
-func LoadNamesMap(chain string, parts Parts, terms []string) (NamesMap, error) {
-	ret := NamesMap{}
+// LoadNamesMap loads the names from the cache and returns a map of names
+func LoadNamesMap(chain string, parts Parts, terms []string) (map[types.Address]Name, error) {
+	ret := map[types.Address]Name{}
+
+	// Load the prefund names first...
 	if parts&Prefund != 0 {
 		loadPrefundMap(chain, &ret, terms, parts)
 	}
@@ -146,9 +127,10 @@ func LoadNamesMap(chain string, parts Parts, terms []string) (NamesMap, error) {
 	binPath := config.GetPathToCache(chain) + "names/names.bin"
 	namesPath := filepath.Join(config.GetPathToChainConfig(chain), "names.tab")
 	customPath := filepath.Join(config.GetPathToChainConfig(chain), "names_custom.tab")
-	enabled := false // os.Getenv("FAST") == "true" // TODO: this isn't right
 
+	// Load the names from the binary file (note that these may overwrite the prefund names)
 	if parts&Regular != 0 {
+		enabled := false // os.Getenv("FAST") == "true" // TODO: this isn't right
 		if enabled && file.FileExists(binPath) {
 			file, _ := os.OpenFile(binPath, os.O_RDONLY, 0)
 			defer file.Close()
@@ -188,14 +170,49 @@ func LoadNamesMap(chain string, parts Parts, terms []string) (NamesMap, error) {
 		}
 	}
 
+	// Load the custom names (note that these may overwrite the prefund and regular names)
 	if parts&Custom != 0 {
-		loadCustomMap(chain, &ret, customPath, terms, parts)
+		loadCustomMap(chain, customPath, terms, parts, &ret)
 	}
 
 	return ret, nil
 }
 
-func nameMapFromFile(chain string, ret *NamesMap, filePath string, terms []string, parts Parts) {
+// asString converts the byte array (not zero-terminated) to a string
+func asString(which string, b []byte) string {
+	ret := ""
+	for _, rVal := range string(b) {
+		if rVal == 0 {
+			return ret
+		}
+		ret += string(rVal)
+	}
+	return ret
+}
+
+// Name is a record in the names database
+type Name struct {
+	Tags       string `json:"tags"`
+	Address    string `json:"address"`
+	Name       string `json:"name"`
+	Symbol     string `json:"symbol"`
+	Source     string `json:"source"`
+	Decimals   string `json:"decimals"`
+	Petname    string `json:"petname"`
+	Deleted    bool   `json:"deleted"`
+	IsCustom   bool   `json:"isCustom"`
+	IsPrefund  bool   `json:"isPrefund"`
+	IsContract bool   `json:"isContract"`
+	IsErc20    bool   `json:"isErc20"`
+	IsErc721   bool   `json:"isErc721"`
+}
+
+func (n Name) String() string {
+	ret, _ := json.MarshalIndent(n, "", "  ")
+	return string(ret)
+}
+
+func nameMapFromFile(chain string, ret *map[types.Address]Name, filePath string, terms []string, parts Parts) {
 	gr, err := NewNameReader(filePath)
 	if err != nil {
 		log.Fatal(err)
@@ -213,18 +230,6 @@ func nameMapFromFile(chain string, ret *NamesMap, filePath string, terms []strin
 			(*ret)[types.HexToAddress(n.Address)] = n
 		}
 	}
-}
-
-// asString converts the byte array (not zero-terminated) to a string
-func asString(which string, b []byte) string {
-	ret := ""
-	for _, rVal := range string(b) {
-		if rVal == 0 {
-			return ret
-		}
-		ret += string(rVal)
-	}
-	return ret
 }
 
 var requiredColumns = []string{

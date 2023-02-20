@@ -11,14 +11,34 @@ import (
 	"github.com/gocarina/gocsv"
 )
 
+// loadPrefundMap loads the prefund names from the cache
+func loadPrefundMap(chain string, ret *map[types.Address]Name, terms []string, parts Parts) {
+	prefunds, _ := LoadPrefunds(chain)
+	for i, prefund := range prefunds {
+		n := Name{
+			Tags:      "80-Prefund",
+			Address:   prefund.Address.Hex(),
+			Name:      "Prefund_" + fmt.Sprintf("%04d", i),
+			Source:    "Genesis",
+			Petname:   AddrToPetname(prefund.Address.Hex(), "-"),
+			IsPrefund: true,
+		}
+		if doSearch(n, terms, parts) {
+			(*ret)[types.HexToAddress(n.Address)] = n
+		}
+	}
+}
+
+// Allocation is a single allocation in the genesis file
 type Allocation struct {
 	Address types.Address `json:"address" csv:"address"`
 	Balance big.Int       `json:"balance" csv:"balance"`
 }
 
-// We want to return at least one valid record
+// emptyAllocs is a list of empty allocations. We use this to return at least one allocation
 var emptyAllocs = []Allocation{{Address: types.HexToAddress("0x0"), Balance: *big.NewInt(0)}}
 
+// LoadPrefunds loads the prefunds from the genesis file
 func LoadPrefunds(chain string) ([]Allocation, error) {
 	allocations := make([]Allocation, 0, 4000)
 	callbackFunc := func(record Allocation) error {
@@ -47,21 +67,4 @@ func LoadPrefunds(chain string) ([]Allocation, error) {
 	}
 
 	return allocations, nil
-}
-
-func loadPrefundMap(chain string, ret *NamesMap, terms []string, parts Parts) {
-	prefunds, _ := LoadPrefunds(chain)
-	for i, prefund := range prefunds {
-		n := Name{
-			Tags:      "80-Prefund",
-			Address:   prefund.Address.Hex(),
-			Name:      "Prefund_" + fmt.Sprintf("%04d", i),
-			Source:    "Genesis",
-			Petname:   AddrToPetname(prefund.Address.Hex(), "-"),
-			IsPrefund: true,
-		}
-		if doSearch(n, terms, parts) {
-			(*ret)[types.HexToAddress(n.Address)] = n
-		}
-	}
 }
