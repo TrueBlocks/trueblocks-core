@@ -2,36 +2,40 @@ package names
 
 import (
 	"fmt"
-	"os"
+	"io"
+	"log"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/gocarina/gocsv"
 )
 
 // loadCustomMap loads the custom names from the cache
 func loadCustomMap(chain string, thePath string, terms []string, parts Parts, ret *map[types.Address]types.SimpleName) error {
-	callbackFunc := func(n Name) error {
-		if doSearch(&n, terms, parts) {
-			s := n.ToSimpleName()
-			(*ret)[s.Address] = s
-		}
-		return nil
-	}
-
 	if parts&Testing == 0 {
-		if theFile, err := os.OpenFile(thePath, os.O_RDWR|os.O_CREATE, os.ModePerm); err != nil {
-			return err
-		} else {
-			defer theFile.Close()
-			if err := gocsv.UnmarshalToCallback(theFile, callbackFunc); err != nil {
-				return err
+		// TODO: This should use gocsv instead of the custom code below
+		reader, err := NewNameReader(thePath)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		for {
+			n, err := reader.Read()
+			if err == io.EOF {
+				break
+			}
+			if err != nil {
+				log.Fatal(err)
+			}
+			if doSearch(&n, terms, parts) {
+				(*ret)[n.Address] = n
 			}
 		}
+
+		return nil
 	} else {
 		for i := 1; i < 5; i++ {
 			addr := fmt.Sprintf("0x%040d", i)
 			num := fmt.Sprintf("%d", i)
-			n := Name{
+			n := types.SimpleName{
 				Address:  types.HexToAddress(addr),
 				Name:     "Account_" + num,
 				Tags:     "81-Custom",
@@ -41,7 +45,9 @@ func loadCustomMap(chain string, thePath string, terms []string, parts Parts, re
 				Petname:  AddrToPetname(addr, "-"),
 				IsCustom: true,
 			}
-			callbackFunc(n)
+			if doSearch(&n, terms, parts) {
+				(*ret)[n.Address] = n
+			}
 		}
 	}
 

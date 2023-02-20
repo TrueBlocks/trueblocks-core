@@ -2,7 +2,6 @@ package names
 
 import (
 	"encoding/csv"
-	"encoding/json"
 	"fmt"
 	"io"
 	"os"
@@ -107,28 +106,6 @@ func LoadNamesMap(chain string, parts Parts, terms []string) (map[types.Address]
 	return namesMap, nil
 }
 
-// Name is a record in the names database
-type Name struct {
-	Tags       string        `json:"tags" csv:"tags"`
-	Address    types.Address `json:"address" csv:"address"`
-	Name       string        `json:"name" csv:"name"`
-	Symbol     string        `json:"symbol" csv:"symbol"`
-	Source     string        `json:"source" csv:"source"`
-	Decimals   uint64        `json:"decimals" csv:"decimals"`
-	Petname    string        `json:"petname" csv:"petname"`
-	Deleted    bool          `json:"deleted" csv:"deleted"`
-	IsCustom   bool          `json:"isCustom" csv:"isCustom"`
-	IsPrefund  bool          `json:"isPrefund" csv:"isPrefund"`
-	IsContract bool          `json:"isContract" csv:"isContract"`
-	IsErc20    bool          `json:"isErc20" csv:"isErc20"`
-	IsErc721   bool          `json:"isErc721" csv:"isErc721"`
-}
-
-func (n Name) String() string {
-	ret, _ := json.MarshalIndent(n, "", "  ")
-	return string(ret)
-}
-
 var requiredColumns = []string{
 	"tags",
 	"address",
@@ -144,16 +121,16 @@ type NameReader struct {
 	csvReader csv.Reader
 }
 
-func (gr *NameReader) Read() (Name, error) {
+func (gr *NameReader) Read() (types.SimpleName, error) {
 	record, err := gr.csvReader.Read()
 	if err == io.EOF {
 		gr.file.Close()
 	}
 	if err != nil {
-		return Name{}, err
+		return types.SimpleName{}, err
 	}
 
-	return Name{
+	return types.SimpleName{
 		Tags:       record[gr.header["tags"]],
 		Address:    types.HexToAddress(strings.ToLower(record[gr.header["address"]])),
 		Name:       record[gr.header["name"]],
@@ -199,31 +176,13 @@ func NewNameReader(path string) (NameReader, error) {
 		}
 	}
 
-	gr := NameReader{
+	r := NameReader{
 		file:      file,
 		header:    header,
 		csvReader: *reader,
 	}
 
-	return gr, nil
-}
-
-func (n *Name) ToSimpleName() types.SimpleName {
-	return types.SimpleName{
-		Tags:       n.Tags,
-		Address:    n.Address,
-		Name:       n.Name,
-		Source:     n.Source,
-		Petname:    n.Petname,
-		Symbol:     n.Symbol,
-		Decimals:   n.Decimals,
-		Deleted:    n.Deleted,
-		IsCustom:   n.IsCustom,
-		IsPrefund:  n.IsPrefund,
-		IsContract: n.IsContract,
-		IsErc20:    n.IsErc20,
-		IsErc721:   n.IsErc721,
-	}
+	return r, nil
 }
 
 /*

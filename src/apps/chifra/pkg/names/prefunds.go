@@ -14,7 +14,7 @@ import (
 func loadPrefundMap(chain string, thePath string, terms []string, parts Parts, ret *map[types.Address]types.SimpleName) {
 	prefunds, _ := LoadPrefunds(chain, thePath)
 	for i, prefund := range prefunds {
-		n := Name{
+		n := types.SimpleName{
 			Tags:      "80-Prefund",
 			Address:   prefund.Address,
 			Name:      "Prefund_" + fmt.Sprintf("%04d", i),
@@ -23,8 +23,7 @@ func loadPrefundMap(chain string, thePath string, terms []string, parts Parts, r
 			IsPrefund: true,
 		}
 		if doSearch(&n, terms, parts) {
-			s := n.ToSimpleName()
-			(*ret)[s.Address] = s
+			(*ret)[n.Address] = n
 		}
 	}
 }
