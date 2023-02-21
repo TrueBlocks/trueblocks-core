@@ -67,7 +67,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12265,tools,Accounts,names,ethNames,expand,e,,false,false,true,true,gocmd,switch,<boolean>,expand search to include all fields (search name&#44; address&#44; and symbol otherwise)
 12270,tools,Accounts,names,ethNames,match_case,m,,false,false,true,true,gocmd,switch,<boolean>,do case-sensitive search
 12275,tools,Accounts,names,ethNames,all,l,,false,false,true,true,gocmd,switch,<boolean>,include all (including custom) names in the search
-12280,tools,Accounts,names,ethNames,custom,c,,false,false,true,true,gocmd,switch,<boolean>,include only custom named account in the search
+12280,tools,Accounts,names,ethNames,custom,c,,false,false,true,true,gocmd,switch,<boolean>,include only custom named accounts in the search
 12285,tools,Accounts,names,ethNames,prefund,p,,false,false,true,true,gocmd,switch,<boolean>,include prefund accounts in the search
 12290,tools,Accounts,names,ethNames,addr,a,,false,false,true,true,gocmd,switch,<boolean>,display only addresses in the results (useful for scripting&#44; assumes --no_header)
 12295,tools,Accounts,names,ethNames,tags,g,,false,false,true,true,gocmd,switch,<boolean>,export the list of tags and subtags only

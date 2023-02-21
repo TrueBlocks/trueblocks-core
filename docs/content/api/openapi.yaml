@@ -625,7 +625,7 @@ paths:
           schema:
             type: boolean
         - name: custom
-          description: include only custom named account in the search
+          description: include only custom named accounts in the search
           required: false
           style: form
           in: query
