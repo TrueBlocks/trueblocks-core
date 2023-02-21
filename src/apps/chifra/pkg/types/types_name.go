@@ -56,6 +56,20 @@ func (s *SimpleName) SetRaw(raw *RawName) {
 
 func (s *SimpleName) Model(showHidden bool, format string, extraOptions map[string]any) Model {
 	// EXISTING_CODE
+	if extraOptions["single"] == "tags" || extraOptions["single"] == "address" {
+		model := map[string]interface{}{}
+		order := []string{}
+		if extraOptions["single"] == "tags" {
+			model["tags"] = s.Tags
+		} else {
+			model["address"] = s.Address.Hex()
+		}
+		order = append(order, extraOptions["single"].(string))
+		return Model{
+			Data:  model,
+			Order: order,
+		}
+	}
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
@@ -167,6 +181,7 @@ func (s *SimpleName) Model(showHidden bool, format string, extraOptions map[stri
 			model["iserc721"] = s.IsErc721
 			order = append(order, "iserc721")
 		}
+
 	}
 	// EXISTING_CODE
 

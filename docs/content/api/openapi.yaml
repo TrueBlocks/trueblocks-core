@@ -697,12 +697,10 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#name">Name</a>, and/or <a href="/data-model/accounts/#part">Part</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-names">chifra names</a> command line.
+                    description: An association between a human-readable name and an address used throughout TrueBlocks. Produces <a href="/data-model/accounts/#name">Name</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-names">chifra names</a> command line.
                     type: array
                     items:
-                      oneOf:
-                        - $ref: "#/components/schemas/name"
-                        - $ref: "#/components/schemas/part"
+                      $ref: "#/components/schemas/name"
                 example:
                   [
                     {
@@ -2275,19 +2273,6 @@ components:
           type: number
           format: uint64
           description: "the size of the monitor file containing those appearances"
-    part:
-      description: "part of a name record"
-      type: object
-      properties:
-        tags:
-          type: string
-          example: "31-Gitcoin:Core"
-          description: "colon separated list of tags"
-        address:
-          type: string
-          format: address
-          example: "0x1234...4321"
-          description: "an address"
     block:
       description: "block data as returned from the RPC (with slight enhancements)"
       type: object

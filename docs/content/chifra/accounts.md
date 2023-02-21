@@ -268,7 +268,6 @@ Notes:
 Data models produced by this tool:
 
 - [name](/data-model/accounts/#name)
-- [part](/data-model/accounts/#part)
 
 Links:
 
