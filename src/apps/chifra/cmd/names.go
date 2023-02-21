@@ -55,13 +55,11 @@ func init() {
 
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Expand, "expand", "e", false, "expand search to include all fields (search name, address, and symbol otherwise)")
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().MatchCase, "match_case", "m", false, "do case-sensitive search")
-	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().All, "all", "l", false, "include all accounts in the search")
-	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Custom, "custom", "c", false, "include your custom named accounts")
-	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Prefund, "prefund", "p", false, "include prefund accounts")
-	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Named, "named", "n", false, "include well know token and airdrop addresses in the search")
-	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Addr, "addr", "a", false, "display only addresses in the results (useful for scripting)")
+	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().All, "all", "l", false, "include all (including custom) names in the search")
+	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Custom, "custom", "c", false, "include only custom named accounts in the search")
+	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Prefund, "prefund", "p", false, "include prefund accounts in the search")
+	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Addr, "addr", "a", false, "display only addresses in the results (useful for scripting, assumes --no_header)")
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Tags, "tags", "g", false, "export the list of tags and subtags only")
-	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().ToCustom, "to_custom", "u", false, "for editCmd only, is the edited name a custom name or not (hidden)")
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Clean, "clean", "C", false, "clean the data (addrs to lower case, sort by addr) (hidden)")
 	namesCmd.Flags().StringVarP(&namesPkg.GetOptions().Autoname, "autoname", "A", "", "an address assumed to be a token, added automatically to names database if true (hidden)")
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Create, "create", "", false, "create a new name record (hidden)")
@@ -69,8 +67,9 @@ func init() {
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Delete, "delete", "", false, "delete a name, but do not remove it (hidden)")
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Undelete, "undelete", "", false, "undelete a previously deleted name (hidden)")
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Remove, "remove", "", false, "remove a previously deleted name (hidden)")
+	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().ToCustom, "to_custom", "u", false, "for editCmd only, is the edited name a custom name or not (hidden)")
+	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Named, "named", "n", false, "please use the --all option instead")
 	if os.Getenv("TEST_MODE") != "true" {
-		namesCmd.Flags().MarkHidden("to_custom")
 		namesCmd.Flags().MarkHidden("clean")
 		namesCmd.Flags().MarkHidden("autoname")
 		namesCmd.Flags().MarkHidden("create")
@@ -78,6 +77,7 @@ func init() {
 		namesCmd.Flags().MarkHidden("delete")
 		namesCmd.Flags().MarkHidden("undelete")
 		namesCmd.Flags().MarkHidden("remove")
+		namesCmd.Flags().MarkHidden("to_custom")
 	}
 	globals.InitGlobals(namesCmd, &namesPkg.GetOptions().Globals)
 
@@ -85,6 +85,7 @@ func init() {
 	namesCmd.SetOut(os.Stderr)
 
 	// EXISTING_CODE
+	namesCmd.Flags().MarkDeprecated("named", "please use the --all option instead")
 	// EXISTING_CODE
 
 	chifraCmd.AddCommand(namesCmd)

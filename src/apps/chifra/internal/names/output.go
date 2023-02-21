@@ -13,6 +13,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -52,7 +53,16 @@ func (opts *NamesOptions) NamesInternal() (err error, handled bool) {
 	// EXISTING_CODE
 	if opts.IsPorted() {
 		handled = true
-		err = opts.HandlePrefundOnly()
+		if opts.anyCrud() {
+			err = opts.HandleCrud()
+		} else if opts.Tags {
+			err = opts.HandleTags()
+		} else if opts.Addr {
+			err = opts.HandleAddr()
+		} else {
+			// Includes opts.Prefund
+			err = opts.HandleTerms()
+		}
 		return
 	}
 
@@ -78,38 +88,61 @@ func GetNamesOptions(args []string, g *globals.GlobalOptions) *NamesOptions {
 
 func (opts *NamesOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	if len(opts.Terms) > 0 {
-		ported = false
-	} else if opts.Expand {
-		ported = false
-	} else if opts.MatchCase {
-		ported = false
-	} else if opts.All {
-		ported = false
-	} else if opts.Custom {
-		ported = false
-	} else if opts.Named {
-		ported = false
-	} else if opts.Addr {
-		ported = false
-	} else if opts.Tags {
-		ported = false
-	} else if opts.ToCustom {
-		ported = false
-	} else if opts.Clean {
-		ported = false
-	} else if len(opts.Autoname) > 0 {
-		ported = false
-	} else if opts.Create || opts.Update || opts.Delete || opts.Undelete || opts.Remove {
-		ported = false
-	} else if len(opts.Globals.OutputFn) > 0 {
+	if opts.anyCrud() || opts.Clean || len(opts.Autoname) > 0 {
 		ported = false
 	} else {
-		ported = opts.Prefund
+		ported = true
 	}
 	// EXISTING_CODE
 	return
 }
 
 // EXISTING_CODE
+func (opts *NamesOptions) getType() names.Parts {
+	var ret names.Parts
+
+	if opts.Custom || opts.All {
+		ret |= names.Custom
+	}
+
+	if opts.Prefund || opts.All {
+		ret |= names.Prefund
+	}
+
+	if (!opts.Custom && !opts.Prefund) || opts.All {
+		ret |= names.Regular
+	}
+
+	if opts.MatchCase {
+		ret |= names.MatchCase
+	}
+
+	if opts.Expand {
+		ret |= names.Expanded
+	}
+
+	if opts.Globals.TestMode {
+		ret |= names.Testing
+	}
+
+	return ret
+}
+
+func (opts *NamesOptions) anyBase() bool {
+	return opts.Expand ||
+		opts.MatchCase ||
+		opts.All ||
+		opts.Prefund ||
+		opts.Named ||
+		opts.Clean
+}
+
+func (opts *NamesOptions) anyCrud() bool {
+	return opts.Create ||
+		opts.Update ||
+		opts.Delete ||
+		opts.Undelete ||
+		opts.Remove
+}
+
 // EXISTING_CODE

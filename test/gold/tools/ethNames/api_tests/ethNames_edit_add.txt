@@ -47,7 +47,7 @@ Env: TB_NAME_SOURCE   = SOURCE
 Env: TB_NAME_SYMBOL   = SYMBOL
 Env: TB_NAME_DECIMALS = 11
 Env: TB_NAME_DESCR    = DESCRIPTION
-names?create&logLevel=10&fmt=json&expand
+names?create&fmt=json
 {
   "data": [
     {
@@ -71,7 +71,6 @@ names?create&logLevel=10&fmt=json&expand
     "ripe": "0xdeadbeef",
     "staging": "0xdeadbeef",
     "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef",
-    "namePath": "--"
+    "client": "0xdeadbeef"
   }
 }

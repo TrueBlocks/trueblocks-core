@@ -28,6 +28,13 @@ function(CopyIgnorePresent FROM_DIR IN_FILE TO_DIR)
 	file(COPY "${FROM_DIR}/${IN_FILE}" DESTINATION "${TO_DIR}" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 endfunction(CopyIgnorePresent)
 
+# copy and touch the file even if it's present (that is, replace it)
+function(CopyAndTouchIgnorePresent FROM_DIR IN_FILE TO_DIR)
+	PrintLine("   ${CColor}Copying ./${IN_FILE} to ${TO_DIR}${COff}")
+	file(TOUCH "${FROM_DIR}/${IN_FILE}")
+	file(COPY "${FROM_DIR}/${IN_FILE}" DESTINATION "${TO_DIR}" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+endfunction(CopyAndTouchIgnorePresent)
+
 # copy an entire folder, replacing even if existing
 function(CopyFolder FROM_DIR TO_DIR)
 	STRING(REGEX REPLACE ${INSTALL_SOURCE} "." FROM_STR ${FROM_DIR})
@@ -90,9 +97,9 @@ CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/sepolia "allocs.csv"             
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/goerli  "allocs.csv"               ${INSTALL_DEST}/config/goerli/)
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/polygon "allocs.csv"               ${INSTALL_DEST}/config/polygon/)
 
-CopyIgnorePresent (${INSTALL_SOURCE}/names/            "names.tab"                ${INSTALL_DEST}/config/mainnet/)
-CopyIgnorePresent (${INSTALL_SOURCE}/names/            "names.tab"                ${INSTALL_DEST}/config/gnosis/)
-CopyIgnorePresent (${INSTALL_SOURCE}/names/            "names.tab"                ${INSTALL_DEST}/config/sepolia/)
+CopyAndTouchIgnorePresent (${INSTALL_SOURCE}/names/    "names.tab"                ${INSTALL_DEST}/config/mainnet/)
+CopyAndTouchIgnorePresent (${INSTALL_SOURCE}/names/    "names.tab"                ${INSTALL_DEST}/config/gnosis/)
+CopyAndTouchIgnorePresent (${INSTALL_SOURCE}/names/    "names.tab"                ${INSTALL_DEST}/config/sepolia/)
 
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/mainnet "specials.csv"             ${INSTALL_DEST}/config/mainnet/)
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/gnosis  "specials.csv"             ${INSTALL_DEST}/config/gnosis/)

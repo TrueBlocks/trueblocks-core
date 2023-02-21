@@ -26,10 +26,10 @@ type TransactionsOptions struct {
 	TransactionIds []identifiers.Identifier `json:"transactionIds,omitempty"` // Transaction identifiers
 	Articulate     bool                     `json:"articulate,omitempty"`     // Articulate the retrieved data if ABIs can be found
 	Traces         bool                     `json:"traces,omitempty"`         // Include the transaction's traces in the results
-	Trace          bool                     `json:"trace,omitempty"`          // Please use traces option instead
+	Trace          bool                     `json:"trace,omitempty"`          // Please use the --traces option instead
 	Uniq           bool                     `json:"uniq,omitempty"`           // Display a list of uniq addresses found in the transaction
 	Flow           string                   `json:"flow,omitempty"`           // For the uniq option only, export only from or to (including trace from or to)
-	Reconcile      string                   `json:"reconcile,omitempty"`      // Please use account_for option instead
+	Reconcile      string                   `json:"reconcile,omitempty"`      // Please use --account_for option instead
 	AccountFor     string                   `json:"accountFor,omitempty"`     // Reconcile the transaction as per the provided address
 	Cache          bool                     `json:"cache,omitempty"`          // Force the results of the query into the tx cache (and the trace cache if applicable)
 	Source         bool                     `json:"source,omitempty"`         // Find the source of the funds sent to the receiver

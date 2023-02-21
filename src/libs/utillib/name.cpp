@@ -80,7 +80,7 @@ string_q CName::getValueByName(const string_q& fieldName) const {
             break;
         case 'd':
             if (fieldName % "decimals") {
-                return decimals == 0 ? "" : uint_2_Str(decimals);
+                return uint_2_Str(decimals);
             }
             break;
         case 'i':
@@ -328,7 +328,7 @@ void CName::registerClass(void) {
     ADD_FIELD(CName, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CName, "symbol", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CName, "source", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CName, "decimals", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CName, "decimals", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CName, "petname", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CName, "isCustom", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CName, "isPrefund", T_BOOL | TS_OMITEMPTY, ++fieldNum);

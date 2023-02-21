@@ -1,4 +1,4 @@
 chifra names  notathingy.eth
 TEST[DATE|TIME] Terms:  [notathingy.eth]
 TEST[DATE|TIME] Format:  txt
-No results for notathingy.eth
+WARN[DATE|TIME] No results for  [chifra names notathingy.eth]

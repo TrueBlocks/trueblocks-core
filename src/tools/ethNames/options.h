@@ -21,26 +21,15 @@
 // END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------
-enum account_t { CUSTOM = (1 << 2), NAMED = (1 << 3), PREFUND = (1 << 4), ALL = (CUSTOM | NAMED) };
-
-//-----------------------------------------------------------------------------
 class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
     CStringArray terms;
-    bool match_case;
-    bool prefund;
-    bool tags;
     bool to_custom;
     // END_CODE_DECLARE
 
-    blknum_t latestBlock;
-
     CNameMap items;
     CStringArray searches;
-    string_q searchFields;
-    uint64_t types;
-    uint64_t nPrefunds{0};
 
     COptions(void);
     ~COptions(void);
@@ -48,19 +37,12 @@ class COptions : public CAbiOptions {
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
-    void filterNames(void);
-    bool addIfUnique(const CName& item);
     bool handle_clean(void);
-
-    bool finishClean(CName& name);
     bool cleanNames(const string_q& sourceIn, const string_q& destIn);
 
-    CStringArray crudCommands;
-    bool isCrudCommand(void) const {
-        return crudCommands.size() > 0;
-    }
-
-    // Crud command handling
     CName target;
+    CStringArray crudCommands;
     bool handle_editcmds(bool autoname);
+
+    bool addIfUnique(const CName& item);
 };
