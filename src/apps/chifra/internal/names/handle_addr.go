@@ -23,9 +23,9 @@ func (opts *NamesOptions) HandleAddr() error {
 	ctx := context.Background()
 
 	// Note: Make sure to add an entry to enabledForCmd in src/apps/chifra/pkg/output/helpers.go
-	fetchData := func(modelChan chan types.Modeler[types.RawPart], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawName], errorChan chan error) {
 		for _, name := range namesArray {
-			s := types.SimplePart{
+			s := types.SimpleName{
 				Address: name.Address,
 			}
 			modelChan <- &s
@@ -45,7 +45,7 @@ func (opts *NamesOptions) HandleAddr() error {
 		Append:     opts.Globals.Append,
 		JsonIndent: "  ",
 		Extra: map[string]interface{}{
-			"address": true,
+			"single": "address",
 		},
 	})
 }
