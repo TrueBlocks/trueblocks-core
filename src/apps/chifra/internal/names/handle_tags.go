@@ -24,10 +24,10 @@ func (opts *NamesOptions) HandleTags() error {
 	ctx := context.Background()
 
 	// Note: Make sure to add an entry to enabledForCmd in src/apps/chifra/pkg/output/helpers.go
-	fetchData := func(modelChan chan types.Modeler[types.RawPart], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawName], errorChan chan error) {
 		for _, name := range namesArray {
 			if !tagsMap[name.Tags] {
-				s := types.SimplePart{
+				s := types.SimpleName{
 					Tags: name.Tags,
 				}
 				modelChan <- &s
@@ -49,7 +49,7 @@ func (opts *NamesOptions) HandleTags() error {
 		Append:     opts.Globals.Append,
 		JsonIndent: "  ",
 		Extra: map[string]interface{}{
-			"tags": true,
+			"single": "tags",
 		},
 	})
 }
