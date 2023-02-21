@@ -2,32 +2,31 @@ package namesPkg
 
 import (
 	"context"
-	"fmt"
+	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// HandlePrefundOnly handles chifra names --prefund
-func (opts *NamesOptions) HandlePrefundOnly() error {
-	allocs, err := names.LoadPrefunds(opts.Globals.Chain)
+func (opts *NamesOptions) HandleTerms() error {
+	namesArray, err := names.LoadNamesArray(opts.Globals.Chain, opts.getType(), names.SortByAddress, opts.Terms)
 	if err != nil {
 		return err
 	}
+	if len(namesArray) == 0 {
+		logger.Log(logger.Warning, "No results for ", os.Args)
+		return nil
+	}
 
-	ctx, _ := context.WithCancel(context.Background())
+	ctx := context.Background()
+
+	// Note: Make sure to add an entry to enabledForCmd in src/apps/chifra/pkg/output/helpers.go
 	fetchData := func(modelChan chan types.Modeler[types.RawName], errorChan chan error) {
-		for i, alloc := range allocs {
-			a := types.SimpleName{
-				Tags:      "80-Prefund",
-				Address:   alloc.Address,
-				Name:      "Prefund_" + fmt.Sprintf("%04d", i),
-				Source:    "Genesis",
-				IsPrefund: true,
-				Petname:   alloc.Petname,
-			}
-			modelChan <- &a
+		for _, name := range namesArray {
+			name := name
+			modelChan <- &name
 		}
 	}
 
@@ -44,7 +43,8 @@ func (opts *NamesOptions) HandlePrefundOnly() error {
 		Append:     opts.Globals.Append,
 		JsonIndent: "  ",
 		Extra: map[string]interface{}{
-			"verbose": opts.Globals.Verbose,
+			"expand":  opts.Expand,
+			"prefund": opts.Prefund,
 		},
 	})
 }

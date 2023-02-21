@@ -16,14 +16,12 @@ func AddrToPetname(address string, separator string) string {
 	}
 
 	aLen := int64(len(adverbs))
-	aPos, _ := strconv.ParseInt(address[2:13], 16, 64)
+	aPos, _ := strconv.ParseInt(address[2:15], 16, 64)
 	aLoc := aPos % aLen
-	// fmt.Println(aPos, aLen, aLoc, adverbs[aLoc])
 
 	bLen := int64(len(adjectives))
 	bPos, _ := strconv.ParseInt(address[15:15+13], 16, 64)
 	bLoc := bPos % bLen
-	// fmt.Println(bPos, bLen, bLoc, adjectives[bLoc])
 
 	cLen := int64(len(nouns))
 	cPos, _ := strconv.ParseInt(address[28:28+14], 16, 64)

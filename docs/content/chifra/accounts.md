@@ -251,11 +251,10 @@ Arguments:
 Flags:
   -e, --expand       expand search to include all fields (search name, address, and symbol otherwise)
   -m, --match_case   do case-sensitive search
-  -l, --all          include all accounts in the search
-  -c, --custom       include your custom named accounts
-  -p, --prefund      include prefund accounts
-  -n, --named        include well know token and airdrop addresses in the search
-  -a, --addr         display only addresses in the results (useful for scripting)
+  -l, --all          include all (including custom) names in the search
+  -c, --custom       include only custom named accounts in the search
+  -p, --prefund      include prefund accounts in the search
+  -a, --addr         display only addresses in the results (useful for scripting, assumes --no_header)
   -g, --tags         export the list of tags and subtags only
   -x, --fmt string   export format, one of [none|json*|txt|csv]
   -v, --verbose      enable verbose (increase detail with --log_level)

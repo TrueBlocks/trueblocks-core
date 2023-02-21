@@ -617,7 +617,7 @@ paths:
           schema:
             type: boolean
         - name: all
-          description: include all accounts in the search
+          description: include all (including custom) names in the search
           required: false
           style: form
           in: query
@@ -625,7 +625,7 @@ paths:
           schema:
             type: boolean
         - name: custom
-          description: include your custom named accounts
+          description: include only custom named accounts in the search
           required: false
           style: form
           in: query
@@ -633,15 +633,7 @@ paths:
           schema:
             type: boolean
         - name: prefund
-          description: include prefund accounts
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: named
-          description: include well know token and airdrop addresses in the search
+          description: include prefund accounts in the search
           required: false
           style: form
           in: query
@@ -649,7 +641,8 @@ paths:
           schema:
             type: boolean
         - name: addr
-          description: display only addresses in the results (useful for scripting)
+          description: >
+            display only addresses in the results (useful for scripting, assumes --no_header)
           required: false
           style: form
           in: query
@@ -658,6 +651,14 @@ paths:
             type: boolean
         - name: tags
           description: export the list of tags and subtags only
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: named
+          description: please use the --all option instead
           required: false
           style: form
           in: query

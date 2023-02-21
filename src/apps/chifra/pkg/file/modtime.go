@@ -30,6 +30,18 @@ func GetNewestInDirectory(directory string) (fileInfo os.FileInfo, err error) {
 	return
 }
 
+func IsLaterThan(fn1, fn2 string) (bool, error) {
+	info1, err := os.Stat(fn1)
+	if err != nil {
+		return false, err
+	}
+	info2, err := os.Stat(fn2)
+	if err != nil {
+		return false, err
+	}
+	return info1.ModTime().After(info2.ModTime()), nil
+}
+
 // func getLastModTs(fileName string) (int64, error) {
 // 	info, err := os.Stat(fileName)
 // 	if err != nil {

@@ -22,7 +22,6 @@
 #include "treenode.h"
 #include "apispec.h"
 #include "ethstate.h"
-#include "ens.h"
 #include "traverser.h"
 
 extern void acctlib_init(QUITHANDLER qh);

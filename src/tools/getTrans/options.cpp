@@ -57,7 +57,7 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "--trace") {
             // clang-format off
-            return usage("the --trace option is deprecated, please use traces option instead");  // NOLINT
+            return usage("the --trace option is deprecated, please use the --traces option instead");  // NOLINT
             // clang-format on
 
         } else if (arg == "-u" || arg == "--uniq") {
@@ -71,7 +71,7 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-r" || arg == "--reconcile") {
             // clang-format off
-            return usage("the --reconcile option is deprecated, please use account_for option instead");  // NOLINT
+            return usage("the --reconcile option is deprecated, please use --account_for option instead");  // NOLINT
             // clang-format on
 
         } else if (startsWith(arg, "-A:") || startsWith(arg, "--account_for:")) {

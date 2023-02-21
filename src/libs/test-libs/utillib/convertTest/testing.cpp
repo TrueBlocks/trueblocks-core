@@ -14,6 +14,7 @@
 #include <algorithm>
 #include "etherlib.h"
 #include "testing.h"
+#include "petname.h"
 
 //------------------------------------------------------------------------
 class CThisTest : public testing::Test {
@@ -254,6 +255,17 @@ TEST_F(CThisTest, TestConverts_4) {
     for (size_t i = 0; i < bytes.size(); i++)
         os << toLower(padLeft(bnu_2_Hex(ptr[i]), 2, '0'));
     ASSERT_EQ("addr_2_Bytes", addr, os.str());
+
+    ASSERT_EQ("addr_2_Petname", addr_2_Petname("0xecfd004d02f36cd4d8b4a8c1a9533b6af85cd716", '-'),
+              "briefly-easy-labrador");
+    ASSERT_EQ("addr_2_Petname", addr_2_Petname("0xed16ce39feef3bd7f5d162045e0f67c0f00046bb", '-'),
+              "firmly-noble-cobra");
+    ASSERT_EQ("addr_2_Petname", addr_2_Petname("0xfcfc3a5004d678613f0b36a642269a7f371c3f6a", '-'),
+              "initially-closing-egret");
+    ASSERT_EQ("addr_2_Petname", addr_2_Petname("0xfd191a35157d781373fb411bf9f25290047c5eef", '-'),
+              "promptly-fitting-shrimp");
+    ASSERT_EQ("addr_2_Petname", addr_2_Petname("0xfe80e9232deaff19baf99869883a4bdf0004e53c", '-'),
+              "adequately-ethical-ocelot");
 
     return true;
 }
