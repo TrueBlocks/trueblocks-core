@@ -25,7 +25,7 @@ type NamesOptions struct {
 	Expand    bool                  `json:"expand,omitempty"`    // Expand search to include all fields (search name, address, and symbol otherwise)
 	MatchCase bool                  `json:"matchCase,omitempty"` // Do case-sensitive search
 	All       bool                  `json:"all,omitempty"`       // Include all (including custom) names in the search
-	Custom    bool                  `json:"custom,omitempty"`    // Include only custom named account in the search
+	Custom    bool                  `json:"custom,omitempty"`    // Include only custom named accounts in the search
 	Prefund   bool                  `json:"prefund,omitempty"`   // Include prefund accounts in the search
 	Addr      bool                  `json:"addr,omitempty"`      // Display only addresses in the results (useful for scripting, assumes --no_header)
 	Tags      bool                  `json:"tags,omitempty"`      // Export the list of tags and subtags only

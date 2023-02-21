@@ -56,7 +56,7 @@ func init() {
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Expand, "expand", "e", false, "expand search to include all fields (search name, address, and symbol otherwise)")
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().MatchCase, "match_case", "m", false, "do case-sensitive search")
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().All, "all", "l", false, "include all (including custom) names in the search")
-	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Custom, "custom", "c", false, "include only custom named account in the search")
+	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Custom, "custom", "c", false, "include only custom named accounts in the search")
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Prefund, "prefund", "p", false, "include prefund accounts in the search")
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Addr, "addr", "a", false, "display only addresses in the results (useful for scripting, assumes --no_header)")
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Tags, "tags", "g", false, "export the list of tags and subtags only")
