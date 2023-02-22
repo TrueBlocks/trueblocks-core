@@ -265,11 +265,8 @@ func GetTracesByTransactionHash(chain string, txHash string) ([]SimpleTrace, err
 					Output:  rawTrace.Result.Output,
 					Code:    rawTrace.Result.Code,
 				}
-				if len(rawTrace.Result.NewContract) > 0 {
-					result.NewContract = HexToAddress(rawTrace.Result.NewContract)
-				} else if len(rawTrace.Result.Address) > 0 {
-					result.NewContract = HexToAddress(rawTrace.Result.Address)
-					result.NewContract = HexToAddress(rawTrace.Result.Address)
+				if len(rawTrace.Result.Address) > 0 {
+					result.Address = HexToAddress(rawTrace.Result.Address)
 				}
 				result.SetRaw(rawTrace.Result)
 			}

@@ -81,7 +81,11 @@ func (s *SimpleTraceAction) Model(showHidden bool, format string, extraOptions m
 				model["value"] = s.Balance.String()
 			}
 		} else {
-			model["to"] = s.To
+			if s.To.IsZero() {
+				model["to"] = "0x0"
+			} else {
+				model["to"] = s.To
+			}
 			model["value"] = s.Value.String()
 		}
 		if !s.Address.IsZero() {

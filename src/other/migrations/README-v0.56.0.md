@@ -6,3 +6,5 @@ When articulating, previously we included escaped characters such as \t and \n i
     This caused problems when using the data in some CSV accepting files (such as MS Excel). We now produce
     [t] for `\t` and [n] for `\n` and change `\r` into a blank
 
+Breaking change -- we renamed a field in the TraceResult model to reflect the field's actual name in the Etheruem data structures returned
+by the RPC.

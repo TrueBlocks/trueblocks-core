@@ -13,6 +13,8 @@ traces?transactions=0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb6
       "blockHash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
       "blockNumber": 1001001,
       "result": {
+        "address": "",
+        "code": "",
         "gasUsed": "0x0",
         "output": "0x"
       },
@@ -34,6 +36,8 @@ traces?transactions=0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb6
       "blockHash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
       "blockNumber": 1001001,
       "result": {
+        "address": "",
+        "code": "",
         "gasUsed": "0x0",
         "output": "0x"
       },

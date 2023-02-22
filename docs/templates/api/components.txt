@@ -728,7 +728,7 @@ components:
       description: "trace result data as returned from the RPC (with slight enhancements)"
       type: object
       properties:
-        newContract:
+        address:
           type: string
           format: address
           example: "0xf503...179b"

@@ -16,6 +16,8 @@ TEST[DATE|TIME] Format:  txt
       "blockHash": "0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853",
       "blockNumber": 4000000,
       "result": {
+        "address": "",
+        "code": "",
         "gasUsed": "0x7370",
         "output": "0x"
       },
