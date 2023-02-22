@@ -5,8 +5,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x013cf08b",
       "inputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "val_0",
           "type": "uint256"
@@ -15,85 +13,61 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "proposals",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "recipient",
           "type": "address"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "amount",
           "type": "uint256"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "string",
           "name": "description",
           "type": "string"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "votingDeadline",
           "type": "uint256"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bool",
           "name": "open",
           "type": "bool"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bool",
           "name": "proposalPassed",
           "type": "bool"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bytes32",
           "name": "proposalHash",
           "type": "bytes32"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "proposalDeposit",
           "type": "uint256"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bool",
           "name": "newCurator",
           "type": "bool"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "yea",
           "type": "uint256"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "nay",
           "type": "uint256"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "creator",
           "type": "address"
@@ -107,15 +81,11 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x095ea7b3",
       "inputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "_spender",
           "type": "address"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "_amount",
           "type": "uint256"
@@ -124,8 +94,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "approve",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bool",
           "name": "success",
           "type": "bool"
@@ -141,8 +109,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "minTokensToCreate",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "val_0",
           "type": "uint256"
@@ -158,8 +124,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "rewardAccount",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "val_0",
           "type": "address"
@@ -175,8 +139,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "daoCreator",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "val_0",
           "type": "address"
@@ -192,8 +154,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "totalSupply",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "val_0",
           "type": "uint256"
@@ -209,8 +169,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "divisor",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "divisor",
           "type": "uint256"
@@ -226,8 +184,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "extraBalance",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "val_0",
           "type": "address"
@@ -241,15 +197,11 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x237e9492",
       "inputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "_proposalID",
           "type": "uint256"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bytes",
           "name": "_transactionData",
           "type": "bytes"
@@ -258,8 +210,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "executeProposal",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bool",
           "name": "_success",
           "type": "bool"
@@ -273,22 +223,16 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x23b872dd",
       "inputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "_from",
           "type": "address"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "_to",
           "type": "address"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "_value",
           "type": "uint256"
@@ -297,8 +241,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "transferFrom",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bool",
           "name": "success",
           "type": "bool"
@@ -314,8 +256,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "unblockMe",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bool",
           "name": "val_0",
           "type": "bool"
@@ -331,8 +271,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "totalRewardToken",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "val_0",
           "type": "uint256"
@@ -348,8 +286,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "actualBalance",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "_actualBalance",
           "type": "uint256"
@@ -365,8 +301,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "closingTime",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "val_0",
           "type": "uint256"
@@ -380,8 +314,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x4df6d6cc",
       "inputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "val_0",
           "type": "address"
@@ -390,8 +322,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "allowedRecipients",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bool",
           "name": "val_0",
           "type": "bool"
@@ -405,15 +335,11 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x4e10c3ee",
       "inputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "_to",
           "type": "address"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "_value",
           "type": "uint256"
@@ -422,8 +348,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "transferWithoutReward",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bool",
           "name": "success",
           "type": "bool"
@@ -437,36 +361,27 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x5790de2c279e58269b93b12828f56fd5f2bc8ad15e61ce08572585c81a38756f",
       "inputs": [
         {
-          "components": [],
           "indexed": true,
           "internalType": "uint256",
           "name": "proposalID",
           "type": "uint256"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "recipient",
           "type": "address"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "amount",
           "type": "uint256"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bool",
           "name": "newCurator",
           "type": "bool"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "string",
           "name": "description",
           "type": "string"
@@ -491,43 +406,31 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x612e45a3",
       "inputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "_recipient",
           "type": "address"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "_amount",
           "type": "uint256"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "string",
           "name": "_description",
           "type": "string"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bytes",
           "name": "_transactionData",
           "type": "bytes"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "_debatingPeriod",
           "type": "uint256"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bool",
           "name": "_newCurator",
           "type": "bool"
@@ -536,8 +439,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "newProposal",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "_proposalID",
           "type": "uint256"
@@ -551,8 +452,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x643f7cdd",
       "inputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "val_0",
           "type": "address"
@@ -561,8 +460,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "DAOpaidOut",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "val_0",
           "type": "uint256"
@@ -578,8 +475,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "minQuorumDivisor",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "val_0",
           "type": "uint256"
@@ -593,8 +488,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x6837ff1e",
       "inputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "_newContract",
           "type": "address"
@@ -610,8 +503,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x70a08231",
       "inputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "_owner",
           "type": "address"
@@ -620,8 +511,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "balanceOf",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "balance",
           "type": "uint256"
@@ -635,15 +524,12 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x73ad2a153c8b67991df9459024950b318a609782cee8c7eeda47b905f9baa91f",
       "inputs": [
         {
-          "components": [],
           "indexed": true,
           "internalType": "address",
           "name": "_recipient",
           "type": "address"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bool",
           "name": "_allowed",
           "type": "bool"
@@ -659,15 +545,11 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x749f9889",
       "inputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "_recipient",
           "type": "address"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bool",
           "name": "_allowed",
           "type": "bool"
@@ -676,8 +558,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "changeAllowedRecipients",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bool",
           "name": "_success",
           "type": "bool"
@@ -693,8 +573,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "halveMinQuorum",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bool",
           "name": "_success",
           "type": "bool"
@@ -708,8 +586,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x81f03fcb",
       "inputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "val_0",
           "type": "address"
@@ -718,8 +594,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "paidOut",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "val_0",
           "type": "uint256"
@@ -733,15 +607,11 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x82661dc4",
       "inputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "_proposalID",
           "type": "uint256"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "_newCurator",
           "type": "address"
@@ -750,8 +620,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "splitDAO",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bool",
           "name": "_success",
           "type": "bool"
@@ -767,8 +635,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "DAOrewardAccount",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "val_0",
           "type": "address"
@@ -782,21 +648,17 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x86abfce99b7dd908bec0169288797f85049ec73cbe046ed9de818fab3a497ae0",
       "inputs": [
         {
-          "components": [],
           "indexed": true,
           "internalType": "uint256",
           "name": "proposalID",
           "type": "uint256"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bool",
           "name": "position",
           "type": "bool"
         },
         {
-          "components": [],
           "indexed": true,
           "internalType": "address",
           "name": "voter",
@@ -815,8 +677,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "proposalDeposit",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "val_0",
           "type": "uint256"
@@ -830,22 +690,18 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
       "inputs": [
         {
-          "components": [],
           "indexed": true,
           "internalType": "address",
           "name": "_owner",
           "type": "address"
         },
         {
-          "components": [],
           "indexed": true,
           "internalType": "address",
           "name": "_spender",
           "type": "address"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "_amount",
           "type": "uint256"
@@ -863,8 +719,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "numberOfProposals",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "_numberOfProposals",
           "type": "uint256"
@@ -878,7 +732,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x9046fefd66f538ab35263248a44217dcb70e2eb2cd136629e141b8b8f9f03b60",
       "inputs": [
         {
-          "components": [],
           "indexed": true,
           "internalType": "address",
           "name": "_newCurator",
@@ -897,8 +750,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "lastTimeMinQuorumMet",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "val_0",
           "type": "uint256"
@@ -912,8 +763,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0xa1da2fb9",
       "inputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bool",
           "name": "_toMembers",
           "type": "bool"
@@ -922,8 +771,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "retrieveDAOReward",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bool",
           "name": "_success",
           "type": "bool"
@@ -939,8 +786,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "receiveEther",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bool",
           "name": "val_0",
           "type": "bool"
@@ -954,15 +799,11 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0xa9059cbb",
       "inputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "_to",
           "type": "address"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "_value",
           "type": "uint256"
@@ -971,8 +812,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "transfer",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bool",
           "name": "success",
           "type": "bool"
@@ -988,8 +827,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "isFueled",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bool",
           "name": "val_0",
           "type": "bool"
@@ -1003,8 +840,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0xbaac5300",
       "inputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "_tokenHolder",
           "type": "address"
@@ -1013,8 +848,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "createTokenProxy",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bool",
           "name": "success",
           "type": "bool"
@@ -1028,15 +861,12 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0xbb28353e4598c3b9199101a66e0989549b659a59a54d2c27fbb183f1932c8e6d",
       "inputs": [
         {
-          "components": [],
           "indexed": true,
           "internalType": "address",
           "name": "to",
           "type": "address"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "value",
           "type": "uint256"
@@ -1052,8 +882,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0xbe7c29c1",
       "inputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "_proposalID",
           "type": "uint256"
@@ -1062,8 +890,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "getNewDAOAddress",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "_newDAO",
           "type": "address"
@@ -1077,15 +903,11 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0xc9d27afe",
       "inputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "_proposalID",
           "type": "uint256"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bool",
           "name": "_supportsProposal",
           "type": "bool"
@@ -1094,8 +916,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "vote",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "_voteID",
           "type": "uint256"
@@ -1111,8 +931,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "getMyReward",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bool",
           "name": "_success",
           "type": "bool"
@@ -1126,8 +944,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0xcdef91d0",
       "inputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "val_0",
           "type": "address"
@@ -1136,8 +952,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "rewardToken",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "val_0",
           "type": "uint256"
@@ -1151,15 +965,12 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0xdbccb92686efceafb9bb7e0394df7f58f71b954061b81afb57109bf247d3d75a",
       "inputs": [
         {
-          "components": [],
           "indexed": true,
           "internalType": "address",
           "name": "to",
           "type": "address"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "amount",
           "type": "uint256"
@@ -1175,22 +986,16 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0xdbde1988",
       "inputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "_from",
           "type": "address"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "_to",
           "type": "address"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "_value",
           "type": "uint256"
@@ -1199,8 +1004,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "transferFromWithoutReward",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bool",
           "name": "success",
           "type": "bool"
@@ -1214,15 +1017,11 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0xdd62ed3e",
       "inputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "_owner",
           "type": "address"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "_spender",
           "type": "address"
@@ -1231,8 +1030,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "allowance",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "remaining",
           "type": "uint256"
@@ -1246,22 +1043,18 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
       "inputs": [
         {
-          "components": [],
           "indexed": true,
           "internalType": "address",
           "name": "_from",
           "type": "address"
         },
         {
-          "components": [],
           "indexed": true,
           "internalType": "address",
           "name": "_to",
           "type": "address"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "_amount",
           "type": "uint256"
@@ -1277,22 +1070,17 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0xdfc78bdca8e3e0b18c16c5c99323c6cb9eb5e00afde190b4e7273f5158702b07",
       "inputs": [
         {
-          "components": [],
           "indexed": true,
           "internalType": "uint256",
           "name": "proposalID",
           "type": "uint256"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bool",
           "name": "result",
           "type": "bool"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "quorum",
           "type": "uint256"
@@ -1308,8 +1096,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0xe33734fd",
       "inputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "_proposalDeposit",
           "type": "uint256"
@@ -1325,8 +1111,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0xe5962195",
       "inputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "val_0",
           "type": "address"
@@ -1335,8 +1119,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "blocked",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "val_0",
           "type": "uint256"
@@ -1352,8 +1134,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "curator",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "val_0",
           "type": "address"
@@ -1367,29 +1147,21 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0xeceb2945",
       "inputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "_proposalID",
           "type": "uint256"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "_recipient",
           "type": "address"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "_amount",
           "type": "uint256"
         },
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bytes",
           "name": "_transactionData",
           "type": "bytes"
@@ -1398,8 +1170,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "checkProposalCode",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "bool",
           "name": "_codeChecksOut",
           "type": "bool"
@@ -1413,8 +1183,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0xf381a3e2428fdda36615919e8d9c35878d9eb0cf85ac6edf575088e80e4c147e",
       "inputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "uint256",
           "name": "value",
           "type": "uint256"
@@ -1432,8 +1200,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "privateCreation",
       "outputs": [
         {
-          "components": [],
-          "indexed": false,
           "internalType": "address",
           "name": "val_0",
           "type": "address"
@@ -1445,13 +1211,13 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
     }
   ],
   "meta": {
-    "chain": "mainnet",
-    "chainId": 1,
     "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",
-    "networkId": 1,
-    "ripe": "0xdeadbeef",
     "staging": "0xdeadbeef",
-    "unripe": "0xdeadbeef"
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
   }
 }

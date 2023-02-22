@@ -16,12 +16,6 @@
 //------------------------------------------------------------------------------------------------------------
 string_q type_2_GoType(const CParameter& field) {
     string_q type = field.type;
-    if (startsWith(type, 'C')) {
-        string_q ret = type_2_ModelName(type);
-        if (field.is_flags & IS_ARRAY) {
-            ret = "[]" + ret;
-        }
-    }
     if (type == "blknum")
         return "uint64";
     if (type == "timestamp")
@@ -54,7 +48,7 @@ string_q specialCase(const CParameter& field, const string_q& name, const string
     } else if (name % "Action") {
         ret = isRaw ? "RawTraceAction" : "*SimpleTraceAction";
     } else if (name % "Components") {
-        ret = isRaw ? "RawParameter" : "*SimpleParameter";
+        ret = isRaw ? "string" : "[]SimpleParameter";
     } else if (name % "Result") {
         ret = isRaw ? "RawTraceResult" : "*SimpleTraceResult";
     } else if (name % "ArticulatedTrace") {
@@ -103,11 +97,6 @@ void generate_go_type_code(COptions* opts, const CClassDefinition& modelIn) {
         string_q type = type_2_GoType(field);
         string_q rawType = specialCase(field, field.name, type, true);
         string_q simpType = specialCase(field, field.name, type, false);
-        if (startsWith(field.type, "C")) {
-            cerr << field.name << " " << field.type << " " << type << " " << rawType << " " << simpType << endl;
-            cerr << bGreen << "Press ENTER to continue..." << cOff << "\r";
-            getchar();
-        }
         maxNameWid = max(maxNameWid, field.name.length());
         if (field.name != "raw") {
             maxSimpWid = max(maxSimpWid, simpType.length());
