@@ -29,9 +29,9 @@ TEST[DATE|TIME] Format:  txt
     },
     {
       "action": {
-        "address": "0xd450aafdb8a225c901d5379a3d0ff8fea1344bfa",
+        "balance": "0x16345785d8a0000",
         "refundAddress": "0x00a3819199113fc6a6e6ba1298afde7377e2009b",
-        "balance": "0x16345785d8a0000"
+        "address": "0xd450aafdb8a225c901d5379a3d0ff8fea1344bfa"
       },
       "blockHash": "0x9ee74ad50cb24017ee6fa90cdabc13d00e714ab3692a689a4a22716bdd2de5a4",
       "blockNumber": 3189962,
