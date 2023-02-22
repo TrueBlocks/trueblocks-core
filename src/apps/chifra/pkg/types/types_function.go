@@ -132,6 +132,8 @@ func FunctionToAbiMethod(function *SimpleFunction) (ethMethod *abi.Method, err e
 		err = fmt.Errorf("FunctionToAbiMethod called for an event")
 		return
 	}
+
+	removeUnknownTuples(function)
 	jsonAbi, err := json.Marshal([]any{function})
 	if err != nil {
 		return
@@ -155,6 +157,7 @@ func FunctionToAbiEvent(function *SimpleFunction) (ethMethod *abi.Event, err err
 		return
 	}
 
+	removeUnknownTuples(function)
 	jsonAbi, err := json.Marshal([]any{function})
 	if err != nil {
 		return
@@ -170,6 +173,25 @@ func FunctionToAbiEvent(function *SimpleFunction) (ethMethod *abi.Event, err err
 	}
 	ethMethod = &found
 	return
+}
+
+// removeUnknownTuples replaces unknown tuple type with `bytes` type.
+// A tuple is unknown if we don't know its components (this can happen for
+// inputs/outputs of internal methods)
+func removeUnknownTuples(function *SimpleFunction) {
+	remove := func(params []SimpleParameter) {
+		for i := 0; i < len(params); i++ {
+			param := params[i]
+			parameterType := param.ParameterType
+			// Unknown struct
+			if parameterType == "()" || parameterType == "()[]" {
+				params[i].ParameterType = "bytes"
+			}
+		}
+	}
+
+	remove(function.Inputs)
+	remove(function.Outputs)
 }
 
 func (s *SimpleFunction) IsMethod() bool {
