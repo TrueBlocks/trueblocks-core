@@ -79,11 +79,11 @@ func argumentsToSimpleParameters(args []abi.Argument) (result []SimpleParameter)
 	result = make([]SimpleParameter, len(args))
 	for index, arg := range args {
 		result[index] = SimpleParameter{
-			ParameterType: arg.Type.String(),
-			Name:          arg.Name,
-			Indexed:       arg.Indexed,
-			InternalType:  getInternalType(&arg.Type),
-			Components:    argumentTypesToSimpleParameters(arg.Type.TupleElems),
+			Type:         arg.Type.String(),
+			Name:         arg.Name,
+			Indexed:      arg.Indexed,
+			InternalType: getInternalType(&arg.Type),
+			Components:   argumentTypesToSimpleParameters(arg.Type.TupleElems),
 		}
 	}
 	return
@@ -103,9 +103,9 @@ func argumentTypesToSimpleParameters(argTypes []*abi.Type) (result []SimpleParam
 	result = make([]SimpleParameter, len(argTypes))
 	for index, argType := range argTypes {
 		result[index] = SimpleParameter{
-			ParameterType: argType.String(),
-			InternalType:  getInternalType(argType),
-			Components:    argumentTypesToSimpleParameters(argType.TupleElems),
+			Type:         argType.String(),
+			InternalType: getInternalType(argType),
+			Components:   argumentTypesToSimpleParameters(argType.TupleElems),
 		}
 	}
 	return

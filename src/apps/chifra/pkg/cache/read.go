@@ -591,7 +591,7 @@ func ReadParameter(reader *bufio.Reader) (param *types.SimpleParameter, err erro
 		return
 	}
 
-	err = readString(reader, &param.ParameterType)
+	err = readString(reader, &param.Type)
 	if err != nil {
 		return
 	}
@@ -631,7 +631,8 @@ func ReadParameter(reader *bufio.Reader) (param *types.SimpleParameter, err erro
 		return
 	}
 
-	err = read(&param.IsFlags)
+	unused := uint64(0)
+	err = read(&unused)
 	if err != nil {
 		return
 	}

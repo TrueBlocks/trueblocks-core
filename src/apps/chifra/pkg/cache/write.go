@@ -462,7 +462,7 @@ func WriteParameter(writer *bufio.Writer, param *types.SimpleParameter) (err err
 		return
 	}
 
-	err = writeString(writer, &param.ParameterType)
+	err = writeString(writer, &param.Type)
 	if err != nil {
 		return
 	}
@@ -502,7 +502,8 @@ func WriteParameter(writer *bufio.Writer, param *types.SimpleParameter) (err err
 		return
 	}
 
-	err = write(&param.IsFlags)
+	unused := uint64(0)
+	err = write(&unused)
 	if err != nil {
 		return
 	}
