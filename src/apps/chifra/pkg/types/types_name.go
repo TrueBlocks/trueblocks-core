@@ -34,7 +34,7 @@ type SimpleName struct {
 	Address    Address `json:"address"`
 	Name       string  `json:"name"`
 	Symbol     string  `json:"symbol"`
-	Source     string  `json:"source,omitempty"`
+	Source     string  `json:"source"`
 	Decimals   uint64  `json:"decimals"`
 	Petname    string  `json:"petname"`
 	Deleted    bool    `json:"deleted,omitempty"`
@@ -73,13 +73,13 @@ func (s *SimpleName) Model(showHidden bool, format string, extraOptions map[stri
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
-		"tags":     s.Tags,
-		"address":  s.Address,
-		"name":     s.Name,
-		"symbol":   s.Symbol,
-		"decimals": s.Decimals,
-		"source":   s.Source,
-		"petname":  s.Petname,
+		"tags":       s.Tags,
+		"address":    s.Address,
+		"name":       s.Name,
+		"symbol":     s.Symbol,
+		"source":     s.Source,
+		"decimals":   s.Decimals,
+		"petname":    s.Petname,
 	}
 
 	order := []string{
@@ -87,8 +87,8 @@ func (s *SimpleName) Model(showHidden bool, format string, extraOptions map[stri
 		"address",
 		"name",
 		"symbol",
-		"decimals",
 		"source",
+		"decimals",
 		"petname",
 	}
 
@@ -166,7 +166,7 @@ func (s *SimpleName) Model(showHidden bool, format string, extraOptions map[stri
 		if s.Decimals == 0 {
 			model["decimals"] = ""
 		}
-		model["source"] = s.Source
+
 		if extraOptions["expand"] == true {
 			model["deleted"] = s.Deleted
 			order = append(order, "deleted")
