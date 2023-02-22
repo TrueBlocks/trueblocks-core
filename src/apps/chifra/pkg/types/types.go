@@ -2,6 +2,7 @@ package types
 
 import (
 	"encoding/hex"
+	"fmt"
 	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
@@ -48,6 +49,10 @@ func (a *Address) Hex() string {
 
 func (a *Address) String() string {
 	return a.Hex()
+}
+
+func (a Address) Format(s fmt.State, c rune) {
+	s.Write([]byte(a.Hex()))
 }
 
 // SetHex sets the address based on the provided string

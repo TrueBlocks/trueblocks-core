@@ -46,6 +46,14 @@ func sanitizeByte(character byte) (replacement []byte, replaced int) {
 	if character == '"' {
 		return []byte{'\''}, 1
 	}
+	if character == ',' {
+		// C++ used `|` to replace commas, but it breaks compressed* fields format
+		// (`|` is the delimeter there)
+		return []byte{'_'}, 1
+	}
+	if character == '|' {
+		return []byte{';'}, 1
+	}
 	if character == '\n' {
 		return []byte("[n]"), 1
 	}

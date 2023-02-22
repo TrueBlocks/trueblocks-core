@@ -4,7 +4,7 @@ import "fmt"
 
 type RawParameter interface{}
 type SimpleParameter struct {
-	ParameterType string            `json:"parameterType"`
+	ParameterType string            `json:"type"`
 	Name          string            `json:"name"`
 	StrDefault    string            `json:"strDefault"`
 	Value         any               `json:"value"`

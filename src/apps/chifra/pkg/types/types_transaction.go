@@ -10,7 +10,10 @@ package types
 
 // EXISTING_CODE
 import (
+	"math/big"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/bykof/gostradamus"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -105,7 +108,22 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		"isError",
 		"encoding",
 		"compressedTx",
-		"value",
+		// "value",
+	}
+
+	if format != "json" {
+		// TODO: these date-related values could be done when RPC is queried and cached
+		date := gostradamus.FromUnixTimestamp(int64(s.Timestamp))
+		model["date"] = date.Format("2006-01-02 15:04:05") + " UTC"
+
+		etherValue := utils.WeiToEther(&s.Value).Text('f', 18)
+		model["ether"] = etherValue
+		ethGasPrice := utils.WeiToEther(big.NewInt(0).SetUint64(s.GasPrice)).Text('f', 18)
+		model["ethGasPrice"] = ethGasPrice
+
+		if s.ArticulatedTx != nil {
+			model["encoding"] = s.ArticulatedTx.Encoding
+		}
 	}
 
 	// EXISTING_CODE
@@ -128,7 +146,6 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		model["receipt"] = nil            // TODO: Why twice?
 
 		// TODO: these date-related values could be done when RPC is queried and cached
-		// model["date"] = date.Format("2006-01-02 15:04:05") + " UTC"
 		// model["datesh"] = date.Format("2006-01-02")
 		// model["time"] = date.Format("15:04:05") + " UTC"
 

@@ -1,6 +1,9 @@
 package types
 
 import (
+	"bytes"
+	"encoding/json"
+	"fmt"
 	"strings"
 
 	"github.com/ethereum/go-ethereum/accounts/abi"
@@ -25,6 +28,7 @@ type SimpleFunction struct {
 	payable   bool
 	abiMethod *abi.Method
 	abiEvent  *abi.Event
+	// abiMethodEventMutex sync.Mutex
 }
 
 func FunctionFromAbiEvent(ethEvent *abi.Event, abiSource string) *SimpleFunction {
@@ -123,11 +127,71 @@ func argumentTypesToSimpleParameters(argTypes []*abi.Type) (result []SimpleParam
 	return
 }
 
+func FunctionToAbiMethod(function *SimpleFunction) (ethMethod *abi.Method, err error) {
+	if !function.IsMethod() {
+		err = fmt.Errorf("FunctionToAbiMethod called for an event")
+		return
+	}
+	jsonAbi, err := json.Marshal([]any{function})
+	if err != nil {
+		return
+	}
+	res, err := abi.JSON(bytes.NewReader(jsonAbi))
+	if err != nil {
+		return
+	}
+	found, ok := res.Methods[function.Name]
+	if !ok {
+		err = fmt.Errorf("generating ABI method: method not found: %s", function.Name)
+		return
+	}
+	ethMethod = &found
+	return
+}
+
+func FunctionToAbiEvent(function *SimpleFunction) (ethMethod *abi.Event, err error) {
+	if function.IsMethod() {
+		err = fmt.Errorf("functionToAbiEvent called for a method")
+		return
+	}
+
+	jsonAbi, err := json.Marshal([]any{function})
+	if err != nil {
+		return
+	}
+	res, err := abi.JSON(bytes.NewReader(jsonAbi))
+	if err != nil {
+		return
+	}
+	found, ok := res.Events[function.Name]
+	if !ok {
+		err = fmt.Errorf("generating ABI method: method not found: %s", function.Name)
+		return
+	}
+	ethMethod = &found
+	return
+}
+
+func (s *SimpleFunction) IsMethod() bool {
+	return s.FunctionType != "event"
+}
+
 func (s *SimpleFunction) SetAbiMethod(method *abi.Method) {
 	s.abiMethod = method
 }
 
 func (s *SimpleFunction) GetAbiMethod() *abi.Method {
+	// if s.abiMethod == nil {
+	// 	abiMethod, err := FunctionToAbiMethod(s)
+	// 	// TODO(articulation): return error
+	// 	if err != nil {
+	// 		return nil
+	// 	}
+	// 	s.abiMethodEventMutex.Lock()
+	// 	s.SetAbiMethod(abiMethod)
+	// 	s.abiMethodEventMutex.Unlock()
+	// 	return abiMethod
+	// }
 	return s.abiMethod
 }
 
@@ -136,6 +200,17 @@ func (s *SimpleFunction) SetAbiEvent(event *abi.Event) {
 }
 
 func (s *SimpleFunction) GetAbiEvent() *abi.Event {
+	// if s.abiEvent == nil {
+	// 	abiEvent, err := FunctionToAbiEvent(s)
+	// 	// TODO(articulation): return error
+	// 	if err != nil {
+	// 		return nil
+	// 	}
+	// 	s.abiMethodEventMutex.Lock()
+	// 	s.SetAbiEvent(abiEvent)
+	// 	s.abiMethodEventMutex.Unlock()
+	// 	return abiEvent
+	// }
 	return s.abiEvent
 }
 

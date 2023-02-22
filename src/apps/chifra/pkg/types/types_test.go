@@ -1,6 +1,7 @@
 package types
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/ethereum/go-ethereum/common"
@@ -47,6 +48,17 @@ func TestAddress_Hex(t *testing.T) {
 	addr = HexToAddress(zero)
 	if result := addr.Hex(); result != expected {
 		t.Fatal("wrong Hex() return value for 0x0:", result)
+	}
+}
+
+func TestAddress_Stringer(t *testing.T) {
+	hex := "0xF1AA581F353005BA3765B81BF52D6B1C488C2101"
+	var addr Address
+	addr.SetHex(hex)
+
+	expected := "0xf1aa581f353005ba3765b81bf52d6b1c488c2101"
+	if result := fmt.Sprint(addr); result != expected {
+		t.Fatal("wrong Hex() return value:", result)
 	}
 }
 

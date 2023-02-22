@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"io/fs"
+	"log"
 	"os"
 	"path"
 	"path/filepath"
@@ -93,6 +94,23 @@ func LoadCache(chain string, destination AbiInterfaceMap) (loaded bool) {
 	for _, function := range functions {
 		function := function
 		function.Normalize()
+		if function.IsMethod() {
+			abiMethod, err := types.FunctionToAbiMethod(&function)
+			if err != nil {
+				// TODO(articulation): remove
+				log.Panicln("cannot create abi struct:", function.Name, err)
+				return false
+			}
+			function.SetAbiMethod(abiMethod)
+		} else {
+			abiEvent, err := types.FunctionToAbiEvent(&function)
+			if err != nil {
+				// TODO(articulation): remove
+				log.Panicln("cannot create abi struct:", function.Name, err)
+				return false
+			}
+			function.SetAbiEvent(abiEvent)
+		}
 		destination[function.Encoding] = &function
 		//TODO(articulation): missing abiMethod/abiEvent
 	}
@@ -229,6 +247,9 @@ func LoadAbiFromAddress(chain string, address types.Address, destination AbiInte
 
 // LoadAbi tries to load ABI from any source (local file, cache, download from 3rd party)
 func LoadAbi(chain string, address types.Address, destination AbiInterfaceMap) (err error) {
+	if err = PreloadKnownAbis(chain, destination, false); err != nil {
+		return
+	}
 	err = LoadAbiFromAddress(chain, address, destination)
 	// return if there's no error (ABI was loaded) or if the error
 	// is not NotExist (something wrong happened)
