@@ -8,3 +8,9 @@ When articulating, previously we included escaped characters such as \t and \n i
 
 Breaking change -- we renamed a field in the TraceResult model to reflect the field's actual name in the Etheruem data structures returned
 by the RPC.
+
+Breaking change -- when a trace routine both creates a smart contract and self destructs, we used to report the newly createds
+smart contract in the from field. As this was not canoncial -- the address is not the from address -- we stopped
+doing that -- this is only from CSV and TXT. If you want to get newly created smart contract addresses, use --fmt json 
+instead.
+
