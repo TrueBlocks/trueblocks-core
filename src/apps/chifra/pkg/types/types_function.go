@@ -19,9 +19,7 @@ import (
 // EXISTING_CODE
 
 type RawFunction struct {
-	Outputs_dict    string `json:"outputs_dict"`
-	Inputs_dict     string `json:"inputs_dict"`
-	Abi_source      string `json:"abi_source"`
+	AbiSource       string `json:"abiSource"`
 	Anonymous       string `json:"anonymous"`
 	Constant        string `json:"constant"`
 	StateMutability string `json:"stateMutability"`
@@ -35,17 +33,17 @@ type RawFunction struct {
 }
 
 type SimpleFunction struct {
-	Encoding        string            `json:"encoding,omitempty"`
-	Signature       string            `json:"signature,omitempty"`
+	AbiSource       string            `json:"abiSource,omitempty"`
+	Anonymous       bool              `json:"anonymous,omitempty"`
+	Constant        bool              `json:"constant,omitempty"`
+	StateMutability string            `json:"stateMutability,omitempty"`
+	Message         string            `json:"message,omitempty"`
 	Name            string            `json:"name"`
 	FunctionType    string            `json:"type"`
-	AbiSource       string            `json:"abi_source"`
-	Anonymous       bool              `json:"anonymous"`
-	Constant        bool              `json:"constant"`
-	StateMutability string            `json:"stateMutability"`
+	Signature       string            `json:"signature,omitempty"`
+	Encoding        string            `json:"encoding,omitempty"`
 	Inputs          []SimpleParameter `json:"inputs"`
 	Outputs         []SimpleParameter `json:"outputs"`
-	Message         string            `json:"message"`
 	raw             *RawFunction
 }
 
@@ -72,9 +70,9 @@ func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
+		"stateMutability": s.StateMutability,
 		"name":            s.Name,
 		"type":            s.FunctionType,
-		"stateMutability": s.StateMutability,
 		"signature":       s.Signature,
 		"encoding":        s.Encoding,
 	}
@@ -171,7 +169,6 @@ func FunctionFromAbiEvent(ethEvent *abi.Event, abiSource string) *SimpleFunction
 		Encoding:     encSig,
 		Signature:    ethEvent.Sig,
 		Name:         ethEvent.Name,
-		AbiSource:    abiSource,
 		FunctionType: "event",
 		Anonymous:    ethEvent.Anonymous,
 		Inputs:       inputs,
@@ -205,7 +202,6 @@ func FunctionFromAbiMethod(ethMethod *abi.Method, abiSource string) *SimpleFunct
 		Encoding:        fourByte,
 		Signature:       ethMethod.Sig,
 		Name:            ethMethod.Name,
-		AbiSource:       abiSource,
 		FunctionType:    functionType,
 		Constant:        ethMethod.Constant,
 		StateMutability: stateMutability,

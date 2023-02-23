@@ -16,6 +16,7 @@
 string_q type_2_GoType(const CParameter& field);
 string_q specialCase(const CParameter& field, const string_q& name, const string_q& type, bool isRaw);
 string_q debug(const CParameter& field);
+bool skipField(const CParameter& field);
 
 //------------------------------------------------------------------------------------------------------------
 void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
@@ -32,7 +33,7 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
 
     size_t maxNameWid = 0, maxSimpWid = 0, maxRawWid = 0;
     for (auto& field : model.fieldArray) {
-        if (contains(field.name, "::"))
+        if (skipField(field))
             continue;
         string_q type = type_2_GoType(field);
         string_q rawType = specialCase(field, field.name, type, true);
@@ -51,7 +52,7 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
 
     string_q rawStr;
     for (auto field : model.fieldArray) {
-        if (contains(field.name, "::"))
+        if (skipField(field))
             continue;
         if (!(field.name % "raw")) {
             string_q type = type_2_GoType(field);
@@ -69,7 +70,7 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
 
     string_q fieldStr;
     for (auto field : model.fieldArray) {
-        if (contains(field.name, "::"))
+        if (skipField(field))
             continue;
         string_q type = type_2_GoType(field);
         string_q spec = specialCase(field, field.name, type, false);
@@ -86,7 +87,7 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
 
     string_q modelStr;
     for (auto field : model.fieldArray) {
-        if (contains(field.name, "::"))
+        if (skipField(field))
             continue;
         ostringstream os;
         if (!(field.name % "raw") && !(field.is_flags & (IS_OMITEMPTY | IS_ARRAY))) {
@@ -98,7 +99,7 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
 
     string_q orderStr;
     for (auto field : model.fieldArray) {
-        if (contains(field.name, "::"))
+        if (skipField(field))
             continue;
         ostringstream os;
         if (!(field.name % "raw") && !(field.is_flags & (IS_OMITEMPTY | IS_ARRAY))) {
@@ -170,4 +171,10 @@ string_q debug(const CParameter& field) {
     // os << " disp: " << field.disp;
     // os << " omit: " << (field.is_flags & IS_OMITEMPTY);
     return os.str();
+}
+
+//------------------------------------------------------------------------------------------------------------
+bool skipField(const CParameter& field) {
+    return contains(field.name, "::") || field.name == "InputsDict" || field.name == "OutputsDict" ||
+           field.name == "Abi_source";
 }

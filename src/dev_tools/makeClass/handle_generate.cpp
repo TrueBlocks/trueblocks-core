@@ -396,7 +396,7 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
                         "return str;";
                     string_q str = substitute(STR_JSON_VALUE_STR, "\n", "\n````");
                     replaceAll(str, "[{FIELD}]", p.name);
-                    replaceAll(str, "[{FIELD_ND}]", substitute(p.name, "_dict", ""));
+                    replaceAll(str, "[{FIELD_ND}]", substitute(p.name, "Dict", ""));
                     outStream << str;
 
                 } else if (p.type == "bool") {
