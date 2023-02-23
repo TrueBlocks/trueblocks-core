@@ -60,6 +60,8 @@ file_cmd ,cmd  ,fast  ,traces ,tools/getTraces ,by_file_v           ,y    ,verbo
 on       ,both ,fast  ,traces ,tools/getTraces ,redir_output        ,y    ,transactions = 3657480.12 & verbose & fmt = json & output = output_test_file
 on       ,both ,fast  ,traces ,tools/getTraces ,redir_output_append ,n    ,transactions = 3657480.9 & fmt = json & output = output_test_file & no_header & append
 
+on       ,both ,fast  ,traces ,tools/getTraces ,ddos_supress        ,y    ,transactions = 0x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4 & fmt = json
+
 # This fails because it has a weird Address/NewContract/RefundAddress messup - maybe weird data from node
 local    ,both ,fast  ,traces ,tools/getTraces ,26                  ,n    ,transactions = 0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328 & fmt = csv
 
@@ -67,9 +69,7 @@ local    ,both ,fast  ,traces ,tools/getTraces ,26                  ,n    ,trans
 local    ,cmd  ,medi  ,traces ,tools/getTraces ,suicidesend_1       ,n    ,transactions = 0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd0e4309 & fmt = txt
 
 # These don't work because the C++ code used to generate a trace that didn't exist
-local    ,both ,fast  ,traces ,tools/getTraces ,ddos_supress        ,y    ,transactions = 0x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4 & fmt = json
 local    ,both ,fast  ,traces ,tools/getTraces ,not_articulated     ,y    ,transactions = 0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33 & fmt = json
-local    ,cmd  ,fast  ,traces ,tools/getTraces ,ddos_show           ,n    ,transactions = 0x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4 & fmt = json
 
 # These don't work because :next and :prev are not parsed in goLang
 local    ,both ,fast  ,traces ,tools/getTraces ,nav_prev1           ,y    ,transactions = 1001001.1:prev

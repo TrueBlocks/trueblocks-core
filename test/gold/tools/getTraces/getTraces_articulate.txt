@@ -3,9 +3,6 @@ TEST[DATE|TIME] Transactions:  [6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12c
 TEST[DATE|TIME] Articulate:  true
 TEST[DATE|TIME] Format:  json
 { "data": [
-params.size: 0
-==================================================
-
   {
     "blockHash": "0x10a610f712557f961e854be9b19561eea3c9c19ab7b302027877181935789da8",
     "blockNumber": 6513870,
@@ -14,7 +11,7 @@ params.size: 0
     "transactionHash": "0x2d92337aa72c51eaf61ab52692af28cc2f7efb62e32bbc1d8a420099a22510e9",
     "transactionIndex": 62,
     "type": "call",
-    "error": "Bad jump destination",
+    "error": "invalid jump destination",
     "action": {
       "selfDestructed": "0x0",
       "balance": 0,
@@ -37,10 +34,7 @@ params.size: 0
     },
     "compressedTrace": "{name:transferFrom|inputs:{_from:0xbb9bc244d798123fde783fcc1c72d3bb8c189413|_to:0x713fa27cb26b5902ea398b04d21e6018bba3a2f1|_value:8263636363636363636}}",
     "timestamp": 1539524970
-  }params.size: 0
-==================================================
-
-,  {
+  },  {
     "blockHash": "0x9a06b1e8e7249a36a5e532997882429805c7a6510e91b05fd9b5ad6e367acb13",
     "blockNumber": 6687987,
     "subtraces": 0,
@@ -60,7 +54,7 @@ params.size: 0
       "value": 0
     },
     "result": {
-      "newContract": "0x0",
+      "address": "0x0",
       "gasUsed": 57054,
       "output": "0x"
     },
@@ -93,7 +87,7 @@ params.size: 0
       "value": 4569662960000000000
     },
     "result": {
-      "newContract": "0x0",
+      "address": "0x0",
       "gasUsed": 7473,
       "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
     },
@@ -110,10 +104,7 @@ params.size: 0
     },
     "compressedTrace": "{name:split|inputs:{targetFork:0x167a9333bf582556f35bd4d16a7e80e191aa6476|targetNoFork:0x571b7b69829ce2568b9bc3d32eaf7405dab76b21}|outputs:{ret_0:true}}",
     "timestamp": 1470188068
-  }params.size: 0
-==================================================
-
-,  {
+  },  {
     "blockHash": "0xcd4dbd459893241b0c21c91d64b445b1eb0579f7341afd17e7b797795a7f1d7e",
     "blockNumber": 2001002,
     "subtraces": 0,
@@ -133,7 +124,7 @@ params.size: 0
       "value": 0
     },
     "result": {
-      "newContract": "0x0",
+      "address": "0x0",
       "gasUsed": 197,
       "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
     },
@@ -166,7 +157,7 @@ params.size: 0
       "value": 4569662960000000000
     },
     "result": {
-      "newContract": "0x0",
+      "address": "0x0",
       "gasUsed": 0,
       "output": "0x"
     },

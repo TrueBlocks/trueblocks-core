@@ -81,7 +81,7 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "--trace") {
             // clang-format off
-            return usage("the --trace option is deprecated, please use traces option instead");  // NOLINT
+            return usage("the --trace option is deprecated, please use --traces option instead");  // NOLINT
             // clang-format on
 
         } else if (arg == "-s" || arg == "--apps") {

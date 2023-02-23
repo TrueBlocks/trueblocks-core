@@ -15,3 +15,4 @@ Flags:
 
 Notes:
   - Re-run chifra init as often as you wish. It will repair or freshen the index.
+

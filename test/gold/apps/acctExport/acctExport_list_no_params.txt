@@ -22,3 +22,4 @@ Flags:
 
 Notes:
   - No other options are permitted when --silent is selected.
+

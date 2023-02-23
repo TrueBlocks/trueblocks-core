@@ -1,149 +1,109 @@
 package names
 
 import (
-	"encoding/binary"
 	"encoding/csv"
-	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"os"
+	"path/filepath"
 	"sort"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/ethereum/go-ethereum/common"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-// Name is a record in the names database
-type Name struct {
-	Tags       string `json:"tags"`
-	Address    string `json:"address"`
-	Name       string `json:"name"`
-	Symbol     string `json:"symbol"`
-	Source     string `json:"source"`
-	Decimals   string `json:"decimals"`
-	Petname    string `json:"petname"`
-	Deleted    bool   `json:"deleted"`
-	IsCustom   bool   `json:"isCustom"`
-	IsPrefund  bool   `json:"isPrefund"`
-	IsContract bool   `json:"isContract"`
-	IsErc20    bool   `json:"isErc20"`
-	IsErc721   bool   `json:"isErc721"`
-}
+type Parts int
 
-func (n Name) String() string {
-	ret, _ := json.MarshalIndent(n, "", "  ")
-	return string(ret)
-}
+// Parts is a bitfield that defines what parts of a name to return and other options
+const (
+	None      Parts = 0x0
+	Regular   Parts = 0x1
+	Custom    Parts = 0x2
+	Prefund   Parts = 0x4
+	Testing   Parts = 0x8
+	MatchCase Parts = 0x10
+	Expanded  Parts = 0x20
+)
 
-type NamesArray []Name
+type SortBy int
 
-// NameOnDisc is a record in the names database when stored in the binary backing file
-type NameOnDisc struct {
-	Tags     [30 + 1]byte  `json:"-"`
-	Address  [42 + 1]byte  `json:"-"`
-	Name     [120 + 1]byte `json:"-"`
-	Symbol   [30 + 1]byte  `json:"-"`
-	Source   [180 + 1]byte `json:"-"`
-	Petname  [40 + 1]byte  `json:"-"`
-	Decimals uint16        `json:"-"`
-	Flags    uint16        `json:"-"`
-	Padding  byte          `json:"-"`
-}
+// SortBy is a bitfield that defines how to sort the names
+const (
+	SortByAddress SortBy = iota
+	SortByName
+	// SortBySymbol
+	// SortBySource
+	// SortByDecimals
+	SortByTags
+	// SortByPetname
+)
 
-type NamesMap map[common.Address]Name
-
-type NameOnDiscHeader struct {
-	Magic   uint64
-	Version uint64
-	Count   uint64
-	Padding [644]byte
-}
-
-func LoadNamesArray(chain string) (NamesArray, error) {
-	names := NamesArray{}
-	if namesMap, err := LoadNamesMap(chain); err != nil {
+// LoadNamesArray loads the names from the cache and returns an array of names
+func LoadNamesArray(chain string, parts Parts, sortBy SortBy, terms []string) ([]types.SimpleName, error) {
+	var names []types.SimpleName
+	if namesMap, err := LoadNamesMap(chain, parts, terms); err != nil {
 		return nil, err
 	} else {
 		for _, name := range namesMap {
-			names = append(names, name)
+			isTesting := parts&Testing != 0
+			isIndiv := strings.Contains(name.Tags, "Individual")
+			if name.Address == types.HexToAddress("0x69e271483c38ed4902a55c3ea8aab9e7cc8617e5") {
+				isIndiv = false
+				name.Name = "Name 0x69e27148"
+			}
+			if !isTesting || !isIndiv {
+				names = append(names, name)
+			}
 		}
 	}
 
 	sort.Slice(names, func(i, j int) bool {
-		return names[i].Address < names[j].Address
+		switch sortBy {
+		case SortByName:
+			return names[i].Name < names[j].Name
+		case SortByTags:
+			return names[i].Tags < names[j].Tags
+		case SortByAddress:
+			fallthrough
+		default:
+			return names[i].Address.Hex() < names[j].Address.Hex()
+		}
 	})
+
+	isTesting := parts&Testing != 0
+	isTags := sortBy == SortByTags
+	if isTesting && !isTags {
+		names = names[:utils.Min(200, len(names))]
+	}
 
 	return names, nil
 }
 
-func LoadNamesMap(chain string) (NamesMap, error) {
-	binPath := config.GetPathToCache(chain) + "names/names.bin"
-	// TODO: Use the names cache if it's present
-	if false && file.FileExists(binPath) {
-		file, _ := os.OpenFile(binPath, os.O_RDONLY, 0)
-		defer file.Close()
+// LoadNamesMap loads the names from the cache and returns a map of names
+func LoadNamesMap(chain string, parts Parts, terms []string) (map[types.Address]types.SimpleName, error) {
+	namesMap := map[types.Address]types.SimpleName{}
 
-		thing := NameOnDiscHeader{}
-		binary.Read(file, binary.LittleEndian, &thing.Magic)
-		binary.Read(file, binary.LittleEndian, &thing.Version)
-		binary.Read(file, binary.LittleEndian, &thing.Count)
-		binary.Read(file, binary.LittleEndian, &thing.Padding)
-		// fmt.Println(thing)
-
-		ret := NamesMap{}
-		for i := uint64(0); i < thing.Count; i++ {
-			v := NameOnDisc{}
-			binary.Read(file, binary.LittleEndian, &v)
-			n := Name{
-				Tags:     justChars(v.Tags[:]),
-				Address:  justChars(v.Address[:]),
-				Name:     justChars(v.Name[:]),
-				Symbol:   justChars(v.Symbol[:]),
-				Decimals: justChars([]byte(fmt.Sprintf("%d", v.Decimals))),
-				Source:   justChars(v.Source[:]),
-				Petname:  justChars(v.Petname[:]),
-			}
-			ret[common.HexToAddress(justChars(v.Address[:]))] = n
-			// fmt.Println(n)
-			// fmt.Println()
-		}
-		return ret, nil
+	// Load the prefund names first...
+	if parts&Prefund != 0 {
+		prefundPath := filepath.Join(config.GetPathToChainConfig(chain), "allocs.csv")
+		loadPrefundMap(chain, prefundPath, terms, parts, &namesMap)
 	}
 
-	ret := NamesMap{}
-	namesPath := config.GetPathToChainConfig(chain) + "names.tab"
-	gr, err := NewNameReader(namesPath)
-	if err != nil {
-		log.Fatal(err)
+	if parts&Regular != 0 {
+		namesPath := filepath.Join(config.GetPathToChainConfig(chain), "names.tab")
+		loadRegularMap(chain, namesPath, terms, parts, &namesMap)
 	}
 
-	for {
-		grant, err := gr.Read()
-		if err == io.EOF {
-			break
-		}
-		if err != nil {
-			log.Fatal(err)
-		}
-		ret[common.HexToAddress(grant.Address)] = grant
+	// Load the custom names (note that these may overwrite the prefund and regular names)
+	if parts&Custom != 0 {
+		customPath := filepath.Join(config.GetPathToChainConfig(chain), "names_custom.tab")
+		loadCustomMap(chain, customPath, terms, parts, &namesMap)
 	}
 
-	return ret, nil
-}
-
-func justChars(b []byte) string {
-	ret := ""
-	for i := 0; i < len(b); i++ {
-		if b[i] != 0 {
-			ret += string(b[i])
-		} else {
-			return ret
-		}
-	}
-	return ret
+	return namesMap, nil
 }
 
 var requiredColumns = []string{
@@ -161,27 +121,29 @@ type NameReader struct {
 	csvReader csv.Reader
 }
 
-func (gr *NameReader) Read() (Name, error) {
+func (gr *NameReader) Read() (types.SimpleName, error) {
 	record, err := gr.csvReader.Read()
 	if err == io.EOF {
 		gr.file.Close()
 	}
 	if err != nil {
-		return Name{}, err
+		return types.SimpleName{}, err
 	}
 
-	// isActive := record[gr.header["active"]] == "true"
-	// isCore := record[gr.header["core"]] == "true"
-	// isValid := validate.IsValidAddress(record[gr.header["address"]]) && !validate.IsZeroAddress(record[gr.header["address"]])
-	return Name{
-		Tags:     record[gr.header["tags"]],
-		Address:  strings.ToLower(record[gr.header["address"]]),
-		Name:     record[gr.header["name"]],
-		Decimals: record[gr.header["decimals"]],
-		Symbol:   record[gr.header["symbol"]],
-		// IsActive: isActive,
-		// IsCore:   isCore,
-		// IsValid:  isValid,
+	return types.SimpleName{
+		Tags:       record[gr.header["tags"]],
+		Address:    types.HexToAddress(strings.ToLower(record[gr.header["address"]])),
+		Name:       record[gr.header["name"]],
+		Decimals:   globals.ToUint64(record[gr.header["decimals"]]),
+		Symbol:     record[gr.header["symbol"]],
+		Source:     record[gr.header["source"]],
+		Petname:    record[gr.header["petname"]],
+		IsCustom:   record[gr.header["iscustom"]] == "true",
+		IsPrefund:  record[gr.header["isprefund"]] == "true",
+		IsContract: record[gr.header["iscontract"]] == "true",
+		IsErc20:    record[gr.header["iserc20"]] == "true",
+		IsErc721:   record[gr.header["iserc721"]] == "true",
+		Deleted:    record[gr.header["deleted"]] == "true",
 	}, nil
 }
 
@@ -214,11 +176,101 @@ func NewNameReader(path string) (NameReader, error) {
 		}
 	}
 
-	gr := NameReader{
+	r := NameReader{
 		file:      file,
 		header:    header,
 		csvReader: *reader,
 	}
 
-	return gr, nil
+	return r, nil
 }
+
+/*
+// NameOnDiscHeader is the header of the names database when stored in the binary backing file
+type NameOnDiscHeader struct {
+	Magic   uint64    // 8 bytes
+	Version uint64    // + 8 bytes = 16 bytes
+	Count   uint64    // + 8 bytes = 24 bytes
+	Padding [428]byte // 452 - 24 = 428 bytes
+}
+
+// NameOnDisc is a record in the names database when stored in the binary backing file
+type NameOnDisc struct {
+	Tags     [30 + 1]byte  `json:"-"` // 31 bytes
+	Address  [42 + 1]byte  `json:"-"` // + 43 bytes = 74 bytes
+	Name     [120 + 1]byte `json:"-"` // + 121 bytes = 195 bytes
+	Symbol   [30 + 1]byte  `json:"-"` // + 31 bytes = 226 bytes
+	Source   [180 + 1]byte `json:"-"` // + 181 bytes = 407 bytes
+	Petname  [40 + 1]byte  `json:"-"` // + 41 bytes = 448 bytes
+	Decimals uint16        `json:"-"` // + 2 bytes = 450 bytes
+	Flags    uint16        `json:"-"` // + 2 bytes = 452 bytes
+}
+
+// Bitflags for the Flags field
+const (
+	IsCustom   uint16 = 0x1
+	IsPrefund  uint16 = 0x2
+	IsContract uint16 = 0x4
+	IsErc20    uint16 = 0x8
+	IsErc721   uint16 = 0x10
+	IsDeleted  uint16 = 0x20
+)
+
+// asString converts the byte array (not zero-terminated) to a string
+func asString(which string, b []byte) string {
+	ret := ""
+	for _, rVal := range string(b) {
+		if rVal == 0 {
+			return ret
+		}
+		ret += string(rVal)
+	}
+	return ret
+}
+
+	// binPath := config.GetPathToCache(chain) + "names/names.bin"
+	// namesPath := filepath.Join(config.GetPathToChainConfig(chain), "names.tab")
+	// customPath := filepath.Join(config.GetPathToChainConfig(chain), "names_custom.tab")
+	// Load the names from the binary file (note that these may overwrite the prefund names)
+	if parts&Regular != 0 {
+		// enabled := false // os.Getenv("FAST") == "true" // TODO: this isn't right
+		// if enabled && file.FileExists(binPath) {
+		// 	file, _ := os.OpenFile(binPath, os.O_RDONLY, 0)
+		// 	defer file.Close()
+
+		// 	header := NameOnDiscHeader{}
+		// 	err := binary.Read(file, binary.LittleEndian, &header)
+		// 	if err != nil {
+		// 		return nil, err
+		// 	}
+
+		// 	for i := uint64(0); i < header.Count; i++ {
+		// 		v := NameOnDisc{}
+		// 		binary.Read(file, binary.LittleEndian, &v)
+		// 		n := Name{
+		// 			Tags:       asString("tags", v.Tags[:]),
+		// 			Address:    asString("address", v.Address[:]),
+		// 			Name:       asString("name", v.Name[:]),
+		// 			Symbol:     asString("symbol", v.Symbol[:]),
+		// 			Decimals:   fmt.Sprintf("%d", v.Decimals),
+		// 			Source:     asString("source", v.Source[:]),
+		// 			Petname:    asString("petname", v.Petname[:]),
+		// 			IsCustom:   v.Flags&IsCustom != 0,
+		// 			IsPrefund:  v.Flags&IsPrefund != 0,
+		// 			IsContract: v.Flags&IsContract != 0,
+		// 			IsErc20:    v.Flags&IsErc20 != 0,
+		// 			IsErc721:   v.Flags&IsErc721 != 0,
+		// 			Deleted:    v.Flags&IsDeleted != 0,
+		// 		}
+		// 		if !n.IsCustom {
+		// 			if doSearch(n, terms, parts) {
+		// 				ret[types.HexToAddress(n.Address)] = n
+		// 			}
+		// 		}
+		// 	}
+		// } else {
+		namesPath := filepath.Join(config.GetPathToChainConfig(chain), "names.tab")
+		loadRegularMap(chain, namesPath, terms, parts, &ret)
+		// }
+	}
+*/

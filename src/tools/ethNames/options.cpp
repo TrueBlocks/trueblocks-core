@@ -22,15 +22,6 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("terms", "", "list<string>", OPT_REQUIRED | OPT_POSITIONAL, "a space separated list of one or more search terms"),  // NOLINT
-    COption("expand", "e", "", OPT_SWITCH, "expand search to include all fields (search name, address, and symbol otherwise)"),  // NOLINT
-    COption("match_case", "m", "", OPT_SWITCH, "do case-sensitive search"),
-    COption("all", "l", "", OPT_SWITCH, "include all accounts in the search"),
-    COption("custom", "c", "", OPT_SWITCH, "include your custom named accounts"),
-    COption("prefund", "p", "", OPT_SWITCH, "include prefund accounts"),
-    COption("named", "n", "", OPT_SWITCH, "include well know token and airdrop addresses in the search"),
-    COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
-    COption("tags", "g", "", OPT_SWITCH, "export the list of tags and subtags only"),
-    COption("to_custom", "u", "", OPT_HIDDEN | OPT_SWITCH, "for editCmd only, is the edited name a custom name or not"),
     COption("clean", "C", "", OPT_HIDDEN | OPT_SWITCH, "clean the data (addrs to lower case, sort by addr)"),
     COption("autoname", "A", "<string>", OPT_HIDDEN | OPT_FLAG, "an address assumed to be a token, added automatically to names database if true"),  // NOLINT
     COption("create", "", "", OPT_HIDDEN | OPT_SWITCH, "create a new name record"),
@@ -38,14 +29,14 @@ static const COption params[] = {
     COption("delete", "", "", OPT_HIDDEN | OPT_SWITCH, "delete a name, but do not remove it"),
     COption("undelete", "", "", OPT_HIDDEN | OPT_SWITCH, "undelete a previously deleted name"),
     COption("remove", "", "", OPT_HIDDEN | OPT_SWITCH, "remove a previously deleted name"),
+    COption("to_custom", "u", "", OPT_HIDDEN | OPT_SWITCH, "for editCmd only, is the edited name a custom name or not"),
+    COption("named", "n", "", OPT_SWITCH, "please use the --all option instead"),
     COption("", "", "", OPT_DESCRIPTION, "Query addresses or names of well known accounts."),
     // clang-format on
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-string_q shortenFormat(const string_q& fmtIn);
-string_q getSearchFields(const string_q& fmtIn);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
@@ -54,11 +45,6 @@ bool COptions::parseArguments(string_q& command) {
     replaceAll(command, "--delete", "--deleteMe");
 
     // BEG_CODE_LOCAL_INIT
-    bool expand = false;
-    bool all = false;
-    bool custom = false;
-    bool named = false;
-    bool addr = false;
     bool clean = false;
     string_q autoname = "";
     bool create = false;
@@ -68,43 +54,12 @@ bool COptions::parseArguments(string_q& command) {
     bool remove = false;
     // END_CODE_LOCAL_INIT
 
-    string_q format;
-    bool deflt = true;
-    bool addr_only = false;
-
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (arg == "-e" || arg == "--expand") {
-            expand = true;
-
-        } else if (arg == "-m" || arg == "--match_case") {
-            match_case = true;
-
-        } else if (arg == "-l" || arg == "--all") {
-            all = true;
-
-        } else if (arg == "-c" || arg == "--custom") {
-            custom = true;
-
-        } else if (arg == "-p" || arg == "--prefund") {
-            prefund = true;
-
-        } else if (arg == "-n" || arg == "--named") {
-            named = true;
-
-        } else if (arg == "-a" || arg == "--addr") {
-            addr = true;
-
-        } else if (arg == "-g" || arg == "--tags") {
-            tags = true;
-
-        } else if (arg == "-u" || arg == "--to_custom") {
-            to_custom = true;
-
         } else if (arg == "-C" || arg == "--clean") {
             clean = true;
 
@@ -127,6 +82,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "--remove") {
             remove = true;
+
+        } else if (arg == "-u" || arg == "--to_custom") {
+            to_custom = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -157,30 +115,15 @@ bool COptions::parseArguments(string_q& command) {
     if (remove)
         crudCommands.push_back("remove");
 
-    if (prefund) {
-        if (!loadNamesWithPrefunds())
-            return usage("Could not load names database.");
-    } else {
-        if (!loadNames())
-            return usage("Could not load names database.");
-    }
+    if (!loadNames())
+        return usage("Could not load names database.");
 
-    if (!autoname.empty() && (!isAddress(autoname) || isZeroAddr(autoname)))
-        return usage("You must provide an address to the --autoname option.");
-
-    // for (auto& term : terms)
-    //     if (endsWith(term, ".eth"))
-    //         term = addressFromENSName(term);
-
-    latestBlock = isTestMode() ? 10800000 : getLatestBlock_client();
     if (clean) {
         abi_spec.loadAbisFromKnown(true);
         return handle_clean();
     }
 
-    if (isCrudCommand()) {
-        if (prefund)
-            return usage("You may not use the --prefund option when editing names.");
+    if (crudCommands.size() > 0) {
         abi_spec.loadAbisFromKnown(true);
         address_t address = toLower(trim(getEnvStr("TB_NAME_ADDRESS"), '\"'));
         if (address.empty() && !terms.empty())
@@ -208,99 +151,16 @@ bool COptions::parseArguments(string_q& command) {
     for (auto term : terms)
         searches.push_back(term);
 
-#define anyBase() (match_case || expand || all || prefund || named || addr || to_custom || clean)
-    if (expand) {
-        searchFields = STR_DISPLAY_NAME;
-        format = searchFields;
-    }
-
-    if (all)
-        types = ALL;
-    if (named) {
-        if (deflt) {
-            types = 0;
-            deflt = false;
-        }
-        types |= NAMED;
-    }
-    if (prefund) {
-        if (deflt) {
-            types = 0;
-            deflt = false;
-        }
-        types |= PREFUND;
-    }
-    if (custom) {
-        if (deflt) {
-            types = 0;
-            deflt = false;
-        }
-        types |= CUSTOM;
-    }
-
-    if (addr) {
-        addr_only = true;
-        noHeader = true;
-        format = "[{ADDRESS}]";
-        searchFields = "[{ADDRESS}]\t[{NAME}]";
-    }
-
-    if (verbose)
-        searchFields += "\t[{SOURCE}]";
-
-    if (tags) {
-        if (anyBase())
-            return usage("Do not use the --tags option with any other option.");
-        manageFields("CName:all", false);
-        manageFields("CName:tags", true);
-        format = "[{TAGS}]";
-        addr_only = false;
-        if (custom) {
-            types = 0;
-            types |= CUSTOM;
-        } else {
-            types |= NAMED;
-            types |= PREFUND;
-            types |= CUSTOM;
-        }
-    }
-
-    // Prepare formatting
-    string_q str = (format.empty() ? shortenFormat(STR_DISPLAY_NAME) : format);
-    if (verbose && !contains(format, "{SOURCE}"))
-        str += "\t[{SOURCE}]";
-    string_q meta = ", \"namePath\": \"" + (isTestMode() ? "--" : cacheFolder_names) + "\"";
-
-    // Display formatting
-    configureDisplay("ethNames", "CName", str, meta);
-    if (!tags && expContext().exportFmt == JSON1)
+    string_q format = STR_DISPLAY_NAME;
+    configureDisplay("ethNames", "CName", format, "");
+    if (expContext().exportFmt == JSON1)
         manageFields("CName:" + cleanFmt(STR_DISPLAY_NAME));
-    if (!expand) {
-        HIDE_FIELD(CName, "deleted");
-        HIDE_FIELD(CName, "isCustom");
-        HIDE_FIELD(CName, "isPrefund");
-        HIDE_FIELD(CName, "isContract");
-        HIDE_FIELD(CName, "isErc20");
-        HIDE_FIELD(CName, "isErc721");
-    }
 
-    // Collect results for later display
-    filterNames();
-
-    // Data wrangling
-    if (addr_only) {
-        HIDE_FIELD(CName, "deleted");
-        HIDE_FIELD(CName, "tags");
-        HIDE_FIELD(CName, "name");
-        HIDE_FIELD(CName, "symbol");
-        HIDE_FIELD(CName, "petname");
-        HIDE_FIELD(CName, "source");
-        HIDE_FIELD(CName, "decimal");
-        HIDE_FIELD(CName, "isCustom");
-        HIDE_FIELD(CName, "isPrefund");
-        HIDE_FIELD(CName, "isContract");
-        HIDE_FIELD(CName, "isErc20");
-        HIDE_FIELD(CName, "isErc721");
+    for (auto name : namePtrMap) {
+        CName acct;
+        name.second->disc_2_Name(acct);
+        if (!acct.isCustom && !acct.isPrefund)
+            addIfUnique(acct);
     }
 
     return true;
@@ -313,17 +173,12 @@ void COptions::Init(void) {
     // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT
-    match_case = false;
-    prefund = false;
-    tags = false;
     to_custom = false;
     // END_CODE_INIT
 
     terms.clear();
     items.clear();
     searches.clear();
-    searchFields = getSearchFields(STR_DISPLAY_NAME);
-    types = NAMED;
     minArgs = 0;
 }
 
@@ -353,19 +208,11 @@ bool COptions::addIfUnique(const CName& item) {
     if (isZeroAddr(item.address))
         return false;
 
-    if (isTestMode() && !isCrudCommand()) {
+    if (isTestMode() && crudCommands.size() == 0) {
         if (items.size() > 200)
             return true;
         if ((contains(item.tags, "Kickback") || contains(item.tags, "Humanity")))  // don't expose people during testing
             return true;
-    }
-
-    if (tags) {
-        string_q key = item.tags;
-        if (items[key].tags == key)  // already exists
-            return false;
-        items[key] = item;
-        return true;
     }
 
     address_t key = toLower(item.address);
@@ -384,116 +231,16 @@ bool COptions::addIfUnique(const CName& item) {
         return true;
     }
 
-    if (!match_case) {
-        for (size_t i = 0; i < searches.size(); i++) {
-            searches[i] = toLower(searches[i]);
-        }
-    }
-
     string_q search1 = searches.size() > 0 ? searches[0] : "";
     string_q search2 = searches.size() > 1 ? searches[1] : "";
     string_q search3 = searches.size() > 2 ? searches[2] : "";
 
-    string_q str = item.Format(searchFields);
-    if (!match_case)
-        str = toLower(str);
-
-    if ((search1.empty() || search1 == "*" || contains(str, search1)) &&
-        (search2.empty() || search2 == "*" || contains(str, search2)) &&
-        (search3.empty() || search3 == "*" || contains(str, search3))) {
+    string_q str = item.Format(STR_DISPLAY_NAME);
+    if ((search1.empty() || contains(str, search1)) && (search2.empty() || contains(str, search2)) &&
+        (search3.empty() || contains(str, search3))) {
         items[key] = item;
         return true;
     }
     items.erase(key);
     return false;
-}
-
-//-----------------------------------------------------------------------
-bool addCustom(NameOnDisc* item, void* data) {
-    COptions* opts = (COptions*)data;
-    if (item->flags & IS_CUSTOM) {
-        CName name;
-        item->disc_2_Name(name);
-        opts->addIfUnique(name);
-    }
-    return true;
-}
-
-//-----------------------------------------------------------------------
-bool addRegular(CName& item, void* data) {
-    COptions* opts = (COptions*)data;
-    if (!item.isCustom && !item.isPrefund)
-        opts->addIfUnique(item);
-    return true;
-}
-
-//-----------------------------------------------------------------------
-bool addPrefund(NameOnDisc* item, void* data) {
-    COptions* opts = (COptions*)data;
-    if (item->flags & IS_PREFUND) {
-        CName name;
-        item->disc_2_Name(name);
-        opts->addIfUnique(name);
-    }
-    return true;
-}
-
-//-----------------------------------------------------------------------
-// order matters...first in wins...
-void COptions::filterNames() {
-    if (types & CUSTOM) {
-        if (isTestMode() && !isCrudCommand()) {
-            for (uint32_t i = 1; i < 5; i++) {
-                CName item;
-                item.tags = "81-Custom";
-                item.address = "0x000000000000000000000000000000000000000" + uint_2_Str(i);
-                item.petname = addr_2_Petname(item.address, '-');
-                item.name = "Account_" + uint_2_Str(i);
-                if (!(i % 2)) {
-                    item.symbol = "AC_" + uint_2_Str(i);
-                    item.decimals = i;
-                }
-                item.source = "Testing";
-                addIfUnique(item);
-            }
-        } else {
-            forEveryName(addCustom, this);
-        }
-    }
-
-    if (types & NAMED) {
-        forEveryNameOld(addRegular, this);
-    }
-
-    if (types & PREFUND) {
-        forEveryName(addPrefund, this);
-    }
-}
-
-//-----------------------------------------------------------------------
-string_q shortenFormat(const string_q& fmtIn) {
-    string_q ret = toUpper(fmtIn);
-    replace(ret, "[{SOURCE}]", "");
-    replace(ret, "[{DECIMAL}]", "");
-    replace(ret, "[{DELETED}]", "");
-    replace(ret, "[{ISCUSTOM}]", "");
-    replace(ret, "[{ISPREFUND}]", "");
-    replace(ret, "[{ISCONTRACT}]", "");
-    replace(ret, "[{ISERC20}]", "");
-    replace(ret, "[{ISERC721}]", "");
-    return trim(ret, '\t');
-}
-
-//-----------------------------------------------------------------------
-string_q getSearchFields(const string_q& fmtIn) {
-    string_q ret = toUpper(fmtIn);
-    replace(ret, "[{SOURCE}]", "");
-    replace(ret, "[{DECIMAL}]", "");
-    replace(ret, "[{DELETED}]", "");
-    replace(ret, "[{ISCUSTOM}]", "");
-    replace(ret, "[{ISPREFUND}]", "");
-    replace(ret, "[{ISCONTRACT}]", "");
-    replace(ret, "[{ISERC20}]", "");
-    replace(ret, "[{ISERC721}]", "");
-    return trim(ret, '\t');
 }

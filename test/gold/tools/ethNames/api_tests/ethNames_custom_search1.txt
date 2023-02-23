@@ -2,21 +2,24 @@ names?custom&terms=Account_1
 {
   "data": [
     {
-      "tags": "81-Custom",
       "address": "0x0000000000000000000000000000000000000001",
+      "decimals": 1,
+      "isCustom": true,
       "name": "Account_1",
-      "symbol": "",
+      "petname": "abnormally-able-ant",
       "source": "Testing",
-      "decimals": 0,
-      "petname": "abnormally-able-ant"
+      "symbol": "SYM_1",
+      "tags": "81-Custom"
     }
   ],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "finalized": "0xdeadbeef",
     "client": "0xdeadbeef",
-    "namePath": "--"
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
   }
 }

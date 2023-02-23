@@ -8,7 +8,7 @@ import (
 	"os"
 	"sort"
 
-	"github.com/ethereum/go-ethereum/common"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 const (
@@ -18,7 +18,7 @@ const (
 
 // AddressRecord is a single record in the Address table
 type AddressRecord struct {
-	Address common.Address
+	Address types.Address
 	Offset  uint32
 	Count   uint32
 }
@@ -27,7 +27,7 @@ func (addressRec *AddressRecord) ReadAddress(file *os.File) (err error) {
 	return binary.Read(file, binary.LittleEndian, addressRec)
 }
 
-func (chunk *ChunkData) searchForAddressRecord(address common.Address) int {
+func (chunk *ChunkData) searchForAddressRecord(address types.Address) int {
 	compareFunc := func(pos int) bool {
 		if pos == -1 {
 			return false
@@ -51,7 +51,7 @@ func (chunk *ChunkData) searchForAddressRecord(address common.Address) int {
 			return false
 		}
 
-		return bytes.Compare(addressRec.Address[:], address[:]) >= 0
+		return bytes.Compare(addressRec.Address.Bytes(), address.Bytes()) >= 0
 	}
 
 	pos := sort.Search(int(chunk.Header.AddressCount), compareFunc)
@@ -64,7 +64,7 @@ func (chunk *ChunkData) searchForAddressRecord(address common.Address) int {
 		return -1
 	}
 
-	if !bytes.Equal(rec.Address[:], address[:]) {
+	if !bytes.Equal(rec.Address.Bytes(), address.Bytes()) {
 		return -1
 	}
 

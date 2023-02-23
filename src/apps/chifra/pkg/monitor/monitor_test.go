@@ -11,7 +11,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 func Test_Monitor_Print(t *testing.T) {
@@ -184,8 +183,8 @@ func GetTestMonitor(t *testing.T) Monitor {
 	file.Remove(mon.Path())
 	file.Touch(mon.Path())
 
-	if mon.Address != common.HexToAddress(testAddr) {
-		t.Error("Expected:", common.HexToAddress(testAddr), "Got:", mon.Address)
+	if mon.Address.Hex() != strings.ToLower(testAddr) {
+		t.Error("Expected:", strings.ToLower(testAddr), "Got:", mon.Address)
 	}
 
 	if mon.GetAddrStr() != strings.ToLower(testAddr) {

@@ -9,3 +9,4 @@ input          ,bytes   ,           ,       ,      ,        ,true      ,        
 refundAddress  ,address ,           ,       ,      ,        ,true      ,        ,      ,         ,6   ,     ,0xf503...179b ,if the call type is self-destruct&#44; the address to which the refund is sent
 to             ,address ,           ,       ,      ,        ,          ,        ,      ,         ,2   ,     ,              ,address to which the trace was sent
 value          ,wei     ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,              ,
+address        ,address ,           ,       ,      ,true    ,true      ,true    ,      ,         ,    ,     ,              ,

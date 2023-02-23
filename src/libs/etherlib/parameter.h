@@ -225,18 +225,6 @@ extern const char* STR_DISPLAY_PARAMETER;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-enum {
-    COMMENT1 = (char)1,         // NOLINT
-    COMMENT_END1 = (char)'\n',  // NOLINT
-    COMMENT2 = (char)2,         // NOLINT
-    COMMENT_END2 = (char)3,     // NOLINT
-    FUNCTION_START = (char)5,   // NOLINT
-    EVENT_START = (char)6,      // NOLINT
-    STRUCT_START = (char)7,     // NOLINT
-    STRUCT_END = (char)8,       // NOLINT
-    MODIFIER_START = (char)9,   // NOLINT
-};
-enum ParseState { OUT, IN, IN_COMMENT1, IN_COMMENT2, IN_FUNCTION, IN_EVENT, IN_STRUCT, IN_MODIFIER };
 inline string_q params_2_Str(CParameterArray& params) {
     string_q ret;
     for (auto param : params) {

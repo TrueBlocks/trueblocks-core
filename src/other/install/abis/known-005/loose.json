@@ -1,5 +1,628 @@
 [
   {
+    "encoding": "",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "address"
+      },
+      {
+        "name": "val_2",
+        "type": "uint256"
+      }
+    ],
+    "name": "SafeReceived",
+    "outputs": [],
+    "signature": "SafeReceived(address,uint256)",
+    "type": "event"
+  },
+  {
+    "encoding": "0x752d49a1",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "uint256"
+      },
+      {
+        "name": "val_2",
+        "type": "uint256"
+      }
+    ],
+    "name": "addTip",
+    "outputs": [],
+    "signature": "addTip(uint256,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x68c180d5",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "bytes"
+      },
+      {
+        "name": "val_1",
+        "type": "uint256"
+      },
+      {
+        "name": "val_2",
+        "type": "uint256"
+      }
+    ],
+    "name": "submitMiningSolution",
+    "outputs": [],
+    "signature": "submitMiningSolution(bytes,uint256,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x4faa8a26",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "address"
+      }
+    ],
+    "name": "depositEtherFor",
+    "outputs": [],
+    "signature": "depositEtherFor(address)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x8591419e",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "uint64"
+      },
+      {
+        "name": "val_2",
+        "type": "address[]"
+      }
+    ],
+    "name": "withdrawMany",
+    "outputs": [],
+    "signature": "withdrawMany(uint64,address[])",
+    "type": "function"
+  },
+  {
+    "encoding": "0xc2998238",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "address[]"
+      }
+    ],
+    "name": "enterMarkets",
+    "outputs": [],
+    "signature": "enterMarkets(address[])",
+    "type": "function"
+  },
+  {
+    "encoding": "0x0c24d5cf",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "uint64"
+      },
+      {
+        "name": "val_2",
+        "type": "address"
+      }
+    ],
+    "name": "withdraw",
+    "outputs": [],
+    "signature": "withdraw(uint64,address)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x39125215",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "address"
+      },
+      {
+        "name": "val_2",
+        "type": "uint256"
+      },
+      {
+        "name": "val_3",
+        "type": "bytes"
+      },
+      {
+        "name": "val_4",
+        "type": "uint256"
+      },
+      {
+        "name": "val_5",
+        "type": "uint256"
+      },
+      {
+        "name": "val_6",
+        "type": "bytes"
+      }
+    ],
+    "name": "sendMultiSig",
+    "outputs": [],
+    "signature": "sendMultiSig(address,uint256,bytes,uint256,uint256,bytes)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x3971ee42",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "address[]"
+      }
+    ],
+    "name": "promo",
+    "outputs": [],
+    "signature": "promo(address[])",
+    "type": "function"
+  },
+  {
+    "encoding": "0x54919a6c",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "address[]"
+      },
+      {
+        "name": "val_2",
+        "type": "uint256"
+      }
+    ],
+    "name": "sendTokensSingleValue",
+    "outputs": [],
+    "signature": "sendTokensSingleValue(address[],uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x8b9e4f93",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "address"
+      },
+      {
+        "name": "val_2",
+        "type": "address"
+      },
+      {
+        "name": "val_3",
+        "type": "uint256"
+      }
+    ],
+    "name": "depositERC20ForUser",
+    "outputs": [],
+    "signature": "depositERC20ForUser(address,address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xe3dec8fb",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "address"
+      },
+      {
+        "name": "val_2",
+        "type": "address"
+      },
+      {
+        "name": "val_3",
+        "type": "bytes"
+      }
+    ],
+    "name": "depositFor",
+    "outputs": [],
+    "signature": "depositFor(address,address,bytes)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xf7fcd384",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "address"
+      },
+      {
+        "name": "val_2",
+        "type": "address"
+      },
+      {
+        "name": "val_3",
+        "type": "address"
+      },
+      {
+        "name": "val_4",
+        "type": "address"
+      },
+      {
+        "name": "val_5",
+        "type": "uint256"
+      },
+      {
+        "name": "val_6",
+        "type": "uint256"
+      },
+      {
+        "name": "val_7",
+        "type": "bytes"
+      }
+    ],
+    "name": "sellToLiquidityProvider",
+    "outputs": [],
+    "signature": "sellToLiquidityProvider(address,address,address,address,uint256,uint256,bytes)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x2befabbf",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "uint256"
+      },
+      {
+        "name": "val_2",
+        "type": "bool"
+      },
+      {
+        "name": "val_3",
+        "type": "address"
+      }
+    ],
+    "name": "mintIdleToken",
+    "outputs": [],
+    "signature": "mintIdleToken(uint256,bool,address)",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_poolId",
+        "type": "uint256"
+      }
+    ],
+    "name": "claim",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "encoding": "0x69328dec",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "address"
+      },
+      {
+        "name": "val_2",
+        "type": "uint256"
+      },
+      {
+        "name": "val_2",
+        "type": "address"
+      }
+    ],
+    "name": "withdraw",
+    "outputs": [],
+    "signature": "withdraw(address,uint256,address)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x8581af19",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "uint256"
+      },
+      {
+        "name": "val_2",
+        "type": "uint256"
+      },
+      {
+        "name": "val_3",
+        "type": "uint256"
+      }
+    ],
+    "name": "beginDispute",
+    "outputs": [],
+    "signature": "beginDispute(uint256,uint256,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xa59f3e0c",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "uint256"
+      }
+    ],
+    "name": "enter",
+    "outputs": [],
+    "signature": "enter(uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xd2d0e066",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "address"
+      },
+      {
+        "name": "val_2",
+        "type": "uint256"
+      },
+      {
+        "name": "val_3",
+        "type": "uint16"
+      }
+    ],
+    "name": "deposit",
+    "outputs": [],
+    "signature": "deposit(address,uint256,uint16)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xe8eda9df",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "address"
+      },
+      {
+        "name": "val_2",
+        "type": "uint256"
+      },
+      {
+        "name": "val_3",
+        "type": "address"
+      },
+      {
+        "name": "val_4",
+        "type": "uint16"
+      }
+    ],
+    "name": "deposit",
+    "outputs": [],
+    "signature": "deposit(address,uint256,address,uint16)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xc0f4ed31",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "uint256"
+      },
+      {
+        "name": "val_2",
+        "type": "address"
+      },
+      {
+        "name": "val_3",
+        "type": "uint256"
+      }
+    ],
+    "name": "bid",
+    "outputs": [],
+    "signature": "bid(uint256,address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x8b30b516",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "uint256"
+      }
+    ],
+    "name": "redeemIdleToken",
+    "outputs": [],
+    "signature": "redeemIdleToken(uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xae9bb692",
+    "inputs": [],
+    "name": "depositGas",
+    "outputs": [],
+    "signature": "depositGas()",
+    "type": "function"
+  },
+  {
+    "encoding": "0xd86f5a6b",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "address"
+      },
+      {
+        "name": "val_2",
+        "type": "uint256"
+      }
+    ],
+    "name": "createStake",
+    "outputs": [],
+    "signature": "createStake(address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x28449c3a",
+    "inputs": [],
+    "name": "requestStakingWithdraw",
+    "outputs": [],
+    "signature": "requestStakingWithdraw()",
+    "type": "function"
+  },
+  {
+    "encoding": "0x573ade81",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "address"
+      },
+      {
+        "name": "val_2",
+        "type": "uint256"
+      },
+      {
+        "name": "val_3",
+        "type": "uint256"
+      },
+      {
+        "name": "val_4",
+        "type": "address"
+      }
+    ],
+    "name": "repay",
+    "outputs": [],
+    "signature": "repay(address,uint256,uint256,address)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x9a01ca13",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "uint256"
+      }
+    ],
+    "name": "unlockDisputeFee",
+    "outputs": [],
+    "signature": "unlockDisputeFee(uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xa415bcad",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "address"
+      },
+      {
+        "name": "val_2",
+        "type": "uint256"
+      },
+      {
+        "name": "val_3",
+        "type": "uint256"
+      },
+      {
+        "name": "val_4",
+        "type": "uint16"
+      },
+      {
+        "name": "val_5",
+        "type": "address"
+      }
+    ],
+    "name": "borrow",
+    "outputs": [],
+    "signature": "borrow(address,uint256,uint256,uint16,address)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xbed9d861",
+    "inputs": [],
+    "name": "withdrawStake",
+    "outputs": [],
+    "signature": "withdrawStake()",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_proposalID",
+        "type": "uint256"
+      },
+      {
+        "name": "_supportsProposal",
+        "type": "bool"
+      }
+    ],
+    "name": "vote",
+    "outputs": [
+      {
+        "name": "_voteID",
+        "type": "uint256"
+      }
+    ],
+    "type": "function"
+  },
+  {
+    "encoding": "0x4d318b0e",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "uint256"
+      }
+    ],
+    "name": "tallyVotes",
+    "outputs": [],
+    "signature": "tallyVotes(uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xbd69deac",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "uint64"
+      }
+    ],
+    "name": "join",
+    "outputs": [],
+    "signature": "join(uint64)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x0d2d76a2",
+    "inputs": [],
+    "name": "depositStake",
+    "outputs": [],
+    "signature": "depositStake()",
+    "type": "function"
+  },
+  {
+    "encoding": "0x42d86693",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "address"
+      }
+    ],
+    "name": "withdrawRewards",
+    "outputs": [],
+    "signature": "withdrawRewards(address)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x4350283e",
+    "inputs": [
+      {
+        "name": "val_1",
+        "type": "bytes"
+      },
+      {
+        "name": "val_2",
+        "type": "uint256[5]"
+      },
+      {
+        "name": "val_3",
+        "type": "uint256[5]"
+      }
+    ],
+    "name": "submitMiningSolution",
+    "outputs": [],
+    "signature": "submitMiningSolution(bytes,uint256[5],uint256[5])",
+    "type": "function"
+  },
+  {
     "encoding": "0xab832b43",
     "inputs": [
       {
@@ -573,35 +1196,6 @@
     "type": "function"
   },
   {
-    "encoding": "0xab832b43",
-    "inputs": [
-      {
-        "name": "toFirst",
-        "type": "address"
-      },
-      {
-        "name": "toSecond",
-        "type": "address"
-      },
-      {
-        "name": "valueFirst",
-        "type": "uint256"
-      },
-      {
-        "name": "valueSecond",
-        "type": "uint256"
-      },
-      {
-        "name": "tokenAddress",
-        "type": "address"
-      }
-    ],
-    "name": "splitTransfer",
-    "outputs": [],
-    "signature": "splitTransfer(address,address,uint256,uint256,address)",
-    "type": "function"
-  },
-  {
     "encoding": "0x8e7e879f",
     "inputs": [
       {
@@ -910,17 +1504,17 @@
     "inputs": [
       {
         "type": "address",
-        "name": "targetFork",
+        "name": "targetFork"
       },
       {
         "type": "address",
-        "name": "targetNoFork",
+        "name": "targetNoFork"
       }
     ],
     "outputs": [
       {
         "type": "bool",
-        "name": "ret_0",
+        "name": "ret_0"
       }
     ]
   },

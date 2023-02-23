@@ -24,7 +24,7 @@
 namespace qblocks {
 
 //-----------------------------------------------------------------------
-struct NameOnDiscHeader {
+struct namesHeaderOnDisc {
   public:
     uint64_t magic;
     uint64_t version;
@@ -33,7 +33,7 @@ struct NameOnDiscHeader {
 
 //-----------------------------------------------------------------------
 static CAddressNameMap namesMap;
-static map<address_t, NameOnDisc*> namePtrMap;
+map<address_t, NameOnDisc*> namePtrMap;
 static NameOnDisc* namesAllocated = nullptr;
 static uint64_t nNameRecords = 0;
 static uint64_t allocSize = 0;
@@ -62,7 +62,7 @@ static bool readNamesFromBinary(void) {
         return false;
     }
 
-    NameOnDiscHeader* header = (NameOnDiscHeader*)&fake;
+    namesHeaderOnDisc* header = (namesHeaderOnDisc*)&fake;
     archive.Read(&header->magic, sizeof(uint64_t), 1);
     archive.Seek(SEEK_SET, 0);
     if (header->magic != 0xdeadbeef) {
@@ -143,7 +143,7 @@ static bool writeNamesToBinary(void) {
         // nNameRecords = (sizeOfFileInBytes / sizeOfRecord) - 1
         NameOnDisc fake;
         memset(&fake, 0, sizeof(NameOnDisc) * 1);
-        NameOnDiscHeader* header = (NameOnDiscHeader*)&fake;
+        namesHeaderOnDisc* header = (namesHeaderOnDisc*)&fake;
         header->magic = 0xdeadbeef;
         header->version = getVersionNum();
         header->count = nNameRecords;
@@ -281,36 +281,6 @@ size_t nNames(void) {
 }
 
 //-----------------------------------------------------------------------
-bool forEveryNameOld(NAMEFUNC func, void* data) {
-    if (!func)
-        return false;
-
-    for (auto name : namePtrMap) {
-        if (!name.second)
-            continue;
-        CName acct;
-        name.second->disc_2_Name(acct);
-        if (!(*func)(acct, data))
-            return false;
-    }
-
-    return true;
-}
-
-//-----------------------------------------------------------------------
-bool forEveryName(NAMEODFUNC func, void* data) {
-    if (!func)
-        return false;
-
-    for (auto name : namePtrMap) {
-        if (!(*func)(name.second, data))
-            return false;
-    }
-
-    return true;
-}
-
-//-----------------------------------------------------------------------
 bool NameOnDisc::name_2_Disc(const CName& nm) {
     memset(this, 0, sizeof(NameOnDisc));
     strncpy(tags, nm.tags.c_str(), nm.tags.length());
@@ -365,7 +335,7 @@ string_q NameOnDisc::Format(void) const {
 bool updateName(const CName& target, const string_q& crud) {
     if (!hasName(target.address)) {
         if (nNameRecords == allocSize) {
-            LOG4("Growing names array");
+            LOG_INFO("Growing names array");
             // TODO: This has to grow the array or we will crash. It's a simple
             // TODO: realloc, but then a clearing of the array and reloading
             // growNames(100);
@@ -381,21 +351,21 @@ bool updateName(const CName& target, const string_q& crud) {
     }
 
     if (crud == "create" || crud == "update") {
-        LOG4((crud == "create" ? "Adding " : "Editing "), nod->address);
+        LOG_INFO((crud == "create" ? "Adding " : "Editing "), nod->address);
         // TODO: we could resort here, but it doesn't appear to matter. When we write
         // TODO: the file out, we should sort it
         nod->name_2_Disc(target);
 
     } else if (crud == "delete") {
-        LOG4("Deleting ", nod->address);
+        LOG_INFO("Deleting ", nod->address);
         nod->flags |= IS_DELETED;
 
     } else if (crud == "undelete") {
-        LOG4("Undeleting ", nod->address);
+        LOG_INFO("Undeleting ", nod->address);
         nod->flags &= ~(IS_DELETED);
 
     } else if (crud == "remove") {
-        LOG4("Removing ", nod->address);
+        LOG_INFO("Removing ", nod->address);
         // We can copy the memory from the position one past this record to the
         // end of the array on top of this record to remove it. If this is the
         // last record, just decrement the number of records
@@ -419,12 +389,6 @@ bool updateName(const CName& target, const string_q& crud) {
     }
 
     writeNamesToBinary();
-
-    if (!isTestMode()) {
-        ostringstream editRecord;
-        editRecord << Now().Format(FMT_JSON) << crud << "\t" << target.Format(STR_DISPLAY_NAME) << endl;
-        stringToAsciiFile(cacheFolder_names + "edit_log.txt", editRecord.str());
-    }
 
     return true;
 }

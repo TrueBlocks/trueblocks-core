@@ -47,12 +47,10 @@ Env: TB_NAME_SOURCE   = SOURCE
 Env: TB_NAME_SYMBOL   = SYMBOL
 Env: TB_NAME_DECIMALS = 11
 Env: TB_NAME_DESCR    = DESCRIPTION
-chifra names  --create --log_level 10 --fmt json --expand
-TEST[DATE|TIME] Expand:  true
+chifra names  --create --fmt json
 TEST[DATE|TIME] Create:  true
-TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  json
-TIME ~ CLOCK - : 4-----Adding 0x0000000000000000000000000000000010101010
+TIME ~ CLOCK - <INFO>  : Adding 0x0000000000000000000000000000000010101010
 { "data": [
   {
     "deleted": false,

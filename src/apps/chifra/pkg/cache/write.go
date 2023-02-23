@@ -43,7 +43,7 @@ func writeHash(writer *bufio.Writer, hash *common.Hash) (err error) {
 	return writeString(writer, &value)
 }
 
-func writeAddress(writer *bufio.Writer, address *common.Address) (err error) {
+func writeAddress(writer *bufio.Writer, address *types.Address) (err error) {
 	value := lowercaseHex(address.Hex())
 	if value == "0x0000000000000000000000000000000000000000" {
 		value = "0x0"
@@ -136,16 +136,7 @@ func writeDefaultHeader(writer *bufio.Writer, className string) (err error) {
 }
 
 func WriteBlock(writer *bufio.Writer, block *types.SimpleBlock[types.SimpleTransaction]) (err error) {
-	// TODO(cache): It's not all clear to me why we need this "complication." I'd prefer seeing exactly
-	// TODO(cache): that we are writing LittleEndian. Plus, remember, all of the data-related code will
-	// TODO(cache): be auto-generated as soon as we get around to it. So, it doesn't save keystrokes, even.
 	write := createWriteFn(writer)
-
-	// TODO(cache): I've not been consistent, but I've been trying to use the new style error
-	// TODO(cache): checking whenever I can. So
-	// TODO(cache): if err := writeDefaultHeader(writer, "CBlock"); err != nil {
-	// TODO(cache):     return
-	// TODO(cache): }
 	err = writeDefaultHeader(writer, "CBlock")
 	if err != nil {
 		return
@@ -466,6 +457,7 @@ func WriteFunction(writer *bufio.Writer, function *types.SimpleFunction) (err er
 
 func WriteParameter(writer *bufio.Writer, param *types.SimpleParameter) (err error) {
 	write := createWriteFn(writer)
+	err = writeDefaultHeader(writer, "CParameter")
 	if err != nil {
 		return
 	}
@@ -510,7 +502,8 @@ func WriteParameter(writer *bufio.Writer, param *types.SimpleParameter) (err err
 		return
 	}
 
-	err = write(&param.IsFlags)
+	unused := uint64(0)
+	err = write(&unused)
 	if err != nil {
 		return
 	}
@@ -652,7 +645,7 @@ func writeTraceResult(writer *bufio.Writer, result *types.SimpleTraceResult) (er
 		return
 	}
 
-	err = writeAddress(writer, &result.NewContract)
+	err = writeAddress(writer, &result.Address)
 	if err != nil {
 		return
 	}
@@ -672,5 +665,21 @@ func writeTraceResult(writer *bufio.Writer, result *types.SimpleTraceResult) (er
 		return
 	}
 
+	return
+}
+
+// WriteAbis writes ABI cache (known.bin)
+func WriteAbis(writer *bufio.Writer, abis []types.SimpleFunction) (err error) {
+	err = writeDefaultHeader(writer, "CAbi")
+	if err != nil {
+		return
+	}
+
+	// This address is always empty
+	address := types.Address{}
+	if err = writeAddress(writer, &address); err != nil {
+		return
+	}
+	err = writeArray(writer, abis, WriteFunction)
 	return
 }

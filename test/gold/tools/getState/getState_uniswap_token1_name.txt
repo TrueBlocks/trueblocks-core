@@ -5,22 +5,4 @@ TEST[DATE|TIME] Format:  txt
 blockNumber	address	signature	encoding	bytes	compressedResult
 TIME ~ CLOCK - <INFO>  : Calling 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 at block 10092000...: 
 TIME ~ CLOCK - <INFO>  : call to 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 at block 10092000 at four-byte 0x06fdde03 returned 0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000d5772617070656420457468657200000000000000000000000000000000000000
-
-level: 1
-readOffset: 0
-objectStart: 0
-params.size: 1
-  0: string _name = <>
-dataArray.size: 3
-  0 (0x000) 0000000000000000...00000000000000000000000000000020 <=o <-r
-  1 (0x020) 0000000000000000...0000000000000000000000000000000d
-  2 (0x040) 5772617070656420...00000000000000000000000000000000
-
-==================================================
-params.size: 1
-  0: string _name = Wrapped Ether
-params.size: 1
-  0: string _name = Wrapped Ether
-==================================================
-
 10092000	0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2	name()	0x06fdde03		Wrapped Ether

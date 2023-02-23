@@ -108,12 +108,12 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
                 return internalType;
             }
             if (fieldName % "is_flags") {
-                return uint_2_Str(is_flags);
+                return is_flags == 0 ? "" : uint_2_Str(is_flags);
             }
             break;
         case 'm':
             if (fieldName % "maxWidth") {
-                return uint_2_Str(maxWidth);
+                return maxWidth == 0 ? "" : uint_2_Str(maxWidth);
             }
             break;
         case 'n':
@@ -123,7 +123,7 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
             break;
         case 'p':
             if (fieldName % "precision") {
-                return uint_2_Str(precision);
+                return precision == 0 ? "" : uint_2_Str(precision);
             }
             break;
         case 's':
@@ -393,10 +393,10 @@ void CParameter::registerClass(void) {
     ADD_FIELD(CParameter, "internalType", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "components", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "unused", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "is_flags", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CParameter, "precision", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CParameter, "is_flags", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CParameter, "precision", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CParameter, "precision");
-    ADD_FIELD(CParameter, "maxWidth", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CParameter, "maxWidth", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CParameter, "maxWidth");
     ADD_FIELD(CParameter, "doc", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CParameter, "doc");

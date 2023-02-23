@@ -19,7 +19,7 @@ extern const char* STR_YAML_MODELHEADER;
 extern const char* STR_MODEL_PRODUCERS;
 extern const char* STR_MODEL_FOOTER;
 extern const char* STR_MODEL_HEADER;
-extern void generate_go_type_code(COptions* opts, const CClassDefinition& model);
+extern void generate_go_type(COptions* opts, const CClassDefinition& model);
 extern void addToTypeMap(map<string_q, string_q>& map, const string_q& group, const string& type);
 extern bool sortByDataModelName(const CClassDefinition& c1, const CClassDefinition& c2);
 extern bool sortByDoc(const CParameter& c1, const CParameter& c2);
@@ -127,7 +127,7 @@ bool COptions::handle_datamodel(void) {
         documentMap[model.doc_group] = documentMap[model.doc_group] + thisDoc;
 
         if (!model.gogen.empty()) {
-            generate_go_type_code(this, model);
+            generate_go_type(this, model);
         }
     }
 

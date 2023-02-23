@@ -223,11 +223,16 @@ bool CReconciliation::reconcileFlows_traces(void) {
 }
 
 //-----------------------------------------------------------------------
-bool CReconciliation::reconcileBalances(bool prevDifferent, bool nextDifferent) {
+bool CReconciliation::reconcileBalances(bool prevDifferent, bool nextDifferent, bigint_t& begBalOut,
+                                        bigint_t& endBalOut) {
     bigint_t balEOLB = blockNumber == 0 ? 0 : getTokenBalanceAt(assetAddr, accountedFor, blockNumber - 1);
     bigint_t balEOB = getTokenBalanceAt(assetAddr, accountedFor, blockNumber);
+    begBalOut = balEOLB;
+    endBalOut = balEOB;
 
     if (blockNumber == 0) {
+        // balances are zero
+
     } else if (prevDifferent && nextDifferent) {
         // The trace reconcile may have changed values
         begBal = balEOLB;

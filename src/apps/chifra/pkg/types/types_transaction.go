@@ -10,8 +10,6 @@ package types
 
 // EXISTING_CODE
 import (
-	"strings"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/bykof/gostradamus"
 	"github.com/ethereum/go-ethereum/common"
@@ -34,8 +32,8 @@ type SimpleTransaction struct {
 	TransactionIndex     uint64          `json:"transactionIndex"`
 	Nonce                uint64          `json:"nonce"`
 	Timestamp            int64           `json:"timestamp"`
-	From                 common.Address  `json:"from"`
-	To                   common.Address  `json:"to"`
+	From                 Address         `json:"from"`
+	To                   Address         `json:"to"`
 	Value                Wei             `json:"value"`
 	ExtraValue1          Wei             `json:"extraValue1"`
 	ExtraValue2          Wei             `json:"extraValue2"`
@@ -132,11 +130,8 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		model["time"] = date.Format("15:04:05") + " UTC"
 
 		if s.Receipt != nil {
-			// TODO: this should be a utility (and used above as well). May be available in go-ethereum. We should check.
-			contractAddress := hexutil.Encode(s.Receipt.ContractAddress.Bytes())
-			if contractAddress == "0x0000000000000000000000000000000000000000" {
-				contractAddress = "0x0"
-			}
+			contractAddress := s.Receipt.ContractAddress.Hex()
+
 			// TODO: this should not be hardcoded here. We have tslib.GetSpecials(), but there
 			// TODO: are 2 issues with it: 1. circular dependency with types package, 2. every
 			// TODO: call to GetSpecials parses CSV file, so we need to call it once and cache
@@ -156,7 +151,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 			logs := make([]map[string]any, 0, len(s.Receipt.Logs))
 			for _, log := range s.Receipt.Logs {
 				logs = append(logs, map[string]any{
-					"address":  strings.ToLower(log.Address.Hex()),
+					"address":  log.Address.Hex(),
 					"logIndex": log.LogIndex,
 					"topics":   log.Topics,
 					"data":     log.Data,

@@ -92,7 +92,7 @@ class CTransaction : public CBaseNode {
     bool loadTransAsUncleReward(blknum_t bn, blknum_t uncleBn, const address_t& addr);
     bool isReconciled(const address_t& accountedFor) const;
     bool readReconsFromCache(const address_t& accountedFor);
-    void cacheIfReconciled(const address_t& accountedFor) const;
+    void cacheConditional(const address_t& accountedFor, bool cacheIfReconciled) const;
     string_q getReconcilationPath(const address_t& address) const;
     CTransfer toTransfer(void) const;
 

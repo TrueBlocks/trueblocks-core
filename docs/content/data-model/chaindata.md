@@ -271,12 +271,12 @@ The following commands produce and manage TraceResults:
 
 TraceResults consist of the following fields:
 
-| Field       | Description                                                                    | Type    |
-| ----------- | ------------------------------------------------------------------------------ | ------- |
-| newContract | Address of new contract, if any                                                | address |
-| code        | if this trace is creating a new smart contract, the byte code of that contract | bytes   |
-| gasUsed     | the amount of gas used by this trace                                           | gas     |
-| output      | the result of the call of this trace                                           | bytes   |
+| Field   | Description                                                                    | Type    |
+| ------- | ------------------------------------------------------------------------------ | ------- |
+| address | Address of new contract, if any                                                | address |
+| code    | if this trace is creating a new smart contract, the byte code of that contract | bytes   |
+| gasUsed | the amount of gas used by this trace                                           | gas     |
+| output  | the result of the call of this trace                                           | bytes   |
 
 ## BlockCount
 

@@ -29,7 +29,7 @@ transactions?transactions=6513870.62%206687987.11%200x5f965cb0a6c3ea59454bc12cce
           "subtraces": 0,
           "traceAddress": null,
           "type": "call",
-          "error": "Bad jump destination",
+          "error": "invalid jump destination",
           "action": {
             "selfDestructed": "0x0",
             "balance": 0,
@@ -42,7 +42,7 @@ transactions?transactions=6513870.62%206687987.11%200x5f965cb0a6c3ea59454bc12cce
             "value": 0
           },
           "result": {
-            "newContract": "0x0",
+            "address": "0x0",
             "gasUsed": 0,
             "output": ""
           },
@@ -139,7 +139,7 @@ transactions?transactions=6513870.62%206687987.11%200x5f965cb0a6c3ea59454bc12cce
             "value": 0
           },
           "result": {
-            "newContract": "0x0",
+            "address": "0x0",
             "gasUsed": 57054,
             "output": "0x"
           },
@@ -211,7 +211,7 @@ transactions?transactions=6513870.62%206687987.11%200x5f965cb0a6c3ea59454bc12cce
             "value": 4569662960000000000
           },
           "result": {
-            "newContract": "0x0",
+            "address": "0x0",
             "gasUsed": 7473,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
           },
@@ -246,7 +246,7 @@ transactions?transactions=6513870.62%206687987.11%200x5f965cb0a6c3ea59454bc12cce
             "value": 0
           },
           "result": {
-            "newContract": "0x0",
+            "address": "0x0",
             "gasUsed": 197,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
           },
@@ -277,7 +277,7 @@ transactions?transactions=6513870.62%206687987.11%200x5f965cb0a6c3ea59454bc12cce
             "value": 4569662960000000000
           },
           "result": {
-            "newContract": "0x0",
+            "address": "0x0",
             "gasUsed": 0,
             "output": "0x"
           },

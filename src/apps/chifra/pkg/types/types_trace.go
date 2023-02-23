@@ -124,8 +124,8 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 			model["action::callType"] = s.Action.CallType
 			model["action::gas"] = s.Action.Gas
 			model["action::input"] = s.Action.Input
-			if len(s.Action.RefundAddress) > 0 && s.Action.RefundAddress != common.HexToAddress("0x0") {
-				model["action::from"] = hexutil.Encode(s.Action.Address.Bytes())
+			if !s.Action.RefundAddress.IsZero() {
+				model["action::from"] = hexutil.Encode(s.Action.From.Bytes())
 				model["action::to"] = hexutil.Encode(s.Action.RefundAddress.Bytes())
 				model["action::value"] = s.Action.Balance.String()
 				model["action::ether"] = utils.WeiToEther(&s.Action.Balance)
@@ -245,15 +245,15 @@ func GetTracesByTransactionHash(chain string, txHash string) ([]SimpleTrace, err
 
 			action := SimpleTraceAction{
 				CallType:       rawTrace.Action.CallType,
-				From:           common.HexToAddress(rawTrace.Action.From),
+				From:           HexToAddress(rawTrace.Action.From),
 				Gas:            mustParseUint(rawTrace.Action.Gas),
 				Input:          rawTrace.Action.Input,
-				To:             common.HexToAddress(rawTrace.Action.To),
+				To:             HexToAddress(rawTrace.Action.To),
 				Value:          *value,
 				Balance:        *balance,
-				Address:        common.HexToAddress(rawTrace.Action.Address),
-				RefundAddress:  common.HexToAddress(rawTrace.Action.RefundAddress),
-				SelfDestructed: common.HexToAddress(rawTrace.Action.SelfDestructed),
+				Address:        HexToAddress(rawTrace.Action.Address),
+				RefundAddress:  HexToAddress(rawTrace.Action.RefundAddress),
+				SelfDestructed: HexToAddress(rawTrace.Action.SelfDestructed),
 				Init:           rawTrace.Action.Init,
 			}
 			action.SetRaw(&rawTrace.Action)
@@ -265,11 +265,8 @@ func GetTracesByTransactionHash(chain string, txHash string) ([]SimpleTrace, err
 					Output:  rawTrace.Result.Output,
 					Code:    rawTrace.Result.Code,
 				}
-				if len(rawTrace.Result.NewContract) > 0 {
-					result.NewContract = common.HexToAddress(rawTrace.Result.NewContract)
-				} else if len(rawTrace.Result.Address) > 0 {
-					result.NewContract = common.HexToAddress(rawTrace.Result.Address)
-					result.NewContract = common.HexToAddress(rawTrace.Result.Address)
+				if len(rawTrace.Result.Address) > 0 {
+					result.Address = HexToAddress(rawTrace.Result.Address)
 				}
 				result.SetRaw(rawTrace.Result)
 			}

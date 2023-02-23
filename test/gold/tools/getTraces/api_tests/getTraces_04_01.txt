@@ -13,7 +13,7 @@ traces?transactions=0x3d762e5f4c2a5c4ed3f4678d81f9078ff68e9d236d87dbcf3eee024dbb
       "articulatedTrace": null,
       "blockHash": "0x759de0be90043e350377c7d1be2f639ead0953b06a16c32552265659bd134f2d",
       "blockNumber": 2229051,
-      "error": "Bad jump destination",
+      "error": "invalid jump destination",
       "result": null,
       "subtraces": 0,
       "timestamp": 1473445368,

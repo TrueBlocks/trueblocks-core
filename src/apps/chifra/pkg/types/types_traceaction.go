@@ -9,38 +9,35 @@
 package types
 
 // EXISTING_CODE
-import (
-	"github.com/ethereum/go-ethereum/common"
-)
 
 // EXISTING_CODE
 
 type RawTraceAction struct {
-	Address        string `json:"address,omitempty"`
+	SelfDestructed string `json:"selfDestructed,omitempty"`
 	From           string `json:"from,omitempty"`
 	CallType       string `json:"callType,omitempty"`
 	Gas            string `json:"gas,omitempty"`
-	Init           string `json:"init,omitempty"`
 	Input          string `json:"input,omitempty"`
-	RefundAddress  string `json:"refundAddress,omitempty"`
-	SelfDestructed string `json:"selfDestructed,omitempty"`
 	To             string `json:"to,omitempty"`
 	Value          string `json:"value,omitempty"`
 	Balance        string `json:"balance,omitempty"`
+	Init           string `json:"init,omitempty"`
+	RefundAddress  string `json:"refundAddress,omitempty"`
+	Address        string `json:"address,omitempty"`
 }
 
 type SimpleTraceAction struct {
-	Address        common.Address `json:"address,omitempty"`
-	Balance        Wei            `json:"balance,omitempty"`
-	CallType       string         `json:"callType,omitempty"`
-	From           common.Address `json:"from,omitempty"`
-	Gas            Gas            `json:"gas"`
-	Init           string         `json:"init,omitempty"`
-	Input          string         `json:"input,omitempty"`
-	RefundAddress  common.Address `json:"refundAddress,omitempty"`
-	SelfDestructed common.Address `json:"selfDestructed,omitempty"`
-	To             common.Address `json:"to,omitempty"`
-	Value          Wei            `json:"value"`
+	SelfDestructed Address `json:"selfDestructed,omitempty"`
+	From           Address `json:"from"`
+	CallType       string  `json:"callType"`
+	Gas            Gas     `json:"gas"`
+	Input          string  `json:"input,omitempty"`
+	To             Address `json:"to"`
+	Value          Wei     `json:"value"`
+	Balance        Wei     `json:"balance,omitempty"`
+	Init           string  `json:"init,omitempty"`
+	RefundAddress  Address `json:"refundAddress,omitempty"`
+	Address        Address `json:"address,omitempty"`
 	raw            *RawTraceAction
 }
 
@@ -61,15 +58,14 @@ func (s *SimpleTraceAction) Model(showHidden bool, format string, extraOptions m
 
 	// EXISTING_CODE
 	if format == "json" {
-		// TODO: this should be a utility (and used above as well). May be available in go-ethereum. We should check.
-		if s.Value.String() != "0" {
-			model["value"] = s.Value.String()
-		}
-		if len(s.Init) > 0 {
-			model["init"] = s.Init
-		}
-		if len(s.SelfDestructed) > 0 && s.SelfDestructed != common.HexToAddress("0x0") {
+		if !s.SelfDestructed.IsZero() {
 			model["selfDestructed"] = s.SelfDestructed
+		}
+		if !s.From.IsZero() {
+			model["from"] = s.From
+		}
+		if len(s.CallType) > 0 {
+			model["callType"] = s.CallType
 		}
 		if s.Gas != 0 {
 			model["gas"] = s.Gas
@@ -77,28 +73,28 @@ func (s *SimpleTraceAction) Model(showHidden bool, format string, extraOptions m
 		if len(s.Input) > 0 {
 			model["input"] = s.Input
 		}
-		if len(s.RefundAddress) > 0 && s.RefundAddress != common.HexToAddress("0x0") {
+		if s.Value.String() != "0" {
+			model["value"] = s.Value.String()
+		}
+		if !s.RefundAddress.IsZero() {
 			model["refundAddress"] = s.RefundAddress
 			model["balance"] = s.Balance.String()
 			if s.Value.String() != "0" {
 				model["value"] = s.Balance.String()
 			}
 		} else {
-			if s.To == common.HexToAddress("0x0") {
+			if s.To.IsZero() {
 				model["to"] = "0x0"
 			} else {
 				model["to"] = s.To
 			}
 			model["value"] = s.Value.String()
 		}
-		if len(s.Address) > 0 && s.Address != common.HexToAddress("0x0") {
+		if len(s.Init) > 0 {
+			model["init"] = s.Init
+		}
+		if !s.Address.IsZero() {
 			model["address"] = s.Address
-		}
-		if len(s.CallType) > 0 {
-			model["callType"] = s.CallType
-		}
-		if len(s.From) > 0 && s.From != common.HexToAddress("0x0") {
-			model["from"] = s.From
 		}
 	}
 	// EXISTING_CODE
