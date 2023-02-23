@@ -76,7 +76,6 @@ func GetTransactionsOptions(args []string, g *globals.GlobalOptions) *Transactio
 
 func (opts *TransactionsOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	ported = opts.Articulate && !opts.Uniq
 	// EXISTING_CODE
 	return
 }
