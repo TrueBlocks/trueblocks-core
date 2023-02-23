@@ -1,4 +1,7 @@
+Remove AbiSource
+Removes input_names and output_names
 Remove empty abi files
+Other changes to types in makeClass 
 
 Must instruct user to remove known.bin and/or remove it ourselves if it doesn't have a version number
 
