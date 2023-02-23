@@ -263,11 +263,6 @@ func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[
 		"encoding":        s.Encoding,
 	}
 
-	if format != "json" || extraOptions["verbose"] != true {
-		model["input_names"] = joinParametersNames(s.Inputs)
-		model["output_names"] = joinParametersNames(s.Outputs)
-	}
-
 	if format == "json" {
 		getParameterModels := func(params []SimpleParameter) []map[string]any {
 			result := make([]map[string]any, len(params))
@@ -292,8 +287,6 @@ func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[
 		"type",
 		"name",
 		"signature",
-		"input_names",
-		"output_names",
 	}
 
 	return Model{
