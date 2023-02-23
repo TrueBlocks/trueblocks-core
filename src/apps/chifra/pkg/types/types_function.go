@@ -36,12 +36,12 @@ type SimpleFunction struct {
 	AbiSource       string            `json:"abiSource,omitempty"`
 	Anonymous       bool              `json:"anonymous,omitempty"`
 	Constant        bool              `json:"constant,omitempty"`
-	StateMutability string            `json:"stateMutability,omitempty"`
+	StateMutability string            `json:"stateMutability"`
 	Message         string            `json:"message,omitempty"`
 	Name            string            `json:"name"`
 	FunctionType    string            `json:"type"`
-	Signature       string            `json:"signature,omitempty"`
-	Encoding        string            `json:"encoding,omitempty"`
+	Signature       string            `json:"signature"`
+	Encoding        string            `json:"encoding"`
 	Inputs          []SimpleParameter `json:"inputs"`
 	Outputs         []SimpleParameter `json:"outputs"`
 	raw             *RawFunction
@@ -78,13 +78,21 @@ func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[
 	}
 
 	order := []string{
+		"stateMutability",
+		"name",
+		"type",
+		"signature",
+		"encoding",
+	}
+
+	// EXISTING_CODE
+	// re-ordering
+	order = []string{
 		"encoding",
 		"type",
 		"name",
 		"signature",
 	}
-
-	// EXISTING_CODE
 	if format == "json" {
 		getParameterModels := func(params []SimpleParameter) []map[string]any {
 			result := make([]map[string]any, len(params))
