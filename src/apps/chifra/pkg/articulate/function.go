@@ -12,7 +12,10 @@ import (
 )
 
 func ArticulateFunction(function *types.SimpleFunction, inputData string, outputData string) (err error) {
-	abiMethod := function.GetAbiMethod()
+	abiMethod, err := function.GetAbiMethod()
+	if err != nil {
+		return
+	}
 
 	if len(inputData) > 0 {
 		if err = ArticulateArguments(abiMethod.Inputs, inputData, nil, function.Inputs); err != nil {
@@ -54,6 +57,18 @@ func ArticulateArguments(args abi.Arguments, data string, topics []common.Hash, 
 		nonIndexed = append(nonIndexed, arg)
 	}
 
+	// In some cases, `data` can be too short, because only some values are present there.
+	// See: https://github.com/TrueBlocks/trueblocks-core/issues/1366
+	nonIndexedLen := len(nonIndexed)
+	valueByteSize := 32
+	if missing := len(dataBytes) - (nonIndexedLen * valueByteSize); missing < 0 {
+		// TODO(articulation): this code breaks getTrans_revert_not_err test
+		nv := make([]byte, missing*-1, nonIndexedLen*valueByteSize)
+		dataBytes = append(
+			nv,
+			dataBytes...,
+		)
+	}
 	unpacked, err := args.Unpack(dataBytes)
 	if err != nil {
 		return
@@ -73,7 +88,9 @@ func ArticulateArguments(args abi.Arguments, data string, topics []common.Hash, 
 		destination[destinationIndex].Value = result
 	}
 
-	if len(topics) == 0 {
+	// Sometimes there are topics, but no indexed parameters:
+	// https://github.com/TrueBlocks/trueblocks-core/issues/1366
+	if len(topics) == 0 || len(indexed) == 0 {
 		return
 	}
 

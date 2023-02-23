@@ -69,8 +69,6 @@ func (opts *TransactionsOptions) HandleArticulate() (err error) {
 					}
 				}
 
-				// TODO: is it possible to NOT have encoding as input here?
-				// if len(tx.Input) >= 10 {
 				selector := tx.Input[:10]
 				inputData := tx.Input[10:]
 				found := abiMap[selector]
@@ -86,9 +84,14 @@ func (opts *TransactionsOptions) HandleArticulate() (err error) {
 						// continue
 					}
 				} else {
-					errorChan <- fmt.Errorf("not found: %s", selector)
+					errorChan <- fmt.Errorf("method/event not found: %s", selector)
 				}
-				// }
+				if inputData != "" {
+					message, ok := articulate.ArticulateString(inputData)
+					if ok {
+						tx.Message = message
+					}
+				}
 
 				modelChan <- tx
 			}

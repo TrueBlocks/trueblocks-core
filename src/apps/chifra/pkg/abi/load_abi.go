@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io"
 	"io/fs"
-	"log"
 	"os"
 	"path"
 	"path/filepath"
@@ -94,25 +93,7 @@ func LoadCache(chain string, destination AbiInterfaceMap) (loaded bool) {
 	for _, function := range functions {
 		function := function
 		function.Normalize()
-		if function.IsMethod() {
-			abiMethod, err := types.FunctionToAbiMethod(&function)
-			if err != nil {
-				// TODO(articulation): remove
-				log.Panicln("cannot create abi struct:", function.Name, err)
-				return false
-			}
-			function.SetAbiMethod(abiMethod)
-		} else {
-			abiEvent, err := types.FunctionToAbiEvent(&function)
-			if err != nil {
-				// TODO(articulation): remove
-				log.Panicln("cannot create abi struct:", function.Name, err)
-				return false
-			}
-			function.SetAbiEvent(abiEvent)
-		}
 		destination[function.Encoding] = &function
-		//TODO(articulation): missing abiMethod/abiEvent
 	}
 	return true
 }

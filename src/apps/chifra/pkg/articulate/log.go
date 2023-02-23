@@ -8,6 +8,36 @@ import (
 )
 
 func ArticulateLog(log *types.SimpleLog, abiMap abi.AbiInterfaceMap) (articulated *types.SimpleFunction, err error) {
+	// Try to articulate the log using some common events
+	articulated = findCommonEvent(log)
+
+	// If we couldn't, then try to find the event in `abiMap`
+	if articulated == nil {
+		selector := "0x" + hex.EncodeToString(log.Topics[0].Bytes())
+		articulated = abiMap[selector]
+	}
+
+	// If articulated is still nil, we don't have ABI for this event
+	if articulated == nil {
+		return
+	}
+
+	abiEvent, err := articulated.GetAbiEvent()
+	if err != nil {
+		return
+	}
+	data := log.Data[2:]
+	err = ArticulateArguments(
+		abiEvent.Inputs,
+		data,
+		log.Topics,
+		articulated.Inputs,
+	)
+
+	return
+}
+
+func findCommonEvent(log *types.SimpleLog) (articulated *types.SimpleFunction) {
 	if articulated = ParseTransferEvent(log); articulated != nil {
 		return
 	}
@@ -17,20 +47,5 @@ func ArticulateLog(log *types.SimpleLog, abiMap abi.AbiInterfaceMap) (articulate
 	if articulated = ParseApprovalEvent(log); articulated != nil {
 		return
 	}
-
-	selector := "0x" + hex.EncodeToString(log.Topics[0].Bytes())
-	articulated = abiMap[selector]
-
-	if articulated == nil {
-		return
-	}
-
-	err = ArticulateArguments(
-		articulated.GetAbiEvent().Inputs,
-		log.Data[2:],
-		log.Topics,
-		articulated.Inputs,
-	)
-
 	return
 }

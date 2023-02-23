@@ -3,6 +3,7 @@ package articulate
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	goEthAbi "github.com/ethereum/go-ethereum/accounts/abi"
 )
 
 func ArticulateTrace(trace *types.SimpleTrace, abiMap abi.AbiInterfaceMap) (articulated *types.SimpleFunction, err error) {
@@ -17,9 +18,15 @@ func ArticulateTrace(trace *types.SimpleTrace, abiMap abi.AbiInterfaceMap) (arti
 		return
 	}
 
+	var abiMethod *goEthAbi.Method
+
 	if len(trace.Action.Input) > 10 {
+		abiMethod, err = articulated.GetAbiMethod()
+		if err != nil {
+			return nil, err
+		}
 		err = ArticulateArguments(
-			articulated.GetAbiMethod().Inputs,
+			abiMethod.Inputs,
 			trace.Action.Input[10:],
 			nil,
 			articulated.Inputs,
@@ -29,8 +36,12 @@ func ArticulateTrace(trace *types.SimpleTrace, abiMap abi.AbiInterfaceMap) (arti
 		}
 	}
 
+	abiMethod, err = articulated.GetAbiMethod()
+	if err != nil {
+		return nil, err
+	}
 	err = ArticulateArguments(
-		articulated.GetAbiMethod().Outputs,
+		abiMethod.Outputs,
 		trace.Result.Output[2:],
 		nil,
 		articulated.Outputs,

@@ -27,7 +27,7 @@ func TestFunctionToAbiMethod(t *testing.T) {
 			},
 		},
 	}
-	result, err := FunctionToAbiMethod(input)
+	result, err := AbiMethodFromFunction(input)
 	if err != nil {
 		t.Fatal(err)
 	}

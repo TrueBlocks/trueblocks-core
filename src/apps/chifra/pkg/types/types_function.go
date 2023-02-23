@@ -28,7 +28,6 @@ type SimpleFunction struct {
 	payable   bool
 	abiMethod *abi.Method
 	abiEvent  *abi.Event
-	// abiMethodEventMutex sync.Mutex
 }
 
 func FunctionFromAbiEvent(ethEvent *abi.Event, abiSource string) *SimpleFunction {
@@ -127,7 +126,7 @@ func argumentTypesToSimpleParameters(argTypes []*abi.Type) (result []SimpleParam
 	return
 }
 
-func FunctionToAbiMethod(function *SimpleFunction) (ethMethod *abi.Method, err error) {
+func AbiMethodFromFunction(function *SimpleFunction) (ethMethod *abi.Method, err error) {
 	if !function.IsMethod() {
 		err = fmt.Errorf("FunctionToAbiMethod called for an event")
 		return
@@ -151,7 +150,7 @@ func FunctionToAbiMethod(function *SimpleFunction) (ethMethod *abi.Method, err e
 	return
 }
 
-func FunctionToAbiEvent(function *SimpleFunction) (ethMethod *abi.Event, err error) {
+func AbiEventFromFunction(function *SimpleFunction) (ethMethod *abi.Event, err error) {
 	if function.IsMethod() {
 		err = fmt.Errorf("functionToAbiEvent called for a method")
 		return
@@ -202,38 +201,32 @@ func (s *SimpleFunction) SetAbiMethod(method *abi.Method) {
 	s.abiMethod = method
 }
 
-func (s *SimpleFunction) GetAbiMethod() *abi.Method {
-	// if s.abiMethod == nil {
-	// 	abiMethod, err := FunctionToAbiMethod(s)
-	// 	// TODO(articulation): return error
-	// 	if err != nil {
-	// 		return nil
-	// 	}
-	// 	s.abiMethodEventMutex.Lock()
-	// 	s.SetAbiMethod(abiMethod)
-	// 	s.abiMethodEventMutex.Unlock()
-	// 	return abiMethod
-	// }
-	return s.abiMethod
+func (s *SimpleFunction) GetAbiMethod() (abiMethod *abi.Method, err error) {
+	if s.abiMethod == nil {
+		abiMethod, err = AbiMethodFromFunction(s)
+		if err != nil {
+			return
+		}
+		s.SetAbiMethod(abiMethod)
+		return
+	}
+	return s.abiMethod, nil
 }
 
 func (s *SimpleFunction) SetAbiEvent(event *abi.Event) {
 	s.abiEvent = event
 }
 
-func (s *SimpleFunction) GetAbiEvent() *abi.Event {
-	// if s.abiEvent == nil {
-	// 	abiEvent, err := FunctionToAbiEvent(s)
-	// 	// TODO(articulation): return error
-	// 	if err != nil {
-	// 		return nil
-	// 	}
-	// 	s.abiMethodEventMutex.Lock()
-	// 	s.SetAbiEvent(abiEvent)
-	// 	s.abiMethodEventMutex.Unlock()
-	// 	return abiEvent
-	// }
-	return s.abiEvent
+func (s *SimpleFunction) GetAbiEvent() (abiEvent *abi.Event, err error) {
+	if s.abiEvent == nil {
+		abiEvent, err = AbiEventFromFunction(s)
+		if err != nil {
+			return
+		}
+		s.SetAbiEvent(abiEvent)
+		return
+	}
+	return s.abiEvent, nil
 }
 
 func (s *SimpleFunction) Raw() *RawFunction {

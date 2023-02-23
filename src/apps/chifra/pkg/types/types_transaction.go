@@ -59,6 +59,7 @@ type SimpleTransaction struct {
 	Receipt              *SimpleReceipt  `json:"receipt"`
 	Traces               []SimpleTrace   `json:"traces"`
 	ArticulatedTx        *SimpleFunction `json:"articulatedTx"`
+	Message              string          `json:"-"`
 	raw                  *RawTransaction
 }
 
@@ -200,20 +201,26 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		}
 	}
 
-	if extraOptions["articulate"] == true && s.ArticulatedTx != nil {
-		inputModels := ParametersToMap(s.ArticulatedTx.Inputs)
-		outputModels := ParametersToMap(s.ArticulatedTx.Outputs)
-		articulated := map[string]any{
-			"name":            s.ArticulatedTx.Name,
-			"stateMutability": s.ArticulatedTx.StateMutability,
-			"inputs":          inputModels,
-			"outputs":         outputModels,
-		}
+	if extraOptions["articulate"] == true {
+		if s.ArticulatedTx != nil {
+			inputModels := ParametersToMap(s.ArticulatedTx.Inputs)
+			outputModels := ParametersToMap(s.ArticulatedTx.Outputs)
+			articulated := map[string]any{
+				"name":            s.ArticulatedTx.Name,
+				"stateMutability": s.ArticulatedTx.StateMutability,
+				"inputs":          inputModels,
+				"outputs":         outputModels,
+			}
 
-		if format == "json" {
-			model["articulatedTx"] = articulated
+			if format == "json" {
+				model["articulatedTx"] = articulated
+			}
+			model["compressedTx"] = MakeCompressed(articulated)
+		} else {
+			if s.Message != "" {
+				model["compressedTx"] = "message:" + s.Message
+			}
 		}
-		model["compressedTx"] = MakeCompressed(articulated)
 	}
 
 	// TODO: These fields are ignored "ethGasPrice": s.EthGasPrice, "encoding": s.Encoding
