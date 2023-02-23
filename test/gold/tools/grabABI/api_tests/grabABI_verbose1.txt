@@ -5,7 +5,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x013cf08b",
       "inputs": [
         {
-          "internalType": "uint256",
           "name": "val_0",
           "type": "uint256"
         }
@@ -13,62 +12,50 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "proposals",
       "outputs": [
         {
-          "internalType": "address",
           "name": "recipient",
           "type": "address"
         },
         {
-          "internalType": "uint256",
           "name": "amount",
           "type": "uint256"
         },
         {
-          "internalType": "string",
           "name": "description",
           "type": "string"
         },
         {
-          "internalType": "uint256",
           "name": "votingDeadline",
           "type": "uint256"
         },
         {
-          "internalType": "bool",
           "name": "open",
           "type": "bool"
         },
         {
-          "internalType": "bool",
           "name": "proposalPassed",
           "type": "bool"
         },
         {
-          "internalType": "bytes32",
           "name": "proposalHash",
           "type": "bytes32"
         },
         {
-          "internalType": "uint256",
           "name": "proposalDeposit",
           "type": "uint256"
         },
         {
-          "internalType": "bool",
           "name": "newCurator",
           "type": "bool"
         },
         {
-          "internalType": "uint256",
           "name": "yea",
           "type": "uint256"
         },
         {
-          "internalType": "uint256",
           "name": "nay",
           "type": "uint256"
         },
         {
-          "internalType": "address",
           "name": "creator",
           "type": "address"
         }
@@ -81,12 +68,10 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x095ea7b3",
       "inputs": [
         {
-          "internalType": "address",
           "name": "_spender",
           "type": "address"
         },
         {
-          "internalType": "uint256",
           "name": "_amount",
           "type": "uint256"
         }
@@ -94,7 +79,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "approve",
       "outputs": [
         {
-          "internalType": "bool",
           "name": "success",
           "type": "bool"
         }
@@ -109,7 +93,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "minTokensToCreate",
       "outputs": [
         {
-          "internalType": "uint256",
           "name": "val_0",
           "type": "uint256"
         }
@@ -124,7 +107,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "rewardAccount",
       "outputs": [
         {
-          "internalType": "address",
           "name": "val_0",
           "type": "address"
         }
@@ -139,7 +121,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "daoCreator",
       "outputs": [
         {
-          "internalType": "address",
           "name": "val_0",
           "type": "address"
         }
@@ -154,7 +135,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "totalSupply",
       "outputs": [
         {
-          "internalType": "uint256",
           "name": "val_0",
           "type": "uint256"
         }
@@ -169,7 +149,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "divisor",
       "outputs": [
         {
-          "internalType": "uint256",
           "name": "divisor",
           "type": "uint256"
         }
@@ -184,7 +163,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "extraBalance",
       "outputs": [
         {
-          "internalType": "address",
           "name": "val_0",
           "type": "address"
         }
@@ -197,12 +175,10 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x237e9492",
       "inputs": [
         {
-          "internalType": "uint256",
           "name": "_proposalID",
           "type": "uint256"
         },
         {
-          "internalType": "bytes",
           "name": "_transactionData",
           "type": "bytes"
         }
@@ -210,7 +186,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "executeProposal",
       "outputs": [
         {
-          "internalType": "bool",
           "name": "_success",
           "type": "bool"
         }
@@ -223,17 +198,14 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x23b872dd",
       "inputs": [
         {
-          "internalType": "address",
           "name": "_from",
           "type": "address"
         },
         {
-          "internalType": "address",
           "name": "_to",
           "type": "address"
         },
         {
-          "internalType": "uint256",
           "name": "_value",
           "type": "uint256"
         }
@@ -241,7 +213,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "transferFrom",
       "outputs": [
         {
-          "internalType": "bool",
           "name": "success",
           "type": "bool"
         }
@@ -256,7 +227,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "unblockMe",
       "outputs": [
         {
-          "internalType": "bool",
           "name": "val_0",
           "type": "bool"
         }
@@ -271,7 +241,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "totalRewardToken",
       "outputs": [
         {
-          "internalType": "uint256",
           "name": "val_0",
           "type": "uint256"
         }
@@ -286,7 +255,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "actualBalance",
       "outputs": [
         {
-          "internalType": "uint256",
           "name": "_actualBalance",
           "type": "uint256"
         }
@@ -301,7 +269,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "closingTime",
       "outputs": [
         {
-          "internalType": "uint256",
           "name": "val_0",
           "type": "uint256"
         }
@@ -314,7 +281,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x4df6d6cc",
       "inputs": [
         {
-          "internalType": "address",
           "name": "val_0",
           "type": "address"
         }
@@ -322,7 +288,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "allowedRecipients",
       "outputs": [
         {
-          "internalType": "bool",
           "name": "val_0",
           "type": "bool"
         }
@@ -335,12 +300,10 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x4e10c3ee",
       "inputs": [
         {
-          "internalType": "address",
           "name": "_to",
           "type": "address"
         },
         {
-          "internalType": "uint256",
           "name": "_value",
           "type": "uint256"
         }
@@ -348,7 +311,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "transferWithoutReward",
       "outputs": [
         {
-          "internalType": "bool",
           "name": "success",
           "type": "bool"
         }
@@ -362,27 +324,22 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "inputs": [
         {
           "indexed": true,
-          "internalType": "uint256",
           "name": "proposalID",
           "type": "uint256"
         },
         {
-          "internalType": "address",
           "name": "recipient",
           "type": "address"
         },
         {
-          "internalType": "uint256",
           "name": "amount",
           "type": "uint256"
         },
         {
-          "internalType": "bool",
           "name": "newCurator",
           "type": "bool"
         },
         {
-          "internalType": "string",
           "name": "description",
           "type": "string"
         }
@@ -406,32 +363,26 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x612e45a3",
       "inputs": [
         {
-          "internalType": "address",
           "name": "_recipient",
           "type": "address"
         },
         {
-          "internalType": "uint256",
           "name": "_amount",
           "type": "uint256"
         },
         {
-          "internalType": "string",
           "name": "_description",
           "type": "string"
         },
         {
-          "internalType": "bytes",
           "name": "_transactionData",
           "type": "bytes"
         },
         {
-          "internalType": "uint256",
           "name": "_debatingPeriod",
           "type": "uint256"
         },
         {
-          "internalType": "bool",
           "name": "_newCurator",
           "type": "bool"
         }
@@ -439,7 +390,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "newProposal",
       "outputs": [
         {
-          "internalType": "uint256",
           "name": "_proposalID",
           "type": "uint256"
         }
@@ -452,7 +402,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x643f7cdd",
       "inputs": [
         {
-          "internalType": "address",
           "name": "val_0",
           "type": "address"
         }
@@ -460,7 +409,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "DAOpaidOut",
       "outputs": [
         {
-          "internalType": "uint256",
           "name": "val_0",
           "type": "uint256"
         }
@@ -475,7 +423,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "minQuorumDivisor",
       "outputs": [
         {
-          "internalType": "uint256",
           "name": "val_0",
           "type": "uint256"
         }
@@ -488,7 +435,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x6837ff1e",
       "inputs": [
         {
-          "internalType": "address",
           "name": "_newContract",
           "type": "address"
         }
@@ -503,7 +449,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x70a08231",
       "inputs": [
         {
-          "internalType": "address",
           "name": "_owner",
           "type": "address"
         }
@@ -511,7 +456,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "balanceOf",
       "outputs": [
         {
-          "internalType": "uint256",
           "name": "balance",
           "type": "uint256"
         }
@@ -525,12 +469,10 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "inputs": [
         {
           "indexed": true,
-          "internalType": "address",
           "name": "_recipient",
           "type": "address"
         },
         {
-          "internalType": "bool",
           "name": "_allowed",
           "type": "bool"
         }
@@ -545,12 +487,10 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x749f9889",
       "inputs": [
         {
-          "internalType": "address",
           "name": "_recipient",
           "type": "address"
         },
         {
-          "internalType": "bool",
           "name": "_allowed",
           "type": "bool"
         }
@@ -558,7 +498,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "changeAllowedRecipients",
       "outputs": [
         {
-          "internalType": "bool",
           "name": "_success",
           "type": "bool"
         }
@@ -573,7 +512,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "halveMinQuorum",
       "outputs": [
         {
-          "internalType": "bool",
           "name": "_success",
           "type": "bool"
         }
@@ -586,7 +524,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x81f03fcb",
       "inputs": [
         {
-          "internalType": "address",
           "name": "val_0",
           "type": "address"
         }
@@ -594,7 +531,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "paidOut",
       "outputs": [
         {
-          "internalType": "uint256",
           "name": "val_0",
           "type": "uint256"
         }
@@ -607,12 +543,10 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0x82661dc4",
       "inputs": [
         {
-          "internalType": "uint256",
           "name": "_proposalID",
           "type": "uint256"
         },
         {
-          "internalType": "address",
           "name": "_newCurator",
           "type": "address"
         }
@@ -620,7 +554,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "splitDAO",
       "outputs": [
         {
-          "internalType": "bool",
           "name": "_success",
           "type": "bool"
         }
@@ -635,7 +568,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "DAOrewardAccount",
       "outputs": [
         {
-          "internalType": "address",
           "name": "val_0",
           "type": "address"
         }
@@ -649,18 +581,15 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "inputs": [
         {
           "indexed": true,
-          "internalType": "uint256",
           "name": "proposalID",
           "type": "uint256"
         },
         {
-          "internalType": "bool",
           "name": "position",
           "type": "bool"
         },
         {
           "indexed": true,
-          "internalType": "address",
           "name": "voter",
           "type": "address"
         }
@@ -677,7 +606,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "proposalDeposit",
       "outputs": [
         {
-          "internalType": "uint256",
           "name": "val_0",
           "type": "uint256"
         }
@@ -691,18 +619,15 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "inputs": [
         {
           "indexed": true,
-          "internalType": "address",
           "name": "_owner",
           "type": "address"
         },
         {
           "indexed": true,
-          "internalType": "address",
           "name": "_spender",
           "type": "address"
         },
         {
-          "internalType": "uint256",
           "name": "_amount",
           "type": "uint256"
         }
@@ -719,7 +644,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "numberOfProposals",
       "outputs": [
         {
-          "internalType": "uint256",
           "name": "_numberOfProposals",
           "type": "uint256"
         }
@@ -733,7 +657,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "inputs": [
         {
           "indexed": true,
-          "internalType": "address",
           "name": "_newCurator",
           "type": "address"
         }
@@ -750,7 +673,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "lastTimeMinQuorumMet",
       "outputs": [
         {
-          "internalType": "uint256",
           "name": "val_0",
           "type": "uint256"
         }
@@ -763,7 +685,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0xa1da2fb9",
       "inputs": [
         {
-          "internalType": "bool",
           "name": "_toMembers",
           "type": "bool"
         }
@@ -771,7 +692,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "retrieveDAOReward",
       "outputs": [
         {
-          "internalType": "bool",
           "name": "_success",
           "type": "bool"
         }
@@ -786,7 +706,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "receiveEther",
       "outputs": [
         {
-          "internalType": "bool",
           "name": "val_0",
           "type": "bool"
         }
@@ -799,12 +718,10 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0xa9059cbb",
       "inputs": [
         {
-          "internalType": "address",
           "name": "_to",
           "type": "address"
         },
         {
-          "internalType": "uint256",
           "name": "_value",
           "type": "uint256"
         }
@@ -812,7 +729,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "transfer",
       "outputs": [
         {
-          "internalType": "bool",
           "name": "success",
           "type": "bool"
         }
@@ -827,7 +743,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "isFueled",
       "outputs": [
         {
-          "internalType": "bool",
           "name": "val_0",
           "type": "bool"
         }
@@ -840,7 +755,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0xbaac5300",
       "inputs": [
         {
-          "internalType": "address",
           "name": "_tokenHolder",
           "type": "address"
         }
@@ -848,7 +762,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "createTokenProxy",
       "outputs": [
         {
-          "internalType": "bool",
           "name": "success",
           "type": "bool"
         }
@@ -862,12 +775,10 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "inputs": [
         {
           "indexed": true,
-          "internalType": "address",
           "name": "to",
           "type": "address"
         },
         {
-          "internalType": "uint256",
           "name": "value",
           "type": "uint256"
         }
@@ -882,7 +793,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0xbe7c29c1",
       "inputs": [
         {
-          "internalType": "uint256",
           "name": "_proposalID",
           "type": "uint256"
         }
@@ -890,7 +800,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "getNewDAOAddress",
       "outputs": [
         {
-          "internalType": "address",
           "name": "_newDAO",
           "type": "address"
         }
@@ -903,12 +812,10 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0xc9d27afe",
       "inputs": [
         {
-          "internalType": "uint256",
           "name": "_proposalID",
           "type": "uint256"
         },
         {
-          "internalType": "bool",
           "name": "_supportsProposal",
           "type": "bool"
         }
@@ -916,7 +823,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "vote",
       "outputs": [
         {
-          "internalType": "uint256",
           "name": "_voteID",
           "type": "uint256"
         }
@@ -931,7 +837,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "getMyReward",
       "outputs": [
         {
-          "internalType": "bool",
           "name": "_success",
           "type": "bool"
         }
@@ -944,7 +849,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0xcdef91d0",
       "inputs": [
         {
-          "internalType": "address",
           "name": "val_0",
           "type": "address"
         }
@@ -952,7 +856,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "rewardToken",
       "outputs": [
         {
-          "internalType": "uint256",
           "name": "val_0",
           "type": "uint256"
         }
@@ -966,12 +869,10 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "inputs": [
         {
           "indexed": true,
-          "internalType": "address",
           "name": "to",
           "type": "address"
         },
         {
-          "internalType": "uint256",
           "name": "amount",
           "type": "uint256"
         }
@@ -986,17 +887,14 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0xdbde1988",
       "inputs": [
         {
-          "internalType": "address",
           "name": "_from",
           "type": "address"
         },
         {
-          "internalType": "address",
           "name": "_to",
           "type": "address"
         },
         {
-          "internalType": "uint256",
           "name": "_value",
           "type": "uint256"
         }
@@ -1004,7 +902,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "transferFromWithoutReward",
       "outputs": [
         {
-          "internalType": "bool",
           "name": "success",
           "type": "bool"
         }
@@ -1017,12 +914,10 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0xdd62ed3e",
       "inputs": [
         {
-          "internalType": "address",
           "name": "_owner",
           "type": "address"
         },
         {
-          "internalType": "address",
           "name": "_spender",
           "type": "address"
         }
@@ -1030,7 +925,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "allowance",
       "outputs": [
         {
-          "internalType": "uint256",
           "name": "remaining",
           "type": "uint256"
         }
@@ -1044,18 +938,15 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "inputs": [
         {
           "indexed": true,
-          "internalType": "address",
           "name": "_from",
           "type": "address"
         },
         {
           "indexed": true,
-          "internalType": "address",
           "name": "_to",
           "type": "address"
         },
         {
-          "internalType": "uint256",
           "name": "_amount",
           "type": "uint256"
         }
@@ -1071,17 +962,14 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "inputs": [
         {
           "indexed": true,
-          "internalType": "uint256",
           "name": "proposalID",
           "type": "uint256"
         },
         {
-          "internalType": "bool",
           "name": "result",
           "type": "bool"
         },
         {
-          "internalType": "uint256",
           "name": "quorum",
           "type": "uint256"
         }
@@ -1096,7 +984,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0xe33734fd",
       "inputs": [
         {
-          "internalType": "uint256",
           "name": "_proposalDeposit",
           "type": "uint256"
         }
@@ -1111,7 +998,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0xe5962195",
       "inputs": [
         {
-          "internalType": "address",
           "name": "val_0",
           "type": "address"
         }
@@ -1119,7 +1005,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "blocked",
       "outputs": [
         {
-          "internalType": "uint256",
           "name": "val_0",
           "type": "uint256"
         }
@@ -1134,7 +1019,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "curator",
       "outputs": [
         {
-          "internalType": "address",
           "name": "val_0",
           "type": "address"
         }
@@ -1147,22 +1031,18 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0xeceb2945",
       "inputs": [
         {
-          "internalType": "uint256",
           "name": "_proposalID",
           "type": "uint256"
         },
         {
-          "internalType": "address",
           "name": "_recipient",
           "type": "address"
         },
         {
-          "internalType": "uint256",
           "name": "_amount",
           "type": "uint256"
         },
         {
-          "internalType": "bytes",
           "name": "_transactionData",
           "type": "bytes"
         }
@@ -1170,7 +1050,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "checkProposalCode",
       "outputs": [
         {
-          "internalType": "bool",
           "name": "_codeChecksOut",
           "type": "bool"
         }
@@ -1183,7 +1062,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "encoding": "0xf381a3e2428fdda36615919e8d9c35878d9eb0cf85ac6edf575088e80e4c147e",
       "inputs": [
         {
-          "internalType": "uint256",
           "name": "value",
           "type": "uint256"
         }
@@ -1200,7 +1078,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "privateCreation",
       "outputs": [
         {
-          "internalType": "address",
           "name": "val_0",
           "type": "address"
         }

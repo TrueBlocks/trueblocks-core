@@ -3,504 +3,392 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413
   "data": [
     {
       "encoding": "0x013cf08b",
-      "input_names": "val_0",
       "name": "proposals",
-      "output_names": "recipient,amount,description,votingDeadline,open,proposalPassed,proposalHash,proposalDeposit,newCurator,yea,nay,creator",
       "signature": "proposals(uint256)",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x095ea7b3",
-      "input_names": "_spender,_amount",
       "name": "approve",
-      "output_names": "success",
       "signature": "approve(address,uint256)",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x0c3b7b96",
-      "input_names": "",
       "name": "minTokensToCreate",
-      "output_names": "val_0",
       "signature": "minTokensToCreate()",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x0e708203",
-      "input_names": "",
       "name": "rewardAccount",
-      "output_names": "val_0",
       "signature": "rewardAccount()",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x149acf9a",
-      "input_names": "",
       "name": "daoCreator",
-      "output_names": "val_0",
       "signature": "daoCreator()",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x18160ddd",
-      "input_names": "",
       "name": "totalSupply",
-      "output_names": "val_0",
       "signature": "totalSupply()",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x1f2dc5ef",
-      "input_names": "",
       "name": "divisor",
-      "output_names": "divisor",
       "signature": "divisor()",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x21b5b8dd",
-      "input_names": "",
       "name": "extraBalance",
-      "output_names": "val_0",
       "signature": "extraBalance()",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x237e9492",
-      "input_names": "_proposalID,_transactionData",
       "name": "executeProposal",
-      "output_names": "_success",
       "signature": "executeProposal(uint256,bytes)",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x23b872dd",
-      "input_names": "_from,_to,_value",
       "name": "transferFrom",
-      "output_names": "success",
       "signature": "transferFrom(address,address,uint256)",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x2632bf20",
-      "input_names": "",
       "name": "unblockMe",
-      "output_names": "val_0",
       "signature": "unblockMe()",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x34145808",
-      "input_names": "",
       "name": "totalRewardToken",
-      "output_names": "val_0",
       "signature": "totalRewardToken()",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x39d1f908",
-      "input_names": "",
       "name": "actualBalance",
-      "output_names": "_actualBalance",
       "signature": "actualBalance()",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x4b6753bc",
-      "input_names": "",
       "name": "closingTime",
-      "output_names": "val_0",
       "signature": "closingTime()",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x4df6d6cc",
-      "input_names": "val_0",
       "name": "allowedRecipients",
-      "output_names": "val_0",
       "signature": "allowedRecipients(address)",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x4e10c3ee",
-      "input_names": "_to,_value",
       "name": "transferWithoutReward",
-      "output_names": "success",
       "signature": "transferWithoutReward(address,uint256)",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x5790de2c279e58269b93b12828f56fd5f2bc8ad15e61ce08572585c81a38756f",
-      "input_names": "proposalID,recipient,amount,newCurator,description",
       "name": "ProposalAdded",
-      "output_names": "",
       "signature": "ProposalAdded(uint256,address,uint256,bool,string)",
       "stateMutability": "",
       "type": "event"
     },
     {
       "encoding": "0x590e1ae3",
-      "input_names": "",
       "name": "refund",
-      "output_names": "",
       "signature": "refund()",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x612e45a3",
-      "input_names": "_recipient,_amount,_description,_transactionData,_debatingPeriod,_newCurator",
       "name": "newProposal",
-      "output_names": "_proposalID",
       "signature": "newProposal(address,uint256,string,bytes,uint256,bool)",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x643f7cdd",
-      "input_names": "val_0",
       "name": "DAOpaidOut",
-      "output_names": "val_0",
       "signature": "DAOpaidOut(address)",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x674ed066",
-      "input_names": "",
       "name": "minQuorumDivisor",
-      "output_names": "val_0",
       "signature": "minQuorumDivisor()",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x6837ff1e",
-      "input_names": "_newContract",
       "name": "newContract",
-      "output_names": "",
       "signature": "newContract(address)",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x70a08231",
-      "input_names": "_owner",
       "name": "balanceOf",
-      "output_names": "balance",
       "signature": "balanceOf(address)",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x73ad2a153c8b67991df9459024950b318a609782cee8c7eeda47b905f9baa91f",
-      "input_names": "_recipient,_allowed",
       "name": "AllowedRecipientChanged",
-      "output_names": "",
       "signature": "AllowedRecipientChanged(address,bool)",
       "stateMutability": "",
       "type": "event"
     },
     {
       "encoding": "0x749f9889",
-      "input_names": "_recipient,_allowed",
       "name": "changeAllowedRecipients",
-      "output_names": "_success",
       "signature": "changeAllowedRecipients(address,bool)",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x78524b2e",
-      "input_names": "",
       "name": "halveMinQuorum",
-      "output_names": "_success",
       "signature": "halveMinQuorum()",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x81f03fcb",
-      "input_names": "val_0",
       "name": "paidOut",
-      "output_names": "val_0",
       "signature": "paidOut(address)",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x82661dc4",
-      "input_names": "_proposalID,_newCurator",
       "name": "splitDAO",
-      "output_names": "_success",
       "signature": "splitDAO(uint256,address)",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x82bf6464",
-      "input_names": "",
       "name": "DAOrewardAccount",
-      "output_names": "val_0",
       "signature": "DAOrewardAccount()",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x86abfce99b7dd908bec0169288797f85049ec73cbe046ed9de818fab3a497ae0",
-      "input_names": "proposalID,position,voter",
       "name": "Voted",
-      "output_names": "",
       "signature": "Voted(uint256,bool,address)",
       "stateMutability": "",
       "type": "event"
     },
     {
       "encoding": "0x8b15a605",
-      "input_names": "",
       "name": "proposalDeposit",
-      "output_names": "val_0",
       "signature": "proposalDeposit()",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
-      "input_names": "_owner,_spender,_amount",
       "name": "Approval",
-      "output_names": "",
       "signature": "Approval(address,address,uint256)",
       "stateMutability": "",
       "type": "event"
     },
     {
       "encoding": "0x8d7af473",
-      "input_names": "",
       "name": "numberOfProposals",
-      "output_names": "_numberOfProposals",
       "signature": "numberOfProposals()",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x9046fefd66f538ab35263248a44217dcb70e2eb2cd136629e141b8b8f9f03b60",
-      "input_names": "_newCurator",
       "name": "NewCurator",
-      "output_names": "",
       "signature": "NewCurator(address)",
       "stateMutability": "",
       "type": "event"
     },
     {
       "encoding": "0x96d7f3f5",
-      "input_names": "",
       "name": "lastTimeMinQuorumMet",
-      "output_names": "val_0",
       "signature": "lastTimeMinQuorumMet()",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xa1da2fb9",
-      "input_names": "_toMembers",
       "name": "retrieveDAOReward",
-      "output_names": "_success",
       "signature": "retrieveDAOReward(bool)",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xa3912ec8",
-      "input_names": "",
       "name": "receiveEther",
-      "output_names": "val_0",
       "signature": "receiveEther()",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xa9059cbb",
-      "input_names": "_to,_value",
       "name": "transfer",
-      "output_names": "success",
       "signature": "transfer(address,uint256)",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xb7bc2c84",
-      "input_names": "",
       "name": "isFueled",
-      "output_names": "val_0",
       "signature": "isFueled()",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xbaac5300",
-      "input_names": "_tokenHolder",
       "name": "createTokenProxy",
-      "output_names": "success",
       "signature": "createTokenProxy(address)",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xbb28353e4598c3b9199101a66e0989549b659a59a54d2c27fbb183f1932c8e6d",
-      "input_names": "to,value",
       "name": "Refund",
-      "output_names": "",
       "signature": "Refund(address,uint256)",
       "stateMutability": "",
       "type": "event"
     },
     {
       "encoding": "0xbe7c29c1",
-      "input_names": "_proposalID",
       "name": "getNewDAOAddress",
-      "output_names": "_newDAO",
       "signature": "getNewDAOAddress(uint256)",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xc9d27afe",
-      "input_names": "_proposalID,_supportsProposal",
       "name": "vote",
-      "output_names": "_voteID",
       "signature": "vote(uint256,bool)",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xcc9ae3f6",
-      "input_names": "",
       "name": "getMyReward",
-      "output_names": "_success",
       "signature": "getMyReward()",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xcdef91d0",
-      "input_names": "val_0",
       "name": "rewardToken",
-      "output_names": "val_0",
       "signature": "rewardToken(address)",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xdbccb92686efceafb9bb7e0394df7f58f71b954061b81afb57109bf247d3d75a",
-      "input_names": "to,amount",
       "name": "CreatedToken",
-      "output_names": "",
       "signature": "CreatedToken(address,uint256)",
       "stateMutability": "",
       "type": "event"
     },
     {
       "encoding": "0xdbde1988",
-      "input_names": "_from,_to,_value",
       "name": "transferFromWithoutReward",
-      "output_names": "success",
       "signature": "transferFromWithoutReward(address,address,uint256)",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xdd62ed3e",
-      "input_names": "_owner,_spender",
       "name": "allowance",
-      "output_names": "remaining",
       "signature": "allowance(address,address)",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-      "input_names": "_from,_to,_amount",
       "name": "Transfer",
-      "output_names": "",
       "signature": "Transfer(address,address,uint256)",
       "stateMutability": "",
       "type": "event"
     },
     {
       "encoding": "0xdfc78bdca8e3e0b18c16c5c99323c6cb9eb5e00afde190b4e7273f5158702b07",
-      "input_names": "proposalID,result,quorum",
       "name": "ProposalTallied",
-      "output_names": "",
       "signature": "ProposalTallied(uint256,bool,uint256)",
       "stateMutability": "",
       "type": "event"
     },
     {
       "encoding": "0xe33734fd",
-      "input_names": "_proposalDeposit",
       "name": "changeProposalDeposit",
-      "output_names": "",
       "signature": "changeProposalDeposit(uint256)",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xe5962195",
-      "input_names": "val_0",
       "name": "blocked",
-      "output_names": "val_0",
       "signature": "blocked(address)",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xe66f53b7",
-      "input_names": "",
       "name": "curator",
-      "output_names": "val_0",
       "signature": "curator()",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xeceb2945",
-      "input_names": "_proposalID,_recipient,_amount,_transactionData",
       "name": "checkProposalCode",
-      "output_names": "_codeChecksOut",
       "signature": "checkProposalCode(uint256,address,uint256,bytes)",
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xf381a3e2428fdda36615919e8d9c35878d9eb0cf85ac6edf575088e80e4c147e",
-      "input_names": "value",
       "name": "FuelingToDate",
-      "output_names": "",
       "signature": "FuelingToDate(uint256)",
       "stateMutability": "",
       "type": "event"
     },
     {
       "encoding": "0xf8c80d26",
-      "input_names": "",
       "name": "privateCreation",
-      "output_names": "val_0",
       "signature": "privateCreation()",
       "stateMutability": "nonpayable",
       "type": "function"

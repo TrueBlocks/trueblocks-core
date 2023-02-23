@@ -452,10 +452,6 @@ void CFunction::registerClass(void) {
     builtIns.push_back(_biCFunction);
 
     // EXISTING_CODE
-    ADD_FIELD(CFunction, "input_names", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CFunction, "input_names");
-    ADD_FIELD(CFunction, "output_names", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CFunction, "output_names");
     ADD_FIELD(CFunction, "declaration", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CFunction, "declaration");
     HIDE_FIELD(CFunction, "anonymous");
@@ -489,28 +485,6 @@ string_q nextFunctionChunk_custom(const string_q& fieldIn, const void* dataPtr) 
             case 'd':
                 if (fieldIn % "declaration") {
                     return fun->getSignature(SIG_FTYPE | SIG_FNAME | SIG_ITYPE | SIG_INAME | SIG_IINDEXED);
-                }
-                break;
-            case 'i':
-                if (fieldIn % "input_names") {
-                    string_q ret;
-                    for (size_t i = 0; i < fun->inputs.size(); i++) {
-                        ret += fun->inputs[i].name;
-                        if (i < fun->inputs.size())
-                            ret += ",";
-                    }
-                    return ret;
-                }
-                break;
-            case 'o':
-                if (fieldIn % "output_names") {
-                    string_q ret;
-                    for (size_t i = 0; i < fun->outputs.size(); i++) {
-                        ret += fun->outputs[i].name;
-                        if (i < fun->outputs.size())
-                            ret += ",";
-                    }
-                    return ret;
                 }
                 break;
             // EXISTING_CODE

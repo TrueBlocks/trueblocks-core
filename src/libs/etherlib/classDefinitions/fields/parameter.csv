@@ -4,8 +4,8 @@ name         ,string    ,           ,       ,      ,        ,          ,        
 strDefault   ,string    ,           ,       ,      ,        ,true          ,        ,      ,         ,3   ,3    ,        ,the default value of this parameter&#44; if any
 value        ,string    ,           ,       ,      ,        ,true      ,        ,      ,         ,    ,4    ,        ,
 indexed      ,bool      ,           ,       ,      ,        ,true      ,        ,      ,         ,4   ,6    ,        ,`true` if this parameter is indexed
-internalType ,string    ,           ,       ,      ,        ,          ,        ,      ,         ,5   ,5    ,        ,for composite types&#44; the internal type of the parameter
-components   ,Parameter ,           ,true   ,true  ,        ,          ,        ,      ,         ,6   ,     ,        ,for composite types&#44; the parameters making up the composite
+internalType ,string    ,           ,       ,      ,        ,true      ,        ,      ,         ,5   ,5    ,        ,for composite types&#44; the internal type of the parameter
+components   ,Parameter ,           ,true   ,true  ,        ,true      ,        ,      ,         ,6   ,     ,        ,for composite types&#44; the parameters making up the composite
 unused       ,bool      ,           ,       ,      ,        ,true      ,        ,      ,         ,    ,     ,        ,
 is_flags     ,uint64    ,IS_ENABLED ,       ,      ,        ,true      ,        ,      ,         ,    ,     ,        ,
 precision    ,uint64    ,5          ,       ,      ,true    ,true      ,        ,      ,         ,    ,     ,        ,

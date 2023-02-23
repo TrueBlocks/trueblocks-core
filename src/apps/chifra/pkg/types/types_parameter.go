@@ -63,8 +63,8 @@ type SimpleParameter struct {
 	Name         string            `json:"name"`
 	StrDefault   string            `json:"strDefault,omitempty"`
 	Indexed      bool              `json:"indexed,omitempty"`
-	InternalType string            `json:"internalType"`
-	Components   []SimpleParameter `json:"components"`
+	InternalType string            `json:"internalType,omitempty"`
+	Components   []SimpleParameter `json:"components,omitempty"`
 	raw          *RawParameter
 }
 
@@ -83,13 +83,11 @@ func (s *SimpleParameter) Model(showHidden bool, format string, extraOptions map
 	model := map[string]interface{}{
 		"type":         s.ParameterType,
 		"name":         s.Name,
-		"internalType": s.InternalType,
 	}
 
 	order := []string{
 		"type",
 		"name",
-		"internalType",
 	}
 
 	// EXISTING_CODE
@@ -97,6 +95,10 @@ func (s *SimpleParameter) Model(showHidden bool, format string, extraOptions map
 		if s.Indexed {
 			model["indexed"] = s.Indexed
 			order = append(order, "indexed")
+		}
+		if s.ParameterType != s.InternalType {
+		 	model["internalType"] = s.InternalType
+		 	order = append(order, "internalType")
 		}
 	}
 	// EXISTING_CODE
