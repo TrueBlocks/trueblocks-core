@@ -13,8 +13,8 @@ jobs:
           go-version: "^1.18"
       - name: Install prerequistes
         run: |
-          sudo apt-get update
-          sudo apt-get upgrade
+          # sudo apt-get update
+          # sudo apt-get upgrade
           sudo apt-get install build-essential git cmake
           sudo apt-get install python3 tree jq
           sudo apt-get install libcurl3-dev clang-format
