@@ -45,7 +45,6 @@ bool COptions::parseArguments(string_q& command) {
     bool hasEsKey = getGlobalConfig("")->getConfigStr("keys.etherscan", "apiKey", "<not_set>") != "<not_set>";
 
     CToml config(rootConfigToml_makeClass);
-    bool makeClassOn = config.getConfigBool("enabled", "generate", false);
 
     Init();
     explode(arguments, command, ' ');
@@ -93,12 +92,7 @@ bool COptions::parseArguments(string_q& command) {
                 tests.push_back("libs/acctlib");
 
             } else if (arg == "dev_tools" || arg == "dev_tools/") {
-                static bool been_here = false;
-                if (been_here)
-                    break;
-                been_here = true;
-                if (makeClassOn)
-                    tests.push_back("dev_tools/makeClass");
+                break;
 
             } else if (arg == "tools" || arg == "tools/") {
                 static bool been_here = false;
@@ -156,8 +150,6 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("libs/utillib");
         tests.push_back("libs/etherlib");
         tests.push_back("libs/acctlib");
-        if (makeClassOn)
-            tests.push_back("dev_tools/makeClass");
         if (hasEsKey && getEnvStr("NO_ES") != "true") {
             tests.push_back("tools/ethslurp");
         }

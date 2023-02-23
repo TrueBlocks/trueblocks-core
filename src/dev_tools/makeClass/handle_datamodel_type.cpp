@@ -150,7 +150,7 @@ string_q specialCase(const CParameter& field, const string_q& name, const string
         ret = isRaw ? "[]RawLog" : "[]SimpleLog";
     } else if (name % "Action") {
         ret = isRaw ? "RawTraceAction" : "*SimpleTraceAction";
-    } else if (name % "Components") {
+    } else if (name % "Components" || name % "Inputs" || name % "Outputs") {
         ret = isRaw ? "string" : "[]SimpleParameter";
     } else if (name % "Result") {
         ret = isRaw ? "RawTraceResult" : "*SimpleTraceResult";
