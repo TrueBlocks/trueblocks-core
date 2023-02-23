@@ -32,7 +32,7 @@ type RawParameter struct {
 	Is_pointer   string `json:"is_pointer"`
 	Is_array     string `json:"is_array"`
 	Is_object    string `json:"is_object"`
-	Type         string `json:"type"`
+	ParameterType string `json:"type"`
 	Name         string `json:"name"`
 	StrDefault   string `json:"strDefault"`
 	Indexed      string `json:"indexed"`
@@ -59,7 +59,7 @@ type SimpleParameter struct {
 	Is_pointer   bool              `json:"is_pointer,omitempty"`
 	Is_array     bool              `json:"is_array,omitempty"`
 	Is_object    bool              `json:"is_object,omitempty"`
-	Type         string            `json:"type"`
+	ParameterType string            `json:"type"`
 	Name         string            `json:"name"`
 	StrDefault   string            `json:"strDefault,omitempty"`
 	Indexed      bool              `json:"indexed,omitempty"`
@@ -81,7 +81,7 @@ func (s *SimpleParameter) Model(showHidden bool, format string, extraOptions map
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
-		"type":         s.Type,
+		"type":         s.ParameterType,
 		"name":         s.Name,
 		"internalType": s.InternalType,
 	}

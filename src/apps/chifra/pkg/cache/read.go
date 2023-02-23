@@ -591,7 +591,7 @@ func ReadParameter(reader *bufio.Reader) (param *types.SimpleParameter, err erro
 		return
 	}
 
-	err = readString(reader, &param.Type)
+	err = readString(reader, &param.ParameterType)
 	if err != nil {
 		return
 	}

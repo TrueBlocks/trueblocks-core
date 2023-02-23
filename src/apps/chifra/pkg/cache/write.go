@@ -462,7 +462,7 @@ func WriteParameter(writer *bufio.Writer, param *types.SimpleParameter) (err err
 		return
 	}
 
-	err = writeString(writer, &param.Type)
+	err = writeString(writer, &param.ParameterType)
 	if err != nil {
 		return
 	}
