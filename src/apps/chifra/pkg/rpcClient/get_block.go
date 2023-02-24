@@ -54,6 +54,7 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, isFinal bool) (types.Simpl
 		input := fmt.Sprint(t["input"])
 		value := big.NewInt(0)
 		value.SetString(fmt.Sprint(t["value"]), 0)
+		txIndex := mustParseUint(t["transactionIndex"])
 
 		hasToken := false
 		if len(input) >= 10 {
@@ -62,7 +63,7 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, isFinal bool) (types.Simpl
 
 		// Get the receipt
 		var receipt types.SimpleReceipt
-		receipt, err = GetTransactionReceipt(chain, bn, 0, &txHash, txGasPrice)
+		receipt, err = GetTransactionReceipt(chain, bn, txIndex, &txHash, txGasPrice)
 		if err != nil {
 			return block, err
 		}
