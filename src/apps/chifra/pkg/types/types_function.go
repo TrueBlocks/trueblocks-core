@@ -39,6 +39,7 @@ type SimpleFunction struct {
 	Inputs          []SimpleParameter `json:"inputs"`
 	Outputs         []SimpleParameter `json:"outputs"`
 	raw             *RawFunction
+	// TODO(merge): The below lines gets removed by autogeneration
 	// `payable` was present in ABIs before Solidity 0.5.0 and was replaced
 	// by `stateMutability`: https://docs.soliditylang.org/en/develop/050-breaking-changes.html#command-line-and-json-interfaces
 	payable   bool
