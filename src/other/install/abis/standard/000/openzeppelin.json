@@ -524,7 +524,8 @@
     "inputs": [
       {
         "name": "attacker",
-        "type": "ReentrancyAttack"
+        "type": "address",
+        "internalType": "contract ReentrancyAttack"
       }
     ],
     "name": "countAndCall",
@@ -1138,7 +1139,8 @@
     "inputs": [
       {
         "name": "context",
-        "type": "ContextMock"
+        "type": "address",
+        "internalType": "contract ContextMock"
       }
     ],
     "name": "callSender",
@@ -1151,7 +1153,8 @@
     "inputs": [
       {
         "name": "context",
-        "type": "ContextMock"
+        "type": "address",
+        "internalType": "contract ContextMock"
       },
       {
         "name": "integerValue",
@@ -1406,7 +1409,8 @@
     "inputs": [
       {
         "name": "token",
-        "type": "IERC777"
+        "type": "address",
+        "internalType": "contract IERC777"
       },
       {
         "name": "to",
@@ -1431,7 +1435,8 @@
     "inputs": [
       {
         "name": "token",
-        "type": "IERC777"
+        "type": "address",
+        "internalType": "contract IERC777"
       },
       {
         "name": "amount",
@@ -2117,7 +2122,8 @@
     "inputs": [
       {
         "name": "token",
-        "type": "IERC20"
+        "type": "address",
+        "internalType": "contract IERC20"
       },
       {
         "name": "to",
@@ -2130,7 +2136,7 @@
     ],
     "name": "safeTransfer",
     "outputs": [],
-    "signature": "safeTransfer(IERC20,address,uint256)",
+    "signature": "safeTransfer(address,address,uint256)",
     "type": "function"
   },
   {
@@ -2138,7 +2144,8 @@
     "inputs": [
       {
         "name": "token",
-        "type": "IERC20"
+        "type": "address",
+        "internalType": "contract IERC20"
       },
       {
         "name": "from",
@@ -2155,7 +2162,7 @@
     ],
     "name": "safeTransferFrom",
     "outputs": [],
-    "signature": "safeTransferFrom(IERC20,address,address,uint256)",
+    "signature": "safeTransferFrom(address,address,address,uint256)",
     "type": "function"
   },
   {
@@ -2163,7 +2170,8 @@
     "inputs": [
       {
         "name": "token",
-        "type": "IERC20"
+        "type": "address",
+        "internalType": "contract IERC20"
       },
       {
         "name": "spender",
@@ -2176,7 +2184,7 @@
     ],
     "name": "safeApprove",
     "outputs": [],
-    "signature": "safeApprove(IERC20,address,uint256)",
+    "signature": "safeApprove(address,address,uint256)",
     "type": "function"
   },
   {
@@ -2184,7 +2192,8 @@
     "inputs": [
       {
         "name": "token",
-        "type": "IERC20"
+        "type": "address",
+        "internalType": "contract IERC20"
       },
       {
         "name": "spender",
@@ -2197,7 +2206,7 @@
     ],
     "name": "safeIncreaseAllowance",
     "outputs": [],
-    "signature": "safeIncreaseAllowance(IERC20,address,uint256)",
+    "signature": "safeIncreaseAllowance(address,address,uint256)",
     "type": "function"
   },
   {
@@ -2205,7 +2214,8 @@
     "inputs": [
       {
         "name": "token",
-        "type": "IERC20"
+        "type": "address",
+        "internalType": "contract IERC20"
       },
       {
         "name": "spender",
@@ -2218,7 +2228,7 @@
     ],
     "name": "safeDecreaseAllowance",
     "outputs": [],
-    "signature": "safeDecreaseAllowance(IERC20,address,uint256)",
+    "signature": "safeDecreaseAllowance(address,address,uint256)",
     "type": "function"
   },
   {
@@ -2226,7 +2236,8 @@
     "inputs": [
       {
         "name": "token",
-        "type": "IERC20"
+        "type": "address",
+        "internalType": "contract IERC20"
       },
       {
         "name": "data",
@@ -2235,7 +2246,7 @@
     ],
     "name": "_callOptionalReturn",
     "outputs": [],
-    "signature": "_callOptionalReturn(IERC20,bytes)",
+    "signature": "_callOptionalReturn(address,bytes)",
     "type": "function"
   },
   {
@@ -2316,7 +2327,8 @@
       },
       {
         "name": "snapshots",
-        "type": "Snapshots"
+        "type": "tuple",
+        "internalType": "struct Snapshots"
       }
     ],
     "name": "_valueAt",
@@ -2359,7 +2371,8 @@
     "inputs": [
       {
         "name": "snapshots",
-        "type": "Snapshots"
+        "type": "tuple",
+        "internalType": "struct Snapshots"
       },
       {
         "name": "currentValue",
@@ -3958,7 +3971,7 @@
       },
       {
         "name": "state",
-        "type": "RelayState"
+        "type": "uint8"
       }
     ],
     "signature": "getRelay(address)",
@@ -4200,7 +4213,7 @@
       },
       {
         "name": "status",
-        "type": "RelayCallStatus"
+        "type": "uint8"
       },
       {
         "name": "charge",
@@ -4209,7 +4222,7 @@
     ],
     "name": "TransactionRelayed",
     "outputs": [],
-    "signature": "TransactionRelayed(address,address,address,bytes4,RelayCallStatus,uint256)",
+    "signature": "TransactionRelayed(address,address,address,bytes4,uint8,uint256)",
     "type": "event"
   },
   {
@@ -4349,7 +4362,8 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "IERC20"
+        "internalType": "contract IERC20",
+        "type": "address"
       }
     ],
     "signature": "token()",
@@ -5038,7 +5052,8 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "State"
+        "type": "uint8",
+        "internalType": "enum State"
       }
     ],
     "signature": "state()",
@@ -5209,26 +5224,28 @@
     "encoding": "0x5a734be6",
     "inputs": [
       {
+        "internalType": "contract IERC20",
         "name": "token",
-        "type": "IERC20"
+        "type": "address"
       }
     ],
     "name": "release",
     "outputs": [],
-    "signature": "release(IERC20)",
+    "signature": "release(address)",
     "type": "function"
   },
   {
     "encoding": "0x2eeb0a7a",
     "inputs": [
       {
+        "internalType": "contract IERC20",
         "name": "token",
-        "type": "IERC20"
+        "type": "address"
       }
     ],
     "name": "revoke",
     "outputs": [],
-    "signature": "revoke(IERC20)",
+    "signature": "revoke(address)",
     "type": "function"
   },
   {
@@ -5236,8 +5253,9 @@
     "encoding": "0x4921cc4a",
     "inputs": [
       {
+        "internalType": "contract IERC20",
         "name": "token",
-        "type": "IERC20"
+        "type": "address"
       }
     ],
     "name": "_releasableAmount",
@@ -5247,7 +5265,7 @@
         "type": "uint256"
       }
     ],
-    "signature": "_releasableAmount(IERC20)",
+    "signature": "_releasableAmount(address)",
     "type": "function"
   },
   {
@@ -5255,8 +5273,9 @@
     "encoding": "0x134208f3",
     "inputs": [
       {
+        "internalType": "contract IERC20",
         "name": "token",
-        "type": "IERC20"
+        "type": "address"
       }
     ],
     "name": "_vestedAmount",
@@ -5266,7 +5285,7 @@
         "type": "uint256"
       }
     ],
-    "signature": "_vestedAmount(IERC20)",
+    "signature": "_vestedAmount(address)",
     "type": "function"
   },
   {
@@ -5331,7 +5350,8 @@
     "inputs": [
       {
         "name": "counter",
-        "type": "Counter"
+        "type": "tuple",
+        "internalType": "struct Counter"
       }
     ],
     "name": "current",
@@ -5341,7 +5361,7 @@
         "type": "uint256"
       }
     ],
-    "signature": "current(Counter)",
+    "signature": "current(tuple)",
     "type": "function"
   },
   {
@@ -5349,12 +5369,13 @@
     "inputs": [
       {
         "name": "counter",
-        "type": "Counter"
+        "type": "tuple",
+        "internalType": "struct Counter"
       }
     ],
     "name": "increment",
     "outputs": [],
-    "signature": "increment(Counter)",
+    "signature": "increment(tuple)",
     "type": "function"
   },
   {
@@ -5362,12 +5383,13 @@
     "inputs": [
       {
         "name": "counter",
-        "type": "Counter"
+        "type": "tuple",
+        "internalType": "struct Counter"
       }
     ],
     "name": "decrement",
     "outputs": [],
-    "signature": "decrement(Counter)",
+    "signature": "decrement(tuple)",
     "type": "function"
   },
   {
@@ -5375,7 +5397,8 @@
     "inputs": [
       {
         "name": "map",
-        "type": "Map"
+        "internalType": "struct Map",
+        "type": "tuple"
       },
       {
         "name": "key",
@@ -5393,7 +5416,7 @@
         "type": "bool"
       }
     ],
-    "signature": "_set(Map,bytes32,bytes32)",
+    "signature": "_set(tuple,bytes32,bytes32)",
     "type": "function"
   },
   {
@@ -5401,7 +5424,8 @@
     "inputs": [
       {
         "name": "map",
-        "type": "Map"
+        "internalType": "struct Map",
+        "type": "tuple"
       },
       {
         "name": "key",
@@ -5415,7 +5439,7 @@
         "type": "bool"
       }
     ],
-    "signature": "_remove(Map,bytes32)",
+    "signature": "_remove(tuple,bytes32)",
     "type": "function"
   },
   {
@@ -5424,7 +5448,8 @@
     "inputs": [
       {
         "name": "map",
-        "type": "Map"
+        "internalType": "struct Map",
+        "type": "tuple"
       },
       {
         "name": "key",
@@ -5438,7 +5463,7 @@
         "type": "bool"
       }
     ],
-    "signature": "_contains(Map,bytes32)",
+    "signature": "_contains(tuple,bytes32)",
     "type": "function"
   },
   {
@@ -5447,7 +5472,8 @@
     "inputs": [
       {
         "name": "map",
-        "type": "Map"
+        "internalType": "struct Map",
+        "type": "tuple"
       }
     ],
     "name": "_length",
@@ -5457,7 +5483,7 @@
         "type": "uint256"
       }
     ],
-    "signature": "_length(Map)",
+    "signature": "_length(tuple)",
     "type": "function"
   },
   {
@@ -5466,7 +5492,8 @@
     "inputs": [
       {
         "name": "map",
-        "type": "Map"
+        "internalType": "struct Map",
+        "type": "tuple"
       },
       {
         "name": "index",
@@ -5484,7 +5511,7 @@
         "type": "bytes32"
       }
     ],
-    "signature": "_at(Map,uint256)",
+    "signature": "_at(tuple,uint256)",
     "type": "function"
   },
   {
@@ -5493,7 +5520,8 @@
     "inputs": [
       {
         "name": "map",
-        "type": "Map"
+        "internalType": "struct Map",
+        "type": "tuple"
       },
       {
         "name": "key",
@@ -5507,7 +5535,7 @@
         "type": "bytes32"
       }
     ],
-    "signature": "_get(Map,bytes32)",
+    "signature": "_get(tuple,bytes32)",
     "type": "function"
   },
   {
@@ -5516,7 +5544,8 @@
     "inputs": [
       {
         "name": "map",
-        "type": "Map"
+        "internalType": "struct Map",
+        "type": "tuple"
       },
       {
         "name": "key",
@@ -5534,7 +5563,7 @@
         "type": "bytes32"
       }
     ],
-    "signature": "_get(Map,bytes32,string)",
+    "signature": "_get(tuple,bytes32,string)",
     "type": "function"
   },
   {
@@ -5542,7 +5571,8 @@
     "inputs": [
       {
         "name": "map",
-        "type": "UintToAddressMap"
+        "type": "tuple",
+        "internalType": "struct UintToAddressMap"
       },
       {
         "name": "key",
@@ -5560,7 +5590,7 @@
         "type": "bool"
       }
     ],
-    "signature": "set(UintToAddressMap,uint256,address)",
+    "signature": "set(tuple,uint256,address)",
     "type": "function"
   },
   {
@@ -5568,7 +5598,8 @@
     "inputs": [
       {
         "name": "map",
-        "type": "UintToAddressMap"
+        "type": "tuple",
+        "internalType": "struct UintToAddressMap"
       },
       {
         "name": "key",
@@ -5582,7 +5613,7 @@
         "type": "bool"
       }
     ],
-    "signature": "remove(UintToAddressMap,uint256)",
+    "signature": "remove(tuple,uint256)",
     "type": "function"
   },
   {
@@ -5591,7 +5622,8 @@
     "inputs": [
       {
         "name": "map",
-        "type": "UintToAddressMap"
+        "type": "tuple",
+        "internalType": "struct UintToAddressMap"
       },
       {
         "name": "key",
@@ -5605,7 +5637,7 @@
         "type": "bool"
       }
     ],
-    "signature": "contains(UintToAddressMap,uint256)",
+    "signature": "contains(tuple,uint256)",
     "type": "function"
   },
   {
@@ -5614,7 +5646,8 @@
     "inputs": [
       {
         "name": "map",
-        "type": "UintToAddressMap"
+        "type": "tuple",
+        "internalType": "struct UintToAddressMap"
       }
     ],
     "name": "length",
@@ -5624,7 +5657,7 @@
         "type": "uint256"
       }
     ],
-    "signature": "length(UintToAddressMap)",
+    "signature": "length(tuple)",
     "type": "function"
   },
   {
@@ -5633,7 +5666,8 @@
     "inputs": [
       {
         "name": "map",
-        "type": "UintToAddressMap"
+        "type": "tuple",
+        "internalType": "struct UintToAddressMap"
       },
       {
         "name": "index",
@@ -5651,7 +5685,7 @@
         "type": "address"
       }
     ],
-    "signature": "at(UintToAddressMap,uint256)",
+    "signature": "at(tuple,uint256)",
     "type": "function"
   },
   {
@@ -5660,7 +5694,8 @@
     "inputs": [
       {
         "name": "map",
-        "type": "UintToAddressMap"
+        "type": "tuple",
+        "internalType": "struct UintToAddressMap"
       },
       {
         "name": "key",
@@ -5674,7 +5709,7 @@
         "type": "address"
       }
     ],
-    "signature": "get(UintToAddressMap,uint256)",
+    "signature": "get(tuple,uint256)",
     "type": "function"
   },
   {
@@ -5683,7 +5718,8 @@
     "inputs": [
       {
         "name": "map",
-        "type": "UintToAddressMap"
+        "type": "tuple",
+        "internalType": "struct UintToAddressMap"
       },
       {
         "name": "key",
@@ -5701,7 +5737,7 @@
         "type": "address"
       }
     ],
-    "signature": "get(UintToAddressMap,uint256,string)",
+    "signature": "get(tuple,uint256,string)",
     "type": "function"
   },
   {
@@ -5750,7 +5786,8 @@
     "inputs": [
       {
         "name": "set",
-        "type": "Set"
+        "internalType": "struct Set",
+        "type": "tuple"
       },
       {
         "name": "value",
@@ -5764,7 +5801,7 @@
         "type": "bool"
       }
     ],
-    "signature": "_add(Set,bytes32)",
+    "signature": "_add(tuple,bytes32)",
     "type": "function"
   },
   {
@@ -5772,7 +5809,8 @@
     "inputs": [
       {
         "name": "set",
-        "type": "Set"
+        "internalType": "struct Set",
+        "type": "tuple"
       },
       {
         "name": "value",
@@ -5786,7 +5824,7 @@
         "type": "bool"
       }
     ],
-    "signature": "_remove(Set,bytes32)",
+    "signature": "_remove(tuple,bytes32)",
     "type": "function"
   },
   {
@@ -5795,7 +5833,8 @@
     "inputs": [
       {
         "name": "set",
-        "type": "Set"
+        "internalType": "struct Set",
+        "type": "tuple"
       },
       {
         "name": "value",
@@ -5809,7 +5848,7 @@
         "type": "bool"
       }
     ],
-    "signature": "_contains(Set,bytes32)",
+    "signature": "_contains(tuple,bytes32)",
     "type": "function"
   },
   {
@@ -5818,7 +5857,8 @@
     "inputs": [
       {
         "name": "set",
-        "type": "Set"
+        "internalType": "struct Set",
+        "type": "tuple"
       }
     ],
     "name": "_length",
@@ -5828,7 +5868,7 @@
         "type": "uint256"
       }
     ],
-    "signature": "_length(Set)",
+    "signature": "_length(tuple)",
     "type": "function"
   },
   {
@@ -5837,7 +5877,8 @@
     "inputs": [
       {
         "name": "set",
-        "type": "Set"
+        "internalType": "struct Set",
+        "type": "tuple"
       },
       {
         "name": "index",
@@ -5851,7 +5892,7 @@
         "type": "bytes32"
       }
     ],
-    "signature": "_at(Set,uint256)",
+    "signature": "_at(tuple,uint256)",
     "type": "function"
   },
   {
@@ -5859,7 +5900,8 @@
     "inputs": [
       {
         "name": "set",
-        "type": "AddressSet"
+        "internalType": "struct AddressSet",
+        "type": "tuple"
       },
       {
         "name": "value",
@@ -5873,7 +5915,7 @@
         "type": "bool"
       }
     ],
-    "signature": "add(AddressSet,address)",
+    "signature": "add(tuple,address)",
     "type": "function"
   },
   {
@@ -5881,7 +5923,8 @@
     "inputs": [
       {
         "name": "set",
-        "type": "AddressSet"
+        "internalType": "struct AddressSet",
+        "type": "tuple"
       },
       {
         "name": "value",
@@ -5895,7 +5938,7 @@
         "type": "bool"
       }
     ],
-    "signature": "remove(AddressSet,address)",
+    "signature": "remove(tuple,address)",
     "type": "function"
   },
   {
@@ -5904,7 +5947,8 @@
     "inputs": [
       {
         "name": "set",
-        "type": "AddressSet"
+        "internalType": "struct AddressSet",
+        "type": "tuple"
       },
       {
         "name": "value",
@@ -5918,7 +5962,7 @@
         "type": "bool"
       }
     ],
-    "signature": "contains(AddressSet,address)",
+    "signature": "contains(tuple,address)",
     "type": "function"
   },
   {
@@ -5927,7 +5971,8 @@
     "inputs": [
       {
         "name": "set",
-        "type": "AddressSet"
+        "internalType": "struct AddressSet",
+        "type": "tuple"
       }
     ],
     "name": "length",
@@ -5937,7 +5982,7 @@
         "type": "uint256"
       }
     ],
-    "signature": "length(AddressSet)",
+    "signature": "length(tuple)",
     "type": "function"
   },
   {
@@ -5946,7 +5991,8 @@
     "inputs": [
       {
         "name": "set",
-        "type": "AddressSet"
+        "internalType": "struct AddressSet",
+        "type": "tuple"
       },
       {
         "name": "index",
@@ -5960,7 +6006,7 @@
         "type": "address"
       }
     ],
-    "signature": "at(AddressSet,uint256)",
+    "signature": "at(tuple,uint256)",
     "type": "function"
   },
   {
@@ -5968,7 +6014,8 @@
     "inputs": [
       {
         "name": "set",
-        "type": "UintSet"
+        "internalType": "struct UintSet",
+        "type": "tuple"
       },
       {
         "name": "value",
@@ -5982,7 +6029,7 @@
         "type": "bool"
       }
     ],
-    "signature": "add(UintSet,uint256)",
+    "signature": "add(tuple,uint256)",
     "type": "function"
   },
   {
@@ -5990,7 +6037,8 @@
     "inputs": [
       {
         "name": "set",
-        "type": "UintSet"
+        "internalType": "struct UintSet",
+        "type": "tuple"
       },
       {
         "name": "value",
@@ -6004,7 +6052,7 @@
         "type": "bool"
       }
     ],
-    "signature": "remove(UintSet,uint256)",
+    "signature": "remove(tuple,uint256)",
     "type": "function"
   },
   {
@@ -6013,7 +6061,8 @@
     "inputs": [
       {
         "name": "set",
-        "type": "UintSet"
+        "internalType": "struct UintSet",
+        "type": "tuple"
       },
       {
         "name": "value",
@@ -6027,7 +6076,7 @@
         "type": "bool"
       }
     ],
-    "signature": "contains(UintSet,uint256)",
+    "signature": "contains(tuple,uint256)",
     "type": "function"
   },
   {
@@ -6036,7 +6085,8 @@
     "inputs": [
       {
         "name": "set",
-        "type": "UintSet"
+        "internalType": "struct UintSet",
+        "type": "tuple"
       }
     ],
     "name": "length",
@@ -6046,7 +6096,7 @@
         "type": "uint256"
       }
     ],
-    "signature": "length(UintSet)",
+    "signature": "length(tuple)",
     "type": "function"
   },
   {
@@ -6055,7 +6105,8 @@
     "inputs": [
       {
         "name": "set",
-        "type": "UintSet"
+        "internalType": "struct UintSet",
+        "type": "tuple"
       },
       {
         "name": "index",
@@ -6069,7 +6120,7 @@
         "type": "uint256"
       }
     ],
-    "signature": "at(UintSet,uint256)",
+    "signature": "at(tuple,uint256)",
     "type": "function"
   },
   {
@@ -7097,7 +7148,8 @@
     "outputs": [
       {
         "name": "provider",
-        "type": "ImplementationProvider"
+        "internalType": "contract ImplementationProvider",
+        "type": "address"
       }
     ],
     "signature": "getProvider(string)",
@@ -7116,7 +7168,8 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "Package"
+        "internalType": "contract Package",
+        "type": "address"
       },
       {
         "is_array": true,
@@ -7136,7 +7189,8 @@
       },
       {
         "name": "package",
-        "type": "Package"
+        "internalType": "contract Package",
+        "type": "address"
       },
       {
         "is_array": true,
@@ -7146,7 +7200,7 @@
     ],
     "name": "setPackage",
     "outputs": [],
-    "signature": "setPackage(string,Package,uint64[3])",
+    "signature": "setPackage(string,address,uint64[3])",
     "type": "function"
   },
   {
@@ -7209,7 +7263,8 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "AdminUpgradeabilityProxy"
+        "internalType": "contract AdminUpgradeabilityProxy",
+        "type": "address"
       }
     ],
     "signature": "create(string,string,address,bytes)",
