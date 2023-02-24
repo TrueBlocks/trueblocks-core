@@ -18,7 +18,6 @@ blocks?blocks=4001001&hashes&raw
       "size": "0x3329",
       "stateRoot": "0x713bf9e27e8fa7cbf2b5d627609c16d0f3e66dd6d66fa7e6fee73c5ecda23525",
       "timestamp": "0x5962de08",
-      "transactionsRoot": "0x6494993a4b201058be9dc1cf005a7b7795b4c7452b0b66af7e82a97549cbed49",
       "totalDifficulty": "0x197cd9304cf302596e",
       "transactions": [
         "0xdd2f0abd8c4ac950fc76cd03870cc99c2ef108a620f1d400de231f5ae7bdaf73",
@@ -115,6 +114,7 @@ blocks?blocks=4001001&hashes&raw
         "0x5799069c6f8e2d822ee33bd5f5984942379cc0dadadd8abc7cf6532a860df6c2",
         "0xa600632d3a6b343ecd51795291818dbd8c59e4588c08c0cfc5a9f2614edfe567"
       ],
+      "transactionsRoot": "0x6494993a4b201058be9dc1cf005a7b7795b4c7452b0b66af7e82a97549cbed49",
       "uncles": []
     }
   ],
