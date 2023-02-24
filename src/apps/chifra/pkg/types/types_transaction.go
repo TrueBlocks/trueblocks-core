@@ -74,13 +74,12 @@ func (s *SimpleTransaction) SetRaw(raw *RawTransaction) {
 func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions map[string]any) Model {
 	// EXISTING_CODE
 	// TODO: these date-related values could be done when RPC is queried and cached
-	// date := gostradamus.FromUnixTimestamp(int64(s.Timestamp))
+	date := gostradamus.FromUnixTimestamp(int64(s.Timestamp))
 
 	// TODO: Imporant note. The `finalized` field creates a dependacy on the transaction model that
 	// TODO: it is in a block (or at least we know the blockNumber. Also, who's to say what `finalized`
 	// TODO: means? Also, `finalized` has a meaning in post-merge code. See #2667
 	// EXISTING_CODE
-	// finalized := extraOptions["finalized"] == true
 
 	model := map[string]interface{}{
 		"blockNumber":      s.BlockNumber,
@@ -91,8 +90,8 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		"gasUsed":          s.GasUsed,
 		"hash":             s.Hash,
 		"isError":          s.IsError,
-		// "finalized":        finalized,
-		"value": s.Value.String(),
+		"finalized":        extraOptions["finalized"],
+		"value":            s.Value.String(),
 	}
 
 	order := []string{
@@ -130,7 +129,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 	// EXISTING_CODE
 	if format == "json" {
 		model["blockHash"] = s.BlockHash
-		// model["nonce"] = s.Nonce
+		model["nonce"] = s.Nonce
 		model["value"] = s.Value
 		model["gas"] = s.Gas
 
@@ -147,8 +146,9 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		model["receipt"] = nil            // TODO: Why twice?
 
 		// TODO: these date-related values could be done when RPC is queried and cached
-		// model["datesh"] = date.Format("2006-01-02")
-		// model["time"] = date.Format("15:04:05") + " UTC"
+		model["date"] = date.Format("2006-01-02 15:04:05") + " UTC"
+		model["datesh"] = date.Format("2006-01-02")
+		model["time"] = date.Format("15:04:05") + " UTC"
 
 		if s.Receipt != nil {
 			contractAddress := s.Receipt.ContractAddress.Hex()
@@ -233,4 +233,9 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 }
 
 // EXISTING_CODE
+func (s *SimpleTransaction) SetGasCost(receipt *SimpleReceipt) Gas {
+	s.GasCost = s.GasPrice * receipt.GasUsed
+	return s.GasCost
+}
+
 // EXISTING_CODE

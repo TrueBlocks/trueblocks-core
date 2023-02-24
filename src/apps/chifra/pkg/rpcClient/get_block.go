@@ -55,7 +55,10 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, isFinal bool) (types.Simpl
 		value := big.NewInt(0)
 		value.SetString(fmt.Sprint(t["value"]), 0)
 
-		hasToken := IsTokenRelated(input[0:9])
+		hasToken := false
+		if len(input) >= 10 {
+			hasToken = IsTokenRelated(input[0:9])
+		}
 
 		// Get the receipt
 		var receipt types.SimpleReceipt
@@ -64,7 +67,7 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, isFinal bool) (types.Simpl
 			return block, err
 		}
 
-		block.Transactions = append(block.Transactions, types.SimpleTransaction{
+		tx := types.SimpleTransaction{
 			Hash:                 txHash,
 			BlockHash:            common.HexToHash(fmt.Sprint(t["blockHash"])),
 			BlockNumber:          mustParseUint(t["blockNumber"]),
@@ -89,7 +92,9 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, isFinal bool) (types.Simpl
 			// Reserved2            uint8           `json:"reserved2"`
 			// Traces               []SimpleTrace   `json:"traces"`
 			// ArticulatedTx        *SimpleFunction `json:"articulatedTx"`
-		})
+		}
+		tx.SetGasCost(&receipt)
+		block.Transactions = append(block.Transactions, tx)
 	}
 
 	return block, nil

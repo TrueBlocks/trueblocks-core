@@ -103,7 +103,6 @@ func GetTransactionByAppearance(chain string, appearance *types.SimpleAppearance
 		Gas:              gas,
 		GasPrice:         gasPrice,
 		GasUsed:          receipt.GasUsed,
-		GasCost:          gasPrice * receipt.GasUsed,
 		// TODO:
 		// MaxFeePerGas:
 		// MaxPriorityFeePerGas:
@@ -118,6 +117,7 @@ func GetTransactionByAppearance(chain string, appearance *types.SimpleAppearance
 		// Traces               []SimpleTrace   `json:"traces"`
 		// ArticulatedTx        *SimpleFunction `json:"articulatedTx"`
 	}
+	tx.SetGasCost(&receipt)
 	tx.SetRaw(rawTx)
 
 	traces, err := types.GetTracesByTransactionHash(chain, txHash.Hex(), tx)
