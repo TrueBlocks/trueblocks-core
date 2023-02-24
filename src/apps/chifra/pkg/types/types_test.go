@@ -49,6 +49,12 @@ func TestAddress_Hex(t *testing.T) {
 	if result := addr.Hex(); result != expected {
 		t.Fatal("wrong Hex() return value for 0x0:", result)
 	}
+
+	var zero2 Address
+	addrStr := fmt.Sprint(zero2)
+	if addrStr != expected {
+		t.Fatal("wrong Hex() return value for 0x0:", addrStr)
+	}
 }
 
 func TestAddress_Stringer(t *testing.T) {

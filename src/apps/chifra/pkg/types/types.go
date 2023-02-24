@@ -55,6 +55,11 @@ func (a Address) Format(s fmt.State, c rune) {
 	s.Write([]byte(a.Hex()))
 }
 
+func (a Address) MarshalText() ([]byte, error) {
+	hex := a.Hex()
+	return []byte(hex), nil
+}
+
 // SetHex sets the address based on the provided string
 func (a *Address) SetHex(hex string) {
 	a.Address = common.HexToAddress(hex)

@@ -136,7 +136,6 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		// TODO: this value could be created when RPC is queried and cached
 		model["ether"] = utils.WeiToEther(&s.Value)
 		model["gasPrice"] = s.GasPrice
-		model["gasCost"] = s.GasCost
 		model["maxFeePerGas"] = s.MaxPriorityFeePerGas
 		model["maxPriorityFeePerGas"] = s.MaxPriorityFeePerGas
 		model["input"] = s.Input
