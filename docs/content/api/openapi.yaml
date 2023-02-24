@@ -2326,10 +2326,6 @@ components:
           type: boolean
           example: true
           description: "flag indicating the system considers this data final"
-        unclesCnt:
-          type: number
-          format: uint64
-          description: "the number of uncles in this block"
     transaction:
       description: "transaction data as returned from the RPC (with slight enhancements)"
       type: object

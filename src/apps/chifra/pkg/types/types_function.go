@@ -159,15 +159,15 @@ func argumentTypesToSimpleParameters(argTypes []*abi.Type) (result []SimpleParam
 	return
 }
 
-func joinParametersNames(params []SimpleParameter) (result string) {
-	for index, param := range params {
-		if index > 0 {
-			result += ","
-		}
-		result += param.DisplayName(index)
-	}
-	return
-}
+// func joinParametersNames(params []SimpleParameter) (result string) {
+// 	for index, param := range params {
+// 		if index > 0 {
+// 			result += ","
+// 		}
+// 		result += param.DisplayName(index)
+// 	}
+// 	return
+// }
 
 func FunctionFromAbiEvent(ethEvent *abi.Event, abiSource string) *SimpleFunction {
 	// ID is encoded signature
