@@ -126,7 +126,7 @@ bool COptions::handle_datamodel(void) {
             thisDoc += toolsStream.str();
         documentMap[model.doc_group] = documentMap[model.doc_group] + thisDoc;
 
-        if (!model.gogen.empty()) {
+        if (!model.go_model.empty()) {
             generate_go_type(this, model);
         }
     }
@@ -183,27 +183,27 @@ bool sortByDoc(const CParameter& c1, const CParameter& c2) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-string_q type_2_ModelName(const string_q& type) {
+string_q type_2_ModelName(const string_q& type, bool raw) {
     string_q ret = type;
     if (startsWith(ret, "C"))
         replace(ret, "C", "");
     replace(ret, "Array", "");
     replace(ret, "CachePtr", "Cache");
     replace(ret, "LogEntry", "Log");
-    return ret;
+    return raw ? nextTokenClear(ret, '[') : ret;
 }
 
 //------------------------------------------------------------------------------------------------------------
 string_q typeFmt(const CParameter& fld) {
     if (fld.is_flags & IS_ARRAY) {
         string_q ret = "          type: array\n          items:\n            $ref: \"#/components/schemas/++X++\"\n";
-        replace(ret, "++X++", firstLower(type_2_ModelName(fld.type)));
+        replace(ret, "++X++", firstLower(type_2_ModelName(fld.type, false)));
         return ret;
     }
 
     if (fld.is_flags & IS_OBJECT) {
         string_q ret = "          type: object\n          items:\n            $ref: \"#/components/schemas/++X++\"\n";
-        replace(ret, "++X++", firstLower(type_2_ModelName(fld.type)));
+        replace(ret, "++X++", firstLower(type_2_ModelName(fld.type, false)));
         return ret;
     }
 

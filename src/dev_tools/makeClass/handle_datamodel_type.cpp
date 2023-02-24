@@ -24,10 +24,11 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
 
     string_q fn = getPathToSource("apps/chifra/pkg/types/types_" + toLower(model.base_name) + ".go");
     string_q contents = asciiFileToString(getPathToTemplates("blank_type.go.tmpl"));
-    replaceAll(contents, "[{CLASS_NAME}]", type_2_ModelName(model.gogen));
+    replaceAll(contents, "[{CLASS_NAME}]", type_2_ModelName(model.go_model, false));
+    replaceAll(contents, "[{RAW_NAME}]", "Raw" + type_2_ModelName(model.go_model, true));
 
     CParameter raw;
-    raw.type = "*Raw" + type_2_ModelName(model.gogen);
+    raw.type = "*Raw" + type_2_ModelName(model.go_model, true);
     raw.name = "raw";
     model.fieldArray.push_back(raw);
 

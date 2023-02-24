@@ -9,4 +9,4 @@ doc_group = 05-Other
 doc_descr = a human-readable representation of a Solidity function call or event
 doc_route = 501-function
 doc_producer = abis, export
-gogen = Function
+go_type = true

@@ -36,6 +36,7 @@ class CClassDefinition : public CBaseNode {
     string_q base_lower;
     string_q base_upper;
     string_q base_base;
+    string_q go_model;
     string_q head_includes;
     string_q src_includes;
     string_q display_str;
@@ -45,7 +46,6 @@ class CClassDefinition : public CBaseNode {
     CParameterArray fieldArray;
     CParameterArray extraArray;
     string_q contained_by;
-    string_q gogen;
     string_q doc_group;
     string_q doc_order;
     string_q doc_descr;
@@ -131,6 +131,7 @@ inline void CClassDefinition::initialize(void) {
     base_lower = "";
     base_upper = "";
     base_base = "";
+    go_model = "";
     head_includes = "";
     src_includes = "";
     display_str = "";
@@ -140,7 +141,6 @@ inline void CClassDefinition::initialize(void) {
     fieldArray.clear();
     extraArray.clear();
     contained_by = "";
-    gogen = "";
     doc_group = "";
     doc_order = "";
     doc_descr = "";
@@ -168,6 +168,7 @@ inline void CClassDefinition::duplicate(const CClassDefinition& cl) {
     base_lower = cl.base_lower;
     base_upper = cl.base_upper;
     base_base = cl.base_base;
+    go_model = cl.go_model;
     head_includes = cl.head_includes;
     src_includes = cl.src_includes;
     display_str = cl.display_str;
@@ -177,7 +178,6 @@ inline void CClassDefinition::duplicate(const CClassDefinition& cl) {
     fieldArray = cl.fieldArray;
     extraArray = cl.extraArray;
     contained_by = cl.contained_by;
-    gogen = cl.gogen;
     doc_group = cl.doc_group;
     doc_order = cl.doc_order;
     doc_descr = cl.doc_descr;
