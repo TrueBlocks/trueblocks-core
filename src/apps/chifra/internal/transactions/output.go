@@ -54,6 +54,10 @@ func (opts *TransactionsOptions) TransactionsInternal() (err error, handled bool
 		return nil, false
 	}
 
+	if opts.IsPorted() {
+		return opts.HandleArticulate(), true
+	}
+
 	handled = true
 	err = opts.Globals.PassItOn("getTrans", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
 	// EXISTING_CODE

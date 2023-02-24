@@ -1,0 +1,216 @@
+[
+  {
+    "encoding": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "outputs": [],
+    "signature": "OwnershipTransferred(address,address)",
+    "type": "event"
+  },
+  {
+    "constant": true,
+    "encoding": "0x01ffc9a7",
+    "inputs": [
+      {
+        "name": "_interfaceID",
+        "type": "bytes4"
+      }
+    ],
+    "name": "supportsInterface",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      }
+    ],
+    "signature": "supportsInterface(bytes4)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x7c696fea",
+    "inputs": [
+      {
+        "is_array": true,
+        "name": "_diamondCut",
+        "type": "bytes[]"
+      },
+      {
+        "name": "_init",
+        "type": "address"
+      },
+      {
+        "name": "_",
+        "type": "bytes"
+      }
+    ],
+    "name": "diamondCut",
+    "outputs": [],
+    "signature": "diamondCut(bytes[],address,bytes)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x99f5f52e",
+    "inputs": [
+      {
+        "is_array": true,
+        "name": "_diamondCut",
+        "type": "bytes[]"
+      }
+    ],
+    "name": "diamondCut",
+    "outputs": [],
+    "signature": "diamondCut(bytes[])",
+    "type": "function"
+  },
+  {
+    "encoding": "0x043f1619",
+    "inputs": [
+      {
+        "is_array": true,
+        "name": "_diamondCut",
+        "type": "bytes[]"
+      }
+    ],
+    "name": "Cut",
+    "outputs": [],
+    "signature": "Cut(bytes[])",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x7a0ed627",
+    "inputs": [],
+    "name": "facets",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "ret_0",
+        "type": "bytes[]"
+      }
+    ],
+    "signature": "facets()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xadfca15e",
+    "inputs": [
+      {
+        "name": "_facet",
+        "type": "address"
+      }
+    ],
+    "name": "facetFunctionSelectors",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bytes"
+      }
+    ],
+    "signature": "facetFunctionSelectors(address)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x52ef6b2c",
+    "inputs": [],
+    "name": "facetAddresses",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bytes"
+      }
+    ],
+    "signature": "facetAddresses()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xcdffacc6",
+    "inputs": [
+      {
+        "name": "_Selector",
+        "type": "bytes4"
+      }
+    ],
+    "name": "facetAddress",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "address"
+      }
+    ],
+    "signature": "facetAddress(bytes4)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x01ffc9a7",
+    "inputs": [
+      {
+        "name": "interfaceID",
+        "type": "bytes4"
+      }
+    ],
+    "name": "supportsInterface",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      }
+    ],
+    "signature": "supportsInterface(bytes4)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x9459e9ce",
+    "inputs": [],
+    "name": "diamondStorage",
+    "outputs": [
+      {
+        "name": "storage ds",
+        "internalType": "struct DiamondStorage",
+        "type": "tuple"
+      }
+    ],
+    "signature": "diamondStorage()",
+    "type": "function"
+  },
+  {
+    "encoding": "0xfdacd576",
+    "inputs": [
+      {
+        "name": "completed",
+        "type": "uint256"
+      }
+    ],
+    "name": "setCompleted",
+    "outputs": [],
+    "signature": "setCompleted(uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x0900f010",
+    "inputs": [
+      {
+        "name": "new_address",
+        "type": "address"
+      }
+    ],
+    "name": "upgrade",
+    "outputs": [],
+    "signature": "upgrade(address)",
+    "type": "function"
+  }
+]

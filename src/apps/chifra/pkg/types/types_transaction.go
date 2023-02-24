@@ -10,19 +10,27 @@ package types
 
 // EXISTING_CODE
 import (
+	"math/big"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/bykof/gostradamus"
 	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // EXISTING_CODE
 
 type RawTransaction struct {
-	Hash             common.Hash `json:"hash"`
-	BlockHash        common.Hash `json:"blockHash"`
-	BlockNumber      Blknum      `json:"blockNumber"`
-	TransactionIndex uint64      `json:"transactionIndex"`
+	Hash             string `json:"hash"`
+	BlockHash        string `json:"blockHash"`
+	BlockNumber      string `json:"blockNumber"`
+	TransactionIndex string `json:"transactionIndex"`
+	From             string `json:"from"`
+	Gas              string `json:"gas"`
+	GasPrice         string `json:"gasPrice"`
+	Input            string `json:"input"`
+	Nonce            string `json:"nonce"`
+	To               string `json:"to"`
+	Value            string `json:"value"`
 }
 
 type SimpleTransaction struct {
@@ -40,6 +48,7 @@ type SimpleTransaction struct {
 	Gas                  Gas             `json:"gas"`
 	GasPrice             Gas             `json:"gasPrice"`
 	GasUsed              Gas             `json:"gasUsed"`
+	GasCost              Gas             `json:"gasCost"`
 	MaxFeePerGas         Gas             `json:"maxFeePerGas"`
 	MaxPriorityFeePerGas Gas             `json:"maxPriorityFeePerGas"`
 	Input                string          `json:"input"`
@@ -50,6 +59,7 @@ type SimpleTransaction struct {
 	Receipt              *SimpleReceipt  `json:"receipt"`
 	Traces               []SimpleTrace   `json:"traces"`
 	ArticulatedTx        *SimpleFunction `json:"articulatedTx"`
+	Message              string          `json:"-"`
 	raw                  *RawTransaction
 }
 
@@ -63,11 +73,6 @@ func (s *SimpleTransaction) SetRaw(raw *RawTransaction) {
 
 func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions map[string]any) Model {
 	// EXISTING_CODE
-	to := hexutil.Encode(s.To.Bytes())
-	if to == "0x0000000000000000000000000000000000000000" {
-		to = "0x0" // weird special case to preserve what RPC does
-	}
-
 	// TODO: these date-related values could be done when RPC is queried and cached
 	date := gostradamus.FromUnixTimestamp(int64(s.Timestamp))
 
@@ -81,7 +86,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		"transactionIndex": s.TransactionIndex,
 		"timestamp":        s.Timestamp,
 		"from":             s.From,
-		"to":               to,
+		"to":               s.To,
 		"gasUsed":          s.GasUsed,
 		"hash":             s.Hash,
 		"isError":          s.IsError,
@@ -103,7 +108,22 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		"isError",
 		"encoding",
 		"compressedTx",
-		"value",
+		// "value",
+	}
+
+	if format != "json" {
+		// TODO: these date-related values could be done when RPC is queried and cached
+		date := gostradamus.FromUnixTimestamp(int64(s.Timestamp))
+		model["date"] = date.Format("2006-01-02 15:04:05") + " UTC"
+
+		etherValue := utils.WeiToEther(&s.Value).Text('f', 18)
+		model["ether"] = etherValue
+		ethGasPrice := utils.WeiToEther(big.NewInt(0).SetUint64(s.GasPrice)).Text('f', 18)
+		model["ethGasPrice"] = ethGasPrice
+
+		if s.ArticulatedTx != nil {
+			model["encoding"] = s.ArticulatedTx.Encoding
+		}
 	}
 
 	// EXISTING_CODE
@@ -150,19 +170,59 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 
 			logs := make([]map[string]any, 0, len(s.Receipt.Logs))
 			for _, log := range s.Receipt.Logs {
-				logs = append(logs, map[string]any{
+				logModel := map[string]any{
 					"address":  log.Address.Hex(),
 					"logIndex": log.LogIndex,
 					"topics":   log.Topics,
 					"data":     log.Data,
-				})
+				}
+				if extraOptions["articulate"] == true && log.ArticulatedLog != nil {
+					inputModels := ParametersToMap(log.ArticulatedLog.Inputs)
+					articulatedLog := map[string]any{
+						"name":   log.ArticulatedLog.Name,
+						"inputs": inputModels,
+					}
+					logModel["articulatedLog"] = articulatedLog
+					logModel["compressedLog"] = MakeCompressed(articulatedLog)
+				}
+				logs = append(logs, logModel)
 			}
 			receiptModel["logs"] = logs
 			model["receipt"] = receiptModel
 		}
+
+		if extraOptions["traces"] == true && len(s.Traces) > 0 {
+			traceModels := make([]map[string]any, 0, len(s.Traces))
+			for _, trace := range s.Traces {
+				traceModels = append(traceModels, trace.Model(showHidden, format, extraOptions).Data)
+			}
+			model["traces"] = traceModels
+		}
 	}
 
-	// TODO: These fields are ignored "ethGasPrice": s.EthGasPrice, "encoding": s.Encoding, "compressedTx": s.CompressedTx,
+	if extraOptions["articulate"] == true {
+		if s.ArticulatedTx != nil {
+			inputModels := ParametersToMap(s.ArticulatedTx.Inputs)
+			outputModels := ParametersToMap(s.ArticulatedTx.Outputs)
+			articulated := map[string]any{
+				"name":            s.ArticulatedTx.Name,
+				"stateMutability": s.ArticulatedTx.StateMutability,
+				"inputs":          inputModels,
+				"outputs":         outputModels,
+			}
+
+			if format == "json" {
+				model["articulatedTx"] = articulated
+			}
+			model["compressedTx"] = MakeCompressed(articulated)
+		} else {
+			if s.Message != "" {
+				model["compressedTx"] = "message:" + s.Message
+			}
+		}
+	}
+
+	// TODO: These fields are ignored "ethGasPrice": s.EthGasPrice, "encoding": s.Encoding
 	// EXISTING_CODE
 
 	return Model{
@@ -172,4 +232,9 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 }
 
 // EXISTING_CODE
+func (s *SimpleTransaction) SetGasCost(receipt *SimpleReceipt) Gas {
+	s.GasCost = s.GasPrice * receipt.GasUsed
+	return s.GasCost
+}
+
 // EXISTING_CODE

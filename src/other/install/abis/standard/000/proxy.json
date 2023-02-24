@@ -1,0 +1,336 @@
+[
+  {
+    "encoding": "0x073d36b4",
+    "inputs": [
+      {
+        "name": "newBeacon",
+        "type": "address"
+      }
+    ],
+    "name": "_setBeacon",
+    "signature": "_setBeacon(address)",
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "encoding": "0x1cf3b03a6cf19fa2baba4df148e9dcabedea7f8a5c07840e207e5c089be95d3e",
+    "inputs": [
+      {
+        "name": "beacon",
+        "type": "address"
+      }
+    ],
+    "name": "BeaconUpgraded",
+    "signature": "BeaconUpgraded(address)",
+    "stateMutability": "nonpayable",
+    "type": "event"
+  },
+  {
+    "encoding": "0x267b04ae",
+    "inputs": [
+      {
+        "name": "data",
+        "type": "bytes"
+      },
+      {
+        "name": "forceCall",
+        "type": "bool"
+      },
+      {
+        "name": "newImplementation",
+        "type":"address"
+      }
+    ],
+    "name": "_upgradeToAndCall",
+    "signature": "_upgradeToAndCall(address,bytes,bool)",
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x2bad8ba0",
+    "name": "_getBeacon",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "address"
+      }
+    ],
+    "signature": "_getBeacon()",
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "encoding": "0x34140748",
+    "inputs": [
+      {
+        "name": "newImplementation",
+        "type": "address"
+      }
+    ],
+    "name": "_upgradeTo",
+    "signature": "_upgradeTo(address)",
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "encoding": "0x353dfc01",
+    "inputs": [
+      {
+        "name": "newAdmin",
+        "type": "address"
+      }
+    ],
+    "name": "_changeAdmin",
+    "signature": "_changeAdmin(address)",
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "encoding": "0x37f4a46d",
+    "inputs": [
+      {
+        "name": "slot",
+        "type": "bytes32"
+      }
+    ],
+    "name": "getBooleanSlot",
+    "outputs": [
+      {
+        "name": "storage r",
+        "internalType": "struct StorageSlot.BooleanSlot",
+        "type": "tuple"
+      }
+    ],
+    "signature": "getBooleanSlot(bytes32)",
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "encoding": "0x3a74a767",
+    "inputs": [
+      {
+        "name": "newAdmin",
+        "type": "address"
+      }
+    ],
+    "name": "_setAdmin",
+    "signature": "_setAdmin(address)",
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x42404e07",
+    "name": "_getImplementation",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "address"
+      }
+    ],
+    "signature": "_getImplementation()",
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "encoding": "0x50c727ad",
+    "name": "_beforeFallback",
+    "signature": "_beforeFallback()",
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x59679b0f",
+    "name": "_implementation",
+    "outputs": [
+      {
+        "name": "impl",
+        "type": "address"
+      }
+    ],
+    "signature": "_implementation()",
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "encoding": "0x7e644d79422f17c01e4894b5f4f588d331ebfa28653d42ae832dc59e38c9798f",
+    "inputs": [
+      {
+        "name": "newAdmin",
+        "type": "address"
+      },
+      {
+        "name": "previousAdmin",
+        "type": "address"
+      }
+    ],
+    "name": "AdminChanged",
+    "signature": "AdminChanged(address,address)",
+    "stateMutability": "nonpayable",
+    "type": "event"
+  },
+  {
+    "constant": true,
+    "encoding": "0x839f5fb8",
+    "name": "_getAdmin",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "address"
+      }
+    ],
+    "signature": "_getAdmin()",
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "encoding": "0x949a352c",
+    "inputs": [
+      {
+        "name": "slot",
+        "type": "bytes32"
+      }
+    ],
+    "name": "getUint256Slot",
+    "outputs": [
+      {
+        "name": "storage r",
+        "internalType": "struct StorageSlot.Uint256Slot",
+        "type": "tuple"
+      }
+    ],
+    "signature": "getUint256Slot(bytes32)",
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "encoding": "0x9ba186fe",
+    "inputs": [
+      {
+        "name": "data",
+        "type": "bytes"
+      },
+      {
+        "name": "forceCall",
+        "type": "bool"
+      },
+      {
+        "name": "newBeacon",
+        "type": "address"
+      }
+    ],
+    "name": "_upgradeBeaconToAndCall",
+    "signature": "_upgradeBeaconToAndCall(address,bytes,bool)",
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "encoding": "0xaf8f35c4",
+    "name": "_fallback",
+    "signature": "_fallback()",
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "encoding": "0xbb913f41",
+    "inputs": [
+      {
+        "name": "newImplementation",
+        "type": "address"
+      }
+    ],
+    "name": "_setImplementation",
+    "signature": "_setImplementation(address)",
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "encoding": "0xbc7cd75a20ee27fd9adebab32041f755214dbc6bffa90cc0225b39da2e5c2d3b",
+    "inputs": [
+      {
+        "name": "implementation",
+        "type": "address"
+      }
+    ],
+    "name": "Upgraded",
+    "signature": "Upgraded(address)",
+    "stateMutability": "nonpayable",
+    "type": "event"
+  },
+  {
+    "encoding": "0xce2ea66a",
+    "inputs": [
+      {
+        "name": "data",
+        "type": "bytes"
+      },
+      {
+        "name": "forceCall",
+        "type": "bool"
+      },
+      {
+        "name": "newImplementation",
+        "type": "address"
+      }
+    ],
+    "name": "_upgradeToAndCallSecure",
+    "signature": "_upgradeToAndCallSecure(address,bytes,bool)",
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "encoding": "0xdd4e2762",
+    "inputs": [
+      {
+        "name": "slot",
+        "type": "bytes32"
+      }
+    ],
+    "name": "getBytes32Slot",
+    "outputs": [
+      {
+        "name": "storage r",
+        "internalType": "struct StorageSlot.Bytes32Slot",
+        "type": "tuple"
+      }
+    ],
+    "signature": "getBytes32Slot(bytes32)",
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "encoding": "0xe8ff0b1d",
+    "inputs": [
+      {
+        "name": "slot",
+        "type": "bytes32"
+      }
+    ],
+    "name": "getAddressSlot",
+    "outputs": [
+      {
+        "name": "storage r",
+        "internalType": "struct StorageSlot.AddressSlot",
+        "type": "tuple"
+      }
+    ],
+    "signature": "getAddressSlot(bytes32)",
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "encoding": "0xf13101e9",
+    "inputs": [
+      {
+        "name": "implementation",
+        "type": "address"
+      }
+    ],
+    "name": "_delegate",
+    "signature": "_delegate(address)",
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

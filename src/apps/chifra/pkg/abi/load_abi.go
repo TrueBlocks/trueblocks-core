@@ -1,7 +1,6 @@
 package abi
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 	"io/fs"
@@ -11,6 +10,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/contract"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/accounts/abi"
@@ -42,15 +42,14 @@ func fromJson(reader io.Reader, abiSource string, destination AbiInterfaceMap) (
 	}
 
 	for _, method := range loadedAbi.Methods {
+		method := method
 		function := types.FunctionFromAbiMethod(&method, abiSource)
-		// We need to convert Encoding to lowercase, because go-ethereum's abi.JSON will
-		// return uppercase Encodings.
 		destination[function.Encoding] = function
 	}
 
 	for _, ethEvent := range loadedAbi.Events {
+		ethEvent := ethEvent
 		event := types.FunctionFromAbiEvent(&ethEvent, abiSource)
-		// Same as above
 		destination[event.Encoding] = event
 	}
 
@@ -65,18 +64,12 @@ func LoadAbiFromKnownFile(filePath string, destination AbiInterfaceMap) (err err
 		return
 	}
 
-	var functions []types.SimpleFunction
-	decoder := json.NewDecoder(file)
-	err = decoder.Decode(&functions)
-	if err != nil {
-		return
-	}
+	// We still need abi.Method and abi.Event, so will just use fromJson
+	return fromJson(file, getAbiSourceByPath(filePath), destination)
+}
 
-	for _, function := range functions {
-		destination[function.Encoding] = &function
-	}
-
-	return
+func getAbiSourceByPath(filePath string) string {
+	return path.Base(filePath)
 }
 
 // LoadKnownAbiByName finds known ABI by name
@@ -99,6 +92,7 @@ func LoadCache(chain string, destination AbiInterfaceMap) (loaded bool) {
 
 	for _, function := range functions {
 		function := function
+		function.Normalize()
 		destination[function.Encoding] = &function
 	}
 	return true
@@ -206,8 +200,10 @@ func LoadAbiFromAddress(chain string, address types.Address, destination AbiInte
 		if err != nil {
 			return err
 		}
+
 		for _, loadedAbi := range loadedAbis {
 			loadedAbi := loadedAbi
+			loadedAbi.Normalize()
 			destination[loadedAbi.Encoding] = &loadedAbi
 		}
 		return nil
@@ -219,7 +215,7 @@ func LoadAbiFromAddress(chain string, address types.Address, destination AbiInte
 	defer localFile.Close()
 
 	// Local file found
-	if err = fromJson(localFile, path.Base(localFile.Name()), destination); err != nil {
+	if err = fromJson(localFile, getAbiSourceByPath(localFile.Name()), destination); err != nil {
 		return
 	}
 	// File is correct
@@ -228,4 +224,37 @@ func LoadAbiFromAddress(chain string, address types.Address, destination AbiInte
 	}
 
 	return
+}
+
+// LoadAbi tries to load ABI from any source (local file, cache, download from 3rd party)
+func LoadAbi(chain string, address types.Address, destination AbiInterfaceMap) (err error) {
+	if err = PreloadKnownAbis(chain, destination, false); err != nil {
+		return
+	}
+	err = LoadAbiFromAddress(chain, address, destination)
+	// return if there's no error (ABI was loaded) or if the error
+	// is not NotExist (something wrong happened)
+	if err == nil {
+		return
+	}
+	if !os.IsNotExist(err) {
+		return fmt.Errorf("while reading %s ABI file: %w", address, err)
+	}
+
+	// We didn't find the file
+	// Check if the address is a contract
+	contract, err := contract.IsContractAt(
+		chain,
+		address,
+		nil, // use latest block number
+	)
+	if err != nil {
+		return
+	}
+	if !contract {
+		// logger.Log(logger.Info, "Address", address, "is not a smart contract. Skipping...")
+		return
+	}
+	// Fetch ABI from a provider
+	return DownloadAbi(chain, address, destination)
 }

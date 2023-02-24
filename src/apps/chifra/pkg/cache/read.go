@@ -3,6 +3,7 @@ package cache
 import (
 	"bufio"
 	"encoding/binary"
+	"encoding/json"
 	"errors"
 	"math/big"
 
@@ -606,8 +607,11 @@ func ReadParameter(reader *bufio.Reader) (param *types.SimpleParameter, err erro
 		return
 	}
 
-	err = readString(reader, &param.Value)
-	if err != nil {
+	var jsonValue string
+	if err = readString(reader, &jsonValue); err != nil {
+		return
+	}
+	if err = json.Unmarshal([]byte(jsonValue), &param.Value); err != nil {
 		return
 	}
 

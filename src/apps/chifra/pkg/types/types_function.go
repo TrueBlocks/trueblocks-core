@@ -1,15 +1,10 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
-// Use of this source code is governed by a license that can
-// be found in the LICENSE file.
-/*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
- * the code inside of 'EXISTING_CODE' tags.
- */
-
 package types
 
 // EXISTING_CODE
 import (
+	"bytes"
+	"encoding/json"
+	"fmt"
 	"strings"
 
 	"github.com/ethereum/go-ethereum/accounts/abi"
@@ -33,18 +28,22 @@ type RawFunction struct {
 }
 
 type SimpleFunction struct {
-	AbiSource       string            `json:"abiSource,omitempty"`
-	Anonymous       bool              `json:"anonymous,omitempty"`
-	Constant        bool              `json:"constant,omitempty"`
-	StateMutability string            `json:"stateMutability"`
-	Message         string            `json:"message,omitempty"`
+	Encoding        string            `json:"encoding,omitempty"`
+	Signature       string            `json:"signature,omitempty"`
 	Name            string            `json:"name"`
 	FunctionType    string            `json:"type"`
-	Signature       string            `json:"signature"`
-	Encoding        string            `json:"encoding"`
+	AbiSource       string            `json:"abi_source"`
+	Anonymous       bool              `json:"anonymous"`
+	Constant        bool              `json:"constant"`
+	StateMutability string            `json:"stateMutability"`
 	Inputs          []SimpleParameter `json:"inputs"`
 	Outputs         []SimpleParameter `json:"outputs"`
 	raw             *RawFunction
+	// `payable` was present in ABIs before Solidity 0.5.0 and was replaced
+	// by `stateMutability`: https://docs.soliditylang.org/en/develop/050-breaking-changes.html#command-line-and-json-interfaces
+	payable   bool
+	abiMethod *abi.Method
+	abiEvent  *abi.Event
 }
 
 func (s *SimpleFunction) Raw() *RawFunction {
@@ -121,6 +120,65 @@ func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[
 }
 
 // EXISTING_CODE
+
+func FunctionFromAbiEvent(ethEvent *abi.Event, abiSource string) *SimpleFunction {
+	// ID is encoded signature
+	encSig := strings.ToLower(ethEvent.ID.Hex())
+	inputs := argumentsToSimpleParameters(ethEvent.Inputs)
+	function := &SimpleFunction{
+		Encoding:     encSig,
+		Signature:    ethEvent.Sig,
+		Name:         ethEvent.Name,
+		AbiSource:    abiSource,
+		FunctionType: "event",
+		Anonymous:    ethEvent.Anonymous,
+		Inputs:       inputs,
+	}
+	function.SetAbiEvent(ethEvent)
+	return function
+}
+
+// FunctionFromAbiMethod converts go-ethereum's abi.Method to our SimpleFunction
+func FunctionFromAbiMethod(ethMethod *abi.Method, abiSource string) *SimpleFunction {
+	// method.ID is our "four-byte"
+	fourByte := "0x" + strings.ToLower(string(common.Bytes2Hex(ethMethod.ID)))
+
+	var functionType string
+	switch ethMethod.Type {
+	case abi.Constructor:
+		functionType = "constructor"
+	case abi.Fallback:
+		functionType = "fallback"
+	case abi.Receive:
+		functionType = "receive"
+	default:
+		functionType = "function"
+	}
+
+	inputs := argumentsToSimpleParameters(ethMethod.Inputs)
+	outputs := argumentsToSimpleParameters(ethMethod.Outputs)
+	stateMutability := "nonpayable"
+	if ethMethod.StateMutability != "" {
+		stateMutability = ethMethod.StateMutability
+	}
+	if ethMethod.Payable {
+		stateMutability = "payable"
+	}
+	function := &SimpleFunction{
+		Encoding:        fourByte,
+		Signature:       ethMethod.Sig,
+		Name:            ethMethod.Name,
+		AbiSource:       abiSource,
+		FunctionType:    functionType,
+		Constant:        ethMethod.Constant,
+		StateMutability: stateMutability,
+		Inputs:          inputs,
+		Outputs:         outputs,
+	}
+	function.SetAbiMethod(ethMethod)
+	return function
+}
+
 // argumentsToSimpleParameters converts slice of go-ethereum's Argument to slice of
 // SimpleParameter
 func argumentsToSimpleParameters(args []abi.Argument) (result []SimpleParameter) {
@@ -159,6 +217,109 @@ func argumentTypesToSimpleParameters(argTypes []*abi.Type) (result []SimpleParam
 	return
 }
 
+func AbiMethodFromFunction(function *SimpleFunction) (ethMethod *abi.Method, err error) {
+	if !function.IsMethod() {
+		err = fmt.Errorf("FunctionToAbiMethod called for an event")
+		return
+	}
+
+	removeUnknownTuples(function)
+	jsonAbi, err := json.Marshal([]any{function})
+	if err != nil {
+		return
+	}
+	res, err := abi.JSON(bytes.NewReader(jsonAbi))
+	if err != nil {
+		return
+	}
+	found, ok := res.Methods[function.Name]
+	if !ok {
+		err = fmt.Errorf("generating ABI method: method not found: %s", function.Name)
+		return
+	}
+	ethMethod = &found
+	return
+}
+
+func AbiEventFromFunction(function *SimpleFunction) (ethMethod *abi.Event, err error) {
+	if function.IsMethod() {
+		err = fmt.Errorf("functionToAbiEvent called for a method")
+		return
+	}
+
+	removeUnknownTuples(function)
+	jsonAbi, err := json.Marshal([]any{function})
+	if err != nil {
+		return
+	}
+	res, err := abi.JSON(bytes.NewReader(jsonAbi))
+	if err != nil {
+		return
+	}
+	found, ok := res.Events[function.Name]
+	if !ok {
+		err = fmt.Errorf("generating ABI method: method not found: %s", function.Name)
+		return
+	}
+	ethMethod = &found
+	return
+}
+
+// removeUnknownTuples replaces unknown tuple type with `bytes` type.
+// A tuple is unknown if we don't know its components (this can happen for
+// inputs/outputs of internal methods)
+func removeUnknownTuples(function *SimpleFunction) {
+	remove := func(params []SimpleParameter) {
+		for i := 0; i < len(params); i++ {
+			param := params[i]
+			parameterType := param.ParameterType
+			// Unknown struct
+			if parameterType == "()" || parameterType == "()[]" {
+				params[i].ParameterType = "bytes"
+			}
+		}
+	}
+
+	remove(function.Inputs)
+	remove(function.Outputs)
+}
+
+func (s *SimpleFunction) IsMethod() bool {
+	return s.FunctionType != "event"
+}
+
+func (s *SimpleFunction) SetAbiMethod(method *abi.Method) {
+	s.abiMethod = method
+}
+
+func (s *SimpleFunction) GetAbiMethod() (abiMethod *abi.Method, err error) {
+	if s.abiMethod == nil {
+		abiMethod, err = AbiMethodFromFunction(s)
+		if err != nil {
+			return
+		}
+		s.SetAbiMethod(abiMethod)
+		return
+	}
+	return s.abiMethod, nil
+}
+
+func (s *SimpleFunction) SetAbiEvent(event *abi.Event) {
+	s.abiEvent = event
+}
+
+func (s *SimpleFunction) GetAbiEvent() (abiEvent *abi.Event, err error) {
+	if s.abiEvent == nil {
+		abiEvent, err = AbiEventFromFunction(s)
+		if err != nil {
+			return
+		}
+		s.SetAbiEvent(abiEvent)
+		return
+	}
+	return s.abiEvent, nil
+}
+
 // func joinParametersNames(params []SimpleParameter) (result string) {
 // 	for index, param := range params {
 // 		if index > 0 {
@@ -169,53 +330,19 @@ func argumentTypesToSimpleParameters(argTypes []*abi.Type) (result []SimpleParam
 // 	return
 // }
 
-func FunctionFromAbiEvent(ethEvent *abi.Event, abiSource string) *SimpleFunction {
-	// ID is encoded signature
-	encSig := strings.ToLower(ethEvent.ID.Hex())
-	inputs := argumentsToSimpleParameters(ethEvent.Inputs)
-	return &SimpleFunction{
-		Encoding:     encSig,
-		Signature:    ethEvent.Sig,
-		Name:         ethEvent.Name,
-		FunctionType: "event",
-		Anonymous:    ethEvent.Anonymous,
-		Inputs:       inputs,
+// Normalize sets StateMutability from `payable` field. It is only useful when
+// reading ABIs generated before Solidity 0.5.0, which use `payable` field:
+// https://docs.soliditylang.org/en/develop/050-breaking-changes.html#command-line-and-json-interfaces
+func (s *SimpleFunction) Normalize() {
+	// if StateMutability is already set, we don't have to do anything
+	if s.StateMutability != "nonpayable" {
+		return
 	}
-}
-
-// FunctionFromAbiMethod converts go-ethereum's abi.Method to our SimpleFunction
-func FunctionFromAbiMethod(ethMethod *abi.Method, abiSource string) *SimpleFunction {
-	// method.ID is our "four-byte"
-	fourByte := "0x" + strings.ToLower(string(common.Bytes2Hex(ethMethod.ID)))
-
-	var functionType string
-	switch ethMethod.Type {
-	case abi.Constructor:
-		functionType = "constructor"
-	case abi.Fallback:
-		functionType = "fallback"
-	case abi.Receive:
-		functionType = "receive"
-	default:
-		functionType = "function"
+	if s.payable {
+		s.StateMutability = "payable"
+		return
 	}
-
-	inputs := argumentsToSimpleParameters(ethMethod.Inputs)
-	outputs := argumentsToSimpleParameters(ethMethod.Outputs)
-	stateMutability := "nonpayable"
-	if ethMethod.StateMutability != "" {
-		stateMutability = ethMethod.StateMutability
-	}
-	return &SimpleFunction{
-		Encoding:        fourByte,
-		Signature:       ethMethod.Sig,
-		Name:            ethMethod.Name,
-		FunctionType:    functionType,
-		Constant:        ethMethod.Constant,
-		StateMutability: stateMutability,
-		Inputs:          inputs,
-		Outputs:         outputs,
-	}
+	s.StateMutability = "nonpayable"
 }
 
 // EXISTING_CODE

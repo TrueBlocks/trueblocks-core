@@ -1,0 +1,4228 @@
+[
+  {
+    "encoding": "0xc8a4ac9c",
+    "inputs": [
+      {
+        "name": "a",
+        "type": "uint256"
+      },
+      {
+        "name": "b",
+        "type": "uint256"
+      }
+    ],
+    "name": "mul",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "mul(uint256,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xa391c15b",
+    "inputs": [
+      {
+        "name": "a",
+        "type": "uint256"
+      },
+      {
+        "name": "b",
+        "type": "uint256"
+      }
+    ],
+    "name": "div",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "div(uint256,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xb67d77c5",
+    "inputs": [
+      {
+        "name": "a",
+        "type": "uint256"
+      },
+      {
+        "name": "b",
+        "type": "uint256"
+      }
+    ],
+    "name": "sub",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "sub(uint256,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x771602f7",
+    "inputs": [
+      {
+        "name": "a",
+        "type": "uint256"
+      },
+      {
+        "name": "b",
+        "type": "uint256"
+      }
+    ],
+    "name": "add",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "add(uint256,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xf43f523a",
+    "inputs": [
+      {
+        "name": "a",
+        "type": "uint256"
+      },
+      {
+        "name": "b",
+        "type": "uint256"
+      }
+    ],
+    "name": "mod",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "mod(uint256,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xa9059cbb",
+    "inputs": [
+      {
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "transfer",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      }
+    ],
+    "signature": "transfer(address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x095ea7b3",
+    "inputs": [
+      {
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "approve",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      }
+    ],
+    "signature": "approve(address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x23b872dd",
+    "inputs": [
+      {
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "transferFrom",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      }
+    ],
+    "signature": "transferFrom(address,address,uint256)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x18160ddd",
+    "inputs": [],
+    "name": "totalSupply",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "totalSupply()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x70a08231",
+    "inputs": [
+      {
+        "name": "who",
+        "type": "address"
+      }
+    ],
+    "name": "balanceOf",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "balanceOf(address)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xdd62ed3e",
+    "inputs": [
+      {
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "name": "spender",
+        "type": "address"
+      }
+    ],
+    "name": "allowance",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "allowance(address,address)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "Transfer",
+    "outputs": [],
+    "signature": "Transfer(address,address,uint256)",
+    "type": "event"
+  },
+  {
+    "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "Approval",
+    "outputs": [],
+    "signature": "Approval(address,address,uint256)",
+    "type": "event"
+  },
+  {
+    "constant": true,
+    "encoding": "0x18160ddd",
+    "inputs": [],
+    "name": "totalSupply",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "totalSupply()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x70a08231",
+    "inputs": [
+      {
+        "name": "owner",
+        "type": "address"
+      }
+    ],
+    "name": "balanceOf",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "balanceOf(address)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xdd62ed3e",
+    "inputs": [
+      {
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "name": "spender",
+        "type": "address"
+      }
+    ],
+    "name": "allowance",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "allowance(address,address)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xa9059cbb",
+    "inputs": [
+      {
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "transfer",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      }
+    ],
+    "signature": "transfer(address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x095ea7b3",
+    "inputs": [
+      {
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "approve",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      }
+    ],
+    "signature": "approve(address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x23b872dd",
+    "inputs": [
+      {
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "transferFrom",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      }
+    ],
+    "signature": "transferFrom(address,address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x39509351",
+    "inputs": [
+      {
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "name": "addedValue",
+        "type": "uint256"
+      }
+    ],
+    "name": "increaseAllowance",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      }
+    ],
+    "signature": "increaseAllowance(address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xa457c2d7",
+    "inputs": [
+      {
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "name": "subtractedValue",
+        "type": "uint256"
+      }
+    ],
+    "name": "decreaseAllowance",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      }
+    ],
+    "signature": "decreaseAllowance(address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x30e0789e",
+    "inputs": [
+      {
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "_transfer",
+    "outputs": [],
+    "signature": "_transfer(address,address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x4e6ec247",
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "_mint",
+    "outputs": [],
+    "signature": "_mint(address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x6161eb18",
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "_burn",
+    "outputs": [],
+    "signature": "_burn(address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x104e81ff",
+    "inputs": [
+      {
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "_approve",
+    "outputs": [],
+    "signature": "_approve(address,address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xa22b35ce",
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "_burnFrom",
+    "outputs": [],
+    "signature": "_burnFrom(address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x683dd191",
+    "inputs": [],
+    "name": "scaleFactor",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "scaleFactor()",
+    "type": "function"
+  },
+  {
+    "encoding": "0x4c2097fd",
+    "inputs": [],
+    "name": "maxUInt256",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "maxUInt256()",
+    "type": "function"
+  },
+  {
+    "encoding": "0x2bec1547",
+    "inputs": [
+      {
+        "name": "a",
+        "type": "uint256"
+      }
+    ],
+    "name": "scale",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "scale(uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xa693cacd",
+    "inputs": [
+      {
+        "name": "a",
+        "type": "uint256"
+      }
+    ],
+    "name": "deScale",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "deScale(uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x1ad50586",
+    "inputs": [
+      {
+        "name": "a",
+        "type": "uint256"
+      },
+      {
+        "name": "pow",
+        "type": "uint256"
+      }
+    ],
+    "name": "safePower",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "safePower(uint256,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x82251512",
+    "inputs": [
+      {
+        "name": "a",
+        "type": "uint256"
+      },
+      {
+        "name": "b",
+        "type": "uint256"
+      }
+    ],
+    "name": "divCeil",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "divCeil(uint256,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x98024a8b",
+    "inputs": [
+      {
+        "name": "_principal",
+        "type": "uint256"
+      },
+      {
+        "name": "_numerator",
+        "type": "uint256"
+      },
+      {
+        "name": "_denominator",
+        "type": "uint256"
+      }
+    ],
+    "name": "getPartialAmount",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "getPartialAmount(uint256,uint256,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xa12bb301",
+    "inputs": [
+      {
+        "name": "_value",
+        "type": "uint256"
+      }
+    ],
+    "name": "ceilLog10",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "ceilLog10(uint256)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x6e667db3",
+    "inputs": [],
+    "name": "transferProxy",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "address"
+      }
+    ],
+    "signature": "transferProxy()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xfbfa77cf",
+    "inputs": [],
+    "name": "vault",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "address"
+      }
+    ],
+    "signature": "vault()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x56fe2784",
+    "inputs": [
+      {
+        "name": "_exchangeId",
+        "type": "uint8"
+      }
+    ],
+    "name": "exchangeIds",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "address"
+      }
+    ],
+    "signature": "exchangeIds(uint8)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xfef3ee73",
+    "inputs": [
+      {
+        "name": "val_0",
+        "type": "address"
+      }
+    ],
+    "name": "validSets",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      }
+    ],
+    "signature": "validSets(address)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x5e633498",
+    "inputs": [
+      {
+        "name": "val_0",
+        "type": "address"
+      }
+    ],
+    "name": "validModules",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      }
+    ],
+    "signature": "validModules(address)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xa2c9eb6d",
+    "inputs": [
+      {
+        "name": "_priceLibrary",
+        "type": "address"
+      }
+    ],
+    "name": "validPriceLibraries",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      }
+    ],
+    "signature": "validPriceLibraries(address)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x867904b4",
+    "inputs": [
+      {
+        "name": "_set",
+        "type": "address"
+      },
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "issue",
+    "outputs": [],
+    "signature": "issue(address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x73088bf7",
+    "inputs": [
+      {
+        "name": "_recipient",
+        "type": "address"
+      },
+      {
+        "name": "_set",
+        "type": "address"
+      },
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "issueTo",
+    "outputs": [],
+    "signature": "issueTo(address,address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xa57de4cf",
+    "inputs": [
+      {
+        "name": "_set",
+        "type": "address"
+      },
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "issueInVault",
+    "outputs": [],
+    "signature": "issueInVault(address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x1e9a6950",
+    "inputs": [
+      {
+        "name": "_set",
+        "type": "address"
+      },
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "redeem",
+    "outputs": [],
+    "signature": "redeem(address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xea466061",
+    "inputs": [
+      {
+        "name": "_recipient",
+        "type": "address"
+      },
+      {
+        "name": "_set",
+        "type": "address"
+      },
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "redeemTo",
+    "outputs": [],
+    "signature": "redeemTo(address,address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xa782132c",
+    "inputs": [
+      {
+        "name": "_set",
+        "type": "address"
+      },
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "redeemInVault",
+    "outputs": [],
+    "signature": "redeemInVault(address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x1c2a0e40",
+    "inputs": [
+      {
+        "name": "_set",
+        "type": "address"
+      },
+      {
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      },
+      {
+        "name": "_toExclude",
+        "type": "uint256"
+      }
+    ],
+    "name": "redeemAndWithdrawTo",
+    "outputs": [],
+    "signature": "redeemAndWithdrawTo(address,address,uint256,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x30a90736",
+    "inputs": [
+      {
+        "is_array": true,
+        "name": "_tokens",
+        "type": "address[]"
+      },
+      {
+        "is_array": true,
+        "name": "_quantities",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "batchDeposit",
+    "outputs": [],
+    "signature": "batchDeposit(address[],uint256[])",
+    "type": "function"
+  },
+  {
+    "encoding": "0xe131243e",
+    "inputs": [
+      {
+        "is_array": true,
+        "name": "_tokens",
+        "type": "address[]"
+      },
+      {
+        "is_array": true,
+        "name": "_quantities",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "batchWithdraw",
+    "outputs": [],
+    "signature": "batchWithdraw(address[],uint256[])",
+    "type": "function"
+  },
+  {
+    "encoding": "0x47e7ef24",
+    "inputs": [
+      {
+        "name": "_token",
+        "type": "address"
+      },
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "deposit",
+    "outputs": [],
+    "signature": "deposit(address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xf3fef3a3",
+    "inputs": [
+      {
+        "name": "_token",
+        "type": "address"
+      },
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "withdraw",
+    "outputs": [],
+    "signature": "withdraw(address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x59e026f7",
+    "inputs": [
+      {
+        "name": "_token",
+        "type": "address"
+      },
+      {
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "internalTransfer",
+    "outputs": [],
+    "signature": "internalTransfer(address,address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x5c217114",
+    "inputs": [
+      {
+        "name": "_factory",
+        "type": "address"
+      },
+      {
+        "is_array": true,
+        "name": "_components",
+        "type": "address[]"
+      },
+      {
+        "is_array": true,
+        "name": "_units",
+        "type": "uint256[]"
+      },
+      {
+        "name": "_naturalUnit",
+        "type": "uint256"
+      },
+      {
+        "name": "_name",
+        "type": "bytes32"
+      },
+      {
+        "name": "_symbol",
+        "type": "bytes32"
+      },
+      {
+        "name": "_callData",
+        "type": "bytes"
+      }
+    ],
+    "name": "createSet",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "address"
+      }
+    ],
+    "signature": "createSet(address,address[],uint256[],uint256,bytes32,bytes32,bytes)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xde30f6ee",
+    "inputs": [
+      {
+        "name": "_from",
+        "type": "address"
+      },
+      {
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "name": "_token",
+        "type": "address"
+      },
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "depositModule",
+    "outputs": [],
+    "signature": "depositModule(address,address,address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x0e1fd334",
+    "inputs": [
+      {
+        "name": "_from",
+        "type": "address"
+      },
+      {
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "name": "_token",
+        "type": "address"
+      },
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "withdrawModule",
+    "outputs": [],
+    "signature": "withdrawModule(address,address,address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xcaaa3ada",
+    "inputs": [
+      {
+        "name": "_from",
+        "type": "address"
+      },
+      {
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "is_array": true,
+        "name": "_tokens",
+        "type": "address[]"
+      },
+      {
+        "is_array": true,
+        "name": "_quantities",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "batchDepositModule",
+    "outputs": [],
+    "signature": "batchDepositModule(address,address,address[],uint256[])",
+    "type": "function"
+  },
+  {
+    "encoding": "0xfe93620e",
+    "inputs": [
+      {
+        "name": "_from",
+        "type": "address"
+      },
+      {
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "is_array": true,
+        "name": "_tokens",
+        "type": "address[]"
+      },
+      {
+        "is_array": true,
+        "name": "_quantities",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "batchWithdrawModule",
+    "outputs": [],
+    "signature": "batchWithdrawModule(address,address,address[],uint256[])",
+    "type": "function"
+  },
+  {
+    "encoding": "0x7c68561f",
+    "inputs": [
+      {
+        "name": "_owner",
+        "type": "address"
+      },
+      {
+        "name": "_recipient",
+        "type": "address"
+      },
+      {
+        "name": "_set",
+        "type": "address"
+      },
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "issueModule",
+    "outputs": [],
+    "signature": "issueModule(address,address,address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x5990ca08",
+    "inputs": [
+      {
+        "name": "_burnAddress",
+        "type": "address"
+      },
+      {
+        "name": "_incrementAddress",
+        "type": "address"
+      },
+      {
+        "name": "_set",
+        "type": "address"
+      },
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "redeemModule",
+    "outputs": [],
+    "signature": "redeemModule(address,address,address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x34650cd7",
+    "inputs": [
+      {
+        "is_array": true,
+        "name": "_tokens",
+        "type": "address[]"
+      },
+      {
+        "name": "_owner",
+        "type": "address"
+      },
+      {
+        "is_array": true,
+        "name": "_quantities",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "batchIncrementTokenOwnerModule",
+    "outputs": [],
+    "signature": "batchIncrementTokenOwnerModule(address[],address,uint256[])",
+    "type": "function"
+  },
+  {
+    "encoding": "0xca1ce8ce",
+    "inputs": [
+      {
+        "is_array": true,
+        "name": "_tokens",
+        "type": "address[]"
+      },
+      {
+        "name": "_owner",
+        "type": "address"
+      },
+      {
+        "is_array": true,
+        "name": "_quantities",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "batchDecrementTokenOwnerModule",
+    "outputs": [],
+    "signature": "batchDecrementTokenOwnerModule(address[],address,uint256[])",
+    "type": "function"
+  },
+  {
+    "encoding": "0x55d2d9cd",
+    "inputs": [
+      {
+        "is_array": true,
+        "name": "_tokens",
+        "type": "address[]"
+      },
+      {
+        "name": "_from",
+        "type": "address"
+      },
+      {
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "is_array": true,
+        "name": "_quantities",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "batchTransferBalanceModule",
+    "outputs": [],
+    "signature": "batchTransferBalanceModule(address[],address,address,uint256[])",
+    "type": "function"
+  },
+  {
+    "encoding": "0xfd496ebf",
+    "inputs": [
+      {
+        "name": "_token",
+        "type": "address"
+      },
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      },
+      {
+        "name": "_from",
+        "type": "address"
+      },
+      {
+        "name": "_to",
+        "type": "address"
+      }
+    ],
+    "name": "transferModule",
+    "outputs": [],
+    "signature": "transferModule(address,uint256,address,address)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x52a5ce53",
+    "inputs": [
+      {
+        "is_array": true,
+        "name": "_tokens",
+        "type": "address[]"
+      },
+      {
+        "is_array": true,
+        "name": "_quantities",
+        "type": "uint256[]"
+      },
+      {
+        "name": "_from",
+        "type": "address"
+      },
+      {
+        "name": "_to",
+        "type": "address"
+      }
+    ],
+    "name": "batchTransferModule",
+    "outputs": [],
+    "signature": "batchTransferModule(address[],uint256[],address,address)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x439fab91",
+    "inputs": [
+      {
+        "name": "_feeCalculatorData",
+        "type": "bytes"
+      }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "signature": "initialize(bytes)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xced72f87",
+    "inputs": [],
+    "name": "getFee",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "getFee()",
+    "type": "function"
+  },
+  {
+    "encoding": "0x20f55404",
+    "inputs": [],
+    "name": "updateAndGetFee",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "updateAndGetFee()",
+    "type": "function"
+  },
+  {
+    "encoding": "0xcbf1c354",
+    "inputs": [
+      {
+        "name": "_newFeeData",
+        "type": "bytes"
+      }
+    ],
+    "name": "adjustFee",
+    "outputs": [],
+    "signature": "adjustFee(bytes)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x42a7cfd5",
+    "inputs": [],
+    "name": "naturalUnit",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "naturalUnit()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x99d50d5d",
+    "inputs": [],
+    "name": "getComponents",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "address[]"
+      }
+    ],
+    "signature": "getComponents()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x027aa9f5",
+    "inputs": [],
+    "name": "getUnits",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "uint256[]"
+      }
+    ],
+    "signature": "getUnits()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x18c53aca",
+    "inputs": [
+      {
+        "name": "_tokenAddress",
+        "type": "address"
+      }
+    ],
+    "name": "tokenIsComponent",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      }
+    ],
+    "signature": "tokenIsComponent(address)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x40c10f19",
+    "inputs": [
+      {
+        "name": "_issuer",
+        "type": "address"
+      },
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "mint",
+    "outputs": [],
+    "signature": "mint(address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x9dc29fac",
+    "inputs": [
+      {
+        "name": "_from",
+        "type": "address"
+      },
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "burn",
+    "outputs": [],
+    "signature": "burn(address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xa9059cbb",
+    "inputs": [
+      {
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "transfer",
+    "outputs": [],
+    "signature": "transfer(address,uint256)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x96213fc7",
+    "inputs": [],
+    "name": "auctionLibrary",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "address"
+      }
+    ],
+    "signature": "auctionLibrary()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x18160ddd",
+    "inputs": [],
+    "name": "totalSupply",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "totalSupply()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xa9faafd9",
+    "inputs": [],
+    "name": "proposalStartTime",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "proposalStartTime()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xb83d8157",
+    "inputs": [],
+    "name": "lastRebalanceTimestamp",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "lastRebalanceTimestamp()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x16d1d916",
+    "inputs": [],
+    "name": "rebalanceInterval",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "rebalanceInterval()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xf75af97f",
+    "inputs": [],
+    "name": "rebalanceState",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "internalType": "enum RebalancingLibrary.State",
+        "type": "uint8"
+      }
+    ],
+    "signature": "rebalanceState()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x4394380b",
+    "inputs": [],
+    "name": "startingCurrentSetAmount",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "startingCurrentSetAmount()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x70a08231",
+    "inputs": [
+      {
+        "name": "owner",
+        "type": "address"
+      }
+    ],
+    "name": "balanceOf",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "balanceOf(address)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x7632b24b",
+    "inputs": [
+      {
+        "name": "_nextSet",
+        "type": "address"
+      },
+      {
+        "name": "_auctionLibrary",
+        "type": "address"
+      },
+      {
+        "name": "_auctionTimeToPivot",
+        "type": "uint256"
+      },
+      {
+        "name": "_auctionStartPrice",
+        "type": "uint256"
+      },
+      {
+        "name": "_auctionPivotPrice",
+        "type": "uint256"
+      }
+    ],
+    "name": "propose",
+    "outputs": [],
+    "signature": "propose(address,address,uint256,uint256,uint256)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x42a7cfd5",
+    "inputs": [],
+    "name": "naturalUnit",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "naturalUnit()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x30b86627",
+    "inputs": [],
+    "name": "currentSet",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "address"
+      }
+    ],
+    "signature": "currentSet()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xcb631699",
+    "inputs": [],
+    "name": "nextSet",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "address"
+      }
+    ],
+    "signature": "nextSet()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x0193aea2",
+    "inputs": [],
+    "name": "unitShares",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "unitShares()",
+    "type": "function"
+  },
+  {
+    "encoding": "0x9dc29fac",
+    "inputs": [
+      {
+        "name": "_from",
+        "type": "address"
+      },
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "burn",
+    "outputs": [],
+    "signature": "burn(address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x9979ef45",
+    "inputs": [
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "placeBid",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "address[]"
+      },
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "uint256[]"
+      },
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "uint256[]"
+      }
+    ],
+    "signature": "placeBid(uint256)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x570f3167",
+    "inputs": [],
+    "name": "getCombinedTokenArrayLength",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "getCombinedTokenArrayLength()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x8618711c",
+    "inputs": [],
+    "name": "getCombinedTokenArray",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "address[]"
+      }
+    ],
+    "signature": "getCombinedTokenArray()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xf0284b1c",
+    "inputs": [],
+    "name": "getFailedAuctionWithdrawComponents",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "address[]"
+      }
+    ],
+    "signature": "getFailedAuctionWithdrawComponents()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xa065172b",
+    "inputs": [],
+    "name": "getAuctionPriceParameters",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "uint256[]"
+      }
+    ],
+    "signature": "getAuctionPriceParameters()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xa2e59c91",
+    "inputs": [],
+    "name": "getBiddingParameters",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "uint256[]"
+      }
+    ],
+    "signature": "getBiddingParameters()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x9b013aee",
+    "inputs": [
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "getBidPrice",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "uint256[]"
+      },
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "uint256[]"
+      }
+    ],
+    "signature": "getBidPrice(uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xacb75403",
+    "inputs": [
+      {
+        "is_array": true,
+        "name": "_addresses",
+        "type": "address[]"
+      },
+      {
+        "is_array": true,
+        "name": "_inflow",
+        "type": "uint256[]"
+      },
+      {
+        "is_array": true,
+        "name": "_outflow",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "composeTokenFlow",
+    "outputs": [
+      {
+        "name": "memory",
+        "internalType": "struct TokenFlow",
+        "type": "tuple"
+      }
+    ],
+    "signature": "composeTokenFlow(address[],uint256[],uint256[])",
+    "type": "function"
+  },
+  {
+    "encoding": "0x86f41e1b",
+    "inputs": [
+      {
+        "name": "_tokenFlow",
+        "internalType": "struct TokenFlow",
+        "type": "tuple"
+      }
+    ],
+    "name": "decomposeTokenFlow",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "address[]"
+      },
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "uint256[]"
+      },
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "uint256[]"
+      }
+    ],
+    "signature": "decomposeTokenFlow(TokenFlow)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x57c6626e",
+    "inputs": [
+      {
+        "name": "_tokenFlow",
+        "internalType": "struct TokenFlow",
+        "type": "tuple"
+      }
+    ],
+    "name": "decomposeTokenFlowToBidPrice",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "uint256[]"
+      },
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "uint256[]"
+      }
+    ],
+    "signature": "decomposeTokenFlowToBidPrice(tuple)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x3f08ae92",
+    "inputs": [
+      {
+        "name": "_rebalancingSetToken",
+        "type": "address"
+      },
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "getTokenFlows",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "address[]"
+      },
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "uint256[]"
+      },
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "uint256[]"
+      }
+    ],
+    "signature": "getTokenFlows(address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xc726bb84",
+    "inputs": [
+      {
+        "name": "_currentSet",
+        "type": "address"
+      },
+      {
+        "name": "_nextSet",
+        "type": "address"
+      },
+      {
+        "name": "_startingCurrentSetQuantity",
+        "type": "uint256"
+      },
+      {
+        "name": "_liquidatorData",
+        "type": "bytes"
+      }
+    ],
+    "name": "startRebalance",
+    "outputs": [],
+    "signature": "startRebalance(address,address,uint256,bytes)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x102d32c0",
+    "inputs": [
+      {
+        "name": "_set",
+        "type": "address"
+      },
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "getBidPrice",
+    "outputs": [
+      {
+        "name": "memory",
+        "internalType": "struct Rebalance.TokenFlow",
+        "type": "tuple"
+      }
+    ],
+    "signature": "getBidPrice(address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x9979ef45",
+    "inputs": [
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "placeBid",
+    "outputs": [
+      {
+        "name": "memory",
+        "internalType": "struct Rebalance.TokenFlow",
+        "type": "tuple"
+      }
+    ],
+    "signature": "placeBid(uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xfa2d8c90",
+    "inputs": [],
+    "name": "settleRebalance",
+    "outputs": [],
+    "signature": "settleRebalance()",
+    "type": "function"
+  },
+  {
+    "encoding": "0x8a411b76",
+    "inputs": [],
+    "name": "endFailedRebalance",
+    "outputs": [],
+    "signature": "endFailedRebalance()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x558a7c06",
+    "inputs": [
+      {
+        "name": "_set",
+        "type": "address"
+      }
+    ],
+    "name": "auctionPriceParameters",
+    "outputs": [
+      {
+        "name": "memory",
+        "internalType": "struct RebalancingLibrary.AuctionPriceParameters",
+        "type": "tuple"
+      }
+    ],
+    "signature": "auctionPriceParameters(address)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x3b52de3b",
+    "inputs": [
+      {
+        "name": "_set",
+        "type": "address"
+      }
+    ],
+    "name": "hasRebalanceFailed",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      }
+    ],
+    "signature": "hasRebalanceFailed(address)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x060f0203",
+    "inputs": [
+      {
+        "name": "_set",
+        "type": "address"
+      }
+    ],
+    "name": "minimumBid",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "minimumBid(address)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x57dc13ec",
+    "inputs": [
+      {
+        "name": "_set",
+        "type": "address"
+      }
+    ],
+    "name": "startingCurrentSets",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "startingCurrentSets(address)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x48454433",
+    "inputs": [
+      {
+        "name": "_set",
+        "type": "address"
+      }
+    ],
+    "name": "remainingCurrentSets",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "remainingCurrentSets(address)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x1273a666",
+    "inputs": [
+      {
+        "name": "_set",
+        "type": "address"
+      }
+    ],
+    "name": "getCombinedCurrentSetUnits",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "uint256[]"
+      }
+    ],
+    "signature": "getCombinedCurrentSetUnits(address)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x22c1107a",
+    "inputs": [
+      {
+        "name": "_set",
+        "type": "address"
+      }
+    ],
+    "name": "getCombinedNextSetUnits",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "uint256[]"
+      }
+    ],
+    "signature": "getCombinedNextSetUnits(address)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x77b7a8d8",
+    "inputs": [
+      {
+        "name": "_set",
+        "type": "address"
+      }
+    ],
+    "name": "getCombinedTokenArray",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "address[]"
+      }
+    ],
+    "signature": "getCombinedTokenArray(address)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xf2f4eb26",
+    "inputs": [],
+    "name": "core",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "address"
+      }
+    ],
+    "signature": "core()",
+    "type": "function"
+  },
+  {
+    "encoding": "0x569f7494",
+    "inputs": [
+      {
+        "is_array": true,
+        "name": "_components",
+        "type": "address[]"
+      },
+      {
+        "is_array": true,
+        "name": "_units",
+        "type": "uint256[]"
+      },
+      {
+        "name": "_naturalUnit",
+        "type": "uint256"
+      },
+      {
+        "name": "_name",
+        "type": "bytes32"
+      },
+      {
+        "name": "_symbol",
+        "type": "bytes32"
+      },
+      {
+        "name": "_callData",
+        "type": "bytes"
+      }
+    ],
+    "name": "createSet",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "address"
+      }
+    ],
+    "signature": "createSet(address[],uint256[],uint256,bytes32,bytes32,bytes)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x372c12b1",
+    "inputs": [
+      {
+        "name": "_address",
+        "type": "address"
+      }
+    ],
+    "name": "whiteList",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      }
+    ],
+    "signature": "whiteList(address)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x32ed010e",
+    "inputs": [
+      {
+        "is_array": true,
+        "name": "_addresses",
+        "type": "address[]"
+      }
+    ],
+    "name": "areValidAddresses",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      }
+    ],
+    "signature": "areValidAddresses(address[])",
+    "type": "function"
+  },
+  {
+    "encoding": "0x81b1c820",
+    "inputs": [],
+    "name": "minimumRebalanceInterval",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "minimumRebalanceInterval()",
+    "type": "function"
+  },
+  {
+    "encoding": "0xf81d6d32",
+    "inputs": [],
+    "name": "minimumProposalPeriod",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "minimumProposalPeriod()",
+    "type": "function"
+  },
+  {
+    "encoding": "0x2b135733",
+    "inputs": [],
+    "name": "minimumTimeToPivot",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "minimumTimeToPivot()",
+    "type": "function"
+  },
+  {
+    "encoding": "0x5a565085",
+    "inputs": [],
+    "name": "maximumTimeToPivot",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "maximumTimeToPivot()",
+    "type": "function"
+  },
+  {
+    "encoding": "0xbefbe99c",
+    "inputs": [],
+    "name": "minimumNaturalUnit",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "minimumNaturalUnit()",
+    "type": "function"
+  },
+  {
+    "encoding": "0x8be5c466",
+    "inputs": [],
+    "name": "maximumNaturalUnit",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "maximumNaturalUnit()",
+    "type": "function"
+  },
+  {
+    "encoding": "0xd0d2ba3e",
+    "inputs": [],
+    "name": "rebalanceAuctionModule",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "address"
+      }
+    ],
+    "signature": "rebalanceAuctionModule()",
+    "type": "function"
+  },
+  {
+    "encoding": "0xc3b35a7e",
+    "inputs": [
+      {
+        "name": "_token",
+        "type": "address"
+      },
+      {
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "withdrawTo",
+    "outputs": [],
+    "signature": "withdrawTo(address,address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xbada5726",
+    "inputs": [
+      {
+        "name": "_token",
+        "type": "address"
+      },
+      {
+        "name": "_owner",
+        "type": "address"
+      },
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "incrementTokenOwner",
+    "outputs": [],
+    "signature": "incrementTokenOwner(address,address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x80ddda30",
+    "inputs": [
+      {
+        "name": "_token",
+        "type": "address"
+      },
+      {
+        "name": "_owner",
+        "type": "address"
+      },
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "decrementTokenOwner",
+    "outputs": [],
+    "signature": "decrementTokenOwner(address,address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xb19ad577",
+    "inputs": [
+      {
+        "name": "_token",
+        "type": "address"
+      },
+      {
+        "name": "_from",
+        "type": "address"
+      },
+      {
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "transferBalance",
+    "outputs": [],
+    "signature": "transferBalance(address,address,address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x2321af6a",
+    "inputs": [
+      {
+        "is_array": true,
+        "name": "_tokens",
+        "type": "address[]"
+      },
+      {
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "is_array": true,
+        "name": "_quantities",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "batchWithdrawTo",
+    "outputs": [],
+    "signature": "batchWithdrawTo(address[],address,uint256[])",
+    "type": "function"
+  },
+  {
+    "encoding": "0x12a3bbe3",
+    "inputs": [
+      {
+        "is_array": true,
+        "name": "_tokens",
+        "type": "address[]"
+      },
+      {
+        "name": "_owner",
+        "type": "address"
+      },
+      {
+        "is_array": true,
+        "name": "_quantities",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "batchIncrementTokenOwner",
+    "outputs": [],
+    "signature": "batchIncrementTokenOwner(address[],address,uint256[])",
+    "type": "function"
+  },
+  {
+    "encoding": "0x3911477c",
+    "inputs": [
+      {
+        "is_array": true,
+        "name": "_tokens",
+        "type": "address[]"
+      },
+      {
+        "name": "_owner",
+        "type": "address"
+      },
+      {
+        "is_array": true,
+        "name": "_quantities",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "batchDecrementTokenOwner",
+    "outputs": [],
+    "signature": "batchDecrementTokenOwner(address[],address,uint256[])",
+    "type": "function"
+  },
+  {
+    "encoding": "0x20153c38",
+    "inputs": [
+      {
+        "is_array": true,
+        "name": "_tokens",
+        "type": "address[]"
+      },
+      {
+        "name": "_from",
+        "type": "address"
+      },
+      {
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "is_array": true,
+        "name": "_quantities",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "batchTransferBalance",
+    "outputs": [],
+    "signature": "batchTransferBalance(address[],address,address,uint256[])",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x1f98ade3",
+    "inputs": [
+      {
+        "name": "_token",
+        "type": "address"
+      },
+      {
+        "name": "_owner",
+        "type": "address"
+      }
+    ],
+    "name": "getOwnerBalance",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "getOwnerBalance(address,address)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xd72daa00",
+    "inputs": [
+      {
+        "name": "_value",
+        "type": "uint256"
+      }
+    ],
+    "name": "validateLessThanEqualOneHundredPercent",
+    "outputs": [],
+    "signature": "validateLessThanEqualOneHundredPercent(uint256)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x02f4858d",
+    "inputs": [
+      {
+        "name": "_value",
+        "type": "uint256"
+      }
+    ],
+    "name": "validateMultipleOfBasisPoint",
+    "outputs": [],
+    "signature": "validateMultipleOfBasisPoint(uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xf9c15f5b74b4e002e8881b2d9810116b1d4d45461e6dd7ac8111381b592e2c65",
+    "inputs": [
+      {
+        "name": "newManager",
+        "type": "address"
+      },
+      {
+        "name": "oldManager",
+        "type": "address"
+      }
+    ],
+    "name": "NewManagerAdded",
+    "outputs": [],
+    "signature": "NewManagerAdded(address,address)",
+    "type": "event"
+  },
+  {
+    "encoding": "0xe26fceb0d040e26e9c96b5be39f9a7b88bc48ce7a787f1e3cfd08e7f97626de6",
+    "inputs": [
+      {
+        "name": "newLiquidator",
+        "type": "address"
+      },
+      {
+        "name": "oldLiquidator",
+        "type": "address"
+      }
+    ],
+    "name": "NewLiquidatorAdded",
+    "outputs": [],
+    "signature": "NewLiquidatorAdded(address,address)",
+    "type": "event"
+  },
+  {
+    "encoding": "0xbf7417a972a6451dbb2afbe07f2846cb433f2c3ab380fecbf70e38684eda554a",
+    "inputs": [
+      {
+        "name": "newEntryFee",
+        "type": "uint256"
+      },
+      {
+        "name": "oldEntryFee",
+        "type": "uint256"
+      }
+    ],
+    "name": "NewEntryFee",
+    "outputs": [],
+    "signature": "NewEntryFee(uint256,uint256)",
+    "type": "event"
+  },
+  {
+    "encoding": "0x2d63d620fb255d563fc112849cc79d42a367a3c51694709297b3ef80b28a8929",
+    "inputs": [
+      {
+        "name": "newFeeRecipient",
+        "type": "address"
+      },
+      {
+        "name": "oldFeeRecipient",
+        "type": "address"
+      }
+    ],
+    "name": "NewFeeRecipient",
+    "outputs": [],
+    "signature": "NewFeeRecipient(address,address)",
+    "type": "event"
+  },
+  {
+    "encoding": "0x4f97c4974c69e34351de4be43b70406a96a48f940ec7d8853b4be6e7e6d98c7b",
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "feeRecipient",
+        "type": "address"
+      },
+      {
+        "name": "feeQuantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "EntryFeePaid",
+    "outputs": [],
+    "signature": "EntryFeePaid(address,uint256)",
+    "type": "event"
+  },
+  {
+    "encoding": "0x9c6ae00de948f7b7024af2cf50454197682e662953f3c8b35e74ce63ec5fcd8f",
+    "inputs": [
+      {
+        "name": "oldSet",
+        "type": "address"
+      },
+      {
+        "name": "newSet",
+        "type": "address"
+      },
+      {
+        "name": "rebalanceIndex",
+        "type": "uint256"
+      },
+      {
+        "name": "currentSetQuantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "RebalanceStarted",
+    "outputs": [],
+    "signature": "RebalanceStarted(address,address,uint256,uint256)",
+    "type": "event"
+  },
+  {
+    "encoding": "0x973319ae5c915d7b31c697261193cb1acf72a6b9286dc987e24cbe0d2e784b5c",
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "feeRecipient",
+        "type": "address"
+      },
+      {
+        "name": "feeQuantity",
+        "type": "uint256"
+      },
+      {
+        "name": "feePercentage",
+        "type": "uint256"
+      },
+      {
+        "name": "rebalanceIndex",
+        "type": "uint256"
+      },
+      {
+        "name": "issueQuantity",
+        "type": "uint256"
+      },
+      {
+        "name": "unitShares",
+        "type": "uint256"
+      }
+    ],
+    "name": "RebalanceSettled",
+    "outputs": [],
+    "signature": "RebalanceSettled(address,uint256,uint256,uint256,uint256,uint256)",
+    "type": "event"
+  },
+  {
+    "encoding": "0xd0ebdbe7",
+    "inputs": [
+      {
+        "name": "_newManager",
+        "type": "address"
+      }
+    ],
+    "name": "setManager",
+    "outputs": [],
+    "signature": "setManager(address)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xeb770d0c",
+    "inputs": [
+      {
+        "name": "_newEntryFee",
+        "type": "uint256"
+      }
+    ],
+    "name": "setEntryFee",
+    "outputs": [],
+    "signature": "setEntryFee(uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x670fd8f1",
+    "inputs": [
+      {
+        "name": "_newLiquidator",
+        "type": "address"
+      }
+    ],
+    "name": "setLiquidator",
+    "outputs": [],
+    "signature": "setLiquidator(address)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xe74b981b",
+    "inputs": [
+      {
+        "name": "_newFeeRecipient",
+        "type": "address"
+      }
+    ],
+    "name": "setFeeRecipient",
+    "outputs": [],
+    "signature": "setFeeRecipient(address)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x2e35bcca",
+    "inputs": [],
+    "name": "rebalanceFee",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "rebalanceFee()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x99d50d5d",
+    "inputs": [],
+    "name": "getComponents",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "address[]"
+      }
+    ],
+    "signature": "getComponents()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x027aa9f5",
+    "inputs": [],
+    "name": "getUnits",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "uint256[]"
+      }
+    ],
+    "signature": "getUnits()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x18c53aca",
+    "inputs": [
+      {
+        "name": "_tokenAddress",
+        "type": "address"
+      }
+    ],
+    "name": "tokenIsComponent",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      }
+    ],
+    "signature": "tokenIsComponent(address)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x25700ba1",
+    "inputs": [],
+    "name": "validateManager",
+    "outputs": [],
+    "signature": "validateManager()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xf208b8b1",
+    "inputs": [],
+    "name": "validateCallerIsCore",
+    "outputs": [],
+    "signature": "validateCallerIsCore()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xc9ce376c",
+    "inputs": [],
+    "name": "validateCallerIsModule",
+    "outputs": [],
+    "signature": "validateCallerIsModule()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xe45d8238",
+    "inputs": [
+      {
+        "name": "_requiredState",
+        "internalType": "enum RebalancingLibrary.State",
+        "type": "uint8"
+      }
+    ],
+    "name": "validateRebalanceStateIs",
+    "outputs": [],
+    "signature": "validateRebalanceStateIs(uint8)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x5c0cde52",
+    "inputs": [
+      {
+        "name": "_requiredState",
+        "internalType": "enum RebalancingLibrary.State",
+        "type": "uint8"
+      }
+    ],
+    "name": "validateRebalanceStateIsNot",
+    "outputs": [],
+    "signature": "validateRebalanceStateIsNot(uint8)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x819f13b7ecdde26dc2f4f306d33b2d6e5b32f631d969f8c98a806896a06a5760",
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "feeRecipient",
+        "type": "address"
+      },
+      {
+        "name": "feeQuantity",
+        "type": "uint256"
+      },
+      {
+        "name": "feePercentage",
+        "type": "uint256"
+      },
+      {
+        "name": "newUnitShares",
+        "type": "uint256"
+      }
+    ],
+    "name": "IncentiveFeePaid",
+    "outputs": [],
+    "signature": "IncentiveFeePaid(address,uint256,uint256,uint256)",
+    "type": "event"
+  },
+  {
+    "encoding": "0xab0fa214",
+    "inputs": [],
+    "name": "handleFees",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      },
+      {
+        "name": "ret_1",
+        "type": "uint256"
+      }
+    ],
+    "signature": "handleFees()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x7ac92150",
+    "inputs": [
+      {
+        "name": "_feePercentage",
+        "type": "uint256"
+      }
+    ],
+    "name": "calculateIncentiveFeeInflation",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "calculateIncentiveFeeInflation(uint256)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x28000375",
+    "inputs": [],
+    "name": "validateFeeActualization",
+    "outputs": [],
+    "signature": "validateFeeActualization()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x659d9c21",
+    "inputs": [],
+    "name": "calculateNewUnitShares",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "calculateNewUnitShares()",
+    "type": "function"
+  },
+  {
+    "encoding": "0x6d5433e6",
+    "inputs": [
+      {
+        "name": "a",
+        "type": "uint256"
+      },
+      {
+        "name": "b",
+        "type": "uint256"
+      }
+    ],
+    "name": "max",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "max(uint256,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x7ae2b5c7",
+    "inputs": [
+      {
+        "name": "a",
+        "type": "uint256"
+      },
+      {
+        "name": "b",
+        "type": "uint256"
+      }
+    ],
+    "name": "min",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "min(uint256,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x2b7423ab",
+    "inputs": [
+      {
+        "name": "a",
+        "type": "uint256"
+      },
+      {
+        "name": "b",
+        "type": "uint256"
+      }
+    ],
+    "name": "average",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "average(uint256,uint256)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x03cd8870",
+    "inputs": [
+      {
+        "name": "_set",
+        "type": "address"
+      },
+      {
+        "is_array": true,
+        "name": "_tokens",
+        "type": "address[]"
+      }
+    ],
+    "name": "validateTokensAreComponents",
+    "outputs": [],
+    "signature": "validateTokensAreComponents(address,address[])",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x49468457",
+    "inputs": [
+      {
+        "name": "_set",
+        "type": "address"
+      },
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "isMultipleOfSetNaturalUnit",
+    "outputs": [],
+    "signature": "isMultipleOfSetNaturalUnit(address,uint256)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x91ab00f3",
+    "inputs": [
+      {
+        "name": "_core",
+        "type": "address"
+      },
+      {
+        "name": "_set",
+        "type": "address"
+      }
+    ],
+    "name": "requireValidSet",
+    "outputs": [],
+    "signature": "requireValidSet(address,address)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x1a2e9c74",
+    "inputs": [
+      {
+        "name": "_set",
+        "type": "address"
+      }
+    ],
+    "name": "getSetDetails",
+    "outputs": [
+      {
+        "name": "memory",
+        "internalType": "struct SetDetails",
+        "type": "tuple"
+      }
+    ],
+    "signature": "getSetDetails(address)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x2fb2b50b",
+    "inputs": [],
+    "name": "validateRebalancingSettlement",
+    "outputs": [],
+    "signature": "validateRebalancingSettlement()",
+    "type": "function"
+  },
+  {
+    "encoding": "0x5a810853",
+    "inputs": [
+      {
+        "name": "_issueQuantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "issueNextSet",
+    "outputs": [],
+    "signature": "issueNextSet(uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xd6255607",
+    "inputs": [
+      {
+        "name": "_newUnitShares",
+        "type": "uint256"
+      }
+    ],
+    "name": "transitionToDefault",
+    "outputs": [],
+    "signature": "transitionToDefault(uint256)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x57b031c1",
+    "inputs": [
+      {
+        "name": "_setToken",
+        "type": "address"
+      }
+    ],
+    "name": "calculateSetIssueQuantity",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "calculateSetIssueQuantity(address)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xab0fa214",
+    "inputs": [],
+    "name": "handleFees",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      },
+      {
+        "name": "ret_1",
+        "type": "uint256"
+      }
+    ],
+    "signature": "handleFees()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x5ee59470",
+    "inputs": [
+      {
+        "name": "_rebalanceFeePercent",
+        "type": "uint256"
+      }
+    ],
+    "name": "calculateRebalanceFeeInflation",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "calculateRebalanceFeeInflation(uint256)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x09a9991d",
+    "inputs": [
+      {
+        "name": "_issueQuantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "calculateNextSetNewUnitShares",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "calculateNextSetNewUnitShares(uint256)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x4d6d401d",
+    "inputs": [
+      {
+        "name": "_setToken",
+        "internalType": "struct SetTokenLibrary.SetDetails",
+        "type": "tuple"
+      }
+    ],
+    "name": "calculateMaxIssueAmount",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "calculateMaxIssueAmount(tuple)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x06fdde03",
+    "inputs": [],
+    "name": "name",
+    "outputs": [
+      {
+        "name": "memory",
+        "type": "string"
+      }
+    ],
+    "signature": "name()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x95d89b41",
+    "inputs": [],
+    "name": "symbol",
+    "outputs": [
+      {
+        "name": "memory",
+        "type": "string"
+      }
+    ],
+    "signature": "symbol()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x313ce567",
+    "inputs": [],
+    "name": "decimals",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint8"
+      }
+    ],
+    "signature": "decimals()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xc4cbfa44",
+    "inputs": [],
+    "name": "isConstructor",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      }
+    ],
+    "signature": "isConstructor()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xa065172b",
+    "inputs": [],
+    "name": "getAuctionPriceParameters",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "uint256[]"
+      }
+    ],
+    "signature": "getAuctionPriceParameters()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xf056a9ae",
+    "inputs": [],
+    "name": "getCombinedCurrentUnits",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "uint256[]"
+      }
+    ],
+    "signature": "getCombinedCurrentUnits()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xcdb026a1",
+    "inputs": [],
+    "name": "getCombinedNextSetUnits",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "uint256[]"
+      }
+    ],
+    "signature": "getCombinedNextSetUnits()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x8618711c",
+    "inputs": [],
+    "name": "getCombinedTokenArray",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "address[]"
+      }
+    ],
+    "signature": "getCombinedTokenArray()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x570f3167",
+    "inputs": [],
+    "name": "getCombinedTokenArrayLength",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "getCombinedTokenArrayLength()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x4394380b",
+    "inputs": [],
+    "name": "startingCurrentSetAmount",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "startingCurrentSetAmount()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xd600ae48",
+    "inputs": [],
+    "name": "auctionPriceParameters",
+    "outputs": [
+      {
+        "name": "memory",
+        "internalType": "struct RebalancingLibrary.AuctionPriceParameters",
+        "type": "tuple"
+      }
+    ],
+    "signature": "auctionPriceParameters()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xa2e59c91",
+    "inputs": [],
+    "name": "getBiddingParameters",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "uint256[]"
+      }
+    ],
+    "signature": "getBiddingParameters()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x57d3810e",
+    "inputs": [],
+    "name": "biddingParameters",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      },
+      {
+        "name": "ret_1",
+        "type": "uint256"
+      }
+    ],
+    "signature": "biddingParameters()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xf0284b1c",
+    "inputs": [],
+    "name": "getFailedAuctionWithdrawComponents",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "address[]"
+      }
+    ],
+    "signature": "getFailedAuctionWithdrawComponents()",
+    "type": "function"
+  },
+  {
+    "encoding": "0x9fce5c8e",
+    "inputs": [
+      {
+        "is_array": true,
+        "name": "A",
+        "type": "address[]"
+      },
+      {
+        "name": "a",
+        "type": "address"
+      }
+    ],
+    "name": "indexOf",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      },
+      {
+        "name": "ret_1",
+        "type": "bool"
+      }
+    ],
+    "signature": "indexOf(address[],address)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x3da80d66",
+    "inputs": [
+      {
+        "is_array": true,
+        "name": "A",
+        "type": "address[]"
+      },
+      {
+        "name": "a",
+        "type": "address"
+      }
+    ],
+    "name": "contains",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      }
+    ],
+    "signature": "contains(address[],address)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x20af660c",
+    "inputs": [
+      {
+        "is_array": true,
+        "name": "A",
+        "type": "address[]"
+      },
+      {
+        "is_array": true,
+        "name": "B",
+        "type": "address[]"
+      }
+    ],
+    "name": "extend",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "address[]"
+      }
+    ],
+    "signature": "extend(address[],address[])",
+    "type": "function"
+  },
+  {
+    "encoding": "0xb9dbe28b",
+    "inputs": [
+      {
+        "is_array": true,
+        "name": "A",
+        "type": "address[]"
+      },
+      {
+        "name": "a",
+        "type": "address"
+      }
+    ],
+    "name": "append",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "address[]"
+      }
+    ],
+    "signature": "append(address[],address)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x9ea98d55",
+    "inputs": [
+      {
+        "is_array": true,
+        "name": "A",
+        "type": "address[]"
+      },
+      {
+        "is_array": true,
+        "name": "B",
+        "type": "address[]"
+      }
+    ],
+    "name": "intersect",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "address[]"
+      }
+    ],
+    "signature": "intersect(address[],address[])",
+    "type": "function"
+  },
+  {
+    "encoding": "0x78537808",
+    "inputs": [
+      {
+        "is_array": true,
+        "name": "A",
+        "type": "address[]"
+      },
+      {
+        "is_array": true,
+        "name": "B",
+        "type": "address[]"
+      }
+    ],
+    "name": "union",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "address[]"
+      }
+    ],
+    "signature": "union(address[],address[])",
+    "type": "function"
+  },
+  {
+    "encoding": "0xd124dd8e",
+    "inputs": [
+      {
+        "is_array": true,
+        "name": "A",
+        "type": "address[]"
+      },
+      {
+        "is_array": true,
+        "name": "B",
+        "type": "address[]"
+      }
+    ],
+    "name": "difference",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "address[]"
+      }
+    ],
+    "signature": "difference(address[],address[])",
+    "type": "function"
+  },
+  {
+    "encoding": "0x2bff89b9",
+    "inputs": [
+      {
+        "is_array": true,
+        "name": "A",
+        "type": "address[]"
+      },
+      {
+        "name": "index",
+        "type": "uint256"
+      }
+    ],
+    "name": "pop",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "address[]"
+      },
+      {
+        "name": "ret_0",
+        "type": "address"
+      }
+    ],
+    "signature": "pop(address[],uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x566a691b",
+    "inputs": [
+      {
+        "is_array": true,
+        "name": "A",
+        "type": "address[]"
+      },
+      {
+        "name": "a",
+        "type": "address"
+      }
+    ],
+    "name": "remove",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "address[]"
+      }
+    ],
+    "signature": "remove(address[],address)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x64c20abc",
+    "inputs": [
+      {
+        "is_array": true,
+        "name": "A",
+        "type": "address[]"
+      }
+    ],
+    "name": "hasDuplicate",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      }
+    ],
+    "signature": "hasDuplicate(address[])",
+    "type": "function"
+  },
+  {
+    "encoding": "0x00775c1a",
+    "inputs": [
+      {
+        "is_array": true,
+        "name": "A",
+        "type": "address[]"
+      },
+      {
+        "is_array": true,
+        "name": "B",
+        "type": "address[]"
+      }
+    ],
+    "name": "isEqual",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      }
+    ],
+    "signature": "isEqual(address[],address[])",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xbe41742d",
+    "inputs": [],
+    "name": "validateFailRebalance",
+    "outputs": [],
+    "signature": "validateFailRebalance()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xca5d7c45",
+    "inputs": [],
+    "name": "getNewRebalanceState",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "internalType": "enum RebalancingLibrary.State",
+        "type": "uint8"
+      }
+    ],
+    "signature": "getNewRebalanceState()",
+    "type": "function"
+  },
+  {
+    "encoding": "0x5e3bff09",
+    "inputs": [
+      {
+        "name": "_newRebalanceState",
+        "internalType": "enum RebalancingLibrary.State",
+        "type": "uint8"
+      }
+    ],
+    "name": "transitionToNewState",
+    "outputs": [],
+    "signature": "transitionToNewState(uint8)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x4093fb18",
+    "inputs": [],
+    "name": "liquidatorBreached",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      }
+    ],
+    "signature": "liquidatorBreached()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xe2bc8a7e",
+    "inputs": [],
+    "name": "failPeriodBreached",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      }
+    ],
+    "signature": "failPeriodBreached()",
+    "type": "function"
+  },
+  {
+    "encoding": "0xa235287c",
+    "inputs": [
+      {
+        "name": "_newRebalanceState",
+        "internalType": "enum RebalancingLibrary.State",
+        "type": "uint8"
+      }
+    ],
+    "name": "reissueSetIfRevertToDefault",
+    "outputs": [],
+    "signature": "reissueSetIfRevertToDefault(uint8)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xc873299e",
+    "inputs": [
+      {
+        "name": "_newRebalanceState",
+        "internalType": "enum RebalancingLibrary.State",
+        "type": "uint8"
+      }
+    ],
+    "name": "setWithdrawComponentsIfDrawdown",
+    "outputs": [],
+    "signature": "setWithdrawComponentsIfDrawdown(uint8)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x8d4192dd",
+    "inputs": [],
+    "name": "validateMint",
+    "outputs": [],
+    "signature": "validateMint()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xbc3ab3c4",
+    "inputs": [],
+    "name": "validateBurn",
+    "outputs": [],
+    "signature": "validateBurn()",
+    "type": "function"
+  },
+  {
+    "encoding": "0xe74a9a92",
+    "inputs": [
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "handleEntryFees",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "handleEntryFees(uint256)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x7285be9f",
+    "inputs": [
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "validateGetBidPrice",
+    "outputs": [],
+    "signature": "validateGetBidPrice(uint256)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x239fa36f",
+    "inputs": [
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "validatePlaceBid",
+    "outputs": [],
+    "signature": "validatePlaceBid(uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xd56d6ed3",
+    "inputs": [],
+    "name": "updateHasBiddedIfNecessary",
+    "outputs": [],
+    "signature": "updateHasBiddedIfNecessary()",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x6b7ba1d6",
+    "inputs": [
+      {
+        "name": "_nextSet",
+        "type": "address"
+      }
+    ],
+    "name": "validateStartRebalance",
+    "outputs": [],
+    "signature": "validateStartRebalance(address)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xd739813c",
+    "inputs": [],
+    "name": "calculateStartingSetQuantity",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "uint256"
+      }
+    ],
+    "signature": "calculateStartingSetQuantity()",
+    "type": "function"
+  },
+  {
+    "encoding": "0x39b0e7a7",
+    "inputs": [
+      {
+        "name": "_nextSet",
+        "type": "address"
+      },
+      {
+        "name": "_startingCurrentSetQuantity",
+        "type": "uint256"
+      },
+      {
+        "name": "_liquidatorData",
+        "type": "bytes"
+      }
+    ],
+    "name": "liquidatorRebalancingStart",
+    "outputs": [],
+    "signature": "liquidatorRebalancingStart(address,uint256,bytes)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x1ec477bd",
+    "inputs": [
+      {
+        "name": "_nextSet",
+        "type": "address"
+      }
+    ],
+    "name": "transitionToRebalance",
+    "outputs": [],
+    "signature": "transitionToRebalance(address)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0xae90948a",
+    "inputs": [
+      {
+        "name": "_currentSet",
+        "type": "address"
+      },
+      {
+        "name": "_nextSet",
+        "type": "address"
+      }
+    ],
+    "name": "naturalUnitsAreValid",
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      }
+    ],
+    "signature": "naturalUnitsAreValid(address,address)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x439fab91",
+    "inputs": [
+      {
+        "name": "_rebalanceFeeCalldata",
+        "type": "bytes"
+      }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "signature": "initialize(bytes)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xbf12a1b8",
+    "inputs": [
+      {
+        "name": "_nextSet",
+        "type": "address"
+      },
+      {
+        "name": "_liquidatorData",
+        "type": "bytes"
+      }
+    ],
+    "name": "startRebalance",
+    "outputs": [],
+    "signature": "startRebalance(address,bytes)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x9b013aee",
+    "inputs": [
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "getBidPrice",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "uint256[]"
+      },
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "uint256[]"
+      }
+    ],
+    "signature": "getBidPrice(uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x9979ef45",
+    "inputs": [
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "placeBid",
+    "outputs": [
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "address[]"
+      },
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "uint256[]"
+      },
+      {
+        "is_array": true,
+        "name": "memory",
+        "type": "uint256[]"
+      }
+    ],
+    "signature": "placeBid(uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0xfa2d8c90",
+    "inputs": [],
+    "name": "settleRebalance",
+    "outputs": [],
+    "signature": "settleRebalance()",
+    "type": "function"
+  },
+  {
+    "encoding": "0x8a411b76",
+    "inputs": [],
+    "name": "endFailedRebalance",
+    "outputs": [],
+    "signature": "endFailedRebalance()",
+    "type": "function"
+  },
+  {
+    "encoding": "0x40c10f19",
+    "inputs": [
+      {
+        "name": "_issuer",
+        "type": "address"
+      },
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "mint",
+    "outputs": [],
+    "signature": "mint(address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x9dc29fac",
+    "inputs": [
+      {
+        "name": "_from",
+        "type": "address"
+      },
+      {
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "burn",
+    "outputs": [],
+    "signature": "burn(address,uint256)",
+    "type": "function"
+  },
+  {
+    "encoding": "0x75aff3c1",
+    "inputs": [],
+    "name": "endFailedAuction",
+    "outputs": [],
+    "signature": "endFailedAuction()",
+    "type": "function"
+  },
+  {
+    "encoding": "0xfa2d8c90",
+    "inputs": [],
+    "name": "settleRebalance",
+    "outputs": [],
+    "signature": "settleRebalance()",
+    "type": "function"
+  },
+  {
+    "encoding": "0x231e004e",
+    "inputs": [],
+    "name": "actualizeFee",
+    "outputs": [],
+    "signature": "actualizeFee()",
+    "type": "function"
+  },
+  {
+    "encoding": "0xcbf1c354",
+    "inputs": [
+      {
+        "name": "_newFeeData",
+        "type": "bytes"
+      }
+    ],
+    "name": "adjustFee",
+    "outputs": [],
+    "signature": "adjustFee(bytes)",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "encoding": "0x0d54240a",
+    "inputs": [
+      {
+        "name": "_newUnitShares",
+        "type": "uint256"
+      }
+    ],
+    "name": "validateUnitShares",
+    "outputs": [],
+    "signature": "validateUnitShares(uint256)",
+    "type": "function"
+  }
+]

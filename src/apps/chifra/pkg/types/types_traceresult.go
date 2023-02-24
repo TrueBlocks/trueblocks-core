@@ -58,7 +58,7 @@ func (s *SimpleTraceResult) Model(showHidden bool, format string, extraOptions m
 			model["address"] = s.Address
 			order = append(order, "address")
 		}
-		if len(s.Code) > 0 {
+		if extraOptions["tracesTransactionsFormat"] != true && len(s.Code) > 0 {
 			model["code"] = s.Code
 			order = append(order, "code")
 		}
