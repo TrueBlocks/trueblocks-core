@@ -2,7 +2,7 @@ name: BuildAndTest
 on: [pull_request, workflow_dispatch]
 jobs:
   Build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout TrueBlocks repo
         uses: actions/checkout@v2
@@ -13,7 +13,7 @@ jobs:
           go-version: "^1.18"
       - name: Install prerequistes
         run: |
-          sudo apt-get update 
+          sudo apt-get update
           sudo apt-get upgrade
           sudo apt-get install build-essential git cmake
           sudo apt-get install python3 tree jq
