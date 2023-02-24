@@ -64,12 +64,6 @@ string_q doOneLightBlock(blknum_t num, const COptions& opt) {
     HIDE_FIELD(CTransaction, "date");
     HIDE_FIELD(CTransaction, "age");
     HIDE_FIELD(CTransaction, "ether");
-    for (auto trans : gold.transactions) {
-        gold.tx_hashes.push_back(trans.hash);
-    }
-    if (opt.uncles) {
-        gold.unclesCnt = getUncleCount(num);
-    }
     return gold.Format(expContext().fmtMap["format"]);
 }
 
