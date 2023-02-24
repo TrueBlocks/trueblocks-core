@@ -67,6 +67,10 @@ func (opts *TransactionsOptions) HandleArticulate() (err error) {
 					}
 				}
 
+				if len(tx.Input) < 10 {
+					modelChan <- tx
+					continue
+				}
 				selector := tx.Input[:10]
 				inputData := tx.Input[10:]
 				found := abiMap[selector]
