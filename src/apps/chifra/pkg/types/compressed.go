@@ -108,6 +108,7 @@ func serialize(input any, maxDeep int) string {
 }
 
 // MakeCompressed produces compressedTx|Trace|Log field value
+// TODO: We may implement this function as an interface: https://github.com/TrueBlocks/trueblocks-core/pull/2707#discussion_r1116910420
 func MakeCompressed(input any) (result string) {
 	return serialize(input, 10)
 }

@@ -21,17 +21,17 @@ func (opts *TransactionsOptions) HandleArticulate() (err error) {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
 		for _, rng := range opts.TransactionIds {
-			appearances, err := rng.ResolveTxs(chain)
+			txIds, err := rng.ResolveTxs(chain)
 			if err != nil && !errors.Is(err, ethereum.NotFound) {
 				errorChan <- err
 				cancel()
 			}
 
-			for _, appearance := range appearances {
+			for _, appearance := range txIds {
 				tx, err := rpcClient.GetTransactionByAppearance(chain, &appearance)
 				if err != nil {
 					errorChan <- err
-					cancel()
+					continue
 				}
 				if tx == nil {
 					logger.Log(logger.Info, "transaction not found:", appearance.BlockNumber, appearance.TransactionIndex)
@@ -39,7 +39,6 @@ func (opts *TransactionsOptions) HandleArticulate() (err error) {
 				}
 				if err = abi.LoadAbi(chain, tx.To, abiMap); err != nil {
 					errorChan <- err
-					// cancel()
 				}
 
 				for index, log := range tx.Receipt.Logs {
@@ -59,7 +58,6 @@ func (opts *TransactionsOptions) HandleArticulate() (err error) {
 					if err = abi.LoadAbi(chain, trace.Action.To, abiMap); err != nil {
 						errorChan <- err
 						continue
-						// cancel()
 					}
 
 					tx.Traces[index].ArticulatedTrace, err = articulate.ArticulateTrace(&trace, abiMap)
@@ -81,7 +79,6 @@ func (opts *TransactionsOptions) HandleArticulate() (err error) {
 					}
 					if err = articulate.ArticulateFunction(tx.ArticulatedTx, inputData, outputData); err != nil {
 						errorChan <- err
-						// continue
 					}
 				} else {
 					errorChan <- fmt.Errorf("method/event not found: %s", selector)
