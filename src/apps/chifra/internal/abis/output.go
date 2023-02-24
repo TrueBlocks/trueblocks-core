@@ -76,7 +76,11 @@ func GetAbisOptions(args []string, g *globals.GlobalOptions) *AbisOptions {
 
 func (opts *AbisOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	ported = true
+	// TODO: We can remove this condition when we finish porting articulation code to Go.
+	// TODO: Go version needs different format of known files.
+	if !opts.Known {
+		return true
+	}
 	// EXISTING_CODE
 	return
 }
