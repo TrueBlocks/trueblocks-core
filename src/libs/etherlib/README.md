@@ -11,7 +11,7 @@ Many of the interfaces provided by the RPC for retrieving data are mimicked by e
 
 ### Mirroring of blockchain data
 
-The mirroring (or caching) of the blockchain data is provided by six classes: CBlock, CTransaction, CReceipt, CLogEntry, CTrace, and CStructLog. These classes are documented in our [white papers](../../other/papers/README.md).
+The mirroring (or caching) of the blockchain data is provided by six classes: CBlock, CTransaction, CReceipt, CLog, CTrace, and CStructLog. These classes are documented in our [white papers](../../other/papers/README.md).
 
 As has been discussed earlier, the various fields in the CBlock class include a list of transactions. The CTransaction class, the most used class in the system, contains the from, to, value, and timestamp values expected of any transaction in addition to a transaction receipt. The CReceipt class contains, importantly, gasUsed and the logs and traces necessary to determine the outcome of a transaction.
 

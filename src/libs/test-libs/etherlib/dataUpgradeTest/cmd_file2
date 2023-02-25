@@ -7,7 +7,7 @@ CApiSpec
 CBalHistory
 CBlock
 CReconciliation
-CLogEntry
+CLog
 CReceipt
 CRPCResult
 CTrace

@@ -729,7 +729,7 @@ bool CTransaction::forEveryAppearanceInTx(APPEARANCEFUNC funcy, TRANSFUNC filt, 
     if (!foundPot(funcy, data, blockNumber, tr, 0, extract(input, 10), "input"))
         return false;
     for (size_t l = 0; l < recPtr->logs.size(); l++) {
-        const CLogEntry* log = &recPtr->logs[l];
+        const CLog* log = &recPtr->logs[l];
         string_q logId = "log_" + uint_2_Str(l) + "_";
         if (!foundOne(funcy, data, blockNumber, tr, 0, log->address, logId + "generator"))
             return false;

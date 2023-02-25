@@ -57,7 +57,7 @@ string_q renameExportFields(const string_q& className, const string_q& inStr) {
         return ret;
     }
 
-    if (className == "CLogEntry") {
+    if (className == "CLog") {
         map<string_q, string_q> renames = {
             make_pair("logindex", "logIndex"),
             make_pair("gasused", "gasUsed"),

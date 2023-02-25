@@ -1,6 +1,6 @@
 name            ,type     ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
 contractAddress ,address  ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
 gasUsed         ,gas      ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-logs            ,LogEntry ,           ,true   ,true  ,        ,          ,        ,      ,         ,    ,     ,        ,
+logs            ,Log      ,           ,true   ,true  ,        ,          ,        ,      ,         ,    ,     ,        ,
 logsBloom       ,string   ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
 isErr           ,bool     ,           ,       ,      ,        ,true      ,        ,      ,         ,    ,     ,        ,

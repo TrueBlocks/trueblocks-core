@@ -75,7 +75,7 @@ bool assignReason(const CName& accountedFor, CAppearance& app, const CTransactio
     }
 
     for (size_t i = 0; i < trans.receipt.logs.size(); i++) {
-        const CLogEntry* l = &trans.receipt.logs[i];
+        const CLog* l = &trans.receipt.logs[i];
         if (l->address == app.address) {
             app.reason = "log_" + uint_2_Str(i) + "_generator";
             return true;
