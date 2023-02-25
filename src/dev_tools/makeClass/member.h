@@ -61,7 +61,6 @@ class CMember : public CBaseNode {
     bool indexed;
     string_q internalType;
     CMemberArray components;
-    bool unused;
     uint64_t is_flags;
     uint64_t precision;
     uint64_t maxWidth;
@@ -69,15 +68,6 @@ class CMember : public CBaseNode {
     uint64_t disp;
     string_q example;
     string_q description;
-    bool is_pointer;
-    bool is_array;
-    bool is_object;
-    bool is_builtin;
-    bool is_minimal;
-    bool is_noaddfld;
-    bool is_nowrite;
-    bool is_omitempty;
-    bool is_extra;
 
   public:
     CMember(void);
@@ -158,7 +148,6 @@ inline void CMember::initialize(void) {
     indexed = false;
     internalType = "";
     components.clear();
-    unused = false;
     is_flags = IS_ENABLED;
     precision = 5;
     maxWidth = NOPOS;
@@ -166,15 +155,6 @@ inline void CMember::initialize(void) {
     disp = 0;
     example = "";
     description = "";
-    is_pointer = false;
-    is_array = false;
-    is_object = false;
-    is_builtin = false;
-    is_minimal = false;
-    is_noaddfld = false;
-    is_nowrite = false;
-    is_omitempty = false;
-    is_extra = false;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -192,7 +172,6 @@ inline void CMember::duplicate(const CMember& me) {
     indexed = me.indexed;
     internalType = me.internalType;
     components = me.components;
-    unused = me.unused;
     is_flags = me.is_flags;
     precision = me.precision;
     maxWidth = me.maxWidth;
@@ -200,15 +179,6 @@ inline void CMember::duplicate(const CMember& me) {
     disp = me.disp;
     example = me.example;
     description = me.description;
-    is_pointer = me.is_pointer;
-    is_array = me.is_array;
-    is_object = me.is_object;
-    is_builtin = me.is_builtin;
-    is_minimal = me.is_minimal;
-    is_noaddfld = me.is_noaddfld;
-    is_nowrite = me.is_nowrite;
-    is_omitempty = me.is_omitempty;
-    is_extra = me.is_extra;
 
     // EXISTING_CODE
     // EXISTING_CODE
