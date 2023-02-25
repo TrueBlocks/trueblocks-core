@@ -110,6 +110,33 @@ string_q CMember::getValueByName(const string_q& fieldName) const {
             if (fieldName % "is_flags") {
                 return is_flags == 0 ? "" : uint_2_Str(is_flags);
             }
+            if (fieldName % "is_pointer") {
+                return bool_2_Str_t(is_pointer);
+            }
+            if (fieldName % "is_array") {
+                return bool_2_Str_t(is_array);
+            }
+            if (fieldName % "is_object") {
+                return bool_2_Str_t(is_object);
+            }
+            if (fieldName % "is_builtin") {
+                return bool_2_Str_t(is_builtin);
+            }
+            if (fieldName % "is_minimal") {
+                return bool_2_Str_t(is_minimal);
+            }
+            if (fieldName % "is_noaddfld") {
+                return bool_2_Str_t(is_noaddfld);
+            }
+            if (fieldName % "is_nowrite") {
+                return bool_2_Str_t(is_nowrite);
+            }
+            if (fieldName % "is_omitempty") {
+                return bool_2_Str_t(is_omitempty);
+            }
+            if (fieldName % "is_extra") {
+                return bool_2_Str_t(is_extra);
+            }
             break;
         case 'm':
             if (fieldName % "maxWidth") {
@@ -223,6 +250,42 @@ bool CMember::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 is_flags = str_2_Uint(fieldValue);
                 return true;
             }
+            if (fieldName % "is_pointer") {
+                is_pointer = str_2_Bool(fieldValue);
+                return true;
+            }
+            if (fieldName % "is_array") {
+                is_array = str_2_Bool(fieldValue);
+                return true;
+            }
+            if (fieldName % "is_object") {
+                is_object = str_2_Bool(fieldValue);
+                return true;
+            }
+            if (fieldName % "is_builtin") {
+                is_builtin = str_2_Bool(fieldValue);
+                return true;
+            }
+            if (fieldName % "is_minimal") {
+                is_minimal = str_2_Bool(fieldValue);
+                return true;
+            }
+            if (fieldName % "is_noaddfld") {
+                is_noaddfld = str_2_Bool(fieldValue);
+                return true;
+            }
+            if (fieldName % "is_nowrite") {
+                is_nowrite = str_2_Bool(fieldValue);
+                return true;
+            }
+            if (fieldName % "is_omitempty") {
+                is_omitempty = str_2_Bool(fieldValue);
+                return true;
+            }
+            if (fieldName % "is_extra") {
+                is_extra = str_2_Bool(fieldValue);
+                return true;
+            }
             break;
         case 'm':
             if (fieldName % "maxWidth") {
@@ -293,21 +356,30 @@ bool CMember::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> type;
-    archive >> name;
-    archive >> strDefault;
-    archive >> value;
-    archive >> indexed;
-    archive >> internalType;
-    archive >> components;
-    archive >> unused;
-    archive >> is_flags;
+    // archive >> type;
+    // archive >> name;
+    // archive >> strDefault;
+    // archive >> value;
+    // archive >> indexed;
+    // archive >> internalType;
+    // archive >> components;
+    // archive >> unused;
+    // archive >> is_flags;
     // archive >> precision;
     // archive >> maxWidth;
     // archive >> doc;
     // archive >> disp;
     // archive >> example;
     // archive >> description;
+    // archive >> is_pointer;
+    // archive >> is_array;
+    // archive >> is_object;
+    // archive >> is_builtin;
+    // archive >> is_minimal;
+    // archive >> is_noaddfld;
+    // archive >> is_nowrite;
+    // archive >> is_omitempty;
+    // archive >> is_extra;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -321,21 +393,30 @@ bool CMember::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << type;
-    archive << name;
-    archive << strDefault;
-    archive << value;
-    archive << indexed;
-    archive << internalType;
-    archive << components;
-    archive << unused;
-    archive << is_flags;
+    // archive << type;
+    // archive << name;
+    // archive << strDefault;
+    // archive << value;
+    // archive << indexed;
+    // archive << internalType;
+    // archive << components;
+    // archive << unused;
+    // archive << is_flags;
     // archive << precision;
     // archive << maxWidth;
     // archive << doc;
     // archive << disp;
     // archive << example;
     // archive << description;
+    // archive << is_pointer;
+    // archive << is_array;
+    // archive << is_object;
+    // archive << is_builtin;
+    // archive << is_minimal;
+    // archive << is_noaddfld;
+    // archive << is_nowrite;
+    // archive << is_omitempty;
+    // archive << is_extra;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -386,14 +467,23 @@ void CMember::registerClass(void) {
     ADD_FIELD(CMember, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CMember, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CMember, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "type");
     ADD_FIELD(CMember, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "name");
     ADD_FIELD(CMember, "strDefault", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "strDefault");
     ADD_FIELD(CMember, "value", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "value");
     ADD_FIELD(CMember, "indexed", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "indexed");
     ADD_FIELD(CMember, "internalType", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "internalType");
     ADD_FIELD(CMember, "components", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "components");
     ADD_FIELD(CMember, "unused", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "unused");
     ADD_FIELD(CMember, "is_flags", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "is_flags");
     ADD_FIELD(CMember, "precision", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CMember, "precision");
     ADD_FIELD(CMember, "maxWidth", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
@@ -406,6 +496,24 @@ void CMember::registerClass(void) {
     HIDE_FIELD(CMember, "example");
     ADD_FIELD(CMember, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CMember, "description");
+    ADD_FIELD(CMember, "is_pointer", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "is_pointer");
+    ADD_FIELD(CMember, "is_array", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "is_array");
+    ADD_FIELD(CMember, "is_object", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "is_object");
+    ADD_FIELD(CMember, "is_builtin", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "is_builtin");
+    ADD_FIELD(CMember, "is_minimal", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "is_minimal");
+    ADD_FIELD(CMember, "is_noaddfld", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "is_noaddfld");
+    ADD_FIELD(CMember, "is_nowrite", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "is_nowrite");
+    ADD_FIELD(CMember, "is_omitempty", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "is_omitempty");
+    ADD_FIELD(CMember, "is_extra", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "is_extra");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CMember, "schema");
@@ -416,18 +524,6 @@ void CMember::registerClass(void) {
     builtIns.push_back(_biCMember);
 
     // EXISTING_CODE
-    ADD_FIELD(CMember, "is_pointer", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CMember, "is_array", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CMember, "is_object", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CMember, "is_builtin", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CMember, "is_enabled", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CMember, "is_minimal", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CMember, "is_noaddfld", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CMember, "is_nowrite", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CMember, "is_omitempty", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CMember, "is_extra", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CMember, "is_enabled");
-    HIDE_FIELD(CMember, "is_flags");
     // EXISTING_CODE
 }
 
@@ -482,21 +578,6 @@ string_q nextMemberChunk_custom(const string_q& fieldIn, const void* dataPtr) {
 bool CMember::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
-    if (m_schema < getVersionNum(0, 8, 3)) {
-        archive >> type;
-        archive >> name;
-        archive >> strDefault;
-        archive >> value;
-        archive >> indexed;
-        archive >> internalType;
-        archive >> components;
-        archive >> unused;
-        archive >> is_flags;
-        if (unused)
-            is_flags |= IS_NOWRITE;
-        finishParse();
-        done = true;
-    }
     // EXISTING_CODE
     return done;
 }
