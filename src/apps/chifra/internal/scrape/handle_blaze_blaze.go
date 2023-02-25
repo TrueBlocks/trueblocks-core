@@ -16,6 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/ethereum/go-ethereum/common"
@@ -333,8 +334,17 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 						// TODO: Why does this interface always accept nil and zero at the end?
 						receipt, err := rpcClient.GetTransactionReceipt(opts.Chain, uint64(bn), uint64(txid), nil, 0)
 						if err != nil {
-							// fmt.Println("rpcCall failed at block", traces.Result[i].TransactionHash, err)
-							return err
+							msg := fmt.Sprintf("rpcCall failed at block %d, tx %d hash %s err %s", bn, txid, traces.Result[i].TransactionHash, err)
+							fmt.Println(msg)
+							// TODO: This is an error in Erigon - remove it when they fix this issue:
+							// TODO: https://github.com/ledgerwatch/erigon/issues/6956. Yes, it appears to be
+							// TODO: this specific.
+							if bn != 16616983 && txid != 242 {
+								return err
+							} else {
+								receipt.ContractAddress = types.HexToAddress("0x6784d7583cf2528daa270b555a4cb5376648488f")
+								fmt.Println("Hacked to correct https://github.com/ledgerwatch/erigon/issues/6956")
+							}
 						}
 						addr := hexutil.Encode(receipt.ContractAddress.Bytes())
 						if isAddress(addr) {
