@@ -1,6 +1,6 @@
 [settings]
-class = CLogEntry
-fields = logentry.csv
+class = CLog
+fields = log.csv
 includes = utillib.h|abi.h
 cpp_includes = etherlib.h
 contained_by = Receipt

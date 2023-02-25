@@ -21,7 +21,7 @@ namespace qblocks {
 
 // EXISTING_CODE
 class CTransaction;
-class CLogEntry;
+class CLog;
 class CTrace;
 typedef map<string, CFunction> CStringFunctionMap;
 // EXISTING_CODE
@@ -46,7 +46,7 @@ class CAbi : public CBaseNode {
     CStringBoolMap abiSourcesMap;
 
     bool articulateTransaction(CTransaction* p) const;
-    bool articulateLog(CLogEntry* l) const;
+    bool articulateLog(CLog* l) const;
     bool articulateTrace(CTrace* t) const;
     bool articulateOutputs(const string_q& encoding, const string_q& value, CFunction& ret) const;
 

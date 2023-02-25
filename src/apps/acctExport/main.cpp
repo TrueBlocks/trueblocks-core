@@ -41,7 +41,7 @@ int main(int argc, const char* argv[]) {
                     : (options.neighbors
                     ? GETRUNTIME_CLASS(CAppearance)->m_ClassName
                       : (options.logs
-                      ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
+                      ? GETRUNTIME_CLASS(CLog)->m_ClassName
                         : GETRUNTIME_CLASS(CTransaction)->m_ClassName))))));
             // clang-format on
 

@@ -56,7 +56,7 @@ void etherlib_init(QUITHANDLER qh) {
     CBlock::registerClass();
     CTransaction::registerClass();
     CReceipt::registerClass();
-    CLogEntry::registerClass();
+    CLog::registerClass();
     CTrace::registerClass();
     CTraceAction::registerClass();
     CTraceResult::registerClass();
@@ -1084,7 +1084,7 @@ bool excludeTrace(const CTransaction* trans, size_t maxTraces) {
 //-----------------------------------------------------------------------
 const string_q defHide =
     "CTransaction: price, nonce, input"
-    "|CLogEntry: data, topics"
+    "|CLog: data, topics"
     "|CTrace: "
     "|CTraceAction: init"
     "|CTraceResult: code"
@@ -1095,7 +1095,7 @@ const string_q defHide =
 const string_q defShow =
     "CTransaction: gasCost, articulatedTx, compressedTx, "
     "traces, isError, hasToken, date, ether"
-    "|CLogEntry: articulatedLog, compressedLog"
+    "|CLog: articulatedLog, compressedLog"
     "|CTrace: articulatedTrace, compressedTrace"
     "|CTraceAction: "
     "|CTraceResult: "

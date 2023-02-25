@@ -365,7 +365,7 @@ bool CLogFilter::wasEmittedBy(const address_t& test) const {
 }
 
 //---------------------------------------------------------------------------
-bool CLogFilter::passes(const CLogEntry& log) {
+bool CLogFilter::passes(const CLog& log) {
     bool filteringEmitters = emitters.size() > 0;
     bool filteringTopics = topics.size() > 0;
 
