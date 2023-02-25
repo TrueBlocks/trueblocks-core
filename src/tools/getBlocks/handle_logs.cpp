@@ -36,7 +36,7 @@ size_t queryLogs(const CLogFilter& filter, void* data) {
     CRPCResult generic;
     generic.parseJson3(result);
     result = generic.result;
-    CLogEntry log;
+    CLog log;
     while (log.parseJson3(result)) {
         if (opt->articulate) {
             opt->abi_spec.loadAbiFromEtherscan(log.address);
@@ -50,7 +50,7 @@ size_t queryLogs(const CLogFilter& filter, void* data) {
         }
         cout << log.Format(expContext().fmtMap["format"]);
         opt->firstOut = false;
-        log = CLogEntry();
+        log = CLog();
     }
 
     return !shouldQuit();

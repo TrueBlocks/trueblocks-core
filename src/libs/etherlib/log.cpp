@@ -14,27 +14,27 @@
  * Parts of this file were generated with makeClass --run. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
-#include "logentry.h"
+#include "log.h"
 #include "etherlib.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CLogEntry, CBaseNode);
+IMPLEMENT_NODE(CLog, CBaseNode);
 
 //---------------------------------------------------------------------------
-extern string_q nextLogentryChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextLogentryChunk_custom(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextLogChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextLogChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CLogEntry::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CLog::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["logentry_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["log_fmt"] : fmtIn);
     if (fmt.empty()) {
         toJson(ctx);
         return;
@@ -44,13 +44,13 @@ void CLogEntry::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextLogentryChunk, this);
+        ctx << getNextChunk(fmt, nextLogChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextLogentryChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextLogChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CLogEntry*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CLog*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -59,9 +59,9 @@ string_q nextLogentryChunk(const string_q& fieldIn, const void* dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-string_q CLogEntry::getValueByName(const string_q& fieldName) const {
+string_q CLog::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextLogentryChunk_custom(fieldName, this);
+    string_q ret = nextLogChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -163,12 +163,12 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CLogEntry::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CLog::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
-    // SEP4("CLogEntry::setValueByName(" + fieldName + ", " + fieldValue.substr(0,40) + "...)");
+    // SEP4("CLog::setValueByName(" + fieldName + ", " + fieldValue.substr(0,40) + "...)");
     if (pReceipt) {
         bool ret = ((CReceipt*)pReceipt)->setValueByName(fieldName, fieldValue);  // NOLINT
         if (ret) {
@@ -269,14 +269,14 @@ bool CLogEntry::setValueByName(const string_q& fieldNameIn, const string_q& fiel
 }
 
 //---------------------------------------------------------------------------------------------------
-void CLogEntry::finishParse() {
+void CLog::finishParse() {
     // EXISTING_CODE
     timestamp = bn_2_Timestamp(blockNumber);
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CLogEntry::Serialize(CArchive& archive) {
+bool CLog::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -309,7 +309,7 @@ bool CLogEntry::Serialize(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CLogEntry::SerializeC(CArchive& archive) const {
+bool CLog::SerializeC(CArchive& archive) const {
     // Writing always writes the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -335,10 +335,10 @@ bool CLogEntry::SerializeC(CArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CLogEntry::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+bool CLog::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
     ASSERT(archiveIn.isReading());
     ASSERT(archiveOut.isWriting());
-    CLogEntry copy;
+    CLog copy;
     // EXISTING_CODE
     // EXISTING_CODE
     copy.Serialize(archiveIn);
@@ -347,7 +347,7 @@ bool CLogEntry::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CLogEntryArray& array) {
+CArchive& operator>>(CArchive& archive, CLogArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -359,7 +359,7 @@ CArchive& operator>>(CArchive& archive, CLogEntryArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CLogEntryArray& array) {
+CArchive& operator<<(CArchive& archive, const CLogArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -368,63 +368,63 @@ CArchive& operator<<(CArchive& archive, const CLogEntryArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CLogEntry::registerClass(void) {
+void CLog::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CLogEntry, "schema"))
+    if (HAS_FIELD(CLog, "schema"))
         return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CLogEntry, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CLogEntry, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CLogEntry, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CLogEntry, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CLogEntry, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CLogEntry, "blockHash", T_HASH | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CLogEntry, "blockHash");
-    ADD_FIELD(CLogEntry, "blockNumber", T_BLOCKNUM, ++fieldNum);
-    HIDE_FIELD(CLogEntry, "blockNumber");
-    ADD_FIELD(CLogEntry, "logIndex", T_BLOCKNUM, ++fieldNum);
-    ADD_FIELD(CLogEntry, "topics", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CLogEntry, "data", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_OBJECT(CLogEntry, "articulatedLog", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CFunction));
-    ADD_FIELD(CLogEntry, "compressedLog", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CLogEntry, "compressedLog");
-    ADD_FIELD(CLogEntry, "transactionHash", T_HASH | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CLogEntry, "transactionHash");
-    ADD_FIELD(CLogEntry, "transactionIndex", T_BLOCKNUM, ++fieldNum);
-    HIDE_FIELD(CLogEntry, "transactionIndex");
-    ADD_FIELD(CLogEntry, "transactionLogIndex", T_BLOCKNUM, ++fieldNum);
-    HIDE_FIELD(CLogEntry, "transactionLogIndex");
-    ADD_FIELD(CLogEntry, "timestamp", T_TIMESTAMP, ++fieldNum);
-    HIDE_FIELD(CLogEntry, "timestamp");
-    ADD_FIELD(CLogEntry, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CLogEntry, "type");
-    ADD_FIELD(CLogEntry, "unused", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CLogEntry, "unused");
+    ADD_FIELD(CLog, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CLog, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CLog, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CLog, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CLog, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CLog, "blockHash", T_HASH | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CLog, "blockHash");
+    ADD_FIELD(CLog, "blockNumber", T_BLOCKNUM, ++fieldNum);
+    HIDE_FIELD(CLog, "blockNumber");
+    ADD_FIELD(CLog, "logIndex", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CLog, "topics", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CLog, "data", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_OBJECT(CLog, "articulatedLog", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CFunction));
+    ADD_FIELD(CLog, "compressedLog", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CLog, "compressedLog");
+    ADD_FIELD(CLog, "transactionHash", T_HASH | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CLog, "transactionHash");
+    ADD_FIELD(CLog, "transactionIndex", T_BLOCKNUM, ++fieldNum);
+    HIDE_FIELD(CLog, "transactionIndex");
+    ADD_FIELD(CLog, "transactionLogIndex", T_BLOCKNUM, ++fieldNum);
+    HIDE_FIELD(CLog, "transactionLogIndex");
+    ADD_FIELD(CLog, "timestamp", T_TIMESTAMP, ++fieldNum);
+    HIDE_FIELD(CLog, "timestamp");
+    ADD_FIELD(CLog, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CLog, "type");
+    ADD_FIELD(CLog, "unused", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CLog, "unused");
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CLogEntry, "schema");
-    HIDE_FIELD(CLogEntry, "deleted");
-    HIDE_FIELD(CLogEntry, "showing");
-    HIDE_FIELD(CLogEntry, "cname");
+    HIDE_FIELD(CLog, "schema");
+    HIDE_FIELD(CLog, "deleted");
+    HIDE_FIELD(CLog, "showing");
+    HIDE_FIELD(CLog, "cname");
 
-    builtIns.push_back(_biCLogEntry);
+    builtIns.push_back(_biCLog);
 
     // EXISTING_CODE
-    ADD_FIELD(CLogEntry, "topic0", T_HASH | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CLogEntry, "topic1", T_HASH | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CLogEntry, "topic2", T_HASH | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CLogEntry, "topic3", T_HASH | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CLogEntry, "topic0");
-    HIDE_FIELD(CLogEntry, "topic1");
-    HIDE_FIELD(CLogEntry, "topic2");
-    HIDE_FIELD(CLogEntry, "topic3");
+    ADD_FIELD(CLog, "topic0", T_HASH | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CLog, "topic1", T_HASH | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CLog, "topic2", T_HASH | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CLog, "topic3", T_HASH | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CLog, "topic0");
+    HIDE_FIELD(CLog, "topic1");
+    HIDE_FIELD(CLog, "topic2");
+    HIDE_FIELD(CLog, "topic3");
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextLogentryChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CLogEntry* log = reinterpret_cast<const CLogEntry*>(dataPtr);
+string_q nextLogChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CLog* log = reinterpret_cast<const CLog*>(dataPtr);
     if (log) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -476,7 +476,7 @@ string_q nextLogentryChunk_custom(const string_q& fieldIn, const void* dataPtr) 
 // EXISTING_CODE
 
 //---------------------------------------------------------------------------
-bool CLogEntry::readBackLevel(CArchive& archive) {
+bool CLog::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     if (m_schema < getVersionNum(0, 6, 5)) {
@@ -498,19 +498,19 @@ bool CLogEntry::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CLogEntry& log) {
+CArchive& operator<<(CArchive& archive, const CLog& log) {
     log.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CLogEntry& log) {
+CArchive& operator>>(CArchive& archive, CLog& log) {
     log.Serialize(archive);
     return archive;
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CLogEntry& it) {
+ostream& operator<<(ostream& os, const CLog& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -520,7 +520,7 @@ ostream& operator<<(ostream& os, const CLogEntry& it) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode* CLogEntry::getObjectAt(const string_q& fieldName, size_t index) const {
+const CBaseNode* CLog::getObjectAt(const string_q& fieldName, size_t index) const {
     // EXISTING_CODE
     // EXISTING_CODE
     if (fieldName % "articulatedLog")
@@ -532,14 +532,14 @@ const CBaseNode* CLogEntry::getObjectAt(const string_q& fieldName, size_t index)
 }
 
 //---------------------------------------------------------------------------
-const string_q CLogEntry::getStringAt(const string_q& fieldName, size_t i) const {
+const string_q CLog::getStringAt(const string_q& fieldName, size_t i) const {
     if (fieldName % "topics" && i < topics.size())
         return topic_2_Str(topics[i]);
     return "";
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_LOGENTRY =
+const char* STR_DISPLAY_LOG =
     "[{BLOCKNUMBER}]\t"
     "[{TRANSACTIONINDEX}]\t"
     "[{LOGINDEX}]\t"

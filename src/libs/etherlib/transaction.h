@@ -29,7 +29,7 @@ class CBlock;
 class CAppearance;
 typedef bool (*APPEARANCEFUNC)(const CAppearance& item, void* data);
 typedef bool (*TRANSFUNC)(const CTransaction* trans, void* data);
-typedef bool (*LOGVISITFUNC)(CLogEntry& log, void* data);
+typedef bool (*LOGVISITFUNC)(CLog& log, void* data);
 typedef bool (*TRACEVISITFUNC)(CTrace& trace, void* data);
 typedef enum {
     CB_NONE = 0,

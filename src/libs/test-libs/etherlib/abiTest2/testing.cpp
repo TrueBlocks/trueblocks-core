@@ -34,10 +34,10 @@ int main(int argc, const char* argv[]) {
 //--------------------------------------------------------------
 extern void doTupleTest(void) {
     manageFields("CTransaction:articulatedTx", true);
-    manageFields("CLogEntry:articulatedLog", true);
+    manageFields("CLog:articulatedLog", true);
     manageFields("CParameter:type,internalType,components,indexed", false);
     manageFields("CTransaction:hash,blockHash,nonce,timestamp,gas,gasPrice,gasUsed", false);
-    manageFields("CLogEntry:logIndex,topics,data", false);
+    manageFields("CLog:logIndex,topics,data", false);
     manageFields("CFunction:type,signature,encoding,outputs,stateMutability", false);
     manageFields("CReceipt:contractAddress,gasUsed,status", false);
 

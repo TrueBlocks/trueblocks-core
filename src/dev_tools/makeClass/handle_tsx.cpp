@@ -118,7 +118,6 @@ bool COptions::handle_tsx_type(const CClassDefinition& classDef) {
         replace(field.type, "Value", "string");
         replace(field.type, "TraceAction", "Traceaction");
         replace(field.type, "TraceResult", "Traceresult");
-        replace(field.type, "LogEntryArray", "LogentryArray");
         if (field.type == "StringArray")
             field.type = "string++BRACKETS++";
         if (field.name == "status" && classDef.class_name == "CReceipt")

@@ -57,7 +57,7 @@ class CFunction : public CBaseNode {
     string_q getSignature(uint64_t parts) const;
     string_q encodeItem(void) const;
     friend class CTransaction;
-    friend class CLogEntry;
+    friend class CLog;
     friend class CTrace;
     string_q compressed(const string_q& def) const;
     bool isDefault(const CBaseNode* obj) const override;

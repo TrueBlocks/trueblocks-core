@@ -189,7 +189,6 @@ string_q type_2_ModelName(const string_q& type, bool raw) {
         replace(ret, "C", "");
     replace(ret, "Array", "");
     replace(ret, "CachePtr", "Cache");
-    replace(ret, "LogEntry", "Log");
     return raw ? nextTokenClear(ret, '[') : ret;
 }
 
@@ -294,7 +293,6 @@ string_q type_2_Link(const CClassDefinitionArray& dataModels, const CMember& mem
     if (group.empty()) {
         return member.type;
     }
-    type = substitute(type, "LogEntry", "Log");
 
     return "[" + type + (isArray ? "[]" : "") + "](/data-model/" + toLower(substitute(group, " ", "")) + "/#" +
            toLower(type) + ")";

@@ -52,7 +52,7 @@ bool COptions::handle_sdk_ts(void) {
 bool COptions::handle_sdk_ts_types(CStringArray& typesOut) {
     for (auto model : dataModels) {
         string_q modelName = substitute(model.class_name, "Array", "");
-        modelName = firstUpper(substitute(modelName, "LogEntry", "Log"));
+        modelName = firstUpper(modelName);
         replace(modelName, "C", "");
         if (modelName == "Status") {
             modelName = "Config";
@@ -66,9 +66,7 @@ bool COptions::handle_sdk_ts_types(CStringArray& typesOut) {
                 continue;
             }
             bool isArray = contains(field.type, "Array");
-            string_q ft =
-                substitute(substitute(substitute(substitute(field.type, "Array", ""), "Ptr", ""), "LogEntry", "Log"),
-                           "uint8", "bool");
+            string_q ft = substitute(substitute(substitute(field.type, "Array", ""), "Ptr", ""), "uint8", "bool");
             if (startsWith(field.type, "C")) {
                 replace(ft, "C", "");
             }
