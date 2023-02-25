@@ -72,9 +72,9 @@ class CMember : public CBaseNode {
 
   public:
     CMember(void);
-    CMember(const CMember& pa);
+    CMember(const CMember& me);
     virtual ~CMember(void);
-    CMember& operator=(const CMember& pa);
+    CMember& operator=(const CMember& me);
 
     DECLARE_NODE(CMember);
 
@@ -101,7 +101,7 @@ class CMember : public CBaseNode {
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CMember& pa);
+    void duplicate(const CMember& me);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -116,10 +116,10 @@ inline CMember::CMember(void) {
 }
 
 //--------------------------------------------------------------------------
-inline CMember::CMember(const CMember& pa) {
+inline CMember::CMember(const CMember& me) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(pa);
+    duplicate(me);
 }
 
 // EXISTING_CODE
@@ -163,33 +163,33 @@ inline void CMember::initialize(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CMember::duplicate(const CMember& pa) {
+inline void CMember::duplicate(const CMember& me) {
     clear();
-    CBaseNode::duplicate(pa);
+    CBaseNode::duplicate(me);
 
-    type = pa.type;
-    name = pa.name;
-    strDefault = pa.strDefault;
-    value = pa.value;
-    indexed = pa.indexed;
-    internalType = pa.internalType;
-    components = pa.components;
-    unused = pa.unused;
-    is_flags = pa.is_flags;
-    precision = pa.precision;
-    maxWidth = pa.maxWidth;
-    doc = pa.doc;
-    disp = pa.disp;
-    example = pa.example;
-    description = pa.description;
+    type = me.type;
+    name = me.name;
+    strDefault = me.strDefault;
+    value = me.value;
+    indexed = me.indexed;
+    internalType = me.internalType;
+    components = me.components;
+    unused = me.unused;
+    is_flags = me.is_flags;
+    precision = me.precision;
+    maxWidth = me.maxWidth;
+    doc = me.doc;
+    disp = me.disp;
+    example = me.example;
+    description = me.description;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CMember& CMember::operator=(const CMember& pa) {
-    duplicate(pa);
+inline CMember& CMember::operator=(const CMember& me) {
+    duplicate(me);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
@@ -217,8 +217,8 @@ extern CArchive& operator>>(CArchive& archive, CMemberArray& array);
 extern CArchive& operator<<(CArchive& archive, const CMemberArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CMember& par);
-extern CArchive& operator>>(CArchive& archive, CMember& par);
+extern CArchive& operator<<(CArchive& archive, const CMember& mem);
+extern CArchive& operator>>(CArchive& archive, CMember& mem);
 
 //---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_MEMBER;

@@ -1,0 +1,5 @@
+[settings]
+class = CMember
+fields = member.csv
+includes = utillib.h
+# disabled = true

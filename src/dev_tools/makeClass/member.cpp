@@ -433,28 +433,28 @@ void CMember::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextMemberChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CMember* par = reinterpret_cast<const CMember*>(dataPtr);
-    if (par) {
+    const CMember* mem = reinterpret_cast<const CMember*>(dataPtr);
+    if (mem) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // clang-format off
             case 'i':
-                if (fieldIn % "is_pointer")   return bool_2_Str_t(par->is_flags & IS_POINTER);
-                if (fieldIn % "is_array")     return bool_2_Str_t(par->is_flags & IS_ARRAY);
-                if (fieldIn % "is_object")    return bool_2_Str_t(par->is_flags & IS_OBJECT);
-                if (fieldIn % "is_builtin")   return bool_2_Str_t(par->is_flags & IS_BUILTIN);
-                if (fieldIn % "is_enabled")   return bool_2_Str_t(par->is_flags & IS_ENABLED);
-                if (fieldIn % "is_minimal")   return bool_2_Str_t(par->is_flags & IS_MINIMAL);
-                if (fieldIn % "is_noaddfld")  return bool_2_Str_t(par->is_flags & IS_NOADDFLD);
-                if (fieldIn % "is_nowrite")   return bool_2_Str_t(par->is_flags & IS_NOWRITE);
-                if (fieldIn % "is_omitempty") return bool_2_Str_t(par->is_flags & IS_OMITEMPTY);
-                if (fieldIn % "is_extra")     return bool_2_Str_t(par->is_flags & IS_EXTRA);
+                if (fieldIn % "is_pointer")   return bool_2_Str_t(mem->is_flags & IS_POINTER);
+                if (fieldIn % "is_array")     return bool_2_Str_t(mem->is_flags & IS_ARRAY);
+                if (fieldIn % "is_object")    return bool_2_Str_t(mem->is_flags & IS_OBJECT);
+                if (fieldIn % "is_builtin")   return bool_2_Str_t(mem->is_flags & IS_BUILTIN);
+                if (fieldIn % "is_enabled")   return bool_2_Str_t(mem->is_flags & IS_ENABLED);
+                if (fieldIn % "is_minimal")   return bool_2_Str_t(mem->is_flags & IS_MINIMAL);
+                if (fieldIn % "is_noaddfld")  return bool_2_Str_t(mem->is_flags & IS_NOADDFLD);
+                if (fieldIn % "is_nowrite")   return bool_2_Str_t(mem->is_flags & IS_NOWRITE);
+                if (fieldIn % "is_omitempty") return bool_2_Str_t(mem->is_flags & IS_OMITEMPTY);
+                if (fieldIn % "is_extra")     return bool_2_Str_t(mem->is_flags & IS_EXTRA);
                 break;
             case 'v':
                 if (fieldIn % "value") {
-                    if (contains(par->type, "tuple"))
-                        return par->value + "--tuple--";
-                    return stripWhitespace(par->value);
+                    if (contains(mem->type, "tuple"))
+                        return mem->value + "--tuple--";
+                    return stripWhitespace(mem->value);
                 }
                 break;
             // clang-format off
@@ -462,7 +462,7 @@ string_q nextMemberChunk_custom(const string_q& fieldIn, const void* dataPtr) {
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if (fieldIn % "parsed")
-                    return nextBasenodeChunk(fieldIn, par);
+                    return nextBasenodeChunk(fieldIn, mem);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -502,14 +502,14 @@ bool CMember::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CMember& par) {
-    par.SerializeC(archive);
+CArchive& operator<<(CArchive& archive, const CMember& mem) {
+    mem.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CMember& par) {
-    par.Serialize(archive);
+CArchive& operator>>(CArchive& archive, CMember& mem) {
+    mem.Serialize(archive);
     return archive;
 }
 
@@ -543,22 +543,7 @@ const CBaseNode* CMember::getObjectAt(const string_q& fieldName, size_t index) c
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_MEMBER =
-    "[{TYPE}]\t"
-    "[{NAME}]\t"
-    "[{STRDEFAULT}]\t"
-    "[{VALUE}]\t"
-    "[{INTERNALTYPE}]\t"
-    "[{INDEXED}]\t"
-    "[{IS_POINTER}]\t"
-    "[{IS_ARRAY}]\t"
-    "[{IS_OBJECT}]\t"
-    "[{IS_BUILTIN}]\t"
-    "[{IS_MINIMAL}]\t"
-    "[{IS_NOADDFLD}]\t"
-    "[{IS_NOWRITE}]\t"
-    "[{IS_OMITEMPTY}]\t"
-    "[{IS_EXTRA}]";
+const char* STR_DISPLAY_MEMBER = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

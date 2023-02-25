@@ -1321,7 +1321,7 @@
         "name": "Message",
         "outputs": [],
         "type": "event"
-    },
+    }
 
 ]
 
