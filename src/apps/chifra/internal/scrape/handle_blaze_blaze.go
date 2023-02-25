@@ -10,6 +10,7 @@ import (
 	"sync"
 	"sync/atomic"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -333,12 +334,48 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 						// TODO: Why does this interface always accept nil and zero at the end?
 						receipt, err := rpcClient.GetTransactionReceipt(opts.Chain, uint64(bn), uint64(txid), nil, 0)
 						if err != nil {
-							// fmt.Println("rpcCall failed at block", traces.Result[i].TransactionHash, err)
-							return err
-						}
-						addr := hexutil.Encode(receipt.ContractAddress.Bytes())
-						if isAddress(addr) {
-							opts.AddToMaps(addr, bn, txid, addressMap)
+							msg := fmt.Sprintf("rpcCall failed at block %d, tx %d hash %s err %s", bn, txid, traces.Result[i].TransactionHash, err)
+							logger.Log(logger.Warning, colors.Red, msg, colors.Off)
+							// TODO: This is possibly an error in Erigon - remove it when they fix this issue:
+							// TODO: https://github.com/ledgerwatch/erigon/issues/6956. It may require a
+							// TODO: full resync. Yes, the problem appears to be this specific. The follow
+							// TODO: hack (which tries to correct the problem) may well not work, but
+							// TODO: the hope is that these will have already been picked up by the traces.
+							// TODO: When fixed, we need to re-scrape from block 16,600,000. This map (which was
+							// TODO: retrieved from Nethermind) tries to repair the missing data by marking (for
+							// TODO: each transaction) any smart contracts created.
+							fixMap := map[string]string{
+								"16616983-242": "0x6784d7583cf2528daa270b555a4cb5376648488f",
+								"16618181-146": "0x86494c70df6d3416bb4f536a82533b6120c52cde",
+								"16618196-18":  "0x40d7b756557d9f7a5655ff70b3253a07f714807a",
+								"16620128-12":  "0xb8fb9a557d19d5266f1ba1724445ee2436e3c626",
+								"16620182-35":  "0x708bf2bf05492a5644787c134cf8a64e82fa4c52",
+								"16621080-107": "0x23c84318fb83ee62e059679cddb3914c923da871",
+								"16623590-179": "0xe88d3857676adf23d8324231eabee6ac390f666e",
+								"16623602-106": "0x473a0524a25c252bc65a023c8b8476b1eb6ac805",
+								"16626181-115": "0x010d9eb886f5b1a0fbef58bca722079e9ac75275",
+								"16627272-125": "0xdfd76821bebdbe589f74d311dff4f5859995cda4",
+								"16628102-66":  "0xddec22d76cfb1aded71c2f7b64ff768d207d615d",
+							}
+							key := fmt.Sprintf("%d-%d", bn, txid)
+							msg = err.Error()
+							if msg != "empty hex string" {
+								// not the error we're looking for
+								return err
+							}
+
+							if len(fixMap[key]) > 0 {
+								// both are true - the error is `empty hex string` and we have a fix
+								msg = fmt.Sprintf("Corrected %d, tx %d adds %s", bn, txid, fixMap[key])
+								logger.Log(logger.Warning, colors.Red, msg, colors.Off)
+								opts.AddToMaps(fixMap[key], bn, txid, addressMap)
+							}
+
+						} else {
+							addr := hexutil.Encode(receipt.ContractAddress.Bytes())
+							if isAddress(addr) {
+								opts.AddToMaps(addr, bn, txid, addressMap)
+							}
 						}
 					}
 				}
