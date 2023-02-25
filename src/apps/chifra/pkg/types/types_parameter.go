@@ -14,30 +14,30 @@ import "fmt"
 // EXISTING_CODE
 
 type RawParameter struct {
-	Precision    string `json:"precision"`
-	Is_flags     string `json:"is_flags"`
-	Unused       string `json:"unused"`
-	Value        string `json:"value"`
+	Components    string `json:"components"`
+	Indexed       string `json:"indexed"`
+	InternalType  string `json:"internalType"`
+	Is_flags      string `json:"is_flags"`
+	Name          string `json:"name"`
+	Precision     string `json:"precision"`
+	StrDefault    string `json:"strDefault"`
 	ParameterType string `json:"type"`
-	Name         string `json:"name"`
-	StrDefault   string `json:"strDefault"`
-	Indexed      string `json:"indexed"`
-	InternalType string `json:"internalType"`
-	Components   string `json:"components"`
+	Unused        string `json:"unused"`
+	Value         string `json:"value"`
 }
 
 type SimpleParameter struct {
-	Precision    uint64            `json:"precision,omitempty"`
-	Is_flags     uint64            `json:"is_flags,omitempty"`
-	Unused       bool              `json:"unused,omitempty"`
-	Value        string            `json:"value,omitempty"`
+	Components    []SimpleParameter `json:"components,omitempty"`
+	Indexed       bool              `json:"indexed,omitempty"`
+	InternalType  string            `json:"internalType,omitempty"`
+	Is_flags      uint64            `json:"is_flags,omitempty"`
+	Name          string            `json:"name"`
+	Precision     uint64            `json:"precision,omitempty"`
+	StrDefault    string            `json:"strDefault,omitempty"`
 	ParameterType string            `json:"type"`
-	Name         string            `json:"name"`
-	StrDefault   string            `json:"strDefault,omitempty"`
-	Indexed      bool              `json:"indexed,omitempty"`
-	InternalType string            `json:"internalType,omitempty"`
-	Components   []SimpleParameter `json:"components,omitempty"`
-	raw          *RawParameter
+	Unused        bool              `json:"unused,omitempty"`
+	Value         string            `json:"value,omitempty"`
+	raw           *RawParameter
 }
 
 func (s *SimpleParameter) Raw() *RawParameter {
@@ -53,8 +53,8 @@ func (s *SimpleParameter) Model(showHidden bool, format string, extraOptions map
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
-		"type":         s.ParameterType,
-		"name":         s.Name,
+		"name":          s.Name,
+		"type":          s.ParameterType,
 	}
 
 	order := []string{

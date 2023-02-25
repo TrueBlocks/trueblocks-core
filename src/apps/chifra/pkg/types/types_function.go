@@ -22,28 +22,28 @@ type RawFunction struct {
 	AbiSource       string `json:"abiSource"`
 	Anonymous       string `json:"anonymous"`
 	Constant        string `json:"constant"`
-	StateMutability string `json:"stateMutability"`
-	Message         string `json:"message"`
-	Name            string `json:"name"`
-	FunctionType    string `json:"type"`
-	Signature       string `json:"signature"`
 	Encoding        string `json:"encoding"`
 	Inputs          string `json:"inputs"`
+	Message         string `json:"message"`
+	Name            string `json:"name"`
 	Outputs         string `json:"outputs"`
+	Signature       string `json:"signature"`
+	StateMutability string `json:"stateMutability"`
+	FunctionType    string `json:"type"`
 }
 
 type SimpleFunction struct {
 	AbiSource       string            `json:"abiSource,omitempty"`
 	Anonymous       bool              `json:"anonymous,omitempty"`
 	Constant        bool              `json:"constant,omitempty"`
-	StateMutability string            `json:"stateMutability"`
-	Message         string            `json:"message,omitempty"`
-	Name            string            `json:"name"`
-	FunctionType    string            `json:"type"`
-	Signature       string            `json:"signature"`
 	Encoding        string            `json:"encoding"`
 	Inputs          []SimpleParameter `json:"inputs"`
+	Message         string            `json:"message,omitempty"`
+	Name            string            `json:"name"`
 	Outputs         []SimpleParameter `json:"outputs"`
+	Signature       string            `json:"signature"`
+	StateMutability string            `json:"stateMutability"`
+	FunctionType    string            `json:"type"`
 	raw             *RawFunction
 }
 
@@ -70,11 +70,11 @@ func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
-		"stateMutability": s.StateMutability,
-		"name":            s.Name,
-		"type":            s.FunctionType,
-		"signature":       s.Signature,
 		"encoding":        s.Encoding,
+		"name":            s.Name,
+		"signature":       s.Signature,
+		"stateMutability": s.StateMutability,
+		"type":            s.FunctionType,
 	}
 
 	order := []string{

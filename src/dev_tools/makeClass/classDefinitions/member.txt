@@ -2,4 +2,5 @@
 class = CMember
 fields = member.csv
 includes = utillib.h
-# disabled = true
+sort = v1.name < v2.name
+equals = name == it.name

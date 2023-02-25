@@ -21,25 +21,33 @@ bool skipField(const CMember& field);
 //------------------------------------------------------------------------------------------------------------
 void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
     CClassDefinition model = modelIn;
+    CClassDefinition modelOrig = modelIn;
+    for (size_t i = 0; i < model.fieldArray.size(); i++) {
+        modelOrig.fieldArray[i] = modelIn.fieldArray[i];
+    }
 
     string_q fn = getPathToSource("apps/chifra/pkg/types/types_" + toLower(model.base_name) + ".go");
     string_q contents = asciiFileToString(getPathToTemplates("blank_type.go.tmpl"));
     replaceAll(contents, "[{CLASS_NAME}]", type_2_ModelName(model.go_model, false));
     replaceAll(contents, "[{RAW_NAME}]", "Raw" + type_2_ModelName(model.go_model, true));
 
+    sort(model.fieldArray.begin(), model.fieldArray.end());
+
     CMember raw;
     raw.type = "*Raw" + type_2_ModelName(model.go_model, true);
     raw.name = "raw";
     model.fieldArray.push_back(raw);
 
-    size_t maxNameWid = 0, maxSimpWid = 0, maxRawWid = 0;
-    for (auto& field : model.fieldArray) {
-        if (skipField(field))
+    size_t maxNameWid = 0, maxModelWid = 0, maxSimpWid = 0, maxRawWid = 0;
+    size_t fieldNo = 0;
+    for (CMember& field : model.fieldArray) {
+        if (skipField(field)) {
+            fieldNo++;
             continue;
+        }
         string_q type = type_2_GoType(field);
         string_q rawType = specialCase(field, field.name, type, true);
         string_q simpType = specialCase(field, field.name, type, false);
-        maxNameWid = max(maxNameWid, field.name.length());
         if (field.name != "raw") {
             maxSimpWid = max(maxSimpWid, simpType.length());
             maxRawWid = max(maxRawWid, rawType.length());
@@ -48,11 +56,21 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
             if (field.name == "Type") {
                 field.name = model.base_name + "Type";
             }
+            modelOrig.fieldArray[fieldNo].name = firstUpper(modelOrig.fieldArray[fieldNo].name);
+            modelOrig.fieldArray[fieldNo].value = modelOrig.fieldArray[fieldNo].name;  // we need it and use it below
+            if (modelOrig.fieldArray[fieldNo].name == "Type") {
+                modelOrig.fieldArray[fieldNo].name = modelOrig.base_name + "Type";
+            }
         }
+        maxNameWid = max(maxNameWid, field.name.length());
+        if (!(field.is_flags & IS_OMITEMPTY)) {
+            maxModelWid = max(maxModelWid, field.name.length());
+        }
+        fieldNo++;
     }
 
     string_q rawStr;
-    for (auto field : model.fieldArray) {
+    for (const CMember& field : model.fieldArray) {
         if (skipField(field))
             continue;
         if (!(field.name % "raw")) {
@@ -70,7 +88,7 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
     }
 
     string_q fieldStr;
-    for (auto field : model.fieldArray) {
+    for (const CMember& field : model.fieldArray) {
         if (skipField(field))
             continue;
         string_q type = type_2_GoType(field);
@@ -87,19 +105,19 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
     }
 
     string_q modelStr;
-    for (auto field : model.fieldArray) {
+    for (const CMember& field : model.fieldArray) {
         if (skipField(field))
             continue;
         ostringstream os;
         if (!(field.name % "raw") && !(field.is_flags & (IS_OMITEMPTY | IS_ARRAY))) {
-            os << "\t\t" << padRight("\"" + firstLower(field.value) + "\":", maxNameWid + 3) << " s."
+            os << "\t\t" << padRight("\"" + firstLower(field.value) + "\":", maxModelWid + 3) << " s."
                << firstUpper(field.name) << "," << debug(field) << endl;
         }
         modelStr += os.str();
     }
 
     string_q orderStr;
-    for (auto field : model.fieldArray) {
+    for (const CMember& field : modelOrig.fieldArray) {
         if (skipField(field))
             continue;
         ostringstream os;

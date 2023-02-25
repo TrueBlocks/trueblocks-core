@@ -10,24 +10,24 @@ import "github.com/ethereum/go-ethereum/common"
 
 type RawLog struct {
 	Address          string   `json:"address"`
-	Topics           []string `json:"topics"`
-	Data             string   `json:"data"`
-	BlockNumber      string   `json:"blockNumber"`
-	TransactionHash  string   `json:"transactionHash"`
-	TransactionIndex string   `json:"transactionIndex"`
 	BlockHash        string   `json:"blockHash"`
+	BlockNumber      string   `json:"blockNumber"`
+	Data             string   `json:"data"`
 	LogIndex         string   `json:"logIndex"`
 	Removed          bool     `json:"removed"`
+	Topics           []string `json:"topics"`
+	TransactionHash  string   `json:"transactionHash"`
+	TransactionIndex string   `json:"transactionIndex"`
 }
 
 type SimpleLog struct {
 	Address          Address         `json:"address"`
-	LogIndex         uint64          `json:"logIndex"`
+	ArticulatedLog   *SimpleFunction `json:"-"`
 	BlockNumber      uint64          `json:"blockNumber"`
-	TransactionIndex uint32          `json:"transactionIndex"`
+	CompressedLog    string          `json:"compressedLog,omitempty"`
+	Data             string          `json:"data,omitempty"`
+	LogIndex         uint64          `json:"logIndex"`
 	Timestamp        uint64          `json:"timestamp,omitempty"`
 	Topics           []common.Hash   `json:"topics,omitempty"`
-	Data             string          `json:"data,omitempty"`
-	CompressedLog    string          `json:"compressedLog,omitempty"`
-	ArticulatedLog   *SimpleFunction `json:"-"`
+	TransactionIndex uint32          `json:"transactionIndex"`
 }

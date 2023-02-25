@@ -196,16 +196,16 @@ inline CMember& CMember::operator=(const CMember& me) {
 inline bool CMember::operator==(const CMember& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default equal operator in class definition, assume none are equal (so find fails)
-    return false;
+    // Equality operator as defined in class definition
+    return name == it.name;
 }
 
 //-------------------------------------------------------------------------
 inline bool operator<(const CMember& v1, const CMember& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted, preserve ordering
-    return true;
+    // Default sort as defined in class definition
+    return v1.name < v2.name;
 }
 
 //---------------------------------------------------------------------------
