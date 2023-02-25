@@ -108,7 +108,7 @@ configuration per chain.
 | [display]           |                                                                                                                                     |
 | format              | Display format when exporting transactions (search source code)<br />STR_DISPLAY_TRANSACTION                                        |
 | receipt             | Display format when exporting receipts<br />STR_DISPLAY_RECEIPT                                                                     |
-| log                 | Display format when exporting logs<br />STR_DISPLAY_LOGENTRY                                                                        |
+| log                 | Display format when exporting logs<br />STR_DISPLAY_LOG                                                                             |
 | trace               | Display format when exporting traces<br />STR_DISPLAY_TRACE                                                                         |
 | appearances         | Display format when exporting appearances<br />STR_DISPLAY_APPEARANCE                                                               |
 | neighbor            | Display format when exporting neighbors<br />STR_DISPLAY_APPEARANCE                                                                 |

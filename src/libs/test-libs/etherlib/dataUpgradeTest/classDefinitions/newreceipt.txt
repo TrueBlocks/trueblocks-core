@@ -1,4 +1,4 @@
 [settings]
 class = CNewReceipt
 fields = newreceipt.csv
-includes = etherlib.h|logentry.h
+includes = etherlib.h|log.h

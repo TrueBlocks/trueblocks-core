@@ -35,7 +35,7 @@ bool COptions::articulateAll(CTransaction& trans) {
 
         // Do the same for the logs...
         for (size_t j = 0; j < trans.receipt.logs.size(); j++) {
-            CLogEntry* log = (CLogEntry*)&trans.receipt.logs[j];  // NOLINT
+            CLog* log = (CLog*)&trans.receipt.logs[j];  // NOLINT
             trans.hasToken |= (log->topics.size() > 0 && isTokenRelated(log->topics[0]));
             string_q str = log->Format();
             if (contains(str, bytesOnly)) {
@@ -62,7 +62,7 @@ bool COptions::articulateAll(CTransaction& trans) {
         // Even if we're not articulating, we want to mark token-related transactions
         trans.hasToken |= isTokenRelated(trans.input.substr(0, 10));
         for (size_t j = 0; j < trans.receipt.logs.size(); j++) {
-            CLogEntry* log = (CLogEntry*)&trans.receipt.logs[j];  // NOLINT
+            CLog* log = (CLog*)&trans.receipt.logs[j];  // NOLINT
             trans.hasToken |= (log->topics.size() > 0 && isTokenRelated(log->topics[0]));
         }
     }
