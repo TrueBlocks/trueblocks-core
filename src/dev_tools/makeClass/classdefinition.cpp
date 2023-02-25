@@ -300,22 +300,22 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
                 return true;
             }
             if (fieldName % "extraArray") {
-                CParameter obj;
+                CMember obj;
                 string_q str = fieldValue;
                 while (obj.parseJson3(str)) {
                     extraArray.push_back(obj);
-                    obj = CParameter();  // reset
+                    obj = CMember();  // reset
                 }
                 return true;
             }
             break;
         case 'f':
             if (fieldName % "fieldArray") {
-                CParameter obj;
+                CMember obj;
                 string_q str = fieldValue;
                 while (obj.parseJson3(str)) {
                     fieldArray.push_back(obj);
-                    obj = CParameter();  // reset
+                    obj = CMember();  // reset
                 }
                 return true;
             }
@@ -603,7 +603,7 @@ const CBaseNode* CClassDefinition::getObjectAt(const string_q& fieldName, size_t
     // EXISTING_CODE
     if (fieldName % "fieldArray") {
         if (index == NOPOS) {
-            CParameter empty;
+            CMember empty;
             ((CClassDefinition*)this)->fieldArray.push_back(empty);  // NOLINT
             index = fieldArray.size() - 1;
         }
@@ -612,7 +612,7 @@ const CBaseNode* CClassDefinition::getObjectAt(const string_q& fieldName, size_t
     }
     if (fieldName % "extraArray") {
         if (index == NOPOS) {
-            CParameter empty;
+            CMember empty;
             ((CClassDefinition*)this)->extraArray.push_back(empty);  // NOLINT
             index = extraArray.size() - 1;
         }
@@ -734,7 +734,7 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
             if (trim(line).empty()) {
                 continue;
             }
-            CParameter tmp;
+            CMember tmp;
             tmp.parseCSV(fields, line);
             if (tmp.is_flags & IS_EXTRA) {
                 tmp.is_flags |= IS_MINIMAL;

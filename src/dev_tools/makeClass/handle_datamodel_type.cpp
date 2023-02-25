@@ -13,10 +13,10 @@
 #include "acctlib.h"
 #include "options.h"
 
-string_q type_2_GoType(const CParameter& field);
-string_q specialCase(const CParameter& field, const string_q& name, const string_q& type, bool isRaw);
-string_q debug(const CParameter& field);
-bool skipField(const CParameter& field);
+string_q type_2_GoType(const CMember& field);
+string_q specialCase(const CMember& field, const string_q& name, const string_q& type, bool isRaw);
+string_q debug(const CMember& field);
+bool skipField(const CMember& field);
 
 //------------------------------------------------------------------------------------------------------------
 void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
@@ -27,7 +27,7 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
     replaceAll(contents, "[{CLASS_NAME}]", type_2_ModelName(model.go_model, false));
     replaceAll(contents, "[{RAW_NAME}]", "Raw" + type_2_ModelName(model.go_model, true));
 
-    CParameter raw;
+    CMember raw;
     raw.type = "*Raw" + type_2_ModelName(model.go_model, true);
     raw.name = "raw";
     model.fieldArray.push_back(raw);
@@ -120,7 +120,7 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-string_q type_2_GoType(const CParameter& field) {
+string_q type_2_GoType(const CMember& field) {
     string_q type = field.type;
     if (type == "blknum")
         return "uint64";
@@ -144,7 +144,7 @@ string_q type_2_GoType(const CParameter& field) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-string_q specialCase(const CParameter& field, const string_q& name, const string_q& type, bool isRaw) {
+string_q specialCase(const CMember& field, const string_q& name, const string_q& type, bool isRaw) {
     string ret;
     if (name % "CumulativeGasUsed" && !isRaw) {
         ret = "string";
@@ -165,7 +165,7 @@ string_q specialCase(const CParameter& field, const string_q& name, const string
 }
 
 //------------------------------------------------------------------------------------------------------------
-string_q debug(const CParameter& field) {
+string_q debug(const CMember& field) {
     ostringstream os;
     // os << " //";
     // os << " doc: " << field.doc;
@@ -175,7 +175,7 @@ string_q debug(const CParameter& field) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-bool skipField(const CParameter& field) {
+bool skipField(const CMember& field) {
     return contains(field.name, "::") || field.name == "InputsDict" || field.name == "OutputsDict" ||
            field.name == "Abi_source";
 }

@@ -16,6 +16,7 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 #include "etherlib.h"
+#include "member.h"
 
 namespace qblocks {
 
@@ -43,8 +44,8 @@ class CClassDefinition : public CBaseNode {
     string_q sort_str;
     string_q eq_str;
     bool tsx;
-    CParameterArray fieldArray;
-    CParameterArray extraArray;
+    CMemberArray fieldArray;
+    CMemberArray extraArray;
     string_q contained_by;
     string_q doc_group;
     string_q doc_order;

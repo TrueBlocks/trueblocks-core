@@ -136,13 +136,13 @@ bool COptions::handle_sdk_ts_types(CStringArray& typesOut) {
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_sdk_ts_paths(CStringArray& pathsOut) {
     for (auto ep : endpointArray) {
-        CCommandOptionArray params;
+        CCommandOptionArray members;
         for (auto option : routeOptionArray) {
             if (option.api_route == ep.api_route && isChifraRoute(option, false)) {
-                params.push_back(option);
+                members.push_back(option);
             }
         }
-        ep.params = &params;
+        ep.members = &members;
 
         if (!ep.api_route.empty()) {
             map<string_q, string_q> imports;
@@ -166,8 +166,8 @@ bool COptions::handle_sdk_ts_paths(CStringArray& pathsOut) {
             }
 
             ostringstream pp;
-            if (isApiRoute(ep.api_route) && ep.params) {
-                for (auto p : *((CCommandOptionArray*)ep.params)) {
+            if (isApiRoute(ep.api_route) && ep.members) {
+                for (auto p : *((CCommandOptionArray*)ep.members)) {
                     if (!p.is_visible_docs) {
                         continue;
                     }
@@ -215,7 +215,7 @@ bool COptions::handle_sdk_ts_paths(CStringArray& pathsOut) {
             writeIfDifferent(filename.str(), out);
         }
 
-        counter.cmdCount += params.size();
+        counter.cmdCount += members.size();
         counter.routeCount++;
     }
 

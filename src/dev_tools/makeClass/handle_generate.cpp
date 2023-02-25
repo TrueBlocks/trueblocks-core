@@ -362,11 +362,11 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
 }
 
 //------------------------------------------------------------------------------------------------
-string_q getCaseGetCode(const CParameterArray& fieldsIn) {
+string_q getCaseGetCode(const CMemberArray& fieldsIn) {
     if (fieldsIn.empty())
         return "// No fields";
 
-    map<char, CParameterArray> ch_map;
+    map<char, CMemberArray> ch_map;
     for (auto f : fieldsIn) {
         if (!(f.is_flags & IS_MINIMAL)) {
             ch_map[f.name[0]].push_back(f);
@@ -549,8 +549,8 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
 }
 
 //------------------------------------------------------------------------------------------------
-string_q getCaseSetCode(const CParameterArray& fieldsIn) {
-    map<char, CParameterArray> ch_map;
+string_q getCaseSetCode(const CMemberArray& fieldsIn) {
+    map<char, CMemberArray> ch_map;
     for (auto f : fieldsIn) {
         if (!(f.is_flags & IS_MINIMAL)) {
             ch_map[f.name[0]].push_back(f);
