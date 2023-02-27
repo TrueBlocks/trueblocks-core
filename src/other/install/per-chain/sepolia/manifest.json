@@ -828,6 +828,13 @@
       "bloomSize": 131114,
       "indexHash": "QmNer4beGa5urKXpXNEgBAXPY18GmUCp1Ub46GVqMeYevp",
       "indexSize": 2001300
+    },
+    {
+      "range": "002967840-002974813",
+      "bloomHash": "QmNgSMQDN25sSLJQ7TH5HEUxG65QnXUmy2Jra77QnMDbVY",
+      "bloomSize": 131114,
+      "indexHash": "QmbNogBBWyyYz2uDyJzGQQ96p83qpDjUp8WKav1EVdJNp3",
+      "indexSize": 1760704
     }
   ]
 }

@@ -9,7 +9,9 @@
 package types
 
 // EXISTING_CODE
-import "strings"
+import (
+	"strings"
+)
 
 // EXISTING_CODE
 
