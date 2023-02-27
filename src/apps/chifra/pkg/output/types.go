@@ -24,6 +24,8 @@ func Format(s *types.SimpleName, fmt string) error {
 		Format:   fmt,
 		OutputFn: "",
 		Append:   false,
-		Extra:    map[string]interface{}{},
+		Extra: map[string]interface{}{
+			"expand": true,
+		},
 	})
 }
