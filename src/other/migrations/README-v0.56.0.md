@@ -1,3 +1,5 @@
+Removes `chifar dump`
+
 Hack for erigon bug
 
 Better Unchained index usage
