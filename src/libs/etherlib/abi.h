@@ -183,8 +183,8 @@ extern const char* STR_DISPLAY_ABI;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern bool fromDefinition(CFunction& func, const string_q& lineIn);
-extern bool fromDefinition(CParameter& parm, const string_q& input);
+// extern bool fromDefinition(CFunction& func, const string_q& lineIn);
+// extern bool fromDefinition(CParameter& parm, const string_q& input);
 extern bool decodeRLP(CParameterArray& ifaces, const string_q& desc, const string_q& input);
 extern bool sortByFuncName(const CFunction& f1, const CFunction& f2);
 extern bool isKnownAbi(const string_q& addr, string_q& path);

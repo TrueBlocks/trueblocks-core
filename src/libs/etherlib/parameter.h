@@ -145,7 +145,7 @@ inline void CParameter::initialize(void) {
     internalType = "";
     components.clear();
     unused = false;
-    is_flags = IS_ENABLED;
+    is_flags = 0;
     precision = 5;
 
     // EXISTING_CODE

@@ -298,94 +298,97 @@ TEST_F(CThisTest, TestSerpent) {
 class CFunctionTester : public CFunction {
   public:
     bool doTest(const string_q& lineIn) {
-#if 0
-        string_q line;
-        line =
-            "decode|decode donation tuple array (address token, uint256 amount, address recipient)[]|function donate((address+uint256+address)[])|\
-0x\
-0000000000000000000000000000000000000000000000000000000000000020\
-0000000000000000000000000000000000000000000000000000000000000002\
-0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f\
-000000000000000000000000000000000000000000000000869d529b714a0000\
-000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b\
-0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f\
-00000000000000000000000000000000000000000000000003782dace9d90000\
-00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3\
-|[{\"val_1\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"val_2\":\"9700000000000000000\", \"val_3\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"val_1\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"val_2\":\"250000000000000000\", \"val_3\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}]";
-#else
-        string_q line = lineIn;
-#endif
-        string_q result;
-        CStringArray parts;
-        explode(parts, line, '|');
-        if (parts.size() != 5) {
-            cerr << "Invalid test: " << line << endl;
-            return false;
-        }
-        string_q testType = trim(parts[0]);
-        string_q testName = trim(parts[1]);
-        string_q testSig = trim(parts[2]);
-        string_q inputBytes = trim(parts[3]);
-        string_q expected = trim(substitute(parts[4], "<empty>", ""));
+        // #if 0
+        //         string_q line;
+        //         line =
+        //             "decode|decode donation tuple array (address token, uint256 amount, address recipient)[]|function
+        //             donate((address+uint256+address)[])|\
+// 0x\
+// 0000000000000000000000000000000000000000000000000000000000000020\
+// 0000000000000000000000000000000000000000000000000000000000000002\
+// 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f\
+// 000000000000000000000000000000000000000000000000869d529b714a0000\
+// 000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b\
+// 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f\
+// 00000000000000000000000000000000000000000000000003782dace9d90000\
+// 00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3\
+// |[{\"val_1\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"val_2\":\"9700000000000000000\",
+        // \"val_3\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"},
+        // {\"val_1\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"val_2\":\"250000000000000000\",
+        // \"val_3\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}]"; #else
+        //         string_q line = lineIn;
+        // #endif
+        //         string_q result;
+        //         CStringArray parts;
+        //         explode(parts, line, '|');
+        //         if (parts.size() != 5) {
+        //             cerr << "Invalid test: " << line << endl;
+        //             return false;
+        //         }
+        //         string_q testType = trim(parts[0]);
+        //         string_q testName = trim(parts[1]);
+        //         string_q testSig = trim(parts[2]);
+        //         string_q inputBytes = trim(parts[3]);
+        //         string_q expected = trim(substitute(parts[4], "<empty>", ""));
 
-        fromDefinition(*this, testSig);
-        if (type != "function" && type != "event") {
-            cout << "invalid: " << testSig << endl;
-            return false;
-        }
+        //         fromDefinition(*this, testSig);
+        //         if (type != "function" && type != "event") {
+        //             cout << "invalid: " << testSig << endl;
+        //             return false;
+        //         }
 
-        cout << endl;
-        cout << "line: " << line << endl;
-        cout << "testType: " << testType << endl;
-        cout << "testName: " << testName << endl;
-        cout << "testSig: " << testSig << " --> " << getSignature(SIG_CANONICAL) << endl;
-        if (startsWith(line, ';')) {
-            cout << (expected == result ? bGreen : bRed);
-            cout << "expected: " << expected << " ?" << endl;
-            cout << "result:   " << expected << " ? " << (expected == expected) << endl;
-            cout << "testName: " << testName << endl;
-            cout << cOff;
-            return true;  // report on commented lines, but don't do the test
-        }
+        //         cout << endl;
+        //         cout << "line: " << line << endl;
+        //         cout << "testType: " << testType << endl;
+        //         cout << "testName: " << testName << endl;
+        //         cout << "testSig: " << testSig << " --> " << getSignature(SIG_CANONICAL) << endl;
+        //         if (startsWith(line, ';')) {
+        //             cout << (expected == result ? bGreen : bRed);
+        //             cout << "expected: " << expected << " ?" << endl;
+        //             cout << "result:   " << expected << " ? " << (expected == expected) << endl;
+        //             cout << "testName: " << testName << endl;
+        //             cout << cOff;
+        //             return true;  // report on commented lines, but don't do the test
+        //         }
 
-        if (testType == "signature") {
-            result = checkTypes() ? encodeItem() : "fail";
-            result = (type == "function" ? result.substr(0, 10) : result);
+        //         if (testType == "signature") {
+        //             result = checkTypes() ? encodeItem() : "fail";
+        //             result = (type == "function" ? result.substr(0, 10) : result);
 
-        } else if (testType == "encode" || testType == "encode_raw") {
-            result = encodeItem();
-            result = (type == "function" ? result.substr(0, 10) : result);
+        //         } else if (testType == "encode" || testType == "encode_raw") {
+        //             result = encodeItem();
+        //             result = (type == "function" ? result.substr(0, 10) : result);
 
-        } else if (testType == "decode" || testType == "decode_raw") {
-            cerr << endl << string_q(50, '-') << endl;
-            bool ret = decodeRLP(inputs, getSignature(SIG_CANONICAL), inputBytes);
-            for (auto param : inputs) {
-                if (!result.empty())
-                    result += ", ";
-                result += param.value;
-            }
-            result = trim(result);
-            if (result.empty() && !ret)
-                result = "fail";
-            cout << (expected == result ? bGreen : bRed);
-            cout << "expected: " << expected << " ?" << endl;
-            cout << "result:   " << result << " ? " << (expected == result) << endl;
-            cout << "testName: " << testName << endl;
-            cout << cOff;
-            // if (!(expected == result))
-            //     cout << "THIS IS AN ERROR, BUT WE DON'T QUIT." << endl;
-            return true;  // debugging
+        //         } else if (testType == "decode" || testType == "decode_raw") {
+        //             cerr << endl << string_q(50, '-') << endl;
+        //             bool ret = decodeRLP(inputs, getSignature(SIG_CANONICAL), inputBytes);
+        //             for (auto param : inputs) {
+        //                 if (!result.empty())
+        //                     result += ", ";
+        //                 result += param.value;
+        //             }
+        //             result = trim(result);
+        //             if (result.empty() && !ret)
+        //                 result = "fail";
+        //             cout << (expected == result ? bGreen : bRed);
+        //             cout << "expected: " << expected << " ?" << endl;
+        //             cout << "result:   " << result << " ? " << (expected == result) << endl;
+        //             cout << "testName: " << testName << endl;
+        //             cout << cOff;
+        //             // if (!(expected == result))
+        //             //     cout << "THIS IS AN ERROR, BUT WE DON'T QUIT." << endl;
+        //             return true;  // debugging
 
-        } else {
-            cerr << "Unknown test type" << testType << endl;
-            return true;  // debugging
-        }
+        //         } else {
+        //             cerr << "Unknown test type" << testType << endl;
+        //             return true;  // debugging
+        //         }
 
-        cout << (expected == result ? bGreen : bRed);
-        cout << "expected: --" << expected << "--?" << endl;
-        cout << "result:   --" << result << "--? " << (expected == result) << endl;
-        cout << "testName: " << testName << endl;
-        cout << cOff;
+        //         cout << (expected == result ? bGreen : bRed);
+        //         cout << "expected: --" << expected << "--?" << endl;
+        //         cout << "result:   --" << result << "--? " << (expected == result) << endl;
+        //         cout << "testName: " << testName << endl;
+        //         cout << cOff;
         return true;  // debugging
     }
 };

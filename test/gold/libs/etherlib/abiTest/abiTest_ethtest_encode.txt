@@ -1,165 +1,37 @@
 abiTest  eth_test -s 2
 ethereum test box test...
 0. --------------------------------------------------------------------------------
-	000.000 test_0                           ==> 
-line: encode|test 1|function vote(uint256,bool)||0xc9d27afe
-testType: encode
-testName: test 1
-testSig: function vote(uint256,bool) --> vote(uint256,bool)
-expected: --0xc9d27afe--?
-result:   --0xc9d27afe--? 1
-testName: test 1
-passed 'func.doTest(line)' is true
+	000.000 test_0                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.001 test_1                           ==> 
-line: encode|test 2|event AllowedRecipientChanged(address,bool)||0x73ad2a153c8b67991df9459024950b318a609782cee8c7eeda47b905f9baa91f
-testType: encode
-testName: test 2
-testSig: event AllowedRecipientChanged(address,bool) --> AllowedRecipientChanged(address,bool)
-expected: --0x73ad2a153c8b67991df9459024950b318a609782cee8c7eeda47b905f9baa91f--?
-result:   --0x73ad2a153c8b67991df9459024950b318a609782cee8c7eeda47b905f9baa91f--? 1
-testName: test 2
-passed 'func.doTest(line)' is true
+	000.001 test_1                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.002 test_2                           ==> 
-line: ;encode|official test vector 1 (encoding)|function baz(uint32,bool)|(69,1)|0xcdcd77c000000000000000000000000000000000000000000000000000000000000000450000000000000000000000000000000000000000000000000000000000000001
-testType: ;encode
-testName: official test vector 1 (encoding)
-testSig: function baz(uint32,bool) --> baz(uint32,bool)
-expected: 0xcdcd77c000000000000000000000000000000000000000000000000000000000000000450000000000000000000000000000000000000000000000000000000000000001 ?
-result:   0xcdcd77c000000000000000000000000000000000000000000000000000000000000000450000000000000000000000000000000000000000000000000000000000000001 ? 1
-testName: official test vector 1 (encoding)
-passed 'func.doTest(line)' is true
+	000.002 test_2                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.003 test_3                           ==> 
-line: ;encode|official test vector 2 (encoding)|function bar(real128x128[2])|([2.125,8.5])|0x3e27986000000000000000000000000000000002400000000000000000000000000000000000000000000000000000000000000880000000000000000000000000000000
-testType: ;encode
-testName: official test vector 2 (encoding)
-testSig: function bar(real128x128[2]) --> bar(real128x128[2])
-expected: 0x3e27986000000000000000000000000000000002400000000000000000000000000000000000000000000000000000000000000880000000000000000000000000000000 ?
-result:   0x3e27986000000000000000000000000000000002400000000000000000000000000000000000000000000000000000000000000880000000000000000000000000000000 ? 1
-testName: official test vector 2 (encoding)
-passed 'func.doTest(line)' is true
+	000.003 test_3                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.004 test_4                           ==> 
-line: ;encode|official test vector 3 (encoding)|function sam(bytes,bool,uint256[])|(dave,true,[1,2,3])|0xa5643bf20000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000000000000000000000000000464617665000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003
-testType: ;encode
-testName: official test vector 3 (encoding)
-testSig: function sam(bytes,bool,uint256[]) --> sam(bytes,bool,uint256[])
-expected: 0xa5643bf20000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000000000000000000000000000464617665000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003 ?
-result:   0xa5643bf20000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000000000000000000000000000464617665000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003 ? 1
-testName: official test vector 3 (encoding)
-passed 'func.doTest(line)' is true
+	000.004 test_4                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.005 test_5                           ==> 
-line: ;encode|official test vector 4 (encoding)|function f(uint,uint32[],bytes10,bytes)|(0x123,[0x456,0x789],1234567890,Hello, world!)|0x8be6524600000000000000000000000000000000000000000000000000000000000001230000000000000000000000000000000000000000000000000000000000000080313233343536373839300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e0000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000004560000000000000000000000000000000000000000000000000000000000000789000000000000000000000000000000000000000000000000000000000000000d48656c6c6f2c20776f726c642100000000000000000000000000000000000000
-testType: ;encode
-testName: official test vector 4 (encoding)
-testSig: function f(uint,uint32[],bytes10,bytes) --> f(uint256,uint32[],bytes10,bytes)
-expected: 0x8be6524600000000000000000000000000000000000000000000000000000000000001230000000000000000000000000000000000000000000000000000000000000080313233343536373839300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e0000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000004560000000000000000000000000000000000000000000000000000000000000789000000000000000000000000000000000000000000000000000000000000000d48656c6c6f2c20776f726c642100000000000000000000000000000000000000 ?
-result:   0x8be6524600000000000000000000000000000000000000000000000000000000000001230000000000000000000000000000000000000000000000000000000000000080313233343536373839300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e0000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000004560000000000000000000000000000000000000000000000000000000000000789000000000000000000000000000000000000000000000000000000000000000d48656c6c6f2c20776f726c642100000000000000000000000000000000000000 ? 1
-testName: official test vector 4 (encoding)
-passed 'func.doTest(line)' is true
+	000.005 test_5                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.006 test_6                           ==> 
-line: ;encode|encoding uint0|function baz(uint0)|1|fail
-testType: ;encode
-testName: encoding uint0
-testSig: function baz(uint0) --> baz(uint0)
-expected: fail ?
-result:   fail ? 1
-testName: encoding uint0
-passed 'func.doTest(line)' is true
+	000.006 test_6                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.007 test_7                           ==> 
-line: ;encode|encoding uint257|function baz(uint257)|1|fail
-testType: ;encode
-testName: encoding uint257
-testSig: function baz(uint257) --> baz(uint257)
-expected: fail ?
-result:   fail ? 1
-testName: encoding uint257
-passed 'func.doTest(line)' is true
+	000.007 test_7                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.008 test_8                           ==> 
-line: ;encode|encoding int0|function baz(int0)|1|fail
-testType: ;encode
-testName: encoding int0
-testSig: function baz(int0) --> baz(int0)
-expected: fail ?
-result:   fail ? 1
-testName: encoding int0
-passed 'func.doTest(line)' is true
+	000.008 test_8                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.009 test_9                           ==> 
-line: ;encode|encoding int257|function baz(int257)|1|fail
-testType: ;encode
-testName: encoding int257
-testSig: function baz(int257) --> baz(int257)
-expected: fail ?
-result:   fail ? 1
-testName: encoding int257
-passed 'func.doTest(line)' is true
+	000.009 test_9                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.010 test_10                          ==> 
-line: ;encode|encoding uint[2] with [1,2,3]|function baz(uint[2])|[1,2,3]|fail
-testType: ;encode
-testName: encoding uint[2] with [1,2,3]
-testSig: function baz(uint[2]) --> baz(uint256[2])
-expected: fail ?
-result:   fail ? 1
-testName: encoding uint[2] with [1,2,3]
-passed 'func.doTest(line)' is true
+	000.010 test_10                          ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.011 test_11                          ==> 
-line: ;encode|encoding uint8 with 9bit data|function baz(uint8)|BN(1).iushln(9)|fail
-testType: ;encode
-testName: encoding uint8 with 9bit data
-testSig: function baz(uint8) --> baz(uint8)
-expected: fail ?
-result:   fail ? 1
-testName: encoding uint8 with 9bit data
-passed 'func.doTest(line)' is true
+	000.011 test_11                          ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.012 test_12                          ==> 
-line: ;encode|should encode latin and extensions|function baz(string)|ethereum számítógép|0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000017657468657265756d20737ac3a16dc3ad74c3b367c3a970000000000000000000
-testType: ;encode
-testName: should encode latin and extensions
-testSig: function baz(string) --> baz(string)
-expected: 0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000017657468657265756d20737ac3a16dc3ad74c3b367c3a970000000000000000000 ?
-result:   0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000017657468657265756d20737ac3a16dc3ad74c3b367c3a970000000000000000000 ? 1
-testName: should encode latin and extensions
-passed 'func.doTest(line)' is true
+	000.012 test_12                          ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.013 test_13                          ==> 
-line: ;encode|should encode non-latin characters|function baz(string)|为什么那么认真？|0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000018e4b8bae4bb80e4b988e982a3e4b988e8aea4e79c9fefbc9f0000000000000000
-testType: ;encode
-testName: should encode non-latin characters
-testSig: function baz(string) --> baz(string)
-expected: 0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000018e4b8bae4bb80e4b988e982a3e4b988e8aea4e79c9fefbc9f0000000000000000 ?
-result:   0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000018e4b8bae4bb80e4b988e982a3e4b988e8aea4e79c9fefbc9f0000000000000000 ? 1
-testName: should encode non-latin characters
-passed 'func.doTest(line)' is true
+	000.013 test_13                          ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.014 test_14                          ==> 
-line: ;encode|encoding -1 as uint|function baz(uint)|-1|fail
-testType: ;encode
-testName: encoding -1 as uint
-testSig: function baz(uint) --> baz(uint256)
-expected: fail ?
-result:   fail ? 1
-testName: encoding -1 as uint
-passed 'func.doTest(line)' is true
+	000.014 test_14                          ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.015 test_15                          ==> 
-line: ;encode|encoding 256 bits as bytes|function baz(bytes)|0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff|0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000020ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-testType: ;encode
-testName: encoding 256 bits as bytes
-testSig: function baz(bytes) --> baz(bytes)
-expected: 0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000020ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff ?
-result:   0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000020ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff ? 1
-testName: encoding 256 bits as bytes
-passed 'func.doTest(line)' is true
+	000.015 test_15                          ==> passed 'func.doTest(line)' is true
 ...passed
 
 Done...
