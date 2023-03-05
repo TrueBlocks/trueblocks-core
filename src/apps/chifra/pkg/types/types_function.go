@@ -41,9 +41,11 @@ type SimpleFunction struct {
 	Constant        bool              `json:"constant,omitempty"`
 	Encoding        string            `json:"encoding"`
 	Inputs          []SimpleParameter `json:"inputs"`
+	Message         string            `json:"message,omitempty"`
 	Name            string            `json:"name"`
 	Outputs         []SimpleParameter `json:"outputs"`
 	Signature       string            `json:"signature,omitempty"`
+	StateMutability string            `json:"stateMutability"`
 	FunctionType    string            `json:"type"`
 	StateMutability string            `json:"stateMutability"`
 	// `payable` was present in ABIs before Solidity 0.5.0 and was replaced
@@ -187,6 +189,7 @@ func FunctionFromAbiMethod(ethMethod *abi.Method, abiSource string) *SimpleFunct
 	return function
 }
 
+// EXISTING_CODE
 // argumentsToSimpleParameters converts slice of go-ethereum's Argument to slice of
 // SimpleParameter
 func argumentsToSimpleParameters(args []abi.Argument) (result []SimpleParameter) {

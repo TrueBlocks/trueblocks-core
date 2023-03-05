@@ -149,7 +149,7 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 			model["action::gas"] = s.Action.Gas
 			model["action::input"] = s.Action.Input
 			if !s.Action.RefundAddress.IsZero() {
-				model["action::from"] = hexutil.Encode(s.Action.Address.Bytes())
+				model["action::from"] = hexutil.Encode(s.Action.From.Bytes())
 				model["action::to"] = hexutil.Encode(s.Action.RefundAddress.Bytes())
 				model["action::value"] = s.Action.Balance.String()
 				model["action::ether"] = utils.WeiToEther(&s.Action.Balance)
@@ -289,11 +289,8 @@ func GetTracesByTransactionHash(chain string, txHash string, transaction *Simple
 					Output:  rawTrace.Result.Output,
 					Code:    rawTrace.Result.Code,
 				}
-				if len(rawTrace.Result.NewContract) > 0 {
-					result.NewContract = HexToAddress(rawTrace.Result.NewContract)
-				} else if len(rawTrace.Result.Address) > 0 {
-					result.NewContract = HexToAddress(rawTrace.Result.Address)
-					result.NewContract = HexToAddress(rawTrace.Result.Address)
+				if len(rawTrace.Result.Address) > 0 {
+					result.Address = HexToAddress(rawTrace.Result.Address)
 				}
 				result.SetRaw(rawTrace.Result)
 			}

@@ -25,7 +25,7 @@ int main(int argc, const char* argv[]) {
         if (!options.parseArguments(command))
             return 0;
         if (once)
-            cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CLogEntry));
+            cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CLog));
         forEveryTransaction(visitTransaction, &options, options.transList.queries);
         once = false;
     }

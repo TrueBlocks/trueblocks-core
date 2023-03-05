@@ -16,7 +16,7 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 #include "etherlib.h"
-#include "logentry.h"
+#include "log.h"
 
 namespace qblocks {
 
@@ -28,7 +28,7 @@ class CNewReceipt : public CBaseNode {
   public:
     address_t contractAddress;
     gas_t gasUsed;
-    CLogEntryArray logs;
+    CLogArray logs;
     string_q logsBloom;
     bool isErr;
 

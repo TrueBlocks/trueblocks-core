@@ -35,13 +35,13 @@ bool COptions::handle_sdk_py_types(CStringArray& typesOut) {
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_sdk_py_paths(CStringArray& pathsOut) {
     for (auto ep : endpointArray) {
-        CCommandOptionArray params;
+        CCommandOptionArray members;
         for (auto option : routeOptionArray) {
             if (option.api_route == ep.api_route && isChifraRoute(option, false)) {
-                params.push_back(option);
+                members.push_back(option);
             }
         }
-        ep.params = &params;
+        ep.members = &members;
 
         if (!ep.api_route.empty()) {
             ostringstream filename;
@@ -52,7 +52,7 @@ bool COptions::handle_sdk_py_paths(CStringArray& pathsOut) {
                 replaceAll(source, "[{ROUTE}]", ep.api_route);
                 string_q firstPos;
                 ostringstream pp;
-                for (auto p : *((CCommandOptionArray*)ep.params)) {
+                for (auto p : *((CCommandOptionArray*)ep.members)) {
                     // if (!p.is_visible_docs || !p.is_visible) {
                     //     continue;
                     // }
@@ -80,7 +80,7 @@ bool COptions::handle_sdk_py_paths(CStringArray& pathsOut) {
             writeIfDifferent(filename.str(), source + "\n");
         }
 
-        counter.cmdCount += params.size();
+        counter.cmdCount += members.size();
         counter.routeCount++;
     }
 

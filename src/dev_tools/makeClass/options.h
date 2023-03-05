@@ -160,8 +160,8 @@ extern bool listClasses(const string_q& path, void* data);
 extern bool lintFiles(const string_q& path, void* data);
 extern bool formatCppFiles(const string_q& path, void* data);
 extern bool formatGoFiles(const string_q& path, void* data);
-extern string_q getCaseGetCode(const CParameterArray& fields);
-extern string_q getCaseSetCode(const CParameterArray& fields);
+extern string_q getCaseGetCode(const CMemberArray& fields);
+extern string_q getCaseSetCode(const CMemberArray& fields);
 extern string_q convertTypes(const string_q& inStr);
 extern string_q splitIfTooWide(const string_q& in);
 extern void expandTabbys(string_q& strOut);
@@ -212,7 +212,7 @@ extern bool parseOptionsFile(const char* str, void* data);
 extern bool isChifraRoute(const CCommandOption& cmd, bool depOk);
 extern bool isApiRoute(const string_q& route);
 extern bool forEveryEnum(APPLYFUNC func, const string_q& enumStr, void* data);
-extern string_q type_2_ModelName(const string_q& type);
+extern string_q type_2_ModelName(const string_q& type, bool raw);
 extern string_q getAliases(COptions* opts, const string_q& group, const string_q& route);
 
 //---------------------------------------------------------------------------------------------------

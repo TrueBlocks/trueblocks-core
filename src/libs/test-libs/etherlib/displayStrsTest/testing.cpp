@@ -54,7 +54,7 @@ bool testDisplayStr(COptions& options) {
         tra.result = tr;
         tra.articulatedTrace = CFunction("artTrace");
 
-        CLogEntry le;
+        CLog le;
         le.articulatedLog = CFunction("artLog");
         le.articulatedLog.encoding = "0xde8bc9f4";
 

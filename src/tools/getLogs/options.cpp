@@ -69,25 +69,25 @@ bool COptions::parseArguments(string_q& command) {
         manageFields("CParameter:strDefault", false);  // hide
         manageFields("CTransaction:price", false);     // hide
         manageFields("CTransaction:input", true);      // show
-        manageFields("CLogEntry:topics", true);        // show
+        manageFields("CLog:topics", true);             // show
         abi_spec.loadAbisFromKnown();
     }
 
     // Not sure why this is here to be honest, perhaps only to make test cases pass. The test cases could be fixed...
     if (isApiMode() || expContext().exportFmt == JSON1) {
-        manageFields("CLogEntry:all", FLD_HIDE);
+        manageFields("CLog:all", FLD_HIDE);
         manageFields(
-            "CLogEntry:address,blockNumber,transactionIndex,logIndex,transactionHash,type,compressedLog,topics,data",
+            "CLog:address,blockNumber,transactionIndex,logIndex,transactionHash,type,compressedLog,topics,data",
             FLD_SHOW);
     }
     // Not sure why this is here to be honest, perhaps only to make test cases pass. The test cases could be fixed...
     if (expContext().exportFmt == JSON1) {
         manageFields(defHide, FLD_HIDE);
-        manageFields(defShow + "|CLogEntry:data,topics", FLD_SHOW);
+        manageFields(defShow + "|CLog:data,topics", FLD_SHOW);
     }
 
     // Display formatting
-    configureDisplay("getLogs", "CLogEntry", STR_DISPLAY_LOGENTRY);
+    configureDisplay("getLogs", "CLog", STR_DISPLAY_LOG);
 
     return true;
 }

@@ -23,7 +23,7 @@ export?addrs=0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533&traces&cache&cacheTraces
         "value": 0
       },
       "result": {
-        "newContract": "0x0",
+        "address": "0x0",
         "gasUsed": 42792,
         "output": "0x"
       },
@@ -51,7 +51,7 @@ export?addrs=0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533&traces&cache&cacheTraces
         "value": 0
       },
       "result": {
-        "newContract": "0x0",
+        "address": "0x0",
         "gasUsed": 27479,
         "output": "0x"
       },
@@ -79,7 +79,7 @@ export?addrs=0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533&traces&cache&cacheTraces
         "value": 1e+18
       },
       "result": {
-        "newContract": "0x0",
+        "address": "0x0",
         "gasUsed": 0,
         "output": "0x"
       },
@@ -107,7 +107,7 @@ export?addrs=0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533&traces&cache&cacheTraces
         "value": 0
       },
       "result": {
-        "newContract": "0x0",
+        "address": "0x0",
         "gasUsed": 0,
         "output": ""
       },
@@ -135,7 +135,7 @@ export?addrs=0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533&traces&cache&cacheTraces
         "value": 984580000000000000
       },
       "result": {
-        "newContract": "0x0",
+        "address": "0x0",
         "gasUsed": 0,
         "output": "0x"
       },

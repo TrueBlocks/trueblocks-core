@@ -100,7 +100,7 @@ bool COptions::handle_tsx_type(const CClassDefinition& classDef) {
     ostringstream fields, types;
     CNameValueMap typeMap;
 
-    CParameterArray allFields;
+    CMemberArray allFields;
     for (auto field : classDef.fieldArray)
         allFields.push_back(field);
 
@@ -118,12 +118,11 @@ bool COptions::handle_tsx_type(const CClassDefinition& classDef) {
         replace(field.type, "Value", "string");
         replace(field.type, "TraceAction", "Traceaction");
         replace(field.type, "TraceResult", "Traceresult");
-        replace(field.type, "LogEntryArray", "LogentryArray");
         if (field.type == "StringArray")
             field.type = "string++BRACKETS++";
         if (field.name == "status" && classDef.class_name == "CReceipt")
             field.type = "string";
-        if (field.name == "components" && classDef.class_name == "CParameter")
+        if (field.name == "components" && classDef.class_name == "CMember")
             field.type = "string";
         fields << field.Format("  [{NAME}]: [{TYPE}];") << endl;
         if (!startsWith(field.type, "string") && field.type != "boolean")

@@ -41,6 +41,5 @@ tags
 80-Malicious
 80-Malicious:DaoDrain
 80-Malicious:Shanghai
-90-Individuals:Gitcoin Grants
 91-Early:Addresses
 91-Early:Miners

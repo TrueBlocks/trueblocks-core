@@ -31,7 +31,7 @@ void COptions::markNeighbors(const CTransaction& trans) {
         fromTraceAddrMap[trace.action.from]++;
         toTraceAddrMap[trace.action.to]++;
         if (factory)
-            creationMap[trace.result.newContract]++;
+            creationMap[trace.result.address]++;
     }
 }
 
