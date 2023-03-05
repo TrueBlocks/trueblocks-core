@@ -1,5 +1,14 @@
+// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
+ */
+
 package types
 
+// EXISTING_CODE
 import (
 	"bytes"
 	"encoding/json"
@@ -10,25 +19,115 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-type RawFunction interface{}
+// EXISTING_CODE
+
+type RawFunction struct {
+	AbiSource       string `json:"abiSource"`
+	Anonymous       string `json:"anonymous"`
+	Constant        string `json:"constant"`
+	Encoding        string `json:"encoding"`
+	Inputs          string `json:"inputs"`
+	Message         string `json:"message"`
+	Name            string `json:"name"`
+	Outputs         string `json:"outputs"`
+	Signature       string `json:"signature"`
+	StateMutability string `json:"stateMutability"`
+	FunctionType    string `json:"type"`
+}
 
 type SimpleFunction struct {
-	Encoding        string            `json:"encoding,omitempty"`
-	Signature       string            `json:"signature,omitempty"`
-	Name            string            `json:"name"`
-	FunctionType    string            `json:"type"`
-	AbiSource       string            `json:"abi_source"`
-	Anonymous       bool              `json:"anonymous"`
-	Constant        bool              `json:"constant"`
-	StateMutability string            `json:"stateMutability"`
+	AbiSource       string            `json:"abiSource,omitempty"`
+	Anonymous       bool              `json:"anonymous,omitempty"`
+	Constant        bool              `json:"constant,omitempty"`
+	Encoding        string            `json:"encoding"`
 	Inputs          []SimpleParameter `json:"inputs"`
+	Name            string            `json:"name"`
 	Outputs         []SimpleParameter `json:"outputs"`
+	Signature       string            `json:"signature,omitempty"`
+	FunctionType    string            `json:"type"`
+	StateMutability string            `json:"stateMutability"`
 	// `payable` was present in ABIs before Solidity 0.5.0 and was replaced
 	// by `stateMutability`: https://docs.soliditylang.org/en/develop/050-breaking-changes.html#command-line-and-json-interfaces
 	payable   bool
 	abiMethod *abi.Method
 	abiEvent  *abi.Event
+	raw             *RawFunction
 }
+
+func (s *SimpleFunction) Raw() *RawFunction {
+	return s.raw
+}
+
+func (s *SimpleFunction) SetRaw(raw *RawFunction) {
+	s.raw = raw
+}
+
+func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+	// EXISTING_CODE
+	// Used by chifra abis --find
+	if extraOptions["encodingSignatureOnly"] == true {
+		return Model{
+			Data: map[string]any{
+				"encoding":  s.Encoding,
+				"signature": s.Signature,
+			},
+			Order: []string{"encoding", "signature"},
+		}
+	}
+	// EXISTING_CODE
+
+	model := map[string]interface{}{
+		"encoding":        s.Encoding,
+		"name":            s.Name,
+		"signature":       s.Signature,
+		"stateMutability": s.StateMutability,
+		"type":            s.FunctionType,
+	}
+
+	order := []string{
+		"stateMutability",
+		"name",
+		"type",
+		"signature",
+		"encoding",
+	}
+
+	// EXISTING_CODE
+	// re-ordering
+	order = []string{
+		"encoding",
+		"type",
+		"name",
+		"signature",
+	}
+	if format == "json" {
+		getParameterModels := func(params []SimpleParameter) []map[string]any {
+			result := make([]map[string]any, len(params))
+			for index, param := range params {
+				result[index] = param.Model(showHidden, format, extraOptions).Data
+				result[index]["name"] = param.DisplayName(index)
+			}
+			return result
+		}
+		if extraOptions["verbose"] == true {
+			model["inputs"] = getParameterModels(s.Inputs)
+			model["outputs"] = getParameterModels(s.Outputs)
+		}
+		return Model{
+			Data:  model,
+			Order: []string{},
+		}
+	}
+
+	// EXISTING_CODE
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// EXISTING_CODE
 
 func FunctionFromAbiEvent(ethEvent *abi.Event, abiSource string) *SimpleFunction {
 	// ID is encoded signature
@@ -243,58 +342,6 @@ func joinParametersNames(params []SimpleParameter) (result string) {
 	return
 }
 
-func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[string]any) Model {
-	// Used by chifra abis --find
-	if extraOptions["encodingSignatureOnly"] == true {
-		return Model{
-			Data: map[string]any{
-				"encoding":  s.Encoding,
-				"signature": s.Signature,
-			},
-			Order: []string{"encoding", "signature"},
-		}
-	}
-
-	model := map[string]interface{}{
-		"name":            s.Name,
-		"type":            s.FunctionType,
-		"stateMutability": s.StateMutability,
-		"signature":       s.Signature,
-		"encoding":        s.Encoding,
-	}
-
-	if format == "json" {
-		getParameterModels := func(params []SimpleParameter) []map[string]any {
-			result := make([]map[string]any, len(params))
-			for index, param := range params {
-				result[index] = param.Model(showHidden, format, extraOptions).Data
-				result[index]["name"] = param.DisplayName(index)
-			}
-			return result
-		}
-		if extraOptions["verbose"] == true {
-			model["inputs"] = getParameterModels(s.Inputs)
-			model["outputs"] = getParameterModels(s.Outputs)
-		}
-		return Model{
-			Data:  model,
-			Order: []string{},
-		}
-	}
-
-	order := []string{
-		"encoding",
-		"type",
-		"name",
-		"signature",
-	}
-
-	return Model{
-		Data:  model,
-		Order: order,
-	}
-}
-
 // Normalize sets StateMutability from `payable` field. It is only useful when
 // reading ABIs generated before Solidity 0.5.0, which use `payable` field:
 // https://docs.soliditylang.org/en/develop/050-breaking-changes.html#command-line-and-json-interfaces
@@ -309,3 +356,5 @@ func (s *SimpleFunction) Normalize() {
 	}
 	s.StateMutability = "nonpayable"
 }
+
+// EXISTING_CODE
