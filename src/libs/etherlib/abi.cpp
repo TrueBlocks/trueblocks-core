@@ -342,9 +342,7 @@ const char* STR_DISPLAY_ABI =
     "[{ENCODING}]\t"
     "[{TYPE}]\t"
     "[{NAME}]\t"
-    "[{SIGNATURE}]\t"
-    "[{INPUT_NAMES}]\t"
-    "[{OUTPUT_NAMES}]";
+    "[{SIGNATURE}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

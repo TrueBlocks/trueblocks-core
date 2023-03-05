@@ -101,7 +101,7 @@ bool COptions::parseArguments(string_q& command) {
             return usage("filter.fromBlock must be no more than 100 blocks before filter.toBlock.");
         filters.push_back(f);
         manageFields("CTraceAction:balance,init,refundAddress,selfDestructed", false);  // hide
-        manageFields("CTraceResult:code,newContract", false);
+        manageFields("CTraceResult:code,address", false);
         manageFields("CTrace:error", false);
         GETRUNTIME_CLASS(CTrace)->sortFieldList();
         GETRUNTIME_CLASS(CTraceAction)->sortFieldList();

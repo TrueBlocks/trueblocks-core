@@ -107,8 +107,6 @@ bool CTraceResult::setValueByName(const string_q& fieldNameIn, const string_q& f
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
-    if (fieldName == "address")
-        fieldName = "newContract";
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
