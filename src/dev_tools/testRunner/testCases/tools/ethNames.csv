@@ -37,7 +37,7 @@ on      ,both ,medi  ,names ,tools/ethNames ,upgrade_fail           ,y    ,fmt =
 on      ,both ,medi  ,names ,tools/ethNames ,name_match             ,n    ,noop & terms = torj & fmt = csv
 on      ,cmd  ,fast  ,names ,tools/ethNames ,show_version           ,n    ,version
 
-on      ,both ,fast  ,names ,tools/ethNames ,ens_test               ,y    ,terms = wildmolasses.eth
+on      ,both ,fast  ,names ,tools/ethNames ,ens_test               ,y    ,terms = wolfofethereum.eth
 on      ,both ,fast  ,names ,tools/ethNames ,ens_test_fail          ,y    ,terms = notathingy.eth
 
 on      ,cmd  ,fast  ,names ,tools/ethNames ,xdg_fail1              ,y    ,terms = test
