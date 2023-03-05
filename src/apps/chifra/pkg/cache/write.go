@@ -502,7 +502,8 @@ func WriteParameter(writer *bufio.Writer, param *types.SimpleParameter) (err err
 		return
 	}
 
-	err = write(&param.IsFlags)
+	unused := uint64(0)
+	err = write(&unused)
 	if err != nil {
 		return
 	}
@@ -644,7 +645,7 @@ func writeTraceResult(writer *bufio.Writer, result *types.SimpleTraceResult) (er
 		return
 	}
 
-	err = writeAddress(writer, &result.NewContract)
+	err = writeAddress(writer, &result.Address)
 	if err != nil {
 		return
 	}

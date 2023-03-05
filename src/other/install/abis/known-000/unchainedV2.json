@@ -51,19 +51,19 @@
     "inputs": [
       {
         "type": "address",
-        "name": "val_0",
+        "name": "publisher",
         "internalType": "address"
       },
       {
         "type": "string",
-        "name": "val_1",
+        "name": "database",
         "internalType": "string"
       }
     ],
     "outputs": [
       {
         "type": "string",
-        "name": "val_0",
+        "name": "hash",
         "internalType": "string"
       }
     ]

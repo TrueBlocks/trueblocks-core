@@ -40,10 +40,10 @@ bool traces_Display(CTraverser* trav, void* data) {
             opt->firstOut = false;
         }
 
-        bool isCreation = trace.result.newContract != "";
+        bool isCreation = trace.result.address != "";
         if (isCreation) {
             copy.action.from = "0x0";
-            copy.action.to = trace.result.newContract;
+            copy.action.to = trace.result.address;
             copy.action.callType = "creation";
             copy.action.value = trace.action.value;
             if (copy.traceAddress.size() == 0)

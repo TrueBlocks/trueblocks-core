@@ -214,25 +214,25 @@ string_q toApiPath(const CCommandOption& cmd, const string_q& returnTypesIn, con
         "[{SCHEMA}]";
 
     bool hasDelete = false;
-    ostringstream paramStream;
-    for (auto param : *(CCommandOptionArray*)cmd.params) {
-        bool needsTwoAddrs = containsI(param.description, "two or more addresses");
-        hasDelete |= contains(param.longName, "deleteMe");
-        replace(param.longName, "deleteMe", "delete");
-        if (param.longName.empty() || !param.is_visible_docs)
+    ostringstream memberStream;
+    for (auto member : *(CCommandOptionArray*)cmd.members) {
+        bool needsTwoAddrs = containsI(member.description, "two or more addresses");
+        hasDelete |= contains(member.longName, "deleteMe");
+        replace(member.longName, "deleteMe", "delete");
+        if (member.longName.empty() || !member.is_visible_docs)
             continue;
-        if (!isCrud(param.longName)) {
+        if (!isCrud(member.longName)) {
             string_q yp = STR_PARAM_YAML;
-            replace(yp, "[{NAME}]", toCamelCase(param.longName));
-            replace(yp, "[{DESCR}]", prepareDescr(param.swagger_descr));
-            replace(yp, "[{REQ}]", param.is_required ? "true" : "false");
-            replace(yp, "[{SCHEMA}]", getSchema(param));
+            replace(yp, "[{NAME}]", toCamelCase(member.longName));
+            replace(yp, "[{DESCR}]", prepareDescr(member.swagger_descr));
+            replace(yp, "[{REQ}]", member.is_required ? "true" : "false");
+            replace(yp, "[{SCHEMA}]", getSchema(member));
             if (needsTwoAddrs) {
                 replace(yp, "            type: array\n", "            type: array\n            minItems: 2\n");
             }
-            if (paramStream.str().empty())
-                paramStream << "      parameters:\n";
-            paramStream << yp << endl;
+            if (memberStream.str().empty())
+                memberStream << "      parameters:\n";
+            memberStream << yp << endl;
         }
     }
 
@@ -325,7 +325,7 @@ string_q toApiPath(const CCommandOption& cmd, const string_q& returnTypesIn, con
     replaceAll(ret, "[{PROPERTIES}]", properties.str());
     replaceAll(ret, "[{EXAMPLE}]", example.str());
     replaceAll(ret, "[{PATH}]", cmd.api_route);
-    replaceAll(ret, "[{PARAMS}]", paramStream.str());
+    replaceAll(ret, "[{PARAMS}]", memberStream.str());
     replaceAll(ret, "[{SUMMARY}]", cmd.summary);
     replaceAll(ret, "[{DESCR}]", cmd.description + corresponds);
     replaceAll(ret, "[{DELETE}]", hasDelete ? STR_DELETE_OPTS : "");
@@ -344,11 +344,11 @@ bool COptions::writeOpenApiFile(void) {
     map<string_q, string_q> converts;
     map<string_q, string_q> pkgs;
     for (auto ep : endpointArray) {
-        CCommandOptionArray params;
+        CCommandOptionArray members;
         for (auto option : routeOptionArray)
             if (option.api_route == ep.api_route && isChifraRoute(option, false))
-                params.push_back(option);
-        ep.params = &params;
+                members.push_back(option);
+        ep.members = &members;
 
         CStringArray unused;
         string_q returnTypes = getReturnTypes(ep, unused);
@@ -364,13 +364,13 @@ bool COptions::writeOpenApiFile(void) {
         string_q nick = nextTokenClear(pkg, ' ');
         pkgs[nick] = substitute(pkg, "\n", "");
 
-        if (isApiRoute(ep.api_route) && ep.params) {
-            for (auto p : *((CCommandOptionArray*)ep.params))
+        if (isApiRoute(ep.api_route) && ep.members) {
+            for (auto p : *((CCommandOptionArray*)ep.members))
                 if (contains(p.longName, "_"))
                     converts[toCamelCase(p.longName)] = p.longName;
         }
 
-        counter.cmdCount += params.size();
+        counter.cmdCount += members.size();
         counter.routeCount++;
     }
     for (auto pkg : pkgs)

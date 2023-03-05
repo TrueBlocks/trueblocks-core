@@ -1,4 +1,4 @@
 [settings]
 class = CClassDefinition
 fields = classdefinition.csv
-includes = etherlib.h
+includes = etherlib.h|member.h

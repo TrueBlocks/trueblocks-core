@@ -79,9 +79,9 @@ func (opts *BlocksOptions) HandleShowUncles() error {
 		Append:     opts.Globals.Append,
 		JsonIndent: "  ",
 		Extra: map[string]interface{}{
-			"txHashes": opts.Hashes,
-			"count":    opts.Count,
-			"uncles":   opts.Uncles,
+			"hashes": opts.Hashes,
+			"count":  opts.Count,
+			"uncles": opts.Uncles,
 		},
 	})
 }

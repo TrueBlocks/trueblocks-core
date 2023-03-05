@@ -84,22 +84,6 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
                 return retS;
             }
             break;
-        case 'd':
-            if (fieldName % "doc") {
-                return doc == 0 ? "" : uint_2_Str(doc);
-            }
-            if (fieldName % "disp") {
-                return disp == 0 ? "" : uint_2_Str(disp);
-            }
-            if (fieldName % "description") {
-                return description;
-            }
-            break;
-        case 'e':
-            if (fieldName % "example") {
-                return example;
-            }
-            break;
         case 'i':
             if (fieldName % "indexed") {
                 return bool_2_Str_t(indexed);
@@ -108,12 +92,7 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
                 return internalType;
             }
             if (fieldName % "is_flags") {
-                return uint_2_Str(is_flags);
-            }
-            break;
-        case 'm':
-            if (fieldName % "maxWidth") {
-                return uint_2_Str(maxWidth);
+                return is_flags == 0 ? "" : uint_2_Str(is_flags);
             }
             break;
         case 'n':
@@ -123,7 +102,7 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
             break;
         case 'p':
             if (fieldName % "precision") {
-                return uint_2_Str(precision);
+                return precision == 0 ? "" : uint_2_Str(precision);
             }
             break;
         case 's':
@@ -190,26 +169,6 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
                 return true;
             }
             break;
-        case 'd':
-            if (fieldName % "doc") {
-                doc = str_2_Uint(fieldValue);
-                return true;
-            }
-            if (fieldName % "disp") {
-                disp = str_2_Uint(fieldValue);
-                return true;
-            }
-            if (fieldName % "description") {
-                description = fieldValue;
-                return true;
-            }
-            break;
-        case 'e':
-            if (fieldName % "example") {
-                example = fieldValue;
-                return true;
-            }
-            break;
         case 'i':
             if (fieldName % "indexed") {
                 indexed = str_2_Bool(fieldValue);
@@ -221,12 +180,6 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
             }
             if (fieldName % "is_flags") {
                 is_flags = str_2_Uint(fieldValue);
-                return true;
-            }
-            break;
-        case 'm':
-            if (fieldName % "maxWidth") {
-                maxWidth = str_2_Uint(fieldValue);
                 return true;
             }
             break;
@@ -303,11 +256,6 @@ bool CParameter::Serialize(CArchive& archive) {
     archive >> unused;
     archive >> is_flags;
     // archive >> precision;
-    // archive >> maxWidth;
-    // archive >> doc;
-    // archive >> disp;
-    // archive >> example;
-    // archive >> description;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -331,11 +279,6 @@ bool CParameter::SerializeC(CArchive& archive) const {
     archive << unused;
     archive << is_flags;
     // archive << precision;
-    // archive << maxWidth;
-    // archive << doc;
-    // archive << disp;
-    // archive << example;
-    // archive << description;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -393,19 +336,9 @@ void CParameter::registerClass(void) {
     ADD_FIELD(CParameter, "internalType", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "components", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "unused", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "is_flags", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CParameter, "precision", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CParameter, "is_flags", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CParameter, "precision", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CParameter, "precision");
-    ADD_FIELD(CParameter, "maxWidth", T_UNUMBER, ++fieldNum);
-    HIDE_FIELD(CParameter, "maxWidth");
-    ADD_FIELD(CParameter, "doc", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CParameter, "doc");
-    ADD_FIELD(CParameter, "disp", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CParameter, "disp");
-    ADD_FIELD(CParameter, "example", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CParameter, "example");
-    ADD_FIELD(CParameter, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CParameter, "description");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CParameter, "schema");
@@ -549,16 +482,7 @@ const char* STR_DISPLAY_PARAMETER =
     "[{STRDEFAULT}]\t"
     "[{VALUE}]\t"
     "[{INTERNALTYPE}]\t"
-    "[{INDEXED}]\t"
-    "[{IS_POINTER}]\t"
-    "[{IS_ARRAY}]\t"
-    "[{IS_OBJECT}]\t"
-    "[{IS_BUILTIN}]\t"
-    "[{IS_MINIMAL}]\t"
-    "[{IS_NOADDFLD}]\t"
-    "[{IS_NOWRITE}]\t"
-    "[{IS_OMITEMPTY}]\t"
-    "[{IS_EXTRA}]";
+    "[{INDEXED}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

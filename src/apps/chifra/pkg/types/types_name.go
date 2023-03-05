@@ -8,41 +8,43 @@
 
 package types
 
-import "strings"
-
 // EXISTING_CODE
+import (
+	"strings"
+)
+
 // EXISTING_CODE
 
 type RawName struct {
-	Tags       string `json:"tags"`
 	Address    string `json:"address"`
-	Name       string `json:"name"`
-	Symbol     string `json:"symbol"`
-	Source     string `json:"source"`
 	Decimals   string `json:"decimals"`
-	Petname    string `json:"petname"`
 	Deleted    string `json:"deleted"`
-	IsCustom   string `json:"isCustom"`
-	IsPrefund  string `json:"isPrefund"`
 	IsContract string `json:"isContract"`
+	IsCustom   string `json:"isCustom"`
 	IsErc20    string `json:"isErc20"`
 	IsErc721   string `json:"isErc721"`
+	IsPrefund  string `json:"isPrefund"`
+	Name       string `json:"name"`
+	Petname    string `json:"petname"`
+	Source     string `json:"source"`
+	Symbol     string `json:"symbol"`
+	Tags       string `json:"tags"`
 }
 
 type SimpleName struct {
-	Tags       string  `json:"tags"`
 	Address    Address `json:"address"`
-	Name       string  `json:"name"`
-	Symbol     string  `json:"symbol"`
-	Source     string  `json:"source,omitempty"`
 	Decimals   uint64  `json:"decimals"`
-	Petname    string  `json:"petname"`
 	Deleted    bool    `json:"deleted,omitempty"`
-	IsCustom   bool    `json:"isCustom,omitempty"`
-	IsPrefund  bool    `json:"isPrefund,omitempty"`
 	IsContract bool    `json:"isContract,omitempty"`
+	IsCustom   bool    `json:"isCustom,omitempty"`
 	IsErc20    bool    `json:"isErc20,omitempty"`
 	IsErc721   bool    `json:"isErc721,omitempty"`
+	IsPrefund  bool    `json:"isPrefund,omitempty"`
+	Name       string  `json:"name"`
+	Petname    string  `json:"petname"`
+	Source     string  `json:"source"`
+	Symbol     string  `json:"symbol"`
+	Tags       string  `json:"tags"`
 	raw        *RawName
 }
 
@@ -73,13 +75,13 @@ func (s *SimpleName) Model(showHidden bool, format string, extraOptions map[stri
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
-		"tags":     s.Tags,
 		"address":  s.Address,
-		"name":     s.Name,
-		"symbol":   s.Symbol,
 		"decimals": s.Decimals,
-		"source":   s.Source,
+		"name":     s.Name,
 		"petname":  s.Petname,
+		"source":   s.Source,
+		"symbol":   s.Symbol,
+		"tags":     s.Tags,
 	}
 
 	order := []string{
@@ -87,8 +89,8 @@ func (s *SimpleName) Model(showHidden bool, format string, extraOptions map[stri
 		"address",
 		"name",
 		"symbol",
-		"decimals",
 		"source",
+		"decimals",
 		"petname",
 	}
 
@@ -166,7 +168,7 @@ func (s *SimpleName) Model(showHidden bool, format string, extraOptions map[stri
 		if s.Decimals == 0 {
 			model["decimals"] = ""
 		}
-		model["source"] = s.Source
+
 		if extraOptions["expand"] == true {
 			model["deleted"] = s.Deleted
 			order = append(order, "deleted")

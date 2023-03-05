@@ -44,7 +44,6 @@ Blocks consist of the following fields:
 | transactions  | a possibly empty array of transactions or transaction hashes  | [Transaction[]](/data-model/chaindata/#transaction) |
 | baseFeePerGas | the base fee for this block                                   | wei                                                 |
 | finalized     | flag indicating the system considers this data final          | bool                                                |
-| unclesCnt     | the number of uncles in this block                            | uint64                                              |
 
 ## Transaction
 
@@ -271,12 +270,12 @@ The following commands produce and manage TraceResults:
 
 TraceResults consist of the following fields:
 
-| Field       | Description                                                                    | Type    |
-| ----------- | ------------------------------------------------------------------------------ | ------- |
-| newContract | Address of new contract, if any                                                | address |
-| code        | if this trace is creating a new smart contract, the byte code of that contract | bytes   |
-| gasUsed     | the amount of gas used by this trace                                           | gas     |
-| output      | the result of the call of this trace                                           | bytes   |
+| Field   | Description                                                                    | Type    |
+| ------- | ------------------------------------------------------------------------------ | ------- |
+| address | Address of new contract, if any                                                | address |
+| code    | if this trace is creating a new smart contract, the byte code of that contract | bytes   |
+| gasUsed | the amount of gas used by this trace                                           | gas     |
+| output  | the result of the call of this trace                                           | bytes   |
 
 ## BlockCount
 

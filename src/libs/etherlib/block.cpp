@@ -106,11 +106,6 @@ string_q CBlock::getValueByName(const string_q& fieldName) const {
                 return addr_2_Str(miner);
             }
             break;
-        case 'n':
-            if (fieldName % "name") {
-                return name;
-            }
-            break;
         case 'p':
             if (fieldName % "parentHash") {
                 return hash_2_Str(parentHash);
@@ -132,24 +127,6 @@ string_q CBlock::getValueByName(const string_q& fieldName) const {
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
                 return retS;
-            }
-            if (fieldName % "tx_hashes" || fieldName % "tx_hashesCnt") {
-                size_t cnt = tx_hashes.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt)
-                    return "";
-                string_q retS;
-                for (size_t i = 0; i < cnt; i++) {
-                    retS += ("\"" + tx_hashes[i] + "\"");
-                    retS += ((i < cnt - 1) ? ",\n" + indentStr() : "\n");
-                }
-                return retS;
-            }
-            break;
-        case 'u':
-            if (fieldName % "unclesCnt") {
-                return uint_2_Str(unclesCnt);
             }
             break;
         default:
@@ -244,12 +221,6 @@ bool CBlock::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
                 return true;
             }
             break;
-        case 'n':
-            if (fieldName % "name") {
-                name = fieldValue;
-                return true;
-            }
-            break;
         case 'p':
             if (fieldName % "parentHash") {
                 parentHash = str_2_Hash(fieldValue);
@@ -268,19 +239,6 @@ bool CBlock::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
                     transactions.push_back(obj);
                     obj = CTransaction();  // reset
                 }
-                return true;
-            }
-            if (fieldName % "tx_hashes") {
-                string_q str = fieldValue;
-                while (!str.empty()) {
-                    tx_hashes.push_back(nextTokenClear(str, ','));
-                }
-                return true;
-            }
-            break;
-        case 'u':
-            if (fieldName % "unclesCnt") {
-                unclesCnt = str_2_Uint(fieldValue);
                 return true;
             }
             break;
@@ -324,9 +282,6 @@ bool CBlock::Serialize(CArchive& archive) {
     archive >> timestamp;
     archive >> baseFeePerGas;
     archive >> transactions;
-    // archive >> tx_hashes;
-    // archive >> name;
-    // archive >> unclesCnt;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -351,9 +306,6 @@ bool CBlock::SerializeC(CArchive& archive) const {
     archive << timestamp;
     archive << baseFeePerGas;
     archive << transactions;
-    // archive << tx_hashes;
-    // archive << name;
-    // archive << unclesCnt;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -414,12 +366,6 @@ void CBlock::registerClass(void) {
     ADD_FIELD(CBlock, "timestamp", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CBlock, "baseFeePerGas", T_WEI, ++fieldNum);
     ADD_FIELD(CBlock, "transactions", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CBlock, "tx_hashes", T_TEXT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CBlock, "tx_hashes");
-    ADD_FIELD(CBlock, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CBlock, "name");
-    ADD_FIELD(CBlock, "unclesCnt", T_UNUMBER, ++fieldNum);
-    HIDE_FIELD(CBlock, "unclesCnt");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CBlock, "schema");
@@ -613,13 +559,6 @@ const CBaseNode* CBlock::getObjectAt(const string_q& fieldName, size_t index) co
 }
 
 //---------------------------------------------------------------------------
-const string_q CBlock::getStringAt(const string_q& fieldName, size_t i) const {
-    if (fieldName % "tx_hashes" && i < tx_hashes.size())
-        return (tx_hashes[i]);
-    return "";
-}
-
-//---------------------------------------------------------------------------
 const char* STR_DISPLAY_BLOCK =
     "[{BLOCKNUMBER}]\t"
     "[{TIMESTAMP}]\t"
@@ -630,7 +569,6 @@ const char* STR_DISPLAY_BLOCK =
     "[{MINER}]\t"
     "[{HASH}]\t"
     "[{PARENTHASH}]\t"
-    "[{TRANSACTIONSCNT}]\t"
     "[{FINALIZED}]";
 
 //---------------------------------------------------------------------------
@@ -699,7 +637,7 @@ bool getTracesAndVisit(const hash_t& hash, CAppearance& item, APPEARANCEFUNC fun
         if (!foundOne(funcy, data, item.blockNumber, item.transactionIndex, traceID + 10, trace.action.selfDestructed,
                       trID + "self-destruct"))
             return false;
-        if (!foundOne(funcy, data, item.blockNumber, item.transactionIndex, traceID + 10, trace.result.newContract,
+        if (!foundOne(funcy, data, item.blockNumber, item.transactionIndex, traceID + 10, trace.result.address,
                       trID + "self-destruct"))
             return false;
         string_q inpt = extract(trace.action.input, 10);
