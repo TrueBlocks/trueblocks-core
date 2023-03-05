@@ -85,19 +85,19 @@ string_q CName::getValueByName(const string_q& fieldName) const {
             break;
         case 'i':
             if (fieldName % "isCustom") {
-                return bool_2_Str(isCustom);
+                return bool_2_Str_t(isCustom);
             }
             if (fieldName % "isPrefund") {
-                return bool_2_Str(isPrefund);
+                return bool_2_Str_t(isPrefund);
             }
             if (fieldName % "isContract") {
-                return bool_2_Str(isContract);
+                return bool_2_Str_t(isContract);
             }
             if (fieldName % "isErc20") {
-                return bool_2_Str(isErc20);
+                return bool_2_Str_t(isErc20);
             }
             if (fieldName % "isErc721") {
-                return bool_2_Str(isErc721);
+                return bool_2_Str_t(isErc721);
             }
             break;
         case 'n':
@@ -467,8 +467,8 @@ const char* STR_DISPLAY_NAME =
     "[{ADDRESS}]\t"
     "[{NAME}]\t"
     "[{SYMBOL}]\t"
-    "[{SOURCE}]\t"
     "[{DECIMALS}]\t"
+    "[{SOURCE}]\t"
     "[{PETNAME}]\t"
     "[{DELETED}]\t"
     "[{ISCUSTOM}]\t"
