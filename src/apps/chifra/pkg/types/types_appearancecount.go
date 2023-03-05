@@ -14,14 +14,14 @@ package types
 
 type RawAppearanceCount struct {
 	Address  string `json:"address"`
-	NRecords string `json:"nRecords"`
 	FileSize string `json:"fileSize"`
+	NRecords string `json:"nRecords"`
 }
 
 type SimpleAppearanceCount struct {
 	Address  Address `json:"address"`
-	NRecords uint64  `json:"nRecords"`
 	FileSize uint64  `json:"fileSize"`
+	NRecords uint64  `json:"nRecords"`
 	raw      *RawAppearanceCount
 }
 
@@ -39,8 +39,8 @@ func (s *SimpleAppearanceCount) Model(showHidden bool, format string, extraOptio
 
 	model := map[string]interface{}{
 		"address":  s.Address,
-		"nRecords": s.NRecords,
 		"fileSize": s.FileSize,
+		"nRecords": s.NRecords,
 	}
 
 	order := []string{

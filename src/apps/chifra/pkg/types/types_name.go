@@ -9,7 +9,9 @@
 package types
 
 // EXISTING_CODE
-import "strings"
+import (
+	"strings"
+)
 
 // EXISTING_CODE
 
@@ -166,7 +168,7 @@ func (s *SimpleName) Model(showHidden bool, format string, extraOptions map[stri
 		if s.Decimals == 0 {
 			model["decimals"] = ""
 		}
-		model["source"] = s.Source
+
 		if extraOptions["expand"] == true {
 			model["deleted"] = s.Deleted
 			order = append(order, "deleted")
