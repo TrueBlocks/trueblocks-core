@@ -14,26 +14,26 @@
  * Parts of this file were generated with makeClass --run. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
-#include "parameter.h"
+#include "member.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CParameter, CBaseNode);
+IMPLEMENT_NODE(CMember, CBaseNode);
 
 //---------------------------------------------------------------------------
-extern string_q nextParameterChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextParameterChunk_custom(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextMemberChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextMemberChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CParameter::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CMember::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["parameter_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["member_fmt"] : fmtIn);
     if (fmt.empty()) {
         toJson(ctx);
         return;
@@ -43,13 +43,13 @@ void CParameter::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) cons
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextParameterChunk, this);
+        ctx << getNextChunk(fmt, nextMemberChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextParameterChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextMemberChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CParameter*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CMember*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -58,9 +58,9 @@ string_q nextParameterChunk(const string_q& fieldIn, const void* dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-string_q CParameter::getValueByName(const string_q& fieldName) const {
+string_q CMember::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextParameterChunk_custom(fieldName, this);
+    string_q ret = nextMemberChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -84,6 +84,22 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
                 return retS;
             }
             break;
+        case 'd':
+            if (fieldName % "doc") {
+                return doc == 0 ? "" : uint_2_Str(doc);
+            }
+            if (fieldName % "disp") {
+                return disp == 0 ? "" : uint_2_Str(disp);
+            }
+            if (fieldName % "description") {
+                return description;
+            }
+            break;
+        case 'e':
+            if (fieldName % "example") {
+                return example;
+            }
+            break;
         case 'i':
             if (fieldName % "indexed") {
                 return bool_2_Str_t(indexed);
@@ -93,6 +109,11 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
             }
             if (fieldName % "is_flags") {
                 return is_flags == 0 ? "" : uint_2_Str(is_flags);
+            }
+            break;
+        case 'm':
+            if (fieldName % "maxWidth") {
+                return maxWidth == 0 ? "" : uint_2_Str(maxWidth);
             }
             break;
         case 'n':
@@ -115,11 +136,6 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
                 return type;
             }
             break;
-        case 'u':
-            if (fieldName % "unused") {
-                return bool_2_Str_t(unused);
-            }
-            break;
         case 'v':
             if (fieldName % "value") {
                 return value;
@@ -137,7 +153,7 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CMember::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
@@ -160,12 +176,32 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
     switch (tolower(fieldName[0])) {
         case 'c':
             if (fieldName % "components") {
-                CParameter obj;
+                CMember obj;
                 string_q str = fieldValue;
                 while (obj.parseJson3(str)) {
                     components.push_back(obj);
-                    obj = CParameter();  // reset
+                    obj = CMember();  // reset
                 }
+                return true;
+            }
+            break;
+        case 'd':
+            if (fieldName % "doc") {
+                doc = str_2_Uint(fieldValue);
+                return true;
+            }
+            if (fieldName % "disp") {
+                disp = str_2_Uint(fieldValue);
+                return true;
+            }
+            if (fieldName % "description") {
+                description = fieldValue;
+                return true;
+            }
+            break;
+        case 'e':
+            if (fieldName % "example") {
+                example = fieldValue;
                 return true;
             }
             break;
@@ -180,6 +216,12 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
             }
             if (fieldName % "is_flags") {
                 is_flags = str_2_Uint(fieldValue);
+                return true;
+            }
+            break;
+        case 'm':
+            if (fieldName % "maxWidth") {
+                maxWidth = str_2_Uint(fieldValue);
                 return true;
             }
             break;
@@ -207,12 +249,6 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
                 return true;
             }
             break;
-        case 'u':
-            if (fieldName % "unused") {
-                unused = str_2_Bool(fieldValue);
-                return true;
-            }
-            break;
         case 'v':
             if (fieldName % "value") {
                 value = fieldValue;
@@ -226,7 +262,7 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
 }
 
 //---------------------------------------------------------------------------------------------------
-void CParameter::finishParse() {
+void CMember::finishParse() {
     // EXISTING_CODE
     if (internalType.empty())
         internalType = type;
@@ -234,7 +270,7 @@ void CParameter::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CParameter::Serialize(CArchive& archive) {
+bool CMember::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -246,16 +282,20 @@ bool CParameter::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> type;
-    archive >> name;
-    archive >> strDefault;
-    archive >> value;
-    archive >> indexed;
-    archive >> internalType;
-    archive >> components;
-    archive >> unused;
-    archive >> is_flags;
+    // archive >> type;
+    // archive >> name;
+    // archive >> strDefault;
+    // archive >> value;
+    // archive >> indexed;
+    // archive >> internalType;
+    // archive >> components;
+    // archive >> is_flags;
     // archive >> precision;
+    // archive >> maxWidth;
+    // archive >> doc;
+    // archive >> disp;
+    // archive >> example;
+    // archive >> description;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -263,32 +303,36 @@ bool CParameter::Serialize(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CParameter::SerializeC(CArchive& archive) const {
+bool CMember::SerializeC(CArchive& archive) const {
     // Writing always writes the latest version of the data
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << type;
-    archive << name;
-    archive << strDefault;
-    archive << value;
-    archive << indexed;
-    archive << internalType;
-    archive << components;
-    archive << unused;
-    archive << is_flags;
+    // archive << type;
+    // archive << name;
+    // archive << strDefault;
+    // archive << value;
+    // archive << indexed;
+    // archive << internalType;
+    // archive << components;
+    // archive << is_flags;
     // archive << precision;
+    // archive << maxWidth;
+    // archive << doc;
+    // archive << disp;
+    // archive << example;
+    // archive << description;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CParameter::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+bool CMember::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
     ASSERT(archiveIn.isReading());
     ASSERT(archiveOut.isWriting());
-    CParameter copy;
+    CMember copy;
     // EXISTING_CODE
     // EXISTING_CODE
     copy.Serialize(archiveIn);
@@ -297,7 +341,7 @@ bool CParameter::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CParameterArray& array) {
+CArchive& operator>>(CArchive& archive, CMemberArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -309,7 +353,7 @@ CArchive& operator>>(CArchive& archive, CParameterArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CParameterArray& array) {
+CArchive& operator<<(CArchive& archive, const CMemberArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -318,76 +362,81 @@ CArchive& operator<<(CArchive& archive, const CParameterArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CParameter::registerClass(void) {
+void CMember::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CParameter, "schema"))
+    if (HAS_FIELD(CMember, "schema"))
         return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CParameter, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CParameter, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CParameter, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CParameter, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CParameter, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "strDefault", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "value", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "indexed", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "internalType", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "components", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "unused", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "is_flags", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "precision", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CParameter, "precision");
+    ADD_FIELD(CMember, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CMember, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CMember, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CMember, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CMember, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "type");
+    ADD_FIELD(CMember, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "name");
+    ADD_FIELD(CMember, "strDefault", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "strDefault");
+    ADD_FIELD(CMember, "value", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "value");
+    ADD_FIELD(CMember, "indexed", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "indexed");
+    ADD_FIELD(CMember, "internalType", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "internalType");
+    ADD_FIELD(CMember, "components", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "components");
+    ADD_FIELD(CMember, "is_flags", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "is_flags");
+    ADD_FIELD(CMember, "precision", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "precision");
+    ADD_FIELD(CMember, "maxWidth", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "maxWidth");
+    ADD_FIELD(CMember, "doc", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "doc");
+    ADD_FIELD(CMember, "disp", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "disp");
+    ADD_FIELD(CMember, "example", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "example");
+    ADD_FIELD(CMember, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "description");
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CParameter, "schema");
-    HIDE_FIELD(CParameter, "deleted");
-    HIDE_FIELD(CParameter, "showing");
-    HIDE_FIELD(CParameter, "cname");
+    HIDE_FIELD(CMember, "schema");
+    HIDE_FIELD(CMember, "deleted");
+    HIDE_FIELD(CMember, "showing");
+    HIDE_FIELD(CMember, "cname");
 
-    builtIns.push_back(_biCParameter);
+    builtIns.push_back(_biCMember);
 
     // EXISTING_CODE
-    ADD_FIELD(CParameter, "is_pointer", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "is_array", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "is_object", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "is_builtin", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "is_enabled", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "is_minimal", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "is_noaddfld", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "is_nowrite", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "is_omitempty", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "is_extra", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CParameter, "is_enabled");
-    HIDE_FIELD(CParameter, "is_flags");
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextParameterChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CParameter* par = reinterpret_cast<const CParameter*>(dataPtr);
-    if (par) {
+string_q nextMemberChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CMember* mem = reinterpret_cast<const CMember*>(dataPtr);
+    if (mem) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // clang-format off
             case 'i':
-                if (fieldIn % "is_pointer")   return bool_2_Str_t(par->is_flags & IS_POINTER);
-                if (fieldIn % "is_array")     return bool_2_Str_t(par->is_flags & IS_ARRAY);
-                if (fieldIn % "is_object")    return bool_2_Str_t(par->is_flags & IS_OBJECT);
-                if (fieldIn % "is_builtin")   return bool_2_Str_t(par->is_flags & IS_BUILTIN);
-                if (fieldIn % "is_enabled")   return bool_2_Str_t(par->is_flags & IS_ENABLED);
-                if (fieldIn % "is_minimal")   return bool_2_Str_t(par->is_flags & IS_MINIMAL);
-                if (fieldIn % "is_noaddfld")  return bool_2_Str_t(par->is_flags & IS_NOADDFLD);
-                if (fieldIn % "is_nowrite")   return bool_2_Str_t(par->is_flags & IS_NOWRITE);
-                if (fieldIn % "is_omitempty") return bool_2_Str_t(par->is_flags & IS_OMITEMPTY);
-                if (fieldIn % "is_extra")     return bool_2_Str_t(par->is_flags & IS_EXTRA);
+                if (fieldIn % "is_pointer")   return bool_2_Str_t(mem->is_flags & IS_POINTER);
+                if (fieldIn % "is_array")     return bool_2_Str_t(mem->is_flags & IS_ARRAY);
+                if (fieldIn % "is_object")    return bool_2_Str_t(mem->is_flags & IS_OBJECT);
+                if (fieldIn % "is_builtin")   return bool_2_Str_t(mem->is_flags & IS_BUILTIN);
+                if (fieldIn % "is_enabled")   return bool_2_Str_t(mem->is_flags & IS_ENABLED);
+                if (fieldIn % "is_minimal")   return bool_2_Str_t(mem->is_flags & IS_MINIMAL);
+                if (fieldIn % "is_noaddfld")  return bool_2_Str_t(mem->is_flags & IS_NOADDFLD);
+                if (fieldIn % "is_nowrite")   return bool_2_Str_t(mem->is_flags & IS_NOWRITE);
+                if (fieldIn % "is_omitempty") return bool_2_Str_t(mem->is_flags & IS_OMITEMPTY);
+                if (fieldIn % "is_extra")     return bool_2_Str_t(mem->is_flags & IS_EXTRA);
                 break;
             case 'v':
                 if (fieldIn % "value") {
-                    if (contains(par->type, "tuple"))
-                        return par->value + "--tuple--";
-                    return stripWhitespace(par->value);
+                    if (contains(mem->type, "tuple"))
+                        return mem->value + "--tuple--";
+                    return stripWhitespace(mem->value);
                 }
                 break;
             // clang-format off
@@ -395,7 +444,7 @@ string_q nextParameterChunk_custom(const string_q& fieldIn, const void* dataPtr)
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if (fieldIn % "parsed")
-                    return nextBasenodeChunk(fieldIn, par);
+                    return nextBasenodeChunk(fieldIn, mem);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -412,42 +461,27 @@ string_q nextParameterChunk_custom(const string_q& fieldIn, const void* dataPtr)
 // EXISTING_CODE
 
 //---------------------------------------------------------------------------
-bool CParameter::readBackLevel(CArchive& archive) {
+bool CMember::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
-    if (m_schema < getVersionNum(0, 8, 3)) {
-        archive >> type;
-        archive >> name;
-        archive >> strDefault;
-        archive >> value;
-        archive >> indexed;
-        archive >> internalType;
-        archive >> components;
-        archive >> unused;
-        archive >> is_flags;
-        if (unused)
-            is_flags |= IS_NOWRITE;
-        finishParse();
-        done = true;
-    }
     // EXISTING_CODE
     return done;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CParameter& par) {
-    par.SerializeC(archive);
+CArchive& operator<<(CArchive& archive, const CMember& mem) {
+    mem.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CParameter& par) {
-    par.Serialize(archive);
+CArchive& operator>>(CArchive& archive, CMember& mem) {
+    mem.Serialize(archive);
     return archive;
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CParameter& it) {
+ostream& operator<<(ostream& os, const CMember& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -457,13 +491,13 @@ ostream& operator<<(ostream& os, const CParameter& it) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode* CParameter::getObjectAt(const string_q& fieldName, size_t index) const {
+const CBaseNode* CMember::getObjectAt(const string_q& fieldName, size_t index) const {
     // EXISTING_CODE
     // EXISTING_CODE
     if (fieldName % "components") {
         if (index == NOPOS) {
-            CParameter empty;
-            ((CParameter*)this)->components.push_back(empty);  // NOLINT
+            CMember empty;
+            ((CMember*)this)->components.push_back(empty);  // NOLINT
             index = components.size() - 1;
         }
         if (index < components.size())
@@ -476,18 +510,12 @@ const CBaseNode* CParameter::getObjectAt(const string_q& fieldName, size_t index
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_PARAMETER =
-    "[{TYPE}]\t"
-    "[{NAME}]\t"
-    "[{STRDEFAULT}]\t"
-    "[{VALUE}]\t"
-    "[{INTERNALTYPE}]\t"
-    "[{INDEXED}]";
+const char* STR_DISPLAY_MEMBER = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-void CParameter::postProcessType(void) {
+void CMember::postProcessType(void) {
     if (startsWith(type, "double")) {
         precision = str_2_Uint(substitute(type, "double", "") == "" ? "5" : substitute(type, "double", ""));
         type = "double";
@@ -510,7 +538,7 @@ void CParameter::postProcessType(void) {
 }
 
 //-----------------------------------------------------------------------
-CParameter::CParameter(const string_q& n, const string_q& t, const string_q& v) {
+CMember::CMember(const string_q& n, const string_q& t, const string_q& v) {
     initialize();
     name = n;
     type = t;
@@ -518,7 +546,7 @@ CParameter::CParameter(const string_q& n, const string_q& t, const string_q& v) 
 }
 
 //-----------------------------------------------------------------------
-CParameter::CParameter(const string_q& n, const string_q& t, uint64_t v) {
+CMember::CMember(const string_q& n, const string_q& t, uint64_t v) {
     initialize();
     name = n;
     type = t;
@@ -526,7 +554,7 @@ CParameter::CParameter(const string_q& n, const string_q& t, uint64_t v) {
 }
 
 //-----------------------------------------------------------------------
-CParameter::CParameter(const string_q& n, const string_q& t, int64_t v) {
+CMember::CMember(const string_q& n, const string_q& t, int64_t v) {
     initialize();
     name = n;
     type = t;
@@ -534,7 +562,7 @@ CParameter::CParameter(const string_q& n, const string_q& t, int64_t v) {
 }
 
 //-----------------------------------------------------------------------
-CParameter::CParameter(const string_q& n, const string_q& t, bool v) {
+CMember::CMember(const string_q& n, const string_q& t, bool v) {
     initialize();
     name = n;
     type = t;
@@ -542,7 +570,7 @@ CParameter::CParameter(const string_q& n, const string_q& t, bool v) {
 }
 
 //-----------------------------------------------------------------------
-CParameter::CParameter(const string_q& n, const string_q& t, biguint_t v) {
+CMember::CMember(const string_q& n, const string_q& t, biguint_t v) {
     initialize();
     name = n;
     type = t;
@@ -550,7 +578,7 @@ CParameter::CParameter(const string_q& n, const string_q& t, biguint_t v) {
 }
 
 //-----------------------------------------------------------------------
-CParameter::CParameter(const string_q& n, const string_q& t, const CStringArray& array) {
+CMember::CMember(const string_q& n, const string_q& t, const CStringArray& array) {
     initialize();
     name = n;
     type = t;
@@ -559,7 +587,7 @@ CParameter::CParameter(const string_q& n, const string_q& t, const CStringArray&
 }
 
 //-----------------------------------------------------------------------
-bool CParameter::isValid(void) const {
+bool CMember::isValid(void) const {
     if (!(startsWith(type, "address") || startsWith(type, "bool") || startsWith(type, "string") ||
           startsWith(type, "bytes") || startsWith(type, "fixed") || startsWith(type, "uint") ||
           startsWith(type, "int") || startsWith(type, "tuple")))
@@ -572,7 +600,7 @@ bool CParameter::isValid(void) const {
 }
 
 //--------------------------------------------------------------------------------
-string_q CParameter::resolveType(void) const {
+string_q CMember::resolveType(void) const {
     if (contains(type, "tuple")) {
         ostringstream os;
         bool first = true;

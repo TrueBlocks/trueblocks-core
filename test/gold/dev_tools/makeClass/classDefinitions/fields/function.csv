@@ -1,7 +1,7 @@
 name            ,type      ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
 name            ,string    ,           ,       ,      ,        ,          ,        ,      ,         ,1   ,2    ,        ,the name of the interface
 type            ,string    ,           ,       ,      ,        ,          ,        ,      ,         ,2   ,3    ,        ,the type of the interface&#44; either 'event' or 'function'
-abi_source      ,string    ,           ,       ,      ,        ,          ,        ,      ,         ,    ,1    ,        ,
+abiSource       ,string    ,           ,       ,      ,        ,          ,        ,      ,         ,    ,1    ,        ,
 anonymous       ,bool      ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
 constant        ,bool      ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
 stateMutability ,string    ,           ,       ,      ,        ,          ,        ,      ,         ,    ,4    ,        ,
@@ -10,5 +10,5 @@ encoding        ,string    ,           ,       ,      ,        ,          ,     
 message         ,string    ,           ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
 inputs          ,Parameter ,           ,true   ,true  ,        ,          ,        ,      ,         ,5   ,7    ,        ,the input parameters to the function&#44; if any
 outputs         ,Parameter ,           ,true   ,true  ,        ,          ,        ,      ,         ,6   ,8    ,        ,the output parameters to the function&#44; if any
-inputs_dict     ,Value     ,           ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
-outputs_dict    ,Value     ,           ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
+inputsDict      ,Value     ,           ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
+outputsDict     ,Value     ,           ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,

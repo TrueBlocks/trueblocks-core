@@ -47,12 +47,12 @@ namespace qblocks {
 #define IS_OMITEMPTY (1 << 8)
 #define IS_EXTRA (1 << 9)
 #define IS_NOADDFLD (1 << 10)
-class CParameter;
-typedef vector<CParameter> CParameterArray;
+class CMember;
+typedef vector<CMember> CMemberArray;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CParameter : public CBaseNode {
+class CMember : public CBaseNode {
   public:
     string_q type;
     string_q name;
@@ -60,43 +60,47 @@ class CParameter : public CBaseNode {
     string_q value;
     bool indexed;
     string_q internalType;
-    CParameterArray components;
-    bool unused;
+    CMemberArray components;
     uint64_t is_flags;
     uint64_t precision;
+    uint64_t maxWidth;
+    uint64_t doc;
+    uint64_t disp;
+    string_q example;
+    string_q description;
 
   public:
-    CParameter(void);
-    CParameter(const CParameter& pa);
-    virtual ~CParameter(void);
-    CParameter& operator=(const CParameter& pa);
+    CMember(void);
+    CMember(const CMember& me);
+    virtual ~CMember(void);
+    CMember& operator=(const CMember& me);
 
-    DECLARE_NODE(CParameter);
+    DECLARE_NODE(CMember);
 
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     string_q resolveType(void) const;
-    explicit CParameter(const string_q& n, const string_q& type, const string_q& val = "");
-    explicit CParameter(const string_q& n, const string_q& type, uint64_t val);
-    explicit CParameter(const string_q& n, const string_q& type, int64_t val);
-    explicit CParameter(const string_q& n, const string_q& type, bool val);
-    explicit CParameter(const string_q& n, const string_q& type, biguint_t val);
-    explicit CParameter(const string_q& n, const string_q& type, const CStringArray& array);
+    explicit CMember(const string_q& n, const string_q& type, const string_q& val = "");
+    explicit CMember(const string_q& n, const string_q& type, uint64_t val);
+    explicit CMember(const string_q& n, const string_q& type, int64_t val);
+    explicit CMember(const string_q& n, const string_q& type, bool val);
+    explicit CMember(const string_q& n, const string_q& type, biguint_t val);
+    explicit CMember(const string_q& n, const string_q& type, const CStringArray& array);
     bool isValid(void) const;
     void postProcessType(void);
     // EXISTING_CODE
-    bool operator==(const CParameter& it) const;
-    bool operator!=(const CParameter& it) const {
+    bool operator==(const CMember& it) const;
+    bool operator!=(const CMember& it) const {
         return !operator==(it);
     }
-    friend bool operator<(const CParameter& v1, const CParameter& v2);
-    friend ostream& operator<<(ostream& os, const CParameter& it);
+    friend bool operator<(const CMember& v1, const CMember& v2);
+    friend ostream& operator<<(ostream& os, const CMember& it);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CParameter& pa);
+    void duplicate(const CMember& me);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -104,37 +108,37 @@ class CParameter : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CParameter::CParameter(void) {
+inline CMember::CMember(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CParameter::CParameter(const CParameter& pa) {
+inline CMember::CMember(const CMember& me) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(pa);
+    duplicate(me);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CParameter::~CParameter(void) {
+inline CMember::~CMember(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CParameter::clear(void) {
+inline void CMember::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CParameter::initialize(void) {
+inline void CMember::initialize(void) {
     CBaseNode::initialize();
 
     type = "";
@@ -144,78 +148,86 @@ inline void CParameter::initialize(void) {
     indexed = false;
     internalType = "";
     components.clear();
-    unused = false;
-    is_flags = 0;
+    is_flags = IS_ENABLED;
     precision = 5;
+    maxWidth = NOPOS;
+    doc = 0;
+    disp = 0;
+    example = "";
+    description = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CParameter::duplicate(const CParameter& pa) {
+inline void CMember::duplicate(const CMember& me) {
     clear();
-    CBaseNode::duplicate(pa);
+    CBaseNode::duplicate(me);
 
-    type = pa.type;
-    name = pa.name;
-    strDefault = pa.strDefault;
-    value = pa.value;
-    indexed = pa.indexed;
-    internalType = pa.internalType;
-    components = pa.components;
-    unused = pa.unused;
-    is_flags = pa.is_flags;
-    precision = pa.precision;
+    type = me.type;
+    name = me.name;
+    strDefault = me.strDefault;
+    value = me.value;
+    indexed = me.indexed;
+    internalType = me.internalType;
+    components = me.components;
+    is_flags = me.is_flags;
+    precision = me.precision;
+    maxWidth = me.maxWidth;
+    doc = me.doc;
+    disp = me.disp;
+    example = me.example;
+    description = me.description;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CParameter& CParameter::operator=(const CParameter& pa) {
-    duplicate(pa);
+inline CMember& CMember::operator=(const CMember& me) {
+    duplicate(me);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CParameter::operator==(const CParameter& it) const {
+inline bool CMember::operator==(const CMember& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default equal operator in class definition, assume none are equal (so find fails)
-    return false;
+    // Equality operator as defined in class definition
+    return name == it.name;
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CParameter& v1, const CParameter& v2) {
+inline bool operator<(const CMember& v1, const CMember& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted, preserve ordering
-    return true;
+    // Default sort as defined in class definition
+    return v1.name < v2.name;
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CParameter> CParameterArray;
-extern CArchive& operator>>(CArchive& archive, CParameterArray& array);
-extern CArchive& operator<<(CArchive& archive, const CParameterArray& array);
+typedef vector<CMember> CMemberArray;
+extern CArchive& operator>>(CArchive& archive, CMemberArray& array);
+extern CArchive& operator<<(CArchive& archive, const CMemberArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CParameter& par);
-extern CArchive& operator>>(CArchive& archive, CParameter& par);
+extern CArchive& operator<<(CArchive& archive, const CMember& mem);
+extern CArchive& operator>>(CArchive& archive, CMember& mem);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_PARAMETER;
+extern const char* STR_DISPLAY_MEMBER;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-inline string_q params_2_Str(CParameterArray& params) {
+inline string_q members_2_Str(CMemberArray& members) {
     string_q ret;
-    for (auto param : params) {
+    for (auto member : members) {
         if (!ret.empty())
             ret += ", ";
-        ret += param.value;
+        ret += member.value;
     }
     return trim(ret);
 }

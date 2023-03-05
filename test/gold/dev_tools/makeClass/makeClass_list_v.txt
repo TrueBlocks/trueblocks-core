@@ -23,7 +23,7 @@ TIME ~ CLOCK - <INFO>  : Processing 1 class definition files.
     },
     {
       "type": "string",
-      "name": "abi_source",
+      "name": "abiSource",
       "internalType": "string"
     },
     {
@@ -73,13 +73,13 @@ TIME ~ CLOCK - <INFO>  : Processing 1 class definition files.
     },
     {
       "type": "Value",
-      "name": "inputs_dict",
+      "name": "inputsDict",
       "internalType": "Value",
       "is_nowrite": true
     },
     {
       "type": "Value",
-      "name": "outputs_dict",
+      "name": "outputsDict",
       "internalType": "Value",
       "is_nowrite": true
     }
