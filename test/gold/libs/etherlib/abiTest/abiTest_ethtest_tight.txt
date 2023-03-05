@@ -1,165 +1,37 @@
 abiTest  eth_test -s 6
 ethereum test box test...
 0. --------------------------------------------------------------------------------
-	000.000 test_0                           ==> 
-line: ;tight|solidity tight packing bool|function baz(bool)|true|01
-testType: ;tight
-testName: solidity tight packing bool
-testSig: function baz(bool) --> baz(bool)
-expected: 01 ?
-result:   01 ? 1
-testName: solidity tight packing bool
-passed 'func.doTest(line)' is true
+	000.000 test_0                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.001 test_1                           ==> 
-line: ;tight|solidity tight packing bool|function baz(bool)|false|00
-testType: ;tight
-testName: solidity tight packing bool
-testSig: function baz(bool) --> baz(bool)
-expected: 00 ?
-result:   00 ? 1
-testName: solidity tight packing bool
-passed 'func.doTest(line)' is true
+	000.001 test_1                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.002 test_2                           ==> 
-line: ;tight|solidity tight packing address|function baz(address)|0x43989fb883ba8111221e89123897538475893837|0x43989fb883ba8111221e89123897538475893837
-testType: ;tight
-testName: solidity tight packing address
-testSig: function baz(address) --> baz(address)
-expected: 0x43989fb883ba8111221e89123897538475893837 ?
-result:   0x43989fb883ba8111221e89123897538475893837 ? 1
-testName: solidity tight packing address
-passed 'func.doTest(line)' is true
+	000.002 test_2                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.003 test_3                           ==> 
-line: ;tight|solidity tight packing string|function baz(string)|test|0x74657374
-testType: ;tight
-testName: solidity tight packing string
-testSig: function baz(string) --> baz(string)
-expected: 0x74657374 ?
-result:   0x74657374 ? 1
-testName: solidity tight packing string
-passed 'func.doTest(line)' is true
+	000.003 test_3                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.004 test_4                           ==> 
-line: ;tight|solidity tight packing bytes|function baz(bytes)|0x123456|0x123456
-testType: ;tight
-testName: solidity tight packing bytes
-testSig: function baz(bytes) --> baz(bytes)
-expected: 0x123456 ?
-result:   0x123456 ? 1
-testName: solidity tight packing bytes
-passed 'func.doTest(line)' is true
+	000.004 test_4                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.005 test_5                           ==> 
-line: ;tight|solidity tight packing bytes8|function baz(bytes8)|0x123456|0x1234560000000000
-testType: ;tight
-testName: solidity tight packing bytes8
-testSig: function baz(bytes8) --> baz(bytes8)
-expected: 0x1234560000000000 ?
-result:   0x1234560000000000 ? 1
-testName: solidity tight packing bytes8
-passed 'func.doTest(line)' is true
+	000.005 test_5                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.006 test_6                           ==> 
-line: ;tight|solidity tight packing uint|function baz(uint)|42|0x000000000000000000000000000000000000000000000000000000000000002a
-testType: ;tight
-testName: solidity tight packing uint
-testSig: function baz(uint) --> baz(uint256)
-expected: 0x000000000000000000000000000000000000000000000000000000000000002a ?
-result:   0x000000000000000000000000000000000000000000000000000000000000002a ? 1
-testName: solidity tight packing uint
-passed 'func.doTest(line)' is true
+	000.006 test_6                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.007 test_7                           ==> 
-line: ;tight|solidity tight packing uint16|function baz(uint16)|42|002a
-testType: ;tight
-testName: solidity tight packing uint16
-testSig: function baz(uint16) --> baz(uint16)
-expected: 002a ?
-result:   002a ? 1
-testName: solidity tight packing uint16
-passed 'func.doTest(line)' is true
+	000.007 test_7                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.008 test_8                           ==> 
-line: ;tight|solidity tight packing int|function baz(int)|-42|0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd6
-testType: ;tight
-testName: solidity tight packing int
-testSig: function baz(int) --> baz(int256)
-expected: 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd6 ?
-result:   0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd6 ? 1
-testName: solidity tight packing int
-passed 'func.doTest(line)' is true
+	000.008 test_8                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.009 test_9                           ==> 
-line: ;tight|solidity tight packing int16|function baz(int16)|-42|0xffd6
-testType: ;tight
-testName: solidity tight packing int16
-testSig: function baz(int16) --> baz(int16)
-expected: 0xffd6 ?
-result:   0xffd6 ? 1
-testName: solidity tight packing int16
-passed 'func.doTest(line)' is true
+	000.009 test_9                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.010 test_10                          ==> 
-line: ;tight|solidity tight packing multiple arguments|function baz(bytes32, uint32, uint32, uint32, uint32)|0x123456,6,7,8,9|0x123456000000000000000000000000000000000000000000000000000000000000000006000000070000000800000009
-testType: ;tight
-testName: solidity tight packing multiple arguments
-testSig: function baz(bytes32, uint32, uint32, uint32, uint32) --> baz(bytes32,uint32,uint32,uint32,uint32)
-expected: 0x123456000000000000000000000000000000000000000000000000000000000000000006000000070000000800000009 ?
-result:   0x123456000000000000000000000000000000000000000000000000000000000000000006000000070000000800000009 ? 1
-testName: solidity tight packing multiple arguments
-passed 'func.doTest(line)' is true
+	000.010 test_10                          ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.011 test_11                          ==> 
-line: ;tight|solidity tight packing sha3|function baz(address,address,uint,uint)|0x43989fb883ba8111221e89123897538475893837, 0, 10000, 1448075779|0xc3ab5ca31a013757f26a88561f0ff5057a97dfcc33f43d6b479abc3ac2d1d595
-testType: ;tight
-testName: solidity tight packing sha3
-testSig: function baz(address,address,uint,uint) --> baz(address,address,uint256,uint256)
-expected: 0xc3ab5ca31a013757f26a88561f0ff5057a97dfcc33f43d6b479abc3ac2d1d595 ?
-result:   0xc3ab5ca31a013757f26a88561f0ff5057a97dfcc33f43d6b479abc3ac2d1d595 ? 1
-testName: solidity tight packing sha3
-passed 'func.doTest(line)' is true
+	000.011 test_11                          ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.012 test_12                          ==> 
-line: ;tight|solidity tight packing sha3 #2|function baz(bytes32,uint32,uint32,uint32,uint32)|0x123456,6,7,8,9|0x1f2eedb6c2ac3e4b4e4c9f7598e626baf1e15a4e848d295479f46ec85d967cba
-testType: ;tight
-testName: solidity tight packing sha3 #2
-testSig: function baz(bytes32,uint32,uint32,uint32,uint32) --> baz(bytes32,uint32,uint32,uint32,uint32)
-expected: 0x1f2eedb6c2ac3e4b4e4c9f7598e626baf1e15a4e848d295479f46ec85d967cba ?
-result:   0x1f2eedb6c2ac3e4b4e4c9f7598e626baf1e15a4e848d295479f46ec85d967cba ? 1
-testName: solidity tight packing sha3 #2
-passed 'func.doTest(line)' is true
+	000.012 test_12                          ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.013 test_13                          ==> 
-line: ;tight|solidity tight packing sha256|function baz(address,address,uint,uint)|0x43989fb883ba8111221e89123897538475893837,0,10000,1448075779|0x344d8cb0711672efbdfe991f35943847c1058e1ecf515ff63ad936b91fd16231
-testType: ;tight
-testName: solidity tight packing sha256
-testSig: function baz(address,address,uint,uint) --> baz(address,address,uint256,uint256)
-expected: 0x344d8cb0711672efbdfe991f35943847c1058e1ecf515ff63ad936b91fd16231 ?
-result:   0x344d8cb0711672efbdfe991f35943847c1058e1ecf515ff63ad936b91fd16231 ? 1
-testName: solidity tight packing sha256
-passed 'func.doTest(line)' is true
+	000.013 test_13                          ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.014 test_14                          ==> 
-line: ;tight|solidity tight packing ripemd160|function baz(address,address,uint,uint)|0x43989fb883ba8111221e89123897538475893837,0,10000,1448075779|0x000000000000000000000000a398cc72490f72048efa52c4e92067e8499672e7
-testType: ;tight
-testName: solidity tight packing ripemd160
-testSig: function baz(address,address,uint,uint) --> baz(address,address,uint256,uint256)
-expected: 0x000000000000000000000000a398cc72490f72048efa52c4e92067e8499672e7 ?
-result:   0x000000000000000000000000a398cc72490f72048efa52c4e92067e8499672e7 ? 1
-testName: solidity tight packing ripemd160
-passed 'func.doTest(line)' is true
+	000.014 test_14                          ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.015 test_15                          ==> 
-line: ;tight|solidity tight packing with small ints|function baz(address,address,int64,uint192|0x43989fb883ba8111221e89123897538475893837,0,10000,1448075779)|0x1c34bbd3d419c05d028a9f13a81a1212e33cb21f4b96ce1310442911c62c6986
-testType: ;tight
-testName: solidity tight packing with small ints
-testSig: function baz(address,address,int64,uint192 --> baz(address,address,int64,uint192)
-expected: 0x1c34bbd3d419c05d028a9f13a81a1212e33cb21f4b96ce1310442911c62c6986 ?
-result:   0x1c34bbd3d419c05d028a9f13a81a1212e33cb21f4b96ce1310442911c62c6986 ? 1
-testName: solidity tight packing with small ints
-passed 'func.doTest(line)' is true
+	000.015 test_15                          ==> passed 'func.doTest(line)' is true
 ...passed
 
 Done...

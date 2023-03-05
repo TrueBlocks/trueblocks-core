@@ -66,7 +66,7 @@ TEST[DATE|TIME] Format:  json
           "value": 0
         },
         "result": {
-          "newContract": "0x0",
+          "address": "0x0",
           "gasUsed": 2991,
           "output": "0x"
         },

@@ -61,7 +61,7 @@ transactions?transactions=0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532d
             "value": 1e+18
           },
           "result": {
-            "newContract": "0x0",
+            "address": "0x0",
             "gasUsed": 21938,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
           },
