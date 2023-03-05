@@ -366,7 +366,7 @@
                 "type": "address"
             }
         ],
-        "name": "newContract",
+        "name": "address",
         "outputs": [],
         "type": "function"
     },
