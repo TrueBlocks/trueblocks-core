@@ -50,10 +50,6 @@ func LoadNamesArray(chain string, parts Parts, sortBy SortBy, terms []string) ([
 		for _, name := range namesMap {
 			isTesting := parts&Testing != 0
 			isIndiv := strings.Contains(name.Tags, "Individual")
-			if name.Address == types.HexToAddress("0x69e271483c38ed4902a55c3ea8aab9e7cc8617e5") {
-				isIndiv = false
-				name.Name = "Name 0x69e27148"
-			}
 			if !isTesting || !isIndiv {
 				names = append(names, name)
 			}
