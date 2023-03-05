@@ -16,35 +16,35 @@ import (
 // EXISTING_CODE
 
 type RawReceipt struct {
-	From              string   `json:"from"`
-	To                string   `json:"to"`
-	EffectiveGasPrice string   `json:"effectiveGasPrice"`
-	CumulativeGasUsed string   `json:"cumulativeGasUsed"`
-	BlockNumber       string   `json:"blockNumber"`
-	TransactionIndex  string   `json:"transactionIndex"`
-	TransactionHash   string   `json:"transactionHash"`
 	BlockHash         string   `json:"blockHash"`
-	Status            string   `json:"status"`
-	GasUsed           string   `json:"gasUsed"`
+	BlockNumber       string   `json:"blockNumber"`
 	ContractAddress   string   `json:"contractAddress"`
+	CumulativeGasUsed string   `json:"cumulativeGasUsed"`
+	EffectiveGasPrice string   `json:"effectiveGasPrice"`
+	From              string   `json:"from"`
+	GasUsed           string   `json:"gasUsed"`
 	IsError           string   `json:"isError"`
 	Logs              []RawLog `json:"logs"`
+	Status            string   `json:"status"`
+	To                string   `json:"to"`
+	TransactionHash   string   `json:"transactionHash"`
+	TransactionIndex  string   `json:"transactionIndex"`
 }
 
 type SimpleReceipt struct {
-	From              Address     `json:"from,omitempty"`
-	To                Address     `json:"to,omitempty"`
-	EffectiveGasPrice Gas         `json:"effectiveGasPrice,omitempty"`
-	CumulativeGasUsed string      `json:"cumulativeGasUsed,omitempty"`
-	BlockNumber       uint64      `json:"blockNumber"`
-	TransactionIndex  uint64      `json:"transactionIndex"`
-	TransactionHash   common.Hash `json:"transactionHash"`
 	BlockHash         common.Hash `json:"blockHash,omitempty"`
-	Status            uint32      `json:"status"`
-	GasUsed           Gas         `json:"gasUsed"`
+	BlockNumber       uint64      `json:"blockNumber"`
 	ContractAddress   Address     `json:"contractAddress,omitempty"`
+	CumulativeGasUsed string      `json:"cumulativeGasUsed,omitempty"`
+	EffectiveGasPrice Gas         `json:"effectiveGasPrice,omitempty"`
+	From              Address     `json:"from,omitempty"`
+	GasUsed           Gas         `json:"gasUsed"`
 	IsError           bool        `json:"isError,omitempty"`
 	Logs              []SimpleLog `json:"logs"`
+	Status            uint32      `json:"status"`
+	To                Address     `json:"to,omitempty"`
+	TransactionHash   common.Hash `json:"transactionHash"`
+	TransactionIndex  uint64      `json:"transactionIndex"`
 	raw               *RawReceipt
 }
 
@@ -61,11 +61,11 @@ func (s *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[s
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
-		"blockNumber":       s.BlockNumber,
-		"transactionIndex":  s.TransactionIndex,
-		"transactionHash":   s.TransactionHash,
-		"status":            s.Status,
-		"gasUsed":           s.GasUsed,
+		"blockNumber":      s.BlockNumber,
+		"gasUsed":          s.GasUsed,
+		"status":           s.Status,
+		"transactionHash":  s.TransactionHash,
+		"transactionIndex": s.TransactionIndex,
 	}
 
 	order := []string{

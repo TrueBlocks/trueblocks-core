@@ -795,7 +795,7 @@ func readTraceResult(reader *bufio.Reader) (result *types.SimpleTraceResult, err
 		return
 	}
 
-	err = readAddress(reader, &result.NewContract)
+	err = readAddress(reader, &result.Address)
 	if err != nil {
 		return
 	}

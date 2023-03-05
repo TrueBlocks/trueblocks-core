@@ -645,7 +645,7 @@ func writeTraceResult(writer *bufio.Writer, result *types.SimpleTraceResult) (er
 		return
 	}
 
-	err = writeAddress(writer, &result.NewContract)
+	err = writeAddress(writer, &result.Address)
 	if err != nil {
 		return
 	}

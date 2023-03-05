@@ -10,4 +10,4 @@ doc_group = 02-Chain Data
 doc_descr = transaction data as returned from the RPC (with slight enhancements)
 doc_route = 202-transaction
 doc_producer = transactions, slurp, export
-# gogen = Transaction
+# go_type = true
