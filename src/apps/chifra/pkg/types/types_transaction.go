@@ -73,6 +73,11 @@ func (s *SimpleTransaction) SetRaw(raw *RawTransaction) {
 
 func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions map[string]any) Model {
 	// EXISTING_CODE
+	to := hexutil.Encode(s.To.Bytes())
+	if to == "0x0000000000000000000000000000000000000000" {
+		to = "0x0" // weird special case to preserve what RPC does
+	}
+
 	// TODO: these date-related values could be done when RPC is queried and cached
 	date := gostradamus.FromUnixTimestamp(int64(s.Timestamp))
 
@@ -86,7 +91,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		"transactionIndex": s.TransactionIndex,
 		"timestamp":        s.Timestamp,
 		"from":             s.From,
-		"to":               s.To,
+		"to":               to,
 		"gasUsed":          s.GasUsed,
 		"hash":             s.Hash,
 		"isError":          s.IsError,
