@@ -62,7 +62,8 @@ int main(int argc, const char* argv[]) {
 bool visitAddrs(const CAppearance& item, void* data) {
     if (isZeroAddr(item.address))
         return true;
-    cout << item.Format(STR_DISPLAY_APPEARANCE) << "\n";
+    string_q fmt = substitute(STR_DISPLAY_APPEARANCE, "\t[{TIMESTAMP}]\t[{DATE}]", "");
+    cout << item.Format(fmt) << "\n";
     return true;
 }
 
@@ -112,8 +113,10 @@ void everySortedUniqueAddressPerTx(CBlock& block) {
     CAppearanceArray array;
     block.forEveryUniqueAppearanceInTxs(accumAddrs, transFilter, &array);
     sort(array.begin(), array.end(), sortAddressArray);
-    for (auto elem : array)
-        cout << elem.Format(STR_DISPLAY_APPEARANCE) << "\n";
+    for (auto elem : array) {
+        string_q fmt = substitute(STR_DISPLAY_APPEARANCE, "\t[{TIMESTAMP}]\t[{DATE}]", "");
+        cout << elem.Format(fmt) << "\n";
+    }
 }
 
 //--------------------------------------------------------------
