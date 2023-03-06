@@ -21,22 +21,7 @@ namespace qblocks {
 
 // EXISTING_CODE
 //--------------------------------------------------------------------------
-// Signature parts
-#define SIG_FTYPE (1 << 1)
-#define SIG_FNAME (1 << 2)
-#define SIG_FSPACE (1 << 3)
-#define SIG_ITYPE (1 << 4)
-#define SIG_INAME (1 << 5)
-#define SIG_IINDEXED (1 << 6)
-#define SIG_ENCODE (1 << 7)
-#define SIG_CONST (1 << 8)
-#define SIG_ANONYMOUS (1 << 9)
-#define SIG_PAYABLE (1 << 10)
-#define SIG_CANONICAL (SIG_FNAME | SIG_ITYPE)
-#define SIG_DEFAULT (SIG_FTYPE | SIG_FNAME | SIG_FSPACE | SIG_ITYPE | SIG_INAME | SIG_IINDEXED)
-#define SIG_DETAILS (SIG_DEFAULT | SIG_CONST | SIG_ANONYMOUS | SIG_PAYABLE | SIG_ENCODE)
 // bitfield for 'is_flags'
-#define IS_NOT (0)
 #define IS_POINTER (1 << 1)
 #define IS_ARRAY (1 << 2)
 #define IS_OBJECT (1 << 3)

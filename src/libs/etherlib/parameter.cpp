@@ -144,16 +144,7 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
     // EXISTING_CODE
     // clang-format off
 #define BOOL_ASSIGN_MASK(a, b) { if (str_2_Bool(fieldValue)) { a |= (b); } else { a &= uint64_t(~b); } }
-    if (fieldName % "is_pointer")   { BOOL_ASSIGN_MASK(is_flags, IS_POINTER);   return true; }
     if (fieldName % "is_array")     { BOOL_ASSIGN_MASK(is_flags, IS_ARRAY);     return true; }
-    if (fieldName % "is_object")    { BOOL_ASSIGN_MASK(is_flags, IS_OBJECT);    return true; }
-    if (fieldName % "is_builtin")   { BOOL_ASSIGN_MASK(is_flags, IS_BUILTIN);   return true; }
-    if (fieldName % "is_enabled")   { BOOL_ASSIGN_MASK(is_flags, IS_ENABLED);   return true; }
-    if (fieldName % "is_minimal")   { BOOL_ASSIGN_MASK(is_flags, IS_MINIMAL);   return true; }
-    if (fieldName % "is_noaddfld")  { BOOL_ASSIGN_MASK(is_flags, IS_NOADDFLD);  return true; }
-    if (fieldName % "is_nowrite")   { BOOL_ASSIGN_MASK(is_flags, IS_NOWRITE);   return true; }
-    if (fieldName % "is_omitempty") { BOOL_ASSIGN_MASK(is_flags, IS_OMITEMPTY); return true; }
-    if (fieldName % "is_extra")     { BOOL_ASSIGN_MASK(is_flags, IS_EXTRA);     return true; }
     // clang-format on
     // EXISTING_CODE
 
@@ -352,13 +343,6 @@ void CParameter::registerClass(void) {
     ADD_FIELD(CParameter, "is_pointer", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "is_array", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "is_object", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "is_builtin", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "is_enabled", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "is_minimal", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "is_noaddfld", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "is_nowrite", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "is_omitempty", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "is_extra", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CParameter, "is_enabled");
     HIDE_FIELD(CParameter, "is_flags");
     // EXISTING_CODE
@@ -372,16 +356,7 @@ string_q nextParameterChunk_custom(const string_q& fieldIn, const void* dataPtr)
             // EXISTING_CODE
             // clang-format off
             case 'i':
-                if (fieldIn % "is_pointer")   return bool_2_Str_t(par->is_flags & IS_POINTER);
                 if (fieldIn % "is_array")     return bool_2_Str_t(par->is_flags & IS_ARRAY);
-                if (fieldIn % "is_object")    return bool_2_Str_t(par->is_flags & IS_OBJECT);
-                if (fieldIn % "is_builtin")   return bool_2_Str_t(par->is_flags & IS_BUILTIN);
-                if (fieldIn % "is_enabled")   return bool_2_Str_t(par->is_flags & IS_ENABLED);
-                if (fieldIn % "is_minimal")   return bool_2_Str_t(par->is_flags & IS_MINIMAL);
-                if (fieldIn % "is_noaddfld")  return bool_2_Str_t(par->is_flags & IS_NOADDFLD);
-                if (fieldIn % "is_nowrite")   return bool_2_Str_t(par->is_flags & IS_NOWRITE);
-                if (fieldIn % "is_omitempty") return bool_2_Str_t(par->is_flags & IS_OMITEMPTY);
-                if (fieldIn % "is_extra")     return bool_2_Str_t(par->is_flags & IS_EXTRA);
                 break;
             case 'v':
                 if (fieldIn % "value") {
@@ -425,8 +400,6 @@ bool CParameter::readBackLevel(CArchive& archive) {
         archive >> components;
         archive >> unused;
         archive >> is_flags;
-        if (unused)
-            is_flags |= IS_NOWRITE;
         finishParse();
         done = true;
     }
@@ -487,29 +460,6 @@ const char* STR_DISPLAY_PARAMETER =
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-void CParameter::postProcessType(void) {
-    if (startsWith(type, "double")) {
-        precision = str_2_Uint(substitute(type, "double", "") == "" ? "5" : substitute(type, "double", ""));
-        type = "double";
-    }
-    if (contains(type, "*") || contains(type, "Ptr"))
-        is_flags |= IS_POINTER;
-    if (contains(type, "Array"))
-        is_flags |= IS_ARRAY;
-    if (startsWith(type, 'C'))
-        is_flags |= IS_OBJECT;
-    CStringArray builtinTypes = {
-        "CStringArray", "CBlkNumArray", "CAddressArray", "CBigUintArray", "CTopicArray",
-    };
-    for (auto b : builtinTypes) {
-        if (type == b) {
-            is_flags |= IS_BUILTIN;
-        }
-    }
-    type = substitute(type, "*", "");
-}
-
-//-----------------------------------------------------------------------
 CParameter::CParameter(const string_q& n, const string_q& t, const string_q& v) {
     initialize();
     name = n;
