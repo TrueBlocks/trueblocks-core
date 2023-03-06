@@ -148,7 +148,7 @@ on      ,both ,fast  ,export   ,apps/acctExport ,export_relevant_not_emit ,n    
 on      ,both ,fast  ,export   ,apps/acctExport ,export_relevant_emit     ,n    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & logs & last_block = 10272064 & emitter = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 & fmt = csv & relevant
 
 on      ,both ,fast  ,export   ,apps/acctExport ,old_bug                  ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & max_records = 1 & first_record = 213 & fmt = json
-on      ,both ,fast  ,export   ,apps/acctExport ,old_bug2_1               ,y    ,addrs = 0x000001f568875f378bf6d170b790967fe429c81a & max_records = 1 & first_record = 2 & articulate & fmt = json
+broken  ,both ,fast  ,export   ,apps/acctExport ,old_bug2_1               ,y    ,addrs = 0x000001f568875f378bf6d170b790967fe429c81a & max_records = 1 & first_record = 2 & articulate & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,old_bug2_5               ,y    ,addrs = 0x000001f568875f378bf6d170b790967fe429c81a & max_records = 1 & first_record = 6 & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,old_bug2_336             ,y    ,addrs = 0x000001f568875f378bf6d170b790967fe429c81a & max_records = 2 & first_record = 337 & articulate & fmt = json
 
