@@ -68,6 +68,7 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 
 	var model map[string]interface{}
 
+	// TODO: We can probably change the output of the traces to remove this special case
 	if extraOptions["tracesTransactionsFormat"] == true {
 		model = map[string]interface{}{
 			"articulatedTrace": s.ArticulatedTrace,
@@ -248,6 +249,8 @@ func GetTracesCountByTransactionHash(chain string, txHash string) (uint64, error
 	return uint64(len(traces)), nil
 }
 
+// TODO: I'm curious if this could be pushed up to the caller. In other words, the handling of the trace is not
+// TODO: handled in the type but in the caller
 // GetTracesByTransactionHash returns a slice of traces in a given transaction's hash
 func GetTracesByTransactionHash(chain string, txHash string, transaction *SimpleTransaction) ([]SimpleTrace, error) {
 	method := "trace_transaction"
