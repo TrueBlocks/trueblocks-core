@@ -5,7 +5,6 @@ includes = utillib.h|abi.h
 cpp_includes = trace.h
 output = ../../libs/etherlib/
 equals = ((address == it.address) && (code == it.code) && (gasUsed == it.gasUsed) && (output == it.output))
-tsx = true
 doc_group = 02-Chain Data
 doc_descr = trace result data as returned from the RPC (with slight enhancements)
 doc_route = 208-traceResult

@@ -157,12 +157,6 @@ bool writeCodeOut(COptions* opts, const string_q& fn) {
         codeOut = replaceCode(codeOut, "CODE_DECLARE", opts->headerStream.str());
         codeOut = replaceCode(codeOut, "ERROR_DEFINES", opts->errorDefStream.str());
 
-    } else if (endsWith(fn, "Routes.tsx")) {
-        codeOut = replaceCode(codeOut, "CODE_LOCATIONS", opts->jsLocationStream.str());
-        // codeOut = replaceCode(codeOut, "CODE_TEMPLATES", jsTemplateStream.str());
-        codeOut = replaceCode(codeOut, "CODE_ROUTES", opts->jsRouteStream.str());
-        codeOut = replaceCode(codeOut, "CODE_KEYS", opts->jsHotkeyStream.str());
-
     } else {
         cerr << "Unkown file type for " << fn << endl;
     }

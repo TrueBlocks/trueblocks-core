@@ -4,7 +4,6 @@ fields = trace.csv
 includes = utillib.h|abi.h|traceaction.h|traceresult.h
 cpp_includes = transaction.h|node.h
 output = ../../libs/etherlib/
-tsx = true
 doc_group = 02-Chain Data
 doc_descr = trace data as returned from the RPC (with slight enhancements)
 doc_route = 206-trace

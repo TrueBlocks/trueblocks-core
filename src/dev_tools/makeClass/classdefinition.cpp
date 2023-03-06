@@ -185,11 +185,6 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
                 return sort_str;
             }
             break;
-        case 't':
-            if (fieldName % "tsx") {
-                return bool_2_Str_t(tsx);
-            }
-            break;
         default:
             break;
     }
@@ -352,12 +347,6 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
                 return true;
             }
             break;
-        case 't':
-            if (fieldName % "tsx") {
-                tsx = str_2_Bool(fieldValue);
-                return true;
-            }
-            break;
         default:
             break;
     }
@@ -382,6 +371,7 @@ bool CClassDefinition::Serialize(CArchive& archive) {
         return true;
 
     // EXISTING_CODE
+    bool unused = false; // used to be tsx
     // EXISTING_CODE
     archive >> short_fn;
     archive >> input_path;
@@ -400,7 +390,7 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     archive >> display_str;
     archive >> sort_str;
     archive >> eq_str;
-    archive >> tsx;
+    archive >> unused;
     // archive >> fieldArray;
     // archive >> extraArray;
     archive >> contained_by;
@@ -422,6 +412,7 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
+    bool unused = false; // used to be tsx
     // EXISTING_CODE
     archive << short_fn;
     archive << input_path;
@@ -440,7 +431,7 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     archive << display_str;
     archive << sort_str;
     archive << eq_str;
-    archive << tsx;
+    archive << unused;
     // archive << fieldArray;
     // archive << extraArray;
     archive << contained_by;
@@ -516,7 +507,6 @@ void CClassDefinition::registerClass(void) {
     ADD_FIELD(CClassDefinition, "display_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "sort_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "eq_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CClassDefinition, "tsx", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "fieldArray", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CClassDefinition, "fieldArray");
     ADD_FIELD(CClassDefinition, "extraArray", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
@@ -691,7 +681,6 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
         LOG_ERR("makeClass: do not include semicolon in equals string ", eq_str);
         exit(0);
     }
-    tsx = toml.getConfigBool("settings", "tsx", false);
     doc_group = toml.getConfigStr("settings", "doc_group", "");
     doc_descr = toml.getConfigStr("settings", "doc_descr", "");
     doc_route = toml.getConfigStr("settings", "doc_route", "");

@@ -3,7 +3,6 @@ class = CParameter
 fields = paramter.csv
 includes = utillib.h
 output = ../../libs/etherlib/
-tsx = true
 doc_group = 05-Other
 doc_descr = an input or output parameter to a Solidity function or event
 doc_route = 502-parameter

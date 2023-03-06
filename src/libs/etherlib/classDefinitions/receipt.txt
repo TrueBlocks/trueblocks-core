@@ -6,7 +6,6 @@ cpp_includes = etherlib.h
 output = ../../libs/etherlib/
 equals = (getValueByName("transactionHash") == it.getValueByName("transactionHash"))
 contained_by = Transaction
-tsx = true
 doc_group = 02-Chain Data
 doc_descr = receipt data as returned from the RPC (with slight enhancements)
 doc_route = 204-receipt

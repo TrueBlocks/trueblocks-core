@@ -43,7 +43,6 @@ class CClassDefinition : public CBaseNode {
     string_q display_str;
     string_q sort_str;
     string_q eq_str;
-    bool tsx;
     CMemberArray fieldArray;
     CMemberArray extraArray;
     string_q contained_by;
@@ -138,7 +137,6 @@ inline void CClassDefinition::initialize(void) {
     display_str = "";
     sort_str = "";
     eq_str = "";
-    tsx = false;
     fieldArray.clear();
     extraArray.clear();
     contained_by = "";
@@ -175,7 +173,6 @@ inline void CClassDefinition::duplicate(const CClassDefinition& cl) {
     display_str = cl.display_str;
     sort_str = cl.sort_str;
     eq_str = cl.eq_str;
-    tsx = cl.tsx;
     fieldArray = cl.fieldArray;
     extraArray = cl.extraArray;
     contained_by = cl.contained_by;

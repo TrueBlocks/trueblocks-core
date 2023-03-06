@@ -355,9 +355,6 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     expandTabbys(srcSource);
     counter.nProcessed += writeCodeIn(this, codewrite_t(srcFile, srcSource));
 
-    if (tsx && classDef.tsx)
-        handle_tsx_type(classDef);
-
     return true;
 }
 
