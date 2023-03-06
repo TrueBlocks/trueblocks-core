@@ -67,26 +67,28 @@ func (opts *TransactionsOptions) HandleArticulate() (err error) {
 					}
 				}
 
-				selector := tx.Input[:10]
-				inputData := tx.Input[10:]
-				found := abiMap[selector]
-				if found != nil {
-					tx.ArticulatedTx = found
-					var outputData string
+				if len(tx.Input) >= 10 {
+					selector := tx.Input[:10]
+					inputData := tx.Input[10:]
+					found := abiMap[selector]
+					if found != nil {
+						tx.ArticulatedTx = found
+						var outputData string
 
-					if len(tx.Traces) > 0 && tx.Traces[0].Result != nil && len(tx.Traces[0].Result.Output) > 2 {
-						outputData = tx.Traces[0].Result.Output[2:]
+						if len(tx.Traces) > 0 && tx.Traces[0].Result != nil && len(tx.Traces[0].Result.Output) > 2 {
+							outputData = tx.Traces[0].Result.Output[2:]
+						}
+						if err = articulate.ArticulateFunction(tx.ArticulatedTx, inputData, outputData); err != nil {
+							errorChan <- err
+						}
+					} else {
+						errorChan <- fmt.Errorf("method/event not found: %s", selector)
 					}
-					if err = articulate.ArticulateFunction(tx.ArticulatedTx, inputData, outputData); err != nil {
-						errorChan <- err
-					}
-				} else {
-					errorChan <- fmt.Errorf("method/event not found: %s", selector)
-				}
-				if inputData != "" {
-					message, ok := articulate.ArticulateString(inputData)
-					if ok {
-						tx.Message = message
+					if inputData != "" {
+						message, ok := articulate.ArticulateString(inputData)
+						if ok {
+							tx.Message = message
+						}
 					}
 				}
 
