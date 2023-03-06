@@ -371,7 +371,6 @@ bool CClassDefinition::Serialize(CArchive& archive) {
         return true;
 
     // EXISTING_CODE
-    bool unused = false; // used to be tsx
     // EXISTING_CODE
     archive >> short_fn;
     archive >> input_path;
@@ -390,7 +389,6 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     archive >> display_str;
     archive >> sort_str;
     archive >> eq_str;
-    archive >> unused;
     // archive >> fieldArray;
     // archive >> extraArray;
     archive >> contained_by;
@@ -412,7 +410,6 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
-    bool unused = false; // used to be tsx
     // EXISTING_CODE
     archive << short_fn;
     archive << input_path;
@@ -431,7 +428,6 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     archive << display_str;
     archive << sort_str;
     archive << eq_str;
-    archive << unused;
     // archive << fieldArray;
     // archive << extraArray;
     archive << contained_by;
