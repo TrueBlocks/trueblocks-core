@@ -15,22 +15,28 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/bykof/gostradamus"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // EXISTING_CODE
 
+// TODO: Type is probably not a real field with real values. Might be old and unused in the node
 type RawTransaction struct {
-	Hash             string `json:"hash"`
 	BlockHash        string `json:"blockHash"`
 	BlockNumber      string `json:"blockNumber"`
-	TransactionIndex string `json:"transactionIndex"`
 	From             string `json:"from"`
 	Gas              string `json:"gas"`
 	GasPrice         string `json:"gasPrice"`
+	Hash             string `json:"hash"`
 	Input            string `json:"input"`
 	Nonce            string `json:"nonce"`
 	To               string `json:"to"`
+	TransactionIndex string `json:"transactionIndex"`
 	Value            string `json:"value"`
+	Type             string `json:"type"`
+	V                string `json:"v"`
+	R                string `json:"r"`
+	S                string `json:"s"`
 }
 
 type SimpleTransaction struct {
