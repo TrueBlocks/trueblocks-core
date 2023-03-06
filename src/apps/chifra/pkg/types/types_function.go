@@ -47,13 +47,12 @@ type SimpleFunction struct {
 	Signature       string            `json:"signature,omitempty"`
 	StateMutability string            `json:"stateMutability"`
 	FunctionType    string            `json:"type"`
-	StateMutability string            `json:"stateMutability"`
 	// `payable` was present in ABIs before Solidity 0.5.0 and was replaced
 	// by `stateMutability`: https://docs.soliditylang.org/en/develop/050-breaking-changes.html#command-line-and-json-interfaces
 	payable   bool
 	abiMethod *abi.Method
 	abiEvent  *abi.Event
-	raw             *RawFunction
+	raw       *RawFunction
 }
 
 func (s *SimpleFunction) Raw() *RawFunction {
@@ -189,7 +188,6 @@ func FunctionFromAbiMethod(ethMethod *abi.Method, abiSource string) *SimpleFunct
 	return function
 }
 
-// EXISTING_CODE
 // argumentsToSimpleParameters converts slice of go-ethereum's Argument to slice of
 // SimpleParameter
 func argumentsToSimpleParameters(args []abi.Argument) (result []SimpleParameter) {
@@ -331,10 +329,6 @@ func (s *SimpleFunction) GetAbiEvent() (abiEvent *abi.Event, err error) {
 	return s.abiEvent, nil
 }
 
-func (s *SimpleFunction) Raw() *RawFunction {
-	return nil
-}
-
 func joinParametersNames(params []SimpleParameter) (result string) {
 	for index, param := range params {
 		if index > 0 {
@@ -345,6 +339,7 @@ func joinParametersNames(params []SimpleParameter) (result string) {
 	return
 }
 
+// TODO: I feel like we might be able to remove stateMutability since we don't really use it.
 // Normalize sets StateMutability from `payable` field. It is only useful when
 // reading ABIs generated before Solidity 0.5.0, which use `payable` field:
 // https://docs.soliditylang.org/en/develop/050-breaking-changes.html#command-line-and-json-interfaces
