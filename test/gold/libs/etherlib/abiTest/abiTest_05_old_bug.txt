@@ -29,16 +29,6 @@ ABI of test1.json
   }
 }
 {
-  "name": "address",
-  "type": "function",
-  "stateMutability": "nonpayable",
-  "signature": "address(address)",
-  "encoding": "0x0706105e",
-  "inputs": {
-    "_newContract": ""
-  }
-}
-{
   "name": "approve",
   "type": "function",
   "stateMutability": "nonpayable",
@@ -294,6 +284,16 @@ ABI of test1.json
   "encoding": "0x674ed066",
   "outputs": {
     "val_0": ""
+  }
+}
+{
+  "name": "newContract",
+  "type": "function",
+  "stateMutability": "nonpayable",
+  "signature": "newContract(address)",
+  "encoding": "0x6837ff1e",
+  "inputs": {
+    "_newContract": ""
   }
 }
 {
