@@ -721,9 +721,11 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
         CStringArray fields;
         explode(fields, header, ',');
         for (auto& fld : fields) {
+            // note use of is_object, is_array, is_minimal, is_noaddfld, is_nowrite, is_omitempty,is_extra";
             string_q isFields = "object,array,minimal,noaddfld,nowrite,omitempty,extra";
-            if (contains(isFields, fld))
+            if (contains(isFields, fld)) {
                 fld = "is_" + fld;
+            }
         }
         CStringArray lines;
         explode(lines, contents, '\n');
@@ -735,14 +737,14 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
             }
             CMember tmp;
             tmp.parseCSV(fields, line);
-            if (tmp.is_flags & IS_EXTRA) {
-                tmp.is_flags |= IS_MINIMAL;
+            if (tmp.memberFlags & IS_EXTRA) {
+                tmp.memberFlags |= IS_MINIMAL;
                 tmp.postProcessType();
                 extraArray.push_back(tmp);
             } else {
-                if (tmp.is_flags & IS_ARRAY) {
+                if (tmp.memberFlags & IS_ARRAY) {
                     tmp.type = "C" + string_q(1, char(toupper(tmp.type[0]))) + tmp.type.substr(1, 100) + "Array";
-                } else if (tmp.is_flags & IS_OBJECT) {
+                } else if (tmp.memberFlags & IS_OBJECT) {
                     tmp.type = "C" + string_q(1, char(toupper(tmp.type[0]))) + tmp.type.substr(1, 100);
                 }
                 tmp.postProcessType();

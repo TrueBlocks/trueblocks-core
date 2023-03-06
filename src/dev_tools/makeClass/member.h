@@ -21,7 +21,7 @@ namespace qblocks {
 
 // EXISTING_CODE
 //--------------------------------------------------------------------------
-// bitfield for 'is_flags'
+// bitfield for 'memberFlags'
 #define IS_POINTER (1 << 1)
 #define IS_ARRAY (1 << 2)
 #define IS_OBJECT (1 << 3)
@@ -46,7 +46,7 @@ class CMember : public CBaseNode {
     bool indexed;
     string_q internalType;
     CMemberArray components;
-    uint64_t is_flags;
+    uint64_t memberFlags;
     uint64_t precision;
     uint64_t maxWidth;
     uint64_t doc;
@@ -133,7 +133,7 @@ inline void CMember::initialize(void) {
     indexed = false;
     internalType = "";
     components.clear();
-    is_flags = IS_ENABLED;
+    memberFlags = IS_ENABLED;
     precision = 5;
     maxWidth = NOPOS;
     doc = 0;
@@ -157,7 +157,7 @@ inline void CMember::duplicate(const CMember& me) {
     indexed = me.indexed;
     internalType = me.internalType;
     components = me.components;
-    is_flags = me.is_flags;
+    memberFlags = me.memberFlags;
     precision = me.precision;
     maxWidth = me.maxWidth;
     doc = me.doc;

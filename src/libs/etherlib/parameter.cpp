@@ -91,9 +91,6 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
             if (fieldName % "internalType") {
                 return internalType;
             }
-            if (fieldName % "is_flags") {
-                return is_flags == 0 ? "" : uint_2_Str(is_flags);
-            }
             break;
         case 'n':
             if (fieldName % "name") {
@@ -101,6 +98,9 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'p':
+            if (fieldName % "paramFlags") {
+                return paramFlags == 0 ? "" : uint_2_Str(paramFlags);
+            }
             if (fieldName % "precision") {
                 return precision == 0 ? "" : uint_2_Str(precision);
             }
@@ -144,7 +144,7 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
     // EXISTING_CODE
     // clang-format off
 #define BOOL_ASSIGN_MASK(a, b) { if (str_2_Bool(fieldValue)) { a |= (b); } else { a &= uint64_t(~b); } }
-    if (fieldName % "is_array")     { BOOL_ASSIGN_MASK(is_flags, IS_ARRAY);     return true; }
+    if (fieldName % "is_array")     { BOOL_ASSIGN_MASK(paramFlags, IS_ARRAY);     return true; }
     // clang-format on
     // EXISTING_CODE
 
@@ -169,10 +169,6 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
                 internalType = fieldValue;
                 return true;
             }
-            if (fieldName % "is_flags") {
-                is_flags = str_2_Uint(fieldValue);
-                return true;
-            }
             break;
         case 'n':
             if (fieldName % "name") {
@@ -181,6 +177,10 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
             }
             break;
         case 'p':
+            if (fieldName % "paramFlags") {
+                paramFlags = str_2_Uint(fieldValue);
+                return true;
+            }
             if (fieldName % "precision") {
                 precision = str_2_Uint(fieldValue);
                 return true;
@@ -245,7 +245,7 @@ bool CParameter::Serialize(CArchive& archive) {
     archive >> internalType;
     archive >> components;
     archive >> unused;
-    archive >> is_flags;
+    archive >> paramFlags;
     // archive >> precision;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -268,7 +268,7 @@ bool CParameter::SerializeC(CArchive& archive) const {
     archive << internalType;
     archive << components;
     archive << unused;
-    archive << is_flags;
+    archive << paramFlags;
     // archive << precision;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -327,7 +327,7 @@ void CParameter::registerClass(void) {
     ADD_FIELD(CParameter, "internalType", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "components", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "unused", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "is_flags", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CParameter, "paramFlags", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "precision", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CParameter, "precision");
 
@@ -340,11 +340,8 @@ void CParameter::registerClass(void) {
     builtIns.push_back(_biCParameter);
 
     // EXISTING_CODE
-    ADD_FIELD(CParameter, "is_pointer", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "is_array", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "is_object", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CParameter, "is_enabled");
-    HIDE_FIELD(CParameter, "is_flags");
+    HIDE_FIELD(CParameter, "paramFlags");
     // EXISTING_CODE
 }
 
@@ -356,7 +353,7 @@ string_q nextParameterChunk_custom(const string_q& fieldIn, const void* dataPtr)
             // EXISTING_CODE
             // clang-format off
             case 'i':
-                if (fieldIn % "is_array")     return bool_2_Str_t(par->is_flags & IS_ARRAY);
+                if (fieldIn % "is_array")     return bool_2_Str_t(par->paramFlags & IS_ARRAY);
                 break;
             case 'v':
                 if (fieldIn % "value") {
@@ -399,7 +396,7 @@ bool CParameter::readBackLevel(CArchive& archive) {
         archive >> internalType;
         archive >> components;
         archive >> unused;
-        archive >> is_flags;
+        archive >> paramFlags;
         finishParse();
         done = true;
     }

@@ -17,7 +17,7 @@ type RawParameter struct {
 	Components    string `json:"components"`
 	Indexed       string `json:"indexed"`
 	InternalType  string `json:"internalType"`
-	Is_flags      string `json:"is_flags"`
+	ParamFlags    string `json:"paramFlags"`
 	Name          string `json:"name"`
 	Precision     string `json:"precision"`
 	StrDefault    string `json:"strDefault"`
@@ -30,7 +30,7 @@ type SimpleParameter struct {
 	Components    []SimpleParameter `json:"components,omitempty"`
 	Indexed       bool              `json:"indexed,omitempty"`
 	InternalType  string            `json:"internalType,omitempty"`
-	Is_flags      uint64            `json:"is_flags,omitempty"`
+	ParamFlags    uint64            `json:"paramFlags,omitempty"`
 	Name          string            `json:"name"`
 	Precision     uint64            `json:"precision,omitempty"`
 	StrDefault    string            `json:"strDefault,omitempty"`
@@ -53,8 +53,8 @@ func (s *SimpleParameter) Model(showHidden bool, format string, extraOptions map
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
-		"name":          s.Name,
-		"type":          s.ParameterType,
+		"name": s.Name,
+		"type": s.ParameterType,
 	}
 
 	order := []string{
@@ -69,8 +69,8 @@ func (s *SimpleParameter) Model(showHidden bool, format string, extraOptions map
 			order = append(order, "indexed")
 		}
 		if s.ParameterType != s.InternalType {
-		 	model["internalType"] = s.InternalType
-		 	order = append(order, "internalType")
+			model["internalType"] = s.InternalType
+			order = append(order, "internalType")
 		}
 	}
 	// EXISTING_CODE
