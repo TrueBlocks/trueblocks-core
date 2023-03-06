@@ -2,3 +2,4 @@
 class = CTraceFilter
 fields = tracefilter.csv
 includes = utillib.h
+output = ../../libs/etherlib/

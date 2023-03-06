@@ -2,6 +2,7 @@
 class = CFunction
 fields = function.csv
 includes = utillib.h|parameter.h
+output = ../../libs/etherlib/
 sort = v1.encoding < v2.encoding
 equals = encoding % it.encoding && message % it.message
 tsx = true
@@ -9,4 +10,4 @@ doc_group = 05-Other
 doc_descr = a human-readable representation of a Solidity function call or event
 doc_route = 501-function
 doc_producer = abis, export
-go_type = true
+# go_type = true

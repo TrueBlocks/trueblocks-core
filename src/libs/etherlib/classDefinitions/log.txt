@@ -3,6 +3,7 @@ class = CLog
 fields = log.csv
 includes = utillib.h|abi.h
 cpp_includes = etherlib.h
+output = ../../libs/etherlib/
 contained_by = Receipt
 tsx = true
 doc_group = 02-Chain Data

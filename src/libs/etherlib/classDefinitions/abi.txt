@@ -3,6 +3,7 @@ class = CAbi
 fields = abi.csv
 includes = function.h
 cpp_includes = node.h
+output = ../../libs/etherlib/
 equals = (address == it.address)
 tsx = true
 disabled = true

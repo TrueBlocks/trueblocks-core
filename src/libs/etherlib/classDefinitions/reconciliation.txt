@@ -3,6 +3,7 @@ class = CReconciliation
 fields = reconciliation.csv
 includes = utillib.h
 cpp_includes = etherlib.h
+output = ../../libs/etherlib/
 equals = ((blockNumber == it.blockNumber) && (assetAddr == it.assetAddr))
 tsx = true
 doc_group = 01-Accounts

@@ -3,6 +3,7 @@ class = CReceipt
 fields = receipt.csv
 includes = utillib.h|abi.h|log.h
 cpp_includes = etherlib.h
+output = ../../libs/etherlib/
 equals = (getValueByName("transactionHash") == it.getValueByName("transactionHash"))
 contained_by = Transaction
 tsx = true

@@ -3,6 +3,7 @@ class = CMonitor
 base_class = CName
 fields = monitor.csv
 includes = etherlib.h|transaction.h|reconciliation.h|ethstate.h|monitordapp.h
+output = ../../libs/acctlib/
 force_objget = true
 tsx = true
 doc_group = 01-Accounts
