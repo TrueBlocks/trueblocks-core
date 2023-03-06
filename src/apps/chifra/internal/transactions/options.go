@@ -135,7 +135,7 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
-	opts.AccountFor = ens.ConvertOneEns(opts.Globals.Chain, opts.AccountFor)
+	opts.AccountFor, _ = ens.ConvertOneEns(opts.Globals.Chain, opts.AccountFor)
 	if len(opts.AccountFor) == 0 && len(opts.Reconcile) > 0 {
 		opts.AccountFor = opts.Reconcile
 	}
@@ -154,7 +154,7 @@ func transactionsFinishParse(args []string) *TransactionsOptions {
 	defFmt := "txt"
 	// EXISTING_CODE
 	opts.Transactions = args
-	opts.AccountFor = ens.ConvertOneEns(opts.Globals.Chain, opts.AccountFor)
+	opts.AccountFor, _ = ens.ConvertOneEns(opts.Globals.Chain, opts.AccountFor)
 	if len(opts.AccountFor) == 0 && len(opts.Reconcile) > 0 {
 		opts.AccountFor = opts.Reconcile
 	}
