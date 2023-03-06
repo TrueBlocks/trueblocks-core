@@ -11,7 +11,7 @@ TEST[DATE|TIME] Format:  json
     "transactionHash": "0x2d92337aa72c51eaf61ab52692af28cc2f7efb62e32bbc1d8a420099a22510e9",
     "transactionIndex": 62,
     "type": "call",
-    "error": "Bad jump destination",
+    "error": "invalid jump destination",
     "action": {
       "selfDestructed": "0x0",
       "balance": 0,
@@ -27,12 +27,12 @@ TEST[DATE|TIME] Format:  json
       "name": "transferFrom",
       "stateMutability": "nonpayable",
       "inputs": {
-        "_from": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
-        "_to": "0x713fa27cb26b5902ea398b04d21e6018bba3a2f1",
-        "_value": "8263636363636363636"
+        "from": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+        "to": "0x713fa27cb26b5902ea398b04d21e6018bba3a2f1",
+        "value": "8263636363636363636"
       }
     },
-    "compressedTrace": "{name:transferFrom|inputs:{_from:0xbb9bc244d798123fde783fcc1c72d3bb8c189413|_to:0x713fa27cb26b5902ea398b04d21e6018bba3a2f1|_value:8263636363636363636}}",
+    "compressedTrace": "{name:transferFrom|inputs:{from:0xbb9bc244d798123fde783fcc1c72d3bb8c189413|to:0x713fa27cb26b5902ea398b04d21e6018bba3a2f1|value:8263636363636363636}}",
     "timestamp": 1539524970
   },  {
     "blockHash": "0x9a06b1e8e7249a36a5e532997882429805c7a6510e91b05fd9b5ad6e367acb13",
