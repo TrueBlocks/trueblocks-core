@@ -27,12 +27,12 @@ TEST[DATE|TIME] Format:  json
       "name": "transferFrom",
       "stateMutability": "nonpayable",
       "inputs": {
-        "from": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
-        "to": "0x713fa27cb26b5902ea398b04d21e6018bba3a2f1",
-        "value": "8263636363636363636"
+        "_from": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+        "_to": "0x713fa27cb26b5902ea398b04d21e6018bba3a2f1",
+        "_value": "8263636363636363636"
       }
     },
-    "compressedTrace": "{name:transferFrom|inputs:{from:0xbb9bc244d798123fde783fcc1c72d3bb8c189413|to:0x713fa27cb26b5902ea398b04d21e6018bba3a2f1|value:8263636363636363636}}",
+    "compressedTrace": "{name:transferFrom|inputs:{_from:0xbb9bc244d798123fde783fcc1c72d3bb8c189413|_to:0x713fa27cb26b5902ea398b04d21e6018bba3a2f1|_value:8263636363636363636}}",
     "timestamp": 1539524970
   },  {
     "blockHash": "0x9a06b1e8e7249a36a5e532997882429805c7a6510e91b05fd9b5ad6e367acb13",
