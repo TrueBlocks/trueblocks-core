@@ -39,6 +39,10 @@ func getRawTransaction(chain string, blockHash common.Hash, index uint64) (raw *
 		Nonce:            response.Result.Nonce,
 		To:               response.Result.To,
 		Value:            response.Result.Value,
+		Type:             response.Result.Type,
+		V:                response.Result.V,
+		R:                response.Result.R,
+		S:                response.Result.S,
 	}
 
 	return

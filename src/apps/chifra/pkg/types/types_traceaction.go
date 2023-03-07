@@ -58,10 +58,6 @@ func (s *SimpleTraceAction) Model(showHidden bool, format string, extraOptions m
 
 	// EXISTING_CODE
 	if format == "json" {
-		// TODO: this should be a utility (and used above as well). May be available in go-ethereum. We should check.
-		if s.Value.String() != "0" {
-			model["value"] = s.Value.String()
-		}
 		if extraOptions["tracesTransactionsFormat"] != true && len(s.Init) > 0 {
 			model["init"] = s.Init
 		}

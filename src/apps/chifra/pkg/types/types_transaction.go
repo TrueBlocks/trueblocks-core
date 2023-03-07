@@ -15,22 +15,28 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/bykof/gostradamus"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
+// TODO: Type is probably not a real field with real values. Might be old and unused in the node
 // EXISTING_CODE
 
 type RawTransaction struct {
-	Hash             string `json:"hash"`
 	BlockHash        string `json:"blockHash"`
 	BlockNumber      string `json:"blockNumber"`
-	TransactionIndex string `json:"transactionIndex"`
 	From             string `json:"from"`
 	Gas              string `json:"gas"`
 	GasPrice         string `json:"gasPrice"`
+	Hash             string `json:"hash"`
 	Input            string `json:"input"`
 	Nonce            string `json:"nonce"`
 	To               string `json:"to"`
+	TransactionIndex string `json:"transactionIndex"`
 	Value            string `json:"value"`
+	Type             string `json:"type"`
+	V                string `json:"v"`
+	R                string `json:"r"`
+	S                string `json:"s"`
 }
 
 type SimpleTransaction struct {
@@ -73,6 +79,11 @@ func (s *SimpleTransaction) SetRaw(raw *RawTransaction) {
 
 func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions map[string]any) Model {
 	// EXISTING_CODE
+	to := hexutil.Encode(s.To.Bytes())
+	if to == "0x0000000000000000000000000000000000000000" {
+		to = "0x0" // weird special case to preserve what RPC does
+	}
+
 	// TODO: these date-related values could be done when RPC is queried and cached
 	date := gostradamus.FromUnixTimestamp(int64(s.Timestamp))
 
@@ -86,7 +97,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		"transactionIndex": s.TransactionIndex,
 		"timestamp":        s.Timestamp,
 		"from":             s.From,
-		"to":               s.To,
+		"to":               to,
 		"gasUsed":          s.GasUsed,
 		"hash":             s.Hash,
 		"isError":          s.IsError,
