@@ -97,14 +97,6 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
                 return name;
             }
             break;
-        case 'p':
-            if (fieldName % "paramFlags") {
-                return paramFlags == 0 ? "" : uint_2_Str(paramFlags);
-            }
-            if (fieldName % "precision") {
-                return precision == 0 ? "" : uint_2_Str(precision);
-            }
-            break;
         case 's':
             if (fieldName % "strDefault") {
                 return strDefault;
@@ -113,11 +105,6 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
         case 't':
             if (fieldName % "type") {
                 return type;
-            }
-            break;
-        case 'u':
-            if (fieldName % "unused") {
-                return bool_2_Str_t(unused);
             }
             break;
         case 'v':
@@ -143,8 +130,10 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
 
     // EXISTING_CODE
     // clang-format off
-#define BOOL_ASSIGN_MASK(a, b) { if (str_2_Bool(fieldValue)) { a |= (b); } else { a &= uint64_t(~b); } }
-    if (fieldName % "is_array")     { BOOL_ASSIGN_MASK(paramFlags, IS_ARRAY);     return true; }
+    if (fieldName % "is_array" || fieldName % "isArray") {
+        isArray = str_2_Bool(fieldValue);
+        return true;
+    }
     // clang-format on
     // EXISTING_CODE
 
@@ -176,16 +165,6 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
                 return true;
             }
             break;
-        case 'p':
-            if (fieldName % "paramFlags") {
-                paramFlags = str_2_Uint(fieldValue);
-                return true;
-            }
-            if (fieldName % "precision") {
-                precision = str_2_Uint(fieldValue);
-                return true;
-            }
-            break;
         case 's':
             if (fieldName % "strDefault") {
                 strDefault = fieldValue;
@@ -195,12 +174,6 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
         case 't':
             if (fieldName % "type") {
                 type = fieldValue;
-                return true;
-            }
-            break;
-        case 'u':
-            if (fieldName % "unused") {
-                unused = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -219,8 +192,10 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
 //---------------------------------------------------------------------------------------------------
 void CParameter::finishParse() {
     // EXISTING_CODE
-    if (internalType.empty())
+    if (internalType.empty()) {
         internalType = type;
+    }
+    isArray = contains(type, "[");
     // EXISTING_CODE
 }
 
@@ -244,9 +219,6 @@ bool CParameter::Serialize(CArchive& archive) {
     archive >> indexed;
     archive >> internalType;
     archive >> components;
-    archive >> unused;
-    archive >> paramFlags;
-    // archive >> precision;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -267,9 +239,6 @@ bool CParameter::SerializeC(CArchive& archive) const {
     archive << indexed;
     archive << internalType;
     archive << components;
-    archive << unused;
-    archive << paramFlags;
-    // archive << precision;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -326,10 +295,6 @@ void CParameter::registerClass(void) {
     ADD_FIELD(CParameter, "indexed", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "internalType", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "components", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "unused", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "paramFlags", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "precision", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CParameter, "precision");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CParameter, "schema");
@@ -340,8 +305,6 @@ void CParameter::registerClass(void) {
     builtIns.push_back(_biCParameter);
 
     // EXISTING_CODE
-    ADD_FIELD(CParameter, "is_array", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CParameter, "paramFlags");
     // EXISTING_CODE
 }
 
@@ -353,7 +316,9 @@ string_q nextParameterChunk_custom(const string_q& fieldIn, const void* dataPtr)
             // EXISTING_CODE
             // clang-format off
             case 'i':
-                if (fieldIn % "is_array")     return bool_2_Str_t(par->paramFlags & IS_ARRAY);
+                if (fieldIn % "is_array" || fieldIn % "isArray") {
+                    return bool_2_Str(par->isArray);
+                }
                 break;
             case 'v':
                 if (fieldIn % "value") {
@@ -387,6 +352,8 @@ string_q nextParameterChunk_custom(const string_q& fieldIn, const void* dataPtr)
 bool CParameter::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
+    bool unused1;
+    uint64_t unused2;
     if (m_schema < getVersionNum(0, 8, 3)) {
         archive >> type;
         archive >> name;
@@ -395,8 +362,20 @@ bool CParameter::readBackLevel(CArchive& archive) {
         archive >> indexed;
         archive >> internalType;
         archive >> components;
-        archive >> unused;
-        archive >> paramFlags;
+        archive >> unused1;
+        archive >> unused2;
+        finishParse();
+        done = true;
+    } else if (m_schema < getVersionNum(0,56,0)) {
+        archive >> type;
+        archive >> name;
+        archive >> strDefault;
+        archive >> value;
+        archive >> indexed;
+        archive >> internalType;
+        archive >> components;
+        archive >> unused1;
+        archive >> unused2;
         finishParse();
         done = true;
     }

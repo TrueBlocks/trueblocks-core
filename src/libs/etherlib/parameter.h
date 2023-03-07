@@ -35,7 +35,6 @@ namespace qblocks {
 #define SIG_CANONICAL (SIG_FNAME | SIG_ITYPE)
 #define SIG_DEFAULT (SIG_FTYPE | SIG_FNAME | SIG_FSPACE | SIG_ITYPE | SIG_INAME | SIG_IINDEXED)
 #define SIG_DETAILS (SIG_DEFAULT | SIG_CONST | SIG_ANONYMOUS | SIG_PAYABLE | SIG_ENCODE)
-#define IS_ARRAY (1 << 2)
 class CParameter;
 typedef vector<CParameter> CParameterArray;
 // EXISTING_CODE
@@ -50,9 +49,6 @@ class CParameter : public CBaseNode {
     bool indexed;
     string_q internalType;
     CParameterArray components;
-    bool unused;
-    uint64_t paramFlags;
-    uint64_t precision;
 
   public:
     CParameter(void);
@@ -65,6 +61,7 @@ class CParameter : public CBaseNode {
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
+    bool isArray;
     string_q resolveType(void) const;
     explicit CParameter(const string_q& n, const string_q& type, const string_q& val = "");
     explicit CParameter(const string_q& n, const string_q& type, uint64_t val);
@@ -132,11 +129,9 @@ inline void CParameter::initialize(void) {
     indexed = false;
     internalType = "";
     components.clear();
-    unused = false;
-    paramFlags = 0;
-    precision = 5;
 
     // EXISTING_CODE
+    isArray = false;
     // EXISTING_CODE
 }
 
@@ -152,11 +147,9 @@ inline void CParameter::duplicate(const CParameter& pa) {
     indexed = pa.indexed;
     internalType = pa.internalType;
     components = pa.components;
-    unused = pa.unused;
-    paramFlags = pa.paramFlags;
-    precision = pa.precision;
 
     // EXISTING_CODE
+    isArray = pa.isArray;
     // EXISTING_CODE
 }
 

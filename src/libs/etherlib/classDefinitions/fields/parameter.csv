@@ -6,6 +6,3 @@ value        ,string    ,           ,       ,      ,        ,true      ,        
 indexed      ,bool      ,           ,       ,      ,        ,true      ,        ,      ,         ,  4 ,   6 ,        ,`true` if this parameter is indexed
 internalType ,string    ,           ,       ,      ,        ,true      ,        ,      ,         ,  5 ,   5 ,        ,for composite types&#44; the internal type of the parameter
 components   ,Parameter ,           ,true   ,true  ,        ,true      ,        ,      ,         ,  6 ,     ,        ,for composite types&#44; the parameters making up the composite
-unused       ,bool      ,           ,       ,      ,        ,true      ,        ,      ,         ,    ,     ,        ,
-paramFlags   ,uint64    ,0 ,       ,      ,        ,true      ,        ,      ,         ,    ,     ,        ,
-precision    ,uint64    ,5          ,       ,      ,true    ,true      ,        ,      ,         ,    ,     ,        ,
