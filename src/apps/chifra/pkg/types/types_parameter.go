@@ -17,12 +17,9 @@ type RawParameter struct {
 	Components    string `json:"components"`
 	Indexed       string `json:"indexed"`
 	InternalType  string `json:"internalType"`
-	ParamFlags    string `json:"paramFlags"`
 	Name          string `json:"name"`
-	Precision     string `json:"precision"`
 	StrDefault    string `json:"strDefault"`
 	ParameterType string `json:"type"`
-	Unused        string `json:"unused"`
 	Value         string `json:"value"`
 }
 
@@ -30,12 +27,9 @@ type SimpleParameter struct {
 	Components    []SimpleParameter `json:"components,omitempty"`
 	Indexed       bool              `json:"indexed,omitempty"`
 	InternalType  string            `json:"internalType,omitempty"`
-	ParamFlags    uint64            `json:"paramFlags,omitempty"`
 	Name          string            `json:"name"`
-	Precision     uint64            `json:"precision,omitempty"`
 	StrDefault    string            `json:"strDefault,omitempty"`
 	ParameterType string            `json:"type"`
-	Unused        bool              `json:"unused,omitempty"`
 	Value         string            `json:"value,omitempty"`
 	raw           *RawParameter
 }
@@ -53,8 +47,8 @@ func (s *SimpleParameter) Model(showHidden bool, format string, extraOptions map
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
-		"name": s.Name,
-		"type": s.ParameterType,
+		"name":          s.Name,
+		"type":          s.ParameterType,
 	}
 
 	order := []string{
