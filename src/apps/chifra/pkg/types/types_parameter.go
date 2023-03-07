@@ -17,12 +17,9 @@ type RawParameter struct {
 	Components    string `json:"components"`
 	Indexed       string `json:"indexed"`
 	InternalType  string `json:"internalType"`
-	Is_flags      string `json:"is_flags"`
 	Name          string `json:"name"`
-	Precision     string `json:"precision"`
 	StrDefault    string `json:"strDefault"`
 	ParameterType string `json:"type"`
-	Unused        string `json:"unused"`
 	Value         string `json:"value"`
 }
 
@@ -30,7 +27,6 @@ type SimpleParameter struct {
 	Components    []SimpleParameter `json:"components,omitempty"`
 	Indexed       bool              `json:"indexed,omitempty"`
 	InternalType  string            `json:"internalType,omitempty"`
-	IsFlags       uint64            `json:"is_flags,omitempty"`
 	Name          string            `json:"name"`
 	StrDefault    string            `json:"strDefault,omitempty"`
 	ParameterType string            `json:"type"`
@@ -68,8 +64,8 @@ func (s *SimpleParameter) Model(showHidden bool, format string, extraOptions map
 			order = append(order, "indexed")
 		}
 		if s.ParameterType != s.InternalType {
-		 	model["internalType"] = s.InternalType
-		 	order = append(order, "internalType")
+			model["internalType"] = s.InternalType
+			order = append(order, "internalType")
 		}
 	}
 	// EXISTING_CODE

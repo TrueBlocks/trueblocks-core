@@ -76,7 +76,7 @@ bool COptions::handle_sdk_ts_types(CStringArray& typesOut) {
             ft = substitute(substitute(ft, "String", "string"), "Topic", "topic");
             replace(ft, "bool", "boolean");
 
-            bool isOptional = field.is_flags & IS_OMITEMPTY;
+            bool isOptional = field.memberFlags & IS_OMITEMPTY;
             if (field.name == "fromName" || field.name == "toName") {
                 isOptional = true;
             }

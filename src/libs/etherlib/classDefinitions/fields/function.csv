@@ -1,14 +1,14 @@
-name            ,type      ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
-name            ,string    ,           ,       ,      ,        ,          ,        ,      ,         ,1   ,3    ,        ,the name of the interface
-type            ,string    ,           ,       ,      ,        ,          ,        ,      ,         ,2   ,2    ,        ,the type of the interface&#44; either 'event' or 'function'
-abiSource       ,string    ,           ,       ,      ,        ,true      ,        ,      ,         ,    ,    ,        ,
-anonymous       ,bool      ,           ,       ,      ,        ,true      ,        ,      ,         ,    ,     ,        ,
-constant        ,bool      ,           ,       ,      ,        ,true      ,        ,      ,         ,    ,     ,        ,
-stateMutability ,string    ,           ,       ,      ,        ,          ,        ,      ,         ,    ,    ,        ,
-signature       ,string    ,           ,       ,      ,        ,          ,        ,      ,         ,3   ,4    ,        ,the canonical signature of the interface
-encoding        ,string    ,           ,       ,      ,        ,          ,        ,      ,         ,4   ,1    ,        ,the signature encoded with keccak
-message         ,string    ,           ,       ,      ,true    ,true      ,        ,      ,         ,    ,    ,        ,
-inputs          ,Parameter ,           ,true   ,true  ,        ,          ,        ,      ,         ,5   ,    ,        ,the input parameters to the function&#44; if any
-outputs         ,Parameter ,           ,true   ,true  ,        ,          ,        ,      ,         ,6   ,    ,        ,the output parameters to the function&#44; if any
-inputsDict      ,Value     ,           ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
-outputsDict     ,Value     ,           ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
+name            ,type      ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,noaddfld ,doc ,disp ,example ,description
+name            ,string    ,           ,       ,      ,        ,          ,        ,         ,1   ,3    ,        ,the name of the interface
+type            ,string    ,           ,       ,      ,        ,          ,        ,         ,2   ,2    ,        ,the type of the interface&#44; either 'event' or 'function'
+abiSource       ,string    ,           ,       ,      ,        ,true      ,        ,         ,    ,    ,        ,
+anonymous       ,bool      ,           ,       ,      ,        ,true      ,        ,         ,    ,     ,        ,
+constant        ,bool      ,           ,       ,      ,        ,true      ,        ,         ,    ,     ,        ,
+stateMutability ,string    ,           ,       ,      ,        ,          ,        ,         ,    ,    ,        ,
+signature       ,string    ,           ,       ,      ,        ,          ,        ,         ,3   ,4    ,        ,the canonical signature of the interface
+encoding        ,string    ,           ,       ,      ,        ,          ,        ,         ,4   ,1    ,        ,the signature encoded with keccak
+message         ,string    ,           ,       ,      ,true    ,true      ,        ,         ,    ,    ,        ,
+inputs          ,Parameter ,           ,true   ,true  ,        ,          ,        ,         ,5   ,    ,        ,the input parameters to the function&#44; if any
+outputs         ,Parameter ,           ,true   ,true  ,        ,          ,        ,         ,6   ,    ,        ,the output parameters to the function&#44; if any
+inputsDict      ,Value     ,           ,       ,      ,true    ,          ,        ,         ,    ,     ,        ,
+outputsDict     ,Value     ,           ,       ,      ,true    ,          ,        ,         ,    ,     ,        ,

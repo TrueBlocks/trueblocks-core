@@ -28,7 +28,6 @@ static const COption params[] = {
     COption("readmes", "m", "", OPT_SWITCH, "create readme files for each tool and app"),
     COption("format", "f", "", OPT_SWITCH, "format source code files (.cpp and .h) found in local folder and below"),
     COption("lint", "l", "", OPT_SWITCH, "lint source code files (.cpp and .h) found in local folder and below"),
-    COption("tsx", "t", "", OPT_SWITCH, "create typescript routes, help text and types for the front end"),
     COption("sdk", "s", "", OPT_SWITCH, "create typescript sdk"),
     COption("openapi", "A", "", OPT_HIDDEN | OPT_SWITCH, "export openapi.yaml file for API documentation"),
     COption("", "", "", OPT_DESCRIPTION, "Automatically writes C++ for various purposes."),
@@ -74,9 +73,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-l" || arg == "--lint") {
             lint = true;
-
-        } else if (arg == "-t" || arg == "--tsx") {
-            tsx = true;
 
         } else if (arg == "-s" || arg == "--sdk") {
             sdk = true;
@@ -151,10 +147,6 @@ bool COptions::parseArguments(string_q& command) {
     verifyDescriptions();
     if (gocmds) {
         verifyGoEnumValidators();
-    }
-
-    if (tsx) {
-        handle_tsx();
     }
 
     // If the user has explicitly specified a classDef, use that
@@ -243,7 +235,6 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     all = false;
-    tsx = false;
     sdk = false;
     openapi = false;
     // END_CODE_INIT

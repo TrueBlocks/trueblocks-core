@@ -1,8 +1,8 @@
-name              ,type     ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
-clientVersion     ,string   ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-trueblocksVersion ,string   ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-rpcProvider       ,string   ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-malanceProvider   ,string   ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-host              ,string   ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-isScraping        ,bool     ,           ,       ,      ,        ,true      ,        ,      ,         ,    ,     ,        ,
-caches            ,CachePtr ,           ,true   ,true  ,true    ,          ,        ,      ,         ,    ,     ,        ,
+name              ,type     ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,noaddfld ,doc ,disp ,example ,description
+clientVersion     ,string   ,           ,       ,      ,        ,          ,        ,         ,    ,     ,        ,
+trueblocksVersion ,string   ,           ,       ,      ,        ,          ,        ,         ,    ,     ,        ,
+rpcProvider       ,string   ,           ,       ,      ,        ,          ,        ,         ,    ,     ,        ,
+malanceProvider   ,string   ,           ,       ,      ,        ,          ,        ,         ,    ,     ,        ,
+host              ,string   ,           ,       ,      ,        ,          ,        ,         ,    ,     ,        ,
+isScraping        ,bool     ,           ,       ,      ,        ,true      ,        ,         ,    ,     ,        ,
+caches            ,CachePtr ,           ,true   ,true  ,true    ,          ,        ,         ,    ,     ,        ,

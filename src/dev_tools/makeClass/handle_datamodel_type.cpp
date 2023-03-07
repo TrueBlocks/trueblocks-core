@@ -63,7 +63,7 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
             }
         }
         maxNameWid = max(maxNameWid, field.name.length());
-        if (!(field.is_flags & IS_OMITEMPTY)) {
+        if (!(field.memberFlags & IS_OMITEMPTY)) {
             maxModelWid = max(maxModelWid, field.name.length());
         }
         fieldNo++;
@@ -97,8 +97,8 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
         ostringstream os;
         os << "\t" << padRight(field.name, maxNameWid) << " " << simpType;
         if (!(field.name % "raw")) {
-            os << " `json:\"" << firstLower(field.value) << (field.is_flags & IS_OMITEMPTY ? ",omitempty" : "") << "\"`"
-               << debug(field);
+            os << " `json:\"" << firstLower(field.value) << (field.memberFlags & IS_OMITEMPTY ? ",omitempty" : "")
+               << "\"`" << debug(field);
         }
         os << endl;
         fieldStr += os.str();
@@ -109,7 +109,7 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
         if (skipField(field))
             continue;
         ostringstream os;
-        if (!(field.name % "raw") && !(field.is_flags & (IS_OMITEMPTY | IS_ARRAY))) {
+        if (!(field.name % "raw") && !(field.memberFlags & (IS_OMITEMPTY | IS_ARRAY))) {
             os << "\t\t" << padRight("\"" + firstLower(field.value) + "\":", maxModelWid + 3) << " s."
                << firstUpper(field.name) << "," << debug(field) << endl;
         }
@@ -121,7 +121,7 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
         if (skipField(field))
             continue;
         ostringstream os;
-        if (!(field.name % "raw") && !(field.is_flags & (IS_OMITEMPTY | IS_ARRAY))) {
+        if (!(field.name % "raw") && !(field.memberFlags & (IS_OMITEMPTY | IS_ARRAY))) {
             os << "\t\t\"" << firstLower(field.value) << "\"," << debug(field) << endl;
         }
         orderStr += os.str();
@@ -188,7 +188,7 @@ string_q debug(const CMember& field) {
     // os << " //";
     // os << " doc: " << field.doc;
     // os << " disp: " << field.disp;
-    // os << " omit: " << (field.is_flags & IS_OMITEMPTY);
+    // os << " omit: " << (field.memberFlags & IS_OMITEMPTY);
     return os.str();
 }
 

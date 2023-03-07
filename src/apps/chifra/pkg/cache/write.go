@@ -502,13 +502,14 @@ func WriteParameter(writer *bufio.Writer, param *types.SimpleParameter) (err err
 		return
 	}
 
-	err = write(&param.Unused)
+	unused1 := false
+	err = write(&unused1)
 	if err != nil {
 		return
 	}
 
-	unused := uint64(0)
-	err = write(&unused)
+	unused2 := uint64(0)
+	err = write(&unused2)
 	if err != nil {
 		return
 	}

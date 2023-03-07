@@ -2,6 +2,7 @@
 class = CPinnedChunk
 fields = pinnedchunk.csv
 includes = utillib.h
+output = ../../apps/cacheStatus/
 sort = v1.range < v2.range
 equals = range == it.range
 disabled = true

@@ -2,3 +2,4 @@
 class = CNewBlock
 fields = newblock.csv
 includes = etherlib.h|transaction.h
+output = ../../libs/test-libs/etherlib/parsingTest

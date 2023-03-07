@@ -174,6 +174,11 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
                 return input_path;
             }
             break;
+        case 'o':
+            if (fieldName % "output") {
+                return output;
+            }
+            break;
         case 's':
             if (fieldName % "short_fn") {
                 return short_fn;
@@ -183,11 +188,6 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
             }
             if (fieldName % "sort_str") {
                 return sort_str;
-            }
-            break;
-        case 't':
-            if (fieldName % "tsx") {
-                return bool_2_Str_t(tsx);
             }
             break;
         default:
@@ -338,6 +338,12 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
                 return true;
             }
             break;
+        case 'o':
+            if (fieldName % "output") {
+                output = fieldValue;
+                return true;
+            }
+            break;
         case 's':
             if (fieldName % "short_fn") {
                 short_fn = fieldValue;
@@ -349,12 +355,6 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
             }
             if (fieldName % "sort_str") {
                 sort_str = fieldValue;
-                return true;
-            }
-            break;
-        case 't':
-            if (fieldName % "tsx") {
-                tsx = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -397,10 +397,10 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     archive >> go_model;
     archive >> head_includes;
     archive >> src_includes;
+    archive >> output;
     archive >> display_str;
     archive >> sort_str;
     archive >> eq_str;
-    archive >> tsx;
     // archive >> fieldArray;
     // archive >> extraArray;
     archive >> contained_by;
@@ -437,10 +437,10 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     archive << go_model;
     archive << head_includes;
     archive << src_includes;
+    archive << output;
     archive << display_str;
     archive << sort_str;
     archive << eq_str;
-    archive << tsx;
     // archive << fieldArray;
     // archive << extraArray;
     archive << contained_by;
@@ -513,10 +513,10 @@ void CClassDefinition::registerClass(void) {
     ADD_FIELD(CClassDefinition, "go_model", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "head_includes", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "src_includes", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CClassDefinition, "output", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "display_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "sort_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "eq_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CClassDefinition, "tsx", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "fieldArray", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CClassDefinition, "fieldArray");
     ADD_FIELD(CClassDefinition, "extraArray", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
@@ -691,7 +691,6 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
         LOG_ERR("makeClass: do not include semicolon in equals string ", eq_str);
         exit(0);
     }
-    tsx = toml.getConfigBool("settings", "tsx", false);
     doc_group = toml.getConfigStr("settings", "doc_group", "");
     doc_descr = toml.getConfigStr("settings", "doc_descr", "");
     doc_route = toml.getConfigStr("settings", "doc_route", "");
@@ -722,9 +721,11 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
         CStringArray fields;
         explode(fields, header, ',');
         for (auto& fld : fields) {
-            string_q isFields = "object,array,minimal,noaddfld,nowrite,omitempty,extra";
-            if (contains(isFields, fld))
+            // note use of is_object, is_array, is_minimal, is_noaddfld, is_nowrite, is_omitempty";
+            string_q isFields = "object,array,minimal,noaddfld,nowrite,omitempty";
+            if (contains(isFields, fld)) {
                 fld = "is_" + fld;
+            }
         }
         CStringArray lines;
         explode(lines, contents, '\n');
@@ -736,19 +737,13 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
             }
             CMember tmp;
             tmp.parseCSV(fields, line);
-            if (tmp.is_flags & IS_EXTRA) {
-                tmp.is_flags |= IS_MINIMAL;
-                tmp.postProcessType();
-                extraArray.push_back(tmp);
-            } else {
-                if (tmp.is_flags & IS_ARRAY) {
-                    tmp.type = "C" + string_q(1, char(toupper(tmp.type[0]))) + tmp.type.substr(1, 100) + "Array";
-                } else if (tmp.is_flags & IS_OBJECT) {
-                    tmp.type = "C" + string_q(1, char(toupper(tmp.type[0]))) + tmp.type.substr(1, 100);
-                }
-                tmp.postProcessType();
-                fieldArray.push_back(tmp);
+            if (tmp.memberFlags & IS_ARRAY) {
+                tmp.type = "C" + string_q(1, char(toupper(tmp.type[0]))) + tmp.type.substr(1, 100) + "Array";
+            } else if (tmp.memberFlags & IS_OBJECT) {
+                tmp.type = "C" + string_q(1, char(toupper(tmp.type[0]))) + tmp.type.substr(1, 100);
             }
+            tmp.postProcessType();
+            fieldArray.push_back(tmp);
         }
     } else {
         LOG_ERR("Cannot find file ", fn);

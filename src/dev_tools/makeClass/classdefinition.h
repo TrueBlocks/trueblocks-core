@@ -40,10 +40,10 @@ class CClassDefinition : public CBaseNode {
     string_q go_model;
     string_q head_includes;
     string_q src_includes;
+    string_q output;
     string_q display_str;
     string_q sort_str;
     string_q eq_str;
-    bool tsx;
     CMemberArray fieldArray;
     CMemberArray extraArray;
     string_q contained_by;
@@ -135,10 +135,10 @@ inline void CClassDefinition::initialize(void) {
     go_model = "";
     head_includes = "";
     src_includes = "";
+    output = "";
     display_str = "";
     sort_str = "";
     eq_str = "";
-    tsx = false;
     fieldArray.clear();
     extraArray.clear();
     contained_by = "";
@@ -172,10 +172,10 @@ inline void CClassDefinition::duplicate(const CClassDefinition& cl) {
     go_model = cl.go_model;
     head_includes = cl.head_includes;
     src_includes = cl.src_includes;
+    output = cl.output;
     display_str = cl.display_str;
     sort_str = cl.sort_str;
     eq_str = cl.eq_str;
-    tsx = cl.tsx;
     fieldArray = cl.fieldArray;
     extraArray = cl.extraArray;
     contained_by = cl.contained_by;
