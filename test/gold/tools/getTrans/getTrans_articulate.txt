@@ -37,7 +37,7 @@ params.size: 0
         "subtraces": 0,
         "traceAddress": null,
         "type": "call",
-        "error": "Bad jump destination",
+        "error": "invalid jump destination",
         "action": {
           "selfDestructed": "0x0",
           "balance": 0,
