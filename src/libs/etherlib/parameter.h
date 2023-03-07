@@ -61,7 +61,6 @@ class CParameter : public CBaseNode {
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    bool isArray;
     string_q resolveType(void) const;
     explicit CParameter(const string_q& n, const string_q& type, const string_q& val = "");
     explicit CParameter(const string_q& n, const string_q& type, uint64_t val);
@@ -131,7 +130,6 @@ inline void CParameter::initialize(void) {
     components.clear();
 
     // EXISTING_CODE
-    isArray = false;
     // EXISTING_CODE
 }
 
@@ -149,7 +147,6 @@ inline void CParameter::duplicate(const CParameter& pa) {
     components = pa.components;
 
     // EXISTING_CODE
-    isArray = pa.isArray;
     // EXISTING_CODE
 }
 

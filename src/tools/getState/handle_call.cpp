@@ -257,7 +257,6 @@ bool fromDefinition(CParameter& param, const string_q& strIn) {
     param.indexed = contains(str, "indexed");
     str = trim(substitute(str, "indexed", ""));
     param.type = trim(elementaryName(nextTokenClear(str, ' ')));
-    param.isArray = contains(param.type, '[');
     param.name = trim(str);
     if (contains(param.type, "+")) {
         while (contains(param.type, "(")) {

@@ -130,10 +130,6 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
 
     // EXISTING_CODE
     // clang-format off
-    if (fieldName % "is_array" || fieldName % "isArray") {
-        isArray = str_2_Bool(fieldValue);
-        return true;
-    }
     // clang-format on
     // EXISTING_CODE
 
@@ -195,7 +191,6 @@ void CParameter::finishParse() {
     if (internalType.empty()) {
         internalType = type;
     }
-    isArray = contains(type, "[");
     // EXISTING_CODE
 }
 
@@ -315,11 +310,6 @@ string_q nextParameterChunk_custom(const string_q& fieldIn, const void* dataPtr)
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // clang-format off
-            case 'i':
-                if (fieldIn % "is_array" || fieldIn % "isArray") {
-                    return bool_2_Str(par->isArray);
-                }
-                break;
             case 'v':
                 if (fieldIn % "value") {
                     if (contains(par->type, "tuple"))
