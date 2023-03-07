@@ -30,7 +30,6 @@ type SimpleParameter struct {
 	Name          string            `json:"name"`
 	StrDefault    string            `json:"strDefault,omitempty"`
 	ParameterType string            `json:"type"`
-	Unused        bool              `json:"unused,omitempty"`
 	Value         any               `json:"value,omitempty"`
 	raw           *RawParameter
 }

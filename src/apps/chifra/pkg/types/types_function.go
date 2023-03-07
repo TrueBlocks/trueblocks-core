@@ -129,7 +129,6 @@ func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[
 }
 
 // EXISTING_CODE
-
 func FunctionFromAbiEvent(ethEvent *abi.Event, abiSource string) *SimpleFunction {
 	// ID is encoded signature
 	encSig := strings.ToLower(ethEvent.ID.Hex())
