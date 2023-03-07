@@ -2,6 +2,7 @@
 class = CManifest
 fields = manifest.csv
 includes = etherlib.h|pinnedchunk.h
+output = ../../apps/cacheStatus/
 disabled = true
 doc_group = 04-Admin
 doc_descr = a JSON object containing records for each bloom filter and index chunk in the Unchained Index

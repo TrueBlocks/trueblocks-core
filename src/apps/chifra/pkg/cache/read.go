@@ -626,13 +626,14 @@ func ReadParameter(reader *bufio.Reader) (param *types.SimpleParameter, err erro
 		return
 	}
 
-	err = read(&param.Unused)
+	unused1 := false
+	err = read(&unused1)
 	if err != nil {
 		return
 	}
 
-	unused := uint64(0)
-	err = read(&unused)
+	unused2 := uint64(0)
+	err = read(&unused2)
 	if err != nil {
 		return
 	}

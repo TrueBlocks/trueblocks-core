@@ -41,7 +41,6 @@ class COptions : public COptionsBase {
   public:
     // BEG_CODE_DECLARE
     bool all;
-    bool tsx;
     bool sdk;
     bool openapi;
     // END_CODE_DECLARE
@@ -64,7 +63,6 @@ class COptions : public COptionsBase {
     ostringstream notesStream, errorStrStream, errorDefStream, goCallStream, goPkgStream, goConvertStream;
     ostringstream goRouteStream, chifraHelpStream;
     ostringstream apiTagStream, apiPathStream;
-    ostringstream jsLocationStream, jsTemplateStream, jsHotkeyStream, jsRouteStream;
     ostringstream goStream;
 
     void clearStreams(void) {
@@ -84,10 +82,6 @@ class COptions : public COptionsBase {
         chifraHelpStream.str("");
         apiTagStream.str("");
         apiPathStream.str("");
-        jsLocationStream.str("");
-        jsTemplateStream.str("");
-        jsHotkeyStream.str("");
-        jsRouteStream.str("");
         goStream.str("");
 
         optionStream.clear();
@@ -106,10 +100,6 @@ class COptions : public COptionsBase {
         chifraHelpStream.clear();
         apiTagStream.clear();
         apiPathStream.clear();
-        jsLocationStream.clear();
-        jsTemplateStream.clear();
-        jsHotkeyStream.clear();
-        jsRouteStream.clear();
         positionals.clear();
         goStream.clear();
     }
@@ -127,8 +117,6 @@ class COptions : public COptionsBase {
     bool handle_format(void);
     bool handle_generate(CToml& toml, const CClassDefinition& classDef, bool asJs);
     bool handle_datamodel(void);
-    bool handle_tsx(void);
-    bool handle_tsx_type(const CClassDefinition& classDef);
 
     bool handle_sdk(void);
     bool handle_sdk_ts(void);

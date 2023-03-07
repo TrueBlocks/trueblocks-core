@@ -3,6 +3,7 @@ class = CEthCall
 fields = ethcall.csv
 includes = utillib.h|ethstate.h
 cpp_includes = etherlib.h
+output = ../../libs/etherlib/
 sort = v1.blockNumber < v2.blockNumber
 equals = blockNumber == it.blockNumber
 doc_group = 03-Chain State

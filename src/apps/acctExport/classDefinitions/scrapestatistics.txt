@@ -2,3 +2,4 @@
 class = CScrapeStatistics
 fields = scrapstatistics.csv
 includes = etherlib.h
+output = ../../apps/acctExport/
