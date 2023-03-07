@@ -68,6 +68,7 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 
 	var model map[string]interface{}
 
+	// TODO: We can probably change the output of the traces to remove this special case
 	if extraOptions["tracesTransactionsFormat"] == true {
 		model = map[string]interface{}{
 			"articulatedTrace": s.ArticulatedTrace,
@@ -149,7 +150,7 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 			model["action::gas"] = s.Action.Gas
 			model["action::input"] = s.Action.Input
 			if !s.Action.RefundAddress.IsZero() {
-				model["action::from"] = hexutil.Encode(s.Action.Address.Bytes())
+				model["action::from"] = hexutil.Encode(s.Action.From.Bytes())
 				model["action::to"] = hexutil.Encode(s.Action.RefundAddress.Bytes())
 				model["action::value"] = s.Action.Balance.String()
 				model["action::ether"] = utils.WeiToEther(&s.Action.Balance)
@@ -248,6 +249,8 @@ func GetTracesCountByTransactionHash(chain string, txHash string) (uint64, error
 	return uint64(len(traces)), nil
 }
 
+// TODO: I'm curious if this could be pushed up to the caller. In other words, the handling of the trace is not
+// TODO: handled in the type but in the caller
 // GetTracesByTransactionHash returns a slice of traces in a given transaction's hash
 func GetTracesByTransactionHash(chain string, txHash string, transaction *SimpleTransaction) ([]SimpleTrace, error) {
 	method := "trace_transaction"
@@ -289,11 +292,8 @@ func GetTracesByTransactionHash(chain string, txHash string, transaction *Simple
 					Output:  rawTrace.Result.Output,
 					Code:    rawTrace.Result.Code,
 				}
-				if len(rawTrace.Result.NewContract) > 0 {
-					result.NewContract = HexToAddress(rawTrace.Result.NewContract)
-				} else if len(rawTrace.Result.Address) > 0 {
-					result.NewContract = HexToAddress(rawTrace.Result.Address)
-					result.NewContract = HexToAddress(rawTrace.Result.Address)
+				if len(rawTrace.Result.Address) > 0 {
+					result.Address = HexToAddress(rawTrace.Result.Address)
 				}
 				result.SetRaw(rawTrace.Result)
 			}

@@ -35,8 +35,8 @@ local   ,both ,fast  ,abis  ,tools/grabABI ,findSig_a_lot       ,n    ,find = 0x
 
 # These fail because the tester doesn't read lines with commas or parentheses in the line
 
-porting ,both ,fast  ,abis  ,tools/grabABI ,known_alone         ,y    ,known
-porting ,both ,fast  ,abis  ,tools/grabABI ,known_with          ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & known
+broken  ,both ,fast  ,abis  ,tools/grabABI ,known_alone         ,y    ,known
+broken  ,both ,fast  ,abis  ,tools/grabABI ,known_with          ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & known
 on      ,both ,fast  ,abis  ,tools/grabABI ,known_trueclasses   ,y    ,addrs = truebit & classes & fmt = json
 
 #       ,     ,      ,      ,              ,                    ,     ,This fails under the API because cobra doesn't give us a chance to report invalid flags

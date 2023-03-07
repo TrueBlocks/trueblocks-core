@@ -1,37 +1,86 @@
+// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
+ */
+
 package types
 
+// EXISTING_CODE
 import "fmt"
 
-type RawParameter interface{}
+// EXISTING_CODE
+
+type RawParameter struct {
+	Components    string `json:"components"`
+	Indexed       string `json:"indexed"`
+	InternalType  string `json:"internalType"`
+	Name          string `json:"name"`
+	StrDefault    string `json:"strDefault"`
+	ParameterType string `json:"type"`
+	Value         string `json:"value"`
+}
+
 type SimpleParameter struct {
-	ParameterType string            `json:"type"`
+	Components    []SimpleParameter `json:"components,omitempty"`
+	Indexed       bool              `json:"indexed,omitempty"`
+	InternalType  string            `json:"internalType,omitempty"`
 	Name          string            `json:"name"`
-	StrDefault    string            `json:"strDefault"`
-	Value         any               `json:"value"`
-	Indexed       bool              `json:"indexed"`
-	InternalType  string            `json:"internalType"`
-	Components    []SimpleParameter `json:"components"`
-	Unused        bool              `json:"unused"`
-	IsFlags       uint64            `json:"is_flags"`
+	StrDefault    string            `json:"strDefault,omitempty"`
+	ParameterType string            `json:"type"`
+	Unused        bool              `json:"unused,omitempty"`
+	Value         any               `json:"value,omitempty"`
+	raw           *RawParameter
 }
 
 func (s *SimpleParameter) Raw() *RawParameter {
-	return nil
+	return s.raw
+}
+
+func (s *SimpleParameter) SetRaw(raw *RawParameter) {
+	s.raw = raw
 }
 
 func (s *SimpleParameter) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	model := map[string]interface{}{
+		"name":          s.Name,
+		"type":          s.ParameterType,
+	}
+
+	order := []string{
+		"type",
+		"name",
+	}
+
+	// EXISTING_CODE
+	if format == "json" {
+		if s.Indexed {
+			model["indexed"] = s.Indexed
+			order = append(order, "indexed")
+		}
+		if s.ParameterType != s.InternalType {
+			model["internalType"] = s.InternalType
+			order = append(order, "internalType")
+		}
+		if len(s.Components) > 0 {
+			model["components"] = s.Components
+			order = append(order, "components")
+		}
+	}
+	// EXISTING_CODE
+
 	return Model{
-		Data: map[string]any{
-			"type":         s.ParameterType,
-			"name":         s.Name,
-			"indexed":      s.Indexed,
-			"internalType": s.InternalType,
-			"components":   s.Components,
-		},
-		// We only output SimpleParameter when using JSON format, so we don't need order
+		Data:  model,
+		Order: order,
 	}
 }
 
+// EXISTING_CODE
 // DisplayName returns parameter name if defined, or a default name "val_" + index
 func (s *SimpleParameter) DisplayName(index int) string {
 	if s.Name != "" {
@@ -54,3 +103,4 @@ func ParametersToMap(params []SimpleParameter) (result map[string]any) {
 	}
 	return
 }
+// EXISTING_CODE
