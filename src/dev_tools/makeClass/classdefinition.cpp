@@ -721,8 +721,8 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
         CStringArray fields;
         explode(fields, header, ',');
         for (auto& fld : fields) {
-            // note use of is_object, is_array, is_minimal, is_noaddfld, is_nowrite, is_omitempty,is_extra";
-            string_q isFields = "object,array,minimal,noaddfld,nowrite,omitempty,extra";
+            // note use of is_object, is_array, is_minimal, is_noaddfld, is_nowrite, is_omitempty";
+            string_q isFields = "object,array,minimal,noaddfld,nowrite,omitempty";
             if (contains(isFields, fld)) {
                 fld = "is_" + fld;
             }
@@ -737,19 +737,13 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
             }
             CMember tmp;
             tmp.parseCSV(fields, line);
-            if (tmp.memberFlags & IS_EXTRA) {
-                tmp.memberFlags |= IS_MINIMAL;
-                tmp.postProcessType();
-                extraArray.push_back(tmp);
-            } else {
-                if (tmp.memberFlags & IS_ARRAY) {
-                    tmp.type = "C" + string_q(1, char(toupper(tmp.type[0]))) + tmp.type.substr(1, 100) + "Array";
-                } else if (tmp.memberFlags & IS_OBJECT) {
-                    tmp.type = "C" + string_q(1, char(toupper(tmp.type[0]))) + tmp.type.substr(1, 100);
-                }
-                tmp.postProcessType();
-                fieldArray.push_back(tmp);
+            if (tmp.memberFlags & IS_ARRAY) {
+                tmp.type = "C" + string_q(1, char(toupper(tmp.type[0]))) + tmp.type.substr(1, 100) + "Array";
+            } else if (tmp.memberFlags & IS_OBJECT) {
+                tmp.type = "C" + string_q(1, char(toupper(tmp.type[0]))) + tmp.type.substr(1, 100);
             }
+            tmp.postProcessType();
+            fieldArray.push_back(tmp);
         }
     } else {
         LOG_ERR("Cannot find file ", fn);

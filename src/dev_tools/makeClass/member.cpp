@@ -169,7 +169,6 @@ bool CMember::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
     if (fieldName % "is_noaddfld")  { BOOL_ASSIGN_MASK(memberFlags, IS_NOADDFLD);  return true; }
     if (fieldName % "is_nowrite")   { BOOL_ASSIGN_MASK(memberFlags, IS_NOWRITE);   return true; }
     if (fieldName % "is_omitempty") { BOOL_ASSIGN_MASK(memberFlags, IS_OMITEMPTY); return true; }
-    if (fieldName % "is_extra")     { BOOL_ASSIGN_MASK(memberFlags, IS_EXTRA);     return true; }
     // clang-format on
     // EXISTING_CODE
 
@@ -430,7 +429,6 @@ string_q nextMemberChunk_custom(const string_q& fieldIn, const void* dataPtr) {
                 if (fieldIn % "is_noaddfld")  return bool_2_Str_t(mem->memberFlags & IS_NOADDFLD);
                 if (fieldIn % "is_nowrite")   return bool_2_Str_t(mem->memberFlags & IS_NOWRITE);
                 if (fieldIn % "is_omitempty") return bool_2_Str_t(mem->memberFlags & IS_OMITEMPTY);
-                if (fieldIn % "is_extra")     return bool_2_Str_t(mem->memberFlags & IS_EXTRA);
                 break;
             case 'v':
                 if (fieldIn % "value") {

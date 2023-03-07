@@ -1090,7 +1090,7 @@ const string_q defHide =
     "|CTraceResult: code"
     "|CFunction: constant, payable, signature, encoding, type, articulate_str"
     "|CParameter: type, indexed, is_pointer, is_array, is_object, is_builtin, "
-    "is_enabled, is_minimal, is_noaddfld, is_nowrite, is_omitempty, is_extra, paramFlags";
+    "is_enabled, is_minimal, is_noaddfld, is_nowrite, is_omitempty";
 
 const string_q defShow =
     "CTransaction: gasCost, articulatedTx, compressedTx, "
