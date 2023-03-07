@@ -3,3 +3,4 @@ class = CMonitorCacheItem
 base_class = CCacheBase
 fields = monitorcacheitem.csv
 includes = etherlib.h|cachebase.h
+output = ../../apps/cacheStatus/

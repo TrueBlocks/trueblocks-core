@@ -103,7 +103,7 @@ bool isTokenRelated(const string_q& needle) {
 }
 
 //-----------------------------------------------------------------------
-bool parseTransferEvent(CLogEntry* p) {
+bool parseTransferEvent(CLog* p) {
     if (p->topics[0] != transferTopic)
         return false;
 
@@ -130,7 +130,7 @@ bool parseTransferEvent(CLogEntry* p) {
 }
 
 //-----------------------------------------------------------------------
-bool parseENSTransferEvent(CLogEntry* p) {
+bool parseENSTransferEvent(CLog* p) {
     if (p->topics[0] != transferTopic)
         return false;
 
@@ -154,7 +154,7 @@ bool parseENSTransferEvent(CLogEntry* p) {
     return true;
 }
 //-----------------------------------------------------------------------
-bool parseApprovalEvent(CLogEntry* p) {
+bool parseApprovalEvent(CLog* p) {
     if (p->topics[0] != transferTopic)
         return false;
 
@@ -182,7 +182,7 @@ bool parseApprovalEvent(CLogEntry* p) {
 
 extern string_q parse_str(const string_q& input, const void* data);
 //-----------------------------------------------------------------------
-bool CAbi::articulateLog(CLogEntry* p) const {
+bool CAbi::articulateLog(CLog* p) const {
     if (!p || p->topics.size() == 0)
         return false;
 

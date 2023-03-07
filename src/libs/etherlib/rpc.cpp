@@ -74,7 +74,7 @@ CReceipt RPCSession::e th_get TransactionReceipt(const string_q& _transactionHas
     receipt.gasUsed = result["gasUsed"];
     receipt.contractAddress = result["contractAddress"];
     for (auto const& log : result["logs"]) {
-        LogEntry entry;
+        Log entry;
         entry.address = log["address"];
         entry.data = log["data"];
         for (auto const& topic : log["topics"])

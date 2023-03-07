@@ -41,7 +41,6 @@ class COptions : public COptionsBase {
   public:
     // BEG_CODE_DECLARE
     bool all;
-    bool tsx;
     bool sdk;
     bool openapi;
     // END_CODE_DECLARE
@@ -64,7 +63,6 @@ class COptions : public COptionsBase {
     ostringstream notesStream, errorStrStream, errorDefStream, goCallStream, goPkgStream, goConvertStream;
     ostringstream goRouteStream, chifraHelpStream;
     ostringstream apiTagStream, apiPathStream;
-    ostringstream jsLocationStream, jsTemplateStream, jsHotkeyStream, jsRouteStream;
     ostringstream goStream;
 
     void clearStreams(void) {
@@ -84,10 +82,6 @@ class COptions : public COptionsBase {
         chifraHelpStream.str("");
         apiTagStream.str("");
         apiPathStream.str("");
-        jsLocationStream.str("");
-        jsTemplateStream.str("");
-        jsHotkeyStream.str("");
-        jsRouteStream.str("");
         goStream.str("");
 
         optionStream.clear();
@@ -106,10 +100,6 @@ class COptions : public COptionsBase {
         chifraHelpStream.clear();
         apiTagStream.clear();
         apiPathStream.clear();
-        jsLocationStream.clear();
-        jsTemplateStream.clear();
-        jsHotkeyStream.clear();
-        jsRouteStream.clear();
         positionals.clear();
         goStream.clear();
     }
@@ -127,8 +117,6 @@ class COptions : public COptionsBase {
     bool handle_format(void);
     bool handle_generate(CToml& toml, const CClassDefinition& classDef, bool asJs);
     bool handle_datamodel(void);
-    bool handle_tsx(void);
-    bool handle_tsx_type(const CClassDefinition& classDef);
 
     bool handle_sdk(void);
     bool handle_sdk_ts(void);
@@ -160,8 +148,8 @@ extern bool listClasses(const string_q& path, void* data);
 extern bool lintFiles(const string_q& path, void* data);
 extern bool formatCppFiles(const string_q& path, void* data);
 extern bool formatGoFiles(const string_q& path, void* data);
-extern string_q getCaseGetCode(const CParameterArray& fields);
-extern string_q getCaseSetCode(const CParameterArray& fields);
+extern string_q getCaseGetCode(const CMemberArray& fields);
+extern string_q getCaseSetCode(const CMemberArray& fields);
 extern string_q convertTypes(const string_q& inStr);
 extern string_q splitIfTooWide(const string_q& in);
 extern void expandTabbys(string_q& strOut);
@@ -212,7 +200,7 @@ extern bool parseOptionsFile(const char* str, void* data);
 extern bool isChifraRoute(const CCommandOption& cmd, bool depOk);
 extern bool isApiRoute(const string_q& route);
 extern bool forEveryEnum(APPLYFUNC func, const string_q& enumStr, void* data);
-extern string_q type_2_ModelName(const string_q& type);
+extern string_q type_2_ModelName(const string_q& type, bool raw);
 extern string_q getAliases(COptions* opts, const string_q& group, const string_q& route);
 
 //---------------------------------------------------------------------------------------------------

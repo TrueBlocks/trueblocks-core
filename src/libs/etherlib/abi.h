@@ -21,7 +21,7 @@ namespace qblocks {
 
 // EXISTING_CODE
 class CTransaction;
-class CLogEntry;
+class CLog;
 class CTrace;
 typedef map<string, CFunction> CStringFunctionMap;
 // EXISTING_CODE
@@ -46,7 +46,7 @@ class CAbi : public CBaseNode {
     CStringBoolMap abiSourcesMap;
 
     bool articulateTransaction(CTransaction* p) const;
-    bool articulateLog(CLogEntry* l) const;
+    bool articulateLog(CLog* l) const;
     bool articulateTrace(CTrace* t) const;
     bool articulateOutputs(const string_q& encoding, const string_q& value, CFunction& ret) const;
 
@@ -183,8 +183,6 @@ extern const char* STR_DISPLAY_ABI;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern bool fromDefinition(CFunction& func, const string_q& lineIn);
-extern bool fromDefinition(CParameter& parm, const string_q& input);
 extern bool decodeRLP(CParameterArray& ifaces, const string_q& desc, const string_q& input);
 extern bool sortByFuncName(const CFunction& f1, const CFunction& f2);
 extern bool isKnownAbi(const string_q& addr, string_q& path);

@@ -117,7 +117,7 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
             "value": 1e+16
           },
           "result": {
-            "newContract": "0x0",
+            "address": "0x0",
             "gasUsed": 503153,
             "output": "0x"
           },
@@ -149,7 +149,7 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
             "value": 0
           },
           "result": {
-            "newContract": "0x0",
+            "address": "0x0",
             "gasUsed": 432,
             "output": "0x0000000000000000000000006090a6e47849629b7245dfa1ca21d94cd15878ef"
           },
@@ -183,7 +183,7 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
             "value": 0
           },
           "result": {
-            "newContract": "0x0",
+            "address": "0x0",
             "gasUsed": 432,
             "output": "0x0000000000000000000000006090a6e47849629b7245dfa1ca21d94cd15878ef"
           },
@@ -217,7 +217,7 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
             "value": 0
           },
           "result": {
-            "newContract": "0x0",
+            "address": "0x0",
             "gasUsed": 432,
             "output": "0x0000000000000000000000006090a6e47849629b7245dfa1ca21d94cd15878ef"
           },
@@ -251,7 +251,7 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
             "value": 1e+16
           },
           "result": {
-            "newContract": "0x9b810944879c013244192f0f94df08d324f7c994",
+            "address": "0x9b810944879c013244192f0f94df08d324f7c994",
             "gasUsed": 339168,
             "output": ""
           },

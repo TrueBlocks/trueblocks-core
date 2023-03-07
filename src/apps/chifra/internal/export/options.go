@@ -277,9 +277,9 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
-	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
-	opts.Emitter = ens.ConvertEns(opts.Globals.Chain, opts.Emitter)
-	opts.Asset = ens.ConvertEns(opts.Globals.Chain, opts.Asset)
+	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	opts.Emitter, _ = ens.ConvertEns(opts.Globals.Chain, opts.Emitter)
+	opts.Asset, _ = ens.ConvertEns(opts.Globals.Chain, opts.Asset)
 	// EXISTING_CODE
 
 	return opts
@@ -300,9 +300,9 @@ func exportFinishParse(args []string) *ExportOptions {
 			opts.Addrs = append(opts.Addrs, arg)
 		}
 	}
-	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
-	opts.Emitter = ens.ConvertEns(opts.Globals.Chain, opts.Emitter)
-	opts.Asset = ens.ConvertEns(opts.Globals.Chain, opts.Asset)
+	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	opts.Emitter, _ = ens.ConvertEns(opts.Globals.Chain, opts.Emitter)
+	opts.Asset, _ = ens.ConvertEns(opts.Globals.Chain, opts.Asset)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

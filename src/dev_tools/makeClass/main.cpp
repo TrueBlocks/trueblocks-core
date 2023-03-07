@@ -19,7 +19,7 @@ int main(int argc, const char* argv[]) {
     nodeNotRequired();
     acctlib_init(quickQuitHandler);
 
-    CParameter::registerClass();
+    CMember::registerClass();
 
     COptions options;
     if (!options.prepareArguments(argc, argv))

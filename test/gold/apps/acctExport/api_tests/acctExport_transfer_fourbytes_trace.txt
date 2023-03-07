@@ -22,7 +22,7 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&maxRecords=10&fourbytes=
         "value": 0
       },
       "result": {
-        "newContract": "0x0",
+        "address": "0x0",
         "gasUsed": 29106,
         "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
       },
@@ -50,7 +50,7 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&maxRecords=10&fourbytes=
         "value": 0
       },
       "result": {
-        "newContract": "0x0",
+        "address": "0x0",
         "gasUsed": 14106,
         "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
       },
@@ -78,7 +78,7 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&maxRecords=10&fourbytes=
         "value": 0
       },
       "result": {
-        "newContract": "0x0",
+        "address": "0x0",
         "gasUsed": 14106,
         "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
       },

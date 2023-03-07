@@ -1,7 +1,8 @@
 [settings]
 class = CTransfer
 fields = transfer.csv
-includes = utillib.h|logentry.h
+includes = utillib.h|log.h
+output = ../../libs/etherlib/
 equals = compare(it) == 0
 sort = v1.compare(v2) < 0
 cpp_includes = etherlib.h

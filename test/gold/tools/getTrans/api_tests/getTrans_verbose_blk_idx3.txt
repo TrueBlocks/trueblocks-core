@@ -48,7 +48,7 @@ transactions?transactions=0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798
             "value": 306329900000000000
           },
           "result": {
-            "newContract": "0x0",
+            "address": "0x0",
             "code": "",
             "gasUsed": 0,
             "output": "0x"

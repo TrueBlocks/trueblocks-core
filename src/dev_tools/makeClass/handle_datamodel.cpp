@@ -19,14 +19,14 @@ extern const char* STR_YAML_MODELHEADER;
 extern const char* STR_MODEL_PRODUCERS;
 extern const char* STR_MODEL_FOOTER;
 extern const char* STR_MODEL_HEADER;
-extern void generate_go_type_code(COptions* opts, const CClassDefinition& model);
+extern void generate_go_type(COptions* opts, const CClassDefinition& model);
 extern void addToTypeMap(map<string_q, string_q>& map, const string_q& group, const string& type);
 extern bool sortByDataModelName(const CClassDefinition& c1, const CClassDefinition& c2);
-extern bool sortByDoc(const CParameter& c1, const CParameter& c2);
-extern string_q typeFmt(const CParameter& fld);
-extern string_q exFmt(const CParameter& fld);
+extern bool sortByDoc(const CMember& c1, const CMember& c2);
+extern string_q typeFmt(const CMember& fld);
+extern string_q exFmt(const CMember& fld);
 extern string_q get_producer_table(const CClassDefinition& model, const CCommandOptionArray& endpoints);
-extern string_q type_2_Link(const CClassDefinitionArray& dataModels, const CParameter& param);
+extern string_q type_2_Link(const CClassDefinitionArray& dataModels, const CMember& member);
 extern string_q plural(const string_q& in);
 
 //------------------------------------------------------------------------------------------------------------
@@ -126,8 +126,8 @@ bool COptions::handle_datamodel(void) {
             thisDoc += toolsStream.str();
         documentMap[model.doc_group] = documentMap[model.doc_group] + thisDoc;
 
-        if (!model.gogen.empty()) {
-            generate_go_type_code(this, model);
+        if (!model.go_model.empty()) {
+            generate_go_type(this, model);
         }
     }
 
@@ -178,32 +178,31 @@ bool sortByDataModelName(const CClassDefinition& c1, const CClassDefinition& c2)
 }
 
 //------------------------------------------------------------------------------------------------------------
-bool sortByDoc(const CParameter& c1, const CParameter& c2) {
+bool sortByDoc(const CMember& c1, const CMember& c2) {
     return c1.doc < c2.doc;
 }
 
 //------------------------------------------------------------------------------------------------------------
-string_q type_2_ModelName(const string_q& type) {
+string_q type_2_ModelName(const string_q& type, bool raw) {
     string_q ret = type;
     if (startsWith(ret, "C"))
         replace(ret, "C", "");
     replace(ret, "Array", "");
     replace(ret, "CachePtr", "Cache");
-    replace(ret, "LogEntry", "Log");
-    return ret;
+    return raw ? nextTokenClear(ret, '[') : ret;
 }
 
 //------------------------------------------------------------------------------------------------------------
-string_q typeFmt(const CParameter& fld) {
-    if (fld.is_flags & IS_ARRAY) {
+string_q typeFmt(const CMember& fld) {
+    if (fld.memberFlags & IS_ARRAY) {
         string_q ret = "          type: array\n          items:\n            $ref: \"#/components/schemas/++X++\"\n";
-        replace(ret, "++X++", firstLower(type_2_ModelName(fld.type)));
+        replace(ret, "++X++", firstLower(type_2_ModelName(fld.type, false)));
         return ret;
     }
 
-    if (fld.is_flags & IS_OBJECT) {
+    if (fld.memberFlags & IS_OBJECT) {
         string_q ret = "          type: object\n          items:\n            $ref: \"#/components/schemas/++X++\"\n";
-        replace(ret, "++X++", firstLower(type_2_ModelName(fld.type)));
+        replace(ret, "++X++", firstLower(type_2_ModelName(fld.type, false)));
         return ret;
     }
 
@@ -223,7 +222,7 @@ string_q typeFmt(const CParameter& fld) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-string_q exFmt(const CParameter& fld) {
+string_q exFmt(const CMember& fld) {
     if (fld.type == "blknum" || fld.type == "uint64" || fld.type == "timestamp" || fld.type == "bool" ||
         fld.type == "double")
         return "[          example: {EXAMPLE}\n]";
@@ -275,8 +274,8 @@ string_q findGroup(const CClassDefinitionArray& dataModels, const string_q& type
 }
 
 //------------------------------------------------------------------------------------------------------------
-string_q type_2_Link(const CClassDefinitionArray& dataModels, const CParameter& param) {
-    string_q type = param.type;
+string_q type_2_Link(const CClassDefinitionArray& dataModels, const CMember& member) {
+    string_q type = member.type;
     if (!startsWith(type, "C")) {
         return type;
     } else if (type == "CStringArray") {
@@ -292,9 +291,8 @@ string_q type_2_Link(const CClassDefinitionArray& dataModels, const CParameter& 
 
     string_q group = findGroup(dataModels, type);
     if (group.empty()) {
-        return param.type;
+        return member.type;
     }
-    type = substitute(type, "LogEntry", "Log");
 
     return "[" + type + (isArray ? "[]" : "") + "](/data-model/" + toLower(substitute(group, " ", "")) + "/#" +
            toLower(type) + ")";

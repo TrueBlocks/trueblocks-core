@@ -17,7 +17,7 @@
  */
 #include "utillib.h"
 #include "abi.h"
-#include "logentry.h"
+#include "log.h"
 
 namespace qblocks {
 
@@ -33,7 +33,7 @@ class CReceipt : public CBaseNode {
     wei_t cumulativeGasUsed;
     gas_t gasUsed;
     gas_t effectiveGasPrice;
-    CLogEntryArray logs;
+    CLogArray logs;
     uint32_t status;
 
   public:

@@ -3,6 +3,7 @@ class = CAppearance
 fields = appearance.csv
 includes = etherlib.h
 cpp_includes = indexedaddress.h
+output = ../../libs/etherlib/
 doc_group = 01-Accounts
 doc_descr = an appearance (`<blockNumber,transactionIndex>`) of an address anywhere on the chain
 doc_route = 101-appearance

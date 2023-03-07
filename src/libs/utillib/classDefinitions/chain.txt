@@ -3,6 +3,7 @@ class = CChain
 fields = chain.csv
 includes = utillib.h
 cpp_includes =
+output = ../../libs/utillib/
 doc_group = 04-Admin
 doc_descr = a configuration item carrying information about a single chain
 doc_route = 412-chain

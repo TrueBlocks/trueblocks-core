@@ -29,7 +29,7 @@ params.size: 0
       "value": 0
     },
     "result": {
-      "newContract": "0x0",
+      "address": "0x0",
       "gasUsed": 2871679,
       "output": "0x"
     },
@@ -61,7 +61,7 @@ params.size: 0
       "value": 0
     },
     "result": {
-      "newContract": "0x0",
+      "address": "0x0",
       "gasUsed": 252,
       "output": "0x0000000000000000000000005c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f"
     },
@@ -96,7 +96,7 @@ params.size: 0
       "value": 0
     },
     "result": {
-      "newContract": "0x0",
+      "address": "0x0",
       "gasUsed": 275,
       "output": "0x000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
     },
@@ -128,7 +128,7 @@ params.size: 0
       "value": 0
     },
     "result": {
-      "newContract": "0x0",
+      "address": "0x0",
       "gasUsed": 2484486,
       "output": "0x000000000000000000000000ea0be20914783d6b538539795069ca333f820bc5"
     },
@@ -162,7 +162,7 @@ params.size: 0
       "value": 0
     },
     "result": {
-      "newContract": "0xea0be20914783d6b538539795069ca333f820bc5",
+      "address": "0xea0be20914783d6b538539795069ca333f820bc5",
       "gasUsed": 2327803
     }
   },  {
@@ -184,7 +184,7 @@ params.size: 0
       "value": 0
     },
     "result": {
-      "newContract": "0xea0be20914783d6b538539795069ca333f820bc5",
+      "address": "0xea0be20914783d6b538539795069ca333f820bc5",
       "gasUsed": 2327803
     }
   }params.size: 0
@@ -210,7 +210,7 @@ params.size: 0
       "value": 0
     },
     "result": {
-      "newContract": "0x0",
+      "address": "0x0",
       "gasUsed": 44677,
       "output": "0x"
     },
@@ -414,7 +414,7 @@ params.size: 6
       "value": 2750000000000000000
     },
     "result": {
-      "newContract": "0x0",
+      "address": "0x0",
       "gasUsed": 266442,
       "output": "0x0000000000000000000000000000000000000000000001b1ae4d6e2ef50000000000000000000000000000000000000000000000000000002629f66e0c5300000000000000000000000000000000000000000000000000080a6898a04e86f7f6"
     },
@@ -456,7 +456,7 @@ params.size: 6
       "value": 0
     },
     "result": {
-      "newContract": "0x0",
+      "address": "0x0",
       "gasUsed": 564,
       "output": "0x000000000000000000000000ea0be20914783d6b538539795069ca333f820bc5"
     },
@@ -555,7 +555,7 @@ params.size: 3
       "value": 0
     },
     "result": {
-      "newContract": "0x0",
+      "address": "0x0",
       "gasUsed": 2504,
       "output": "0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
     },
@@ -589,7 +589,7 @@ params.size: 3
       "value": 0
     },
     "result": {
-      "newContract": "0x0",
+      "address": "0x0",
       "gasUsed": 66483,
       "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
     },
@@ -632,7 +632,7 @@ params.size: 0
       "value": 2750000000000000000
     },
     "result": {
-      "newContract": "0x0",
+      "address": "0x0",
       "gasUsed": 23974,
       "output": "0x"
     },
@@ -661,7 +661,7 @@ params.size: 0
       "value": 0
     },
     "result": {
-      "newContract": "0x0",
+      "address": "0x0",
       "gasUsed": 25162,
       "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
     },
@@ -700,7 +700,7 @@ params.size: 0
       "value": 0
     },
     "result": {
-      "newContract": "0x0",
+      "address": "0x0",
       "gasUsed": 133117,
       "output": "0x0000000000000000000000000000000000000000000000080a6898a04e86f7f6"
     },
@@ -732,7 +732,7 @@ params.size: 0
       "value": 0
     },
     "result": {
-      "newContract": "0x0",
+      "address": "0x0",
       "gasUsed": 534,
       "output": "0x0000000000000000000000000000000000000000000000002629f66e0c530000"
     },
@@ -767,7 +767,7 @@ params.size: 0
       "value": 0
     },
     "result": {
-      "newContract": "0x0",
+      "address": "0x0",
       "gasUsed": 2676,
       "output": "0x0000000000000000000000000000000000000000000001b1ae4d6e2ef5000000"
     },
@@ -805,7 +805,7 @@ params.size: 0
       "value": 0
     },
     "result": {
-      "newContract": "0x0",
+      "address": "0x0",
       "gasUsed": 2314,
       "output": "0x0000000000000000000000000000000000000000000000000000000000000000"
     },
@@ -837,7 +837,7 @@ params.size: 0
       "value": 0
     },
     "result": {
-      "newContract": "0x0",
+      "address": "0x0",
       "gasUsed": 24442,
       "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
     },

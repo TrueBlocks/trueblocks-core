@@ -70,7 +70,7 @@ bool COptions::parseArguments(string_q& command) {
         manageFields("CParameter:strDefault", false);  // hide
         manageFields("CTransaction:price", false);     // hide
         manageFields("CTransaction:input", true);      // show
-        manageFields("CLogEntry:topics", true);        // show
+        manageFields("CLog:topics", true);             // show
         abi_spec.loadAbisFromKnown();
     }
 

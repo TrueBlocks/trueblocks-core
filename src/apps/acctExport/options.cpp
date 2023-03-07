@@ -447,7 +447,7 @@ bool COptions::setDisplayFormatting(void) {
         expContext().fmtMap["header"] = noHeader ? "" : cleanFmt(format);
 
     } else {
-        string_q hide = substitute(defHide, "|CLogEntry: data, topics", "");
+        string_q hide = substitute(defHide, "|CLog: data, topics", "");
         manageFields(hide, false);
         string_q show = defShow;
         show += (isApiMode() ? "|CTransaction:encoding,function,input,etherGasCost|CTrace:traceAddress" : "");
@@ -469,9 +469,9 @@ bool COptions::setDisplayFormatting(void) {
             expContext().fmtMap["receipt_fmt"] = cleanFmt(format);
             manageFields("CReceipt:" + format);
 
-            format = getGlobalConfig("acctExport")->getConfigStr("display", "log", STR_DISPLAY_LOGENTRY);
-            expContext().fmtMap["logentry_fmt"] = cleanFmt(format);
-            manageFields("CLogEntry:" + format);
+            format = getGlobalConfig("acctExport")->getConfigStr("display", "log", STR_DISPLAY_LOG);
+            expContext().fmtMap["log_fmt"] = cleanFmt(format);
+            manageFields("CLog:" + format);
 
             format = getGlobalConfig("acctExport")->getConfigStr("display", "statement", STR_DISPLAY_RECONCILIATION);
             expContext().fmtMap["reconciliation_fmt"] = cleanFmt(format);
@@ -529,7 +529,7 @@ bool COptions::setDisplayFormatting(void) {
             } else if (neighbors) {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["appearance_fmt"]);
             } else if (logs) {
-                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["logentry_fmt"]);
+                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["log_fmt"]);
             } else if (appearances) {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["appearance_fmt"]);
             } else {
@@ -550,9 +550,9 @@ bool COptions::setDisplayFormatting(void) {
         }
 
         if (logs) {
-            SHOW_FIELD(CLogEntry, "blockNumber");
-            SHOW_FIELD(CLogEntry, "transactionIndex");
-            SHOW_FIELD(CLogEntry, "transactionHash");
+            SHOW_FIELD(CLog, "blockNumber");
+            SHOW_FIELD(CLog, "transactionIndex");
+            SHOW_FIELD(CLog, "transactionHash");
             SHOW_FIELD(CReceipt, "blockNumber");
             SHOW_FIELD(CReceipt, "transactionIndex");
         }
@@ -568,7 +568,7 @@ bool COptions::setDisplayFormatting(void) {
 
     // TODO(tjayrush): This doesn't work for some reason (see test case acctExport_export_logs.txt)
     if (!articulate)
-        HIDE_FIELD(CLogEntry, "compressedTx");
+        HIDE_FIELD(CLog, "compressedTx");
 
     if (receipts) {
         SHOW_FIELD(CReceipt, "blockNumber");
@@ -592,8 +592,8 @@ bool COptions::isEmitter(const address_t& test) const {
 }
 
 //-----------------------------------------------------------------------
-bool COptions::isRelevant(const CLogEntry& log) const {
-    string_q str = toLower(log.Format(STR_DISPLAY_LOGENTRY));
+bool COptions::isRelevant(const CLog& log) const {
+    string_q str = toLower(log.Format(STR_DISPLAY_LOG));
     for (auto monitor : allMonitors) {
         if (contains(str, monitor.address.substr(2))) {
             return true;

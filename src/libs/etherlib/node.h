@@ -38,7 +38,7 @@ extern bool getTransaction(CTransaction& trans, blknum_t blockNum, txnum_t txID)
 extern bool getTransaction(CTransaction& trans, const hash_t& txHash);
 extern bool getTransaction(CTransaction& trans, const hash_t& blockHash, txnum_t txID);
 extern bool getReceipt(CReceipt& receipt, const hash_t& txHash);
-extern bool getLogEntry(CLogEntry& log, const hash_t& txHash);
+extern bool getLog(CLog& log, const hash_t& txHash);
 extern void getTraces(CTraceArray& traces, const hash_t& txHash, const CTransaction* pT);
 extern void getStateDiffAddrs(CAddressArray& addrs, const hash_t& txHash);
 extern void getTracesByFilter(CTraceArray& traces, const CTraceFilter& filter);
@@ -128,7 +128,7 @@ extern string_q getPathToBinaryCache(cache_t ct, const address_t& addr, blknum_t
 // function pointer types for forEvery functions
 typedef bool (*BLOCKVISITFUNC)(CBlock& block, void* data);
 typedef bool (*TRANSVISITFUNC)(CTransaction& trans, void* data);
-typedef bool (*LOGVISITFUNC)(CLogEntry& log, void* data);
+typedef bool (*LOGVISITFUNC)(CLog& log, void* data);
 typedef bool (*TRACEVISITFUNC)(CTrace& trace, void* data);
 typedef bool (*ABIVISITFUNC)(CAbi& abi_spec, void* data);
 
@@ -193,5 +193,5 @@ extern wei_t getBalanceAt(const address_t& addr, blknum_t blockNum);
 extern bool visitBlockNumber(blknum_t bn, void* data);
 extern bool visitBlock(CBlock& block, void* data);
 extern bool visitTransaction(CTransaction& trans, void* data);
-extern bool visitLog(CLogEntry& log, void* data);
+extern bool visitLog(CLog& log, void* data);
 extern bool visitTrace(CTrace& trace, void* data);

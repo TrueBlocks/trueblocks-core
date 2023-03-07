@@ -22,7 +22,7 @@ export?addrs=0x8b3b3b624c3c0397d3da8fd861512393d51dcbac&factory&traces&lastBlock
         "value": 0
       },
       "result": {
-        "newContract": "0x8b3b3b624c3c0397d3da8fd861512393d51dcbac",
+        "address": "0x8b3b3b624c3c0397d3da8fd861512393d51dcbac",
         "gasUsed": 823600,
         "output": ""
       },
@@ -50,7 +50,7 @@ export?addrs=0x8b3b3b624c3c0397d3da8fd861512393d51dcbac&factory&traces&lastBlock
         "value": 0
       },
       "result": {
-        "newContract": "0xa8eced73b863886478a81b411868fbac8ffbd334",
+        "address": "0xa8eced73b863886478a81b411868fbac8ffbd334",
         "gasUsed": 155966,
         "output": ""
       },
@@ -78,7 +78,7 @@ export?addrs=0x8b3b3b624c3c0397d3da8fd861512393d51dcbac&factory&traces&lastBlock
         "value": 0
       },
       "result": {
-        "newContract": "0x6d4e427e35c8daffe77719e166f51cc1e4d68a4c",
+        "address": "0x6d4e427e35c8daffe77719e166f51cc1e4d68a4c",
         "gasUsed": 155966,
         "output": ""
       },
@@ -106,7 +106,7 @@ export?addrs=0x8b3b3b624c3c0397d3da8fd861512393d51dcbac&factory&traces&lastBlock
         "value": 0
       },
       "result": {
-        "newContract": "0x53d2e99857fd426e8204aa9d5b51ab2bcf3d7a55",
+        "address": "0x53d2e99857fd426e8204aa9d5b51ab2bcf3d7a55",
         "gasUsed": 155966,
         "output": ""
       },
@@ -134,7 +134,7 @@ export?addrs=0x8b3b3b624c3c0397d3da8fd861512393d51dcbac&factory&traces&lastBlock
         "value": 0
       },
       "result": {
-        "newContract": "0x25a94c918500c8fbcc9e340d8db8fdbd19e563cf",
+        "address": "0x25a94c918500c8fbcc9e340d8db8fdbd19e563cf",
         "gasUsed": 155966,
         "output": ""
       },
@@ -162,7 +162,7 @@ export?addrs=0x8b3b3b624c3c0397d3da8fd861512393d51dcbac&factory&traces&lastBlock
         "value": 0
       },
       "result": {
-        "newContract": "0x3c20199c2ca76b2d74508df90394b7f5477f859c",
+        "address": "0x3c20199c2ca76b2d74508df90394b7f5477f859c",
         "gasUsed": 155966,
         "output": ""
       },
@@ -190,7 +190,7 @@ export?addrs=0x8b3b3b624c3c0397d3da8fd861512393d51dcbac&factory&traces&lastBlock
         "value": 0
       },
       "result": {
-        "newContract": "0xb1fa9e33e9684a08718076047569ec87ddfb2963",
+        "address": "0xb1fa9e33e9684a08718076047569ec87ddfb2963",
         "gasUsed": 155966,
         "output": ""
       },
@@ -218,7 +218,7 @@ export?addrs=0x8b3b3b624c3c0397d3da8fd861512393d51dcbac&factory&traces&lastBlock
         "value": 0
       },
       "result": {
-        "newContract": "0xef436dc387093904792b08cbc62691457bef5dfb",
+        "address": "0xef436dc387093904792b08cbc62691457bef5dfb",
         "gasUsed": 155966,
         "output": ""
       },
@@ -246,7 +246,7 @@ export?addrs=0x8b3b3b624c3c0397d3da8fd861512393d51dcbac&factory&traces&lastBlock
         "value": 0
       },
       "result": {
-        "newContract": "0xcfe771fe863e4d6fe5f21348980b4329f59ead8a",
+        "address": "0xcfe771fe863e4d6fe5f21348980b4329f59ead8a",
         "gasUsed": 155966,
         "output": ""
       },
@@ -274,7 +274,7 @@ export?addrs=0x8b3b3b624c3c0397d3da8fd861512393d51dcbac&factory&traces&lastBlock
         "value": 0
       },
       "result": {
-        "newContract": "0xc743bf777427f917f0c910f96232e00ee4c6fc34",
+        "address": "0xc743bf777427f917f0c910f96232e00ee4c6fc34",
         "gasUsed": 155966,
         "output": ""
       },
@@ -302,7 +302,7 @@ export?addrs=0x8b3b3b624c3c0397d3da8fd861512393d51dcbac&factory&traces&lastBlock
         "value": 0
       },
       "result": {
-        "newContract": "0xfb26a5474e91db31cbad68933e7726422c1ddc1d",
+        "address": "0xfb26a5474e91db31cbad68933e7726422c1ddc1d",
         "gasUsed": 155966,
         "output": ""
       },
@@ -330,7 +330,7 @@ export?addrs=0x8b3b3b624c3c0397d3da8fd861512393d51dcbac&factory&traces&lastBlock
         "value": 0
       },
       "result": {
-        "newContract": "0xe754bb3f679303aa3086170a2ca4a434a1842d4c",
+        "address": "0xe754bb3f679303aa3086170a2ca4a434a1842d4c",
         "gasUsed": 155966,
         "output": ""
       },
@@ -358,7 +358,7 @@ export?addrs=0x8b3b3b624c3c0397d3da8fd861512393d51dcbac&factory&traces&lastBlock
         "value": 0
       },
       "result": {
-        "newContract": "0xc6f58fd005c95a75622f5bbe091f77c2e8c07bf1",
+        "address": "0xc6f58fd005c95a75622f5bbe091f77c2e8c07bf1",
         "gasUsed": 155966,
         "output": ""
       },
@@ -386,7 +386,7 @@ export?addrs=0x8b3b3b624c3c0397d3da8fd861512393d51dcbac&factory&traces&lastBlock
         "value": 0
       },
       "result": {
-        "newContract": "0xa63d5adefb4424901c7904106d55df61b2f90e07",
+        "address": "0xa63d5adefb4424901c7904106d55df61b2f90e07",
         "gasUsed": 155966,
         "output": ""
       },
@@ -414,7 +414,7 @@ export?addrs=0x8b3b3b624c3c0397d3da8fd861512393d51dcbac&factory&traces&lastBlock
         "value": 0
       },
       "result": {
-        "newContract": "0x3ea5a7c881ca1ccf8b090d4465f0c9f47863bb1b",
+        "address": "0x3ea5a7c881ca1ccf8b090d4465f0c9f47863bb1b",
         "gasUsed": 155966,
         "output": ""
       },
@@ -442,7 +442,7 @@ export?addrs=0x8b3b3b624c3c0397d3da8fd861512393d51dcbac&factory&traces&lastBlock
         "value": 0
       },
       "result": {
-        "newContract": "0x58669f55fc4162830887823cee1e9da1731f5173",
+        "address": "0x58669f55fc4162830887823cee1e9da1731f5173",
         "gasUsed": 155966,
         "output": ""
       },
@@ -470,7 +470,7 @@ export?addrs=0x8b3b3b624c3c0397d3da8fd861512393d51dcbac&factory&traces&lastBlock
         "value": 0
       },
       "result": {
-        "newContract": "0xf4d0a0814621b22e80d7d0767213f94c7644bbab",
+        "address": "0xf4d0a0814621b22e80d7d0767213f94c7644bbab",
         "gasUsed": 155966,
         "output": ""
       },

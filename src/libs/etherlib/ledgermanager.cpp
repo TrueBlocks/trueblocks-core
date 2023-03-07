@@ -181,7 +181,7 @@ bool CLedgerManager::getTransfers(const CTransaction& trans) {
                 transfer.transactionHash = trans.hash;
                 transfer.encoding = encoding;
                 transfer.assetAddr = log.address;
-                transfer.log = (CLogEntry*)&log;  // TODO: for debugging only, can be removed
+                transfer.log = (CLog*)&log;  // TODO: for debugging only, can be removed
 
                 transfer.assetSymbol = tokenName.symbol;
                 if (transfer.assetSymbol.empty()) {

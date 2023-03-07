@@ -1,14 +1,6 @@
-not found
 when?blocks=0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
 {
-  "data": [
-    {
-      "blockNumber": 0,
-      "date": "2015-07-30 15:26:15 UTC",
-      "name": "first",
-      "timestamp": 1438269975
-    }
-  ],
+  "data": [],
   "meta": {
     "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",
@@ -18,5 +10,8 @@ when?blocks=0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
     "chainId": 1,
     "networkId": 1,
     "chain": "mainnet"
-  }
+  },
+  "errors": [
+    "block hash not found"
+  ]
 }

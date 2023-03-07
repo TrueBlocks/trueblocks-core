@@ -100,7 +100,7 @@ func listFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
-	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
 	// EXISTING_CODE
 
 	return opts
@@ -112,7 +112,7 @@ func listFinishParse(args []string) *ListOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	// EXISTING_CODE
-	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, args)
+	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, args)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

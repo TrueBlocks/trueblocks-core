@@ -28,7 +28,7 @@ class CFunction : public CBaseNode {
   public:
     string_q name;
     string_q type;
-    string_q abi_source;
+    string_q abiSource;
     bool anonymous;
     bool constant;
     string_q stateMutability;
@@ -37,8 +37,8 @@ class CFunction : public CBaseNode {
     string_q message;
     CParameterArray inputs;
     CParameterArray outputs;
-    Value inputs_dict;
-    Value outputs_dict;
+    Value inputsDict;
+    Value outputsDict;
 
   public:
     CFunction(void);
@@ -57,7 +57,7 @@ class CFunction : public CBaseNode {
     string_q getSignature(uint64_t parts) const;
     string_q encodeItem(void) const;
     friend class CTransaction;
-    friend class CLogEntry;
+    friend class CLog;
     friend class CTrace;
     string_q compressed(const string_q& def) const;
     bool isDefault(const CBaseNode* obj) const override;
@@ -115,7 +115,7 @@ inline void CFunction::initialize(void) {
 
     name = "";
     type = "";
-    abi_source = "";
+    abiSource = "";
     anonymous = false;
     constant = false;
     stateMutability = "";
@@ -124,8 +124,8 @@ inline void CFunction::initialize(void) {
     message = "";
     inputs.clear();
     outputs.clear();
-    inputs_dict.clear();
-    outputs_dict.clear();
+    inputsDict.clear();
+    outputsDict.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -138,7 +138,7 @@ inline void CFunction::duplicate(const CFunction& fu) {
 
     name = fu.name;
     type = fu.type;
-    abi_source = fu.abi_source;
+    abiSource = fu.abiSource;
     anonymous = fu.anonymous;
     constant = fu.constant;
     stateMutability = fu.stateMutability;
@@ -147,8 +147,8 @@ inline void CFunction::duplicate(const CFunction& fu) {
     message = fu.message;
     inputs = fu.inputs;
     outputs = fu.outputs;
-    inputs_dict = fu.inputs_dict;
-    outputs_dict = fu.outputs_dict;
+    inputsDict = fu.inputsDict;
+    outputsDict = fu.outputsDict;
 
     // EXISTING_CODE
     // EXISTING_CODE
