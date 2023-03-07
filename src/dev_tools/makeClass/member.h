@@ -21,22 +21,7 @@ namespace qblocks {
 
 // EXISTING_CODE
 //--------------------------------------------------------------------------
-// Signature parts
-#define SIG_FTYPE (1 << 1)
-#define SIG_FNAME (1 << 2)
-#define SIG_FSPACE (1 << 3)
-#define SIG_ITYPE (1 << 4)
-#define SIG_INAME (1 << 5)
-#define SIG_IINDEXED (1 << 6)
-#define SIG_ENCODE (1 << 7)
-#define SIG_CONST (1 << 8)
-#define SIG_ANONYMOUS (1 << 9)
-#define SIG_PAYABLE (1 << 10)
-#define SIG_CANONICAL (SIG_FNAME | SIG_ITYPE)
-#define SIG_DEFAULT (SIG_FTYPE | SIG_FNAME | SIG_FSPACE | SIG_ITYPE | SIG_INAME | SIG_IINDEXED)
-#define SIG_DETAILS (SIG_DEFAULT | SIG_CONST | SIG_ANONYMOUS | SIG_PAYABLE | SIG_ENCODE)
-// bitfield for 'is_flags'
-#define IS_NOT (0)
+// bitfield for 'memberFlags'
 #define IS_POINTER (1 << 1)
 #define IS_ARRAY (1 << 2)
 #define IS_OBJECT (1 << 3)
@@ -45,7 +30,6 @@ namespace qblocks {
 #define IS_ENABLED (1 << 6)
 #define IS_NOWRITE (1 << 7)
 #define IS_OMITEMPTY (1 << 8)
-#define IS_EXTRA (1 << 9)
 #define IS_NOADDFLD (1 << 10)
 class CMember;
 typedef vector<CMember> CMemberArray;
@@ -61,7 +45,7 @@ class CMember : public CBaseNode {
     bool indexed;
     string_q internalType;
     CMemberArray components;
-    uint64_t is_flags;
+    uint64_t memberFlags;
     uint64_t precision;
     uint64_t maxWidth;
     uint64_t doc;
@@ -148,7 +132,7 @@ inline void CMember::initialize(void) {
     indexed = false;
     internalType = "";
     components.clear();
-    is_flags = IS_ENABLED;
+    memberFlags = IS_ENABLED;
     precision = 5;
     maxWidth = NOPOS;
     doc = 0;
@@ -172,7 +156,7 @@ inline void CMember::duplicate(const CMember& me) {
     indexed = me.indexed;
     internalType = me.internalType;
     components = me.components;
-    is_flags = me.is_flags;
+    memberFlags = me.memberFlags;
     precision = me.precision;
     maxWidth = me.maxWidth;
     doc = me.doc;

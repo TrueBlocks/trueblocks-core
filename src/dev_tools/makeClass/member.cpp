@@ -107,11 +107,11 @@ string_q CMember::getValueByName(const string_q& fieldName) const {
             if (fieldName % "internalType") {
                 return internalType;
             }
-            if (fieldName % "is_flags") {
-                return is_flags == 0 ? "" : uint_2_Str(is_flags);
-            }
             break;
         case 'm':
+            if (fieldName % "memberFlags") {
+                return memberFlags == 0 ? "" : uint_2_Str(memberFlags);
+            }
             if (fieldName % "maxWidth") {
                 return maxWidth == 0 ? "" : uint_2_Str(maxWidth);
             }
@@ -160,16 +160,15 @@ bool CMember::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
     // EXISTING_CODE
     // clang-format off
 #define BOOL_ASSIGN_MASK(a, b) { if (str_2_Bool(fieldValue)) { a |= (b); } else { a &= uint64_t(~b); } }
-    if (fieldName % "is_pointer")   { BOOL_ASSIGN_MASK(is_flags, IS_POINTER);   return true; }
-    if (fieldName % "is_array")     { BOOL_ASSIGN_MASK(is_flags, IS_ARRAY);     return true; }
-    if (fieldName % "is_object")    { BOOL_ASSIGN_MASK(is_flags, IS_OBJECT);    return true; }
-    if (fieldName % "is_builtin")   { BOOL_ASSIGN_MASK(is_flags, IS_BUILTIN);   return true; }
-    if (fieldName % "is_enabled")   { BOOL_ASSIGN_MASK(is_flags, IS_ENABLED);   return true; }
-    if (fieldName % "is_minimal")   { BOOL_ASSIGN_MASK(is_flags, IS_MINIMAL);   return true; }
-    if (fieldName % "is_noaddfld")  { BOOL_ASSIGN_MASK(is_flags, IS_NOADDFLD);  return true; }
-    if (fieldName % "is_nowrite")   { BOOL_ASSIGN_MASK(is_flags, IS_NOWRITE);   return true; }
-    if (fieldName % "is_omitempty") { BOOL_ASSIGN_MASK(is_flags, IS_OMITEMPTY); return true; }
-    if (fieldName % "is_extra")     { BOOL_ASSIGN_MASK(is_flags, IS_EXTRA);     return true; }
+    if (fieldName % "is_pointer")   { BOOL_ASSIGN_MASK(memberFlags, IS_POINTER);   return true; }
+    if (fieldName % "is_array")     { BOOL_ASSIGN_MASK(memberFlags, IS_ARRAY);     return true; }
+    if (fieldName % "is_object")    { BOOL_ASSIGN_MASK(memberFlags, IS_OBJECT);    return true; }
+    if (fieldName % "is_builtin")   { BOOL_ASSIGN_MASK(memberFlags, IS_BUILTIN);   return true; }
+    if (fieldName % "is_enabled")   { BOOL_ASSIGN_MASK(memberFlags, IS_ENABLED);   return true; }
+    if (fieldName % "is_minimal")   { BOOL_ASSIGN_MASK(memberFlags, IS_MINIMAL);   return true; }
+    if (fieldName % "is_noaddfld")  { BOOL_ASSIGN_MASK(memberFlags, IS_NOADDFLD);  return true; }
+    if (fieldName % "is_nowrite")   { BOOL_ASSIGN_MASK(memberFlags, IS_NOWRITE);   return true; }
+    if (fieldName % "is_omitempty") { BOOL_ASSIGN_MASK(memberFlags, IS_OMITEMPTY); return true; }
     // clang-format on
     // EXISTING_CODE
 
@@ -214,12 +213,12 @@ bool CMember::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 internalType = fieldValue;
                 return true;
             }
-            if (fieldName % "is_flags") {
-                is_flags = str_2_Uint(fieldValue);
-                return true;
-            }
             break;
         case 'm':
+            if (fieldName % "memberFlags") {
+                memberFlags = str_2_Uint(fieldValue);
+                return true;
+            }
             if (fieldName % "maxWidth") {
                 maxWidth = str_2_Uint(fieldValue);
                 return true;
@@ -289,7 +288,7 @@ bool CMember::Serialize(CArchive& archive) {
     // archive >> indexed;
     // archive >> internalType;
     // archive >> components;
-    // archive >> is_flags;
+    // archive >> memberFlags;
     // archive >> precision;
     // archive >> maxWidth;
     // archive >> doc;
@@ -316,7 +315,7 @@ bool CMember::SerializeC(CArchive& archive) const {
     // archive << indexed;
     // archive << internalType;
     // archive << components;
-    // archive << is_flags;
+    // archive << memberFlags;
     // archive << precision;
     // archive << maxWidth;
     // archive << doc;
@@ -386,8 +385,8 @@ void CMember::registerClass(void) {
     HIDE_FIELD(CMember, "internalType");
     ADD_FIELD(CMember, "components", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CMember, "components");
-    ADD_FIELD(CMember, "is_flags", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CMember, "is_flags");
+    ADD_FIELD(CMember, "memberFlags", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMember, "memberFlags");
     ADD_FIELD(CMember, "precision", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CMember, "precision");
     ADD_FIELD(CMember, "maxWidth", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
@@ -421,16 +420,15 @@ string_q nextMemberChunk_custom(const string_q& fieldIn, const void* dataPtr) {
             // EXISTING_CODE
             // clang-format off
             case 'i':
-                if (fieldIn % "is_pointer")   return bool_2_Str_t(mem->is_flags & IS_POINTER);
-                if (fieldIn % "is_array")     return bool_2_Str_t(mem->is_flags & IS_ARRAY);
-                if (fieldIn % "is_object")    return bool_2_Str_t(mem->is_flags & IS_OBJECT);
-                if (fieldIn % "is_builtin")   return bool_2_Str_t(mem->is_flags & IS_BUILTIN);
-                if (fieldIn % "is_enabled")   return bool_2_Str_t(mem->is_flags & IS_ENABLED);
-                if (fieldIn % "is_minimal")   return bool_2_Str_t(mem->is_flags & IS_MINIMAL);
-                if (fieldIn % "is_noaddfld")  return bool_2_Str_t(mem->is_flags & IS_NOADDFLD);
-                if (fieldIn % "is_nowrite")   return bool_2_Str_t(mem->is_flags & IS_NOWRITE);
-                if (fieldIn % "is_omitempty") return bool_2_Str_t(mem->is_flags & IS_OMITEMPTY);
-                if (fieldIn % "is_extra")     return bool_2_Str_t(mem->is_flags & IS_EXTRA);
+                if (fieldIn % "is_pointer")   return bool_2_Str_t(mem->memberFlags & IS_POINTER);
+                if (fieldIn % "is_array")     return bool_2_Str_t(mem->memberFlags & IS_ARRAY);
+                if (fieldIn % "is_object")    return bool_2_Str_t(mem->memberFlags & IS_OBJECT);
+                if (fieldIn % "is_builtin")   return bool_2_Str_t(mem->memberFlags & IS_BUILTIN);
+                if (fieldIn % "is_enabled")   return bool_2_Str_t(mem->memberFlags & IS_ENABLED);
+                if (fieldIn % "is_minimal")   return bool_2_Str_t(mem->memberFlags & IS_MINIMAL);
+                if (fieldIn % "is_noaddfld")  return bool_2_Str_t(mem->memberFlags & IS_NOADDFLD);
+                if (fieldIn % "is_nowrite")   return bool_2_Str_t(mem->memberFlags & IS_NOWRITE);
+                if (fieldIn % "is_omitempty") return bool_2_Str_t(mem->memberFlags & IS_OMITEMPTY);
                 break;
             case 'v':
                 if (fieldIn % "value") {
@@ -521,17 +519,17 @@ void CMember::postProcessType(void) {
         type = "double";
     }
     if (contains(type, "*") || contains(type, "Ptr"))
-        is_flags |= IS_POINTER;
+        memberFlags |= IS_POINTER;
     if (contains(type, "Array"))
-        is_flags |= IS_ARRAY;
+        memberFlags |= IS_ARRAY;
     if (startsWith(type, 'C'))
-        is_flags |= IS_OBJECT;
+        memberFlags |= IS_OBJECT;
     CStringArray builtinTypes = {
         "CStringArray", "CBlkNumArray", "CAddressArray", "CBigUintArray", "CTopicArray",
     };
     for (auto b : builtinTypes) {
         if (type == b) {
-            is_flags |= IS_BUILTIN;
+            memberFlags |= IS_BUILTIN;
         }
     }
     type = substitute(type, "*", "");

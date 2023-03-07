@@ -3,6 +3,7 @@ class = CTokenBalance
 base_class = CMonitor
 fields = tokenbalance.csv
 includes = acctlib.h
+output = ../../tools/getTokens/
 equals = address == it.address
 sort = v1.address < v2.address
 doc_group = 03-Chain State

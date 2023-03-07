@@ -10,7 +10,6 @@ on      ,cmd  ,fast  ,null  ,dev_tools/makeClass ,conflict3 ,n    ,@ a & edit
 on      ,cmd  ,fast  ,null  ,dev_tools/makeClass ,edit      ,n    ,edit @ a & filter = function
 on      ,cmd  ,fast  ,null  ,dev_tools/makeClass ,run       ,n    ,all & files = block
 on      ,cmd  ,fast  ,null  ,dev_tools/makeClass ,run_ns    ,n    ,@n = qblocks & all & files = function
-local   ,cmd  ,fast  ,null  ,dev_tools/makeClass ,tsx       ,n    ,tsx & files = CBlock
 
 # dump option was removed as never being used anyway
 off     ,cmd  ,fast  ,null  ,dev_tools/makeClass ,list      ,n    ,dump & files = function

@@ -186,7 +186,6 @@ The following tools are documented, but customizing them is not supported. If yo
 | generate    | If true, run the auto-code generator<br />false                                                                      |
 | readmes     | If true, generate README files with `make generate`<br />false                                                       |
 | lint_all    | If true, run the linter when doing `make finish`<br />false                                                          |
-| tsx         | (deprecated)<br />false                                                                                              |
 
 The follow values are defined for each classDefinition file
 
@@ -203,7 +202,6 @@ The follow values are defined for each classDefinition file
 | equals       | If true, add equality function to the class                        |
 | contained_by | If present, the name of the class that contains items of this type |
 | doc_producer | The name of the chifra tool that produces this type of data        |
-| tsx          | (deprecated)<br />false                                            |
 | doc_group    | The documentation group this class belongs to                      |
 | doc_descr    | The description of the class for the documentation                 |
 | doc_route    | The command line tool and/or the API route                         |

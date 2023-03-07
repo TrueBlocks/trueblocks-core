@@ -35,18 +35,6 @@ namespace qblocks {
 #define SIG_CANONICAL (SIG_FNAME | SIG_ITYPE)
 #define SIG_DEFAULT (SIG_FTYPE | SIG_FNAME | SIG_FSPACE | SIG_ITYPE | SIG_INAME | SIG_IINDEXED)
 #define SIG_DETAILS (SIG_DEFAULT | SIG_CONST | SIG_ANONYMOUS | SIG_PAYABLE | SIG_ENCODE)
-// bitfield for 'is_flags'
-#define IS_NOT (0)
-#define IS_POINTER (1 << 1)
-#define IS_ARRAY (1 << 2)
-#define IS_OBJECT (1 << 3)
-#define IS_BUILTIN (1 << 4)
-#define IS_MINIMAL (1 << 5)
-#define IS_ENABLED (1 << 6)
-#define IS_NOWRITE (1 << 7)
-#define IS_OMITEMPTY (1 << 8)
-#define IS_EXTRA (1 << 9)
-#define IS_NOADDFLD (1 << 10)
 class CParameter;
 typedef vector<CParameter> CParameterArray;
 // EXISTING_CODE
@@ -61,9 +49,6 @@ class CParameter : public CBaseNode {
     bool indexed;
     string_q internalType;
     CParameterArray components;
-    bool unused;
-    uint64_t is_flags;
-    uint64_t precision;
 
   public:
     CParameter(void);
@@ -84,7 +69,6 @@ class CParameter : public CBaseNode {
     explicit CParameter(const string_q& n, const string_q& type, biguint_t val);
     explicit CParameter(const string_q& n, const string_q& type, const CStringArray& array);
     bool isValid(void) const;
-    void postProcessType(void);
     // EXISTING_CODE
     bool operator==(const CParameter& it) const;
     bool operator!=(const CParameter& it) const {
@@ -144,9 +128,6 @@ inline void CParameter::initialize(void) {
     indexed = false;
     internalType = "";
     components.clear();
-    unused = false;
-    is_flags = 0;
-    precision = 5;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -164,9 +145,6 @@ inline void CParameter::duplicate(const CParameter& pa) {
     indexed = pa.indexed;
     internalType = pa.internalType;
     components = pa.components;
-    unused = pa.unused;
-    is_flags = pa.is_flags;
-    precision = pa.precision;
 
     // EXISTING_CODE
     // EXISTING_CODE

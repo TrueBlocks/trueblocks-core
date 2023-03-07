@@ -3,3 +3,4 @@ class = CStake
 fields = stake.csv
 includes = etherlib.h
 disabled  = true
+output = ../tokenTool/

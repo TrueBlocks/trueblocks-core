@@ -194,13 +194,13 @@ string_q type_2_ModelName(const string_q& type, bool raw) {
 
 //------------------------------------------------------------------------------------------------------------
 string_q typeFmt(const CMember& fld) {
-    if (fld.is_flags & IS_ARRAY) {
+    if (fld.memberFlags & IS_ARRAY) {
         string_q ret = "          type: array\n          items:\n            $ref: \"#/components/schemas/++X++\"\n";
         replace(ret, "++X++", firstLower(type_2_ModelName(fld.type, false)));
         return ret;
     }
 
-    if (fld.is_flags & IS_OBJECT) {
+    if (fld.memberFlags & IS_OBJECT) {
         string_q ret = "          type: object\n          items:\n            $ref: \"#/components/schemas/++X++\"\n";
         replace(ret, "++X++", firstLower(type_2_ModelName(fld.type, false)));
         return ret;

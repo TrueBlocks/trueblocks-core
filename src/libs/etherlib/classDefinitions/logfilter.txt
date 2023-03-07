@@ -2,3 +2,4 @@
 class = CLogFilter
 fields = logfilter.csv
 includes = utillib.h|log.h
+output = ../../libs/etherlib/
