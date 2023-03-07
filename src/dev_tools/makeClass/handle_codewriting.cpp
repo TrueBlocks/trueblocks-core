@@ -14,6 +14,7 @@
 #include "options.h"
 
 extern string_q replaceCode(const string_q& orig, const string_q& which, const string_q& new_code);
+extern size_t countSections(const string_q& in);
 //------------------------------------------------------------------------------------------------------------
 bool writeCodeIn(COptions* opts, const codewrite_t& cw) {
     if (contains(cw.fileName, "/other/data-models/")) {
@@ -23,6 +24,14 @@ bool writeCodeIn(COptions* opts, const codewrite_t& cw) {
     string_q codeOut = cw.codeOutIn;
     string_q orig;
     asciiFileToString(cw.fileName, orig);
+    size_t nSections = countSections(orig);
+    if ((nSections % 2)) {
+        // ostringstream os;
+        cerr << bRed << "Uneven number of EXISTING_CODE blocks in the file:" << endl;
+        cerr << "file: " << cw.fileName << endl;
+        exit(0);
+    }
+
     string_q existingCode = substitute(orig, "//EXISTING_CODE", "// EXISTING_CODE");
 
     string_q checkCode = existingCode;
@@ -32,12 +41,10 @@ bool writeCodeIn(COptions* opts, const codewrite_t& cw) {
         cnt++;
     }
     if ((cnt % 2)) {
-        ostringstream os;
-        os << "Uneven number of EXISTING_CODE blocks in the file." << endl;
-        os << "file: " << cw.fileName << endl;
-        os << "replaced: " << cnt << " instances of // EXISTING_CODE" << endl;
-        os << "Original: " << orig << endl;
-        codeOut = os.str() + codeOut;
+        // ostringstream os;
+        cerr << bRed << "Uneven number of EXISTING_CODE blocks in the file:" << endl;
+        cerr << "file: " << cw.fileName << endl;
+        exit(0);
     }
     if (cw.nSpaces) {
         replaceAll(existingCode, string_q(cw.nSpaces, ' '), "\t");
@@ -237,4 +244,18 @@ void expandTabbys(string_q& strOut) {
     replaceAll(strOut, "```", string_q(3, '\t'));
     replaceAll(strOut, "``", string_q(2, '\t'));
     replaceAll(strOut, "`", string_q(1, '\t'));
+}
+
+//------------------------------------------------------------------------------------------------------------
+size_t countSections(const string_q& in) {
+    string_q inIn = substitute(in, "the code inside of 'EXISTING_CODE' tags", "");
+    CStringArray lines;
+    explode(lines, inIn, '\n');
+    size_t cnt = 0;
+    for (auto line : lines) {
+        if (contains(line, "EXISTING_CODE")) {
+            cnt++;
+        }
+    }
+    return cnt;
 }
