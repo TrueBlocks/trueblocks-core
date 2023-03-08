@@ -158,8 +158,9 @@ func transactionsFinishParse(args []string) *TransactionsOptions {
 	if len(opts.AccountFor) == 0 && len(opts.Reconcile) > 0 {
 		opts.AccountFor = opts.Reconcile
 	}
-	if !opts.Traces {
-		opts.Traces = opts.Trace
+	if !opts.Traces && opts.Trace {
+		opts.Traces = true
+		logger.Log(logger.Warning, "Note: the --trace option has been replaced with --traces")
 	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
