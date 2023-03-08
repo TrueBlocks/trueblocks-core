@@ -51,7 +51,7 @@ func (opts *TransactionsOptions) TransactionsInternal() (err error, handled bool
 
 	// EXISTING_CODE
 	if opts.IsPorted() {
-		return opts.HandleArticulate(), true
+		return opts.HandleShow(), true
 	}
 
 	if opts.Globals.IsApiMode() {
@@ -76,7 +76,7 @@ func GetTransactionsOptions(args []string, g *globals.GlobalOptions) *Transactio
 
 func (opts *TransactionsOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	ported = false // !opts.Traces && !opts.Uniq && len(opts.Flow) == 0 && !opts.Cache && !opts.Source && len(opts.AccountFor) == 0
+	ported = !opts.Uniq && len(opts.Flow) == 0 && !opts.Cache && !opts.Source && len(opts.AccountFor) == 0
 	// EXISTING_CODE
 	return
 }
