@@ -1,5 +1,6 @@
 chifra transactions  4000002.5 --trace
 Flag --trace has been deprecated, please use --traces instead
+WARN[DATE|TIME] Note: the --trace option has been replaced with --traces
 TEST[DATE|TIME] Transactions:  [4000002.5]
 TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] Format:  txt
