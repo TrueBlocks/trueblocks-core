@@ -3,389 +3,279 @@ abis?addrs=0xdac17f958d2ee523a2206206994597c13d831ec7
   "data": [
     {
       "encoding": "0x06fdde03",
-      "input_names": "",
       "name": "name",
-      "output_names": "val_0",
       "signature": "name()",
       "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x0753c30c",
-      "input_names": "_upgradedAddress",
       "name": "deprecate",
-      "output_names": "",
       "signature": "deprecate(address)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x095ea7b3",
-      "input_names": "_spender,_value",
       "name": "approve",
-      "output_names": "",
       "signature": "approve(address,uint256)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x0e136b19",
-      "input_names": "",
       "name": "deprecated",
-      "output_names": "val_0",
       "signature": "deprecated()",
       "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x0ecb93c0",
-      "input_names": "_evilUser",
       "name": "addBlackList",
-      "output_names": "",
       "signature": "addBlackList(address)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x18160ddd",
-      "input_names": "",
       "name": "totalSupply",
-      "output_names": "val_0",
       "signature": "totalSupply()",
       "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x23b872dd",
-      "input_names": "_from,_to,_value",
       "name": "transferFrom",
-      "output_names": "",
       "signature": "transferFrom(address,address,uint256)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x26976e3f",
-      "input_names": "",
       "name": "upgradedAddress",
-      "output_names": "val_0",
       "signature": "upgradedAddress()",
       "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x27e235e3",
-      "input_names": "val_0",
       "name": "balances",
-      "output_names": "val_0",
       "signature": "balances(address)",
       "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x313ce567",
-      "input_names": "",
       "name": "decimals",
-      "output_names": "val_0",
       "signature": "decimals()",
       "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x35390714",
-      "input_names": "",
       "name": "maximumFee",
-      "output_names": "val_0",
       "signature": "maximumFee()",
       "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x3eaaf86b",
-      "input_names": "",
       "name": "_totalSupply",
-      "output_names": "val_0",
       "signature": "_totalSupply()",
       "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x3f4ba83a",
-      "input_names": "",
       "name": "unpause",
-      "output_names": "",
       "signature": "unpause()",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x42e160154868087d6bfdc0ca23d96a1c1cfa32f1b72ba9ba27b69b98a0d819dc",
-      "input_names": "_user",
       "name": "AddedBlackList",
-      "output_names": "",
       "signature": "AddedBlackList(address)",
-      "stateMutability": "",
       "type": "event"
     },
     {
       "encoding": "0x59bf1abe",
-      "input_names": "_maker",
       "name": "getBlackListStatus",
-      "output_names": "val_0",
       "signature": "getBlackListStatus(address)",
       "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x5c658165",
-      "input_names": "val_0,val_1",
       "name": "allowed",
-      "output_names": "val_0",
       "signature": "allowed(address,address)",
       "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x5c975abb",
-      "input_names": "",
       "name": "paused",
-      "output_names": "val_0",
       "signature": "paused()",
       "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x61e6e66b0d6339b2980aecc6ccc0039736791f0ccde9ed512e789a7fbdd698c6",
-      "input_names": "_blackListedUser,_balance",
       "name": "DestroyedBlackFunds",
-      "output_names": "",
       "signature": "DestroyedBlackFunds(address,uint256)",
-      "stateMutability": "",
       "type": "event"
     },
     {
       "encoding": "0x6985a02210a168e66602d3235cb6db0e70f92b3ba4d376a33c0f3d9434bff625",
-      "input_names": "",
       "name": "Pause",
-      "output_names": "",
       "signature": "Pause()",
-      "stateMutability": "",
       "type": "event"
     },
     {
       "encoding": "0x702d5967f45f6513a38ffc42d6ba9bf230bd40e8f53b16363c7eb4fd2deb9a44",
-      "input_names": "amount",
       "name": "Redeem",
-      "output_names": "",
       "signature": "Redeem(uint256)",
-      "stateMutability": "",
       "type": "event"
     },
     {
       "encoding": "0x70a08231",
-      "input_names": "who",
       "name": "balanceOf",
-      "output_names": "val_0",
       "signature": "balanceOf(address)",
       "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x7805862f689e2f13df9f062ff482ad3ad112aca9e0847911ed832e158c525b33",
-      "input_names": "",
       "name": "Unpause",
-      "output_names": "",
       "signature": "Unpause()",
-      "stateMutability": "",
       "type": "event"
     },
     {
       "encoding": "0x8456cb59",
-      "input_names": "",
       "name": "pause",
-      "output_names": "",
       "signature": "pause()",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x893d20e8",
-      "input_names": "",
       "name": "getOwner",
-      "output_names": "val_0",
       "signature": "getOwner()",
       "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
-      "input_names": "owner,spender,value",
       "name": "Approval",
-      "output_names": "",
       "signature": "Approval(address,address,uint256)",
-      "stateMutability": "",
       "type": "event"
     },
     {
       "encoding": "0x8da5cb5b",
-      "input_names": "",
       "name": "owner",
-      "output_names": "val_0",
       "signature": "owner()",
       "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x95d89b41",
-      "input_names": "",
       "name": "symbol",
-      "output_names": "val_0",
       "signature": "symbol()",
       "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0xa9059cbb",
-      "input_names": "_to,_value",
       "name": "transfer",
-      "output_names": "",
       "signature": "transfer(address,uint256)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xb044a1e409eac5c48e5af22d4af52670dd1a99059537a78b31b48c6500a6354e",
-      "input_names": "feeBasisPoints,maxFee",
       "name": "Params",
-      "output_names": "",
       "signature": "Params(uint256,uint256)",
-      "stateMutability": "",
       "type": "event"
     },
     {
       "encoding": "0xc0324c77",
-      "input_names": "newBasisPoints,newMaxFee",
       "name": "setParams",
-      "output_names": "",
       "signature": "setParams(uint256,uint256)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xcb8241adb0c3fdb35b70c24ce35c5eb0c17af7431c99f827d44a445ca624176a",
-      "input_names": "amount",
       "name": "Issue",
-      "output_names": "",
       "signature": "Issue(uint256)",
-      "stateMutability": "",
       "type": "event"
     },
     {
       "encoding": "0xcc358699805e9a8b7f77b522628c7cb9abd07d9efb86b6fb616af1609036a99e",
-      "input_names": "newAddress",
       "name": "Deprecate",
-      "output_names": "",
       "signature": "Deprecate(address)",
-      "stateMutability": "",
       "type": "event"
     },
     {
       "encoding": "0xcc872b66",
-      "input_names": "amount",
       "name": "issue",
-      "output_names": "",
       "signature": "issue(uint256)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xd7e9ec6e6ecd65492dce6bf513cd6867560d49544421d0783ddf06e76c24470c",
-      "input_names": "_user",
       "name": "RemovedBlackList",
-      "output_names": "",
       "signature": "RemovedBlackList(address)",
-      "stateMutability": "",
       "type": "event"
     },
     {
       "encoding": "0xdb006a75",
-      "input_names": "amount",
       "name": "redeem",
-      "output_names": "",
       "signature": "redeem(uint256)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xdd62ed3e",
-      "input_names": "_owner,_spender",
       "name": "allowance",
-      "output_names": "remaining",
       "signature": "allowance(address,address)",
       "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0xdd644f72",
-      "input_names": "",
       "name": "basisPointsRate",
-      "output_names": "val_0",
       "signature": "basisPointsRate()",
       "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-      "input_names": "from,to,value",
       "name": "Transfer",
-      "output_names": "",
       "signature": "Transfer(address,address,uint256)",
-      "stateMutability": "",
       "type": "event"
     },
     {
       "encoding": "0xe47d6060",
-      "input_names": "val_0",
       "name": "isBlackListed",
-      "output_names": "val_0",
       "signature": "isBlackListed(address)",
       "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0xe4997dc5",
-      "input_names": "_clearedUser",
       "name": "removeBlackList",
-      "output_names": "",
       "signature": "removeBlackList(address)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xe5b5019a",
-      "input_names": "",
       "name": "MAX_UINT",
-      "output_names": "val_0",
       "signature": "MAX_UINT()",
       "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0xf2fde38b",
-      "input_names": "newOwner",
       "name": "transferOwnership",
-      "output_names": "",
       "signature": "transferOwnership(address)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xf3bdc228",
-      "input_names": "_blackListedUser",
       "name": "destroyBlackFunds",
-      "output_names": "",
       "signature": "destroyBlackFunds(address)",
-      "stateMutability": "nonpayable",
       "type": "function"
     }
   ],

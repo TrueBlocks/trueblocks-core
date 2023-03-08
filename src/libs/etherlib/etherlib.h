@@ -15,7 +15,7 @@
 #include "block.h"
 #include "transaction.h"
 #include "receipt.h"
-#include "logentry.h"
+#include "log.h"
 #include "trace.h"
 #include "traceaction.h"
 #include "traceresult.h"

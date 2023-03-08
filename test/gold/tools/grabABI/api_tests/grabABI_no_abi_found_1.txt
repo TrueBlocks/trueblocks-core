@@ -3,11 +3,8 @@ abis?addrs=0x713b73c3994442b533e6a083ec968e40606810ec
   "data": [
     {
       "encoding": "0x08b2745a",
-      "input_names": "",
       "name": "AbiNotFound",
-      "output_names": "",
       "signature": "AbiNotFound()",
-      "stateMutability": "nonpayable",
       "type": "function"
     }
   ],

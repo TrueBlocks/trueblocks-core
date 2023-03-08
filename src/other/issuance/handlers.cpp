@@ -56,36 +56,6 @@ bool COptions::model_issuance(void) {
 }
 
 CStringArray header;
-////--------------------------------------------------------------
-// bool auditLine(const char* str, void* data) {
-//    if (header.empty()) {
-//        string_q headers =
-//        "blockNum,timestamp,month,day,minerBaseRewardIn,minerNephewRewardIn,minerIssuance,minerUncleRewardIn,issuance";
-//        explode(header, headers, ',');
-//        return true;
-//    }
-//
-//    string_q line = str;
-//    CReconciliation rec;
-//    rec.parseCSV(header, line);
-//    if (rec.blockNum == 0)
-//        return true;
-//    // END LAST TIME: 459690
-//    if (rec.blockNum < 1145042) //(first TransactionBlock - 10))
-//        return true;
-//
-//    CTransaction trans;
-//    trans.l oadTransAsBlockReward(rec.blockNum, 99999, block.miner);
-//    expContext().account edFor = block.miner;
-//    if (rec.reconcileIssuance(rec.blockNum, &trans)) {
-//        cout << "Block " << rec.blockNum << " balances" << endl;
-//    } else {
-//        cerr << "Block " << rec.blockNum << " does not balances. Hit enter to coninue..." << endl;
-//        cerr << rec << endl;
-//        getchar();
-//    }
-//    return true;
-//}
 
 //--------------------------------------------------------------
 int sortByFirstAppearance(const void* v1, const void* v2) {

@@ -52,7 +52,7 @@ bool COptions::handle_sdk_ts(void) {
 bool COptions::handle_sdk_ts_types(CStringArray& typesOut) {
     for (auto model : dataModels) {
         string_q modelName = substitute(model.class_name, "Array", "");
-        modelName = firstUpper(substitute(modelName, "LogEntry", "Log"));
+        modelName = firstUpper(modelName);
         replace(modelName, "C", "");
         if (modelName == "Status") {
             modelName = "Config";
@@ -66,9 +66,7 @@ bool COptions::handle_sdk_ts_types(CStringArray& typesOut) {
                 continue;
             }
             bool isArray = contains(field.type, "Array");
-            string_q ft =
-                substitute(substitute(substitute(substitute(field.type, "Array", ""), "Ptr", ""), "LogEntry", "Log"),
-                           "uint8", "bool");
+            string_q ft = substitute(substitute(substitute(field.type, "Array", ""), "Ptr", ""), "uint8", "bool");
             if (startsWith(field.type, "C")) {
                 replace(ft, "C", "");
             }
@@ -78,7 +76,7 @@ bool COptions::handle_sdk_ts_types(CStringArray& typesOut) {
             ft = substitute(substitute(ft, "String", "string"), "Topic", "topic");
             replace(ft, "bool", "boolean");
 
-            bool isOptional = field.is_flags & IS_OMITEMPTY;
+            bool isOptional = field.memberFlags & IS_OMITEMPTY;
             if (field.name == "fromName" || field.name == "toName") {
                 isOptional = true;
             }
@@ -136,13 +134,13 @@ bool COptions::handle_sdk_ts_types(CStringArray& typesOut) {
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_sdk_ts_paths(CStringArray& pathsOut) {
     for (auto ep : endpointArray) {
-        CCommandOptionArray params;
+        CCommandOptionArray members;
         for (auto option : routeOptionArray) {
             if (option.api_route == ep.api_route && isChifraRoute(option, false)) {
-                params.push_back(option);
+                members.push_back(option);
             }
         }
-        ep.params = &params;
+        ep.members = &members;
 
         if (!ep.api_route.empty()) {
             map<string_q, string_q> imports;
@@ -166,8 +164,8 @@ bool COptions::handle_sdk_ts_paths(CStringArray& pathsOut) {
             }
 
             ostringstream pp;
-            if (isApiRoute(ep.api_route) && ep.params) {
-                for (auto p : *((CCommandOptionArray*)ep.params)) {
+            if (isApiRoute(ep.api_route) && ep.members) {
+                for (auto p : *((CCommandOptionArray*)ep.members)) {
                     if (!p.is_visible_docs) {
                         continue;
                     }
@@ -215,7 +213,7 @@ bool COptions::handle_sdk_ts_paths(CStringArray& pathsOut) {
             writeIfDifferent(filename.str(), out);
         }
 
-        counter.cmdCount += params.size();
+        counter.cmdCount += members.size();
         counter.routeCount++;
     }
 

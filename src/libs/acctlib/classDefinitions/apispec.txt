@@ -2,3 +2,4 @@
 class = CApiSpec
 fields = apispec.csv
 includes = utillib.h
+output = ../../libs/acctlib/

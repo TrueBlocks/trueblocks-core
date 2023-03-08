@@ -1,6 +1,6 @@
 # Instructions for Adding a Field to a C++ Class
 
-THIS IS QUITE OUT OF DATE
+**THIS IS QUITE OUT OF DATE**
 
 We use a home grown tool called `makeClass` to generate a large amount of boilerplate code for many of the C++ classes in this repo.
 
@@ -28,7 +28,7 @@ fields = gas gasLimit|\
         bool finalized|\
         timestamp timestamp|\
         CTransactionArray transactions|\
-        CStringArray tx_hashes (nowrite)|\
+        CStringArray tx _hashes (nowrite)|\
         string name (nowrite)|\
         bool light (nowrite,omitempty)
 
@@ -68,7 +68,7 @@ fields = gas gasLimit|\
         bool finalized|\
         timestamp timestamp|\
         CTransactionArray transactions|\
-        CStringArray tx_hashes (nowrite)|\
+        CStringArray tx _hashes (nowrite)|\
         string name (nowrite)|\
         bool light (nowrite,omitempty)
 ```

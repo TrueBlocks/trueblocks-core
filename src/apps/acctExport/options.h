@@ -122,7 +122,7 @@ class COptions : public CStatementOptions {
 
     bool isEmitter(const address_t& test) const;
     bool wasEmittedBy(const address_t& test) const;
-    bool isRelevant(const CLogEntry& log) const;
+    bool isRelevant(const CLog& log) const;
     bool fourByteFilter(const string_q& input) const;
 
     void writePerformanceData(void);

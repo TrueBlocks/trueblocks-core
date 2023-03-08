@@ -39,9 +39,6 @@ class CBlock : public CBaseNode {
     timestamp_t timestamp;
     wei_t baseFeePerGas;
     CTransactionArray transactions;
-    CStringArray tx_hashes;
-    string_q name;
-    uint64_t unclesCnt;
 
   public:
     CBlock(void);
@@ -52,7 +49,6 @@ class CBlock : public CBaseNode {
     DECLARE_NODE(CBlock);
 
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
-    const string_q getStringAt(const string_q& fieldName, size_t i) const override;
 
     // EXISTING_CODE
     bool forEveryTransaction(TRANSVISITFUNC func, void* data) const;
@@ -123,9 +119,6 @@ inline void CBlock::initialize(void) {
     timestamp = 0;
     baseFeePerGas = 0;
     transactions.clear();
-    tx_hashes.clear();
-    name = "";
-    unclesCnt = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -147,9 +140,6 @@ inline void CBlock::duplicate(const CBlock& bl) {
     timestamp = bl.timestamp;
     baseFeePerGas = bl.baseFeePerGas;
     transactions = bl.transactions;
-    tx_hashes = bl.tx_hashes;
-    name = bl.name;
-    unclesCnt = bl.unclesCnt;
 
     // EXISTING_CODE
     finishParse();

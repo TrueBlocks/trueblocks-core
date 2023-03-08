@@ -15,7 +15,7 @@ on      ,both ,slow  ,config ,apps/cacheStatus ,mode_abis           ,y    ,modes
 ; TODO: turn back on
 local   ,both ,fast  ,config ,apps/cacheStatus ,mode_blocks         ,y    ,modes = show & module = caches & types = blocks
 on      ,both ,fast  ,config ,apps/cacheStatus ,mode_txs            ,y    ,modes = show & module = caches & types = txs
-on      ,both ,fast  ,config ,apps/cacheStatus ,mode_traces         ,y    ,modes = show & module = caches & types = traces
+local   ,both ,fast  ,config ,apps/cacheStatus ,mode_traces         ,y    ,modes = show & module = caches & types = traces
 on      ,both ,fast  ,config ,apps/cacheStatus ,mode_cache_fail     ,y    ,modes = show & module = caches & types = junk
 ; TODO: turn back on
 local   ,both ,fast  ,config ,apps/cacheStatus ,mode_cache_all      ,y    ,modes = show & module = caches & types = all

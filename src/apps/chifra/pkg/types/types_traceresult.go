@@ -16,20 +16,18 @@ import (
 // EXISTING_CODE
 
 type RawTraceResult struct {
-	Address     string `json:"address,omitempty"`
-	Code        string `json:"code,omitempty"`
-	GasUsed     string `json:"gasUsed,omitempty"`
-	NewContract string `json:"newContract,omitempty"`
-	Output      string `json:"output,omitempty"`
+	Address string `json:"address"`
+	Code    string `json:"code"`
+	GasUsed string `json:"gasUsed"`
+	Output  string `json:"output"`
 }
 
 type SimpleTraceResult struct {
-	Address     Address `json:"address,omitempty"`
-	Code        string  `json:"code,omitempty"`
-	GasUsed     Gas     `json:"gasUsed"`
-	NewContract Address `json:"newContract,omitempty"`
-	Output      string  `json:"output,omitempty"`
-	raw         *RawTraceResult
+	Address Address `json:"address,omitempty"`
+	Code    string  `json:"code,omitempty"`
+	GasUsed Gas     `json:"gasUsed"`
+	Output  string  `json:"output"`
+	raw     *RawTraceResult
 }
 
 func (s *SimpleTraceResult) Raw() *RawTraceResult {
@@ -56,19 +54,27 @@ func (s *SimpleTraceResult) Model(showHidden bool, format string, extraOptions m
 
 	// EXISTING_CODE
 	if format == "json" {
-		if !s.NewContract.IsZero() {
-			model["newContract"] = s.NewContract
+		if !s.Address.IsZero() {
+			model["address"] = s.Address
+			order = append(order, "address")
 		}
 		if extraOptions["tracesTransactionsFormat"] != true && len(s.Code) > 0 {
 			model["code"] = s.Code
+			order = append(order, "code")
 		}
+		// if len(s.Output) > 0 && s.Output != "0x" {
+		// 	model["output"] = s.Output
+		// 	order = append(order, "output")
+		// }
 	} else {
-		if !s.NewContract.IsZero() {
-			model["newContract"] = "0x"
-		} else {
-			model["newContract"] = hexutil.Encode(s.NewContract.Bytes())
+		if !s.Address.IsZero() {
+			model["address"] = hexutil.Encode(s.Address.Bytes())
+			order = append(order, "address")
 		}
-		order = append(order, "newContract")
+		// if len(s.Output) > 0 && s.Output != "0x" {
+		// 	model["output"] = s.Output
+		// 	order = append(order, "output")
+		// }
 	}
 	// EXISTING_CODE
 

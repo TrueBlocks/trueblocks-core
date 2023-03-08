@@ -85,7 +85,7 @@ transactions?transactions=0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b8
             "value": 607298625296748300
           },
           "result": {
-            "newContract": "0x0",
+            "address": "0x0",
             "gasUsed": 214359,
             "output": "0x"
           },
@@ -118,7 +118,7 @@ transactions?transactions=0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b8
             "value": 0
           },
           "result": {
-            "newContract": "0x0",
+            "address": "0x0",
             "gasUsed": 537,
             "output": "0x00000000000000000000000000000000000000000000000000002af50c27a980"
           },
@@ -152,7 +152,7 @@ transactions?transactions=0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b8
             "value": 0
           },
           "result": {
-            "newContract": "0x0",
+            "address": "0x0",
             "gasUsed": 537,
             "output": "0x00000000000000000000000000000000000000000000000000002af50c27a980"
           },

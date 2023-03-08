@@ -117,7 +117,7 @@ bool COptions::parseArguments(string_q& command) {
         manageFields("CParameter:strDefault", false);                                              // hide
         manageFields("CTransaction:price", false);                                                 // hide
         manageFields("CTransaction:input", true);                                                  // show
-        manageFields("CLogEntry:data,topics", true);                                               // show
+        manageFields("CLog:data,topics", true);                                                    // show
         manageFields("CTrace: blockHash, blockNumber, transactionHash, transactionIndex", false);  // hide
         abi_spec.loadAbisFromKnown();
     } else {

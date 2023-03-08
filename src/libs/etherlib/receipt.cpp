@@ -179,11 +179,11 @@ bool CReceipt::setValueByName(const string_q& fieldNameIn, const string_q& field
             break;
         case 'l':
             if (fieldName % "logs") {
-                CLogEntry obj;
+                CLog obj;
                 string_q str = fieldValue;
                 while (obj.parseJson3(str)) {
                     logs.push_back(obj);
-                    obj = CLogEntry();  // reset
+                    obj = CLog();  // reset
                 }
                 return true;
             }
@@ -444,7 +444,7 @@ const CBaseNode* CReceipt::getObjectAt(const string_q& fieldName, size_t index) 
     // EXISTING_CODE
     if (fieldName % "logs") {
         if (index == NOPOS) {
-            CLogEntry empty;
+            CLog empty;
             ((CReceipt*)this)->logs.push_back(empty);  // NOLINT
             index = logs.size() - 1;
         }

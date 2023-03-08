@@ -1,115 +1,27 @@
 abiTest  eth_test -s 1
 ethereum test box test...
 0. --------------------------------------------------------------------------------
-	000.000 test_0                           ==> 
-line: signature|test 1|function vote(uint256,bool)||0xc9d27afe
-testType: signature
-testName: test 1
-testSig: function vote(uint256,bool) --> vote(uint256,bool)
-expected: --0xc9d27afe--?
-result:   --0xc9d27afe--? 1
-testName: test 1
-passed 'func.doTest(line)' is true
+	000.000 test_0                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.001 test_1                           ==> 
-line: signature|test 2|event AllowedRecipientChanged(address,bool)||0x73ad2a153c8b67991df9459024950b318a609782cee8c7eeda47b905f9baa91f
-testType: signature
-testName: test 2
-testSig: event AllowedRecipientChanged(address,bool) --> AllowedRecipientChanged(address,bool)
-expected: --0x73ad2a153c8b67991df9459024950b318a609782cee8c7eeda47b905f9baa91f--?
-result:   --0x73ad2a153c8b67991df9459024950b318a609782cee8c7eeda47b905f9baa91f--? 1
-testName: test 2
-passed 'func.doTest(line)' is true
+	000.001 test_1                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.002 test_2                           ==> 
-line: signature|method signature 1|function test()||0xf8a8fd6d
-testType: signature
-testName: method signature 1
-testSig: function test() --> test()
-expected: --0xf8a8fd6d--?
-result:   --0xf8a8fd6d--? 1
-testName: method signature 1
-passed 'func.doTest(line)' is true
+	000.002 test_2                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.003 test_3                           ==> 
-line: signature|method signature 2|function test(uint)||0x29e99f07
-testType: signature
-testName: method signature 2
-testSig: function test(uint) --> test(uint256)
-expected: --0x29e99f07--?
-result:   --0x29e99f07--? 1
-testName: method signature 2
-passed 'func.doTest(line)' is true
+	000.003 test_3                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.004 test_4                           ==> 
-line: signature|method signature 3|function test(uint256)||0x29e99f07
-testType: signature
-testName: method signature 3
-testSig: function test(uint256) --> test(uint256)
-expected: --0x29e99f07--?
-result:   --0x29e99f07--? 1
-testName: method signature 3
-passed 'func.doTest(line)' is true
+	000.004 test_4                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.005 test_5                           ==> 
-line: signature|method signature 4|function test(uint, uint)||0xeb8ac921
-testType: signature
-testName: method signature 4
-testSig: function test(uint, uint) --> test(uint256,uint256)
-expected: --0xeb8ac921--?
-result:   --0xeb8ac921--? 1
-testName: method signature 4
-passed 'func.doTest(line)' is true
+	000.005 test_5                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.006 test_6                           ==> 
-line: signature|event signature 1|event test()||0xf8a8fd6dd9544ca87214e80c840685bd13ff4682cacb0c90821ed74b1d248926
-testType: signature
-testName: event signature 1
-testSig: event test() --> test()
-expected: --0xf8a8fd6dd9544ca87214e80c840685bd13ff4682cacb0c90821ed74b1d248926--?
-result:   --0xf8a8fd6dd9544ca87214e80c840685bd13ff4682cacb0c90821ed74b1d248926--? 1
-testName: event signature 1
-passed 'func.doTest(line)' is true
+	000.006 test_6                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.007 test_7                           ==> 
-line: signature|event signature 2|event test(uint)||0x29e99f07d14aa8d30a12fa0b0789b43183ba1bf6b4a72b95459a3e397cca10d7
-testType: signature
-testName: event signature 2
-testSig: event test(uint) --> test(uint256)
-expected: --0x29e99f07d14aa8d30a12fa0b0789b43183ba1bf6b4a72b95459a3e397cca10d7--?
-result:   --0x29e99f07d14aa8d30a12fa0b0789b43183ba1bf6b4a72b95459a3e397cca10d7--? 1
-testName: event signature 2
-passed 'func.doTest(line)' is true
+	000.007 test_7                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.008 test_8                           ==> 
-line: signature|event signature 3|event test(uint256)||0x29e99f07d14aa8d30a12fa0b0789b43183ba1bf6b4a72b95459a3e397cca10d7
-testType: signature
-testName: event signature 3
-testSig: event test(uint256) --> test(uint256)
-expected: --0x29e99f07d14aa8d30a12fa0b0789b43183ba1bf6b4a72b95459a3e397cca10d7--?
-result:   --0x29e99f07d14aa8d30a12fa0b0789b43183ba1bf6b4a72b95459a3e397cca10d7--? 1
-testName: event signature 3
-passed 'func.doTest(line)' is true
+	000.008 test_8                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.009 test_9                           ==> 
-line: signature|event signature 4|event test(uint, uint)||0xeb8ac9210327650aab0044de896b150391af3be06f43d0f74c01f05633b97a70
-testType: signature
-testName: event signature 4
-testSig: event test(uint, uint) --> test(uint256,uint256)
-expected: --0xeb8ac9210327650aab0044de896b150391af3be06f43d0f74c01f05633b97a70--?
-result:   --0xeb8ac9210327650aab0044de896b150391af3be06f43d0f74c01f05633b97a70--? 1
-testName: event signature 4
-passed 'func.doTest(line)' is true
+	000.009 test_9                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.010 test_10                          ==> 
-line: signature|encoding bytes33 (should fail)|function baz(bytes33)||fail
-testType: signature
-testName: encoding bytes33 (should fail)
-testSig: function baz(bytes33) --> baz(bytes33)
-expected: --fail--?
-result:   --fail--? 1
-testName: encoding bytes33 (should fail)
-passed 'func.doTest(line)' is true
+	000.010 test_10                          ==> passed 'func.doTest(line)' is true
 ...passed
 
 Done...

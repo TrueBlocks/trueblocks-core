@@ -29,14 +29,14 @@ TEST[DATE|TIME] Format:  json
   "articulatedTx": {
     "name": "approve",
     "inputs": {
-      "_spender": "0x755cdba6ae4f479f7164792b318b2a06c759833b",
-      "_value": "0"
+      "spender": "0x755cdba6ae4f479f7164792b318b2a06c759833b",
+      "value": "0"
     },
     "outputs": {
-      "_success": ""
+      "ret_0": "null"
     }
   },
-  "compressedTx": "{name:approve|inputs:{_spender:0x755cdba6ae4f479f7164792b318b2a06c759833b|_value:0}|outputs:{_success:}}",
+  "compressedTx": "{name:approve|inputs:{spender:0x755cdba6ae4f479f7164792b318b2a06c759833b|value:0}|outputs:{ret_0:null}}",
   "gasCost": 563280000000000,
   "gasUsed": 28164,
   "date": "2016-09-08 13:05:19 UTC",

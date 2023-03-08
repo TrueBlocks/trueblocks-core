@@ -12,7 +12,6 @@ TEST[DATE|TIME] Format:  json
         "to": "0xd450aafdb8a225c901d5379a3d0ff8fea1344bfa",
         "value": "0"
       },
-      "articulatedTrace": null,
       "blockHash": "0x9ee74ad50cb24017ee6fa90cdabc13d00e714ab3692a689a4a22716bdd2de5a4",
       "blockNumber": 3189962,
       "result": {
@@ -32,7 +31,6 @@ TEST[DATE|TIME] Format:  json
         "balance": "100000000000000000",
         "refundAddress": "0x00a3819199113fc6a6e6ba1298afde7377e2009b"
       },
-      "articulatedTrace": null,
       "blockHash": "0x9ee74ad50cb24017ee6fa90cdabc13d00e714ab3692a689a4a22716bdd2de5a4",
       "blockNumber": 3189962,
       "result": null,

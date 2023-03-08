@@ -28,16 +28,21 @@ func getRawTransaction(chain string, blockHash common.Hash, index uint64) (raw *
 	}
 
 	raw = &types.RawTransaction{
-		Hash:             response.Result.Hash,
 		BlockHash:        response.Result.BlockHash,
 		BlockNumber:      response.Result.BlockNumber,
-		TransactionIndex: response.Result.TransactionIndex,
+		ChainId:          response.Result.ChainId,
 		From:             response.Result.From,
 		Gas:              response.Result.Gas,
 		GasPrice:         response.Result.GasPrice,
+		Hash:             response.Result.Hash,
 		Input:            response.Result.Input,
 		Nonce:            response.Result.Nonce,
+		R:                response.Result.R,
+		S:                response.Result.S,
 		To:               response.Result.To,
+		TransactionIndex: response.Result.TransactionIndex,
+		Type:             response.Result.Type,
+		V:                response.Result.V,
 		Value:            response.Result.Value,
 	}
 

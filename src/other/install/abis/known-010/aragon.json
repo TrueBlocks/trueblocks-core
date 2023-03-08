@@ -107,11 +107,13 @@
     "inputs": [
       {
         "name": "_tokenFactory",
-        "type": "MiniMeTokenFactory"
+        "internalType": "contract MiniMeTokenFactory",
+        "type": "address"
       },
       {
         "name": "_parentToken",
-        "type": "MiniMeToken"
+        "internalType": "contract MiniMeToken",
+        "type": "address"
       },
       {
         "name": "_parentSnapShotBlock",
@@ -136,7 +138,7 @@
     ],
     "name": "MiniMeToken",
     "outputs": [],
-    "signature": "MiniMeToken(MiniMeTokenFactory,MiniMeToken,uint256,string,uint8,string,bool)",
+    "signature": "MiniMeToken(address,address,uint256,string,uint8,string,bool)",
     "type": "function"
   },
   {
@@ -282,7 +284,8 @@
     "inputs": [
       {
         "name": "_spender",
-        "type": "ApproveAndCallFallBack"
+        "internalType": "contract ApproveAndCallFallBack",
+        "type": "address"
       },
       {
         "name": "_amount",
@@ -300,7 +303,7 @@
         "type": "bool"
       }
     ],
-    "signature": "approveAndCall(ApproveAndCallFallBack,uint256,bytes)",
+    "signature": "approveAndCall(address,uint256,bytes)",
     "type": "function"
   },
   {
@@ -387,7 +390,8 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MiniMeToken"
+        "internalType": "contract MiniMeToken",
+        "type": "address"
       }
     ],
     "signature": "createCloneToken(string,uint8,string,uint256,bool)",
@@ -457,7 +461,8 @@
       {
         "is_array": true,
         "name": "checkpoints",
-        "type": "Checkpoint[]"
+        "internalType": "struct Checkpoint[]",
+        "type": "tuple[]"
       },
       {
         "name": "_block",
@@ -471,7 +476,7 @@
         "type": "uint256"
       }
     ],
-    "signature": "getValueAt(Checkpoint[],uint256)",
+    "signature": "getValueAt(tuple[],uint256)",
     "type": "function"
   },
   {
@@ -480,7 +485,8 @@
       {
         "is_array": true,
         "name": "checkpoints",
-        "type": "Checkpoint[]"
+        "internalType": "struct Checkpoint[]",
+        "type": "tuple[]"
       },
       {
         "name": "_value",
@@ -489,7 +495,7 @@
     ],
     "name": "updateValueAtNow",
     "outputs": [],
-    "signature": "updateValueAtNow(Checkpoint[],uint256)",
+    "signature": "updateValueAtNow(tuple[],uint256)",
     "type": "function"
   },
   {
@@ -638,7 +644,8 @@
     "inputs": [
       {
         "name": "_parentToken",
-        "type": "MiniMeToken"
+        "internalType": "contract MiniMeToken",
+        "type": "address"
       },
       {
         "name": "_snapshotBlock",
@@ -665,10 +672,11 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MiniMeToken"
+        "internalType": "contract MiniMeToken",
+        "type": "address"
       }
     ],
-    "signature": "createCloneToken(MiniMeToken,uint256,string,uint8,string,bool)",
+    "signature": "createCloneToken(address,uint256,string,uint8,string,bool)",
     "type": "function"
   },
   {
@@ -676,7 +684,8 @@
     "inputs": [
       {
         "name": "_token",
-        "type": "MiniMeToken"
+        "internalType": "contract MiniMeToken",
+        "type": "address"
       },
       {
         "name": "_owner",
@@ -685,7 +694,7 @@
     ],
     "name": "_cacheToken",
     "outputs": [],
-    "signature": "_cacheToken(MiniMeToken,address)",
+    "signature": "_cacheToken(address,address)",
     "type": "function"
   },
   {
@@ -700,7 +709,8 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MiniMeToken"
+        "internalType": "contract MiniMeToken",
+        "type": "address"
       }
     ],
     "signature": "_popTokenCache(address)",
@@ -1252,7 +1262,7 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "IACL"
+        "type": "address"
       }
     ],
     "signature": "acl()",
@@ -1341,7 +1351,7 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "IKernel"
+        "type": "address"
       }
     ],
     "signature": "kernel()",
@@ -1366,12 +1376,13 @@
     "inputs": [
       {
         "name": "_kernel",
-        "type": "IKernel"
+        "internalType": "contract IKernel",
+        "type": "address"
       }
     ],
     "name": "setKernel",
     "outputs": [],
-    "signature": "setKernel(IKernel)",
+    "signature": "setKernel(address)",
     "type": "function"
   },
   {
@@ -2279,7 +2290,8 @@
     "inputs": [
       {
         "name": "_token",
-        "type": "ERC20"
+        "internalType": "contract ERC20",
+        "type": "address"
       },
       {
         "name": "_to",
@@ -2297,7 +2309,7 @@
         "type": "bool"
       }
     ],
-    "signature": "safeTransfer(ERC20,address,uint256)",
+    "signature": "safeTransfer(address,address,uint256)",
     "type": "function"
   },
   {
@@ -2305,7 +2317,8 @@
     "inputs": [
       {
         "name": "_token",
-        "type": "ERC20"
+        "internalType": "contract ERC20",
+        "type": "address"
       },
       {
         "name": "_from",
@@ -2327,7 +2340,7 @@
         "type": "bool"
       }
     ],
-    "signature": "safeTransferFrom(ERC20,address,address,uint256)",
+    "signature": "safeTransferFrom(address,address,address,uint256)",
     "type": "function"
   },
   {
@@ -2335,7 +2348,8 @@
     "inputs": [
       {
         "name": "_token",
-        "type": "ERC20"
+        "internalType": "contract ERC20",
+        "type": "address"
       },
       {
         "name": "_spender",
@@ -2353,7 +2367,7 @@
         "type": "bool"
       }
     ],
-    "signature": "safeApprove(ERC20,address,uint256)",
+    "signature": "safeApprove(address,address,uint256)",
     "type": "function"
   },
   {
@@ -2362,7 +2376,8 @@
     "inputs": [
       {
         "name": "_token",
-        "type": "ERC20"
+        "internalType": "contract ERC20",
+        "type": "address"
       },
       {
         "name": "_owner",
@@ -2376,7 +2391,7 @@
         "type": "uint256"
       }
     ],
-    "signature": "staticBalanceOf(ERC20,address)",
+    "signature": "staticBalanceOf(address,address)",
     "type": "function"
   },
   {
@@ -2385,7 +2400,8 @@
     "inputs": [
       {
         "name": "_token",
-        "type": "ERC20"
+        "internalType": "contract ERC20",
+        "type": "address"
       },
       {
         "name": "_owner",
@@ -2403,7 +2419,7 @@
         "type": "uint256"
       }
     ],
-    "signature": "staticAllowance(ERC20,address,address)",
+    "signature": "staticAllowance(address,address,address)",
     "type": "function"
   },
   {
@@ -2412,7 +2428,8 @@
     "inputs": [
       {
         "name": "_token",
-        "type": "ERC20"
+        "internalType": "contract ERC20",
+        "type": "address"
       }
     ],
     "name": "staticTotalSupply",
@@ -2422,7 +2439,7 @@
         "type": "uint256"
       }
     ],
-    "signature": "staticTotalSupply(ERC20)",
+    "signature": "staticTotalSupply(address)",
     "type": "function"
   },
   {
@@ -2516,7 +2533,7 @@
     "inputs": [
       {
         "name": "executor",
-        "type": "IEVMScriptExecutor"
+        "type": "address"
       }
     ],
     "name": "addScriptExecutor",
@@ -2526,7 +2543,7 @@
         "type": "uint256"
       }
     ],
-    "signature": "addScriptExecutor(IEVMScriptExecutor)",
+    "signature": "addScriptExecutor(address)",
     "type": "function"
   },
   {
@@ -2555,7 +2572,7 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "IEVMScriptExecutor"
+        "type": "address"
       }
     ],
     "signature": "getScriptExecutor(bytes)",
@@ -2600,7 +2617,7 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "IEVMScriptExecutor"
+        "type": "address"
       }
     ],
     "signature": "getEVMScriptExecutor(bytes)",
@@ -2614,7 +2631,7 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "IEVMScriptRegistry"
+        "type": "address"
       }
     ],
     "signature": "getEVMScriptRegistry()",
@@ -3663,7 +3680,8 @@
     "inputs": [
       {
         "name": "_token",
-        "type": "MiniMeToken"
+        "internalType": "contract MiniMeToken",
+        "type": "address"
       },
       {
         "name": "_supportRequiredPct",
@@ -3680,7 +3698,7 @@
     ],
     "name": "initialize",
     "outputs": [],
-    "signature": "initialize(MiniMeToken,uint64,uint64,uint64)",
+    "signature": "initialize(address,uint64,uint64,uint64)",
     "type": "function"
   },
   {
@@ -4072,7 +4090,8 @@
     "inputs": [
       {
         "name": "vote_",
-        "type": "Vote"
+        "internalType": "struct Vote",
+        "type": "tuple"
       }
     ],
     "name": "_isVoteOpen",
@@ -4082,7 +4101,7 @@
         "type": "bool"
       }
     ],
-    "signature": "_isVoteOpen(Vote)",
+    "signature": "_isVoteOpen(tuple)",
     "type": "function"
   },
   {
@@ -4309,7 +4328,8 @@
     "inputs": [
       {
         "name": "_vault",
-        "type": "Vault"
+        "internalType": "contract Vault",
+        "type": "address"
       },
       {
         "name": "_periodDuration",
@@ -4318,7 +4338,7 @@
     ],
     "name": "initialize",
     "outputs": [],
-    "signature": "initialize(Vault,uint64)",
+    "signature": "initialize(address,uint64)",
     "type": "function"
   },
   {
@@ -4946,7 +4966,8 @@
     "outputs": [
       {
         "name": "storage",
-        "type": "Period"
+        "internalType": "struct Period",
+        "type": "tuple"
       }
     ],
     "signature": "_newPeriod(uint64)",
@@ -5405,7 +5426,8 @@
     "inputs": [
       {
         "name": "_finance",
-        "type": "Finance"
+        "internalType": "contract Finance",
+        "type": "address"
       },
       {
         "name": "_denominationToken",
@@ -5413,7 +5435,8 @@
       },
       {
         "name": "_priceFeed",
-        "type": "IFeed"
+        "internalType": "contract IFeed",
+        "type": "address"
       },
       {
         "name": "_rateExpiryTime",
@@ -5422,7 +5445,7 @@
     ],
     "name": "initialize",
     "outputs": [],
-    "signature": "initialize(Finance,address,IFeed,uint64)",
+    "signature": "initialize(address,address,address,uint64)",
     "type": "function"
   },
   {
@@ -5447,12 +5470,13 @@
     "inputs": [
       {
         "name": "_feed",
-        "type": "IFeed"
+        "internalType": "contract Finance",
+        "type": "address"
       }
     ],
     "name": "setPriceFeed",
     "outputs": [],
-    "signature": "setPriceFeed(IFeed)",
+    "signature": "setPriceFeed(address)",
     "type": "function"
   },
   {
@@ -5598,7 +5622,8 @@
     "inputs": [
       {
         "name": "_type",
-        "type": "PaymentType"
+        "internalType": "enum PaymentType",
+        "type": "uint8"
       },
       {
         "name": "_requestedAmount",
@@ -5612,7 +5637,7 @@
     ],
     "name": "payday",
     "outputs": [],
-    "signature": "payday(PaymentType,uint256,uint256[])",
+    "signature": "payday(uint8,uint256,uint256[])",
     "type": "function"
   },
   {
@@ -5786,12 +5811,13 @@
     "inputs": [
       {
         "name": "_feed",
-        "type": "IFeed"
+        "internalType": "contract Finance",
+        "type": "address"
       }
     ],
     "name": "_setPriceFeed",
     "outputs": [],
-    "signature": "_setPriceFeed(IFeed)",
+    "signature": "_setPriceFeed(address)",
     "type": "function"
   },
   {
@@ -5926,7 +5952,8 @@
       },
       {
         "name": "_type",
-        "type": "PaymentType"
+        "internalType": "enum PaymentType",
+        "type": "uint8"
       },
       {
         "name": "_totalAmount",
@@ -5945,7 +5972,7 @@
         "type": "bool"
       }
     ],
-    "signature": "_transferTokensAmount(uint256,PaymentType,uint256,uint256[])",
+    "signature": "_transferTokensAmount(uint256,uint8,uint256,uint256[])",
     "type": "function"
   },
   {
@@ -5966,7 +5993,8 @@
     "inputs": [
       {
         "name": "_employee",
-        "type": "Employee"
+        "internalType": "struct Employee",
+        "type": "tuple"
       },
       {
         "name": "_paymentAmount",
@@ -5975,7 +6003,7 @@
     ],
     "name": "_updateEmployeeAccountingBasedOnPaidSalary",
     "outputs": [],
-    "signature": "_updateEmployeeAccountingBasedOnPaidSalary(Employee,uint256)",
+    "signature": "_updateEmployeeAccountingBasedOnPaidSalary(tuple,uint256)",
     "type": "function"
   },
   {
@@ -6003,12 +6031,13 @@
     "inputs": [
       {
         "name": "_employee",
-        "type": "Employee"
+        "internalType": "struct Employee",
+        "type": "tuple"
       }
     ],
     "name": "_ensureEmployeeTokenAllocationsIsValid",
     "outputs": [],
-    "signature": "_ensureEmployeeTokenAllocationsIsValid(Employee)",
+    "signature": "_ensureEmployeeTokenAllocationsIsValid(tuple)",
     "type": "function"
   },
   {
@@ -6017,7 +6046,8 @@
     "inputs": [
       {
         "name": "_employee",
-        "type": "Employee"
+        "internalType": "struct Employee",
+        "type": "tuple"
       }
     ],
     "name": "_isEmployeeActive",
@@ -6027,7 +6057,7 @@
         "type": "bool"
       }
     ],
-    "signature": "_isEmployeeActive(Employee)",
+    "signature": "_isEmployeeActive(tuple)",
     "type": "function"
   },
   {
@@ -6074,7 +6104,8 @@
     "inputs": [
       {
         "name": "_employee",
-        "type": "Employee"
+        "internalType": "struct Employee",
+        "type": "tuple"
       },
       {
         "name": "_capped",
@@ -6088,7 +6119,7 @@
         "type": "uint256"
       }
     ],
-    "signature": "_getOwedSalarySinceLastPayroll(Employee,bool)",
+    "signature": "_getOwedSalarySinceLastPayroll(tuple,bool)",
     "type": "function"
   },
   {
@@ -6097,7 +6128,8 @@
     "inputs": [
       {
         "name": "_employee",
-        "type": "Employee"
+        "internalType": "struct Employee",
+        "type": "tuple"
       }
     ],
     "name": "_getOwedPayrollPeriod",
@@ -6107,7 +6139,7 @@
         "type": "uint256"
       }
     ],
-    "signature": "_getOwedPayrollPeriod(Employee)",
+    "signature": "_getOwedPayrollPeriod(tuple)",
     "type": "function"
   },
   {
@@ -6116,7 +6148,8 @@
     "inputs": [
       {
         "name": "_employee",
-        "type": "Employee"
+        "internalType": "struct Employee",
+        "type": "tuple"
       }
     ],
     "name": "_getTotalOwedCappedSalary",
@@ -6126,7 +6159,7 @@
         "type": "uint256"
       }
     ],
-    "signature": "_getTotalOwedCappedSalary(Employee)",
+    "signature": "_getTotalOwedCappedSalary(tuple)",
     "type": "function"
   },
   {
@@ -6134,7 +6167,8 @@
     "inputs": [
       {
         "name": "_type",
-        "type": "PaymentType"
+        "internalType": "enum PaymentType",
+        "type": "uint8"
       }
     ],
     "name": "_paymentReferenceFor",
@@ -6144,7 +6178,7 @@
         "type": "string"
       }
     ],
-    "signature": "_paymentReferenceFor(PaymentType)",
+    "signature": "_paymentReferenceFor(uint8)",
     "type": "function"
   },
   {
@@ -6218,7 +6252,8 @@
     "inputs": [
       {
         "name": "_token",
-        "type": "MiniMeToken"
+        "internalType": "contract MiniMeToken",
+        "type": "address"
       },
       {
         "name": "_transferable",
@@ -6231,7 +6266,7 @@
     ],
     "name": "initialize",
     "outputs": [],
-    "signature": "initialize(MiniMeToken,bool,uint256)",
+    "signature": "initialize(address,bool,uint256)",
     "type": "function"
   },
   {
@@ -6783,7 +6818,8 @@
     "inputs": [
       {
         "name": "_token",
-        "type": "MiniMeToken"
+        "internalType": "contract MiniMeToken",
+        "type": "address"
       },
       {
         "name": "_minParticipationPct",
@@ -6796,7 +6832,7 @@
     ],
     "name": "initialize",
     "outputs": [],
-    "signature": "initialize(MiniMeToken,uint64,uint64)",
+    "signature": "initialize(address,uint64,uint64)",
     "type": "function"
   },
   {
@@ -7044,7 +7080,8 @@
     "inputs": [
       {
         "name": "_survey",
-        "type": "SurveyStruct"
+        "internalType": "struct SurveyStruct",
+        "type": "tuple"
       }
     ],
     "name": "_isSurveyOpen",
@@ -7054,7 +7091,7 @@
         "type": "bool"
       }
     ],
-    "signature": "_isSurveyOpen(SurveyStruct)",
+    "signature": "_isSurveyOpen(tuple)",
     "type": "function"
   },
   {
@@ -7675,7 +7712,8 @@
     "inputs": [
       {
         "name": "_param",
-        "type": "Param"
+        "internalType": "struct Param",
+        "type": "tuple"
       },
       {
         "name": "_paramsHash",
@@ -7706,7 +7744,7 @@
         "type": "bool"
       }
     ],
-    "signature": "_evalLogic(Param,bytes32,address,address,bytes32,uint256[])",
+    "signature": "_evalLogic(tuple,bytes32,address,address,bytes32,uint256[])",
     "type": "function"
   },
   {
@@ -7718,7 +7756,8 @@
       },
       {
         "name": "_op",
-        "type": "Op"
+        "internalType": "enum Op",
+        "type": "uint8"
       },
       {
         "name": "_b",
@@ -7732,7 +7771,7 @@
         "type": "bool"
       }
     ],
-    "signature": "compare(uint256,Op,uint256)",
+    "signature": "compare(uint256,uint8,uint256)",
     "type": "function"
   },
   {
@@ -7741,7 +7780,8 @@
     "inputs": [
       {
         "name": "_oracleAddr",
-        "type": "IACLOracle"
+        "internalType": "contract IACLOracle",
+        "type": "address"
       },
       {
         "name": "_who",
@@ -7768,7 +7808,7 @@
         "type": "bool"
       }
     ],
-    "signature": "checkOracle(IACLOracle,address,address,bytes32,uint256[])",
+    "signature": "checkOracle(address,address,address,bytes32,uint256[])",
     "type": "function"
   },
   {
@@ -8235,7 +8275,8 @@
     "inputs": [
       {
         "name": "_kernel",
-        "type": "IKernel"
+        "internalType": "contract IKernel",
+        "type": "address"
       },
       {
         "name": "_appId",
@@ -8246,10 +8287,11 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "AppProxyUpgradeable"
+        "internalType": "contract AppProxyUpgradeable",
+        "type": "address"
       }
     ],
-    "signature": "newAppProxy(IKernel,bytes32)",
+    "signature": "newAppProxy(address,bytes32)",
     "type": "function"
   },
   {
@@ -8257,7 +8299,8 @@
     "inputs": [
       {
         "name": "_kernel",
-        "type": "IKernel"
+        "internalType": "contract IKernel",
+        "type": "address"
       },
       {
         "name": "_appId",
@@ -8272,10 +8315,11 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "AppProxyUpgradeable"
+        "internalType": "contract AppProxyUpgradeable",
+        "type": "address"
       }
     ],
-    "signature": "newAppProxy(IKernel,bytes32,bytes)",
+    "signature": "newAppProxy(address,bytes32,bytes)",
     "type": "function"
   },
   {
@@ -8283,7 +8327,8 @@
     "inputs": [
       {
         "name": "_kernel",
-        "type": "IKernel"
+        "internalType": "contract IKernel",
+        "type": "address"
       },
       {
         "name": "_appId",
@@ -8294,10 +8339,11 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "AppProxyPinned"
+        "internalType": "contract AppProxyPinned",
+        "type": "address"
       }
     ],
-    "signature": "newAppProxyPinned(IKernel,bytes32)",
+    "signature": "newAppProxyPinned(address,bytes32)",
     "type": "function"
   },
   {
@@ -8305,7 +8351,8 @@
     "inputs": [
       {
         "name": "_kernel",
-        "type": "IKernel"
+        "internalType": "contract IKernel",
+        "type": "address"
       },
       {
         "name": "_appId",
@@ -8320,10 +8367,11 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "AppProxyPinned"
+        "internalType": "contract AppProxyPinned",
+        "type": "address"
       }
     ],
-    "signature": "newAppProxyPinned(IKernel,bytes32,bytes)",
+    "signature": "newAppProxyPinned(address,bytes32,bytes)",
     "type": "function"
   },
   {
@@ -8331,7 +8379,7 @@
     "inputs": [
       {
         "name": "_baseAcl",
-        "type": "IACL"
+        "type": "address"
       },
       {
         "name": "_permissionsCreator",
@@ -8340,7 +8388,7 @@
     ],
     "name": "initialize",
     "outputs": [],
-    "signature": "initialize(IACL,address)",
+    "signature": "initialize(address,address)",
     "type": "function"
   },
   {
@@ -8359,7 +8407,8 @@
     "outputs": [
       {
         "name": "appProxy",
-        "type": "ERCProxy"
+        "internalType": "contract ERCProxy",
+        "type": "address"
       }
     ],
     "signature": "newAppInstance(bytes32,address)",
@@ -8389,7 +8438,8 @@
     "outputs": [
       {
         "name": "appProxy",
-        "type": "ERCProxy"
+        "internalType": "contract ERCProxy",
+        "type": "address"
       }
     ],
     "signature": "newAppInstance(bytes32,address,bytes,bool)",
@@ -8411,7 +8461,8 @@
     "outputs": [
       {
         "name": "appProxy",
-        "type": "ERCProxy"
+        "internalType": "contract ERCProxy",
+        "type": "address"
       }
     ],
     "signature": "newPinnedAppInstance(bytes32,address)",
@@ -8441,7 +8492,8 @@
     "outputs": [
       {
         "name": "appProxy",
-        "type": "ERCProxy"
+        "internalType": "contract ERCProxy",
+        "type": "address"
       }
     ],
     "signature": "newPinnedAppInstance(bytes32,address,bytes,bool)",
@@ -8591,7 +8643,7 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "IACL"
+        "type": "address"
       }
     ],
     "signature": "acl()",
@@ -9018,12 +9070,13 @@
     "inputs": [
       {
         "name": "ensAddr",
-        "type": "AbstractENS"
+        "internalType": "contract AbstractENS",
+        "type": "address"
       }
     ],
     "name": "PublicResolver",
     "outputs": [],
-    "signature": "PublicResolver(AbstractENS)",
+    "signature": "PublicResolver(address)",
     "type": "function"
   },
   {
@@ -9490,12 +9543,12 @@
     "inputs": [
       {
         "name": "_executor",
-        "type": "IEVMScriptExecutor"
+        "type": "address"
       }
     ],
     "name": "addScriptExecutor",
     "outputs": [],
-    "signature": "addScriptExecutor(IEVMScriptExecutor)",
+    "signature": "addScriptExecutor(address)",
     "type": "function"
   },
   {
@@ -9537,7 +9590,7 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "IEVMScriptExecutor"
+        "type": "address"
       }
     ],
     "signature": "getScriptExecutor(bytes)",
@@ -9612,17 +9665,19 @@
     "inputs": [
       {
         "name": "_dao",
-        "type": "Kernel"
+        "internalType": "contract Kernel",
+        "type": "address"
       }
     ],
     "name": "newEVMScriptRegistry",
     "outputs": [
       {
         "name": "reg",
-        "type": "EVMScriptRegistry"
+        "internalType": "contract EVMScriptRegistry",
+        "type": "address"
       }
     ],
-    "signature": "newEVMScriptRegistry(Kernel)",
+    "signature": "newEVMScriptRegistry(address)",
     "type": "function"
   },
   {
@@ -9637,7 +9692,8 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "Kernel"
+        "internalType": "contract Kernel",
+        "type": "address"
       }
     ],
     "signature": "newDAO(address)",
@@ -9764,12 +9820,13 @@
       },
       {
         "name": "_resolver",
-        "type": "IPublicResolver"
+        "internalType": "contract IPublicResolver",
+        "type": "address"
       }
     ],
     "name": "registerWithResolver",
     "outputs": [],
-    "signature": "registerWithResolver(bytes32,address,IPublicResolver)",
+    "signature": "registerWithResolver(bytes32,address,address)",
     "type": "function"
   },
   {
@@ -9779,11 +9836,13 @@
     "outputs": [
       {
         "name": "dao",
-        "type": "Kernel"
+        "internalType": "contract Kernel",
+        "type": "address"
       },
       {
         "name": "acl",
-        "type": "ACL"
+        "internalType": "contract ACL",
+        "type": "address"
       }
     ],
     "signature": "_createDAO()",
@@ -9794,7 +9853,8 @@
     "inputs": [
       {
         "name": "_acl",
-        "type": "ACL"
+        "internalType": "contract ACL",
+        "type": "address"
       },
       {
         "is_array": true,
@@ -9816,7 +9876,7 @@
     ],
     "name": "_createPermissions",
     "outputs": [],
-    "signature": "_createPermissions(ACL,address[],address,bytes32,address)",
+    "signature": "_createPermissions(address,address[],address,bytes32,address)",
     "type": "function"
   },
   {
@@ -9824,7 +9884,8 @@
     "inputs": [
       {
         "name": "_acl",
-        "type": "ACL"
+        "internalType": "contract ACL",
+        "type": "address"
       },
       {
         "name": "_app",
@@ -9837,7 +9898,7 @@
     ],
     "name": "_createPermissionForTemplate",
     "outputs": [],
-    "signature": "_createPermissionForTemplate(ACL,address,bytes32)",
+    "signature": "_createPermissionForTemplate(address,address,bytes32)",
     "type": "function"
   },
   {
@@ -9845,7 +9906,8 @@
     "inputs": [
       {
         "name": "_acl",
-        "type": "ACL"
+        "internalType": "contract ACL",
+        "type": "address"
       },
       {
         "name": "_app",
@@ -9858,7 +9920,7 @@
     ],
     "name": "_removePermissionFromTemplate",
     "outputs": [],
-    "signature": "_removePermissionFromTemplate(ACL,address,bytes32)",
+    "signature": "_removePermissionFromTemplate(address,address,bytes32)",
     "type": "function"
   },
   {
@@ -9866,7 +9928,8 @@
     "inputs": [
       {
         "name": "_dao",
-        "type": "Kernel"
+        "internalType": "contract Kernel",
+        "type": "address"
       },
       {
         "name": "_to",
@@ -9875,7 +9938,7 @@
     ],
     "name": "_transferRootPermissionsFromTemplateAndFinalizeDAO",
     "outputs": [],
-    "signature": "_transferRootPermissionsFromTemplateAndFinalizeDAO(Kernel,address)",
+    "signature": "_transferRootPermissionsFromTemplateAndFinalizeDAO(address,address)",
     "type": "function"
   },
   {
@@ -9883,7 +9946,8 @@
     "inputs": [
       {
         "name": "_dao",
-        "type": "Kernel"
+        "internalType": "contract Kernel",
+        "type": "address"
       },
       {
         "name": "_to",
@@ -9896,7 +9960,7 @@
     ],
     "name": "_transferRootPermissionsFromTemplateAndFinalizeDAO",
     "outputs": [],
-    "signature": "_transferRootPermissionsFromTemplateAndFinalizeDAO(Kernel,address,address)",
+    "signature": "_transferRootPermissionsFromTemplateAndFinalizeDAO(address,address,address)",
     "type": "function"
   },
   {
@@ -9904,7 +9968,8 @@
     "inputs": [
       {
         "name": "_acl",
-        "type": "ACL"
+        "internalType": "contract ACL",
+        "type": "address"
       },
       {
         "name": "_app",
@@ -9925,7 +9990,7 @@
     ],
     "name": "_transferPermissionFromTemplate",
     "outputs": [],
-    "signature": "_transferPermissionFromTemplate(ACL,address,address,bytes32,address)",
+    "signature": "_transferPermissionFromTemplate(address,address,address,bytes32,address)",
     "type": "function"
   },
   {
@@ -9933,17 +9998,19 @@
     "inputs": [
       {
         "name": "_dao",
-        "type": "Kernel"
+        "internalType": "contract Kernel",
+        "type": "address"
       }
     ],
     "name": "_installDefaultAgentApp",
     "outputs": [
       {
         "name": "ret_0",
-        "type": "Agent"
+        "internalType": "contract Agent",
+        "type": "address"
       }
     ],
-    "signature": "_installDefaultAgentApp(Kernel)",
+    "signature": "_installDefaultAgentApp(address)",
     "type": "function"
   },
   {
@@ -9951,17 +10018,19 @@
     "inputs": [
       {
         "name": "_dao",
-        "type": "Kernel"
+        "internalType": "contract Kernel",
+        "type": "address"
       }
     ],
     "name": "_installNonDefaultAgentApp",
     "outputs": [
       {
         "name": "ret_0",
-        "type": "Agent"
+        "internalType": "contract Agent",
+        "type": "address"
       }
     ],
-    "signature": "_installNonDefaultAgentApp(Kernel)",
+    "signature": "_installNonDefaultAgentApp(address)",
     "type": "function"
   },
   {
@@ -9969,11 +10038,13 @@
     "inputs": [
       {
         "name": "_acl",
-        "type": "ACL"
+        "internalType": "contract ACL",
+        "type": "address"
       },
       {
         "name": "_agent",
-        "type": "Agent"
+        "internalType": "contract Agent",
+        "type": "address"
       },
       {
         "name": "_grantee",
@@ -9986,7 +10057,7 @@
     ],
     "name": "_createAgentPermissions",
     "outputs": [],
-    "signature": "_createAgentPermissions(ACL,Agent,address,address)",
+    "signature": "_createAgentPermissions(address,address,address,address)",
     "type": "function"
   },
   {
@@ -9994,17 +10065,19 @@
     "inputs": [
       {
         "name": "_dao",
-        "type": "Kernel"
+        "internalType": "contract Kernel",
+        "type": "address"
       }
     ],
     "name": "_installVaultApp",
     "outputs": [
       {
         "name": "ret_0",
-        "type": "Vault"
+        "internalType": "contract Vault",
+        "type": "address"
       }
     ],
-    "signature": "_installVaultApp(Kernel)",
+    "signature": "_installVaultApp(address)",
     "type": "function"
   },
   {
@@ -10012,11 +10085,13 @@
     "inputs": [
       {
         "name": "_acl",
-        "type": "ACL"
+        "internalType": "contract ACL",
+        "type": "address"
       },
       {
         "name": "_vault",
-        "type": "Vault"
+        "internalType": "contract Vault",
+        "type": "address"
       },
       {
         "name": "_grantee",
@@ -10029,7 +10104,7 @@
     ],
     "name": "_createVaultPermissions",
     "outputs": [],
-    "signature": "_createVaultPermissions(ACL,Vault,address,address)",
+    "signature": "_createVaultPermissions(address,address,address,address)",
     "type": "function"
   },
   {
@@ -10037,11 +10112,13 @@
     "inputs": [
       {
         "name": "_dao",
-        "type": "Kernel"
+        "internalType": "contract Kernel",
+        "type": "address"
       },
       {
         "name": "_token",
-        "type": "MiniMeToken"
+        "internalType": "contract MiniMeToken",
+        "type": "address"
       },
       {
         "is_array": true,
@@ -10053,10 +10130,11 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "Voting"
+        "internalType": "contract Voting",
+        "type": "address"
       }
     ],
-    "signature": "_installVotingApp(Kernel,MiniMeToken,uint64[3])",
+    "signature": "_installVotingApp(address,address,uint64[3])",
     "type": "function"
   },
   {
@@ -10064,11 +10142,13 @@
     "inputs": [
       {
         "name": "_dao",
-        "type": "Kernel"
+        "internalType": "contract Kernel",
+        "type": "address"
       },
       {
         "name": "_token",
-        "type": "MiniMeToken"
+        "internalType": "contract MiniMeToken",
+        "type": "address"
       },
       {
         "name": "_support",
@@ -10087,10 +10167,11 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "Voting"
+        "internalType": "contract Voting",
+        "type": "address"
       }
     ],
-    "signature": "_installVotingApp(Kernel,MiniMeToken,uint64,uint64,uint64)",
+    "signature": "_installVotingApp(address,address,uint64,uint64,uint64)",
     "type": "function"
   },
   {
@@ -10098,11 +10179,13 @@
     "inputs": [
       {
         "name": "_acl",
-        "type": "ACL"
+        "internalType": "contract ACL",
+        "type": "address"
       },
       {
         "name": "_voting",
-        "type": "Voting"
+        "internalType": "contract Voting",
+        "type": "address"
       },
       {
         "name": "_settingsGrantee",
@@ -10119,7 +10202,7 @@
     ],
     "name": "_createVotingPermissions",
     "outputs": [],
-    "signature": "_createVotingPermissions(ACL,Voting,address,address,address)",
+    "signature": "_createVotingPermissions(address,address,address,address,address)",
     "type": "function"
   },
   {
@@ -10127,11 +10210,13 @@
     "inputs": [
       {
         "name": "_dao",
-        "type": "Kernel"
+        "internalType": "contract Kernel",
+        "type": "address"
       },
       {
         "name": "_token",
-        "type": "MiniMeToken"
+        "internalType": "contract MiniMeToken",
+        "type": "address"
       },
       {
         "name": "_minParticipationPct",
@@ -10146,10 +10231,11 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "Survey"
+        "internalType": "contract Survey",
+        "type": "address"
       }
     ],
-    "signature": "_installSurveyApp(Kernel,MiniMeToken,uint64,uint64)",
+    "signature": "_installSurveyApp(address,address,uint64,uint64)",
     "type": "function"
   },
   {
@@ -10157,11 +10243,13 @@
     "inputs": [
       {
         "name": "_acl",
-        "type": "ACL"
+        "internalType": "contract ACL",
+        "type": "address"
       },
       {
         "name": "_survey",
-        "type": "Survey"
+        "internalType": "contract Survey",
+        "type": "address"
       },
       {
         "name": "_grantee",
@@ -10174,7 +10262,7 @@
     ],
     "name": "_createSurveyPermissions",
     "outputs": [],
-    "signature": "_createSurveyPermissions(ACL,Survey,address,address)",
+    "signature": "_createSurveyPermissions(address,address,address,address)",
     "type": "function"
   },
   {
@@ -10182,11 +10270,13 @@
     "inputs": [
       {
         "name": "_dao",
-        "type": "Kernel"
+        "internalType": "contract Kernel",
+        "type": "address"
       },
       {
         "name": "_finance",
-        "type": "Finance"
+        "internalType": "contract Finance",
+        "type": "address"
       },
       {
         "name": "_denominationToken",
@@ -10194,7 +10284,8 @@
       },
       {
         "name": "_priceFeed",
-        "type": "IFeed"
+        "internalType": "contract Finance",
+        "type": "address"
       },
       {
         "name": "_rateExpiryTime",
@@ -10205,10 +10296,11 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "Payroll"
+        "internalType": "contract Payroll",
+        "type": "address"
       }
     ],
-    "signature": "_installPayrollApp(Kernel,Finance,address,IFeed,uint64)",
+    "signature": "_installPayrollApp(address,address,address,address,uint64)",
     "type": "function"
   },
   {
@@ -10216,11 +10308,13 @@
     "inputs": [
       {
         "name": "_acl",
-        "type": "ACL"
+        "internalType": "contract ACL",
+        "type": "address"
       },
       {
         "name": "_payroll",
-        "type": "Payroll"
+        "internalType": "contract Payroll",
+        "type": "address"
       },
       {
         "name": "_employeeManager",
@@ -10237,7 +10331,7 @@
     ],
     "name": "_createPayrollPermissions",
     "outputs": [],
-    "signature": "_createPayrollPermissions(ACL,Payroll,address,address,address)",
+    "signature": "_createPayrollPermissions(address,address,address,address,address)",
     "type": "function"
   },
   {
@@ -10257,7 +10351,8 @@
       },
       {
         "name": "priceFeed",
-        "type": "IFeed"
+        "internalType": "contract Finance",
+        "type": "address"
       },
       {
         "name": "rateExpiryTime",
@@ -10276,11 +10371,13 @@
     "inputs": [
       {
         "name": "_dao",
-        "type": "Kernel"
+        "internalType": "contract Kernel",
+        "type": "address"
       },
       {
         "name": "_vault",
-        "type": "Vault"
+        "internalType": "contract Vault",
+        "type": "address"
       },
       {
         "name": "_periodDuration",
@@ -10291,10 +10388,11 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "Finance"
+        "internalType": "contract Finance",
+        "type": "address"
       }
     ],
-    "signature": "_installFinanceApp(Kernel,Vault,uint64)",
+    "signature": "_installFinanceApp(address,address,uint64)",
     "type": "function"
   },
   {
@@ -10302,11 +10400,13 @@
     "inputs": [
       {
         "name": "_acl",
-        "type": "ACL"
+        "internalType": "contract ACL",
+        "type": "address"
       },
       {
         "name": "_finance",
-        "type": "Finance"
+        "internalType": "contract Finance",
+        "type": "address"
       },
       {
         "name": "_grantee",
@@ -10319,7 +10419,7 @@
     ],
     "name": "_createFinancePermissions",
     "outputs": [],
-    "signature": "_createFinancePermissions(ACL,Finance,address,address)",
+    "signature": "_createFinancePermissions(address,address,address,address)",
     "type": "function"
   },
   {
@@ -10327,11 +10427,13 @@
     "inputs": [
       {
         "name": "_acl",
-        "type": "ACL"
+        "internalType": "contract ACL",
+        "type": "address"
       },
       {
         "name": "_finance",
-        "type": "Finance"
+        "internalType": "contract Finance",
+        "type": "address"
       },
       {
         "name": "_grantee",
@@ -10344,7 +10446,7 @@
     ],
     "name": "_createFinanceCreatePaymentsPermission",
     "outputs": [],
-    "signature": "_createFinanceCreatePaymentsPermission(ACL,Finance,address,address)",
+    "signature": "_createFinanceCreatePaymentsPermission(address,address,address,address)",
     "type": "function"
   },
   {
@@ -10352,11 +10454,13 @@
     "inputs": [
       {
         "name": "_acl",
-        "type": "ACL"
+        "internalType": "contract ACL",
+        "type": "address"
       },
       {
         "name": "_finance",
-        "type": "Finance"
+        "internalType": "contract Finance",
+        "type": "address"
       },
       {
         "name": "_to",
@@ -10365,7 +10469,7 @@
     ],
     "name": "_grantCreatePaymentPermission",
     "outputs": [],
-    "signature": "_grantCreatePaymentPermission(ACL,Finance,address)",
+    "signature": "_grantCreatePaymentPermission(address,address,address)",
     "type": "function"
   },
   {
@@ -10373,11 +10477,13 @@
     "inputs": [
       {
         "name": "_acl",
-        "type": "ACL"
+        "internalType": "contract ACL",
+        "type": "address"
       },
       {
         "name": "_finance",
-        "type": "Finance"
+        "internalType": "contract Finance",
+        "type": "address"
       },
       {
         "name": "_manager",
@@ -10386,7 +10492,7 @@
     ],
     "name": "_transferCreatePaymentManagerFromTemplate",
     "outputs": [],
-    "signature": "_transferCreatePaymentManagerFromTemplate(ACL,Finance,address)",
+    "signature": "_transferCreatePaymentManagerFromTemplate(address,address,address)",
     "type": "function"
   },
   {
@@ -10394,11 +10500,13 @@
     "inputs": [
       {
         "name": "_dao",
-        "type": "Kernel"
+        "internalType": "contract Kernel",
+        "type": "address"
       },
       {
         "name": "_token",
-        "type": "MiniMeToken"
+        "internalType": "contract MiniMeToken",
+        "type": "address"
       },
       {
         "name": "_transferable",
@@ -10413,10 +10521,11 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "TokenManager"
+        "internalType": "contract TokenManager",
+        "type": "address"
       }
     ],
-    "signature": "_installTokenManagerApp(Kernel,MiniMeToken,bool,uint256)",
+    "signature": "_installTokenManagerApp(address,address,bool,uint256)",
     "type": "function"
   },
   {
@@ -10424,11 +10533,13 @@
     "inputs": [
       {
         "name": "_acl",
-        "type": "ACL"
+        "internalType": "contract ACL",
+        "type": "address"
       },
       {
         "name": "_tokenManager",
-        "type": "TokenManager"
+        "internalType": "contract TokenManager",
+        "type": "address"
       },
       {
         "name": "_grantee",
@@ -10441,7 +10552,7 @@
     ],
     "name": "_createTokenManagerPermissions",
     "outputs": [],
-    "signature": "_createTokenManagerPermissions(ACL,TokenManager,address,address)",
+    "signature": "_createTokenManagerPermissions(address,address,address,address)",
     "type": "function"
   },
   {
@@ -10449,11 +10560,13 @@
     "inputs": [
       {
         "name": "_acl",
-        "type": "ACL"
+        "internalType": "contract ACL",
+        "type": "address"
       },
       {
         "name": "_tokenManager",
-        "type": "TokenManager"
+        "internalType": "contract TokenManager",
+        "type": "address"
       },
       {
         "is_array": true,
@@ -10468,7 +10581,7 @@
     ],
     "name": "_mintTokens",
     "outputs": [],
-    "signature": "_mintTokens(ACL,TokenManager,address[],uint256[])",
+    "signature": "_mintTokens(address,address,address[],uint256[])",
     "type": "function"
   },
   {
@@ -10476,11 +10589,13 @@
     "inputs": [
       {
         "name": "_acl",
-        "type": "ACL"
+        "internalType": "contract ACL",
+        "type": "address"
       },
       {
         "name": "_tokenManager",
-        "type": "TokenManager"
+        "internalType": "contract TokenManager",
+        "type": "address"
       },
       {
         "is_array": true,
@@ -10494,7 +10609,7 @@
     ],
     "name": "_mintTokens",
     "outputs": [],
-    "signature": "_mintTokens(ACL,TokenManager,address[],uint256)",
+    "signature": "_mintTokens(address,address,address[],uint256)",
     "type": "function"
   },
   {
@@ -10502,11 +10617,13 @@
     "inputs": [
       {
         "name": "_acl",
-        "type": "ACL"
+        "internalType": "contract ACL",
+        "type": "address"
       },
       {
         "name": "_tokenManager",
-        "type": "TokenManager"
+        "internalType": "contract TokenManager",
+        "type": "address"
       },
       {
         "name": "_holder",
@@ -10519,7 +10636,7 @@
     ],
     "name": "_mintTokens",
     "outputs": [],
-    "signature": "_mintTokens(ACL,TokenManager,address,uint256)",
+    "signature": "_mintTokens(address,address,address,uint256)",
     "type": "function"
   },
   {
@@ -10527,7 +10644,8 @@
     "inputs": [
       {
         "name": "_acl",
-        "type": "ACL"
+        "internalType": "contract ACL",
+        "type": "address"
       },
       {
         "name": "_grantee",
@@ -10540,7 +10658,7 @@
     ],
     "name": "_createEvmScriptsRegistryPermissions",
     "outputs": [],
-    "signature": "_createEvmScriptsRegistryPermissions(ACL,address,address)",
+    "signature": "_createEvmScriptsRegistryPermissions(address,address,address)",
     "type": "function"
   },
   {
@@ -10548,7 +10666,8 @@
     "inputs": [
       {
         "name": "_dao",
-        "type": "Kernel"
+        "internalType": "contract Kernel",
+        "type": "address"
       },
       {
         "name": "_appId",
@@ -10562,7 +10681,7 @@
         "type": "address"
       }
     ],
-    "signature": "_installNonDefaultApp(Kernel,bytes32)",
+    "signature": "_installNonDefaultApp(address,bytes32)",
     "type": "function"
   },
   {
@@ -10570,7 +10689,8 @@
     "inputs": [
       {
         "name": "_dao",
-        "type": "Kernel"
+        "internalType": "contract Kernel",
+        "type": "address"
       },
       {
         "name": "_appId",
@@ -10588,7 +10708,7 @@
         "type": "address"
       }
     ],
-    "signature": "_installNonDefaultApp(Kernel,bytes32,bytes)",
+    "signature": "_installNonDefaultApp(address,bytes32,bytes)",
     "type": "function"
   },
   {
@@ -10596,7 +10716,8 @@
     "inputs": [
       {
         "name": "_dao",
-        "type": "Kernel"
+        "internalType": "contract Kernel",
+        "type": "address"
       },
       {
         "name": "_appId",
@@ -10610,7 +10731,7 @@
         "type": "address"
       }
     ],
-    "signature": "_installDefaultApp(Kernel,bytes32)",
+    "signature": "_installDefaultApp(address,bytes32)",
     "type": "function"
   },
   {
@@ -10618,7 +10739,8 @@
     "inputs": [
       {
         "name": "_dao",
-        "type": "Kernel"
+        "internalType": "contract Kernel",
+        "type": "address"
       },
       {
         "name": "_appId",
@@ -10636,7 +10758,7 @@
         "type": "address"
       }
     ],
-    "signature": "_installDefaultApp(Kernel,bytes32,bytes)",
+    "signature": "_installDefaultApp(address,bytes32,bytes)",
     "type": "function"
   },
   {
@@ -10644,7 +10766,8 @@
     "inputs": [
       {
         "name": "_dao",
-        "type": "Kernel"
+        "internalType": "contract Kernel",
+        "type": "address"
       },
       {
         "name": "_appId",
@@ -10666,7 +10789,7 @@
         "type": "address"
       }
     ],
-    "signature": "_installApp(Kernel,bytes32,bytes,bool)",
+    "signature": "_installApp(address,bytes32,bytes,bool)",
     "type": "function"
   },
   {
@@ -10708,7 +10831,8 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MiniMeToken"
+        "internalType": "contract MiniMeToken",
+        "type": "address"
       }
     ],
     "signature": "_createToken(string,string,uint8)",
@@ -10845,7 +10969,8 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MiniMeToken"
+        "internalType": "contract MiniMeToken",
+        "type": "address"
       }
     ],
     "signature": "newToken(string,string)",
@@ -10923,11 +11048,13 @@
     "inputs": [
       {
         "name": "_dao",
-        "type": "Kernel"
+        "internalType": "contract Kernel",
+        "type": "address"
       },
       {
         "name": "_acl",
-        "type": "ACL"
+        "internalType": "contract ACL",
+        "type": "address"
       },
       {
         "is_array": true,
@@ -10952,14 +11079,16 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "Finance"
+        "internalType": "contract Finance",
+        "type": "address"
       },
       {
         "name": "ret_1",
-        "type": "Voting"
+        "internalType": "contract Voting",
+        "type": "address"
       }
     ],
-    "signature": "_setupApps(Kernel,ACL,address[],uint64[3],uint64,bool)",
+    "signature": "_setupApps(address,address,address[],uint64[3],uint64,bool)",
     "type": "function"
   },
   {
@@ -10967,19 +11096,23 @@
     "inputs": [
       {
         "name": "_dao",
-        "type": "Kernel"
+        "internalType": "contract Kernel",
+        "type": "address"
       },
       {
         "name": "_acl",
-        "type": "ACL"
+        "internalType": "contract ACL",
+        "type": "address"
       },
       {
         "name": "_finance",
-        "type": "Finance"
+        "internalType": "contract Finance",
+        "type": "address"
       },
       {
         "name": "_voting",
-        "type": "Voting"
+        "internalType": "contract Voting",
+        "type": "address"
       },
       {
         "is_array": true,
@@ -10989,7 +11122,7 @@
     ],
     "name": "_setupPayrollApp",
     "outputs": [],
-    "signature": "_setupPayrollApp(Kernel,ACL,Finance,Voting,uint256[4])",
+    "signature": "_setupPayrollApp(address,address,address,address,uint256[4])",
     "type": "function"
   },
   {
@@ -10997,23 +11130,28 @@
     "inputs": [
       {
         "name": "_acl",
-        "type": "ACL"
+        "internalType": "contract ACL",
+        "type": "address"
       },
       {
         "name": "_agentOrVault",
-        "type": "Vault"
+        "internalType": "contract Vault",
+        "type": "address"
       },
       {
         "name": "_voting",
-        "type": "Voting"
+        "internalType": "contract Voting",
+        "type": "address"
       },
       {
         "name": "_finance",
-        "type": "Finance"
+        "internalType": "contract Finance",
+        "type": "address"
       },
       {
         "name": "_tokenManager",
-        "type": "TokenManager"
+        "internalType": "contract TokenManager",
+        "type": "address"
       },
       {
         "name": "_useAgentAsVault",
@@ -11022,7 +11160,7 @@
     ],
     "name": "_setupPermissions",
     "outputs": [],
-    "signature": "_setupPermissions(ACL,Vault,Voting,Finance,TokenManager,bool)",
+    "signature": "_setupPermissions(address,address,address,address,address,bool)",
     "type": "function"
   },
   {

@@ -70,16 +70,16 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if (fieldName % "abi_source") {
-                return abi_source;
+            if (fieldName % "abiSource") {
+                return abiSource;
             }
             if (fieldName % "anonymous") {
-                return bool_2_Str(anonymous);
+                return bool_2_Str_t(anonymous);
             }
             break;
         case 'c':
             if (fieldName % "constant") {
-                return bool_2_Str(constant);
+                return bool_2_Str_t(constant);
             }
             break;
         case 'e':
@@ -101,12 +101,12 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
                 }
                 return retS;
             }
-            if (fieldName % "inputs_dict") {
+            if (fieldName % "inputsDict") {
                 for (size_t i = 0; i < inputs.size(); i++)
-                    ((CFunction*)this)->inputs_dict[inputs[i].name] = inputs[i].value;
+                    ((CFunction*)this)->inputsDict[inputs[i].name] = inputs[i].value;
                 ostringstream os;
                 JsonWriter writer;
-                writer.writeJson(os, inputs_dict);
+                writer.writeJson(os, inputsDict);
                 string_q str = os.str();
                 while (startsWith(str, '\n') || startsWith(str, ' '))
                     str = trim(trim(str, '\n'), ' ');
@@ -137,12 +137,12 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
                 }
                 return retS;
             }
-            if (fieldName % "outputs_dict") {
+            if (fieldName % "outputsDict") {
                 for (size_t i = 0; i < outputs.size(); i++)
-                    ((CFunction*)this)->outputs_dict[outputs[i].name] = outputs[i].value;
+                    ((CFunction*)this)->outputsDict[outputs[i].name] = outputs[i].value;
                 ostringstream os;
                 JsonWriter writer;
-                writer.writeJson(os, outputs_dict);
+                writer.writeJson(os, outputsDict);
                 string_q str = os.str();
                 while (startsWith(str, '\n') || startsWith(str, ' '))
                     str = trim(trim(str, '\n'), ' ');
@@ -214,8 +214,8 @@ bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fiel
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if (fieldName % "abi_source") {
-                abi_source = fieldValue;
+            if (fieldName % "abiSource") {
+                abiSource = fieldValue;
                 return true;
             }
             if (fieldName % "anonymous") {
@@ -245,8 +245,8 @@ bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fiel
                 }
                 return true;
             }
-            if (fieldName % "inputs_dict") {
-                inputs_dict = fieldValue;
+            if (fieldName % "inputsDict") {
+                inputsDict = fieldValue;
                 return true;
             }
             break;
@@ -272,8 +272,8 @@ bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fiel
                 }
                 return true;
             }
-            if (fieldName % "outputs_dict") {
-                outputs_dict = fieldValue;
+            if (fieldName % "outputsDict") {
+                outputsDict = fieldValue;
                 return true;
             }
             break;
@@ -340,7 +340,7 @@ bool CFunction::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> name;
     archive >> type;
-    archive >> abi_source;
+    archive >> abiSource;
     archive >> anonymous;
     archive >> constant;
     archive >> stateMutability;
@@ -349,8 +349,8 @@ bool CFunction::Serialize(CArchive& archive) {
     // archive >> message;
     archive >> inputs;
     archive >> outputs;
-    // archive >> inputs_dict;
-    // archive >> outputs_dict;
+    // archive >> inputsDict;
+    // archive >> outputsDict;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -366,7 +366,7 @@ bool CFunction::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << name;
     archive << type;
-    archive << abi_source;
+    archive << abiSource;
     archive << anonymous;
     archive << constant;
     archive << stateMutability;
@@ -375,8 +375,8 @@ bool CFunction::SerializeC(CArchive& archive) const {
     // archive << message;
     archive << inputs;
     archive << outputs;
-    // archive << inputs_dict;
-    // archive << outputs_dict;
+    // archive << inputsDict;
+    // archive << outputsDict;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -428,7 +428,7 @@ void CFunction::registerClass(void) {
     ADD_FIELD(CFunction, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CFunction, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CFunction, "abi_source", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CFunction, "abiSource", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "anonymous", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "constant", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "stateMutability", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -438,10 +438,10 @@ void CFunction::registerClass(void) {
     HIDE_FIELD(CFunction, "message");
     ADD_FIELD(CFunction, "inputs", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "outputs", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CFunction, "inputs_dict", T_JSONVAL | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CFunction, "inputs_dict");
-    ADD_FIELD(CFunction, "outputs_dict", T_JSONVAL | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CFunction, "outputs_dict");
+    ADD_FIELD(CFunction, "inputsDict", T_JSONVAL | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CFunction, "inputsDict");
+    ADD_FIELD(CFunction, "outputsDict", T_JSONVAL | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CFunction, "outputsDict");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CFunction, "schema");
@@ -452,18 +452,14 @@ void CFunction::registerClass(void) {
     builtIns.push_back(_biCFunction);
 
     // EXISTING_CODE
-    ADD_FIELD(CFunction, "input_names", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CFunction, "input_names");
-    ADD_FIELD(CFunction, "output_names", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CFunction, "output_names");
     ADD_FIELD(CFunction, "declaration", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CFunction, "declaration");
     HIDE_FIELD(CFunction, "anonymous");
     HIDE_FIELD(CFunction, "inputs");
-    SHOW_FIELD(CFunction, "inputs_dict")
+    SHOW_FIELD(CFunction, "inputsDict")
     HIDE_FIELD(CFunction, "outputs");
-    SHOW_FIELD(CFunction, "outputs_dict")
-    HIDE_FIELD(CFunction, "abi_source");
+    SHOW_FIELD(CFunction, "outputsDict")
+    HIDE_FIELD(CFunction, "abiSource");
     // EXISTING_CODE
 }
 
@@ -489,28 +485,6 @@ string_q nextFunctionChunk_custom(const string_q& fieldIn, const void* dataPtr) 
             case 'd':
                 if (fieldIn % "declaration") {
                     return fun->getSignature(SIG_FTYPE | SIG_FNAME | SIG_ITYPE | SIG_INAME | SIG_IINDEXED);
-                }
-                break;
-            case 'i':
-                if (fieldIn % "input_names") {
-                    string_q ret;
-                    for (size_t i = 0; i < fun->inputs.size(); i++) {
-                        ret += fun->inputs[i].name;
-                        if (i < fun->inputs.size())
-                            ret += ",";
-                    }
-                    return ret;
-                }
-                break;
-            case 'o':
-                if (fieldIn % "output_names") {
-                    string_q ret;
-                    for (size_t i = 0; i < fun->outputs.size(); i++) {
-                        ret += fun->outputs[i].name;
-                        if (i < fun->outputs.size())
-                            ret += ",";
-                    }
-                    return ret;
                 }
                 break;
             // EXISTING_CODE
@@ -607,14 +581,10 @@ const CBaseNode* CFunction::getObjectAt(const string_q& fieldName, size_t index)
 
 //---------------------------------------------------------------------------
 const char* STR_DISPLAY_FUNCTION =
-    "[{ABI_SOURCE}]\t"
-    "[{NAME}]\t"
-    "[{TYPE}]\t"
-    "[{STATEMUTABILITY}]\t"
-    "[{SIGNATURE}]\t"
     "[{ENCODING}]\t"
-    "[{INPUTS}]\t"
-    "[{OUTPUTS}]";
+    "[{TYPE}]\t"
+    "[{NAME}]\t"
+    "[{SIGNATURE}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

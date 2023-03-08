@@ -39,7 +39,7 @@ type RawTrace struct {
 
 type SimpleTrace struct {
 	Action           *SimpleTraceAction `json:"action"`
-	ArticulatedTrace *SimpleFunction    `json:"articulatedTrace"`
+	ArticulatedTrace *SimpleFunction    `json:"articulatedTrace,omitempty"`
 	BlockHash        common.Hash        `json:"blockHash"`
 	BlockNumber      uint64             `json:"blockNumber"`
 	CompressedTrace  string             `json:"compressedTrace,omitempty"`
@@ -68,16 +68,15 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 
 	var model map[string]interface{}
 
+	// TODO: We can probably change the output of the traces to remove this special case
 	if extraOptions["tracesTransactionsFormat"] == true {
 		model = map[string]interface{}{
-			"articulatedTrace": s.ArticulatedTrace,
-			"result":           s.Result,
-			"subtraces":        s.Subtraces,
-			"timestamp":        s.Timestamp,
+			"result":    s.Result,
+			"subtraces": s.Subtraces,
+			"timestamp": s.Timestamp,
 		}
 	} else {
 		model = map[string]interface{}{
-			"articulatedTrace": s.ArticulatedTrace,
 			"blockHash":        s.BlockHash,
 			"blockNumber":      s.BlockNumber,
 			"result":           s.Result,
@@ -125,10 +124,12 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 			inputModels := ParametersToMap(s.ArticulatedTrace.Inputs)
 			outputModels := ParametersToMap(s.ArticulatedTrace.Outputs)
 			articulatedTrace := map[string]interface{}{
-				"name":            s.ArticulatedTrace.Name,
-				"stateMutability": s.ArticulatedTrace.StateMutability,
-				"inputs":          inputModels,
-				"outputs":         outputModels,
+				"name":    s.ArticulatedTrace.Name,
+				"inputs":  inputModels,
+				"outputs": outputModels,
+			}
+			if s.ArticulatedTrace.StateMutability != "" && s.ArticulatedTrace.StateMutability != "nonpayable" {
+				articulatedTrace["stateMutability"] = s.ArticulatedTrace.StateMutability
 			}
 			model["articulatedTrace"] = articulatedTrace
 			model["compressedTrace"] = MakeCompressed(articulatedTrace)
@@ -142,14 +143,16 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 		model["blockNumber"] = s.BlockNumber
 		model["transactionIndex"] = s.TransactionIndex
 		model["error"] = s.Error
-		model["compressedTrace"] = s.CompressedTrace
+		if s.ArticulatedTrace != nil && extraOptions["articulate"] == true {
+			model["compressedTrace"] = s.CompressedTrace
+		}
 		model["timestamp"] = s.Timestamp
 		if s.Action != nil {
 			model["action::callType"] = s.Action.CallType
 			model["action::gas"] = s.Action.Gas
 			model["action::input"] = s.Action.Input
 			if !s.Action.RefundAddress.IsZero() {
-				model["action::from"] = hexutil.Encode(s.Action.Address.Bytes())
+				model["action::from"] = hexutil.Encode(s.Action.From.Bytes())
 				model["action::to"] = hexutil.Encode(s.Action.RefundAddress.Bytes())
 				model["action::value"] = s.Action.Balance.String()
 				model["action::ether"] = utils.WeiToEther(&s.Action.Balance)
@@ -168,6 +171,11 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 		} else {
 			model["result::gasUsed"] = "0"
 			model["result::output"] = ""
+		}
+		if s.ArticulatedTrace != nil {
+			model["compressedTrace"] = s.CompressedTrace
+		} else {
+			model["compressedTrace"] = ""
 		}
 	}
 	// EXISTING_CODE
@@ -248,6 +256,8 @@ func GetTracesCountByTransactionHash(chain string, txHash string) (uint64, error
 	return uint64(len(traces)), nil
 }
 
+// TODO: I'm curious if this could be pushed up to the caller. In other words, the handling of the trace is not
+// TODO: handled in the type but in the caller
 // GetTracesByTransactionHash returns a slice of traces in a given transaction's hash
 func GetTracesByTransactionHash(chain string, txHash string, transaction *SimpleTransaction) ([]SimpleTrace, error) {
 	method := "trace_transaction"
@@ -289,11 +299,8 @@ func GetTracesByTransactionHash(chain string, txHash string, transaction *Simple
 					Output:  rawTrace.Result.Output,
 					Code:    rawTrace.Result.Code,
 				}
-				if len(rawTrace.Result.NewContract) > 0 {
-					result.NewContract = HexToAddress(rawTrace.Result.NewContract)
-				} else if len(rawTrace.Result.Address) > 0 {
-					result.NewContract = HexToAddress(rawTrace.Result.Address)
-					result.NewContract = HexToAddress(rawTrace.Result.Address)
+				if len(rawTrace.Result.Address) > 0 {
+					result.Address = HexToAddress(rawTrace.Result.Address)
 				}
 				result.SetRaw(rawTrace.Result)
 			}

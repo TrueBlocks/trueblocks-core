@@ -74,7 +74,7 @@ class CCommandOption : public CBaseNode {
     bool isNote;
     bool isAlias;
     bool isErr;
-    void* params{nullptr};
+    void* members{nullptr};
     void* notes{nullptr};
     CStringArray aliases;
     explicit CCommandOption(const string_q& line);

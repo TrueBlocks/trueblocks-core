@@ -844,7 +844,7 @@
   ],
   "types": [
     {
-      "type": "CLogEntry",
+      "type": "CLog",
       "fields": [
         {
           "name": "address",

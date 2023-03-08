@@ -17,11 +17,8 @@ finalized           	1012	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
 timestamp           	1013	0	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
 baseFeePerGas       	1014	0	545259555	T_WEI TS_NUMERAL TS_BIGNUM
 transactions        	1015	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-tx_hashes           	1016	1	88080434	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY TS_OMITEMPTY
-name                	1017	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
-unclesCnt           	1018	1	8388635	T_UNUMBER TS_NUMERAL
-date                	1019	1	33554437	T_DATE TS_DATE
-age                 	1020	1	33554437	T_DATE TS_DATE
+date                	1016	1	33554437	T_DATE TS_DATE
+age                 	1017	1	33554437	T_DATE TS_DATE
 {
   "gasLimit": 0,
   "gasUsed": 0,
@@ -52,11 +49,8 @@ finalized           	1012	1	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
 timestamp           	1013	1	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
 baseFeePerGas       	1014	1	545259555	T_WEI TS_NUMERAL TS_BIGNUM
 transactions        	1015	1	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-tx_hashes           	1016	1	88080434	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY TS_OMITEMPTY
-name                	1017	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
-unclesCnt           	1018	1	8388635	T_UNUMBER TS_NUMERAL
-date                	1019	1	33554437	T_DATE TS_DATE
-age                 	1020	1	33554437	T_DATE TS_DATE
+date                	1016	1	33554437	T_DATE TS_DATE
+age                 	1017	1	33554437	T_DATE TS_DATE
 {
 }
 
@@ -78,13 +72,10 @@ finalized           	1012	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
 timestamp           	1013	0	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
 baseFeePerGas       	1014	0	545259555	T_WEI TS_NUMERAL TS_BIGNUM
 transactions        	1015	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-tx_hashes           	1016	0	88080434	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY TS_OMITEMPTY
-name                	1017	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
-unclesCnt           	1018	0	8388635	T_UNUMBER TS_NUMERAL
-date                	1019	0	33554437	T_DATE TS_DATE
-age                 	1020	0	33554437	T_DATE TS_DATE
+date                	1016	0	33554437	T_DATE TS_DATE
+age                 	1017	0	33554437	T_DATE TS_DATE
 {
-  "schema": 55000,
+  "schema": 56000,
   "deleted": false,
   "showing": true,
   "cname": "Block",
@@ -97,7 +88,6 @@ age                 	1020	0	33554437	T_DATE TS_DATE
   "difficulty": 0,
   "timestamp": 0,
   "baseFeePerGas": 0,
-  "unclesCnt": 0,
   "date": "1970-01-01 00:00:00 UTC",
   "age": "100"
 }

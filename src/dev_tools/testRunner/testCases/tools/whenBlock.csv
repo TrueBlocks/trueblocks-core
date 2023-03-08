@@ -73,14 +73,8 @@ on      ,both ,fast  ,when  ,tools/whenBlock ,repair_fail                 ,y    
 on      ,both ,fast  ,when  ,tools/whenBlock ,repair_fail_2               ,y    ,timestamps & repair
 on      ,both ,fast  ,when  ,tools/whenBlock ,fix_and_check_bad           ,y    ,timestamps & fix & check
 
-# fails because it does not report an error in API mode
-local   ,both ,fast  ,when  ,tools/whenBlock ,block_not_found             ,y    ,blocks = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
-
-local   ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_hourly                 ,n    ,fmt = txt & blocks = 1125561-1130516:hourly
-local   ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_daily                  ,n    ,fmt = txt & blocks = 1065497-1125561:daily
-local   ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_weekly                 ,n    ,fmt = txt & blocks = 1065497-1856235:weekly
-local   ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_monthly                ,n    ,fmt = txt & blocks = 768414-1856235:monthly
-local   ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_quaterly               ,n    ,fmt = txt & blocks = 768414-1856235:quarterly
+on      ,both ,fast  ,when  ,tools/whenBlock ,missing_hash_2689           ,y    ,blocks = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b4
+on      ,both ,fast  ,when  ,tools/whenBlock ,block_not_found             ,y    ,blocks = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
 on      ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_annually               ,n    ,fmt = txt & blocks = 768414-4838611:annually
 
 on      ,both ,fast  ,when  ,tools/whenBlock ,customized_1                ,y    ,blocks = myblock
@@ -94,3 +88,10 @@ on      ,both ,fast  ,when  ,tools/whenBlock ,count_not_timestamps        ,y    
 on      ,both ,fast  ,when  ,tools/whenBlock ,count_timestamps_csv        ,n    ,count & fmt = csv & timestamps
 on      ,both ,fast  ,when  ,tools/whenBlock ,count_timestamps_json       ,y    ,count & fmt = json & timestamps
 on      ,both ,fast  ,when  ,tools/whenBlock ,count_timestamps_txt_raw    ,y    ,count & fmt = txt & timestamps & raw
+
+local   ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_hourly                 ,n    ,fmt = txt & blocks = 1125561-1130516:hourly
+local   ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_daily                  ,n    ,fmt = txt & blocks = 1065497-1125561:daily
+local   ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_weekly                 ,n    ,fmt = txt & blocks = 1065497-1856235:weekly
+local   ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_monthly                ,n    ,fmt = txt & blocks = 768414-1856235:monthly
+local   ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_quaterly               ,n    ,fmt = txt & blocks = 768414-1856235:quarterly
+

@@ -1,4 +1,5 @@
 [settings]
 class = CLogFilter
 fields = logfilter.csv
-includes = utillib.h|logentry.h
+includes = utillib.h|log.h
+output = ../../libs/etherlib/

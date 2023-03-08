@@ -25,7 +25,7 @@ class CReceipt;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CLogEntry : public CBaseNode {
+class CLog : public CBaseNode {
   public:
     address_t address;
     hash_t blockHash;
@@ -43,12 +43,12 @@ class CLogEntry : public CBaseNode {
     bool unused;
 
   public:
-    CLogEntry(void);
-    CLogEntry(const CLogEntry& lo);
-    virtual ~CLogEntry(void);
-    CLogEntry& operator=(const CLogEntry& lo);
+    CLog(void);
+    CLog(const CLog& lo);
+    virtual ~CLog(void);
+    CLog& operator=(const CLog& lo);
 
-    DECLARE_NODE(CLogEntry);
+    DECLARE_NODE(CLog);
 
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
     const string_q getStringAt(const string_q& fieldName, size_t i) const override;
@@ -56,17 +56,17 @@ class CLogEntry : public CBaseNode {
     // EXISTING_CODE
     const CReceipt* pReceipt;
     // EXISTING_CODE
-    bool operator==(const CLogEntry& it) const;
-    bool operator!=(const CLogEntry& it) const {
+    bool operator==(const CLog& it) const;
+    bool operator!=(const CLog& it) const {
         return !operator==(it);
     }
-    friend bool operator<(const CLogEntry& v1, const CLogEntry& v2);
-    friend ostream& operator<<(ostream& os, const CLogEntry& it);
+    friend bool operator<(const CLog& v1, const CLog& v2);
+    friend ostream& operator<<(ostream& os, const CLog& it);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CLogEntry& lo);
+    void duplicate(const CLog& lo);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -74,14 +74,14 @@ class CLogEntry : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CLogEntry::CLogEntry(void) {
+inline CLog::CLog(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CLogEntry::CLogEntry(const CLogEntry& lo) {
+inline CLog::CLog(const CLog& lo) {
     // EXISTING_CODE
     // EXISTING_CODE
     duplicate(lo);
@@ -91,20 +91,20 @@ inline CLogEntry::CLogEntry(const CLogEntry& lo) {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CLogEntry::~CLogEntry(void) {
+inline CLog::~CLog(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CLogEntry::clear(void) {
+inline void CLog::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CLogEntry::initialize(void) {
+inline void CLog::initialize(void) {
     CBaseNode::initialize();
 
     address = "";
@@ -128,7 +128,7 @@ inline void CLogEntry::initialize(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CLogEntry::duplicate(const CLogEntry& lo) {
+inline void CLog::duplicate(const CLog& lo) {
     clear();
     CBaseNode::duplicate(lo);
 
@@ -155,7 +155,7 @@ inline void CLogEntry::duplicate(const CLogEntry& lo) {
 }
 
 //--------------------------------------------------------------------------
-inline CLogEntry& CLogEntry::operator=(const CLogEntry& lo) {
+inline CLog& CLog::operator=(const CLog& lo) {
     duplicate(lo);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -163,7 +163,7 @@ inline CLogEntry& CLogEntry::operator=(const CLogEntry& lo) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CLogEntry::operator==(const CLogEntry& it) const {
+inline bool CLog::operator==(const CLog& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -171,7 +171,7 @@ inline bool CLogEntry::operator==(const CLogEntry& it) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CLogEntry& v1, const CLogEntry& v2) {
+inline bool operator<(const CLog& v1, const CLog& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -179,16 +179,16 @@ inline bool operator<(const CLogEntry& v1, const CLogEntry& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CLogEntry> CLogEntryArray;
-extern CArchive& operator>>(CArchive& archive, CLogEntryArray& array);
-extern CArchive& operator<<(CArchive& archive, const CLogEntryArray& array);
+typedef vector<CLog> CLogArray;
+extern CArchive& operator>>(CArchive& archive, CLogArray& array);
+extern CArchive& operator<<(CArchive& archive, const CLogArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CLogEntry& log);
-extern CArchive& operator>>(CArchive& archive, CLogEntry& log);
+extern CArchive& operator<<(CArchive& archive, const CLog& log);
+extern CArchive& operator>>(CArchive& archive, CLog& log);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_LOGENTRY;
+extern const char* STR_DISPLAY_LOG;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

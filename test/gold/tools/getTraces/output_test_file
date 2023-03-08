@@ -9,7 +9,6 @@
         "to": "0xaf30d2a7e90d7dc361c8c4585e9bb7d2f6f15bc7",
         "value": "0"
       },
-      "articulatedTrace": null,
       "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
       "blockNumber": 3657480,
       "result": {
@@ -36,7 +35,6 @@
         "to": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
         "value": "1007817120000000000"
       },
-      "articulatedTrace": null,
       "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
       "blockNumber": 3657480,
       "result": {
@@ -59,7 +57,6 @@
         "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
         "value": "1007817120000000000"
       },
-      "articulatedTrace": null,
       "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
       "blockNumber": 3657480,
       "result": {
