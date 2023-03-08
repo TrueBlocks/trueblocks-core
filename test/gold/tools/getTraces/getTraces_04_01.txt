@@ -12,7 +12,6 @@ TEST[DATE|TIME] Format:  json
         "to": "0x19ad2660ca7c239df82d2cb24b1cb9a8717ffc35",
         "value": "0"
       },
-      "articulatedTrace": null,
       "blockHash": "0x759de0be90043e350377c7d1be2f639ead0953b06a16c32552265659bd134f2d",
       "blockNumber": 2229051,
       "error": "invalid jump destination",

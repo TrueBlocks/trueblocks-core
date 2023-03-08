@@ -10,7 +10,6 @@ traces?transactions=0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9
         "to": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
         "value": "80000000000000000"
       },
-      "articulatedTrace": null,
       "blockHash": "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f",
       "blockNumber": 4001001,
       "result": {

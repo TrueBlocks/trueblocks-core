@@ -71,10 +71,12 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 						}
 					}
 
+					var found *types.SimpleFunction
+					var selector string
 					if len(tx.Input) >= 10 {
-						selector := tx.Input[:10]
+						selector = tx.Input[:10]
 						inputData := tx.Input[10:]
-						found := abiMap[selector]
+						found = abiMap[selector]
 						if found != nil {
 							tx.ArticulatedTx = found
 							var outputData string
@@ -85,16 +87,14 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 							if err = articulate.ArticulateFunction(tx.ArticulatedTx, inputData, outputData); err != nil {
 								errorChan <- err
 							}
-
-						} else {
-							errorChan <- fmt.Errorf("method/event not found: %s", selector)
 						}
+					}
 
-						if inputData != "" {
-							message, ok := articulate.ArticulateString(inputData)
-							if ok {
-								tx.Message = message
-							}
+					if found == nil && len(tx.Input) > 0 {
+						if message, ok := articulate.ArticulateString(tx.Input); ok {
+							tx.Message = message
+						} else if len(selector) > 0 {
+							errorChan <- fmt.Errorf("method/event not found: %s", selector)
 						}
 					}
 				}

@@ -24,19 +24,20 @@ import (
 type RawTransaction struct {
 	BlockHash        string `json:"blockHash"`
 	BlockNumber      string `json:"blockNumber"`
+	ChainId          string `json:"chainId,omitempty"`
 	From             string `json:"from"`
 	Gas              string `json:"gas"`
 	GasPrice         string `json:"gasPrice"`
 	Hash             string `json:"hash"`
 	Input            string `json:"input"`
 	Nonce            string `json:"nonce"`
-	To               string `json:"to"`
-	TransactionIndex string `json:"transactionIndex"`
-	Value            string `json:"value"`
-	Type             string `json:"type"`
-	V                string `json:"v"`
 	R                string `json:"r"`
 	S                string `json:"s"`
+	To               string `json:"to"`
+	TransactionIndex string `json:"transactionIndex"`
+	Type             string `json:"type"`
+	V                string `json:"v"`
+	Value            string `json:"value"`
 }
 
 type SimpleTransaction struct {
@@ -58,13 +59,13 @@ type SimpleTransaction struct {
 	MaxFeePerGas         Gas             `json:"maxFeePerGas"`
 	MaxPriorityFeePerGas Gas             `json:"maxPriorityFeePerGas"`
 	Input                string          `json:"input"`
-	IsError              bool            `json:"isError"`
-	HasToken             bool            `json:"hasToken"`
+	IsError              bool            `json:"isError,omitempty"`
+	HasToken             bool            `json:"hasToken,omitempty"`
 	Cachebits            uint8           `json:"cachebits"`
 	Reserved2            uint8           `json:"reserved2"`
 	Receipt              *SimpleReceipt  `json:"receipt"`
 	Traces               []SimpleTrace   `json:"traces"`
-	ArticulatedTx        *SimpleFunction `json:"articulatedTx"`
+	ArticulatedTx        *SimpleFunction `json:"articulatedTx,omitempty"`
 	Message              string          `json:"-"`
 	raw                  *RawTransaction
 }
@@ -94,14 +95,12 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 
 	model := map[string]interface{}{
 		"blockNumber":      s.BlockNumber,
-		"transactionIndex": s.TransactionIndex,
-		"timestamp":        s.Timestamp,
 		"from":             s.From,
-		"to":               to,
 		"gasUsed":          s.GasUsed,
 		"hash":             s.Hash,
-		"isError":          s.IsError,
-		"finalized":        extraOptions["finalized"],
+		"timestamp":        s.Timestamp,
+		"to":               to,
+		"transactionIndex": s.TransactionIndex,
 		"value":            s.Value.String(),
 	}
 
@@ -122,23 +121,14 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		// "value",
 	}
 
-	if format != "json" {
-		// TODO: these date-related values could be done when RPC is queried and cached
-		date := gostradamus.FromUnixTimestamp(int64(s.Timestamp))
-		model["date"] = date.Format("2006-01-02 15:04:05") + " UTC"
-
-		etherValue := utils.WeiToEther(&s.Value).Text('f', 18)
-		model["ether"] = etherValue
-		ethGasPrice := utils.WeiToEther(big.NewInt(0).SetUint64(s.GasPrice)).Text('f', 18)
-		model["ethGasPrice"] = ethGasPrice
-
-		if s.ArticulatedTx != nil {
-			model["encoding"] = s.ArticulatedTx.Encoding
-		}
-	}
-
 	// EXISTING_CODE
 	if format == "json" {
+		gu := big.NewInt(int64(s.GasUsed))
+		gp := big.NewInt(int64(s.GasPrice))
+		gC := gu.Mul(gu, gp)
+		model["gasCost"] = gC.String()
+		order = append(order, "gasCost")
+
 		model["blockHash"] = s.BlockHash
 		model["nonce"] = s.Nonce
 		model["value"] = s.Value
@@ -150,15 +140,22 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		model["maxFeePerGas"] = s.MaxPriorityFeePerGas
 		model["maxPriorityFeePerGas"] = s.MaxPriorityFeePerGas
 		model["input"] = s.Input
-		model["hasToken"] = s.HasToken
+		if s.HasToken {
+			model["hasToken"] = s.HasToken
+		}
+		if s.IsError {
+			model["isError"] = s.IsError
+		}
 		model["receipt"] = s.Receipt
 		model["value"] = s.Value.String() // TODO: Why twice?
 		model["receipt"] = nil            // TODO: Why twice?
 
 		// TODO: these date-related values could be done when RPC is queried and cached
 		model["date"] = date.Format("2006-01-02 15:04:05") + " UTC"
-		model["datesh"] = date.Format("2006-01-02")
-		model["time"] = date.Format("15:04:05") + " UTC"
+		if showHidden {
+			model["datesh"] = date.Format("2006-01-02")
+			model["time"] = date.Format("15:04:05") + " UTC"
+		}
 
 		if s.Receipt != nil {
 			contractAddress := s.Receipt.ContractAddress.Hex()
@@ -209,31 +206,78 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 			}
 			model["traces"] = traceModels
 		}
-	}
 
-	if extraOptions["articulate"] == true {
+		if s.ArticulatedTx != nil && extraOptions["articulate"] == true {
+			inputModels := ParametersToMap(s.ArticulatedTx.Inputs)
+			outputModels := ParametersToMap(s.ArticulatedTx.Outputs)
+			// TODO: Shouldn't this be a SimpleFunction?
+			articulatedTx := map[string]any{
+				"name":    s.ArticulatedTx.Name,
+				"inputs":  inputModels,
+				"outputs": outputModels,
+			}
+			if s.ArticulatedTx.StateMutability != "" && s.ArticulatedTx.StateMutability != "nonpayable" {
+				articulatedTx["stateMutability"] = s.ArticulatedTx.StateMutability
+			}
+			if format == "json" {
+				model["articulatedTx"] = articulatedTx
+			}
+			// TODO: This should be a method on Function
+			model["compressedTx"] = MakeCompressed(articulatedTx)
+		} else {
+			if s.Message != "" {
+				model["message"] = s.Message
+			}
+		}
+
+	} else {
+		// TODO: these date-related values could be done when RPC is queried and cached
+		date := gostradamus.FromUnixTimestamp(int64(s.Timestamp))
+		model["date"] = date.Format("2006-01-02 15:04:05") + " UTC"
+
+		etherValue := utils.WeiToEther(&s.Value).Text('f', 18)
+		model["ether"] = etherValue
+		ethGasPrice := utils.WeiToEther(big.NewInt(0).SetUint64(s.GasPrice)).Text('f', 18)
+		model["ethGasPrice"] = ethGasPrice
+		model["isError"] = s.IsError
+
+		if s.ArticulatedTx != nil {
+			model["encoding"] = s.ArticulatedTx.Encoding
+		}
+
+		model["compressedTx"] = ""
+		enc := s.Input
+		if len(s.Input) >= 10 {
+			enc = s.Input[:10]
+		}
+		model["encoding"] = enc
+
 		if s.ArticulatedTx != nil {
 			inputModels := ParametersToMap(s.ArticulatedTx.Inputs)
 			outputModels := ParametersToMap(s.ArticulatedTx.Outputs)
-			articulated := map[string]any{
-				"name":            s.ArticulatedTx.Name,
-				"stateMutability": s.ArticulatedTx.StateMutability,
-				"inputs":          inputModels,
-				"outputs":         outputModels,
+			// TODO: Shouldn't this be a SimpleFunction?
+			articulatedTx := map[string]any{
+				"name":    s.ArticulatedTx.Name,
+				"inputs":  inputModels,
+				"outputs": outputModels,
 			}
-
+			if s.ArticulatedTx.StateMutability != "" && s.ArticulatedTx.StateMutability != "nonpayable" {
+				articulatedTx["stateMutability"] = s.ArticulatedTx.StateMutability
+			}
 			if format == "json" {
-				model["articulatedTx"] = articulated
+				model["articulatedTx"] = articulatedTx
 			}
-			model["compressedTx"] = MakeCompressed(articulated)
-		} else {
-			if s.Message != "" {
-				model["compressedTx"] = "message:" + s.Message
-			}
+			model["compressedTx"] = MakeCompressed(articulatedTx)
+		} else if s.Message != "" {
+			model["encoding"] = ""
+			model["compressedTx"] = s.Message
+		}
+
+		if extraOptions["traces"] == true {
+			model["nTraces"] = len(s.Traces)
+			order = append(order, "nTraces")
 		}
 	}
-
-	// TODO: These fields are ignored "ethGasPrice": s.EthGasPrice, "encoding": s.Encoding
 	// EXISTING_CODE
 
 	return Model{

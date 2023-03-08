@@ -7,12 +7,11 @@ transactions?transactions=0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532d
         "name": "deposit",
         "outputs": {
           "ret_0": "1"
-        },
-        "stateMutability": "nonpayable"
+        }
       },
       "blockHash": "0x12804134060126a2b62a3db6d37facc47622624dd055e98f309fd624f1a12ae8",
       "blockNumber": 1545347,
-      "compressedTx": "{name:deposit|inputs:{}|outputs:{ret_0:1}|stateMutability:nonpayable}",
+      "compressedTx": "{name:deposit|inputs:{}|outputs:{ret_0:1}}",
       "date": "2016-05-19 10:19:53 UTC",
       "ether": "1",
       "from": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
@@ -92,10 +91,5 @@ transactions?transactions=0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532d
     "chainId": 1,
     "networkId": 1,
     "chain": "mainnet"
-  },
-  "errors": [
-    "while reading 0xd654bdd32fc99471455e86c2e7f7d7b6437e9179 ABI file: EOF",
-    "while reading 0xd654bdd32fc99471455e86c2e7f7d7b6437e9179 ABI file: EOF",
-    "while reading 0xd654bdd32fc99471455e86c2e7f7d7b6437e9179 ABI file: EOF"
-  ]
+  }
 }

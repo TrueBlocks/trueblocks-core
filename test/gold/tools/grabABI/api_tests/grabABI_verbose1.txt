@@ -61,7 +61,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "proposals(uint256)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -84,7 +83,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "approve(address,uint256)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -98,7 +96,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "minTokensToCreate()",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -112,7 +109,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "rewardAccount()",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -126,7 +122,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "daoCreator()",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -140,7 +135,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "totalSupply()",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -154,7 +148,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "divisor()",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -168,7 +161,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "extraBalance()",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -191,7 +183,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "executeProposal(uint256,bytes)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -218,7 +209,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "transferFrom(address,address,uint256)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -232,7 +222,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "unblockMe()",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -246,7 +235,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "totalRewardToken()",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -260,7 +248,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "actualBalance()",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -274,7 +261,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "closingTime()",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -293,7 +279,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "allowedRecipients(address)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -316,7 +301,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "transferWithoutReward(address,uint256)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -347,7 +331,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "ProposalAdded",
       "outputs": [],
       "signature": "ProposalAdded(uint256,address,uint256,bool,string)",
-      "stateMutability": "",
       "type": "event"
     },
     {
@@ -356,7 +339,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "refund",
       "outputs": [],
       "signature": "refund()",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -395,7 +377,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "newProposal(address,uint256,string,bytes,uint256,bool)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -414,7 +395,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "DAOpaidOut(address)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -428,7 +408,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "minQuorumDivisor()",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -442,7 +421,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "newContract",
       "outputs": [],
       "signature": "newContract(address)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -461,7 +439,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "balanceOf(address)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -480,7 +457,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "AllowedRecipientChanged",
       "outputs": [],
       "signature": "AllowedRecipientChanged(address,bool)",
-      "stateMutability": "",
       "type": "event"
     },
     {
@@ -503,7 +479,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "changeAllowedRecipients(address,bool)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -517,7 +492,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "halveMinQuorum()",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -536,7 +510,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "paidOut(address)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -559,7 +532,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "splitDAO(uint256,address)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -573,7 +545,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "DAOrewardAccount()",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -597,7 +568,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "Voted",
       "outputs": [],
       "signature": "Voted(uint256,bool,address)",
-      "stateMutability": "",
       "type": "event"
     },
     {
@@ -611,7 +581,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "proposalDeposit()",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -635,7 +604,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "Approval",
       "outputs": [],
       "signature": "Approval(address,address,uint256)",
-      "stateMutability": "",
       "type": "event"
     },
     {
@@ -649,7 +617,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "numberOfProposals()",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -664,7 +631,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "NewCurator",
       "outputs": [],
       "signature": "NewCurator(address)",
-      "stateMutability": "",
       "type": "event"
     },
     {
@@ -678,7 +644,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "lastTimeMinQuorumMet()",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -697,7 +662,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "retrieveDAOReward(bool)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -711,7 +675,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "receiveEther()",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -734,7 +697,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "transfer(address,uint256)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -748,7 +710,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "isFueled()",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -767,7 +728,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "createTokenProxy(address)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -786,7 +746,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "Refund",
       "outputs": [],
       "signature": "Refund(address,uint256)",
-      "stateMutability": "",
       "type": "event"
     },
     {
@@ -805,7 +764,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "getNewDAOAddress(uint256)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -828,7 +786,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "vote(uint256,bool)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -842,7 +799,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "getMyReward()",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -861,7 +817,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "rewardToken(address)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -880,7 +835,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "CreatedToken",
       "outputs": [],
       "signature": "CreatedToken(address,uint256)",
-      "stateMutability": "",
       "type": "event"
     },
     {
@@ -907,7 +861,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "transferFromWithoutReward(address,address,uint256)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -930,7 +883,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "allowance(address,address)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -954,7 +906,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "Transfer",
       "outputs": [],
       "signature": "Transfer(address,address,uint256)",
-      "stateMutability": "",
       "type": "event"
     },
     {
@@ -977,7 +928,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "ProposalTallied",
       "outputs": [],
       "signature": "ProposalTallied(uint256,bool,uint256)",
-      "stateMutability": "",
       "type": "event"
     },
     {
@@ -991,7 +941,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "changeProposalDeposit",
       "outputs": [],
       "signature": "changeProposalDeposit(uint256)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -1010,7 +959,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "blocked(address)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -1024,7 +972,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "curator()",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -1055,7 +1002,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "checkProposalCode(uint256,address,uint256,bytes)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -1069,7 +1015,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
       "name": "FuelingToDate",
       "outputs": [],
       "signature": "FuelingToDate(uint256)",
-      "stateMutability": "",
       "type": "event"
     },
     {
@@ -1083,7 +1028,6 @@ abis?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose
         }
       ],
       "signature": "privateCreation()",
-      "stateMutability": "nonpayable",
       "type": "function"
     }
   ],

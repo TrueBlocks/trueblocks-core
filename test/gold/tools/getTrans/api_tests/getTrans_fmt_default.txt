@@ -43,7 +43,6 @@ transactions?transactions=2222222.0%202332332.0
       "hasToken": true,
       "hash": "0xa023f79cc26b321111cf051cab92b3a325e00ecfa9d377845a41654f6b2f0ebe",
       "input": "0xa9059cbb0000000000000000000000007d19317cc81c3ef06039ae5514679f8b12fd28e2000000000000000000000000000000000000000000000000031d958f80134000",
-      "isError": false,
       "maxFeePerGas": 0,
       "maxPriorityFeePerGas": 0,
       "nonce": 10,

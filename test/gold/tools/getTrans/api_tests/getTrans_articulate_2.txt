@@ -26,10 +26,8 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
       "gasCost": "10849501969331551",
       "gasPrice": 20343286631,
       "gasUsed": 533321,
-      "hasToken": false,
       "hash": "0x811bb4494b3bbcfd6f0205f22b3e983792b21cb0a9689366903b843ec4d62531",
       "input": "0xfebefd610000000000000000000000000000000000000000000000000000000000000040cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb898110000000000000000000000000000000000000000000000000000000000000003000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573",
-      "isError": false,
       "maxFeePerGas": 0,
       "maxPriorityFeePerGas": 0,
       "nonce": 411,
@@ -163,10 +161,9 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
             "name": "owner",
             "outputs": {
               "val_0": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef"
-            },
-            "stateMutability": "nonpayable"
+            }
           },
-          "compressedTrace": "{name:owner|inputs:{node:0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae}|outputs:{val_0:0x6090a6e47849629b7245dfa1ca21d94cd15878ef}|stateMutability:nonpayable}",
+          "compressedTrace": "{name:owner|inputs:{node:0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae}|outputs:{val_0:0x6090a6e47849629b7245dfa1ca21d94cd15878ef}}",
           "result": {
             "gasUsed": 432,
             "output": "0x0000000000000000000000006090a6e47849629b7245dfa1ca21d94cd15878ef"
@@ -194,10 +191,9 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
             "name": "owner",
             "outputs": {
               "val_0": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef"
-            },
-            "stateMutability": "nonpayable"
+            }
           },
-          "compressedTrace": "{name:owner|inputs:{node:0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae}|outputs:{val_0:0x6090a6e47849629b7245dfa1ca21d94cd15878ef}|stateMutability:nonpayable}",
+          "compressedTrace": "{name:owner|inputs:{node:0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae}|outputs:{val_0:0x6090a6e47849629b7245dfa1ca21d94cd15878ef}}",
           "result": {
             "gasUsed": 432,
             "output": "0x0000000000000000000000006090a6e47849629b7245dfa1ca21d94cd15878ef"
@@ -225,10 +221,9 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
             "name": "owner",
             "outputs": {
               "val_0": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef"
-            },
-            "stateMutability": "nonpayable"
+            }
           },
-          "compressedTrace": "{name:owner|inputs:{node:0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae}|outputs:{val_0:0x6090a6e47849629b7245dfa1ca21d94cd15878ef}|stateMutability:nonpayable}",
+          "compressedTrace": "{name:owner|inputs:{node:0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae}|outputs:{val_0:0x6090a6e47849629b7245dfa1ca21d94cd15878ef}}",
           "result": {
             "gasUsed": 432,
             "output": "0x0000000000000000000000006090a6e47849629b7245dfa1ca21d94cd15878ef"

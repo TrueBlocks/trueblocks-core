@@ -237,7 +237,7 @@ func LoadAbi(chain string, address types.Address, destination AbiInterfaceMap) (
 	if err == nil {
 		return
 	}
-	if !os.IsNotExist(err) {
+	if !os.IsNotExist(err) && err != io.EOF {
 		return fmt.Errorf("while reading %s ABI file: %w", address, err)
 	}
 

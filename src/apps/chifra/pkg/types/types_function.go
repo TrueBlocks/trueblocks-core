@@ -45,7 +45,7 @@ type SimpleFunction struct {
 	Name            string            `json:"name"`
 	Outputs         []SimpleParameter `json:"outputs"`
 	Signature       string            `json:"signature,omitempty"`
-	StateMutability string            `json:"stateMutability"`
+	StateMutability string            `json:"stateMutability,omitempty"`
 	FunctionType    string            `json:"type"`
 	// `payable` was present in ABIs before Solidity 0.5.0 and was replaced
 	// by `stateMutability`: https://docs.soliditylang.org/en/develop/050-breaking-changes.html#command-line-and-json-interfaces
@@ -78,29 +78,21 @@ func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
-		"encoding":        s.Encoding,
-		"name":            s.Name,
-		"signature":       s.Signature,
-		"stateMutability": s.StateMutability,
-		"type":            s.FunctionType,
+		"encoding":  s.Encoding,
+		"name":      s.Name,
+		"signature": s.Signature,
+		"type":      s.FunctionType,
 	}
 
 	order := []string{
-		"stateMutability",
-		"name",
-		"type",
-		"signature",
 		"encoding",
+		"type",
+		"name",
+		"signature",
 	}
 
 	// EXISTING_CODE
 	// re-ordering
-	order = []string{
-		"encoding",
-		"type",
-		"name",
-		"signature",
-	}
 	if format == "json" {
 		getParameterModels := func(params []SimpleParameter) []map[string]any {
 			result := make([]map[string]any, len(params))
@@ -114,9 +106,8 @@ func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[
 			model["inputs"] = getParameterModels(s.Inputs)
 			model["outputs"] = getParameterModels(s.Outputs)
 		}
-		return Model{
-			Data:  model,
-			Order: []string{},
+		if s.StateMutability != "" && s.StateMutability != "nonpayable" {
+			model["stateMutability"] = s.StateMutability
 		}
 	}
 
@@ -166,10 +157,9 @@ func FunctionFromAbiMethod(ethMethod *abi.Method, abiSource string) *SimpleFunct
 	inputs := argumentsToSimpleParameters(ethMethod.Inputs)
 	outputs := argumentsToSimpleParameters(ethMethod.Outputs)
 	stateMutability := "nonpayable"
-	if ethMethod.StateMutability != "" {
+	if ethMethod.StateMutability != "" && ethMethod.StateMutability != "nonpayable" {
 		stateMutability = ethMethod.StateMutability
-	}
-	if ethMethod.Payable {
+	} else if ethMethod.Payable {
 		stateMutability = "payable"
 	}
 	function := &SimpleFunction{

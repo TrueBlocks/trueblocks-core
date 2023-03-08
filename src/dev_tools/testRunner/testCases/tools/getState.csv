@@ -64,8 +64,8 @@ on      ,both ,fast  ,state ,tools/getState ,uniswap_factory_getPair        ,n  
 on      ,both ,fast  ,state ,tools/getState ,uniswap_token0                 ,y    ,call = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0dfe1681 & blocks = 10092000
 on      ,both ,fast  ,state ,tools/getState ,uniswap_token0_name            ,n    ,call = 0x2260fac5e5542a773aa44fbcfedf7c193bc2c599!0x06fdde03 & blocks = 10092000 & fmt = txt
 on      ,both ,fast  ,state ,tools/getState ,uniswap_token1                 ,y    ,call = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0xd21220a7 & blocks = 10092000
-broken  ,both ,fast  ,state ,tools/getState ,uniswap_token1_name            ,y    ,call = 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2!0x06fdde03 & blocks = 10092000
-broken  ,both ,fast  ,state ,tools/getState ,uniswap_name                   ,y    ,call = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x06fdde03 & blocks = 10092000
+on      ,both ,fast  ,state ,tools/getState ,uniswap_token1_name            ,y    ,call = 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2!0x06fdde03 & blocks = 10092000
+on      ,both ,fast  ,state ,tools/getState ,uniswap_name                   ,y    ,call = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x06fdde03 & blocks = 10092000
 on      ,both ,fast  ,state ,tools/getState ,uniswap_reserve                ,n    ,call = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0902f1ac & blocks = 10092000 & fmt = csv
 on      ,both ,fast  ,state ,tools/getState ,uniswap_fail                   ,y    ,call = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0902f1ad & blocks = 10092000
 local   ,both ,fast  ,state ,tools/getState ,proxy_fail                     ,y    ,call = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B!0x0902f1ac & blocks = 10092000

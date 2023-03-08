@@ -31,7 +31,7 @@ transactions?transactions=0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5
               },
               "name": "Transfer"
             },
-            "compressedLog": "{name:Transfer|stateMutability:|inputs:{_amount:100000000|_from:0xe81a6c6b733d52df5d6aa863d75aab78147a0f28|_to:0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021}}",
+            "compressedLog": "{name:Transfer|inputs:{_amount:100000000|_from:0xe81a6c6b733d52df5d6aa863d75aab78147a0f28|_to:0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021}}",
             "data": "0x0000000000000000000000000000000000000000000000000000000005f5e100",
             "logIndex": 0,
             "topics": [
@@ -219,9 +219,10 @@ transactions?transactions=0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5
             "name": "balanceOf",
             "outputs": {
               "balance": "0"
-            }
+            },
+            "stateMutability": "view"
           },
-          "compressedTrace": "{name:balanceOf|inputs:{_owner:0xe81a6c6b733d52df5d6aa863d75aab78147a0f28}|outputs:{balance:0}}",
+          "compressedTrace": "{name:balanceOf|inputs:{_owner:0xe81a6c6b733d52df5d6aa863d75aab78147a0f28}|outputs:{balance:0}|stateMutability:view}",
           "result": {
             "gasUsed": 727,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000000"
@@ -280,10 +281,9 @@ transactions?transactions=0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5
             "name": "balanceOf",
             "outputs": {
               "balance": "100000000"
-            },
-            "stateMutability": "nonpayable"
+            }
           },
-          "compressedTrace": "{name:balanceOf|inputs:{_owner:0xe81a6c6b733d52df5d6aa863d75aab78147a0f28}|outputs:{balance:100000000}|stateMutability:nonpayable}",
+          "compressedTrace": "{name:balanceOf|inputs:{_owner:0xe81a6c6b733d52df5d6aa863d75aab78147a0f28}|outputs:{balance:100000000}}",
           "result": {
             "gasUsed": 1037,
             "output": "0x0000000000000000000000000000000000000000000000000000000005f5e100"
@@ -342,8 +342,7 @@ transactions?transactions=0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5
             "name": "balanceOf",
             "outputs": {
               "balance": "100000000"
-            },
-            "stateMutability": "nonpayable"
+            }
           },
           "compressedTrace": "{name:balanceOf|inputs:{_owner:0xe81a6c6b733d52df5d6aa863d75aab78147a0f28}|outputs:{balance:100000000}}",
           "result": {
@@ -446,10 +445,9 @@ transactions?transactions=0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5
             "name": "transfer",
             "outputs": {
               "success": true
-            },
-            "stateMutability": "nonpayable"
+            }
           },
-          "compressedTrace": "{name:transfer|inputs:{_to:0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021|_value:100000000}|outputs:{success:true}|stateMutability:nonpayable}",
+          "compressedTrace": "{name:transfer|inputs:{_to:0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021|_value:100000000}|outputs:{success:true}}",
           "result": {
             "gasUsed": 29257,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000001"

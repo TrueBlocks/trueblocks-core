@@ -10,7 +10,6 @@ traces?transactions=0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88e
         "to": "0x4e86721a4e00d7167c11d9cfd2480403bb630378",
         "value": "2000000000000000000"
       },
-      "articulatedTrace": null,
       "blockHash": "0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73",
       "blockNumber": 4348290,
       "result": {
@@ -33,7 +32,6 @@ traces?transactions=0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88e
         "to": "0x7d4b8cce0591c9044a22ee543533b72e976e36c3",
         "value": "0"
       },
-      "articulatedTrace": null,
       "blockHash": "0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73",
       "blockNumber": 4348290,
       "result": {
@@ -58,7 +56,6 @@ traces?transactions=0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88e
         "to": "0x71b1ee0848c4f68df05429490fc4237089692e1e",
         "value": "2000000000000000000"
       },
-      "articulatedTrace": null,
       "blockHash": "0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73",
       "blockNumber": 4348290,
       "result": {

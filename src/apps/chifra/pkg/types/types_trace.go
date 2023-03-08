@@ -39,7 +39,7 @@ type RawTrace struct {
 
 type SimpleTrace struct {
 	Action           *SimpleTraceAction `json:"action"`
-	ArticulatedTrace *SimpleFunction    `json:"articulatedTrace"`
+	ArticulatedTrace *SimpleFunction    `json:"articulatedTrace,omitempty"`
 	BlockHash        common.Hash        `json:"blockHash"`
 	BlockNumber      uint64             `json:"blockNumber"`
 	CompressedTrace  string             `json:"compressedTrace,omitempty"`
@@ -71,14 +71,12 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 	// TODO: We can probably change the output of the traces to remove this special case
 	if extraOptions["tracesTransactionsFormat"] == true {
 		model = map[string]interface{}{
-			"articulatedTrace": s.ArticulatedTrace,
-			"result":           s.Result,
-			"subtraces":        s.Subtraces,
-			"timestamp":        s.Timestamp,
+			"result":    s.Result,
+			"subtraces": s.Subtraces,
+			"timestamp": s.Timestamp,
 		}
 	} else {
 		model = map[string]interface{}{
-			"articulatedTrace": s.ArticulatedTrace,
 			"blockHash":        s.BlockHash,
 			"blockNumber":      s.BlockNumber,
 			"result":           s.Result,
@@ -126,10 +124,12 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 			inputModels := ParametersToMap(s.ArticulatedTrace.Inputs)
 			outputModels := ParametersToMap(s.ArticulatedTrace.Outputs)
 			articulatedTrace := map[string]interface{}{
-				"name":            s.ArticulatedTrace.Name,
-				"stateMutability": s.ArticulatedTrace.StateMutability,
-				"inputs":          inputModels,
-				"outputs":         outputModels,
+				"name":    s.ArticulatedTrace.Name,
+				"inputs":  inputModels,
+				"outputs": outputModels,
+			}
+			if s.ArticulatedTrace.StateMutability != "" && s.ArticulatedTrace.StateMutability != "nonpayable" {
+				articulatedTrace["stateMutability"] = s.ArticulatedTrace.StateMutability
 			}
 			model["articulatedTrace"] = articulatedTrace
 			model["compressedTrace"] = MakeCompressed(articulatedTrace)
@@ -143,7 +143,9 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 		model["blockNumber"] = s.BlockNumber
 		model["transactionIndex"] = s.TransactionIndex
 		model["error"] = s.Error
-		model["compressedTrace"] = s.CompressedTrace
+		if s.ArticulatedTrace != nil && extraOptions["articulate"] == true {
+			model["compressedTrace"] = s.CompressedTrace
+		}
 		model["timestamp"] = s.Timestamp
 		if s.Action != nil {
 			model["action::callType"] = s.Action.CallType
@@ -169,6 +171,11 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 		} else {
 			model["result::gasUsed"] = "0"
 			model["result::output"] = ""
+		}
+		if s.ArticulatedTrace != nil {
+			model["compressedTrace"] = s.CompressedTrace
+		} else {
+			model["compressedTrace"] = ""
 		}
 	}
 	// EXISTING_CODE

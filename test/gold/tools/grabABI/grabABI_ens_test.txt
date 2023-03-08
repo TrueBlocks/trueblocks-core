@@ -14,7 +14,6 @@ TEST[DATE|TIME] Format:  json
       "encoding": "0x0e18b681",
       "name": "acceptAdmin",
       "signature": "acceptAdmin()",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -28,35 +27,30 @@ TEST[DATE|TIME] Format:  json
       "encoding": "0x2fffc091a501fd91bfbff27141450d3acb40fb8e6d8382b243ec7a812a3aaf87",
       "name": "CancelTransaction",
       "signature": "CancelTransaction(bytes32,address,uint256,string,bytes,uint256)",
-      "stateMutability": "",
       "type": "event"
     },
     {
       "encoding": "0x3a66f901",
       "name": "queueTransaction",
       "signature": "queueTransaction(address,uint256,string,bytes,uint256)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x4dd18bf5",
       "name": "setPendingAdmin",
       "signature": "setPendingAdmin(address)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x591fcdfe",
       "name": "cancelTransaction",
       "signature": "cancelTransaction(address,uint256,string,bytes,uint256)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x69d78e38a01985fbb1462961809b4b2d65531bc93b2b94037f3334b82ca4a756",
       "name": "NewPendingAdmin",
       "signature": "NewPendingAdmin(address)",
-      "stateMutability": "",
       "type": "event"
     },
     {
@@ -70,14 +64,12 @@ TEST[DATE|TIME] Format:  json
       "encoding": "0x71614071b88dee5e0b2ae578a9dd7b2ebbe9ae832ba419dc0242cd065a290b6c",
       "name": "NewAdmin",
       "signature": "NewAdmin(address)",
-      "stateMutability": "",
       "type": "event"
     },
     {
       "encoding": "0x76e2796dc3a81d57b0e8504b647febcbeeb5f4af818e164f11eef8131a6a763f",
       "name": "QueueTransaction",
       "signature": "QueueTransaction(bytes32,address,uint256,string,bytes,uint256)",
-      "stateMutability": "",
       "type": "event"
     },
     {
@@ -91,14 +83,12 @@ TEST[DATE|TIME] Format:  json
       "encoding": "0x948b1f6a42ee138b7e34058ba85a37f716d55ff25ff05a763f15bed6a04c8d2c",
       "name": "NewDelay",
       "signature": "NewDelay(uint256)",
-      "stateMutability": "",
       "type": "event"
     },
     {
       "encoding": "0xa560e3198060a2f10670c1ec5b403077ea6ae93ca8de1c32b451dc1a943cd6e7",
       "name": "ExecuteTransaction",
       "signature": "ExecuteTransaction(bytes32,address,uint256,string,bytes,uint256)",
-      "stateMutability": "",
       "type": "event"
     },
     {
@@ -119,7 +109,6 @@ TEST[DATE|TIME] Format:  json
       "encoding": "0xe177246e",
       "name": "setDelay",
       "signature": "setDelay(uint256)",
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {

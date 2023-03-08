@@ -7,11 +7,11 @@ TEST[DATE|TIME] Format:  json
   "data": [
     {
       "articulatedTx": {
+        "inputs": null,
         "name": "deposit",
         "outputs": {
           "ret_0": "1"
-        },
-        "stateMutability": "nonpayable"
+        }
       },
       "blockHash": "0x12804134060126a2b62a3db6d37facc47622624dd055e98f309fd624f1a12ae8",
       "blockNumber": 1545347,
