@@ -28,7 +28,7 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 			}
 
 			for _, appearance := range txIds {
-				tx, err := rpcClient.GetTransactionByAppearance(chain, &appearance, opts.Articulate)
+				tx, err := rpcClient.GetTransactionByAppearance(chain, &appearance, opts.Traces)
 				if err != nil {
 					errorChan <- fmt.Errorf("transaction at %s returned an error: %w", strings.Replace(rng.Orig, "-", ".", -1), err)
 					continue
