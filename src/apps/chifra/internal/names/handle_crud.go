@@ -10,7 +10,7 @@ func (opts *NamesOptions) HandleCrud() error {
 	// 	return err
 	// }
 	// if len(namesArray) == 0 {
-	// 	logger.Log(logger.Warning, "No results for ", os.Args)
+	// 	logger.Log(logger.Warning, "No results for", os.Args)
 	// 	return nil
 	// }
 

@@ -24,7 +24,7 @@ TEST[DATE|TIME] Format:  json
       "value": 607298625296748300
     },
     "result": {
-      "newContract": "0x0",
+      "address": "0x0",
       "gasUsed": 214359,
       "output": "0x"
     },
@@ -59,7 +59,7 @@ TEST[DATE|TIME] Format:  json
       "value": 0
     },
     "result": {
-      "newContract": "0x0",
+      "address": "0x0",
       "gasUsed": 537,
       "output": "0x00000000000000000000000000000000000000000000000000002af50c27a980"
     },
@@ -95,7 +95,7 @@ TEST[DATE|TIME] Format:  json
       "value": 0
     },
     "result": {
-      "newContract": "0x0",
+      "address": "0x0",
       "gasUsed": 537,
       "output": "0x00000000000000000000000000000000000000000000000000002af50c27a980"
     },

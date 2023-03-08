@@ -31,7 +31,7 @@ int main(int argc, const char* argv[]) {
             return 0;
 
         string_q className = (options.traces ? GETRUNTIME_CLASS(CTrace)->m_ClassName
-                                             : (options.logs ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
+                                             : (options.logs ? GETRUNTIME_CLASS(CLog)->m_ClassName
                                                              : GETRUNTIME_CLASS(CBlock)->m_ClassName));
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], className);
@@ -64,12 +64,6 @@ string_q doOneLightBlock(blknum_t num, const COptions& opt) {
     HIDE_FIELD(CTransaction, "date");
     HIDE_FIELD(CTransaction, "age");
     HIDE_FIELD(CTransaction, "ether");
-    for (auto trans : gold.transactions) {
-        gold.tx_hashes.push_back(trans.hash);
-    }
-    if (opt.uncles) {
-        gold.unclesCnt = getUncleCount(num);
-    }
     return gold.Format(expContext().fmtMap["format"]);
 }
 

@@ -46,7 +46,7 @@ TEST[DATE|TIME] Format:  json
     "value": 100990000000000000000
   },
   "result": {
-    "newContract": "0x0",
+    "address": "0x0",
     "gasUsed": 0,
     "output": "0x"
   },
@@ -72,7 +72,7 @@ TEST[DATE|TIME] Format:  json
     "value": 2245430000000000
   },
   "result": {
-    "newContract": "0x0",
+    "address": "0x0",
     "gasUsed": 0,
     "output": "0x"
   },
@@ -98,7 +98,7 @@ TEST[DATE|TIME] Format:  json
     "value": 10077690000000000
   },
   "result": {
-    "newContract": "0x0",
+    "address": "0x0",
     "gasUsed": 0,
     "output": "0x"
   },
@@ -124,7 +124,7 @@ TEST[DATE|TIME] Format:  json
     "value": 2101380000000000
   },
   "result": {
-    "newContract": "0x0",
+    "address": "0x0",
     "gasUsed": 0,
     "output": "0x"
   },
@@ -150,7 +150,7 @@ TEST[DATE|TIME] Format:  json
     "value": 3004621300000000000
   },
   "result": {
-    "newContract": "0x0",
+    "address": "0x0",
     "gasUsed": 0,
     "output": "0x"
   },
@@ -176,7 +176,7 @@ TEST[DATE|TIME] Format:  json
     "value": 5463912680000000000
   },
   "result": {
-    "newContract": "0x0",
+    "address": "0x0",
     "gasUsed": 0,
     "output": "0x"
   },
@@ -202,7 +202,7 @@ TEST[DATE|TIME] Format:  json
     "value": 10003562600000000000
   },
   "result": {
-    "newContract": "0x0",
+    "address": "0x0",
     "gasUsed": 0,
     "output": "0x"
   },
@@ -228,7 +228,7 @@ TEST[DATE|TIME] Format:  json
     "value": 270000000000000000
   },
   "result": {
-    "newContract": "0x0",
+    "address": "0x0",
     "gasUsed": 0,
     "output": "0x"
   },
@@ -254,7 +254,7 @@ TEST[DATE|TIME] Format:  json
     "value": 100151880000000000
   },
   "result": {
-    "newContract": "0x0",
+    "address": "0x0",
     "gasUsed": 0,
     "output": "0x"
   },
@@ -280,7 +280,7 @@ TEST[DATE|TIME] Format:  json
     "value": 0
   },
   "result": {
-    "newContract": "0x0",
+    "address": "0x0",
     "gasUsed": 15479,
     "output": "0x"
   },
@@ -306,7 +306,7 @@ TEST[DATE|TIME] Format:  json
     "value": 257408100000000000
   },
   "result": {
-    "newContract": "0x0",
+    "address": "0x0",
     "gasUsed": 0,
     "output": "0x"
   },
@@ -332,7 +332,7 @@ TEST[DATE|TIME] Format:  json
     "value": 0
   },
   "result": {
-    "newContract": "0x0",
+    "address": "0x0",
     "gasUsed": 15479,
     "output": "0x"
   },
@@ -358,7 +358,7 @@ TEST[DATE|TIME] Format:  json
     "value": 0
   },
   "result": {
-    "newContract": "0x0",
+    "address": "0x0",
     "gasUsed": 15479,
     "output": "0x"
   },
@@ -384,7 +384,7 @@ TEST[DATE|TIME] Format:  json
     "value": 0
   },
   "result": {
-    "newContract": "0x0",
+    "address": "0x0",
     "gasUsed": 15479,
     "output": "0x"
   },

@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.55.0-beta
+  version: 0.56.0-beta
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra daemon`, you can
@@ -2326,10 +2326,6 @@ components:
           type: boolean
           example: true
           description: "flag indicating the system considers this data final"
-        unclesCnt:
-          type: number
-          format: uint64
-          description: "the number of uncles in this block"
     transaction:
       description: "transaction data as returned from the RPC (with slight enhancements)"
       type: object
@@ -2668,7 +2664,7 @@ components:
       description: "trace result data as returned from the RPC (with slight enhancements)"
       type: object
       properties:
-        newContract:
+        address:
           type: string
           format: address
           example: "0xf503...179b"

@@ -2,3 +2,4 @@
 class = CMonitorCount
 fields = monitorcount.csv
 includes = etherlib.h
+output = ../../libs/acctlib/

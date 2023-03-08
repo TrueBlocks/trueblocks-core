@@ -22,7 +22,7 @@ export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&lastBlock=1506480&maxRec
         "value": 4.1999e+21
       },
       "result": {
-        "newContract": "0x0",
+        "address": "0x0",
         "gasUsed": 0,
         "output": "0x"
       },
@@ -50,7 +50,7 @@ export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&lastBlock=1506480&maxRec
         "value": 74259320489077340
       },
       "result": {
-        "newContract": "0x0",
+        "address": "0x0",
         "gasUsed": 0,
         "output": "0x"
       },

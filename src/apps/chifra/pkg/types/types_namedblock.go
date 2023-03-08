@@ -13,16 +13,16 @@ package types
 
 type RawNamedBlock struct {
 	BlockNumber string `json:"blockNumber"`
-	Timestamp   string `json:"timestamp"`
 	Date        string `json:"date"`
 	Name        string `json:"name"`
+	Timestamp   string `json:"timestamp"`
 }
 
 type SimpleNamedBlock struct {
 	BlockNumber uint64 `json:"blockNumber"`
-	Timestamp   int64  `json:"timestamp"`
 	Date        string `json:"date"`
 	Name        string `json:"name,omitempty"`
+	Timestamp   int64  `json:"timestamp"`
 	raw         *RawNamedBlock
 }
 
@@ -40,8 +40,8 @@ func (s *SimpleNamedBlock) Model(showHidden bool, format string, extraOptions ma
 
 	model := map[string]interface{}{
 		"blockNumber": s.BlockNumber,
-		"timestamp":   s.Timestamp,
 		"date":        s.Date,
+		"timestamp":   s.Timestamp,
 	}
 
 	order := []string{

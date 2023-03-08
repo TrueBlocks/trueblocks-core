@@ -1,12 +1,12 @@
-names?terms=wildmolasses.eth
+names?terms=wolfofethereum.eth
 {
   "data": [
     {
-      "address": "0x69e271483c38ed4902a55c3ea8aab9e7cc8617e5",
-      "name": "Name 0x69e27148",
-      "petname": "partly-national-monitor",
-      "source": "Gitcoin Website",
-      "tags": "90-Individuals:Gitcoin Grants"
+      "address": "0x0559a413a3ab19508a144aeebc474eb14c5e76ce",
+      "name": "Grant 0386 Wolfofethereum.eth",
+      "petname": "arguably-actual-gar",
+      "source": "https://gitcoin.co/grants/386/wolfofethereumeth",
+      "tags": "31-Gitcoin:Grants"
     }
   ],
   "meta": {

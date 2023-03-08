@@ -1,45 +1,13 @@
 abiTest  eth_test -s 5
 ethereum test box test...
 0. --------------------------------------------------------------------------------
-	000.000 test_0                           ==> 
-line: ;raw_decode|decoding ufixed128x128|function baz(ufixed128x128)|0x0000000000000000000000000000000100000000000000000000000000000000|1
-testType: ;raw_decode
-testName: decoding ufixed128x128
-testSig: function baz(ufixed128x128) --> baz(ufixed128x128)
-expected: 1 ?
-result:   1 ? 1
-testName: decoding ufixed128x128
-passed 'func.doTest(line)' is true
+	000.000 test_0                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.001 test_1                           ==> 
-line: ;raw_decode|decoding fixed128x128|function baz(fixed128x128)|0xffffffffffffffffffffffffffffffff00000000000000000000000000000000|-1
-testType: ;raw_decode
-testName: decoding fixed128x128
-testSig: function baz(fixed128x128) --> baz(fixed128x128)
-expected: -1 ?
-result:   -1 ? 1
-testName: decoding fixed128x128
-passed 'func.doTest(line)' is true
+	000.001 test_1                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.002 test_2                           ==> 
-line: ;raw_decode|decimals should fail|function baz(ufixed128x128)|0x0000000000000000000000000000000100000000000000000000000000000001|fail
-testType: ;raw_decode
-testName: decimals should fail
-testSig: function baz(ufixed128x128) --> baz(ufixed128x128)
-expected: fail ?
-result:   fail ? 1
-testName: decimals should fail
-passed 'func.doTest(line)' is true
+	000.002 test_2                           ==> passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.003 test_3                           ==> 
-line: ;raw_decode|decimals should fail|function baz(ufixed128x128)|0xffffffffffffffffffffffffffffffff00000000000000000000000000000001|fail
-testType: ;raw_decode
-testName: decimals should fail
-testSig: function baz(ufixed128x128) --> baz(ufixed128x128)
-expected: fail ?
-result:   fail ? 1
-testName: decimals should fail
-passed 'func.doTest(line)' is true
+	000.003 test_3                           ==> passed 'func.doTest(line)' is true
 ...passed
 
 Done...

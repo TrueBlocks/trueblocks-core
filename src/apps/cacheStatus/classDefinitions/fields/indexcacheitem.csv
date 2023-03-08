@@ -1,14 +1,14 @@
-name           ,type      ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
-type           ,string    ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-nAddrs         ,uint32    ,           ,       ,      ,        ,          ,        ,      ,         ,  1 ,     ,        ,the number of addresses in this chunk
-nApps          ,uint32    ,           ,       ,      ,        ,          ,        ,      ,         ,  2 ,     ,        ,the number of appearances in this chunk
-firstApp       ,blknum    ,           ,       ,      ,        ,          ,        ,      ,         ,  3 ,     ,        ,the first appearance in this chunk
-latestApp      ,blknum    ,           ,       ,      ,        ,          ,        ,      ,         ,  4 ,     ,        ,the last appeaerance in this chunk
-firstTs        ,timestamp ,           ,       ,      ,        ,          ,        ,      ,         ,  5 ,     ,        ,the first timestamp in this chunk
-latestTs       ,timestamp ,           ,       ,      ,        ,          ,        ,      ,         ,  6 ,     ,        ,the last timestamp in this chunk
-filename       ,string    ,           ,       ,      ,        ,          ,        ,      ,         ,  7 ,     ,        ,the filename of this chunk
-fileDate       ,datetime  ,           ,       ,      ,        ,          ,        ,      ,         ,  8 ,     ,        ,the file date of this chunk
-indexSizeBytes ,uint32    ,           ,       ,      ,        ,          ,        ,      ,         ,  9 ,     ,        ,the size in bytes of the index portion of this chunk
-indexHash      ,ipfshash  ,           ,       ,      ,        ,          ,        ,      ,         , 10 ,     ,        ,the IPFS hash of the index portion of this chunk
-bloomSizeBytes ,uint32    ,           ,       ,      ,        ,          ,        ,      ,         , 11 ,     ,        ,the size in bytes of the bloom filter for this chunk
-bloomHash      ,ipfshash  ,           ,       ,      ,        ,          ,        ,      ,         , 12 ,     ,        ,the IPFS has of the bloom filter for this chunk
+name           ,type      ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,noaddfld ,doc ,disp ,example ,description
+type           ,string    ,           ,       ,      ,        ,          ,        ,         ,    ,     ,        ,
+nAddrs         ,uint32    ,           ,       ,      ,        ,          ,        ,         ,  1 ,     ,        ,the number of addresses in this chunk
+nApps          ,uint32    ,           ,       ,      ,        ,          ,        ,         ,  2 ,     ,        ,the number of appearances in this chunk
+firstApp       ,blknum    ,           ,       ,      ,        ,          ,        ,         ,  3 ,     ,        ,the first appearance in this chunk
+latestApp      ,blknum    ,           ,       ,      ,        ,          ,        ,         ,  4 ,     ,        ,the last appeaerance in this chunk
+firstTs        ,timestamp ,           ,       ,      ,        ,          ,        ,         ,  5 ,     ,        ,the first timestamp in this chunk
+latestTs       ,timestamp ,           ,       ,      ,        ,          ,        ,         ,  6 ,     ,        ,the last timestamp in this chunk
+filename       ,string    ,           ,       ,      ,        ,          ,        ,         ,  7 ,     ,        ,the filename of this chunk
+fileDate       ,datetime  ,           ,       ,      ,        ,          ,        ,         ,  8 ,     ,        ,the file date of this chunk
+indexSizeBytes ,uint32    ,           ,       ,      ,        ,          ,        ,         ,  9 ,     ,        ,the size in bytes of the index portion of this chunk
+indexHash      ,ipfshash  ,           ,       ,      ,        ,          ,        ,         , 10 ,     ,        ,the IPFS hash of the index portion of this chunk
+bloomSizeBytes ,uint32    ,           ,       ,      ,        ,          ,        ,         , 11 ,     ,        ,the size in bytes of the bloom filter for this chunk
+bloomHash      ,ipfshash  ,           ,       ,      ,        ,          ,        ,         , 12 ,     ,        ,the IPFS has of the bloom filter for this chunk

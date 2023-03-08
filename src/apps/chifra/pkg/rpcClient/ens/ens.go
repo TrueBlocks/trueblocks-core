@@ -21,11 +21,12 @@ func lowerIfHex(addr string) string {
 
 // ConvertEns converts an array of strings, if they contains .eth, into addresses. Note, we take
 // chain parameter, but ignore it choosing to look at mainnet ENS only
-func ConvertEns(chain string, addrsIn []string) []string {
+func ConvertEns(chain string, addrsIn []string) ([]string, bool) {
 	provider := config.GetRpcProvider("mainnet")
 	ec := rpcClient.GetClient(provider)
 	defer ec.Close()
 
+	found := false
 	var out []string
 	for i := 0; i < len(addrsIn); i++ {
 		term := addrsIn[i]
@@ -33,18 +34,19 @@ func ConvertEns(chain string, addrsIn []string) []string {
 			val, err := ensGo.Resolve(ec, term)
 			if err == nil && len(val) > 0 {
 				term = val.Hex()
+				found = true
 			}
 		}
 		out = append(out, lowerIfHex(term))
 	}
-	return out
+	return out, found
 }
 
 // ConvertOneEns converts a single string, if it contains .eth, into an address. Note, we take
 // chain parameter, but ignore it choosing to look at mainnet ENS only
-func ConvertOneEns(chain string, in string) string {
+func ConvertOneEns(chain string, in string) (string, bool) {
 	if !strings.Contains(in, ".eth") {
-		return lowerIfHex(in)
+		return lowerIfHex(in), false
 	}
 
 	provider := config.GetRpcProvider("mainnet")
@@ -53,8 +55,8 @@ func ConvertOneEns(chain string, in string) string {
 
 	val, err := ensGo.Resolve(ec, in)
 	if err == nil && len(val) > 0 {
-		return lowerIfHex(val.Hex())
+		return lowerIfHex(val.Hex()), true
 	}
 
-	return lowerIfHex(in)
+	return lowerIfHex(in), false
 }

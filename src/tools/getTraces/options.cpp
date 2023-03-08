@@ -101,7 +101,7 @@ bool COptions::parseArguments(string_q& command) {
             return usage("filter.fromBlock must be no more than 100 blocks before filter.toBlock.");
         filters.push_back(f);
         manageFields("CTraceAction:balance,init,refundAddress,selfDestructed", false);  // hide
-        manageFields("CTraceResult:code,newContract", false);
+        manageFields("CTraceResult:code,address", false);
         manageFields("CTrace:error", false);
         GETRUNTIME_CLASS(CTrace)->sortFieldList();
         GETRUNTIME_CLASS(CTraceAction)->sortFieldList();
@@ -131,7 +131,7 @@ bool COptions::parseArguments(string_q& command) {
         manageFields("CParameter:strDefault", false);  // hide
         manageFields("CTransaction:price", false);     // hide
         manageFields("CTransaction:input", true);      // show
-        manageFields("CLogEntry:topics", true);        // show
+        manageFields("CLog:topics", true);             // show
         abi_spec.loadAbisFromKnown();
     }
 

@@ -342,9 +342,7 @@ const char* STR_DISPLAY_ABI =
     "[{ENCODING}]\t"
     "[{TYPE}]\t"
     "[{NAME}]\t"
-    "[{SIGNATURE}]\t"
-    "[{INPUT_NAMES}]\t"
-    "[{OUTPUT_NAMES}]";
+    "[{SIGNATURE}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
@@ -488,10 +486,10 @@ bool CAbi::loadAbiFromFile(const string_q& fileName) {
 
     if (loadAbiFromJson(asciiFileToString(fileName))) {
         for (auto& item : interfaceMap)
-            if (item.second.abi_source.empty()) {
+            if (item.second.abiSource.empty()) {
                 string_q str = substitute(substitute(fileName, cacheFolder_abis, ""), rootConfigs_abis, "");
                 nextTokenClear(str, '/');
-                item.second.abi_source = str;
+                item.second.abiSource = str;
             }
         abiSourcesMap[fileName] = true;
         return true;

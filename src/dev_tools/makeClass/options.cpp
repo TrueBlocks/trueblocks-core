@@ -28,9 +28,7 @@ static const COption params[] = {
     COption("readmes", "m", "", OPT_SWITCH, "create readme files for each tool and app"),
     COption("format", "f", "", OPT_SWITCH, "format source code files (.cpp and .h) found in local folder and below"),
     COption("lint", "l", "", OPT_SWITCH, "lint source code files (.cpp and .h) found in local folder and below"),
-    COption("tsx", "t", "", OPT_SWITCH, "create typescript routes, help text and types for the front end"),
     COption("sdk", "s", "", OPT_SWITCH, "create typescript sdk"),
-    COption("dump", "d", "", OPT_HIDDEN | OPT_SWITCH, "dump any classDefinition config tomls to screen and quit"),
     COption("openapi", "A", "", OPT_HIDDEN | OPT_SWITCH, "export openapi.yaml file for API documentation"),
     COption("", "", "", OPT_DESCRIPTION, "Automatically writes C++ for various purposes."),
     // clang-format on
@@ -50,7 +48,6 @@ bool COptions::parseArguments(string_q& command) {
     bool readmes = false;
     bool format = false;
     bool lint = false;
-    bool dump = false;
     // END_CODE_LOCAL_INIT
 
     Init();
@@ -77,14 +74,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-l" || arg == "--lint") {
             lint = true;
 
-        } else if (arg == "-t" || arg == "--tsx") {
-            tsx = true;
-
         } else if (arg == "-s" || arg == "--sdk") {
             sdk = true;
-
-        } else if (arg == "-d" || arg == "--dump") {
-            dump = true;
 
         } else if (arg == "-A" || arg == "--openapi") {
             openapi = true;
@@ -158,10 +149,6 @@ bool COptions::parseArguments(string_q& command) {
         verifyGoEnumValidators();
     }
 
-    if (tsx) {
-        handle_tsx();
-    }
-
     // If the user has explicitly specified a classDef, use that
     LOG8("pwd: ", getCWD());
     for (auto file : files) {
@@ -229,28 +216,6 @@ bool COptions::parseArguments(string_q& command) {
     if (classDefs.empty())
         return usage(usageErrs[ERR_NEEDONECLASS]);
 
-    // If we're dumping, dump...
-    if (dump) {
-        for (auto cl : classDefs) {
-            CToml toml(cl.input_path);
-            if (verbose) {
-                SHOW_FIELD(CClassDefinition, "fieldArray");
-                HIDE_FIELD(CClassDefinition, "field_str");
-                manageFields("CParameter:is_enabled,is_flags", false);
-                CClassDefinition d(toml);
-                cout << d << endl;
-                HIDE_FIELD(CClassDefinition, "fieldArray");
-                SHOW_FIELD(CClassDefinition, "field_str");
-            } else {
-                cout << string_q(120, '-') << endl << cl.input_path << endl << string_q(120, '-') << endl;
-                cout << toml << endl;
-            }
-        }
-        // Maybe we're done..
-        if (!all)
-            return false;
-    }
-
     // We need the template files
     CStringArray templs = {"", "blank.yaml", "blank.cpp", "blank.h", "blank.go.tmpl", "blank_options.go.tmpl"};
     for (auto temp : templs) {
@@ -270,7 +235,6 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     all = false;
-    tsx = false;
     sdk = false;
     openapi = false;
     // END_CODE_INIT

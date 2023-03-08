@@ -871,7 +871,8 @@
     "outputs": [
       {
         "name": "c",
-        "type": "Conference"
+        "internalType": "contract Conference",
+        "type": "address"
       }
     ],
     "signature": "deploy(string,uint256,uint256,uint256,address,address)",
@@ -992,7 +993,8 @@
     "outputs": [
       {
         "name": "c",
-        "type": "Conference"
+        "internalType": "contract Conference",
+        "type": "address"
       }
     ],
     "signature": "deploy(string,uint256,uint256,uint256,address,address)",
@@ -1092,7 +1094,8 @@
     "outputs": [
       {
         "name": "c",
-        "type": "Conference"
+        "internalType": "contract Conference",
+        "type": "address"
       }
     ],
     "signature": "deploy(string,uint256,uint256,uint256,address,address)",

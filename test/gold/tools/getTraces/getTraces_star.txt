@@ -12,7 +12,6 @@ TEST[DATE|TIME] Format:  json
         "to": "0x4d3f8e9f000409ca9f49432ccb2a1f84e8673bf1",
         "value": "50000000000000000000"
       },
-      "articulatedTrace": null,
       "blockHash": "0xe4c2b8cb9ddd1acb41043afb3bd0149c281eca23f1bc563af5899bac748ec372",
       "blockNumber": 2222221,
       "result": {
@@ -35,7 +34,6 @@ TEST[DATE|TIME] Format:  json
         "to": "0x079af03aaa85ca10b9f15b036a91289ac3d8c2b8",
         "value": "19377212010000000000"
       },
-      "articulatedTrace": null,
       "blockHash": "0xe4c2b8cb9ddd1acb41043afb3bd0149c281eca23f1bc563af5899bac748ec372",
       "blockNumber": 2222221,
       "result": {
@@ -58,7 +56,6 @@ TEST[DATE|TIME] Format:  json
         "to": "0x71316cb345b2b978bfbe3f28a4761fe3136273a5",
         "value": "21990000000000000000"
       },
-      "articulatedTrace": null,
       "blockHash": "0xe4c2b8cb9ddd1acb41043afb3bd0149c281eca23f1bc563af5899bac748ec372",
       "blockNumber": 2222221,
       "result": {
@@ -81,7 +78,6 @@ TEST[DATE|TIME] Format:  json
         "to": "0xb7831ba70c989e7b2ab03ff804e8cdab83a67ba3",
         "value": "2154968800000000000"
       },
-      "articulatedTrace": null,
       "blockHash": "0xe4c2b8cb9ddd1acb41043afb3bd0149c281eca23f1bc563af5899bac748ec372",
       "blockNumber": 2222221,
       "result": {

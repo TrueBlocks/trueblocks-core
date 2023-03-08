@@ -2,8 +2,9 @@
 class = CTraceCount
 fields = tracecount.csv
 includes = etherlib.h
+output =
 doc_group = 02-Chain Data
 doc_descr = counts the number of traces in a transaction
 doc_route = 210-traceCount
 doc_producer = traces
-gogen = TraceCount
+go_type = true

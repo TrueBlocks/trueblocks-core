@@ -699,7 +699,7 @@ params.size: 0
           "value": 607298625296748300
         },
         "result": {
-          "newContract": "0x0",
+          "address": "0x0",
           "gasUsed": 214359,
           "output": "0x"
         },
@@ -731,7 +731,7 @@ params.size: 0
           "value": 0
         },
         "result": {
-          "newContract": "0x0",
+          "address": "0x0",
           "gasUsed": 537,
           "output": "0x00000000000000000000000000000000000000000000000000002af50c27a980"
         },
@@ -764,7 +764,7 @@ params.size: 0
           "value": 0
         },
         "result": {
-          "newContract": "0x0",
+          "address": "0x0",
           "gasUsed": 537,
           "output": "0x00000000000000000000000000000000000000000000000000002af50c27a980"
         },

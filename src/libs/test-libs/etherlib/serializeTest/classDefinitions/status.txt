@@ -3,3 +3,4 @@ class = CStatus
 fields = status.csv
 includes = etherlib.h|cache.h
 disabled = true
+output = ../../libs/test-libs/etherlib/serializeTest

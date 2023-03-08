@@ -119,9 +119,6 @@ names?tags
       "tags": "80-Malicious:Shanghai"
     },
     {
-      "tags": "90-Individuals:Gitcoin Grants"
-    },
-    {
       "tags": "91-Early:Addresses"
     },
     {

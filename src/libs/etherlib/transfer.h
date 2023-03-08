@@ -16,12 +16,12 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 #include "utillib.h"
-#include "logentry.h"
+#include "log.h"
 
 namespace qblocks {
 
 // EXISTING_CODE
-class CLogEntry;
+class CLog;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ class CTransfer : public CBaseNode {
     DECLARE_NODE(CTransfer);
 
     // EXISTING_CODE
-    CLogEntry* log{nullptr};
+    CLog* log{nullptr};
     int compare(const CTransfer& it) const;
     // EXISTING_CODE
     bool operator==(const CTransfer& it) const;

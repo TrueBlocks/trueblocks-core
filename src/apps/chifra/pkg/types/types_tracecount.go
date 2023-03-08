@@ -15,18 +15,18 @@ import "github.com/ethereum/go-ethereum/common"
 
 type RawTraceCount struct {
 	BlockNumber      string `json:"blockNumber"`
-	TransactionIndex string `json:"transactionIndex"`
-	TransactionHash  string `json:"transactionHash"`
 	Timestamp        string `json:"timestamp"`
 	TracesCnt        string `json:"tracesCnt"`
+	TransactionHash  string `json:"transactionHash"`
+	TransactionIndex string `json:"transactionIndex"`
 }
 
 type SimpleTraceCount struct {
 	BlockNumber      uint64      `json:"blockNumber"`
-	TransactionIndex uint64      `json:"transactionIndex"`
-	TransactionHash  common.Hash `json:"transactionHash"`
 	Timestamp        int64       `json:"timestamp"`
 	TracesCnt        uint64      `json:"tracesCnt"`
+	TransactionHash  common.Hash `json:"transactionHash"`
+	TransactionIndex uint64      `json:"transactionIndex"`
 	raw              *RawTraceCount
 }
 
@@ -44,10 +44,10 @@ func (s *SimpleTraceCount) Model(showHidden bool, format string, extraOptions ma
 
 	model := map[string]interface{}{
 		"blockNumber":      s.BlockNumber,
-		"transactionIndex": s.TransactionIndex,
-		"transactionHash":  s.TransactionHash,
 		"timestamp":        s.Timestamp,
 		"tracesCnt":        s.TracesCnt,
+		"transactionHash":  s.TransactionHash,
+		"transactionIndex": s.TransactionIndex,
 	}
 
 	order := []string{

@@ -3,4 +3,4 @@ TEST[DATE|TIME] Terms:  [account_1]
 TEST[DATE|TIME] MatchCase:  true
 TEST[DATE|TIME] Custom:  true
 TEST[DATE|TIME] Format:  txt
-WARN[DATE|TIME] No results for  [chifra names --custom account_1 --match_case]
+WARN[DATE|TIME] No results for [chifra names --custom account_1 --match_case]

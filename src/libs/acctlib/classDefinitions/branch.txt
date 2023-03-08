@@ -4,3 +4,4 @@ base_class = CTreeNode
 fields = branch.csv
 includes = etherlib.h|treenode.h
 cpp_includes = treeroot.h
+output = ../../libs/acctlib/

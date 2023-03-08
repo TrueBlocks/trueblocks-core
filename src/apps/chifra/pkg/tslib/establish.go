@@ -13,6 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
 
 func EstablishTsFile(chain string) error {
@@ -25,7 +26,7 @@ func EstablishTsFile(chain string) error {
 		return nil
 	}
 
-	cid, err := manifest.ReadUnchainIndex(chain, "ts")
+	cid, err := manifest.ReadUnchainIndex(chain, "ts", unchained.PreferredPublisher)
 	if err != nil {
 		return err
 	}

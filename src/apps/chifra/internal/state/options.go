@@ -126,8 +126,8 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
-	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
-	opts.ProxyFor = ens.ConvertOneEns(opts.Globals.Chain, opts.ProxyFor)
+	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	opts.ProxyFor, _ = ens.ConvertOneEns(opts.Globals.Chain, opts.ProxyFor)
 	// EXISTING_CODE
 
 	return opts
@@ -146,14 +146,15 @@ func stateFinishParse(args []string) *StateOptions {
 			opts.Blocks = append(opts.Blocks, arg)
 		}
 	}
-	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
-	opts.ProxyFor = ens.ConvertOneEns(opts.Globals.Chain, opts.ProxyFor)
+	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	opts.ProxyFor, _ = ens.ConvertOneEns(opts.Globals.Chain, opts.ProxyFor)
 	opts.Call = strings.Replace(opts.Call, "|", "!", -1)
 	opts.Call = strings.Replace(opts.Call, " !", "!", -1)
 	opts.Call = strings.Replace(opts.Call, "! ", "!", -1)
 	parts := strings.Split(opts.Call, "!")
 	if len(parts) > 0 {
-		opts.Call = strings.Replace(opts.Call, parts[0], ens.ConvertOneEns(opts.Globals.Chain, parts[0]), -1)
+		val, _ := ens.ConvertOneEns(opts.Globals.Chain, parts[0])
+		opts.Call = strings.Replace(opts.Call, parts[0], val, -1)
 	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {

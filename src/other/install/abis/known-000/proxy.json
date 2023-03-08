@@ -98,7 +98,8 @@
     "outputs": [
       {
         "name": "storage r",
-        "type": "struct StorageSlot.BooleanSlot"
+        "internalType": "struct StorageSlot.BooleanSlot",
+        "type": "tuple"
       }
     ],
     "signature": "getBooleanSlot(bytes32)",
@@ -196,7 +197,8 @@
     "outputs": [
       {
         "name": "storage r",
-        "type": "struct StorageSlot.Uint256Slot"
+        "internalType": "struct StorageSlot.Uint256Slot",
+        "type": "tuple"
       }
     ],
     "signature": "getUint256Slot(bytes32)",
@@ -290,7 +292,8 @@
     "outputs": [
       {
         "name": "storage r",
-        "type": "struct StorageSlot.Bytes32Slot"
+        "internalType": "struct StorageSlot.Bytes32Slot",
+        "type": "tuple"
       }
     ],
     "signature": "getBytes32Slot(bytes32)",
@@ -309,7 +312,8 @@
     "outputs": [
       {
         "name": "storage r",
-        "type": "struct StorageSlot.AddressSlot"
+        "internalType": "struct StorageSlot.AddressSlot",
+        "type": "tuple"
       }
     ],
     "signature": "getAddressSlot(bytes32)",

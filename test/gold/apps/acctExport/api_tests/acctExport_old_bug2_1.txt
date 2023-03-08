@@ -26,19 +26,19 @@ export?addrs=0x000001f568875f378bf6d170b790967fe429c81a&maxRecords=1&firstRecord
       },
       "traces": [],
       "articulatedTx": {
-        "name": "approve",
+        "name": "approve0",
         "inputs": {
-          "_spender": "0x755cdba6ae4f479f7164792b318b2a06c759833b",
-          "_value": "0"
+          "spender": "0x755cdba6ae4f479f7164792b318b2a06c759833b",
+          "value": "0"
         },
         "outputs": {
-          "_success": ""
+          "ret_0": "null"
         }
       },
-      "compressedTx": "{name:approve|inputs:{_spender:0x755cdba6ae4f479f7164792b318b2a06c759833b|_value:0}|outputs:{_success:}}",
+      "compressedTx": "{name:approve0|inputs:{spender:0x755cdba6ae4f479f7164792b318b2a06c759833b|value:0}|outputs:{ret_0:null}}",
       "gasCost": 563280000000000,
       "etherGasCost": 0.00056328,
-      "function": "approve",
+      "function": "approve0",
       "gasUsed": 28164,
       "date": "2016-09-08 13:05:19 UTC",
       "ether": 0,

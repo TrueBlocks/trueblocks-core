@@ -3,3 +3,4 @@ class = CKey
 fields = key.csv
 includes = utillib.h
 cpp_includes =
+output = ../../libs/utillib/

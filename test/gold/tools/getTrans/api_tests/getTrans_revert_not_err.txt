@@ -2,707 +2,621 @@ transactions?transactions=0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5
 {
   "data": [
     {
-      "hash": "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c",
       "blockHash": "0xd2b9c8119a1e615046cd83abe333c6cf2c3cfb2773149911339c67ab660c1b06",
       "blockNumber": 6876231,
-      "transactionIndex": 0,
-      "timestamp": 1544664392,
+      "date": "2018-12-13 01:26:32 UTC",
+      "ether": "0",
       "from": "0x63d509f7152769ddf162ed048b83719fe1e31080",
-      "to": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
-      "value": 0,
       "gas": 7990029,
+      "gasCost": "19899285000000000",
       "gasPrice": 21000000000,
+      "gasUsed": 947585,
+      "hash": "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c",
+      "input": "0xa78caf19000000000000000000000000cd565ca18f06e2e4d251b55dc49a4fe456c7205232353030663935653661396438336439380000000000000000000000000000006d3666666e574245453978595178726d32000000000000000000000000000000",
       "maxFeePerGas": 0,
       "maxPriorityFeePerGas": 0,
-      "input": "0xa78caf19000000000000000000000000cd565ca18f06e2e4d251b55dc49a4fe456c7205232353030663935653661396438336439380000000000000000000000000000006d3666666e574245453978595178726d32000000000000000000000000000000",
-      "isError": 0,
-      "hasToken": 0,
+      "nonce": 2033,
       "receipt": {
         "contractAddress": "0x0",
-        "gasUsed": 947585,
         "effectiveGasPrice": 21000000000,
+        "gasUsed": 947585,
         "logs": [
           {
             "address": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a",
+            "articulatedLog": {
+              "inputs": {
+                "_amount": "100000000",
+                "_from": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28",
+                "_to": "0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021"
+              },
+              "name": "Transfer"
+            },
+            "compressedLog": "{name:Transfer|inputs:{_amount:100000000|_from:0xe81a6c6b733d52df5d6aa863d75aab78147a0f28|_to:0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021}}",
+            "data": "0x0000000000000000000000000000000000000000000000000000000005f5e100",
             "logIndex": 0,
             "topics": [
               "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
               "0x000000000000000000000000e81a6c6b733d52df5d6aa863d75aab78147a0f28",
               "0x0000000000000000000000008ca1fec705f7060aaa3d8c6757e34d1e7cc61021"
-            ],
-            "data": "0x0000000000000000000000000000000000000000000000000000000005f5e100",
-            "articulatedLog": {
-              "name": "Transfer",
-              "stateMutability": "",
-              "inputs": {
-                "_amount": "100000000",
-                "_from": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28",
-                "_to": "0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021"
-              }
-            },
-            "compressedLog": "{name:Transfer|stateMutability:|inputs:{_amount:100000000|_from:0xe81a6c6b733d52df5d6aa863d75aab78147a0f28|_to:0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021}}"
+            ]
           },
           {
             "address": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
+            "data": "0x3235303066393565366139643833643938000000000000000000000000000000000000000000000000000000e81a6c6b733d52df5d6aa863d75aab78147a0f280000000000000000000000008ca1fec705f7060aaa3d8c6757e34d1e7cc610216d3666666e574245453978595178726d320000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002",
             "logIndex": 1,
             "topics": [
               "0x0456067687d27fcf6d3db141acb08cedd0fa786fdc7d672a7ed802514669b2e0"
-            ],
-            "data": "0x3235303066393565366139643833643938000000000000000000000000000000000000000000000000000000e81a6c6b733d52df5d6aa863d75aab78147a0f280000000000000000000000008ca1fec705f7060aaa3d8c6757e34d1e7cc610216d3666666e574245453978595178726d320000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002",
-            "compressedLog": ""
+            ]
           }
         ],
         "status": 1
       },
+      "timestamp": 1544664392,
+      "to": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
       "traces": [
         {
-          "subtraces": 12,
-          "traceAddress": null,
-          "type": "call",
-          "error": "",
           "action": {
-            "selfDestructed": "0x0",
-            "balance": 0,
             "callType": "call",
             "from": "0x63d509f7152769ddf162ed048b83719fe1e31080",
             "gas": 7964917,
             "input": "0xa78caf19000000000000000000000000cd565ca18f06e2e4d251b55dc49a4fe456c7205232353030663935653661396438336439380000000000000000000000000000006d3666666e574245453978595178726d32000000000000000000000000000000",
-            "refundAddress": "0x0",
             "to": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
-            "value": 0
+            "value": "0"
           },
           "result": {
-            "newContract": "0x0",
             "gasUsed": 937473,
             "output": "0x"
           },
-          "compressedTrace": "",
-          "timestamp": 1544664392
+          "subtraces": 12,
+          "timestamp": 1544664392,
+          "traceAddress": [],
+          "type": "call"
         },
         {
-          "subtraces": 0,
-          "traceAddress": "0",
-          "type": "call",
-          "error": "",
           "action": {
-            "selfDestructed": "0x0",
-            "balance": 0,
             "callType": "call",
             "from": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
             "gas": 7838119,
             "input": "0xfda0895800000000000000000000000063d509f7152769ddf162ed048b83719fe1e31080",
-            "refundAddress": "0x0",
             "to": "0x98ca4bf7e522cd6d2f69cf843dfab327a1e26497",
-            "value": 0
+            "value": "0"
           },
           "result": {
-            "newContract": "0x0",
             "gasUsed": 657,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
           },
-          "compressedTrace": "",
-          "timestamp": 1544664392
+          "subtraces": 0,
+          "timestamp": 1544664392,
+          "traceAddress": [
+            0
+          ],
+          "type": "call"
         },
         {
-          "subtraces": 0,
-          "traceAddress": "1",
-          "type": "call",
-          "error": "",
           "action": {
-            "selfDestructed": "0x0",
-            "balance": 0,
             "callType": "call",
             "from": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
             "gas": 7835647,
             "input": "0x2a01a4516d3666666e574245453978595178726d32000000000000000000000000000000",
-            "refundAddress": "0x0",
             "to": "0xcd565ca18f06e2e4d251b55dc49a4fe456c72052",
-            "value": 0
+            "value": "0"
           },
           "result": {
-            "newContract": "0x0",
             "gasUsed": 768,
             "output": "0x000000000000000000000000e81a6c6b733d52df5d6aa863d75aab78147a0f28"
           },
-          "compressedTrace": "",
-          "timestamp": 1544664392
+          "subtraces": 0,
+          "timestamp": 1544664392,
+          "traceAddress": [
+            1
+          ],
+          "type": "call"
         },
         {
-          "subtraces": 0,
-          "traceAddress": "2",
-          "type": "call",
-          "error": "",
           "action": {
-            "selfDestructed": "0x0",
-            "balance": 0,
             "callType": "call",
             "from": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
             "gas": 7833106,
             "input": "0x2a01a4516d3666666e574245453978595178726d32000000000000000000000000000000",
-            "refundAddress": "0x0",
             "to": "0xcd565ca18f06e2e4d251b55dc49a4fe456c72052",
-            "value": 0
+            "value": "0"
           },
           "result": {
-            "newContract": "0x0",
             "gasUsed": 768,
             "output": "0x000000000000000000000000e81a6c6b733d52df5d6aa863d75aab78147a0f28"
           },
-          "compressedTrace": "",
-          "timestamp": 1544664392
+          "subtraces": 0,
+          "timestamp": 1544664392,
+          "traceAddress": [
+            2
+          ],
+          "type": "call"
         },
         {
-          "subtraces": 0,
-          "traceAddress": "3",
-          "type": "create",
-          "error": "",
           "action": {
-            "selfDestructed": "0x0",
-            "balance": 0,
-            "callType": "",
             "from": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
             "gas": 7799697,
-            "input": "",
-            "refundAddress": "0x0",
+            "init": "0x606060405260028055341561001357600080fd5b604051604080610d36833981016040528080519190602001805160008054600160a060020a03909216600160a060020a03199092169190911790555050600155610cd4806100626000396000f300606060405236156100bf5763ffffffff60e060020a60003504166302ab72c481146100c457806305b1137b146100e55780630a7e880c1461011b5780630d8e6e2c14610146578063150b7a021461016b5780631aca63761461020c578063418ae26914610234578063468f262214610256578063527fe4131461027557806354fd4d50146102885780636bb3471a1461029b57806370a08231146102ae578063beabacc8146102cd578063f23a6e61146102f5578063f7f01b4b14610366575b600080fd5b34156100cf57600080fd5b6100e3600160a060020a0360043516610395565b005b34156100f057600080fd5b610107600160a060020a0360043516602435610448565b604051901515815260200160405180910390f35b341561012657600080fd5b610107600160a060020a03600435811690602435166044356064356105e8565b341561015157600080fd5b61015961077b565b60405190815260200160405180910390f35b341561017657600080fd5b6101d7600160a060020a036004803582169160248035909116916044359160849060643590810190830135806020601f8201819004810201604051908101604052818152929190602084018383808284375094965061078195505050505050565b6040517fffffffff00000000000000000000000000000000000000000000000000000000909116815260200160405180910390f35b341561021757600080fd5b610107600160a060020a03600435811690602435166044356107aa565b341561023f57600080fd5b610159600160a060020a0360043516602435610940565b341561026157600080fd5b610159600160a060020a03600435166109c1565b341561028057600080fd5b610159610a3c565b341561029357600080fd5b610159610a42565b34156102a657600080fd5b610159610a48565b34156102b957600080fd5b610159600160a060020a0360043516610a4e565b34156102d857600080fd5b610107600160a060020a0360043581169060243516604435610aea565b341561030057600080fd5b6101d7600160a060020a0360048035821691602480359091169160443591606435919060a49060843590810190830135806020601f82018190048102016040519081016040528181529291906020840183838082843750949650610c6f95505050505050565b341561037157600080fd5b610379610c99565b604051600160a060020a03909116815260200160405180910390f35b60008054600160a060020a03169063fda089589033906040516020015260405160e060020a63ffffffff8416028152600160a060020a039091166004820152602401602060405180830381600087803b15156103f057600080fd5b6102c65a03f1151561040157600080fd5b50505060405180511515600114905061041957600080fd5b6000805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0392909216919091179055565b60008054600160a060020a031663fda0895833836040516020015260405160e060020a63ffffffff8416028152600160a060020a039091166004820152602401602060405180830381600087803b15156104a157600080fd5b6102c65a03f115156104b257600080fd5b50505060405180511515600114905080610543575060008054600160a060020a0316906305fd22d09033906040516020015260405160e060020a63ffffffff8416028152600160a060020a039091166004820152602401602060405180830381600087803b151561052257600080fd5b6102c65a03f1151561053357600080fd5b5050506040518051151560011490505b151561054e57600080fd5b600160a060020a033016318290101561056657600080fd5b600160a060020a03831682156108fc0283604051600060405180830381858888f11515600114935061059b9250505057600080fd5b7f1853ca9dc0208799379313b2b43364e45db022f073c72648fbc206dc0bacbcdc8383604051600160a060020a03909216825260208201526040908101905180910390a150600192915050565b60008054600160a060020a031663fda0895833836040516020015260405160e060020a63ffffffff8416028152600160a060020a039091166004820152602401602060405180830381600087803b151561064157600080fd5b6102c65a03f1151561065257600080fd5b505050604051805115156001149050806106e3575060008054600160a060020a0316906305fd22d09033906040516020015260405160e060020a63ffffffff8416028152600160a060020a039091166004820152602401602060405180830381600087803b15156106c257600080fd5b6102c65a03f115156106d357600080fd5b5050506040518051151560011490505b15156106ee57600080fd5b84600160a060020a031663ae28b68c85858560405160e060020a63ffffffff8616028152600160a060020a039093166004840152602483019190915260448201526080606482015260006084820181905260c49091019060405180830381600087803b151561075c57600080fd5b6102c65a03f1151561076d57600080fd5b506001979650505050505050565b60025490565b7f150b7a0200000000000000000000000000000000000000000000000000000000949350505050565b60008054600160a060020a031663fda0895833836040516020015260405160e060020a63ffffffff8416028152600160a060020a039091166004820152602401602060405180830381600087803b151561080357600080fd5b6102c65a03f1151561081457600080fd5b505050604051805115156001149050806108a5575060008054600160a060020a0316906305fd22d09033906040516020015260405160e060020a63ffffffff8416028152600160a060020a039091166004820152602401602060405180830381600087803b151561088457600080fd5b6102c65a03f1151561089557600080fd5b5050506040518051151560011490505b15156108b057600080fd5b83600160a060020a031663b88d4fde30858560405160e060020a63ffffffff8616028152600160a060020a03938416600482015291909216602482015260448101919091526080606482015260006084820181905260c49091019060405180830381600087803b151561092257600080fd5b6102c65a03f1151561093357600080fd5b5060019695505050505050565b600082600160a060020a0316633656eec2833060006040516020015260405160e060020a63ffffffff85160281526004810192909252600160a060020a03166024820152604401602060405180830381600087803b15156109a057600080fd5b6102c65a03f115156109b157600080fd5b5050506040518051949350505050565b600081600160a060020a03166370a082313060006040516020015260405160e060020a63ffffffff8416028152600160a060020a039091166004820152602401602060405180830381600087803b1515610a1a57600080fd5b6102c65a03f11515610a2b57600080fd5b50505060405180519150505b919050565b60015490565b60025481565b60015481565b6000600160a060020a0382161515610a715750600160a060020a03301631610a37565b81600160a060020a03166370a082313060006040516020015260405160e060020a63ffffffff8416028152600160a060020a039091166004820152602401602060405180830381600087803b1515610ac857600080fd5b6102c65a03f11515610ad957600080fd5b505050604051805190509050610a37565b60008054600160a060020a031663fda0895833836040516020015260405160e060020a63ffffffff8416028152600160a060020a039091166004820152602401602060405180830381600087803b1515610b4357600080fd5b6102c65a03f11515610b5457600080fd5b50505060405180511515600114905080610be5575060008054600160a060020a0316906305fd22d09033906040516020015260405160e060020a63ffffffff8416028152600160a060020a039091166004820152602401602060405180830381600087803b1515610bc457600080fd5b6102c65a03f11515610bd557600080fd5b5050506040518051151560011490505b1515610bf057600080fd5b83600160a060020a031663a9059cbb848460006040516020015260405160e060020a63ffffffff8516028152600160a060020a0390921660048301526024820152604401602060405180830381600087803b1515610c4d57600080fd5b6102c65a03f11515610c5e57600080fd5b505050604051805195945050505050565b7ff23a6e610000000000000000000000000000000000000000000000000000000095945050505050565b600054600160a060020a0316815600a165627a7a72305820699083e75a443648c131832683bf631e93c5daaabde2d5e663159a8a63a07e3d00296d3666666e574245453978595178726d3200000000000000000000000000000000000000000000000000000098ca4bf7e522cd6d2f69cf843dfab327a1e26497",
             "to": "0x0",
-            "value": 0
+            "value": "0"
           },
           "result": {
-            "newContract": "0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021",
+            "address": "0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021",
             "gasUsed": 717949,
             "output": ""
           },
-          "compressedTrace": "",
-          "timestamp": 1544664392
+          "subtraces": 0,
+          "timestamp": 1544664392,
+          "traceAddress": [
+            3
+          ],
+          "type": "create"
         },
         {
-          "subtraces": 0,
-          "traceAddress": "4",
-          "type": "call",
-          "error": "Reverted",
           "action": {
-            "selfDestructed": "0x0",
-            "balance": 0,
             "callType": "call",
             "from": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
             "gas": 7091895,
             "input": "0x0d8e6e2c",
-            "refundAddress": "0x0",
             "to": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28",
-            "value": 0
+            "value": "0"
           },
+          "error": "Reverted",
           "result": {
-            "newContract": "0x0",
             "gasUsed": 195,
             "output": "0x"
           },
-          "compressedTrace": "",
-          "timestamp": 1544664392
+          "subtraces": 0,
+          "timestamp": 1544664392,
+          "traceAddress": [
+            4
+          ],
+          "type": "call"
         },
         {
-          "subtraces": 1,
-          "traceAddress": "5",
-          "type": "call",
-          "error": "",
           "action": {
-            "selfDestructed": "0x0",
-            "balance": 0,
             "callType": "call",
             "from": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
             "gas": 7089497,
             "input": "0x70a08231000000000000000000000000c14830e53aa344e8c14603a91229a0b925b0b262",
-            "refundAddress": "0x0",
             "to": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28",
-            "value": 0
-          },
-          "result": {
-            "newContract": "0x0",
-            "gasUsed": 2845,
-            "output": "0x0000000000000000000000000000000000000000000000000000000000000000"
+            "value": "0"
           },
           "articulatedTrace": {
-            "name": "balanceOf",
-            "stateMutability": "view",
             "inputs": {
               "_owner": "0xc14830e53aa344e8c14603a91229a0b925b0b262"
             },
+            "name": "balanceOf",
             "outputs": {
-              "_balance": "0"
+              "balance": "0"
             }
           },
-          "compressedTrace": "{name:balanceOf|inputs:{_owner:0xc14830e53aa344e8c14603a91229a0b925b0b262}|outputs:{_balance:0}}",
-          "timestamp": 1544664392
+          "compressedTrace": "{name:balanceOf|inputs:{_owner:0xc14830e53aa344e8c14603a91229a0b925b0b262}|outputs:{balance:0}}",
+          "result": {
+            "gasUsed": 2845,
+            "output": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          "subtraces": 1,
+          "timestamp": 1544664392,
+          "traceAddress": [
+            5
+          ],
+          "type": "call"
         },
         {
-          "subtraces": 0,
-          "traceAddress": "5-0",
-          "type": "call",
-          "error": "",
           "action": {
-            "selfDestructed": "0x0",
-            "balance": 0,
             "callType": "call",
             "from": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28",
             "gas": 6976736,
             "input": "0x70a08231000000000000000000000000e81a6c6b733d52df5d6aa863d75aab78147a0f28",
-            "refundAddress": "0x0",
             "to": "0xc14830e53aa344e8c14603a91229a0b925b0b262",
-            "value": 0
-          },
-          "result": {
-            "newContract": "0x0",
-            "gasUsed": 727,
-            "output": "0x0000000000000000000000000000000000000000000000000000000000000000"
+            "value": "0"
           },
           "articulatedTrace": {
-            "name": "balanceOf",
-            "stateMutability": "view",
             "inputs": {
               "_owner": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28"
             },
+            "name": "balanceOf",
             "outputs": {
-              "_balance": "0"
-            }
+              "balance": "0"
+            },
+            "stateMutability": "view"
           },
-          "compressedTrace": "{name:balanceOf|inputs:{_owner:0xe81a6c6b733d52df5d6aa863d75aab78147a0f28}|outputs:{_balance:0}}",
-          "timestamp": 1544664392
+          "compressedTrace": "{name:balanceOf|inputs:{_owner:0xe81a6c6b733d52df5d6aa863d75aab78147a0f28}|outputs:{balance:0}|stateMutability:view}",
+          "result": {
+            "gasUsed": 727,
+            "output": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          "subtraces": 0,
+          "timestamp": 1544664392,
+          "traceAddress": [
+            5,
+            0
+          ],
+          "type": "call"
         },
         {
-          "subtraces": 1,
-          "traceAddress": "6",
-          "type": "call",
-          "error": "",
           "action": {
-            "selfDestructed": "0x0",
-            "balance": 0,
             "callType": "call",
             "from": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
             "gas": 7084908,
             "input": "0x70a08231000000000000000000000000d4fa1460f537bb9085d22c7bccb5dd450ef28e3a",
-            "refundAddress": "0x0",
             "to": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28",
-            "value": 0
-          },
-          "result": {
-            "newContract": "0x0",
-            "gasUsed": 3155,
-            "output": "0x0000000000000000000000000000000000000000000000000000000005f5e100"
+            "value": "0"
           },
           "articulatedTrace": {
-            "name": "balanceOf",
-            "stateMutability": "view",
             "inputs": {
               "_owner": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a"
             },
+            "name": "balanceOf",
             "outputs": {
-              "_balance": "100000000"
+              "balance": "100000000"
             }
           },
-          "compressedTrace": "{name:balanceOf|inputs:{_owner:0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a}|outputs:{_balance:100000000}}",
-          "timestamp": 1544664392
+          "compressedTrace": "{name:balanceOf|inputs:{_owner:0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a}|outputs:{balance:100000000}}",
+          "result": {
+            "gasUsed": 3155,
+            "output": "0x0000000000000000000000000000000000000000000000000000000005f5e100"
+          },
+          "subtraces": 1,
+          "timestamp": 1544664392,
+          "traceAddress": [
+            6
+          ],
+          "type": "call"
         },
         {
-          "subtraces": 0,
-          "traceAddress": "6-0",
-          "type": "call",
-          "error": "",
           "action": {
-            "selfDestructed": "0x0",
-            "balance": 0,
             "callType": "call",
             "from": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28",
             "gas": 6972218,
             "input": "0x70a08231000000000000000000000000e81a6c6b733d52df5d6aa863d75aab78147a0f28",
-            "refundAddress": "0x0",
             "to": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a",
-            "value": 0
-          },
-          "result": {
-            "newContract": "0x0",
-            "gasUsed": 1037,
-            "output": "0x0000000000000000000000000000000000000000000000000000000005f5e100"
+            "value": "0"
           },
           "articulatedTrace": {
-            "name": "balanceOf",
-            "stateMutability": "view",
             "inputs": {
               "_owner": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28"
             },
+            "name": "balanceOf",
             "outputs": {
-              "_balance": "100000000"
+              "balance": "100000000"
             }
           },
-          "compressedTrace": "{name:balanceOf|inputs:{_owner:0xe81a6c6b733d52df5d6aa863d75aab78147a0f28}|outputs:{_balance:100000000}}",
-          "timestamp": 1544664392
+          "compressedTrace": "{name:balanceOf|inputs:{_owner:0xe81a6c6b733d52df5d6aa863d75aab78147a0f28}|outputs:{balance:100000000}}",
+          "result": {
+            "gasUsed": 1037,
+            "output": "0x0000000000000000000000000000000000000000000000000000000005f5e100"
+          },
+          "subtraces": 0,
+          "timestamp": 1544664392,
+          "traceAddress": [
+            6,
+            0
+          ],
+          "type": "call"
         },
         {
-          "subtraces": 1,
-          "traceAddress": "7",
-          "type": "call",
-          "error": "",
           "action": {
-            "selfDestructed": "0x0",
-            "balance": 0,
             "callType": "call",
             "from": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
             "gas": 7080005,
             "input": "0x70a08231000000000000000000000000d4fa1460f537bb9085d22c7bccb5dd450ef28e3a",
-            "refundAddress": "0x0",
             "to": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28",
-            "value": 0
+            "value": "0"
           },
+          "articulatedTrace": {
+            "inputs": {
+              "owner": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a"
+            },
+            "name": "balanceOf",
+            "outputs": {
+              "balance": "100000000"
+            }
+          },
+          "compressedTrace": "{name:balanceOf|inputs:{owner:0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a}|outputs:{balance:100000000}}",
           "result": {
-            "newContract": "0x0",
             "gasUsed": 3155,
             "output": "0x0000000000000000000000000000000000000000000000000000000005f5e100"
           },
-          "articulatedTrace": {
-            "name": "balanceOf",
-            "stateMutability": "view",
-            "inputs": {
-              "_owner": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a"
-            },
-            "outputs": {
-              "_balance": "100000000"
-            }
-          },
-          "compressedTrace": "{name:balanceOf|inputs:{_owner:0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a}|outputs:{_balance:100000000}}",
-          "timestamp": 1544664392
+          "subtraces": 1,
+          "timestamp": 1544664392,
+          "traceAddress": [
+            7
+          ],
+          "type": "call"
         },
         {
-          "subtraces": 0,
-          "traceAddress": "7-0",
-          "type": "call",
-          "error": "",
           "action": {
-            "selfDestructed": "0x0",
-            "balance": 0,
             "callType": "call",
             "from": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28",
             "gas": 6967392,
             "input": "0x70a08231000000000000000000000000e81a6c6b733d52df5d6aa863d75aab78147a0f28",
-            "refundAddress": "0x0",
             "to": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a",
-            "value": 0
-          },
-          "result": {
-            "newContract": "0x0",
-            "gasUsed": 1037,
-            "output": "0x0000000000000000000000000000000000000000000000000000000005f5e100"
+            "value": "0"
           },
           "articulatedTrace": {
-            "name": "balanceOf",
-            "stateMutability": "view",
             "inputs": {
               "_owner": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28"
             },
+            "name": "balanceOf",
             "outputs": {
-              "_balance": "100000000"
+              "balance": "100000000"
             }
           },
-          "compressedTrace": "{name:balanceOf|inputs:{_owner:0xe81a6c6b733d52df5d6aa863d75aab78147a0f28}|outputs:{_balance:100000000}}",
-          "timestamp": 1544664392
+          "compressedTrace": "{name:balanceOf|inputs:{_owner:0xe81a6c6b733d52df5d6aa863d75aab78147a0f28}|outputs:{balance:100000000}}",
+          "result": {
+            "gasUsed": 1037,
+            "output": "0x0000000000000000000000000000000000000000000000000000000005f5e100"
+          },
+          "subtraces": 0,
+          "timestamp": 1544664392,
+          "traceAddress": [
+            7,
+            0
+          ],
+          "type": "call"
         },
         {
-          "subtraces": 3,
-          "traceAddress": "8",
-          "type": "call",
-          "error": "",
           "action": {
-            "selfDestructed": "0x0",
-            "balance": 0,
             "callType": "call",
             "from": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
             "gas": 7075172,
             "input": "0xbeabacc8000000000000000000000000d4fa1460f537bb9085d22c7bccb5dd450ef28e3a0000000000000000000000008ca1fec705f7060aaa3d8c6757e34d1e7cc610210000000000000000000000000000000000000000000000000000000005f5e100",
-            "refundAddress": "0x0",
             "to": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28",
-            "value": 0
-          },
-          "result": {
-            "newContract": "0x0",
-            "gasUsed": 36709,
-            "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
+            "value": "0"
           },
           "articulatedTrace": {
-            "name": "transfer",
-            "stateMutability": "nonpayable",
             "inputs": {
               "_to": "0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021",
               "_token": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a",
               "_value": "100000000"
-            }
+            },
+            "name": "transfer"
           },
           "compressedTrace": "{name:transfer|inputs:{_to:0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021|_token:0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a|_value:100000000}}",
-          "timestamp": 1544664392
+          "result": {
+            "gasUsed": 36709,
+            "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
+          },
+          "subtraces": 3,
+          "timestamp": 1544664392,
+          "traceAddress": [
+            8
+          ],
+          "type": "call"
         },
         {
-          "subtraces": 0,
-          "traceAddress": "8-0",
-          "type": "call",
-          "error": "",
           "action": {
-            "selfDestructed": "0x0",
-            "balance": 0,
             "callType": "call",
             "from": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28",
             "gas": 6962395,
             "input": "0xfda089580000000000000000000000002428e9af9bc3d66e4ee9604da681c6e5493f8454",
-            "refundAddress": "0x0",
             "to": "0x98ca4bf7e522cd6d2f69cf843dfab327a1e26497",
-            "value": 0
+            "value": "0"
           },
           "result": {
-            "newContract": "0x0",
             "gasUsed": 657,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
-          "compressedTrace": "",
-          "timestamp": 1544664392
+          "subtraces": 0,
+          "timestamp": 1544664392,
+          "traceAddress": [
+            8,
+            0
+          ],
+          "type": "call"
         },
         {
-          "subtraces": 0,
-          "traceAddress": "8-1",
-          "type": "call",
-          "error": "",
           "action": {
-            "selfDestructed": "0x0",
-            "balance": 0,
             "callType": "call",
             "from": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28",
             "gas": 6959748,
             "input": "0x05fd22d00000000000000000000000002428e9af9bc3d66e4ee9604da681c6e5493f8454",
-            "refundAddress": "0x0",
             "to": "0x98ca4bf7e522cd6d2f69cf843dfab327a1e26497",
-            "value": 0
+            "value": "0"
           },
           "result": {
-            "newContract": "0x0",
             "gasUsed": 547,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
           },
-          "compressedTrace": "",
-          "timestamp": 1544664392
+          "subtraces": 0,
+          "timestamp": 1544664392,
+          "traceAddress": [
+            8,
+            1
+          ],
+          "type": "call"
         },
         {
-          "subtraces": 0,
-          "traceAddress": "8-2",
-          "type": "call",
-          "error": "",
           "action": {
-            "selfDestructed": "0x0",
-            "balance": 0,
             "callType": "call",
             "from": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28",
             "gas": 6957394,
             "input": "0xa9059cbb0000000000000000000000008ca1fec705f7060aaa3d8c6757e34d1e7cc610210000000000000000000000000000000000000000000000000000000005f5e100",
-            "refundAddress": "0x0",
             "to": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a",
-            "value": 0
-          },
-          "result": {
-            "newContract": "0x0",
-            "gasUsed": 29257,
-            "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
+            "value": "0"
           },
           "articulatedTrace": {
-            "name": "transfer",
-            "stateMutability": "nonpayable",
             "inputs": {
               "_to": "0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021",
               "_value": "100000000"
             },
+            "name": "transfer",
             "outputs": {
-              "_success": "true"
+              "success": true
             }
           },
-          "compressedTrace": "{name:transfer|inputs:{_to:0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021|_value:100000000}|outputs:{_success:true}}",
-          "timestamp": 1544664392
+          "compressedTrace": "{name:transfer|inputs:{_to:0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021|_value:100000000}|outputs:{success:true}}",
+          "result": {
+            "gasUsed": 29257,
+            "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
+          },
+          "subtraces": 0,
+          "timestamp": 1544664392,
+          "traceAddress": [
+            8,
+            2
+          ],
+          "type": "call"
         },
         {
-          "subtraces": 4,
-          "traceAddress": "9",
-          "type": "call",
-          "error": "",
           "action": {
-            "selfDestructed": "0x0",
-            "balance": 0,
             "callType": "call",
             "from": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
             "gas": 7037204,
             "input": "0xc9939d0e32353030663935653661396438336439380000000000000000000000000000006d3666666e574245453978595178726d320000000000000000000000000000000000000000000000000000008ca1fec705f7060aaa3d8c6757e34d1e7cc61021",
-            "refundAddress": "0x0",
             "to": "0xcd565ca18f06e2e4d251b55dc49a4fe456c72052",
-            "value": 0
+            "value": "0"
           },
           "result": {
-            "newContract": "0x0",
             "gasUsed": 114419,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
           },
-          "compressedTrace": "",
-          "timestamp": 1544664392
+          "subtraces": 4,
+          "timestamp": 1544664392,
+          "traceAddress": [
+            9
+          ],
+          "type": "call"
         },
         {
-          "subtraces": 0,
-          "traceAddress": "9-0",
-          "type": "call",
-          "error": "",
           "action": {
-            "selfDestructed": "0x0",
-            "balance": 0,
             "callType": "call",
             "from": "0xcd565ca18f06e2e4d251b55dc49a4fe456c72052",
             "gas": 6924470,
             "input": "0xfda089580000000000000000000000002428e9af9bc3d66e4ee9604da681c6e5493f8454",
-            "refundAddress": "0x0",
             "to": "0x98ca4bf7e522cd6d2f69cf843dfab327a1e26497",
-            "value": 0
+            "value": "0"
           },
           "result": {
-            "newContract": "0x0",
             "gasUsed": 657,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
-          "compressedTrace": "",
-          "timestamp": 1544664392
+          "subtraces": 0,
+          "timestamp": 1544664392,
+          "traceAddress": [
+            9,
+            0
+          ],
+          "type": "call"
         },
         {
-          "subtraces": 0,
-          "traceAddress": "9-1",
-          "type": "call",
-          "error": "",
           "action": {
-            "selfDestructed": "0x0",
-            "balance": 0,
             "callType": "call",
             "from": "0xcd565ca18f06e2e4d251b55dc49a4fe456c72052",
             "gas": 6921823,
             "input": "0x05fd22d00000000000000000000000002428e9af9bc3d66e4ee9604da681c6e5493f8454",
-            "refundAddress": "0x0",
             "to": "0x98ca4bf7e522cd6d2f69cf843dfab327a1e26497",
-            "value": 0
+            "value": "0"
           },
           "result": {
-            "newContract": "0x0",
             "gasUsed": 547,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
           },
-          "compressedTrace": "",
-          "timestamp": 1544664392
+          "subtraces": 0,
+          "timestamp": 1544664392,
+          "traceAddress": [
+            9,
+            1
+          ],
+          "type": "call"
         },
         {
-          "subtraces": 0,
-          "traceAddress": "9-2",
-          "type": "call",
-          "error": "",
           "action": {
-            "selfDestructed": "0x0",
-            "balance": 0,
             "callType": "call",
             "from": "0xcd565ca18f06e2e4d251b55dc49a4fe456c72052",
             "gas": 6892880,
             "input": "0xfda089580000000000000000000000002428e9af9bc3d66e4ee9604da681c6e5493f8454",
-            "refundAddress": "0x0",
             "to": "0x98ca4bf7e522cd6d2f69cf843dfab327a1e26497",
-            "value": 0
+            "value": "0"
           },
           "result": {
-            "newContract": "0x0",
             "gasUsed": 657,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
-          "compressedTrace": "",
-          "timestamp": 1544664392
+          "subtraces": 0,
+          "timestamp": 1544664392,
+          "traceAddress": [
+            9,
+            2
+          ],
+          "type": "call"
         },
         {
-          "subtraces": 0,
-          "traceAddress": "9-3",
-          "type": "call",
-          "error": "",
           "action": {
-            "selfDestructed": "0x0",
-            "balance": 0,
             "callType": "call",
             "from": "0xcd565ca18f06e2e4d251b55dc49a4fe456c72052",
             "gas": 6890233,
             "input": "0x05fd22d00000000000000000000000002428e9af9bc3d66e4ee9604da681c6e5493f8454",
-            "refundAddress": "0x0",
             "to": "0x98ca4bf7e522cd6d2f69cf843dfab327a1e26497",
-            "value": 0
+            "value": "0"
           },
           "result": {
-            "newContract": "0x0",
             "gasUsed": 547,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
           },
-          "compressedTrace": "",
-          "timestamp": 1544664392
+          "subtraces": 0,
+          "timestamp": 1544664392,
+          "traceAddress": [
+            9,
+            3
+          ],
+          "type": "call"
         },
         {
-          "subtraces": 0,
-          "traceAddress": "10",
-          "type": "call",
-          "error": "",
           "action": {
-            "selfDestructed": "0x0",
-            "balance": 0,
             "callType": "call",
             "from": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
             "gas": 6922843,
             "input": "0x2a01a4516d3666666e574245453978595178726d32000000000000000000000000000000",
-            "refundAddress": "0x0",
             "to": "0xcd565ca18f06e2e4d251b55dc49a4fe456c72052",
-            "value": 0
+            "value": "0"
           },
           "result": {
-            "newContract": "0x0",
             "gasUsed": 768,
             "output": "0x0000000000000000000000008ca1fec705f7060aaa3d8c6757e34d1e7cc61021"
           },
-          "compressedTrace": "",
-          "timestamp": 1544664392
+          "subtraces": 0,
+          "timestamp": 1544664392,
+          "traceAddress": [
+            10
+          ],
+          "type": "call"
         },
         {
-          "subtraces": 0,
-          "traceAddress": "11",
-          "type": "call",
-          "error": "",
           "action": {
-            "selfDestructed": "0x0",
-            "balance": 0,
             "callType": "call",
             "from": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
             "gas": 6920413,
             "input": "0x0d8e6e2c",
-            "refundAddress": "0x0",
             "to": "0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021",
-            "value": 0
+            "value": "0"
           },
           "result": {
-            "newContract": "0x0",
             "gasUsed": 499,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000002"
           },
-          "compressedTrace": "",
-          "timestamp": 1544664392
+          "subtraces": 0,
+          "timestamp": 1544664392,
+          "traceAddress": [
+            11
+          ],
+          "type": "call"
         }
       ],
-      "compressedTx": "0xa78caf19(stub:000000000000000000000000cd565ca18f06e2e4d251b55dc49a4fe456c7205232353030663935653661396438336439380000000000000000000000000000006d3666666e574245453978595178726d32000000000000000000000000000000)",
-      "gasCost": 19899285000000000,
-      "gasUsed": 947585,
-      "date": "2018-12-13 01:26:32 UTC",
-      "datesh": "2018-12-13",
-      "time": "1:26:32 UTC",
-      "age": "100",
-      "ether": 0
+      "transactionIndex": 0,
+      "value": "0"
     }
   ],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
+    "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
   }
 }
