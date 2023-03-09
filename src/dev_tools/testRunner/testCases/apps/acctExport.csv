@@ -141,11 +141,12 @@ on      ,both ,fast  ,export   ,apps/acctExport ,accounting_tokens_2      ,y    
 
 on      ,both ,slow  ,export   ,apps/acctExport ,monitors_seed_1          ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & last_block = 9000000 & fmt = json
 
-on      ,both ,fast  ,list     ,apps/acctExport ,export_relevant_list     ,y    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & count & fmt = json
-on      ,both ,fast  ,export   ,apps/acctExport ,export_relevant_not      ,n    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & logs & last_block = 10272064 & fmt = csv
-on      ,both ,fast  ,export   ,apps/acctExport ,export_relevant          ,n    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & logs & last_block = 10272064 & fmt = csv & relevant
-on      ,both ,fast  ,export   ,apps/acctExport ,export_relevant_not_emit ,n    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & logs & last_block = 10272064 & emitter = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 & fmt = csv
-on      ,both ,fast  ,export   ,apps/acctExport ,export_relevant_emit     ,n    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & logs & last_block = 10272064 & emitter = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 & fmt = csv & relevant
+# These work but are very slow
+slow    ,both ,fast  ,list     ,apps/acctExport ,export_relevant_list     ,y    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & count & fmt = json
+slow    ,both ,fast  ,export   ,apps/acctExport ,export_relevant_not      ,n    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & logs & last_block = 10272064 & fmt = csv
+slow    ,both ,fast  ,export   ,apps/acctExport ,export_relevant          ,n    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & logs & last_block = 10272064 & fmt = csv & relevant
+slow    ,both ,fast  ,export   ,apps/acctExport ,export_relevant_not_emit ,n    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & logs & last_block = 10272064 & emitter = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 & fmt = csv
+slow    ,both ,fast  ,export   ,apps/acctExport ,export_relevant_emit     ,n    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & logs & last_block = 10272064 & emitter = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 & fmt = csv & relevant
 
 on      ,both ,fast  ,export   ,apps/acctExport ,old_bug                  ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & max_records = 1 & first_record = 213 & fmt = json
 local   ,both ,fast  ,export   ,apps/acctExport ,old_bug2_1               ,y    ,addrs = 0x000001f568875f378bf6d170b790967fe429c81a & max_records = 1 & first_record = 2 & articulate & fmt = json
