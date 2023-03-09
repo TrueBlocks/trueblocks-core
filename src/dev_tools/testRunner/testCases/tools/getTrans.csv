@@ -58,7 +58,7 @@ on       ,both ,fast  ,transactions ,tools/getTrans ,fail_reconcile2          ,y
 on       ,both ,fast  ,transactions ,tools/getTrans ,reconcile                ,y    ,transactions = 0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63 & account_for = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & log_level = 10 & articulate
 on       ,both ,fast  ,transactions ,tools/getTrans ,reconcile2               ,y    ,transactions = 0x3f095a4b4e1b85e148b8b97aa91841f28280692b6045de8e690db38c59ecc603 & account_for = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & log_level = 10
 on       ,both ,fast  ,transactions ,tools/getTrans ,reconcile2_ether         ,y    ,transactions = 0x3f095a4b4e1b85e148b8b97aa91841f28280692b6045de8e690db38c59ecc603 & account_for = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & log_level = 10 & ether
-on       ,both ,fast  ,transactions ,tools/getTrans ,old_bug_2159             ,y    ,account_for = 0x7cfb89d6df1b89a678dcaf42b9c262593e881e22 & transactions = 0x20e4a5279519859c3b8af108fa9b3238f23d5522ceb0f7245080ec79ad8f97fd & fmt = json
+slow     ,both ,fast  ,transactions ,tools/getTrans ,old_bug_2159             ,y    ,account_for = 0x7cfb89d6df1b89a678dcaf42b9c262593e881e22 & transactions = 0x20e4a5279519859c3b8af108fa9b3238f23d5522ceb0f7245080ec79ad8f97fd & fmt = json
 
 on       ,cmd  ,fast  ,transactions ,tools/getTrans ,reconcile_by_file        ,y    ,transactions = 0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33 & ether & file = cmd_file_3
 on       ,cmd  ,fast  ,transactions ,tools/getTrans ,by_file                  ,n    ,file = cmd_file_2 & bad
