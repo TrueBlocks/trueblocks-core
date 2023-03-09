@@ -86,10 +86,11 @@ TEST[DATE|TIME] Format:  json
           "_key": "1"
         },
         "name": "cancelExistingRequest",
+        "outputs": null
       },
       "blockHash": "0x9a06b1e8e7249a36a5e532997882429805c7a6510e91b05fd9b5ad6e367acb13",
       "blockNumber": 6687987,
-      "compressedTx": "{name:cancelExistingRequest|inputs:{_key:1}}",
+      "compressedTx": "{name:cancelExistingRequest|inputs:{_key:1}|outputs:{}}",
       "date": "2018-11-12 01:45:21 UTC",
       "ether": "0",
       "from": "0x752c71a68e4e0ea308c6e4209b7802d135c49292",
@@ -146,10 +147,11 @@ TEST[DATE|TIME] Format:  json
               "_key": "1"
             },
             "name": "cancelExistingRequest",
+            "outputs": null
           },
           "blockHash": "0x9a06b1e8e7249a36a5e532997882429805c7a6510e91b05fd9b5ad6e367acb13",
           "blockNumber": 6687987,
-          "compressedTrace": "{name:cancelExistingRequest|inputs:{_key:1}}",
+          "compressedTrace": "{name:cancelExistingRequest|inputs:{_key:1}|outputs:{}}",
           "result": {
             "gasUsed": 57054,
             "output": "0x"
@@ -173,8 +175,8 @@ TEST[DATE|TIME] Format:  json
         },
         "name": "split",
         "outputs": {
-          "ret_0": "true"
-        },
+          "ret_0": true
+        }
       },
       "blockHash": "0xcd4dbd459893241b0c21c91d64b445b1eb0579f7341afd17e7b797795a7f1d7e",
       "blockNumber": 2001002,
@@ -244,6 +246,7 @@ TEST[DATE|TIME] Format:  json
             "value": "0"
           },
           "articulatedTrace": {
+            "inputs": null,
             "name": "forked",
             "outputs": {
               "val_0": true
@@ -251,7 +254,7 @@ TEST[DATE|TIME] Format:  json
           },
           "blockHash": "0xcd4dbd459893241b0c21c91d64b445b1eb0579f7341afd17e7b797795a7f1d7e",
           "blockNumber": 2001002,
-          "compressedTrace": "{name:forked|outputs:{val_0:true}}",
+          "compressedTrace": "{name:forked|inputs:{}|outputs:{val_0:true}}",
           "result": {
             "gasUsed": 197,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
