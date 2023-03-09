@@ -118,7 +118,7 @@ on   ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_5           ,y    
 on   ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_6           ,y    ,transactions = 0xc12685b2f235e540892f709b09aa5b5e552a328097550b13964aa26609e20ad3 & articulate
 on   ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_7           ,n    ,transactions = 0xf626a4fe94e1c4fb207fad62b1cd8164ba7ac83bad73585a60e8e3bd2a4576bb & articulate & fmt = csv
 on   ,both ,fast  ,transactions ,tools/getTrans ,unparsable               ,y    ,transactions = 12596470.26 & articulate & fmt = json
-o   n   ,both ,slow  ,transactions ,tools/getTrans ,broken_unparseable       ,y    ,transactions = 0xd886ab84df63e4eeb3ea07ccf12fa1f752afdc4d7b82ab4d71c95adae1d86b1f & fmt = json & articulate
+on   ,both ,slow  ,transactions ,tools/getTrans ,broken_unparseable       ,y    ,transactions = 0xd886ab84df63e4eeb3ea07ccf12fa1f752afdc4d7b82ab4d71c95adae1d86b1f & fmt = json & articulate
 
 # These fail because the ABI does not have `indexed` but the data does (or visa versa). See
 # https://github.com/TrueBlocks/trueblocks-core/issues/1366. Also search the codebase for issues/1366
