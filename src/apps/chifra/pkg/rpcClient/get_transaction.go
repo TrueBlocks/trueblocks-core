@@ -49,7 +49,7 @@ func getRawTransaction(chain string, blockHash common.Hash, index uint64) (raw *
 	return
 }
 
-func GetTransactionByAppearance(chain string, appearance *types.SimpleAppearance, fetchTraces bool) (tx *types.SimpleTransaction, err error) {
+func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, fetchTraces bool) (tx *types.SimpleTransaction, err error) {
 	blockNumber := uint64(appearance.BlockNumber)
 	txIndex := uint64(appearance.TransactionIndex)
 	block, err := GetBlockByNumber(chain, blockNumber, false)

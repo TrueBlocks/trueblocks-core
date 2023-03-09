@@ -476,25 +476,21 @@ bool COptions::setDisplayFormatting(void) {
             format = getGlobalConfig("acctExport")->getConfigStr("display", "statement", STR_DISPLAY_RECONCILIATION);
             expContext().fmtMap["reconciliation_fmt"] = cleanFmt(format);
             manageFields("CReconciliation:" + format);
-            if (statements)
-                expContext().fmtMap["header"] = noHeader ? "" : cleanFmt(format);
 
-            if (neighbors) {
-                format = getGlobalConfig("acctExport")->getConfigStr("display", "neighbor", STR_DISPLAY_APPEARANCE);
-                replace(format, "\t[{NAME}]\t[{TIMESTAMP}]\t[{DATE}]", "");
-            } else {
-                format = getGlobalConfig("acctExport")->getConfigStr("display", "appearances", STR_DISPLAY_APPEARANCE);
-                if (!verbose) {
-                    replace(format, "\t[{NAME}]\t[{TIMESTAMP}]\t[{DATE}]", "");
-                }
-                replace(format, "[{TRACEINDEX}]", "");
-                replace(format, "[{REASON}]", "");
+            format = getGlobalConfig("acctExport")->getConfigStr("display", "neighbor", STR_DISPLAY_APPEARANCE);
+            if (neighbors || !verbose) {
+                replace(format, "\t[{NAME}]", "");
+                replace(format, "\t[{TIMESTAMP}]", "");
+                replace(format, "\t[{DATE}]", "");
             }
+            if (!neighbors) {
+                replace(format, "\t[{REASON}]", "");
+            }
+            replace(format, "\t[{TRACEINDEX}]", "");
             replaceAll(format, "\t\t", "\t");
             format = trim(format, '\t');
             expContext().fmtMap["appearance_fmt"] = cleanFmt(format);
             manageFields("CAppearance:" + format);
-            expContext().fmtMap["header"] = noHeader ? "" : cleanFmt(format);
 
             format = getGlobalConfig("acctExport")->getConfigStr("display", "trace", STR_DISPLAY_TRACE);
             expContext().fmtMap["trace_fmt"] = cleanFmt(format);

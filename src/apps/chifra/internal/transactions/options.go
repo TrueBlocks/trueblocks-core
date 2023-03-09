@@ -87,9 +87,6 @@ func (opts *TransactionsOptions) toCmdLine() string {
 	if opts.Cache {
 		options += " --cache"
 	}
-	if opts.Source {
-		options += " --source"
-	}
 	options += " " + strings.Join(opts.Transactions, " ")
 	// EXISTING_CODE
 	// EXISTING_CODE

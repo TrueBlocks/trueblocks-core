@@ -59,11 +59,19 @@ int main(int argc, const char* argv[]) {
 }
 
 //----------------------------------------------------------------
+const char* STR_DISPLAY_APPEARANCE_TESTING =
+    "[{ADDRESS}]\t"
+    "[{BLOCKNUMBER}]\t"
+    "[{TRANSACTIONINDEX}]\t"
+    "[{TRACEINDEX}]\t"
+    "[{REASON}]\t"
+    "[{NAME}]";
+
+//----------------------------------------------------------------
 bool visitAddrs(const CAppearance& item, void* data) {
     if (isZeroAddr(item.address))
         return true;
-    string_q fmt = substitute(STR_DISPLAY_APPEARANCE, "\t[{TIMESTAMP}]\t[{DATE}]", "");
-    cout << item.Format(fmt) << endl;
+    cout << item.Format(STR_DISPLAY_APPEARANCE_TESTING) << endl;
     return true;
 }
 
@@ -114,8 +122,7 @@ void everySortedUniqueAddressPerTx(CBlock& block) {
     block.forEveryUniqueAppearanceInTxs(accumAddrs, transFilter, &array);
     sort(array.begin(), array.end(), sortAddressArray);
     for (auto elem : array) {
-        string_q fmt = substitute(STR_DISPLAY_APPEARANCE, "\t[{TIMESTAMP}]\t[{DATE}]", "");
-        cout << elem.Format(fmt) << endl;
+        cout << elem.Format(STR_DISPLAY_APPEARANCE_TESTING) << endl;
     }
 }
 

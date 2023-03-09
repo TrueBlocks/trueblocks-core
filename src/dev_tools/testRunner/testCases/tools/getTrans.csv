@@ -28,8 +28,6 @@ on       ,both ,fast  ,transactions ,tools/getTrans ,message                  ,y
 on       ,both ,fast  ,transactions ,tools/getTrans ,source_disabled          ,y    ,transactions = 0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a & source & fmt = json
 
 on       ,cmd  ,medi  ,transactions ,tools/getTrans ,core_dump_bug            ,y    ,@avt & transactions = 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 & fmt = json
-on       ,both ,fast  ,transactions ,tools/getTrans ,uniqAddrs_fail           ,y    ,transactions = 1301011.0 1301672.0 1301324.0 & broken & fmt = json
-on       ,both ,fast  ,transactions ,tools/getTrans ,uniqAddrs                ,y    ,transactions = 1301011.0 1301672.0 1301324.0 & uniq & fmt = json
 on       ,both ,fast  ,transactions ,tools/getTrans ,fmt_default              ,y    ,transactions = 2222222.0 2332332.0
 on       ,both ,fast  ,transactions ,tools/getTrans ,star                     ,y    ,transactions = 2222221.* & fmt = json
 on       ,both ,fast  ,transactions ,tools/getTrans ,fmt_txt                  ,n    ,transactions = 2222222.0 2332332.0 & fmt = txt
@@ -39,6 +37,8 @@ on       ,both ,fast  ,transactions ,tools/getTrans ,fmt_json                 ,y
 on       ,cmd  ,fast  ,transactions ,tools/getTrans ,fmt_junk                 ,y    ,transactions = 2222222.0 2332332.0 & fmt = junk
 on       ,both ,fast  ,transactions ,tools/getTrans ,old_hang_bug             ,y    ,transactions = 6409270.108 & articulate & fmt = json
 
+on       ,both ,fast  ,transactions ,tools/getTrans ,uniqAddrs_fail           ,y    ,transactions = 1301011.0 1301672.0 1301324.0 & broken & fmt = json
+on       ,both ,fast  ,transactions ,tools/getTrans ,uniqAddrs                ,y    ,transactions = 1301011.0 1301672.0 1301324.0 & uniq & fmt = json
 on       ,both ,fast  ,transactions ,tools/getTrans ,flow_error_1             ,n    ,transactions = 4102000.0 & fmt = txt & flow = to
 on       ,both ,fast  ,transactions ,tools/getTrans ,flow_error_2             ,n    ,transactions = 4102000.0 & fmt = txt & uniq & flow = not-a-choice
 on       ,both ,fast  ,transactions ,tools/getTrans ,flow_uniq_flow_to        ,n    ,transactions = 4102000.0 & fmt = txt & uniq & flow = to
