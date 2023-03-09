@@ -16,7 +16,7 @@ transactions?transactions=0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532d
       "ether": "1",
       "from": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
       "gas": 150000,
-      "gasCost": "864200000000000",
+      "gasCost": 864200000000000,
       "gasPrice": 20000000000,
       "gasUsed": 43210,
       "hash": "0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532ddc717ffd0abe",
@@ -33,12 +33,12 @@ transactions?transactions=0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532d
             "address": "0xd654bdd32fc99471455e86c2e7f7d7b6437e9179",
             "articulatedLog": {
               "inputs": {
-                "from": "0x0000000000000000000000000de0b6b3a7640000",
+                "from": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
                 "value": "1000000000000000000"
               },
               "name": "Deposit"
             },
-            "compressedLog": "{name:Deposit|inputs:{from:0x0000000000000000000000000de0b6b3a7640000|value:1000000000000000000}}",
+            "compressedLog": "{name:Deposit|inputs:{from:0xd8da6bf26964af9d7eed9e03e53415d37aa96045|value:1000000000000000000}}",
             "data": "0x0000000000000000000000000000000000000000000000000de0b6b3a7640000",
             "logIndex": 0,
             "topics": [
@@ -62,12 +62,15 @@ transactions?transactions=0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532d
             "value": "1000000000000000000"
           },
           "articulatedTrace": {
+            "inputs": null,
             "name": "deposit",
             "outputs": {
               "ret_0": "1"
             }
           },
-          "compressedTrace": "{name:deposit|outputs:{ret_0:1}}",
+          "blockHash": "0x12804134060126a2b62a3db6d37facc47622624dd055e98f309fd624f1a12ae8",
+          "blockNumber": 1545347,
+          "compressedTrace": "{name:deposit|inputs:{}|outputs:{ret_0:1}}",
           "result": {
             "gasUsed": 21938,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
@@ -75,6 +78,8 @@ transactions?transactions=0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532d
           "subtraces": 0,
           "timestamp": 1463653193,
           "traceAddress": [],
+          "transactionHash": "0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532ddc717ffd0abe",
+          "transactionIndex": 3,
           "type": "call"
         }
       ],
