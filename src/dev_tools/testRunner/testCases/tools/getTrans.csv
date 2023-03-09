@@ -102,10 +102,12 @@ local    ,both ,fast  ,transactions ,tools/getTrans ,nav_next2                ,n
 # These are broken in ways very similar (if not identical) to above
 on   ,both ,slow  ,transactions ,tools/getTrans ,old_parsing_bug_1        ,y    ,transactions = 0xfa62ab036f36b4755bfa0d6e3e641d08daa7e41e95b0c1f2246485702319efb8 & fmt = json & articulate
 on   ,both ,slow  ,transactions ,tools/getTrans ,old_parsing_bug_2        ,y    ,transactions = 0xfa62ab036f36b4755bfa0d6e3e641d08daa7e41e95b0c1f2246485702319efb8 & fmt = json & articulate
+
+# This one is broken because it reads wrong ABI (with wrong input type)
 broken   ,both ,slow  ,transactions ,tools/getTrans ,issue_1583               ,y    ,transactions = 0x2f83088fa87f6054779a5511ec4f6b64f1e773e9bd7ec97956d6e04910d59303 & articulate & fmt = json
 
 # Seems to be missing some values
-broken   ,both ,slow  ,transactions ,tools/getTrans ,articulate_proxy         ,y    ,transactions = 11476466.96 & articulate & fmt = json
+on   ,both ,slow  ,transactions ,tools/getTrans ,articulate_proxy         ,y    ,transactions = 11476466.96 & articulate & fmt = json
 
 # Two main problems: (1) shows characters instead of hex bytes and (2) changes signature comma to underbar
 broken   ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_1           ,y    ,transactions = 0x028dcd16e00f95a1526186f30b105fd69c89e3d25d42ff8708c9f638b1bfabdd & articulate
