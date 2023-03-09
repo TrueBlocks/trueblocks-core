@@ -16,6 +16,7 @@ import (
 
 func (opts *TransactionsOptions) HandleShow() (err error) {
 	abiMap := make(abi.AbiInterfaceMap)
+	// TODO: BOGUS - LOAD KNOWN ABIS - ALLOW THEM TO BE OVERLAID IF FOUND
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -79,11 +80,11 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 						if found != nil {
 							tx.ArticulatedTx = found
 							var outputData string
-
 							if len(tx.Traces) > 0 && tx.Traces[0].Result != nil && len(tx.Traces[0].Result.Output) > 2 {
 								outputData = tx.Traces[0].Result.Output[2:]
 							}
 							if err = articulate.ArticulateFunction(tx.ArticulatedTx, inputData, outputData); err != nil {
+								// continue processing even with an error
 								errorChan <- err
 							}
 						}

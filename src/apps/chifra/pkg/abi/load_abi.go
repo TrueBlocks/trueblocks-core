@@ -98,26 +98,8 @@ func LoadCache(chain string, destination AbiInterfaceMap) (loaded bool) {
 	return true
 }
 
-func PreloadTokensAbi(destination AbiInterfaceMap) (err error) {
-	err = LoadAbiFromJsonFile(
-		path.Join(config.GetPathToRootConfig(), "abis", "known-000/erc_00020.json"),
-		destination,
-	)
-	if err != nil {
-		return
-	}
-	return LoadAbiFromJsonFile(
-		path.Join(config.GetPathToRootConfig(), "abis", "known-000/erc_00721.json"),
-		destination,
-	)
-}
-
 // PreloadKnownAbis loads known ABI files into destination, refreshing binary cache if needed
-func PreloadKnownAbis(chain string, destination AbiInterfaceMap, tokensOnly bool) (err error) {
-	if tokensOnly {
-		return PreloadTokensAbi(destination)
-	}
-
+func PreloadKnownAbis(chain string, destination AbiInterfaceMap) (err error) {
 	// Check if cache file is fresh
 	useCache, err := cache.IsAbiCacheUpToDate(chain)
 	if err != nil {
@@ -228,21 +210,22 @@ func LoadAbiFromAddress(chain string, address types.Address, destination AbiInte
 
 // LoadAbi tries to load ABI from any source (local file, cache, download from 3rd party)
 func LoadAbi(chain string, address types.Address, destination AbiInterfaceMap) (err error) {
-	if err = PreloadKnownAbis(chain, destination, false); err != nil {
+	if err = PreloadKnownAbis(chain, destination); err != nil {
 		return
 	}
+
+	// If there was no error, the abi was loaded...
 	err = LoadAbiFromAddress(chain, address, destination)
-	// return if there's no error (ABI was loaded) or if the error
-	// is not NotExist (something wrong happened)
 	if err == nil {
 		return
 	}
+
+	// If there was an unexpected error (not NotExist or not an empty file), return the error
 	if !os.IsNotExist(err) && err != io.EOF {
 		return fmt.Errorf("while reading %s ABI file: %w", address, err)
 	}
 
-	// We didn't find the file
-	// Check if the address is a contract
+	// We didn't find the file. Check if the address is a contract
 	contract, err := contract.IsContractAt(
 		chain,
 		address,
