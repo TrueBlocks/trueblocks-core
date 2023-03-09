@@ -16,7 +16,7 @@ import (
 
 func (opts *TransactionsOptions) HandleShow() (err error) {
 	abiMap := make(abi.AbiInterfaceMap)
-	// TODO: BOGUS - LOAD KNOWN ABIS - ALLOW THEM TO BE OVERLAID IF FOUND
+	loadedMap := make(map[types.Address]bool)
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -40,16 +40,22 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 				}
 
 				if opts.Articulate {
-					if err = abi.LoadAbi(chain, tx.To, abiMap); err != nil {
-						// continue processing even with an error
-						errorChan <- err
+					if !loadedMap[tx.To] {
+						if err = abi.LoadAbi(chain, tx.To, abiMap); err != nil {
+							// continue processing even with an error
+							errorChan <- err
+						}
 					}
 
 					for index, log := range tx.Receipt.Logs {
-						if err = abi.LoadAbi(chain, log.Address, abiMap); err != nil {
-							// continue processing even with an error
-							errorChan <- err
-						} else {
+						var err error
+						if !loadedMap[log.Address] {
+							if err = abi.LoadAbi(chain, log.Address, abiMap); err != nil {
+								// continue processing even with an error
+								errorChan <- err
+							}
+						}
+						if err == nil {
 							tx.Receipt.Logs[index].ArticulatedLog, err = articulate.ArticulateLog(&log, abiMap)
 							if err != nil {
 								// continue processing even with an error
@@ -59,10 +65,14 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 					}
 
 					for index, trace := range tx.Traces {
-						if err = abi.LoadAbi(chain, trace.Action.To, abiMap); err != nil {
-							// continue processing even with an error
-							errorChan <- err
-						} else {
+						var err error
+						if !loadedMap[trace.Action.To] {
+							if err = abi.LoadAbi(chain, trace.Action.To, abiMap); err != nil {
+								// continue processing even with an error
+								errorChan <- err
+							}
+						}
+						if err == nil {
 							tx.Traces[index].ArticulatedTrace, err = articulate.ArticulateTrace(&trace, abiMap)
 							if err != nil {
 								// continue processing even with an error
