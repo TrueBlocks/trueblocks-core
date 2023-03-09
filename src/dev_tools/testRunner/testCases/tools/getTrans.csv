@@ -101,7 +101,7 @@ local    ,both ,fast  ,transactions ,tools/getTrans ,nav_next2                ,n
 
 # These are broken in ways very similar (if not identical) to above
 on   ,both ,slow  ,transactions ,tools/getTrans ,old_parsing_bug_1        ,y    ,transactions = 0xfa62ab036f36b4755bfa0d6e3e641d08daa7e41e95b0c1f2246485702319efb8 & fmt = json & articulate
-broken   ,both ,slow  ,transactions ,tools/getTrans ,old_parsing_bug_2        ,y    ,transactions = 0xfa62ab036f36b4755bfa0d6e3e641d08daa7e41e95b0c1f2246485702319efb8 & fmt = json & articulate
+on   ,both ,slow  ,transactions ,tools/getTrans ,old_parsing_bug_2        ,y    ,transactions = 0xfa62ab036f36b4755bfa0d6e3e641d08daa7e41e95b0c1f2246485702319efb8 & fmt = json & articulate
 broken   ,both ,slow  ,transactions ,tools/getTrans ,issue_1583               ,y    ,transactions = 0x2f83088fa87f6054779a5511ec4f6b64f1e773e9bd7ec97956d6e04910d59303 & articulate & fmt = json
 
 # Seems to be missing some values
