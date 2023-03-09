@@ -58,7 +58,7 @@ func (s *SimpleTraceAction) Model(showHidden bool, format string, extraOptions m
 
 	// EXISTING_CODE
 	if format == "json" {
-		if extraOptions["tracesTransactionsFormat"] != true && len(s.Init) > 0 {
+		if extraOptions["traces"] != true && len(s.Init) > 0 {
 			model["init"] = s.Init
 		}
 		if !s.SelfDestructed.IsZero() {

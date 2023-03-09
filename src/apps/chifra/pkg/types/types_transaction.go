@@ -85,17 +85,13 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		to = "0x0" // weird special case to preserve what RPC does
 	}
 
-	// TODO: these date-related values could be done when RPC is queried and cached
 	date := gostradamus.FromUnixTimestamp(int64(s.Timestamp))
-
-	// TODO: Imporant note. The `finalized` field creates a dependacy on the transaction model that
-	// TODO: it is in a block (or at least we know the blockNumber. Also, who's to say what `finalized`
-	// TODO: means? Also, `finalized` has a meaning in post-merge code. See #2667
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
 		"blockNumber":      s.BlockNumber,
 		"from":             s.From,
+		"gasPrice":         s.GasPrice,
 		"gasUsed":          s.GasUsed,
 		"hash":             s.Hash,
 		"timestamp":        s.Timestamp,
@@ -112,23 +108,20 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		"from",
 		"to",
 		"ether",
-		"ethGasPrice",
+		"gasPrice",
 		"gasUsed",
+		"gasCost",
 		"hash",
 		"isError",
 		"encoding",
 		"compressedTx",
-		// "value",
 	}
 
 	// EXISTING_CODE
-	if format == "json" {
-		gu := big.NewInt(int64(s.GasUsed))
-		gp := big.NewInt(int64(s.GasPrice))
-		gC := gu.Mul(gu, gp)
-		model["gasCost"] = gC.String()
-		order = append(order, "gasCost")
+	model["date"] = date.Format("2006-01-02 15:04:05") + " UTC"
+	model["gasCost"] = s.SetGasCost(s.Receipt)
 
+	if format == "json" {
 		model["blockHash"] = s.BlockHash
 		model["nonce"] = s.Nonce
 		model["value"] = s.Value
@@ -136,7 +129,6 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 
 		// TODO: this value could be created when RPC is queried and cached
 		model["ether"] = utils.WeiToEther(&s.Value)
-		model["gasPrice"] = s.GasPrice
 		model["maxFeePerGas"] = s.MaxPriorityFeePerGas
 		model["maxPriorityFeePerGas"] = s.MaxPriorityFeePerGas
 		model["input"] = s.Input
@@ -150,8 +142,6 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		model["value"] = s.Value.String() // TODO: Why twice?
 		model["receipt"] = nil            // TODO: Why twice?
 
-		// TODO: these date-related values could be done when RPC is queried and cached
-		model["date"] = date.Format("2006-01-02 15:04:05") + " UTC"
 		if showHidden {
 			model["datesh"] = date.Format("2006-01-02")
 			model["time"] = date.Format("15:04:05") + " UTC"
@@ -207,7 +197,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 			model["traces"] = traceModels
 		}
 
-		if s.ArticulatedTx != nil && extraOptions["articulate"] == true {
+		if extraOptions["articulate"] == true && s.ArticulatedTx != nil {
 			inputModels := ParametersToMap(s.ArticulatedTx.Inputs)
 			outputModels := ParametersToMap(s.ArticulatedTx.Outputs)
 			// TODO: Shouldn't this be a SimpleFunction?
@@ -231,17 +221,13 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		}
 
 	} else {
-		// TODO: these date-related values could be done when RPC is queried and cached
-		date := gostradamus.FromUnixTimestamp(int64(s.Timestamp))
-		model["date"] = date.Format("2006-01-02 15:04:05") + " UTC"
-
 		etherValue := utils.WeiToEther(&s.Value).Text('f', 18)
 		model["ether"] = etherValue
 		ethGasPrice := utils.WeiToEther(big.NewInt(0).SetUint64(s.GasPrice)).Text('f', 18)
 		model["ethGasPrice"] = ethGasPrice
 		model["isError"] = s.IsError
 
-		if s.ArticulatedTx != nil {
+		if extraOptions["articulate"] == true && s.ArticulatedTx != nil {
 			model["encoding"] = s.ArticulatedTx.Encoding
 		}
 
@@ -252,7 +238,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		}
 		model["encoding"] = enc
 
-		if s.ArticulatedTx != nil {
+		if extraOptions["articulate"] == true && s.ArticulatedTx != nil {
 			inputModels := ParametersToMap(s.ArticulatedTx.Inputs)
 			outputModels := ParametersToMap(s.ArticulatedTx.Outputs)
 			// TODO: Shouldn't this be a SimpleFunction?

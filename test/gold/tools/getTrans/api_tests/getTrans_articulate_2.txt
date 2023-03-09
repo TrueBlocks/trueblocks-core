@@ -23,7 +23,7 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
       "ether": "0.01",
       "from": "0xd1220a0cf47c7b9be7a2e6ba89f429762e7b9adb",
       "gas": 900000,
-      "gasCost": "10849501969331551",
+      "gasCost": 10849501969331552,
       "gasPrice": 20343286631,
       "gasUsed": 533321,
       "hash": "0x811bb4494b3bbcfd6f0205f22b3e983792b21cb0a9689366903b843ec4d62531",
@@ -135,6 +135,8 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
             "outputs": null,
             "stateMutability": "payable"
           },
+          "blockHash": "0x836c4866ea68fbe3b9786cdb3c2c8a36fa0c689e77b0f9fc441d37fb85489fad",
+          "blockNumber": 3648669,
           "compressedTrace": "{name:startAuctionsAndBid|inputs:{hashes:[0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c|0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc|0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]|sealedBid:0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811}|outputs:{}|stateMutability:payable}",
           "result": {
             "gasUsed": 503153,
@@ -143,6 +145,8 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
           "subtraces": 4,
           "timestamp": 1493897242,
           "traceAddress": [],
+          "transactionHash": "0x811bb4494b3bbcfd6f0205f22b3e983792b21cb0a9689366903b843ec4d62531",
+          "transactionIndex": 24,
           "type": "call"
         },
         {
@@ -163,6 +167,8 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
               "val_0": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef"
             }
           },
+          "blockHash": "0x836c4866ea68fbe3b9786cdb3c2c8a36fa0c689e77b0f9fc441d37fb85489fad",
+          "blockNumber": 3648669,
           "compressedTrace": "{name:owner|inputs:{node:0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae}|outputs:{val_0:0x6090a6e47849629b7245dfa1ca21d94cd15878ef}}",
           "result": {
             "gasUsed": 432,
@@ -173,6 +179,8 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
           "traceAddress": [
             0
           ],
+          "transactionHash": "0x811bb4494b3bbcfd6f0205f22b3e983792b21cb0a9689366903b843ec4d62531",
+          "transactionIndex": 24,
           "type": "call"
         },
         {
@@ -193,6 +201,8 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
               "val_0": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef"
             }
           },
+          "blockHash": "0x836c4866ea68fbe3b9786cdb3c2c8a36fa0c689e77b0f9fc441d37fb85489fad",
+          "blockNumber": 3648669,
           "compressedTrace": "{name:owner|inputs:{node:0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae}|outputs:{val_0:0x6090a6e47849629b7245dfa1ca21d94cd15878ef}}",
           "result": {
             "gasUsed": 432,
@@ -203,6 +213,8 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
           "traceAddress": [
             1
           ],
+          "transactionHash": "0x811bb4494b3bbcfd6f0205f22b3e983792b21cb0a9689366903b843ec4d62531",
+          "transactionIndex": 24,
           "type": "call"
         },
         {
@@ -223,6 +235,8 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
               "val_0": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef"
             }
           },
+          "blockHash": "0x836c4866ea68fbe3b9786cdb3c2c8a36fa0c689e77b0f9fc441d37fb85489fad",
+          "blockNumber": 3648669,
           "compressedTrace": "{name:owner|inputs:{node:0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae}|outputs:{val_0:0x6090a6e47849629b7245dfa1ca21d94cd15878ef}}",
           "result": {
             "gasUsed": 432,
@@ -233,6 +247,8 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
           "traceAddress": [
             2
           ],
+          "transactionHash": "0x811bb4494b3bbcfd6f0205f22b3e983792b21cb0a9689366903b843ec4d62531",
+          "transactionIndex": 24,
           "type": "call"
         },
         {
@@ -243,6 +259,8 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
             "to": "0x0",
             "value": "10000000000000000"
           },
+          "blockHash": "0x836c4866ea68fbe3b9786cdb3c2c8a36fa0c689e77b0f9fc441d37fb85489fad",
+          "blockNumber": 3648669,
           "result": {
             "address": "0x9b810944879c013244192f0f94df08d324f7c994",
             "gasUsed": 339168,
@@ -253,6 +271,8 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
           "traceAddress": [
             3
           ],
+          "transactionHash": "0x811bb4494b3bbcfd6f0205f22b3e983792b21cb0a9689366903b843ec4d62531",
+          "transactionIndex": 24,
           "type": "create"
         }
       ],

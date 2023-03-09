@@ -5,6 +5,6 @@ TEST[DATE|TIME] OutputFn:  output_test_file
 TEST[DATE|TIME] Format:  csv
 ----
 Results in ./output_test_file
-blockNumber,transactionIndex,date,timestamp,from,to,ether,ethGasPrice,gasUsed,hash,isError,encoding,compressedTx
-3657480,12,2017-05-06 00:43:39 UTC,1494031419,0xd9bd20efca7b0e6606b969548b1516c08d37374b,0xaf30d2a7e90d7dc361c8c4585e9bb7d2f6f15bc7,0.000000000000000000,0.000000020000000000,37712,0x4b4fe9946bfe9ef6f07fcfc1b985f1ca0db093b3b2d378b363504a92d07637bd,false,0xa9059cbb,
+blockNumber,transactionIndex,date,timestamp,from,to,ether,gasPrice,gasUsed,gasCost,hash,isError,encoding,compressedTx
+3657480,12,2017-05-06 00:43:39 UTC,1494031419,0xd9bd20efca7b0e6606b969548b1516c08d37374b,0xaf30d2a7e90d7dc361c8c4585e9bb7d2f6f15bc7,0.000000000000000000,20000000000,37712,754240000000000,0x4b4fe9946bfe9ef6f07fcfc1b985f1ca0db093b3b2d378b363504a92d07637bd,false,0xa9059cbb,
 

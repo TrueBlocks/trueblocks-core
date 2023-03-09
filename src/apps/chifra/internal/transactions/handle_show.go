@@ -40,34 +40,33 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 
 				if opts.Articulate {
 					if err = abi.LoadAbi(chain, tx.To, abiMap); err != nil {
+						// continue processing even with an error
 						errorChan <- err
 					}
 
 					for index, log := range tx.Receipt.Logs {
 						if err = abi.LoadAbi(chain, log.Address, abiMap); err != nil {
+							// continue processing even with an error
 							errorChan <- err
-							// TODO: I don't think we want to stop processing this tx
-							// TODO: simply because we can't articulate it. Same for below.
-							continue
-						}
-
-						tx.Receipt.Logs[index].ArticulatedLog, err = articulate.ArticulateLog(&log, abiMap)
-						if err != nil {
-							errorChan <- err
-							continue
+						} else {
+							tx.Receipt.Logs[index].ArticulatedLog, err = articulate.ArticulateLog(&log, abiMap)
+							if err != nil {
+								// continue processing even with an error
+								errorChan <- err
+							}
 						}
 					}
 
 					for index, trace := range tx.Traces {
 						if err = abi.LoadAbi(chain, trace.Action.To, abiMap); err != nil {
+							// continue processing even with an error
 							errorChan <- err
-							continue
-						}
-
-						tx.Traces[index].ArticulatedTrace, err = articulate.ArticulateTrace(&trace, abiMap)
-						if err != nil {
-							errorChan <- err
-							continue
+						} else {
+							tx.Traces[index].ArticulatedTrace, err = articulate.ArticulateTrace(&trace, abiMap)
+							if err != nil {
+								// continue processing even with an error
+								errorChan <- err
+							}
 						}
 					}
 
@@ -93,8 +92,9 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 					if found == nil && len(tx.Input) > 0 {
 						if message, ok := articulate.ArticulateString(tx.Input); ok {
 							tx.Message = message
-						} else if len(selector) > 0 {
-							errorChan <- fmt.Errorf("method/event not found: %s", selector)
+							// } else if len(selector) > 0 {
+							// 	// don't report this error
+							// 	errorChan <- fmt.Errorf("method/event not found: %s", selector)
 						}
 					}
 				}
@@ -116,9 +116,8 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 		Append:     opts.Globals.Append,
 		JsonIndent: "  ",
 		Extra: map[string]interface{}{
-			"articulate":               opts.Articulate,
-			"traces":                   opts.Traces,
-			"tracesTransactionsFormat": true,
+			"articulate": opts.Articulate,
+			"traces":     opts.Traces,
 		},
 	})
 }

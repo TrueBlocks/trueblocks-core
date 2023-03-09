@@ -23,6 +23,9 @@ func ParseTransferEvent(log *types.SimpleLog) (function *types.SimpleFunction) {
 		return nil
 	}
 	if len(log.Topics) < 3 {
+		// TODO: This happens (sometimes) because the ABI says that the data is not index, but it is
+		// TODO: or visa versa. In either case, we get the same topic0. We need to attempt both with
+		// TODO: and without indexed parameters. See issues/1366.
 		return nil
 	}
 
@@ -55,6 +58,9 @@ func ParseEnsTransferEvent(log *types.SimpleLog) (function *types.SimpleFunction
 		return nil
 	}
 	if len(log.Topics) < 2 {
+		// TODO: This happens (sometimes) because the ABI says that the data is not index, but it is
+		// TODO: or visa versa. In either case, we get the same topic0. We need to attempt both with
+		// TODO: and without indexed parameters. See issues/1366.
 		return nil
 	}
 
@@ -82,11 +88,14 @@ func ParseApprovalEvent(log *types.SimpleLog) (function *types.SimpleFunction) {
 		return nil
 	}
 	if len(log.Topics) < 3 {
+		// TODO: This happens (sometimes) because the ABI says that the data is not index, but it is
+		// TODO: or visa versa. In either case, we get the same topic0. We need to attempt both with
+		// TODO: and without indexed parameters. See issues/1366.
 		return nil
 	}
 
 	function = &types.SimpleFunction{}
-	function.Name = "Transfer"
+	function.Name = "Approval"
 	function.FunctionType = "event"
 	function.Encoding = transferTopic.Hex()
 	function.Inputs = []types.SimpleParameter{

@@ -12,7 +12,7 @@ TEST[DATE|TIME] Format:  json
       "ether": "0",
       "from": "0x63d509f7152769ddf162ed048b83719fe1e31080",
       "gas": 7990029,
-      "gasCost": "19899285000000000",
+      "gasCost": 19899285000000000,
       "gasPrice": 21000000000,
       "gasUsed": 947585,
       "hash": "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c",
@@ -67,6 +67,8 @@ TEST[DATE|TIME] Format:  json
             "to": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
             "value": "0"
           },
+          "blockHash": "0xd2b9c8119a1e615046cd83abe333c6cf2c3cfb2773149911339c67ab660c1b06",
+          "blockNumber": 6876231,
           "result": {
             "gasUsed": 937473,
             "output": "0x"
@@ -74,6 +76,8 @@ TEST[DATE|TIME] Format:  json
           "subtraces": 12,
           "timestamp": 1544664392,
           "traceAddress": [],
+          "transactionHash": "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c",
+          "transactionIndex": 0,
           "type": "call"
         },
         {
@@ -85,6 +89,8 @@ TEST[DATE|TIME] Format:  json
             "to": "0x98ca4bf7e522cd6d2f69cf843dfab327a1e26497",
             "value": "0"
           },
+          "blockHash": "0xd2b9c8119a1e615046cd83abe333c6cf2c3cfb2773149911339c67ab660c1b06",
+          "blockNumber": 6876231,
           "result": {
             "gasUsed": 657,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
@@ -94,6 +100,8 @@ TEST[DATE|TIME] Format:  json
           "traceAddress": [
             0
           ],
+          "transactionHash": "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c",
+          "transactionIndex": 0,
           "type": "call"
         },
         {
@@ -105,6 +113,8 @@ TEST[DATE|TIME] Format:  json
             "to": "0xcd565ca18f06e2e4d251b55dc49a4fe456c72052",
             "value": "0"
           },
+          "blockHash": "0xd2b9c8119a1e615046cd83abe333c6cf2c3cfb2773149911339c67ab660c1b06",
+          "blockNumber": 6876231,
           "result": {
             "gasUsed": 768,
             "output": "0x000000000000000000000000e81a6c6b733d52df5d6aa863d75aab78147a0f28"
@@ -114,6 +124,8 @@ TEST[DATE|TIME] Format:  json
           "traceAddress": [
             1
           ],
+          "transactionHash": "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c",
+          "transactionIndex": 0,
           "type": "call"
         },
         {
@@ -125,6 +137,8 @@ TEST[DATE|TIME] Format:  json
             "to": "0xcd565ca18f06e2e4d251b55dc49a4fe456c72052",
             "value": "0"
           },
+          "blockHash": "0xd2b9c8119a1e615046cd83abe333c6cf2c3cfb2773149911339c67ab660c1b06",
+          "blockNumber": 6876231,
           "result": {
             "gasUsed": 768,
             "output": "0x000000000000000000000000e81a6c6b733d52df5d6aa863d75aab78147a0f28"
@@ -134,6 +148,8 @@ TEST[DATE|TIME] Format:  json
           "traceAddress": [
             2
           ],
+          "transactionHash": "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c",
+          "transactionIndex": 0,
           "type": "call"
         },
         {
@@ -144,6 +160,8 @@ TEST[DATE|TIME] Format:  json
             "to": "0x0",
             "value": "0"
           },
+          "blockHash": "0xd2b9c8119a1e615046cd83abe333c6cf2c3cfb2773149911339c67ab660c1b06",
+          "blockNumber": 6876231,
           "result": {
             "address": "0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021",
             "gasUsed": 717949,
@@ -154,6 +172,8 @@ TEST[DATE|TIME] Format:  json
           "traceAddress": [
             3
           ],
+          "transactionHash": "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c",
+          "transactionIndex": 0,
           "type": "create"
         },
         {
@@ -165,6 +185,8 @@ TEST[DATE|TIME] Format:  json
             "to": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28",
             "value": "0"
           },
+          "blockHash": "0xd2b9c8119a1e615046cd83abe333c6cf2c3cfb2773149911339c67ab660c1b06",
+          "blockNumber": 6876231,
           "error": "Reverted",
           "result": {
             "gasUsed": 195,
@@ -175,6 +197,8 @@ TEST[DATE|TIME] Format:  json
           "traceAddress": [
             4
           ],
+          "transactionHash": "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c",
+          "transactionIndex": 0,
           "type": "call"
         },
         {
@@ -195,6 +219,8 @@ TEST[DATE|TIME] Format:  json
               "ret_0": "0"
             }
           },
+          "blockHash": "0xd2b9c8119a1e615046cd83abe333c6cf2c3cfb2773149911339c67ab660c1b06",
+          "blockNumber": 6876231,
           "compressedTrace": "{name:balanceOf|inputs:{owner:0xc14830e53aa344e8c14603a91229a0b925b0b262}|outputs:{ret_0:0}}",
           "result": {
             "gasUsed": 2845,
@@ -205,6 +231,8 @@ TEST[DATE|TIME] Format:  json
           "traceAddress": [
             5
           ],
+          "transactionHash": "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c",
+          "transactionIndex": 0,
           "type": "call"
         },
         {
@@ -226,6 +254,8 @@ TEST[DATE|TIME] Format:  json
             },
             "stateMutability": "view"
           },
+          "blockHash": "0xd2b9c8119a1e615046cd83abe333c6cf2c3cfb2773149911339c67ab660c1b06",
+          "blockNumber": 6876231,
           "compressedTrace": "{name:balanceOf|inputs:{_owner:0xe81a6c6b733d52df5d6aa863d75aab78147a0f28}|outputs:{balance:0}|stateMutability:view}",
           "result": {
             "gasUsed": 727,
@@ -237,6 +267,8 @@ TEST[DATE|TIME] Format:  json
             5,
             0
           ],
+          "transactionHash": "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c",
+          "transactionIndex": 0,
           "type": "call"
         },
         {
@@ -257,6 +289,8 @@ TEST[DATE|TIME] Format:  json
               "ret_0": "100000000"
             }
           },
+          "blockHash": "0xd2b9c8119a1e615046cd83abe333c6cf2c3cfb2773149911339c67ab660c1b06",
+          "blockNumber": 6876231,
           "compressedTrace": "{name:balanceOf|inputs:{owner:0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a}|outputs:{ret_0:100000000}}",
           "result": {
             "gasUsed": 3155,
@@ -267,6 +301,8 @@ TEST[DATE|TIME] Format:  json
           "traceAddress": [
             6
           ],
+          "transactionHash": "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c",
+          "transactionIndex": 0,
           "type": "call"
         },
         {
@@ -287,6 +323,8 @@ TEST[DATE|TIME] Format:  json
               "balance": "100000000"
             }
           },
+          "blockHash": "0xd2b9c8119a1e615046cd83abe333c6cf2c3cfb2773149911339c67ab660c1b06",
+          "blockNumber": 6876231,
           "compressedTrace": "{name:balanceOf|inputs:{_owner:0xe81a6c6b733d52df5d6aa863d75aab78147a0f28}|outputs:{balance:100000000}}",
           "result": {
             "gasUsed": 1037,
@@ -298,6 +336,8 @@ TEST[DATE|TIME] Format:  json
             6,
             0
           ],
+          "transactionHash": "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c",
+          "transactionIndex": 0,
           "type": "call"
         },
         {
@@ -318,6 +358,8 @@ TEST[DATE|TIME] Format:  json
               "ret_0": "100000000"
             }
           },
+          "blockHash": "0xd2b9c8119a1e615046cd83abe333c6cf2c3cfb2773149911339c67ab660c1b06",
+          "blockNumber": 6876231,
           "compressedTrace": "{name:balanceOf|inputs:{owner:0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a}|outputs:{ret_0:100000000}}",
           "result": {
             "gasUsed": 3155,
@@ -328,6 +370,8 @@ TEST[DATE|TIME] Format:  json
           "traceAddress": [
             7
           ],
+          "transactionHash": "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c",
+          "transactionIndex": 0,
           "type": "call"
         },
         {
@@ -348,6 +392,8 @@ TEST[DATE|TIME] Format:  json
               "balance": "100000000"
             }
           },
+          "blockHash": "0xd2b9c8119a1e615046cd83abe333c6cf2c3cfb2773149911339c67ab660c1b06",
+          "blockNumber": 6876231,
           "compressedTrace": "{name:balanceOf|inputs:{_owner:0xe81a6c6b733d52df5d6aa863d75aab78147a0f28}|outputs:{balance:100000000}}",
           "result": {
             "gasUsed": 1037,
@@ -359,6 +405,8 @@ TEST[DATE|TIME] Format:  json
             7,
             0
           ],
+          "transactionHash": "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c",
+          "transactionIndex": 0,
           "type": "call"
         },
         {
@@ -379,6 +427,8 @@ TEST[DATE|TIME] Format:  json
             "name": "transfer",
             "outputs": null
           },
+          "blockHash": "0xd2b9c8119a1e615046cd83abe333c6cf2c3cfb2773149911339c67ab660c1b06",
+          "blockNumber": 6876231,
           "compressedTrace": "{name:transfer|inputs:{_to:0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021|_token:0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a|_value:100000000}|outputs:{}}",
           "result": {
             "gasUsed": 36709,
@@ -389,6 +439,8 @@ TEST[DATE|TIME] Format:  json
           "traceAddress": [
             8
           ],
+          "transactionHash": "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c",
+          "transactionIndex": 0,
           "type": "call"
         },
         {
@@ -400,6 +452,8 @@ TEST[DATE|TIME] Format:  json
             "to": "0x98ca4bf7e522cd6d2f69cf843dfab327a1e26497",
             "value": "0"
           },
+          "blockHash": "0xd2b9c8119a1e615046cd83abe333c6cf2c3cfb2773149911339c67ab660c1b06",
+          "blockNumber": 6876231,
           "result": {
             "gasUsed": 657,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000000"
@@ -410,6 +464,8 @@ TEST[DATE|TIME] Format:  json
             8,
             0
           ],
+          "transactionHash": "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c",
+          "transactionIndex": 0,
           "type": "call"
         },
         {
@@ -421,6 +477,8 @@ TEST[DATE|TIME] Format:  json
             "to": "0x98ca4bf7e522cd6d2f69cf843dfab327a1e26497",
             "value": "0"
           },
+          "blockHash": "0xd2b9c8119a1e615046cd83abe333c6cf2c3cfb2773149911339c67ab660c1b06",
+          "blockNumber": 6876231,
           "result": {
             "gasUsed": 547,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
@@ -431,6 +489,8 @@ TEST[DATE|TIME] Format:  json
             8,
             1
           ],
+          "transactionHash": "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c",
+          "transactionIndex": 0,
           "type": "call"
         },
         {
@@ -452,6 +512,8 @@ TEST[DATE|TIME] Format:  json
               "success": true
             }
           },
+          "blockHash": "0xd2b9c8119a1e615046cd83abe333c6cf2c3cfb2773149911339c67ab660c1b06",
+          "blockNumber": 6876231,
           "compressedTrace": "{name:transfer|inputs:{_to:0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021|_value:100000000}|outputs:{success:true}}",
           "result": {
             "gasUsed": 29257,
@@ -463,6 +525,8 @@ TEST[DATE|TIME] Format:  json
             8,
             2
           ],
+          "transactionHash": "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c",
+          "transactionIndex": 0,
           "type": "call"
         },
         {
@@ -474,6 +538,8 @@ TEST[DATE|TIME] Format:  json
             "to": "0xcd565ca18f06e2e4d251b55dc49a4fe456c72052",
             "value": "0"
           },
+          "blockHash": "0xd2b9c8119a1e615046cd83abe333c6cf2c3cfb2773149911339c67ab660c1b06",
+          "blockNumber": 6876231,
           "result": {
             "gasUsed": 114419,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
@@ -483,6 +549,8 @@ TEST[DATE|TIME] Format:  json
           "traceAddress": [
             9
           ],
+          "transactionHash": "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c",
+          "transactionIndex": 0,
           "type": "call"
         },
         {
@@ -494,6 +562,8 @@ TEST[DATE|TIME] Format:  json
             "to": "0x98ca4bf7e522cd6d2f69cf843dfab327a1e26497",
             "value": "0"
           },
+          "blockHash": "0xd2b9c8119a1e615046cd83abe333c6cf2c3cfb2773149911339c67ab660c1b06",
+          "blockNumber": 6876231,
           "result": {
             "gasUsed": 657,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000000"
@@ -504,6 +574,8 @@ TEST[DATE|TIME] Format:  json
             9,
             0
           ],
+          "transactionHash": "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c",
+          "transactionIndex": 0,
           "type": "call"
         },
         {
@@ -515,6 +587,8 @@ TEST[DATE|TIME] Format:  json
             "to": "0x98ca4bf7e522cd6d2f69cf843dfab327a1e26497",
             "value": "0"
           },
+          "blockHash": "0xd2b9c8119a1e615046cd83abe333c6cf2c3cfb2773149911339c67ab660c1b06",
+          "blockNumber": 6876231,
           "result": {
             "gasUsed": 547,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
@@ -525,6 +599,8 @@ TEST[DATE|TIME] Format:  json
             9,
             1
           ],
+          "transactionHash": "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c",
+          "transactionIndex": 0,
           "type": "call"
         },
         {
@@ -536,6 +612,8 @@ TEST[DATE|TIME] Format:  json
             "to": "0x98ca4bf7e522cd6d2f69cf843dfab327a1e26497",
             "value": "0"
           },
+          "blockHash": "0xd2b9c8119a1e615046cd83abe333c6cf2c3cfb2773149911339c67ab660c1b06",
+          "blockNumber": 6876231,
           "result": {
             "gasUsed": 657,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000000"
@@ -546,6 +624,8 @@ TEST[DATE|TIME] Format:  json
             9,
             2
           ],
+          "transactionHash": "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c",
+          "transactionIndex": 0,
           "type": "call"
         },
         {
@@ -557,6 +637,8 @@ TEST[DATE|TIME] Format:  json
             "to": "0x98ca4bf7e522cd6d2f69cf843dfab327a1e26497",
             "value": "0"
           },
+          "blockHash": "0xd2b9c8119a1e615046cd83abe333c6cf2c3cfb2773149911339c67ab660c1b06",
+          "blockNumber": 6876231,
           "result": {
             "gasUsed": 547,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
@@ -567,6 +649,8 @@ TEST[DATE|TIME] Format:  json
             9,
             3
           ],
+          "transactionHash": "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c",
+          "transactionIndex": 0,
           "type": "call"
         },
         {
@@ -578,6 +662,8 @@ TEST[DATE|TIME] Format:  json
             "to": "0xcd565ca18f06e2e4d251b55dc49a4fe456c72052",
             "value": "0"
           },
+          "blockHash": "0xd2b9c8119a1e615046cd83abe333c6cf2c3cfb2773149911339c67ab660c1b06",
+          "blockNumber": 6876231,
           "result": {
             "gasUsed": 768,
             "output": "0x0000000000000000000000008ca1fec705f7060aaa3d8c6757e34d1e7cc61021"
@@ -587,6 +673,8 @@ TEST[DATE|TIME] Format:  json
           "traceAddress": [
             10
           ],
+          "transactionHash": "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c",
+          "transactionIndex": 0,
           "type": "call"
         },
         {
@@ -598,6 +686,8 @@ TEST[DATE|TIME] Format:  json
             "to": "0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021",
             "value": "0"
           },
+          "blockHash": "0xd2b9c8119a1e615046cd83abe333c6cf2c3cfb2773149911339c67ab660c1b06",
+          "blockNumber": 6876231,
           "result": {
             "gasUsed": 499,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000002"
@@ -607,6 +697,8 @@ TEST[DATE|TIME] Format:  json
           "traceAddress": [
             11
           ],
+          "transactionHash": "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c",
+          "transactionIndex": 0,
           "type": "call"
         }
       ],

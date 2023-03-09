@@ -10,7 +10,7 @@ TEST[DATE|TIME] Format:  json
       "ether": "0.3063299",
       "from": "0x64014a5817e05a205bca161a6763e945659b50b0",
       "gas": 21000,
-      "gasCost": "441000000000000",
+      "gasCost": 441000000000000,
       "gasPrice": 21000000000,
       "gasUsed": 21000,
       "hash": "0xc62d9410b73b18d767fe32df91e6336c5d563eceee49c55c56df65bfeb4b966d",

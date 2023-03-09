@@ -66,25 +66,14 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 	// EXISTING_CODE
 	// EXISTING_CODE
 
-	var model map[string]interface{}
-
-	// TODO: We can probably change the output of the traces to remove this special case
-	if extraOptions["tracesTransactionsFormat"] == true {
-		model = map[string]interface{}{
-			"result":    s.Result,
-			"subtraces": s.Subtraces,
-			"timestamp": s.Timestamp,
-		}
-	} else {
-		model = map[string]interface{}{
-			"blockHash":        s.BlockHash,
-			"blockNumber":      s.BlockNumber,
-			"result":           s.Result,
-			"subtraces":        s.Subtraces,
-			"timestamp":        s.Timestamp,
-			"transactionHash":  s.TransactionHash,
-			"transactionIndex": s.TransactionIndex,
-		}
+	model := map[string]interface{}{
+		"blockHash":        s.BlockHash,
+		"blockNumber":      s.BlockNumber,
+		"result":           s.Result,
+		"subtraces":        s.Subtraces,
+		"timestamp":        s.Timestamp,
+		"transactionHash":  s.TransactionHash,
+		"transactionIndex": s.TransactionIndex,
 	}
 
 	order := []string{
@@ -256,8 +245,6 @@ func GetTracesCountByTransactionHash(chain string, txHash string) (uint64, error
 	return uint64(len(traces)), nil
 }
 
-// TODO: I'm curious if this could be pushed up to the caller. In other words, the handling of the trace is not
-// TODO: handled in the type but in the caller
 // GetTracesByTransactionHash returns a slice of traces in a given transaction's hash
 func GetTracesByTransactionHash(chain string, txHash string, transaction *SimpleTransaction) ([]SimpleTrace, error) {
 	method := "trace_transaction"

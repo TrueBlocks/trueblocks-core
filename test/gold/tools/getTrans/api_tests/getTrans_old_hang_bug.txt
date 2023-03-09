@@ -19,7 +19,7 @@ transactions?transactions=6409270.108&articulate&fmt=json
       "ether": "0",
       "from": "0x035d45345cdc7e4f91ef8cddf7c55d79cc65bc16",
       "gas": 60000,
-      "gasCost": "486000000000000",
+      "gasCost": 486000000000000,
       "gasPrice": 8100000000,
       "gasUsed": 60000,
       "hash": "0x7f4ed854e4b318fc1ba3d07506639e50942fa1a82eb9e35373a0d9cb2d1ee37e",

@@ -8,7 +8,7 @@ transactions?transactions=0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23
       "ether": "0",
       "from": "0xa1619bda3f5160d19df5f9358f76a3e9bc893ed6",
       "gas": 50000,
-      "gasCost": "1200000000000000",
+      "gasCost": 1200000000000000,
       "gasPrice": 24000000000,
       "gasUsed": 50000,
       "hasToken": true,
