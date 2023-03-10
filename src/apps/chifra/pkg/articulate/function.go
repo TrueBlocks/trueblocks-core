@@ -48,6 +48,8 @@ func ArticulateArguments(args abi.Arguments, data string, topics []common.Hash, 
 	indexed := make(abi.Arguments, 0, len(args))
 	nonIndexed := make(abi.Arguments, 0, len(args))
 
+	// In some cases, `data` can be too short, because only some values are present there.
+	// See: https://github.com/TrueBlocks/trueblocks-core/issues/1366
 	dataLen := len(data) * 4
 	nonIndexedSize := 0
 	for _, nonIndexedArg := range args.NonIndexed() {
@@ -68,19 +70,6 @@ func ArticulateArguments(args abi.Arguments, data string, topics []common.Hash, 
 		}
 		nonIndexed = append(nonIndexed, arg)
 	}
-
-	// In some cases, `data` can be too short, because only some values are present there.
-	// See: https://github.com/TrueBlocks/trueblocks-core/issues/1366
-	// nonIndexedLen := len(nonIndexed)
-	// valueByteSize := 32
-	// if missing := len(dataBytes) - (nonIndexedLen * valueByteSize); missing < 0 {
-	// 	// TODO(articulation): this code breaks getTrans_revert_not_err test
-	// 	nv := make([]byte, missing*-1, nonIndexedLen*valueByteSize)
-	// 	dataBytes = append(
-	// 		nv,
-	// 		dataBytes...,
-	// 	)
-	// }
 
 	unpacked, err := args.Unpack(dataBytes)
 	if err != nil {
@@ -190,7 +179,7 @@ func formatValue(argType *abi.Type, value any) (result any, err error) {
 	case abi.BoolTy:
 		result = value
 	case abi.BytesTy:
-		result = fmt.Sprintf("%x", value)
+		result = fmt.Sprintf("0x%x", value)
 	case abi.FunctionTy:
 		item, ok := value.([]byte)
 		if ok {

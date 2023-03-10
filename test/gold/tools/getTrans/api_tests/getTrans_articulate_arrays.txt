@@ -17,12 +17,10 @@ transactions?transactions=0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b8
             "25000000000000000000"
           ]
         },
-        "name": "acceptTheseAskRequestsAndBUY",
-        "outputs": null
+        "name": "acceptTheseAskRequestsAndBUY"
       },
       "blockHash": "0xc9d375441b8deb0ca5544234ccbe3f6a9f67361ec30128030401b0d16713b55a",
       "blockNumber": 6711969,
-      "compressedTx": "{name:acceptTheseAskRequestsAndBUY|inputs:{_dollarPrices:[2000000000000000000|2000000000000000000]|_keys:[6|5]|_tokenAmounts:[25000000000000000000|25000000000000000000]}|outputs:{}}",
       "date": "2018-11-16 00:10:08 UTC",
       "ether": "0.6072986252967483",
       "from": "0xd503d263de9092232d28492d60c5a956ad754a83",
@@ -52,7 +50,6 @@ transactions?transactions=0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b8
               },
               "name": "AcceptRequest"
             },
-            "compressedLog": "{name:AcceptRequest|inputs:{_acceptor:0xd503d263de9092232d28492d60c5a956ad754a83|_dollarPrice:2000000000000000000|_etherAmount:236159796400000000|_key:6|_tokenAmount:25000000000000000000}}",
             "data": "0x00000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000347021566a68c000000000000000000000000000000000000000000000000015af1d78b58c400000000000000000000000000000000000000000000000000001bc16d674ec80000",
             "logIndex": 0,
             "topics": [
@@ -72,7 +69,6 @@ transactions?transactions=0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b8
               },
               "name": "AcceptRequest"
             },
-            "compressedLog": "{name:AcceptRequest|inputs:{_acceptor:0xd503d263de9092232d28492d60c5a956ad754a83|_dollarPrice:2000000000000000000|_etherAmount:236159796400000000|_key:5|_tokenAmount:25000000000000000000}}",
             "data": "0x00000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000347021566a68c000000000000000000000000000000000000000000000000015af1d78b58c400000000000000000000000000000000000000000000000000001bc16d674ec80000",
             "logIndex": 1,
             "topics": [
@@ -110,12 +106,10 @@ transactions?transactions=0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b8
                 "25000000000000000000"
               ]
             },
-            "name": "acceptTheseAskRequestsAndBUY",
-            "outputs": null
+            "name": "acceptTheseAskRequestsAndBUY"
           },
           "blockHash": "0xc9d375441b8deb0ca5544234ccbe3f6a9f67361ec30128030401b0d16713b55a",
           "blockNumber": 6711969,
-          "compressedTrace": "{name:acceptTheseAskRequestsAndBUY|inputs:{_dollarPrices:[2000000000000000000|2000000000000000000]|_keys:[6|5]|_tokenAmounts:[25000000000000000000|25000000000000000000]}|outputs:{}}",
           "result": {
             "gasUsed": 214359,
             "output": "0x"
@@ -147,7 +141,6 @@ transactions?transactions=0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b8
           },
           "blockHash": "0xc9d375441b8deb0ca5544234ccbe3f6a9f67361ec30128030401b0d16713b55a",
           "blockNumber": 6711969,
-          "compressedTrace": "{name:USD|inputs:{_id:0}|outputs:{val_0:47231959280000}}",
           "result": {
             "gasUsed": 537,
             "output": "0x00000000000000000000000000000000000000000000000000002af50c27a980"
@@ -181,7 +174,6 @@ transactions?transactions=0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b8
           },
           "blockHash": "0xc9d375441b8deb0ca5544234ccbe3f6a9f67361ec30128030401b0d16713b55a",
           "blockNumber": 6711969,
-          "compressedTrace": "{name:USD|inputs:{_id:0}|outputs:{val_0:47231959280000}}",
           "result": {
             "gasUsed": 537,
             "output": "0x00000000000000000000000000000000000000000000000000002af50c27a980"

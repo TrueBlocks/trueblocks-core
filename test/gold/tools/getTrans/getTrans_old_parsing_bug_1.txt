@@ -31,12 +31,10 @@ TEST[DATE|TIME] Format:  json
             }
           ]
         },
-        "name": "operate",
-        "outputs": null
+        "name": "operate"
       },
       "blockHash": "0x9793244e740c78afa6065779660d2ea6be9b9d00b94311e1bcda3fcfe191c829",
       "blockNumber": 10052989,
-      "compressedTx": "{name:operate|inputs:{accounts:[{number:0|owner:0x66215d23b8a247c80c2d1b7bef4befc2ab384bce}]|actions:[{accountId:0|actionType:4|amount:{denomination:0|ref:0|sign:false|value:5000000000000000000000}|data:0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000045f783cce6b7ff23b2ab2d70e416cdb7d6055f510000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000|otherAccountId:0|otherAddress:0x7a603dc3eb0f4e3883929ee15a3c86d2ac45f445|primaryMarketId:3|secondaryMarketId:2}]}|outputs:{}}",
       "date": "2020-05-12 18:35:22 UTC",
       "ether": "0",
       "from": "0x66215d23b8a247c80c2d1b7bef4befc2ab384bce",
@@ -99,7 +97,6 @@ TEST[DATE|TIME] Format:  json
               },
               "name": "Transfer"
             },
-            "compressedLog": "{name:Transfer|inputs:{_amount:5000000000000000000000|_from:0x1e0447b19bb6ecfdae1e4ae1694b0c3659614e4e|_to:0x7a603dc3eb0f4e3883929ee15a3c86d2ac45f445}}",
             "data": "0x00000000000000000000000000000000000000000000010f0cf064dd59200000",
             "logIndex": 100,
             "topics": [
@@ -118,7 +115,6 @@ TEST[DATE|TIME] Format:  json
               },
               "name": "Approval"
             },
-            "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x7a603dc3eb0f4e3883929ee15a3c86d2ac45f445|_spender:0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51}}",
             "data": "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
             "logIndex": 101,
             "topics": [
@@ -137,7 +133,6 @@ TEST[DATE|TIME] Format:  json
               },
               "name": "Transfer"
             },
-            "compressedLog": "{name:Transfer|inputs:{_amount:5000000000000000000000|_from:0x7a603dc3eb0f4e3883929ee15a3c86d2ac45f445|_to:0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51}}",
             "data": "0x00000000000000000000000000000000000000000000010f0cf064dd59200000",
             "logIndex": 102,
             "topics": [
@@ -156,7 +151,6 @@ TEST[DATE|TIME] Format:  json
               },
               "name": "Approval"
             },
-            "compressedLog": "{name:Approval|inputs:{_amount:5000000000000000000000|_owner:0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51|_spender:0x16de59092dae5ccf4a1e6439d611fd0653f0bd01}}",
             "data": "0x00000000000000000000000000000000000000000000010f0cf064dd59200000",
             "logIndex": 103,
             "topics": [
@@ -175,7 +169,6 @@ TEST[DATE|TIME] Format:  json
               },
               "name": "Transfer"
             },
-            "compressedLog": "{name:Transfer|inputs:{_amount:5000000000000000000000|_from:0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51|_to:0x16de59092dae5ccf4a1e6439d611fd0653f0bd01}}",
             "data": "0x00000000000000000000000000000000000000000000010f0cf064dd59200000",
             "logIndex": 104,
             "topics": [
@@ -189,11 +182,11 @@ TEST[DATE|TIME] Format:  json
             "articulatedLog": {
               "inputs": {
                 "_amount": "4924918040916063755098",
+                "_from": "0x0",
                 "_to": "0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51"
               },
               "name": "Transfer"
             },
-            "compressedLog": "{name:Transfer|inputs:{_amount:4924918040916063755098|_to:0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51}}",
             "data": "0x00000000000000000000000000000000000000000000010afaf7b0e10ab11b5a",
             "logIndex": 105,
             "topics": [
@@ -207,11 +200,11 @@ TEST[DATE|TIME] Format:  json
             "articulatedLog": {
               "inputs": {
                 "_amount": "4366123864",
-                "_from": "0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51"
+                "_from": "0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51",
+                "_to": "0x0"
               },
               "name": "Transfer"
             },
-            "compressedLog": "{name:Transfer|inputs:{_amount:4366123864|_from:0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51}}",
             "data": "0x00000000000000000000000000000000000000000000000000000001043dc358",
             "logIndex": 106,
             "topics": [
@@ -225,11 +218,11 @@ TEST[DATE|TIME] Format:  json
             "articulatedLog": {
               "inputs": {
                 "_amount": "11025506",
+                "_from": "0x0",
                 "_to": "0xd6ad7a6750a7593e092a9b218d66c0a814a3436e"
               },
               "name": "Transfer"
             },
-            "compressedLog": "{name:Transfer|inputs:{_amount:11025506|_to:0xd6ad7a6750a7593e092a9b218d66c0a814a3436e}}",
             "data": "0x0000000000000000000000000000000000000000000000000000000000a83c62",
             "logIndex": 107,
             "topics": [
@@ -243,11 +236,11 @@ TEST[DATE|TIME] Format:  json
             "articulatedLog": {
               "inputs": {
                 "_amount": "3769169475",
-                "_from": "0xd6ad7a6750a7593e092a9b218d66c0a814a3436e"
+                "_from": "0xd6ad7a6750a7593e092a9b218d66c0a814a3436e",
+                "_to": "0x0"
               },
               "name": "Transfer"
             },
-            "compressedLog": "{name:Transfer|inputs:{_amount:3769169475|_from:0xd6ad7a6750a7593e092a9b218d66c0a814a3436e}}",
             "data": "0x00000000000000000000000000000000000000000000000000000000e0a8f643",
             "logIndex": 108,
             "topics": [
@@ -275,7 +268,6 @@ TEST[DATE|TIME] Format:  json
               },
               "name": "Transfer"
             },
-            "compressedLog": "{name:Transfer|inputs:{_amount:3769169475|_from:0x3dfd23a6c5e8bbcfc9581d2e864a68feb6a076d3|_to:0xd6ad7a6750a7593e092a9b218d66c0a814a3436e}}",
             "data": "0x00000000000000000000000000000000000000000000000000000000e0a8f643",
             "logIndex": 110,
             "topics": [
@@ -305,7 +297,6 @@ TEST[DATE|TIME] Format:  json
               },
               "name": "Redeem"
             },
-            "compressedLog": "{name:Redeem|inputs:{_from:0xd6ad7a6750a7593e092a9b218d66c0a814a3436e|_fromBalanceIncrease:11025506|_fromIndex:1014121593306210030440419359|_value:3769169475}}",
             "data": "0x00000000000000000000000000000000000000000000000000000000e0a8f6430000000000000000000000000000000000000000000000000000000000a83c6200000000000000000000000000000000000000000346dc99bb39ee4f2954101f",
             "logIndex": 112,
             "topics": [
@@ -323,7 +314,6 @@ TEST[DATE|TIME] Format:  json
               },
               "name": "Transfer"
             },
-            "compressedLog": "{name:Transfer|inputs:{_amount:5032355925|_from:0xd6ad7a6750a7593e092a9b218d66c0a814a3436e|_to:0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51}}",
             "data": "0x000000000000000000000000000000000000000000000000000000012bf3a855",
             "logIndex": 113,
             "topics": [
@@ -342,7 +332,6 @@ TEST[DATE|TIME] Format:  json
               },
               "name": "Transfer"
             },
-            "compressedLog": "{name:Transfer|inputs:{_amount:5032355925|_from:0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51|_to:0x7a603dc3eb0f4e3883929ee15a3c86d2ac45f445}}",
             "data": "0x000000000000000000000000000000000000000000000000000000012bf3a855",
             "logIndex": 114,
             "topics": [
@@ -363,7 +352,6 @@ TEST[DATE|TIME] Format:  json
               },
               "name": "TokenExchangeUnderlying"
             },
-            "compressedLog": "{name:TokenExchangeUnderlying|inputs:{bought_id:1|buyer:0x7a603dc3eb0f4e3883929ee15a3c86d2ac45f445|sold_id:0|tokens_bought:5032355925|tokens_sold:5000000000000000000000}}",
             "data": "0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010f0cf064dd592000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000012bf3a855",
             "logIndex": 115,
             "topics": [
@@ -381,7 +369,6 @@ TEST[DATE|TIME] Format:  json
               },
               "name": "Approval"
             },
-            "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x7a603dc3eb0f4e3883929ee15a3c86d2ac45f445|_spender:0x1e0447b19bb6ecfdae1e4ae1694b0c3659614e4e}}",
             "data": "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
             "logIndex": 116,
             "topics": [
@@ -400,7 +387,6 @@ TEST[DATE|TIME] Format:  json
               },
               "name": "Transfer"
             },
-            "compressedLog": "{name:Transfer|inputs:{_amount:5032355925|_from:0x7a603dc3eb0f4e3883929ee15a3c86d2ac45f445|_to:0x1e0447b19bb6ecfdae1e4ae1694b0c3659614e4e}}",
             "data": "0x000000000000000000000000000000000000000000000000000000012bf3a855",
             "logIndex": 117,
             "topics": [
