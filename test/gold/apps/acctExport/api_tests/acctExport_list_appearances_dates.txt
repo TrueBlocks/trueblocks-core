@@ -6,14 +6,14 @@ list?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&firstBlock=100000&lastBloc
       "blockNumber": 202249,
       "transactionIndex": 0,
       "timestamp": 1441703356,
-      "date": "2015-09-08 09:09:16 UTC"
+      "date": "2015-09-08T09:09:16.000000Z"
     },
     {
       "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
       "blockNumber": 1501459,
       "transactionIndex": 2,
       "timestamp": 1463025233,
-      "date": "2016-05-12 03:53:53 UTC"
+      "date": "2016-05-12T03:53:53.000000Z"
     }
   ],
   "meta": {
