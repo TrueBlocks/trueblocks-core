@@ -39,8 +39,8 @@ func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) e
 		})
 
 		exportRange := paths.FileRange{First: opts.FirstBlock, Last: opts.LastBlock}
-		results := make([]types.SimpleAppearance, 0, mon.Count())
-		verboseResults := make([]types.VerboseAppearance, 0, mon.Count())
+		results := make([]types.RawAppearance, 0, mon.Count())
+		verboseResults := make([]types.SimpleAppearance, 0, mon.Count())
 		for record, app := range apps {
 			appRange := paths.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)}
 			if appRange.Intersects(exportRange) {
@@ -49,18 +49,18 @@ func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) e
 					if err != nil {
 						return err
 					}
-					s := types.VerboseAppearance{
-						Address:          mon.GetAddrStr(),
+					s := types.SimpleAppearance{
+						Address:          mon.Address,
 						BlockNumber:      app.BlockNumber,
 						TransactionIndex: app.TransactionId,
 						Timestamp:        ts,
-						Date:             gostradamus.FromUnixTimestamp(int64(ts)),
+						Date:             gostradamus.FromUnixTimestamp(int64(ts)).String(),
 					}
 					if uint64(record+1) >= opts.FirstRecord && (opts.MaxRecords == 250 || uint64(len(verboseResults)) < opts.MaxRecords) {
 						verboseResults = append(verboseResults, s)
 					}
 				} else {
-					s := types.SimpleAppearance{
+					s := types.RawAppearance{
 						Address:          mon.GetAddrStr(),
 						BlockNumber:      app.BlockNumber,
 						TransactionIndex: app.TransactionId,
