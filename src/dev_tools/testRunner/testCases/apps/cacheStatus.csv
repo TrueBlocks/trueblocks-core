@@ -33,7 +33,7 @@ local   ,both ,fast  ,config ,apps/cacheStatus ,mode_all            ,y    ,modes
 on      ,both ,fast  ,config ,apps/cacheStatus ,config_bad          ,y    ,modes = show & module = config
 on      ,both ,fast  ,config ,apps/cacheStatus ,three               ,y    ,modes = show & module = abis & module = caches & module = monitors & types = slurps
 on      ,both ,fast  ,config ,apps/cacheStatus ,items_abis          ,y    ,details & modes = show & module = abis
-on      ,both ,fast  ,config ,apps/cacheStatus ,items_slurps        ,y    ,details & modes = show & module = caches & types = slurps
+local   ,both ,fast  ,config ,apps/cacheStatus ,items_slurps        ,y    ,details & modes = show & module = caches & types = slurps
 on      ,both ,fast  ,config ,apps/cacheStatus ,items_scrap_mon     ,y    ,details & modes = show & module = index & first_block = 1000000 & last_block = 2200000
 on      ,both ,fast  ,config ,apps/cacheStatus ,report              ,n    ,report & fmt = txt
 on      ,both ,fast  ,config ,apps/cacheStatus ,report_json         ,y    ,report & fmt = json
