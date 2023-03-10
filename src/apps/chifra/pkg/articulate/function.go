@@ -47,7 +47,21 @@ func ArticulateArguments(args abi.Arguments, data string, topics []common.Hash, 
 	nameToIndexed := make(map[string]abi.Argument)
 	indexed := make(abi.Arguments, 0, len(args))
 	nonIndexed := make(abi.Arguments, 0, len(args))
-	for index, arg := range args {
+
+	// In some cases, `data` can be too short, because only some values are present there.
+	// See: https://github.com/TrueBlocks/trueblocks-core/issues/1366
+	dataLen := len(data) * 4
+	nonIndexedSize := 0
+	for _, nonIndexedArg := range args.NonIndexed() {
+		nonIndexedSize += nonIndexedArg.Type.Size
+	}
+
+	for i := 0; i < len(args); i++ {
+		index := i
+		if dataLen < nonIndexedSize {
+			fixFalseNonIndexedArgument(&args[i], dataLen)
+		}
+		arg := args[i]
 		argNameToIndex[arg.Name] = index
 		if arg.Indexed {
 			indexed = append(indexed, arg)
@@ -57,18 +71,6 @@ func ArticulateArguments(args abi.Arguments, data string, topics []common.Hash, 
 		nonIndexed = append(nonIndexed, arg)
 	}
 
-	// In some cases, `data` can be too short, because only some values are present there.
-	// See: https://github.com/TrueBlocks/trueblocks-core/issues/1366
-	nonIndexedLen := len(nonIndexed)
-	valueByteSize := 32
-	if missing := len(dataBytes) - (nonIndexedLen * valueByteSize); missing < 0 {
-		// TODO(articulation): this code breaks getTrans_revert_not_err test
-		nv := make([]byte, missing*-1, nonIndexedLen*valueByteSize)
-		dataBytes = append(
-			nv,
-			dataBytes...,
-		)
-	}
 	unpacked, err := args.Unpack(dataBytes)
 	if err != nil {
 		return
@@ -117,6 +119,18 @@ func ArticulateArguments(args abi.Arguments, data string, topics []common.Hash, 
 	return
 }
 
+// fixFalseNonIndexedArgument turns false non-indexed argument to indexed one
+func fixFalseNonIndexedArgument(arg *abi.Argument, dataLen int) {
+	if arg.Indexed {
+		return
+	}
+
+	if dataLen == arg.Type.Size {
+		return
+	}
+	arg.Indexed = true
+}
+
 func formatValue(argType *abi.Type, value any) (result any, err error) {
 	switch argType.T {
 	case abi.TupleTy:
@@ -163,9 +177,9 @@ func formatValue(argType *abi.Type, value any) (result any, err error) {
 		// using strings only should make it easier for the consumers.
 		result = fmt.Sprint(value)
 	case abi.BoolTy:
-		fallthrough
-	case abi.BytesTy:
 		result = value
+	case abi.BytesTy:
+		result = fmt.Sprintf("0x%x", value)
 	case abi.FunctionTy:
 		item, ok := value.([]byte)
 		if ok {
@@ -176,7 +190,13 @@ func formatValue(argType *abi.Type, value any) (result any, err error) {
 	case abi.FixedBytesTy:
 		result = articulateFixedBytes(argType, value)
 	case abi.AddressTy:
-		fallthrough
+		addr, ok := value.(common.Address)
+		if !ok {
+			result = fmt.Sprint(value)
+			return
+		}
+		ourAddr := types.HexToAddress(addr.Hex())
+		result = ourAddr.Hex()
 	case abi.HashTy:
 		result = strings.ToLower(fmt.Sprint(value))
 	default:
