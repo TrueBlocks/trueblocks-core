@@ -121,7 +121,6 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 				articulatedTrace["stateMutability"] = s.ArticulatedTrace.StateMutability
 			}
 			model["articulatedTrace"] = articulatedTrace
-			model["compressedTrace"] = MakeCompressed(articulatedTrace)
 		}
 	} else {
 		to := hexutil.Encode(s.Action.To.Bytes())
@@ -132,9 +131,6 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 		model["blockNumber"] = s.BlockNumber
 		model["transactionIndex"] = s.TransactionIndex
 		model["error"] = s.Error
-		if s.ArticulatedTrace != nil && extraOptions["articulate"] == true {
-			model["compressedTrace"] = s.CompressedTrace
-		}
 		model["timestamp"] = s.Timestamp
 		if s.Action != nil {
 			model["action::callType"] = s.Action.CallType
@@ -161,10 +157,10 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 			model["result::gasUsed"] = "0"
 			model["result::output"] = ""
 		}
+
+		model["compressedTrace"] = ""
 		if s.ArticulatedTrace != nil {
 			model["compressedTrace"] = s.CompressedTrace
-		} else {
-			model["compressedTrace"] = ""
 		}
 	}
 	// EXISTING_CODE
