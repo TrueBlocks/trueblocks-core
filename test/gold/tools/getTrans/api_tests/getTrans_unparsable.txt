@@ -143,7 +143,6 @@ transactions?transactions=12596470.26&articulate&fmt=json
             "articulatedLog": {
               "inputs": {
                 "_amount": "5782348469290000000000",
-                "_from": "0x0000000000000000000000000000000000000000",
                 "_to": "0xbb2e790ec118881de8afcc55f16c203efa8e3c51"
               },
               "name": "Transfer"

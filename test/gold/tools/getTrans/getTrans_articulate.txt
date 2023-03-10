@@ -83,7 +83,8 @@ TEST[DATE|TIME] Format:  json
         "inputs": {
           "_key": "1"
         },
-        "name": "cancelExistingRequest"
+        "name": "cancelExistingRequest",
+        "outputs": null
       },
       "blockHash": "0x9a06b1e8e7249a36a5e532997882429805c7a6510e91b05fd9b5ad6e367acb13",
       "blockNumber": 6687987,
@@ -141,7 +142,8 @@ TEST[DATE|TIME] Format:  json
             "inputs": {
               "_key": "1"
             },
-            "name": "cancelExistingRequest"
+            "name": "cancelExistingRequest",
+            "outputs": null
           },
           "blockHash": "0x9a06b1e8e7249a36a5e532997882429805c7a6510e91b05fd9b5ad6e367acb13",
           "blockNumber": 6687987,
@@ -166,10 +168,8 @@ TEST[DATE|TIME] Format:  json
           "targetFork": "0x167a9333bf582556f35bd4d16a7e80e191aa6476",
           "targetNoFork": "0x571b7b69829ce2568b9bc3d32eaf7405dab76b21"
         },
-        "name": "split",
-        "outputs": {
-          "ret_0": true
-        }
+        "name": "split0",
+        "outputs": null
       },
       "blockHash": "0xcd4dbd459893241b0c21c91d64b445b1eb0579f7341afd17e7b797795a7f1d7e",
       "blockNumber": 2001002,
@@ -237,6 +237,7 @@ TEST[DATE|TIME] Format:  json
             "value": "0"
           },
           "articulatedTrace": {
+            "inputs": null,
             "name": "forked",
             "outputs": {
               "val_0": true

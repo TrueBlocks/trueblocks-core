@@ -213,7 +213,7 @@ TEST[DATE|TIME] Format:  json
             "inputs": {
               "owner": "0xc14830e53aa344e8c14603a91229a0b925b0b262"
             },
-            "name": "balanceOf",
+            "name": "balanceOf1",
             "outputs": {
               "ret_0": "0"
             }
@@ -281,7 +281,7 @@ TEST[DATE|TIME] Format:  json
             "inputs": {
               "owner": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a"
             },
-            "name": "balanceOf",
+            "name": "balanceOf1",
             "outputs": {
               "ret_0": "100000000"
             }
@@ -348,7 +348,7 @@ TEST[DATE|TIME] Format:  json
             "inputs": {
               "owner": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a"
             },
-            "name": "balanceOf",
+            "name": "balanceOf1",
             "outputs": {
               "ret_0": "100000000"
             }

@@ -23,7 +23,7 @@ TEST[DATE|TIME] Format:  json
             },
             "srcAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
             "srcAmount": "5782348469290000000000",
-            "user": "0x0000000000000000000000000000000000000000",
+            "user": "0x0",
             "wrapper": "0x71c8dc1d6315a48850e88530d18d3a97505d2065",
             "wrapperData": "0x00"
           },
@@ -146,7 +146,6 @@ TEST[DATE|TIME] Format:  json
             "articulatedLog": {
               "inputs": {
                 "_amount": "5782348469290000000000",
-                "_from": "0x0000000000000000000000000000000000000000",
                 "_to": "0xbb2e790ec118881de8afcc55f16c203efa8e3c51"
               },
               "name": "Transfer"

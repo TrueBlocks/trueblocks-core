@@ -56,8 +56,8 @@ transactions?transactions=0xd886ab84df63e4eeb3ea07ccf12fa1f752afdc4d7b82ab4d71c9
             "flags": "4",
             "guaranteedAmount": "7867805708549270924568",
             "minReturnAmount": "7631771537292792796830",
-            "permit": "",
-            "referrer": "0x0000000000000000000000000000000000000000",
+            "permit": "0x",
+            "referrer": "0x0",
             "srcReceiver": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71",
             "srcToken": "0x5732046a883704404f284ce41ffadd5b007fd668"
           }
@@ -381,7 +381,6 @@ transactions?transactions=0xd886ab84df63e4eeb3ea07ccf12fa1f752afdc4d7b82ab4d71c9
                 "dstToken": "0x6b175474e89094c44da98b954eedeac495271d0f",
                 "guaranteedAmount": "7867805708549270924568",
                 "minReturnAmount": "7631771537292792796830",
-                "referrer": "0x0000000000000000000000000000000000000000",
                 "returnAmount": "7867805708549270924568",
                 "sender": "0x00de4b13153673bcae2616b67bf822500d325fc3",
                 "spentAmount": "114395560000000000000000",

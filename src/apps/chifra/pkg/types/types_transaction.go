@@ -181,7 +181,6 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 						"inputs": inputModels,
 					}
 					logModel["articulatedLog"] = articulatedLog
-					logModel["compressedLog"] = MakeCompressed(articulatedLog)
 				}
 				logs = append(logs, logModel)
 			}
@@ -212,8 +211,6 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 			if format == "json" {
 				model["articulatedTx"] = articulatedTx
 			}
-			// TODO: This should be a method on Function
-			model["compressedTx"] = MakeCompressed(articulatedTx)
 		} else {
 			if s.Message != "" {
 				model["message"] = s.Message
