@@ -211,9 +211,9 @@ TEST[DATE|TIME] Format:  json
           },
           "articulatedTrace": {
             "inputs": {
-              "who": "0xc14830e53aa344e8c14603a91229a0b925b0b262"
+              "owner": "0xc14830e53aa344e8c14603a91229a0b925b0b262"
             },
-            "name": "balanceOf",
+            "name": "balanceOf0",
             "outputs": {
               "ret_0": "0"
             }
@@ -244,13 +244,12 @@ TEST[DATE|TIME] Format:  json
           },
           "articulatedTrace": {
             "inputs": {
-              "_owner": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28"
+              "owner": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28"
             },
-            "name": "balanceOf",
+            "name": "balanceOf0",
             "outputs": {
-              "balance": "0"
-            },
-            "stateMutability": "view"
+              "ret_0": "0"
+            }
           },
           "blockHash": "0xd2b9c8119a1e615046cd83abe333c6cf2c3cfb2773149911339c67ab660c1b06",
           "blockNumber": 6876231,
@@ -279,9 +278,9 @@ TEST[DATE|TIME] Format:  json
           },
           "articulatedTrace": {
             "inputs": {
-              "who": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a"
+              "owner": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a"
             },
-            "name": "balanceOf",
+            "name": "balanceOf0",
             "outputs": {
               "ret_0": "100000000"
             }
@@ -346,9 +345,9 @@ TEST[DATE|TIME] Format:  json
           },
           "articulatedTrace": {
             "inputs": {
-              "who": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a"
+              "owner": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a"
             },
-            "name": "balanceOf",
+            "name": "balanceOf0",
             "outputs": {
               "ret_0": "100000000"
             }

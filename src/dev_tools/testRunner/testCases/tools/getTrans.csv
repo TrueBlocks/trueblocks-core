@@ -74,7 +74,6 @@ on       ,both ,fast  ,transactions ,tools/getTrans ,failed_recon_1           ,y
 on       ,both ,fast  ,transactions ,tools/getTrans ,failed_recon_2           ,y    ,transactions = 0xf9a11aed09a4be208539a261d8c79567ba9918b4c4e577400ac39b64350b45fd & fmt = json & account_for = 0xf503017d7baf7fbc0fff7492b751025c6a78179b
 on       ,both ,fast  ,transactions ,tools/getTrans ,bad_hash                 ,y    ,transactions = 0x0012
 
-on   ,cmd  ,slow  ,transactions ,tools/getTrans ,articulate               ,y    ,transactions = 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12 & articulate & fmt = json & traces
 on   ,cmd  ,medi  ,transactions ,tools/getTrans ,articulate_arrays        ,y    ,transactions = 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f & traces & articulate & fmt = json
 
 on   ,both ,slow  ,transactions ,tools/getTrans ,old_parsing_bug_1        ,y    ,transactions = 0xfa62ab036f36b4755bfa0d6e3e641d08daa7e41e95b0c1f2246485702319efb8 & fmt = json & articulate
@@ -90,11 +89,9 @@ on   ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_5           ,y    
 on   ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_6           ,y    ,transactions = 0xc12685b2f235e540892f709b09aa5b5e552a328097550b13964aa26609e20ad3 & articulate
 on   ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_7           ,n    ,transactions = 0xf626a4fe94e1c4fb207fad62b1cd8164ba7ac83bad73585a60e8e3bd2a4576bb & articulate & fmt = csv
 on   ,both ,fast  ,transactions ,tools/getTrans ,unparsable               ,y    ,transactions = 12596470.26 & articulate & fmt = json
-on   ,both ,slow  ,transactions ,tools/getTrans ,broken_unparseable       ,y    ,transactions = 0xd886ab84df63e4eeb3ea07ccf12fa1f752afdc4d7b82ab4d71c95adae1d86b1f & fmt = json & articulate
 
 on       ,both ,slow  ,transactions ,tools/getTrans ,issue_1583               ,y    ,transactions = 0x2f83088fa87f6054779a5511ec4f6b64f1e773e9bd7ec97956d6e04910d59303 & articulate & fmt = json
 on   ,both ,slow  ,transactions ,tools/getTrans ,issue_1366               ,y    ,transactions = 0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532ddc717ffd0abe & fmt = json & traces & articulate
-on   ,both ,fast  ,transactions ,tools/getTrans ,revert_not_err           ,y    ,transactions = 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c & articulate & fmt = json & traces
 
 # These work but are very slow
 local    ,both ,fast  ,transactions ,tools/getTrans ,multi_articulate         ,y    ,transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json
@@ -120,3 +117,12 @@ local    ,both ,fast  ,transactions ,tools/getTrans ,nav_prev1                ,n
 local    ,both ,fast  ,transactions ,tools/getTrans ,nav_prev2                ,n    ,transactions = 1001001.0:prev & fmt = txt & no_header
 local    ,both ,fast  ,transactions ,tools/getTrans ,nav_next1                ,n    ,transactions = 1001001.2:next & fmt = txt
 local    ,both ,fast  ,transactions ,tools/getTrans ,nav_next2                ,n    ,transactions = 1001001.1:next & fmt = txt
+
+# related to 0x159cf1e9ae58211b588f5e3bf1d7e423952d959b
+broken   ,cmd  ,slow  ,transactions ,tools/getTrans ,articulate               ,y    ,transactions = 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12 & articulate & fmt = json & traces
+
+# broken when run remotely
+broken   ,both ,slow  ,transactions ,tools/getTrans ,broken_unparseable       ,y    ,transactions = 0xd886ab84df63e4eeb3ea07ccf12fa1f752afdc4d7b82ab4d71c95adae1d86b1f & fmt = json & articulate
+
+# weird additional number added by Geth
+broken   ,both ,fast  ,transactions ,tools/getTrans ,revert_not_err           ,y    ,transactions = 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c & articulate & fmt = json & traces
