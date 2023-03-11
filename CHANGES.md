@@ -67,7 +67,7 @@ This is a major release focusing mostly on the continued porting of the old C++ 
 **chifra abis**
 
 - Removed the `--sol` option. Use something like `forge` instead.
-- Added the `--clean` option to remove empty or unused abi files from the cache.
+- Added the `--clean` option to remove empty or unused abi files from the cache. Note that removing empty ABI files is not yet implemented.
 - Added the `--encode` option to generate a 32-byte encoding for the given canonical function or event signature.
 
 **chifra blocks**
