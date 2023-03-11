@@ -18,7 +18,6 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
-// TODO: Type is probably not a real field with real values. Might be old and unused in the node
 // EXISTING_CODE
 
 type RawTransaction struct {
@@ -124,7 +123,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 	if format == "json" {
 		model["blockHash"] = s.BlockHash
 		model["nonce"] = s.Nonce
-		model["value"] = s.Value
+		model["value"] = s.Value.String()
 		model["gas"] = s.Gas
 
 		// TODO: this value could be created when RPC is queried and cached
@@ -138,15 +137,13 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		if s.IsError {
 			model["isError"] = s.IsError
 		}
-		model["receipt"] = s.Receipt
-		model["value"] = s.Value.String() // TODO: Why twice?
-		model["receipt"] = nil            // TODO: Why twice?
 
 		if showHidden {
 			model["datesh"] = date.Format("2006-01-02")
 			model["time"] = date.Format("15:04:05") + " UTC"
 		}
 
+		model["receipt"] = nil
 		if s.Receipt != nil {
 			contractAddress := s.Receipt.ContractAddress.Hex()
 

@@ -46,7 +46,6 @@ class CBaseNode {
     virtual bool getVisibleFields(CFieldDataArray& visibleFields) const;
 
   public:
-    // TODO(tjayrush): global data
     static CRuntimeClass classCBaseNode;
     static CBaseNode* createObject(void);
     virtual bool isDefault(const CBaseNode* test) const {

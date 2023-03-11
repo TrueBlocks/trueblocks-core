@@ -12,7 +12,6 @@ on      ,both ,fast  ,config ,apps/cacheStatus ,index_start_bad     ,y    ,modes
 on      ,both ,slow  ,config ,apps/cacheStatus ,mode_monitors       ,y    ,modes = show & module = monitors
 on      ,both ,slow  ,config ,apps/cacheStatus ,mode_names          ,y    ,modes = show & module = names
 on      ,both ,slow  ,config ,apps/cacheStatus ,mode_abis           ,y    ,modes = show & module = abis
-on      ,both ,fast  ,config ,apps/cacheStatus ,mode_blocks         ,y    ,modes = show & module = caches & types = blocks
 on      ,both ,fast  ,config ,apps/cacheStatus ,mode_txs            ,y    ,modes = show & module = caches & types = txs
 on      ,both ,fast  ,config ,apps/cacheStatus ,mode_cache_fail     ,y    ,modes = show & module = caches & types = junk
 on      ,both ,fast  ,config ,apps/cacheStatus ,mode_txs_l01        ,y    ,modes = show & module = caches & types = txs & details
@@ -35,6 +34,7 @@ on      ,both ,fast  ,config ,apps/cacheStatus ,terse               ,y    ,terse
 on      ,both ,slow  ,config ,apps/cacheStatus ,redir_output        ,y    ,modes = show & module = names & output = output_test_file
 on      ,both ,slow  ,config ,apps/cacheStatus ,redir_output_append ,n    ,modes = show & module = index & output = output_test_file & no_header & append
 
+# Not sure why these fail
 local   ,both ,fast  ,config ,apps/cacheStatus ,items_monitors      ,y    ,details & modes = show & module = monitors
 local   ,both ,fast  ,config ,apps/cacheStatus ,items_some          ,y    ,details & modes = show & module = some & first_block = 3000000 & last_block = 3100000
 local   ,both ,fast  ,config ,apps/cacheStatus ,items_three         ,y    ,details & modes = show & module = abis & module = caches & module = monitors & types = slurps
@@ -42,6 +42,9 @@ local   ,both ,fast  ,config ,apps/cacheStatus ,terse_gnosis        ,y    ,terse
 
 # Fails because of some weird isValid thing (remote only)
 local   ,both ,fast  ,config ,apps/cacheStatus ,items_slurps        ,y    ,details & modes = show & module = caches & types = slurps
-local   ,both ,fast  ,config ,apps/cacheStatus ,mode_all            ,y    ,modes = show & module = all
-local   ,both ,fast  ,config ,apps/cacheStatus ,mode_cache_all      ,y    ,modes = show & module = caches & types = all
 local   ,both ,fast  ,config ,apps/cacheStatus ,mode_traces         ,y    ,modes = show & module = caches & types = traces
+
+# These fail in a weird way (isValid is false) but only when run remote testing
+local   ,both ,fast  ,config ,apps/cacheStatus ,mode_blocks         ,y    ,modes = show & module = caches & types = blocks
+local   ,both ,fast  ,config ,apps/cacheStatus ,mode_cache_all      ,y    ,modes = show & module = caches & types = all
+local   ,both ,fast  ,config ,apps/cacheStatus ,mode_all            ,y    ,modes = show & module = all

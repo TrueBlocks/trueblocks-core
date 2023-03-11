@@ -87,27 +87,3 @@ bool visitTransaction(CTransaction& trans, void* data) {
     }
     return true;
 }
-
-/*
-TODO: One user (thanks Matt!) pointed to a very common use case:
-TODO: Give me all the events with topic emitted by address
-TODO: He uses ethers.js and it returns the query very quickly (less than a minute for a very popular address).
-TODO: TrueBlocks takes hours when using chifra export --emitter <address>. This is because TrueBlocks does not use the
-TODO: filtering function the node provides for eth_getLogs. We kind of knew this path was slow for us, but have been
-TODO: ignoring it since we always query for full transactional details and/or traces, but it is a very clear primary use
-TODO: case for most people. We should bite the bullet and implement eth_getLogs with filtering. chifra logs pretty easy
-TODO: speedup when querying logs hasno dependencies
-TODO:
-TODO:
-TODO: ethers.js code:
-TODO: const pairCreatedAbi = ["event PairCreated(address indexed token0, address indexed token1, address pair, uint)"];
-TODO: const provider = new JsonRpcProvider(process.env.ETH_RPC_URL);
-TODO: const factory = new Contract(UNISWAP_V2_FACTORY_ADDRESS, pairCreatedAbi, provider);
-TODO: const pairCreatedFilter = factory.filters.PairCreated();
-TODO: const logs = await factory.queryFilter(pairCreatedFilter, 10000834, 10500000);
-TODO: const parsedLogs = logs.map(factory.interface.parseLog);
-TODO: 10000834, 10500000 is the block range
-TODO: You can leave out the 10500000 input if you want to query until the current block
-TODO: Version 2.0 of the Uniswap Factory: 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
-TODO: Version 3.0: 0x1f98431c8ad98523631ae4a59f267346ea31f984
-*/

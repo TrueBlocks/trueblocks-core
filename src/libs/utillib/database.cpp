@@ -311,7 +311,6 @@ void CSharedResource::WriteLine(const string_q& str) {
 }
 
 //-----------------------------------------------------------------------
-// TODO(tjayrush): global data
 static uint32_t sectionLocks = 0;
 void lockSection(void) {
     sectionLocks++;
@@ -332,7 +331,6 @@ static bool isSectionLocked(void) {
 
 //-----------------------------------------------------------------------
 size_t quitCount(size_t s) {
-    // TODO(tjayrush): global data
     // This is global data, and therefore not thread safe, but it's okay since
     // we want to count a quit request no matter which thread it's from.
     static size_t g_QuitCount = 0;
@@ -407,7 +405,6 @@ string_q manageRemoveList(const string_q& filename) {
     mutex aMutex;
     lock_guard<mutex> lock(aMutex);
 
-    // TODO(tjayrush): global data
     static string_q theList;
     if (filename == "clear") {
         theList = "";

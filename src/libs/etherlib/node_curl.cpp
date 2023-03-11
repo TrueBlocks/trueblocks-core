@@ -91,7 +91,6 @@ CURLCALLBACKFUNC CCurlContext::setCurlCallback(CURLCALLBACKFUNC func) {
 
 //-------------------------------------------------------------------------
 CURL* CCurlContext::getCurl(void) {
-    // TODO(tjayrush): global data
     if (!curlHandle) {
         curlHandle = curl_easy_init();
         if (!curlHandle) {

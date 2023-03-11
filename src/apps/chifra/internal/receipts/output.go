@@ -11,7 +11,6 @@ package receiptsPkg
 // EXISTING_CODE
 import (
 	"net/http"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -75,19 +74,4 @@ func (opts *ReceiptsOptions) IsPorted() (ported bool) {
 }
 
 // EXISTING_CODE
-// TODO: create EXISTING CODE block at the beginning of this file to keep constants ther
-var byzantiumBlockNumber = 4370000
-
-// TODO: remove this function when rewrite to Go is completed. It is only used to send
-// pre-Byzantium transactions to C++ version
-func getReceiptsCmdLine(opts *ReceiptsOptions, txs []string) string {
-	options := ""
-	if opts.Articulate {
-		options += " --articulate"
-	}
-
-	options += " " + strings.Join(txs, " ")
-	return options
-}
-
 // EXISTING_CODE

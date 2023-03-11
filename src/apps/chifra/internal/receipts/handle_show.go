@@ -11,7 +11,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum"
 )
 
@@ -20,13 +19,6 @@ func (opts *ReceiptsOptions) HandleShow() error {
 	abiMap := make(abi.AbiInterfaceMap)
 	loadedMap := make(map[types.Address]bool)
 	chain := opts.Globals.Chain
-
-	clientVersion, err := rpcClient.GetVersion(opts.Globals.Chain)
-	if err != nil {
-		return err
-	}
-	erigonUsed := utils.IsClientErigon(clientVersion)
-
 	ctx, cancel := context.WithCancel(context.Background())
 
 	// Note: Make sure to add an entry to enabledForCmd in src/apps/chifra/pkg/output/helpers.go
@@ -44,16 +36,6 @@ func (opts *ReceiptsOptions) HandleShow() error {
 			}
 
 			for _, tx := range txList {
-				if tx.BlockNumber < uint32(byzantiumBlockNumber) && !erigonUsed {
-					err = opts.Globals.PassItOn("getReceipts", opts.Globals.Chain, getReceiptsCmdLine(opts, []string{rng.Orig}), opts.getEnvStr())
-					if err != nil {
-						errorChan <- err
-						cancel()
-						return
-					}
-					continue
-				}
-
 				// TODO(cache): Can this be hidden behind the GetTransactionReceipt interface. No reason
 				// TODO(cache): for this calling code to know the data is in the cache.
 				// Try to load receipt from cache
