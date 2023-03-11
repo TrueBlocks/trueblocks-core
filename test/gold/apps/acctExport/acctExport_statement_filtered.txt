@@ -1,5 +1,6 @@
-chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --statements --first_block 8860513 --last_block 8860531 --ether --asset 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 --fmt json
+chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --first_block 8860513 --last_block 8860531 --ether --asset 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 --fmt json
 TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Statements:  true
 TEST[DATE|TIME] Asset:  [0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359]
 TEST[DATE|TIME] FirstBlock:  8860513
@@ -7,102 +8,65 @@ TEST[DATE|TIME] LastBlock:  8860531
 TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] Format:  json
 { "data": [
-TIME ~ CLOCK - <INFO>  : Calling a contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 8860512 prior to its deployment 10000835
-TIME ~ CLOCK - <INFO>  : doEthCall in CUniPrice::findPair returned false
-TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8860512...: 
-TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8860512 at four-byte 0x59e02dd7 returned 0x000000000000000000000000000000000000000000000009ece258f2964500000000000000000000000000000000000000000000000000000000000000000001
-
-level: 1
-readOffset: 0
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = <>
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...0000000000000009ece258f296450000 <=o <-r
-  1 (0x020) 0000000000000000...00000000000000000000000000000001
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
-  1: bool val_1 = <>
-
-level: 1
-readOffset: 1
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...0000000000000009ece258f296450000 <=o
-  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
-  1: bool val_1 = true
-params.size: 2
-  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
-  1: bool val_1 = true
-==================================================
-
-TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8860513...: 
-TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8860513 at four-byte 0x59e02dd7 returned 0x000000000000000000000000000000000000000000000009ece258f2964500000000000000000000000000000000000000000000000000000000000000000001
-
-level: 1
-readOffset: 0
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = <>
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...0000000000000009ece258f296450000 <=o <-r
-  1 (0x020) 0000000000000000...00000000000000000000000000000001
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
-  1: bool val_1 = <>
-
-level: 1
-readOffset: 1
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...0000000000000009ece258f296450000 <=o
-  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
-  1: bool val_1 = true
-params.size: 2
-  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
-  1: bool val_1 = true
-==================================================
-
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         SAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a
+TIME ~ CLOCK - <INFO>  :    blockNumber:         8860513
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    85
+TIME ~ CLOCK - <INFO>  :    logIndex:            84
+TIME ~ CLOCK - <INFO>  :    begBal:              7500000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountOut:           500000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            500000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -500000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              7000000000000000000000
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 8860512 prevBlock: 8860512 transfer.blockNumber: 8860513 nextBlock: 8860529
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    blks:                [8860513] 1 1
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         SAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a
+TIME ~ CLOCK - <INFO>  :    blockNumber:         8860513
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    85
+TIME ~ CLOCK - <INFO>  :    logIndex:            84
+TIME ~ CLOCK - <INFO>  :    begBal:              7500000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountOut:           500000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            500000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -500000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              7000000000000000000000
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 {
   "blockNumber": 8860513,
   "transactionIndex": 85,
+  "logIndex": 84,
   "transactionHash": "0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a",
   "timestamp": 1572720150,
   "date": "2019-11-02 18:42:30 UTC",
-  "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-  "sender": "0x0",
-  "recipient": "0x0",
   "assetAddr": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
   "assetSymbol": "SAI",
   "decimals": 18,
-  "prevAppBlk": 8860512,
-  "prevBal": "7500.0000000",
+  "spotPrice": 1.00000,
+  "priceSource": "stable-coin",
+  "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+  "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+  "recipient": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
   "begBal": "7500.0000000",
-  "begBalDiff": "",
   "amountNet": "-500.0000000",
   "endBal": "7000.0000000",
-  "endBalCalc": "7000.0000000",
-  "endBalDiff": "",
+  "encoding": "0x4c4316c7",
+  "signature": "{name:donate|inputs:{_amount:500000000000000000000|giverId:1945|receiverId:1402|token:0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359}}",
+  "reconciliationType": "regular-token",
+  "reconciled": true,
   "totalIn": "",
   "amountIn": "",
   "internalIn": "",
@@ -113,109 +77,74 @@ params.size: 2
   "minerUncleRewardIn": "",
   "prefundIn": "",
   "totalOut": "500.0000000",
-  "totalOutLessGas": "500.0000000",
   "amountOut": "500.0000000",
   "internalOut": "",
   "selfDestructOut": "",
-  "gasCost": "",
-  "spotPrice": 1.00000,
-  "priceSource": "stable-coin",
-  "reconciled": true
+  "gasOut": "",
+  "totalOutLessGas": "500.0000000",
+  "prevAppBlk": 8860512,
+  "prevBal": "7500.0000000",
+  "begBalDiff": "",
+  "endBalDiff": "",
+  "endBalCalc": "7000.0000000"
 }
-TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8860529...: 
-TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8860529 at four-byte 0x59e02dd7 returned 0x000000000000000000000000000000000000000000000009ece258f2964500000000000000000000000000000000000000000000000000000000000000000001
-
-level: 1
-readOffset: 0
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = <>
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...0000000000000009ece258f296450000 <=o <-r
-  1 (0x020) 0000000000000000...00000000000000000000000000000001
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
-  1: bool val_1 = <>
-
-level: 1
-readOffset: 1
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...0000000000000009ece258f296450000 <=o
-  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
-  1: bool val_1 = true
-params.size: 2
-  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
-  1: bool val_1 = true
-==================================================
-
-TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8860531...: 
-TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8860531 at four-byte 0x59e02dd7 returned 0x000000000000000000000000000000000000000000000009ece258f2964500000000000000000000000000000000000000000000000000000000000000000001
-
-level: 1
-readOffset: 0
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = <>
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...0000000000000009ece258f296450000 <=o <-r
-  1 (0x020) 0000000000000000...00000000000000000000000000000001
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
-  1: bool val_1 = <>
-
-level: 1
-readOffset: 1
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...0000000000000009ece258f296450000 <=o
-  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
-  1: bool val_1 = true
-params.size: 2
-  0: bytes32 val_0 = 0x000000000000000000000000000000000000000000000009ece258f296450000
-  1: bool val_1 = true
-==================================================
-
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         SAI
+TIME ~ CLOCK - <INFO>  :    hash:                0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124
+TIME ~ CLOCK - <INFO>  :    blockNumber:         8860531
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    152
+TIME ~ CLOCK - <INFO>  :    logIndex:            95
+TIME ~ CLOCK - <INFO>  :    begBal:              7000000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountOut:           7000000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            7000000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -7000000000000000000000
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 8860513 prevBlock: 8860513 transfer.blockNumber: 8860531 nextBlock: 18446744073709551615
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    blks:                [8860531] 1 1
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         SAI
+TIME ~ CLOCK - <INFO>  :    hash:                0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124
+TIME ~ CLOCK - <INFO>  :    blockNumber:         8860531
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    152
+TIME ~ CLOCK - <INFO>  :    logIndex:            95
+TIME ~ CLOCK - <INFO>  :    begBal:              7000000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountOut:           7000000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            7000000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -7000000000000000000000
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 , {
   "blockNumber": 8860531,
   "transactionIndex": 152,
+  "logIndex": 95,
   "transactionHash": "0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124",
   "timestamp": 1572720361,
   "date": "2019-11-02 18:46:01 UTC",
-  "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-  "sender": "0x0",
-  "recipient": "0x0",
   "assetAddr": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
   "assetSymbol": "SAI",
   "decimals": 18,
-  "prevAppBlk": 8860513,
-  "prevBal": "7000.0000000",
+  "spotPrice": 1.00000,
+  "priceSource": "stable-coin",
+  "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+  "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+  "recipient": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
   "begBal": "7000.0000000",
-  "begBalDiff": "",
   "amountNet": "-7000.0000000",
   "endBal": "",
-  "endBalCalc": "",
-  "endBalDiff": "",
+  "encoding": "0x4c4316c7",
+  "signature": "{name:donate|inputs:{_amount:7000000000000000000000|giverId:1946|receiverId:1402|token:0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359}}",
+  "reconciliationType": "regular-token",
+  "reconciled": true,
   "totalIn": "",
   "amountIn": "",
   "internalIn": "",
@@ -226,13 +155,15 @@ params.size: 2
   "minerUncleRewardIn": "",
   "prefundIn": "",
   "totalOut": "7000.0000000",
-  "totalOutLessGas": "7000.0000000",
   "amountOut": "7000.0000000",
   "internalOut": "",
   "selfDestructOut": "",
-  "gasCost": "",
-  "spotPrice": 1.00000,
-  "priceSource": "stable-coin",
-  "reconciled": true
+  "gasOut": "",
+  "totalOutLessGas": "7000.0000000",
+  "prevAppBlk": 8860513,
+  "prevBal": "7000.0000000",
+  "begBalDiff": "",
+  "endBalDiff": "",
+  "endBalCalc": ""
 }
 ] }

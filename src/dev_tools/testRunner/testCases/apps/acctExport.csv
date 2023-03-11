@@ -157,6 +157,9 @@ on      ,both ,fast  ,export   ,apps/acctExport ,transfer_fourbytes       ,y    
 on      ,both ,fast  ,export   ,apps/acctExport ,transfer_fourbytes_trace ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & max_records = 10 & fourbytes = 0xa9059cbb & traces & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,accounting_intra_tokens  ,y    ,addrs = 0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E & max_records = 3 & first_record = 684 & accounting & fmt = json & log_level = 10
 
+on      ,both ,fast  ,export   ,apps/acctExport ,statement_unfiltered     ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & statements & first_block = 8860513 & last_block = 8860531 & ether & fmt = json
+on      ,both ,fast  ,export   ,apps/acctExport ,statement_filtered       ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & statements & first_block = 8860513 & last_block = 8860531 & ether & asset = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 & fmt = json
+
 # correctly reports an error, but should report a n ot found error instead, it reports a not an integer error. first_block/last_block should accept hashes
 local   ,both ,fast  ,export   ,apps/acctExport ,block_not_found          ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
 
@@ -183,10 +186,6 @@ local   ,both ,fast  ,export   ,apps/acctExport ,statement_reverse        ,y    
 
 # not sure why this fails
 local   ,both ,slow  ,monitors ,apps/acctExport ,monitors_speed_test      ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & last_block = 7000000 & fmt = txt
-
-# test case fails due to first_block see #2535
-local   ,both ,fast  ,export   ,apps/acctExport ,statement_unfiltered     ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & statements & first_block = 8860513 & last_block = 8860531 & ether & fmt = json
-local   ,both ,fast  ,export   ,apps/acctExport ,statement_filtered       ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & statements & first_block = 8860513 & last_block = 8860531 & ether & asset = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 & fmt = json
 
 # reversed non-accounting does not work
 local   ,both ,fast  ,export   ,apps/acctExport ,reversed_not_reversed    ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & last_block = 8856511 & ether & max_records = 100 & fmt = json
