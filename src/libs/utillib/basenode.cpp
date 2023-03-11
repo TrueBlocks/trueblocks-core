@@ -27,7 +27,6 @@
 namespace qblocks {
 
 //--------------------------------------------------------------------------------
-// TODO(tjayrush): global data
 CRuntimeClass CBaseNode::classCBaseNode;
 static CBuiltIn _biBaseNode(&CBaseNode::classCBaseNode, "CBaseNode", sizeof(CBaseNode), NULL, NULL);
 vector<CBuiltIn> builtIns;  // Keeps track of all the classes that have beebn registered
@@ -107,7 +106,7 @@ bool CBaseNode::setValueByName(const string_q& fieldName, const string_q& fieldV
 //--------------------------------------------------------------------------------
 string_q CBaseNode::getKeyByName(const string_q& fieldName) const {
     if (expContext().quoteKeys)
-        return "\"" + substitute(fieldName, "_dict", "") + "\"" + ": ";
+        return "\"" + substitute(fieldName, "Dict", "") + "\"" + ": ";
     return fieldName + ": ";
 }
 
@@ -588,7 +587,7 @@ void CBaseNode::toJson(ostream& os) const {
             string_q nn = field.getName();
             string_q val = getValueByName(nn);
             bool isTuple = contains(val, "--tuple--");
-            bool isDict = contains(nn, "_dict");
+            bool isDict = endsWith(nn, "Dict");
             if (isTuple) {
                 replaceReverse(val, "--tuple--", "");  // hacky
                 val = trim(val, '\"');

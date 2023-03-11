@@ -180,7 +180,8 @@
     "outputs": [
       {
         "name": "storage ds",
-        "type": "DiamondStorage"
+        "internalType": "struct DiamondStorage",
+        "type": "tuple"
       }
     ],
     "signature": "diamondStorage()",

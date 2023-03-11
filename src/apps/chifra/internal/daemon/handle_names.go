@@ -15,11 +15,12 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func EditName(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
-	newName := NewNamedAddress()
+	newName := types.SimpleName{}
 	for k := range r.Form {
 		json.Unmarshal([]byte(k), &newName)
 	}
@@ -27,12 +28,12 @@ func EditName(w http.ResponseWriter, r *http.Request) {
 
 	// Do the actual call
 	cmd := exec.Command(config.GetPathToCommands("ethNames"), "--create")
-	cmd.Env = append(os.Environ(), "TB_NAME_ADDRESS="+newName.Address)
+	cmd.Env = append(os.Environ(), "TB_NAME_ADDRESS="+newName.Address.Hex())
 	cmd.Env = append(cmd.Env, "TB_NAME_NAME="+newName.Name)
 	cmd.Env = append(cmd.Env, "TB_NAME_TAG="+newName.Tags)
 	cmd.Env = append(cmd.Env, "TB_NAME_SOURCE="+newName.Source)
 	cmd.Env = append(cmd.Env, "TB_NAME_SYMBOL="+newName.Symbol)
-	cmd.Env = append(cmd.Env, "TB_NAME_DECIMALS="+newName.Decimals)
+	cmd.Env = append(cmd.Env, "TB_NAME_DECIMALS="+fmt.Sprintf("%d", newName.Decimals))
 	out, err := cmd.Output()
 	if err != nil {
 		log.Print("Error from server: ", err)
@@ -49,36 +50,6 @@ func EditName(w http.ResponseWriter, r *http.Request) {
 	} else {
 		w.WriteHeader(http.StatusOK)
 	}
-	fmt.Fprintf(w, "{ \"data\": [ "+newName.String()+"\n  ]\n}")
-}
-
-type NamedAddress struct {
-	Tags       string `json:"tags"`
-	Address    string `json:"address"`
-	Name       string `json:"name"`
-	Symbol     string `json:"symbol,omitempty"`
-	Source     string `json:"source"`
-	Decimals   string `json:"decimals,omitempty"`
-	Petname    string `json:"petname,omitempty"`
-	Deleted    bool   `json:"deleted,omitempty"`
-	IsCustom   bool   `json:"isCustom,omitempty"`
-	IsPrefund  bool   `json:"isPrefund,omitempty"`
-	IsContract bool   `json:"isContract,omitempty"`
-	IsErc20    bool   `json:"isErc20,omitempty"`
-	IsErc721   bool   `json:"isErc721,omitempty"`
-}
-
-func NewNamedAddress() NamedAddress {
-	ret := new(NamedAddress)
-	ret.Name = "none"
-	ret.Address = "none"
-	ret.Tags = "19-Unknown"
-	ret.Source = "EtherScan.io"
-	// ret.Petname = ""
-	return *ret
-}
-
-func (name *NamedAddress) String() string {
-	bytes, _ := json.MarshalIndent(name, "", "  ")
-	return string(bytes)
+	bytes, _ := json.MarshalIndent(newName, "", "  ")
+	fmt.Fprintf(w, "{ \"data\": [ "+string(bytes)+"\n  ]\n}")
 }

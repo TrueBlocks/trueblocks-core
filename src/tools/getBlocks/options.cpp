@@ -81,7 +81,7 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "--trace") {
             // clang-format off
-            return usage("the --trace option is deprecated, please use traces option instead");  // NOLINT
+            return usage("the --trace option is deprecated, please use --traces option instead");  // NOLINT
             // clang-format on
 
         } else if (arg == "-s" || arg == "--apps") {
@@ -197,10 +197,10 @@ bool COptions::parseArguments(string_q& command) {
         configureDisplay("getBlocks", "CTrace", STR_DISPLAY_TRACE);
 
     } else if (logs) {
-        configureDisplay("getBlocks", "CLogEntry", STR_DISPLAY_LOGENTRY);
-        manageFields("CLogEntry:topic0,topic1,topic2,topic3", FLD_HIDE);
+        configureDisplay("getBlocks", "CLog", STR_DISPLAY_LOG);
+        manageFields("CLog:topic0,topic1,topic2,topic3", FLD_HIDE);
         manageFields(
-            "CLogEntry:blocknumber,blockhash,transactionindex,transactionhash,timestamp,"
+            "CLog:blocknumber,blockhash,transactionindex,transactionhash,timestamp,"
             "logindex,address,data,compressedlog",
             FLD_SHOW);
         bool isText = expContext().exportFmt == TXT1 || expContext().exportFmt == CSV1;

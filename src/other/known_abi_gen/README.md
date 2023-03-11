@@ -5,8 +5,8 @@ This tool downloads repositories containing well-known smart contracts, unzips t
 compiles `.sol` files into combined ASTs and parses them to generate slices of `types.SimpleFunction`.
 Finally, it marshals the slices into JSON.
 
-TODO
-----
+TO DO
+-----
 
 We switched the tool to use `forge` (part of Foundry) instead of `solc`, as `forge` can automatically detect and fetch
 different `solc` versions. However, `forge` doesn't seem to produce combined AST (just separate AST files for each `.sol` input).

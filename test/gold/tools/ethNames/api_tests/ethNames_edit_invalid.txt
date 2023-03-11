@@ -1,4 +1,4 @@
-names?invalid&logLevel=10&fmt=json&expand
+names?invalid&fmt=json
 {
   "errors": [
     "Invalid key (invalid) in names route."

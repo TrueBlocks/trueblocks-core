@@ -11,7 +11,6 @@ package types
 // EXISTING_CODE
 import (
 	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 type BlockTransaction interface {
@@ -38,26 +37,26 @@ type RawBlock struct {
 	Size             string   `json:"size"`
 	StateRoot        string   `json:"stateRoot"`
 	Timestamp        string   `json:"timestamp"`
-	TransactionsRoot string   `json:"transactionsRoot"`
 	TotalDifficulty  string   `json:"totalDifficulty"`
 	Transactions     []any    `json:"transactions"`
+	TransactionsRoot string   `json:"transactionsRoot"`
 	Uncles           []string `json:"uncles"`
 	// SealFields       []string      `json:"sealFields"`
 }
 
 type SimpleBlock[Tx BlockTransaction] struct {
-	GasLimit      uint64         `json:"gasLimit"`
-	GasUsed       uint64         `json:"gasUsed"`
-	Hash          common.Hash    `json:"hash"`
-	BlockNumber   Blknum         `json:"blockNumber"`
-	ParentHash    common.Hash    `json:"parentHash"`
-	Miner         common.Address `json:"miner"`
-	Difficulty    uint64         `json:"difficulty"`
-	Finalized     bool           `json:"finalized"`
-	Timestamp     int64          `json:"timestamp"`
-	BaseFeePerGas Wei            `json:"baseFeePerGas"`
-	Transactions  []Tx           `json:"transactions"`
-	Uncles        []common.Hash  `json:"uncles"`
+	BaseFeePerGas Wei           `json:"baseFeePerGas"`
+	BlockNumber   uint64        `json:"blockNumber"`
+	Difficulty    uint64        `json:"difficulty"`
+	Finalized     bool          `json:"finalized"`
+	GasLimit      Gas           `json:"gasLimit"`
+	GasUsed       Gas           `json:"gasUsed"`
+	Hash          common.Hash   `json:"hash"`
+	Miner         Address       `json:"miner"`
+	ParentHash    common.Hash   `json:"parentHash"`
+	Timestamp     int64         `json:"timestamp"`
+	Transactions  []Tx          `json:"transactions"`
+	Uncles        []common.Hash `json:"uncles"`
 	raw           *RawBlock
 }
 
@@ -84,7 +83,7 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 		}
 	}
 
-	if extraOptions["txHashes"] == true {
+	if extraOptions["hashes"] == true {
 		txHashes := make([]string, 0, len(s.Transactions))
 		// Check what type Tx is
 		switch txs := any(s.Transactions).(type) {
@@ -117,19 +116,37 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
-		"blockNumber":   s.BlockNumber,
-		"timestamp":     s.Timestamp,
-		"hash":          s.Hash,
-		"parentHash":    s.ParentHash,
-		"miner":         hexutil.Encode(s.Miner.Bytes()),
-		"difficulty":    s.Difficulty,
-		"finalized":     s.Finalized,
-		"baseFeePerGas": s.BaseFeePerGas.Uint64(),
-		"gasLimit":      s.GasLimit,
 		"gasUsed":       s.GasUsed,
+		"gasLimit":      s.GasLimit,
+		"hash":          s.Hash,
+		"blockNumber":   s.BlockNumber,
+		"parentHash":    s.ParentHash,
+		"miner":         s.Miner.Hex(),
+		"difficulty":    s.Difficulty,
+		"timestamp":     s.Timestamp,
+		"baseFeePerGas": s.BaseFeePerGas.Uint64(),
+		"finalized":     s.Finalized,
 	}
 
 	order := []string{
+		"transactionsCnt",
+		"gasUsed",
+		"name",
+		"gasLimit",
+		"hash",
+		"blockNumber",
+		"parentHash",
+		"miner",
+		"difficulty",
+		"timestamp",
+		"baseFeePerGas",
+		"finalized",
+		"unclesCnt",
+	}
+
+	// EXISTING_CODE
+	// reorder
+	order = []string{
 		"blockNumber",
 		"timestamp",
 		"hash",
@@ -142,8 +159,6 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 		"gasUsed",
 	}
 
-	// EXISTING_CODE
-	// TODO: This (the whole distinction between json and not) is confused and inefficient
 	if format == "json" {
 		if extraOptions["list"] == true {
 			model["transactionsCnt"] = len(s.Transactions)

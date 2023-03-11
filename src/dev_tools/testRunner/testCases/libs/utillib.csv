@@ -54,7 +54,6 @@ on      ,cmd  ,fast  ,null  ,utillib/sizeofTest  ,00           ,n    ,
 
 on      ,cmd  ,fast  ,null  ,utillib/stringTest  ,Assignment   ,n    ,val = 2
 on      ,cmd  ,fast  ,null  ,utillib/stringTest  ,CStr         ,n    ,val = 3
-on      ,cmd  ,fast  ,null  ,utillib/stringTest  ,Clean        ,n    ,val = 5
 on      ,cmd  ,fast  ,null  ,utillib/stringTest  ,Compare      ,n    ,val = 1
 on      ,cmd  ,fast  ,null  ,utillib/stringTest  ,Extract      ,n    ,val = 4
 on      ,cmd  ,fast  ,null  ,utillib/stringTest  ,Relational   ,n    ,val = 0

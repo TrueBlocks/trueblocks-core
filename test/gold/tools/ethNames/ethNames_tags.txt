@@ -10,6 +10,8 @@ tags
 30-Contracts:Compound
 30-Contracts:Consensys
 30-Contracts:DAO Related
+30-Contracts:Humanity DAO
+30-Contracts:Kickback
 30-Contracts:Kyber Network
 30-Contracts:Moloch
 30-Contracts:Pasta
@@ -39,14 +41,5 @@ tags
 80-Malicious
 80-Malicious:DaoDrain
 80-Malicious:Shanghai
-81-Custom
-90-Individuals
-90-Individuals:DAO Curators
-90-Individuals:DAO Whales
-90-Individuals:DevCon2
-90-Individuals:Gitcoin Grants
-90-Individuals:Other
-90-Individuals:TheCyber
-90-Individuals:Twitter
 91-Early:Addresses
 91-Early:Miners

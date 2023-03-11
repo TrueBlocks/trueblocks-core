@@ -59,10 +59,19 @@ int main(int argc, const char* argv[]) {
 }
 
 //----------------------------------------------------------------
+const char* STR_DISPLAY_APPEARANCE_TESTING =
+    "[{ADDRESS}]\t"
+    "[{BLOCKNUMBER}]\t"
+    "[{TRANSACTIONINDEX}]\t"
+    "[{TRACEINDEX}]\t"
+    "[{REASON}]\t"
+    "[{NAME}]";
+
+//----------------------------------------------------------------
 bool visitAddrs(const CAppearance& item, void* data) {
     if (isZeroAddr(item.address))
         return true;
-    cout << item.Format(STR_DISPLAY_APPEARANCE) << endl;
+    cout << item.Format(STR_DISPLAY_APPEARANCE_TESTING) << endl;
     return true;
 }
 
@@ -112,8 +121,9 @@ void everySortedUniqueAddressPerTx(CBlock& block) {
     CAppearanceArray array;
     block.forEveryUniqueAppearanceInTxs(accumAddrs, transFilter, &array);
     sort(array.begin(), array.end(), sortAddressArray);
-    for (auto elem : array)
-        cout << elem.Format(STR_DISPLAY_APPEARANCE) << endl;
+    for (auto elem : array) {
+        cout << elem.Format(STR_DISPLAY_APPEARANCE_TESTING) << endl;
+    }
 }
 
 //--------------------------------------------------------------

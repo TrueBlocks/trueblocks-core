@@ -28,16 +28,16 @@ Arguments:
   addrs - a list of one or more smart contracts whose ABIs to display (required)
 
 Flags:
-  -k, --known          load common 'known' ABIs from cache
-  -s, --sol            extract the abi definition from the provided .sol file(s)
-  -f, --find strings   search for function or event declarations given a four- or 32-byte code(s)
-  -n, --hint strings   for the --find option only, provide hints to speed up the search
-  -x, --fmt string     export format, one of [none|json*|txt|csv]
-  -v, --verbose        enable verbose (increase detail with --log_level)
-  -h, --help           display this help screen
+  -k, --known           load common 'known' ABIs from cache
+  -f, --find strings    search for function or event declarations given a four- or 32-byte code(s)
+  -n, --hint strings    for the --find option only, provide hints to speed up the search
+  -e, --encode string   generate the 32-byte encoding for a given cannonical function or event signature
+  -c, --clean           remove an abi file for an address or all zero-length files if no address is given
+  -x, --fmt string      export format, one of [none|json*|txt|csv]
+  -v, --verbose         enable verbose (increase detail with --log_level)
+  -h, --help            display this help screen
 
 Notes:
-  - For the --sol option, place the solidity files in the current working folder.
   - Search for either four byte signatures or event signatures with the --find option.
 ```
 

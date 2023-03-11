@@ -1185,7 +1185,8 @@
       },
       {
         "name": "state",
-        "type": "RelayState"
+        "internalType": "enum RelayState",
+        "type": "uint8"
       }
     ],
     "signature": "getRelay(address)",
@@ -1446,7 +1447,8 @@
       },
       {
         "name": "status",
-        "type": "RelayCallStatus"
+        "internalType": "RelayCallStatus",
+        "type": "uint8"
       },
       {
         "name": "charge",
@@ -1455,7 +1457,7 @@
     ],
     "name": "TransactionRelayed",
     "outputs": [],
-    "signature": "TransactionRelayed(address,address,address,bytes4,RelayCallStatus,uint256)",
+    "signature": "TransactionRelayed(address,address,address,bytes4,uint8,uint256)",
     "type": "event"
   },
   {
@@ -1836,7 +1838,8 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "ret_1",
@@ -1862,7 +1865,8 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "ret_1",
@@ -1888,7 +1892,8 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "ret_1",
@@ -1914,7 +1919,8 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "ret_1",
@@ -1944,7 +1950,8 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "ret_1",
@@ -1970,11 +1977,13 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "memory",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "signature": "getExp(uint256,uint256)",
@@ -1985,25 +1994,29 @@
     "inputs": [
       {
         "name": "a",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       },
       {
         "name": "b",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "name": "addExp",
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "memory",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
-    "signature": "addExp(Exp,Exp)",
+    "signature": "addExp(tuple,tuple)",
     "type": "function"
   },
   {
@@ -2011,25 +2024,29 @@
     "inputs": [
       {
         "name": "a",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       },
       {
         "name": "b",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "name": "subExp",
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "memory",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
-    "signature": "subExp(Exp,Exp)",
+    "signature": "subExp(tuple,tuple)",
     "type": "function"
   },
   {
@@ -2037,7 +2054,8 @@
     "inputs": [
       {
         "name": "a",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       },
       {
         "name": "scalar",
@@ -2048,14 +2066,16 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "memory",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
-    "signature": "mulScalar(Exp,uint256)",
+    "signature": "mulScalar(tuple,uint256)",
     "type": "function"
   },
   {
@@ -2063,7 +2083,8 @@
     "inputs": [
       {
         "name": "a",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       },
       {
         "name": "scalar",
@@ -2074,14 +2095,15 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "ret_1",
         "type": "uint256"
       }
     ],
-    "signature": "mulScalarTruncate(Exp,uint256)",
+    "signature": "mulScalarTruncate(tuple,uint256)",
     "type": "function"
   },
   {
@@ -2089,7 +2111,8 @@
     "inputs": [
       {
         "name": "a",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       },
       {
         "name": "scalar",
@@ -2104,14 +2127,15 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "ret_1",
         "type": "uint256"
       }
     ],
-    "signature": "mulScalarTruncateAddUInt(Exp,uint256,uint256)",
+    "signature": "mulScalarTruncateAddUInt(tuple,uint256,uint256)",
     "type": "function"
   },
   {
@@ -2119,7 +2143,8 @@
     "inputs": [
       {
         "name": "a",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       },
       {
         "name": "scalar",
@@ -2130,14 +2155,16 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "memory",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
-    "signature": "divScalar(Exp,uint256)",
+    "signature": "divScalar(tuple,uint256)",
     "type": "function"
   },
   {
@@ -2149,18 +2176,21 @@
       },
       {
         "name": "divisor",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "name": "divScalarByExp",
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "memory",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "signature": "divScalarByExp(uint256,Exp)",
@@ -2175,14 +2205,16 @@
       },
       {
         "name": "divisor",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "name": "divScalarByExpTruncate",
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "ret_1",
@@ -2197,25 +2229,29 @@
     "inputs": [
       {
         "name": "a",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       },
       {
         "name": "b",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "name": "mulExp",
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "memory",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
-    "signature": "mulExp(Exp,Exp)",
+    "signature": "mulExp(tuple,tuple)",
     "type": "function"
   },
   {
@@ -2234,11 +2270,13 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "memory",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "signature": "mulExp(uint256,uint256)",
@@ -2249,29 +2287,34 @@
     "inputs": [
       {
         "name": "a",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       },
       {
         "name": "b",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       },
       {
         "name": "c",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "name": "mulExp3",
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "memory",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
-    "signature": "mulExp3(Exp,Exp,Exp)",
+    "signature": "mulExp3(tuple,Exp,Exp)",
     "type": "function"
   },
   {
@@ -2279,25 +2322,29 @@
     "inputs": [
       {
         "name": "a",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       },
       {
         "name": "b",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "name": "divExp",
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "memory",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
-    "signature": "divExp(Exp,Exp)",
+    "signature": "divExp(tuple,tuple)",
     "type": "function"
   },
   {
@@ -2305,7 +2352,8 @@
     "inputs": [
       {
         "name": "exp",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "name": "truncate",
@@ -2315,7 +2363,7 @@
         "type": "uint256"
       }
     ],
-    "signature": "truncate(Exp)",
+    "signature": "truncate(tuple)",
     "type": "function"
   },
   {
@@ -2323,11 +2371,13 @@
     "inputs": [
       {
         "name": "left",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       },
       {
         "name": "right",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "name": "lessThanExp",
@@ -2337,7 +2387,7 @@
         "type": "bool"
       }
     ],
-    "signature": "lessThanExp(Exp,Exp)",
+    "signature": "lessThanExp(tuple,tuple)",
     "type": "function"
   },
   {
@@ -2345,11 +2395,13 @@
     "inputs": [
       {
         "name": "left",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       },
       {
         "name": "right",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "name": "lessThanOrEqualExp",
@@ -2359,7 +2411,7 @@
         "type": "bool"
       }
     ],
-    "signature": "lessThanOrEqualExp(Exp,Exp)",
+    "signature": "lessThanOrEqualExp(tuple,tuple)",
     "type": "function"
   },
   {
@@ -2367,11 +2419,13 @@
     "inputs": [
       {
         "name": "left",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       },
       {
         "name": "right",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "name": "greaterThanExp",
@@ -2381,7 +2435,7 @@
         "type": "bool"
       }
     ],
-    "signature": "greaterThanExp(Exp,Exp)",
+    "signature": "greaterThanExp(tuple,tuple)",
     "type": "function"
   },
   {
@@ -2389,7 +2443,8 @@
     "inputs": [
       {
         "name": "value",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "name": "isZeroExp",
@@ -2399,7 +2454,7 @@
         "type": "bool"
       }
     ],
-    "signature": "isZeroExp(Exp)",
+    "signature": "isZeroExp(tuple)",
     "type": "function"
   },
   {
@@ -2681,7 +2736,8 @@
     "inputs": [
       {
         "name": "role",
-        "type": "Role"
+        "internalType": "struct Role",
+        "type": "tuple"
       },
       {
         "name": "account",
@@ -2690,7 +2746,7 @@
     ],
     "name": "add",
     "outputs": [],
-    "signature": "add(Role,address)",
+    "signature": "add(tuple,address)",
     "type": "function"
   },
   {
@@ -2698,7 +2754,8 @@
     "inputs": [
       {
         "name": "role",
-        "type": "Role"
+        "internalType": "struct Role",
+        "type": "tuple"
       },
       {
         "name": "account",
@@ -2707,7 +2764,7 @@
     ],
     "name": "remove",
     "outputs": [],
-    "signature": "remove(Role,address)",
+    "signature": "remove(tuple,address)",
     "type": "function"
   },
   {
@@ -2716,7 +2773,8 @@
     "inputs": [
       {
         "name": "role",
-        "type": "Role"
+        "internalType": "struct Role",
+        "type": "tuple"
       },
       {
         "name": "account",
@@ -2730,7 +2788,7 @@
         "type": "bool"
       }
     ],
-    "signature": "has(Role,address)",
+    "signature": "has(tuple,address)",
     "type": "function"
   },
   {
@@ -4121,7 +4179,8 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "ret_1",
@@ -4147,7 +4206,8 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "ret_1",
@@ -4173,7 +4233,8 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "ret_1",
@@ -4199,7 +4260,8 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "ret_1",
@@ -4229,7 +4291,8 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "ret_1",
@@ -4255,11 +4318,13 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "memory",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "signature": "getExp(uint256,uint256)",
@@ -4270,25 +4335,29 @@
     "inputs": [
       {
         "name": "a",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       },
       {
         "name": "b",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "name": "addExp",
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "memory",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
-    "signature": "addExp(Exp,Exp)",
+    "signature": "addExp(tuple,tuple)",
     "type": "function"
   },
   {
@@ -4296,25 +4365,29 @@
     "inputs": [
       {
         "name": "a",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       },
       {
         "name": "b",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "name": "subExp",
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "memory",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
-    "signature": "subExp(Exp,Exp)",
+    "signature": "subExp(tuple,tuple)",
     "type": "function"
   },
   {
@@ -4322,7 +4395,8 @@
     "inputs": [
       {
         "name": "a",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       },
       {
         "name": "scalar",
@@ -4333,14 +4407,16 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "memory",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
-    "signature": "mulScalar(Exp,uint256)",
+    "signature": "mulScalar(tuple,uint256)",
     "type": "function"
   },
   {
@@ -4348,7 +4424,8 @@
     "inputs": [
       {
         "name": "a",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       },
       {
         "name": "scalar",
@@ -4359,14 +4436,15 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "ret_1",
         "type": "uint256"
       }
     ],
-    "signature": "mulScalarTruncate(Exp,uint256)",
+    "signature": "mulScalarTruncate(tuple,uint256)",
     "type": "function"
   },
   {
@@ -4374,7 +4452,8 @@
     "inputs": [
       {
         "name": "a",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       },
       {
         "name": "scalar",
@@ -4389,14 +4468,15 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "ret_1",
         "type": "uint256"
       }
     ],
-    "signature": "mulScalarTruncateAddUInt(Exp,uint256,uint256)",
+    "signature": "mulScalarTruncateAddUInt(tuple,uint256,uint256)",
     "type": "function"
   },
   {
@@ -4404,7 +4484,8 @@
     "inputs": [
       {
         "name": "a",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       },
       {
         "name": "scalar",
@@ -4415,14 +4496,16 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "memory",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
-    "signature": "divScalar(Exp,uint256)",
+    "signature": "divScalar(tuple,uint256)",
     "type": "function"
   },
   {
@@ -4434,18 +4517,21 @@
       },
       {
         "name": "divisor",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "name": "divScalarByExp",
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "memory",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "signature": "divScalarByExp(uint256,Exp)",
@@ -4460,14 +4546,16 @@
       },
       {
         "name": "divisor",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "name": "divScalarByExpTruncate",
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "ret_1",
@@ -4482,25 +4570,29 @@
     "inputs": [
       {
         "name": "a",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       },
       {
         "name": "b",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "name": "mulExp",
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "memory",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
-    "signature": "mulExp(Exp,Exp)",
+    "signature": "mulExp(tuple,tuple)",
     "type": "function"
   },
   {
@@ -4519,11 +4611,13 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "memory",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "signature": "mulExp(uint256,uint256)",
@@ -4534,29 +4628,34 @@
     "inputs": [
       {
         "name": "a",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       },
       {
         "name": "b",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       },
       {
         "name": "c",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "name": "mulExp3",
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "memory",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
-    "signature": "mulExp3(Exp,Exp,Exp)",
+    "signature": "mulExp3(tuple,Exp,Exp)",
     "type": "function"
   },
   {
@@ -4564,25 +4663,29 @@
     "inputs": [
       {
         "name": "a",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       },
       {
         "name": "b",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "name": "divExp",
     "outputs": [
       {
         "name": "ret_0",
-        "type": "MathError"
+        "internalType": "enum MathError",
+        "type": "uint8"
       },
       {
         "name": "memory",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
-    "signature": "divExp(Exp,Exp)",
+    "signature": "divExp(tuple,tuple)",
     "type": "function"
   },
   {
@@ -4590,7 +4693,8 @@
     "inputs": [
       {
         "name": "exp",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "name": "truncate",
@@ -4600,7 +4704,7 @@
         "type": "uint256"
       }
     ],
-    "signature": "truncate(Exp)",
+    "signature": "truncate(tuple)",
     "type": "function"
   },
   {
@@ -4608,11 +4712,13 @@
     "inputs": [
       {
         "name": "left",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       },
       {
         "name": "right",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "name": "lessThanExp",
@@ -4622,7 +4728,7 @@
         "type": "bool"
       }
     ],
-    "signature": "lessThanExp(Exp,Exp)",
+    "signature": "lessThanExp(tuple,tuple)",
     "type": "function"
   },
   {
@@ -4630,11 +4736,13 @@
     "inputs": [
       {
         "name": "left",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       },
       {
         "name": "right",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "name": "lessThanOrEqualExp",
@@ -4644,7 +4752,7 @@
         "type": "bool"
       }
     ],
-    "signature": "lessThanOrEqualExp(Exp,Exp)",
+    "signature": "lessThanOrEqualExp(tuple,tuple)",
     "type": "function"
   },
   {
@@ -4652,11 +4760,13 @@
     "inputs": [
       {
         "name": "left",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       },
       {
         "name": "right",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "name": "greaterThanExp",
@@ -4666,7 +4776,7 @@
         "type": "bool"
       }
     ],
-    "signature": "greaterThanExp(Exp,Exp)",
+    "signature": "greaterThanExp(tuple,tuple)",
     "type": "function"
   },
   {
@@ -4674,7 +4784,8 @@
     "inputs": [
       {
         "name": "value",
-        "type": "Exp"
+        "internalType": "struct Exp",
+        "type": "tuple"
       }
     ],
     "name": "isZeroExp",
@@ -4684,7 +4795,7 @@
         "type": "bool"
       }
     ],
-    "signature": "isZeroExp(Exp)",
+    "signature": "isZeroExp(tuple)",
     "type": "function"
   },
   {
@@ -4994,7 +5105,8 @@
     "inputs": [
       {
         "name": "role",
-        "type": "Role"
+        "internalType": "struct Role",
+        "type": "tuple"
       },
       {
         "name": "account",
@@ -5003,7 +5115,7 @@
     ],
     "name": "add",
     "outputs": [],
-    "signature": "add(Role,address)",
+    "signature": "add(tuple,address)",
     "type": "function"
   },
   {
@@ -5011,7 +5123,8 @@
     "inputs": [
       {
         "name": "role",
-        "type": "Role"
+        "internalType": "struct Role",
+        "type": "tuple"
       },
       {
         "name": "account",
@@ -5020,7 +5133,7 @@
     ],
     "name": "remove",
     "outputs": [],
-    "signature": "remove(Role,address)",
+    "signature": "remove(tuple,address)",
     "type": "function"
   },
   {
@@ -5029,7 +5142,8 @@
     "inputs": [
       {
         "name": "role",
-        "type": "Role"
+        "internalType": "struct Role",
+        "type": "tuple"
       },
       {
         "name": "account",
@@ -5043,7 +5157,7 @@
         "type": "bool"
       }
     ],
-    "signature": "has(Role,address)",
+    "signature": "has(tuple,address)",
     "type": "function"
   },
   {

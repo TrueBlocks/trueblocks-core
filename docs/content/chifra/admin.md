@@ -57,9 +57,6 @@ Flags:
   -x, --fmt string       export format, one of [none|json*|txt|csv]
   -v, --verbose          enable verbose (increase detail with --log_level)
   -h, --help             display this help screen
-
-Notes:
-  - The 'status' alias is deprecated and will be removed shortly.
 ```
 
 Data models produced by this tool:
@@ -114,7 +111,6 @@ Flags:
 Notes:
   - To start API open terminal window and run chifra daemon.
   - See the API documentation (https://trueblocks.io/api) for more information.
-  - The 'serve' alias is deprecated and will be removed shortly.
 ```
 
 Data models produced by this tool:

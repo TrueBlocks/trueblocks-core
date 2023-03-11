@@ -12,24 +12,24 @@ package types
 // EXISTING_CODE
 
 type RawBlockCount struct {
+	AppsCnt         string `json:"appsCnt"`
 	BlockNumber     string `json:"blockNumber"`
+	LogsCnt         string `json:"logsCnt"`
 	Timestamp       string `json:"timestamp"`
+	TracesCnt       string `json:"tracesCnt"`
 	TransactionsCnt string `json:"transactionsCnt"`
 	UnclesCnt       string `json:"unclesCnt"`
-	LogsCnt         string `json:"logsCnt"`
-	TracesCnt       string `json:"tracesCnt"`
-	AppsCnt         string `json:"appsCnt"`
 	UniqsCnt        string `json:"uniqsCnt"`
 }
 
 type SimpleBlockCount struct {
+	AppsCnt         uint64 `json:"appsCnt,omitempty"`
 	BlockNumber     uint64 `json:"blockNumber"`
+	LogsCnt         uint64 `json:"logsCnt,omitempty"`
 	Timestamp       int64  `json:"timestamp"`
+	TracesCnt       uint64 `json:"tracesCnt,omitempty"`
 	TransactionsCnt uint64 `json:"transactionsCnt"`
 	UnclesCnt       uint64 `json:"unclesCnt,omitempty"`
-	LogsCnt         uint64 `json:"logsCnt,omitempty"`
-	TracesCnt       uint64 `json:"tracesCnt,omitempty"`
-	AppsCnt         uint64 `json:"appsCnt,omitempty"`
 	UniqsCnt        uint64 `json:"uniqsCnt,omitempty"`
 	raw             *RawBlockCount
 }

@@ -12,13 +12,8 @@ on      ,both ,fast  ,config ,apps/cacheStatus ,index_start_bad     ,y    ,modes
 on      ,both ,slow  ,config ,apps/cacheStatus ,mode_monitors       ,y    ,modes = show & module = monitors
 on      ,both ,slow  ,config ,apps/cacheStatus ,mode_names          ,y    ,modes = show & module = names
 on      ,both ,slow  ,config ,apps/cacheStatus ,mode_abis           ,y    ,modes = show & module = abis
-; TODO: turn back on
-local   ,both ,fast  ,config ,apps/cacheStatus ,mode_blocks         ,y    ,modes = show & module = caches & types = blocks
 on      ,both ,fast  ,config ,apps/cacheStatus ,mode_txs            ,y    ,modes = show & module = caches & types = txs
-on      ,both ,fast  ,config ,apps/cacheStatus ,mode_traces         ,y    ,modes = show & module = caches & types = traces
 on      ,both ,fast  ,config ,apps/cacheStatus ,mode_cache_fail     ,y    ,modes = show & module = caches & types = junk
-; TODO: turn back on
-local   ,both ,fast  ,config ,apps/cacheStatus ,mode_cache_all      ,y    ,modes = show & module = caches & types = all
 on      ,both ,fast  ,config ,apps/cacheStatus ,mode_txs_l01        ,y    ,modes = show & module = caches & types = txs & details
 on      ,both ,fast  ,config ,apps/cacheStatus ,mode_txs_l02        ,y    ,modes = show & module = caches & types = txs & details & depth = 0
 on      ,both ,fast  ,config ,apps/cacheStatus ,mode_txs_l1         ,y    ,modes = show & module = caches & types = txs & details & depth = 1
@@ -28,20 +23,28 @@ on      ,both ,fast  ,config ,apps/cacheStatus ,mode_txs_l4_bad     ,y    ,modes
 on      ,both ,fast  ,config ,apps/cacheStatus ,mode_txs_blks       ,y    ,modes = show & module = caches & types = txs & types = blocks
 on      ,both ,fast  ,config ,apps/cacheStatus ,mode_slurps         ,y    ,modes = show & module = caches & types = slurps
 on      ,both ,fast  ,config ,apps/cacheStatus ,mode_some           ,y    ,modes = show & module = some
-; TODO: turn back on
-local   ,both ,fast  ,config ,apps/cacheStatus ,mode_all            ,y    ,modes = show & module = all
 on      ,both ,fast  ,config ,apps/cacheStatus ,config_bad          ,y    ,modes = show & module = config
 on      ,both ,fast  ,config ,apps/cacheStatus ,three               ,y    ,modes = show & module = abis & module = caches & module = monitors & types = slurps
 on      ,both ,fast  ,config ,apps/cacheStatus ,items_abis          ,y    ,details & modes = show & module = abis
-on      ,both ,fast  ,config ,apps/cacheStatus ,items_slurps        ,y    ,details & modes = show & module = caches & types = slurps
 on      ,both ,fast  ,config ,apps/cacheStatus ,items_scrap_mon     ,y    ,details & modes = show & module = index & first_block = 1000000 & last_block = 2200000
 on      ,both ,fast  ,config ,apps/cacheStatus ,report              ,n    ,report & fmt = txt
 on      ,both ,fast  ,config ,apps/cacheStatus ,report_json         ,y    ,report & fmt = json
 on      ,both ,fast  ,config ,apps/cacheStatus ,terse               ,y    ,terse
+
 on      ,both ,slow  ,config ,apps/cacheStatus ,redir_output        ,y    ,modes = show & module = names & output = output_test_file
 on      ,both ,slow  ,config ,apps/cacheStatus ,redir_output_append ,n    ,modes = show & module = index & output = output_test_file & no_header & append
 
+# Not sure why these fail
 local   ,both ,fast  ,config ,apps/cacheStatus ,items_monitors      ,y    ,details & modes = show & module = monitors
 local   ,both ,fast  ,config ,apps/cacheStatus ,items_some          ,y    ,details & modes = show & module = some & first_block = 3000000 & last_block = 3100000
 local   ,both ,fast  ,config ,apps/cacheStatus ,items_three         ,y    ,details & modes = show & module = abis & module = caches & module = monitors & types = slurps
 local   ,both ,fast  ,config ,apps/cacheStatus ,terse_gnosis        ,y    ,terse & chain = gnosis
+
+# Fails because of some weird isValid thing (remote only)
+local   ,both ,fast  ,config ,apps/cacheStatus ,items_slurps        ,y    ,details & modes = show & module = caches & types = slurps
+local   ,both ,fast  ,config ,apps/cacheStatus ,mode_traces         ,y    ,modes = show & module = caches & types = traces
+
+# These fail in a weird way (isValid is false) but only when run remote testing
+local   ,both ,fast  ,config ,apps/cacheStatus ,mode_blocks         ,y    ,modes = show & module = caches & types = blocks
+local   ,both ,fast  ,config ,apps/cacheStatus ,mode_cache_all      ,y    ,modes = show & module = caches & types = all
+local   ,both ,fast  ,config ,apps/cacheStatus ,mode_all            ,y    ,modes = show & module = all

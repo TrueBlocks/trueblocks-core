@@ -68,9 +68,6 @@ bool CRuntimeClass::isFieldHidden(const string_q& fieldName) {
 //-------------------------------------------------------------------------
 void CRuntimeClass::addField(const string_q& fieldName, size_t dataType, size_t fieldID) {
     if (findField(fieldName)) {
-        // TODO(tjayrush): can we turn this off?
-        if (fieldName != "deleted" && fieldName != "schema")
-            LOG_WARN("Field ", fieldName, " already exists");
         return;
     }
     CFieldData field(fieldName, fieldID, dataType);
@@ -80,9 +77,6 @@ void CRuntimeClass::addField(const string_q& fieldName, size_t dataType, size_t 
 //-------------------------------------------------------------------------
 void CRuntimeClass::addObject(const string_q& fieldName, size_t dataType, size_t fieldID, const CRuntimeClass* pClass) {
     if (findField(fieldName)) {
-        // TODO(tjayrush): can we turn this off?
-        if (fieldName != "deleted" && fieldName != "schema")
-            LOG_WARN("Field ", fieldName, " already exists");
         return;
     }
     CFieldData field(fieldName, fieldID, dataType, pClass);

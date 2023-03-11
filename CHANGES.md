@@ -1,7 +1,185 @@
 <!-- markdownlint-disable MD024 MD036 -->
 # Changes
 
-This file details changes made to TrueBlocks per version (starting with version v0.40.0). See the [migration notes](./MIGRATIONS.md) for changes from previous versions.
+This file details changes made to TrueBlocks per version. See the [migration notes](./MIGRATIONS.md) for changes from previous versions.
+
+## v0.60.0 (2023/03/11)
+
+This is a major release focusing mostly on the continued porting to GoLang. Many of the tools (`chifra abis`, `chifra blocks`, `chifra transactions`, `chifra receipts`, etc.) are now either fully ported to GoLang or well on the way to being fully ported. The largest remaining work is porting the binary cache code, the `neighborhood` processing, and the GoLang account reconciliations.
+
+## Specification
+
+There were no changes to the [Specification for the Unchained Index](https://trueblocks.io/papers/2023/specification-for-the-unchained-index-v0.51.0-beta.pdf) since the last release.
+
+## Breaking Changes
+
+- Bumped version to v0.60.0.
+- Bumped required GoLang version to 1.19.
+- Removed the global `--to_file` option from all tools. You may use the `--output` option instead. Note that `--output` does not work when interacting through the API.
+- Removed the rarely-used, global `--very_raw` option from all tools.
+- Removed the global `--dollars` option from tools that still presented it. Its implementation was unsupportable. To reproduce the behaviour, use the `spotPrice` exported by reconciliations.
+- During articulation, the export previously included certain whitespace characters direclty (`\t`, `\r` and `\n`, for example). This was causing various problems (for example, trying to import into CSV into MS Excel). The code now replaces those characters with `[t]` for `\t` or `[n]` for `\n`, changes `\r` into a space and (in some cases) changes `,` internal to a field into `_`. This may be a breaking change depending on your usage.
+- Previously, if one exported traces to CSV or TXT, and smart contracts were both created and self destructed in a single trace (which happens frequently), the code used to report the newly-minted smart contract in the `from` field of the trace. This was not canoncial. We stopped doing it. If you wish to see the address of the newly-created contract in such a case, export to `--fmt json`. The value is presented as received from the RPC.
+
+## Bug Fixes
+
+- There were a number of fairly minor bug fixes including one to PetNames and the above mentioned correction to the index due to Erigon's bug.
+
+## System Wide Changes
+
+- We completed a full port to GoLang for `chifra names`, `chifra abis`, and `chifra receipts`. In some cases, this changed the format of the output (especially for JSON output). In every case, we think the data has been improved.
+- We completed partial ports for `chifra blocks`, `chifra transactions`, and `chifra traces`. In some cases, this changed the format of the output (especially for JSON output). In every case, we think the data has been improved.
+- Implemented `--articulate` across many tools in GoLang. (Thanks Dawid!)
+- We made significant improvements to the documentation including more examples for the API docs and cross links to data models from tools producing the same.
+- We prepared all tools for using the GoLang `--cache` options (caching is not yet yet enabled in the GoLang code). (Thanks Dawid!)
+- Better support for streaming output to various formats (including preliminary support for `.xlsx`).
+- Begun improvements for more useful and flexible connections to the RPC.
+
+## Changes to Data Models
+
+- `Function` data model:
+  - Changed `abi_source` to `abiSource`.
+  - Changed `input_dicts` to `inputDicts`.
+  - Changed `output_dicts` to `outputDicts`.
+  - Removed `input_names` and `output_names`. (These may be added back in in the future.)
+- `Reconciliation` data model:
+  - Changed `prevBlock` to `prevAppBlk`.
+  - Changed `prevBlkBal` to `prevBal`.
+  - Changed `getCostOut` to `gasOut`. (This may be renamed in the future.)
+  - Added `accountedFor` field.
+- `Block` data model:
+  - Removed `unclesCnt`.
+- `TraceResult` data model:
+  - Renamed `newContract` to `address` in order to agree with the RPC.
+- Renamed `VerboseAppearance` data model to `SimpleAppearance` to be consistent with other tools.
+- Renamed `TokenBalanceRecord` data model to `TokenBalance`.
+- New data models:
+  - `BlockCount`
+  - `ChunkAddresses`
+  - `ChunkAppearances`
+  - `ChunkBlooms`
+  - `ChunkIndex`
+  - `ChunkStats`
+  - `NamedBlock`
+  - `TraceCount`
+
+## Tool Specific Changes
+
+**chifra list**
+
+- Added `--no_zero` option analogous to the same option for `chifra state`.
+- Added `--first_record` and `--first_block` options analogous to the same option for `chifra export`.
+- Added `--max_record` and `--last_block` options analogous to the same option for `chifra export`.
+
+**chifra export**
+
+- Major re-write of accounting module. Previously, token accounting was incomplete. Now, were' 99.98% accurate.
+- Removed `--dollars` option. Instead, use the `spotPrice` from `chifra export --accounting` reconciliation model. 
+- Clarified the semantics of `--first_record`, `--max_records`, `--first_block`, `--last_block` and how they interact.
+
+**chifra monitors**
+
+- Added `chifra monitors --list` option to display a list of currently monitored addresses.
+- Added `chifra monitors --decache` to remove all files (including those in the cache) for a given address. Note that this may remove cache items that are associated with other monitors, as cache items (for example transactions and traces) are shared between addresses.
+
+**chifra names**
+
+- Completed port of the entire tool to GoLang
+- Deprecated the `--named` option. Use the `--all` option instead. `--named` will be removed in a future release.
+- Added new names to names database including OFAC censored names and addresses.
+- Made preliminary steps in preparation for a much better names module.
+
+**chifra abis**
+
+- Removed the `--sol` option. Tools such as `foundry's forge` are much better. Use those.
+- Added the `--clean` option to remove empty or unused abi files from the cache. Note that removing empty ABI files is not yet implemented.
+- Added the `--encode` option to generate a 32-byte encoding for the given canonical function or event signature.
+
+**chifra blocks**
+
+- Changed the name of the `--trace` option to `--traces`. Deprecated `--trace` which will be removed in a future release.
+- Improvements to `chifra blocks --count` to show more information about various data types.
+
+**chifra transactions**
+
+- Changed the name of the `--trace` option to `--traces`. Deprecated `--trace` which will be removed in a future release.
+- Renamed the `--statements` option to `--account_for`. `--statements` no longer works.
+- Added placeholder option called `--source` which meant to trace the source of funds into an address. Currenly not implemented.
+
+**chifra receipts**
+
+- Completed full port to GoLang.
+
+**chifra logs**
+
+- No notable changes.
+
+**chifra traces**
+
+- Removed the previous un-implemented `--statediff` option.
+- Changed hot key from `-c` to `-U` for the `--count` option to be consistent with other tools.
+
+**chifra when**
+
+- Changed the `--repair` option to use the block range(s) provided on the command line for processing instead of a `<blockId>` directly.
+- Changed hot key from `-c` to `-U` for the `--count` option to be consistent with other tools.
+
+**chifra state**
+
+- No notable changes.
+
+**chifra tokens**
+
+- Changed data model previously called `TokenBalanceRecord` to `TokenBalance`.
+
+**chifra config**
+
+- Renamed the `status` tool to `config` as its responsibilities have grown. `status` is now an alias of `config` and will continue to work as before.
+- Previously named `modes` positional option now takes different values (`show` or `edit`). (`edit` is unimplemented.)
+- Previous option for `modes` (`[index | monitors | names | abis | caches | some | all]`) are now available under the `--module` option for either `show` or `edit`.
+- Removed the `--report` option which had been previously deprecated.
+- Added `--paths` option which is useful for migration instructions.
+- Minor improvements to reporting from this tool.
+
+**chifra daemon**
+
+- Renamed the `serve` tool to `daemon` as its responsibilities have grown. `serve` still works (and will continue to work) but only starts the API server. In the future, `daemon` will allow you to start other long running processes (i.e. daemons) such as the `chifra scrape` and `chifra monitor --watch` tools.
+- Added option `--api` which takes on values of `[ on | off ]`.
+- Added option `--scrape` which takes on values of `[ off | blooms | full-index ]`. Currently non-functional.
+- Added option `--monitor` which eneables the monitor tool. Currently non-functional.
+
+**chifra scrape**
+
+- No notable changes.
+
+**chifra chunks**
+
+- Added `--save_addrs` option (currently hidden) to write addresses to disc from chunks to aide in debugging.
+- Improved reporting for various options.
+
+**chifra init**
+
+- No notable changes.
+
+**chifra explore**
+
+- No notable changes.
+
+**chifra slurp**
+
+- Turned off testing for this tool as EtherScan availability was a very frequent cause of failed test cases. In order to test `chifra slurp` one must set an environment variable.
+
+**makeClass**
+
+- Removed `--tsx` option as unused.
+- Removed `--dump` option as unused.
+- Added `--sdk` option to output Python and Typescript SDKs.
+- Separation of `CParameter` class from `CMember` class making publically presented `CParamater` much simple since most of the complications came from that class's use in makeClass.
+
+**testRunner**
+
+- Improved test runner to protect against incorrect test cases.
+- Additions, corrections, removal of incorrect, and general improvements to test cases.
 
 ## v0.55.0
 

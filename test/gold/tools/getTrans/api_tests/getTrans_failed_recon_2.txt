@@ -1,0 +1,53 @@
+transactions?transactions=0xf9a11aed09a4be208539a261d8c79567ba9918b4c4e577400ac39b64350b45fd&fmt=json&accountFor=0xf503017d7baf7fbc0fff7492b751025c6a78179b
+{
+  "data": [
+    {
+      "blockNumber": 15687451,
+      "transactionIndex": 133,
+      "logIndex": 2652,
+      "transactionHash": "0xf9a11aed09a4be208539a261d8c79567ba9918b4c4e577400ac39b64350b45fd",
+      "timestamp": 1665039815,
+      "date": "2022-10-06 07:03:35 UTC",
+      "assetAddr": "0xf55f8aa8f3d777f1ab3a4ae9e269c8d7b73078de",
+      "assetSymbol": "0xf5",
+      "decimals": 18,
+      "spotPrice": 0,
+      "priceSource": "not-priced",
+      "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "sender": "0x15069300bf5ed3e653ce309b17d173a8c7589f7f",
+      "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "begBal": "5170000000000000000000",
+      "amountNet": "",
+      "endBal": "5170000000000000000000",
+      "reconciliationType": "skipped",
+      "reconciled": true,
+      "totalIn": "164377000000000000000000",
+      "amountIn": "164377000000000000000000",
+      "internalIn": "",
+      "selfDestructIn": "",
+      "minerBaseRewardIn": "",
+      "minerNephewRewardIn": "",
+      "minerTxFeeIn": "",
+      "minerUncleRewardIn": "",
+      "prefundIn": "",
+      "totalOut": "164377000000000000000000",
+      "amountOut": "",
+      "internalOut": "164377000000000000000000",
+      "selfDestructOut": "",
+      "gasOut": "",
+      "totalOutLessGas": "164377000000000000000000",
+      "prevAppBlk": 15687450,
+      "prevBal": "5170000000000000000000",
+      "begBalDiff": "",
+      "endBalDiff": "",
+      "endBalCalc": "5170000000000000000000"
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
+}

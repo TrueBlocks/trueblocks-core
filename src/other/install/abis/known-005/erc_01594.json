@@ -143,7 +143,7 @@
       },
       {
         "name": "ret_1",
-        "type": "byte"
+        "type": "bytes1"
       },
       {
         "name": "ret_2",
@@ -182,7 +182,7 @@
       },
       {
         "name": "ret_1",
-        "type": "byte"
+        "type": "bytes1"
       },
       {
         "name": "ret_2",

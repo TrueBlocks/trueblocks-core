@@ -27,3 +27,4 @@ Notes:
   - Special blocks are detailed under chifra when --list.
   - Balance is the default mode. To select a single mode use none first, followed by that mode.
   - You may specify multiple modes on a single line.
+

@@ -80,24 +80,24 @@ string_q CName::getValueByName(const string_q& fieldName) const {
             break;
         case 'd':
             if (fieldName % "decimals") {
-                return decimals == 0 ? "" : uint_2_Str(decimals);
+                return uint_2_Str(decimals);
             }
             break;
         case 'i':
             if (fieldName % "isCustom") {
-                return bool_2_Str(isCustom);
+                return bool_2_Str_t(isCustom);
             }
             if (fieldName % "isPrefund") {
-                return bool_2_Str(isPrefund);
+                return bool_2_Str_t(isPrefund);
             }
             if (fieldName % "isContract") {
-                return bool_2_Str(isContract);
+                return bool_2_Str_t(isContract);
             }
             if (fieldName % "isErc20") {
-                return bool_2_Str(isErc20);
+                return bool_2_Str_t(isErc20);
             }
             if (fieldName % "isErc721") {
-                return bool_2_Str(isErc721);
+                return bool_2_Str_t(isErc721);
             }
             break;
         case 'n':
@@ -328,7 +328,7 @@ void CName::registerClass(void) {
     ADD_FIELD(CName, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CName, "symbol", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CName, "source", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CName, "decimals", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CName, "decimals", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CName, "petname", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CName, "isCustom", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CName, "isPrefund", T_BOOL | TS_OMITEMPTY, ++fieldNum);
@@ -467,8 +467,8 @@ const char* STR_DISPLAY_NAME =
     "[{ADDRESS}]\t"
     "[{NAME}]\t"
     "[{SYMBOL}]\t"
-    "[{SOURCE}]\t"
     "[{DECIMALS}]\t"
+    "[{SOURCE}]\t"
     "[{PETNAME}]\t"
     "[{DELETED}]\t"
     "[{ISCUSTOM}]\t"

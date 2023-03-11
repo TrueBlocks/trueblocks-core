@@ -2,4 +2,4 @@ chifra names  --prefund etwork
 TEST[DATE|TIME] Terms:  [etwork]
 TEST[DATE|TIME] Prefund:  true
 TEST[DATE|TIME] Format:  txt
-No results for --prefund etwork
+WARN[DATE|TIME] No results for [chifra names --prefund etwork]

@@ -316,6 +316,8 @@ void CTraceAction::registerClass(void) {
     ADD_FIELD(CTraceAction, "refundAddress", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTraceAction, "to", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTraceAction, "value", T_WEI, ++fieldNum);
+    ADD_FIELD(CTraceAction, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CTraceAction, "address");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTraceAction, "schema");

@@ -29,7 +29,7 @@ class CBlock;
 class CAppearance;
 typedef bool (*APPEARANCEFUNC)(const CAppearance& item, void* data);
 typedef bool (*TRANSFUNC)(const CTransaction* trans, void* data);
-typedef bool (*LOGVISITFUNC)(CLogEntry& log, void* data);
+typedef bool (*LOGVISITFUNC)(CLog& log, void* data);
 typedef bool (*TRACEVISITFUNC)(CTrace& trace, void* data);
 typedef enum {
     CB_NONE = 0,
@@ -92,7 +92,7 @@ class CTransaction : public CBaseNode {
     bool loadTransAsUncleReward(blknum_t bn, blknum_t uncleBn, const address_t& addr);
     bool isReconciled(const address_t& accountedFor) const;
     bool readReconsFromCache(const address_t& accountedFor);
-    void cacheIfReconciled(const address_t& accountedFor) const;
+    void cacheConditional(const address_t& accountedFor, bool cacheIfReconciled) const;
     string_q getReconcilationPath(const address_t& address) const;
     CTransfer toTransfer(void) const;
 

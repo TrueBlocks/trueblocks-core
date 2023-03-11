@@ -4,19 +4,19 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
-	"github.com/ethereum/go-ethereum/common"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // AppearanceResult carries the appearances found in a single ChunkData for the given address.
 type AppearanceResult struct {
-	Address    common.Address
+	Address    types.Address
 	Range      paths.FileRange
 	AppRecords *[]AppearanceRecord
 	Err        error
 }
 
 // GetAppearanceRecords searches an already-opened ChunkData for the given address. Returns a AppearanceResult or nil
-func (chunk *ChunkData) GetAppearanceRecords(address common.Address) *AppearanceResult {
+func (chunk *ChunkData) GetAppearanceRecords(address types.Address) *AppearanceResult {
 	ret := AppearanceResult{Address: address, Range: chunk.Range}
 
 	foundAt := chunk.searchForAddressRecord(address)

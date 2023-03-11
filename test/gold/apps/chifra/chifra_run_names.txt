@@ -203,4 +203,3 @@ tags	address	name	symbol	source	decimals	petname	deleted	iscustom	isprefund	isco
 50-Tokens:ERC20	0x09617f6fd6cf8a71278ec86e23bbab29c04353a7	Unblocked Ledger Token	ULT	On chain	18	intensely-endless-platypus	false	false	false	true	true	false
 50-Tokens:ERC20	0x099fabb0a5ad43732d8f636f856da15006431581	best ICO 2018-2019 https://jullar.io	JULLAR.io	On chain	18	formerly-massive-tuna	false	false	false	true	true	false
 50-Tokens:ERC20	0x09a3ecafa817268f77be1283176b946c4ff2e608	Wrapped MIR Token	MIR	Giveth website	18	secondly-key-elf	false	false	false	true	true	false
-50-Tokens:ERC20	0x09ade3ab80b9f885eca960e8001a430d8021b591	SHIBASWAP	SHIBASWAP	On chain	18	wildly-meet-buffalo	false	false	false	true	true	false

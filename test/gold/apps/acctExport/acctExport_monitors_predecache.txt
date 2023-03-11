@@ -26,7 +26,7 @@ TEST[DATE|TIME] Format:  json
     "value": 0
   },
   "result": {
-    "newContract": "0x0",
+    "address": "0x0",
     "gasUsed": 42792,
     "output": "0x"
   },
@@ -52,7 +52,7 @@ TEST[DATE|TIME] Format:  json
     "value": 0
   },
   "result": {
-    "newContract": "0x0",
+    "address": "0x0",
     "gasUsed": 27479,
     "output": "0x"
   },
@@ -78,7 +78,7 @@ TEST[DATE|TIME] Format:  json
     "value": 1000000000000000000
   },
   "result": {
-    "newContract": "0x0",
+    "address": "0x0",
     "gasUsed": 0,
     "output": "0x"
   },
@@ -92,7 +92,7 @@ TEST[DATE|TIME] Format:  json
   "transactionHash": "0x86f114801efe90b466611a0c8aef86b6f0bd83e624a901741ef1216de36b635f",
   "transactionIndex": 0,
   "type": "call",
-  "error": "Bad jump destination",
+  "error": "invalid jump destination",
   "action": {
     "selfDestructed": "0x0",
     "balance": 0,
@@ -126,7 +126,7 @@ TEST[DATE|TIME] Format:  json
     "value": 984580000000000000
   },
   "result": {
-    "newContract": "0x0",
+    "address": "0x0",
     "gasUsed": 0,
     "output": "0x"
   },

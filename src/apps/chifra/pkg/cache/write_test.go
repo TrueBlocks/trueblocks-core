@@ -5,6 +5,8 @@ import (
 	"bytes"
 	"os"
 	"testing"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func TestWriteBlock(t *testing.T) {
@@ -97,3 +99,37 @@ func TestWriteBlock(t *testing.T) {
 // 		}
 // 	}
 // }
+
+func TestWriteAbis(t *testing.T) {
+	// We will write to a buffer
+	var writeBuf bytes.Buffer
+	writer := bufio.NewWriter(&writeBuf)
+
+	testData := make([]types.SimpleFunction, 3)
+	testData[1] = types.SimpleFunction{
+		Encoding: "0xdeadbeef",
+	}
+
+	err := WriteAbis(writer, testData)
+	if err != nil {
+		t.Fatal(err)
+	}
+	// Make sure we've written everything
+	writer.Flush()
+	// result := writeBuf.Bytes()
+
+	// Now read it and compare
+	reader := bufio.NewReader(&writeBuf)
+	result, err := ReadAbis(reader)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if count := len(result); count != len(testData) {
+		t.Fatal("wrong length", count)
+	}
+
+	if enc := result[1].Encoding; enc != testData[1].Encoding {
+		t.Fatal("wrong encoding value", enc)
+	}
+}

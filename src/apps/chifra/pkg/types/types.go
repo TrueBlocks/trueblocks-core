@@ -1,10 +1,11 @@
 package types
 
 import (
+	"encoding/hex"
+	"fmt"
 	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
-	"github.com/bykof/gostradamus"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -15,7 +16,8 @@ type Modeler[Raw RawData] interface {
 
 // TODO: BOGUS - The auto code generation should check that all auto generated fields are included here
 type RawData interface {
-	RawReceipt | RawWhenCount | RawNamedBlock | RawBlock | RawBlockCount | RawTraceAction | RawTraceResult | RawTrace | RawTraceCount
+	RawReceipt | RawWhenCount | RawNamedBlock | RawBlock | RawBlockCount | RawTraceAction |
+		RawTraceResult | RawTrace | RawTraceCount | RawFunction | RawParameter | RawAppearance
 }
 
 type Model struct {
@@ -29,43 +31,65 @@ func (h IpfsHash) String() string {
 	return string(h)
 }
 
+// Address is a wrapper for go-ethereum's Address type that always
+// return lower case hex.
+type Address struct {
+	common.Address
+}
+
+// Hex returns string representation of an address
+func (a *Address) Hex() string {
+	if a.IsZero() {
+		return "0x0"
+	}
+	// This is 1000 ns/op faster than strings.ToLower
+	return "0x" + hex.EncodeToString(a.Bytes())
+}
+
+func (a *Address) String() string {
+	return a.Hex()
+}
+
+func (a Address) Format(s fmt.State, c rune) {
+	s.Write([]byte(a.Hex()))
+}
+
+func (a Address) MarshalText() ([]byte, error) {
+	hex := a.Hex()
+	return []byte(hex), nil
+}
+
+// SetHex sets the address based on the provided string
+func (a *Address) SetHex(hex string) {
+	a.Address = common.HexToAddress(hex)
+}
+
+// IsZero returns true if an addres is a zero value or 0x0.
+func (a *Address) IsZero() bool {
+	// go-ethereum initializes Address.Bytes() with
+	// length, so the slice if filled with 0s. Comparing
+	// strings seem to be the simplest and most efficient
+	// way.
+	zero := common.HexToAddress("0x0")
+	return a.Address.Hex() == zero.Hex()
+}
+
+// HexToAddress returns new address with the given string
+// as value.
+func HexToAddress(hex string) (addr Address) {
+	addr.SetHex(hex)
+	return
+}
+
+func BytesToAddress(b []byte) (addr Address) {
+	addr.SetBytes(b)
+	return
+}
+
 type SimpleTimestamp struct {
 	BlockNumber uint64 `json:"blockNumber"`
 	Timestamp   uint64 `json:"timestamp"`
 	Diff        uint64 `json:"diff"`
-}
-
-type SimpleAppearance struct {
-	Address          string `json:"address"`
-	BlockNumber      uint32 `json:"blockNumber"`
-	TransactionIndex uint32 `json:"transactionIndex"`
-}
-
-type VerboseAppearance struct {
-	Address          string               `json:"address"`
-	BlockNumber      uint32               `json:"blockNumber"`
-	TransactionIndex uint32               `json:"transactionIndex"`
-	Timestamp        uint64               `json:"timestamp"`
-	Date             gostradamus.DateTime `json:"date"`
-}
-
-type SimpleFunction struct {
-	Encoding        string            `json:"encoding,omitempty"`
-	Signature       string            `json:"signature,omitempty"`
-	Name            string            `json:"name"`
-	FunctionType    string            `json:"functionType"`
-	AbiSource       string            `json:"abi_source"`
-	Anonymous       bool              `json:"anonymous"`
-	Constant        bool              `json:"constant"`
-	StateMutability string            `json:"stateMutability"`
-	Inputs          []SimpleParameter `json:"inputs"`
-	Outputs         []SimpleParameter `json:"outputs"`
-}
-
-// TODO: remove this type when we move ABI output to StreamMany
-type SimpleFunctionOutput struct {
-	Encoding  string `json:"encoding,omitempty"`
-	Signature string `json:"signature,omitempty"`
 }
 
 type SimpleMonitor struct {
@@ -128,29 +152,7 @@ type SimpleIndexAddressBelongs struct {
 	Apps    []SimpleIndexAppearance `json:"apps"`
 }
 
-type SimpleName struct {
-	Tags     string `json:"tags"`
-	Address  string `json:"address"`
-	Name     string `json:"name"`
-	Symbol   string `json:"symbol,omitempty"`
-	Source   string `json:"source,omitempty"`
-	Decimals string `json:"decimals,omitempty"`
-	Petname  string `json:"petname,omitempty"`
-}
-
 type Wei = big.Int
 type Gas = uint64
 type Blknum = uint64
 type Topic = string
-
-type SimpleParameter struct {
-	ParameterType string            `json:"parameterType"`
-	Name          string            `json:"name"`
-	StrDefault    string            `json:"strDefault"`
-	Value         string            `json:"value"`
-	Indexed       bool              `json:"indexed"`
-	InternalType  string            `json:"internalType"`
-	Components    []SimpleParameter `json:"components"`
-	Unused        bool              `json:"unused"`
-	IsFlags       uint64            `json:"is_flags"`
-}

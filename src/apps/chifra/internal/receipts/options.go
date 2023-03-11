@@ -9,7 +9,6 @@ package receiptsPkg
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -41,27 +40,6 @@ func (opts *ReceiptsOptions) testLog() {
 func (opts *ReceiptsOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
-}
-
-// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
-func (opts *ReceiptsOptions) getEnvStr() []string {
-	envStr := []string{}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return envStr
-}
-
-// toCmdLine converts the option to a command line for calling out to the system.
-func (opts *ReceiptsOptions) toCmdLine() string {
-	options := ""
-	if opts.Articulate {
-		options += " --articulate"
-	}
-	options += " " + strings.Join(opts.Transactions, " ")
-	// EXISTING_CODE
-	// EXISTING_CODE
-	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
-	return options
 }
 
 // receiptsFinishParseApi finishes the parsing for server invocations. Returns a new ReceiptsOptions.

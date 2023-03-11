@@ -48,8 +48,7 @@ const longDaemon = `Purpose:
 const notesDaemon = `
 Notes:
   - To start API open terminal window and run chifra daemon.
-  - See the API documentation (https://trueblocks.io/api) for more information.
-  - The 'serve' alias is deprecated and will be removed shortly.`
+  - See the API documentation (https://trueblocks.io/api) for more information.`
 
 func init() {
 	daemonCmd.Flags().SortFlags = false

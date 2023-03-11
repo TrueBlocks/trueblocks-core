@@ -17,14 +17,14 @@ import (
 var input = types.SimpleReceipt{
 	BlockHash:         common.Hash{1, 2, 3},
 	BlockNumber:       123,
-	ContractAddress:   common.Address{1, 5, 5},
+	ContractAddress:   types.HexToAddress("0xdafea492d9c6733ae3d56b7ed1adb60692c98bc5"),
 	CumulativeGasUsed: "500",
-	From:              common.Address{1, 5, 6},
+	From:              types.HexToAddress("0xfd4536dd5a81ecfd1a4b30111a01d129e7567ff8"),
 	GasUsed:           500,
 	EffectiveGasPrice: 500,
 	Logs: []types.SimpleLog{
 		{
-			Address:          common.Address{1, 5, 7},
+			Address:          types.HexToAddress("0x02ef66278c3c88ff929a5c84c46fbfb83614382e"),
 			LogIndex:         0,
 			BlockNumber:      124,
 			TransactionIndex: 1,
@@ -32,7 +32,7 @@ var input = types.SimpleReceipt{
 	},
 	Status:           1,
 	IsError:          false,
-	To:               common.Address{1, 5, 8},
+	To:               types.HexToAddress("0x917e5e52ac55098d8caa1709e33178aadd9d4901"),
 	TransactionHash:  common.Hash{1, 2, 4},
 	TransactionIndex: 1,
 }

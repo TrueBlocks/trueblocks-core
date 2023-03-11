@@ -1,0 +1,7 @@
+[settings]
+class = CMember
+fields = member.csv
+includes = utillib.h
+sort = v1.name < v2.name
+equals = name == it.name
+output = ../../dev_tools/makeClass

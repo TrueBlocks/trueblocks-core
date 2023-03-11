@@ -78,10 +78,8 @@ func RouteNames(w http.ResponseWriter, r *http.Request) {
 
 // RouteAbis Fetches the ABI for a smart contract.
 func RouteAbis(w http.ResponseWriter, r *http.Request) {
-	if err, handled := abisPkg.ServeAbis(w, r); err != nil {
+	if err, _ := abisPkg.ServeAbis(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
-	} else if !handled {
-		CallOne(w, r, config.GetPathToCommands("grabABI"), "", "abis")
 	}
 }
 

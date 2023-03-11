@@ -63,6 +63,18 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
 }
 
 //---------------------------------------------------------------------------------------------------
+bool hasValidator(const string_q& route, const string_q& str) {
+    string_q contents = asciiFileToString(getPathToSource("apps/chifra/internal/" + route + "/validate.go"));
+    CStringArray parts;
+    explode(parts, str, '|');
+    for (auto part : parts) {
+        if (!contains(contents, part))
+            return false;
+    }
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
 void COptions::verifyGoEnumValidators(void) {
     for (auto p : cmdOptionArray) {
         if (contains(p.data_type, "enum") && !p.api_route.empty()) {
@@ -71,12 +83,16 @@ void COptions::verifyGoEnumValidators(void) {
             replace(e, "list", "");
             replaceAny(e, "<[*]>", "");
             e = "[" + e + "]";
-            string_q fn = getPathToSource("apps/chifra/internal/" + p.api_route + "/validate.go");
-            string_q contents = asciiFileToString(fn);
-            if (contains(contents, e)) {
-                // cout << cGreen << "HAS: " << fn << ": " << e << cOff << endl;
-            } else {
+            if (!hasValidator(p.api_route, e)) {
                 LOG_WARN("\t", bRed, p.api_route, " has no enum validator for ", e, cOff);
+            }
+        }
+        if (p.generate == "deprecated") {
+            if (!hasValidator(p.api_route, "deprecated|--" + p.longName)) {
+                ostringstream os;
+                os << "The '" << p.api_route << " --" << p.longName
+                   << "' option is deprecated, but no usage message in validate.go";
+                LOG_WARN("\t", bRed, os.str(), cOff);
             }
         }
     }
@@ -184,12 +200,12 @@ bool COptions::handle_gocmds(void) {
                 chifraHelpStream << toChifraHelp(p);
             continue;
         }
-        CCommandOptionArray params;
+        CCommandOptionArray members;
         CCommandOptionArray notes;
         for (auto option : routeOptionArray) {
             bool isOne = option.api_route == p.api_route && isChifraRoute(option, true);
             if (isOne) {
-                params.push_back(option);
+                members.push_back(option);
             }
             if (option.api_route == p.api_route) {
                 if (option.isNote) {
@@ -199,7 +215,7 @@ bool COptions::handle_gocmds(void) {
                 }
             }
         }
-        p.params = &params;
+        p.members = &members;
         p.notes = &notes;
 
         handle_gocmds_cmd(p);
@@ -236,7 +252,7 @@ bool visitEnumItem2(string_q& item, void* data) {
 
 string_q get_use(const CCommandOption& cmd) {
     ostringstream arguments;
-    for (auto p : *((CCommandOptionArray*)cmd.params)) {
+    for (auto p : *((CCommandOptionArray*)cmd.members)) {
         replace(p.longName, "deleteMe", "delete");
         if (p.option_type == "positional") {
             if (arguments.str().empty())
@@ -257,7 +273,7 @@ string_q get_use(const CCommandOption& cmd) {
     }
 
     ostringstream positionals;
-    for (auto p : *((CCommandOptionArray*)cmd.params)) {
+    for (auto p : *((CCommandOptionArray*)cmd.members)) {
         if (p.option_type == "positional") {
             if (!positionals.str().empty())
                 positionals << " ";
@@ -330,14 +346,14 @@ bool isDef(const CCommandOption& p) {
 
 string_q get_godefaults(const CCommandOption& cmd) {
     size_t wid = 0;
-    for (auto p : *((CCommandOptionArray*)cmd.params)) {
+    for (auto p : *((CCommandOptionArray*)cmd.members)) {
         if (!isDef(p)) {
             wid = max(wid, p.Format("[{VARIABLE}]").length());
         }
     }
 
     ostringstream os;
-    for (auto p : *((CCommandOptionArray*)cmd.params)) {
+    for (auto p : *((CCommandOptionArray*)cmd.members)) {
         if (!isDef(p)) {
             string_q val = substitute(p.def_val, "NOPOS", "utils.NOPOS");
             os << "\t" << padRight(p.Format("[{VARIABLE}]") + ": ", wid + 2, ' ') << val << "," << endl;
@@ -350,7 +366,7 @@ string_q get_godefaults(const CCommandOption& cmd) {
 string_q get_testlogs(const CCommandOption& cmd) {
     bool hasConfig = false;
     ostringstream os;
-    for (auto p : *((CCommandOptionArray*)cmd.params)) {
+    for (auto p : *((CCommandOptionArray*)cmd.members)) {
         replace(p.longName, "deleteMe", "delete");
         p.def_val = substitute(p.def_val, "NOPOS", "utils.NOPOS");
         if (p.generate == "config") {
@@ -399,7 +415,7 @@ string_q get_optfields(const CCommandOption& cmd) {
 
     bool hasConfig = 0;
     size_t varWidth = 0, typeWidth = 0;
-    for (auto p : *((CCommandOptionArray*)cmd.params)) {
+    for (auto p : *((CCommandOptionArray*)cmd.members)) {
         if (p.generate == "config") {
             string_q var = p.Format("Settings");
             varWidth = max(var.length(), varWidth);
@@ -436,7 +452,7 @@ string_q get_optfields(const CCommandOption& cmd) {
     os << "// " << firstUpper(c) << endl;
 
     ostringstream os;
-    for (auto p : *((CCommandOptionArray*)cmd.params)) {
+    for (auto p : *((CCommandOptionArray*)cmd.members)) {
         if (p.generate == "config") {
             ostringstream dd;
             if (!hasConfig) {
@@ -476,7 +492,7 @@ string_q get_optfields(const CCommandOption& cmd) {
 }
 
 string_q get_config_override(const CCommandOption& cmd) {
-    for (auto p : *((CCommandOptionArray*)cmd.params))
+    for (auto p : *((CCommandOptionArray*)cmd.members))
         if (p.generate == "config") {
             ostringstream os;
             os << "\t"
@@ -488,7 +504,7 @@ string_q get_config_override(const CCommandOption& cmd) {
 }
 
 string_q get_config_package(const CCommandOption& cmd) {
-    for (auto p : *((CCommandOptionArray*)cmd.params))
+    for (auto p : *((CCommandOptionArray*)cmd.members))
         if (p.generate == "config")
             return "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/" + cmd.api_route + "Cfg\"\n";
     return "";
@@ -496,7 +512,7 @@ string_q get_config_package(const CCommandOption& cmd) {
 
 string_q get_defaults_apis(const CCommandOption& cmd) {
     ostringstream os;
-    for (auto p : *((CCommandOptionArray*)cmd.params)) {
+    for (auto p : *((CCommandOptionArray*)cmd.members)) {
         if (p.isDeprecated) {
             continue;
         }
@@ -522,7 +538,7 @@ string_q get_defaults_apis(const CCommandOption& cmd) {
 
 string_q get_requestopts(const CCommandOption& cmd) {
     ostringstream os;
-    for (auto p : *((CCommandOptionArray*)cmd.params)) {
+    for (auto p : *((CCommandOptionArray*)cmd.members)) {
         replace(p.longName, "deleteMe", "delete");
         string_q low = toCamelCase(p.Format("[{LOWER}]"));
         string_q fmt;
@@ -602,7 +618,7 @@ const char* STR_POSITIONALS1 = "\toptions += \" \" + strings.Join(opts.[{VARIABL
 //---------------------------------------------------------------------------------------------------
 string_q get_positionals2(const CCommandOption& cmd) {
     ostringstream os;
-    for (auto p : *((CCommandOptionArray*)cmd.params))
+    for (auto p : *((CCommandOptionArray*)cmd.members))
         if (p.option_type == "positional")
             os << p.Format(STR_POSITIONALS1) << endl;
     if (os.str().empty())
@@ -612,7 +628,7 @@ string_q get_positionals2(const CCommandOption& cmd) {
 
 string_q get_hidden(const CCommandOption& cmd) {
     ostringstream os;
-    for (auto p : *((CCommandOptionArray*)cmd.params)) {
+    for (auto p : *((CCommandOptionArray*)cmd.members)) {
         replace(p.longName, "deleteMe", "delete");
         if (!p.is_visible) {
             os << "\t\t[{ROUTE}]Cmd.Flags().MarkHidden(\"" + p.Format("[{LONGNAME}]") + "\")" << endl;
@@ -632,7 +648,7 @@ string_q get_hidden(const CCommandOption& cmd) {
 
 string_q get_setopts(const CCommandOption& cmd) {
     ostringstream os;
-    for (auto p : *((CCommandOptionArray*)cmd.params)) {
+    for (auto p : *((CCommandOptionArray*)cmd.members)) {
         if (p.option_type != "positional") {
             replace(p.longName, "deleteMe", "delete");
             os << "\t[{ROUTE}]Cmd.Flags().";
@@ -651,7 +667,7 @@ string_q get_setopts(const CCommandOption& cmd) {
 
 string_q get_copyopts(const CCommandOption& cmd) {
     ostringstream os;
-    for (auto p : *((CCommandOptionArray*)cmd.params)) {
+    for (auto p : *((CCommandOptionArray*)cmd.members)) {
         if (p.isDeprecated || p.codeLoc() == GOCMD)
             continue;
 

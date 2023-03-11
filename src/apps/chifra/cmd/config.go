@@ -49,9 +49,7 @@ const shortConfig = "report on and edit the configuration of the TrueBlocks syst
 const longConfig = `Purpose:
   Report on and edit the configuration of the TrueBlocks system.`
 
-const notesConfig = `
-Notes:
-  - The 'status' alias is deprecated and will be removed shortly.`
+const notesConfig = ``
 
 func init() {
 	configCmd.Flags().SortFlags = false

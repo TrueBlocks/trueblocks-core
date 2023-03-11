@@ -555,7 +555,7 @@
             },
             {
                 "name": "_requestType",
-                "type": "RequestType"
+                "type": "uint8"
             }
         ],
         "name": "doesRequestMatch",
@@ -1321,7 +1321,6 @@
         "name": "Message",
         "outputs": [],
         "type": "event"
-    },
+    }
 
 ]
-

@@ -28,7 +28,6 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------------
 void COptionsBase::registerOptions(size_t nP, COption const* pP, uint32_t on, uint32_t off) {
-    // TODO(tjayrush): global data
     arguments.clear();
     if (parameters.empty()) {
         for (size_t i = 0; i < nP; i++)
@@ -41,7 +40,6 @@ void COptionsBase::registerOptions(size_t nP, COption const* pP, uint32_t on, ui
 }
 
 //--------------------------------------------------------------------------------
-// TODO(tjayrush): global data - but okay, a program only has one name
 string_q COptionsBase::g_progName = "trueBlocks";
 
 //--------------------------------------------------------------------------------
@@ -729,7 +727,6 @@ static bool sortByValue(const CNameValue& p1, const CNameValue& p2) {
 }
 
 //-----------------------------------------------------------------------
-// TODO(tjayrush): global data
 // TODO(tjayrush): Can we remove this since this is all processed in the go code?
 // TODO(tjayrush): Almost - if we convert specials to block numbers before calling into the C++
 CNameValueArray COptionsBase::specials;

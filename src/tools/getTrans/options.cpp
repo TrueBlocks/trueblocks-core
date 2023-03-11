@@ -27,7 +27,6 @@ static const COption params[] = {
     COption("flow", "f", "enum[from|to]", OPT_FLAG, "for the uniq option only, export only from or to (including trace from or to)"),  // NOLINT
     COption("account_for", "A", "<address>", OPT_FLAG, "reconcile the transaction as per the provided address"),
     COption("cache", "o", "", OPT_SWITCH, "force the results of the query into the tx cache (and the trace cache if applicable)"),  // NOLINT
-    COption("source", "s", "", OPT_HIDDEN | OPT_SWITCH, "find the source of the funds sent to the receiver"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve one or more transactions from the chain or local cache."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -57,7 +56,7 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "--trace") {
             // clang-format off
-            return usage("the --trace option is deprecated, please use traces option instead");  // NOLINT
+            return usage("the --trace option is deprecated, please use the --traces option instead");  // NOLINT
             // clang-format on
 
         } else if (arg == "-u" || arg == "--uniq") {
@@ -71,7 +70,7 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-r" || arg == "--reconcile") {
             // clang-format off
-            return usage("the --reconcile option is deprecated, please use account_for option instead");  // NOLINT
+            return usage("the --reconcile option is deprecated, please use --account_for option instead");  // NOLINT
             // clang-format on
 
         } else if (startsWith(arg, "-A:") || startsWith(arg, "--account_for:")) {
@@ -83,9 +82,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-o" || arg == "--cache") {
             cache = true;
-
-        } else if (arg == "-s" || arg == "--source") {
-            source = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -117,7 +113,7 @@ bool COptions::parseArguments(string_q& command) {
         manageFields("CParameter:strDefault", false);                                              // hide
         manageFields("CTransaction:price", false);                                                 // hide
         manageFields("CTransaction:input", true);                                                  // show
-        manageFields("CLogEntry:data,topics", true);                                               // show
+        manageFields("CLog:data,topics", true);                                                    // show
         manageFields("CTrace: blockHash, blockNumber, transactionHash, transactionIndex", false);  // hide
         abi_spec.loadAbisFromKnown();
     } else {
@@ -151,15 +147,6 @@ bool COptions::parseArguments(string_q& command) {
         configureDisplay("getTrans", "CTransaction", fmt);
     }
 
-    if (source) {
-        LOG_WARN("The --source option is unsupported. Use at your own risk.");
-        if (!fileExists("./whiteList.csv")) {
-            return usage("./whiteList.csv file is required for this option.");
-        }
-        expContext().exportFmt = CSV1;
-        expContext().fmtMap["header"] = "";
-    }
-
     return true;
 }
 
@@ -175,7 +162,6 @@ void COptions::Init(void) {
     uniq = false;
     flow = "";
     cache = false;
-    source = false;
     // END_CODE_INIT
 
     transList.Init();

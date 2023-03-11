@@ -39,7 +39,7 @@ type RawTrace struct {
 
 type SimpleTrace struct {
 	Action           *SimpleTraceAction `json:"action"`
-	ArticulatedTrace *SimpleFunction    `json:"articulatedTrace"`
+	ArticulatedTrace *SimpleFunction    `json:"articulatedTrace,omitempty"`
 	BlockHash        common.Hash        `json:"blockHash"`
 	BlockNumber      uint64             `json:"blockNumber"`
 	CompressedTrace  string             `json:"compressedTrace,omitempty"`
@@ -67,7 +67,6 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
-		"articulatedTrace": s.ArticulatedTrace,
 		"blockHash":        s.BlockHash,
 		"blockNumber":      s.BlockNumber,
 		"result":           s.Result,
@@ -109,6 +108,20 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 		if s.Result != nil {
 			model["result"] = s.Result.Model(showHidden, format, extraOptions).Data
 		}
+
+		if s.ArticulatedTrace != nil && extraOptions["articulate"] == true {
+			inputModels := ParametersToMap(s.ArticulatedTrace.Inputs)
+			outputModels := ParametersToMap(s.ArticulatedTrace.Outputs)
+			articulatedTrace := map[string]interface{}{
+				"name":    s.ArticulatedTrace.Name,
+				"inputs":  inputModels,
+				"outputs": outputModels,
+			}
+			if s.ArticulatedTrace.StateMutability != "" && s.ArticulatedTrace.StateMutability != "nonpayable" {
+				articulatedTrace["stateMutability"] = s.ArticulatedTrace.StateMutability
+			}
+			model["articulatedTrace"] = articulatedTrace
+		}
 	} else {
 		to := hexutil.Encode(s.Action.To.Bytes())
 		if to == "0x0000000000000000000000000000000000000000" {
@@ -118,14 +131,13 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 		model["blockNumber"] = s.BlockNumber
 		model["transactionIndex"] = s.TransactionIndex
 		model["error"] = s.Error
-		model["compressedTrace"] = s.CompressedTrace
 		model["timestamp"] = s.Timestamp
 		if s.Action != nil {
 			model["action::callType"] = s.Action.CallType
 			model["action::gas"] = s.Action.Gas
 			model["action::input"] = s.Action.Input
-			if len(s.Action.RefundAddress) > 0 && s.Action.RefundAddress != common.HexToAddress("0x0") {
-				model["action::from"] = hexutil.Encode(s.Action.Address.Bytes())
+			if !s.Action.RefundAddress.IsZero() {
+				model["action::from"] = hexutil.Encode(s.Action.From.Bytes())
 				model["action::to"] = hexutil.Encode(s.Action.RefundAddress.Bytes())
 				model["action::value"] = s.Action.Balance.String()
 				model["action::ether"] = utils.WeiToEther(&s.Action.Balance)
@@ -144,6 +156,11 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 		} else {
 			model["result::gasUsed"] = "0"
 			model["result::output"] = ""
+		}
+
+		model["compressedTrace"] = ""
+		if s.ArticulatedTrace != nil {
+			model["compressedTrace"] = s.CompressedTrace
 		}
 	}
 	// EXISTING_CODE
@@ -212,12 +229,12 @@ func GetTracesByTransactionId(chain string, bn, txid uint64) ([]SimpleTrace, err
 		return ret, err
 	}
 
-	return GetTracesByTransactionHash(chain, txHash)
+	return GetTracesByTransactionHash(chain, txHash, nil)
 }
 
 // GetTracesCountByTransactionHash returns the number of traces in a given transaction
 func GetTracesCountByTransactionHash(chain string, txHash string) (uint64, error) {
-	traces, err := GetTracesByTransactionHash(chain, txHash)
+	traces, err := GetTracesByTransactionHash(chain, txHash, nil)
 	if err != nil {
 		return 0, err
 	}
@@ -225,7 +242,7 @@ func GetTracesCountByTransactionHash(chain string, txHash string) (uint64, error
 }
 
 // GetTracesByTransactionHash returns a slice of traces in a given transaction's hash
-func GetTracesByTransactionHash(chain string, txHash string) ([]SimpleTrace, error) {
+func GetTracesByTransactionHash(chain string, txHash string, transaction *SimpleTransaction) ([]SimpleTrace, error) {
 	method := "trace_transaction"
 	params := rpc.Params{txHash}
 
@@ -245,15 +262,15 @@ func GetTracesByTransactionHash(chain string, txHash string) ([]SimpleTrace, err
 
 			action := SimpleTraceAction{
 				CallType:       rawTrace.Action.CallType,
-				From:           common.HexToAddress(rawTrace.Action.From),
+				From:           HexToAddress(rawTrace.Action.From),
 				Gas:            mustParseUint(rawTrace.Action.Gas),
 				Input:          rawTrace.Action.Input,
-				To:             common.HexToAddress(rawTrace.Action.To),
+				To:             HexToAddress(rawTrace.Action.To),
 				Value:          *value,
 				Balance:        *balance,
-				Address:        common.HexToAddress(rawTrace.Action.Address),
-				RefundAddress:  common.HexToAddress(rawTrace.Action.RefundAddress),
-				SelfDestructed: common.HexToAddress(rawTrace.Action.SelfDestructed),
+				Address:        HexToAddress(rawTrace.Action.Address),
+				RefundAddress:  HexToAddress(rawTrace.Action.RefundAddress),
+				SelfDestructed: HexToAddress(rawTrace.Action.SelfDestructed),
 				Init:           rawTrace.Action.Init,
 			}
 			action.SetRaw(&rawTrace.Action)
@@ -265,11 +282,8 @@ func GetTracesByTransactionHash(chain string, txHash string) ([]SimpleTrace, err
 					Output:  rawTrace.Result.Output,
 					Code:    rawTrace.Result.Code,
 				}
-				if len(rawTrace.Result.NewContract) > 0 {
-					result.NewContract = common.HexToAddress(rawTrace.Result.NewContract)
-				} else if len(rawTrace.Result.Address) > 0 {
-					result.NewContract = common.HexToAddress(rawTrace.Result.Address)
-					result.NewContract = common.HexToAddress(rawTrace.Result.Address)
+				if len(rawTrace.Result.Address) > 0 {
+					result.Address = HexToAddress(rawTrace.Result.Address)
 				}
 				result.SetRaw(rawTrace.Result)
 			}
@@ -285,6 +299,9 @@ func GetTracesByTransactionHash(chain string, txHash string) ([]SimpleTrace, err
 				Type:             rawTrace.Type,
 				Action:           &action,
 				Result:           result,
+			}
+			if transaction != nil {
+				trace.Timestamp = transaction.Timestamp
 			}
 			trace.SetRaw(&rawTrace)
 			ret = append(ret, trace)

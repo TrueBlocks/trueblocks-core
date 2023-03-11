@@ -13,6 +13,16 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------------
+hash_t namehash(const string_q& domainIn) {
+    CStringArray parts;
+    explode(parts, domainIn, '.');
+    hash_t node = "0x" + string_q(64, '0');
+    for (auto part : parts)
+        node = keccak256(node + keccak256(part));
+    return "Doesn't work: " + node;
+}
+
+//-----------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
 

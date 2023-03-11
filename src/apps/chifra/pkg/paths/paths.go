@@ -13,6 +13,7 @@ const (
 	Index_Staging
 	Index_Ripe
 	Index_Unripe
+	Cache_Abis
 )
 
 func (ct CacheType) String() string {
@@ -23,6 +24,7 @@ func (ct CacheType) String() string {
 		Index_Staging: "staging",
 		Index_Ripe:    "ripe",
 		Index_Unripe:  "unripe",
+		Cache_Abis:    "abis",
 	}
 	return descrs[ct]
 }

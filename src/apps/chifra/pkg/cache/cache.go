@@ -10,12 +10,14 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	filePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/ethereum/go-ethereum/accounts/abi"
 )
 
 // Any data structure that we know how to cache
 type cacheable interface {
-	types.SimpleBlock[types.SimpleTransaction] |
-		types.SimpleTransaction
+	*types.SimpleBlock[types.SimpleTransaction] |
+		*types.SimpleTransaction |
+		[]types.SimpleFunction
 }
 
 // getCacheAndChainPath returns path to cache for given chain
@@ -71,13 +73,15 @@ func remove(chain string, filePath string) (err error) {
 func setItem[Data cacheable](
 	chain string,
 	filePath string,
-	value *Data,
-	write func(w *bufio.Writer, d *Data) error,
+	value Data,
+	write func(w *bufio.Writer, d Data) error,
 ) (err error) {
 	buf := bytes.Buffer{}
 	writer := bufio.NewWriter(&buf)
-	err = write(writer, value)
-	if err != nil {
+	if err = write(writer, value); err != nil {
+		return
+	}
+	if err = writer.Flush(); err != nil {
 		return
 	}
 	reader := bytes.NewReader(buf.Bytes())
@@ -89,8 +93,8 @@ func setItem[Data cacheable](
 func getItem[Data cacheable](
 	chain string,
 	filePath string,
-	read func(w *bufio.Reader) (*Data, error),
-) (value *Data, err error) {
+	read func(w *bufio.Reader) (Data, error),
+) (value Data, err error) {
 	file, err := load(chain, filePath)
 	if err != nil {
 		return
@@ -143,7 +147,7 @@ func SetTransaction(chain string, tx *types.SimpleTransaction) (err error) {
 	)
 }
 
-// GetTransaction reads transactiono from the cache
+// GetTransaction reads transaction from the cache
 func GetTransaction(chain string, blockNumber types.Blknum, txIndex uint64) (tx *types.SimpleTransaction, err error) {
 	filePath := getPathByBlockAndTransactionIndex(ItemTransaction, blockNumber, txIndex)
 
@@ -152,4 +156,97 @@ func GetTransaction(chain string, blockNumber types.Blknum, txIndex uint64) (tx 
 		filePath,
 		ReadTransaction,
 	)
+}
+
+var abisFilePath = path.Join(itemToDirectory[ItemABI], "known.bin")
+
+// GetAbis reads all ABIs stored in the cache
+func GetAbis(chain string) (abis []types.SimpleFunction, err error) {
+	return getItem(
+		chain,
+		abisFilePath,
+		ReadAbis,
+	)
+}
+
+// SetAbis writes ABIs to the cache
+func SetAbis(chain string, abis []types.SimpleFunction) (err error) {
+	return setItem(
+		chain,
+		abisFilePath,
+		abis,
+		WriteAbis,
+	)
+}
+
+// GetAbi returns single ABI per address. ABI-per-address are stored as JSON, not binary.
+func GetAbi(chain string, address types.Address) (simpleAbis []types.SimpleFunction, err error) {
+	fileName := address.Hex() + ".json"
+	filePath := path.Join(
+		itemToDirectory[ItemABI],
+		fileName,
+	)
+	file, err := load(chain, filePath)
+	if err != nil {
+		return
+	}
+	defer file.Close()
+
+	ethAbi, err := abi.JSON(file)
+	if err != nil {
+		return
+	}
+
+	functions := make([]types.SimpleFunction, 0, len(ethAbi.Methods))
+	for _, method := range ethAbi.Methods {
+		method := method
+		functions = append(functions, *types.FunctionFromAbiMethod(&method, fileName))
+	}
+
+	events := make([]types.SimpleFunction, 0, len(ethAbi.Events))
+	for _, event := range ethAbi.Events {
+		event := event
+		events = append(events, *types.FunctionFromAbiEvent(&event, fileName))
+	}
+
+	simpleAbis = append(functions, events...)
+	return
+}
+
+// SetAbi writes single ABI to cache. ABI-per-address are stored as JSON, not binary.
+// TODO: we cache abi.ABI, not types.SimpleFunction
+// func SetAbi(chain string, address types.Address, abi []types.SimpleFunction) (err error) {
+// 	filePath := path.Join(
+// 		itemToDirectory[ItemABI],
+// 		address.Hex()+".json",
+// 	)
+
+// 	rawBytes, err := json.Marshal(abi)
+// 	if err != nil {
+// 		return
+// 	}
+// 	reader := bytes.NewReader(rawBytes)
+// 	return save(chain, filePath, reader)
+// }
+
+// InsertAbi copies file (e.g. opened local file) into cache
+func InsertAbi(chain string, address types.Address, inputReader io.Reader) (err error) {
+	filePath := path.Join(
+		itemToDirectory[ItemABI],
+		address.Hex()+".json",
+	)
+	cacheDir := getCacheAndChainPath(chain)
+	fullPath := path.Join(cacheDir, filePath)
+
+	file, err := os.OpenFile(fullPath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666)
+	if err != nil {
+		return
+	}
+	defer file.Close()
+
+	if _, err = io.Copy(file, inputReader); err != nil {
+		return
+	}
+
+	return
 }

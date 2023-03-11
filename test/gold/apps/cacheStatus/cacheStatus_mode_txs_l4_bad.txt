@@ -30,5 +30,3 @@ Flags:
   -v, --verbose            enable verbose (increase detail with --log_level)
   -h, --help               display this help screen
 
-Notes:
-  - The 'status' alias is deprecated and will be removed shortly.

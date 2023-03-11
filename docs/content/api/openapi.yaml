@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.55.0-beta
+  version: 0.60.0-beta
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra daemon`, you can
@@ -617,7 +617,7 @@ paths:
           schema:
             type: boolean
         - name: all
-          description: include all accounts in the search
+          description: include all (including custom) names in the search
           required: false
           style: form
           in: query
@@ -625,7 +625,7 @@ paths:
           schema:
             type: boolean
         - name: custom
-          description: include your custom named accounts
+          description: include only custom named accounts in the search
           required: false
           style: form
           in: query
@@ -633,15 +633,7 @@ paths:
           schema:
             type: boolean
         - name: prefund
-          description: include prefund accounts
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: named
-          description: include well know token and airdrop addresses in the search
+          description: include prefund accounts in the search
           required: false
           style: form
           in: query
@@ -649,7 +641,8 @@ paths:
           schema:
             type: boolean
         - name: addr
-          description: display only addresses in the results (useful for scripting)
+          description: >
+            display only addresses in the results (useful for scripting, assumes --no_header)
           required: false
           style: form
           in: query
@@ -658,6 +651,14 @@ paths:
             type: boolean
         - name: tags
           description: export the list of tags and subtags only
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: named
+          description: please use the --all option instead
           required: false
           style: form
           in: query
@@ -741,14 +742,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: sol
-          description: extract the abi definition from the provided .sol file(s)
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: find
           description: search for function or event declarations given a four- or 32-byte code(s)
           required: false
@@ -771,6 +764,24 @@ paths:
             items:
               type: string
               format: string
+        - name: encode
+          description: >
+            generate the 32-byte encoding for a given cannonical function or event signature
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: clean
+          description: >
+            remove an abi file for an address or all zero-length files if no address is given
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data
@@ -2315,10 +2326,6 @@ components:
           type: boolean
           example: true
           description: "flag indicating the system considers this data final"
-        unclesCnt:
-          type: number
-          format: uint64
-          description: "the number of uncles in this block"
     transaction:
       description: "transaction data as returned from the RPC (with slight enhancements)"
       type: object
@@ -2657,7 +2664,7 @@ components:
       description: "trace result data as returned from the RPC (with slight enhancements)"
       type: object
       properties:
-        newContract:
+        address:
           type: string
           format: address
           example: "0xf503...179b"

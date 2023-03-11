@@ -62,10 +62,10 @@ func GetMetaData(chain string, testmode bool) (*MetaData, error) {
 	filenameChan := make(chan paths.IndexFileInfo)
 
 	var nRoutines int = 4
-	go paths.WalkCacheFolder(chain, paths.Index_Final, filenameChan)
-	go paths.WalkCacheFolder(chain, paths.Index_Staging, filenameChan)
-	go paths.WalkCacheFolder(chain, paths.Index_Ripe, filenameChan)
-	go paths.WalkCacheFolder(chain, paths.Index_Unripe, filenameChan)
+	go paths.WalkIndexFolder(chain, paths.Index_Final, filenameChan)
+	go paths.WalkIndexFolder(chain, paths.Index_Staging, filenameChan)
+	go paths.WalkIndexFolder(chain, paths.Index_Ripe, filenameChan)
+	go paths.WalkIndexFolder(chain, paths.Index_Unripe, filenameChan)
 
 	for result := range filenameChan {
 		switch result.Type {

@@ -163,8 +163,8 @@ func (p *Point) resolvePoint(chain string) uint64 {
 	return bn
 }
 
-func (id *Identifier) ResolveTxs(chain string) ([]types.SimpleAppearance, error) {
-	txs := []types.SimpleAppearance{}
+func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
+	txs := []types.RawAppearance{}
 
 	if id.StartType == BlockNumber {
 		if id.Modifier.Period == "all" {
@@ -174,14 +174,14 @@ func (id *Identifier) ResolveTxs(chain string) ([]types.SimpleAppearance, error)
 				return txs, err
 			}
 			for i := uint32(0); i < uint32(cnt); i++ {
-				app := types.SimpleAppearance{BlockNumber: uint32(id.Start.Number), TransactionIndex: i}
+				app := types.RawAppearance{BlockNumber: uint32(id.Start.Number), TransactionIndex: i}
 				txs = append(txs, app)
 			}
 			return txs, nil
 		}
 
 		if id.EndType == TransactionIndex {
-			app := types.SimpleAppearance{BlockNumber: uint32(id.Start.Number), TransactionIndex: uint32(id.End.Number)}
+			app := types.RawAppearance{BlockNumber: uint32(id.Start.Number), TransactionIndex: uint32(id.End.Number)}
 			return append(txs, app), nil
 		}
 
@@ -197,24 +197,24 @@ func (id *Identifier) ResolveTxs(chain string) ([]types.SimpleAppearance, error)
 				return txs, err
 			}
 			for i := uint32(0); i < uint32(cnt); i++ {
-				app := types.SimpleAppearance{BlockNumber: uint32(id.Start.resolvePoint(chain)), TransactionIndex: i}
+				app := types.RawAppearance{BlockNumber: uint32(id.Start.resolvePoint(chain)), TransactionIndex: i}
 				txs = append(txs, app)
 			}
 			return txs, nil
 		}
 
-		app := types.SimpleAppearance{BlockNumber: uint32(id.Start.resolvePoint(chain)), TransactionIndex: uint32(id.End.Number)}
+		app := types.RawAppearance{BlockNumber: uint32(id.Start.resolvePoint(chain)), TransactionIndex: uint32(id.End.Number)}
 		return append(txs, app), nil
 	}
 
 	if id.StartType == TransactionHash {
 		provider := config.GetRpcProvider(chain)
 		bn, txid, err := rpcClient.TxNumberAndIdFromHash(provider, id.Start.Hash)
-		app := types.SimpleAppearance{BlockNumber: uint32(bn), TransactionIndex: uint32(txid)}
+		app := types.RawAppearance{BlockNumber: uint32(bn), TransactionIndex: uint32(txid)}
 		return append(txs, app), err
 	}
 
-	app := types.SimpleAppearance{BlockNumber: uint32(0), TransactionIndex: uint32(0)}
+	app := types.RawAppearance{BlockNumber: uint32(0), TransactionIndex: uint32(0)}
 	msg := fmt.Sprintf("unknown transaction type %s", id)
 	return append(txs, app), errors.New(msg)
 }
@@ -338,12 +338,12 @@ func GetBlockNumbers(chain string, ids []Identifier) ([]uint64, error) {
 	return nums, nil
 }
 
-func GetTransactionIds(chain string, ids []Identifier) ([]types.SimpleAppearance, error) {
-	var txids []types.SimpleAppearance
+func GetTransactionIds(chain string, ids []Identifier) ([]types.RawAppearance, error) {
+	var txids []types.RawAppearance
 	for _, br := range ids {
 		blockNums, err := br.ResolveTxs(chain)
 		if err != nil {
-			return []types.SimpleAppearance{}, err
+			return []types.RawAppearance{}, err
 		}
 		txids = append(txids, blockNums...)
 	}

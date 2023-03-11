@@ -26,10 +26,10 @@ type TransactionsOptions struct {
 	TransactionIds []identifiers.Identifier `json:"transactionIds,omitempty"` // Transaction identifiers
 	Articulate     bool                     `json:"articulate,omitempty"`     // Articulate the retrieved data if ABIs can be found
 	Traces         bool                     `json:"traces,omitempty"`         // Include the transaction's traces in the results
-	Trace          bool                     `json:"trace,omitempty"`          // Please use traces option instead
+	Trace          bool                     `json:"trace,omitempty"`          // Please use the --traces option instead
 	Uniq           bool                     `json:"uniq,omitempty"`           // Display a list of uniq addresses found in the transaction
 	Flow           string                   `json:"flow,omitempty"`           // For the uniq option only, export only from or to (including trace from or to)
-	Reconcile      string                   `json:"reconcile,omitempty"`      // Please use account_for option instead
+	Reconcile      string                   `json:"reconcile,omitempty"`      // Please use --account_for option instead
 	AccountFor     string                   `json:"accountFor,omitempty"`     // Reconcile the transaction as per the provided address
 	Cache          bool                     `json:"cache,omitempty"`          // Force the results of the query into the tx cache (and the trace cache if applicable)
 	Source         bool                     `json:"source,omitempty"`         // Find the source of the funds sent to the receiver
@@ -87,9 +87,6 @@ func (opts *TransactionsOptions) toCmdLine() string {
 	if opts.Cache {
 		options += " --cache"
 	}
-	if opts.Source {
-		options += " --source"
-	}
 	options += " " + strings.Join(opts.Transactions, " ")
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -135,7 +132,7 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
-	opts.AccountFor = ens.ConvertOneEns(opts.Globals.Chain, opts.AccountFor)
+	opts.AccountFor, _ = ens.ConvertOneEns(opts.Globals.Chain, opts.AccountFor)
 	if len(opts.AccountFor) == 0 && len(opts.Reconcile) > 0 {
 		opts.AccountFor = opts.Reconcile
 	}
@@ -154,12 +151,13 @@ func transactionsFinishParse(args []string) *TransactionsOptions {
 	defFmt := "txt"
 	// EXISTING_CODE
 	opts.Transactions = args
-	opts.AccountFor = ens.ConvertOneEns(opts.Globals.Chain, opts.AccountFor)
+	opts.AccountFor, _ = ens.ConvertOneEns(opts.Globals.Chain, opts.AccountFor)
 	if len(opts.AccountFor) == 0 && len(opts.Reconcile) > 0 {
 		opts.AccountFor = opts.Reconcile
 	}
-	if !opts.Traces {
-		opts.Traces = opts.Trace
+	if !opts.Traces && opts.Trace {
+		opts.Traces = true
+		logger.Log(logger.Warning, "Note: the --trace option has been replaced with --traces")
 	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {

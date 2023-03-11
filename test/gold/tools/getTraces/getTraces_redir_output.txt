@@ -17,7 +17,6 @@ Results in ./output_test_file
         "to": "0xaf30d2a7e90d7dc361c8c4585e9bb7d2f6f15bc7",
         "value": "0"
       },
-      "articulatedTrace": null,
       "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
       "blockNumber": 3657480,
       "result": {

@@ -29,6 +29,7 @@ bool CLedgerManager::getStatements(CTransaction& trans) {
     searchOp = RECONCILE;
     getTransfers(trans);
 
+    bool hasBogus = false;
     for (size_t i = 0; i < transfers.size(); i++) {
         CTransfer& transfer = transfers[i];
         if (filterByAsset(transfer.assetAddr)) {
@@ -63,17 +64,43 @@ bool CLedgerManager::getStatements(CTransaction& trans) {
 
             statement.prevAppBlk = ledgers[tokenKey].blockNumber;
             statement.prevBal = ledgers[tokenKey].balance;
-            statement.reconcileBalances(isPrevDiff, isNextDiff);
-            if (statement.amountNet() != 0) {
+            bigint_t begBal, endBal;
+            bool isBogus = false;
+            if (!statement.reconcileBalances(isPrevDiff, isNextDiff, begBal, endBal)) {
+                // This fixes a lot of unreconciled transactions. We need to do this because sometimes
+                // hackers send events but do not change balances. We need to be able to detect this
+                // and skip these events. We do this by looking for a large number of events and
+                // no balance change. If we find this, we call it a 'bogus' transfer and skip it.
+                // A better method would have been to query the number of state changes in the
+                // transaction, but that's not available in the logs. So, we have to do this.
+                bool lotsOfLogs = trans.receipt.logs.size() > 49;
+                bool mayBeAirdrop = isZeroAddr(transfer.sender) || transfer.sender == trans.to;
+                bool noBalanceChange = (begBal == endBal);
+                if ((lotsOfLogs || mayBeAirdrop) && noBalanceChange) {
+                    // Sometimes, people generate events but do not change balances. Call FakeFishing on Etherscan
+                    // LOG_WARN("Probably bogus transfer skipped: ", trans.hash);
+                    statement.reconciliationType = "skipped";
+                    statement.internalOut = statement.amountNet();
+                    isBogus = true;
+                }
+            }
+            if (statement.amountNet() != 0 || isBogus) {
                 trans.statements.push_back(statement);
                 ledgers[tokenKey] = statement;
             }
+            hasBogus |= isBogus;
         }
     }
 
     for (size_t s = 0; s < trans.statements.size(); s++) {
         CReconciliation* st = &trans.statements[s];
         st->spotPrice = getPriceInUsd(st->assetAddr, st->priceSource, st->blockNumber);
+    }
+
+    if (hasBogus) {
+        // We've determined that this transaction has bogus transfers. Cache this tx
+        // since it's probably all bogus.
+        trans.cacheConditional(accountedFor, false);
     }
 
     return !shouldQuit();
@@ -154,7 +181,7 @@ bool CLedgerManager::getTransfers(const CTransaction& trans) {
                 transfer.transactionHash = trans.hash;
                 transfer.encoding = encoding;
                 transfer.assetAddr = log.address;
-                transfer.log = (CLogEntry*)&log;  // TODO: for debugging only, can be removed
+                transfer.log = (CLog*)&log;  // TODO: for debugging only, can be removed
 
                 transfer.assetSymbol = tokenName.symbol;
                 if (transfer.assetSymbol.empty()) {

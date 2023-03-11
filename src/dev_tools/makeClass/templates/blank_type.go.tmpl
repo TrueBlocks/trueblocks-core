@@ -11,17 +11,17 @@ package types
 // EXISTING_CODE
 // EXISTING_CODE
 
-type Raw[{CLASS_NAME}] struct {
+type [{RAW_NAME}] struct {
 [{RAWFIELDS}]}
 
 type Simple[{CLASS_NAME}] struct {
 [{FIELDS}]}
 
-func (s *Simple[{CLASS_NAME}]) Raw() *Raw[{CLASS_NAME}] {
+func (s *Simple[{CLASS_NAME}]) Raw() *[{RAW_NAME}] {
 	return s.raw
 }
 
-func (s *Simple[{CLASS_NAME}]) SetRaw(raw *Raw[{CLASS_NAME}]) {
+func (s *Simple[{CLASS_NAME}]) SetRaw(raw *[{RAW_NAME}]) {
 	s.raw = raw
 }
 

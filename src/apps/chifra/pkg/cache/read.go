@@ -3,6 +3,7 @@ package cache
 import (
 	"bufio"
 	"encoding/binary"
+	"encoding/json"
 	"errors"
 	"math/big"
 
@@ -37,11 +38,12 @@ func createReadFn(reader *bufio.Reader) readBytes {
 type ArrayItem interface {
 	~string |
 		common.Hash |
-		common.Address |
+		types.Address |
 		types.SimpleTransaction |
 		types.SimpleTrace |
 		types.SimpleParameter |
-		types.SimpleLog
+		types.SimpleLog |
+		types.SimpleFunction
 }
 
 // readFromArray converts binary array into slice of type Item
@@ -97,13 +99,13 @@ func readCString(reader *bufio.Reader, str *cString) (err error) {
 	return
 }
 
-func readAddress(reader *bufio.Reader, target *common.Address) (err error) {
+func readAddress(reader *bufio.Reader, target *types.Address) (err error) {
 	str := &cString{}
 	err = readCString(reader, str)
 	if err != nil {
 		return
 	}
-	addr := common.HexToAddress(string(str.content))
+	addr := types.HexToAddress(string(str.content))
 	*target = addr
 	return
 }
@@ -605,8 +607,11 @@ func ReadParameter(reader *bufio.Reader) (param *types.SimpleParameter, err erro
 		return
 	}
 
-	err = readString(reader, &param.Value)
-	if err != nil {
+	var jsonValue string
+	if err = readString(reader, &jsonValue); err != nil {
+		return
+	}
+	if err = json.Unmarshal([]byte(jsonValue), &param.Value); err != nil {
 		return
 	}
 
@@ -625,12 +630,14 @@ func ReadParameter(reader *bufio.Reader) (param *types.SimpleParameter, err erro
 		return
 	}
 
-	err = read(&param.Unused)
+	unused1 := false
+	err = read(&unused1)
 	if err != nil {
 		return
 	}
 
-	err = read(&param.IsFlags)
+	unused2 := uint64(0)
+	err = read(&unused2)
 	if err != nil {
 		return
 	}
@@ -793,7 +800,7 @@ func readTraceResult(reader *bufio.Reader) (result *types.SimpleTraceResult, err
 		return
 	}
 
-	err = readAddress(reader, &result.NewContract)
+	err = readAddress(reader, &result.Address)
 	if err != nil {
 		return
 	}
@@ -812,6 +819,26 @@ func readTraceResult(reader *bufio.Reader) (result *types.SimpleTraceResult, err
 	if err != nil {
 		return
 	}
+
+	return
+}
+
+// ReadAbis reads ABI cache (known.bin)
+func ReadAbis(reader *bufio.Reader) (result []types.SimpleFunction, err error) {
+	header := &cacheHeader{}
+	if err = readCacheHeader(reader, header); err != nil {
+		return
+	}
+	if err = validateHeader(header); err != nil {
+		return
+	}
+
+	// This address is always empty
+	var address types.Address
+	if err = readAddress(reader, &address); err != nil {
+		return
+	}
+	err = readFromArray(reader, &result, ReadFunction)
 
 	return
 }

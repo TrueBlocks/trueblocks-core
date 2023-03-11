@@ -29,7 +29,7 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	filenameChan := make(chan paths.IndexFileInfo)
 
 	var nRoutines int = 1
-	go paths.WalkCacheFolder(opts.Globals.Chain, paths.Index_Bloom, filenameChan)
+	go paths.WalkIndexFolder(opts.Globals.Chain, paths.Index_Bloom, filenameChan)
 
 	fileNames := []string{}
 	for result := range filenameChan {
