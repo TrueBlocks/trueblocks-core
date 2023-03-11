@@ -10,9 +10,3 @@ on      ,cmd  ,fast  ,null  ,dev_tools/makeClass ,conflict3 ,n    ,@ a & edit
 on      ,cmd  ,fast  ,null  ,dev_tools/makeClass ,edit      ,n    ,edit @ a & filter = function
 on      ,cmd  ,fast  ,null  ,dev_tools/makeClass ,run       ,n    ,all & files = block
 on      ,cmd  ,fast  ,null  ,dev_tools/makeClass ,run_ns    ,n    ,@n = qblocks & all & files = function
-
-# dump option was removed as never being used anyway
-off     ,cmd  ,fast  ,null  ,dev_tools/makeClass ,list      ,n    ,dump & files = function
-off     ,cmd  ,fast  ,null  ,dev_tools/makeClass ,list_v    ,n    ,dump & files = function & verbose
-off     ,cmd  ,fast  ,null  ,dev_tools/makeClass ,edit_f    ,n    ,dump @ a
-off     ,cmd  ,fast  ,null  ,dev_tools/makeClass ,dump_stat ,n    ,dump @ a @ i = CStatus & verbose
