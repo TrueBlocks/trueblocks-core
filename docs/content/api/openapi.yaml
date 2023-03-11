@@ -775,7 +775,7 @@ paths:
             type: string
         - name: clean
           description: >
-            remove an abi file for an address or all zero-length files if no addresses is given
+            remove an abi file for an address or all zero-length files if no address is given
           required: false
           style: form
           in: query

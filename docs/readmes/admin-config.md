@@ -31,9 +31,6 @@ Flags:
   -x, --fmt string       export format, one of [none|json*|txt|csv]
   -v, --verbose          enable verbose (increase detail with --log_level)
   -h, --help             display this help screen
-
-Notes:
-  - The 'status' alias is deprecated and will be removed shortly.
 ```
 
 Data models produced by this tool:
