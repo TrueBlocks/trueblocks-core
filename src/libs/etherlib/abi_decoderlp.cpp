@@ -21,7 +21,7 @@ namespace qblocks {
 extern bool toPrintable(const string_q& inHex, string_q& result, bool pureStr);
 static size_t level = 0;
 
-// TODO: Clean up this file
+// TODO BOGUS: Clean up this file
 //------------------------------------------------------------------------------------------------
 string_q prettyPrintParams(const CParameterArray& params) {
     return "";

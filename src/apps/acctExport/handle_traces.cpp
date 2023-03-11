@@ -25,8 +25,8 @@ bool traces_Display(CTraverser* trav, void* data) {
 
         // Do not collapse the following code...both (create and (suicide|regular)) can be true in a single trace
         if (!opt->factory) {
-            bool isSuicide = trace.action.selfDestructed != "";
-            if (isSuicide) {
+            bool isSelfDestruct = trace.action.selfDestructed != "";
+            if (isSelfDestruct) {
                 copy.action.from = trace.action.selfDestructed;
                 copy.action.to = trace.action.refundAddress;
                 copy.action.callType = "suicide";

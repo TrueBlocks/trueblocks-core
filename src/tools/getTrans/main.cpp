@@ -33,12 +33,6 @@ int main(int argc, const char* argv[]) {
     }
     cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
 
-    // TODO: Report on no statements if there were none
-    // } else {
-    //     LOG_ERR("No material transactions found");
-    //     return true;
-    // }
-
     etherlib_cleanup();
     return 0;
 }

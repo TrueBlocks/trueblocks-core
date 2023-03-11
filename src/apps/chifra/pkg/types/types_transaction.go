@@ -166,6 +166,8 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 				"status":            status,
 			}
 
+			// TODO: We've already made a copy of the data that we've queried from the chain,
+			// TODO: why are we copying it yet again? Can't we use pointers to the one copy of the data?
 			logs := make([]map[string]any, 0, len(s.Receipt.Logs))
 			for _, log := range s.Receipt.Logs {
 				logModel := map[string]any{
