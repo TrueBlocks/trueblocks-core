@@ -36,6 +36,8 @@ This is a major release focusing mostly on the continued porting of the old C++ 
 - `Reconciliation` model changes `prevBlock` to `prevAppBlk`, `prevBlkBal` to `prevBal`, and `getCostOut` to `gasOut`. Added `accountedFor` field.
 - New data models: `BlockCount`, `ChunkAddresses`, `ChunkAppearances`, `ChunkBlooms`, `ChunkIndex`, `ChunkStats`, `NamedBlock`, `TraceCount`.
 - Renamed `VerboseAppearance` to `SimpleAppearance` to be consistent with other tools.
+- Removes `unclesCnt` from the `Block` data model.
+- Renamed `newContract` to `address` in the `TraceResult` data model to agree with the RPC.
 
 ## Tool Specific Changes
 
