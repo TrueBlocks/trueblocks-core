@@ -27,7 +27,6 @@
 namespace qblocks {
 
 //--------------------------------------------------------------------------------
-// TODO(tjayrush): global data
 CRuntimeClass CBaseNode::classCBaseNode;
 static CBuiltIn _biBaseNode(&CBaseNode::classCBaseNode, "CBaseNode", sizeof(CBaseNode), NULL, NULL);
 vector<CBuiltIn> builtIns;  // Keeps track of all the classes that have beebn registered

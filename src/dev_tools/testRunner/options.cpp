@@ -42,7 +42,9 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
     string_q path;
 
-    bool hasEsKey = getGlobalConfig("")->getConfigStr("keys.etherscan", "apiKey", "<not_set>") != "<not_set>";
+    bool hasKey = getGlobalConfig("")->getConfigStr("keys.etherscan", "apiKey", "<not_set>") != "<not_set>";
+    bool wantsTest = getEnvStr("TEST_SLURPS") == "true";
+    bool runSlurps = hasKey && wantsTest;
 
     CToml config(rootConfigToml_makeClass);
 
@@ -99,7 +101,7 @@ bool COptions::parseArguments(string_q& command) {
                 if (been_here)
                     break;
                 been_here = true;
-                if (hasEsKey && getEnvStr("NO_ES") != "true") {
+                if (runSlurps) {
                     tests.push_back("tools/ethslurp");
                 }
                 tests.push_back("tools/ethNames");
@@ -150,7 +152,7 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("libs/utillib");
         tests.push_back("libs/etherlib");
         tests.push_back("libs/acctlib");
-        if (hasEsKey && getEnvStr("NO_ES") != "true") {
+        if (runSlurps) {
             tests.push_back("tools/ethslurp");
         }
         tests.push_back("tools/ethNames");

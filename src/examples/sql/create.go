@@ -103,7 +103,7 @@ func readFile(path string) ([]Appearance, error) {
 	}
 
 	for i := 0; int64(i) < int64(nAddresses); i++ {
-		// TODO: I am not sure this hex encoding is correct, so check it
+		// TO DO: I am not sure this hex encoding is correct, so check it
 		var address = hex.EncodeToString(addressByteSlice[(i * 28) : (i*28)+20])
 		var startRecord = binary.LittleEndian.Uint32(addressByteSlice[(i*28)+20 : (i*28)+20+4])
 		var nRecord = binary.LittleEndian.Uint32(addressByteSlice[(i*28)+20+4 : (i*28)+20+4+4])

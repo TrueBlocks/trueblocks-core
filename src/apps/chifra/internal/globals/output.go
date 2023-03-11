@@ -24,8 +24,8 @@ func RenderSlice[
 		types.SimpleFunction |
 		types.SimpleMonitor |
 		types.SimpleChunkRecord |
-		types.SimpleAppearance |
-		types.VerboseAppearance](opts *GlobalOptions, arr []T) error {
+		types.RawAppearance |
+		types.SimpleAppearance](opts *GlobalOptions, arr []T) error {
 
 	data := make([]interface{}, len(arr))
 	for i := range arr {

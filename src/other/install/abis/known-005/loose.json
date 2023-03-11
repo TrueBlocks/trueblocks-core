@@ -655,10 +655,26 @@
     "encoding": "0x9120491c",
     "inputs": [
       {
-        "is_array": true,
-        "is_tuple": true,
-        "name": "donations",
-        "type": "(address,uint256,address)[]"
+        "components": [
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address payable",
+            "name": "dest",
+            "type": "address"
+          }
+        ],
+        "name": "_donations",
+        "type": "tuple[]",
+        "internalType": "struct BulkCheckout.Donation[]"
       }
     ],
     "name": "donate",

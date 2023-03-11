@@ -54,20 +54,21 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, isFinal bool) (types.Simpl
 		input := fmt.Sprint(t["input"])
 		value := big.NewInt(0)
 		value.SetString(fmt.Sprint(t["value"]), 0)
+		txIndex := mustParseUint(t["transactionIndex"])
 
-		var hasToken bool
+		hasToken := false
 		if len(input) >= 10 {
-			hasToken = tokenRelated[input[0:9]]
+			hasToken = IsTokenRelated(input[0:9])
 		}
 
 		// Get the receipt
 		var receipt types.SimpleReceipt
-		receipt, err = GetTransactionReceipt(chain, bn, 0, &txHash, txGasPrice)
+		receipt, err = GetTransactionReceipt(chain, bn, txIndex, &txHash, txGasPrice)
 		if err != nil {
 			return block, err
 		}
 
-		block.Transactions = append(block.Transactions, types.SimpleTransaction{
+		tx := types.SimpleTransaction{
 			Hash:                 txHash,
 			BlockHash:            common.HexToHash(fmt.Sprint(t["blockHash"])),
 			BlockNumber:          mustParseUint(t["blockNumber"]),
@@ -92,7 +93,9 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, isFinal bool) (types.Simpl
 			// Reserved2            uint8           `json:"reserved2"`
 			// Traces               []SimpleTrace   `json:"traces"`
 			// ArticulatedTx        *SimpleFunction `json:"articulatedTx"`
-		})
+		}
+		tx.SetGasCost(&receipt)
+		block.Transactions = append(block.Transactions, tx)
 	}
 
 	return block, nil
@@ -229,4 +232,8 @@ var tokenRelated = map[string]bool{
 	"0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925": true, // Approval(address owner, address spender, uint256 value)
 	"0xd4735d920b0f87494915f556dd9b54c8f309026070caea5c737245152564d266": true, // Transfer(bytes32 node, address owner)
 	"0x30385c845b448a36257a6a1716e6ad2e1bc2cbe333cde1e69fe849ad6511adfe": true, // Minted(address,uint256)
+}
+
+func IsTokenRelated(needle string) bool {
+	return len(needle) >= 10 && tokenRelated[needle]
 }

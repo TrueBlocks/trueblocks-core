@@ -2,10 +2,10 @@ package types
 
 import (
 	"encoding/hex"
+	"fmt"
 	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
-	"github.com/bykof/gostradamus"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -17,7 +17,7 @@ type Modeler[Raw RawData] interface {
 // TODO: BOGUS - The auto code generation should check that all auto generated fields are included here
 type RawData interface {
 	RawReceipt | RawWhenCount | RawNamedBlock | RawBlock | RawBlockCount | RawTraceAction |
-		RawTraceResult | RawTrace | RawTraceCount | RawFunction | RawParameter
+		RawTraceResult | RawTrace | RawTraceCount | RawFunction | RawParameter | RawAppearance
 }
 
 type Model struct {
@@ -50,6 +50,15 @@ func (a *Address) String() string {
 	return a.Hex()
 }
 
+func (a Address) Format(s fmt.State, c rune) {
+	s.Write([]byte(a.Hex()))
+}
+
+func (a Address) MarshalText() ([]byte, error) {
+	hex := a.Hex()
+	return []byte(hex), nil
+}
+
 // SetHex sets the address based on the provided string
 func (a *Address) SetHex(hex string) {
 	a.Address = common.HexToAddress(hex)
@@ -72,24 +81,15 @@ func HexToAddress(hex string) (addr Address) {
 	return
 }
 
+func BytesToAddress(b []byte) (addr Address) {
+	addr.SetBytes(b)
+	return
+}
+
 type SimpleTimestamp struct {
 	BlockNumber uint64 `json:"blockNumber"`
 	Timestamp   uint64 `json:"timestamp"`
 	Diff        uint64 `json:"diff"`
-}
-
-type SimpleAppearance struct {
-	Address          string `json:"address"`
-	BlockNumber      uint32 `json:"blockNumber"`
-	TransactionIndex uint32 `json:"transactionIndex"`
-}
-
-type VerboseAppearance struct {
-	Address          string               `json:"address"`
-	BlockNumber      uint32               `json:"blockNumber"`
-	TransactionIndex uint32               `json:"transactionIndex"`
-	Timestamp        uint64               `json:"timestamp"`
-	Date             gostradamus.DateTime `json:"date"`
 }
 
 type SimpleMonitor struct {

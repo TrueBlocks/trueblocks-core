@@ -54,8 +54,6 @@ func (s *SimpleLog) Model(showHidden bool, format string, extraOptions map[strin
 		"address":          s.Address,
 		"articulatedLog":   s.ArticulatedLog,
 		"blockNumber":      s.BlockNumber,
-		"compressedLog":    s.CompressedLog,
-		"data":             s.Data,
 		"logIndex":         s.LogIndex,
 		"timestamp":        s.Timestamp,
 		"transactionIndex": s.TransactionIndex,
@@ -77,10 +75,22 @@ func (s *SimpleLog) Model(showHidden bool, format string, extraOptions map[strin
 		"address",
 		"data",
 		"articulatedLog",
-		"compressedLog",
 	}
 
 	// EXISTING_CODE
+	if format != "json" {
+		if len(s.Data) > 0 && s.Data != "0x" {
+			model["data"] = s.Data
+		}
+		model["compressedLog"] = s.CompressedLog
+		order = append(order, "compressedLog")
+	} else {
+		if len(s.Data) > 0 && s.Data != "0x" {
+			model["data"] = s.Data
+		} else {
+			model["data"] = ""
+		}
+	}
 	// EXISTING_CODE
 
 	return Model{

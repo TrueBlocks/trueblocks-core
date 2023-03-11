@@ -16,7 +16,6 @@
  * the code outside of the BEG_CODE/END_CODE sections
  */
 #include "etherlib.h"
-#include "handle_source.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
@@ -30,7 +29,6 @@ class COptions : public CStatementOptions {
     bool uniq;
     string_q flow;
     bool cache;
-    bool source;
     // END_CODE_DECLARE
 
     COptionsTransList transList;
@@ -40,7 +38,6 @@ class COptions : public CStatementOptions {
 
     bool parseArguments(string_q& command) override;
     void Init(void) override;
-    void showTransactionForSource(const CTransaction& trans);
 };
 
 //-----------------------------------------------------------------------------

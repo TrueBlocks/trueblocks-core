@@ -159,7 +159,6 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 		"gasUsed",
 	}
 
-	// TODO: This (the whole distinction between json and not) is confused and inefficient
 	if format == "json" {
 		if extraOptions["list"] == true {
 			model["transactionsCnt"] = len(s.Transactions)

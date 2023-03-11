@@ -656,13 +656,7 @@ void checkSorts(const string_q& className, const CStringArray& fields, const CSt
             sorted.push_back(str_2_Uint(trim(parts[which])));
         }
     }
-    // for (auto s : sorted) {
-    //     cerr << "\t" << s << "\n";
-    // }
     sort(sorted.begin(), sorted.end());
-    // for (size_t i = 0; i < sorted.size(); i++) {
-    //     cerr << "\t" << (i + 1) << "-" << sorted[i] << "\n";
-    // }
     for (size_t i = 1; i < sorted.size(); i++) {
         if (sorted[i] != i + 1) {
             LOG_ERR(bYellow, "makeClass:", " incorrect sort of \"", field, "\" field at row ", (i + 1), "-", sorted[i],

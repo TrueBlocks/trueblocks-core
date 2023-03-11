@@ -196,7 +196,11 @@ func StreamMany[Raw types.RawData](ctx context.Context, fetchData fetchDataFunc[
 			errsMutex.Unlock()
 
 		case <-ctx.Done():
-			return ctx.Err()
+			err = ctx.Err()
+			if err == context.Canceled {
+				return nil
+			}
+			return err
 		}
 	}
 }

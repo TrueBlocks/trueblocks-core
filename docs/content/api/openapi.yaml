@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.56.0-beta
+  version: 0.60.0-beta
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra daemon`, you can
@@ -775,7 +775,7 @@ paths:
             type: string
         - name: clean
           description: >
-            remove an abi file for an address or all zero-length files if no addresses is given
+            remove an abi file for an address or all zero-length files if no address is given
           required: false
           style: form
           in: query

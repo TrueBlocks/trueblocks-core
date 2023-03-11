@@ -13,7 +13,6 @@ namespace qblocks {
 template <class BaseType>
 class BigNumStore {
   public:
-    // TODO(tjayrush): global data
     static const unsigned int N;
     unsigned int capacity;
     unsigned int len;

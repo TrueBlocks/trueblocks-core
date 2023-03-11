@@ -30,7 +30,7 @@ type SimpleParameter struct {
 	Name          string            `json:"name"`
 	StrDefault    string            `json:"strDefault,omitempty"`
 	ParameterType string            `json:"type"`
-	Value         string            `json:"value,omitempty"`
+	Value         any               `json:"value,omitempty"`
 	raw           *RawParameter
 }
 
@@ -66,6 +66,10 @@ func (s *SimpleParameter) Model(showHidden bool, format string, extraOptions map
 			model["internalType"] = s.InternalType
 			order = append(order, "internalType")
 		}
+		if len(s.Components) > 0 {
+			model["components"] = s.Components
+			order = append(order, "components")
+		}
 	}
 	// EXISTING_CODE
 
@@ -84,4 +88,18 @@ func (s *SimpleParameter) DisplayName(index int) string {
 	return "val_" + fmt.Sprint(index)
 }
 
+func ParametersToMap(params []SimpleParameter) (result map[string]any) {
+	// This produces `null` in JSON instead of an empty object (`{}`)
+	if len(params) == 0 {
+		return nil
+	}
+	result = make(map[string]any)
+	for index, param := range params {
+		if param.Value == "0x" || param.Value == "0x0" {
+			continue
+		}
+		result[param.DisplayName(index)] = param.Value
+	}
+	return
+}
 // EXISTING_CODE

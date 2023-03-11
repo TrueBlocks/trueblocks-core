@@ -129,3 +129,4 @@ file(REMOVE "${INSTALL_DEST}/cache/abis/known.bin")
 
 PrintLine("Cleaning old files...")
 file(REMOVE "${INSTALL_DEST}/config/mainnet/manifest.txt")
+file(REMOVE "${INSTALL_DEST}/abis/known-000/openzephlin.json")

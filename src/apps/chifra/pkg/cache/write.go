@@ -3,6 +3,7 @@ package cache
 import (
 	"bufio"
 	"encoding/binary"
+	"encoding/json"
 	"math"
 	"math/big"
 	"strings"
@@ -477,8 +478,12 @@ func WriteParameter(writer *bufio.Writer, param *types.SimpleParameter) (err err
 		return
 	}
 
-	err = writeString(writer, &param.Value)
+	jsonValue, err := json.Marshal(&param.Value)
 	if err != nil {
+		return
+	}
+	strValue := string(jsonValue)
+	if err = writeString(writer, &strValue); err != nil {
 		return
 	}
 

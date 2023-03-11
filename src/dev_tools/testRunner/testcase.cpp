@@ -528,6 +528,11 @@ CTestCase::CTestCase(const string_q& line, uint32_t id) {
     options = parts.size() > 7 ? trim(parts[7]) : "";
     extra = parts.size() > 8 ? trim(parts[8]) : "";
 
+    if (contains(line, "&&")) {
+        cerr << bRed << "test case " << bTeal << name << bRed << " contains '&&'. Quitting..." << cOff << endl;
+        exit(0);
+    }
+
     path = nextTokenClear(tool, '/');
     if (endsWith(path, "lib"))
         path = "libs/" + path;
@@ -612,6 +617,7 @@ void CTestCase::prepareTest(bool cmdLine, bool removeWorking) {
     }
 }
 
+//---------------------------------------------------------------------------------------------
 string CTestCase::getOutputFile(bool isApi, const string& goldApiPath) const {
     if (isApi) {
         return "";

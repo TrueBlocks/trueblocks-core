@@ -40,7 +40,6 @@ class COptionsBase {
     CErrorStringMap usageErrs;
     CStringArray errors;
 
-    // TODO(tjayrush): global data
     uint64_t minArgs;
     uint32_t enableBits;
     bool isRaw;

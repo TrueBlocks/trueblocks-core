@@ -2,6 +2,7 @@
 
 | Tag     | Migration                                                                                                                         | Date       | Summary                                                                                                 |
 | ------- | --------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------- |
+| v0.60.0 | [Many GoLang Ports](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v0.60.0.md)                | 2023/03/11 | Two options migrations for two very specific, small edge cases.                                   |
 | v0.45.0 | [Better Docker](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v0.45.0.md)                | 2022/12/16 | Much better support for use in the docker version (more coming soon).                                   |
 | v0.44.0 | [Scraper Bug Fix](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v0.44.0.md)              | 2022/11/25 | Fixes a bug related to scraping at the head of the chain.                                               |
 | v0.43.0 | [Better Accounting](https://github.com/TrueBlocks/trueblocks-core/blob/master/CHANGES.md#v0430)                                   | 2022/11/16 | No migrations, but a lot of improvements to the accounting modules.                                     |

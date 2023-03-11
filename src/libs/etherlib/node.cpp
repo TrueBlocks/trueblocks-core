@@ -17,7 +17,6 @@
 
 namespace qblocks {
 
-// TODO(tjayrush): global data
 static QUITHANDLER theQuitHandler = NULL;
 //-------------------------------------------------------------------------
 void etherlib_init(QUITHANDLER qh) {

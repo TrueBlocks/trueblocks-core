@@ -372,68 +372,6 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                 stringToAsciiFile(oldFn, oldText);
             }
 
-            bool hasId = contains(oldText, "\"id\":");
-            bool isTools = contains(oldFn, "/tools/");
-            bool isClasses = contains(oldFn, "classes");
-            bool isBlocksLogs = contains(oldFn, "getBlocks") && contains(oldFn, "logs");
-            bool isReceipt = contains(oldFn, "getReceipts");
-            bool isBlocks = contains(oldFn, "getBlocks");
-            bool isTrans = contains(oldFn, "getTrans");
-            bool isLogs = contains(oldFn, "getLogs");
-            bool isTraces = contains(oldFn, "getTraces");
-            if (!isReceipt && !isBlocks && !isTrans && !isLogs && !isTraces && hasId && isTools && !isClasses &&
-                !isBlocksLogs) {
-                // This crazy shit is because we want to pass tests when running against different nodes (Parity,
-                // Erigon, etc.) so we have to remove some stuff and then sort the data (after deliniating it)
-                // so it matches more easily.
-                // TODO(tjayrush): Once we shift from Parity to Erigon, this can go away.
-                while (contains(oldText, "sealFields")) {
-                    replaceAll(oldText, "\"sealFields\":", "|");
-                    string_q pre = nextTokenClear(oldText, '|');
-                    nextTokenClear(oldText, ']');
-                    oldText = pre + oldText;
-                }
-
-                replaceAny(oldText, ",{}[]", "\n");
-                CStringArray lines;
-                explode(lines, oldText, '\n');
-                sort(lines.begin(), lines.end());
-                ostringstream os;
-                string_q last;
-                for (auto line : lines) {
-                    if (last != line) {
-                        bool has = false;
-                        CStringArray removes = {"author",
-                                                "sealFields",
-                                                "chainId",
-                                                "condition",
-                                                "creates",
-                                                "publicKey",
-                                                "raw",
-                                                "standardV",
-                                                "transactionLogIndex",
-                                                "root",
-                                                "mined",
-                                                "\"result\":null",
-                                                "\"type\":\"\"",
-                                                "\"type\":\"0x0\"",
-                                                "\"type\": \"0x0\"",
-                                                "\"timestamp\":\"0x0\"",
-                                                "\"timestamp\": \"0x0\"",
-                                                "\"status\":\"0x1\"",
-                                                "\"status\": \"0x1\""};
-                        for (auto r : removes)
-                            has = (has || contains(line, r));
-                        if (!has && startsWith(line, "\"") && !startsWith(line, "\"0x"))
-                            os << substitute(line, "\": ", "\":") << endl;
-                    }
-                    last = line;
-                }
-                stringToAsciiFile(oldFn, os.str());
-                oldText = os.str();
-                // TODO(tjayrush): Once we shift from Parity to Erigon, the above can go away.
-            }
-
             string_q result = greenCheck;
             if (!newText.empty() && newText == oldText) {
                 if (test.mode == "both" || contains(test.tool, "lib"))
@@ -444,17 +382,6 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                 os << cRed << "\tFailed: " << cTeal << (endsWith(test.path, "lib") ? test.tool : measure.cmd) << " ";
                 os << test.name << ".txt " << cOff << "(" << (test.builtin ? "" : measure.cmd) << " "
                    << trim(test.options) << ")" << cRed;
-                // if (newText.empty())
-                //    os << " working file is empty ";
-                //// if (ret)
-                ////     os << " system call returned non-zero ";
-                // if (newText != oldText) {
-                //    os << " files differ " << endl;
-                //    os << "newFile: " << newFn << ": " << fileExists(newFn) << ": " << newText.size() << endl;
-                //    os << cYellow << newText << endl;
-                //    os << "oldFile: " << oldFn << ": " << fileExists(oldFn) << ": " << oldText.size() << endl;
-                //    os << cBlue << oldText << endl;
-                //}
                 os << cOff << endl;
                 fails.push_back(os.str());
                 result = redX;
@@ -476,7 +403,8 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             } else {
                 // we ignore ethQuote testing since it deprecated
             }
-            usleep(1000);
+
+            usleep(500);
             if (shouldQuit()) {
                 LOG4("Quitting because of shouldQuit");
                 break;

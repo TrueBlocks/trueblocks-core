@@ -78,16 +78,38 @@ func (s *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[s
 
 	// EXISTING_CODE
 	if format == "json" {
-		model["logs"] = s.Logs
-		order = append(order, "logs")
-
-		if len(s.ContractAddress.Bytes()) > 0 && s.ContractAddress != HexToAddress("0x0") {
+		if !s.ContractAddress.IsZero() {
 			model["contractAddress"] = s.ContractAddress
 		}
 
 		if s.IsError {
 			model["isError"] = s.IsError
 			order = append(order, "isError")
+		}
+
+		if extraOptions["articulate"] == true {
+			logs := make([]map[string]any, 0, len(s.Logs))
+			for _, log := range s.Logs {
+				logModel := map[string]any{
+					"address":  log.Address.Hex(),
+					"logIndex": log.LogIndex,
+					"topics":   log.Topics,
+					"data":     log.Data,
+				}
+				if extraOptions["articulate"] == true && log.ArticulatedLog != nil {
+					inputModels := ParametersToMap(log.ArticulatedLog.Inputs)
+					articulatedLog := map[string]any{
+						"name":   log.ArticulatedLog.Name,
+						"inputs": inputModels,
+					}
+					logModel["articulatedLog"] = articulatedLog
+				}
+				logs = append(logs, logModel)
+			}
+			model["logs"] = logs
+		} else {
+			model["logs"] = s.Logs
+			// order = append(order, "logs")
 		}
 
 		if showHidden {

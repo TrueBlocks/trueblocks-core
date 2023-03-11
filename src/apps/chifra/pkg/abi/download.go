@@ -56,7 +56,8 @@ func DownloadAbi(chain string, address types.Address, destination AbiInterfaceMa
 		// Etherscan sends 200 OK responses even if there's an error. We want to cache the error
 		// response so we don't keep asking Etherscan for the same address. The user may later
 		// remove empty ABIs with chifra abis --clean.
-		logger.Log(logger.Warning, "provider responded with: ", data["message"])
+		logger.Log(logger.Warning, "provider responded with:", address.Hex(), data["message"])
+
 		reader := strings.NewReader("[{\"name\": \"AbiNotFound\",\"type\": \"function\"}]")
 		fromJson(reader, address.Hex()+".json", destination)
 		if _, err = reader.Seek(0, io.SeekStart); err != nil {

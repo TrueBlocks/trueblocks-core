@@ -352,8 +352,6 @@ bool updateName(const CName& target, const string_q& crud) {
 
     if (crud == "create" || crud == "update") {
         LOG_INFO((crud == "create" ? "Adding " : "Editing "), nod->address);
-        // TODO: we could resort here, but it doesn't appear to matter. When we write
-        // TODO: the file out, we should sort it
         nod->name_2_Disc(target);
 
     } else if (crud == "delete") {

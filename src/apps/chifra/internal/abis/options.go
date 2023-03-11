@@ -25,7 +25,7 @@ type AbisOptions struct {
 	Find    []string              `json:"find,omitempty"`    // Search for function or event declarations given a four- or 32-byte code(s)
 	Hint    []string              `json:"hint,omitempty"`    // For the --find option only, provide hints to speed up the search
 	Encode  string                `json:"encode,omitempty"`  // Generate the 32-byte encoding for a given cannonical function or event signature
-	Clean   bool                  `json:"clean,omitempty"`   // Remove an abi file for an address or all zero-length files if no addresses is given
+	Clean   bool                  `json:"clean,omitempty"`   // Remove an abi file for an address or all zero-length files if no address is given
 	Sol     bool                  `json:"sol,omitempty"`     // Please use the `solc --abi` tool instead
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed

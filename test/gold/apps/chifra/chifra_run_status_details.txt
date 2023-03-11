@@ -59,6 +59,7 @@ TEST[DATE|TIME] LastBlock:  2000000
           "name": "--name--",
           "symbol": "--symbol--",
           "source": "--source--",
+          "decimals": 0,
           "petname": "--petname--"
         }
       ],
@@ -90,6 +91,7 @@ TEST[DATE|TIME] LastBlock:  2000000
           "sizeInBytes": 36963,
           "address": "---address---",
           "name": "--name--",
+          "decimals": 0,
           "petname": "--petname--"
         }
       ],

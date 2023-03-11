@@ -108,6 +108,7 @@ func GetMonitorsOptions(args []string, g *globals.GlobalOptions) *MonitorsOption
 
 func (opts *MonitorsOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
+	// ported = true
 	// EXISTING_CODE
 	return
 }

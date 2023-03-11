@@ -1594,7 +1594,8 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "RebalancingLibrary.State"
+        "internalType": "enum RebalancingLibrary.State",
+        "type": "uint8"
       }
     ],
     "signature": "rebalanceState()",
@@ -1886,7 +1887,8 @@
     "outputs": [
       {
         "name": "memory",
-        "type": "TokenFlow"
+        "internalType": "struct TokenFlow",
+        "type": "tuple"
       }
     ],
     "signature": "composeTokenFlow(address[],uint256[],uint256[])",
@@ -1897,7 +1899,8 @@
     "inputs": [
       {
         "name": "_tokenFlow",
-        "type": "TokenFlow"
+        "internalType": "struct TokenFlow",
+        "type": "tuple"
       }
     ],
     "name": "decomposeTokenFlow",
@@ -1926,7 +1929,8 @@
     "inputs": [
       {
         "name": "_tokenFlow",
-        "type": "TokenFlow"
+        "internalType": "struct TokenFlow",
+        "type": "tuple"
       }
     ],
     "name": "decomposeTokenFlowToBidPrice",
@@ -1942,7 +1946,7 @@
         "type": "uint256[]"
       }
     ],
-    "signature": "decomposeTokenFlowToBidPrice(TokenFlow)",
+    "signature": "decomposeTokenFlowToBidPrice(tuple)",
     "type": "function"
   },
   {
@@ -1951,7 +1955,7 @@
     "inputs": [
       {
         "name": "_rebalancingSetToken",
-        "type": "IRebalancingSetToken"
+        "type": "address"
       },
       {
         "name": "_quantity",
@@ -1976,7 +1980,7 @@
         "type": "uint256[]"
       }
     ],
-    "signature": "getTokenFlows(IRebalancingSetToken,uint256)",
+    "signature": "getTokenFlows(address,uint256)",
     "type": "function"
   },
   {
@@ -1984,11 +1988,11 @@
     "inputs": [
       {
         "name": "_currentSet",
-        "type": "ISetToken"
+        "type": "address"
       },
       {
         "name": "_nextSet",
-        "type": "ISetToken"
+        "type": "address"
       },
       {
         "name": "_startingCurrentSetQuantity",
@@ -2001,7 +2005,7 @@
     ],
     "name": "startRebalance",
     "outputs": [],
-    "signature": "startRebalance(ISetToken,ISetToken,uint256,bytes)",
+    "signature": "startRebalance(address,address,uint256,bytes)",
     "type": "function"
   },
   {
@@ -2021,7 +2025,8 @@
     "outputs": [
       {
         "name": "memory",
-        "type": "Rebalance.TokenFlow"
+        "internalType": "struct Rebalance.TokenFlow",
+        "type": "tuple"
       }
     ],
     "signature": "getBidPrice(address,uint256)",
@@ -2039,7 +2044,8 @@
     "outputs": [
       {
         "name": "memory",
-        "type": "Rebalance.TokenFlow"
+        "internalType": "struct Rebalance.TokenFlow",
+        "type": "tuple"
       }
     ],
     "signature": "placeBid(uint256)",
@@ -2074,7 +2080,8 @@
     "outputs": [
       {
         "name": "memory",
-        "type": "RebalancingLibrary.AuctionPriceParameters"
+        "internalType": "struct RebalancingLibrary.AuctionPriceParameters",
+        "type": "tuple"
       }
     ],
     "signature": "auctionPriceParameters(address)",
@@ -2810,12 +2817,12 @@
     "inputs": [
       {
         "name": "_newLiquidator",
-        "type": "ILiquidator"
+        "type": "address"
       }
     ],
     "name": "setLiquidator",
     "outputs": [],
-    "signature": "setLiquidator(ILiquidator)",
+    "signature": "setLiquidator(address)",
     "type": "function"
   },
   {
@@ -2927,12 +2934,13 @@
     "inputs": [
       {
         "name": "_requiredState",
-        "type": "RebalancingLibrary.State"
+        "internalType": "enum RebalancingLibrary.State",
+        "type": "uint8"
       }
     ],
     "name": "validateRebalanceStateIs",
     "outputs": [],
-    "signature": "validateRebalanceStateIs(RebalancingLibrary.State)",
+    "signature": "validateRebalanceStateIs(uint8)",
     "type": "function"
   },
   {
@@ -2941,12 +2949,13 @@
     "inputs": [
       {
         "name": "_requiredState",
-        "type": "RebalancingLibrary.State"
+        "internalType": "enum RebalancingLibrary.State",
+        "type": "uint8"
       }
     ],
     "name": "validateRebalanceStateIsNot",
     "outputs": [],
-    "signature": "validateRebalanceStateIsNot(RebalancingLibrary.State)",
+    "signature": "validateRebalanceStateIsNot(uint8)",
     "type": "function"
   },
   {
@@ -3143,7 +3152,7 @@
     "inputs": [
       {
         "name": "_core",
-        "type": "ICore"
+        "type": "address"
       },
       {
         "name": "_set",
@@ -3152,7 +3161,7 @@
     ],
     "name": "requireValidSet",
     "outputs": [],
-    "signature": "requireValidSet(ICore,address)",
+    "signature": "requireValidSet(address,address)",
     "type": "function"
   },
   {
@@ -3168,7 +3177,8 @@
     "outputs": [
       {
         "name": "memory",
-        "type": "SetDetails"
+        "internalType": "struct SetDetails",
+        "type": "tuple"
       }
     ],
     "signature": "getSetDetails(address)",
@@ -3215,7 +3225,7 @@
     "inputs": [
       {
         "name": "_setToken",
-        "type": "ISetToken"
+        "type": "address"
       }
     ],
     "name": "calculateSetIssueQuantity",
@@ -3225,7 +3235,7 @@
         "type": "uint256"
       }
     ],
-    "signature": "calculateSetIssueQuantity(ISetToken)",
+    "signature": "calculateSetIssueQuantity(address)",
     "type": "function"
   },
   {
@@ -3289,7 +3299,8 @@
     "inputs": [
       {
         "name": "_setToken",
-        "type": "SetTokenLibrary.SetDetails"
+        "internalType": "struct SetTokenLibrary.SetDetails",
+        "type": "tuple"
       }
     ],
     "name": "calculateMaxIssueAmount",
@@ -3299,7 +3310,7 @@
         "type": "uint256"
       }
     ],
-    "signature": "calculateMaxIssueAmount(SetTokenLibrary.SetDetails)",
+    "signature": "calculateMaxIssueAmount(tuple)",
     "type": "function"
   },
   {
@@ -3454,7 +3465,8 @@
     "outputs": [
       {
         "name": "memory",
-        "type": "RebalancingLibrary.AuctionPriceParameters"
+        "internalType": "struct RebalancingLibrary.AuctionPriceParameters",
+        "type": "tuple"
       }
     ],
     "signature": "auctionPriceParameters()",
@@ -3794,7 +3806,8 @@
     "outputs": [
       {
         "name": "ret_0",
-        "type": "RebalancingLibrary.State"
+        "internalType": "enum RebalancingLibrary.State",
+        "type": "uint8"
       }
     ],
     "signature": "getNewRebalanceState()",
@@ -3805,12 +3818,13 @@
     "inputs": [
       {
         "name": "_newRebalanceState",
-        "type": "RebalancingLibrary.State"
+        "internalType": "enum RebalancingLibrary.State",
+        "type": "uint8"
       }
     ],
     "name": "transitionToNewState",
     "outputs": [],
-    "signature": "transitionToNewState(RebalancingLibrary.State)",
+    "signature": "transitionToNewState(uint8)",
     "type": "function"
   },
   {
@@ -3846,12 +3860,13 @@
     "inputs": [
       {
         "name": "_newRebalanceState",
-        "type": "RebalancingLibrary.State"
+        "internalType": "enum RebalancingLibrary.State",
+        "type": "uint8"
       }
     ],
     "name": "reissueSetIfRevertToDefault",
     "outputs": [],
-    "signature": "reissueSetIfRevertToDefault(RebalancingLibrary.State)",
+    "signature": "reissueSetIfRevertToDefault(uint8)",
     "type": "function"
   },
   {
@@ -3859,12 +3874,13 @@
     "inputs": [
       {
         "name": "_newRebalanceState",
-        "type": "RebalancingLibrary.State"
+        "internalType": "enum RebalancingLibrary.State",
+        "type": "uint8"
       }
     ],
     "name": "setWithdrawComponentsIfDrawdown",
     "outputs": [],
-    "signature": "setWithdrawComponentsIfDrawdown(RebalancingLibrary.State)",
+    "signature": "setWithdrawComponentsIfDrawdown(uint8)",
     "type": "function"
   },
   {
@@ -3945,12 +3961,12 @@
     "inputs": [
       {
         "name": "_nextSet",
-        "type": "ISetToken"
+        "type": "address"
       }
     ],
     "name": "validateStartRebalance",
     "outputs": [],
-    "signature": "validateStartRebalance(ISetToken)",
+    "signature": "validateStartRebalance(address)",
     "type": "function"
   },
   {
@@ -3972,7 +3988,7 @@
     "inputs": [
       {
         "name": "_nextSet",
-        "type": "ISetToken"
+        "type": "address"
       },
       {
         "name": "_startingCurrentSetQuantity",
@@ -3985,7 +4001,7 @@
     ],
     "name": "liquidatorRebalancingStart",
     "outputs": [],
-    "signature": "liquidatorRebalancingStart(ISetToken,uint256,bytes)",
+    "signature": "liquidatorRebalancingStart(address,uint256,bytes)",
     "type": "function"
   },
   {
@@ -3993,12 +4009,12 @@
     "inputs": [
       {
         "name": "_nextSet",
-        "type": "ISetToken"
+        "type": "address"
       }
     ],
     "name": "transitionToRebalance",
     "outputs": [],
-    "signature": "transitionToRebalance(ISetToken)",
+    "signature": "transitionToRebalance(address)",
     "type": "function"
   },
   {
@@ -4007,11 +4023,11 @@
     "inputs": [
       {
         "name": "_currentSet",
-        "type": "ISetToken"
+        "type": "address"
       },
       {
         "name": "_nextSet",
-        "type": "ISetToken"
+        "type": "address"
       }
     ],
     "name": "naturalUnitsAreValid",
@@ -4021,7 +4037,7 @@
         "type": "bool"
       }
     ],
-    "signature": "naturalUnitsAreValid(ISetToken,ISetToken)",
+    "signature": "naturalUnitsAreValid(address,address)",
     "type": "function"
   },
   {
@@ -4042,7 +4058,7 @@
     "inputs": [
       {
         "name": "_nextSet",
-        "type": "ISetToken"
+        "type": "address"
       },
       {
         "name": "_liquidatorData",
@@ -4051,7 +4067,7 @@
     ],
     "name": "startRebalance",
     "outputs": [],
-    "signature": "startRebalance(ISetToken,bytes)",
+    "signature": "startRebalance(address,bytes)",
     "type": "function"
   },
   {
