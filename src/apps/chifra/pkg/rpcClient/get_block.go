@@ -187,8 +187,7 @@ func getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error)
 
 	if bn == 0 {
 		// The RPC does not return a timestamp for the zero block, so we make one
-		ts := rpc.GetBlockTimestamp(chain, 0)
-		response.Result.Timestamp = fmt.Sprintf("0x%x", ts)
+		response.Result.Timestamp = fmt.Sprintf("0x%x", rpc.GetBlockTimestamp(chain, 0))
 	}
 
 	rawBlock := &response.Result

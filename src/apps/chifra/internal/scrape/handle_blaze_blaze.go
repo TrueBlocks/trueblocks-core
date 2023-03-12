@@ -40,7 +40,7 @@ type BlazeOptions struct {
 	UnripeDist    uint64                     `json:"unripe"`
 	RpcProvider   string                     `json:"rpcProvider"`
 	AppearanceMap index.AddressAppearanceMap `json:"-"`
-	TsArray       []tslib.Timestamp          `json:"-"`
+	TsArray       []tslib.TimestampRecord    `json:"-"`
 	ProcessedMap  map[int]bool               `json:"-"`
 	BlockWg       sync.WaitGroup             `json:"-"`
 	AppearanceWg  sync.WaitGroup             `json:"-"`
@@ -82,7 +82,7 @@ func (opts *BlazeOptions) HandleBlaze1(meta *rpcClient.MetaData, blocks []int) (
 	//
 	blockChannel := make(chan int)
 	appearanceChannel := make(chan ScrapedData)
-	tsChannel := make(chan tslib.Timestamp)
+	tsChannel := make(chan tslib.TimestampRecord)
 
 	opts.BlockWg.Add(int(opts.NChannels))
 	for i := 0; i < int(opts.NChannels); i++ {
@@ -119,7 +119,7 @@ func (opts *BlazeOptions) HandleBlaze1(meta *rpcClient.MetaData, blocks []int) (
 // var beenHere = false
 
 // BlazeProcessBlocks Processes the block channel and for each block query the node for both traces and logs. Send results down appearanceChannel.
-func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChannel chan int, appearanceChannel chan ScrapedData, tsChannel chan tslib.Timestamp) (err error) {
+func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChannel chan int, appearanceChannel chan ScrapedData, tsChannel chan tslib.TimestampRecord) (err error) {
 	defer opts.BlockWg.Done()
 
 	for blockNum := range blockChannel {
@@ -160,7 +160,7 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 			logs:        logs,
 		}
 
-		ts := tslib.Timestamp{
+		ts := tslib.TimestampRecord{
 			Bn: uint32(blockNum),
 			Ts: uint32(rpc.GetBlockTimestamp(opts.Chain, uint64(blockNum))),
 		}
@@ -199,7 +199,7 @@ func (opts *BlazeOptions) BlazeProcessAppearances(meta *rpcClient.MetaData, appe
 }
 
 // BlazeProcessTimestamps processes timestamp data (currently by printing to a temporary file)
-func (opts *BlazeOptions) BlazeProcessTimestamps(tsChannel chan tslib.Timestamp) (err error) {
+func (opts *BlazeOptions) BlazeProcessTimestamps(tsChannel chan tslib.TimestampRecord) (err error) {
 	defer opts.TsWg.Done()
 
 	for ts := range tsChannel {

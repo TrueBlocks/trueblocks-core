@@ -10,7 +10,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
-type Timestamp struct {
+type TimestampRecord struct {
 	Bn uint32 `json:"bn"`
 	Ts uint32 `json:"ts"`
 }
@@ -18,7 +18,7 @@ type Timestamp struct {
 type TimestampDatabase struct {
 	loaded bool
 	count  uint64
-	memory []Timestamp
+	memory []TimestampRecord
 }
 
 var perChainTimestamps = map[string]TimestampDatabase{}
@@ -62,7 +62,7 @@ func loadTimestamps(chain string) error {
 	}
 	defer tsFile.Close()
 
-	memory := make([]Timestamp, cnt)
+	memory := make([]TimestampRecord, cnt)
 	err = binary.Read(tsFile, binary.LittleEndian, memory)
 	if err != nil {
 		return err
@@ -82,15 +82,15 @@ var ErrInTheFuture = errors.New("timestamp in the future")
 // FromTs is a local function that returns a Timestamp record given a Unix timestamp. It
 // loads the timestamp file into memory if it isn't already. If the timestamp requested
 // is past the end of the timestamp file, it estimates the block number and returns and error
-func FromTs(chain string, ts int64) (*Timestamp, error) {
+func FromTs(chain string, ts int64) (*TimestampRecord, error) {
 	cnt, err := NTimestamps(chain)
 	if err != nil {
-		return &Timestamp{}, err
+		return &TimestampRecord{}, err
 	}
 
 	err = loadTimestamps(chain)
 	if err != nil {
-		return &Timestamp{}, err
+		return &TimestampRecord{}, err
 	}
 
 	if ts > int64(perChainTimestamps[chain].memory[cnt-1].Ts) {
@@ -130,19 +130,19 @@ func DeCache(chain string) {
 
 // FromBn is a local function that returns a Timestamp record given a blockNum. It
 // loads the timestamp file into memory if it isn't already
-func FromBn(chain string, bn uint64) (*Timestamp, error) {
+func FromBn(chain string, bn uint64) (*TimestampRecord, error) {
 	cnt, err := NTimestamps(chain)
 	if err != nil {
-		return &Timestamp{}, err
+		return &TimestampRecord{}, err
 	}
 
 	if bn > cnt {
-		return &Timestamp{}, errors.New("invalid block number " + fmt.Sprintf("%d of %d", bn, cnt))
+		return &TimestampRecord{}, errors.New("invalid block number " + fmt.Sprintf("%d of %d", bn, cnt))
 	}
 
 	err = loadTimestamps(chain)
 	if err != nil {
-		return &Timestamp{}, err
+		return &TimestampRecord{}, err
 	}
 
 	return &perChainTimestamps[chain].memory[bn], nil
