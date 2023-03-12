@@ -70,13 +70,13 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Si
 		Timestamp:   int64(itemOnDisc.Ts),
 	}
 
-	expected := types.SimpleBlock[string]{BlockNumber: bn, Timestamp: int64(onDisc.Timestamp)}
+	expected := types.SimpleBlock[string]{BlockNumber: bn, Timestamp: onDisc.Timestamp}
 	if opts.Deep {
 		// If we're going deep, we need to query the node
 		expected, _ = rpcClient.GetBlockHeaderByNumber(opts.Globals.Chain, bn)
 	}
 
-	if prev.Timestamp != int64(utils.NOPOSI) {
+	if prev.Timestamp != utils.NOPOSI {
 		status := "Okay"
 
 		bnSequential := prev.BlockNumber < onDisc.BlockNumber
@@ -93,7 +93,7 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Si
 			status = "Error"
 		}
 
-		deepTsCheck := !opts.Deep || (onDisc.Timestamp == int64(expected.Timestamp))
+		deepTsCheck := !opts.Deep || (onDisc.Timestamp == expected.Timestamp)
 		if !deepTsCheck {
 			msg := fmt.Sprintf("At block %d, timestamp on disc %d does not agree with on chain %d%s", bn, onDisc.Timestamp, expected.Timestamp, clear)
 			logger.Log(logger.Error, msg)

@@ -16,7 +16,7 @@ import (
 type Expected struct {
 	name string
 	bn   uint64
-	ts   uint64
+	ts   int64
 	date string
 }
 

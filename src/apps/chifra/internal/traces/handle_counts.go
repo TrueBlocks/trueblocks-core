@@ -68,7 +68,7 @@ func (opts *TracesOptions) HandleCounts() error {
 					BlockNumber:      uint64(id.BlockNumber),
 					TransactionIndex: uint64(id.TransactionIndex),
 					TransactionHash:  common.HexToHash(txHash),
-					Timestamp:        int64(ts),
+					Timestamp:        ts,
 					TracesCnt:        cnt,
 				}
 				modelChan <- &counter

@@ -82,7 +82,7 @@ var ErrInTheFuture = errors.New("timestamp in the future")
 // FromTs is a local function that returns a Timestamp record given a Unix timestamp. It
 // loads the timestamp file into memory if it isn't already. If the timestamp requested
 // is past the end of the timestamp file, it estimates the block number and returns and error
-func FromTs(chain string, ts uint64) (*Timestamp, error) {
+func FromTs(chain string, ts int64) (*Timestamp, error) {
 	cnt, err := NTimestamps(chain)
 	if err != nil {
 		return &Timestamp{}, err
@@ -93,9 +93,9 @@ func FromTs(chain string, ts uint64) (*Timestamp, error) {
 		return &Timestamp{}, err
 	}
 
-	if ts > uint64(perChainTimestamps[chain].memory[cnt-1].Ts) {
+	if ts > int64(perChainTimestamps[chain].memory[cnt-1].Ts) {
 		last := perChainTimestamps[chain].memory[cnt-1]
-		secs := ts - uint64(last.Ts)
+		secs := ts - int64(last.Ts)
 		blks := uint32(float64(secs) / 13.3)
 		last.Bn = last.Bn + blks
 		last.Ts = uint32(ts)
@@ -105,7 +105,7 @@ func FromTs(chain string, ts uint64) (*Timestamp, error) {
 	// Go docs: Search uses binary search to find and return the smallest index i in [0, n) at which f(i) is true,
 	index := sort.Search(int(cnt), func(i int) bool {
 		d := perChainTimestamps[chain].memory[i]
-		v := uint64(d.Ts)
+		v := int64(d.Ts)
 		return v > ts
 	})
 

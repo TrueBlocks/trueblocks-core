@@ -42,7 +42,7 @@ func FromNameToBn(chain, name string) (uint64, error) {
 }
 
 // FromTsToBn returns a chain-specific block number given a Linux timestamp.
-func FromTsToBn(chain string, ts uint64) (uint64, error) {
+func FromTsToBn(chain string, ts int64) (uint64, error) {
 	ret, err := FromTs(chain, ts)
 	if err != nil {
 		return 0, err

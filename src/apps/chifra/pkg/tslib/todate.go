@@ -27,7 +27,7 @@ func FromNameToDate(chain, name string) (gostradamus.DateTime, error) {
 	if name == "latest" {
 		meta, _ := rpcClient.GetMetaData(chain, false)
 		ts := rpc.GetBlockTimestamp(chain, meta.Latest)
-		return FromTsToDate(uint64(ts))
+		return FromTsToDate(ts)
 	}
 
 	for _, value := range specials {
@@ -41,6 +41,6 @@ func FromNameToDate(chain, name string) (gostradamus.DateTime, error) {
 }
 
 // FromTsToDate returns a date given a Linux timestamp (not chain-specific)
-func FromTsToDate(ts uint64) (gostradamus.DateTime, error) {
-	return gostradamus.FromUnixTimestamp(int64(ts)), nil
+func FromTsToDate(ts int64) (gostradamus.DateTime, error) {
+	return gostradamus.FromUnixTimestamp(ts), nil
 }

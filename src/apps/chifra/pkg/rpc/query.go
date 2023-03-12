@@ -84,7 +84,7 @@ func TxFromNumberAndId(chain string, blkNum, txId uint64) (ethTypes.Transaction,
 	return *tx, nil
 }
 
-// TODO: DUPLICATED DUE TO CYCLICAL IMPORT
+// GetBlockTimestamp returns the timestamp associated with a given block
 func GetBlockTimestamp(chain string, bn uint64) int64 {
 	provider := config.GetRpcProvider(chain)
 	ec := GetClient(provider)
