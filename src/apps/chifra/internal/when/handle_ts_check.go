@@ -67,7 +67,7 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Si
 	// This just simplifies the code below by removing the need to type cast
 	onDisc := types.SimpleNamedBlock{
 		BlockNumber: uint64(itemOnDisc.Bn),
-		Timestamp:   int64(itemOnDisc.Ts),
+		Timestamp:   types.Timestamp(itemOnDisc.Ts),
 	}
 
 	expected := types.SimpleBlock[string]{BlockNumber: bn, Timestamp: onDisc.Timestamp}

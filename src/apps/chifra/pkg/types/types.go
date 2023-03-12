@@ -87,9 +87,9 @@ func BytesToAddress(b []byte) (addr Address) {
 }
 
 type SimpleTimestamp struct {
-	BlockNumber uint64 `json:"blockNumber"`
-	Timestamp   int64  `json:"timestamp"`
-	Diff        int64  `json:"diff"`
+	BlockNumber uint64    `json:"blockNumber"`
+	Timestamp   Timestamp `json:"timestamp"`
+	Diff        Timestamp `json:"diff"`
 }
 
 type SimpleMonitor struct {
@@ -156,3 +156,4 @@ type Wei = big.Int
 type Gas = uint64
 type Blknum = uint64
 type Topic = string
+type Timestamp = int64

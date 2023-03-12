@@ -7,12 +7,12 @@ type RawAppearance struct {
 }
 
 type SimpleAppearance struct {
-	Address          Address `json:"address"`
-	BlockNumber      uint32  `json:"blockNumber"`
-	TransactionIndex uint32  `json:"transactionIndex"`
-	Reason           string  `json:"reason,omitempty"`
-	Timestamp        int64   `json:"timestamp"`
-	Date             string  `json:"date"`
+	Address          Address   `json:"address"`
+	BlockNumber      uint32    `json:"blockNumber"`
+	TransactionIndex uint32    `json:"transactionIndex"`
+	Reason           string    `json:"reason,omitempty"`
+	Timestamp        Timestamp `json:"timestamp"`
+	Date             string    `json:"date"`
 	raw              *RawAppearance
 }
 

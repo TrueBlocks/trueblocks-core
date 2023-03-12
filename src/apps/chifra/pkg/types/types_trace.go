@@ -43,7 +43,7 @@ type SimpleTrace struct {
 	Error            string             `json:"error,omitempty"`
 	Result           *SimpleTraceResult `json:"result"`
 	Subtraces        uint64             `json:"subtraces"`
-	Timestamp        int64              `json:"timestamp"`
+	Timestamp        Timestamp          `json:"timestamp"`
 	TraceAddress     []uint64           `json:"traceAddress"`
 	TransactionHash  common.Hash        `json:"transactionHash"`
 	TransactionIndex uint64             `json:"transactionIndex"`
