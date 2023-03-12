@@ -162,7 +162,7 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 
 		ts := tslib.Timestamp{
 			Bn: uint32(blockNum),
-			Ts: uint32(rpcClient.GetBlockTimestamp(opts.RpcProvider, uint64(blockNum))),
+			Ts: uint32(rpc.GetBlockTimestamp(opts.Chain, uint64(blockNum))),
 		}
 		tsChannel <- ts
 	}

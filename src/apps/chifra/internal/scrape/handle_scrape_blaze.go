@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
@@ -74,14 +75,14 @@ func WriteTimestamps(chain string, tsArray []tslib.Timestamp, endPoint uint64) e
 		if cnt >= len(tsArray) {
 			ts = tslib.Timestamp{
 				Bn: uint32(bn),
-				Ts: uint32(rpcClient.GetBlockTimestamp(config.GetRpcProvider(chain), bn)),
+				Ts: uint32(rpc.GetBlockTimestamp(chain, bn)),
 			}
 		} else {
 			ts = tsArray[cnt]
 			if tsArray[cnt].Bn != uint32(bn) {
 				ts = tslib.Timestamp{
 					Bn: uint32(bn),
-					Ts: uint32(rpcClient.GetBlockTimestamp(config.GetRpcProvider(chain), bn)),
+					Ts: uint32(rpc.GetBlockTimestamp(chain, bn)),
 				}
 				cnt-- // set it back
 			}
