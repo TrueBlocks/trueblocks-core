@@ -93,9 +93,9 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Si
 			status = "Error"
 		}
 
-		deepTsCheck := !opts.Deep || (onDisc.Timestamp == expected.GetTimestamp())
+		deepTsCheck := !opts.Deep || (onDisc.Timestamp == uint64(expected.Timestamp))
 		if !deepTsCheck {
-			msg := fmt.Sprintf("At block %d, timestamp on disc %d does not agree with on chain %d%s", bn, onDisc.Timestamp, expected.GetTimestamp(), clear)
+			msg := fmt.Sprintf("At block %d, timestamp on disc %d does not agree with on chain %d%s", bn, onDisc.Timestamp, expected.Timestamp, clear)
 			logger.Log(logger.Error, msg)
 			status = "Error"
 		}
@@ -111,7 +111,7 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Si
 		}
 
 		if status == "Okay" {
-			scanBar.Report(opts.Globals.Writer, status, fmt.Sprintf(" bn: %d ts: %d", expected.BlockNumber, expected.GetTimestamp()))
+			scanBar.Report(opts.Globals.Writer, status, fmt.Sprintf(" bn: %d ts: %d", expected.BlockNumber, expected.Timestamp))
 		}
 	}
 

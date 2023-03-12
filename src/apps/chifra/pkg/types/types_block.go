@@ -201,8 +201,4 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 }
 
 // EXISTING_CODE
-func (s *SimpleBlock[Tx]) GetTimestamp() uint64 {
-	return uint64(s.Timestamp)
-}
-
 // EXISTING_CODE

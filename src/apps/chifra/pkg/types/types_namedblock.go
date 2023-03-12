@@ -65,8 +65,4 @@ func (s *SimpleNamedBlock) Model(showHidden bool, format string, extraOptions ma
 }
 
 // EXISTING_CODE
-func (s *SimpleNamedBlock) GetTimestamp() int64 {
-	return s.Timestamp
-}
-
 // EXISTING_CODE
