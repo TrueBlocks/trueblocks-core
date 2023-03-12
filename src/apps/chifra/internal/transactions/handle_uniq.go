@@ -32,7 +32,7 @@ func (opts *TransactionsOptions) HandleUniq() (err error, disp bool) {
 					BlockNumber:      app.BlockNumber,
 					TransactionIndex: app.TransactionIndex,
 					Timestamp:        ts,
-					Date:             gostradamus.FromUnixTimestamp(ts).String(),
+					Date:             gostradamus.FromUnixTimestamp(int64(ts)).String(),
 				}
 			}
 		}

@@ -55,8 +55,8 @@ func (opts *WhenOptions) showOneBlock(prev *types.SimpleTimestamp, bn uint64, fi
 	}
 	obj := types.SimpleTimestamp{
 		BlockNumber: uint64(ts.Bn),
-		Timestamp:   types.Timestamp(ts.Ts),
-		Diff:        types.Timestamp(ts.Ts) - prev.Timestamp,
+		Timestamp:   uint64(ts.Ts),
+		Diff:        uint64(ts.Ts - uint32(prev.Timestamp)),
 	}
 	if first {
 		// Report zero diff at first block

@@ -8,10 +8,9 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-type TimestampRecord struct {
+type Timestamp struct {
 	Bn uint32 `json:"bn"`
 	Ts uint32 `json:"ts"`
 }
@@ -19,7 +18,7 @@ type TimestampRecord struct {
 type TimestampDatabase struct {
 	loaded bool
 	count  uint64
-	memory []TimestampRecord
+	memory []Timestamp
 }
 
 var perChainTimestamps = map[string]TimestampDatabase{}
@@ -63,7 +62,7 @@ func loadTimestamps(chain string) error {
 	}
 	defer tsFile.Close()
 
-	memory := make([]TimestampRecord, cnt)
+	memory := make([]Timestamp, cnt)
 	err = binary.Read(tsFile, binary.LittleEndian, memory)
 	if err != nil {
 		return err
@@ -83,20 +82,20 @@ var ErrInTheFuture = errors.New("timestamp in the future")
 // FromTs is a local function that returns a Timestamp record given a Unix timestamp. It
 // loads the timestamp file into memory if it isn't already. If the timestamp requested
 // is past the end of the timestamp file, it estimates the block number and returns and error
-func FromTs(chain string, ts types.Timestamp) (*TimestampRecord, error) {
+func FromTs(chain string, ts uint64) (*Timestamp, error) {
 	cnt, err := NTimestamps(chain)
 	if err != nil {
-		return &TimestampRecord{}, err
+		return &Timestamp{}, err
 	}
 
 	err = loadTimestamps(chain)
 	if err != nil {
-		return &TimestampRecord{}, err
+		return &Timestamp{}, err
 	}
 
-	if ts > types.Timestamp(perChainTimestamps[chain].memory[cnt-1].Ts) {
+	if ts > uint64(perChainTimestamps[chain].memory[cnt-1].Ts) {
 		last := perChainTimestamps[chain].memory[cnt-1]
-		secs := ts - types.Timestamp(last.Ts)
+		secs := ts - uint64(last.Ts)
 		blks := uint32(float64(secs) / 13.3)
 		last.Bn = last.Bn + blks
 		last.Ts = uint32(ts)
@@ -106,7 +105,7 @@ func FromTs(chain string, ts types.Timestamp) (*TimestampRecord, error) {
 	// Go docs: Search uses binary search to find and return the smallest index i in [0, n) at which f(i) is true,
 	index := sort.Search(int(cnt), func(i int) bool {
 		d := perChainTimestamps[chain].memory[i]
-		v := types.Timestamp(d.Ts)
+		v := uint64(d.Ts)
 		return v > ts
 	})
 
@@ -131,19 +130,19 @@ func DeCache(chain string) {
 
 // FromBn is a local function that returns a Timestamp record given a blockNum. It
 // loads the timestamp file into memory if it isn't already
-func FromBn(chain string, bn uint64) (*TimestampRecord, error) {
+func FromBn(chain string, bn uint64) (*Timestamp, error) {
 	cnt, err := NTimestamps(chain)
 	if err != nil {
-		return &TimestampRecord{}, err
+		return &Timestamp{}, err
 	}
 
 	if bn > cnt {
-		return &TimestampRecord{}, errors.New("invalid block number " + fmt.Sprintf("%d of %d", bn, cnt))
+		return &Timestamp{}, errors.New("invalid block number " + fmt.Sprintf("%d of %d", bn, cnt))
 	}
 
 	err = loadTimestamps(chain)
 	if err != nil {
-		return &TimestampRecord{}, err
+		return &Timestamp{}, err
 	}
 
 	return &perChainTimestamps[chain].memory[bn], nil

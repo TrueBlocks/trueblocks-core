@@ -111,12 +111,8 @@ func ToCamelCase(in string) string {
 	return strings.Join(arr, "")
 }
 
-// TODO: Might be nice if the below two values were the same so we could cast between them.
-// TODO: Trouble is that these values may be stored on disc.
-
 // maximum uint64
-const NOPOS = uint64(^uint64(0))
-const NOPOSI = int64(0xdeadbeef)
+const NOPOS = ^uint64(0)
 
 // Min calculates the minimum between two unsigned integers (golang has no such function)
 func Min[T int | float64 | uint32 | uint64](x, y T) T {
