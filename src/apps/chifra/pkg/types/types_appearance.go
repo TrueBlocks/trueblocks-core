@@ -11,7 +11,7 @@ type SimpleAppearance struct {
 	BlockNumber      uint32  `json:"blockNumber"`
 	TransactionIndex uint32  `json:"transactionIndex"`
 	Reason           string  `json:"reason,omitempty"`
-	Timestamp        uint64  `json:"timestamp"`
+	Timestamp        int64   `json:"timestamp"`
 	Date             string  `json:"date"`
 	raw              *RawAppearance
 }

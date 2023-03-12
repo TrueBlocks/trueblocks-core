@@ -113,6 +113,7 @@ func ToCamelCase(in string) string {
 
 // maximum uint64
 const NOPOS = ^uint64(0)
+const NOPOSI = 0xdeadbeef
 
 // Min calculates the minimum between two unsigned integers (golang has no such function)
 func Min[T int | float64 | uint32 | uint64](x, y T) T {

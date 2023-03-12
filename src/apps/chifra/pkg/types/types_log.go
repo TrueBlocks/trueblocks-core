@@ -32,7 +32,7 @@ type SimpleLog struct {
 	CompressedLog    string          `json:"compressedLog,omitempty"`
 	Data             string          `json:"data,omitempty"`
 	LogIndex         uint64          `json:"logIndex"`
-	Timestamp        uint64          `json:"timestamp,omitempty"`
+	Timestamp        int64           `json:"timestamp,omitempty"`
 	Topics           []common.Hash   `json:"topics,omitempty"`
 	TransactionIndex uint32          `json:"transactionIndex"`
 	raw              *RawLog         `json:"-"`

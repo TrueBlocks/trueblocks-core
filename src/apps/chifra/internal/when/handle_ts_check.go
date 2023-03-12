@@ -35,7 +35,7 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 
 	prev := types.SimpleTimestamp{
 		BlockNumber: utils.NOPOS,
-		Timestamp:   utils.NOPOS,
+		Timestamp:   utils.NOPOSI,
 	}
 
 	if len(blockNums) > 0 {
@@ -67,7 +67,7 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Si
 	// This just simplifies the code below by removing the need to type cast
 	onDisc := types.SimpleTimestamp{
 		BlockNumber: uint64(itemOnDisc.Bn),
-		Timestamp:   uint64(itemOnDisc.Ts),
+		Timestamp:   int64(itemOnDisc.Ts),
 	}
 
 	expected := types.SimpleBlock[string]{BlockNumber: bn, Timestamp: int64(onDisc.Timestamp)}
@@ -76,7 +76,7 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Si
 		expected, _ = rpcClient.GetBlockHeaderByNumber(opts.Globals.Chain, bn)
 	}
 
-	if prev.Timestamp != utils.NOPOS {
+	if prev.Timestamp != int64(utils.NOPOSI) {
 		status := "Okay"
 
 		bnSequential := prev.BlockNumber < onDisc.BlockNumber
@@ -93,7 +93,7 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Si
 			status = "Error"
 		}
 
-		deepTsCheck := !opts.Deep || (onDisc.Timestamp == uint64(expected.Timestamp))
+		deepTsCheck := !opts.Deep || (onDisc.Timestamp == int64(expected.Timestamp))
 		if !deepTsCheck {
 			msg := fmt.Sprintf("At block %d, timestamp on disc %d does not agree with on chain %d%s", bn, onDisc.Timestamp, expected.Timestamp, clear)
 			logger.Log(logger.Error, msg)
