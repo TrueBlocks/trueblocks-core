@@ -126,7 +126,7 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 	tx.SetRaw(rawTx)
 
 	if fetchTraces {
-		traces, err := types.GetTracesByTransactionHash(chain, txHash.Hex(), tx)
+		traces, err := GetTracesByTransactionHash(chain, txHash.Hex(), tx)
 		if err != nil {
 			return nil, err
 		}

@@ -41,7 +41,7 @@ func (opts *BlocksOptions) HandleTrace() error {
 
 			for _, bn := range blockNums {
 				var traces []types.SimpleTrace
-				traces, err = types.GetTracesByBlockNumber(opts.Globals.Chain, bn)
+				traces, err = rpcClient.GetTracesByBlockNumber(opts.Globals.Chain, bn)
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {

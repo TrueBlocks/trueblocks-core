@@ -10,6 +10,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
@@ -44,7 +45,7 @@ func (opts *TracesOptions) HandleCounts() error {
 				}
 
 				txHash := tx.Hash().Hex()
-				cnt, err := types.GetTracesCountByTransactionHash(opts.Globals.Chain, txHash)
+				cnt, err := rpcClient.GetTracesCountByTransactionHash(opts.Globals.Chain, txHash)
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
