@@ -286,15 +286,6 @@ func DecodeHex(hex string) []byte {
 	return hexutil.MustDecode(hex)
 }
 
-// GetBlockZeroTs for some reason block zero does not return a timestamp, so we assign block one's ts minus 14 seconds
-func GetBlockZeroTs(chain string) (int64, error) {
-	ts := rpc.GetBlockTimestamp(chain, 0)
-	if ts == 0 {
-		ts = rpc.GetBlockTimestamp(chain, 1) - 13
-	}
-	return ts, nil
-}
-
 func GetCodeAt(chain, addr string, bn uint64) ([]byte, error) {
 	// return IsValidAddress(addr)
 	provider := config.GetRpcProvider(chain)

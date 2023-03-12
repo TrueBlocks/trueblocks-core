@@ -73,15 +73,12 @@ func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
 		dt = dt.FloorYear()
 	}
 
-	blockZeroTs, err := rpcClient.GetBlockZeroTs(chain)
-	if err != nil {
-		return utils.EarliestEvmTs, err
-	}
-
-	firstDate := gostradamus.FromUnixTimestamp(int64(blockZeroTs))
+	tsZero := rpc.GetBlockTimestamp(chain, 0)
+	firstDate := gostradamus.FromUnixTimestamp(tsZero)
 	if dt.Time().Before(firstDate.Time()) {
 		dt = firstDate
 	}
+
 	ts := dt.UnixTimestamp()
 	return tslib.FromTsToBn(chain, ts)
 }

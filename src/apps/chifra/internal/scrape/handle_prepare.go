@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/ethereum/go-ethereum/common/hexutil"
@@ -47,7 +48,7 @@ func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData, blaze
 		})
 	}
 
-	ts, _ := rpcClient.GetBlockZeroTs(opts.Globals.Chain)
+	ts := rpc.GetBlockTimestamp(opts.Globals.Chain, 0)
 	array := []tslib.Timestamp{}
 	array = append(array, tslib.Timestamp{
 		Bn: uint32(0),

@@ -96,5 +96,11 @@ func GetBlockTimestamp(chain string, bn uint64) int64 {
 		return 0
 	}
 
-	return int64(r.Time)
+	ts := int64(r.Time)
+	if ts == 0 {
+		// TODO: Chain specific
+		// The RPC does not return a timestamp for block zero, so we simulate it with ts from block one less 13 seconds
+		return GetBlockTimestamp(chain, 1) - 13
+	}
+	return ts
 }

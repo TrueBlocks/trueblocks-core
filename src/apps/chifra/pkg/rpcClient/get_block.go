@@ -125,7 +125,7 @@ func loadBlock[Tx types.BlockTransaction](chain string, bn uint64, isFinal bool,
 		return
 	}
 
-	timestamp, err := hexutil.DecodeUint64(rawBlock.Timestamp)
+	ts, err := hexutil.DecodeUint64(rawBlock.Timestamp)
 	if err != nil {
 		return
 	}
@@ -157,7 +157,7 @@ func loadBlock[Tx types.BlockTransaction](chain string, bn uint64, isFinal bool,
 
 	block = types.SimpleBlock[Tx]{
 		BlockNumber: blockNumber,
-		Timestamp:   int64(timestamp), // note that we turn Ethereum's timestamps into int64 upon read.
+		Timestamp:   int64(ts), // note that we turn Ethereum's timestamps into int64 upon read.
 		Hash:        common.HexToHash(rawBlock.Hash),
 		ParentHash:  common.HexToHash(rawBlock.ParentHash),
 		GasLimit:    gasLimit,
@@ -187,11 +187,7 @@ func getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error)
 
 	if bn == 0 {
 		// The RPC does not return a timestamp for the zero block, so we make one
-		var ts int64
-		ts, err = GetBlockZeroTs(chain)
-		if err != nil {
-			return &types.RawBlock{}, err
-		}
+		ts := rpc.GetBlockTimestamp(chain, 0)
 		response.Result.Timestamp = fmt.Sprintf("0x%x", ts)
 	}
 
