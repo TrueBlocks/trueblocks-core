@@ -54,7 +54,7 @@ func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) e
 						BlockNumber:      app.BlockNumber,
 						TransactionIndex: app.TransactionId,
 						Timestamp:        ts,
-						Date:             gostradamus.FromUnixTimestamp(int64(ts)).String(),
+						Date:             gostradamus.FromUnixTimestamp(ts).String(),
 					}
 					if uint64(record+1) >= opts.FirstRecord && (opts.MaxRecords == 250 || uint64(len(verboseResults)) < opts.MaxRecords) {
 						verboseResults = append(verboseResults, s)

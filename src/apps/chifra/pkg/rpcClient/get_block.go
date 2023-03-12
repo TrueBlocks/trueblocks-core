@@ -39,7 +39,7 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, isFinal bool) (types.Simpl
 		return block, err
 	}
 
-	timestamp, _ := strconv.ParseInt(rawBlock.Timestamp, 0, 64)
+	ts, _ := strconv.ParseInt(rawBlock.Timestamp, 0, 64)
 	block.Transactions = make([]types.SimpleTransaction, 0, len(rawBlock.Transactions))
 	for _, rawTx := range rawBlock.Transactions {
 		// cast transaction to a concrete type
@@ -74,7 +74,7 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, isFinal bool) (types.Simpl
 			BlockNumber:          mustParseUint(t["blockNumber"]),
 			TransactionIndex:     mustParseUint(t["transactionIndex"]),
 			Nonce:                mustParseUint(t["nonce"]),
-			Timestamp:            timestamp,
+			Timestamp:            ts,
 			From:                 types.HexToAddress(fmt.Sprint(t["from"])),
 			To:                   types.HexToAddress(fmt.Sprint(t["to"])),
 			Value:                *value,
@@ -125,7 +125,7 @@ func loadBlock[Tx types.BlockTransaction](chain string, bn uint64, isFinal bool,
 		return
 	}
 
-	timestamp, err := hexutil.DecodeUint64(rawBlock.Timestamp)
+	ts, err := hexutil.DecodeUint64(rawBlock.Timestamp)
 	if err != nil {
 		return
 	}
@@ -157,7 +157,7 @@ func loadBlock[Tx types.BlockTransaction](chain string, bn uint64, isFinal bool,
 
 	block = types.SimpleBlock[Tx]{
 		BlockNumber: blockNumber,
-		Timestamp:   int64(timestamp),
+		Timestamp:   types.Timestamp(ts), // note that we turn Ethereum's timestamps into types.Timestamp upon read.
 		Hash:        common.HexToHash(rawBlock.Hash),
 		ParentHash:  common.HexToHash(rawBlock.ParentHash),
 		GasLimit:    gasLimit,
@@ -187,12 +187,7 @@ func getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error)
 
 	if bn == 0 {
 		// The RPC does not return a timestamp for the zero block, so we make one
-		var ts uint64
-		ts, err = GetBlockZeroTs(chain)
-		if err != nil {
-			return &types.RawBlock{}, err
-		}
-		response.Result.Timestamp = fmt.Sprintf("0x%x", ts)
+		response.Result.Timestamp = fmt.Sprintf("0x%x", rpc.GetBlockTimestamp(chain, 0))
 	}
 
 	rawBlock := &response.Result

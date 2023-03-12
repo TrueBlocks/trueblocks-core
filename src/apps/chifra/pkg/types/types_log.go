@@ -9,7 +9,9 @@
 package types
 
 // EXISTING_CODE
-import "github.com/ethereum/go-ethereum/common"
+import (
+	"github.com/ethereum/go-ethereum/common"
+)
 
 // EXISTING_CODE
 
@@ -32,7 +34,7 @@ type SimpleLog struct {
 	CompressedLog    string          `json:"compressedLog,omitempty"`
 	Data             string          `json:"data,omitempty"`
 	LogIndex         uint64          `json:"logIndex"`
-	Timestamp        uint64          `json:"timestamp,omitempty"`
+	Timestamp        Timestamp       `json:"timestamp,omitempty"`
 	Topics           []common.Hash   `json:"topics,omitempty"`
 	TransactionIndex uint32          `json:"transactionIndex"`
 	raw              *RawLog         `json:"-"`

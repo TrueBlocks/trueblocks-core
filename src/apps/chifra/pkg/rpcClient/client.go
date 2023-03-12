@@ -281,31 +281,9 @@ func (ec *Client) TransactionCount(ctx context.Context, blockHash common.Hash) (
 func (ec *Client) TransactionSender(ctx context.Context, tx *types.Transaction, block common.Hash, index uint) (common.Address, error)
 */
 
-func GetBlockTimestamp(provider string, bn uint64) uint64 {
-	ec := GetClient(provider)
-	defer ec.Close()
-
-	r, err := ec.HeaderByNumber(context.Background(), big.NewInt(int64(bn)))
-	if err != nil {
-		logger.Log(logger.Error, "Could not connect to RPC client", err)
-		return 0
-	}
-
-	return r.Time
-}
-
 // DecodeHex decodes a string with hex into a slice of bytes
 func DecodeHex(hex string) []byte {
 	return hexutil.MustDecode(hex)
-}
-
-// GetBlockZeroTs for some reason block zero does not return a timestamp, so we assign block one's ts minus 14 seconds
-func GetBlockZeroTs(chain string) (uint64, error) {
-	ts := GetBlockTimestamp(config.GetRpcProvider(chain), 0)
-	if ts == 0 {
-		ts = GetBlockTimestamp(config.GetRpcProvider(chain), 1) - 13
-	}
-	return ts, nil
 }
 
 func GetCodeAt(chain, addr string, bn uint64) ([]byte, error) {

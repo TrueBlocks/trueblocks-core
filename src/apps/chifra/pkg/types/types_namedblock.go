@@ -19,10 +19,10 @@ type RawNamedBlock struct {
 }
 
 type SimpleNamedBlock struct {
-	BlockNumber uint64 `json:"blockNumber"`
-	Date        string `json:"date"`
-	Name        string `json:"name,omitempty"`
-	Timestamp   int64  `json:"timestamp"`
+	BlockNumber uint64    `json:"blockNumber"`
+	Date        string    `json:"date"`
+	Name        string    `json:"name,omitempty"`
+	Timestamp   Timestamp `json:"timestamp"`
 	raw         *RawNamedBlock
 }
 
@@ -65,8 +65,4 @@ func (s *SimpleNamedBlock) Model(showHidden bool, format string, extraOptions ma
 }
 
 // EXISTING_CODE
-func (s *SimpleNamedBlock) GetTimestamp() int64 {
-	return s.Timestamp
-}
-
 // EXISTING_CODE
