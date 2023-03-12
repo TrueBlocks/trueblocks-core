@@ -119,7 +119,7 @@ const NOPOS = uint64(^uint64(0))
 const NOPOSI = int64(0xdeadbeef)
 
 // Min calculates the minimum between two unsigned integers (golang has no such function)
-func Min[T int | float64 | uint32 | uint64](x, y T) T {
+func Min[T int | float64 | uint32 | int64 | uint64](x, y T) T {
 	if x < y {
 		return x
 	}
@@ -127,7 +127,7 @@ func Min[T int | float64 | uint32 | uint64](x, y T) T {
 }
 
 // Max calculates the max between two unsigned integers (golang has no such function)
-func Max[T int | float64 | uint32 | uint64](x, y T) T {
+func Max[T int | float64 | uint32 | int64 | uint64](x, y T) T {
 	if x > y {
 		return x
 	}

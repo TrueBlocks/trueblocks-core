@@ -84,7 +84,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		to = "0x0" // weird special case to preserve what RPC does
 	}
 
-	date := gostradamus.FromUnixTimestamp(int64(s.Timestamp))
+	date := gostradamus.FromUnixTimestamp(s.Timestamp)
 	// EXISTING_CODE
 
 	model := map[string]interface{}{

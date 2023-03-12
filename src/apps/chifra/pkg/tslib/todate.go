@@ -3,6 +3,7 @@ package tslib
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/bykof/gostradamus"
 )
@@ -41,6 +42,6 @@ func FromNameToDate(chain, name string) (gostradamus.DateTime, error) {
 }
 
 // FromTsToDate returns a date given a Linux timestamp (not chain-specific)
-func FromTsToDate(ts int64) (gostradamus.DateTime, error) {
+func FromTsToDate(ts types.Timestamp) (gostradamus.DateTime, error) {
 	return gostradamus.FromUnixTimestamp(ts), nil
 }
