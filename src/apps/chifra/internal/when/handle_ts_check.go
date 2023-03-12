@@ -33,7 +33,7 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 		return err
 	}
 
-	prev := types.SimpleTimestamp{
+	prev := types.SimpleNamedBlock{
 		BlockNumber: utils.NOPOS,
 		Timestamp:   utils.NOPOSI,
 	}
@@ -57,7 +57,7 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 	return nil
 }
 
-func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.SimpleTimestamp, bn uint64) error {
+func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.SimpleNamedBlock, bn uint64) error {
 	// The i'th item in the timestamp array on disc
 	itemOnDisc, err := tslib.FromBn(opts.Globals.Chain, bn)
 	if err != nil {
@@ -65,7 +65,7 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Si
 	}
 
 	// This just simplifies the code below by removing the need to type cast
-	onDisc := types.SimpleTimestamp{
+	onDisc := types.SimpleNamedBlock{
 		BlockNumber: uint64(itemOnDisc.Bn),
 		Timestamp:   int64(itemOnDisc.Ts),
 	}
