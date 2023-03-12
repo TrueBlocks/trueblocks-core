@@ -54,7 +54,7 @@ type SimpleBlock[Tx BlockTransaction] struct {
 	Hash          common.Hash   `json:"hash"`
 	Miner         Address       `json:"miner"`
 	ParentHash    common.Hash   `json:"parentHash"`
-	Timestamp     Timestamp     `json:"timestamp"`
+	Timestamp     int64         `json:"timestamp"`
 	Transactions  []Tx          `json:"transactions"`
 	Uncles        []common.Hash `json:"uncles"`
 	raw           *RawBlock
@@ -201,4 +201,8 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 }
 
 // EXISTING_CODE
+func (s *SimpleBlock[Tx]) GetTimestamp() uint64 {
+	return uint64(s.Timestamp)
+}
+
 // EXISTING_CODE

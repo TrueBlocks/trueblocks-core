@@ -143,7 +143,7 @@ string_q type_2_GoType(const CMember& field) {
     if (type == "blknum")
         return "uint64";
     if (type == "timestamp")
-        return "Timestamp";
+        return "int64";
     if (type == "hash" || type == "bytes32")
         return "common.Hash";
     if (type == "datetime" || type == "bytes")

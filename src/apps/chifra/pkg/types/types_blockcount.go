@@ -23,14 +23,14 @@ type RawBlockCount struct {
 }
 
 type SimpleBlockCount struct {
-	AppsCnt         uint64    `json:"appsCnt,omitempty"`
-	BlockNumber     uint64    `json:"blockNumber"`
-	LogsCnt         uint64    `json:"logsCnt,omitempty"`
-	Timestamp       Timestamp `json:"timestamp"`
-	TracesCnt       uint64    `json:"tracesCnt,omitempty"`
-	TransactionsCnt uint64    `json:"transactionsCnt"`
-	UnclesCnt       uint64    `json:"unclesCnt,omitempty"`
-	UniqsCnt        uint64    `json:"uniqsCnt,omitempty"`
+	AppsCnt         uint64 `json:"appsCnt,omitempty"`
+	BlockNumber     uint64 `json:"blockNumber"`
+	LogsCnt         uint64 `json:"logsCnt,omitempty"`
+	Timestamp       int64  `json:"timestamp"`
+	TracesCnt       uint64 `json:"tracesCnt,omitempty"`
+	TransactionsCnt uint64 `json:"transactionsCnt"`
+	UnclesCnt       uint64 `json:"unclesCnt,omitempty"`
+	UniqsCnt        uint64 `json:"uniqsCnt,omitempty"`
 	raw             *RawBlockCount
 }
 

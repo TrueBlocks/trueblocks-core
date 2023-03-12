@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -73,12 +72,16 @@ func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
 		dt = dt.FloorYear()
 	}
 
-	firstDate := gostradamus.FromUnixTimestamp(rpc.GetBlockTimestamp(chain, 0))
+	blockZeroTs, err := rpcClient.GetBlockZeroTs(chain)
+	if err != nil {
+		return utils.EarliestEvmTs, err
+	}
+
+	firstDate := gostradamus.FromUnixTimestamp(int64(blockZeroTs))
 	if dt.Time().Before(firstDate.Time()) {
 		dt = firstDate
 	}
-
-	ts := dt.UnixTimestamp()
+	ts := uint64(dt.UnixTimestamp())
 	return tslib.FromTsToBn(chain, ts)
 }
 
@@ -120,7 +123,7 @@ func (id *Identifier) nextBlock(chain string, current uint64) (uint64, error) {
 				// should not happen
 			}
 
-			ts := dt.UnixTimestamp()
+			ts := uint64(dt.UnixTimestamp())
 			bn, err = tslib.FromTsToBn(chain, ts)
 			if err != nil {
 				return bn, err
@@ -145,12 +148,12 @@ func (p *Point) resolvePoint(chain string) uint64 {
 		bn, _ = tslib.FromNameToBn(chain, p.Special)
 	} else if p.Number >= utils.EarliestEvmTs {
 		var err error
-		bn, err = tslib.FromTsToBn(chain, types.Timestamp(p.Number))
+		bn, err = tslib.FromTsToBn(chain, uint64(p.Number))
 		if err == tslib.ErrInTheFuture {
 			provider := config.GetRpcProvider(chain)
 			latest := rpcClient.BlockNumber(provider)
-			tsFuture := rpc.GetBlockTimestamp(chain, latest)
-			secs := uint64(tsFuture - types.Timestamp(p.Number))
+			tsFuture := rpcClient.GetBlockTimestamp(provider, latest)
+			secs := (tsFuture - uint64(p.Number))
 			blks := (secs / 13)
 			bn = latest + blks
 		}
