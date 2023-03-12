@@ -49,7 +49,7 @@ func Repair(chain string, bn uint64) error {
 			fp.Seek(pos, io.SeekStart)
 
 			block, _ := rpcClient.GetBlockHeaderByNumber(chain, bn)
-			record := TimestampRecord{Bn: uint32(block.BlockNumber), Ts: uint32(block.Timestamp)}
+			record := Timestamp{Bn: uint32(block.BlockNumber), Ts: uint32(block.GetTimestamp())}
 			err = binary.Write(fp, binary.LittleEndian, &record)
 			if err != nil {
 				return err

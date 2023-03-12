@@ -15,7 +15,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
@@ -46,7 +45,7 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpcClient.MetaData, blaze
 }
 
 // TODO: Protect against overwriting files on disc
-func WriteTimestamps(chain string, tsArray []tslib.TimestampRecord, endPoint uint64) error {
+func WriteTimestamps(chain string, tsArray []tslib.Timestamp, endPoint uint64) error {
 	sort.Slice(tsArray, func(i, j int) bool {
 		return tsArray[i].Bn < tsArray[j].Bn
 	})
@@ -71,18 +70,18 @@ func WriteTimestamps(chain string, tsArray []tslib.TimestampRecord, endPoint uin
 	for bn := nTs; bn < endPoint; bn++ {
 		// Append to the timestamps file all the new timestamps but as we do that make sure we're
 		// not skipping anything at the front, in the middle, or at the end of the list
-		ts := tslib.TimestampRecord{}
+		ts := tslib.Timestamp{}
 		if cnt >= len(tsArray) {
-			ts = tslib.TimestampRecord{
+			ts = tslib.Timestamp{
 				Bn: uint32(bn),
-				Ts: uint32(rpc.GetBlockTimestamp(chain, bn)),
+				Ts: uint32(rpcClient.GetBlockTimestamp(config.GetRpcProvider(chain), bn)),
 			}
 		} else {
 			ts = tsArray[cnt]
 			if tsArray[cnt].Bn != uint32(bn) {
-				ts = tslib.TimestampRecord{
+				ts = tslib.Timestamp{
 					Bn: uint32(bn),
-					Ts: uint32(rpc.GetBlockTimestamp(chain, bn)),
+					Ts: uint32(rpcClient.GetBlockTimestamp(config.GetRpcProvider(chain), bn)),
 				}
 				cnt-- // set it back
 			}

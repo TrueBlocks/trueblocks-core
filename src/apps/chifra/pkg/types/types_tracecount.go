@@ -23,7 +23,7 @@ type RawTraceCount struct {
 
 type SimpleTraceCount struct {
 	BlockNumber      uint64      `json:"blockNumber"`
-	Timestamp        Timestamp   `json:"timestamp"`
+	Timestamp        int64       `json:"timestamp"`
 	TracesCnt        uint64      `json:"tracesCnt"`
 	TransactionHash  common.Hash `json:"transactionHash"`
 	TransactionIndex uint64      `json:"transactionIndex"`

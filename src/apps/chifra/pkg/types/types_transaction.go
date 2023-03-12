@@ -45,7 +45,7 @@ type SimpleTransaction struct {
 	BlockNumber          Blknum          `json:"blockNumber"`
 	TransactionIndex     uint64          `json:"transactionIndex"`
 	Nonce                uint64          `json:"nonce"`
-	Timestamp            Timestamp       `json:"timestamp"`
+	Timestamp            int64           `json:"timestamp"`
 	From                 Address         `json:"from"`
 	To                   Address         `json:"to"`
 	Value                Wei             `json:"value"`

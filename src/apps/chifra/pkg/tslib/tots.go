@@ -3,24 +3,23 @@ package tslib
 import (
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/bykof/gostradamus"
 )
 
 // FromBnToTs returns a chain-specific Linux timestamp given a block number
-func FromBnToTs(chain string, bn uint64) (types.Timestamp, error) {
+func FromBnToTs(chain string, bn uint64) (uint64, error) {
 	ret, err := FromBn(chain, bn)
-	return types.Timestamp(ret.Ts), err
+	return uint64(ret.Ts), err
 }
 
 // FromDateToTs returns a Linux timestamp given a date string (not chain-specific)
-func FromDateToTs(dateStr string) (types.Timestamp, error) {
+func FromDateToTs(dateStr string) (uint64, error) {
 	str := toIsoDateStr(dateStr)
 	t, err := gostradamus.Parse(str, gostradamus.Iso8601)
 	if err != nil {
 		return 0, err
 	}
-	return types.Timestamp(t.UnixTimestamp()), nil
+	return uint64(t.UnixTimestamp()), nil
 }
 
 func toIsoDateStr(dateStr string) string {

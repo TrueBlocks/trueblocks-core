@@ -33,9 +33,9 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 		return err
 	}
 
-	prev := types.SimpleNamedBlock{
+	prev := types.SimpleTimestamp{
 		BlockNumber: utils.NOPOS,
-		Timestamp:   utils.NOPOSI,
+		Timestamp:   utils.NOPOS,
 	}
 
 	if len(blockNums) > 0 {
@@ -57,7 +57,7 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 	return nil
 }
 
-func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.SimpleNamedBlock, bn uint64) error {
+func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.SimpleTimestamp, bn uint64) error {
 	// The i'th item in the timestamp array on disc
 	itemOnDisc, err := tslib.FromBn(opts.Globals.Chain, bn)
 	if err != nil {
@@ -65,18 +65,18 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Si
 	}
 
 	// This just simplifies the code below by removing the need to type cast
-	onDisc := types.SimpleNamedBlock{
+	onDisc := types.SimpleTimestamp{
 		BlockNumber: uint64(itemOnDisc.Bn),
-		Timestamp:   types.Timestamp(itemOnDisc.Ts),
+		Timestamp:   uint64(itemOnDisc.Ts),
 	}
 
-	expected := types.SimpleBlock[string]{BlockNumber: bn, Timestamp: onDisc.Timestamp}
+	expected := types.SimpleBlock[string]{BlockNumber: bn, Timestamp: int64(onDisc.Timestamp)}
 	if opts.Deep {
 		// If we're going deep, we need to query the node
 		expected, _ = rpcClient.GetBlockHeaderByNumber(opts.Globals.Chain, bn)
 	}
 
-	if prev.Timestamp != utils.NOPOSI {
+	if prev.Timestamp != utils.NOPOS {
 		status := "Okay"
 
 		bnSequential := prev.BlockNumber < onDisc.BlockNumber
@@ -93,9 +93,9 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Si
 			status = "Error"
 		}
 
-		deepTsCheck := !opts.Deep || (onDisc.Timestamp == expected.Timestamp)
+		deepTsCheck := !opts.Deep || (onDisc.Timestamp == expected.GetTimestamp())
 		if !deepTsCheck {
-			msg := fmt.Sprintf("At block %d, timestamp on disc %d does not agree with on chain %d%s", bn, onDisc.Timestamp, expected.Timestamp, clear)
+			msg := fmt.Sprintf("At block %d, timestamp on disc %d does not agree with on chain %d%s", bn, onDisc.Timestamp, expected.GetTimestamp(), clear)
 			logger.Log(logger.Error, msg)
 			status = "Error"
 		}
@@ -111,7 +111,7 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Si
 		}
 
 		if status == "Okay" {
-			scanBar.Report(opts.Globals.Writer, status, fmt.Sprintf(" bn: %d ts: %d", expected.BlockNumber, expected.Timestamp))
+			scanBar.Report(opts.Globals.Writer, status, fmt.Sprintf(" bn: %d ts: %d", expected.BlockNumber, expected.GetTimestamp()))
 		}
 	}
 

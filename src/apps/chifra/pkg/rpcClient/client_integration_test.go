@@ -14,8 +14,6 @@ import (
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -33,8 +31,7 @@ func Test_Client(t *testing.T) {
 		t.Error("incorrect result from HexToAddress")
 	}
 
-	chain := utils.GetTestChain()
-	provider := config.GetRpcProvider(chain)
+	provider := config.GetRpcProvider("mainnet")
 	ec := GetClient(provider) // won't return if it doesn't connect
 
 	bn, _ := ec.BlockNumber(context.Background())
@@ -47,8 +44,8 @@ func Test_Client(t *testing.T) {
 		t.Error("provider chain id is 1")
 	}
 
-	ts := rpc.GetBlockTimestamp(chain, 1)
-	blockOneTimestamp := int64(1438269988)
+	ts := GetBlockTimestamp(provider, 1)
+	blockOneTimestamp := uint64(1438269988)
 	if ts != blockOneTimestamp {
 		t.Error("timestamp for block 1 is not correct")
 	}
