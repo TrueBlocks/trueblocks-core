@@ -291,7 +291,7 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 			mon.Close()
 			err := mon.WriteAppearancesAppend(lastScanned, nil)
 			if err != nil {
-				logger.Println(err)
+				logger.Log(logger.Error, err)
 			}
 		}
 
@@ -305,7 +305,7 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 			if nWritten > 0 {
 				_, err := mon.WriteAppearances(*result.AppRecords, true /* append */)
 				if err != nil {
-					logger.Println(err)
+					logger.Log(logger.Error, err)
 				} else if !updater.Options.Globals.TestMode {
 					msg := fmt.Sprintf("%s appended %d apps at %s", mon.GetAddrStr(), nWritten, result.Range)
 					logger.Log(logger.Info, msg)

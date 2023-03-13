@@ -95,14 +95,6 @@ func Log(sev severity, a ...interface{}) {
 	}
 }
 
-func Print(v ...any) {
-    log.Print(v...)
-}
-
-func Println(v ...any) {
-	log.Println(v...)
-}
-
 func Fatal(v ...any) {
 	log.Fatal(v...)
 }

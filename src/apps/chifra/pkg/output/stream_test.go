@@ -176,7 +176,7 @@ func TestStreamMany(t *testing.T) {
 	var result R
 	err := json.Unmarshal(buffer.Bytes(), &result)
 	if err != nil {
-		logger.Println(buffer.String())
+		logger.Log(logger.Error, buffer.String())
 		t.Fatal(err)
 	}
 

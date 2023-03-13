@@ -94,10 +94,10 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 			<-r.Context().Done()
 			pid := cmd.Process.Pid
 			if err := cmd.Process.Kill(); err != nil {
-				logger.Println("failed to kill process: ", err)
+				logger.Log(logger.Error, "failed to kill process: ", err)
 			}
-			logger.Println("apiCmd: ", apiCmd)
-			logger.Println("The client closed the connection to process id ", pid, ". Cleaning up.")
+			logger.Log(logger.Info, "apiCmd: ", apiCmd)
+			logger.Log(logger.Info, "The client closed the connection to process id ", pid, ". Cleaning up.")
 		}()
 	}
 
@@ -144,7 +144,7 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 
 	out, err := cmd.Output()
 	if err != nil {
-		logger.Println(err)
+		logger.Log(logger.Error, err)
 		connectionPool.broadcast <- &Message{
 			Action:  CommandErrorMessage,
 			ID:      tbCmd,

@@ -37,7 +37,7 @@ func GetClient(provider string) *ethclient.Client {
 		// TODO: If we make this a cached item, it needs to be cached per chain, see timestamps
 		ec, err := ethclient.Dial(provider)
 		if err != nil || ec == nil {
-			logger.Println("Missdial(" + provider + "):")
+			logger.Log(logger.Error, "Missdial("+provider+"):")
 			logger.Fatalln(err)
 		}
 		perProviderClientMap[provider] = ec

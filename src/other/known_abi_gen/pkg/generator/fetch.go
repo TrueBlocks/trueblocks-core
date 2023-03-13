@@ -120,7 +120,7 @@ func Fetch(source *generatorSource, pl *pathList, forceDownload bool) (err error
 		return
 	}
 
-	logger.Println("Downloading", source.Name, "to", pl.ZipArchive)
+	logger.Log(logger.Info, "Downloading", source.Name, "to", pl.ZipArchive)
 
 	if _, err = io.Copy(outputFile, response.Body); err != nil {
 		return
@@ -170,7 +170,7 @@ func runSolc(pl *pathList, source *generatorSource) (err error) {
 		installDeps.Dir = pl.UnpackedZip
 		err = installDeps.Run()
 		if err != nil {
-			logger.Println("install deps error:", err)
+			logger.Log(logger.Error, "install deps error:", err)
 		}
 		// We continue, because error doesn't mean we can't build
 	}
@@ -227,28 +227,28 @@ func RegenerateAll() (err error) {
 	for _, source := range defaultSources {
 		pl := getPaths(&source)
 		if isPresent(pl.CacheFile) {
-			logger.Println("Cache file for", source.Name, "already present, skipping")
+			logger.Log(logger.Warning, "Cache file for", source.Name, "already present, skipping")
 			continue
 		}
-		logger.Println("Downloading")
+		logger.Log(logger.Info, "Downloading")
 		err = Fetch(&source, pl, false)
 		if err != nil {
 			return err
 		}
-		logger.Println("Unpacking")
+		logger.Log(logger.Info, "Unpacking")
 		if err = runUnzip(pl); err != nil {
 			return err
 		}
-		logger.Println("Compiling")
+		logger.Log(logger.Info, "Compiling")
 		err = runSolc(pl, &source)
 		if err != nil {
 			return err
 		}
-		logger.Println("Building known ABI file")
+		logger.Log(logger.Info, "Building known ABI file")
 		if err = buildCacheFile(pl); err != nil {
 			return err
 		}
-		logger.Println("Built", source.Name)
+		logger.Log(logger.Info, "Built", source.Name)
 		cleanAllInputs(pl)
 	}
 	return
