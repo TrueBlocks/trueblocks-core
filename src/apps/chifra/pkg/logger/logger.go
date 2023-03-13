@@ -34,10 +34,8 @@ var severityToLabel = map[severity]string{
 }
 
 var (
-	testModeSet     = false
-	testMode        = false
-	logTimingOffSet = false
-	logTiming       = true
+	testModeSet = false
+	testMode    = false
 )
 
 // TestLog is used to print command line options to the screen during testing only
@@ -56,20 +54,21 @@ func TestLog(notDefault bool, a ...interface{}) {
 	}
 }
 
-func getLogTiming() bool {
-	if !logTimingOffSet {
-		logTimingOffSet = true
-		logTiming = os.Getenv("LOG_TIMING_OFF") == "" && os.Getenv("TEST_MODE") != "true"
-	}
-	return logTiming
-}
+var (
+	timingModeSet = false
+	timingMode    = true
+)
 
 // toLog prints `a` to stderr with a label corresponding to the severity level
 // prepended (e.g. <INFO>, <EROR>, etc.)
 func toLog(sev severity, a ...interface{}) {
+	if !timingModeSet {
+		timingModeSet = true
+		timingMode = os.Getenv("LOG_TIMING_OFF") == "" && os.Getenv("TEST_MODE") != "true"
+	}
 
 	timeDatePart := "DATE|TIME"
-	if getLogTiming() {
+	if timingMode {
 		now := time.Now()
 		timeDatePart = now.Format("02-01|15:04:05.000")
 	}
