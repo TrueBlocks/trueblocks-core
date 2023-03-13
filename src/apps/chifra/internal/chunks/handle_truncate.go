@@ -15,7 +15,7 @@ import (
 
 func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 	if opts.Globals.TestMode {
-		logger.Log(logger.Warning, "Truncate option not tested.")
+		logger.Warn("Truncate option not tested.")
 		return nil
 	}
 

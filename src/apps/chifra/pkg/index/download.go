@@ -267,7 +267,7 @@ func writeBytesToDisc(chain string, chunkType paths.CacheType, res *jobResult) e
 			if fullPath == paths.ToIndexPath(fullPath) {
 				col = colors.Yellow
 			}
-			logger.Log(logger.Warning, "Failed download", col, res.rng, colors.Off, "(will retry)", strings.Repeat(" ", 30))
+			logger.Warn("Failed download", col, res.rng, colors.Off, "(will retry)", strings.Repeat(" ", 30))
 		}
 		// Information about this error
 		// https://community.k6.io/t/warn-0040-request-failed-error-stream-error-stream-id-3-internal-error/777/2

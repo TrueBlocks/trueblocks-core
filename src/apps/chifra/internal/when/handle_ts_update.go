@@ -15,7 +15,7 @@ import (
 // HandleTimestampUpdate update the timestamp file to the latest block
 func (opts *WhenOptions) HandleTimestampUpdate() error {
 	if opts.Globals.TestMode {
-		logger.Log(logger.Warning, "Update option not tested.")
+		logger.Warn("Update option not tested.")
 		return nil
 	}
 

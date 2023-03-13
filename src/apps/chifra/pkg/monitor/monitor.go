@@ -263,7 +263,7 @@ func (mon *Monitor) MoveToProduction() error {
 
 	if before != after {
 		msg := fmt.Sprintf("%s %d duplicates removed.", mon.GetAddrStr(), (before - after))
-		logger.Log(logger.Warning, msg)
+		logger.Warn(msg)
 	}
 
 	oldPath := mon.Path()

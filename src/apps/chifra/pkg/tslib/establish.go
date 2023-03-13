@@ -49,7 +49,7 @@ func downloadCidToBinary(chain, cid, fileName string) error {
 	logger.Log(logger.InfoC, "CID:", cid)
 	logger.Log(logger.InfoC, "URL:", url.String())
 	msg := colors.Yellow + "Downloading timestamp file. This may take a moment, please wait..." + colors.Off
-	logger.Log(logger.Warning, msg)
+	logger.Warn(msg)
 
 	//Get the response bytes from the url
 	response, err := http.Get(url.String())

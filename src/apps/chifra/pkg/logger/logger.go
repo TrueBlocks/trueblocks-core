@@ -17,19 +17,19 @@ type severity int
 
 const (
 	Progress severity = iota
+	InfoC             // colored table
 	Info
-	InfoC // colored table
 	test
-	Warning
+	warning
 	err
 )
 
 var severityToLabel = map[severity]string{
 	Progress: "PROG",
-	Info:     "INFO",
 	InfoC:    "INFO",
+	Info:     "INFO",
 	test:     "TEST",
-	Warning:  "WARN",
+	warning:  "WARN",
 	err:      "EROR",
 }
 
@@ -91,6 +91,10 @@ func Log(sev severity, a ...interface{}) {
 	} else {
 		fmt.Fprintln(os.Stderr, a...)
 	}
+}
+
+func Warn(v ...any) {
+	Log(warning, v...)
 }
 
 func Error(v ...any) {

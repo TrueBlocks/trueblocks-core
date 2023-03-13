@@ -16,7 +16,7 @@ func (opts *NamesOptions) HandleTags() error {
 		return err
 	}
 	if len(namesArray) == 0 {
-		logger.Log(logger.Warning, "No results for", os.Args)
+		logger.Warn("No results for", os.Args)
 		return nil
 	}
 

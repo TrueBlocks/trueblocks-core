@@ -219,7 +219,7 @@ func retry(failedChunks []manifest.ChunkRecord, nTimes int, downloadChunksFunc f
 			break
 		}
 
-		logger.Log(logger.Warning, colors.Yellow, "Retrying", len(chunksToRetry), "downloads", colors.Off)
+		logger.Warn(colors.Yellow, "Retrying", len(chunksToRetry), "downloads", colors.Off)
 		if chunksToRetry, cancelled = downloadChunksFunc(chunksToRetry); cancelled {
 			break
 		}

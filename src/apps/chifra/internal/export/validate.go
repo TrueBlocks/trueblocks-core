@@ -86,7 +86,7 @@ func (opts *ExportOptions) validateExport() error {
 		}
 
 		if opts.Globals.Chain != "mainnet" {
-			logger.Log(logger.Warning, "The --accounting option reports a spotPrice of one for all assets on non-mainnet chains.")
+			logger.Warn("The --accounting option reports a spotPrice of one for all assets on non-mainnet chains.")
 		}
 
 		if opts.Statements {

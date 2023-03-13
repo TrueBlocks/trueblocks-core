@@ -227,7 +227,7 @@ func RegenerateAll() (err error) {
 	for _, source := range defaultSources {
 		pl := getPaths(&source)
 		if isPresent(pl.CacheFile) {
-			logger.Log(logger.Warning, "Cache file for", source.Name, "already present, skipping")
+			logger.Warn("Cache file for", source.Name, "already present, skipping")
 			continue
 		}
 		logger.Log(logger.Info, "Downloading")

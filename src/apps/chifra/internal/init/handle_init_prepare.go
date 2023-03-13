@@ -176,5 +176,5 @@ func reportReason(prefix string, status validate.ErrorType, path string, verbose
 	}
 
 	msg := fmt.Sprintf("%s%s %-30.30s%s%s", col, prefix, reasons[status], colors.Off, path)
-	logger.Log(logger.Warning, msg)
+	logger.Warn(msg)
 }
