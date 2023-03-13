@@ -1,9 +1,9 @@
 package index
 
 import (
-	"log"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 )
 
@@ -58,7 +58,7 @@ func (walker *IndexWalker) WalkBloomFilters(blockNums []uint64) error {
 				continue
 			}
 		default:
-			log.Fatal("You may only traverse the bloom folder")
+			logger.Fatal("You may only traverse the bloom folder")
 		}
 	}
 

@@ -5,13 +5,13 @@
 package config
 
 import (
-	"log"
 	"os"
 	"os/user"
 	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
 )
 
@@ -38,7 +38,7 @@ func GetPathToChainConfig(chain string) string {
 	// Our configuration files are always in ./config folder relative to top most folder
 	cfgFolder := filepath.Join(ret, "config/", chain) + "/"
 	if _, err := os.Stat(cfgFolder); err != nil {
-		log.Fatal(usage.Usage(chainConfigMustExist, chain, cfgFolder))
+		logger.Fatal(usage.Usage(chainConfigMustExist, chain, cfgFolder))
 	}
 	return cfgFolder
 }
@@ -48,7 +48,7 @@ func GetPathToIndex(chain string) string {
 	// We need the index path from either XDG which dominates or the config file
 	indexPath, err := PathFromXDG("XDG_CACHE_HOME")
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	} else if len(indexPath) == 0 {
 		indexPath = GetRootConfig().Settings.IndexPath
 	}
@@ -75,7 +75,7 @@ func GetPathToCache(chain string) string {
 	// We need the index path from either XDG which dominates or the config file
 	cachePath, err := PathFromXDG("XDG_CACHE_HOME")
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	} else if len(cachePath) == 0 {
 		cachePath = GetRootConfig().Settings.CachePath
 	}
@@ -117,7 +117,7 @@ func EstablishCachePaths(cachePath string) {
 	}
 
 	if err := file.EstablishFolders(cachePath, folders); err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 }
 
@@ -133,6 +133,6 @@ func EstablishIndexPaths(indexPath string) {
 	}
 
 	if err := file.EstablishFolders(indexPath, folders); err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 }

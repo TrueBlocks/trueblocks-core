@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"os"
 	"os/exec"
@@ -13,6 +12,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type generatorSource struct {
@@ -120,7 +120,7 @@ func Fetch(source *generatorSource, pl *pathList, forceDownload bool) (err error
 		return
 	}
 
-	log.Println("Downloading", source.Name, "to", pl.ZipArchive)
+	logger.Println("Downloading", source.Name, "to", pl.ZipArchive)
 
 	if _, err = io.Copy(outputFile, response.Body); err != nil {
 		return
@@ -170,7 +170,7 @@ func runSolc(pl *pathList, source *generatorSource) (err error) {
 		installDeps.Dir = pl.UnpackedZip
 		err = installDeps.Run()
 		if err != nil {
-			log.Println("install deps error:", err)
+			logger.Println("install deps error:", err)
 		}
 		// We continue, because error doesn't mean we can't build
 	}
@@ -227,28 +227,28 @@ func RegenerateAll() (err error) {
 	for _, source := range defaultSources {
 		pl := getPaths(&source)
 		if isPresent(pl.CacheFile) {
-			log.Println("Cache file for", source.Name, "already present, skipping")
+			logger.Println("Cache file for", source.Name, "already present, skipping")
 			continue
 		}
-		log.Println("Downloading")
+		logger.Println("Downloading")
 		err = Fetch(&source, pl, false)
 		if err != nil {
 			return err
 		}
-		log.Println("Unpacking")
+		logger.Println("Unpacking")
 		if err = runUnzip(pl); err != nil {
 			return err
 		}
-		log.Println("Compiling")
+		logger.Println("Compiling")
 		err = runSolc(pl, &source)
 		if err != nil {
 			return err
 		}
-		log.Println("Building known ABI file")
+		logger.Println("Building known ABI file")
 		if err = buildCacheFile(pl); err != nil {
 			return err
 		}
-		log.Println("Built", source.Name)
+		logger.Println("Built", source.Name)
 		cleanAllInputs(pl)
 	}
 	return

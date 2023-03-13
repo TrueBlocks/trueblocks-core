@@ -9,7 +9,6 @@ import (
 	"errors"
 	"fmt"
 	"io/fs"
-	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -226,7 +225,7 @@ func ListMonitors(chain, folder string, monitorChan chan<- Monitor) {
 					}
 					addrMap[addr] = true
 				} else {
-					log.Panic("Invalid line in file", info.Name())
+					logger.Panic("Invalid line in file", info.Name())
 				}
 			}
 		}

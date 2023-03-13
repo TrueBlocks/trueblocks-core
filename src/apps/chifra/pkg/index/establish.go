@@ -7,7 +7,6 @@ package index
 import (
 	"errors"
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -130,7 +129,7 @@ func CheckBackLevelIndex(chain string) {
 	msg = strings.Replace(msg, "[{FILE}]", fileName, -1)
 	msg = strings.Replace(msg, "{", colors.Green, -1)
 	msg = strings.Replace(msg, "}", colors.Off, -1)
-	log.Fatalf(msg)
+	logger.Fatalf(msg)
 }
 
 const BackLevelVersion string = `

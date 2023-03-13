@@ -13,7 +13,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"os"
 	"os/exec"
@@ -22,6 +21,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -85,7 +85,7 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 	// Do the actual call
 	cmd := exec.Command(tbCmd, allDogs...)
 	if GetOptions().Globals.Verbose {
-		log.Print(colors.Yellow, "Calling: ", cmd, colors.Off)
+		logger.Print(colors.Yellow, "Calling: ", cmd, colors.Off)
 	}
 
 	if cmd.Process != nil {
@@ -94,10 +94,10 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 			<-r.Context().Done()
 			pid := cmd.Process.Pid
 			if err := cmd.Process.Kill(); err != nil {
-				log.Println("failed to kill process: ", err)
+				logger.Println("failed to kill process: ", err)
 			}
-			log.Println("apiCmd: ", apiCmd)
-			log.Println("The client closed the connection to process id ", pid, ". Cleaning up.")
+			logger.Println("apiCmd: ", apiCmd)
+			logger.Println("The client closed the connection to process id ", pid, ". Cleaning up.")
 		}()
 	}
 
@@ -129,7 +129,7 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 	// off and pass along through the web socket and progress reports
 	stderrPipe, err := cmd.StderrPipe()
 	if err != nil {
-		log.Printf("%s", err)
+		logger.Printf("%s", err)
 	} else {
 		go func() {
 			scanForProgress(stderrPipe, func(msg string) {
@@ -144,7 +144,7 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 
 	out, err := cmd.Output()
 	if err != nil {
-		log.Println(err)
+		logger.Println(err)
 		connectionPool.broadcast <- &Message{
 			Action:  CommandErrorMessage,
 			ID:      tbCmd,

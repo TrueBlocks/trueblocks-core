@@ -3,7 +3,6 @@ package scrapePkg
 import (
 	"errors"
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -121,7 +120,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 			if report, err := index.WriteChunk(blazeOpts.Chain, indexPath, appMap, len(appearances), opts.Pin, opts.Remote); err != nil {
 				return false, err
 			} else if report == nil {
-				log.Fatal("Should not happen, write chunk returned empty report")
+				logger.Fatal("Should not happen, write chunk returned empty report")
 			} else {
 				report.Snapped = isSnap
 				report.Report()
@@ -138,7 +137,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		Last := uint64(0)
 		if len(parts) > 1 {
 			Last, _ = strconv.ParseUint(parts[1], 10, 32)
-			Last = utils.Max(blazeOpts.StartBlock + opts.BlockCnt - 1, Last)
+			Last = utils.Max(blazeOpts.StartBlock+opts.BlockCnt-1, Last)
 		} else {
 			return true, errors.New("Cannot find last block number at lineLast in consolidate: " + lineLast)
 		}

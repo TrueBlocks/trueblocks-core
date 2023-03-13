@@ -6,10 +6,10 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
-	"log"
 	"testing"
 	"text/template"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common"
 )
@@ -176,7 +176,7 @@ func TestStreamMany(t *testing.T) {
 	var result R
 	err := json.Unmarshal(buffer.Bytes(), &result)
 	if err != nil {
-		log.Println(buffer.String())
+		logger.Println(buffer.String())
 		t.Fatal(err)
 	}
 

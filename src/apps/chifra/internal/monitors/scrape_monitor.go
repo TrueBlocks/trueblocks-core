@@ -7,7 +7,6 @@ package monitorsPkg
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -262,7 +261,7 @@ func establishExportPaths(chain string) {
 	cwd, _ := os.Getwd()
 	exportPath := cwd + "/exports/"
 	if err := file.EstablishFolders(exportPath, nil); err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 
 	exportPath = cwd + "/exports/" + chain + "/"
@@ -273,7 +272,7 @@ func establishExportPaths(chain string) {
 	}
 
 	if err := file.EstablishFolders(exportPath, folders); err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 }
 

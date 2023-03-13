@@ -228,7 +228,7 @@ func GetBlockScrapeSettings(chain string) blockScrapeSettings {
 	}
 	if _, err := toml.Decode(str, &conf); err != nil {
 		// TODO: Don't panic here, just report and return defaults
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 
 	tt := reflect.TypeOf(conf.Settings)

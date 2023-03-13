@@ -9,11 +9,11 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"os"
 	"unsafe"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
@@ -205,7 +205,7 @@ func (bl *ChunkBloom) AddToSet(addr types.Address) {
 func (bl *ChunkBloom) WhichBits(addr types.Address) (bits [5]uint32) {
 	slice := addr.Bytes()
 	if len(slice) != 20 {
-		log.Fatal("address is not 20 bytes long - should not happen")
+		logger.Fatal("address is not 20 bytes long - should not happen")
 	}
 
 	cnt := 0

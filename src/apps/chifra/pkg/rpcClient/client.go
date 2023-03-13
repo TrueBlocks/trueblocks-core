@@ -7,7 +7,6 @@ package rpcClient
 import (
 	"context"
 	"fmt"
-	"log"
 	"math/big"
 	"strconv"
 	"strings"
@@ -37,8 +36,8 @@ func GetClient(provider string) *ethclient.Client {
 		// TODO: If we make this a cached item, it needs to be cached per chain, see timestamps
 		ec, err := ethclient.Dial(provider)
 		if err != nil || ec == nil {
-			log.Println("Missdial(" + provider + "):")
-			log.Fatalln(err)
+			logger.Println("Missdial(" + provider + "):")
+			logger.Fatalln(err)
 		}
 		perProviderClientMap[provider] = ec
 	}
@@ -175,7 +174,7 @@ func TxNumberAndIdFromHash(provider string, hash string) (uint64, uint64, error)
 	err := rpc.FromRpc(provider, &transPayload, &trans)
 	if err != nil {
 		fmt.Println("rpc.FromRpc(traces) returned error")
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 	if trans.Result.BlockNumber == "" {
 		return 0, 0, fmt.Errorf("transaction at %s reported an error: %w", hash, ethereum.NotFound)

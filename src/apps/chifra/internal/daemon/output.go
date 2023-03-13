@@ -11,7 +11,6 @@ package daemonPkg
 // EXISTING_CODE
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"strings"
 
@@ -45,7 +44,7 @@ func ServeDaemon(w http.ResponseWriter, r *http.Request) (err error, handled boo
 	outputHelpers.SetEnabledForCmds("daemon", opts.IsPorted())
 	outputHelpers.InitJsonWriterApi("daemon", w, &opts.Globals)
 	// EXISTING_CODE
-	log.Fatal("Should not happen. Daemon is an invalid route for server")
+	logger.Fatal("Should not happen. Daemon is an invalid route for server")
 	// EXISTING_CODE
 	err, handled = opts.DaemonInternal()
 	outputHelpers.CloseJsonWriterIfNeededApi("daemon", err, &opts.Globals)
@@ -81,7 +80,7 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 	if err != nil {
 		msg := fmt.Sprintf("%sCould not load RPC provider: %s%s", colors.Red, err, colors.Off)
 		logger.Log(logger.InfoC, pad("Progress:"), msg)
-		log.Fatalf("")
+		logger.Fatalf("")
 	} else {
 		nTs, _ := tslib.NTimestamps(opts.Globals.Chain)
 		msg := fmt.Sprintf("%d, %d, %d,  %d, ts: %d", meta.Latest, meta.Finalized, meta.Staging, meta.Unripe, nTs)
@@ -94,7 +93,7 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 	// Start listening to the web sockets
 	RunWebsocketPool()
 	// Start listening for requests
-	log.Fatal(http.ListenAndServe(opts.Port, NewRouter()))
+	logger.Fatal(http.ListenAndServe(opts.Port, NewRouter()))
 
 	// EXISTING_CODE
 

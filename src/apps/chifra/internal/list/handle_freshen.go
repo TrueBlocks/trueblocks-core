@@ -6,7 +6,6 @@ package listPkg
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"sort"
 	"strconv"
@@ -18,6 +17,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -291,7 +291,7 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 			mon.Close()
 			err := mon.WriteAppearancesAppend(lastScanned, nil)
 			if err != nil {
-				log.Println(err)
+				logger.Println(err)
 			}
 		}
 
@@ -305,9 +305,9 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 			if nWritten > 0 {
 				_, err := mon.WriteAppearances(*result.AppRecords, true /* append */)
 				if err != nil {
-					log.Println(err)
+					logger.Println(err)
 				} else if !updater.Options.Globals.TestMode {
-					log.Printf("%s appended %d apps at %s\n", mon.GetAddrStr(), nWritten, result.Range)
+					logger.Printf("%s appended %d apps at %s\n", mon.GetAddrStr(), nWritten, result.Range)
 				}
 			}
 		}

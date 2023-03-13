@@ -3,7 +3,6 @@ package rpc
 import (
 	"context"
 	"fmt"
-	"log"
 	"math/big"
 	"sync"
 
@@ -38,8 +37,8 @@ func GetClient(provider string) *ethclient.Client {
 		// TODO: If we make this a cached item, it needs to be cached per chain, see timestamps
 		ec, err := ethclient.Dial(provider)
 		if err != nil || ec == nil {
-			log.Println("Missdial(" + provider + "):")
-			log.Fatalln(err)
+			logger.Println("Missdial(" + provider + "):")
+			logger.Fatalln(err)
 		}
 		perProviderClientMap[provider] = ec
 	}

@@ -6,6 +6,7 @@ package logger
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"time"
 
@@ -74,19 +75,44 @@ func Log(sev severity, a ...interface{}) {
 			fmt.Fprint(os.Stderr, aa)
 		}
 		fmt.Fprint(os.Stderr, "\r")
+
 	} else if sev == InfoC {
 		fmt.Fprintf(os.Stderr, "%s%s%s ", colors.Green, a[0], colors.Off)
 		for _, aa := range a[1:] {
 			fmt.Fprintf(os.Stderr, "%s", aa)
 		}
 		fmt.Fprintln(os.Stderr, "")
+
 	} else {
 		fmt.Fprintln(os.Stderr, a...)
 	}
 }
 
-// Fatal prints its arguments to stderr and calls os.Exit(1)
-func Fatal(a ...interface{}) {
-	Log(ErrorFatal, a...)
-	os.Exit(1)
+func Print(v ...any) {
+	log.Print(v...)
 }
+
+func Println(v ...any) {
+	log.Println(v...)
+}
+
+func Printf(format string, v ...any) {
+	log.Printf(format, v...)
+}
+
+func Fatal(v ...any) {
+	log.Fatal(v...)
+}
+
+func Fatalln(v ...any) {
+	log.Fatalln(v...)
+}
+
+func Fatalf(format string, v ...any) {
+	log.Fatalf(format, v...)
+}
+
+func Panic(v ...any) {
+	log.Panic(v...)
+}
+

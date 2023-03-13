@@ -5,10 +5,10 @@
 package validate
 
 import (
-	"log"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
@@ -39,8 +39,9 @@ const ValidBlockIdWithRangeAndDate = ValidBlockIdWithRange | ValidArgumentDate
 // If all identifiers are valid, it returns nil
 //
 // Examples:
-//     ValidateIdentifiers(identifiers, ValidArgumentBlockNumber | ValidArgumentDate, 0)
-//     ValidateIdentifiers(identifiers, ValidArgumentRange, 1)
+//
+//	ValidateIdentifiers(identifiers, ValidArgumentBlockNumber | ValidArgumentDate, 0)
+//	ValidateIdentifiers(identifiers, ValidArgumentRange, 1)
 //
 // This routine can be used for both block identifiers and transaction
 func ValidateIdentifiers(chain string, ids []string, validTypes ValidArgumentType, maxRanges int, results *[]identifiers.Identifier) error {
@@ -50,7 +51,7 @@ func ValidateIdentifiers(chain string, ids []string, validTypes ValidArgumentTyp
 	}
 
 	if isBitmaskSet(ValidTransId) && isBitmaskSet(ValidBlockId) {
-		log.Fatal("Both block ids and transaction ids appear in the same command. Should not happen.")
+		logger.Fatal("Both block ids and transaction ids appear in the same command. Should not happen.")
 	}
 
 	rangesFound := 0

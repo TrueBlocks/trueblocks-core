@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-    fmt.Println("Temporarily disabled")
+	fmt.Println("Temporarily disabled")
 }
 
 /*
@@ -29,7 +29,7 @@ func deleteDatabase(databasePath string) {
 func createEmptyDatabase(databasePath string) {
 	db, err := sql.Open("sqlite3", databasePath)
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 	defer db.Close()
 
@@ -42,7 +42,7 @@ func createEmptyDatabase(databasePath string) {
 	CREATE UNIQUE INDEX idx_addresses_address on addresses(address);
 	CREATE TABLE IF NOT EXISTS txs (
 		txAddressID INTEGER,
-		blockIndex INT, 
+		blockIndex INT,
 		transactionIndex INT,
 		FOREIGN KEY(txAddressID) REFERENCES addresses(addressID)
 	);
@@ -51,7 +51,7 @@ func createEmptyDatabase(databasePath string) {
 	fmt.Println("Creating DB")
 	_, err = db.Exec(sqlStmt)
 	if err != nil {
-		log.Printf("%q: %s\n", err, sqlStmt)
+		logger.Printf("%q: %s\n", err, sqlStmt)
 		return
 	}
 }
@@ -62,7 +62,7 @@ func main() {
 	os.Remove(joinedChunksDBPath)
 	db, err := sql.Open("sqlite3", joinedChunksDBPath)
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 	defer db.Close()
 
@@ -74,7 +74,7 @@ func main() {
 
 		rows, err := chunkDB.Query(fmt.Sprintf("select txAddressID, blockIndex, transactionIndex from txs where txAddressID = (SELECT addressID from addresses where addresses.address = '%s')", address))
 		if err != nil {
-			log.Fatal(err)
+			logger.Fatal(err)
 		}
 		defer rows.Close()
 		for rows.Next() {
@@ -83,13 +83,13 @@ func main() {
 			var transactionIndex int
 			err = rows.Scan(&address, &blockIndex, &transactionIndex)
 			if err != nil {
-				log.Fatal(err)
+				logger.Fatal(err)
 			}
 			fmt.Println(address, blockIndex, transactionIndex)
 		}
 		err = rows.Err()
 		if err != nil {
-			log.Fatal(err)
+			logger.Fatal(err)
 		}
 	}
 }

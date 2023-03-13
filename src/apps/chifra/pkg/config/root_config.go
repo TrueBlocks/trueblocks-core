@@ -5,7 +5,6 @@
 package config
 
 import (
-	"log"
 	"os"
 	"os/user"
 	"path/filepath"
@@ -125,7 +124,7 @@ func IsAtLeastVersion(needle string) bool {
 func GetPathToRootConfig() string {
 	configPath, err := PathFromXDG("XDG_CONFIG_HOME")
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	} else if len(configPath) > 0 {
 		return configPath
 	}

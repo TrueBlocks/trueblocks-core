@@ -1,14 +1,15 @@
 package file
 
 import (
-	"log"
 	"os"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 func NFilesInFolder(path string) int {
 	files, err := os.ReadDir(path)
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 	return len(files)
 }
