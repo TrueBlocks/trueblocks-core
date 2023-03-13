@@ -129,7 +129,7 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 	// off and pass along through the web socket and progress reports
 	stderrPipe, err := cmd.StderrPipe()
 	if err != nil {
-		logger.Log(logger.Error, "%s", err)
+		logger.Log(logger.Error, err)
 	} else {
 		go func() {
 			scanForProgress(stderrPipe, func(msg string) {
