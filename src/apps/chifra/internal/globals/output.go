@@ -8,9 +8,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -33,7 +33,7 @@ func RenderSlice[
 	}
 
 	if opts.Writer == nil {
-		log.Fatal("opts.Writer is nil")
+		logger.Fatal("opts.Writer is nil")
 	}
 
 	var meta *rpcClient.MetaData = nil
@@ -84,7 +84,7 @@ func RenderSlice[
 // TODO: Fix export without arrays
 func (opts *GlobalOptions) RenderObject(data interface{}, first bool) error {
 	if opts.Writer == nil {
-		log.Fatal("opts.Writer is nil")
+		logger.Fatal("opts.Writer is nil")
 	}
 
 	// TODO: We may move this line to InitGlobals when we merge json and api formats

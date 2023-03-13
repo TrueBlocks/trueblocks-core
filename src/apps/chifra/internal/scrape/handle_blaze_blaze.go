@@ -335,7 +335,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 						receipt, err := rpcClient.GetTransactionReceipt(opts.Chain, uint64(bn), uint64(txid), nil, 0)
 						if err != nil {
 							msg := fmt.Sprintf("rpcCall failed at block %d, tx %d hash %s err %s", bn, txid, traces.Result[i].TransactionHash, err)
-							logger.Log(logger.Warning, colors.Red, msg, colors.Off)
+							logger.Warn(colors.Red, msg, colors.Off)
 							// TODO: This is possibly an error in Erigon - remove it when they fix this issue:
 							// TODO: https://github.com/ledgerwatch/erigon/issues/6956. It may require a
 							// TODO: full resync. Yes, the problem appears to be this specific. The follow
@@ -367,7 +367,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 							if len(fixMap[key]) > 0 {
 								// both are true - the error is `empty hex string` and we have a fix
 								msg = fmt.Sprintf("Corrected %d, tx %d adds %s", bn, txid, fixMap[key])
-								logger.Log(logger.Warning, colors.Red, msg, colors.Off)
+								logger.Warn(colors.Red, msg, colors.Off)
 								opts.AddToMaps(fixMap[key], bn, txid, addressMap)
 							}
 
@@ -532,6 +532,6 @@ func (opts *BlazeOptions) syncedReporting(bn int, force bool) {
 			dist = (opts.RipeBlock - uint64(bn))
 		}
 		msg := fmt.Sprintf("Scraping %-04d of %-04d at block %d of %d (%d blocks from head)", opts.NProcessed, opts.BlockCount, bn, opts.RipeBlock, dist)
-		logger.Log(logger.Progress, msg)
+		logger.Progress(msg)
 	}
 }

@@ -15,6 +15,6 @@ func (opts *WhenOptions) HandleTimestampsTruncate() error {
 		return err
 	}
 
-	logger.Log(logger.Info, "The timestamps file was trucated to block", opts.Truncate)
+	logger.Info("The timestamps file was trucated to block", opts.Truncate)
 	return nil
 }

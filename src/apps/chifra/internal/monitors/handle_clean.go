@@ -44,7 +44,7 @@ func (opts *MonitorsOptions) HandleClean() error {
 			obj := types.ReportClean{
 				Addr: mon.GetAddrStr(),
 			}
-			logger.Log(logger.Info, "Cleaning", obj.Addr, mon.Count())
+			logger.Info("Cleaning", obj.Addr, mon.Count())
 			var err error
 			obj.SizeThen, obj.SizeNow, err = mon.RemoveDups()
 			if err != nil {

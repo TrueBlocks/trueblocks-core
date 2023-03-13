@@ -3,7 +3,7 @@ package transactionsPkg
 import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 
 func (opts *TransactionsOptions) HandleSource() (err error) {
-	// logger.Log(logger.Warning, "Sourcing of funds is currently not implemented. Please come back soon.")
+	// logger.Warn("Sourcing of funds is currently not implemented. Please come back soon.")
 	return validate.Usage("The --source flag is currently disabled.")
 }
 

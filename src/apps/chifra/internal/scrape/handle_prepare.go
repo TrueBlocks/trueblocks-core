@@ -5,7 +5,6 @@ package scrapePkg
 // be found in the LICENSE file.
 
 import (
-	"log"
 	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -55,12 +54,12 @@ func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData, blaze
 	})
 	tslib.Append(opts.Globals.Chain, array)
 
-	logger.Log(logger.Info, "Writing block zero allocations for", len(prefunds), "prefunds, nAddresses:", len(appMap))
+	logger.Info("Writing block zero allocations for", len(prefunds), "prefunds, nAddresses:", len(appMap))
 	indexPath := paths.ToIndexPath(bloomPath)
 	if report, err := index.WriteChunk(opts.Globals.Chain, indexPath, appMap, len(prefunds), opts.Pin, opts.Remote); err != nil {
 		return false, err
 	} else if report == nil {
-		log.Fatal("Should not happen, write chunk returned empty report")
+		logger.Fatal("Should not happen, write chunk returned empty report")
 	} else {
 		report.Snapped = true // assumes block zero is a snap to grid (which it is in a sense)
 		report.Report()

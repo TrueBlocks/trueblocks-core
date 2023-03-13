@@ -9,7 +9,6 @@ import (
 	"errors"
 	"fmt"
 	"io/fs"
-	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -55,7 +54,7 @@ func NewMonitor(chain, addr string, create bool) Monitor {
 	mon.Chain = chain
 	_, err := mon.Reload(create)
 	if err != nil {
-		logger.Log(logger.Error, err)
+		logger.Error(err)
 	}
 	return *mon
 }
@@ -214,7 +213,7 @@ func ListMonitors(chain, folder string, monitorChan chan<- Monitor) {
 	if err == nil {
 		// If the shorthand file exists in the current folder, use it...
 		lines := file.AsciiFileToLines(info.Name())
-		logger.Log(logger.Info, "Found", len(lines), "unique addresses in ./addresses.tsv")
+		logger.Info("Found", len(lines), "unique addresses in ./addresses.tsv")
 		addrMap := make(map[string]bool)
 		for _, line := range lines {
 			if !strings.HasPrefix(line, "#") {
@@ -226,7 +225,7 @@ func ListMonitors(chain, folder string, monitorChan chan<- Monitor) {
 					}
 					addrMap[addr] = true
 				} else {
-					log.Panic("Invalid line in file", info.Name())
+					logger.Panic("Invalid line in file", info.Name())
 				}
 			}
 		}
@@ -264,7 +263,7 @@ func (mon *Monitor) MoveToProduction() error {
 
 	if before != after {
 		msg := fmt.Sprintf("%s %d duplicates removed.", mon.GetAddrStr(), (before - after))
-		logger.Log(logger.Warning, msg)
+		logger.Warn(msg)
 	}
 
 	oldPath := mon.Path()

@@ -82,21 +82,21 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Si
 		bnSequential := prev.BlockNumber < onDisc.BlockNumber
 		if !bnSequential {
 			msg := fmt.Sprintf("At block %d, block number %d is not one plus %d.%s", bn, onDisc.BlockNumber, prev.BlockNumber, clear)
-			logger.Log(logger.Error, msg)
+			logger.Error(msg)
 			status = "Error"
 		}
 
 		tsSequential := prev.Timestamp < onDisc.Timestamp
 		if !tsSequential {
 			msg := fmt.Sprintf("At block %d, timestamp %d does not increase over previous %d%s", bn, onDisc.Timestamp, prev.Timestamp, clear)
-			logger.Log(logger.Error, msg)
+			logger.Error(msg)
 			status = "Error"
 		}
 
 		deepTsCheck := !opts.Deep || (onDisc.Timestamp == expected.Timestamp)
 		if !deepTsCheck {
 			msg := fmt.Sprintf("At block %d, timestamp on disc %d does not agree with on chain %d%s", bn, onDisc.Timestamp, expected.Timestamp, clear)
-			logger.Log(logger.Error, msg)
+			logger.Error(msg)
 			status = "Error"
 		}
 
@@ -106,7 +106,7 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Si
 		}
 		if !posOnDisc {
 			msg := fmt.Sprintf("At block %d, onDisc block number %d does not match expected %d%s", bn, onDisc.BlockNumber, expected.BlockNumber, clear)
-			logger.Log(logger.Error, msg)
+			logger.Error(msg)
 			status = "Error"
 		}
 

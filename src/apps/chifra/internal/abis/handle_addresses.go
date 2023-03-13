@@ -36,7 +36,7 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 					errorChan <- err
 					cancel()
 				} else if !contract {
-					logger.Log(logger.Info, "Address", address, "is not a smart contract. Skipping...")
+					logger.Info("Address", address, "is not a smart contract. Skipping...")
 					continue
 				} else {
 					// It's okay to not find the ABI. We report an error, but do not stop processing

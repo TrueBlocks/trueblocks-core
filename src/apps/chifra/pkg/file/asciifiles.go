@@ -7,9 +7,10 @@ package file
 import (
 	"bufio"
 	"io"
-	"log"
 	"os"
 	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 func AsciiFileToLines(filename string) []string {
@@ -34,7 +35,7 @@ func AsciiFileToString(fileName string) string {
 
 	contents, err := os.ReadFile(fileName)
 	if err != nil {
-		log.Println(err)
+		logger.Error(err)
 		return ""
 	}
 

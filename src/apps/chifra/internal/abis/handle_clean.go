@@ -32,7 +32,7 @@ func (opts *AbisOptions) HandleClean() error {
 		// 		skip := !strings.HasSuffix(result.Path, ".json")
 		// 		if !skip {
 		// 			if file.FileSize(result.Path) == 0 {
-		// 				logger.Log(logger.Info, "Removing empty abi: "+strings.Replace(result.Path, config.GetPathToCache(opts.Globals.Chain)+"abis/", "", -1), file.FileSize(result.Path))
+		// 				logger.Info("Removing empty abi: "+strings.Replace(result.Path, config.GetPathToCache(opts.Globals.Chain)+"abis/", "", -1), file.FileSize(result.Path))
 		// 				// if err := cleanOneAbi(result.Path, ""); err != nil {
 		// 				// 	return err
 		// 				// }
@@ -63,7 +63,7 @@ func cleanOneAbi(abiFolder, addr string) error {
 	}
 
 	if !file.FileExists(fn) {
-		logger.Log(logger.Info, colors.Red, "Abi", addr, "not found", colors.Off)
+		logger.Info(colors.Red, "Abi", addr, "not found", colors.Off)
 		return nil
 	}
 
@@ -71,6 +71,6 @@ func cleanOneAbi(abiFolder, addr string) error {
 		return err
 	}
 
-	logger.Log(logger.Info, colors.Green, "Abi for", addr, "removed", colors.Off)
+	logger.Info(colors.Green, "Abi for", addr, "removed", colors.Off)
 	return nil
 }

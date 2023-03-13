@@ -16,7 +16,7 @@ func (opts *ScrapeOptions) Pause(progressThen *rpcClient.MetaData) {
 	if shouldSleep {
 		sleep := opts.Sleep
 		if sleep > 1 {
-			logger.Log(logger.Info, "Sleeping for", sleep, "seconds -", distanceFromHead, "away from head.")
+			logger.Info("Sleeping for", sleep, "seconds -", distanceFromHead, "away from head.")
 		}
 		halfSecs := (sleep * 2) - 1 // we already slept one quarter of a second
 		for i := 0; i < int(halfSecs); i++ {

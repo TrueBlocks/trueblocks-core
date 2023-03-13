@@ -7,7 +7,6 @@ package daemonPkg
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"os/exec"
@@ -15,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -24,7 +24,7 @@ func EditName(w http.ResponseWriter, r *http.Request) {
 	for k := range r.Form {
 		json.Unmarshal([]byte(k), &newName)
 	}
-	log.Print(colors.Yellow, "Adding name: ", newName, colors.Off)
+	logger.Info(colors.Yellow, "Adding name: ", newName, colors.Off)
 
 	// Do the actual call
 	cmd := exec.Command(config.GetPathToCommands("ethNames"), "--create")
@@ -36,10 +36,10 @@ func EditName(w http.ResponseWriter, r *http.Request) {
 	cmd.Env = append(cmd.Env, "TB_NAME_DECIMALS="+fmt.Sprintf("%d", newName.Decimals))
 	out, err := cmd.Output()
 	if err != nil {
-		log.Print("Error from server: ", err)
+		logger.Error("Error from server: ", err)
 	}
 	output := string(out[:])
-	log.Print(colors.Yellow, string(output), colors.Off)
+	logger.Info(colors.Yellow, string(output), colors.Off)
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")

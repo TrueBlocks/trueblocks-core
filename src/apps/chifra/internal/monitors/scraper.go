@@ -5,9 +5,10 @@ package monitorsPkg
 // be found in the LICENSE file.
 
 import (
-	"log"
 	"os"
 	"time"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type Scraper struct {
@@ -31,7 +32,7 @@ func (scraper *Scraper) ChangeState(onOff bool, tmpPath string) bool {
 	fileName := tmpPath + scraper.Name + ".txt"
 	err := os.WriteFile(fileName, []byte(str), 0644) // Uses os.O_WRONLY|os.O_CREATE|os.O_TRUNC
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 	return prev
 }

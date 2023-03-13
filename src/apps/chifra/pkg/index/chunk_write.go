@@ -39,10 +39,10 @@ func (c *WriteChunkReport) Report() {
 	if c.Snapped {
 		str = fmt.Sprintf("%sWrote %d address and %d appearance records to $INDEX/%s.bin %s%s%s", colors.BrightBlue, c.nAddresses, c.nAppearances, c.Range, colors.Yellow, "(snapped to grid)", colors.Off)
 	}
-	logger.Log(logger.Info, str)
+	logger.Info(str)
 	if c.Pinned {
 		str := fmt.Sprintf("%sPinned chunk $INDEX/%s.bin (%s,%s)%s", colors.BrightBlue, c.Range, c.PinRecord.IndexHash, c.PinRecord.BloomHash, colors.Off)
-		logger.Log(logger.Info, str)
+		logger.Info(str)
 	}
 }
 

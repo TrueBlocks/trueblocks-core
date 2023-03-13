@@ -6,6 +6,7 @@ package logger
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"time"
 
@@ -15,78 +16,106 @@ import (
 type severity int
 
 const (
-	Progress severity = iota
-	Info
-	InfoC // colored table
-	Test
-	Warning
-	Error
-	ErrorFatal
+	progress severity = iota
+	infoC             // colored table
+	info
+	test
+	warning
+	err
 )
 
 var severityToLabel = map[severity]string{
-	Progress:   "PROG",
-	Info:       "INFO",
-	InfoC:      "INFO",
-	Test:       "TEST",
-	Warning:    "WARN",
-	Error:      "EROR",
-	ErrorFatal: "FATL",
+	progress: "PROG",
+	infoC:    "INFO",
+	info:     "INFO",
+	test:     "TEST",
+	warning:  "WARN",
+	err:      "EROR",
 }
+
+var (
+	testModeSet = false
+	testMode    = false
+)
 
 // TestLog is used to print command line options to the screen during testing only
 func TestLog(notDefault bool, a ...interface{}) {
-	testMode := os.Getenv("TEST_MODE") == "true"
+	if !testModeSet {
+		testModeSet = true
+		testMode = os.Getenv("TEST_MODE") == "true"
+	}
+
 	if !testMode {
-		// If we're not testing...don't report
 		return
 	}
 
 	if notDefault {
-		Log(Test, a...)
+		toLog(test, a...)
 	}
 }
 
-var logTimingOffSet = false
-var logTiming = true
+var (
+	timingModeSet = false
+	timingMode    = true
+)
 
-func getLogTiming() bool {
-	if !logTimingOffSet {
-		logTimingOffSet = true
-		logTiming = os.Getenv("LOG_TIMING_OFF") == "" && os.Getenv("TEST_MODE") != "true"
-	}
-	return logTiming
-}
-
-// Log prints `a` to stderr with a label corresponding to the severity level
+// toLog prints `a` to stderr with a label corresponding to the severity level
 // prepended (e.g. <INFO>, <EROR>, etc.)
-func Log(sev severity, a ...interface{}) {
+func toLog(sev severity, a ...interface{}) {
+	if !timingModeSet {
+		timingModeSet = true
+		timingMode = os.Getenv("LOG_TIMING_OFF") == "" && os.Getenv("TEST_MODE") != "true"
+	}
 
 	timeDatePart := "DATE|TIME"
-	if getLogTiming() {
+	if timingMode {
 		now := time.Now()
 		timeDatePart = now.Format("02-01|15:04:05.000")
 	}
 
 	fmt.Fprintf(os.Stderr, "%s[%s] ", severityToLabel[sev], timeDatePart)
-	if sev == Progress {
+	if sev == progress {
 		for _, aa := range a {
 			fmt.Fprint(os.Stderr, aa)
 		}
 		fmt.Fprint(os.Stderr, "\r")
-	} else if sev == InfoC {
+
+	} else if sev == infoC {
 		fmt.Fprintf(os.Stderr, "%s%s%s ", colors.Green, a[0], colors.Off)
 		for _, aa := range a[1:] {
 			fmt.Fprintf(os.Stderr, "%s", aa)
 		}
 		fmt.Fprintln(os.Stderr, "")
+
 	} else {
 		fmt.Fprintln(os.Stderr, a...)
 	}
 }
 
-// Fatal prints its arguments to stderr and calls os.Exit(1)
-func Fatal(a ...interface{}) {
-	Log(ErrorFatal, a...)
-	os.Exit(1)
+func Progress(v ...any) {
+	toLog(progress, v...)
+}
+
+func InfoTable(v ...any) {
+	toLog(infoC, v...)
+}
+
+func Info(v ...any) {
+	toLog(info, v...)
+}
+
+func Warn(v ...any) {
+	toLog(warning, v...)
+}
+
+func Error(v ...any) {
+	toLog(err, v...)
+}
+
+func Fatal(v ...any) {
+	log.Fatal(v...)
+}
+
+func Panic(v ...any) {
+	log.Panic(v...)
 }

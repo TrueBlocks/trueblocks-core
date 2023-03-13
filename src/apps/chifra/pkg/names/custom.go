@@ -3,8 +3,8 @@ package names
 import (
 	"fmt"
 	"io"
-	"log"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -14,7 +14,7 @@ func loadCustomMap(chain string, thePath string, terms []string, parts Parts, re
 		// TODO: This should use gocsv instead of the custom code below
 		reader, err := NewNameReader(thePath)
 		if err != nil {
-			log.Fatal(err)
+			logger.Fatal(err)
 		}
 
 		for {
@@ -23,7 +23,7 @@ func loadCustomMap(chain string, thePath string, terms []string, parts Parts, re
 				break
 			}
 			if err != nil {
-				log.Fatal(err)
+				logger.Fatal(err)
 			}
 			if doSearch(&n, terms, parts) {
 				(*ret)[n.Address] = n

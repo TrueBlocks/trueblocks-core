@@ -3,7 +3,6 @@ package rpc
 import (
 	"context"
 	"fmt"
-	"log"
 	"math/big"
 	"sync"
 
@@ -38,8 +37,8 @@ func GetClient(provider string) *ethclient.Client {
 		// TODO: If we make this a cached item, it needs to be cached per chain, see timestamps
 		ec, err := ethclient.Dial(provider)
 		if err != nil || ec == nil {
-			log.Println("Missdial(" + provider + "):")
-			log.Fatalln(err)
+			logger.Error("Missdial("+provider+"):", err)
+			logger.Fatal("")
 		}
 		perProviderClientMap[provider] = ec
 	}
@@ -93,7 +92,7 @@ func GetBlockTimestamp(chain string, bn uint64) types.Timestamp {
 
 	r, err := ec.HeaderByNumber(context.Background(), big.NewInt(int64(bn)))
 	if err != nil {
-		logger.Log(logger.Error, "Could not connect to RPC client", err)
+		logger.Error("Could not connect to RPC client", err)
 		return 0
 	}
 

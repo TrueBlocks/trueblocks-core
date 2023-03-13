@@ -157,7 +157,7 @@ func transactionsFinishParse(args []string) *TransactionsOptions {
 	}
 	if !opts.Traces && opts.Trace {
 		opts.Traces = true
-		logger.Log(logger.Warning, "Note: the --trace option has been replaced with --traces")
+		logger.Warn("Note: the --trace option has been replaced with --traces")
 	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {

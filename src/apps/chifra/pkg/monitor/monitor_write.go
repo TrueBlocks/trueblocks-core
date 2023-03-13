@@ -7,10 +7,10 @@ package monitor
 import (
 	"encoding/binary"
 	"io"
-	"log"
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 // TODO: Protect against overwriting files on disc
@@ -37,10 +37,10 @@ func (mon *Monitor) WriteMonHeader(deleted bool, lastScanned uint32) (err error)
 // be writing to a temporary file.
 func (mon *Monitor) WriteAppearancesAppend(lastScanned uint32, apps *[]index.AppearanceRecord) error {
 	if !mon.Staged {
-		log.Fatal("Trying to write to a non-staged file. Should not happen.")
+		logger.Fatal("Trying to write to a non-staged file. Should not happen.")
 
 	} else if mon == nil {
-		log.Fatal("Trying to write from a nil monitor. Should not happen.")
+		logger.Fatal("Trying to write from a nil monitor. Should not happen.")
 	}
 
 	err := mon.WriteMonHeader(mon.Deleted, lastScanned)

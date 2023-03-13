@@ -113,7 +113,7 @@ func StreamRaw[Raw types.RawData](w io.Writer, raw *Raw) (err error) {
 
 func logErrors(errsToReport []string) {
 	for _, errMessage := range errsToReport {
-		logger.Log(logger.Error, errMessage)
+		logger.Error(errMessage)
 	}
 }
 

@@ -48,7 +48,7 @@ func (opts *AbisOptions) HandleAbiFind() error {
 				if bytes.Equal(sigBytes[:len(str)], str) {
 					scanBar.Found++
 					if len(opts.Find) < 2 || !opts.Globals.TestMode {
-						logger.Log(logger.Progress, "Found ", scanBar.Found, " of ", scanBar.Wanted, arg, testSig)
+						logger.Progress("Found ", scanBar.Found, " of ", scanBar.Wanted, arg, testSig)
 					}
 					found := types.SimpleFunction{Encoding: arg, Signature: testSig.(string)}
 					if testMode {

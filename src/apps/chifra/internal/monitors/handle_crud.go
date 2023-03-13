@@ -32,7 +32,7 @@ func (opts *MonitorsOptions) HandleCrudCommands() error {
 		} else {
 			if opts.Decache {
 				if opts.Globals.TestMode {
-					logger.Log(logger.Info, "Decaching monitor for address ", addr, "not tested.")
+					logger.Info("Decaching monitor for address ", addr, "not tested.")
 					return nil
 				}
 
@@ -53,13 +53,13 @@ func (opts *MonitorsOptions) HandleCrudCommands() error {
 
 					os.Remove(fileName)
 					if opts.Globals.Verbose {
-						logger.Log(logger.Info, fileNameStr, "was removed.")
+						logger.Info(fileNameStr, "was removed.")
 					}
 					path, _ := filepath.Split(fileName)
 					if empty, _ := file.IsFolderEmpty(path); empty {
 						os.RemoveAll(path)
 						if opts.Globals.Verbose {
-							logger.Log(logger.Info, "Empty folder", path, "was removed.")
+							logger.Info("Empty folder", path, "was removed.")
 						}
 					}
 
@@ -71,16 +71,16 @@ func (opts *MonitorsOptions) HandleCrudCommands() error {
 				if err != nil {
 					return err
 				}
-				logger.Log(logger.Info, itemsRemoved, "items totaling", bytesRemoved, "bytes were removed from the cache.")
+				logger.Info(itemsRemoved, "items totaling", bytesRemoved, "bytes were removed from the cache.")
 
 				// We've visited them all, so delete the monitor itself
 				m.Delete()
-				logger.Log(logger.Info, ("Monitor " + addr + " was deleted but not removed."))
+				logger.Info(("Monitor " + addr + " was deleted but not removed."))
 				wasRemoved, err := m.Remove()
 				if !wasRemoved || err != nil {
-					logger.Log(logger.Info, ("Monitor for " + addr + " was not removed (" + err.Error() + ")"))
+					logger.Info(("Monitor for " + addr + " was not removed (" + err.Error() + ")"))
 				} else {
-					logger.Log(logger.Info, ("Monitor for " + addr + " was permanently removed."))
+					logger.Info(("Monitor for " + addr + " was permanently removed."))
 				}
 
 			} else if opts.Undelete && !m.IsDeleted() {
@@ -110,20 +110,20 @@ func (opts *MonitorsOptions) HandleCrudCommands() error {
 		m := monitor.NewMonitor(opts.Globals.Chain, addr, false)
 		if opts.Undelete {
 			m.UnDelete()
-			logger.Log(logger.Info, ("Monitor " + addr + " was undeleted."))
+			logger.Info(("Monitor " + addr + " was undeleted."))
 
 		} else {
 			if opts.Delete {
 				m.Delete()
-				logger.Log(logger.Info, ("Monitor " + addr + " was deleted but not removed."))
+				logger.Info(("Monitor " + addr + " was deleted but not removed."))
 			}
 
 			if opts.Remove {
 				wasRemoved, err := m.Remove()
 				if !wasRemoved || err != nil {
-					logger.Log(logger.Info, ("Monitor for " + addr + " was not removed (" + err.Error() + ")"))
+					logger.Info(("Monitor for " + addr + " was not removed (" + err.Error() + ")"))
 				} else {
-					logger.Log(logger.Info, ("Monitor for " + addr + " was permanently removed."))
+					logger.Info(("Monitor for " + addr + " was permanently removed."))
 				}
 			}
 		}

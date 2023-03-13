@@ -141,7 +141,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 			chunksNeeded = append(chunksNeeded, *chunk)
 			if opts.Globals.Verbose {
 				msg := fmt.Sprintf("%s%s%s%v", colors.BrightBlack, "The chunk needs to be downloaded", colors.Off, chunk)
-				logger.Log(logger.Info, msg)
+				logger.Info(msg)
 			}
 		}
 	}
@@ -176,5 +176,5 @@ func reportReason(prefix string, status validate.ErrorType, path string, verbose
 	}
 
 	msg := fmt.Sprintf("%s%s %-30.30s%s%s", col, prefix, reasons[status], colors.Off, path)
-	logger.Log(logger.Warning, msg)
+	logger.Warn(msg)
 }

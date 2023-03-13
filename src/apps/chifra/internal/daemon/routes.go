@@ -10,7 +10,7 @@ package daemonPkg
 
 import (
 	"encoding/json"
-	"log"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -36,6 +36,7 @@ import (
 	transactionsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/transactions"
 	whenPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/when"
 	config "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/gorilla/mux"
 	"golang.org/x/time/rate"
@@ -320,15 +321,8 @@ func Logger(inner http.Handler, name string) http.Handler {
 		if utils.IsTestModeServer(r) {
 			t = "-test"
 		}
-		log.Printf(
-			"%d %s%s %s %s %s",
-			nProcessed,
-			r.Method,
-			t,
-			r.RequestURI,
-			name,
-			time.Since(start),
-		)
+		msg := fmt.Sprintf("%d %s%s %s %s %s", nProcessed, r.Method, t, r.RequestURI, name, time.Since(start))
+		logger.Info(msg)
 		nProcessed++
 	})
 }

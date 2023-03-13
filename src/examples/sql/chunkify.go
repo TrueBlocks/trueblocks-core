@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-    fmt.Println("Temporarily disabled")
+	fmt.Println("Temporarily disabled")
 }
 
 /*
@@ -27,7 +27,7 @@ func deleteDatabase(databasePath string) {
 func createEmptyDatabase(databasePath string) {
 	db, err := sql.Open("sqlite3", databasePath)
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 	defer db.Close()
 
@@ -40,7 +40,7 @@ func createEmptyDatabase(databasePath string) {
 	CREATE UNIQUE INDEX idx_addresses_address on addresses(address);
 	CREATE TABLE IF NOT EXISTS txs (
 		txAddressID INTEGER,
-		blockIndex INT, 
+		blockIndex INT,
 		transactionIndex INT,
 		FOREIGN KEY(txAddressID) REFERENCES addresses(addressID)
 	);
@@ -49,7 +49,8 @@ func createEmptyDatabase(databasePath string) {
 	fmt.Println("Creating DB")
 	_, err = db.Exec(sqlStmt)
 	if err != nil {
-		log.Printf("%q: %s\n", err, sqlStmt)
+		msg := fmt.Sprintf("%q: %s", err, sqlStmt)
+		logger.Info(msg)
 		return
 	}
 }
@@ -57,7 +58,7 @@ func createEmptyDatabase(databasePath string) {
 func main() {
 	db, err := sql.Open("sqlite3", "./txs-with-indexes.db")
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 	defer db.Close()
 
@@ -76,17 +77,17 @@ func main() {
 
 		tx, err := db.Begin()
 		if err != nil {
-			log.Fatal(err)
+			logger.Fatal(err)
 		}
 		if i >= 1 {
 			_, err = tx.Exec("DETACH DATABASE chunk_database;")
 			if err != nil {
-				log.Fatal(err)
+				logger.Fatal(err)
 			}
 		}
 		_, err = tx.Exec(fmt.Sprintf("ATTACH DATABASE \"%s\" AS chunk_database; INSERT INTO chunk_database.addresses SELECT * FROM addresses; INSERT INTO chunk_database.txs SELECT * FROM txs where blockIndex >= %d AND blockIndex < %d;", chunkDBPath, i*1_000_000, (i+1)*1_000_000))
 		if err != nil {
-			log.Fatal(err)
+			logger.Fatal(err)
 		}
 
 		tx.Commit()
