@@ -85,7 +85,7 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 	// Do the actual call
 	cmd := exec.Command(tbCmd, allDogs...)
 	if GetOptions().Globals.Verbose {
-		logger.Print(colors.Yellow, "Calling: ", cmd, colors.Off)
+		logger.Log(logger.Info, colors.Yellow, "Calling: ", cmd, colors.Off)
 	}
 
 	if cmd.Process != nil {

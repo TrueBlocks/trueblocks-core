@@ -131,7 +131,7 @@ func HandleWebsockets(pool *ConnectionPool, w http.ResponseWriter, r *http.Reque
 
 	c, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
-		logger.Print("upgrade:", err)
+		logger.Log(logger.Error, "upgrade:", err)
 		return
 	}
 

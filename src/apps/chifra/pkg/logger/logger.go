@@ -19,7 +19,7 @@ const (
 	Progress severity = iota
 	Info
 	InfoC // colored table
-	Test
+	test
 	Warning
 	Error
 	ErrorFatal
@@ -29,27 +29,34 @@ var severityToLabel = map[severity]string{
 	Progress:   "PROG",
 	Info:       "INFO",
 	InfoC:      "INFO",
-	Test:       "TEST",
+	test:       "TEST",
 	Warning:    "WARN",
 	Error:      "EROR",
 	ErrorFatal: "FATL",
 }
 
+var (
+	testModeSet     = false
+	testMode        = false
+	logTimingOffSet = false
+	logTiming       = true
+)
+
 // TestLog is used to print command line options to the screen during testing only
 func TestLog(notDefault bool, a ...interface{}) {
-	testMode := os.Getenv("TEST_MODE") == "true"
+	if !testModeSet {
+		testModeSet = true
+		testMode = os.Getenv("TEST_MODE") == "true"
+	}
+
 	if !testMode {
-		// If we're not testing...don't report
 		return
 	}
 
 	if notDefault {
-		Log(Test, a...)
+		Log(test, a...)
 	}
 }
-
-var logTimingOffSet = false
-var logTiming = true
 
 func getLogTiming() bool {
 	if !logTimingOffSet {
@@ -88,10 +95,6 @@ func Log(sev severity, a ...interface{}) {
 	}
 }
 
-func Print(v ...any) {
-	log.Print(v...)
-}
-
 func Println(v ...any) {
 	log.Println(v...)
 }
@@ -115,4 +118,3 @@ func Fatalf(format string, v ...any) {
 func Panic(v ...any) {
 	log.Panic(v...)
 }
-
