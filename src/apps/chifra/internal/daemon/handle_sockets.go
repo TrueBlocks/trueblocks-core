@@ -74,7 +74,7 @@ func (c *Connection) RemoteAddr() net.Addr {
 func (c *Connection) Log(s string, args ...interface{}) {
 	subMsg := fmt.Sprintf(s, args...)
 	msg := fmt.Sprintf("%s %s", c.RemoteAddr(), subMsg)
-	logger.Log(logger.Info, msg)
+	logger.Info(msg)
 }
 
 // ConnectionPool is the collection of all connections

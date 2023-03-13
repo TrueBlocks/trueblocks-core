@@ -37,7 +37,7 @@ func (opts *WhenOptions) HandleTimestampsRepair() error {
 			}
 
 			ts, _ := tslib.FromBnToTs(opts.Globals.Chain, bn)
-			logger.Log(logger.Info, "The timestamp at block", bn, "was reset to", ts, "from on chain.")
+			logger.Info("The timestamp at block", bn, "was reset to", ts, "from on chain.")
 		}
 	}
 

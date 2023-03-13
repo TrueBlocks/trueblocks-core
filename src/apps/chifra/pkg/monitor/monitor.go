@@ -213,7 +213,7 @@ func ListMonitors(chain, folder string, monitorChan chan<- Monitor) {
 	if err == nil {
 		// If the shorthand file exists in the current folder, use it...
 		lines := file.AsciiFileToLines(info.Name())
-		logger.Log(logger.Info, "Found", len(lines), "unique addresses in ./addresses.tsv")
+		logger.Info("Found", len(lines), "unique addresses in ./addresses.tsv")
 		addrMap := make(map[string]bool)
 		for _, line := range lines {
 			if !strings.HasPrefix(line, "#") {

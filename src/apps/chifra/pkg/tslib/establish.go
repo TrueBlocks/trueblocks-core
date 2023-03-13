@@ -44,10 +44,10 @@ func downloadCidToBinary(chain, cid, fileName string) error {
 	}
 	url.Path = filepath.Join(url.Path, cid)
 
-	logger.Log(logger.InfoC, "Chain:", chain)
-	logger.Log(logger.InfoC, "Gateway:", gatewayUrl)
-	logger.Log(logger.InfoC, "CID:", cid)
-	logger.Log(logger.InfoC, "URL:", url.String())
+	logger.InfoTable("Chain:", chain)
+	logger.InfoTable("Gateway:", gatewayUrl)
+	logger.InfoTable("CID:", cid)
+	logger.InfoTable("URL:", url.String())
 	msg := colors.Yellow + "Downloading timestamp file. This may take a moment, please wait..." + colors.Off
 	logger.Warn(msg)
 

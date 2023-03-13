@@ -50,12 +50,12 @@ func (opts *InitOptions) HandleInit() error {
 	chunksToDownload, nCorrections := opts.prepareDownloadList(chain, remoteManifest, []uint64{})
 
 	// Tell the user what we're doing
-	logger.Log(logger.InfoC, "Unchained Index:", unchained.Address_V2)
-	logger.Log(logger.InfoC, "Schemas:", unchained.Schemas)
-	logger.Log(logger.InfoC, "Config Folder:", config.GetPathToChainConfig(chain))
-	logger.Log(logger.InfoC, "Index Folder:", config.GetPathToIndex(chain))
-	logger.Log(logger.InfoC, "Chunks in Manifest:", fmt.Sprintf("%d", len(remoteManifest.Chunks)))
-	logger.Log(logger.InfoC, "Corrections Needed:", fmt.Sprintf("%d", nCorrections))
+	logger.InfoTable("Unchained Index:", unchained.Address_V2)
+	logger.InfoTable("Schemas:", unchained.Schemas)
+	logger.InfoTable("Config Folder:", config.GetPathToChainConfig(chain))
+	logger.InfoTable("Index Folder:", config.GetPathToIndex(chain))
+	logger.InfoTable("Chunks in Manifest:", fmt.Sprintf("%d", len(remoteManifest.Chunks)))
+	logger.InfoTable("Corrections Needed:", fmt.Sprintf("%d", nCorrections))
 
 	// Open a channel to receive a message when all the blooms have been downloaded...
 	bloomsDoneChannel := make(chan bool)
@@ -76,7 +76,7 @@ func (opts *InitOptions) HandleInit() error {
 		if len(failedChunks) > 0 {
 			// ...if there were failed downloads, try them again (3 times if necessary)...
 			retry(failedChunks, 3, func(items []manifest.ChunkRecord) ([]manifest.ChunkRecord, bool) {
-				logger.Log(logger.Info, "Retrying", len(items), "bloom(s)")
+				logger.Info("Retrying", len(items), "bloom(s)")
 				return opts.downloadAndReportProgress(items, chunkType, nCorrections)
 			})
 		}
@@ -142,7 +142,7 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord
 
 		if event.Event == progress.AllDone {
 			msg := fmt.Sprintf("%sCompleted initializing %s files.%s", colors.BrightWhite, chunkType, colors.Off)
-			logger.Log(logger.Info, msg, strings.Repeat(" ", 60))
+			logger.Info(msg, strings.Repeat(" ", 60))
 			break
 		}
 
@@ -158,16 +158,16 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord
 		case progress.Start:
 			nStarted12++
 			if nProcessed12 < 20 { // we don't need too many of these
-				logger.Log(logger.Info, "Started download ", nStarted12, " of ", nTotal, " ", event.Message)
+				logger.Info("Started download ", nStarted12, " of ", nTotal, " ", event.Message)
 			}
 			if nStarted12 == poolSize*3 {
 				msg := fmt.Sprintf("%sPlease wait...%s", colors.BrightWhite, colors.Off)
-				logger.Log(logger.Info, msg)
+				logger.Info(msg)
 			}
 
 		case progress.Update:
 			msg := fmt.Sprintf("%s%s%s", colors.Yellow, event.Message, colors.Off)
-			logger.Log(logger.Info, msg, spaces)
+			logger.Info(msg, spaces)
 			nUpdated12++
 
 		case progress.Finished:
@@ -177,16 +177,16 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord
 				col = colors.Magenta
 			}
 			msg := fmt.Sprintf("Unchained %s%s%s file for range %s%s%s (% 4d of %4d)", col, event.Message, colors.Off, col, rng, colors.Off, nProcessed12, nTotal)
-			logger.Log(logger.Info, msg, spaces)
+			logger.Info(msg, spaces)
 
 		default:
-			logger.Log(logger.Info, event.Message, rng, spaces)
+			logger.Info(event.Message, rng, spaces)
 		}
 		m.Unlock()
 
 		// if opts.Sleep != 0.0 {
-		// 	logger.Log(logger.Info, "")
-		// 	logger.Log(logger.Info, "Sleeping between downloads for", opts.Sleep, "seconds")
+		// 	logger.Info("")
+		// 	logger.Info("Sleeping between downloads for", opts.Sleep, "seconds")
 		// 	time.Sleep(time.Duration(opts.Sleep*1000) * time.Millisecond)
 		// }
 	}

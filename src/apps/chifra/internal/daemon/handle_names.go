@@ -24,7 +24,7 @@ func EditName(w http.ResponseWriter, r *http.Request) {
 	for k := range r.Form {
 		json.Unmarshal([]byte(k), &newName)
 	}
-	logger.Log(logger.Info, colors.Yellow, "Adding name: ", newName, colors.Off)
+	logger.Info(colors.Yellow, "Adding name: ", newName, colors.Off)
 
 	// Do the actual call
 	cmd := exec.Command(config.GetPathToCommands("ethNames"), "--create")
@@ -39,7 +39,7 @@ func EditName(w http.ResponseWriter, r *http.Request) {
 		logger.Error("Error from server: ", err)
 	}
 	output := string(out[:])
-	logger.Log(logger.Info, colors.Yellow, string(output), colors.Off)
+	logger.Info(colors.Yellow, string(output), colors.Off)
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")

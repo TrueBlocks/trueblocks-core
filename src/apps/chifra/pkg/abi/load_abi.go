@@ -235,7 +235,7 @@ func LoadAbi(chain string, address types.Address, destination AbiInterfaceMap) (
 		return
 	}
 	if !contract {
-		// logger.Log(logger.Info, "Address", address, "is not a smart contract. Skipping...")
+		// logger.Info("Address", address, "is not a smart contract. Skipping...")
 		return
 	}
 	// Fetch ABI from a provider

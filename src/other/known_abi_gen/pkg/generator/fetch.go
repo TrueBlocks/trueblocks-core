@@ -120,7 +120,7 @@ func Fetch(source *generatorSource, pl *pathList, forceDownload bool) (err error
 		return
 	}
 
-	logger.Log(logger.Info, "Downloading", source.Name, "to", pl.ZipArchive)
+	logger.Info("Downloading", source.Name, "to", pl.ZipArchive)
 
 	if _, err = io.Copy(outputFile, response.Body); err != nil {
 		return
@@ -230,25 +230,25 @@ func RegenerateAll() (err error) {
 			logger.Warn("Cache file for", source.Name, "already present, skipping")
 			continue
 		}
-		logger.Log(logger.Info, "Downloading")
+		logger.Info("Downloading")
 		err = Fetch(&source, pl, false)
 		if err != nil {
 			return err
 		}
-		logger.Log(logger.Info, "Unpacking")
+		logger.Info("Unpacking")
 		if err = runUnzip(pl); err != nil {
 			return err
 		}
-		logger.Log(logger.Info, "Compiling")
+		logger.Info("Compiling")
 		err = runSolc(pl, &source)
 		if err != nil {
 			return err
 		}
-		logger.Log(logger.Info, "Building known ABI file")
+		logger.Info("Building known ABI file")
 		if err = buildCacheFile(pl); err != nil {
 			return err
 		}
-		logger.Log(logger.Info, "Built", source.Name)
+		logger.Info("Built", source.Name)
 		cleanAllInputs(pl)
 	}
 	return

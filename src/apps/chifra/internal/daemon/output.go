@@ -71,20 +71,20 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 
 	chain := opts.Globals.Chain
 	meta, err := rpcClient.GetMetaData(chain, false)
-	logger.Log(logger.InfoC, pad("Server URL:"), apiUrl)
-	logger.Log(logger.InfoC, pad("RPC Provider:"), config.GetRpcProvider(chain))
-	logger.Log(logger.InfoC, pad("Root Config Path:"), config.GetPathToRootConfig())
-	logger.Log(logger.InfoC, pad("Chain Config Path:"), config.GetPathToChainConfig(chain))
-	logger.Log(logger.InfoC, pad("Cache Path:"), config.GetPathToCache(chain))
-	logger.Log(logger.InfoC, pad("Index Path:"), config.GetPathToIndex(chain))
+	logger.InfoTable(pad("Server URL:"), apiUrl)
+	logger.InfoTable(pad("RPC Provider:"), config.GetRpcProvider(chain))
+	logger.InfoTable(pad("Root Config Path:"), config.GetPathToRootConfig())
+	logger.InfoTable(pad("Chain Config Path:"), config.GetPathToChainConfig(chain))
+	logger.InfoTable(pad("Cache Path:"), config.GetPathToCache(chain))
+	logger.InfoTable(pad("Index Path:"), config.GetPathToIndex(chain))
 	if err != nil {
 		msg := fmt.Sprintf("%sCould not load RPC provider: %s%s", colors.Red, err, colors.Off)
-		logger.Log(logger.InfoC, pad("Progress:"), msg)
+		logger.InfoTable(gress:"), msg)
 		logger.Fatal("")
 	} else {
 		nTs, _ := tslib.NTimestamps(opts.Globals.Chain)
 		msg := fmt.Sprintf("%d, %d, %d,  %d, ts: %d", meta.Latest, meta.Finalized, meta.Staging, meta.Unripe, nTs)
-		logger.Log(logger.InfoC, pad("Progress:"), msg)
+		logger.InfoTable(pad("Progress:"), msg)
 	}
 
 	go opts.HandleScraper()

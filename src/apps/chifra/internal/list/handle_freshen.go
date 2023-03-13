@@ -308,7 +308,7 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 					logger.Error(err)
 				} else if !updater.Options.Globals.TestMode {
 					msg := fmt.Sprintf("%s appended %d apps at %s", mon.GetAddrStr(), nWritten, result.Range)
-					logger.Log(logger.Info, msg)
+					logger.Info(msg)
 				}
 			}
 		}

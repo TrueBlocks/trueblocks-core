@@ -147,11 +147,11 @@ func UpdateManifest(chain string, chunk ChunkRecord) error {
 	// Make sure this chunk is only added once
 	_, ok := man.ChunkMap[chunk.Range]
 	if ok {
-		// logger.Log(logger.Info, "Replacing chunk at", chunk.Range)
+		// logger.Info("Replacing chunk at", chunk.Range)
 		*man.ChunkMap[chunk.Range] = chunk
 	} else {
 		// Create somewhere to put it if it's not already there
-		// logger.Log(logger.Info, "Adding chunk at", chunk.Range)
+		// logger.Info("Adding chunk at", chunk.Range)
 		man.Chunks = append(man.Chunks, chunk)
 		man.ChunkMap[chunk.Range] = &chunk
 		sort.Slice(man.Chunks, func(i, j int) bool {
@@ -172,7 +172,7 @@ func UpdateManifest(chain string, chunk ChunkRecord) error {
 	}
 	defer file.Unlock(w)
 
-	logger.Log(logger.Info, "Updating manifest with", len(man.Chunks), "chunks", spaces)
+	logger.Info("Updating manifest with", len(man.Chunks), "chunks", spaces)
 	return output.OutputObject(man, w, "json", false, true, nil)
 }
 

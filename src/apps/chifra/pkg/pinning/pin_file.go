@@ -40,7 +40,7 @@ func PinTimestamps(chain string, isRemote bool) error {
 	}
 
 	fn := config.GetPathToCache(chain) + "/tmp/ts.ipfs_hash.fil"
-	logger.Log(logger.Info, "Pinning timestamp file", fn, "to", hash)
+	logger.Info("Pinning timestamp file", fn, "to", hash)
 	file.StringToAsciiFile(fn, hash.String())
 	return nil
 }

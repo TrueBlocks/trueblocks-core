@@ -52,7 +52,7 @@ func createEmptyDatabase(databasePath string) {
 	_, err = db.Exec(sqlStmt)
 	if err != nil {
 		msg := fmt.Sprintf("%q: %s", err, sqlStmt)
-		logger.Log(logger.Info, msg)
+		logger.Info(msg)
 		return
 	}
 }

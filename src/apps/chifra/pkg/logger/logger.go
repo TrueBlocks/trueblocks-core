@@ -17,8 +17,8 @@ type severity int
 
 const (
 	Progress severity = iota
-	InfoC             // colored table
-	Info
+	infoC             // colored table
+	info
 	test
 	warning
 	err
@@ -26,8 +26,8 @@ const (
 
 var severityToLabel = map[severity]string{
 	Progress: "PROG",
-	InfoC:    "INFO",
-	Info:     "INFO",
+	infoC:    "INFO",
+	info:     "INFO",
 	test:     "TEST",
 	warning:  "WARN",
 	err:      "EROR",
@@ -81,7 +81,7 @@ func Log(sev severity, a ...interface{}) {
 		}
 		fmt.Fprint(os.Stderr, "\r")
 
-	} else if sev == InfoC {
+	} else if sev == infoC {
 		fmt.Fprintf(os.Stderr, "%s%s%s ", colors.Green, a[0], colors.Off)
 		for _, aa := range a[1:] {
 			fmt.Fprintf(os.Stderr, "%s", aa)
@@ -91,6 +91,14 @@ func Log(sev severity, a ...interface{}) {
 	} else {
 		fmt.Fprintln(os.Stderr, a...)
 	}
+}
+
+func InfoTable(v ...any) {
+	Log(infoC, v...)
+}
+
+func Info(v ...any) {
+	Log(info, v...)
 }
 
 func Warn(v ...any) {

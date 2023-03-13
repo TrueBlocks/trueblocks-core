@@ -141,7 +141,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 			chunksNeeded = append(chunksNeeded, *chunk)
 			if opts.Globals.Verbose {
 				msg := fmt.Sprintf("%s%s%s%v", colors.BrightBlack, "The chunk needs to be downloaded", colors.Off, chunk)
-				logger.Log(logger.Info, msg)
+				logger.Info(msg)
 			}
 		}
 	}

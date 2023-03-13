@@ -322,7 +322,7 @@ func Logger(inner http.Handler, name string) http.Handler {
 			t = "-test"
 		}
 		msg := fmt.Sprintf("%d %s%s %s %s %s", nProcessed, r.Method, t, r.RequestURI, name, time.Since(start))
-		logger.Log(logger.Info, msg)
+		logger.Info(msg)
 		nProcessed++
 	})
 }

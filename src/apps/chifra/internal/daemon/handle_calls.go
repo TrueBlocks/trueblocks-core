@@ -85,7 +85,7 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 	// Do the actual call
 	cmd := exec.Command(tbCmd, allDogs...)
 	if GetOptions().Globals.Verbose {
-		logger.Log(logger.Info, colors.Yellow, "Calling: ", cmd, colors.Off)
+		logger.Info(colors.Yellow, "Calling: ", cmd, colors.Off)
 	}
 
 	if cmd.Process != nil {
@@ -96,8 +96,8 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 			if err := cmd.Process.Kill(); err != nil {
 				logger.Error("failed to kill process: ", err)
 			}
-			logger.Log(logger.Info, "apiCmd: ", apiCmd)
-			logger.Log(logger.Info, "The client closed the connection to process id ", pid, ". Cleaning up.")
+			logger.Info("apiCmd: ", apiCmd)
+			logger.Info("The client closed the connection to process id ", pid, ". Cleaning up.")
 		}()
 	}
 

@@ -57,7 +57,7 @@ func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup) {
 					monitors = append(monitors, result)
 					count++
 					if result.Count() > 0 {
-						logger.Log(logger.Info, "     ", count, ": ", result, "                                        ")
+						logger.Info("     ", count, ": ", result, "                                        ")
 					}
 				}
 			}
@@ -203,10 +203,10 @@ func getCommandsFromFile(globals globals.GlobalOptions) ([]SemiParse, error) {
 		}
 	}
 
-	logger.Log(logger.Info, "Found", len(ret), "commands to process in ./"+globals.File)
+	logger.Info("Found", len(ret), "commands to process in ./"+globals.File)
 	for i, cmd := range ret {
 		msg := fmt.Sprintf("\t%d. %s", i, cmd.CmdLine)
-		logger.Log(logger.Info, msg)
+		logger.Info(msg)
 	}
 
 	return ret, nil

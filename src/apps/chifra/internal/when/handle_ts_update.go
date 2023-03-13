@@ -30,27 +30,27 @@ func (opts *WhenOptions) HandleTimestampUpdate() error {
 	}
 
 	if cnt >= meta.Latest {
-		logger.Log(logger.Info, "Timestamp file is up to date.")
+		logger.Info("Timestamp file is up to date.")
 		return nil
 	}
 
 	timestamps := make([]tslib.TimestampRecord, 0, meta.Latest-cnt+2)
 
-	logger.Log(logger.Info, "Updating timestamps file from", cnt, "to", meta.Latest, fmt.Sprintf("(%d blocks)", (meta.Latest-cnt)))
+	logger.Info("Updating timestamps file from", cnt, "to", meta.Latest, fmt.Sprintf("(%d blocks)", (meta.Latest-cnt)))
 	for bn := cnt; bn < meta.Latest; bn++ {
 		block, _ := rpcClient.GetBlockHeaderByNumber(opts.Globals.Chain, bn)
 		record := tslib.TimestampRecord{Bn: uint32(block.BlockNumber), Ts: uint32(block.Timestamp)}
 		timestamps = append(timestamps, record)
 		logger.Log(logger.Progress, "Adding block ", bn, " to timestamp array")
 		if bn%1000 == 0 {
-			logger.Log(logger.Info, "Writing...", len(timestamps), "timestamps at block", bn)
+			logger.Info("Writing...", len(timestamps), "timestamps at block", bn)
 			tslib.Append(opts.Globals.Chain, timestamps)
 			timestamps = []tslib.TimestampRecord{}
 		}
 	}
 
 	if len(timestamps) > 0 {
-		logger.Log(logger.Info, "Writing...", len(timestamps), "timestamps at block", meta.Latest)
+		logger.Info("Writing...", len(timestamps), "timestamps at block", meta.Latest)
 		tslib.Append(opts.Globals.Chain, timestamps)
 	}
 

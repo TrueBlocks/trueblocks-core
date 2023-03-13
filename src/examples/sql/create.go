@@ -56,7 +56,7 @@ func createEmptyDatabase(databasePath string) {
 	_, err = db.Exec(sqlStmt)
 	if err != nil {
 		msg := fmt.Sprintf("%q: %s", err, sqlStmt)
-		logger.Log(logger.Info, msg)
+		logger.Info(msg)
 		return
 	}
 }
@@ -89,9 +89,9 @@ func readFile(path string) ([]Appearance, error) {
 	nAppearances := binary.LittleEndian.Uint32(headerByteSlice[44-4:])
 
 	msg := fmt.Sprintf("Number Addresses: %s\n", nAddresses)
-	logger.Log(logger.Info, msg)
+	logger.Info(msg)
 	msg = fmt.Sprintf("Number Appearances: %s\n", nAppearances)
-	logger.Log(logger.Info, msg)
+	logger.Info(msg)
 
 	addressByteSlice := make([]byte, 28*nAddresses)
 	_, err = f.Read(addressByteSlice)

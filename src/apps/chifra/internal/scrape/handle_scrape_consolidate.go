@@ -35,7 +35,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		// On active chains, this most likely never happens, but on some less used or private chains, this is a frequent occurrence.
 		// return a message, but don't do anything about it.
 		msg := fmt.Sprintf("No new blocks at block %d (%d away from head)%s", progressThen.Latest, (progressThen.Latest - progressThen.Ripe), spaces)
-		logger.Log(logger.Info, msg)
+		logger.Info(msg)
 
 		// we need to move the file to the end of the scraped range so we show progress
 		stageFn, _ := file.LatestFileInFolder(stageFolder) // it may not exist...
@@ -77,11 +77,11 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		return true, errors.New("Could not create backup file: " + err.Error())
 	}
 
-	// logger.Log(logger.Info, "Created backup file for stage")
+	// logger.Info("Created backup file for stage")
 	defer func() {
 		if backupFn != "" && file.FileExists(backupFn) {
 			// If the backup file exists, something failed, so we replace the original file.
-			// logger.Log(logger.Info, "Replacing backed up staging file")
+			// logger.Info("Replacing backed up staging file")
 			os.Rename(backupFn, stageFn)
 			os.Remove(backupFn) // seems redundant, but may not be on some operating systems
 		}
@@ -150,15 +150,15 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 			os.Remove(fileName) // cleans up by replacing the previous stage
 			return true, err
 		}
-		// logger.Log(logger.Info, colors.Red, "fileName:", fileName, colors.Off)
-		// logger.Log(logger.Info, colors.Red, "curRange:", curRange, colors.Off)
+		// logger.Info(colors.Red, "fileName:", fileName, colors.Off)
+		// logger.Info(colors.Red, "curRange:", curRange, colors.Off)
 	}
 
 	stageFn, _ = file.LatestFileInFolder(stageFolder) // it may not exist...
 	nAppsNow := int(file.FileSize(stageFn) / asciiAppearanceSize)
 	opts.Report(nAppsThen, nAppsNow)
 
-	// logger.Log(logger.Info, "Removing backup file as it's not needed.")
+	// logger.Info("Removing backup file as it's not needed.")
 	os.Remove(backupFn) // commits the change
 
 	return true, err
@@ -176,7 +176,7 @@ func (opts *ScrapeOptions) Report(nAppsThen, nAppsNow int) {
 	height := opts.StartBlock + opts.BlockCnt - 1
 	msg = strings.Replace(msg, "{", colors.Green, -1)
 	msg = strings.Replace(msg, "}", colors.Off, -1)
-	logger.Log(logger.Info, fmt.Sprintf(msg, height, nAppsNow, opts.Settings.Apps_per_chunk, pct*100, need, seen, pBlk))
+	logger.Info(fmt.Sprintf(msg, height, nAppsNow, opts.Settings.Apps_per_chunk, pct*100, need, seen, pBlk))
 }
 
 func isListSequential(chain string, ripeFileList []os.DirEntry, allowMissing bool) error {
