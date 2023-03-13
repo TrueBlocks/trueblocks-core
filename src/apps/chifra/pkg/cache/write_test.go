@@ -71,7 +71,7 @@ func TestWriteBlock(t *testing.T) {
 
 // 		block, err := ReadBlock(inputReader)
 // 		if err != nil && err.Error() == "invalid schema" {
-// 			logger.Log(logger.Error, "File too old", err)
+// 			logger.Error("File too old", err)
 // 			continue
 // 		}
 

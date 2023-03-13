@@ -120,7 +120,7 @@ func GetSettings(chain, configFn string, cmdLine *ScrapeSettings) (ScrapeSetting
 		t.Settings = Unset
 		// ...pick up values from toml file...
 		if _, err := toml.Decode(utils.AsciiFileToString(configFn), &t); err != nil {
-			logger.Log(logger.Error, "Could not load", configFn)
+			logger.Error("Could not load", configFn)
 			logger.Fatal("Error:", err)
 			return ScrapeSettings{}, err
 		}

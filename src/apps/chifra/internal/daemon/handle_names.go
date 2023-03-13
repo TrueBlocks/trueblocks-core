@@ -36,7 +36,7 @@ func EditName(w http.ResponseWriter, r *http.Request) {
 	cmd.Env = append(cmd.Env, "TB_NAME_DECIMALS="+fmt.Sprintf("%d", newName.Decimals))
 	out, err := cmd.Output()
 	if err != nil {
-		logger.Log(logger.Error, "Error from server: ", err)
+		logger.Error("Error from server: ", err)
 	}
 	output := string(out[:])
 	logger.Log(logger.Info, colors.Yellow, string(output), colors.Off)

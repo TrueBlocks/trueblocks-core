@@ -35,7 +35,7 @@ func AsciiFileToString(fileName string) string {
 
 	contents, err := os.ReadFile(fileName)
 	if err != nil {
-		logger.Log(logger.Error, err)
+		logger.Error(err)
 		return ""
 	}
 

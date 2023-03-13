@@ -129,7 +129,7 @@ func CheckBackLevelIndex(chain string) {
 	msg = strings.Replace(msg, "[{FILE}]", fileName, -1)
 	msg = strings.Replace(msg, "{", colors.Green, -1)
 	msg = strings.Replace(msg, "}", colors.Off, -1)
-	logger.Fatalf(msg)
+	logger.Fatal(msg)
 }
 
 const BackLevelVersion string = `

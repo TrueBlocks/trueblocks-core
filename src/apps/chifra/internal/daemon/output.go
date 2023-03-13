@@ -80,7 +80,7 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 	if err != nil {
 		msg := fmt.Sprintf("%sCould not load RPC provider: %s%s", colors.Red, err, colors.Off)
 		logger.Log(logger.InfoC, pad("Progress:"), msg)
-		logger.Fatalf("")
+		logger.Fatal("")
 	} else {
 		nTs, _ := tslib.NTimestamps(opts.Globals.Chain)
 		msg := fmt.Sprintf("%d, %d, %d,  %d, ts: %d", meta.Latest, meta.Finalized, meta.Staging, meta.Unripe, nTs)

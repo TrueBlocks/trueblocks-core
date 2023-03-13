@@ -54,7 +54,7 @@ func NewMonitor(chain, addr string, create bool) Monitor {
 	mon.Chain = chain
 	_, err := mon.Reload(create)
 	if err != nil {
-		logger.Log(logger.Error, err)
+		logger.Error(err)
 	}
 	return *mon
 }

@@ -36,8 +36,8 @@ func GetClient(provider string) *ethclient.Client {
 		// TODO: If we make this a cached item, it needs to be cached per chain, see timestamps
 		ec, err := ethclient.Dial(provider)
 		if err != nil || ec == nil {
-			logger.Log(logger.Error, "Missdial("+provider+"):")
-			logger.Fatalln(err)
+			logger.Error("Missdial("+provider+"):", err)
+			logger.Fatal("")
 		}
 		perProviderClientMap[provider] = ec
 	}
@@ -52,7 +52,7 @@ func BlockNumber(provider string) uint64 {
 
 	r, err := ec.BlockNumber(context.Background())
 	if err != nil {
-		logger.Log(logger.Error, "Could not connect to RPC client")
+		logger.Error("Could not connect to RPC client")
 		return 0
 	}
 

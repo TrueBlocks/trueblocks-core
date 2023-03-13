@@ -170,7 +170,7 @@ func runSolc(pl *pathList, source *generatorSource) (err error) {
 		installDeps.Dir = pl.UnpackedZip
 		err = installDeps.Run()
 		if err != nil {
-			logger.Log(logger.Error, "install deps error:", err)
+			logger.Error("install deps error:", err)
 		}
 		// We continue, because error doesn't mean we can't build
 	}

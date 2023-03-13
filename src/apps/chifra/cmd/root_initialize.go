@@ -32,16 +32,16 @@ func Initialize() bool {
 func VerifyOs() {
 	userOs := runtime.GOOS
 	if userOs == "windows" {
-		logger.Fatalln("Windows is not supported")
+		logger.Fatal("Windows is not supported\n")
 	}
 
 	if userOs != "linux" && userOs != "darwin" {
-		logger.Fatalln("Unsupported operating system: ", userOs)
+		logger.Fatal("Unsupported operating system: ", userOs, "\n")
 	}
 
 	_, err := user.Current()
 	if err != nil {
-		logger.Fatalln("Could not read user home directory")
+		logger.Fatal("Could not read user home directory\n")
 	}
 }
 
@@ -98,7 +98,7 @@ func VerifyMigrations() {
 		msg = strings.Replace(msg, "{1}", "{v0.09.0}", -1)
 		msg = strings.Replace(msg, "{", colors.Green, -1)
 		msg = strings.Replace(msg, "}", colors.Off, -1)
-		logger.Fatalf(msg)
+		logger.Fatal(msg)
 	}
 
 	// Both the config folder...
@@ -108,7 +108,7 @@ func VerifyMigrations() {
 		msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
 		msg = strings.Replace(msg, "{", colors.Green, -1)
 		msg = strings.Replace(msg, "}", colors.Off, -1)
-		logger.Fatalf(msg)
+		logger.Fatal(msg)
 	}
 
 	// ...and the config file better exist.
@@ -118,7 +118,7 @@ func VerifyMigrations() {
 		msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
 		msg = strings.Replace(msg, "{", colors.Green, -1)
 		msg = strings.Replace(msg, "}", colors.Off, -1)
-		logger.Fatalf(msg)
+		logger.Fatal(msg)
 	}
 
 	// ...and some chains...
@@ -128,7 +128,7 @@ func VerifyMigrations() {
 		msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
 		msg = strings.Replace(msg, "{", colors.Green, -1)
 		msg = strings.Replace(msg, "}", colors.Off, -1)
-		logger.Fatalf(msg)
+		logger.Fatal(msg)
 	}
 
 	// If any of the following folders or files exist, the user has not
@@ -170,7 +170,7 @@ func VerifyMigrations() {
 			msg = strings.Replace(msg, "{1}", "{v0.25.0}", -1)
 			msg = strings.Replace(msg, "{", colors.Green, -1)
 			msg = strings.Replace(msg, "}", colors.Off, -1)
-			logger.Fatalf(msg)
+			logger.Fatal(msg)
 		}
 	}
 
@@ -181,7 +181,7 @@ func VerifyMigrations() {
 		msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
 		msg = strings.Replace(msg, "{", colors.Green, -1)
 		msg = strings.Replace(msg, "}", colors.Off, -1)
-		logger.Fatalf(msg)
+		logger.Fatal(msg)
 	}
 
 	// We need at least this version...
@@ -191,6 +191,6 @@ func VerifyMigrations() {
 		msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
 		msg = strings.Replace(msg, "{", colors.Green, -1)
 		msg = strings.Replace(msg, "}", colors.Off, -1)
-		logger.Fatalf(msg)
+		logger.Fatal(msg)
 	}
 }

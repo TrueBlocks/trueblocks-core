@@ -21,18 +21,16 @@ const (
 	InfoC // colored table
 	test
 	Warning
-	Error
-	ErrorFatal
+	err
 )
 
 var severityToLabel = map[severity]string{
-	Progress:   "PROG",
-	Info:       "INFO",
-	InfoC:      "INFO",
-	test:       "TEST",
-	Warning:    "WARN",
-	Error:      "EROR",
-	ErrorFatal: "FATL",
+	Progress: "PROG",
+	Info:     "INFO",
+	InfoC:    "INFO",
+	test:     "TEST",
+	Warning:  "WARN",
+	err:      "EROR",
 }
 
 var (
@@ -95,16 +93,12 @@ func Log(sev severity, a ...interface{}) {
 	}
 }
 
+func Error(v ...any) {
+	Log(err, v...)
+}
+
 func Fatal(v ...any) {
 	log.Fatal(v...)
-}
-
-func Fatalln(v ...any) {
-	log.Fatalln(v...)
-}
-
-func Fatalf(format string, v ...any) {
-	log.Fatalf(format, v...)
 }
 
 func Panic(v ...any) {

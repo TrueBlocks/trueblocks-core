@@ -150,7 +150,7 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord
 		m.Lock() // To conflict progress printing
 		switch event.Event {
 		case progress.Error:
-			logger.Log(logger.Error, event.Message)
+			logger.Error(event.Message)
 			if ok {
 				failed = append(failed, *chunk)
 			}
