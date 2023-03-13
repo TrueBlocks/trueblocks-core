@@ -532,6 +532,6 @@ func (opts *BlazeOptions) syncedReporting(bn int, force bool) {
 			dist = (opts.RipeBlock - uint64(bn))
 		}
 		msg := fmt.Sprintf("Scraping %-04d of %-04d at block %d of %d (%d blocks from head)", opts.NProcessed, opts.BlockCount, bn, opts.RipeBlock, dist)
-		logger.Log(logger.Progress, msg)
+		logger.Progress(msg)
 	}
 }

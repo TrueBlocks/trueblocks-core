@@ -79,7 +79,7 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 	logger.InfoTable(pad("Index Path:"), config.GetPathToIndex(chain))
 	if err != nil {
 		msg := fmt.Sprintf("%sCould not load RPC provider: %s%s", colors.Red, err, colors.Off)
-		logger.InfoTable(gress:"), msg)
+		logger.InfoTable("Progress:", msg)
 		logger.Fatal("")
 	} else {
 		nTs, _ := tslib.NTimestamps(opts.Globals.Chain)

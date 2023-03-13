@@ -16,7 +16,7 @@ import (
 type severity int
 
 const (
-	Progress severity = iota
+	progress severity = iota
 	infoC             // colored table
 	info
 	test
@@ -25,7 +25,7 @@ const (
 )
 
 var severityToLabel = map[severity]string{
-	Progress: "PROG",
+	progress: "PROG",
 	infoC:    "INFO",
 	info:     "INFO",
 	test:     "TEST",
@@ -52,7 +52,7 @@ func TestLog(notDefault bool, a ...interface{}) {
 	}
 
 	if notDefault {
-		Log(test, a...)
+		toLog(test, a...)
 	}
 }
 
@@ -64,9 +64,9 @@ func getLogTiming() bool {
 	return logTiming
 }
 
-// Log prints `a` to stderr with a label corresponding to the severity level
+// toLog prints `a` to stderr with a label corresponding to the severity level
 // prepended (e.g. <INFO>, <EROR>, etc.)
-func Log(sev severity, a ...interface{}) {
+func toLog(sev severity, a ...interface{}) {
 
 	timeDatePart := "DATE|TIME"
 	if getLogTiming() {
@@ -75,7 +75,7 @@ func Log(sev severity, a ...interface{}) {
 	}
 
 	fmt.Fprintf(os.Stderr, "%s[%s] ", severityToLabel[sev], timeDatePart)
-	if sev == Progress {
+	if sev == progress {
 		for _, aa := range a {
 			fmt.Fprint(os.Stderr, aa)
 		}
@@ -93,20 +93,24 @@ func Log(sev severity, a ...interface{}) {
 	}
 }
 
+func Progress(v ...any) {
+	toLog(progress, v...)
+}
+
 func InfoTable(v ...any) {
-	Log(infoC, v...)
+	toLog(infoC, v...)
 }
 
 func Info(v ...any) {
-	Log(info, v...)
+	toLog(info, v...)
 }
 
 func Warn(v ...any) {
-	Log(warning, v...)
+	toLog(warning, v...)
 }
 
 func Error(v ...any) {
-	Log(err, v...)
+	toLog(err, v...)
 }
 
 func Fatal(v ...any) {

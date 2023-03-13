@@ -42,14 +42,14 @@ func (opts *ChunksOptions) HandlePinManifest(blockNums []uint64) error {
 
 		if pinning.LocalDaemonRunning() {
 			man.Chunks = append(man.Chunks, result.Local)
-			logger.Log(logger.Progress, "Pinning: ", result.Local, spaces)
+			logger.Progress("Pinning: ", result.Local, spaces)
 		} else {
 			man.Chunks = append(man.Chunks, result.Remote)
-			logger.Log(logger.Progress, "Pinning: ", result.Remote, spaces)
+			logger.Progress("Pinning: ", result.Remote, spaces)
 		}
 
 		if opts.Globals.Verbose {
-			logger.Log(logger.Progress, "Pinning", path)
+			logger.Progress("Pinning", path)
 		}
 		if opts.Sleep > 0 {
 			time.Sleep(time.Duration(opts.Sleep) * time.Second)
