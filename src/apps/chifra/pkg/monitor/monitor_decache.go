@@ -7,6 +7,7 @@ package monitor
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -16,10 +17,13 @@ import (
 
 // Decache removes a monitor and all cached data from the cache
 func (mon *Monitor) Decache(chain string, processor func(string) bool) (err error) {
+	if mon.IsOpen() {
+		defer mon.Close()
+	}
+
 	if mon.Count() == 0 {
 		return nil
 	}
-	defer mon.Close()
 
 	apps := make([]index.AppearanceRecord, mon.Count())
 	err = mon.ReadAppearances(&apps)
@@ -38,6 +42,11 @@ func (mon *Monitor) Decache(chain string, processor func(string) bool) (err erro
 			}
 		}
 	}
+
+	// Remove the abi file if it exists
+	path := config.GetPathToCache(chain) + "abis/"
+	pathToAbi := filepath.Join(path, mon.Address.Hex()+".json")
+	processor(pathToAbi)
 
 	return err
 }

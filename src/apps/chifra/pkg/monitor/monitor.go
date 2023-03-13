@@ -147,6 +147,11 @@ func (mon *Monitor) GetAddrStr() string {
 	return hexutil.Encode(mon.Address.Bytes())
 }
 
+// IsOpen returns true if the underlying monitor file is opened.
+func (mon *Monitor) IsOpen() bool {
+	return mon.ReadFp != nil
+}
+
 // Close closes an open Monitor if it's open, does nothing otherwise
 func (mon *Monitor) Close() {
 	if mon.ReadFp != nil {
