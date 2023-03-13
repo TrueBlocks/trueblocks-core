@@ -10,6 +10,7 @@ package daemonPkg
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -320,15 +321,8 @@ func Logger(inner http.Handler, name string) http.Handler {
 		if utils.IsTestModeServer(r) {
 			t = "-test"
 		}
-		logger.Printf(
-			"%d %s%s %s %s %s",
-			nProcessed,
-			r.Method,
-			t,
-			r.RequestURI,
-			name,
-			time.Since(start),
-		)
+		msg := fmt.Sprintf("%d %s%s %s %s %s", nProcessed, r.Method, t, r.RequestURI, name, time.Since(start))
+		logger.Log(logger.Info, msg)
 		nProcessed++
 	})
 }

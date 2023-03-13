@@ -49,7 +49,8 @@ func createEmptyDatabase(databasePath string) {
 	fmt.Println("Creating DB")
 	_, err = db.Exec(sqlStmt)
 	if err != nil {
-		logger.Printf("%q: %s\n", err, sqlStmt)
+		msg := fmt.Sprintf("%q: %s", err, sqlStmt)
+		logger.Log(logger.Info, msg)
 		return
 	}
 }

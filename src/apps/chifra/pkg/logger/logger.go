@@ -95,12 +95,12 @@ func Log(sev severity, a ...interface{}) {
 	}
 }
 
-func Println(v ...any) {
-	log.Println(v...)
+func Print(v ...any) {
+    log.Print(v...)
 }
 
-func Printf(format string, v ...any) {
-	log.Printf(format, v...)
+func Println(v ...any) {
+	log.Println(v...)
 }
 
 func Fatal(v ...any) {

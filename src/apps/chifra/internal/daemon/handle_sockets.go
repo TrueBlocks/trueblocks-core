@@ -72,7 +72,9 @@ func (c *Connection) RemoteAddr() net.Addr {
 
 // Log writes a log messages to the server's stderr
 func (c *Connection) Log(s string, args ...interface{}) {
-	logger.Printf("%s %s\n", c.RemoteAddr(), fmt.Sprintf(s, args...))
+	subMsg := fmt.Sprintf(s, args...)
+	msg := fmt.Sprintf("%s %s", c.RemoteAddr(), subMsg)
+	logger.Log(logger.Info, msg)
 }
 
 // ConnectionPool is the collection of all connections
