@@ -10,11 +10,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var enabledForCmds = map[string]bool{
-	"blocks":   true,
-	"receipts": true,
-	"when":     true,
-}
+var enabledForCmds = map[string]bool{}
 
 func SetEnabledForCmds(cmd string, enabled bool) {
 	enabledForCmds[cmd] = enabled
