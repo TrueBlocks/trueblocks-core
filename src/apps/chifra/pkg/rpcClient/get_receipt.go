@@ -26,41 +26,45 @@ func GetTransactionReceipt(chain string, bn uint64, txid uint64, txHash *common.
 
 	// Prepare logs of type []SimpleLog
 	logs := []types.SimpleLog{}
-	for _, log := range rawReceipt.Logs {
-		logAddress := types.HexToAddress(log.Address)
-		logIndex, parseErr := hexutil.DecodeUint64(log.LogIndex)
+	for _, rawLog := range rawReceipt.Logs {
+		rawLog := rawLog
+		logAddress := types.HexToAddress(rawLog.Address)
+		logIndex, parseErr := hexutil.DecodeUint64(rawLog.LogIndex)
 		if parseErr != nil {
 			err = parseErr
 			return
 		}
 
-		logBlockNumber, parseErr := hexutil.DecodeUint64(log.BlockNumber)
+		logBlockNumber, parseErr := hexutil.DecodeUint64(rawLog.BlockNumber)
 		if parseErr != nil {
 			err = parseErr
 			return
 		}
 
-		logTxIndex, parseErr := hexutil.DecodeUint64(log.TransactionIndex)
+		logTxIndex, parseErr := hexutil.DecodeUint64(rawLog.TransactionIndex)
 		if parseErr != nil {
 			err = parseErr
 			return
 		}
 
-		logTopics := make([]common.Hash, 0, len(log.Topics))
-		for _, topic := range log.Topics {
+		logTopics := make([]common.Hash, 0, len(rawLog.Topics))
+		for _, topic := range rawLog.Topics {
 			logTopics = append(logTopics, common.HexToHash(topic))
 		}
 
-		logs = append(logs, types.SimpleLog{
+		log := types.SimpleLog{
 			Address:          logAddress,
 			LogIndex:         logIndex,
 			BlockNumber:      logBlockNumber,
 			TransactionIndex: uint32(logTxIndex),
+			TransactionHash:  tx.Hash(),
 			Timestamp:        0, // TODO: FIXME #2695
 			Topics:           logTopics,
-			Data:             string(log.Data),
-			CompressedLog:    "", // TODO: FIXME
-		})
+			Data:             string(rawLog.Data),
+			CompressedLog:    "", // TODO: FIXME -- Note: we do this when displaying
+		}
+		log.SetRaw(&rawLog)
+		logs = append(logs, log)
 	}
 
 	// Type-cast values that are not strings

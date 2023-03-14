@@ -36,6 +36,7 @@ type SimpleLog struct {
 	LogIndex         uint64          `json:"logIndex"`
 	Timestamp        Timestamp       `json:"timestamp,omitempty"`
 	Topics           []common.Hash   `json:"topics,omitempty"`
+	TransactionHash  common.Hash     `json:"transactionHash"`
 	TransactionIndex uint32          `json:"transactionIndex"`
 	raw              *RawLog         `json:"-"`
 }
@@ -54,43 +55,68 @@ func (s *SimpleLog) Model(showHidden bool, format string, extraOptions map[strin
 
 	model := map[string]interface{}{
 		"address":          s.Address,
-		"articulatedLog":   s.ArticulatedLog,
 		"blockNumber":      s.BlockNumber,
 		"logIndex":         s.LogIndex,
 		"timestamp":        s.Timestamp,
 		"transactionIndex": s.TransactionIndex,
+		"transactionHash":  s.TransactionHash,
 	}
 
 	order := []string{
-		"topic3",
-		"blockHash",
-		"transactionLogIndex",
-		"topic2",
-		"topic1",
-		"topic0",
-		"type",
 		"blockNumber",
 		"transactionIndex",
 		"logIndex",
 		"transactionHash",
 		"timestamp",
 		"address",
+		"topic0",
+		"topic1",
+		"topic2",
+		"topic3",
 		"data",
-		"articulatedLog",
 	}
 
 	// EXISTING_CODE
-	if format != "json" {
-		if len(s.Data) > 0 && s.Data != "0x" {
-			model["data"] = s.Data
-		}
-		model["compressedLog"] = s.CompressedLog
-		order = append(order, "compressedLog")
-	} else {
+	if format == "json" {
 		if len(s.Data) > 0 && s.Data != "0x" {
 			model["data"] = s.Data
 		} else {
 			model["data"] = ""
+		}
+		if s.ArticulatedLog != nil {
+			model["articulatedLog"] = s.ArticulatedLog
+		}
+
+		model["topics"] = s.Topics
+
+	} else {
+		if len(s.Data) > 0 && s.Data != "0x" {
+			model["data"] = s.Data
+		}
+
+		if extraOptions["articulate"] == true && s.ArticulatedLog != nil {
+			inputModels := ParametersToMap(s.ArticulatedLog.Inputs)
+			// TODO: Shouldn't this be a SimpleFunction?
+			articulatedLog := map[string]any{
+				"name":   s.ArticulatedLog.Name,
+				"inputs": inputModels,
+			}
+			model["compressedLog"] = MakeCompressed(articulatedLog)
+			order = append(order, "compressedLog")
+		}
+
+		model["topic0"] = s.Topics[0]
+		model["topic1"] = ""
+		if len(s.Topics) > 1 {
+			model["topic1"] = s.Topics[1]
+		}
+		model["topic2"] = ""
+		if len(s.Topics) > 2 {
+			model["topic2"] = s.Topics[2]
+		}
+		model["topic3"] = ""
+		if len(s.Topics) > 3 {
+			model["topic3"] = s.Topics[3]
 		}
 	}
 	// EXISTING_CODE
