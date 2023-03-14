@@ -51,7 +51,7 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 
 	// EXISTING_CODE
 	handled = true
-	err = opts.HandleShow()
+	err = opts.HandleShowReceipts()
 	// EXISTING_CODE
 
 	return

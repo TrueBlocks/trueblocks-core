@@ -59,7 +59,7 @@ func (opts *TransactionsOptions) TransactionsInternal() (err error, handled bool
 		} else if len(opts.AccountFor) > 0 {
 			return opts.HandleAccountFor()
 		} else {
-			return opts.HandleShow(), true
+			return opts.HandleShowTxs(), true
 		}
 	}
 

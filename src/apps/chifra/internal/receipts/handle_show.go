@@ -14,7 +14,7 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-func (opts *ReceiptsOptions) HandleShow() error {
+func (opts *ReceiptsOptions) HandleShowReceipts() error {
 
 	abiMap := make(abi.AbiInterfaceMap)
 	loadedMap := make(map[types.Address]bool)

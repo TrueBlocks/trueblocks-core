@@ -14,7 +14,7 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-func (opts *TransactionsOptions) HandleShow() (err error) {
+func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 	abiMap := make(abi.AbiInterfaceMap)
 	loadedMap := make(map[types.Address]bool)
 	chain := opts.Globals.Chain
