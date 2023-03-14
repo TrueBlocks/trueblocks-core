@@ -15,6 +15,7 @@ TEST[DATE|TIME] Format:  json
           "topics": [
             "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
           ],
+          "transactionHash": "0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765",
           "transactionIndex": 68
         },
         {
@@ -25,6 +26,7 @@ TEST[DATE|TIME] Format:  json
           "topics": [
             "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
           ],
+          "transactionHash": "0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765",
           "transactionIndex": 68
         }
       ],
