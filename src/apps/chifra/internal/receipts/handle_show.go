@@ -22,7 +22,7 @@ func (opts *ReceiptsOptions) HandleShow() error {
 	ctx, cancel := context.WithCancel(context.Background())
 
 	// Note: Make sure to add an entry to enabledForCmd in src/apps/chifra/pkg/output/helpers.go
-	fetchTransactionData := func(modelChan chan types.Modeler[types.RawReceipt], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawReceipt], errorChan chan error) {
 		// TODO: stream transaction identifiers
 		for idIndex, rng := range opts.TransactionIds {
 			txList, err := rng.ResolveTxs(opts.Globals.Chain)
@@ -91,7 +91,7 @@ func (opts *ReceiptsOptions) HandleShow() error {
 		}
 	}
 
-	return output.StreamMany(ctx, fetchTransactionData, output.OutputOptions{
+	return output.StreamMany(ctx, fetchData, output.OutputOptions{
 		Writer:     opts.Globals.Writer,
 		Chain:      opts.Globals.Chain,
 		TestMode:   opts.Globals.TestMode,
