@@ -13,6 +13,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -50,12 +51,12 @@ func (opts *LogsOptions) LogsInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.Globals.IsApiMode() {
-		return nil, false
+	if !opts.IsPorted() {
+		logger.Panic("Should not happen in chifra logs.")
 	}
 
 	handled = true
-	err = opts.Globals.PassItOn("getLogs", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
+	err = opts.HandleShow()
 	// EXISTING_CODE
 
 	return
@@ -72,6 +73,7 @@ func GetLogsOptions(args []string, g *globals.GlobalOptions) *LogsOptions {
 
 func (opts *LogsOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
+	ported = true
 	// EXISTING_CODE
 	return
 }
