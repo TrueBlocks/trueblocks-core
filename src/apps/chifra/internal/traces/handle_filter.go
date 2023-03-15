@@ -1,9 +1,74 @@
 package tracesPkg
 
-import "fmt"
+import (
+	"context"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+)
 
 func (opts *TracesOptions) HandleFilter() error {
-	return fmt.Errorf("chifra traces --filter is not yet implemented")
+	abiMap := make(abi.AbiInterfaceMap)
+	loadedMap := make(map[types.Address]bool)
+	chain := opts.Globals.Chain
+
+	ctx, cancel := context.WithCancel(context.Background())
+
+	// Note: Make sure to add an entry to enabledForCmd in src/apps/chifra/pkg/output/helpers.go
+	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
+		traces, err := rpcClient.GetTracesByFilter(opts.Globals.Chain, opts.Filter)
+		if err != nil {
+			errorChan <- err
+			cancel()
+			return
+		}
+		if len(traces) == 0 {
+			return
+		}
+
+		ts := types.Timestamp(0) // rpc.GetBlockTimestamp(opts.Globals.Chain, uint64(traces[0].BlockNumber))
+		for _, trace := range traces {
+			// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
+			trace := trace
+			trace.Timestamp = ts
+			var err error
+			if !loadedMap[trace.Action.To] {
+				if err = abi.LoadAbi(chain, trace.Action.To, abiMap); err != nil {
+					// continue processing even with an error
+					errorChan <- err
+					err = nil
+				}
+			}
+			if err == nil {
+				trace.ArticulatedTrace, err = articulate.ArticulateTrace(&trace, abiMap)
+				if err != nil {
+					// continue processing even with an error
+					errorChan <- err
+				}
+			}
+			modelChan <- &trace
+		}
+	}
+
+	return output.StreamMany(ctx, fetchData, output.OutputOptions{
+		Writer:     opts.Globals.Writer,
+		Chain:      opts.Globals.Chain,
+		TestMode:   opts.Globals.TestMode,
+		NoHeader:   opts.Globals.NoHeader,
+		ShowRaw:    opts.Globals.ShowRaw,
+		Verbose:    opts.Globals.Verbose,
+		LogLevel:   opts.Globals.LogLevel,
+		Format:     opts.Globals.Format,
+		OutputFn:   opts.Globals.OutputFn,
+		Append:     opts.Globals.Append,
+		JsonIndent: "  ",
+		Extra: map[string]interface{}{
+			"articulate": opts.Articulate,
+		},
+	})
 }
 
 /*

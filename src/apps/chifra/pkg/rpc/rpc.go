@@ -41,6 +41,7 @@ func FromRpc(rpcProvider string, payload *Payload, ret interface{}) error {
 	if err != nil {
 		return err
 	}
+	// fmt.Println(string(plBytes))
 
 	body := bytes.NewReader(plBytes)
 	req, err := http.NewRequest("POST", rpcProvider, body)

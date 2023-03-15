@@ -9,7 +9,6 @@ package tracesPkg
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -45,27 +44,6 @@ func (opts *TracesOptions) testLog() {
 func (opts *TracesOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
-}
-
-// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
-func (opts *TracesOptions) getEnvStr() []string {
-	envStr := []string{}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return envStr
-}
-
-// toCmdLine converts the option to a command line for calling out to the system.
-func (opts *TracesOptions) toCmdLine() string {
-	options := ""
-	if len(opts.Filter) > 0 {
-		options += " --filter " + opts.Filter
-	}
-	options += " " + strings.Join(opts.Transactions, " ")
-	// EXISTING_CODE
-	// EXISTING_CODE
-	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
-	return options
 }
 
 // tracesFinishParseApi finishes the parsing for server invocations. Returns a new TracesOptions.
@@ -105,7 +83,6 @@ func tracesFinishParse(args []string) *TracesOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	// EXISTING_CODE
-	opts.Transactions = args
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
