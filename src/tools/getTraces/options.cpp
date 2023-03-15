@@ -21,11 +21,7 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers"),  // NOLINT
-    COption("articulate", "a", "", OPT_SWITCH, "articulate the retrieved data if ABIs can be found"),
     COption("filter", "f", "<string>", OPT_FLAG, "call the node's trace_filter routine with bang-separated filter"),
-    COption("count", "U", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
-    COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "skip over the 2016 ddos during export ('on' by default)"),
-    COption("max", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Retrieve traces for the given transaction(s)."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -46,25 +42,10 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (arg == "-a" || arg == "--articulate") {
-            articulate = true;
-
         } else if (startsWith(arg, "-f:") || startsWith(arg, "--filter:")) {
             filter = substitute(substitute(arg, "-f:", ""), "--filter:", "");
         } else if (arg == "-f" || arg == "--filter") {
             return flag_required("filter");
-
-        } else if (arg == "-U" || arg == "--count") {
-            count = true;
-
-        } else if (arg == "-s" || arg == "--skip_ddos") {
-            skip_ddos = !skip_ddos;
-
-        } else if (startsWith(arg, "-m:") || startsWith(arg, "--max:")) {
-            if (!confirmUint("max", max, arg))
-                return false;
-        } else if (arg == "-m" || arg == "--max") {
-            return flag_required("max");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -79,9 +60,6 @@ bool COptions::parseArguments(string_q& command) {
             // END_CODE_AUTO
         }
     }
-
-    if (!isTracingNode())
-        return usage("Tracing is required for this program to work properly.");
 
     if (!filter.empty()) {
         string_q headerLine = "fromBlock,toBlock,fromAddress,toAddress,after,count";
@@ -116,23 +94,12 @@ bool COptions::parseArguments(string_q& command) {
         return true;
     }
 
-    if ((!articulate && filter.empty()) || count) {
+    if (filter.empty()) {
         return usage("Should by ported in getTraces.");
     }
 
     if (isRaw) {
         return usage("Should not be --raw in getTraces.");
-    }
-
-    if (articulate) {
-        // show certain fields and hide others
-        manageFields(defHide, false);
-        manageFields(defShow, true);
-        manageFields("CParameter:strDefault", false);  // hide
-        manageFields("CTransaction:price", false);     // hide
-        manageFields("CTransaction:input", true);      // show
-        manageFields("CLog:topics", true);             // show
-        abi_spec.loadAbisFromKnown();
     }
 
     // Display formatting
@@ -174,13 +141,7 @@ void COptions::Init(void) {
     // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT
-    articulate = false;
     filter = "";
-    count = false;
-    // clang-format off
-    skip_ddos = getGlobalConfig("getTraces")->getConfigBool("settings", "skip_ddos", true);
-    max = getGlobalConfig("getTraces")->getConfigInt("settings", "max", 250);
-    // clang-format on
     // END_CODE_INIT
 
     transList.Init();
@@ -200,8 +161,6 @@ COptions::COptions(void) {
     // END_CODE_NOTES
 
     // clang-format off
-    configs.push_back("`skip_ddos`: skip over the 2016 ddos during export ('on' by default).");
-    configs.push_back("`max`: if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250).");  // NOLINT
     // clang-format on
 
     // BEG_ERROR_STRINGS

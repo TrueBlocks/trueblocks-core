@@ -24,11 +24,7 @@
 class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
-    bool articulate;
     string_q filter;
-    bool count;
-    bool skip_ddos;
-    uint64_t max;
     // END_CODE_DECLARE
 
     CTraceFilterArray filters;
@@ -42,9 +38,3 @@ class COptions : public CAbiOptions {
 
     bool extractBlocksFromFilter(blknum_t& b1, const string_q& p1, blknum_t& b2, const string_q& p2);
 };
-
-//-----------------------------------------------------------------------------
-extern bool visitTransaction(CTransaction& trans, void* data);
-extern bool displayAsCreation(COptions* opt, const CTrace& trace);
-extern bool displayAsSuicide(COptions* opt, const CTrace& trace);
-extern bool displayAsTrace(COptions* opt, const CTrace& trace);
