@@ -41,7 +41,6 @@ extern bool getReceipt(CReceipt& receipt, const hash_t& txHash);
 extern bool getLog(CLog& log, const hash_t& txHash);
 extern void getTraces(CTraceArray& traces, const hash_t& txHash, const CTransaction* pT);
 extern void getStateDiffAddrs(CAddressArray& addrs, const hash_t& txHash);
-extern void getTracesByFilter(CTraceArray& traces, const CTraceFilter& filter);
 extern size_t getTraceCount(const hash_t& hashIn);
 extern bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, bool skipDdos);
 extern bool getFullReceipt(CTransaction* trans, bool needsTrace);

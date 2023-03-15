@@ -565,53 +565,6 @@ string_q getTokenState(const address_t& token, const string_q& what, const CAbi&
     return "";
 }
 
-//-----------------------------------------------------------------------
-void getTracesByFilter(CTraceArray& traces, const CTraceFilter& filter) {
-    if (filter.Format() == CTraceFilter().Format())
-        return;
-
-    string_q toAddrs;
-    for (auto addr : filter.toAddress) {
-        if (!isZeroAddr(addr))
-            toAddrs += ("\"" + addr + "\",");
-    }
-    if (!toAddrs.empty()) {
-        toAddrs = "[" + trim(toAddrs, ',') + "]";
-    }
-
-    string_q fromAddrs;
-    for (auto addr : filter.fromAddress) {
-        if (!isZeroAddr(addr))
-            fromAddrs += ("\"" + addr + "\",");
-    }
-    if (!fromAddrs.empty()) {
-        fromAddrs = "[" + trim(fromAddrs, ',') + "]";
-    }
-
-#define AA(test, name, val) ((test) ? "\"" + string_q(name) + "\": " + (val) + "," : "")
-    string_q params;
-    params += AA(filter.fromBlock, "fromBlock", "\"" + uint_2_Hex(filter.fromBlock) + "\"");
-    params += AA(filter.toBlock, "toBlock", "\"" + uint_2_Hex(filter.toBlock) + "\"");
-    params += AA(!fromAddrs.empty(), "fromAddress", fromAddrs);
-    params += AA(!toAddrs.empty(), "toAddress", toAddrs);
-    params += AA(filter.after, "after", uint_2_Str(filter.after));
-    params += AA(filter.count, "count", uint_2_Str(filter.count));
-    params = "{" + trim(params, ',') + "}";
-
-    cerr << substitute(params, " ", "") << endl;
-
-    string_q result = "[" + callRPC("trace_filter", "[" + params + "]", true) + "]";
-    CRPCResult generic;
-    generic.parseJson3(result);                                   // pull out the result
-    generic.result = cleanUpJson((char*)generic.result.c_str());  // NOLINT
-    CTrace trace;
-    traces.clear();
-    while (trace.parseJson4(generic.result)) {
-        traces.push_back(trace);
-        trace = CTrace();  // reset
-    }
-}
-
 //-------------------------------------------------------------------------
 string_q getVersionFromClient(void) {
     string_q clientVersionFn = cacheFolder_tmp + "clientVersion.txt";
