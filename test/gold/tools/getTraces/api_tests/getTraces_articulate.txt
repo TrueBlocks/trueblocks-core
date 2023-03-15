@@ -1,7 +1,4 @@
-chifra traces  6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12 --articulate --fmt json
-TEST[DATE|TIME] Transactions:  [6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12]
-TEST[DATE|TIME] Articulate:  true
-TEST[DATE|TIME] Format:  json
+traces?transactions=6513870.62%206687987.11%200x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12&articulate&fmt=json
 {
   "data": [
     {
@@ -149,5 +146,15 @@ TEST[DATE|TIME] Format:  json
       "transactionIndex": 0,
       "type": "call"
     }
-  ]
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
 }

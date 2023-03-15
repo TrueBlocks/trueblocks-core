@@ -96,11 +96,13 @@ func (s *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[s
 					"topics":   log.Topics,
 					"data":     log.Data,
 				}
-				if extraOptions["articulate"] == true && log.ArticulatedLog != nil {
-					inputModels := ParametersToMap(log.ArticulatedLog.Inputs)
+				if log.ArticulatedLog != nil {
 					articulatedLog := map[string]any{
-						"name":   log.ArticulatedLog.Name,
-						"inputs": inputModels,
+						"name": log.ArticulatedLog.Name,
+					}
+					inputModels := ParametersToMap(log.ArticulatedLog.Inputs)
+					if inputModels != nil {
+						articulatedLog["inputs"] = inputModels
 					}
 					logModel["articulatedLog"] = articulatedLog
 				}

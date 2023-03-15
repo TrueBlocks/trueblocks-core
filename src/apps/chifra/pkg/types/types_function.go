@@ -103,11 +103,18 @@ func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[
 			return result
 		}
 		if extraOptions["verbose"] == true {
-			model["inputs"] = getParameterModels(s.Inputs)
-			model["outputs"] = getParameterModels(s.Outputs)
+			inputs := getParameterModels(s.Inputs)
+			if inputs != nil {
+				model["inputs"] = inputs
+			}
+			outputs := getParameterModels(s.Outputs)
+			if outputs != nil {
+				model["outputs"] = outputs
+			}
 		}
-		if s.StateMutability != "" && s.StateMutability != "nonpayable" {
-			model["stateMutability"] = s.StateMutability
+		sm := s.StateMutability
+		if sm != "" && sm != "nonpayable" && sm != "view" {
+			model["stateMutability"] = sm
 		}
 	}
 
@@ -127,7 +134,7 @@ func FunctionFromAbiEvent(ethEvent *abi.Event, abiSource string) *SimpleFunction
 	function := &SimpleFunction{
 		Encoding:     encSig,
 		Signature:    ethEvent.Sig,
-		Name:         ethEvent.Name,
+		Name:         ethEvent.RawName,
 		AbiSource:    abiSource,
 		FunctionType: "event",
 		Anonymous:    ethEvent.Anonymous,
@@ -157,7 +164,7 @@ func FunctionFromAbiMethod(ethMethod *abi.Method, abiSource string) *SimpleFunct
 	inputs := argumentsToSimpleParameters(ethMethod.Inputs)
 	outputs := argumentsToSimpleParameters(ethMethod.Outputs)
 	stateMutability := "nonpayable"
-	if ethMethod.StateMutability != "" && ethMethod.StateMutability != "nonpayable" {
+	if ethMethod.StateMutability != "" && ethMethod.StateMutability != "nonpayable" && ethMethod.StateMutability != "view" {
 		stateMutability = ethMethod.StateMutability
 	} else if ethMethod.Payable {
 		stateMutability = "payable"
@@ -165,7 +172,7 @@ func FunctionFromAbiMethod(ethMethod *abi.Method, abiSource string) *SimpleFunct
 	function := &SimpleFunction{
 		Encoding:        fourByte,
 		Signature:       ethMethod.Sig,
-		Name:            ethMethod.Name,
+		Name:            ethMethod.RawName,
 		AbiSource:       abiSource,
 		FunctionType:    functionType,
 		Constant:        ethMethod.Constant,

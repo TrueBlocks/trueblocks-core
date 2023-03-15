@@ -1,4 +1,7 @@
-traces?transactions=0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f&articulate&fmt=json
+chifra traces  0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --articulate --fmt json
+TEST[DATE|TIME] Transactions:  [0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f]
+TEST[DATE|TIME] Articulate:  true
+TEST[DATE|TIME] Format:  json
 {
   "data": [
     {
@@ -1067,7 +1070,7 @@ traces?transactions=0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c86
           "where": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
           "who": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031"
         },
-        "name": "hasPermission0",
+        "name": "hasPermission",
         "outputs": {
           "ret_0": true
         }
@@ -15724,15 +15727,5 @@ traces?transactions=0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c86
       "transactionIndex": 32,
       "type": "call"
     }
-  ],
-  "meta": {
-    "client": "0xdeadbeef",
-    "finalized": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "unripe": "0xdeadbeef",
-    "chainId": 1,
-    "networkId": 1,
-    "chain": "mainnet"
-  }
+  ]
 }

@@ -28,8 +28,7 @@ transactions?transactions=0xfa62ab036f36b4755bfa0d6e3e641d08daa7e41e95b0c1f22464
             }
           ]
         },
-        "name": "operate",
-        "outputs": null
+        "name": "operate"
       },
       "blockHash": "0x9793244e740c78afa6065779660d2ea6be9b9d00b94311e1bcda3fcfe191c829",
       "blockNumber": 10052989,

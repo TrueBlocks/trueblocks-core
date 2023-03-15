@@ -5,7 +5,6 @@ abis?addrs=0xdac17f958d2ee523a2206206994597c13d831ec7
       "encoding": "0x06fdde03",
       "name": "name",
       "signature": "name()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -24,7 +23,6 @@ abis?addrs=0xdac17f958d2ee523a2206206994597c13d831ec7
       "encoding": "0x0e136b19",
       "name": "deprecated",
       "signature": "deprecated()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -37,7 +35,6 @@ abis?addrs=0xdac17f958d2ee523a2206206994597c13d831ec7
       "encoding": "0x18160ddd",
       "name": "totalSupply",
       "signature": "totalSupply()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -50,35 +47,30 @@ abis?addrs=0xdac17f958d2ee523a2206206994597c13d831ec7
       "encoding": "0x26976e3f",
       "name": "upgradedAddress",
       "signature": "upgradedAddress()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x27e235e3",
       "name": "balances",
       "signature": "balances(address)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x313ce567",
       "name": "decimals",
       "signature": "decimals()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x35390714",
       "name": "maximumFee",
       "signature": "maximumFee()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x3eaaf86b",
       "name": "_totalSupply",
       "signature": "_totalSupply()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -97,21 +89,18 @@ abis?addrs=0xdac17f958d2ee523a2206206994597c13d831ec7
       "encoding": "0x59bf1abe",
       "name": "getBlackListStatus",
       "signature": "getBlackListStatus(address)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x5c658165",
       "name": "allowed",
       "signature": "allowed(address,address)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x5c975abb",
       "name": "paused",
       "signature": "paused()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -136,7 +125,6 @@ abis?addrs=0xdac17f958d2ee523a2206206994597c13d831ec7
       "encoding": "0x70a08231",
       "name": "balanceOf",
       "signature": "balanceOf(address)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -155,7 +143,6 @@ abis?addrs=0xdac17f958d2ee523a2206206994597c13d831ec7
       "encoding": "0x893d20e8",
       "name": "getOwner",
       "signature": "getOwner()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -168,14 +155,12 @@ abis?addrs=0xdac17f958d2ee523a2206206994597c13d831ec7
       "encoding": "0x8da5cb5b",
       "name": "owner",
       "signature": "owner()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x95d89b41",
       "name": "symbol",
       "signature": "symbol()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -230,14 +215,12 @@ abis?addrs=0xdac17f958d2ee523a2206206994597c13d831ec7
       "encoding": "0xdd62ed3e",
       "name": "allowance",
       "signature": "allowance(address,address)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0xdd644f72",
       "name": "basisPointsRate",
       "signature": "basisPointsRate()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -250,7 +233,6 @@ abis?addrs=0xdac17f958d2ee523a2206206994597c13d831ec7
       "encoding": "0xe47d6060",
       "name": "isBlackListed",
       "signature": "isBlackListed(address)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -263,7 +245,6 @@ abis?addrs=0xdac17f958d2ee523a2206206994597c13d831ec7
       "encoding": "0xe5b5019a",
       "name": "MAX_UINT",
       "signature": "MAX_UINT()",
-      "stateMutability": "view",
       "type": "function"
     },
     {

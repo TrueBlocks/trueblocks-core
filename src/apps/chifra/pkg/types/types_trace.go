@@ -18,7 +18,6 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
-// TODO: CompressedTrace is not part of the raw trace data
 // EXISTING_CODE
 
 type RawTrace struct {
@@ -39,7 +38,6 @@ type SimpleTrace struct {
 	ArticulatedTrace *SimpleFunction    `json:"articulatedTrace,omitempty"`
 	BlockHash        common.Hash        `json:"blockHash"`
 	BlockNumber      uint64             `json:"blockNumber"`
-	CompressedTrace  string             `json:"compressedTrace,omitempty"`
 	Error            string             `json:"error,omitempty"`
 	Result           *SimpleTraceResult `json:"result"`
 	Subtraces        uint64             `json:"subtraces"`
@@ -76,8 +74,9 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 	order := []string{
 		"blockNumber",
 		"transactionIndex",
-		"action::callType",
+		"timestamp",
 		"error",
+		"action::callType",
 		"action::from",
 		"action::to",
 		"action::value",
@@ -85,12 +84,30 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 		"action::gas",
 		"result::gasUsed",
 		"action::input",
-		"compressedTrace",
 		"result::output",
-		"timestamp",
 	}
 
 	// EXISTING_CODE
+	var articulatedTrace map[string]interface{}
+	isArticulated := extraOptions["articulate"] == true && s.ArticulatedTrace != nil
+	if isArticulated {
+		articulatedTrace = map[string]interface{}{
+			"name": s.ArticulatedTrace.Name,
+		}
+		inputModels := ParametersToMap(s.ArticulatedTrace.Inputs)
+		if inputModels != nil {
+			articulatedTrace["inputs"] = inputModels
+		}
+		outputModels := ParametersToMap(s.ArticulatedTrace.Outputs)
+		if outputModels != nil {
+			articulatedTrace["outputs"] = outputModels
+		}
+		sm := s.ArticulatedTrace.StateMutability
+		if sm != "" && sm != "nonpayable" && sm != "view" {
+			articulatedTrace["stateMutability"] = sm
+		}
+	}
+
 	if format == "json" {
 		model["traceAddress"] = s.TraceAddress
 		if len(s.Error) > 0 {
@@ -106,19 +123,10 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 			model["result"] = s.Result.Model(showHidden, format, extraOptions).Data
 		}
 
-		if s.ArticulatedTrace != nil && extraOptions["articulate"] == true {
-			inputModels := ParametersToMap(s.ArticulatedTrace.Inputs)
-			outputModels := ParametersToMap(s.ArticulatedTrace.Outputs)
-			articulatedTrace := map[string]interface{}{
-				"name":    s.ArticulatedTrace.Name,
-				"inputs":  inputModels,
-				"outputs": outputModels,
-			}
-			if s.ArticulatedTrace.StateMutability != "" && s.ArticulatedTrace.StateMutability != "nonpayable" {
-				articulatedTrace["stateMutability"] = s.ArticulatedTrace.StateMutability
-			}
+		if isArticulated {
 			model["articulatedTrace"] = articulatedTrace
 		}
+
 	} else {
 		to := hexutil.Encode(s.Action.To.Bytes())
 		if to == "0x0000000000000000000000000000000000000000" {
@@ -155,9 +163,9 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 			model["result::output"] = ""
 		}
 
-		model["compressedTrace"] = ""
-		if s.ArticulatedTrace != nil {
-			model["compressedTrace"] = s.CompressedTrace
+		if isArticulated {
+			model["compressedTrace"] = MakeCompressed(articulatedTrace)
+			order = append(order, "compressedTrace")
 		}
 	}
 	// EXISTING_CODE

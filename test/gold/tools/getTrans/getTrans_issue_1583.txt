@@ -12,8 +12,7 @@ TEST[DATE|TIME] Format:  json
             "0x00000000000000000000000041eb63d55b1b0000"
           ]
         },
-        "name": "donate",
-        "outputs": null
+        "name": "donate"
       },
       "blockHash": "0x9e3bfcd31fe2aba667980cee5f9a9a834ab7309c04c1387fac457a30b777a0b3",
       "blockNumber": 10279310,

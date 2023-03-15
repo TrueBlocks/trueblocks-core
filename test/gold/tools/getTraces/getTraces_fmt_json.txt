@@ -45,5 +45,8 @@ TEST[DATE|TIME] Format:  json
       "transactionIndex": 0,
       "type": "call"
     }
+  ],
+  "errors": [
+    "abi: attempting to unmarshall an empty string while arguments are expected"
   ]
 }

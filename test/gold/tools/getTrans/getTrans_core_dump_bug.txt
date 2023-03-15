@@ -13,8 +13,7 @@ TEST[DATE|TIME] Format:  json
           "recipient": "0xd31f381ad54386895852f311fc3be2008c88cb27",
           "topic": "This is the string that represents the type of data being posted"
         },
-        "name": "postData",
-        "outputs": null
+        "name": "postData"
       },
       "blockHash": "0xf41643281a0a58e45254b6a7e3a53db51deeef05a80ebcbb1c1314a754aefbf9",
       "blockNumber": 3691662,
@@ -76,8 +75,7 @@ TEST[DATE|TIME] Format:  json
               "recipient": "0xd31f381ad54386895852f311fc3be2008c88cb27",
               "topic": "This is the string that represents the type of data being posted"
             },
-            "name": "postData",
-            "outputs": null
+            "name": "postData"
           },
           "blockHash": "0xf41643281a0a58e45254b6a7e3a53db51deeef05a80ebcbb1c1314a754aefbf9",
           "blockNumber": 3691662,

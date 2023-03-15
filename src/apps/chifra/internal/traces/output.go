@@ -80,7 +80,7 @@ func GetTracesOptions(args []string, g *globals.GlobalOptions) *TracesOptions {
 
 func (opts *TracesOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	ported = !opts.Articulate && len(opts.Filter) == 0
+	ported = len(opts.Filter) == 0
 	// EXISTING_CODE
 	return
 }

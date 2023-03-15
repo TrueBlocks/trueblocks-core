@@ -20,7 +20,6 @@ TEST[DATE|TIME] Format:  json
       "encoding": "0x26782247",
       "name": "pendingAdmin",
       "signature": "pendingAdmin()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -57,7 +56,6 @@ TEST[DATE|TIME] Format:  json
       "encoding": "0x6a42b8f8",
       "name": "delay",
       "signature": "delay()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -76,7 +74,6 @@ TEST[DATE|TIME] Format:  json
       "encoding": "0x7d645fab",
       "name": "MAXIMUM_DELAY",
       "signature": "MAXIMUM_DELAY()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -95,14 +92,12 @@ TEST[DATE|TIME] Format:  json
       "encoding": "0xb1b43ae5",
       "name": "MINIMUM_DELAY",
       "signature": "MINIMUM_DELAY()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0xc1a287e2",
       "name": "GRACE_PERIOD",
       "signature": "GRACE_PERIOD()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -115,14 +110,12 @@ TEST[DATE|TIME] Format:  json
       "encoding": "0xf2b06537",
       "name": "queuedTransactions",
       "signature": "queuedTransactions(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0xf851a440",
       "name": "admin",
       "signature": "admin()",
-      "stateMutability": "view",
       "type": "function"
     }
   ]

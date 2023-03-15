@@ -12,7 +12,6 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
           "sealedBid": "0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811"
         },
         "name": "startAuctionsAndBid",
-        "outputs": null,
         "stateMutability": "payable"
       },
       "blockHash": "0x836c4866ea68fbe3b9786cdb3c2c8a36fa0c689e77b0f9fc441d37fb85489fad",
@@ -127,7 +126,6 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
               "sealedBid": "0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811"
             },
             "name": "startAuctionsAndBid",
-            "outputs": null,
             "stateMutability": "payable"
           },
           "blockHash": "0x836c4866ea68fbe3b9786cdb3c2c8a36fa0c689e77b0f9fc441d37fb85489fad",

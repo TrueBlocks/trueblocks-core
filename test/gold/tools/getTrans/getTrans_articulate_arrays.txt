@@ -21,8 +21,7 @@ TEST[DATE|TIME] Format:  json
             "25000000000000000000"
           ]
         },
-        "name": "acceptTheseAskRequestsAndBUY",
-        "outputs": null
+        "name": "acceptTheseAskRequestsAndBUY"
       },
       "blockHash": "0xc9d375441b8deb0ca5544234ccbe3f6a9f67361ec30128030401b0d16713b55a",
       "blockNumber": 6711969,
@@ -111,8 +110,7 @@ TEST[DATE|TIME] Format:  json
                 "25000000000000000000"
               ]
             },
-            "name": "acceptTheseAskRequestsAndBUY",
-            "outputs": null
+            "name": "acceptTheseAskRequestsAndBUY"
           },
           "blockHash": "0xc9d375441b8deb0ca5544234ccbe3f6a9f67361ec30128030401b0d16713b55a",
           "blockNumber": 6711969,

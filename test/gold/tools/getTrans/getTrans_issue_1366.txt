@@ -7,7 +7,6 @@ TEST[DATE|TIME] Format:  json
   "data": [
     {
       "articulatedTx": {
-        "inputs": null,
         "name": "deposit",
         "outputs": {
           "ret_0": "1"
@@ -64,7 +63,6 @@ TEST[DATE|TIME] Format:  json
             "value": "1000000000000000000"
           },
           "articulatedTrace": {
-            "inputs": null,
             "name": "deposit",
             "outputs": {
               "ret_0": "1"

@@ -120,6 +120,27 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 	model["date"] = date.Format("2006-01-02 15:04:05") + " UTC"
 	model["gasCost"] = s.SetGasCost(s.Receipt)
 
+	// TODO: Shouldn't this use the SimpleFunction model - the answer is yes?
+	var articulatedTx map[string]interface{}
+	isArticulated := extraOptions["articulate"] == true && s.ArticulatedTx != nil
+	if isArticulated {
+		articulatedTx = map[string]interface{}{
+			"name": s.ArticulatedTx.Name,
+		}
+		inputModels := ParametersToMap(s.ArticulatedTx.Inputs)
+		if inputModels != nil {
+			articulatedTx["inputs"] = inputModels
+		}
+		outputModels := ParametersToMap(s.ArticulatedTx.Outputs)
+		if outputModels != nil {
+			articulatedTx["outputs"] = outputModels
+		}
+		sm := s.ArticulatedTx.StateMutability
+		if sm != "" && sm != "nonpayable" && sm != "view" {
+			articulatedTx["stateMutability"] = sm
+		}
+	}
+
 	if format == "json" {
 		model["blockHash"] = s.BlockHash
 		model["nonce"] = s.Nonce
@@ -195,21 +216,9 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 			model["traces"] = traceModels
 		}
 
-		if extraOptions["articulate"] == true && s.ArticulatedTx != nil {
-			inputModels := ParametersToMap(s.ArticulatedTx.Inputs)
-			outputModels := ParametersToMap(s.ArticulatedTx.Outputs)
-			// TODO: Shouldn't this be a SimpleFunction?
-			articulatedTx := map[string]any{
-				"name":    s.ArticulatedTx.Name,
-				"inputs":  inputModels,
-				"outputs": outputModels,
-			}
-			if s.ArticulatedTx.StateMutability != "" && s.ArticulatedTx.StateMutability != "nonpayable" {
-				articulatedTx["stateMutability"] = s.ArticulatedTx.StateMutability
-			}
-			if format == "json" {
-				model["articulatedTx"] = articulatedTx
-			}
+		if isArticulated {
+			model["articulatedTx"] = articulatedTx
+
 		} else {
 			if s.Message != "" {
 				model["message"] = s.Message
@@ -234,21 +243,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		}
 		model["encoding"] = enc
 
-		if extraOptions["articulate"] == true && s.ArticulatedTx != nil {
-			inputModels := ParametersToMap(s.ArticulatedTx.Inputs)
-			outputModels := ParametersToMap(s.ArticulatedTx.Outputs)
-			// TODO: Shouldn't this be a SimpleFunction?
-			articulatedTx := map[string]any{
-				"name":    s.ArticulatedTx.Name,
-				"inputs":  inputModels,
-				"outputs": outputModels,
-			}
-			if s.ArticulatedTx.StateMutability != "" && s.ArticulatedTx.StateMutability != "nonpayable" {
-				articulatedTx["stateMutability"] = s.ArticulatedTx.StateMutability
-			}
-			if format == "json" {
-				model["articulatedTx"] = articulatedTx
-			}
+		if isArticulated {
 			model["compressedTx"] = MakeCompressed(articulatedTx)
 		} else if s.Message != "" {
 			model["encoding"] = ""

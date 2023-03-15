@@ -8,6 +8,8 @@ import (
 	"context"
 	"errors"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
@@ -16,6 +18,10 @@ import (
 )
 
 func (opts *TracesOptions) HandleShowTraces() error {
+	abiMap := make(abi.AbiInterfaceMap)
+	loadedMap := make(map[types.Address]bool)
+	chain := opts.Globals.Chain
+
 	ctx, cancel := context.WithCancel(context.Background())
 
 	// Note: Make sure to add an entry to enabledForCmd in src/apps/chifra/pkg/output/helpers.go
@@ -49,6 +55,21 @@ func (opts *TracesOptions) HandleShowTraces() error {
 					// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
 					trace := trace
 					trace.Timestamp = ts
+					var err error
+					if !loadedMap[trace.Action.To] {
+						if err = abi.LoadAbi(chain, trace.Action.To, abiMap); err != nil {
+							// continue processing even with an error
+							errorChan <- err
+							err = nil
+						}
+					}
+					if err == nil {
+						trace.ArticulatedTrace, err = articulate.ArticulateTrace(&trace, abiMap)
+						if err != nil {
+							// continue processing even with an error
+							errorChan <- err
+						}
+					}
 					modelChan <- &trace
 				}
 			}
@@ -67,5 +88,8 @@ func (opts *TracesOptions) HandleShowTraces() error {
 		OutputFn:   opts.Globals.OutputFn,
 		Append:     opts.Globals.Append,
 		JsonIndent: "  ",
+		Extra: map[string]interface{}{
+			"articulate": opts.Articulate,
+		},
 	})
 }

@@ -144,6 +144,7 @@ bool COptions::parseArguments(string_q& command) {
             manageFields("CTrace:" + cleanFmt(format));
             manageFields("CTraceAction:" + substitute(cleanFmt(format), "ACTION::", ""));
             manageFields("CTraceResult:" + substitute(cleanFmt(format), "RESULT::", ""));
+            manageFields("CTrace:compressedTrace", false);
             break;
         case TXT1:
         case CSV1:
@@ -154,6 +155,7 @@ bool COptions::parseArguments(string_q& command) {
             manageFields("CTraceResult:" + substitute(cleanFmt(format), "RESULT::", ""));
             break;
         case JSON1:
+            manageFields("CTrace:compressedTrace", false);
             format = "";
             break;
     }

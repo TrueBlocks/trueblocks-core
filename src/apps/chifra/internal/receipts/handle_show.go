@@ -74,6 +74,7 @@ func (opts *ReceiptsOptions) HandleShowReceipts() error {
 							if err = abi.LoadAbi(chain, log.Address, abiMap); err != nil {
 								// continue processing even with an error
 								errorChan <- err
+								err = nil
 							}
 						}
 						if err == nil {

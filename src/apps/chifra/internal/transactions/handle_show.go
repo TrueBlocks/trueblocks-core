@@ -44,6 +44,7 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 						if err = abi.LoadAbi(chain, tx.To, abiMap); err != nil {
 							// continue processing even with an error
 							errorChan <- err
+							err = nil
 						}
 					}
 
@@ -53,6 +54,7 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 							if err = abi.LoadAbi(chain, log.Address, abiMap); err != nil {
 								// continue processing even with an error
 								errorChan <- err
+								err = nil
 							}
 						}
 						if err == nil {
@@ -70,6 +72,7 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 							if err = abi.LoadAbi(chain, trace.Action.To, abiMap); err != nil {
 								// continue processing even with an error
 								errorChan <- err
+								err = nil
 							}
 						}
 						if err == nil {

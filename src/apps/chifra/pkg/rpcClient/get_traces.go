@@ -71,7 +71,6 @@ func GetTracesByTransactionId(chain string, bn, txid uint64) ([]types.SimpleTrac
 	if err != nil {
 		return ret, err
 	}
-
 	return GetTracesByTransactionHash(chain, txHash, nil)
 }
 
