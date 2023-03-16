@@ -31,7 +31,6 @@ TEST[DATE|TIME] Format:  json
           "_nextPrice": "0"
         },
         "name": "boostFor",
-        "outputs": null,
         "stateMutability": "payable"
       },
       "blockHash": "0x8540142d4431daf6e1279bfa46061805103520ead6291121ed29b560ddcac3de",

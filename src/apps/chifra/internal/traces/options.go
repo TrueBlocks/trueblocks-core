@@ -9,7 +9,6 @@ package tracesPkg
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -26,16 +25,11 @@ type TracesOptions struct {
 	Articulate     bool                     `json:"articulate,omitempty"`     // Articulate the retrieved data if ABIs can be found
 	Filter         string                   `json:"filter,omitempty"`         // Call the node's trace_filter routine with bang-separated filter
 	Count          bool                     `json:"count,omitempty"`          // Show the number of traces for the transaction only (fast)
-	SkipDdos       bool                     `json:"skipDdos,omitempty"`       // Skip over the 2016 ddos during export ('on' by default)
-	Max            uint64                   `json:"max,omitempty"`            // If --skip_ddos is on, this many traces defines what a ddos transaction is
 	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
 	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
 }
 
-var defaultTracesOptions = TracesOptions{
-	SkipDdos: true,
-	Max:      250,
-}
+var defaultTracesOptions = TracesOptions{}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *TracesOptions) testLog() {
@@ -43,8 +37,6 @@ func (opts *TracesOptions) testLog() {
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(len(opts.Filter) > 0, "Filter: ", opts.Filter)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
-	logger.TestLog(opts.SkipDdos, "SkipDdos: ", opts.SkipDdos)
-	logger.TestLog(opts.Max != 250, "Max: ", opts.Max)
 	opts.Globals.TestLog()
 }
 
@@ -54,44 +46,10 @@ func (opts *TracesOptions) String() string {
 	return string(b)
 }
 
-// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
-func (opts *TracesOptions) getEnvStr() []string {
-	envStr := []string{}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return envStr
-}
-
-// toCmdLine converts the option to a command line for calling out to the system.
-func (opts *TracesOptions) toCmdLine() string {
-	options := ""
-	if opts.Articulate {
-		options += " --articulate"
-	}
-	if len(opts.Filter) > 0 {
-		options += " --filter " + opts.Filter
-	}
-	if opts.Count {
-		options += " --count"
-	}
-	if opts.SkipDdos {
-		options += " --skip_ddos"
-	}
-	if opts.Max != 250 {
-		options += (" --max " + fmt.Sprintf("%d", opts.Max))
-	}
-	options += " " + strings.Join(opts.Transactions, " ")
-	// EXISTING_CODE
-	// EXISTING_CODE
-	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
-	return options
-}
-
 // tracesFinishParseApi finishes the parsing for server invocations. Returns a new TracesOptions.
 func tracesFinishParseApi(w http.ResponseWriter, r *http.Request) *TracesOptions {
 	copy := defaultTracesOptions
 	opts := &copy
-	opts.Max = 250
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "transactions":
@@ -105,10 +63,6 @@ func tracesFinishParseApi(w http.ResponseWriter, r *http.Request) *TracesOptions
 			opts.Filter = value[0]
 		case "count":
 			opts.Count = true
-		case "skipDdos":
-			opts.SkipDdos = true
-		case "max":
-			opts.Max = globals.ToUint64(value[0])
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "traces")

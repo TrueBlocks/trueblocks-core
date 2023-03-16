@@ -48,7 +48,7 @@ bool COptions::handle_options(void) {
     // For each tool...
     for (auto tool : toolMap) {
         if (tool.first == "apps/blockScrape" || tool.first == "tools/grabABI" || tool.first == "tools/getReceipts" ||
-            tool.first == "tools/getLogs") {
+            tool.first == "tools/getLogs" || tool.first == "tools/getTraces") {
             continue;
         }
         optionStream << "    // clang-format off" << endl;

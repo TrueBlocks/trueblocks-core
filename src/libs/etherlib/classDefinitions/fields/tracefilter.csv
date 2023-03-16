@@ -1,7 +1,0 @@
-name        ,type    ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,noaddfld ,doc ,disp ,example ,description
-fromBlock   ,blknum  ,           ,       ,      ,        ,          ,        ,         ,    ,     ,        ,
-toBlock     ,blknum  ,           ,       ,      ,        ,          ,        ,         ,    ,     ,        ,
-fromAddress ,address ,           ,       ,true  ,        ,          ,        ,         ,    ,     ,        ,
-toAddress   ,address ,           ,       ,true  ,        ,          ,        ,         ,    ,     ,        ,
-after       ,uint64  ,           ,       ,      ,        ,          ,        ,         ,    ,     ,        ,
-count       ,uint64  ,           ,       ,      ,        ,          ,        ,         ,    ,     ,        ,

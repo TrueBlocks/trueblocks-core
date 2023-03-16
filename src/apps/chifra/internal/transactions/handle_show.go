@@ -14,7 +14,7 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-func (opts *TransactionsOptions) HandleShow() (err error) {
+func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 	abiMap := make(abi.AbiInterfaceMap)
 	loadedMap := make(map[types.Address]bool)
 	chain := opts.Globals.Chain
@@ -44,6 +44,7 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 						if err = abi.LoadAbi(chain, tx.To, abiMap); err != nil {
 							// continue processing even with an error
 							errorChan <- err
+							err = nil
 						}
 					}
 
@@ -53,6 +54,7 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 							if err = abi.LoadAbi(chain, log.Address, abiMap); err != nil {
 								// continue processing even with an error
 								errorChan <- err
+								err = nil
 							}
 						}
 						if err == nil {
@@ -70,6 +72,7 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 							if err = abi.LoadAbi(chain, trace.Action.To, abiMap); err != nil {
 								// continue processing even with an error
 								errorChan <- err
+								err = nil
 							}
 						}
 						if err == nil {

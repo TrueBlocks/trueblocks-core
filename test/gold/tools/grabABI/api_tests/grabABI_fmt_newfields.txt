@@ -5,21 +5,18 @@ abis?addrs=0xffa93aacf49297d51e211817452839052fdfb961
       "encoding": "0x05d2035b",
       "name": "mintingFinished",
       "signature": "mintingFinished()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x05f9bb6b",
       "name": "transfersEnabledFlag",
       "signature": "transfersEnabledFlag()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x06fdde03",
       "name": "name",
       "signature": "name()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -38,7 +35,6 @@ abis?addrs=0xffa93aacf49297d51e211817452839052fdfb961
       "encoding": "0x18160ddd",
       "name": "totalSupply",
       "signature": "totalSupply()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -51,14 +47,12 @@ abis?addrs=0xffa93aacf49297d51e211817452839052fdfb961
       "encoding": "0x313ce567",
       "name": "decimals",
       "signature": "decimals()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x355274ea",
       "name": "cap",
       "signature": "cap()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -71,7 +65,6 @@ abis?addrs=0xffa93aacf49297d51e211817452839052fdfb961
       "encoding": "0x54fd4d50",
       "name": "version",
       "signature": "version()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -84,7 +77,6 @@ abis?addrs=0xffa93aacf49297d51e211817452839052fdfb961
       "encoding": "0x70a08231",
       "name": "balanceOf",
       "signature": "balanceOf(address)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -115,14 +107,12 @@ abis?addrs=0xffa93aacf49297d51e211817452839052fdfb961
       "encoding": "0x8da5cb5b",
       "name": "owner",
       "signature": "owner()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x95d89b41",
       "name": "symbol",
       "signature": "symbol()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -165,7 +155,6 @@ abis?addrs=0xffa93aacf49297d51e211817452839052fdfb961
       "encoding": "0xdd62ed3e",
       "name": "allowance",
       "signature": "allowance(address,address)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -184,7 +173,6 @@ abis?addrs=0xffa93aacf49297d51e211817452839052fdfb961
       "encoding": "0xf46eccc4",
       "name": "minters",
       "signature": "minters(address)",
-      "stateMutability": "view",
       "type": "function"
     }
   ],

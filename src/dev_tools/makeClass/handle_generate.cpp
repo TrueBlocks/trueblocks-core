@@ -46,7 +46,8 @@ extern const char* STR_DELETE_CMDS;
 extern const char* STR_DEFAULT_TAGS;
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, bool asJs) {
-    CClassDefinition classDef(toml);
+    CClassDefinition classDef;
+    classDef.ReadSettings(toml);
     classDef.short_fn = classDefIn.short_fn;
     classDef.input_path = classDefIn.input_path;
 

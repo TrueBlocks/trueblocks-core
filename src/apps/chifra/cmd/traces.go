@@ -58,12 +58,6 @@ func init() {
 	tracesCmd.Flags().BoolVarP(&tracesPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
 	tracesCmd.Flags().StringVarP(&tracesPkg.GetOptions().Filter, "filter", "f", "", "call the node's trace_filter routine with bang-separated filter")
 	tracesCmd.Flags().BoolVarP(&tracesPkg.GetOptions().Count, "count", "U", false, "show the number of traces for the transaction only (fast)")
-	tracesCmd.Flags().BoolVarP(&tracesPkg.GetOptions().SkipDdos, "skip_ddos", "s", false, "skip over the 2016 ddos during export ('on' by default) (hidden)")
-	tracesCmd.Flags().Uint64VarP(&tracesPkg.GetOptions().Max, "max", "m", 250, "if --skip_ddos is on, this many traces defines what a ddos transaction is (hidden)")
-	if os.Getenv("TEST_MODE") != "true" {
-		tracesCmd.Flags().MarkHidden("skip_ddos")
-		tracesCmd.Flags().MarkHidden("max")
-	}
 	globals.InitGlobals(tracesCmd, &tracesPkg.GetOptions().Globals)
 
 	tracesCmd.SetUsageTemplate(UsageWithNotes(notesTraces))

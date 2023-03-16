@@ -71,7 +71,6 @@ func GetTracesByTransactionId(chain string, bn, txid uint64) ([]types.SimpleTrac
 	if err != nil {
 		return ret, err
 	}
-
 	return GetTracesByTransactionHash(chain, txHash, nil)
 }
 
@@ -82,6 +81,76 @@ func GetTracesCountByTransactionHash(chain string, txHash string) (uint64, error
 		return 0, err
 	}
 	return uint64(len(traces)), nil
+}
+
+// GetTracesByFilter returns a slice of traces in a given transaction's hash
+func GetTracesByFilter(chain string, filter string) ([]types.SimpleTrace, error) {
+	method := "trace_filter"
+	var f types.SimpleTraceFilter
+	ff := f.ParseBangString(filter)
+	params := rpc.Params{ff}
+
+	var ret []types.SimpleTrace
+	if rawTraces, err := rpc.QuerySlice[types.RawTrace](chain, method, params); err != nil {
+		return ret, fmt.Errorf("trace filter %s returned an error: %w", filter, ethereum.NotFound)
+	} else {
+		for _, rawTrace := range rawTraces {
+			// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
+			rawTrace := rawTrace
+
+			value := big.NewInt(0)
+			value.SetString(rawTrace.Action.Value, 0)
+			balance := big.NewInt(0)
+			balance.SetString(rawTrace.Action.Balance, 0)
+
+			action := types.SimpleTraceAction{
+				CallType:       rawTrace.Action.CallType,
+				From:           types.HexToAddress(rawTrace.Action.From),
+				Gas:            mustParseUint(rawTrace.Action.Gas),
+				Input:          rawTrace.Action.Input,
+				To:             types.HexToAddress(rawTrace.Action.To),
+				Value:          *value,
+				Balance:        *balance,
+				Address:        types.HexToAddress(rawTrace.Action.Address),
+				RefundAddress:  types.HexToAddress(rawTrace.Action.RefundAddress),
+				SelfDestructed: types.HexToAddress(rawTrace.Action.SelfDestructed),
+				Init:           rawTrace.Action.Init,
+			}
+			action.SetRaw(&rawTrace.Action)
+
+			var result *types.SimpleTraceResult
+			if rawTrace.Result != nil {
+				result = &types.SimpleTraceResult{
+					GasUsed: mustParseUint(rawTrace.Result.GasUsed),
+					Output:  rawTrace.Result.Output,
+					Code:    rawTrace.Result.Code,
+				}
+				if len(rawTrace.Result.Address) > 0 {
+					result.Address = types.HexToAddress(rawTrace.Result.Address)
+				}
+				result.SetRaw(rawTrace.Result)
+			}
+
+			trace := types.SimpleTrace{
+				Error:            rawTrace.Error,
+				BlockHash:        common.HexToHash(rawTrace.BlockHash),
+				BlockNumber:      rawTrace.BlockNumber,
+				TransactionHash:  common.HexToHash(rawTrace.TransactionHash),
+				TransactionIndex: rawTrace.TransactionIndex,
+				TraceAddress:     rawTrace.TraceAddress,
+				Subtraces:        rawTrace.Subtraces,
+				Type:             rawTrace.Type,
+				Action:           &action,
+				Result:           result,
+			}
+			// if transaction != nil {
+			// 	trace.Timestamp = transaction.Timestamp
+			// }
+			trace.SetRaw(&rawTrace)
+			ret = append(ret, trace)
+		}
+	}
+	return ret, nil
 }
 
 // GetTracesByTransactionHash returns a slice of traces in a given transaction's hash

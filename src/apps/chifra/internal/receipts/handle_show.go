@@ -14,7 +14,7 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-func (opts *ReceiptsOptions) HandleShow() error {
+func (opts *ReceiptsOptions) HandleShowReceipts() error {
 
 	abiMap := make(abi.AbiInterfaceMap)
 	loadedMap := make(map[types.Address]bool)
@@ -74,6 +74,7 @@ func (opts *ReceiptsOptions) HandleShow() error {
 							if err = abi.LoadAbi(chain, log.Address, abiMap); err != nil {
 								// continue processing even with an error
 								errorChan <- err
+								err = nil
 							}
 						}
 						if err == nil {

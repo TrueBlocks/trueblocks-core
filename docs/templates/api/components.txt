@@ -837,6 +837,34 @@ components:
           format: uint64
           example: 30
           description: "the number of traces in the transaction"
+    traceFilter:
+      description: "used by chifra traces --filter option to query for traces"
+      type: object
+      properties:
+        fromBlock:
+          type: string
+          description: "The first block to include in the queried list of traces."
+        toBlock:
+          type: string
+          description: "The last block to include in the queried list of traces."
+        fromAddress:
+          type: array
+          items:
+            $ref: "#/components/schemas/address"
+          description: "If included, only traces `from` this address will be included."
+        toAddress:
+          type: array
+          items:
+            $ref: "#/components/schemas/address"
+          description: "If included, only traces `to` this address will be included."
+        after:
+          type: number
+          format: uint64
+          description: "Only traces after this many traces are included."
+        count:
+          type: number
+          format: uint64
+          description: "Only this many traces are included."
     ethState:
       description: "the on-chain state of a given address including ETH balance, nonce, and smart contract byte code if present"
       type: object

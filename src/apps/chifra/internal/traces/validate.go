@@ -5,7 +5,9 @@
 package tracesPkg
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -29,6 +31,14 @@ func (opts *TracesOptions) validateTraces() error {
 
 		if !validate.CanArticulate(opts.Articulate) {
 			return validate.Usage("The {0} option requires an EtherScan API key.", "--articulate")
+		}
+
+		if len(opts.Filter) > 0 {
+			// TODO: Check validity of the filter string
+			if opts.Globals.TestMode {
+				v := types.SimpleTraceFilter{}
+				logger.Info(v.ParseBangString(opts.Filter))
+			}
 		}
 	}
 

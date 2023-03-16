@@ -13,6 +13,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -50,20 +51,18 @@ func (opts *TracesOptions) TracesInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.IsPorted() {
-		if opts.Count {
-			return opts.HandleCounts(), true
-		} else {
-			return opts.HandleShowTraces(), true
-		}
-	}
-
-	if opts.Globals.IsApiMode() {
-		return nil, false
+	if !opts.IsPorted() {
+		logger.Fatal("Should never happen")
 	}
 
 	handled = true
-	err = opts.Globals.PassItOn("getTraces", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
+	if opts.Count {
+		err = opts.HandleCounts()
+	} else if len(opts.Filter) > 0 {
+		err = opts.HandleFilter()
+	} else {
+		err = opts.HandleShowTraces()
+	}
 	// EXISTING_CODE
 
 	return
@@ -80,7 +79,7 @@ func GetTracesOptions(args []string, g *globals.GlobalOptions) *TracesOptions {
 
 func (opts *TracesOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	ported = !opts.Articulate && len(opts.Filter) == 0
+	ported = true
 	// EXISTING_CODE
 	return
 }

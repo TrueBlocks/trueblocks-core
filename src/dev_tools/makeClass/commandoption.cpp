@@ -770,7 +770,7 @@ void CCommandOption::verifyHotkey(CStringArray& warnings, map<string, string>& h
 //---------------------------------------------------------------------------------------------------
 // go-port
 bool isFullyPorted(const string_q& a) {
-    CStringArray tools = {"when", "list", "monitors", "chunks", "init", "scrape", "abis", "receipts", "logs"};
+    CStringArray tools = {"when", "list", "monitors", "chunks", "init", "scrape", "abis", "receipts", "logs", "traces"};
     for (auto tool : tools) {
         if (contains(a, tool))
             return true;

@@ -56,7 +56,7 @@ func (opts *LogsOptions) LogsInternal() (err error, handled bool) {
 	}
 
 	handled = true
-	err = opts.HandleShow()
+	err = opts.HandleShowLogs()
 	// EXISTING_CODE
 
 	return

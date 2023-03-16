@@ -77,14 +77,24 @@ func (s *SimpleLog) Model(showHidden bool, format string, extraOptions map[strin
 	}
 
 	// EXISTING_CODE
+	isArticulated := extraOptions["articulate"] == true && s.ArticulatedLog != nil
+	var articulatedLog = make(map[string]any)
+	if isArticulated {
+		articulatedLog["name"] = s.ArticulatedLog.Name
+		inputModels := ParametersToMap(s.ArticulatedLog.Inputs)
+		if inputModels != nil {
+			articulatedLog["inputs"] = inputModels
+		}
+	}
+
 	if format == "json" {
 		if len(s.Data) > 0 && s.Data != "0x" {
 			model["data"] = s.Data
 		} else {
 			model["data"] = ""
 		}
-		if s.ArticulatedLog != nil {
-			model["articulatedLog"] = s.ArticulatedLog
+		if isArticulated {
+			model["articulatedLog"] = articulatedLog
 		}
 
 		model["topics"] = s.Topics
@@ -94,13 +104,7 @@ func (s *SimpleLog) Model(showHidden bool, format string, extraOptions map[strin
 			model["data"] = s.Data
 		}
 
-		if extraOptions["articulate"] == true && s.ArticulatedLog != nil {
-			inputModels := ParametersToMap(s.ArticulatedLog.Inputs)
-			// TODO: Shouldn't this be a SimpleFunction?
-			articulatedLog := map[string]any{
-				"name":   s.ArticulatedLog.Name,
-				"inputs": inputModels,
-			}
+		if isArticulated {
 			model["compressedLog"] = MakeCompressed(articulatedLog)
 			order = append(order, "compressedLog")
 		}

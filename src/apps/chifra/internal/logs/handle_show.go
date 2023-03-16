@@ -14,7 +14,7 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-func (opts *LogsOptions) HandleShow() (err error) {
+func (opts *LogsOptions) HandleShowLogs() (err error) {
 	abiMap := make(abi.AbiInterfaceMap)
 	loadedMap := make(map[types.Address]bool)
 	chain := opts.Globals.Chain
@@ -48,6 +48,7 @@ func (opts *LogsOptions) HandleShow() (err error) {
 							if err = abi.LoadAbi(chain, log.Address, abiMap); err != nil {
 								// continue processing even with an error
 								errorChan <- err
+								err = nil
 							}
 						}
 						if err == nil {
