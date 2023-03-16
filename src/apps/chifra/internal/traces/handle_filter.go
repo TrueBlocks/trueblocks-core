@@ -34,19 +34,21 @@ func (opts *TracesOptions) HandleFilter() error {
 			// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
 			trace := trace
 			trace.Timestamp = rpc.GetBlockTimestamp(opts.Globals.Chain, uint64(trace.BlockNumber))
-			var err error
-			if !loadedMap[trace.Action.To] {
-				if err = abi.LoadAbi(chain, trace.Action.To, abiMap); err != nil {
-					// continue processing even with an error
-					errorChan <- err
-					err = nil
+			if opts.Articulate {
+				var err error
+				if !loadedMap[trace.Action.To] {
+					if err = abi.LoadAbi(chain, trace.Action.To, abiMap); err != nil {
+						// continue processing even with an error
+						errorChan <- err
+						err = nil
+					}
 				}
-			}
-			if err == nil {
-				trace.ArticulatedTrace, err = articulate.ArticulateTrace(&trace, abiMap)
-				if err != nil {
-					// continue processing even with an error
-					errorChan <- err
+				if err == nil {
+					trace.ArticulatedTrace, err = articulate.ArticulateTrace(&trace, abiMap)
+					if err != nil {
+						// continue processing even with an error
+						errorChan <- err
+					}
 				}
 			}
 			modelChan <- &trace

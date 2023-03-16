@@ -53,8 +53,5 @@ traces?transactions=2222222.0%202332332.0
     "chainId": 1,
     "networkId": 1,
     "chain": "mainnet"
-  },
-  "errors": [
-    "abi: attempting to unmarshall an empty string while arguments are expected"
-  ]
+  }
 }
