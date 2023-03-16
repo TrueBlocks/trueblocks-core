@@ -342,6 +342,26 @@ TraceCounts consist of the following fields:
 | timestamp        | the timestamp of the block              | timestamp |
 | tracesCnt        | the number of traces in the transaction | uint64    |
 
+## TraceFilter
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+The `traceFilter` is an internal data structure used to query using the `chifra traces --filter` command. Its use may, in the future, be expanded for other use cases. Note that all fields are optional, but not all may be empty at the same time.
+
+The following commands produce and manage TraceFilters:
+
+- [chifra traces](/chifra/chaindata/#chifra-traces)
+
+TraceFilters consist of the following fields:
+
+| Field       | Description                                                    | Type          |
+| ----------- | -------------------------------------------------------------- | ------------- |
+| fromBlock   | The first block to include in the queried list of traces.      | string        |
+| toBlock     | The last block to include in the queried list of traces.       | string        |
+| fromAddress | If included, only traces `from` this address will be included. | Address       |
+| toAddress   | If included, only traces `to` this address will be included.   | Address       |
+| after       | Only traces after this many traces are included.               | uint64        |
+| count       | Only this many traces are included.                            | uint64        |
+
 ## Base types
 
 This documentation mentions the following basic data types.

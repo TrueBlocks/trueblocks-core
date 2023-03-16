@@ -1223,7 +1223,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">Traceaction</a>, <a href="/data-model/chaindata/#traceresult">Traceresult</a>, and/or <a href="/data-model/chaindata/#tracecount">Tracecount</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-traces">chifra traces</a> command line.
+                    description: Produces <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">Traceaction</a>, <a href="/data-model/chaindata/#traceresult">Traceresult</a>, <a href="/data-model/chaindata/#tracecount">Tracecount</a>, and/or <a href="/data-model/chaindata/#tracefilter">Tracefilter</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-traces">chifra traces</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -1231,6 +1231,7 @@ paths:
                         - $ref: "#/components/schemas/traceAction"
                         - $ref: "#/components/schemas/traceResult"
                         - $ref: "#/components/schemas/traceCount"
+                        - $ref: "#/components/schemas/traceFilter"
         "400":
           description: bad input parameter
   /when:
@@ -2777,6 +2778,34 @@ components:
           format: uint64
           example: 30
           description: "the number of traces in the transaction"
+    traceFilter:
+      description: "used by chifra traces --filter option to query for traces"
+      type: object
+      properties:
+        fromBlock:
+          type: string
+          description: "The first block to include in the queried list of traces."
+        toBlock:
+          type: string
+          description: "The last block to include in the queried list of traces."
+        fromAddress:
+          type: array
+          items:
+            $ref: "#/components/schemas/address"
+          description: "If included, only traces `from` this address will be included."
+        toAddress:
+          type: array
+          items:
+            $ref: "#/components/schemas/address"
+          description: "If included, only traces `to` this address will be included."
+        after:
+          type: number
+          format: uint64
+          description: "Only traces after this many traces are included."
+        count:
+          type: number
+          format: uint64
+          description: "Only this many traces are included."
     ethState:
       description: "the on-chain state of a given address including ETH balance, nonce, and smart contract byte code if present"
       type: object

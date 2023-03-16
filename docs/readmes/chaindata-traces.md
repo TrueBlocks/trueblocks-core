@@ -41,6 +41,7 @@ Data models produced by this tool:
 - [traceaction](/data-model/chaindata/#traceaction)
 - [traceresult](/data-model/chaindata/#traceresult)
 - [tracecount](/data-model/chaindata/#tracecount)
+- [tracefilter](/data-model/chaindata/#tracefilter)
 
 Links:
 
