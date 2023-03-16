@@ -59,7 +59,6 @@ void etherlib_init(QUITHANDLER qh) {
     CTrace::registerClass();
     CTraceAction::registerClass();
     CTraceResult::registerClass();
-    CTraceFilter::registerClass();
     CAbi::registerClass();
     CFunction::registerClass();
     CParameter::registerClass();

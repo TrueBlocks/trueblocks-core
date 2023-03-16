@@ -1,0 +1,9 @@
+[settings]
+class = CTraceFilter
+fields = tracefilter.csv
+output =
+doc_group = 02-Chain Data
+doc_descr = used by chifra traces --filter option to query for traces
+doc_route = 211-traceFilter
+doc_producer = traces
+# go_type = true
