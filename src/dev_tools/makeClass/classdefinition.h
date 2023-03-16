@@ -68,7 +68,7 @@ class CClassDefinition : public CBaseNode {
     string_q outputPath(const string_q& t) const {
         return substitute(substitute(input_path, "classDefinitions/", ""), ".txt", t);
     }
-    explicit CClassDefinition(const CToml& toml);
+    void ReadSettings(const CToml& toml);
     // EXISTING_CODE
     bool operator==(const CClassDefinition& it) const;
     bool operator!=(const CClassDefinition& it) const {

@@ -50,6 +50,7 @@ bool COptions::handle_datamodel(void) {
         string_q groupFn = getDocsPathTemplates("model-groups/" + groupLow + ".md");
         if (!fileExists(groupFn)) {
             LOG_WARN("Missing data model intro file: ", bYellow, getPathToTemplates(groupFn), cOff);
+            exit(0);
         }
 
         sort(model.fieldArray.begin(), model.fieldArray.end(), sortByDoc);
@@ -82,6 +83,7 @@ bool COptions::handle_datamodel(void) {
         string_q modelFn = getDocsPathTemplates("model-intros/" + model.doc_route + ".md");
         if (!fileExists(modelFn)) {
             LOG_WARN("Missing data model intro file: ", bYellow, getPathToTemplates(modelFn), cOff);
+            exit(0);
         } else {
             docStream << STR_MODEL_HEADER << asciiFileToString(modelFn) << get_producer_table(model, endpointArray)
                       << STR_MODEL_FOOTER << endl;
@@ -95,6 +97,7 @@ bool COptions::handle_datamodel(void) {
         fieldStream << markDownRow("Field", "Description", "Type", fieldWidths);
         fieldStream << markDownRow("-", "", "", fieldWidths);
 
+        size_t cnt = 0;
         ostringstream yamlPropStream;
         for (auto fld : model.fieldArray) {
             if (fld.doc) {
@@ -104,7 +107,12 @@ bool COptions::handle_datamodel(void) {
                 yamlPropStream << fld.Format("[          description: \"{DESCRIPTION}\"\n]");
                 fieldStream << markDownRow(fld.name, fld.description, type_2_Link(dataModels, fld), fieldWidths);
                 addToTypeMap(typeMaps, model.doc_group, fld.type);
+                cnt++;
             }
+        }
+        if (cnt == 0) {
+            cerr << bRed << "Data model for " << model.class_name << " has zero documented fields." << cOff << endl;
+            exit(0);
         }
 
         string_q head = model.Format(STR_YAML_MODELHEADER);

@@ -213,6 +213,7 @@ string_q toApiPath(const CCommandOption& cmd, const string_q& returnTypesIn, con
         "          schema:\n"
         "[{SCHEMA}]";
 
+    size_t fieldCnt = 0;
     bool hasDelete = false;
     ostringstream memberStream;
     for (auto member : *(CCommandOptionArray*)cmd.members) {
@@ -233,7 +234,12 @@ string_q toApiPath(const CCommandOption& cmd, const string_q& returnTypesIn, con
             if (memberStream.str().empty())
                 memberStream << "      parameters:\n";
             memberStream << yp << endl;
+            fieldCnt++;
         }
+    }
+    if (fieldCnt == 0) {
+        cerr << bRed << "The " << cmd.api_route << " data model has zero documented fields." << cOff << endl;
+        exit(0);
     }
 
     ostringstream example;

@@ -86,21 +86,9 @@ func GetTracesCountByTransactionHash(chain string, txHash string) (uint64, error
 // GetTracesByFilter returns a slice of traces in a given transaction's hash
 func GetTracesByFilter(chain string, filter string) ([]types.SimpleTrace, error) {
 	method := "trace_filter"
-	type Thing struct {
-		FromBlock string   `json:"fromBlock"`
-		ToBlock   string   `json:"toBlock"`
-		ToAddress []string `json:"toAddress"`
-		After     int      `json:"after"`
-		Count     int      `json:"count"`
-	}
-	v := Thing{
-		FromBlock: "0x2ed0c4",
-		ToBlock:   "0x2ed128",
-		ToAddress: []string{"0x8bbb73bcb5d553b5a556358d27625323fd781d37"},
-		After:     1000,
-		Count:     100,
-	}
-	params := rpc.Params{v}
+	var f types.SimpleTraceFilter
+	ff := f.ParseBangString(filter)
+	params := rpc.Params{ff}
 
 	var ret []types.SimpleTrace
 	if rawTraces, err := rpc.QuerySlice[types.RawTrace](chain, method, params); err != nil {

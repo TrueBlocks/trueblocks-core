@@ -667,7 +667,7 @@ void checkSorts(const string_q& className, const CStringArray& fields, const CSt
 }
 
 //------------------------------------------------------------------------------------------------
-CClassDefinition::CClassDefinition(const CToml& toml) {
+void CClassDefinition::ReadSettings(const CToml& toml) {
     //------------------------------------------------------------------------------------------------
     class_name = toml.getConfigStr("settings", "class", "");
     base_class = toml.getConfigStr("settings", "base_class", "CBaseNode");
@@ -740,7 +740,8 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
             fieldArray.push_back(tmp);
         }
     } else {
-        LOG_ERR("Cannot find file ", fn);
+        LOG_ERR("Cannot find fields file ReadSettings", fn);
+        exit(0);
     }
 }
 // EXISTING_CODE

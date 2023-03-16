@@ -166,16 +166,25 @@ string_q specialCase(const CMember& field, const string_q& name, const string_q&
     string ret;
     if (name % "CumulativeGasUsed" && !isRaw) {
         ret = "string";
+
     } else if (name % "Logs") {
         ret = isRaw ? "[]RawLog" : "[]SimpleLog";
+
     } else if (name % "Action") {
         ret = isRaw ? "RawTraceAction" : "*SimpleTraceAction";
+
     } else if (name % "Components" || name % "Inputs" || name % "Outputs") {
         ret = isRaw ? "string" : "[]SimpleParameter";
+
     } else if (name % "Result") {
         ret = isRaw ? "RawTraceResult" : "*SimpleTraceResult";
+
     } else if (name % "ArticulatedTrace") {
         ret = isRaw ? "" : "*SimpleFunction";
+
+    } else if ((name % "FromAddress" || name % "ToAddress") && type % "CAddressArray") {
+        ret = isRaw ? "string" : "[]string";
+
     } else {
         ret = (type == "CStringArray" ? "[]string" : isRaw ? "string" : type);
     }

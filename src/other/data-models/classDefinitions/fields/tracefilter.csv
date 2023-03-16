@@ -1,0 +1,7 @@
+name        ,type    ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,noaddfld ,doc ,disp ,example ,description
+fromBlock   ,string  ,           ,       ,      ,        ,true      ,        ,         ,  1 ,     ,        ,The first block to include in the queried list of traces.
+toBlock     ,string  ,           ,       ,      ,        ,true      ,        ,         ,  2 ,     ,        ,The last block to include in the queried list of traces.
+fromAddress ,address ,           ,       ,true  ,        ,true      ,        ,         ,  3 ,     ,        ,If included&#44; only traces `from` this address will be included.
+toAddress   ,address ,           ,       ,true  ,        ,true      ,        ,         ,  4 ,     ,        ,If included&#44; only traces `to` this address will be included.
+after       ,uint64  ,           ,       ,      ,        ,true      ,        ,         ,  5 ,     ,        ,Only traces after this many traces are included.
+count       ,uint64  ,           ,       ,      ,        ,true      ,        ,         ,  6 ,     ,        ,Only this many traces are included.
