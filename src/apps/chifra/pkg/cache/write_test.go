@@ -116,7 +116,6 @@ func TestWriteAbis(t *testing.T) {
 	}
 	// Make sure we've written everything
 	writer.Flush()
-	// result := writeBuf.Bytes()
 
 	// Now read it and compare
 	reader := bufio.NewReader(&writeBuf)
@@ -133,3 +132,30 @@ func TestWriteAbis(t *testing.T) {
 		t.Fatal("wrong encoding value", enc)
 	}
 }
+
+// func TestWriteName(t *testing.T) {
+// 	var writeBuf bytes.Buffer
+// 	writer := bufio.NewWriter(&writeBuf)
+// 	name := &types.SimpleName{
+// 		Address: types.HexToAddress("0x199d5ed7f45f4ee35960cf22eade2076e95b253f"),
+// 		Name:    "some name",
+// 		Tags:    "00-Test",
+// 	}
+
+// 	if err := WriteName(writer, name); err != nil {
+// 		t.Fatal(err)
+// 	}
+
+// 	// Make sure we've written everything
+// 	writer.Flush()
+
+// 	reader := bufio.NewReader(&writeBuf)
+// 	result, err := ReadName(reader)
+// 	if err != nil {
+// 		t.Fatal(err)
+// 	}
+
+// 	if !reflect.DeepEqual(result, name) {
+// 		t.Fatalf("value mismatch: %+v", result)
+// 	}
+// }

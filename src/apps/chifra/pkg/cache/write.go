@@ -693,3 +693,60 @@ func WriteAbis(writer *bufio.Writer, abis []types.SimpleFunction) (err error) {
 	err = writeArray(writer, abis, WriteFunction)
 	return
 }
+
+// func WriteName(writer *bufio.Writer, name *types.SimpleName) (err error) {
+// 	write := createWriteFn(writer)
+
+// 	err = writeString(writer, &name.Tags)
+// 	if err != nil {
+// 		return
+// 	}
+
+// 	err = writeAddress(writer, &name.Address)
+// 	if err != nil {
+// 		return
+// 	}
+
+// 	err = writeString(writer, &name.Name)
+// 	if err != nil {
+// 		return
+// 	}
+
+// 	if err = writeString(writer, &name.Symbol); err != nil {
+// 		return
+// 	}
+
+// 	if err = writeString(writer, &name.Source); err != nil {
+// 		return
+// 	}
+
+// 	if err = write(&name.Decimals); err != nil {
+// 		return
+// 	}
+
+// 	if err = writeString(writer, &name.Petname); err != nil {
+// 		return
+// 	}
+
+// 	if err = write(&name.IsCustom); err != nil {
+// 		return
+// 	}
+
+// 	if err = write(&name.IsPrefund); err != nil {
+// 		return
+// 	}
+
+// 	if err = write(&name.IsContract); err != nil {
+// 		return
+// 	}
+
+// 	if err = write(&name.IsErc20); err != nil {
+// 		return
+// 	}
+
+// 	if err = write(&name.IsErc721); err != nil {
+// 		return
+// 	}
+
+// 	return
+// }

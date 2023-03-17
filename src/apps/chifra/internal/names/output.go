@@ -10,9 +10,12 @@ package namesPkg
 
 // EXISTING_CODE
 import (
+	"errors"
 	"net/http"
+	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -26,6 +29,9 @@ func RunNames(cmd *cobra.Command, args []string) (err error) {
 	outputHelpers.SetEnabledForCmds("names", opts.IsPorted())
 	outputHelpers.SetWriterForCommand("names", &opts.Globals)
 	// EXISTING_CODE
+	if err = opts.loadCrudDataIfNeeded(nil); err != nil {
+		return
+	}
 	// EXISTING_CODE
 	err, _ = opts.NamesInternal()
 	return
@@ -37,6 +43,9 @@ func ServeNames(w http.ResponseWriter, r *http.Request) (err error, handled bool
 	outputHelpers.SetEnabledForCmds("names", opts.IsPorted())
 	outputHelpers.InitJsonWriterApi("names", w, &opts.Globals)
 	// EXISTING_CODE
+	if err = opts.loadCrudDataIfNeeded(r); err != nil {
+		return
+	}
 	// EXISTING_CODE
 	err, handled = opts.NamesInternal()
 	outputHelpers.CloseJsonWriterIfNeededApi("names", err, &opts.Globals)
@@ -88,11 +97,7 @@ func GetNamesOptions(args []string, g *globals.GlobalOptions) *NamesOptions {
 
 func (opts *NamesOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	if opts.anyCrud() || opts.Clean || len(opts.Autoname) > 0 {
-		ported = false
-	} else {
-		ported = true
-	}
+	ported = !(opts.Clean || len(opts.Autoname) > 0)
 	// EXISTING_CODE
 	return
 }
@@ -101,7 +106,7 @@ func (opts *NamesOptions) IsPorted() (ported bool) {
 func (opts *NamesOptions) getType() names.Parts {
 	var ret names.Parts
 
-	if opts.Custom || opts.All {
+	if opts.Custom || opts.All || opts.anyCrud() {
 		ret |= names.Custom
 	}
 
@@ -143,6 +148,159 @@ func (opts *NamesOptions) anyCrud() bool {
 		opts.Delete ||
 		opts.Undelete ||
 		opts.Remove
+}
+
+func (opts *NamesOptions) createOrUpdate() bool {
+	return opts.Create || opts.Update
+}
+
+type CrudData struct {
+	Address     crudDataField[base.Address]
+	Name        crudDataField[string]
+	Tag         crudDataField[string]
+	Source      crudDataField[string]
+	Symbol      crudDataField[string]
+	Decimals    crudDataField[string]
+	Description crudDataField[string]
+}
+type crudValue interface {
+	base.Address | string
+}
+type crudDataField[CV crudValue] struct {
+	Value   CV
+	Updated bool
+}
+
+func (opts *NamesOptions) getCrudDataHttp(r *http.Request) (data *CrudData, err error) {
+	if err = r.ParseForm(); err != nil {
+		return
+	}
+	if len(r.PostForm) == 0 {
+		err = errors.New("empty form")
+		return
+	}
+
+	data = &CrudData{
+		Address: crudDataField[base.Address]{
+			Value:   base.HexToAddress(r.PostForm.Get("address")),
+			Updated: r.PostForm.Has("address"),
+		},
+		Name: crudDataField[string]{
+			Value:   r.PostForm.Get("name"),
+			Updated: r.PostForm.Has("name"),
+		},
+		Tag: crudDataField[string]{
+			Value:   r.PostForm.Get("tag"),
+			Updated: r.PostForm.Has("tag"),
+		},
+		Source: crudDataField[string]{
+			Value:   r.PostForm.Get("source"),
+			Updated: r.PostForm.Has("source"),
+		},
+		Symbol: crudDataField[string]{
+			Value:   r.PostForm.Get("symbol"),
+			Updated: r.PostForm.Has("symbol"),
+		},
+		Decimals: crudDataField[string]{
+			Value:   r.PostForm.Get("decimals"),
+			Updated: r.PostForm.Has("decimals"),
+		},
+		Description: crudDataField[string]{
+			Value:   r.PostForm.Get("description"),
+			Updated: r.PostForm.Has("description"),
+		},
+	}
+	if err = opts.validateCrudData(data); err != nil {
+		return nil, err
+	}
+
+	return
+}
+
+func (opts *NamesOptions) getCrudDataEnv() (data *CrudData, err error) {
+	data = &CrudData{}
+	address, addressUpdated := os.LookupEnv("TB_NAME_ADDRESS")
+	data.Address = crudDataField[base.Address]{
+		Value:   base.HexToAddress(address),
+		Updated: addressUpdated,
+	}
+	name, nameUpdated := os.LookupEnv("TB_NAME_NAME")
+	data.Name = crudDataField[string]{
+		Value:   name,
+		Updated: nameUpdated,
+	}
+	tag, tagUpdated := os.LookupEnv("TB_NAME_TAG")
+	data.Tag = crudDataField[string]{
+		Value:   tag,
+		Updated: tagUpdated,
+	}
+	source, sourceUpdated := os.LookupEnv("TB_NAME_SOURCE")
+	data.Source = crudDataField[string]{
+		Value:   source,
+		Updated: sourceUpdated,
+	}
+	symbol, symbolUpdated := os.LookupEnv("TB_NAME_SYMBOL")
+	data.Symbol = crudDataField[string]{
+		Value:   symbol,
+		Updated: symbolUpdated,
+	}
+	decimals, decimalsUpdated := os.LookupEnv("TB_NAME_DECIMALS")
+	data.Decimals = crudDataField[string]{
+		Value:   decimals,
+		Updated: decimalsUpdated,
+	}
+	description, descriptionUpdated := os.LookupEnv("TB_NAME_DESCR")
+	data.Description = crudDataField[string]{
+		Value:   description,
+		Updated: descriptionUpdated,
+	}
+
+	if err = opts.validateCrudData(data); err != nil {
+		return nil, err
+	}
+
+	return
+}
+
+func (opts *NamesOptions) validateCrudData(data *CrudData) error {
+	if data.Address.Value.IsZero() {
+		return errors.New("address is required")
+	}
+	// TODO: make sure Autoname is something that we still want to support
+	if data.Name.Value == "" {
+		return errors.New("address is required")
+	}
+
+	// TODO: we should validate symbol and decimals if address is a token
+	return nil
+}
+
+func (opts *NamesOptions) loadCrudDataIfNeeded(request *http.Request) (err error) {
+	// These three read address from command arguments
+	if opts.Delete || opts.Undelete || opts.Remove {
+		if len(opts.Terms) != 1 {
+			return errors.New("exactly 1 address required")
+		}
+		opts.crudData = &CrudData{
+			Address: crudDataField[base.Address]{
+				Value: base.HexToAddress(opts.Terms[0]),
+			},
+		}
+		return
+	}
+	if !opts.createOrUpdate() {
+		return
+	}
+
+	var data *CrudData
+	if request == nil {
+		data, err = opts.getCrudDataEnv()
+	} else {
+		data, err = opts.getCrudDataHttp(request)
+	}
+
+	opts.crudData = data
+	return
 }
 
 // EXISTING_CODE

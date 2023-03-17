@@ -846,3 +846,61 @@ func ReadAbis(reader *bufio.Reader) (result []types.SimpleFunction, err error) {
 
 	return
 }
+
+// func ReadName(reader *bufio.Reader) (name *types.SimpleName, err error) {
+// 	name = &types.SimpleName{}
+// 	read := createReadFn(reader)
+
+// 	err = readString(reader, &name.Tags)
+// 	if err != nil {
+// 		return
+// 	}
+
+// 	err = readAddress(reader, &name.Address)
+// 	if err != nil {
+// 		return
+// 	}
+
+// 	err = readString(reader, &name.Name)
+// 	if err != nil {
+// 		return
+// 	}
+
+// 	if err = readString(reader, &name.Symbol); err != nil {
+// 		return
+// 	}
+
+// 	if err = readString(reader, &name.Source); err != nil {
+// 		return
+// 	}
+
+// 	if err = read(&name.Decimals); err != nil {
+// 		return
+// 	}
+
+// 	if err = readString(reader, &name.Petname); err != nil {
+// 		return
+// 	}
+
+// 	if err = read(&name.IsCustom); err != nil {
+// 		return
+// 	}
+
+// 	if err = read(&name.IsPrefund); err != nil {
+// 		return
+// 	}
+
+// 	if err = read(&name.IsContract); err != nil {
+// 		return
+// 	}
+
+// 	if err = read(&name.IsErc20); err != nil {
+// 		return
+// 	}
+
+// 	if err = read(&name.IsErc721); err != nil {
+// 		return
+// 	}
+
+// 	return
+// }
