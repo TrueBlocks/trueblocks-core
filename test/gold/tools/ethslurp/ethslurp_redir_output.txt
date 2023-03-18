@@ -10,8 +10,3 @@ hash	blockHash	blockNumber	transactionIndex	nonce	timestamp	from	to	value	gas	ga
 0x290b0b5f0a0504df3069f5c65b34386c095af19234f24e9aa222a3f7a7d1823b	0xb16325508885d09880efb6111b5e450f934e77155db250e47e4bc0bfb937b8cf	3730549	17	1	1495165176	0x9c6df936c884811b9a6b49f0dd0a62919a6581d4	0x1324e7b922b30b49ab8ea81086341cc41c249346	157900169159979996854272	21001	20000000000	0	0	0x	0	0	21000	2017-05-19 03:39:36 UTC	157900.169159979996854272
 ----
 Results in ./output_test_file
-{
-    "urls": [
-        "https://api.etherscan.io/api?module=account&sort=asc&action=txlist&address=0x1324e7b922b30b49ab8ea81086341cc41c249346&page=1&offset=5000"
-    ]
-}

@@ -1,8 +1,8 @@
-slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=int&blocks=0-7000000
+slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=int&blocks=0-7000000&fmt=json
 {
   "data": [
     {
-      "blockHash": "0x0",
+      "blockHash": "0x4e1df8783842411230b99f99f532fb5bf7722ed3982a155278d8cd9ecf4508b8",
       "blockNumber": 3790483,
       "date": "2017-05-30 03:00:06 UTC",
       "ether": "184761.000000000000000000",
@@ -18,7 +18,7 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=int&blocks=0-700000
       "value": "184761000000000000000000"
     },
     {
-      "blockHash": "0x0",
+      "blockHash": "0x0836fbac338d703c4a34de8d4dd47e3b8e5a3b015a5b337e36a0b87322572658",
       "blockNumber": 3835659,
       "date": "2017-06-07 16:58:15 UTC",
       "ether": "184460.000000000000000000",
@@ -34,7 +34,7 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=int&blocks=0-700000
       "value": "184460000000000000000000"
     },
     {
-      "blockHash": "0x0",
+      "blockHash": "0xe4f0debd362694ca2bb90e9e0c60afc9bfbf3192a5fdb485cf94f630fcda7165",
       "blockNumber": 3912453,
       "date": "2017-06-22 09:30:57 UTC",
       "ether": "184392.780000000000000000",

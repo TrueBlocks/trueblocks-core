@@ -1,20 +1,15 @@
-slurp?addrs=0xc8ebccc5f5689fa8659d83713341e5ad19349448&types=uncles&blocks=1-10
+slurp?addrs=0xc8ebccc5f5689fa8659d83713341e5ad19349448&types=uncles&blocks=1-10&fmt=json
 {
   "data": [
     {
-      "blockHash": "0x0",
+      "blockHash": "0x88e96d4537bea4d9c05d12549907b32561d3bf31f45aae734cdc119f13406cb6",
       "blockNumber": 1,
       "date": "2015-07-30 15:26:58 UTC",
       "ether": "3.750000000000000000",
       "from": "0xUncleReward",
-      "gas": "0",
-      "gasPrice": 0,
-      "gasUsed": 0,
-      "hash": "0x0",
-      "input": "",
-      "timestamp": "1438270018",
-      "to": "0x0",
-      "transactionIndex": "99998",
+      "timestamp": 1438270018,
+      "to": "0xc8ebccc5f5689fa8659d83713341e5ad19349448",
+      "transactionIndex": 99998,
       "value": "3750000000000000000"
     }
   ],

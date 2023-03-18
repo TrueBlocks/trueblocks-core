@@ -2,7 +2,7 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=all&blocks=0-379342
 {
   "data": [
     {
-      "blockHash": "0x0",
+      "blockHash": "0x4e1df8783842411230b99f99f532fb5bf7722ed3982a155278d8cd9ecf4508b8",
       "blockNumber": 3790483,
       "date": "2017-05-30 03:00:06 UTC",
       "ether": "184761.000000000000000000",

@@ -1,6 +1,0 @@
-chifra slurp  0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5
-TEST[DATE|TIME] Addrs:  [0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5]
-TEST[DATE|TIME] Format:  txt
-INFO[DATE|TIME] Processing [0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5] --types: [txlist] []
-INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&action=txlistinternal&address=0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5&page=1&offset=5000
-TEST[DATE|TIME] Not found address

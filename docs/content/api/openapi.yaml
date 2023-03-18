@@ -1890,6 +1890,7 @@ paths:
                 - int
                 - token
                 - nfts
+                - "1155"
                 - miner
                 - uncles
                 - all

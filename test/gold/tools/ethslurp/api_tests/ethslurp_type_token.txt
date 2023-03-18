@@ -1,4 +1,4 @@
-slurp?addrs=0x9519afbc60719a83c470ceec41e32d3e4b8b262e&types=token&blocks=0-1500000
+slurp?addrs=0x9519afbc60719a83c470ceec41e32d3e4b8b262e&types=token&blocks=0-1500000&fmt=json
 {
   "data": [
     {
@@ -7,15 +7,14 @@ slurp?addrs=0x9519afbc60719a83c470ceec41e32d3e4b8b262e&types=token&blocks=0-1500
       "date": "2016-04-30 22:33:28 UTC",
       "ether": "0.000000000000000001",
       "from": "0xfd23407a31f54413e32043adb7b1ee61a6e04027",
-      "gas": "136032",
-      "gasPrice": "20000000000",
-      "gasUsed": "36032",
-      "hasToken": "1",
+      "gas": 136032,
+      "gasPrice": 20000000000,
+      "gasUsed": 36032,
+      "hasToken": 1,
       "hash": "0x13646e04bdc9bbb743963e8e660c58ec1b0f3b457428bcceed786317842d32d4",
-      "input": "deprecated",
-      "timestamp": "1462055608",
+      "timestamp": 1462055608,
       "to": "0x9519afbc60719a83c470ceec41e32d3e4b8b262e",
-      "transactionIndex": "2",
+      "transactionIndex": 2,
       "value": "1"
     }
   ],
