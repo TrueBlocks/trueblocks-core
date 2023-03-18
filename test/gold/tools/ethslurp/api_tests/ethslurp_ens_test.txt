@@ -1,4 +1,4 @@
-slurp?addrs=wolfofethereum.eth&types=int&blocks=12524380-13675400
+slurp?addrs=wolfofethereum.eth&types=int&blocks=12524380-13675400&fmt=json
 [
   {
     "hash": "0x73dfde0d7e37278eb238f30f9a5b82f565b6b773a21c52c2f2d04375f092adb0",
