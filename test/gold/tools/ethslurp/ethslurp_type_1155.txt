@@ -1,7 +1,9 @@
-chifra slurp  --pank
-Error: 
-  unknown flag: --pank
-
+chifra slurp  0x00a3819199113fc6a6e6ba1298afde7377e2009b --types 1155   0-8500000 --fmt json
+TEST[DATE|TIME] Addrs:  [0x00a3819199113fc6a6e6ba1298afde7377e2009b]
+TEST[DATE|TIME] Blocks:  [0-8500000]
+TEST[DATE|TIME] Types:  [1155]
+TEST[DATE|TIME] Format:  json
+Error: The --types option (1155) must be one of [ ext | int | token | nfts | miner | uncles | all ]
 Usage:
   chifra slurp [flags] <address> [address...] [block...]
 

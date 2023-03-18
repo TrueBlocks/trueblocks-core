@@ -1,0 +1,6 @@
+slurp?addrs=0x00a3819199113fc6a6e6ba1298afde7377e2009b&types=1155&blocks=0-8500000&fmt=json
+{
+  "errors": [
+    "The --types option (1155) must be one of [ ext | int | token | nfts | miner | uncles | all ]"
+  ]
+}

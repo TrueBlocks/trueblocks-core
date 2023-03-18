@@ -1,6 +1,6 @@
-chifra slurp  --pink
+chifra slurp  --junk
 Error: 
-  unknown flag: --pink
+  unknown flag: --junk
 
 Usage:
   chifra slurp [flags] <address> [address...] [block...]

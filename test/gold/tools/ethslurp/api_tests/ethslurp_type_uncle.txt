@@ -1,27 +1,15 @@
-slurp?addrs=0xc8ebccc5f5689fa8659d83713341e5ad19349448&types=uncles&blocks=1-10
+slurp?addrs=0xc8ebccc5f5689fa8659d83713341e5ad19349448&types=uncles&blocks=1-10&fmt=json
 [
   {
-    "hash": "0x0",
-    "blockHash": "0x0",
+    "blockHash": "0x88e96d4537bea4d9c05d12549907b32561d3bf31f45aae734cdc119f13406cb6",
     "blockNumber": "1",
-    "transactionIndex": "99998",
+    "date": "2015-07-30 15:26:58 UTC",
+    "ether": "3.750000000000000000",
+    "from": "0xUncleReward",
     "nonce": "0",
     "timestamp": "1438270018",
-    "from": "0xUncleReward",
-    "to": "0x0",
-    "value": "3750000000000000000",
-    "gas": "0",
-    "gasPrice": "0",
-    "maxFeePerGas": "0",
-    "maxPriorityFeePerGas": "0",
-    "input": "",
-    "isError": "0",
-    "hasToken": "0",
-    "gasUsed": "0",
-    "date": "2015-07-30 15:26:58 UTC",
-    "datesh": "2015-07-30",
-    "time": "5:26:58 UTC",
-    "age": "100",
-    "ether": "3.750000000000000000"
+    "to": "0xc8ebccc5f5689fa8659d83713341e5ad19349448",
+    "transactionIndex": "99998",
+    "value": "3750000000000000000"
   }
 ]

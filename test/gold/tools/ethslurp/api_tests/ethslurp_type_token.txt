@@ -1,27 +1,21 @@
-slurp?addrs=0x9519afbc60719a83c470ceec41e32d3e4b8b262e&types=token&blocks=0-1500000
+slurp?addrs=0x9519afbc60719a83c470ceec41e32d3e4b8b262e&types=token&blocks=0-1500000&fmt=json
 [
   {
-    "hash": "0x13646e04bdc9bbb743963e8e660c58ec1b0f3b457428bcceed786317842d32d4",
     "blockHash": "0xb4894c6e25d16410b21ff2c733d2a7bc07b4c9f34b00c87ec3909c2f11c919b2",
     "blockNumber": "1434022",
-    "transactionIndex": "2",
-    "nonce": "5",
-    "timestamp": "1462055608",
+    "date": "2016-04-30 22:33:28 UTC",
+    "ether": "0.000000000000000001",
     "from": "0xfd23407a31f54413e32043adb7b1ee61a6e04027",
-    "to": "0x9519afbc60719a83c470ceec41e32d3e4b8b262e",
-    "value": "1",
     "gas": "136032",
     "gasPrice": "20000000000",
-    "maxFeePerGas": "0",
-    "maxPriorityFeePerGas": "0",
-    "input": "deprecated",
-    "isError": "0",
-    "hasToken": "1",
     "gasUsed": "36032",
-    "date": "2016-04-30 22:33:28 UTC",
-    "datesh": "2016-04-30",
-    "time": "2:33:28 UTC",
-    "age": "100",
-    "ether": "0.000000000000000001"
+    "hasToken": "1",
+    "hash": "0x13646e04bdc9bbb743963e8e660c58ec1b0f3b457428bcceed786317842d32d4",
+    "input": "deprecated",
+    "nonce": "5",
+    "timestamp": "1462055608",
+    "to": "0x9519afbc60719a83c470ceec41e32d3e4b8b262e",
+    "transactionIndex": "2",
+    "value": "1"
   }
 ]
