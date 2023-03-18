@@ -71,29 +71,29 @@ bool COptions::parseArguments(string_q& command) {
     // if (typesList.empty())
     //     typesList.push_back("ext");
 
-    if (expContext().exportFmt == TXT1)
-        exportFormat = "txt";
-    else if (expContext().exportFmt == CSV1)
-        exportFormat = "csv";
-    else
-        exportFormat = "json";
+    // if (expContext().exportFmt == TXT1)
+    //     exportFormat = "txt";
+    // else if (expContext().exportFmt == CSV1)
+    //     exportFormat = "csv";
+    // else
+    //     exportFormat = "json";
 
     // if (addrs.empty())
     //     return usage("You must supply an Ethereum account or contract address. ");
 
-    if (!establishFolder(cacheFolder_slurps))
-        return usage("Unable to create data folders at " + cacheFolder_slurps);
+    // if (!establishFolder(cacheFolder_slurps))
+    //     return usage("Unable to create data folders at " + cacheFolder_slurps);
 
-    if (blocks.start == 0 && blocks.stop == 0)
-        blocks.stop = INT_MAX;
+    // if (blocks.start == 0 && blocks.stop == 0)
+    //     blocks.stop = INT_MAX;
 
-    // Dumps an error message if the fmt_X_file format string is not found.
-    if (!getFormatString("file", false, formatString)) {
-        ostringstream os;
-        for (auto err : errors)
-            os << err << endl;
-        return usage(os.str());
-    }
+    // // Dumps an error message if the fmt_X_file format string is not found.
+    // if (!getFormatString("file", false, formatString)) {
+    //     ostringstream os;
+    //     for (auto err : errors)
+    //         os << err << endl;
+    //     return usage(os.str());
+    // }
 
     return true;
 }
@@ -186,9 +186,9 @@ bool COptions::getFormatString(const string_q& which, bool ignoreBlank, string_q
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::buildDisplayStrings(void) {
-    // Set the default if it's not set
-    if (exportFormat.empty())
-        exportFormat = "json";
+    // // Set the default if it's not set
+    // if (exportFormat.empty())
+    //     exportFormat = "json";
 
     // if (appearances) {
     //     if (exportFormat == "txt" || exportFormat == "csv") {
@@ -206,59 +206,60 @@ bool COptions::buildDisplayStrings(void) {
     //     return true;
     // }
 
-    // This is what we're really after...
-    string_q fmtForRecords;
-    if (!getFormatString("record", false, fmtForRecords))
-        return false;
+    // // This is what we're really after...
+    // string_q fmtForRecords;
+    // if (!getFormatString("record", false, fmtForRecords))
+    //     return false;
 
-    ASSERT(!fmtForRecords.empty());
+    // ASSERT(!fmtForRecords.empty());
 
-    // ...we may need this to build it.
-    string_q fmtForFields;
-    if (!getFormatString("field", !contains(fmtForRecords, "{FIELDS}"), fmtForFields))
-        return false;
+    // // ...we may need this to build it.
+    // string_q fmtForFields;
+    // if (!getFormatString("field", !contains(fmtForRecords, "{FIELDS}"), fmtForFields))
+    //     return false;
 
-    ASSERT(!fmtForFields.empty());
-    string_q defList = getGlobalConfig("ethslurp")->getConfigStr("display", "fmt_fieldList", "");
-    string_q fieldList =
-        getGlobalConfig("ethslurp")->getConfigStr("display", "fmt_" + exportFormat + "_fieldList", defList);
-    if (fieldList.empty())
-        GETRUNTIME_CLASS(CTransaction)->forEveryField(buildFieldList, &fieldList);
+    // ASSERT(!fmtForFields.empty());
+    // string_q defList = getGlobalConfig("ethslurp")->getConfigStr("display", "fmt_fieldList", "");
+    // string_q fieldList =
+    //     getGlobalConfig("ethslurp")->getConfigStr("display", "fmt_" + exportFormat + "_fieldList", defList);
+    // if (fieldList.empty())
+    //     GETRUNTIME_CLASS(CTransaction)->forEveryField(buildFieldList, &fieldList);
 
-    string_q origList = fieldList;
+    // string_q origList = fieldList;
 
-    displayString = "";
-    header = "";
-    while (!fieldList.empty()) {
-        string_q fieldName = nextTokenClear(fieldList, '|');
-        bool force = contains(fieldName, "*");
-        replace(fieldName, "*", "");
+    // displayString = "";
+    // header = "";
+    // while (!fieldList.empty()) {
+    //     string_q fieldName = nextTokenClear(fieldList, '|');
+    //     bool force = contains(fieldName, "*");
+    //     replace(fieldName, "*", "");
 
-        const CFieldData* field = GETRUNTIME_CLASS(CTransaction)->findField(fieldName);
-        if (!field) {
-            cerr << "Field '" << fieldName << "' not found in fieldList '" << origList << "'.";
-            quickQuitHandler(EXIT_FAILURE);
-        }
-        if (field->isHidden() && force)
-            ((CFieldData*)field)->setHidden(false);  // NOLINT
-        if (!field->isHidden()) {
-            string_q resolved = fieldName;
-            if (exportFormat != "json")
-                resolved = getGlobalConfig("ethslurp")->getConfigStr("field_str", fieldName, fieldName);
-            displayString += substitute(substitute(fmtForFields, "{FIELD}", "{" + toUpper(resolved) + "}"), "{p:FIELD}",
-                                        "{p:" + resolved + "}");
-            header +=
-                substitute(substitute(substitute(substitute(fmtForFields, "{FIELD}", resolved), "[", ""), "]", ""),
-                           "<td ", "<th ");
-        }
-    }
-    displayString = trimWhitespace(displayString);
-    header = trimWhitespace(header);
+    //     const CFieldData* field = GETRUNTIME_CLASS(CTransaction)->findField(fieldName);
+    //     if (!field) {
+    //         cerr << "Field '" << fieldName << "' not found in fieldList '" << origList << "'.";
+    //         quickQuitHandler(EXIT_FAILURE);
+    //     }
+    //     if (field->isHidden() && force)
+    //         ((CFieldData*)field)->setHidden(false);  // NOLINT
+    //     if (!field->isHidden()) {
+    //         string_q resolved = fieldName;
+    //         if (exportFormat != "json")
+    //             resolved = getGlobalConfig("ethslurp")->getConfigStr("field_str", fieldName, fieldName);
+    //         displayString += substitute(substitute(fmtForFields, "{FIELD}", "{" + toUpper(resolved) + "}"),
+    //         "{p:FIELD}",
+    //                                     "{p:" + resolved + "}");
+    //         header +=
+    //             substitute(substitute(substitute(substitute(fmtForFields, "{FIELD}", resolved), "[", ""), "]", ""),
+    //                        "<td ", "<th ");
+    //     }
+    // }
+    // displayString = trimWhitespace(displayString);
+    // header = trimWhitespace(header);
 
-    displayString = trim(substitute(fmtForRecords, "[{FIELDS}]", displayString), '\t');
-    if (exportFormat == "json") {
-        // One little hack to make raw json more readable
-        replaceReverse(displayString, "}]\",", "}]\"\n");
-    }
+    // displayString = trim(substitute(fmtForRecords, "[{FIELDS}]", displayString), '\t');
+    // if (exportFormat == "json") {
+    //     // One little hack to make raw json more readable
+    //     replaceReverse(displayString, "}]\",", "}]\"\n");
+    // }
     return true;
 }

@@ -115,10 +115,6 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 		IsError:  receipt.IsError,
 		HasToken: hasToken,
 		Receipt:  &receipt,
-		// ExtraValue1          Wei
-		// ExtraValue2          Wei
-		// Cachebits            uint8           `json:"cachebits"`
-		// Reserved2            uint8           `json:"reserved2"`
 		// Traces               []SimpleTrace   `json:"traces"`
 		// ArticulatedTx        *SimpleFunction `json:"articulatedTx"`
 	}

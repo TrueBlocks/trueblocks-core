@@ -106,7 +106,8 @@ bool Slurp(CCachedAccount& theAccount, COptions& options) {
     //             uint64_t nRecords = countOf(response.result, '}');
     //             LOG4("Downloaded ", nRecords, " records from EtherScan.\r");
 
-    //             // pre allocate the array (probably wrong input here--reserve takes max needed size, not addition size
+    //             // pre allocate the array (probably wrong input here--reserve takes max needed size, not addition
+    //             size
     //             // needed)
     //             theAccount.transactions.reserve(theAccount.transactions.size() + nRecords);
 
@@ -158,7 +159,8 @@ bool Slurp(CCachedAccount& theAccount, COptions& options) {
     //     LOG4("Processed transaction of type ", type, ". nTrans: ", theAccount.transactions.size());
     // }
     // cerr << string_q(120, ' ') << "\r";
-    return (theAccount.transactions.size() > 0);
+    // return (theAccount.transactions.size() > 0);
+    return false;
 }
 
 //---------------------------------------------------------------------------
