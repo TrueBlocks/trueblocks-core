@@ -38,7 +38,6 @@ transactions?transactions=0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5
       "gasUsed": 21000,
       "hash": "0x5352c80aa2073e21ce6c4aa5488c38455f3519955ece7dca5af3e326797bcc63",
       "input": "0x",
-      "nonce": 0,
       "receipt": {
         "contractAddress": "0x0",
         "effectiveGasPrice": 50000000000,
