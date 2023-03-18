@@ -59,12 +59,6 @@ func (opts *SlurpOptions) getEnvStr() []string {
 // toCmdLine converts the option to a command line for calling out to the system.
 func (opts *SlurpOptions) toCmdLine() string {
 	options := ""
-	for _, types := range opts.Types {
-		options += " --types " + types
-	}
-	if opts.Appearances {
-		options += " --appearances"
-	}
 	options += " " + strings.Join(opts.Addrs, " ")
 	options += " " + strings.Join(opts.Blocks, " ")
 	// EXISTING_CODE

@@ -65,99 +65,99 @@ int main(int argc, const char* argv[]) {
 
 //--------------------------------------------------------------------------------
 bool Slurp(CCachedAccount& theAccount, COptions& options) {
-    theAccount.transactions.clear();
-    theAccount = CCachedAccount();
-    theAccount.addr = options.addrs[0];
+    // theAccount.transactions.clear();
+    // theAccount = CCachedAccount();
+    // theAccount.addr = options.addrs[0];
 
-    bool first = true;
-    for (auto type : options.typesList) {
-        string_q cacheFilename =
-            cacheFolder_slurps + theAccount.addr + (type == "ext" || type.empty() ? "" : "." + type) + ".bin";
-        if (fileExists(cacheFilename)) {
-            CArchive inArchive(READING_ARCHIVE);
-            if (inArchive.Lock(cacheFilename, modeReadOnly, LOCK_NOWAIT)) {
-                theAccount.Serialize(inArchive);
-                inArchive.Close();
-            } else {
-                options.errors.push_back("Could not open file: '" + cacheFilename + "'");
-            }
-        }
+    // bool first = true;
+    // for (auto type : options.typesList) {
+    //     string_q cacheFilename =
+    //         cacheFolder_slurps + theAccount.addr + (type == "ext" || type.empty() ? "" : "." + type) + ".bin";
+    //     if (fileExists(cacheFilename)) {
+    //         CArchive inArchive(READING_ARCHIVE);
+    //         if (inArchive.Lock(cacheFilename, modeReadOnly, LOCK_NOWAIT)) {
+    //             theAccount.Serialize(inArchive);
+    //             inArchive.Close();
+    //         } else {
+    //             options.errors.push_back("Could not open file: '" + cacheFilename + "'");
+    //         }
+    //     }
 
-        // Keep reading until we get less than a full page
-        bool done = false;
-        while (!done) {
-            string_q url = string_q("https://api.etherscan.io/api?module=account&sort=asc") +
-                           "&action=" + toEtherscan(type) + "&address=" + theAccount.addr +
-                           "&page=" + uint_2_Str(theAccount.latestPage) + "&offset=" + uint_2_Str(5000) +
-                           "&apikey=" + getEtherscanKey(true);
+    //     // Keep reading until we get less than a full page
+    //     bool done = false;
+    //     while (!done) {
+    //         string_q url = string_q("https://api.etherscan.io/api?module=account&sort=asc") +
+    //                        "&action=" + toEtherscan(type) + "&address=" + theAccount.addr +
+    //                        "&page=" + uint_2_Str(theAccount.latestPage) + "&offset=" + uint_2_Str(5000) +
+    //                        "&apikey=" + getEtherscanKey(true);
 
-            string_q responseStr = urlToString(url);
-            if (getGlobalConfig("")->getConfigBool("dev", "debug_curl", false)) {
-                cerr << "[calling EtherScan: " << url << endl;
-                cerr << "[result: " << url << responseStr << endl;
-            }
-            if (!contains(responseStr, "\"message\":\"OK\"")) {
-                options.errors.push_back("Error: " + responseStr + ".");
-                done = true;
+    //         string_q responseStr = urlToString(url);
+    //         if (getGlobalConfig("")->getConfigBool("dev", "debug_curl", false)) {
+    //             cerr << "[calling EtherScan: " << url << endl;
+    //             cerr << "[result: " << url << responseStr << endl;
+    //         }
+    //         if (!contains(responseStr, "\"message\":\"OK\"")) {
+    //             options.errors.push_back("Error: " + responseStr + ".");
+    //             done = true;
 
-            } else {
-                CESResult response;
-                response.parseJson3(responseStr);
-                uint64_t nRecords = countOf(response.result, '}');
-                LOG4("Downloaded ", nRecords, " records from EtherScan.\r");
+    //         } else {
+    //             CESResult response;
+    //             response.parseJson3(responseStr);
+    //             uint64_t nRecords = countOf(response.result, '}');
+    //             LOG4("Downloaded ", nRecords, " records from EtherScan.\r");
 
-                // pre allocate the array (probably wrong input here--reserve takes max needed size, not addition size
-                // needed)
-                theAccount.transactions.reserve(theAccount.transactions.size() + nRecords);
+    //             // pre allocate the array (probably wrong input here--reserve takes max needed size, not addition size
+    //             // needed)
+    //             theAccount.transactions.reserve(theAccount.transactions.size() + nRecords);
 
-                uint64_t nAdded = 0;
-                CTransaction trans;
-                while (trans.parseJson3(response.result)) {
-                    if (type == "int") {
-                        findInternalTxIndex(trans);
-                    } else if (type == "token" || type == "nfts") {
-                        trans.hasToken = true;
-                    } else if (type == "miner") {
-                        trans.from = "0xBlockReward";
-                        trans.transactionIndex = 99999;
-                    } else if (type == "uncles") {
-                        trans.from = "0xUncleReward";
-                        trans.transactionIndex = 99998;
-                    }
-                    theAccount.transactions.push_back(trans);
-                    theAccount.markLatest(trans);
-                    trans = CTransaction();  // reset
-                    nAdded++;
-                    LOG4("Adding records from block ", trans.blockNumber, "...\r");
-                }
+    //             uint64_t nAdded = 0;
+    //             CTransaction trans;
+    //             while (trans.parseJson3(response.result)) {
+    //                 if (type == "int") {
+    //                     findInternalTxIndex(trans);
+    //                 } else if (type == "token" || type == "nfts") {
+    //                     trans.hasToken = true;
+    //                 } else if (type == "miner") {
+    //                     trans.from = "0xBlockReward";
+    //                     trans.transactionIndex = 99999;
+    //                 } else if (type == "uncles") {
+    //                     trans.from = "0xUncleReward";
+    //                     trans.transactionIndex = 99998;
+    //                 }
+    //                 theAccount.transactions.push_back(trans);
+    //                 theAccount.markLatest(trans);
+    //                 trans = CTransaction();  // reset
+    //                 nAdded++;
+    //                 LOG4("Adding records from block ", trans.blockNumber, "...\r");
+    //             }
 
-                // We're done if we got a page of less than 5,000 records, otherwise we will process the next page
-                done = (nRecords < 5000);
-                if (!done)
-                    theAccount.latestPage++;
+    //             // We're done if we got a page of less than 5,000 records, otherwise we will process the next page
+    //             done = (nRecords < 5000);
+    //             if (!done)
+    //                 theAccount.latestPage++;
 
-                if (nAdded) {
-                    LOG4("Appending ", nAdded, " new records, total ", theAccount.transactions.size(), "\r");
-                    CArchive outArchive(WRITING_ARCHIVE);
-                    if (outArchive.Lock(cacheFilename, (first ? modeWriteCreate : modeWriteAppend), LOCK_CREATE)) {
-                        lockSection();
-                        theAccount.Serialize(outArchive);
-                        outArchive.Close();
-                        unlockSection();
-                        first = false;
+    //             if (nAdded) {
+    //                 LOG4("Appending ", nAdded, " new records, total ", theAccount.transactions.size(), "\r");
+    //                 CArchive outArchive(WRITING_ARCHIVE);
+    //                 if (outArchive.Lock(cacheFilename, (first ? modeWriteCreate : modeWriteAppend), LOCK_CREATE)) {
+    //                     lockSection();
+    //                     theAccount.Serialize(outArchive);
+    //                     outArchive.Close();
+    //                     unlockSection();
+    //                     first = false;
 
-                    } else {
-                        options.errors.push_back("\tCould not open file: " + cacheFilename);
-                        continue;
-                    }
-                }
-            }
-        }
-        if (shouldQuit())
-            break;
-        LOG4("Processed transaction of type ", type, ". nTrans: ", theAccount.transactions.size());
-    }
-    cerr << string_q(120, ' ') << "\r";
+    //                 } else {
+    //                     options.errors.push_back("\tCould not open file: " + cacheFilename);
+    //                     continue;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     if (shouldQuit())
+    //         break;
+    //     LOG4("Processed transaction of type ", type, ". nTrans: ", theAccount.transactions.size());
+    // }
+    // cerr << string_q(120, ' ') << "\r";
     return (theAccount.transactions.size() > 0);
 }
 

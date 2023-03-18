@@ -24,8 +24,6 @@
 class COptions : public CBlockOptions {
   public:
     // BEG_CODE_DECLARE
-    CAddressArray addrs;
-    bool appearances;
     // END_CODE_DECLARE
 
     CStringArray typesList;

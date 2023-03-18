@@ -20,10 +20,6 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses to slurp from Etherscan"),
-    COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional range of blocks to slurp"),
-    COption("types", "t", "list<enum[ext*|int|token|nfts|miner|uncles|all]>", OPT_FLAG, "which types of transactions to request"),  // NOLINT
-    COption("appearances", "p", "", OPT_SWITCH, "show only the blocknumber.tx_id appearances of the exported transactions"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Fetch data from EtherScan for any address."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -36,41 +32,21 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
-    CStringArray types;
     // END_CODE_LOCAL_INIT
 
     Init();
-    blknum_t latest = getLatestBlock_client();
+    // blknum_t latest = getLatestBlock_client();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (startsWith(arg, "-t:") || startsWith(arg, "--types:")) {
-            string_q types_tmp;
-            if (!confirmEnum("types", types_tmp, arg))
-                return false;
-            types.push_back(types_tmp);
-        } else if (arg == "-t" || arg == "--types") {
-            return flag_required("types");
-
-        } else if (arg == "-p" || arg == "--appearances") {
-            appearances = true;
-
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 return invalid_option(arg);
             }
-
-        } else if (isAddress(arg)) {
-            if (!parseAddressList(this, addrs, arg))
-                return false;
-
-        } else {
-            if (!parseBlockList2(this, blocks, arg, latest))
-                return false;
 
             // END_CODE_AUTO
         }
@@ -79,21 +55,21 @@ bool COptions::parseArguments(string_q& command) {
     // This will fail if we don't have a key. Let's fail early.
     getEtherscanKey(true);
 
-    for (auto type : types) {
-        if (type == "all") {
-            typesList.clear();
-            typesList.push_back("ext");
-            typesList.push_back("int");
-            typesList.push_back("token");
-            typesList.push_back("nfts");
-            typesList.push_back("miner");
-            typesList.push_back("uncles");
-        } else {
-            typesList.push_back(type);
-        }
-    }
-    if (typesList.empty())
-        typesList.push_back("ext");
+    // for (auto type : types) {
+    //     if (type == "all") {
+    //         typesList.clear();
+    //         typesList.push_back("ext");
+    //         typesList.push_back("int");
+    //         typesList.push_back("token");
+    //         typesList.push_back("nfts");
+    //         typesList.push_back("miner");
+    //         typesList.push_back("uncles");
+    //     } else {
+    //         typesList.push_back(type);
+    //     }
+    // }
+    // if (typesList.empty())
+    //     typesList.push_back("ext");
 
     if (expContext().exportFmt == TXT1)
         exportFormat = "txt";
@@ -102,8 +78,8 @@ bool COptions::parseArguments(string_q& command) {
     else
         exportFormat = "json";
 
-    if (addrs.empty())
-        return usage("You must supply an Ethereum account or contract address. ");
+    // if (addrs.empty())
+    //     return usage("You must supply an Ethereum account or contract address. ");
 
     if (!establishFolder(cacheFolder_slurps))
         return usage("Unable to create data folders at " + cacheFolder_slurps);
@@ -129,12 +105,11 @@ void COptions::Init(void) {
     // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT
-    appearances = false;
     // END_CODE_INIT
 
     blocks.Init();
     exportFormat = "json";
-    addrs.clear();
+    // addrs.clear();
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -215,21 +190,21 @@ bool COptions::buildDisplayStrings(void) {
     if (exportFormat.empty())
         exportFormat = "json";
 
-    if (appearances) {
-        if (exportFormat == "txt" || exportFormat == "csv") {
-            displayString = "[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t1\n";
-            header = "blocknumber\ttransactionindex\t1\n";
-            if (exportFormat == "csv") {
-                replace(displayString, "\t", ",");
-                replace(header, "\t", ",");
-            }
-        } else {
-            manageFields("CTransaction:all", false);
-            UNHIDE_FIELD(CTransaction, "blockNumber");
-            UNHIDE_FIELD(CTransaction, "transactionIndex");
-        }
-        return true;
-    }
+    // if (appearances) {
+    //     if (exportFormat == "txt" || exportFormat == "csv") {
+    //         displayString = "[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t1\n";
+    //         header = "blocknumber\ttransactionindex\t1\n";
+    //         if (exportFormat == "csv") {
+    //             replace(displayString, "\t", ",");
+    //             replace(header, "\t", ",");
+    //         }
+    //     } else {
+    //         manageFields("CTransaction:all", false);
+    //         UNHIDE_FIELD(CTransaction, "blockNumber");
+    //         UNHIDE_FIELD(CTransaction, "transactionIndex");
+    //     }
+    //     return true;
+    // }
 
     // This is what we're really after...
     string_q fmtForRecords;
