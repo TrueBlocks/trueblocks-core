@@ -25,8 +25,6 @@ blocks?blocks=0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
           "gasUsed": 21000,
           "hash": "0xc8f18f5041f2d070c9688181edee313da2fe506dd3e85cb6c22409cd0bcbe476",
           "input": "0x",
-          "maxFeePerGas": 0,
-          "maxPriorityFeePerGas": 0,
           "nonce": 727,
           "receipt": {
             "contractAddress": "0x0",
@@ -52,8 +50,6 @@ blocks?blocks=0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
           "gasUsed": 21000,
           "hash": "0xb26eb39e0eb84b470f2da07fe3ceff0d51d4e7418787589f2dda4bc3e23deeeb",
           "input": "0x",
-          "maxFeePerGas": 0,
-          "maxPriorityFeePerGas": 0,
           "nonce": 173053,
           "receipt": {
             "contractAddress": "0x0",

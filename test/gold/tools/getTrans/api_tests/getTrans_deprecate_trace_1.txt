@@ -13,8 +13,6 @@ transactions?transactions=4000002.5&trace
       "gasUsed": 21000,
       "hash": "0x9ba401a48e378440f90e8d50feac2331f38a39fd9f33e3c6c213302cef3e5887",
       "input": "0x",
-      "maxFeePerGas": 0,
-      "maxPriorityFeePerGas": 0,
       "nonce": 9,
       "receipt": {
         "contractAddress": "0x0",

@@ -24,8 +24,6 @@ transactions?transactions=6409270.108&articulate&fmt=json
       "hash": "0x7f4ed854e4b318fc1ba3d07506639e50942fa1a82eb9e35373a0d9cb2d1ee37e",
       "input": "0x1e89d545dd2f1e6e498202e86d8f5442af596580a4f03c2c5088d623ba0fcf0131e0897a91734a4d83596aa0000000000000000000000000000000000000000000000000000000000bebc2000000000000000000000000000000000000000000000000000000000011e1a300",
       "isError": true,
-      "maxFeePerGas": 0,
-      "maxPriorityFeePerGas": 0,
       "nonce": 166,
       "receipt": {
         "contractAddress": "0x0",

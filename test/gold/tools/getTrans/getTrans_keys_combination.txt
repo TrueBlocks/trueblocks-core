@@ -15,8 +15,6 @@ TEST[DATE|TIME] Format:  json
       "gasUsed": 39512,
       "hash": "0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765",
       "input": "0x",
-      "maxFeePerGas": 0,
-      "maxPriorityFeePerGas": 0,
       "nonce": 2333166,
       "receipt": {
         "contractAddress": "0x0",
@@ -60,8 +58,6 @@ TEST[DATE|TIME] Format:  json
       "hasToken": true,
       "hash": "0xfe52da8afe135e14a0855240e1ef4b44a0b4ebe374bd39de307cf0f3fabf0ff1",
       "input": "0xa9059cbb00000000000000000000000043a4210390998945dc7658a20b43c6c4189ac7d4000000000000000000000000000000000000000000000000000000000a21fe80",
-      "maxFeePerGas": 0,
-      "maxPriorityFeePerGas": 0,
       "nonce": 1935,
       "receipt": {
         "contractAddress": "0x0",
@@ -98,8 +94,6 @@ TEST[DATE|TIME] Format:  json
       "gasUsed": 30416,
       "hash": "0xf1e398af74afe7dff17573ab30ae0b5bdbbcfc65a5d22d69b096cf620363a3c0",
       "input": "0x",
-      "maxFeePerGas": 0,
-      "maxPriorityFeePerGas": 0,
       "nonce": 476,
       "receipt": {
         "contractAddress": "0x0",

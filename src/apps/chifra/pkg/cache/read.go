@@ -354,12 +354,14 @@ func ReadTransaction(reader *bufio.Reader) (tx *types.SimpleTransaction, err err
 		return
 	}
 
-	err = readBigUint(reader, &tx.ExtraValue1)
+	var extraValue1 big.Int
+	err = readBigUint(reader, &extraValue1)
 	if err != nil {
 		return
 	}
 
-	err = readBigUint(reader, &tx.ExtraValue2)
+	var extraValue2 big.Int
+	err = readBigUint(reader, &extraValue2)
 	if err != nil {
 		return
 	}
@@ -399,12 +401,14 @@ func ReadTransaction(reader *bufio.Reader) (tx *types.SimpleTransaction, err err
 		return
 	}
 
-	err = read(&tx.Cachebits)
+	var cachebits uint8
+	err = read(&cachebits)
 	if err != nil {
 		return
 	}
 
-	err = read(&tx.Reserved2)
+	var reserved2 uint8
+	err = read(&reserved2)
 	if err != nil {
 		return
 	}

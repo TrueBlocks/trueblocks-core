@@ -44,24 +44,20 @@ type SimpleTransaction struct {
 	BlockHash            common.Hash     `json:"blockHash"`
 	BlockNumber          Blknum          `json:"blockNumber"`
 	TransactionIndex     uint64          `json:"transactionIndex"`
-	Nonce                uint64          `json:"nonce"`
+	Nonce                uint64          `json:"nonce,omitempty"`
 	Timestamp            Timestamp       `json:"timestamp"`
 	From                 Address         `json:"from"`
 	To                   Address         `json:"to"`
 	Value                Wei             `json:"value"`
-	ExtraValue1          Wei             `json:"extraValue1"`
-	ExtraValue2          Wei             `json:"extraValue2"`
 	Gas                  Gas             `json:"gas"`
 	GasPrice             Gas             `json:"gasPrice"`
 	GasUsed              Gas             `json:"gasUsed"`
 	GasCost              Gas             `json:"gasCost"`
-	MaxFeePerGas         Gas             `json:"maxFeePerGas"`
-	MaxPriorityFeePerGas Gas             `json:"maxPriorityFeePerGas"`
+	MaxFeePerGas         Gas             `json:"maxFeePerGas,omitempty"`
+	MaxPriorityFeePerGas Gas             `json:"maxPriorityFeePerGas,omitempty"`
 	Input                string          `json:"input"`
 	IsError              bool            `json:"isError,omitempty"`
 	HasToken             bool            `json:"hasToken,omitempty"`
-	Cachebits            uint8           `json:"cachebits"`
-	Reserved2            uint8           `json:"reserved2"`
 	Receipt              *SimpleReceipt  `json:"receipt"`
 	Traces               []SimpleTrace   `json:"traces"`
 	ArticulatedTx        *SimpleFunction `json:"articulatedTx,omitempty"`
@@ -148,9 +144,15 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		model["gas"] = s.Gas
 
 		// TODO: this value could be created when RPC is queried and cached
+		// if s.Value > 0 {
 		model["ether"] = utils.WeiToEther(&s.Value)
-		model["maxFeePerGas"] = s.MaxPriorityFeePerGas
-		model["maxPriorityFeePerGas"] = s.MaxPriorityFeePerGas
+		// }
+		if s.MaxFeePerGas > 0 {
+			model["maxFeePerGas"] = s.MaxFeePerGas
+		}
+		if s.MaxPriorityFeePerGas > 0 {
+			model["maxPriorityFeePerGas"] = s.MaxPriorityFeePerGas
+		}
 		model["input"] = s.Input
 		if s.HasToken {
 			model["hasToken"] = s.HasToken

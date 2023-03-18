@@ -15,8 +15,6 @@ transactions?transactions=0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23
       "hash": "0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a",
       "input": "0xa9059cbb0000000000000000000000004625f6b9416ca879cecb78855807f867cc15f8dc00000000000000000000000000000000000000000000010f0f32ad53d5936cb3",
       "isError": true,
-      "maxFeePerGas": 0,
-      "maxPriorityFeePerGas": 0,
       "nonce": 31,
       "receipt": {
         "contractAddress": "0x0",
