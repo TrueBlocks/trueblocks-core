@@ -99,7 +99,6 @@ blocks?blocks=1590000%204000001%204000002
           "gasUsed": 21000,
           "hash": "0xc592d3b88d926d7e5aba2b2b99171e094e55fe1f493fa449060df91e7085c6d8",
           "input": "0x",
-          "nonce": 0,
           "receipt": {
             "contractAddress": "0x0",
             "effectiveGasPrice": 24150000000,

@@ -75,7 +75,6 @@ blocks?blocks=1001001
           "gasUsed": 21000,
           "hash": "0x5352c80aa2073e21ce6c4aa5488c38455f3519955ece7dca5af3e326797bcc63",
           "input": "0x",
-          "nonce": 0,
           "receipt": {
             "contractAddress": "0x0",
             "effectiveGasPrice": 50000000000,
@@ -100,7 +99,6 @@ blocks?blocks=1001001
           "gasUsed": 21000,
           "hash": "0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521",
           "input": "0x",
-          "nonce": 0,
           "receipt": {
             "contractAddress": "0x0",
             "effectiveGasPrice": 50000000000,
