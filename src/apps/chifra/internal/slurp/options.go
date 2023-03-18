@@ -9,7 +9,6 @@ package slurpPkg
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -46,25 +45,6 @@ func (opts *SlurpOptions) testLog() {
 func (opts *SlurpOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
-}
-
-// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
-func (opts *SlurpOptions) getEnvStr() []string {
-	envStr := []string{}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return envStr
-}
-
-// toCmdLine converts the option to a command line for calling out to the system.
-func (opts *SlurpOptions) toCmdLine() string {
-	options := ""
-	options += " " + strings.Join(opts.Addrs, " ")
-	options += " " + strings.Join(opts.Blocks, " ")
-	// EXISTING_CODE
-	// EXISTING_CODE
-	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
-	return options
 }
 
 // slurpFinishParseApi finishes the parsing for server invocations. Returns a new SlurpOptions.

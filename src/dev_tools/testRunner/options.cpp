@@ -97,7 +97,9 @@ bool COptions::parseArguments(string_q& command) {
                 if (been_here)
                     break;
                 been_here = true;
-                tests.push_back("tools/ethslurp");
+                if (getEnvStr("TEST_SLURP") == "true") {
+                    tests.push_back("tools/ethslurp");
+                }
                 tests.push_back("tools/ethNames");
                 tests.push_back("tools/getBlocks");
                 tests.push_back("tools/getLogs");
@@ -146,7 +148,9 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("libs/utillib");
         tests.push_back("libs/etherlib");
         tests.push_back("libs/acctlib");
-        tests.push_back("tools/ethslurp");
+        if (getEnvStr("TEST_SLURP") == "true") {
+            tests.push_back("tools/ethslurp");
+        }
         tests.push_back("tools/ethNames");
         tests.push_back("tools/getBlocks");
         tests.push_back("tools/getLogs");

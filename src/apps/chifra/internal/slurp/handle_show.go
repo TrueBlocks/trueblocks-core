@@ -135,19 +135,21 @@ func GetTransactionsFromEtherscan(chain string, url string) ([]types.SimpleTrans
 			Timestamp:        mustParseInt(esTx.Timestamp),
 			From:             types.HexToAddress(rawTx.From),
 			To:               types.HexToAddress(rawTx.To),
+			Gas:              mustParseUint(rawTx.Gas),
+			GasPrice:         mustParseUint(rawTx.GasPrice),
+			GasUsed:          mustParseUint(esTx.GasUsed),
+			Nonce:            mustParseUint(esTx.Nonce),
+			Input:            rawTx.Input,
 			// Value: big.Uint(rawTx.Value),
-			Gas:      mustParseUint(rawTx.Gas),
-			GasPrice: mustParseUint(rawTx.GasPrice),
-			GasUsed:  mustParseUint(esTx.GasUsed),
+			// IsError:          esTx.TxReceiptStatus == "1",
 			// GasCost: mustParseUint(rawTx.GasCost),
 			// MaxFeePerGas         Gas             `json:"maxFeePerGas"`
 			// MaxPriorityFeePerGas Gas             `json:"maxPriorityFeePerGas"`
-			Input: rawTx.Input,
-			// IsError: esTx.TxReceiptStatus == "1",
 			// HasToken             bool            `json:"hasToken,omitempty"`
-
 		}
+		t.GasCost = t.GasPrice * t.GasUsed
 		t.IsError = esTx.TxReceiptStatus == "1"
+		t.Value.SetString(rawTx.Value, 0)
 
 		a := types.HexToAddress(esTx.ContractAddress)
 		b := mustParseUint(esTx.CumulativeGasUsed)
