@@ -139,7 +139,9 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 
 	if format == "json" {
 		model["blockHash"] = s.BlockHash
-		model["nonce"] = s.Nonce
+		if s.Nonce > 0 {
+			model["nonce"] = s.Nonce
+		}
 		model["value"] = s.Value.String()
 		model["gas"] = s.Gas
 
@@ -166,7 +168,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 			model["time"] = date.Format("15:04:05") + " UTC"
 		}
 
-		model["receipt"] = nil
+		// model["receipt"] = nil
 		if s.Receipt != nil {
 			contractAddress := s.Receipt.ContractAddress.Hex()
 
@@ -267,6 +269,9 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 
 // EXISTING_CODE
 func (s *SimpleTransaction) SetGasCost(receipt *SimpleReceipt) Gas {
+	if receipt == nil {
+		return 0
+	}
 	s.GasCost = s.GasPrice * receipt.GasUsed
 	return s.GasCost
 }

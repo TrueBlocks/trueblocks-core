@@ -37,6 +37,9 @@ func (opts *SlurpOptions) HandleShowSlurps() error {
 				}
 				for _, tx := range txs {
 					tx := tx
+					if !opts.isInRange(uint(tx.BlockNumber), errorChan) {
+						continue
+					}
 					modelChan <- &tx
 				}
 			}
@@ -129,7 +132,6 @@ func GetTransactionsFromEtherscan(chain string, url string) ([]types.SimpleTrans
 			BlockHash:        common.HexToHash(rawTx.BlockHash),
 			BlockNumber:      mustParseUint(rawTx.BlockNumber),
 			TransactionIndex: mustParseUint(rawTx.TransactionIndex),
-			Nonce:            mustParseUint(rawTx.Nonce),
 			Timestamp:        mustParseInt(esTx.Timestamp),
 			From:             types.HexToAddress(rawTx.From),
 			To:               types.HexToAddress(rawTx.To),
@@ -143,15 +145,23 @@ func GetTransactionsFromEtherscan(chain string, url string) ([]types.SimpleTrans
 			Input: rawTx.Input,
 			// IsError: esTx.TxReceiptStatus == "1",
 			// HasToken             bool            `json:"hasToken,omitempty"`
-			Receipt: &types.SimpleReceipt{
-				ContractAddress:   types.HexToAddress(esTx.ContractAddress),
-				CumulativeGasUsed: esTx.CumulativeGasUsed,
-				GasUsed:           mustParseUint(esTx.GasUsed),
-				Status:            uint32(mustParseUint(esTx.TxReceiptStatus)),
-			},
+
 		}
 		t.IsError = esTx.TxReceiptStatus == "1"
-		t.Receipt.IsError = esTx.TxReceiptStatus == "1"
+
+		a := types.HexToAddress(esTx.ContractAddress)
+		b := mustParseUint(esTx.CumulativeGasUsed)
+		c := mustParseUint(esTx.GasUsed)
+		d := uint32(mustParseUint(esTx.TxReceiptStatus))
+		if a != types.HexToAddress("0x0") || b != 0 || c != 0 || d != 0 {
+			t.Receipt = &types.SimpleReceipt{
+				ContractAddress:   a,
+				CumulativeGasUsed: esTx.CumulativeGasUsed,
+				GasUsed:           c,
+				Status:            d,
+			}
+			t.Receipt.IsError = t.IsError
+		}
 		t.SetRaw(&rawTx)
 
 		ret = append(ret, t)
@@ -196,4 +206,27 @@ func mustParseUint(input any) (result uint64) {
 func mustParseInt(input any) (result int64) {
 	result, _ = strconv.ParseInt(fmt.Sprint(input), 0, 64)
 	return
+}
+
+func (opts *SlurpOptions) isInRange(bn uint, errorChan chan error) bool {
+	for _, br := range opts.BlockIds {
+		// fmt.Println(br)
+		if strings.Contains(br.Orig, "-") && !strings.Contains(br.Orig, ":") {
+			// a plain block range
+			// fmt.Println("range", br.Start.Number <= bn, bn <= br.End.Number, br.Start.Number <= bn && bn <= br.End.Number)
+			return br.Start.Number <= bn && bn <= br.End.Number
+		}
+
+		blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
+		if err != nil {
+			errorChan <- err
+			return false
+		}
+		for _, num := range blockNums {
+			if uint(num) == bn {
+				return true
+			}
+		}
+	}
+	return false
 }
