@@ -4,7 +4,8 @@ TEST[DATE|TIME] Blocks:  [0-1500000]
 TEST[DATE|TIME] Types:  [token]
 TEST[DATE|TIME] Appearances:  true
 TEST[DATE|TIME] Format:  json
-INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&action=tokentx&address=0x9519afbc60719a83c470ceec41e32d3e4b8b262e&page=1&offset=5000
+INFO[DATE|TIME] Processing [0x9519afbc60719a83c470ceec41e32d3e4b8b262e] --types: [token] [0-1500000]
+INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&action=tokentx&address=0x9519afbc60719a83c470ceec41e32d3e4b8b262e&page=1&offset=100
 {
   "data": [
     {

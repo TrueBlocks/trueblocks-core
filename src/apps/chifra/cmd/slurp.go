@@ -56,6 +56,8 @@ func init() {
 	slurpCmd.Flags().StringSliceVarP(&slurpPkg.GetOptions().Types, "types", "t", nil, `which types of transactions to request
 One or more of [ ext | int | token | nfts | 1155 | miner | uncles | all ]`)
 	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Appearances, "appearances", "p", false, "show only the blocknumber.tx_id appearances of the exported transactions")
+	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().PerPage, "per_page", "P", 5000, "the number of records to request on each page")
+	slurpCmd.Flags().Float64VarP(&slurpPkg.GetOptions().Sleep, "sleep", "s", .25, "seconds to sleep between requests")
 	globals.InitGlobals(slurpCmd, &slurpPkg.GetOptions().Globals)
 
 	slurpCmd.SetUsageTemplate(UsageWithNotes(notesSlurp))

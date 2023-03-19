@@ -14,45 +14,67 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-	"github.com/bykof/gostradamus"
 	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
+type Paginator struct {
+	page    int
+	perPage int
+}
+
 func (opts *SlurpOptions) HandleShowSlurps() error {
+	paginator := Paginator{
+		page:    1,
+		perPage: int(opts.PerPage),
+	}
+	if opts.Globals.TestMode {
+		paginator.perPage = 100
+	}
+
 	chain := opts.Globals.Chain
 	logger.Info("Processing", opts.Addrs, "--types:", opts.Types, opts.Blocks)
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[RawEtherscan], errorChan chan error) {
-		cnt := 0
+	fetchData := func(modelChan chan types.Modeler[types.RawEtherscan], errorChan chan error) {
+		totalFetched := 0
+		totalFiltered := 0
 		for _, addr := range opts.Addrs {
 			for _, tt := range opts.Types {
-				txs, err := opts.GetTransactionsFromEtherscan(chain, addr, tt)
-				if err != nil {
-					errorChan <- err
-					continue
-				}
-
-				for _, tx := range txs {
-					tx := tx
-					if !opts.isInRange(uint(tx.BlockNumber), errorChan) {
+				done := false
+				for !done {
+					txs, nFetched, err := opts.GetTransactionsFromEtherscan(chain, addr, tt, &paginator)
+					done = nFetched < paginator.perPage
+					totalFetched += nFetched
+					if err != nil {
+						errorChan <- err
 						continue
 					}
-					modelChan <- &tx
-					cnt++
-				}
-				if opts.Globals.TestMode {
+
+					for _, tx := range txs {
+						tx := tx
+						if !opts.isInRange(uint(tx.BlockNumber), errorChan) {
+							continue
+						}
+						modelChan <- &tx
+						totalFiltered++
+					}
+
 					// Without this Etherscan chokes
-					time.Sleep(250 * time.Millisecond)
+					sleep := opts.Sleep
+					if sleep > 0 {
+						ms := time.Duration(sleep*1000) * time.Millisecond
+						if !opts.Globals.TestMode {
+							logger.Info(fmt.Sprintf("Sleeping for %f seconds (%d milliseconds)", sleep, ms))
+						}
+						time.Sleep(ms)
+					}
 				}
 			}
 		}
 
-		if cnt == 0 {
-			errorChan <- fmt.Errorf("no transactions found")
+		if totalFiltered == 0 {
+			msg := fmt.Sprintf("zero transactions reported, %d fetched", totalFetched)
+			errorChan <- fmt.Errorf(msg)
 		}
 	}
 
@@ -90,45 +112,48 @@ var ss = map[string]string{
 	"uncles": "asc",
 }
 
-func (opts *SlurpOptions) getEtherscanUrl(addr string, tt string, page int) string {
+func (opts *SlurpOptions) getEtherscanUrl(addr string, tt string, paginator *Paginator) string {
 	if ss[tt] == "" || m[tt] == "" {
 		logger.Fatal("Should not happen in getEtherscanUrl", tt)
 	}
-	const str = "https://api.etherscan.io/api?module=account&sort=[{SORT}]&action=[{CMD}]&address=[{ADDRESS}]&page=[{PAGE}]&offset=5000"
+
+	const str = "https://api.etherscan.io/api?module=account&sort=[{SORT}]&action=[{CMD}]&address=[{ADDRESS}]&page=[{PAGE}]&offset=[{PER_PAGE}]"
 	ret := strings.Replace(str, "[{SORT}]", ss[tt], -1)
 	ret = strings.Replace(ret, "[{CMD}]", m[tt], -1)
 	ret = strings.Replace(ret, "[{ADDRESS}]", addr, -1)
-	ret = strings.Replace(ret, "[{PAGE}]", fmt.Sprintf("%d", page), -1)
+	ret = strings.Replace(ret, "[{PAGE}]", fmt.Sprintf("%d", paginator.page), -1)
+	ret = strings.Replace(ret, "[{PER_PAGE}]", fmt.Sprintf("%d", paginator.perPage), -1)
+	paginator.page++
 	return ret
 }
 
-func (opts *SlurpOptions) GetTransactionsFromEtherscan(chain string, addr, tt string) ([]SimpleEtherscan, error) {
-	url := opts.getEtherscanUrl(addr, tt, 1)
+func (opts *SlurpOptions) GetTransactionsFromEtherscan(chain string, addr, tt string, paginator *Paginator) ([]types.SimpleEtherscan, int, error) {
+	url := opts.getEtherscanUrl(addr, tt, paginator)
 	logger.Info("Processing", url)
 
-	var ret []SimpleEtherscan
+	var ret []types.SimpleEtherscan
 
 	key := config.GetRootConfig().Keys["etherscan"].ApiKey
 	if key == "" {
-		return ret, errors.New("cannot read Etherscan API key")
+		return ret, 0, errors.New("cannot read Etherscan API key")
 	}
 	url += "&apikey=" + key
 
 	resp, err := http.Get(url)
 	if err != nil {
-		return ret, err
+		return ret, 0, err
 	}
 	defer resp.Body.Close()
 
 	// Check server response
 	if resp.StatusCode != http.StatusOK {
-		return ret, fmt.Errorf("etherscan API error: %s", resp.Status)
+		return ret, 0, fmt.Errorf("etherscan API error: %s", resp.Status)
 	}
 
 	decoder := json.NewDecoder(resp.Body)
-	fromEs := EtherscanResponse{}
+	fromEs := types.EtherscanResponse{}
 	if err = decoder.Decode(&fromEs); err != nil {
-		return ret, err
+		return ret, 0, err
 	}
 	resp.Body.Close()
 
@@ -137,11 +162,11 @@ func (opts *SlurpOptions) GetTransactionsFromEtherscan(chain string, addr, tt st
 		// response so we don't keep asking Etherscan for the same address. The user may later
 		// remove empty ABIs with chifra abis --clean.
 		logger.Warn("provider responded with:", url, fromEs.Message)
-		return ret, nil
+		return ret, 0, nil
 	}
 
 	for _, esTx := range fromEs.Result {
-		rawTx := RawEtherscan{
+		rawTx := types.RawEtherscan{
 			BlockHash:        esTx.BlockHash,
 			BlockNumber:      esTx.BlockNumber,
 			From:             esTx.From,
@@ -155,7 +180,7 @@ func (opts *SlurpOptions) GetTransactionsFromEtherscan(chain string, addr, tt st
 		}
 		// Nonce:            esTx.Nonce,
 
-		t := SimpleEtherscan{
+		t := types.SimpleEtherscan{
 			Hash:             common.HexToHash(rawTx.Hash),
 			BlockHash:        common.HexToHash(rawTx.BlockHash),
 			BlockNumber:      mustParseUint(rawTx.BlockNumber),
@@ -216,7 +241,7 @@ func (opts *SlurpOptions) GetTransactionsFromEtherscan(chain string, addr, tt st
 		ret = append(ret, t)
 	}
 
-	return ret, nil
+	return ret, len(ret), nil
 }
 
 func mustParseUint(input any) (result uint64) {
@@ -253,192 +278,4 @@ func (opts *SlurpOptions) isInRange(bn uint, errorChan chan error) bool {
 	}
 
 	return false
-}
-
-type RawEtherscan struct {
-	BlockHash         string `json:"blockHash"`
-	BlockNumber       string `json:"blockNumber"`
-	ContractAddress   string `json:"contractAddress"`
-	CumulativeGasUsed string `json:"cumulativeGasUsed"`
-	From              string `json:"from"`
-	Gas               string `json:"gas"`
-	GasPrice          string `json:"gasPrice"`
-	GasUsed           string `json:"gasUsed"`
-	HasToken          string `json:"hasToken"`
-	Hash              string `json:"hash"`
-	Input             string `json:"input"`
-	IsError           string `json:"isError"`
-	Timestamp         string `json:"timestamp"`
-	To                string `json:"to"`
-	TransactionIndex  string `json:"transactionIndex"`
-	TxReceiptStatus   string `json:"txreceipt_status"`
-	Value             string `json:"value"`
-	// FunctionName      string `json:"functionName"`
-	// MethodId         string `json:"methodId"`
-	// Nonce            string `json:"nonce"`
-}
-
-type SimpleEtherscan struct {
-	BlockHash        common.Hash     `json:"blockHash"`
-	BlockNumber      uint64          `json:"blockNumber"`
-	ContractAddress  types.Address   `json:"contractAddress"`
-	Date             string          `json:"date"`
-	Ether            string          `json:"ether"`
-	From             types.Address   `json:"from"`
-	Gas              types.Gas       `json:"gas"`
-	GasPrice         types.Gas       `json:"gasPrice"`
-	GasUsed          types.Gas       `json:"gasUsed"`
-	GasCost          types.Gas       `json:"gasCost"`
-	HasToken         bool            `json:"hasToken"`
-	Hash             common.Hash     `json:"hash"`
-	Input            string          `json:"input"`
-	IsError          bool            `json:"isError"`
-	Timestamp        types.Timestamp `json:"timestamp"`
-	To               types.Address   `json:"to"`
-	TransactionIndex uint64          `json:"transactionIndex"`
-	Value            types.Wei       `json:"value"`
-	raw              *RawEtherscan
-	// ArticulatedTx    SimpleFunction `json:"articulatedTx"`
-	// CompressedTx     string         `json:"compressedTx"`
-	// EtherGasPrice    string      `json:"etherGasPrice"`
-	// ExtraValue1      Wei         `json:"extraValue1"`
-	// ExtraValue2      Wei         `json:"extraValue2"`
-}
-
-func (s *SimpleEtherscan) Raw() *RawEtherscan {
-	return s.raw
-}
-
-func (s *SimpleEtherscan) SetRaw(raw *RawEtherscan) {
-	s.raw = raw
-}
-
-func (s *SimpleEtherscan) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
-	to := hexutil.Encode(s.To.Bytes())
-	if to == "0x0000000000000000000000000000000000000000" {
-		to = "0x0" // weird special case to preserve what RPC does
-	}
-
-	date := gostradamus.FromUnixTimestamp(s.Timestamp)
-
-	model := map[string]interface{}{
-		"blockNumber": s.BlockNumber,
-		"date":        s.Date,
-		"ether":       s.Ether,
-		"from":        s.From,
-		"timestamp":   s.Timestamp,
-		"to":          s.To,
-		"value":       s.Value.String(),
-		// "hash":        s.Hash,
-		// "gas":         s.Gas,
-		// "gasCost":     s.GasCost,
-		// "gasPrice":    s.GasPrice,
-		// "gasUsed":     s.GasUsed,
-		// "blockHash":        s.BlockHash,
-		// "transactionIndex": s.TransactionIndex,
-		// "input":            s.Input,
-		// "hasToken":         s.HasToken,
-		// "isError":          s.IsError,
-		// "contractAddress":  s.ContractAddress,
-		// "articulatedTx":    s.ArticulatedTx,
-		// "compressedTx":     s.CompressedTx,
-		// "etherGasPrice":    s.EtherGasPrice,
-		// "extraValue1":      s.ExtraValue1,
-		// "extraValue2":      s.ExtraValue2,
-	}
-
-	var order []string
-
-	model["date"] = date.Format("2006-01-02 15:04:05") + " UTC"
-	if strings.Contains(s.Input, "Reward") {
-		model["from"] = s.Input
-		s.Input = ""
-		order = []string{
-			"blockNumber",
-			"timestamp",
-			"date",
-			"from",
-			"to",
-			"value",
-			"ether",
-		}
-
-	} else {
-		order = []string{
-			// "blockHash",
-			"blockNumber",
-			"transactionIndex",
-			"timestamp",
-			// "contractAddress",
-			"date",
-			"from",
-			"to",
-			"hasToken",
-			"isError",
-			"hash",
-			"gasPrice",
-			"gasUsed",
-			"gasCost",
-			"value",
-			"ether",
-			"input",
-			// "articulatedTx",
-			// "compressedTx",
-			// "etherGasPrice",
-			// "extraValue1",
-			// "extraValue2",
-		}
-
-		model["gas"] = s.Gas
-		model["gasCost"] = s.SetGasCost()
-		model["gasPrice"] = s.GasPrice
-		model["gasUsed"] = s.GasUsed
-		model["hash"] = s.Hash
-	}
-
-	if s.HasToken {
-		model["hasToken"] = s.HasToken
-	}
-	if s.IsError {
-		model["isError"] = s.IsError
-	}
-	model["ether"] = utils.WeiToEther(&s.Value).Text('f', 18)
-	if s.BlockHash != common.HexToHash("0xdeadbeef") {
-		model["blockHash"] = s.BlockHash
-	}
-	if s.TransactionIndex != 80809 {
-		model["transactionIndex"] = s.TransactionIndex
-	}
-
-	if format == "json" {
-		if validate.IsValidAddress(s.ContractAddress.Hex()) {
-			model["contractAddress"] = s.ContractAddress.Hex()
-		}
-		if len(s.Input) > 0 && s.Input != "deprecated" {
-			model["input"] = s.Input
-		}
-	} else {
-		model["hasToken"] = s.HasToken
-		model["isError"] = s.IsError
-		if s.Input == "deprecated" {
-			s.Input = "0x"
-		}
-		model["input"] = s.Input
-	}
-
-	return types.Model{
-		Data:  model,
-		Order: order,
-	}
-}
-
-func (s *SimpleEtherscan) SetGasCost() types.Gas {
-	s.GasCost = s.GasPrice * s.GasUsed
-	return s.GasCost
-}
-
-type EtherscanResponse struct {
-	Message string         `json:"message"`
-	Result  []RawEtherscan `json:"result"`
-	Status  string         `json:"status"`
 }

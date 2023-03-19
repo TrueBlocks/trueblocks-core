@@ -5,7 +5,7 @@ TEST[DATE|TIME] Types:  [ext]
 TEST[DATE|TIME] OutputFn:  output_test_file
 TEST[DATE|TIME] Format:  txt
 INFO[DATE|TIME] Processing [0x1324e7b922b30b49ab8ea81086341cc41c249346] --types: [ext] [3730547-3730590]
-INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&action=txlist&address=0x1324e7b922b30b49ab8ea81086341cc41c249346&page=1&offset=5000
+INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&action=txlist&address=0x1324e7b922b30b49ab8ea81086341cc41c249346&page=1&offset=100
 ----
 Results in ./output_test_file
 blockNumber	transactionIndex	timestamp	date	from	to	hasToken	isError	hash	gasPrice	gasUsed	gasCost	value	ether	input

@@ -26,11 +26,15 @@ type SlurpOptions struct {
 	BlockIds    []identifiers.Identifier `json:"blockIds,omitempty"`    // Block identifiers
 	Types       []string                 `json:"types,omitempty"`       // Which types of transactions to request
 	Appearances bool                     `json:"appearances,omitempty"` // Show only the blocknumber.tx_id appearances of the exported transactions
+	PerPage     uint64                   `json:"perPage,omitempty"`     // The number of records to request on each page
+	Sleep       float64                  `json:"sleep,omitempty"`       // Seconds to sleep between requests
 	Globals     globals.GlobalOptions    `json:"globals,omitempty"`     // The global options
 	BadFlag     error                    `json:"badFlag,omitempty"`     // An error flag if needed
 }
 
-var defaultSlurpOptions = SlurpOptions{}
+var defaultSlurpOptions = SlurpOptions{
+	PerPage: 5000,
+}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *SlurpOptions) testLog() {
@@ -38,6 +42,8 @@ func (opts *SlurpOptions) testLog() {
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
+	logger.TestLog(opts.PerPage != 5000, "PerPage: ", opts.PerPage)
+	logger.TestLog(opts.Sleep != float64(.25), "Sleep: ", opts.Sleep)
 	opts.Globals.TestLog()
 }
 
@@ -51,6 +57,8 @@ func (opts *SlurpOptions) String() string {
 func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 	copy := defaultSlurpOptions
 	opts := &copy
+	opts.PerPage = 5000
+	opts.Sleep = .25
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "addrs":
@@ -70,6 +78,10 @@ func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 			}
 		case "appearances":
 			opts.Appearances = true
+		case "perPage":
+			opts.PerPage = globals.ToUint64(value[0])
+		case "sleep":
+			opts.Sleep = globals.ToFloat64(value[0])
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "slurp")
