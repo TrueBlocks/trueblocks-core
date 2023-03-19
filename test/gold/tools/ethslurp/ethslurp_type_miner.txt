@@ -8,7 +8,6 @@ INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&
 {
   "data": [
     {
-      "blockHash": "0x0b2975c03c468f3ce7eb05935f2910fd3d07fc2964d0399491c86645fd5bb113",
       "blockNumber": 348,
       "date": "2015-07-30 15:42:23 UTC",
       "ether": "5.000000000000000000",
@@ -19,7 +18,6 @@ INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&
       "value": "5000000000000000000"
     },
     {
-      "blockHash": "0xe5579014f7045e8de0c4bb4a7336e8b589530814acb9caf4630fb3261cec7d10",
       "blockNumber": 235,
       "date": "2015-07-30 15:38:33 UTC",
       "ether": "5.000000000000000000",
@@ -30,7 +28,6 @@ INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&
       "value": "5000000000000000000"
     },
     {
-      "blockHash": "0xf37c632d361e0a93f08ba29b1a2c708d9caa3ee19d1ee8d2a02612bffe49f0a9",
       "blockNumber": 5,
       "date": "2015-07-30 15:28:03 UTC",
       "ether": "5.000000000000000000",
@@ -41,7 +38,6 @@ INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&
       "value": "5000000000000000000"
     },
     {
-      "blockHash": "0x88e96d4537bea4d9c05d12549907b32561d3bf31f45aae734cdc119f13406cb6",
       "blockNumber": 1,
       "date": "2015-07-30 15:26:28 UTC",
       "ether": "5.000000000000000000",

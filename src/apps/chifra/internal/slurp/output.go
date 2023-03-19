@@ -56,7 +56,11 @@ func (opts *SlurpOptions) SlurpInternal() (err error, handled bool) {
 	}
 
 	handled = true
-	err = opts.HandleShowSlurps()
+	if opts.Appearances {
+		err = opts.HandleShowAppearances()
+	} else {
+		err = opts.HandleShowSlurps()
+	}
 	// EXISTING_CODE
 
 	return

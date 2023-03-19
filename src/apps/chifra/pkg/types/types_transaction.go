@@ -147,7 +147,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 
 		// TODO: this value could be created when RPC is queried and cached
 		// if s.Value > 0 {
-		model["ether"] = utils.WeiToEther(&s.Value)
+		model["ether"] = utils.WeiToEther(&s.Value).Text('f', 18)
 		// }
 		if s.MaxFeePerGas > 0 {
 			model["maxFeePerGas"] = s.MaxFeePerGas

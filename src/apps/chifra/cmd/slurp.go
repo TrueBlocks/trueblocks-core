@@ -29,7 +29,7 @@ var slurpCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("slurp", func() *globals.GlobalOptions {
 		return &slurpPkg.GetOptions().Globals
 	}),
-	RunE: file.RunWithFileSupport("slurp", slurpPkg.RunSlurp, slurpPkg.ResetOptions),
+	RunE:    file.RunWithFileSupport("slurp", slurpPkg.RunSlurp, slurpPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &slurpPkg.GetOptions().Globals
 	}),
