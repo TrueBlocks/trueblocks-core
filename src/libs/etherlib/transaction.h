@@ -111,7 +111,6 @@ class CTransaction : public CBaseNode {
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
-    friend class CCachedAccount;
     // EXISTING_CODE
 };
 

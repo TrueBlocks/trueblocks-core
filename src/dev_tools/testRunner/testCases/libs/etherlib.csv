@@ -26,7 +26,6 @@ on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,00               ,n    ,v
 on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,01               ,n    ,val = 1
 on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,02               ,n    ,val = 2
 on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,CAbi             ,n    ,val = CAbi
-on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,CCachedAccount   ,n    ,val = CCachedAccount
 on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,CMonitor         ,n    ,val = CMonitor
 on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,CApiSpec         ,n    ,val = CApiSpec
 on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,CBlock           ,n    ,val = CBlock

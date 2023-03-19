@@ -11,7 +11,7 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
-#include "cachedaccount.h"
+// #include "cachedaccount.h"
 
 //--------------------------------------------------------------------------------
 bool migration_001(const string_q& path, void* data) {
@@ -81,9 +81,9 @@ bool migration_001(const string_q& path, void* data) {
                             CAbi item;
                             item.Migrate(readArchive, writeArchive);
 
-                        } else if (checker->path == cacheFolder_slurps) {
-                            CCachedAccount item;
-                            item.Migrate(readArchive, writeArchive);
+                        // } else if (checker->path == cacheFolder_slurps) {
+                        //     C CachedAccount item;
+                        //     item.Migrate(readArchive, writeArchive);
 
                         } else if (checker->path == cacheFolder_txs) {
                             CTransaction item;
