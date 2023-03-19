@@ -49,11 +49,12 @@ type SimpleEtherscan struct {
 	From             Address        `json:"from"`
 	Gas              Gas            `json:"gas"`
 	GasPrice         Gas            `json:"gasPrice"`
-	GasUsed          string         `json:"gasUsed"`
-	HasToken         uint8          `json:"hasToken"`
+	GasUsed          Gas            `json:"gasUsed"`
+	GasCost          Gas            `json:"gasCost"`
+	HasToken         bool           `json:"hasToken"`
 	Hash             common.Hash    `json:"hash"`
 	Input            string         `json:"input"`
-	IsError          uint8          `json:"isError"`
+	IsError          bool           `json:"isError"`
 	Timestamp        Timestamp      `json:"timestamp"`
 	To               Address        `json:"to"`
 	TransactionIndex uint64         `json:"transactionIndex"`
