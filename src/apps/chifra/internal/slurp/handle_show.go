@@ -66,12 +66,22 @@ var m = map[string]string{
 	"int":    "txlistinternal",
 	"nfts":   "tokennfttx",
 	"token":  "tokentx",
+	"miner":  "getminedblocks&blocktype=blocks",
 	"uncles": "getminedblocks&blocktype=uncles",
+}
+var ss = map[string]string{
+	"ext":    "asc",
+	"int":    "asc",
+	"nfts":   "asc",
+	"token":  "asc",
+	"miner":  "asc",
+	"uncles": "asc",
 }
 
 func (opts *SlurpOptions) getEtherscanUrl(addr string, tt string, page int) string {
-	const str = "https://api.etherscan.io/api?module=account&sort=asc&action=[{CMD}]&address=[{ADDRESS}]&page=[{PAGE}]&offset=5000"
-	ret := strings.Replace(str, "[{CMD}]", m[tt], -1)
+	const str = "https://api.etherscan.io/api?module=account&sort=[{SORT}]&action=[{CMD}]&address=[{ADDRESS}]&page=[{PAGE}]&offset=5000"
+	ret := strings.Replace(str, "[{SORT}]", ss[tt], -1)
+	ret = strings.Replace(ret, "[{CMD}]", m[tt], -1)
 	ret = strings.Replace(ret, "[{ADDRESS}]", addr, -1)
 	ret = strings.Replace(ret, "[{PAGE}]", fmt.Sprintf("%d", page), -1)
 	return ret
@@ -148,7 +158,7 @@ func GetTransactionsFromEtherscan(chain string, url string) ([]types.SimpleTrans
 			// HasToken             bool            `json:"hasToken,omitempty"`
 		}
 		t.GasCost = t.GasPrice * t.GasUsed
-		t.IsError = esTx.TxReceiptStatus == "1"
+		t.IsError = esTx.TxReceiptStatus == "0"
 		t.Value.SetString(rawTx.Value, 0)
 
 		a := types.HexToAddress(esTx.ContractAddress)
@@ -211,24 +221,27 @@ func mustParseInt(input any) (result int64) {
 }
 
 func (opts *SlurpOptions) isInRange(bn uint, errorChan chan error) bool {
-	for _, br := range opts.BlockIds {
-		// fmt.Println(br)
-		if strings.Contains(br.Orig, "-") && !strings.Contains(br.Orig, ":") {
-			// a plain block range
-			// fmt.Println("range", br.Start.Number <= bn, bn <= br.End.Number, br.Start.Number <= bn && bn <= br.End.Number)
-			return br.Start.Number <= bn && bn <= br.End.Number
-		}
+	// Note that validation ensures that there is only a single isInRange
+	if len(opts.BlockIds) == 0 {
+		return true
+	}
 
-		blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
-		if err != nil {
-			errorChan <- err
-			return false
-		}
-		for _, num := range blockNums {
-			if uint(num) == bn {
-				return true
-			}
+	br := opts.BlockIds[0]
+	if strings.Contains(br.Orig, "-") && !strings.Contains(br.Orig, ":") {
+		// a plain block range
+		return br.Start.Number <= bn && bn <= br.End.Number
+	}
+
+	blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
+	if err != nil {
+		errorChan <- err
+		return false
+	}
+	for _, num := range blockNums {
+		if uint(num) == bn {
+			return true
 		}
 	}
+
 	return false
 }

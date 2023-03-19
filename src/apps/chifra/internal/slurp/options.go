@@ -80,6 +80,16 @@ func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
 	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	hasAll := false
+	for _, t := range opts.Types {
+		if t == "all" {
+			hasAll = true
+			break
+		}
+	}
+	if hasAll {
+		opts.Types = []string{"ext", "int", "token", "nfts", "1155", "miner", "uncles"}
+	}
 	// EXISTING_CODE
 
 	return opts
@@ -99,6 +109,16 @@ func slurpFinishParse(args []string) *SlurpOptions {
 		}
 	}
 	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	hasAll := false
+	for _, t := range opts.Types {
+		if t == "all" {
+			hasAll = true
+			break
+		}
+	}
+	if hasAll {
+		opts.Types = []string{"ext", "int", "token", "nfts", "1155", "miner", "uncles"}
+	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

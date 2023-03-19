@@ -3,54 +3,59 @@ TEST[DATE|TIME] Addrs:  [0x1324e7b922b30b49ab8ea81086341cc41c249346]
 TEST[DATE|TIME] Blocks:  [0-7000000]
 TEST[DATE|TIME] Types:  [int]
 TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] Processing [0x1324e7b922b30b49ab8ea81086341cc41c249346] --types: [int] [0-7000000]
+INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&action=txlistinternal&address=0x1324e7b922b30b49ab8ea81086341cc41c249346&page=1&offset=5000
 {
   "data": [
     {
       "blockHash": "0x4e1df8783842411230b99f99f532fb5bf7722ed3982a155278d8cd9ecf4508b8",
       "blockNumber": 3790483,
       "date": "2017-05-30 03:00:06 UTC",
-      "ether": "184761.000000000000000000",
+      "ether": "184761",
       "from": "0xccfddfe5f7a205e792dda6d235d5897222a46d4c",
       "gas": 2300,
+      "gasCost": 0,
       "gasPrice": 0,
       "gasUsed": 0,
       "hash": "0xaa5fb607bbb979c6eaebd2b4c5901ef015d12060e14b31ea66978dfd92bbcf08",
       "input": "",
-      "timestamp": "1496113206",
+      "timestamp": 1496113206,
       "to": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
-      "transactionIndex": "9",
+      "transactionIndex": 9,
       "value": "184761000000000000000000"
     },
     {
       "blockHash": "0x0836fbac338d703c4a34de8d4dd47e3b8e5a3b015a5b337e36a0b87322572658",
       "blockNumber": 3835659,
       "date": "2017-06-07 16:58:15 UTC",
-      "ether": "184460.000000000000000000",
+      "ether": "184460",
       "from": "0x621744ce57ea3cd4684731e6069223698c92df79",
       "gas": 2300,
+      "gasCost": 0,
       "gasPrice": 0,
       "gasUsed": 0,
       "hash": "0x787876caa4486b1b62fdf29ebae0ac10cd9260154131231ccd39083ba718c39f",
       "input": "",
-      "timestamp": "1496854695",
+      "timestamp": 1496854695,
       "to": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
-      "transactionIndex": "1",
+      "transactionIndex": 1,
       "value": "184460000000000000000000"
     },
     {
       "blockHash": "0xe4f0debd362694ca2bb90e9e0c60afc9bfbf3192a5fdb485cf94f630fcda7165",
       "blockNumber": 3912453,
       "date": "2017-06-22 09:30:57 UTC",
-      "ether": "184392.780000000000000000",
+      "ether": "184392.78",
       "from": "0x26c4deafd3332bd5dc35d87895ebf038134fa24e",
       "gas": 2300,
+      "gasCost": 0,
       "gasPrice": 0,
       "gasUsed": 0,
       "hash": "0x60b755f51e0b991483c144941b35fddf8677ac10c4be7d46d270cce026cccc57",
       "input": "",
-      "timestamp": "1498123857",
+      "timestamp": 1498123857,
       "to": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
-      "transactionIndex": "15",
+      "transactionIndex": 15,
       "value": "184392780000000000000000"
     }
   ]
