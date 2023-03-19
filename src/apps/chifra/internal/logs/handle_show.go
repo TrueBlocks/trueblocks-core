@@ -8,6 +8,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -16,7 +17,7 @@ import (
 
 func (opts *LogsOptions) HandleShowLogs() (err error) {
 	abiMap := make(abi.AbiInterfaceMap)
-	loadedMap := make(map[types.Address]bool)
+	loadedMap := make(map[base.Address]bool)
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())

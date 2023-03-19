@@ -141,19 +141,19 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
 string_q type_2_GoType(const CMember& field) {
     string_q type = field.type;
     if (type == "blknum")
-        return "uint64";
+        return "base.Blknum";
     if (type == "timestamp")
-        return "Timestamp";
+        return "base.Timestamp";
     if (type == "hash" || type == "bytes32")
         return "common.Hash";
     if (type == "datetime" || type == "bytes")
         return "string";
     if (type == "address")
-        return "Address";
+        return "base.Address";
     if (type == "gas")
-        return "Gas";
+        return "base.Gas";
     if (type == "wei")
-        return "Wei";
+        return "base.Wei";
     if (type == "int256")
         return "big.Int";
     if (type == "double")

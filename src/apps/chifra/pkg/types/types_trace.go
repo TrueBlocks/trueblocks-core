@@ -13,6 +13,7 @@ import (
 	"fmt"
 	"strconv"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
@@ -41,7 +42,7 @@ type SimpleTrace struct {
 	Error            string             `json:"error,omitempty"`
 	Result           *SimpleTraceResult `json:"result"`
 	Subtraces        uint64             `json:"subtraces"`
-	Timestamp        Timestamp          `json:"timestamp"`
+	Timestamp        base.Timestamp     `json:"timestamp"`
 	TraceAddress     []uint64           `json:"traceAddress"`
 	TransactionHash  common.Hash        `json:"transactionHash"`
 	TransactionIndex uint64             `json:"transactionIndex"`

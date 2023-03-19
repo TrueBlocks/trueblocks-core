@@ -1,6 +1,0 @@
-[settings]
-class = QFromTransferFrom
-base_class = QTransferFrom
-fields = fromtransferfrom.csv
-includes = etherlib.h|transferfrom.h
-output = ../../libs/test-libs/etherlib/traceTest

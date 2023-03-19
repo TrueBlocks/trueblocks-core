@@ -14,6 +14,7 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -34,10 +35,10 @@ type Header struct {
 
 // Monitor carries information about a Monitor file and its header
 type Monitor struct {
-	Address types.Address `json:"address"`
-	Staged  bool          `json:"-"`
-	Chain   string        `json:"-"`
-	ReadFp  *os.File      `json:"-"`
+	Address base.Address `json:"address"`
+	Staged  bool         `json:"-"`
+	Chain   string       `json:"-"`
+	ReadFp  *os.File     `json:"-"`
 	Header
 }
 
@@ -50,7 +51,7 @@ const (
 func NewMonitor(chain, addr string, create bool) Monitor {
 	mon := new(Monitor)
 	mon.Header = Header{Magic: file.SmallMagicNumber}
-	mon.Address = types.HexToAddress(addr)
+	mon.Address = base.HexToAddress(addr)
 	mon.Chain = chain
 	_, err := mon.Reload(create)
 	if err != nil {
@@ -63,7 +64,7 @@ func NewMonitor(chain, addr string, create bool) Monitor {
 func NewStagedMonitor(chain, addr string) (Monitor, error) {
 	mon := Monitor{
 		Header:  Header{Magic: file.SmallMagicNumber},
-		Address: types.HexToAddress(addr),
+		Address: base.HexToAddress(addr),
 		Chain:   chain,
 	}
 
@@ -200,7 +201,7 @@ func addressFromPath(path string) (string, error) {
 }
 
 // SentinalAddr is a marker to signify the end of the monitor list produced by ListMonitors
-var SentinalAddr = types.HexToAddress("0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead")
+var SentinalAddr = base.HexToAddress("0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead")
 
 // ListMonitors puts a list of Monitors into the monitorChannel. The list of monitors is built from
 // a file called addresses.tsv in the current folder or, if not present, from existing monitors

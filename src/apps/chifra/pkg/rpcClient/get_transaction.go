@@ -5,6 +5,7 @@ import (
 	"math/big"
 	"strconv"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -102,8 +103,8 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 		TransactionIndex: txIndex,
 		Nonce:            nonce,
 		Timestamp:        block.Timestamp,
-		From:             types.HexToAddress(rawTx.From),
-		To:               types.HexToAddress(rawTx.To),
+		From:             base.HexToAddress(rawTx.From),
+		To:               base.HexToAddress(rawTx.To),
 		Value:            *value,
 		Gas:              gas,
 		GasPrice:         gasPrice,

@@ -8,6 +8,8 @@
 
 package types
 
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+
 // EXISTING_CODE
 
 // EXISTING_CODE
@@ -27,17 +29,17 @@ type RawTraceAction struct {
 }
 
 type SimpleTraceAction struct {
-	SelfDestructed Address `json:"selfDestructed,omitempty"`
-	From           Address `json:"from"`
-	CallType       string  `json:"callType"`
-	Gas            Gas     `json:"gas"`
-	Input          string  `json:"input,omitempty"`
-	To             Address `json:"to"`
-	Value          Wei     `json:"value"`
-	Balance        Wei     `json:"balance,omitempty"`
-	Init           string  `json:"init,omitempty"`
-	RefundAddress  Address `json:"refundAddress,omitempty"`
-	Address        Address `json:"address,omitempty"`
+	SelfDestructed base.Address `json:"selfDestructed,omitempty"`
+	From           base.Address `json:"from"`
+	CallType       string       `json:"callType"`
+	Gas            base.Gas     `json:"gas"`
+	Input          string       `json:"input,omitempty"`
+	To             base.Address `json:"to"`
+	Value          base.Wei     `json:"value"`
+	Balance        base.Wei     `json:"balance,omitempty"`
+	Init           string       `json:"init,omitempty"`
+	RefundAddress  base.Address `json:"refundAddress,omitempty"`
+	Address        base.Address `json:"address,omitempty"`
 	raw            *RawTraceAction
 }
 

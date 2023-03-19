@@ -1,6 +1,7 @@
 package pinning
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -21,7 +22,7 @@ type PinResult struct {
 // TODO: BOGUS - WE HAVE TO HAVE A SOLUTION FOR THE TIMESTAMP FILE --PIN --REMOTE ON THE CHIFRA WHEN ROUTINES?
 func PinTimestamps(chain string, isRemote bool) error {
 	path := config.GetPathToIndex(chain) + "ts.bin"
-	var hash types.IpfsHash
+	var hash base.IpfsHash
 	var err error
 	if LocalDaemonRunning() {
 		localService, _ := NewPinningService(chain, Local)
@@ -92,7 +93,7 @@ func PinChunk(chain, path string, isRemote bool) (PinResult, error) {
 	return result, nil
 }
 
-func (p *Service) PinFile(filepath string, local bool) (types.IpfsHash, error) {
+func (p *Service) PinFile(filepath string, local bool) (base.IpfsHash, error) {
 	if local {
 		return p.pinFileLocally(filepath)
 	}

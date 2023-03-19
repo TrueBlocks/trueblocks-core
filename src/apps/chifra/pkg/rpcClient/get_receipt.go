@@ -7,6 +7,7 @@ package rpcClient
 import (
 	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -28,7 +29,7 @@ func GetTransactionReceipt(chain string, bn uint64, txid uint64, txHash *common.
 	logs := []types.SimpleLog{}
 	for _, rawLog := range rawReceipt.Logs {
 		rawLog := rawLog
-		logAddress := types.HexToAddress(rawLog.Address)
+		logAddress := base.HexToAddress(rawLog.Address)
 		logIndex, parseErr := hexutil.DecodeUint64(rawLog.LogIndex)
 		if parseErr != nil {
 			err = parseErr
@@ -92,7 +93,7 @@ func GetTransactionReceipt(chain string, bn uint64, txid uint64, txHash *common.
 	receipt = types.SimpleReceipt{
 		BlockHash:         common.HexToHash(rawReceipt.BlockHash),
 		BlockNumber:       blockNumber,
-		ContractAddress:   types.HexToAddress(rawReceipt.ContractAddress),
+		ContractAddress:   base.HexToAddress(rawReceipt.ContractAddress),
 		CumulativeGasUsed: fmt.Sprint(cumulativeGasUsed),
 		GasUsed:           gasUsed,
 		Logs:              logs,

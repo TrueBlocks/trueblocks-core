@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -23,10 +24,10 @@ type RawTraceResult struct {
 }
 
 type SimpleTraceResult struct {
-	Address Address `json:"address,omitempty"`
-	Code    string  `json:"code,omitempty"`
-	GasUsed Gas     `json:"gasUsed"`
-	Output  string  `json:"output"`
+	Address base.Address `json:"address,omitempty"`
+	Code    string       `json:"code,omitempty"`
+	GasUsed base.Gas     `json:"gasUsed"`
+	Output  string       `json:"output"`
 	raw     *RawTraceResult
 }
 

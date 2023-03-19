@@ -13,6 +13,7 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -20,13 +21,12 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 // AddressMonitorMap carries arrays of appearances that have not yet been written to the monitor file
-type AddressMonitorMap map[types.Address]*monitor.Monitor
+type AddressMonitorMap map[base.Address]*monitor.Monitor
 
 // MonitorUpdate stores the original 'chifra list' command line options plus
 type MonitorUpdate struct {
@@ -84,7 +84,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 			return err
 		}
 
-		if updater.MonitorMap[types.HexToAddress(addr)] == nil {
+		if updater.MonitorMap[base.HexToAddress(addr)] == nil {
 			mon, _ := monitor.NewStagedMonitor(opts.Globals.Chain, addr)
 			mon.ReadMonitorHeader()
 			if uint64(mon.LastScanned) < updater.FirstBlock {
@@ -316,7 +316,7 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 }
 
 func needsMigration(addr string) error {
-	mon := monitor.Monitor{Address: types.HexToAddress(addr)}
+	mon := monitor.Monitor{Address: base.HexToAddress(addr)}
 	path := strings.Replace(mon.Path(), ".mon.bin", ".acct.bin", -1)
 	if file.FileExists(path) {
 		path = strings.Replace(path, config.GetPathToCache(mon.Chain), "./", -1)

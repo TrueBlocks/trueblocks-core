@@ -10,6 +10,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -186,8 +187,8 @@ func (opts *SlurpOptions) GetTransactionsFromEtherscan(chain string, addr, tt st
 			BlockNumber:      mustParseUint(rawTx.BlockNumber),
 			TransactionIndex: mustParseUint(rawTx.TransactionIndex),
 			Timestamp:        mustParseInt(esTx.Timestamp),
-			From:             types.HexToAddress(rawTx.From),
-			To:               types.HexToAddress(rawTx.To),
+			From:             base.HexToAddress(rawTx.From),
+			To:               base.HexToAddress(rawTx.To),
 			Gas:              mustParseUint(rawTx.Gas),
 			GasPrice:         mustParseUint(rawTx.GasPrice),
 			GasUsed:          mustParseUint(esTx.GasUsed),
@@ -204,7 +205,7 @@ func (opts *SlurpOptions) GetTransactionsFromEtherscan(chain string, addr, tt st
 		t.IsError = esTx.TxReceiptStatus == "0"
 		t.HasToken = tt == "nfts" || tt == "token" || tt == "1155"
 		t.Value.SetString(rawTx.Value, 0)
-		t.ContractAddress = types.HexToAddress(esTx.ContractAddress)
+		t.ContractAddress = base.HexToAddress(esTx.ContractAddress)
 		if tt == "int" {
 			// Markers to help us remove these since Etherscan doesn't send them and we don't want to make another RPC call
 			t.BlockHash = common.HexToHash("0xdeadbeef")
@@ -214,20 +215,20 @@ func (opts *SlurpOptions) GetTransactionsFromEtherscan(chain string, addr, tt st
 			t.TransactionIndex = 99999
 			t.Input = "0xBlockReward"
 			t.Value.SetString("5000000000000000000", 0)
-			t.To = types.HexToAddress(addr)
+			t.To = base.HexToAddress(addr)
 		} else if tt == "uncles" {
 			t.BlockHash = common.HexToHash("0xdeadbeef")
 			t.TransactionIndex = 99998
 			t.Input = "0xUncleReward"
 			t.Value.SetString("3750000000000000000", 0)
-			t.To = types.HexToAddress(addr)
+			t.To = base.HexToAddress(addr)
 		}
 
-		// a := types.HexToAddress(esTx.ContractAddress)
+		// a := base.HexToAddress(esTx.ContractAddress)
 		// b := mustParseUint(esTx.CumulativeGasUsed)
 		// c := mustParseUint(esTx.GasUsed)
 		// d := uint32(mustParseUint(esTx.TxReceiptStatus))
-		// if a != types.HexToAddress("0x0") || b != 0 || c != 0 || d != 0 {
+		// if a != base.HexToAddress("0x0") || b != 0 || c != 0 || d != 0 {
 		// 	t.Receipt = &types.SimpleReceipt{
 		// 		ContractAddress:   a,
 		// 		CumulativeGasUsed: esTx.CumulativeGasUsed,

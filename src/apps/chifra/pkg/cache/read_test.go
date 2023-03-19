@@ -9,6 +9,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common"
 )
@@ -155,8 +156,8 @@ func TestReadBlock(t *testing.T) {
 		TransactionIndex:     0,
 		Nonce:                175,
 		Timestamp:            0,
-		From:                 types.HexToAddress("0x53871c23523453988ebd6524fcb0ea29241ca4d2"),
-		To:                   types.HexToAddress("0x8d12a197cb00d4747a1fe03395095ce2a5cc6819"),
+		From:                 base.HexToAddress("0x53871c23523453988ebd6524fcb0ea29241ca4d2"),
+		To:                   base.HexToAddress("0x8d12a197cb00d4747a1fe03395095ce2a5cc6819"),
 		Value:                *big.NewInt(0),
 		Gas:                  250000,
 		GasPrice:             50000000000,
@@ -165,12 +166,12 @@ func TestReadBlock(t *testing.T) {
 		Input:                "0x338b5dea000000000000000000000000f3db5fa2c66b7af3eb0c0b782510816cbe4813b800000000000000000000000000000000000000000000000000000000004c4b40",
 		HasToken:             false,
 		Receipt: &types.SimpleReceipt{
-			ContractAddress:   types.HexToAddress("0x0"),
+			ContractAddress:   base.HexToAddress("0x0"),
 			GasUsed:           53673,
 			EffectiveGasPrice: 50000000000,
 			Logs: []types.SimpleLog{
 				{
-					Address:  types.HexToAddress("0xf3db5fa2c66b7af3eb0c0b782510816cbe4813b8"),
+					Address:  base.HexToAddress("0xf3db5fa2c66b7af3eb0c0b782510816cbe4813b8"),
 					LogIndex: 0,
 					Topics: []common.Hash{
 						common.HexToHash("0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"),
@@ -180,7 +181,7 @@ func TestReadBlock(t *testing.T) {
 					Data: "0x00000000000000000000000000000000000000000000000000000000004c4b40",
 				},
 				{
-					Address:  types.HexToAddress("0x8d12a197cb00d4747a1fe03395095ce2a5cc6819"),
+					Address:  base.HexToAddress("0x8d12a197cb00d4747a1fe03395095ce2a5cc6819"),
 					LogIndex: 1,
 					Topics: []common.Hash{
 						common.HexToHash("0xdcbc1c05240f31ff3ad067ef1ee35ce4997762752e3a095284754544f4c709d7"),
@@ -201,8 +202,8 @@ func TestReadBlock(t *testing.T) {
 		TransactionIndex:     8,
 		Nonce:                254,
 		Timestamp:            0,
-		From:                 types.HexToAddress("0x1366a2ca67594ffd5174d0216d60d9ea8deb511f"),
-		To:                   types.HexToAddress("0xb4a68dfdfb56184930c3a84e9244919823c3a2b4"),
+		From:                 base.HexToAddress("0x1366a2ca67594ffd5174d0216d60d9ea8deb511f"),
+		To:                   base.HexToAddress("0xb4a68dfdfb56184930c3a84e9244919823c3a2b4"),
 		Value:                *expectedValue,
 		Gas:                  21000,
 		GasPrice:             20000000000,
@@ -211,7 +212,7 @@ func TestReadBlock(t *testing.T) {
 		Input:                "0x",
 		HasToken:             false,
 		Receipt: &types.SimpleReceipt{
-			ContractAddress:   types.HexToAddress("0x0"),
+			ContractAddress:   base.HexToAddress("0x0"),
 			GasUsed:           21000,
 			EffectiveGasPrice: 20000000000,
 			Status:            1,

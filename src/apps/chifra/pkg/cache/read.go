@@ -7,6 +7,7 @@ import (
 	"errors"
 	"math/big"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common"
 )
@@ -38,7 +39,7 @@ func createReadFn(reader *bufio.Reader) readBytes {
 type ArrayItem interface {
 	~string |
 		common.Hash |
-		types.Address |
+		base.Address |
 		types.SimpleTransaction |
 		types.SimpleTrace |
 		types.SimpleParameter |
@@ -99,13 +100,13 @@ func readCString(reader *bufio.Reader, str *cString) (err error) {
 	return
 }
 
-func readAddress(reader *bufio.Reader, target *types.Address) (err error) {
+func readAddress(reader *bufio.Reader, target *base.Address) (err error) {
 	str := &cString{}
 	err = readCString(reader, str)
 	if err != nil {
 		return
 	}
-	addr := types.HexToAddress(string(str.content))
+	addr := base.HexToAddress(string(str.content))
 	*target = addr
 	return
 }
@@ -838,7 +839,7 @@ func ReadAbis(reader *bufio.Reader) (result []types.SimpleFunction, err error) {
 	}
 
 	// This address is always empty
-	var address types.Address
+	var address base.Address
 	if err = readAddress(reader, &address); err != nil {
 		return
 	}

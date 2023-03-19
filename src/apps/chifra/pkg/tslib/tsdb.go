@@ -7,8 +7,8 @@ import (
 	"os"
 	"sort"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 type TimestampRecord struct {
@@ -83,7 +83,7 @@ var ErrInTheFuture = errors.New("timestamp in the future")
 // FromTs is a local function that returns a Timestamp record given a Unix timestamp. It
 // loads the timestamp file into memory if it isn't already. If the timestamp requested
 // is past the end of the timestamp file, it estimates the block number and returns and error
-func FromTs(chain string, ts types.Timestamp) (*TimestampRecord, error) {
+func FromTs(chain string, ts base.Timestamp) (*TimestampRecord, error) {
 	cnt, err := NTimestamps(chain)
 	if err != nil {
 		return &TimestampRecord{}, err
@@ -94,9 +94,9 @@ func FromTs(chain string, ts types.Timestamp) (*TimestampRecord, error) {
 		return &TimestampRecord{}, err
 	}
 
-	if ts > types.Timestamp(perChainTimestamps[chain].memory[cnt-1].Ts) {
+	if ts > base.Timestamp(perChainTimestamps[chain].memory[cnt-1].Ts) {
 		last := perChainTimestamps[chain].memory[cnt-1]
-		secs := ts - types.Timestamp(last.Ts)
+		secs := ts - base.Timestamp(last.Ts)
 		blks := uint32(float64(secs) / 13.3)
 		last.Bn = last.Bn + blks
 		last.Ts = uint32(ts)
@@ -106,7 +106,7 @@ func FromTs(chain string, ts types.Timestamp) (*TimestampRecord, error) {
 	// Go docs: Search uses binary search to find and return the smallest index i in [0, n) at which f(i) is true,
 	index := sort.Search(int(cnt), func(i int) bool {
 		d := perChainTimestamps[chain].memory[i]
-		v := types.Timestamp(d.Ts)
+		v := base.Timestamp(d.Ts)
 		return v > ts
 	})
 

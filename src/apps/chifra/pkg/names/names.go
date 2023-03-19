@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -79,8 +80,8 @@ func LoadNamesArray(chain string, parts Parts, sortBy SortBy, terms []string) ([
 }
 
 // LoadNamesMap loads the names from the cache and returns a map of names
-func LoadNamesMap(chain string, parts Parts, terms []string) (map[types.Address]types.SimpleName, error) {
-	namesMap := map[types.Address]types.SimpleName{}
+func LoadNamesMap(chain string, parts Parts, terms []string) (map[base.Address]types.SimpleName, error) {
+	namesMap := map[base.Address]types.SimpleName{}
 
 	// Load the prefund names first...
 	if parts&Prefund != 0 {
@@ -128,7 +129,7 @@ func (gr *NameReader) Read() (types.SimpleName, error) {
 
 	return types.SimpleName{
 		Tags:       record[gr.header["tags"]],
-		Address:    types.HexToAddress(strings.ToLower(record[gr.header["address"]])),
+		Address:    base.HexToAddress(strings.ToLower(record[gr.header["address"]])),
 		Name:       record[gr.header["name"]],
 		Decimals:   globals.ToUint64(record[gr.header["decimals"]]),
 		Symbol:     record[gr.header["symbol"]],
@@ -260,7 +261,7 @@ func asString(which string, b []byte) string {
 		// 		}
 		// 		if !n.IsCustom {
 		// 			if doSearch(n, terms, parts) {
-		// 				ret[types.HexToAddress(n.Address)] = n
+		// 				ret[base.HexToAddress(n.Address)] = n
 		// 			}
 		// 		}
 		// 	}

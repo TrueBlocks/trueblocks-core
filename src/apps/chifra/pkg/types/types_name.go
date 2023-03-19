@@ -11,6 +11,8 @@ package types
 // EXISTING_CODE
 import (
 	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
 // EXISTING_CODE
@@ -32,19 +34,19 @@ type RawName struct {
 }
 
 type SimpleName struct {
-	Address    Address `json:"address"`
-	Decimals   uint64  `json:"decimals"`
-	Deleted    bool    `json:"deleted,omitempty"`
-	IsContract bool    `json:"isContract,omitempty"`
-	IsCustom   bool    `json:"isCustom,omitempty"`
-	IsErc20    bool    `json:"isErc20,omitempty"`
-	IsErc721   bool    `json:"isErc721,omitempty"`
-	IsPrefund  bool    `json:"isPrefund,omitempty"`
-	Name       string  `json:"name"`
-	Petname    string  `json:"petname"`
-	Source     string  `json:"source"`
-	Symbol     string  `json:"symbol"`
-	Tags       string  `json:"tags"`
+	Address    base.Address `json:"address"`
+	Decimals   uint64       `json:"decimals"`
+	Deleted    bool         `json:"deleted,omitempty"`
+	IsContract bool         `json:"isContract,omitempty"`
+	IsCustom   bool         `json:"isCustom,omitempty"`
+	IsErc20    bool         `json:"isErc20,omitempty"`
+	IsErc721   bool         `json:"isErc721,omitempty"`
+	IsPrefund  bool         `json:"isPrefund,omitempty"`
+	Name       string       `json:"name"`
+	Petname    string       `json:"petname"`
+	Source     string       `json:"source"`
+	Symbol     string       `json:"symbol"`
+	Tags       string       `json:"tags"`
 	raw        *RawName
 }
 
@@ -95,7 +97,7 @@ func (s *SimpleName) Model(showHidden bool, format string, extraOptions map[stri
 	}
 
 	// EXISTING_CODE
-	if len(s.Address.Bytes()) > 0 && s.Address != HexToAddress("0x0") {
+	if len(s.Address.Bytes()) > 0 && s.Address != base.HexToAddress("0x0") {
 		model["address"] = strings.ToLower(s.Address.String())
 	}
 

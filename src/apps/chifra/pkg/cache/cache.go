@@ -7,6 +7,7 @@ import (
 	"os"
 	"path"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	filePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -125,7 +126,7 @@ func SetBlock(chain string, block *types.SimpleBlock[types.SimpleTransaction]) (
 }
 
 // GetBlock reads block from the cache
-func GetBlock(chain string, blockNumber types.Blknum) (block *types.SimpleBlock[types.SimpleTransaction], err error) {
+func GetBlock(chain string, blockNumber base.Blknum) (block *types.SimpleBlock[types.SimpleTransaction], err error) {
 	filePath := getPathByBlock(ItemBlock, blockNumber)
 
 	return getItem(
@@ -148,7 +149,7 @@ func SetTransaction(chain string, tx *types.SimpleTransaction) (err error) {
 }
 
 // GetTransaction reads transaction from the cache
-func GetTransaction(chain string, blockNumber types.Blknum, txIndex uint64) (tx *types.SimpleTransaction, err error) {
+func GetTransaction(chain string, blockNumber base.Blknum, txIndex uint64) (tx *types.SimpleTransaction, err error) {
 	filePath := getPathByBlockAndTransactionIndex(ItemTransaction, blockNumber, txIndex)
 
 	return getItem(
@@ -180,7 +181,7 @@ func SetAbis(chain string, abis []types.SimpleFunction) (err error) {
 }
 
 // GetAbi returns single ABI per address. ABI-per-address are stored as JSON, not binary.
-func GetAbi(chain string, address types.Address) (simpleAbis []types.SimpleFunction, err error) {
+func GetAbi(chain string, address base.Address) (simpleAbis []types.SimpleFunction, err error) {
 	fileName := address.Hex() + ".json"
 	filePath := path.Join(
 		itemToDirectory[ItemABI],
@@ -215,7 +216,7 @@ func GetAbi(chain string, address types.Address) (simpleAbis []types.SimpleFunct
 
 // SetAbi writes single ABI to cache. ABI-per-address are stored as JSON, not binary.
 // TODO: we cache abi.ABI, not types.SimpleFunction
-// func SetAbi(chain string, address types.Address, abi []types.SimpleFunction) (err error) {
+// func SetAbi(chain string, address base.Address, abi []types.SimpleFunction) (err error) {
 // 	filePath := path.Join(
 // 		itemToDirectory[ItemABI],
 // 		address.Hex()+".json",
@@ -230,7 +231,7 @@ func GetAbi(chain string, address types.Address) (simpleAbis []types.SimpleFunct
 // }
 
 // InsertAbi copies file (e.g. opened local file) into cache
-func InsertAbi(chain string, address types.Address, inputReader io.Reader) (err error) {
+func InsertAbi(chain string, address base.Address, inputReader io.Reader) (err error) {
 	filePath := path.Join(
 		itemToDirectory[ItemABI],
 		address.Hex()+".json",

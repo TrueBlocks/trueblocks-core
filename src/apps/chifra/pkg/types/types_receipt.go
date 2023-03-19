@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -32,19 +33,19 @@ type RawReceipt struct {
 }
 
 type SimpleReceipt struct {
-	BlockHash         common.Hash `json:"blockHash,omitempty"`
-	BlockNumber       uint64      `json:"blockNumber"`
-	ContractAddress   Address     `json:"contractAddress,omitempty"`
-	CumulativeGasUsed string      `json:"cumulativeGasUsed,omitempty"`
-	EffectiveGasPrice Gas         `json:"effectiveGasPrice,omitempty"`
-	From              Address     `json:"from,omitempty"`
-	GasUsed           Gas         `json:"gasUsed"`
-	IsError           bool        `json:"isError,omitempty"`
-	Logs              []SimpleLog `json:"logs"`
-	Status            uint32      `json:"status"`
-	To                Address     `json:"to,omitempty"`
-	TransactionHash   common.Hash `json:"transactionHash"`
-	TransactionIndex  uint64      `json:"transactionIndex"`
+	BlockHash         common.Hash  `json:"blockHash,omitempty"`
+	BlockNumber       base.Blknum  `json:"blockNumber"`
+	ContractAddress   base.Address `json:"contractAddress,omitempty"`
+	CumulativeGasUsed string       `json:"cumulativeGasUsed,omitempty"`
+	EffectiveGasPrice base.Gas     `json:"effectiveGasPrice,omitempty"`
+	From              base.Address `json:"from,omitempty"`
+	GasUsed           base.Gas     `json:"gasUsed"`
+	IsError           bool         `json:"isError,omitempty"`
+	Logs              []SimpleLog  `json:"logs"`
+	Status            uint32       `json:"status"`
+	To                base.Address `json:"to,omitempty"`
+	TransactionHash   common.Hash  `json:"transactionHash"`
+	TransactionIndex  base.Blknum  `json:"transactionIndex"`
 	raw               *RawReceipt
 }
 

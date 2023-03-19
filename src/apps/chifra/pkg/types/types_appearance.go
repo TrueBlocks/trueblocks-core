@@ -1,5 +1,7 @@
 package types
 
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+
 type RawAppearance struct {
 	Address          string `json:"address"`
 	BlockNumber      uint32 `json:"blockNumber"`
@@ -7,12 +9,12 @@ type RawAppearance struct {
 }
 
 type SimpleAppearance struct {
-	Address          Address   `json:"address"`
-	BlockNumber      uint32    `json:"blockNumber"`
-	TransactionIndex uint32    `json:"transactionIndex"`
-	Reason           string    `json:"reason,omitempty"`
-	Timestamp        Timestamp `json:"timestamp"`
-	Date             string    `json:"date"`
+	Address          base.Address   `json:"address"`
+	BlockNumber      uint32         `json:"blockNumber"`
+	TransactionIndex uint32         `json:"transactionIndex"`
+	Reason           string         `json:"reason,omitempty"`
+	Timestamp        base.Timestamp `json:"timestamp"`
+	Date             string         `json:"date"`
 	raw              *RawAppearance
 }
 

@@ -8,6 +8,7 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
@@ -145,12 +146,12 @@ func (p *Point) resolvePoint(chain string) uint64 {
 		bn, _ = tslib.FromNameToBn(chain, p.Special)
 	} else if p.Number >= utils.EarliestEvmTs {
 		var err error
-		bn, err = tslib.FromTsToBn(chain, types.Timestamp(p.Number))
+		bn, err = tslib.FromTsToBn(chain, base.Timestamp(p.Number))
 		if err == tslib.ErrInTheFuture {
 			provider := config.GetRpcProvider(chain)
 			latest := rpcClient.BlockNumber(provider)
 			tsFuture := rpc.GetBlockTimestamp(chain, latest)
-			secs := uint64(tsFuture - types.Timestamp(p.Number))
+			secs := uint64(tsFuture - base.Timestamp(p.Number))
 			blks := (secs / 13)
 			bn = latest + blks
 		}

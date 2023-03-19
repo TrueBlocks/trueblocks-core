@@ -5,7 +5,7 @@ import (
 	"path"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
 var itemToDirectory = map[CacheItem]string{
@@ -20,7 +20,7 @@ func getDirectoryByItem(item CacheItem) string {
 
 // TODO(cache): There is code in `chifra monitors --decache` that builds these identical paths. We should
 // TODO(cache): comine the at some point in the future. Of course, that code belongs here in the `cache` package.
-func getDirStructureByBlock(blockNumber types.Blknum) (result string, paddedBn string) {
+func getDirStructureByBlock(blockNumber base.Blknum) (result string, paddedBn string) {
 	paddedBn = fmt.Sprintf("%09d", blockNumber)
 	parts := make([]string, 3)
 	parts[0] = paddedBn[:2]
@@ -30,7 +30,7 @@ func getDirStructureByBlock(blockNumber types.Blknum) (result string, paddedBn s
 	return
 }
 
-func getPathByBlock(item CacheItem, blockNumber types.Blknum) string {
+func getPathByBlock(item CacheItem, blockNumber base.Blknum) string {
 	parentDirs, bn := getDirStructureByBlock(blockNumber)
 	directory := getDirectoryByItem(item)
 	return path.Join(directory, parentDirs, bn+".bin")
@@ -38,7 +38,7 @@ func getPathByBlock(item CacheItem, blockNumber types.Blknum) string {
 
 func getPathByBlockAndTransactionIndex(
 	item CacheItem,
-	blockNumber types.Blknum,
+	blockNumber base.Blknum,
 	txId uint64,
 ) string {
 	txIndex := fmt.Sprintf("%05d", txId)
