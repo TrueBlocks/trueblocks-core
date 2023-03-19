@@ -34,6 +34,8 @@ type MonitorsOptions struct {
 	LastBlock  uint64                `json:"lastBlock,omitempty"`  // Last block to process (inclusive)
 	Globals    globals.GlobalOptions `json:"globals,omitempty"`    // The global options
 	BadFlag    error                 `json:"badFlag,omitempty"`    // An error flag if needed
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 var defaultMonitorsOptions = MonitorsOptions{

@@ -30,6 +30,8 @@ type SlurpOptions struct {
 	Sleep       float64                  `json:"sleep,omitempty"`       // Seconds to sleep between requests
 	Globals     globals.GlobalOptions    `json:"globals,omitempty"`     // The global options
 	BadFlag     error                    `json:"badFlag,omitempty"`     // An error flag if needed
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 var defaultSlurpOptions = SlurpOptions{

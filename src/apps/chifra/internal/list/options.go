@@ -32,6 +32,8 @@ type ListOptions struct {
 	LastBlock   uint64                `json:"lastBlock,omitempty"`   // Last block to export (inclusive, ignored when freshening)
 	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
 	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 var defaultListOptions = ListOptions{
