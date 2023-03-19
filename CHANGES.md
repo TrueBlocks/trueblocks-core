@@ -1,3 +1,9 @@
+Added --sleep and --per_page to chifra slurp
+Ported slurp to GoLang
+Removes zero-valued Nonce, MaxFeePerGas, and MaxPriorityFeePerGas from Transaction and Block data
+
+
+
 <!-- markdownlint-disable MD024 MD036 -->
 # Changes
 

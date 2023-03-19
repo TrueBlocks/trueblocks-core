@@ -11,7 +11,6 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
-// #include "cachedaccount.h"
 
 //--------------------------------------------------------------------------------
 bool migration_001(const string_q& path, void* data) {
