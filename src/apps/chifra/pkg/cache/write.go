@@ -8,6 +8,7 @@ import (
 	"math/big"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common"
 )
@@ -44,7 +45,7 @@ func writeHash(writer *bufio.Writer, hash *common.Hash) (err error) {
 	return writeString(writer, &value)
 }
 
-func writeAddress(writer *bufio.Writer, address *types.Address) (err error) {
+func writeAddress(writer *bufio.Writer, address *base.Address) (err error) {
 	value := lowercaseHex(address.Hex())
 	if value == "0x0000000000000000000000000000000000000000" {
 		value = "0x0"
@@ -686,7 +687,7 @@ func WriteAbis(writer *bufio.Writer, abis []types.SimpleFunction) (err error) {
 	}
 
 	// This address is always empty
-	address := types.Address{}
+	address := base.Address{}
 	if err = writeAddress(writer, &address); err != nil {
 		return
 	}

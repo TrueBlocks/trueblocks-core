@@ -10,6 +10,7 @@ import (
 	"math/big"
 	"strconv"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -75,8 +76,8 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, isFinal bool) (types.Simpl
 			TransactionIndex:     mustParseUint(t["transactionIndex"]),
 			Nonce:                mustParseUint(t["nonce"]),
 			Timestamp:            ts,
-			From:                 types.HexToAddress(fmt.Sprint(t["from"])),
-			To:                   types.HexToAddress(fmt.Sprint(t["to"])),
+			From:                 base.HexToAddress(fmt.Sprint(t["from"])),
+			To:                   base.HexToAddress(fmt.Sprint(t["to"])),
 			Value:                *value,
 			Gas:                  mustParseUint(t["gas"]),
 			GasPrice:             txGasPrice,
@@ -153,12 +154,12 @@ func loadBlock[Tx types.BlockTransaction](chain string, bn uint64, isFinal bool,
 
 	block = types.SimpleBlock[Tx]{
 		BlockNumber: blockNumber,
-		Timestamp:   types.Timestamp(ts), // note that we turn Ethereum's timestamps into types.Timestamp upon read.
+		Timestamp:   base.Timestamp(ts), // note that we turn Ethereum's timestamps into types.Timestamp upon read.
 		Hash:        common.HexToHash(rawBlock.Hash),
 		ParentHash:  common.HexToHash(rawBlock.ParentHash),
 		GasLimit:    gasLimit,
 		GasUsed:     gasUsed,
-		Miner:       types.HexToAddress(rawBlock.Miner),
+		Miner:       base.HexToAddress(rawBlock.Miner),
 		Difficulty:  difficulty,
 		Finalized:   isFinal,
 		Uncles:      uncles,

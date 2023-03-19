@@ -9,7 +9,10 @@
 package types
 
 // EXISTING_CODE
-import "github.com/ethereum/go-ethereum/common"
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/ethereum/go-ethereum/common"
+)
 
 // EXISTING_CODE
 
@@ -22,11 +25,11 @@ type RawTraceCount struct {
 }
 
 type SimpleTraceCount struct {
-	BlockNumber      uint64      `json:"blockNumber"`
-	Timestamp        Timestamp   `json:"timestamp"`
-	TracesCnt        uint64      `json:"tracesCnt"`
-	TransactionHash  common.Hash `json:"transactionHash"`
-	TransactionIndex uint64      `json:"transactionIndex"`
+	BlockNumber      base.Blknum    `json:"blockNumber"`
+	Timestamp        base.Timestamp `json:"timestamp"`
+	TracesCnt        uint64         `json:"tracesCnt"`
+	TransactionHash  common.Hash    `json:"transactionHash"`
+	TransactionIndex base.Blknum    `json:"transactionIndex"`
 	raw              *RawTraceCount
 }
 

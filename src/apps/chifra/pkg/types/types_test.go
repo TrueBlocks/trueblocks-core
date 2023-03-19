@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"testing"
 
+	base "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -35,7 +36,7 @@ func TestTypes(t *testing.T) {
 
 func TestAddress_Hex(t *testing.T) {
 	hex := "0xF1AA581F353005BA3765B81BF52D6B1C488C2101"
-	var addr Address
+	var addr base.Address
 	addr.SetHex(hex)
 
 	expected := "0xf1aa581f353005ba3765b81bf52d6b1c488c2101"
@@ -45,12 +46,12 @@ func TestAddress_Hex(t *testing.T) {
 
 	zero := "0x0000000000000000000000000000000000000000"
 	expected = "0x0"
-	addr = HexToAddress(zero)
+	addr = base.HexToAddress(zero)
 	if result := addr.Hex(); result != expected {
 		t.Fatal("wrong Hex() return value for 0x0:", result)
 	}
 
-	var zero2 Address
+	var zero2 base.Address
 	addrStr := fmt.Sprint(zero2)
 	if addrStr != expected {
 		t.Fatal("wrong Hex() return value for 0x0:", addrStr)
@@ -59,7 +60,7 @@ func TestAddress_Hex(t *testing.T) {
 
 func TestAddress_Stringer(t *testing.T) {
 	hex := "0xF1AA581F353005BA3765B81BF52D6B1C488C2101"
-	var addr Address
+	var addr base.Address
 	addr.SetHex(hex)
 
 	expected := "0xf1aa581f353005ba3765b81bf52d6b1c488c2101"
@@ -69,12 +70,12 @@ func TestAddress_Stringer(t *testing.T) {
 }
 
 func TestAddress_IsZero(t *testing.T) {
-	var zeroValue Address
+	var zeroValue base.Address
 	if result := zeroValue.IsZero(); result != true {
 		t.Fatal("wrong result for zero value")
 	}
 
-	zeroAddr := HexToAddress("0x0")
+	zeroAddr := base.HexToAddress("0x0")
 	if result := zeroAddr.IsZero(); result != true {
 		t.Fatal("wrong result for zero address")
 	}
@@ -82,7 +83,7 @@ func TestAddress_IsZero(t *testing.T) {
 
 func TestHexToAddress(t *testing.T) {
 	hex := "0xF1AA581F353005BA3765B81BF52D6B1C488C2101"
-	addr := HexToAddress(hex)
+	addr := base.HexToAddress(hex)
 
 	expected := "0xf1aa581f353005ba3765b81bf52d6b1c488c2101"
 	if result := addr.Hex(); result != expected {

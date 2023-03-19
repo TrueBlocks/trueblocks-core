@@ -12,6 +12,7 @@ package types
 import (
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/bykof/gostradamus"
 	"github.com/ethereum/go-ethereum/common"
@@ -44,24 +45,24 @@ type RawEtherscan struct {
 }
 
 type SimpleEtherscan struct {
-	BlockHash        common.Hash `json:"blockHash"`
-	BlockNumber      uint64      `json:"blockNumber"`
-	ContractAddress  Address     `json:"contractAddress"`
-	Date             string      `json:"date"`
-	Ether            string      `json:"ether"`
-	From             Address     `json:"from"`
-	Gas              Gas         `json:"gas"`
-	GasPrice         Gas         `json:"gasPrice"`
-	GasUsed          Gas         `json:"gasUsed"`
-	GasCost          Gas         `json:"gasCost"`
-	HasToken         bool        `json:"hasToken"`
-	Hash             common.Hash `json:"hash"`
-	Input            string      `json:"input"`
-	IsError          bool        `json:"isError"`
-	Timestamp        Timestamp   `json:"timestamp"`
-	To               Address     `json:"to"`
-	TransactionIndex uint64      `json:"transactionIndex"`
-	Value            Wei         `json:"value"`
+	BlockHash        common.Hash    `json:"blockHash"`
+	BlockNumber      uint64         `json:"blockNumber"`
+	ContractAddress  base.Address   `json:"contractAddress"`
+	Date             string         `json:"date"`
+	Ether            string         `json:"ether"`
+	From             base.Address   `json:"from"`
+	Gas              base.Gas       `json:"gas"`
+	GasPrice         base.Gas       `json:"gasPrice"`
+	GasUsed          base.Gas       `json:"gasUsed"`
+	GasCost          base.Gas       `json:"gasCost"`
+	HasToken         bool           `json:"hasToken"`
+	Hash             common.Hash    `json:"hash"`
+	Input            string         `json:"input"`
+	IsError          bool           `json:"isError"`
+	Timestamp        base.Timestamp `json:"timestamp"`
+	To               base.Address   `json:"to"`
+	TransactionIndex uint64         `json:"transactionIndex"`
+	Value            base.Wei       `json:"value"`
 	raw              *RawEtherscan
 	// ArticulatedTx    SimpleFunction `json:"articulatedTx"`
 	// CompressedTx     string         `json:"compressedTx"`
@@ -203,7 +204,7 @@ func (s *SimpleEtherscan) Model(showHidden bool, format string, extraOptions map
 }
 
 // EXISTING_CODE
-func (s *SimpleEtherscan) SetGasCost() Gas {
+func (s *SimpleEtherscan) SetGasCost() base.Gas {
 	s.GasCost = s.GasPrice * s.GasUsed
 	return s.GasCost
 }

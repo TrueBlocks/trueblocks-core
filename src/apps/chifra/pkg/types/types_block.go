@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -45,18 +46,18 @@ type RawBlock struct {
 }
 
 type SimpleBlock[Tx BlockTransaction] struct {
-	BaseFeePerGas Wei           `json:"baseFeePerGas"`
-	BlockNumber   uint64        `json:"blockNumber"`
-	Difficulty    uint64        `json:"difficulty"`
-	Finalized     bool          `json:"finalized"`
-	GasLimit      Gas           `json:"gasLimit"`
-	GasUsed       Gas           `json:"gasUsed"`
-	Hash          common.Hash   `json:"hash"`
-	Miner         Address       `json:"miner"`
-	ParentHash    common.Hash   `json:"parentHash"`
-	Timestamp     Timestamp     `json:"timestamp"`
-	Transactions  []Tx          `json:"transactions"`
-	Uncles        []common.Hash `json:"uncles"`
+	BaseFeePerGas base.Wei       `json:"baseFeePerGas"`
+	BlockNumber   uint64         `json:"blockNumber"`
+	Difficulty    uint64         `json:"difficulty"`
+	Finalized     bool           `json:"finalized"`
+	GasLimit      base.Gas       `json:"gasLimit"`
+	GasUsed       base.Gas       `json:"gasUsed"`
+	Hash          common.Hash    `json:"hash"`
+	Miner         base.Address   `json:"miner"`
+	ParentHash    common.Hash    `json:"parentHash"`
+	Timestamp     base.Timestamp `json:"timestamp"`
+	Transactions  []Tx           `json:"transactions"`
+	Uncles        []common.Hash  `json:"uncles"`
 	raw           *RawBlock
 }
 

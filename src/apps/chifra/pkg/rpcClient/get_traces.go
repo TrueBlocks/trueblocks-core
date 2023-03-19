@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"math/big"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -105,15 +106,15 @@ func GetTracesByFilter(chain string, filter string) ([]types.SimpleTrace, error)
 
 			action := types.SimpleTraceAction{
 				CallType:       rawTrace.Action.CallType,
-				From:           types.HexToAddress(rawTrace.Action.From),
+				From:           base.HexToAddress(rawTrace.Action.From),
 				Gas:            mustParseUint(rawTrace.Action.Gas),
 				Input:          rawTrace.Action.Input,
-				To:             types.HexToAddress(rawTrace.Action.To),
+				To:             base.HexToAddress(rawTrace.Action.To),
 				Value:          *value,
 				Balance:        *balance,
-				Address:        types.HexToAddress(rawTrace.Action.Address),
-				RefundAddress:  types.HexToAddress(rawTrace.Action.RefundAddress),
-				SelfDestructed: types.HexToAddress(rawTrace.Action.SelfDestructed),
+				Address:        base.HexToAddress(rawTrace.Action.Address),
+				RefundAddress:  base.HexToAddress(rawTrace.Action.RefundAddress),
+				SelfDestructed: base.HexToAddress(rawTrace.Action.SelfDestructed),
 				Init:           rawTrace.Action.Init,
 			}
 			action.SetRaw(&rawTrace.Action)
@@ -126,7 +127,7 @@ func GetTracesByFilter(chain string, filter string) ([]types.SimpleTrace, error)
 					Code:    rawTrace.Result.Code,
 				}
 				if len(rawTrace.Result.Address) > 0 {
-					result.Address = types.HexToAddress(rawTrace.Result.Address)
+					result.Address = base.HexToAddress(rawTrace.Result.Address)
 				}
 				result.SetRaw(rawTrace.Result)
 			}
@@ -174,15 +175,15 @@ func GetTracesByTransactionHash(chain string, txHash string, transaction *types.
 
 			action := types.SimpleTraceAction{
 				CallType:       rawTrace.Action.CallType,
-				From:           types.HexToAddress(rawTrace.Action.From),
+				From:           base.HexToAddress(rawTrace.Action.From),
 				Gas:            mustParseUint(rawTrace.Action.Gas),
 				Input:          rawTrace.Action.Input,
-				To:             types.HexToAddress(rawTrace.Action.To),
+				To:             base.HexToAddress(rawTrace.Action.To),
 				Value:          *value,
 				Balance:        *balance,
-				Address:        types.HexToAddress(rawTrace.Action.Address),
-				RefundAddress:  types.HexToAddress(rawTrace.Action.RefundAddress),
-				SelfDestructed: types.HexToAddress(rawTrace.Action.SelfDestructed),
+				Address:        base.HexToAddress(rawTrace.Action.Address),
+				RefundAddress:  base.HexToAddress(rawTrace.Action.RefundAddress),
+				SelfDestructed: base.HexToAddress(rawTrace.Action.SelfDestructed),
 				Init:           rawTrace.Action.Init,
 			}
 			action.SetRaw(&rawTrace.Action)
@@ -195,7 +196,7 @@ func GetTracesByTransactionHash(chain string, txHash string, transaction *types.
 					Code:    rawTrace.Result.Code,
 				}
 				if len(rawTrace.Result.Address) > 0 {
-					result.Address = types.HexToAddress(rawTrace.Result.Address)
+					result.Address = base.HexToAddress(rawTrace.Result.Address)
 				}
 				result.SetRaw(rawTrace.Result)
 			}

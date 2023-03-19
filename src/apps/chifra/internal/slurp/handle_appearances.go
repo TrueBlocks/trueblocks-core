@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -45,7 +46,7 @@ func (opts *SlurpOptions) HandleShowAppearances() error {
 							continue
 						}
 						modelChan <- &types.SimpleAppearance{
-							Address:          types.HexToAddress(addr),
+							Address:          base.HexToAddress(addr),
 							BlockNumber:      uint32(tx.BlockNumber),
 							TransactionIndex: uint32(tx.TransactionIndex),
 							Timestamp:        tx.Timestamp,

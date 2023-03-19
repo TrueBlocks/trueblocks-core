@@ -4,12 +4,13 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // loadCustomMap loads the custom names from the cache
-func loadCustomMap(chain string, thePath string, terms []string, parts Parts, ret *map[types.Address]types.SimpleName) error {
+func loadCustomMap(chain string, thePath string, terms []string, parts Parts, ret *map[base.Address]types.SimpleName) error {
 	if parts&Testing == 0 {
 		// TODO: This should use gocsv instead of the custom code below
 		reader, err := NewNameReader(thePath)
@@ -36,7 +37,7 @@ func loadCustomMap(chain string, thePath string, terms []string, parts Parts, re
 			addr := fmt.Sprintf("0x%040d", i)
 			num := fmt.Sprintf("%d", i)
 			n := types.SimpleName{
-				Address:  types.HexToAddress(addr),
+				Address:  base.HexToAddress(addr),
 				Name:     "Account_" + num,
 				Tags:     "81-Custom",
 				Decimals: uint64(i),

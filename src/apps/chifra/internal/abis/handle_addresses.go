@@ -6,6 +6,7 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/contract"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -24,7 +25,7 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 	fetchData := func(modelChan chan types.Modeler[types.RawFunction], errorChan chan error) {
 		// Note here, that known ABIs are not downloaded. They are only loaded from the local cache.
 		for _, addr := range opts.Addrs {
-			address := types.HexToAddress(addr)
+			address := base.HexToAddress(addr)
 			if err = abi.LoadAbiFromAddress(opts.Globals.Chain, address, result); err != nil {
 				if !os.IsNotExist(err) {
 					// The error was not due to a missing file...

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
@@ -67,7 +68,7 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Si
 	// This just simplifies the code below by removing the need to type cast
 	onDisc := types.SimpleNamedBlock{
 		BlockNumber: uint64(itemOnDisc.Bn),
-		Timestamp:   types.Timestamp(itemOnDisc.Ts),
+		Timestamp:   base.Timestamp(itemOnDisc.Ts),
 	}
 
 	expected := types.SimpleBlock[string]{BlockNumber: bn, Timestamp: onDisc.Timestamp}

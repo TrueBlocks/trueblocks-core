@@ -8,15 +8,15 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // TODO: This function should be easy to replace with "ABI providers" (different services like
 // Sourcify or custom ones configured by the user)
-func DownloadAbi(chain string, address types.Address, destination AbiInterfaceMap) error {
+func DownloadAbi(chain string, address base.Address, destination AbiInterfaceMap) error {
 	if address.IsZero() {
 		return errors.New("address is 0x0")
 	}

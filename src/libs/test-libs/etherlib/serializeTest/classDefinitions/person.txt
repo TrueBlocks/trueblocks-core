@@ -1,5 +1,0 @@
-[settings]
-class = CPerson
-fields = person.csv
-includes = etherlib.h
-output = ../../libs/test-libs/etherlib/serializeTest

@@ -5,6 +5,7 @@
 package whenPkg
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -55,8 +56,8 @@ func (opts *WhenOptions) showOneBlock(prev *types.SimpleTimestamp, bn uint64, fi
 	}
 	obj := types.SimpleTimestamp{
 		BlockNumber: uint64(ts.Bn),
-		Timestamp:   types.Timestamp(ts.Ts),
-		Diff:        types.Timestamp(ts.Ts) - prev.Timestamp,
+		Timestamp:   base.Timestamp(ts.Ts),
+		Diff:        base.Timestamp(ts.Ts) - prev.Timestamp,
 	}
 	if first {
 		// Report zero diff at first block

@@ -5,7 +5,7 @@
 package namesPkg
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -46,7 +46,7 @@ func (opts *NamesOptions) validateNames() error {
 		return validate.Usage("Use the {0} option only when editing names.", "--to_custom")
 	}
 
-	addr := types.HexToAddress(opts.Autoname)
+	addr := base.HexToAddress(opts.Autoname)
 	if len(opts.Autoname) > 0 && (!validate.IsValidAddress(opts.Autoname) || addr.IsZero()) {
 		return validate.Usage("You must provide an address to the {0} option.", "--autoname")
 	}

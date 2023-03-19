@@ -9,6 +9,8 @@
 package types
 
 // EXISTING_CODE
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+
 // EXISTING_CODE
 
 type RawNamedBlock struct {
@@ -19,10 +21,10 @@ type RawNamedBlock struct {
 }
 
 type SimpleNamedBlock struct {
-	BlockNumber uint64    `json:"blockNumber"`
-	Date        string    `json:"date"`
-	Name        string    `json:"name,omitempty"`
-	Timestamp   Timestamp `json:"timestamp"`
+	BlockNumber base.Blknum    `json:"blockNumber"`
+	Date        string         `json:"date"`
+	Name        string         `json:"name,omitempty"`
+	Timestamp   base.Timestamp `json:"timestamp"`
 	raw         *RawNamedBlock
 }
 

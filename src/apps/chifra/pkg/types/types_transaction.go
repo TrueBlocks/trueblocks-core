@@ -12,6 +12,7 @@ package types
 import (
 	"math/big"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/bykof/gostradamus"
 	"github.com/ethereum/go-ethereum/common"
@@ -42,19 +43,19 @@ type RawTransaction struct {
 type SimpleTransaction struct {
 	Hash                 common.Hash     `json:"hash"`
 	BlockHash            common.Hash     `json:"blockHash"`
-	BlockNumber          Blknum          `json:"blockNumber"`
+	BlockNumber          base.Blknum     `json:"blockNumber"`
 	TransactionIndex     uint64          `json:"transactionIndex"`
 	Nonce                uint64          `json:"nonce,omitempty"`
-	Timestamp            Timestamp       `json:"timestamp"`
-	From                 Address         `json:"from"`
-	To                   Address         `json:"to"`
-	Value                Wei             `json:"value"`
-	Gas                  Gas             `json:"gas"`
-	GasPrice             Gas             `json:"gasPrice"`
-	GasUsed              Gas             `json:"gasUsed"`
-	GasCost              Gas             `json:"gasCost"`
-	MaxFeePerGas         Gas             `json:"maxFeePerGas,omitempty"`
-	MaxPriorityFeePerGas Gas             `json:"maxPriorityFeePerGas,omitempty"`
+	Timestamp            base.Timestamp  `json:"timestamp"`
+	From                 base.Address    `json:"from"`
+	To                   base.Address    `json:"to"`
+	Value                base.Wei        `json:"value"`
+	Gas                  base.Gas        `json:"gas"`
+	GasPrice             base.Gas        `json:"gasPrice"`
+	GasUsed              base.Gas        `json:"gasUsed"`
+	GasCost              base.Gas        `json:"gasCost"`
+	MaxFeePerGas         base.Gas        `json:"maxFeePerGas,omitempty"`
+	MaxPriorityFeePerGas base.Gas        `json:"maxPriorityFeePerGas,omitempty"`
 	Input                string          `json:"input"`
 	IsError              bool            `json:"isError,omitempty"`
 	HasToken             bool            `json:"hasToken,omitempty"`
@@ -268,7 +269,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 }
 
 // EXISTING_CODE
-func (s *SimpleTransaction) SetGasCost(receipt *SimpleReceipt) Gas {
+func (s *SimpleTransaction) SetGasCost(receipt *SimpleReceipt) base.Gas {
 	if receipt == nil {
 		return 0
 	}

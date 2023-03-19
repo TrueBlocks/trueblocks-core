@@ -10,13 +10,13 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
@@ -33,7 +33,7 @@ type Manifest struct {
 	Chain string `json:"chain"`
 
 	// An IPFS hash pointing to documentation describing the binary format of the files in the index
-	Schemas types.IpfsHash `json:"schemas"`
+	Schemas base.IpfsHash `json:"schemas"`
 
 	// An IPFS hash pointing to documentation describing the binary format of the files in the index
 	Config scrapeCfg.ScrapeSettings `json:"config"`
@@ -49,11 +49,11 @@ type Manifest struct {
 // covering that block range, and a hash of the Bloom filter covering that chunk. The format of the chunk and the Bloom
 // filter are detailed in the manifest's Schema record.
 type ChunkRecord struct {
-	Range     string         `json:"range"`
-	BloomHash types.IpfsHash `json:"bloomHash"`
-	BloomSize int64          `json:"bloomSize"`
-	IndexHash types.IpfsHash `json:"indexHash,omitempty"`
-	IndexSize int64          `json:"indexSize,omitempty"`
+	Range     string        `json:"range"`
+	BloomHash base.IpfsHash `json:"bloomHash"`
+	BloomSize int64         `json:"bloomSize"`
+	IndexHash base.IpfsHash `json:"indexHash,omitempty"`
+	IndexSize int64         `json:"indexSize,omitempty"`
 }
 
 func (ch *ChunkRecord) GetFullPath(chain string, cacheType paths.CacheType) string {

@@ -3,11 +3,11 @@ package pinning
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	shell "github.com/ipfs/go-ipfs-api"
 )
 
-func (p *Service) pinFileLocally(filepath string) (types.IpfsHash, error) {
+func (p *Service) pinFileLocally(filepath string) (base.IpfsHash, error) {
 	file, err := os.OpenFile(filepath, os.O_RDONLY, 0)
 	if err != nil {
 		return "", err
@@ -19,5 +19,5 @@ func (p *Service) pinFileLocally(filepath string) (types.IpfsHash, error) {
 	if err != nil {
 		return "", err
 	}
-	return types.IpfsHash(cid), nil
+	return base.IpfsHash(cid), nil
 }

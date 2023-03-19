@@ -9,6 +9,7 @@
 package types
 
 // EXISTING_CODE
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 
 // EXISTING_CODE
 
@@ -19,9 +20,9 @@ type RawAppearanceCount struct {
 }
 
 type SimpleAppearanceCount struct {
-	Address  Address `json:"address"`
-	FileSize uint64  `json:"fileSize"`
-	NRecords uint64  `json:"nRecords"`
+	Address  base.Address `json:"address"`
+	FileSize uint64       `json:"fileSize"`
+	NRecords uint64       `json:"nRecords"`
 	raw      *RawAppearanceCount
 }
 
