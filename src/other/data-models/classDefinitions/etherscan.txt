@@ -1,0 +1,8 @@
+[settings]
+class = CEtherscan
+fields = etherscan.csv
+doc_group = 02-Chain Data
+doc_descr = etherscan
+doc_route = 202-etherscan
+doc_producer = slurp
+# go_type = true

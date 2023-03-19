@@ -1,0 +1,22 @@
+name                 ,type           ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,noaddfld ,doc ,disp ,example       ,description
+articulatedTx        ,Function       ,           ,true   ,      ,        ,          ,        ,         ,  1 ,   1 ,              ,
+blockHash            ,hash           ,           ,       ,      ,        ,          ,        ,         ,  2 ,   2 ,0xc421...fb04 ,The hash of the block containing this transaction
+blockNumber          ,blknum         ,           ,       ,      ,        ,          ,        ,         ,  3 ,   3 ,10021         ,the number of the block
+compressedTx         ,string         ,           ,       ,      ,        ,          ,        ,         ,  4 ,   4 ,0x3d18b912( ) ,truncated&#44; more readable version of the articulation
+date                 ,datetime       ,           ,       ,      ,        ,          ,        ,         ,  5 ,   5 ,              ,
+ether                ,string         ,           ,       ,      ,        ,          ,        ,         ,  6 ,   6 ,              ,
+etherGasPrice        ,string         ,           ,       ,      ,        ,          ,        ,         ,  7 ,   7 ,              ,
+extraValue1          ,wei            ,           ,       ,      ,        ,          ,        ,         ,  8 ,   8 ,              ,
+extraValue2          ,wei            ,           ,       ,      ,        ,          ,        ,         ,  9 ,   9 ,              ,
+from                 ,address        ,           ,       ,      ,        ,          ,        ,         , 10 ,  10 ,              ,address from which the transaction was sent
+gas                  ,gas            ,           ,       ,      ,        ,          ,        ,         , 11 ,  11 ,158660        ,the maximum number of gas allowed for this transaction
+gasPrice             ,gas            ,           ,       ,      ,        ,          ,        ,         , 12 ,  12 ,63525836552   ,the number of wei per unit of gas the sender is willing to spend
+gasUsed              ,string         ,           ,       ,      ,        ,          ,        ,         , 13 ,  13 ,              ,
+hash                 ,hash           ,           ,       ,      ,        ,          ,        ,         , 14 ,  14 ,0xf128...1e98 ,The hash of the transaction
+hasToken             ,uint8          ,           ,       ,      ,        ,          ,        ,         , 15 ,  15 ,              ,`true` if the transaction is token related&#44; `false` otherwise
+input                ,bytes          ,           ,       ,      ,        ,          ,        ,         , 16 ,  16 ,0x3d18b912    ,byte data either containing a message or funcational data for a smart contracts. See the --articulate
+isError              ,uint8          ,           ,       ,      ,        ,          ,        ,         , 17 ,  17 ,              ,`true` if the transaction ended in error&#44; `false` otherwise
+timestamp            ,timestamp      ,           ,       ,      ,        ,          ,        ,         , 18 ,  18 ,1438335038    ,the Unix timestamp of the object
+to                   ,address        ,           ,       ,      ,        ,          ,        ,         , 19 ,  19 ,              ,address to which the transaction was sent
+transactionIndex     ,blknum         ,           ,       ,      ,        ,          ,        ,         , 20 ,  20 ,305           ,the zero-indexed position of the transaction in the block
+value                ,wei            ,           ,       ,      ,        ,          ,        ,         , 21 ,  21 ,0             ,the amount of wei sent with this transactions

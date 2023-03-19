@@ -89,6 +89,8 @@ func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 	}
 	if hasAll {
 		opts.Types = []string{"ext", "int", "token", "nfts", "1155", "miner", "uncles"}
+	} else if len(opts.Types) == 0 {
+		opts.Types = []string{"ext"}
 	}
 	// EXISTING_CODE
 
@@ -118,6 +120,8 @@ func slurpFinishParse(args []string) *SlurpOptions {
 	}
 	if hasAll {
 		opts.Types = []string{"ext", "int", "token", "nfts", "1155", "miner", "uncles"}
+	} else if len(opts.Types) == 0 {
+		opts.Types = []string{"ext"}
 	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {

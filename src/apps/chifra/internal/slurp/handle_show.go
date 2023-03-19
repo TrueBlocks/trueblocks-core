@@ -20,12 +20,8 @@ func (opts *SlurpOptions) HandleShowSlurps() error {
 	chain := opts.Globals.Chain
 	logger.Info("Processing", opts.Addrs, "--types:", opts.Types, opts.Blocks)
 
-	if len(opts.Types) == 0 {
-		opts.Types = append(opts.Types, "txlist")
-	}
-
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawEtherscan], errorChan chan error) {
 		for _, addr := range opts.Addrs {
 			for _, tt := range opts.Types {
 				url := opts.getEtherscanUrl(addr, tt, 1)
@@ -64,21 +60,26 @@ func (opts *SlurpOptions) HandleShowSlurps() error {
 var m = map[string]string{
 	"ext":    "txlist",
 	"int":    "txlistinternal",
-	"nfts":   "tokennfttx",
 	"token":  "tokentx",
+	"nfts":   "tokennfttx",
+	"1155":   "token1155tx",
 	"miner":  "getminedblocks&blocktype=blocks",
 	"uncles": "getminedblocks&blocktype=uncles",
 }
 var ss = map[string]string{
 	"ext":    "asc",
 	"int":    "asc",
-	"nfts":   "asc",
 	"token":  "asc",
+	"nfts":   "asc",
+	"1155":   "asc",
 	"miner":  "asc",
 	"uncles": "asc",
 }
 
 func (opts *SlurpOptions) getEtherscanUrl(addr string, tt string, page int) string {
+	if ss[tt] == "" || m[tt] == "" {
+		logger.Fatal("Should not happen in getEtherscanUrl", tt)
+	}
 	const str = "https://api.etherscan.io/api?module=account&sort=[{SORT}]&action=[{CMD}]&address=[{ADDRESS}]&page=[{PAGE}]&offset=5000"
 	ret := strings.Replace(str, "[{SORT}]", ss[tt], -1)
 	ret = strings.Replace(ret, "[{CMD}]", m[tt], -1)
@@ -87,8 +88,8 @@ func (opts *SlurpOptions) getEtherscanUrl(addr string, tt string, page int) stri
 	return ret
 }
 
-func GetTransactionsFromEtherscan(chain string, url string) ([]types.SimpleTransaction, error) {
-	var ret []types.SimpleTransaction
+func GetTransactionsFromEtherscan(chain string, url string) ([]types.SimpleEtherscan, error) {
+	var ret []types.SimpleEtherscan
 
 	key := config.GetRootConfig().Keys["etherscan"].ApiKey
 	if key == "" {
@@ -108,7 +109,7 @@ func GetTransactionsFromEtherscan(chain string, url string) ([]types.SimpleTrans
 	}
 
 	decoder := json.NewDecoder(resp.Body)
-	fromEs := FromEtherscan{}
+	fromEs := types.EtherscanResponse{}
 	if err = decoder.Decode(&fromEs); err != nil {
 		return ret, err
 	}
@@ -123,7 +124,7 @@ func GetTransactionsFromEtherscan(chain string, url string) ([]types.SimpleTrans
 	}
 
 	for _, esTx := range fromEs.Result {
-		rawTx := types.RawTransaction{
+		rawTx := types.RawEtherscan{
 			BlockHash:        esTx.BlockHash,
 			BlockNumber:      esTx.BlockNumber,
 			From:             esTx.From,
@@ -137,7 +138,7 @@ func GetTransactionsFromEtherscan(chain string, url string) ([]types.SimpleTrans
 			Value:            esTx.Value,
 		}
 
-		t := types.SimpleTransaction{
+		t := types.SimpleEtherscan{
 			Hash:             common.HexToHash(rawTx.Hash),
 			BlockHash:        common.HexToHash(rawTx.BlockHash),
 			BlockNumber:      mustParseUint(rawTx.BlockNumber),
@@ -161,53 +162,25 @@ func GetTransactionsFromEtherscan(chain string, url string) ([]types.SimpleTrans
 		t.IsError = esTx.TxReceiptStatus == "0"
 		t.Value.SetString(rawTx.Value, 0)
 
-		a := types.HexToAddress(esTx.ContractAddress)
-		b := mustParseUint(esTx.CumulativeGasUsed)
-		c := mustParseUint(esTx.GasUsed)
-		d := uint32(mustParseUint(esTx.TxReceiptStatus))
-		if a != types.HexToAddress("0x0") || b != 0 || c != 0 || d != 0 {
-			t.Receipt = &types.SimpleReceipt{
-				ContractAddress:   a,
-				CumulativeGasUsed: esTx.CumulativeGasUsed,
-				GasUsed:           c,
-				Status:            d,
-			}
-			t.Receipt.IsError = t.IsError
-		}
+		// a := types.HexToAddress(esTx.ContractAddress)
+		// b := mustParseUint(esTx.CumulativeGasUsed)
+		// c := mustParseUint(esTx.GasUsed)
+		// d := uint32(mustParseUint(esTx.TxReceiptStatus))
+		// if a != types.HexToAddress("0x0") || b != 0 || c != 0 || d != 0 {
+		// 	t.Receipt = &types.SimpleReceipt{
+		// 		ContractAddress:   a,
+		// 		CumulativeGasUsed: esTx.CumulativeGasUsed,
+		// 		GasUsed:           c,
+		// 		Status:            d,
+		// 	}
+		// 	t.Receipt.IsError = t.IsError
+		// }
 		t.SetRaw(&rawTx)
 
 		ret = append(ret, t)
 	}
 
 	return ret, nil
-}
-
-type SimpleEtherscan struct {
-	BlockHash         string `json:"blockHash"`
-	BlockNumber       string `json:"blockNumber"`
-	ContractAddress   string `json:"contractAddress"`
-	CumulativeGasUsed string `json:"cumulativeGasUsed"`
-	From              string `json:"from"`
-	FunctionName      string `json:"functionName"`
-	Gas               string `json:"gas"`
-	GasPrice          string `json:"gasPrice"`
-	GasUsed           string `json:"gasUsed"`
-	Hash              string `json:"hash"`
-	Input             string `json:"input"`
-	IsError           string `json:"isError"`
-	MethodId          string `json:"methodId"`
-	Nonce             string `json:"nonce"`
-	Timestamp         string `json:"timeStamp"`
-	To                string `json:"To"`
-	TransactionIndex  string `json:"transactionIndex"`
-	TxReceiptStatus   string `json:"txreceipt_status"`
-	Value             string `json:"value"`
-}
-
-type FromEtherscan struct {
-	Message string            `json:"message"`
-	Result  []SimpleEtherscan `json:"result"`
-	Status  string            `json:"status"`
 }
 
 func mustParseUint(input any) (result uint64) {

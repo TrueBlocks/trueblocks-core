@@ -533,7 +533,7 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr) {
     const char* STR_CONTRACT_API =
         "http://api.etherscan.io/api?module=contract&action=getabi&address=[{ADDRESS}]&apikey=[{KEY}]";
     if (!isTestMode())
-        LOG4("Reading ABI for address ", addr, " from ", (isTestMode() ? "--" : "EtherScan"), "\r");
+        LOG4("Reading ABI for address ", addr, " from ", (isTestMode() ? "--" : "Etherscan"), "\r");
     string_q url = substitute(substitute(STR_CONTRACT_API, "[{ADDRESS}]", addr), "[{KEY}]", getEtherscanKey(true));
     string_q fromES = urlToString(url);
 
@@ -557,7 +557,7 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr) {
     }
 
     // We write an empty file to the abi cache even though at some point in the future
-    // this ABI may be published to EtherScan.
+    // this ABI may be published to Etherscan.
     stringToAsciiFile(fileName, "");
     abiSourcesMap[addr] = true;
     return false;

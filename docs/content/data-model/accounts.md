@@ -219,9 +219,9 @@ and Event signatures for a given smart contract. Along with [Names](/data-model/
 use of ABIs goes a very long way towards making your Ethereum data much more understandable.
 
 Similar to names of addresses, ABI files are not available on-chain which means they must be
-acquired somewhere. Unfortunately, the Ethereum community has not yet understand that EtherScan
+acquired somewhere. Unfortunately, the Ethereum community has not yet understand that Etherscan
 is not a good place to store this very important information. For this reason, TrueBlocks uses
-EtherScan to acquire ABI files and therefor one needs to get an EtherScan API key to use this
+Etherscan to acquire ABI files and therefor one needs to get an Etherscan API key to use this
 function.
 
 The following commands produce and manage Abis:
@@ -237,7 +237,7 @@ Abis consist of the following fields:
 
 ### Notes
 
-See the [chifra abis](/chifra/accounts/#chifra-abis) command line for information about getting an EtherScan key.
+See the [chifra abis](/chifra/accounts/#chifra-abis) command line for information about getting an Etherscan key.
 
 ## AppearanceCount
 

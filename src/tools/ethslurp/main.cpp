@@ -93,7 +93,7 @@ bool Slurp(CCachedAccount& theAccount, COptions& options) {
 
     //         string_q responseStr = urlToString(url);
     //         if (getGlobalConfig("")->getConfigBool("dev", "debug_curl", false)) {
-    //             cerr << "[calling EtherScan: " << url << endl;
+    //             cerr << "[calling Etherscan: " << url << endl;
     //             cerr << "[result: " << url << responseStr << endl;
     //         }
     //         if (!contains(responseStr, "\"message\":\"OK\"")) {
@@ -104,7 +104,7 @@ bool Slurp(CCachedAccount& theAccount, COptions& options) {
     //             CESResult response;
     //             response.parseJson3(responseStr);
     //             uint64_t nRecords = countOf(response.result, '}');
-    //             LOG4("Downloaded ", nRecords, " records from EtherScan.\r");
+    //             LOG4("Downloaded ", nRecords, " records from Etherscan.\r");
 
     //             // pre allocate the array (probably wrong input here--reserve takes max needed size, not addition
     //             size

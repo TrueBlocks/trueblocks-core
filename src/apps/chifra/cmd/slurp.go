@@ -29,7 +29,7 @@ var slurpCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("slurp", func() *globals.GlobalOptions {
 		return &slurpPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("slurp", slurpPkg.RunSlurp, slurpPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("slurp", slurpPkg.RunSlurp, slurpPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &slurpPkg.GetOptions().Globals
 	}),
@@ -41,10 +41,10 @@ Arguments:
   addrs - one or more addresses to slurp from Etherscan (required)
   blocks - an optional range of blocks to slurp`
 
-const shortSlurp = "fetch data from EtherScan for any address"
+const shortSlurp = "fetch data from Etherscan for any address"
 
 const longSlurp = `Purpose:
-  Fetch data from EtherScan for any address.`
+  Fetch data from Etherscan for any address.`
 
 const notesSlurp = `
 Notes:

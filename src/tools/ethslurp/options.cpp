@@ -20,7 +20,7 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("", "", "", OPT_DESCRIPTION, "Fetch data from EtherScan for any address."),
+    COption("", "", "", OPT_DESCRIPTION, "Fetch data from Etherscan for any address."),
     // clang-format on
     // END_CODE_OPTIONS
 };

@@ -130,9 +130,7 @@ INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&
       "to": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
       "transactionIndex": 9,
       "value": "0"
-    }
-INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&action=txlistinternal&address=0x1324e7b922b30b49ab8ea81086341cc41c249346&page=1&offset=500
-,
+    },
     {
       "blockHash": "0xe718f525aa103166908d96282f665eb8db760118864fcc3532a1a9de4f834bb7",
       "blockNumber": 3793420,
@@ -157,7 +155,7 @@ INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&
       "to": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
       "transactionIndex": 57,
       "value": "184761000000000000000000"
-    }
+    }INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&action=txlistinternal&address=0x1324e7b922b30b49ab8ea81086341cc41c249346&page=1&offset=5000
 INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&action=tokentx&address=0x1324e7b922b30b49ab8ea81086341cc41c249346&page=1&offset=5000
 ,
     {
@@ -176,25 +174,16 @@ INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&
       "to": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "transactionIndex": 0,
       "value": "184761000000000000000000"
-    }
-INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&action=tokennfttx&address=0x1324e7b922b30b49ab8ea81086341cc41c249346&page=1&offset=5000
-
-INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=&action=&address=0x1324e7b922b30b49ab8ea81086341cc41c249346&page=1&offset=5000
-
+    }INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&action=tokennfttx&address=0x1324e7b922b30b49ab8ea81086341cc41c249346&page=1&offset=5000
+INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&action=token1155tx&address=0x1324e7b922b30b49ab8ea81086341cc41c249346&page=1&offset=5000
 INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&action=getminedblocks&blocktype=blocks&address=0x1324e7b922b30b49ab8ea81086341cc41c249346&page=1&offset=5000
-
 INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&action=getminedblocks&blocktype=uncles&address=0x1324e7b922b30b49ab8ea81086341cc41c249346&page=1&offset=5000
 
   ],
   "errors": [
     "json: cannot unmarshal string into Go struct field FromEtherscan.result of type []slurpPkg.SimpleEtherscan",
     "json: cannot unmarshal string into Go struct field FromEtherscan.result of type []slurpPkg.SimpleEtherscan",
+    "json: cannot unmarshal string into Go struct field FromEtherscan.result of type []slurpPkg.SimpleEtherscan",
     "json: cannot unmarshal string into Go struct field FromEtherscan.result of type []slurpPkg.SimpleEtherscan"
   ]
-}
-{
-  "data": []
-}
-{
-  "data": []
 }

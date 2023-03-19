@@ -19,7 +19,7 @@ INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&
       "gasUsed": 21000,
       "hash": "0x5678743a31c0096e3e10459ee695de4f4b09f3a5bcc8fd357ed214ea14283a9b",
       "input": "0x",
-      "timestamp": "1495165137",
+      "timestamp": 1495165137,
       "to": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "transactionIndex": 16,
       "value": "26911713734980000000000"
@@ -36,7 +36,7 @@ INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&
       "gasUsed": 21000,
       "hash": "0x290b0b5f0a0504df3069f5c65b34386c095af19234f24e9aa222a3f7a7d1823b",
       "input": "0x",
-      "timestamp": "1495165176",
+      "timestamp": 1495165176,
       "to": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "transactionIndex": 17,
       "value": "157900169159979996854272"

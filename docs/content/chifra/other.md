@@ -19,7 +19,7 @@ toc: true
 The commands in the Other group provide useful miscellaneous features.
 
 - `chifra explore` provides a quick way to open the configured blockchain explorer,
-- `ethslurp` (an older tool) allows you call extract data from EtherScan.
+- `ethslurp` (an older tool) allows you call extract data from Etherscan.
 
 To the right is a list of commands in this group. Click on a command to see its full documentation.
 
@@ -63,7 +63,7 @@ Links:
 
 While it's useful, it has two shortcomings. First, it is fully centralized, pulling its data from
 [http://etherscan.io](http://etherscan.io). Second, is that it does not report every transaction
-for a given account. This is actually a shortcoming with EtherScan. It's too complicated to explain
+for a given account. This is actually a shortcoming with Etherscan. It's too complicated to explain
 here, but see our blog.
 
 While `chifra slurp` has its shortcomings, it does provides some nice features. You may use it to pull
@@ -72,7 +72,7 @@ referenced website for more information.
 
 ```[plaintext]
 Purpose:
-  Fetch data from EtherScan for any address.
+  Fetch data from Etherscan for any address.
 
 Usage:
   chifra slurp [flags] <address> [address...] [block...]

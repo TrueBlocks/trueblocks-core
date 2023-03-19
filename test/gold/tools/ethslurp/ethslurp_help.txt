@@ -1,6 +1,6 @@
 chifra slurp   -h
 Purpose:
-  Fetch data from EtherScan for any address.
+  Fetch data from Etherscan for any address.
 
 Usage:
   chifra slurp [flags] <address> [address...] [block...]
