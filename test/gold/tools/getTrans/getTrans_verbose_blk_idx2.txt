@@ -7,7 +7,7 @@ TEST[DATE|TIME] Format:  json
       "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
       "blockNumber": 3657480,
       "date": "2017-05-06 00:43:39 UTC",
-      "ether": "0",
+      "ether": "0.000000000000000000",
       "from": "0x281ebba4e6c29ff930418181026b8bfb1ad5fc82",
       "gas": 150000,
       "gasCost": 3150000000000000,

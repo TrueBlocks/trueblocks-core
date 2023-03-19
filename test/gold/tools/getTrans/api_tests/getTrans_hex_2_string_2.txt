@@ -26,7 +26,7 @@ transactions?transactions=0x178e2bcd2d2eb05002d4f7b3ae5f47731bddba6c8ef940738a69
       "blockHash": "0xba09171cc3a63d255b6706049a09ca5cbea13608f46c1767c57486a2fc677467",
       "blockNumber": 14800933,
       "date": "2022-05-18 20:38:22 UTC",
-      "ether": "0",
+      "ether": "0.000000000000000000",
       "from": "0x7e052ef7b4bb7e5a45f331128afadb1e589deaf1",
       "gas": 390472,
       "gasCost": 9226605948740888,

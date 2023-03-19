@@ -81,9 +81,9 @@ bool migration_001(const string_q& path, void* data) {
                             CAbi item;
                             item.Migrate(readArchive, writeArchive);
 
-                        // } else if (checker->path == cacheFolder_slurps) {
-                        //     C CachedAccount item;
-                        //     item.Migrate(readArchive, writeArchive);
+                            // } else if (checker->path == cacheFolder_slurps) {
+                            //     C CachedAccount item;
+                            //     item.Migrate(readArchive, writeArchive);
 
                         } else if (checker->path == cacheFolder_txs) {
                             CTransaction item;

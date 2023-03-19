@@ -11,7 +11,7 @@ transactions?transactions=0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532d
       "blockHash": "0x12804134060126a2b62a3db6d37facc47622624dd055e98f309fd624f1a12ae8",
       "blockNumber": 1545347,
       "date": "2016-05-19 10:19:53 UTC",
-      "ether": "1",
+      "ether": "1.000000000000000000",
       "from": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
       "gas": 150000,
       "gasCost": 864200000000000,

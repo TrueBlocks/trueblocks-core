@@ -23,7 +23,7 @@ TEST[DATE|TIME] Format:  json
       "blockNumber": 3648669,
       "date": "2017-05-04 11:27:22 UTC",
       "datesh": "2017-05-04",
-      "ether": "0.01",
+      "ether": "0.010000000000000000",
       "from": "0xd1220a0cf47c7b9be7a2e6ba89f429762e7b9adb",
       "gas": 900000,
       "gasCost": 10849501969331551,
