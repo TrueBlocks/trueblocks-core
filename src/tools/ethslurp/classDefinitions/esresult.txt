@@ -1,5 +1,0 @@
-[settings]
-class = CESResult
-fields = esresult.csv
-includes = utillib.h
-output = ../../tools/ethslurp/

@@ -30,7 +30,7 @@ Purpose:
     init          initialize the TrueBlocks system by downloading from IPFS
   Other:
     explore       open an explorer for one or more addresses, blocks, or transactions
-    slurp         fetch data from EtherScan for any address
+    slurp         fetch data from Etherscan for any address
   Flags:
     -h, --help    display this help screen
 

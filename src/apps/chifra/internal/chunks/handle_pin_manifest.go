@@ -1,6 +1,7 @@
 package chunksPkg
 
 import (
+	"fmt"
 	"strings"
 	"time"
 
@@ -51,8 +52,14 @@ func (opts *ChunksOptions) HandlePinManifest(blockNums []uint64) error {
 		if opts.Globals.Verbose {
 			logger.Progress("Pinning", path)
 		}
-		if opts.Sleep > 0 {
-			time.Sleep(time.Duration(opts.Sleep) * time.Second)
+
+		sleep := opts.Sleep
+		if sleep > 0 {
+			ms := time.Duration(sleep*1000) * time.Millisecond
+			if !opts.Globals.TestMode {
+				logger.Info(fmt.Sprintf("Sleeping for %f seconds (%d milliseconds)", sleep, ms))
+			}
+			time.Sleep(ms)
 		}
 
 		return true, nil

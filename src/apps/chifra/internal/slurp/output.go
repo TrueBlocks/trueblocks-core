@@ -13,6 +13,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -50,12 +51,16 @@ func (opts *SlurpOptions) SlurpInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.Globals.IsApiMode() {
-		return nil, false
+	if !opts.IsPorted() {
+		logger.Fatal("Should not happen.")
 	}
 
 	handled = true
-	err = opts.Globals.PassItOn("ethslurp", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
+	if opts.Appearances {
+		err = opts.HandleShowAppearances()
+	} else {
+		err = opts.HandleShowSlurps()
+	}
 	// EXISTING_CODE
 
 	return
@@ -72,6 +77,7 @@ func GetSlurpOptions(args []string, g *globals.GlobalOptions) *SlurpOptions {
 
 func (opts *SlurpOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
+	ported = true
 	// EXISTING_CODE
 	return
 }

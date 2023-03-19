@@ -80,7 +80,7 @@ configuration per chain.
 | rpcProvider   | The RPC endpoint (required)<br />http://localhost:8545 |
 | cachePath     | Location of binary cache<br />$CONFIG/cache/           |
 | indexPath     | Location of unchained index<br />$CONFIG/unchained/    |
-| etherscan_key | API key for EtherScan (optional)<br/>empty             |
+| etherscan_key | API key for Etherscan (optional)<br/>empty             |
 |               |                                                        |
 | [dev]         |                                                        |
 | debug_curl    | Increases log level for curl commands<br />false       |

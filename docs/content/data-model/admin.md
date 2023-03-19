@@ -56,7 +56,7 @@ Statuses consist of the following fields:
 | isScraping        | `true` if the index scraper is running                   | bool                                |
 | isArchive         | `true` if the rpcProvider is an archive node             | bool                                |
 | isTracing         | `true` if the rpcProvider provides Parity traces         | bool                                |
-| hasEskey          | `true` if an EtherScan key is present                    | bool                                |
+| hasEskey          | `true` if an Etherscan key is present                    | bool                                |
 | hasPinkey         | `true` if a Pinata API key is present                    | bool                                |
 | ts                | the timestamp when this status data was produced         | timestamp                           |
 | chains            | the list of configured chains                            | [Chain[]](/data-model/admin/#chain) |
@@ -307,7 +307,7 @@ Chains consist of the following fields:
 | symbol         | The symbol of the base currency on the chain                     | string |
 | rpcProvider    | A valid RPC provider for the chain                               | string |
 | apiProvider    | A valid API provider for the explorer                            | string |
-| remoteExplorer | A remote explorer for the chain such as EtherScan                | string |
+| remoteExplorer | A remote explorer for the chain such as Etherscan                | string |
 | localExplorer  | The local explorer for the chain (typically TrueBlocks Explorer) | string |
 | ipfsGateway    | An IPFS gateway for pinning the index if enabled                 | string |
 

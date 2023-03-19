@@ -4,7 +4,6 @@
                       "blockHash": "0xeab8fe9da0b41b2c003db620bb9adbedd5fcc7222cc50d53431aa1df47a20dda",
                       "blockNumber": "46217",
                       "transactionIndex": "0",
-                      "nonce": "0",
                       "timestamp": "1438919451",
                       "from": "0xc8ebccc5f5689fa8659d83713341e5ad19349448",
                       "to": "0xc8ebccc5f5689fa8659d83713341e5ad19349448",

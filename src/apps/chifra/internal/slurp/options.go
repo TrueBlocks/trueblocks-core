@@ -9,7 +9,6 @@ package slurpPkg
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -27,11 +26,15 @@ type SlurpOptions struct {
 	BlockIds    []identifiers.Identifier `json:"blockIds,omitempty"`    // Block identifiers
 	Types       []string                 `json:"types,omitempty"`       // Which types of transactions to request
 	Appearances bool                     `json:"appearances,omitempty"` // Show only the blocknumber.tx_id appearances of the exported transactions
+	PerPage     uint64                   `json:"perPage,omitempty"`     // The number of records to request on each page
+	Sleep       float64                  `json:"sleep,omitempty"`       // Seconds to sleep between requests
 	Globals     globals.GlobalOptions    `json:"globals,omitempty"`     // The global options
 	BadFlag     error                    `json:"badFlag,omitempty"`     // An error flag if needed
 }
 
-var defaultSlurpOptions = SlurpOptions{}
+var defaultSlurpOptions = SlurpOptions{
+	PerPage: 5000,
+}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *SlurpOptions) testLog() {
@@ -39,6 +42,8 @@ func (opts *SlurpOptions) testLog() {
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
+	logger.TestLog(opts.PerPage != 5000, "PerPage: ", opts.PerPage)
+	logger.TestLog(opts.Sleep != float64(.25), "Sleep: ", opts.Sleep)
 	opts.Globals.TestLog()
 }
 
@@ -48,35 +53,12 @@ func (opts *SlurpOptions) String() string {
 	return string(b)
 }
 
-// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
-func (opts *SlurpOptions) getEnvStr() []string {
-	envStr := []string{}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return envStr
-}
-
-// toCmdLine converts the option to a command line for calling out to the system.
-func (opts *SlurpOptions) toCmdLine() string {
-	options := ""
-	for _, types := range opts.Types {
-		options += " --types " + types
-	}
-	if opts.Appearances {
-		options += " --appearances"
-	}
-	options += " " + strings.Join(opts.Addrs, " ")
-	options += " " + strings.Join(opts.Blocks, " ")
-	// EXISTING_CODE
-	// EXISTING_CODE
-	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
-	return options
-}
-
 // slurpFinishParseApi finishes the parsing for server invocations. Returns a new SlurpOptions.
 func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 	copy := defaultSlurpOptions
 	opts := &copy
+	opts.PerPage = 5000
+	opts.Sleep = .25
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "addrs":
@@ -96,6 +78,10 @@ func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 			}
 		case "appearances":
 			opts.Appearances = true
+		case "perPage":
+			opts.PerPage = globals.ToUint64(value[0])
+		case "sleep":
+			opts.Sleep = globals.ToFloat64(value[0])
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "slurp")
@@ -106,6 +92,18 @@ func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
 	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	hasAll := false
+	for _, t := range opts.Types {
+		if t == "all" {
+			hasAll = true
+			break
+		}
+	}
+	if hasAll {
+		opts.Types = []string{"ext", "int", "token", "nfts", "1155", "miner", "uncles"}
+	} else if len(opts.Types) == 0 {
+		opts.Types = []string{"ext"}
+	}
 	// EXISTING_CODE
 
 	return opts
@@ -125,6 +123,18 @@ func slurpFinishParse(args []string) *SlurpOptions {
 		}
 	}
 	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	hasAll := false
+	for _, t := range opts.Types {
+		if t == "all" {
+			hasAll = true
+			break
+		}
+	}
+	if hasAll {
+		opts.Types = []string{"ext", "int", "token", "nfts", "1155", "miner", "uncles"}
+	} else if len(opts.Types) == 0 {
+		opts.Types = []string{"ext"}
+	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

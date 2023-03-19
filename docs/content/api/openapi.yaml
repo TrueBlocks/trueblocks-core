@@ -1850,7 +1850,7 @@ paths:
       tags:
         - Other
       summary: Slurp Etherscan
-      description: Fetch data from EtherScan for any address. Corresponds to the <a href="/chifra/other/#chifra-slurp">chifra slurp</a> command line.
+      description: Fetch data from Etherscan for any address. Corresponds to the <a href="/chifra/other/#chifra-slurp">chifra slurp</a> command line.
       operationId: other-slurp
       parameters:
         - name: addrs
@@ -1902,6 +1902,24 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: perPage
+          description: the number of records to request on each page
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: uint64
+        - name: sleep
+          description: seconds to sleep between requests
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: double
       responses:
         "200":
           description: returns the requested data
@@ -1921,7 +1939,6 @@ paths:
                       "blockHash": "0xeab8fe9da0b41b2c003db620bb9adbedd5fcc7222cc50d53431aa1df47a20dda",
                       "blockNumber": "46217",
                       "transactionIndex": "0",
-                      "nonce": "0",
                       "timestamp": "1438919451",
                       "from": "0xc8ebccc5f5689fa8659d83713341e5ad19349448",
                       "to": "0xc8ebccc5f5689fa8659d83713341e5ad19349448",
@@ -2972,7 +2989,7 @@ components:
           description: "`true` if the rpcProvider provides Parity traces"
         hasEskey:
           type: boolean
-          description: "`true` if an EtherScan key is present"
+          description: "`true` if an Etherscan key is present"
         hasPinkey:
           type: boolean
           description: "`true` if a Pinata API key is present"
@@ -3294,7 +3311,7 @@ components:
           description: "A valid API provider for the explorer"
         remoteExplorer:
           type: string
-          description: "A remote explorer for the chain such as EtherScan"
+          description: "A remote explorer for the chain such as Etherscan"
         localExplorer:
           type: string
           description: "The local explorer for the chain (typically TrueBlocks Explorer)"

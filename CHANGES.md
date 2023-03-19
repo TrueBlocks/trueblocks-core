@@ -1,3 +1,9 @@
+Added --sleep and --per_page to chifra slurp
+Ported slurp to GoLang
+Removes zero-valued Nonce, MaxFeePerGas, and MaxPriorityFeePerGas from Transaction and Block data
+
+
+
 <!-- markdownlint-disable MD024 MD036 -->
 # Changes
 
@@ -167,7 +173,7 @@ There were no changes to the [Specification for the Unchained Index](https://tru
 
 **chifra slurp**
 
-- Turned off testing for this tool as EtherScan availability was a very frequent cause of failed test cases. In order to test `chifra slurp` one must set an environment variable.
+- Turned off testing for this tool as Etherscan availability was a very frequent cause of failed test cases. In order to test `chifra slurp` one must set an environment variable.
 
 **makeClass**
 

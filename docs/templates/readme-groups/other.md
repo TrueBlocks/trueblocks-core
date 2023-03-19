@@ -2,7 +2,7 @@
 The commands in the Other group provide useful miscellaneous features.
 
 - `chifra explore` provides a quick way to open the configured blockchain explorer,
-- `ethslurp` (an older tool) allows you call extract data from EtherScan.
+- `ethslurp` (an older tool) allows you call extract data from Etherscan.
 
 To the right is a list of commands in this group. Click on a command to see its full documentation.
 

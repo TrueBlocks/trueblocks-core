@@ -91,7 +91,7 @@ func (opts *BlocksOptions) validateBlocks() error {
 				return validate.Usage("The {0} option is not available{1}.", "--traces", " with the --hashes option")
 			}
 			if !validate.CanArticulate(opts.Articulate) {
-				return validate.Usage("The {0} option requires an EtherScan API key.", "--articulate")
+				return validate.Usage("The {0} option requires an Etherscan API key.", "--articulate")
 			}
 			if opts.Articulate && !opts.Logs {
 				return validate.Usage("The {0} option is available only with {1}.", "--articulate", "the --logs option")

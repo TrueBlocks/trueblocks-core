@@ -1030,7 +1030,7 @@ components:
           description: "`true` if the rpcProvider provides Parity traces"
         hasEskey:
           type: boolean
-          description: "`true` if an EtherScan key is present"
+          description: "`true` if an Etherscan key is present"
         hasPinkey:
           type: boolean
           description: "`true` if a Pinata API key is present"
@@ -1352,7 +1352,7 @@ components:
           description: "A valid API provider for the explorer"
         remoteExplorer:
           type: string
-          description: "A remote explorer for the chain such as EtherScan"
+          description: "A remote explorer for the chain such as Etherscan"
         localExplorer:
           type: string
           description: "The local explorer for the chain (typically TrueBlocks Explorer)"

@@ -27,9 +27,6 @@ TEST[DATE|TIME] Format:  json
           "gasUsed": 21000,
           "hash": "0xc592d3b88d926d7e5aba2b2b99171e094e55fe1f493fa449060df91e7085c6d8",
           "input": "0x",
-          "maxFeePerGas": 0,
-          "maxPriorityFeePerGas": 0,
-          "nonce": 0,
           "receipt": {
             "contractAddress": "0x0",
             "effectiveGasPrice": 24150000000,
@@ -54,8 +51,6 @@ TEST[DATE|TIME] Format:  json
           "gasUsed": 21000,
           "hash": "0x57a3488de7994e04fe00a5d7d4d0a38ce1104b9b90ed9394738b2157ab430070",
           "input": "0x",
-          "maxFeePerGas": 0,
-          "maxPriorityFeePerGas": 0,
           "nonce": 2377511,
           "receipt": {
             "contractAddress": "0x0",
@@ -81,8 +76,6 @@ TEST[DATE|TIME] Format:  json
           "gasUsed": 21000,
           "hash": "0x425793cb6e195e3dfa5921ccbc199bc69faf8f3465c39d4cb48a80fb71a87f6e",
           "input": "0x",
-          "maxFeePerGas": 0,
-          "maxPriorityFeePerGas": 0,
           "nonce": 2333167,
           "receipt": {
             "contractAddress": "0x0",
@@ -108,8 +101,6 @@ TEST[DATE|TIME] Format:  json
           "gasUsed": 21000,
           "hash": "0xbc6bed814cc004f95a074dbccc693facae62ff7f12fe6a4c6ca3ffb94250a6b3",
           "input": "0x",
-          "maxFeePerGas": 0,
-          "maxPriorityFeePerGas": 0,
           "nonce": 2377512,
           "receipt": {
             "contractAddress": "0x0",
@@ -135,8 +126,6 @@ TEST[DATE|TIME] Format:  json
           "gasUsed": 21000,
           "hash": "0x8e005535af802be2d7d2d06ad95ef3b6053708acb939bb7c61a560f56dba0e7d",
           "input": "0x",
-          "maxFeePerGas": 0,
-          "maxPriorityFeePerGas": 0,
           "nonce": 2377513,
           "receipt": {
             "contractAddress": "0x0",
@@ -162,8 +151,6 @@ TEST[DATE|TIME] Format:  json
           "gasUsed": 21000,
           "hash": "0x6ad61b6f12a5a5714b33b04d461b97042ee86cf9eb77f71a51ee53b9f53c2bb0",
           "input": "0x",
-          "maxFeePerGas": 0,
-          "maxPriorityFeePerGas": 0,
           "nonce": 2377514,
           "receipt": {
             "contractAddress": "0x0",
@@ -189,8 +176,6 @@ TEST[DATE|TIME] Format:  json
           "gasUsed": 21000,
           "hash": "0x279995efb6e1fa15122f25bb05c14cbe6360790b6552559de06d850c8a0920ef",
           "input": "0x",
-          "maxFeePerGas": 0,
-          "maxPriorityFeePerGas": 0,
           "nonce": 2377515,
           "receipt": {
             "contractAddress": "0x0",
@@ -216,8 +201,6 @@ TEST[DATE|TIME] Format:  json
           "gasUsed": 21000,
           "hash": "0x0f98005f865c473b016e893db2b91b9f4ab9f7c44ef829e40eb90607b7855289",
           "input": "0x",
-          "maxFeePerGas": 0,
-          "maxPriorityFeePerGas": 0,
           "nonce": 2377516,
           "receipt": {
             "contractAddress": "0x0",
@@ -243,8 +226,6 @@ TEST[DATE|TIME] Format:  json
           "gasUsed": 21000,
           "hash": "0xa6a7f07eedf8c8f46fb4d1553f97b33632c3641ef8657f8576729b64f29e25ab",
           "input": "0x",
-          "maxFeePerGas": 0,
-          "maxPriorityFeePerGas": 0,
           "nonce": 2377517,
           "receipt": {
             "contractAddress": "0x0",
@@ -270,8 +251,6 @@ TEST[DATE|TIME] Format:  json
           "gasUsed": 21000,
           "hash": "0x54bd209394d92a783bb62f82d660ae963c8ca7d073f3c940691177c6aa95e4f9",
           "input": "0x",
-          "maxFeePerGas": 0,
-          "maxPriorityFeePerGas": 0,
           "nonce": 2377518,
           "receipt": {
             "contractAddress": "0x0",
@@ -297,8 +276,6 @@ TEST[DATE|TIME] Format:  json
           "gasUsed": 22966,
           "hash": "0x62974c8152c87e14880c54007260e0d5fe9d182c2cd22c58797735a9ae88370a",
           "input": "0x",
-          "maxFeePerGas": 0,
-          "maxPriorityFeePerGas": 0,
           "nonce": 2377519,
           "receipt": {
             "contractAddress": "0x0",
@@ -335,8 +312,6 @@ TEST[DATE|TIME] Format:  json
           "gasUsed": 21000,
           "hash": "0xa9f9f8b1ddda0e5e48e06b2e06039d11c825f4b56d115948ac265725d1a4374a",
           "input": "0x",
-          "maxFeePerGas": 0,
-          "maxPriorityFeePerGas": 0,
           "nonce": 2377520,
           "receipt": {
             "contractAddress": "0x0",
@@ -362,8 +337,6 @@ TEST[DATE|TIME] Format:  json
           "gasUsed": 21000,
           "hash": "0xe0f20b8f8f758984f6f8794c50fa78d227862c34669a52903702908db58472ef",
           "input": "0x",
-          "maxFeePerGas": 0,
-          "maxPriorityFeePerGas": 0,
           "nonce": 2377521,
           "receipt": {
             "contractAddress": "0x0",
@@ -389,8 +362,6 @@ TEST[DATE|TIME] Format:  json
           "gasUsed": 21000,
           "hash": "0xd9ecdc692d94d1858d108309c780a2258e649b628f78f63a4731581dc6fabb55",
           "input": "0x",
-          "maxFeePerGas": 0,
-          "maxPriorityFeePerGas": 0,
           "nonce": 2377522,
           "receipt": {
             "contractAddress": "0x0",
@@ -416,8 +387,6 @@ TEST[DATE|TIME] Format:  json
           "gasUsed": 21000,
           "hash": "0xd362bd30e789e6653a8b8e7397a4559eded275613c11005653cd7625ac120a6b",
           "input": "0x",
-          "maxFeePerGas": 0,
-          "maxPriorityFeePerGas": 0,
           "nonce": 2377523,
           "receipt": {
             "contractAddress": "0x0",
@@ -443,8 +412,6 @@ TEST[DATE|TIME] Format:  json
           "gasUsed": 21000,
           "hash": "0xbae6578384116e928bdf9b4f85094ae41642cbe3eefd45cd7f7259b51317cb36",
           "input": "0x",
-          "maxFeePerGas": 0,
-          "maxPriorityFeePerGas": 0,
           "nonce": 2377524,
           "receipt": {
             "contractAddress": "0x0",
@@ -477,7 +444,7 @@ TEST[DATE|TIME] Format:  json
           "blockHash": "0xe821b0f2752e49d421127f74b14d9a65dd8d5f48ad240b4b592043803f644372",
           "blockNumber": 4000002,
           "date": "2017-07-09 20:52:54 UTC",
-          "ether": "0",
+          "ether": "0.000000000000000000",
           "from": "0xba83e9ce38b10522e3d6061a12779b7526839eda",
           "gas": 170000,
           "gasCost": 1563870000000000,
@@ -485,8 +452,6 @@ TEST[DATE|TIME] Format:  json
           "gasUsed": 52129,
           "hash": "0x5662a612bbc416842a01b103d895f4e4ea026860ef83dc7ca153bcde74d6c872",
           "input": "0xa9059cbb000000000000000000000000aca33c43bd8deac8e1d144baa51fe9c7dd7b010f000000000000000000000000000000000000000000000181e5085292122a0000",
-          "maxFeePerGas": 0,
-          "maxPriorityFeePerGas": 0,
           "nonce": 41,
           "receipt": {
             "contractAddress": "0x0",
@@ -515,7 +480,7 @@ TEST[DATE|TIME] Format:  json
           "blockHash": "0xe821b0f2752e49d421127f74b14d9a65dd8d5f48ad240b4b592043803f644372",
           "blockNumber": 4000002,
           "date": "2017-07-09 20:52:54 UTC",
-          "ether": "0",
+          "ether": "0.000000000000000000",
           "from": "0x174443351e21d47ed9ab51517a301107d92ede64",
           "gas": 150000,
           "gasCost": 3381652050000000,
@@ -523,8 +488,6 @@ TEST[DATE|TIME] Format:  json
           "gasUsed": 140027,
           "hash": "0xe5b306068f0e655014db9f683f2813f0d0b9b52b09f867d80813a68d16072b5c",
           "input": "0x606060405260008054600160a060020a0319163317905560f2806100236000396000f3606060405260e060020a6000350463f5537ede8114601c575b6002565b3460025760f06004356024356044356000805433600160a060020a039081169116141560ea5783905080600160a060020a031663a9059cbb84846000604051602001526040518360e060020a0281526004018083600160a060020a0316815260200182815260200192505050602060405180830381600087803b1560025760325a03f1156002575050604080518481529051600160a060020a0386811693508716917fd0ed88a3f042c6bbb1e3ea406079b5f2b4b198afccaa535d837f4c63abbc4de6919081900360200190a35b50505050565b00",
-          "maxFeePerGas": 0,
-          "maxPriorityFeePerGas": 0,
           "nonce": 12883,
           "receipt": {
             "contractAddress": "0x9f87e7a713d8575b1d3b9c2320aae64c8222c001",
@@ -542,7 +505,7 @@ TEST[DATE|TIME] Format:  json
           "blockHash": "0xe821b0f2752e49d421127f74b14d9a65dd8d5f48ad240b4b592043803f644372",
           "blockNumber": 4000002,
           "date": "2017-07-09 20:52:54 UTC",
-          "ether": "2",
+          "ether": "2.000000000000000000",
           "from": "0x90024af4dc1dabd0e73dc07d5b47486a75b24c1d",
           "gas": 21000,
           "gasCost": 485100000000000,
@@ -550,8 +513,6 @@ TEST[DATE|TIME] Format:  json
           "gasUsed": 21000,
           "hash": "0x4fe0adad12312244777da72025dc3dabd47458c64008de5fca3219145b8ea6ae",
           "input": "0x",
-          "maxFeePerGas": 0,
-          "maxPriorityFeePerGas": 0,
           "nonce": 9,
           "receipt": {
             "contractAddress": "0x0",
@@ -577,8 +538,6 @@ TEST[DATE|TIME] Format:  json
           "gasUsed": 21000,
           "hash": "0x86ffa8b3933de6d5eaa6a2fd3c949889a3e3edf83d2cfd2340e4ea7838319be6",
           "input": "0x",
-          "maxFeePerGas": 0,
-          "maxPriorityFeePerGas": 0,
           "nonce": 2377525,
           "receipt": {
             "contractAddress": "0x0",
@@ -604,8 +563,6 @@ TEST[DATE|TIME] Format:  json
           "gasUsed": 21000,
           "hash": "0x826b7d8f81fc1c05ecdffe44bd6f2d0d15d22b4829ea13b457d4e55a7fc2e15a",
           "input": "0x",
-          "maxFeePerGas": 0,
-          "maxPriorityFeePerGas": 0,
           "nonce": 2377526,
           "receipt": {
             "contractAddress": "0x0",
@@ -623,7 +580,7 @@ TEST[DATE|TIME] Format:  json
           "blockHash": "0xe821b0f2752e49d421127f74b14d9a65dd8d5f48ad240b4b592043803f644372",
           "blockNumber": 4000002,
           "date": "2017-07-09 20:52:54 UTC",
-          "ether": "15",
+          "ether": "15.000000000000000000",
           "from": "0xd5f1eaa0be5f7b15b062b82a54eadaaa5a16e90f",
           "gas": 31500,
           "gasCost": 441000000000000,
@@ -631,8 +588,6 @@ TEST[DATE|TIME] Format:  json
           "gasUsed": 21000,
           "hash": "0x9ba401a48e378440f90e8d50feac2331f38a39fd9f33e3c6c213302cef3e5887",
           "input": "0x",
-          "maxFeePerGas": 0,
-          "maxPriorityFeePerGas": 0,
           "nonce": 9,
           "receipt": {
             "contractAddress": "0x0",
@@ -658,8 +613,6 @@ TEST[DATE|TIME] Format:  json
           "gasUsed": 21000,
           "hash": "0x71a39941379da4991540600691734451c63ae9de6c4cee552992cb0abc552251",
           "input": "0x",
-          "maxFeePerGas": 0,
-          "maxPriorityFeePerGas": 0,
           "nonce": 2,
           "receipt": {
             "contractAddress": "0x0",
@@ -677,7 +630,7 @@ TEST[DATE|TIME] Format:  json
           "blockHash": "0xe821b0f2752e49d421127f74b14d9a65dd8d5f48ad240b4b592043803f644372",
           "blockNumber": 4000002,
           "date": "2017-07-09 20:52:54 UTC",
-          "ether": "0.25377632",
+          "ether": "0.253776320000000000",
           "from": "0x7fb150f37be0d34afdfe3bc1f599a08115b11c4f",
           "gas": 21000,
           "gasCost": 441000000000000,
@@ -685,8 +638,6 @@ TEST[DATE|TIME] Format:  json
           "gasUsed": 21000,
           "hash": "0x5ae781982b6a75ba5a93baebe7f3bd596320f8407d81d90c931eff13e73f58e2",
           "input": "0x",
-          "maxFeePerGas": 0,
-          "maxPriorityFeePerGas": 0,
           "nonce": 23,
           "receipt": {
             "contractAddress": "0x0",
@@ -704,7 +655,7 @@ TEST[DATE|TIME] Format:  json
           "blockHash": "0xe821b0f2752e49d421127f74b14d9a65dd8d5f48ad240b4b592043803f644372",
           "blockNumber": 4000002,
           "date": "2017-07-09 20:52:54 UTC",
-          "ether": "1.252142",
+          "ether": "1.252142000000000000",
           "from": "0x3ba17bd0600d23028c62bd909cd2601912a5a234",
           "gas": 21000,
           "gasCost": 441000000000000,
@@ -712,8 +663,6 @@ TEST[DATE|TIME] Format:  json
           "gasUsed": 21000,
           "hash": "0x5b21089cdcb7a877608a33570fc4d4965dd759878c175022d5c7ca822ec1a086",
           "input": "0x",
-          "maxFeePerGas": 0,
-          "maxPriorityFeePerGas": 0,
           "nonce": 5,
           "receipt": {
             "contractAddress": "0x0",

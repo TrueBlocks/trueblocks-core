@@ -253,12 +253,14 @@ func WriteTransaction(writer *bufio.Writer, tx *types.SimpleTransaction) (err er
 		return
 	}
 
-	err = writeBigUint(writer, &tx.ExtraValue1)
+	var extraValue1 big.Int
+	err = writeBigUint(writer, &extraValue1)
 	if err != nil {
 		return
 	}
 
-	err = writeBigUint(writer, &tx.ExtraValue2)
+	var extraValue2 big.Int
+	err = writeBigUint(writer, &extraValue2)
 	if err != nil {
 		return
 	}
@@ -298,12 +300,14 @@ func WriteTransaction(writer *bufio.Writer, tx *types.SimpleTransaction) (err er
 		return
 	}
 
-	err = write(&tx.Cachebits)
+	var cachebits uint8
+	err = write(&cachebits)
 	if err != nil {
 		return
 	}
 
-	err = write(&tx.Reserved2)
+	var reserved2 uint8
+	err = write(&reserved2)
 	if err != nil {
 		return
 	}

@@ -193,7 +193,7 @@ func RouteExplore(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// RouteSlurp Fetch data from EtherScan for any address.
+// RouteSlurp Fetch data from Etherscan for any address.
 func RouteSlurp(w http.ResponseWriter, r *http.Request) {
 	if err, handled := slurpPkg.ServeSlurp(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)

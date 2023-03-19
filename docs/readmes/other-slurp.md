@@ -5,7 +5,7 @@
 
 While it's useful, it has two shortcomings. First, it is fully centralized, pulling its data from
 [http://etherscan.io](http://etherscan.io). Second, is that it does not report every transaction
-for a given account. This is actually a shortcoming with EtherScan. It's too complicated to explain
+for a given account. This is actually a shortcoming with Etherscan. It's too complicated to explain
 here, but see our blog.
 
 While `chifra slurp` has its shortcomings, it does provides some nice features. You may use it to pull
@@ -14,7 +14,7 @@ referenced website for more information.
 
 ```[plaintext]
 Purpose:
-  Fetch data from EtherScan for any address.
+  Fetch data from Etherscan for any address.
 
 Usage:
   chifra slurp [flags] <address> [address...] [block...]
@@ -27,6 +27,8 @@ Flags:
   -t, --types strings   which types of transactions to request
                         One or more of [ ext | int | token | nfts | 1155 | miner | uncles | all ]
   -p, --appearances     show only the blocknumber.tx_id appearances of the exported transactions
+  -P, --per_page uint   the number of records to request on each page (default 5000)
+  -s, --sleep float     seconds to sleep between requests (default 0.25)
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)
   -h, --help            display this help screen

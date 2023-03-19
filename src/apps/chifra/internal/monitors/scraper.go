@@ -5,6 +5,7 @@ package monitorsPkg
 // be found in the LICENSE file.
 
 import (
+	"fmt"
 	"os"
 	"time"
 
@@ -44,6 +45,14 @@ func (scraper *Scraper) Pause() {
 		if state != scraper.Running {
 			break
 		}
-		time.Sleep(time.Duration(500) * time.Millisecond)
+
+		sleep := .5
+		if sleep > 0 {
+			ms := time.Duration(sleep*1000) * time.Millisecond
+			if false { // opts.Globals.TestMode {
+				logger.Info(fmt.Sprintf("Sleeping for %f seconds (%d milliseconds)", sleep, ms))
+			}
+			time.Sleep(ms)
+		}
 	}
 }

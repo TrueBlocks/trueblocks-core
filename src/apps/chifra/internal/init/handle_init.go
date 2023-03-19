@@ -10,6 +10,7 @@ import (
 	"runtime"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -184,11 +185,14 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord
 		}
 		m.Unlock()
 
-		// if opts.Sleep != 0.0 {
-		// 	logger.Info("")
-		// 	logger.Info("Sleeping between downloads for", opts.Sleep, "seconds")
-		// 	time.Sleep(time.Duration(opts.Sleep*1000) * time.Millisecond)
-		// }
+		sleep := opts.Sleep
+		if sleep > 0 {
+			ms := time.Duration(sleep*1000) * time.Millisecond
+			if !opts.Globals.TestMode {
+				logger.Info(fmt.Sprintf("Sleeping for %f seconds (%d milliseconds)", sleep, ms))
+			}
+			time.Sleep(ms)
+		}
 	}
 
 	return failed, cancelled
