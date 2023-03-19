@@ -203,6 +203,14 @@ func (s *SimpleEtherscan) Model(showHidden bool, format string, extraOptions map
 	}
 }
 
+func (s *SimpleEtherscan) Write(p []byte) (n int, err error) {
+	return 0, nil
+}
+
+func (s *SimpleEtherscan) Read(p []byte) (n int, err error) {
+	return 0, nil
+}
+
 // EXISTING_CODE
 func (s *SimpleEtherscan) SetGasCost() base.Gas {
 	s.GasCost = s.GasPrice * s.GasUsed

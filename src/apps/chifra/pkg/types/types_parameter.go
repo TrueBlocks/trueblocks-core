@@ -47,8 +47,8 @@ func (s *SimpleParameter) Model(showHidden bool, format string, extraOptions map
 	// EXISTING_CODE
 
 	model := map[string]interface{}{
-		"name":          s.Name,
-		"type":          s.ParameterType,
+		"name": s.Name,
+		"type": s.ParameterType,
 	}
 
 	order := []string{
@@ -79,6 +79,14 @@ func (s *SimpleParameter) Model(showHidden bool, format string, extraOptions map
 	}
 }
 
+func (s *SimpleParameter) Write(p []byte) (n int, err error) {
+	return 0, nil
+}
+
+func (s *SimpleParameter) Read(p []byte) (n int, err error) {
+	return 0, nil
+}
+
 // EXISTING_CODE
 // DisplayName returns parameter name if defined, or a default name "val_" + index
 func (s *SimpleParameter) DisplayName(index int) string {
@@ -102,4 +110,5 @@ func ParametersToMap(params []SimpleParameter) (result map[string]any) {
 	}
 	return
 }
+
 // EXISTING_CODE

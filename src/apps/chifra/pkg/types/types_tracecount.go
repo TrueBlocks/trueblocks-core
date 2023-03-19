@@ -70,5 +70,17 @@ func (s *SimpleTraceCount) Model(showHidden bool, format string, extraOptions ma
 	}
 }
 
+func (s *SimpleTraceCount) Write(p []byte) (n int, err error) {
+	// JIMMY_JAM
+	// JIMMY_JAM
+	return 0, nil
+}
+
+func (s *SimpleTraceCount) Read(p []byte) (n int, err error) {
+	// JIMMY_JAM
+	// JIMMY_JAM
+	return 0, nil
+}
+
 // EXISTING_CODE
 // EXISTING_CODE

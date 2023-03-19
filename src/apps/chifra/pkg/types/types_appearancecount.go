@@ -59,5 +59,17 @@ func (s *SimpleAppearanceCount) Model(showHidden bool, format string, extraOptio
 	}
 }
 
+func (s *SimpleAppearanceCount) Write(p []byte) (n int, err error) {
+	// JIMMY_JAM
+	// JIMMY_JAM
+	return 0, nil
+}
+
+func (s *SimpleAppearanceCount) Read(p []byte) (n int, err error) {
+	// JIMMY_JAM
+	// JIMMY_JAM
+	return 0, nil
+}
+
 // EXISTING_CODE
 // EXISTING_CODE

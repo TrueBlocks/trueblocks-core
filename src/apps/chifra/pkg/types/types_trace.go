@@ -177,6 +177,14 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 	}
 }
 
+func (s *SimpleTrace) Write(p []byte) (n int, err error) {
+	return 0, nil
+}
+
+func (s *SimpleTrace) Read(p []byte) (n int, err error) {
+	return 0, nil
+}
+
 // EXISTING_CODE
 func mustParseUint(input any) (result uint64) {
 	result, _ = strconv.ParseUint(fmt.Sprint(input), 0, 64)

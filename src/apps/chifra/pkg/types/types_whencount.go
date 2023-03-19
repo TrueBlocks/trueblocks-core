@@ -23,3 +23,11 @@ func (s *SimpleWhenCount) Model(showHidden bool, format string, extraOptions map
 		Order: order,
 	}
 }
+
+func (s *SimpleWhenCount) Write(p []byte) (n int, err error) {
+	return 0, nil
+}
+
+func (s *SimpleWhenCount) Read(p []byte) (n int, err error) {
+	return 0, nil
+}

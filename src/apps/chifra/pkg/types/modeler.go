@@ -1,6 +1,8 @@
 package types
 
 type Modeler[Raw RawData] interface {
+	Write(p []byte) (n int, err error)
+	Read(p []byte) (n int, err error)
 	Model(showHidden bool, format string, extraOptions map[string]any) Model
 	Raw() *Raw
 }

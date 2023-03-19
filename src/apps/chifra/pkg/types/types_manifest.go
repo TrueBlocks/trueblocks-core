@@ -10,3 +10,11 @@ type SimpleManifest struct {
 	Schemas base.IpfsHash       `json:"schemas"`
 	Chunks  []SimpleChunkRecord `json:"chunks"`
 }
+
+func (s *SimpleManifest) Write(p []byte) (n int, err error) {
+	return 0, nil
+}
+
+func (s *SimpleManifest) Read(p []byte) (n int, err error) {
+	return 0, nil
+}

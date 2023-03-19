@@ -268,6 +268,14 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 	}
 }
 
+func (s *SimpleTransaction) Write(p []byte) (n int, err error) {
+	return 0, nil
+}
+
+func (s *SimpleTransaction) Read(p []byte) (n int, err error) {
+	return 0, nil
+}
+
 // EXISTING_CODE
 func (s *SimpleTransaction) SetGasCost(receipt *SimpleReceipt) base.Gas {
 	if receipt == nil {

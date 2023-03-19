@@ -16,3 +16,11 @@ type SimpleBloom struct {
 	Size      int64           `json:"size"`
 	Width     uint64          `json:"byteWidth"`
 }
+
+func (s *SimpleBloom) Write(p []byte) (n int, err error) {
+	return 0, nil
+}
+
+func (s *SimpleBloom) Read(p []byte) (n int, err error) {
+	return 0, nil
+}

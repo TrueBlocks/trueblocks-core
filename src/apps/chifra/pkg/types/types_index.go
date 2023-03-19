@@ -15,3 +15,11 @@ type SimpleIndex struct {
 	AppearanceCount uint32          `json:"nAppearances"`
 	Size            int64           `json:"fileSize"`
 }
+
+func (s *SimpleIndex) Write(p []byte) (n int, err error) {
+	return 0, nil
+}
+
+func (s *SimpleIndex) Read(p []byte) (n int, err error) {
+	return 0, nil
+}

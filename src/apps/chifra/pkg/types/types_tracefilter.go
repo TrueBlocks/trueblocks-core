@@ -70,6 +70,14 @@ func (s *SimpleTraceFilter) Model(showHidden bool, format string, extraOptions m
 	}
 }
 
+func (s *SimpleTraceFilter) Write(p []byte) (n int, err error) {
+	return 0, nil
+}
+
+func (s *SimpleTraceFilter) Read(p []byte) (n int, err error) {
+	return 0, nil
+}
+
 // EXISTING_CODE
 func (s *SimpleTraceFilter) ParseBangString(filter string) (ret map[string]any) {
 	ret = make(map[string]any)

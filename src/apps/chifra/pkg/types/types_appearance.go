@@ -1,6 +1,8 @@
 package types
 
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+)
 
 type RawAppearance struct {
 	Address          string `json:"address"`
@@ -49,4 +51,12 @@ func (s *SimpleAppearance) Model(showHidden bool, format string, extraOptions ma
 		Data:  model,
 		Order: order,
 	}
+}
+
+func (s *SimpleAppearance) Write(p []byte) (n int, err error) {
+	return 0, nil
+}
+
+func (s *SimpleAppearance) Read(p []byte) (n int, err error) {
+	return 0, nil
 }

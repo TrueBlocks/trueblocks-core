@@ -126,6 +126,14 @@ func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[
 	}
 }
 
+func (s *SimpleFunction) Write(p []byte) (n int, err error) {
+	return 0, nil
+}
+
+func (s *SimpleFunction) Read(p []byte) (n int, err error) {
+	return 0, nil
+}
+
 // EXISTING_CODE
 func FunctionFromAbiEvent(ethEvent *abi.Event, abiSource string) *SimpleFunction {
 	// ID is encoded signature

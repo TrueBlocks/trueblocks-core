@@ -11,3 +11,11 @@ type SimpleChunkRecord struct {
 	IndexHash base.IpfsHash `json:"indexHash,omitempty"`
 	IndexSize int64         `json:"indexSize,omitempty"`
 }
+
+func (s *SimpleChunkRecord) Write(p []byte) (n int, err error) {
+	return 0, nil
+}
+
+func (s *SimpleChunkRecord) Read(p []byte) (n int, err error) {
+	return 0, nil
+}

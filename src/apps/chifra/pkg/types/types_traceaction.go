@@ -110,5 +110,13 @@ func (s *SimpleTraceAction) Model(showHidden bool, format string, extraOptions m
 	}
 }
 
+func (s *SimpleTraceAction) Write(p []byte) (n int, err error) {
+	return 0, nil
+}
+
+func (s *SimpleTraceAction) Read(p []byte) (n int, err error) {
+	return 0, nil
+}
+
 // EXISTING_CODE
 // EXISTING_CODE

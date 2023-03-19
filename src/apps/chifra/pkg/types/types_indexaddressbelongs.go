@@ -8,3 +8,11 @@ type SimpleIndexAddressBelongs struct {
 	Count   uint32                  `json:"count"`
 	Apps    []SimpleIndexAppearance `json:"apps"`
 }
+
+func (s *SimpleIndexAddressBelongs) Write(p []byte) (n int, err error) {
+	return 0, nil
+}
+
+func (s *SimpleIndexAddressBelongs) Read(p []byte) (n int, err error) {
+	return 0, nil
+}
