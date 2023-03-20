@@ -58,10 +58,11 @@ func (s *SimpleReceipt) SetRaw(raw *RawReceipt) {
 }
 
 func (s *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[string]any) Model {
-	// EXISTING_CODE
-	// EXISTING_CODE
+	var model = map[string]interface{}{}
+	var order = []string{}
 
-	model := map[string]interface{}{
+	// EXISTING_CODE
+	model = map[string]interface{}{
 		"blockNumber":      s.BlockNumber,
 		"gasUsed":          s.GasUsed,
 		"status":           s.Status,
@@ -69,7 +70,7 @@ func (s *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[s
 		"transactionIndex": s.TransactionIndex,
 	}
 
-	order := []string{
+	order = []string{
 		"blockNumber",
 		"transactionIndex",
 		"transactionHash",
@@ -77,7 +78,6 @@ func (s *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[s
 		"gasUsed",
 	}
 
-	// EXISTING_CODE
 	if format == "json" {
 		if !s.ContractAddress.IsZero() {
 			model["contractAddress"] = s.ContractAddress

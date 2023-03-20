@@ -22,13 +22,12 @@ func (s *SimpleIndexAddressBelongs) SetRaw(raw *RawIndexAddressBelongs) {
 }
 
 func (s *SimpleIndexAddressBelongs) Model(showHidden bool, format string, extraOptions map[string]any) Model {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	model := map[string]interface{}{}
-	order := []string{}
+	var model = map[string]interface{}{}
+	var order = []string{}
 
 	// EXISTING_CODE
 	// EXISTING_CODE
+
 	return Model{
 		Data:  model,
 		Order: order,

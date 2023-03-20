@@ -42,10 +42,11 @@ func (s *SimpleTraceCount) SetRaw(raw *RawTraceCount) {
 }
 
 func (s *SimpleTraceCount) Model(showHidden bool, format string, extraOptions map[string]any) Model {
-	// EXISTING_CODE
-	// EXISTING_CODE
+	var model = map[string]interface{}{}
+	var order = []string{}
 
-	model := map[string]interface{}{
+	// EXISTING_CODE
+	model = map[string]interface{}{
 		"blockNumber":      s.BlockNumber,
 		"timestamp":        s.Timestamp,
 		"tracesCnt":        s.TracesCnt,
@@ -53,15 +54,13 @@ func (s *SimpleTraceCount) Model(showHidden bool, format string, extraOptions ma
 		"transactionIndex": s.TransactionIndex,
 	}
 
-	order := []string{
+	order = []string{
 		"blockNumber",
 		"transactionIndex",
 		"transactionHash",
 		"timestamp",
 		"tracesCnt",
 	}
-
-	// EXISTING_CODE
 	// EXISTING_CODE
 
 	return Model{

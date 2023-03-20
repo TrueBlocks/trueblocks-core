@@ -45,22 +45,22 @@ func (s *SimpleBlockCount) SetRaw(raw *RawBlockCount) {
 }
 
 func (s *SimpleBlockCount) Model(showHidden bool, format string, extraOptions map[string]any) Model {
-	// EXISTING_CODE
-	// EXISTING_CODE
+	var model = map[string]interface{}{}
+	var order = []string{}
 
-	model := map[string]interface{}{
+	// EXISTING_CODE
+	model = map[string]interface{}{
 		"blockNumber":     s.BlockNumber,
 		"timestamp":       s.Timestamp,
 		"transactionsCnt": s.TransactionsCnt,
 	}
 
-	order := []string{
+	order = []string{
 		"blockNumber",
 		"timestamp",
 		"transactionsCnt",
 	}
 
-	// EXISTING_CODE
 	wantsUncles := extraOptions["uncles"] == true
 	wantsLogs := extraOptions["logs"] == true
 	wantsTraces := extraOptions["traces"] == true

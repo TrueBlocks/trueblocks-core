@@ -6,8 +6,8 @@ TEST[DATE|TIME] Format:  txt
   "data": [
     {
       "action": {
-        "from": "0x30d285941dfb8bbbe4ec72b02c8d166be01322d2",
         "callType": "call",
+        "from": "0x30d285941dfb8bbbe4ec72b02c8d166be01322d2",
         "gas": "0x0",
         "input": "0x",
         "to": "0x9b0a028eafdecde3afc0fd00b7937098388b7c8a",
@@ -29,8 +29,8 @@ TEST[DATE|TIME] Format:  txt
     },
     {
       "action": {
-        "from": "0x30d285941dfb8bbbe4ec72b02c8d166be01322d2",
         "callType": "call",
+        "from": "0x30d285941dfb8bbbe4ec72b02c8d166be01322d2",
         "gas": "0x0",
         "input": "0x",
         "to": "0x9b0a028eafdecde3afc0fd00b7937098388b7c8a",

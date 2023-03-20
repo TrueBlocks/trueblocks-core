@@ -26,14 +26,8 @@ func (s *Simple[{CLASS_NAME}]) SetRaw(raw *[{RAW_NAME}]) {
 }
 
 func (s *Simple[{CLASS_NAME}]) Model(showHidden bool, format string, extraOptions map[string]any) Model {
-	// EXISTING_CODE
-	// EXISTING_CODE
-
-	model := map[string]interface{}{
-[{MODEL_FIELDS}]	}
-
-	order := []string{
-[{ORDER_FIELDS}]	}
+	var model = map[string]interface{}{}
+	var order = []string{}
 
 	// EXISTING_CODE
 	// EXISTING_CODE

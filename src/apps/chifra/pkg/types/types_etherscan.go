@@ -80,6 +80,9 @@ func (s *SimpleEtherscan) SetRaw(raw *RawEtherscan) {
 }
 
 func (s *SimpleEtherscan) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+	var model = map[string]interface{}{}
+	var order = []string{}
+
 	// EXISTING_CODE
 	to := hexutil.Encode(s.To.Bytes())
 	if to == "0x0000000000000000000000000000000000000000" {
@@ -87,9 +90,8 @@ func (s *SimpleEtherscan) Model(showHidden bool, format string, extraOptions map
 	}
 
 	date := gostradamus.FromUnixTimestamp(s.Timestamp)
-	// EXISTING_CODE
 
-	model := map[string]interface{}{
+	model = map[string]interface{}{
 		"blockNumber": s.BlockNumber,
 		"date":        s.Date,
 		"ether":       s.Ether,
@@ -115,9 +117,8 @@ func (s *SimpleEtherscan) Model(showHidden bool, format string, extraOptions map
 		// "extraValue2":      s.ExtraValue2,
 	}
 
-	var order []string
+	// var order []string
 
-	// EXISTING_CODE
 	model["date"] = date.Format("2006-01-02 15:04:05") + " UTC"
 	if strings.Contains(s.Input, "Reward") {
 		model["from"] = s.Input

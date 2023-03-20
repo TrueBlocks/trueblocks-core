@@ -59,10 +59,11 @@ func (s *SimpleTrace) SetRaw(raw *RawTrace) {
 }
 
 func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[string]any) Model {
-	// EXISTING_CODE
-	// EXISTING_CODE
+	var model = map[string]interface{}{}
+	var order = []string{}
 
-	model := map[string]interface{}{
+	// EXISTING_CODE
+	model = map[string]interface{}{
 		"blockHash":        s.BlockHash,
 		"blockNumber":      s.BlockNumber,
 		"result":           s.Result,
@@ -72,7 +73,7 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 		"transactionIndex": s.TransactionIndex,
 	}
 
-	order := []string{
+	order = []string{
 		"blockNumber",
 		"transactionIndex",
 		"timestamp",
@@ -88,7 +89,6 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 		"result::output",
 	}
 
-	// EXISTING_CODE
 	var articulatedTrace map[string]interface{}
 	isArticulated := extraOptions["articulate"] == true && s.ArticulatedTrace != nil
 	if isArticulated {

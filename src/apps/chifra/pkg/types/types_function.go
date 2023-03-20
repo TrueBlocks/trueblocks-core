@@ -64,8 +64,10 @@ func (s *SimpleFunction) SetRaw(raw *RawFunction) {
 }
 
 func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+	var model = map[string]interface{}{}
+	var order = []string{}
+
 	// EXISTING_CODE
-	// Used by chifra abis --find
 	if extraOptions["encodingSignatureOnly"] == true {
 		return Model{
 			Data: map[string]any{
@@ -75,24 +77,21 @@ func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[
 			Order: []string{"encoding", "signature"},
 		}
 	}
-	// EXISTING_CODE
 
-	model := map[string]interface{}{
+	model = map[string]interface{}{
 		"encoding":  s.Encoding,
 		"name":      s.Name,
 		"signature": s.Signature,
 		"type":      s.FunctionType,
 	}
 
-	order := []string{
+	order = []string{
 		"encoding",
 		"type",
 		"name",
 		"signature",
 	}
 
-	// EXISTING_CODE
-	// re-ordering
 	if format == "json" {
 		getParameterModels := func(params []SimpleParameter) []map[string]any {
 			result := make([]map[string]any, len(params))
@@ -117,7 +116,6 @@ func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[
 			model["stateMutability"] = sm
 		}
 	}
-
 	// EXISTING_CODE
 
 	return Model{

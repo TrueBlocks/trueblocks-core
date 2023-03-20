@@ -47,7 +47,7 @@ type RawBlock struct {
 
 type SimpleBlock[Tx BlockTransaction] struct {
 	BaseFeePerGas base.Wei       `json:"baseFeePerGas"`
-	BlockNumber   uint64         `json:"blockNumber"`
+	BlockNumber   base.Blknum    `json:"blockNumber"`
 	Difficulty    uint64         `json:"difficulty"`
 	Finalized     bool           `json:"finalized"`
 	GasLimit      base.Gas       `json:"gasLimit"`
@@ -70,6 +70,9 @@ func (s *SimpleBlock[Tx]) SetRaw(raw *RawBlock) {
 }
 
 func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+	var model = map[string]interface{}{}
+	var order = []string{}
+
 	// EXISTING_CODE
 	if extraOptions["count"] == true {
 		return Model{
@@ -114,9 +117,8 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 			},
 		}
 	}
-	// EXISTING_CODE
 
-	model := map[string]interface{}{
+	model = map[string]interface{}{
 		"gasUsed":       s.GasUsed,
 		"gasLimit":      s.GasLimit,
 		"hash":          s.Hash,
@@ -129,24 +131,6 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 		"finalized":     s.Finalized,
 	}
 
-	order := []string{
-		"transactionsCnt",
-		"gasUsed",
-		"name",
-		"gasLimit",
-		"hash",
-		"blockNumber",
-		"parentHash",
-		"miner",
-		"difficulty",
-		"timestamp",
-		"baseFeePerGas",
-		"finalized",
-		"unclesCnt",
-	}
-
-	// EXISTING_CODE
-	// reorder
 	order = []string{
 		"blockNumber",
 		"timestamp",
