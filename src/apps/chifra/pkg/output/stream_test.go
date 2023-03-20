@@ -12,11 +12,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 var input = types.SimpleReceipt{
-	BlockHash:         common.Hash{1, 2, 3},
+	BlockHash:         base.HexToHash("0x123"),
 	BlockNumber:       123,
 	ContractAddress:   base.HexToAddress("0xdafea492d9c6733ae3d56b7ed1adb60692c98bc5"),
 	CumulativeGasUsed: "500",
@@ -34,7 +33,7 @@ var input = types.SimpleReceipt{
 	Status:           1,
 	IsError:          false,
 	To:               base.HexToAddress("0x917e5e52ac55098d8caa1709e33178aadd9d4901"),
-	TransactionHash:  common.Hash{1, 2, 4},
+	TransactionHash:  base.HexToHash("0x124"),
 	TransactionIndex: 1,
 }
 
@@ -147,7 +146,7 @@ func TestStreamMany(t *testing.T) {
 		models <- &types.SimpleReceipt{
 			BlockNumber:      uint64(123),
 			TransactionIndex: 1,
-			TransactionHash:  common.HexToHash("0xdeadbeef"),
+			TransactionHash:  base.HexToHash("0xdeadbeef"),
 			GasUsed:          100,
 			Status:           1,
 			IsError:          false,
@@ -156,7 +155,7 @@ func TestStreamMany(t *testing.T) {
 		models <- &types.SimpleReceipt{
 			BlockNumber:      uint64(124),
 			TransactionIndex: 5,
-			TransactionHash:  common.HexToHash("0xdeadbeef2"),
+			TransactionHash:  base.HexToHash("0xdeadbeef2"),
 			GasUsed:          200,
 			Status:           1,
 			IsError:          false,
@@ -195,7 +194,7 @@ func TestApiFormat(t *testing.T) {
 		models <- &types.SimpleReceipt{
 			BlockNumber:      uint64(123),
 			TransactionIndex: 1,
-			TransactionHash:  common.HexToHash("0xdeadbeef"),
+			TransactionHash:  base.HexToHash("0xdeadbeef"),
 			GasUsed:          100,
 			Status:           1,
 			IsError:          false,

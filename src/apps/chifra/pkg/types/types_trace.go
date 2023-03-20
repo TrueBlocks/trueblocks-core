@@ -15,7 +15,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -37,14 +36,14 @@ type RawTrace struct {
 type SimpleTrace struct {
 	Action           *SimpleTraceAction `json:"action"`
 	ArticulatedTrace *SimpleFunction    `json:"articulatedTrace,omitempty"`
-	BlockHash        common.Hash        `json:"blockHash"`
+	BlockHash        base.Hash          `json:"blockHash"`
 	BlockNumber      uint64             `json:"blockNumber"`
 	Error            string             `json:"error,omitempty"`
 	Result           *SimpleTraceResult `json:"result"`
 	Subtraces        uint64             `json:"subtraces"`
 	Timestamp        base.Timestamp     `json:"timestamp"`
 	TraceAddress     []uint64           `json:"traceAddress"`
-	TransactionHash  common.Hash        `json:"transactionHash"`
+	TransactionHash  base.Hash          `json:"transactionHash"`
 	TransactionIndex uint64             `json:"transactionIndex"`
 	Type             string             `json:"type,omitempty"`
 	raw              *RawTrace          `json:"-"`
@@ -59,10 +58,11 @@ func (s *SimpleTrace) SetRaw(raw *RawTrace) {
 }
 
 func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[string]any) Model {
-	// EXISTING_CODE
-	// EXISTING_CODE
+	var model = map[string]interface{}{}
+	var order = []string{}
 
-	model := map[string]interface{}{
+	// EXISTING_CODE
+	model = map[string]interface{}{
 		"blockHash":        s.BlockHash,
 		"blockNumber":      s.BlockNumber,
 		"result":           s.Result,
@@ -72,7 +72,7 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 		"transactionIndex": s.TransactionIndex,
 	}
 
-	order := []string{
+	order = []string{
 		"blockNumber",
 		"transactionIndex",
 		"timestamp",
@@ -88,7 +88,6 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 		"result::output",
 	}
 
-	// EXISTING_CODE
 	var articulatedTrace map[string]interface{}
 	isArticulated := extraOptions["articulate"] == true && s.ArticulatedTrace != nil
 	if isArticulated {

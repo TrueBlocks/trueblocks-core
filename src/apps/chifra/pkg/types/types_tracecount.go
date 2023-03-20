@@ -11,7 +11,6 @@ package types
 // EXISTING_CODE
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 // EXISTING_CODE
@@ -28,7 +27,7 @@ type SimpleTraceCount struct {
 	BlockNumber      base.Blknum    `json:"blockNumber"`
 	Timestamp        base.Timestamp `json:"timestamp"`
 	TracesCnt        uint64         `json:"tracesCnt"`
-	TransactionHash  common.Hash    `json:"transactionHash"`
+	TransactionHash  base.Hash      `json:"transactionHash"`
 	TransactionIndex base.Blknum    `json:"transactionIndex"`
 	raw              *RawTraceCount
 }
@@ -42,10 +41,11 @@ func (s *SimpleTraceCount) SetRaw(raw *RawTraceCount) {
 }
 
 func (s *SimpleTraceCount) Model(showHidden bool, format string, extraOptions map[string]any) Model {
-	// EXISTING_CODE
-	// EXISTING_CODE
+	var model = map[string]interface{}{}
+	var order = []string{}
 
-	model := map[string]interface{}{
+	// EXISTING_CODE
+	model = map[string]interface{}{
 		"blockNumber":      s.BlockNumber,
 		"timestamp":        s.Timestamp,
 		"tracesCnt":        s.TracesCnt,
@@ -53,15 +53,13 @@ func (s *SimpleTraceCount) Model(showHidden bool, format string, extraOptions ma
 		"transactionIndex": s.TransactionIndex,
 	}
 
-	order := []string{
+	order = []string{
 		"blockNumber",
 		"transactionIndex",
 		"transactionHash",
 		"timestamp",
 		"tracesCnt",
 	}
-
-	// EXISTING_CODE
 	// EXISTING_CODE
 
 	return Model{

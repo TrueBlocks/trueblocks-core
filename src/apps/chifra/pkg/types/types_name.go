@@ -59,10 +59,11 @@ func (s *SimpleName) SetRaw(raw *RawName) {
 }
 
 func (s *SimpleName) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+	var model = map[string]interface{}{}
+	var order = []string{}
+
 	// EXISTING_CODE
 	if extraOptions["single"] == "tags" || extraOptions["single"] == "address" {
-		model := map[string]interface{}{}
-		order := []string{}
 		if extraOptions["single"] == "tags" {
 			model["tags"] = s.Tags
 		} else {
@@ -74,9 +75,8 @@ func (s *SimpleName) Model(showHidden bool, format string, extraOptions map[stri
 			Order: order,
 		}
 	}
-	// EXISTING_CODE
 
-	model := map[string]interface{}{
+	model = map[string]interface{}{
 		"address":  s.Address,
 		"decimals": s.Decimals,
 		"name":     s.Name,
@@ -86,7 +86,7 @@ func (s *SimpleName) Model(showHidden bool, format string, extraOptions map[stri
 		"tags":     s.Tags,
 	}
 
-	order := []string{
+	order = []string{
 		"tags",
 		"address",
 		"name",
@@ -96,7 +96,6 @@ func (s *SimpleName) Model(showHidden bool, format string, extraOptions map[stri
 		"petname",
 	}
 
-	// EXISTING_CODE
 	if len(s.Address.Bytes()) > 0 && s.Address != base.HexToAddress("0x0") {
 		model["address"] = strings.ToLower(s.Address.String())
 	}

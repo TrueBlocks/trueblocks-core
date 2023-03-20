@@ -11,7 +11,6 @@ package types
 // EXISTING_CODE
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 type BlockTransaction interface {
@@ -47,17 +46,17 @@ type RawBlock struct {
 
 type SimpleBlock[Tx BlockTransaction] struct {
 	BaseFeePerGas base.Wei       `json:"baseFeePerGas"`
-	BlockNumber   uint64         `json:"blockNumber"`
+	BlockNumber   base.Blknum    `json:"blockNumber"`
 	Difficulty    uint64         `json:"difficulty"`
 	Finalized     bool           `json:"finalized"`
 	GasLimit      base.Gas       `json:"gasLimit"`
 	GasUsed       base.Gas       `json:"gasUsed"`
-	Hash          common.Hash    `json:"hash"`
+	Hash          base.Hash      `json:"hash"`
 	Miner         base.Address   `json:"miner"`
-	ParentHash    common.Hash    `json:"parentHash"`
+	ParentHash    base.Hash      `json:"parentHash"`
 	Timestamp     base.Timestamp `json:"timestamp"`
 	Transactions  []Tx           `json:"transactions"`
-	Uncles        []common.Hash  `json:"uncles"`
+	Uncles        []base.Hash    `json:"uncles"`
 	raw           *RawBlock      `json:"-"`
 }
 
@@ -70,6 +69,9 @@ func (s *SimpleBlock[Tx]) SetRaw(raw *RawBlock) {
 }
 
 func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+	var model = map[string]interface{}{}
+	var order = []string{}
+
 	// EXISTING_CODE
 	if extraOptions["count"] == true {
 		return Model{
@@ -114,9 +116,8 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 			},
 		}
 	}
-	// EXISTING_CODE
 
-	model := map[string]interface{}{
+	model = map[string]interface{}{
 		"gasUsed":       s.GasUsed,
 		"gasLimit":      s.GasLimit,
 		"hash":          s.Hash,
@@ -129,24 +130,6 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 		"finalized":     s.Finalized,
 	}
 
-	order := []string{
-		"transactionsCnt",
-		"gasUsed",
-		"name",
-		"gasLimit",
-		"hash",
-		"blockNumber",
-		"parentHash",
-		"miner",
-		"difficulty",
-		"timestamp",
-		"baseFeePerGas",
-		"finalized",
-		"unclesCnt",
-	}
-
-	// EXISTING_CODE
-	// reorder
 	order = []string{
 		"blockNumber",
 		"timestamp",

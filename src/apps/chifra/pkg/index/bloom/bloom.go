@@ -17,7 +17,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 const (
@@ -38,8 +37,8 @@ type BloomBytes struct {
 }
 
 type BloomHeader struct {
-	Magic uint16      `json:"magic"`
-	Hash  common.Hash `json:"hash"`
+	Magic uint16    `json:"magic"`
+	Hash  base.Hash `json:"hash"`
 }
 
 // ChunkBloom structures contain an array of BloomBytes each BLOOM_WIDTH_IN_BYTES wide. A new BloomBytes is added to

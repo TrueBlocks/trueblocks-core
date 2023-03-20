@@ -15,7 +15,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/bykof/gostradamus"
-	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -41,8 +40,8 @@ type RawTransaction struct {
 }
 
 type SimpleTransaction struct {
-	Hash                 common.Hash     `json:"hash"`
-	BlockHash            common.Hash     `json:"blockHash"`
+	Hash                 base.Hash       `json:"hash"`
+	BlockHash            base.Hash       `json:"blockHash"`
 	BlockNumber          base.Blknum     `json:"blockNumber"`
 	TransactionIndex     uint64          `json:"transactionIndex"`
 	Nonce                uint64          `json:"nonce,omitempty"`
@@ -75,16 +74,17 @@ func (s *SimpleTransaction) SetRaw(raw *RawTransaction) {
 }
 
 func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+	var model = map[string]interface{}{}
+	var order = []string{}
+
 	// EXISTING_CODE
 	to := hexutil.Encode(s.To.Bytes())
 	if to == "0x0000000000000000000000000000000000000000" {
 		to = "0x0" // weird special case to preserve what RPC does
 	}
-
 	date := gostradamus.FromUnixTimestamp(s.Timestamp)
-	// EXISTING_CODE
 
-	model := map[string]interface{}{
+	model = map[string]interface{}{
 		"blockNumber":      s.BlockNumber,
 		"from":             s.From,
 		"gasPrice":         s.GasPrice,
@@ -96,7 +96,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		"value":            s.Value.String(),
 	}
 
-	order := []string{
+	order = []string{
 		"blockNumber",
 		"transactionIndex",
 		"date",
@@ -113,7 +113,6 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		"compressedTx",
 	}
 
-	// EXISTING_CODE
 	model["date"] = date.Format("2006-01-02 15:04:05") + " UTC"
 	model["gasCost"] = s.SetGasCost(s.Receipt)
 

@@ -26,12 +26,12 @@ type RawTraceFilter struct {
 }
 
 type SimpleTraceFilter struct {
-	After       uint64          `json:"after"`
-	Count       uint64          `json:"count"`
-	FromAddress []string        `json:"fromAddress"`
-	FromBlock   string          `json:"fromBlock"`
-	ToAddress   []string        `json:"toAddress"`
-	ToBlock     string          `json:"toBlock"`
+	After       uint64          `json:"after,omitempty"`
+	Count       uint64          `json:"count,omitempty"`
+	FromAddress []string        `json:"fromAddress,omitempty"`
+	FromBlock   string          `json:"fromBlock,omitempty"`
+	ToAddress   []string        `json:"toAddress,omitempty"`
+	ToBlock     string          `json:"toBlock,omitempty"`
 	raw         *RawTraceFilter `json:"-"`
 }
 
@@ -44,24 +44,23 @@ func (s *SimpleTraceFilter) SetRaw(raw *RawTraceFilter) {
 }
 
 func (s *SimpleTraceFilter) Model(showHidden bool, format string, extraOptions map[string]any) Model {
-	// EXISTING_CODE
-	// EXISTING_CODE
+	var model = map[string]interface{}{}
+	var order = []string{}
 
-	model := map[string]interface{}{
+	// EXISTING_CODE
+	model = map[string]interface{}{
 		"after":     s.After,
 		"count":     s.Count,
 		"fromBlock": s.FromBlock,
 		"toBlock":   s.ToBlock,
 	}
 
-	order := []string{
+	order = []string{
 		"fromBlock",
 		"toBlock",
 		"after",
 		"count",
 	}
-
-	// EXISTING_CODE
 	// EXISTING_CODE
 
 	return Model{

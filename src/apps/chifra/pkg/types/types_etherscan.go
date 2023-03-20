@@ -15,7 +15,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/bykof/gostradamus"
-	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -45,7 +44,7 @@ type RawEtherscan struct {
 }
 
 type SimpleEtherscan struct {
-	BlockHash        common.Hash    `json:"blockHash"`
+	BlockHash        base.Hash      `json:"blockHash"`
 	BlockNumber      uint64         `json:"blockNumber"`
 	ContractAddress  base.Address   `json:"contractAddress"`
 	Date             string         `json:"date"`
@@ -56,7 +55,7 @@ type SimpleEtherscan struct {
 	GasUsed          base.Gas       `json:"gasUsed"`
 	GasCost          base.Gas       `json:"gasCost"`
 	HasToken         bool           `json:"hasToken"`
-	Hash             common.Hash    `json:"hash"`
+	Hash             base.Hash      `json:"hash"`
 	Input            string         `json:"input"`
 	IsError          bool           `json:"isError"`
 	Timestamp        base.Timestamp `json:"timestamp"`
@@ -80,6 +79,9 @@ func (s *SimpleEtherscan) SetRaw(raw *RawEtherscan) {
 }
 
 func (s *SimpleEtherscan) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+	var model = map[string]interface{}{}
+	var order = []string{}
+
 	// EXISTING_CODE
 	to := hexutil.Encode(s.To.Bytes())
 	if to == "0x0000000000000000000000000000000000000000" {
@@ -87,9 +89,8 @@ func (s *SimpleEtherscan) Model(showHidden bool, format string, extraOptions map
 	}
 
 	date := gostradamus.FromUnixTimestamp(s.Timestamp)
-	// EXISTING_CODE
 
-	model := map[string]interface{}{
+	model = map[string]interface{}{
 		"blockNumber": s.BlockNumber,
 		"date":        s.Date,
 		"ether":       s.Ether,
@@ -115,9 +116,8 @@ func (s *SimpleEtherscan) Model(showHidden bool, format string, extraOptions map
 		// "extraValue2":      s.ExtraValue2,
 	}
 
-	var order []string
+	// var order []string
 
-	// EXISTING_CODE
 	model["date"] = date.Format("2006-01-02 15:04:05") + " UTC"
 	if strings.Contains(s.Input, "Reward") {
 		model["from"] = s.Input
@@ -172,7 +172,7 @@ func (s *SimpleEtherscan) Model(showHidden bool, format string, extraOptions map
 		model["isError"] = s.IsError
 	}
 	model["ether"] = utils.WeiToEther(&s.Value).Text('f', 18)
-	if s.BlockHash != common.HexToHash("0xdeadbeef") {
+	if s.BlockHash != base.HexToHash("0xdeadbeef") {
 		model["blockHash"] = s.BlockHash
 	}
 	if s.TransactionIndex != 80809 {

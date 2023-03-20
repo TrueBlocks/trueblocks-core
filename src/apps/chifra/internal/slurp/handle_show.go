@@ -15,7 +15,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 type Paginator struct {
@@ -182,8 +181,8 @@ func (opts *SlurpOptions) GetTransactionsFromEtherscan(chain string, addr, tt st
 		// Nonce:            esTx.Nonce,
 
 		t := types.SimpleEtherscan{
-			Hash:             common.HexToHash(rawTx.Hash),
-			BlockHash:        common.HexToHash(rawTx.BlockHash),
+			Hash:             base.HexToHash(rawTx.Hash),
+			BlockHash:        base.HexToHash(rawTx.BlockHash),
 			BlockNumber:      mustParseUint(rawTx.BlockNumber),
 			TransactionIndex: mustParseUint(rawTx.TransactionIndex),
 			Timestamp:        mustParseInt(esTx.Timestamp),
@@ -208,16 +207,16 @@ func (opts *SlurpOptions) GetTransactionsFromEtherscan(chain string, addr, tt st
 		t.ContractAddress = base.HexToAddress(esTx.ContractAddress)
 		if tt == "int" {
 			// Markers to help us remove these since Etherscan doesn't send them and we don't want to make another RPC call
-			t.BlockHash = common.HexToHash("0xdeadbeef")
+			t.BlockHash = base.HexToHash("0xdeadbeef")
 			t.TransactionIndex = 80809
 		} else if tt == "miner" {
-			t.BlockHash = common.HexToHash("0xdeadbeef")
+			t.BlockHash = base.HexToHash("0xdeadbeef")
 			t.TransactionIndex = 99999
 			t.Input = "0xBlockReward"
 			t.Value.SetString("5000000000000000000", 0)
 			t.To = base.HexToAddress(addr)
 		} else if tt == "uncles" {
-			t.BlockHash = common.HexToHash("0xdeadbeef")
+			t.BlockHash = base.HexToHash("0xdeadbeef")
 			t.TransactionIndex = 99998
 			t.Input = "0xUncleReward"
 			t.Value.SetString("3750000000000000000", 0)

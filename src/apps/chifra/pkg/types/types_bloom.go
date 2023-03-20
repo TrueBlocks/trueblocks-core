@@ -2,8 +2,8 @@ package types
 
 // EXISTING_CODE
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 // EXISTING_CODE
@@ -13,7 +13,7 @@ type RawBloom interface{}
 type SimpleBloom struct {
 	Range     paths.FileRange `json:"range"`
 	Magic     uint16          `json:"magic"`
-	Hash      common.Hash     `json:"hash"`
+	Hash      base.Hash       `json:"hash"`
 	Count     uint32          `json:"nBlooms"`
 	NInserted uint64          `json:"nInserted"`
 	Size      int64           `json:"size"`
@@ -30,13 +30,12 @@ func (s *SimpleBloom) SetRaw(raw *RawBloom) {
 }
 
 func (s *SimpleBloom) Model(showHidden bool, format string, extraOptions map[string]any) Model {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	model := map[string]interface{}{}
-	order := []string{}
+	var model = map[string]interface{}{}
+	var order = []string{}
 
 	// EXISTING_CODE
 	// EXISTING_CODE
+
 	return Model{
 		Data:  model,
 		Order: order,

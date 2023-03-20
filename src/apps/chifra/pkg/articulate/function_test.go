@@ -7,6 +7,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
@@ -74,9 +75,9 @@ func TestArticulateArgumentsMixedIndexed(t *testing.T) {
 		t.Fatal(err)
 	}
 	txData := `0x000000000000000000000000000000000000000000000000000000005911a79a`
-	txTopics := []common.Hash{
-		common.HexToHash("0x87e97e825a1d1fa0c54e1d36c7506c1dea8b1efd451fe68b000cf96f7cf40003"),
-		common.HexToHash("0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c"),
+	txTopics := []base.Hash{
+		base.HexToHash("0x87e97e825a1d1fa0c54e1d36c7506c1dea8b1efd451fe68b000cf96f7cf40003"),
+		base.HexToHash("0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c"),
 	}
 	abiEvent := abi.Events["AuctionStarted"]
 	result := types.FunctionFromAbiEvent(&abiEvent, "")

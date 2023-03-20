@@ -23,13 +23,12 @@ func (s *SimpleTimestamp) SetRaw(raw *RawTimestamp) {
 }
 
 func (s *SimpleTimestamp) Model(showHidden bool, format string, extraOptions map[string]any) Model {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	model := map[string]interface{}{}
-	order := []string{}
+	var model = map[string]interface{}{}
+	var order = []string{}
 
 	// EXISTING_CODE
 	// EXISTING_CODE
+
 	return Model{
 		Data:  model,
 		Order: order,

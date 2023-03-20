@@ -40,20 +40,20 @@ func (s *SimpleTraceResult) SetRaw(raw *RawTraceResult) {
 }
 
 func (s *SimpleTraceResult) Model(showHidden bool, format string, extraOptions map[string]any) Model {
-	// EXISTING_CODE
-	// EXISTING_CODE
+	var model = map[string]interface{}{}
+	var order = []string{}
 
-	model := map[string]interface{}{
+	// EXISTING_CODE
+	model = map[string]interface{}{
 		"gasUsed": s.GasUsed,
 		"output":  s.Output,
 	}
 
-	order := []string{
+	order = []string{
 		"gasUsed",
 		"output",
 	}
 
-	// EXISTING_CODE
 	if format == "json" {
 		if !s.Address.IsZero() {
 			model["address"] = s.Address

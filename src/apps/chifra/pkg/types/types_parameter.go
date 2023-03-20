@@ -43,20 +43,20 @@ func (s *SimpleParameter) SetRaw(raw *RawParameter) {
 }
 
 func (s *SimpleParameter) Model(showHidden bool, format string, extraOptions map[string]any) Model {
-	// EXISTING_CODE
-	// EXISTING_CODE
+	var model = map[string]interface{}{}
+	var order = []string{}
 
-	model := map[string]interface{}{
+	// EXISTING_CODE
+	model = map[string]interface{}{
 		"name": s.Name,
 		"type": s.ParameterType,
 	}
 
-	order := []string{
+	order = []string{
 		"type",
 		"name",
 	}
 
-	// EXISTING_CODE
 	if format == "json" {
 		if s.Indexed {
 			model["indexed"] = s.Indexed

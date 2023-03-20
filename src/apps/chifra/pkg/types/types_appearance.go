@@ -32,9 +32,11 @@ func (s *SimpleAppearance) SetRaw(raw *RawAppearance) {
 }
 
 func (s *SimpleAppearance) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+	var model = map[string]interface{}{}
+	var order = []string{}
+
 	// EXISTING_CODE
-	// EXISTING_CODE
-	model := map[string]interface{}{
+	model = map[string]interface{}{
 		"address":          s.Address,
 		"blockNumber":      s.BlockNumber,
 		"transactionIndex": s.TransactionIndex,
@@ -43,7 +45,7 @@ func (s *SimpleAppearance) Model(showHidden bool, format string, extraOptions ma
 		"date":             s.Date,
 	}
 
-	order := []string{
+	order = []string{
 		"address",
 		"blockNumber",
 		"transactionIndex",
@@ -51,8 +53,6 @@ func (s *SimpleAppearance) Model(showHidden bool, format string, extraOptions ma
 		"timestamp",
 		"date",
 	}
-
-	// EXISTING_CODE
 	// EXISTING_CODE
 
 	return Model{

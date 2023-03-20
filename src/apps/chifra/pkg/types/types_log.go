@@ -11,7 +11,6 @@ package types
 // EXISTING_CODE
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 // EXISTING_CODE
@@ -36,8 +35,8 @@ type SimpleLog struct {
 	Data             string          `json:"data,omitempty"`
 	LogIndex         uint64          `json:"logIndex"`
 	Timestamp        base.Timestamp  `json:"timestamp,omitempty"`
-	Topics           []common.Hash   `json:"topics,omitempty"`
-	TransactionHash  common.Hash     `json:"transactionHash"`
+	Topics           []base.Hash     `json:"topics,omitempty"`
+	TransactionHash  base.Hash       `json:"transactionHash"`
 	TransactionIndex uint32          `json:"transactionIndex"`
 	raw              *RawLog         `json:"-"`
 }
@@ -51,10 +50,11 @@ func (s *SimpleLog) SetRaw(raw *RawLog) {
 }
 
 func (s *SimpleLog) Model(showHidden bool, format string, extraOptions map[string]any) Model {
-	// EXISTING_CODE
-	// EXISTING_CODE
+	var model = map[string]interface{}{}
+	var order = []string{}
 
-	model := map[string]interface{}{
+	// EXISTING_CODE
+	model = map[string]interface{}{
 		"address":          s.Address,
 		"blockNumber":      s.BlockNumber,
 		"logIndex":         s.LogIndex,
@@ -63,7 +63,7 @@ func (s *SimpleLog) Model(showHidden bool, format string, extraOptions map[strin
 		"transactionHash":  s.TransactionHash,
 	}
 
-	order := []string{
+	order = []string{
 		"blockNumber",
 		"transactionIndex",
 		"logIndex",
@@ -77,7 +77,6 @@ func (s *SimpleLog) Model(showHidden bool, format string, extraOptions map[strin
 		"data",
 	}
 
-	// EXISTING_CODE
 	isArticulated := extraOptions["articulate"] == true && s.ArticulatedLog != nil
 	var articulatedLog = make(map[string]any)
 	if isArticulated {

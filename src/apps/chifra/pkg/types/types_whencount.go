@@ -19,17 +19,18 @@ func (s *SimpleWhenCount) SetRaw(raw *RawWhenCount) {
 }
 
 func (s *SimpleWhenCount) Model(showHidden bool, format string, extraOptions map[string]any) Model {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	model := map[string]interface{}{
-		"count": s.Count,
-	}
-	order := []string{
-		"count",
-	}
+	var model = map[string]interface{}{}
+	var order = []string{}
 
 	// EXISTING_CODE
+	model = map[string]interface{}{
+		"count": s.Count,
+	}
+	order = []string{
+		"count",
+	}
 	// EXISTING_CODE
+
 	return Model{
 		Data:  model,
 		Order: order,

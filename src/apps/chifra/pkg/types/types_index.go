@@ -2,8 +2,8 @@ package types
 
 // EXISTING_CODE
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 // EXISTING_CODE
@@ -13,7 +13,7 @@ type RawIndex interface{}
 type SimpleIndex struct {
 	Range           paths.FileRange `json:"range"`
 	Magic           uint32          `json:"magic"`
-	Hash            common.Hash     `json:"hash"`
+	Hash            base.Hash       `json:"hash"`
 	AddressCount    uint32          `json:"nAddresses"`
 	AppearanceCount uint32          `json:"nAppearances"`
 	Size            int64           `json:"fileSize"`
@@ -29,13 +29,12 @@ func (s *SimpleIndex) SetRaw(raw *RawIndex) {
 }
 
 func (s *SimpleIndex) Model(showHidden bool, format string, extraOptions map[string]any) Model {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	model := map[string]interface{}{}
-	order := []string{}
+	var model = map[string]interface{}{}
+	var order = []string{}
 
 	// EXISTING_CODE
 	// EXISTING_CODE
+
 	return Model{
 		Data:  model,
 		Order: order,

@@ -14,31 +14,31 @@ import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 // EXISTING_CODE
 
 type RawTraceAction struct {
-	SelfDestructed string `json:"selfDestructed,omitempty"`
-	From           string `json:"from,omitempty"`
+	Address        string `json:"address,omitempty"`
+	Balance        string `json:"balance,omitempty"`
 	CallType       string `json:"callType,omitempty"`
+	From           string `json:"from,omitempty"`
 	Gas            string `json:"gas,omitempty"`
+	Init           string `json:"init,omitempty"`
 	Input          string `json:"input,omitempty"`
+	RefundAddress  string `json:"refundAddress,omitempty"`
+	SelfDestructed string `json:"selfDestructed,omitempty"`
 	To             string `json:"to,omitempty"`
 	Value          string `json:"value,omitempty"`
-	Balance        string `json:"balance,omitempty"`
-	Init           string `json:"init,omitempty"`
-	RefundAddress  string `json:"refundAddress,omitempty"`
-	Address        string `json:"address,omitempty"`
 }
 
 type SimpleTraceAction struct {
-	SelfDestructed base.Address    `json:"selfDestructed,omitempty"`
-	From           base.Address    `json:"from"`
+	Address        base.Address    `json:"address,omitempty"`
+	Balance        base.Wei        `json:"balance,omitempty"`
 	CallType       string          `json:"callType"`
+	From           base.Address    `json:"from"`
 	Gas            base.Gas        `json:"gas"`
+	Init           string          `json:"init,omitempty"`
 	Input          string          `json:"input,omitempty"`
+	RefundAddress  base.Address    `json:"refundAddress,omitempty"`
+	SelfDestructed base.Address    `json:"selfDestructed,omitempty"`
 	To             base.Address    `json:"to"`
 	Value          base.Wei        `json:"value"`
-	Balance        base.Wei        `json:"balance,omitempty"`
-	Init           string          `json:"init,omitempty"`
-	RefundAddress  base.Address    `json:"refundAddress,omitempty"`
-	Address        base.Address    `json:"address,omitempty"`
 	raw            *RawTraceAction `json:"-"`
 }
 
@@ -51,11 +51,8 @@ func (s *SimpleTraceAction) SetRaw(raw *RawTraceAction) {
 }
 
 func (s *SimpleTraceAction) Model(showHidden bool, format string, extraOptions map[string]any) Model {
-	// EXISTING_CODE
-	// EXISTING_CODE
-
-	model := map[string]interface{}{}
-	order := []string{}
+	var model = map[string]interface{}{}
+	var order = []string{}
 
 	// EXISTING_CODE
 	if format == "json" {

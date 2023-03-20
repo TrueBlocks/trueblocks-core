@@ -37,24 +37,27 @@ func (s *SimpleNamedBlock) SetRaw(raw *RawNamedBlock) {
 }
 
 func (s *SimpleNamedBlock) Model(showHidden bool, format string, extraOptions map[string]any) Model {
-	// EXISTING_CODE
-	// EXISTING_CODE
+	var model = map[string]interface{}{}
+	var order = []string{}
 
-	model := map[string]interface{}{
+	// EXISTING_CODE
+	model = map[string]interface{}{
 		"blockNumber": s.BlockNumber,
 		"date":        s.Date,
 		"timestamp":   s.Timestamp,
 	}
 
-	order := []string{
+	order = []string{
 		"blockNumber",
 		"timestamp",
 		"date",
 	}
 
-	// EXISTING_CODE
-	// TODO: Can we automate omitempty?
-	if format != "json" || len(s.Name) > 0 {
+	if format == "json" {
+		if len(s.Name) > 0 {
+			model["name"] = s.Name
+		}
+	} else {
 		model["name"] = s.Name
 		order = append(order, "name")
 	}

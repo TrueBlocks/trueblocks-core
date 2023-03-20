@@ -35,22 +35,21 @@ func (s *SimpleAppearanceCount) SetRaw(raw *RawAppearanceCount) {
 }
 
 func (s *SimpleAppearanceCount) Model(showHidden bool, format string, extraOptions map[string]any) Model {
-	// EXISTING_CODE
-	// EXISTING_CODE
+	var model = map[string]interface{}{}
+	var order = []string{}
 
-	model := map[string]interface{}{
+	// EXISTING_CODE
+	model = map[string]interface{}{
 		"address":  s.Address,
 		"fileSize": s.FileSize,
 		"nRecords": s.NRecords,
 	}
 
-	order := []string{
+	order = []string{
 		"address",
 		"nRecords",
 		"fileSize",
 	}
-
-	// EXISTING_CODE
 	// EXISTING_CODE
 
 	return Model{

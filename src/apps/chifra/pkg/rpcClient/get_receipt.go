@@ -11,14 +11,13 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	ethTypes "github.com/ethereum/go-ethereum/core/types"
 )
 
 // GetTransactionReceipt fetches receipt from the RPC. If txGasPrice is provided, it will be used for
 // receipts in blocks before London
-func GetTransactionReceipt(chain string, bn uint64, txid uint64, txHash *common.Hash, txGasPrice uint64) (receipt types.SimpleReceipt, err error) {
+func GetTransactionReceipt(chain string, bn uint64, txid uint64, txHash *base.Hash, txGasPrice uint64) (receipt types.SimpleReceipt, err error) {
 	// First, get raw receipt directly from RPC
 	rawReceipt, tx, err := getRawTransactionReceipt(chain, bn, txid, txHash)
 	if err != nil {
@@ -48,9 +47,9 @@ func GetTransactionReceipt(chain string, bn uint64, txid uint64, txHash *common.
 			return
 		}
 
-		logTopics := make([]common.Hash, 0, len(rawLog.Topics))
+		logTopics := make([]base.Hash, 0, len(rawLog.Topics))
 		for _, topic := range rawLog.Topics {
-			logTopics = append(logTopics, common.HexToHash(topic))
+			logTopics = append(logTopics, base.HexToHash(topic))
 		}
 
 		log := types.SimpleLog{
@@ -58,7 +57,7 @@ func GetTransactionReceipt(chain string, bn uint64, txid uint64, txHash *common.
 			LogIndex:         logIndex,
 			BlockNumber:      logBlockNumber,
 			TransactionIndex: uint32(logTxIndex),
-			TransactionHash:  tx.Hash(),
+			TransactionHash:  base.HexToHash(tx.Hash().Hex()),
 			Timestamp:        0, // TODO: FIXME #2695
 			Topics:           logTopics,
 			Data:             string(rawLog.Data),
@@ -91,7 +90,7 @@ func GetTransactionReceipt(chain string, bn uint64, txid uint64, txHash *common.
 	}
 
 	receipt = types.SimpleReceipt{
-		BlockHash:         common.HexToHash(rawReceipt.BlockHash),
+		BlockHash:         base.HexToHash(rawReceipt.BlockHash),
 		BlockNumber:       blockNumber,
 		ContractAddress:   base.HexToAddress(rawReceipt.ContractAddress),
 		CumulativeGasUsed: fmt.Sprint(cumulativeGasUsed),
@@ -99,7 +98,7 @@ func GetTransactionReceipt(chain string, bn uint64, txid uint64, txHash *common.
 		Logs:              logs,
 		Status:            uint32(status),
 		IsError:           status == 0,
-		TransactionHash:   common.HexToHash(rawReceipt.TransactionHash),
+		TransactionHash:   base.HexToHash(rawReceipt.TransactionHash),
 		TransactionIndex:  transactionIndex,
 		// From:
 		// To:
@@ -129,7 +128,7 @@ func GetTransactionReceipt(chain string, bn uint64, txid uint64, txHash *common.
 
 // getRawTransactionReceipt fetches raw transaction. If txHash is provided, the function
 // will not fetch the transaction (we may have already loaded it)
-func getRawTransactionReceipt(chain string, bn uint64, txid uint64, txHash *common.Hash) (receipt *types.RawReceipt, tx *ethTypes.Transaction, err error) {
+func getRawTransactionReceipt(chain string, bn uint64, txid uint64, txHash *base.Hash) (receipt *types.RawReceipt, tx *ethTypes.Transaction, err error) {
 	fetchedTx, ferr := TxFromNumberAndId(chain, bn, txid)
 	tx = &fetchedTx
 	if ferr != nil {
