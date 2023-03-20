@@ -57,7 +57,7 @@ func GetTransactionReceipt(chain string, bn uint64, txid uint64, txHash *common.
 			Address:          logAddress,
 			LogIndex:         logIndex,
 			BlockNumber:      logBlockNumber,
-			TransactionIndex: uint32(logTxIndex),
+			TransactionIndex: logTxIndex,
 			TransactionHash:  tx.Hash(),
 			Timestamp:        0, // TODO: FIXME #2695
 			Topics:           logTopics,
