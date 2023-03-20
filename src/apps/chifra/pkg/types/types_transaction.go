@@ -15,7 +15,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/bykof/gostradamus"
-	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -41,8 +40,8 @@ type RawTransaction struct {
 }
 
 type SimpleTransaction struct {
-	Hash                 common.Hash     `json:"hash"`
-	BlockHash            common.Hash     `json:"blockHash"`
+	Hash                 base.Hash       `json:"hash"`
+	BlockHash            base.Hash       `json:"blockHash"`
 	BlockNumber          base.Blknum     `json:"blockNumber"`
 	TransactionIndex     uint64          `json:"transactionIndex"`
 	Nonce                uint64          `json:"nonce,omitempty"`

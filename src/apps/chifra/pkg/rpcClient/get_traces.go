@@ -13,7 +13,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 // GetTraceCountByBlockNumber returns the number of traces in a block
@@ -37,9 +36,9 @@ func GetTracesByBlockNumber(chain string, bn uint64) ([]types.SimpleTrace, error
 		for _, rawTrace := range rawTraces {
 			trace := types.SimpleTrace{
 				Error:            rawTrace.Error,
-				BlockHash:        common.HexToHash(rawTrace.BlockHash),
+				BlockHash:        base.HexToHash(rawTrace.BlockHash),
 				BlockNumber:      rawTrace.BlockNumber,
-				TransactionHash:  common.HexToHash(rawTrace.TransactionHash),
+				TransactionHash:  base.HexToHash(rawTrace.TransactionHash),
 				TransactionIndex: rawTrace.TransactionIndex,
 				TraceAddress:     rawTrace.TraceAddress,
 				Subtraces:        rawTrace.Subtraces,
@@ -134,9 +133,9 @@ func GetTracesByFilter(chain string, filter string) ([]types.SimpleTrace, error)
 
 			trace := types.SimpleTrace{
 				Error:            rawTrace.Error,
-				BlockHash:        common.HexToHash(rawTrace.BlockHash),
+				BlockHash:        base.HexToHash(rawTrace.BlockHash),
 				BlockNumber:      rawTrace.BlockNumber,
-				TransactionHash:  common.HexToHash(rawTrace.TransactionHash),
+				TransactionHash:  base.HexToHash(rawTrace.TransactionHash),
 				TransactionIndex: rawTrace.TransactionIndex,
 				TraceAddress:     rawTrace.TraceAddress,
 				Subtraces:        rawTrace.Subtraces,
@@ -203,9 +202,9 @@ func GetTracesByTransactionHash(chain string, txHash string, transaction *types.
 
 			trace := types.SimpleTrace{
 				Error:            rawTrace.Error,
-				BlockHash:        common.HexToHash(rawTrace.BlockHash),
+				BlockHash:        base.HexToHash(rawTrace.BlockHash),
 				BlockNumber:      rawTrace.BlockNumber,
-				TransactionHash:  common.HexToHash(rawTrace.TransactionHash),
+				TransactionHash:  base.HexToHash(rawTrace.TransactionHash),
 				TransactionIndex: rawTrace.TransactionIndex,
 				TraceAddress:     rawTrace.TraceAddress,
 				Subtraces:        rawTrace.Subtraces,

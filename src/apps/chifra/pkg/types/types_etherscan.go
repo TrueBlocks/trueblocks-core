@@ -15,7 +15,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/bykof/gostradamus"
-	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -45,7 +44,7 @@ type RawEtherscan struct {
 }
 
 type SimpleEtherscan struct {
-	BlockHash        common.Hash    `json:"blockHash"`
+	BlockHash        base.Hash      `json:"blockHash"`
 	BlockNumber      uint64         `json:"blockNumber"`
 	ContractAddress  base.Address   `json:"contractAddress"`
 	Date             string         `json:"date"`
@@ -56,7 +55,7 @@ type SimpleEtherscan struct {
 	GasUsed          base.Gas       `json:"gasUsed"`
 	GasCost          base.Gas       `json:"gasCost"`
 	HasToken         bool           `json:"hasToken"`
-	Hash             common.Hash    `json:"hash"`
+	Hash             base.Hash      `json:"hash"`
 	Input            string         `json:"input"`
 	IsError          bool           `json:"isError"`
 	Timestamp        base.Timestamp `json:"timestamp"`
@@ -173,7 +172,7 @@ func (s *SimpleEtherscan) Model(showHidden bool, format string, extraOptions map
 		model["isError"] = s.IsError
 	}
 	model["ether"] = utils.WeiToEther(&s.Value).Text('f', 18)
-	if s.BlockHash != common.HexToHash("0xdeadbeef") {
+	if s.BlockHash != base.HexToHash("0xdeadbeef") {
 		model["blockHash"] = s.BlockHash
 	}
 	if s.TransactionIndex != 80809 {

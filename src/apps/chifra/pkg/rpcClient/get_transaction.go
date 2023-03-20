@@ -9,10 +9,9 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum/common"
 )
 
-func getRawTransaction(chain string, blockHash common.Hash, index uint64) (raw *types.RawTransaction, err error) {
+func getRawTransaction(chain string, blockHash base.Hash, index uint64) (raw *types.RawTransaction, err error) {
 	var response struct {
 		Result types.RawTransaction `json:"result"`
 	}
@@ -61,7 +60,7 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 	if err != nil {
 		return
 	}
-	txHash := common.HexToHash(rawTx.Hash)
+	txHash := base.HexToHash(rawTx.Hash)
 	receipt, err := GetTransactionReceipt(
 		chain,
 		blockNumber,
@@ -98,7 +97,7 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 
 	tx = &types.SimpleTransaction{
 		Hash:             txHash,
-		BlockHash:        common.HexToHash(rawTx.BlockHash),
+		BlockHash:        base.HexToHash(rawTx.BlockHash),
 		BlockNumber:      txBlockNumber,
 		TransactionIndex: txIndex,
 		Nonce:            nonce,

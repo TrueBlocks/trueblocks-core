@@ -5,6 +5,7 @@
 package chunksPkg
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -43,7 +44,7 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 		obj := types.SimpleIndex{
 			Range:           rng,
 			Magic:           header.Magic,
-			Hash:            header.Hash,
+			Hash:            base.HexToHash(header.Hash.Hex()),
 			AddressCount:    header.AddressCount,
 			AppearanceCount: header.AppearanceCount,
 			Size:            file.FileSize(path),

@@ -8,13 +8,13 @@ import (
 	"context"
 	"errors"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 func (opts *WhenOptions) HandleShowBlocks() error {
@@ -44,7 +44,7 @@ func (opts *WhenOptions) HandleShowBlocks() error {
 					cancel()
 					return
 				}
-				if br.StartType == identifiers.BlockHash && common.HexToHash(br.Orig) != block.Hash {
+				if br.StartType == identifiers.BlockHash && base.HexToHash(br.Orig) != block.Hash {
 					errorChan <- errors.New("block hash not found")
 					continue
 				}

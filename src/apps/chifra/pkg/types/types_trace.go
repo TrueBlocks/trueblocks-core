@@ -15,7 +15,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -37,14 +36,14 @@ type RawTrace struct {
 type SimpleTrace struct {
 	Action           *SimpleTraceAction `json:"action"`
 	ArticulatedTrace *SimpleFunction    `json:"articulatedTrace,omitempty"`
-	BlockHash        common.Hash        `json:"blockHash"`
+	BlockHash        base.Hash          `json:"blockHash"`
 	BlockNumber      uint64             `json:"blockNumber"`
 	Error            string             `json:"error,omitempty"`
 	Result           *SimpleTraceResult `json:"result"`
 	Subtraces        uint64             `json:"subtraces"`
 	Timestamp        base.Timestamp     `json:"timestamp"`
 	TraceAddress     []uint64           `json:"traceAddress"`
-	TransactionHash  common.Hash        `json:"transactionHash"`
+	TransactionHash  base.Hash          `json:"transactionHash"`
 	TransactionIndex uint64             `json:"transactionIndex"`
 	Type             string             `json:"type,omitempty"`
 	raw              *RawTrace          `json:"-"`

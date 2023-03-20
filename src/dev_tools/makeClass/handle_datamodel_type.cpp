@@ -145,7 +145,7 @@ string_q type_2_GoType(const CMember& field) {
     if (type == "timestamp")
         return "base.Timestamp";
     if (type == "hash" || type == "bytes32")
-        return "common.Hash";
+        return "base.Hash";
     if (type == "datetime" || type == "bytes")
         return "string";
     if (type == "address")

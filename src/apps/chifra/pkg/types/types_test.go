@@ -5,12 +5,11 @@ import (
 	"testing"
 
 	base "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 func TestTypes(t *testing.T) {
 	r := SimpleReceipt{
-		BlockHash:   common.Hash{0x1},
+		BlockHash:   base.HexToHash("0x1"),
 		BlockNumber: 100,
 	}
 

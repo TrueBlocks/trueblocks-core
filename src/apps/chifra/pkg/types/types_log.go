@@ -11,7 +11,6 @@ package types
 // EXISTING_CODE
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 // EXISTING_CODE
@@ -31,7 +30,7 @@ type RawLog struct {
 type SimpleLog struct {
 	Address             base.Address    `json:"address"`
 	ArticulatedLog      *SimpleFunction `json:"-"`
-	BlockHash           common.Hash     `json:"blockHash"`
+	BlockHash           base.Hash       `json:"blockHash"`
 	BlockNumber         base.Blknum     `json:"blockNumber"`
 	CompressedLog       string          `json:"compressedLog"`
 	Data                string          `json:"data"`
@@ -41,8 +40,8 @@ type SimpleLog struct {
 	Topic1              base.Topic      `json:"topic1"`
 	Topic2              base.Topic      `json:"topic2"`
 	Topic3              base.Topic      `json:"topic3"`
-	Topics              []common.Hash   `json:"topics"`
-	TransactionHash     common.Hash     `json:"transactionHash"`
+	Topics              []base.Hash     `json:"topics"`
+	TransactionHash     base.Hash       `json:"transactionHash"`
 	TransactionIndex    base.Blknum     `json:"transactionIndex"`
 	TransactionLogIndex base.Blknum     `json:"transactionLogIndex"`
 	LogType             string          `json:"type"`

@@ -9,7 +9,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 // TODO(cache): I don't think we want to hard code this version value here. We want to read it programmatically
@@ -38,7 +37,7 @@ func createReadFn(reader *bufio.Reader) readBytes {
 // files
 type ArrayItem interface {
 	~string |
-		common.Hash |
+		base.Hash |
 		base.Address |
 		types.SimpleTransaction |
 		types.SimpleTrace |
@@ -111,13 +110,13 @@ func readAddress(reader *bufio.Reader, target *base.Address) (err error) {
 	return
 }
 
-func readHash(reader *bufio.Reader, target *common.Hash) (err error) {
+func readHash(reader *bufio.Reader, target *base.Hash) (err error) {
 	str := &cString{}
 	err = readCString(reader, str)
 	if err != nil {
 		return
 	}
-	hash := common.HexToHash(string(str.content))
+	hash := base.HexToHash(string(str.content))
 	*target = hash
 	return
 }

@@ -10,7 +10,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 type writeBytes = func(data any) error
@@ -40,7 +39,7 @@ func writeString(writer *bufio.Writer, str *string) (err error) {
 	return
 }
 
-func writeHash(writer *bufio.Writer, hash *common.Hash) (err error) {
+func writeHash(writer *bufio.Writer, hash *base.Hash) (err error) {
 	value := lowercaseHex(hash.Hex())
 	return writeString(writer, &value)
 }

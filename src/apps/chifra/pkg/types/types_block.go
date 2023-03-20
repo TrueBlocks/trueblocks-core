@@ -11,7 +11,6 @@ package types
 // EXISTING_CODE
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 type BlockTransaction interface {
@@ -52,12 +51,12 @@ type SimpleBlock[Tx BlockTransaction] struct {
 	Finalized     bool           `json:"finalized"`
 	GasLimit      base.Gas       `json:"gasLimit"`
 	GasUsed       base.Gas       `json:"gasUsed"`
-	Hash          common.Hash    `json:"hash"`
+	Hash          base.Hash      `json:"hash"`
 	Miner         base.Address   `json:"miner"`
-	ParentHash    common.Hash    `json:"parentHash"`
+	ParentHash    base.Hash      `json:"parentHash"`
 	Timestamp     base.Timestamp `json:"timestamp"`
 	Transactions  []Tx           `json:"transactions"`
-	Uncles        []common.Hash  `json:"uncles"`
+	Uncles        []base.Hash    `json:"uncles"`
 	raw           *RawBlock      `json:"-"`
 }
 

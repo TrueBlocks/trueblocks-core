@@ -15,7 +15,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
-	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -50,7 +49,7 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, isFinal bool) (types.Simpl
 			return block, err
 		}
 
-		txHash := common.HexToHash(fmt.Sprint(t["hash"]))
+		txHash := base.HexToHash(fmt.Sprint(t["hash"]))
 		txGasPrice := mustParseUint(t["gasPrice"])
 		input := fmt.Sprint(t["input"])
 		value := big.NewInt(0)
@@ -71,7 +70,7 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, isFinal bool) (types.Simpl
 
 		tx := types.SimpleTransaction{
 			Hash:                 txHash,
-			BlockHash:            common.HexToHash(fmt.Sprint(t["blockHash"])),
+			BlockHash:            base.HexToHash(fmt.Sprint(t["blockHash"])),
 			BlockNumber:          mustParseUint(t["blockNumber"]),
 			TransactionIndex:     mustParseUint(t["transactionIndex"]),
 			Nonce:                mustParseUint(t["nonce"]),
@@ -147,16 +146,16 @@ func loadBlock[Tx types.BlockTransaction](chain string, bn uint64, isFinal bool,
 		return
 	}
 
-	uncles := make([]common.Hash, 0, len(rawBlock.Uncles))
+	uncles := make([]base.Hash, 0, len(rawBlock.Uncles))
 	for _, uncle := range rawBlock.Uncles {
-		uncles = append(uncles, common.HexToHash(uncle))
+		uncles = append(uncles, base.HexToHash(uncle))
 	}
 
 	block = types.SimpleBlock[Tx]{
 		BlockNumber: blockNumber,
 		Timestamp:   base.Timestamp(ts), // note that we turn Ethereum's timestamps into types.Timestamp upon read.
-		Hash:        common.HexToHash(rawBlock.Hash),
-		ParentHash:  common.HexToHash(rawBlock.ParentHash),
+		Hash:        base.HexToHash(rawBlock.Hash),
+		ParentHash:  base.HexToHash(rawBlock.ParentHash),
 		GasLimit:    gasLimit,
 		GasUsed:     gasUsed,
 		Miner:       base.HexToAddress(rawBlock.Miner),

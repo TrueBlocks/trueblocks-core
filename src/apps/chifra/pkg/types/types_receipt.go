@@ -11,7 +11,6 @@ package types
 // EXISTING_CODE
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 // EXISTING_CODE
@@ -33,7 +32,7 @@ type RawReceipt struct {
 }
 
 type SimpleReceipt struct {
-	BlockHash         common.Hash  `json:"blockHash,omitempty"`
+	BlockHash         base.Hash    `json:"blockHash,omitempty"`
 	BlockNumber       base.Blknum  `json:"blockNumber"`
 	ContractAddress   base.Address `json:"contractAddress,omitempty"`
 	CumulativeGasUsed string       `json:"cumulativeGasUsed,omitempty"`
@@ -44,7 +43,7 @@ type SimpleReceipt struct {
 	Logs              []SimpleLog  `json:"logs"`
 	Status            uint32       `json:"status"`
 	To                base.Address `json:"to,omitempty"`
-	TransactionHash   common.Hash  `json:"transactionHash"`
+	TransactionHash   base.Hash    `json:"transactionHash"`
 	TransactionIndex  base.Blknum  `json:"transactionIndex"`
 	raw               *RawReceipt
 }

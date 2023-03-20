@@ -8,13 +8,13 @@ import (
 	"context"
 	"errors"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 func (opts *TracesOptions) HandleCounts() error {
@@ -68,7 +68,7 @@ func (opts *TracesOptions) HandleCounts() error {
 				counter := types.SimpleTraceCount{
 					BlockNumber:      uint64(id.BlockNumber),
 					TransactionIndex: uint64(id.TransactionIndex),
-					TransactionHash:  common.HexToHash(txHash),
+					TransactionHash:  base.HexToHash(txHash),
 					Timestamp:        ts,
 					TracesCnt:        cnt,
 				}
