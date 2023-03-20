@@ -150,5 +150,17 @@ func (s *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[s
 	}
 }
 
+func (s *SimpleReceipt) Write(p []byte) (n int, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
+}
+
+func (s *SimpleReceipt) Read(p []byte) (n int, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
+}
+
 // EXISTING_CODE
 // EXISTING_CODE

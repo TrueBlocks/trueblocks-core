@@ -122,5 +122,17 @@ func (s *SimpleBlockCount) Model(showHidden bool, format string, extraOptions ma
 	}
 }
 
+func (s *SimpleBlockCount) Write(p []byte) (n int, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
+}
+
+func (s *SimpleBlockCount) Read(p []byte) (n int, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
+}
+
 // EXISTING_CODE
 // EXISTING_CODE

@@ -52,7 +52,7 @@ type SimpleFunction struct {
 	payable   bool
 	abiMethod *abi.Method
 	abiEvent  *abi.Event
-	raw       *RawFunction
+	raw       *RawFunction `json:"-"`
 }
 
 func (s *SimpleFunction) Raw() *RawFunction {
@@ -124,6 +124,18 @@ func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[
 		Data:  model,
 		Order: order,
 	}
+}
+
+func (s *SimpleFunction) Write(p []byte) (n int, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
+}
+
+func (s *SimpleFunction) Read(p []byte) (n int, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
 }
 
 // EXISTING_CODE

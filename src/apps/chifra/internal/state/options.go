@@ -32,6 +32,8 @@ type StateOptions struct {
 	ProxyFor string                   `json:"proxyFor,omitempty"` // For the --call option only, redirects calls to this implementation
 	Globals  globals.GlobalOptions    `json:"globals,omitempty"`  // The global options
 	BadFlag  error                    `json:"badFlag,omitempty"`  // An error flag if needed
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 var defaultStateOptions = StateOptions{}

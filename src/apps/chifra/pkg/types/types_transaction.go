@@ -63,7 +63,7 @@ type SimpleTransaction struct {
 	Traces               []SimpleTrace   `json:"traces"`
 	ArticulatedTx        *SimpleFunction `json:"articulatedTx,omitempty"`
 	Message              string          `json:"-"`
-	raw                  *RawTransaction
+	raw                  *RawTransaction `json:"-"`
 }
 
 func (s *SimpleTransaction) Raw() *RawTransaction {
@@ -266,6 +266,18 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		Data:  model,
 		Order: order,
 	}
+}
+
+func (s *SimpleTransaction) Write(p []byte) (n int, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
+}
+
+func (s *SimpleTransaction) Read(p []byte) (n int, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
 }
 
 // EXISTING_CODE

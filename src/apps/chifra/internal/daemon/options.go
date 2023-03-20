@@ -26,6 +26,8 @@ type DaemonOptions struct {
 	Monitor bool                  `json:"monitor,omitempty"` // Instruct the node to start the monitors tool
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 var defaultDaemonOptions = DaemonOptions{

@@ -132,5 +132,17 @@ func (s *SimpleLog) Model(showHidden bool, format string, extraOptions map[strin
 	}
 }
 
+func (s *SimpleLog) Write(p []byte) (n int, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
+}
+
+func (s *SimpleLog) Read(p []byte) (n int, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
+}
+
 // EXISTING_CODE
 // EXISTING_CODE

@@ -63,7 +63,7 @@ type SimpleEtherscan struct {
 	To               base.Address   `json:"to"`
 	TransactionIndex uint64         `json:"transactionIndex"`
 	Value            base.Wei       `json:"value"`
-	raw              *RawEtherscan
+	raw              *RawEtherscan  `json:"-"`
 	// ArticulatedTx    SimpleFunction `json:"articulatedTx"`
 	// CompressedTx     string         `json:"compressedTx"`
 	// EtherGasPrice    string      `json:"etherGasPrice"`
@@ -201,6 +201,18 @@ func (s *SimpleEtherscan) Model(showHidden bool, format string, extraOptions map
 		Data:  model,
 		Order: order,
 	}
+}
+
+func (s *SimpleEtherscan) Write(p []byte) (n int, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
+}
+
+func (s *SimpleEtherscan) Read(p []byte) (n int, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
 }
 
 // EXISTING_CODE

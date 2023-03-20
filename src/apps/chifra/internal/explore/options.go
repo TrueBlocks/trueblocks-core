@@ -26,6 +26,8 @@ type ExploreOptions struct {
 	Google  bool                  `json:"google,omitempty"`  // Search google excluding popular blockchain explorers
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 var defaultExploreOptions = ExploreOptions{}

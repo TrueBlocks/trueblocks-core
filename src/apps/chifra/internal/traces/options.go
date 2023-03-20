@@ -27,6 +27,8 @@ type TracesOptions struct {
 	Count          bool                     `json:"count,omitempty"`          // Show the number of traces for the transaction only (fast)
 	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
 	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 var defaultTracesOptions = TracesOptions{}

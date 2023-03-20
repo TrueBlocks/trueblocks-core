@@ -58,7 +58,7 @@ type SimpleBlock[Tx BlockTransaction] struct {
 	Timestamp     base.Timestamp `json:"timestamp"`
 	Transactions  []Tx           `json:"transactions"`
 	Uncles        []common.Hash  `json:"uncles"`
-	raw           *RawBlock
+	raw           *RawBlock      `json:"-"`
 }
 
 func (s *SimpleBlock[Tx]) Raw() *RawBlock {
@@ -199,6 +199,18 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 		Data:  model,
 		Order: order,
 	}
+}
+
+func (s *SimpleBlock[Tx]) Write(p []byte) (n int, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
+}
+
+func (s *SimpleBlock[Tx]) Read(p []byte) (n int, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
 }
 
 // EXISTING_CODE

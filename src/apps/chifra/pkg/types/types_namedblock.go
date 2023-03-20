@@ -66,5 +66,17 @@ func (s *SimpleNamedBlock) Model(showHidden bool, format string, extraOptions ma
 	}
 }
 
+func (s *SimpleNamedBlock) Write(p []byte) (n int, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
+}
+
+func (s *SimpleNamedBlock) Read(p []byte) (n int, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
+}
+
 // EXISTING_CODE
 // EXISTING_CODE
