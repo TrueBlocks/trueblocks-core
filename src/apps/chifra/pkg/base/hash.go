@@ -18,9 +18,6 @@ type Hash struct {
 }
 
 func (h *Hash) Hex() string {
-	if h.IsZero() {
-		return "0x0"
-	}
 	return "0x" + hex.EncodeToString(h.Bytes())
 }
 

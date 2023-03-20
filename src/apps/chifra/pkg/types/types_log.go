@@ -28,24 +28,17 @@ type RawLog struct {
 }
 
 type SimpleLog struct {
-	Address             base.Address    `json:"address"`
-	ArticulatedLog      *SimpleFunction `json:"-"`
-	BlockHash           base.Hash       `json:"blockHash"`
-	BlockNumber         base.Blknum     `json:"blockNumber"`
-	CompressedLog       string          `json:"compressedLog"`
-	Data                string          `json:"data"`
-	LogIndex            base.Blknum     `json:"logIndex"`
-	Timestamp           base.Timestamp  `json:"timestamp"`
-	Topic0              base.Topic      `json:"topic0"`
-	Topic1              base.Topic      `json:"topic1"`
-	Topic2              base.Topic      `json:"topic2"`
-	Topic3              base.Topic      `json:"topic3"`
-	Topics              []base.Hash     `json:"topics"`
-	TransactionHash     base.Hash       `json:"transactionHash"`
-	TransactionIndex    base.Blknum     `json:"transactionIndex"`
-	TransactionLogIndex base.Blknum     `json:"transactionLogIndex"`
-	LogType             string          `json:"type"`
-	raw                 *RawLog
+	Address          base.Address    `json:"address"`
+	ArticulatedLog   *SimpleFunction `json:"-"`
+	BlockNumber      uint64          `json:"blockNumber"`
+	CompressedLog    string          `json:"compressedLog,omitempty"`
+	Data             string          `json:"data,omitempty"`
+	LogIndex         uint64          `json:"logIndex"`
+	Timestamp        base.Timestamp  `json:"timestamp,omitempty"`
+	Topics           []base.Hash     `json:"topics,omitempty"`
+	TransactionHash  base.Hash       `json:"transactionHash"`
+	TransactionIndex uint32          `json:"transactionIndex"`
+	raw              *RawLog         `json:"-"`
 }
 
 func (s *SimpleLog) Raw() *RawLog {
