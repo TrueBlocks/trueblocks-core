@@ -47,7 +47,7 @@ type SimpleTrace struct {
 	TransactionHash  common.Hash        `json:"transactionHash"`
 	TransactionIndex uint64             `json:"transactionIndex"`
 	Type             string             `json:"type,omitempty"`
-	raw              *RawTrace
+	raw              *RawTrace          `json:"-"`
 }
 
 func (s *SimpleTrace) Raw() *RawTrace {
@@ -178,10 +178,14 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 }
 
 func (s *SimpleTrace) Write(p []byte) (n int, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
 	return 0, nil
 }
 
 func (s *SimpleTrace) Read(p []byte) (n int, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
 	return 0, nil
 }
 

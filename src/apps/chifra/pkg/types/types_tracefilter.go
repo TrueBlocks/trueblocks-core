@@ -8,12 +8,12 @@
 
 package types
 
+// EXISTING_CODE
 import (
 	"fmt"
 	"strings"
 )
 
-// EXISTING_CODE
 // EXISTING_CODE
 
 type RawTraceFilter struct {
@@ -26,13 +26,13 @@ type RawTraceFilter struct {
 }
 
 type SimpleTraceFilter struct {
-	After       uint64   `json:"after"`
-	Count       uint64   `json:"count"`
-	FromAddress []string `json:"fromAddress"`
-	FromBlock   string   `json:"fromBlock"`
-	ToAddress   []string `json:"toAddress"`
-	ToBlock     string   `json:"toBlock"`
-	raw         *RawTraceFilter
+	After       uint64          `json:"after"`
+	Count       uint64          `json:"count"`
+	FromAddress []string        `json:"fromAddress"`
+	FromBlock   string          `json:"fromBlock"`
+	ToAddress   []string        `json:"toAddress"`
+	ToBlock     string          `json:"toBlock"`
+	raw         *RawTraceFilter `json:"-"`
 }
 
 func (s *SimpleTraceFilter) Raw() *RawTraceFilter {
@@ -71,10 +71,14 @@ func (s *SimpleTraceFilter) Model(showHidden bool, format string, extraOptions m
 }
 
 func (s *SimpleTraceFilter) Write(p []byte) (n int, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
 	return 0, nil
 }
 
 func (s *SimpleTraceFilter) Read(p []byte) (n int, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
 	return 0, nil
 }
 

@@ -8,9 +8,8 @@
 
 package types
 
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-
 // EXISTING_CODE
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 
 // EXISTING_CODE
 
@@ -29,18 +28,18 @@ type RawTraceAction struct {
 }
 
 type SimpleTraceAction struct {
-	SelfDestructed base.Address `json:"selfDestructed,omitempty"`
-	From           base.Address `json:"from"`
-	CallType       string       `json:"callType"`
-	Gas            base.Gas     `json:"gas"`
-	Input          string       `json:"input,omitempty"`
-	To             base.Address `json:"to"`
-	Value          base.Wei     `json:"value"`
-	Balance        base.Wei     `json:"balance,omitempty"`
-	Init           string       `json:"init,omitempty"`
-	RefundAddress  base.Address `json:"refundAddress,omitempty"`
-	Address        base.Address `json:"address,omitempty"`
-	raw            *RawTraceAction
+	SelfDestructed base.Address    `json:"selfDestructed,omitempty"`
+	From           base.Address    `json:"from"`
+	CallType       string          `json:"callType"`
+	Gas            base.Gas        `json:"gas"`
+	Input          string          `json:"input,omitempty"`
+	To             base.Address    `json:"to"`
+	Value          base.Wei        `json:"value"`
+	Balance        base.Wei        `json:"balance,omitempty"`
+	Init           string          `json:"init,omitempty"`
+	RefundAddress  base.Address    `json:"refundAddress,omitempty"`
+	Address        base.Address    `json:"address,omitempty"`
+	raw            *RawTraceAction `json:"-"`
 }
 
 func (s *SimpleTraceAction) Raw() *RawTraceAction {
@@ -111,10 +110,14 @@ func (s *SimpleTraceAction) Model(showHidden bool, format string, extraOptions m
 }
 
 func (s *SimpleTraceAction) Write(p []byte) (n int, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
 	return 0, nil
 }
 
 func (s *SimpleTraceAction) Read(p []byte) (n int, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
 	return 0, nil
 }
 
