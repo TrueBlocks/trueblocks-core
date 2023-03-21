@@ -6,10 +6,15 @@ TEST[DATE|TIME] Format:  txt
   "data": [
     {
       "action": {
+        "address": "",
+        "balance": "",
         "callType": "call",
         "from": "0x00a3819199113fc6a6e6ba1298afde7377e2009b",
         "gas": "0x31ac",
+        "init": "",
         "input": "0xd8963b9100000000000000000000000000a3819199113fc6a6e6ba1298afde7377e2009b",
+        "refundAddress": "",
+        "selfDestructed": "",
         "to": "0x204882bcba3e6d804e5f7d6e483bb18dd2b3d678",
         "value": "0x0"
       },
@@ -31,7 +36,15 @@ TEST[DATE|TIME] Format:  txt
       "action": {
         "address": "0x204882bcba3e6d804e5f7d6e483bb18dd2b3d678",
         "balance": "0x2c68af0bb140000",
-        "refundAddress": "0x00a3819199113fc6a6e6ba1298afde7377e2009b"
+        "callType": "",
+        "from": "",
+        "gas": "",
+        "init": "",
+        "input": "",
+        "refundAddress": "0x00a3819199113fc6a6e6ba1298afde7377e2009b",
+        "selfDestructed": "",
+        "to": "",
+        "value": ""
       },
       "blockHash": "0x9ffade8b2d130070ce1d45ffe06bdab963993d597b8a7851320c1789c579b857",
       "blockNumber": 3191290,

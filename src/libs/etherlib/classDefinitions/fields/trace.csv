@@ -9,7 +9,7 @@ type             ,string      ,           ,       ,      ,        ,true      ,  
 error            ,string      ,           ,       ,      ,        ,true      ,        ,         ,    ,   5 ,              ,
 action           ,TraceAction ,           ,true   ,      ,        ,          ,        ,         ,  9 ,     ,              ,the trace action for this trace
 result           ,TraceResult ,           ,true   ,      ,        ,          ,        ,         , 10 ,     ,              ,the trace result of this trace
-articulatedTrace ,Function    ,           ,true   ,      ,        ,          ,        ,         , 11 ,     ,              ,human readable version of the trace action input data
+articulatedTrace ,Function    ,           ,true   ,      ,        ,true      ,        ,         , 11 ,     ,              ,human readable version of the trace action input data
 compressedTrace  ,string      ,           ,       ,      ,true    ,true      ,        ,         , 12 ,  13 ,              ,a compressed string version of the articulated trace
 action::callType ,string      ,           ,       ,      ,        ,          ,true    ,true     ,    ,   4 ,              ,
 action::from     ,string      ,           ,       ,      ,        ,          ,true    ,true     ,    ,   6 ,              ,

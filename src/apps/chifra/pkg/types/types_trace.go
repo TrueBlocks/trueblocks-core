@@ -24,13 +24,13 @@ type RawTrace struct {
 	Action           RawTraceAction  `json:"action"`
 	BlockHash        string          `json:"blockHash"`
 	BlockNumber      uint64          `json:"blockNumber"`
-	Error            string          `json:"error,omitempty"`
+	Error            string          `json:"error"`
 	Result           *RawTraceResult `json:"result"`
 	Subtraces        uint64          `json:"subtraces"`
 	TraceAddress     []uint64        `json:"traceAddress"`
 	TransactionHash  string          `json:"transactionHash"`
 	TransactionIndex uint64          `json:"transactionPosition"`
-	Type             string          `json:"type"`
+	TraceType        string          `json:"type"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -48,7 +48,7 @@ type SimpleTrace struct {
 	TraceAddress     []uint64           `json:"traceAddress"`
 	TransactionHash  base.Hash          `json:"transactionHash"`
 	TransactionIndex base.Blknum        `json:"transactionIndex"`
-	Type             string             `json:"type,omitempty"`
+	TraceType        string             `json:"type,omitempty"`
 	raw              *RawTrace          `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -118,8 +118,8 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 		if len(s.Error) > 0 {
 			model["error"] = s.Error
 		}
-		if len(s.Type) > 0 {
-			model["type"] = s.Type
+		if len(s.TraceType) > 0 {
+			model["type"] = s.TraceType
 		}
 		if s.Action != nil {
 			model["action"] = s.Action.Model(showHidden, format, extraOptions).Data

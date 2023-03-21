@@ -14,17 +14,17 @@ import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 // EXISTING_CODE
 
 type RawTraceAction struct {
-	Address        string `json:"address,omitempty"`
-	Balance        string `json:"balance,omitempty"`
-	CallType       string `json:"callType,omitempty"`
-	From           string `json:"from,omitempty"`
-	Gas            string `json:"gas,omitempty"`
-	Init           string `json:"init,omitempty"`
-	Input          string `json:"input,omitempty"`
-	RefundAddress  string `json:"refundAddress,omitempty"`
-	SelfDestructed string `json:"selfDestructed,omitempty"`
-	To             string `json:"to,omitempty"`
-	Value          string `json:"value,omitempty"`
+	Address        string `json:"address"`
+	Balance        string `json:"balance"`
+	CallType       string `json:"callType"`
+	From           string `json:"from"`
+	Gas            string `json:"gas"`
+	Init           string `json:"init"`
+	Input          string `json:"input"`
+	RefundAddress  string `json:"refundAddress"`
+	SelfDestructed string `json:"selfDestructed"`
+	To             string `json:"to"`
+	Value          string `json:"value"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
