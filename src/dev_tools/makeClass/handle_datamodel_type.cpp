@@ -14,7 +14,7 @@
 #include "options.h"
 
 string_q type_2_GoType(const CMember& field);
-string_q specialCase(const CMember& field, const string_q& name, const string_q& type, bool isRaw);
+string_q specialCase(const string_q& modelName, const CMember& field, const string_q& type, bool isRaw);
 bool skipField(const CMember& field, bool raw);
 
 //------------------------------------------------------------------------------------------------------------
@@ -45,8 +45,8 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
             continue;
         }
         string_q type = type_2_GoType(field);
-        string_q rawType = specialCase(field, field.name, type, true);
-        string_q simpType = specialCase(field, field.name, type, false);
+        string_q rawType = specialCase(model.base_name, field, type, true);
+        string_q simpType = specialCase(model.base_name, field, type, false);
         maxSimpWid = max(maxSimpWid, simpType.length());
         maxRawWid = max(maxRawWid, rawType.length());
         if (field.name != "raw") {
@@ -76,7 +76,7 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
             continue;
         if (!(field.name % "raw")) {
             string_q type = type_2_GoType(field);
-            string_q spec = specialCase(field, field.name, type, true);
+            string_q spec = specialCase(model.base_name, field, type, true);
             string_q rawType = field.name % "raw" ? spec : padRight(spec, maxRawWid);
             if (spec.empty())
                 continue;
@@ -93,7 +93,7 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
         if (skipField(field, false))
             continue;
         string_q type = type_2_GoType(field);
-        string_q spec = specialCase(field, field.name, type, false);
+        string_q spec = specialCase(model.base_name, field, type, false);
         string_q simpType = padRight(spec, maxSimpWid);
         ostringstream os;
         os << "\t" << padRight(field.name, maxNameWid) << " " << simpType;
@@ -143,7 +143,8 @@ string_q type_2_GoType(const CMember& field) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-string_q specialCase(const CMember& field, const string_q& name, const string_q& type, bool isRaw) {
+string_q specialCase(const string_q& modelName, const CMember& field, const string_q& type, bool isRaw) {
+    string_q name = field.name;
     string ret;
     if (name % "CumulativeGasUsed" && !isRaw) {
         ret = "string";
@@ -168,6 +169,9 @@ string_q specialCase(const CMember& field, const string_q& name, const string_q&
 
     } else if (name % "Transactions") {
         ret = isRaw ? "[]any" : "[]Tx";
+
+    } else if (modelName == "Parameter" && name % "Value") {
+        ret = isRaw ? "string" : "any";
 
     } else {
         ret = (type == "CStringArray" ? "[]string" : isRaw ? "string" : type);
