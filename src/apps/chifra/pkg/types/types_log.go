@@ -14,17 +14,16 @@ import (
 )
 
 // EXISTING_CODE
-
 type RawLog struct {
-	Address          string   `json:"address"`
-	BlockHash        string   `json:"blockHash"`
-	BlockNumber      string   `json:"blockNumber"`
-	Data             string   `json:"data"`
-	LogIndex         string   `json:"logIndex"`
-	Removed          bool     `json:"removed"`
-	Topics           []string `json:"topics"`
-	TransactionHash  string   `json:"transactionHash"`
-	TransactionIndex string   `json:"transactionIndex"`
+	Address          string   `json:"address"`          // address
+	BlockHash        string   `json:"blockHash"`        // hash
+	BlockNumber      string   `json:"blockNumber"`      // block number
+	Data             string   `json:"data"`             // byte data
+	LogIndex         string   `json:"logIndex"`         // int
+	Removed          bool     `json:"removed"`          // bool
+	Topics           []string `json:"topics"`           // array of hashes
+	TransactionHash  string   `json:"transactionHash"`  // hash
+	TransactionIndex string   `json:"transactionIndex"` // int
 }
 
 type SimpleLog struct {

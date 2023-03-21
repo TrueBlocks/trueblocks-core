@@ -37,16 +37,17 @@ type SimpleTrace struct {
 	Action           *SimpleTraceAction `json:"action"`
 	ArticulatedTrace *SimpleFunction    `json:"articulatedTrace,omitempty"`
 	BlockHash        base.Hash          `json:"blockHash"`
-	BlockNumber      uint64             `json:"blockNumber"`
+	BlockNumber      base.Blknum        `json:"blockNumber"`
+	CompressedTrace  string             `json:"compressedTrace,omitempty"`
 	Error            string             `json:"error,omitempty"`
 	Result           *SimpleTraceResult `json:"result"`
 	Subtraces        uint64             `json:"subtraces"`
 	Timestamp        base.Timestamp     `json:"timestamp"`
 	TraceAddress     []uint64           `json:"traceAddress"`
 	TransactionHash  base.Hash          `json:"transactionHash"`
-	TransactionIndex uint64             `json:"transactionIndex"`
+	TransactionIndex base.Blknum        `json:"transactionIndex"`
 	Type             string             `json:"type,omitempty"`
-	raw              *RawTrace          `json:"-"`
+	raw              *RawTrace
 }
 
 func (s *SimpleTrace) Raw() *RawTrace {

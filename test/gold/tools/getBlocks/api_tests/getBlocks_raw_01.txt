@@ -2,6 +2,7 @@ blocks?blocks=2768801%201995314%201958017&raw
 {
   "data": [
     {
+      "baseFeePerGas": "",
       "difficulty": "0x450cc7c5b8b2",
       "extraData": "0x65746865726d696e65202d20455531",
       "gasLimit": "0x3d2782",
@@ -14,6 +15,7 @@ blocks?blocks=2768801%201995314%201958017&raw
       "number": "0x2a3fa1",
       "parentHash": "0xabc3e2787669f48ad8ab2e521cf914d779e6514f296914d12b0668af5b2f97d0",
       "receiptsRoot": "0x9989b7dd5d8fffe4dd198f9f2d6b20270172df22ecedc9a8def42ab11373201d",
+      "sealFields": null,
       "sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
       "size": "0x339",
       "stateRoot": "0x83ee7ef8352ca2b4d334422df96a87d849fab065fd5ca6a1ba328ab99d79d8c6",
@@ -61,6 +63,7 @@ blocks?blocks=2768801%201995314%201958017&raw
       "uncles": []
     },
     {
+      "baseFeePerGas": "",
       "difficulty": "0x301f53282378",
       "extraData": "0x65746865726d696e652e6f7267202845553129",
       "gasLimit": "0x47e7c4",
@@ -73,6 +76,7 @@ blocks?blocks=2768801%201995314%201958017&raw
       "number": "0x1e7232",
       "parentHash": "0xe19aa0276eee73e6d548e457eff67797dfec9142a8c9044b7494cf19fd5c55e4",
       "receiptsRoot": "0x4cb69dc923d85727887dec16306b0228323d8272b25369ba6215117f9bf46214",
+      "sealFields": null,
       "sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
       "size": "0x3ed",
       "stateRoot": "0x01b8959131929dfed812874789c38bd68dc7ca6a6f308951400b8f89db339c10",
@@ -135,6 +139,7 @@ blocks?blocks=2768801%201995314%201958017&raw
       "uncles": []
     },
     {
+      "baseFeePerGas": "",
       "difficulty": "0x2fb8651f992b",
       "extraData": "0x7777772e62772e636f6d",
       "gasLimit": "0x47c94c",
@@ -147,6 +152,7 @@ blocks?blocks=2768801%201995314%201958017&raw
       "number": "0x1de081",
       "parentHash": "0x6b218fa2bfd0e3c331c5f442dc559208a1ee41e8a01c2c689b0f338a107d3708",
       "receiptsRoot": "0xe284ad251fe0ec20835fdf562aa24a52ef118d9383ba7609826fd5d164839d8f",
+      "sealFields": null,
       "sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
       "size": "0x2f1",
       "stateRoot": "0x29ed2489aaf51224577c6235d867594453af4dc39017bc0c48320860cd8527cc",

@@ -131,6 +131,8 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
     replaceAll(contents, "[{FIELDS}]", fieldStr);
     replaceAll(contents, "[{MODEL_FIELDS}]", modelStr);
     replaceAll(contents, "[{ORDER_FIELDS}]", orderStr);
+    // hackathon!
+    replaceAll(contents, "type SimpleBlock[Tx] struct {", "type SimpleBlock[Tx BlockTransaction] struct {");
 
     codewrite_t cw(fn, contents + "\n");
     cw.nSpaces = 0;
@@ -184,6 +186,9 @@ string_q specialCase(const CMember& field, const string_q& name, const string_q&
 
     } else if ((name % "FromAddress" || name % "ToAddress") && type % "CAddressArray") {
         ret = isRaw ? "string" : "[]string";
+
+    } else if (name % "Transactions") {
+        ret = isRaw ? "[]any" : "[]Tx";
 
     } else {
         ret = (type == "CStringArray" ? "[]string" : isRaw ? "string" : type);
