@@ -16,19 +16,19 @@ import (
 // EXISTING_CODE
 
 type RawReceipt struct {
-	BlockHash         string   `json:"blockHash"`         // hash
-	BlockNumber       string   `json:"blockNumber"`       // block number
-	ContractAddress   string   `json:"contractAddress"`   // address
-	CumulativeGasUsed string   `json:"cumulativeGasUsed"` // gas
-	EffectiveGasPrice string   `json:"effectiveGasPrice"` // gas
-	From              string   `json:"from"`              // address
-	GasUsed           string   `json:"gasUsed"`           // gas
-	Logs              []RawLog `json:"logs"`              // array of logs
-	LogsBloom         string   `json:"logsBloom"`         // bytes data
-	Status            string   `json:"status"`            // 1 or 0
-	To                string   `json:"to"`                // address
-	TransactionHash   string   `json:"transactionHash"`   // hash
-	TransactionIndex  string   `json:"transactionIndex"`  // id
+	BlockHash         string   `json:"blockHash"`
+	BlockNumber       string   `json:"blockNumber"`
+	ContractAddress   string   `json:"contractAddress"`
+	CumulativeGasUsed string   `json:"cumulativeGasUsed"`
+	EffectiveGasPrice string   `json:"effectiveGasPrice"`
+	From              string   `json:"from"`
+	GasUsed           string   `json:"gasUsed"`
+	Logs              []RawLog `json:"logs"`
+	LogsBloom         string   `json:"logsBloom"`
+	Status            string   `json:"status"`
+	To                string   `json:"to"`
+	TransactionHash   string   `json:"transactionHash"`
+	TransactionIndex  string   `json:"transactionIndex"`
 }
 
 type SimpleReceipt struct {
