@@ -14,6 +14,7 @@ func (p *Service) pinFileLocally(filepath string) (base.IpfsHash, error) {
 	}
 	defer file.Close()
 
+	// TODO: should be configurable (see #2804)
 	sh := shell.NewShell("localhost:5001")
 	cid, err := sh.Add(file, shell.Pin(true))
 	if err != nil {

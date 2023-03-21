@@ -134,7 +134,7 @@ bool COptions::handle_datamodel(void) {
             thisDoc += toolsStream.str();
         documentMap[model.doc_group] = documentMap[model.doc_group] + thisDoc;
 
-        if (!model.go_model.empty()) {
+        if (false) {  // !model.go_model.empty()) {
             generate_go_type(this, model);
         }
     }
