@@ -28,18 +28,18 @@ type RawTraceAction struct {
 }
 
 type SimpleTraceAction struct {
-	Address        base.Address `json:"address,omitempty"`
-	Balance        base.Wei     `json:"balance,omitempty"`
-	CallType       string       `json:"callType"`
-	From           base.Address `json:"from"`
-	Gas            base.Gas     `json:"gas"`
-	Init           string       `json:"init,omitempty"`
-	Input          string       `json:"input,omitempty"`
-	RefundAddress  base.Address `json:"refundAddress,omitempty"`
-	SelfDestructed base.Address `json:"selfDestructed,omitempty"`
-	To             base.Address `json:"to"`
-	Value          base.Wei     `json:"value"`
-	raw            *RawTraceAction
+	Address        base.Address    `json:"address,omitempty"`
+	Balance        base.Wei        `json:"balance,omitempty"`
+	CallType       string          `json:"callType"`
+	From           base.Address    `json:"from"`
+	Gas            base.Gas        `json:"gas"`
+	Init           string          `json:"init,omitempty"`
+	Input          string          `json:"input,omitempty"`
+	RefundAddress  base.Address    `json:"refundAddress,omitempty"`
+	SelfDestructed base.Address    `json:"selfDestructed,omitempty"`
+	To             base.Address    `json:"to"`
+	Value          base.Wei        `json:"value"`
+	raw            *RawTraceAction `json:"-"`
 }
 
 func (s *SimpleTraceAction) Raw() *RawTraceAction {

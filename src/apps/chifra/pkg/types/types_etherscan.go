@@ -26,6 +26,7 @@ type RawEtherscan struct {
 	ContractAddress   string `json:"contractAddress"`
 	CumulativeGasUsed string `json:"cumulativeGasUsed"`
 	From              string `json:"from"`
+	FunctionName      string `json:"functionName"`
 	Gas               string `json:"gas"`
 	GasPrice          string `json:"gasPrice"`
 	GasUsed           string `json:"gasUsed"`
@@ -33,14 +34,13 @@ type RawEtherscan struct {
 	Hash              string `json:"hash"`
 	Input             string `json:"input"`
 	IsError           string `json:"isError"`
+	MethodId          string `json:"methodId"`
+	Nonce             string `json:"nonce"`
 	Timestamp         string `json:"timestamp"`
 	To                string `json:"to"`
 	TransactionIndex  string `json:"transactionIndex"`
 	TxReceiptStatus   string `json:"txreceipt_status"`
 	Value             string `json:"value"`
-	// FunctionName      string `json:"functionName"`
-	// MethodId         string `json:"methodId"`
-	// Nonce            string `json:"nonce"`
 }
 
 type SimpleEtherscan struct {
@@ -63,11 +63,6 @@ type SimpleEtherscan struct {
 	TransactionIndex uint64         `json:"transactionIndex"`
 	Value            base.Wei       `json:"value"`
 	raw              *RawEtherscan  `json:"-"`
-	// ArticulatedTx    SimpleFunction `json:"articulatedTx"`
-	// CompressedTx     string         `json:"compressedTx"`
-	// EtherGasPrice    string      `json:"etherGasPrice"`
-	// ExtraValue1      Wei         `json:"extraValue1"`
-	// ExtraValue2      Wei         `json:"extraValue2"`
 }
 
 func (s *SimpleEtherscan) Raw() *RawEtherscan {

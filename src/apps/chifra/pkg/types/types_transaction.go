@@ -70,7 +70,7 @@ type SimpleTransaction struct {
 	Value                base.Wei        `json:"value"`
 	Traces               []SimpleTrace   `json:"traces"`
 	Message              string          `json:"-"`
-	raw                  *RawTransaction
+	raw                  *RawTransaction `json:"-"`
 }
 
 func (s *SimpleTransaction) Raw() *RawTransaction {

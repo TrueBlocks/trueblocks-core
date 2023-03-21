@@ -47,7 +47,7 @@ type SimpleName struct {
 	Source     string       `json:"source"`
 	Symbol     string       `json:"symbol"`
 	Tags       string       `json:"tags"`
-	raw        *RawName
+	raw        *RawName     `json:"-"`
 }
 
 func (s *SimpleName) Raw() *RawName {

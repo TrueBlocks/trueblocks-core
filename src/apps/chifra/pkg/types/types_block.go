@@ -58,7 +58,7 @@ type SimpleBlock[Tx BlockTransaction] struct {
 	Timestamp     base.Timestamp `json:"timestamp"`
 	Transactions  []Tx           `json:"transactions"`
 	Uncles        []base.Hash    `json:"uncles"`
-	raw           *RawBlock
+	raw           *RawBlock      `json:"-"`
 }
 
 func (s *SimpleBlock[Tx]) Raw() *RawBlock {

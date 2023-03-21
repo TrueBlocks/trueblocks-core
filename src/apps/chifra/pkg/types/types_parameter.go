@@ -31,7 +31,7 @@ type SimpleParameter struct {
 	StrDefault    string            `json:"strDefault,omitempty"`
 	ParameterType string            `json:"type"`
 	Value         any               `json:"value,omitempty"`
-	raw           *RawParameter
+	raw           *RawParameter     `json:"-"`
 }
 
 func (s *SimpleParameter) Raw() *RawParameter {

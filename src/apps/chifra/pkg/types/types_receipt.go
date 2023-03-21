@@ -45,7 +45,7 @@ type SimpleReceipt struct {
 	To                base.Address `json:"to,omitempty"`
 	TransactionHash   base.Hash    `json:"transactionHash"`
 	TransactionIndex  base.Blknum  `json:"transactionIndex"`
-	raw               *RawReceipt
+	raw               *RawReceipt  `json:"-"`
 }
 
 func (s *SimpleReceipt) Raw() *RawReceipt {

@@ -26,13 +26,13 @@ type RawTraceFilter struct {
 }
 
 type SimpleTraceFilter struct {
-	After       uint64   `json:"after,omitempty"`
-	Count       uint64   `json:"count,omitempty"`
-	FromAddress []string `json:"fromAddress,omitempty"`
-	FromBlock   string   `json:"fromBlock,omitempty"`
-	ToAddress   []string `json:"toAddress,omitempty"`
-	ToBlock     string   `json:"toBlock,omitempty"`
-	raw         *RawTraceFilter
+	After       uint64          `json:"after,omitempty"`
+	Count       uint64          `json:"count,omitempty"`
+	FromAddress []string        `json:"fromAddress,omitempty"`
+	FromBlock   string          `json:"fromBlock,omitempty"`
+	ToAddress   []string        `json:"toAddress,omitempty"`
+	ToBlock     string          `json:"toBlock,omitempty"`
+	raw         *RawTraceFilter `json:"-"`
 }
 
 func (s *SimpleTraceFilter) Raw() *RawTraceFilter {
