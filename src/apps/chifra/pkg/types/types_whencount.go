@@ -3,11 +3,16 @@ package types
 // EXISTING_CODE
 // EXISTING_CODE
 
-type RawWhenCount interface{}
+type RawWhenCount interface {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
 
 type SimpleWhenCount struct {
 	Count uint64        `json:"count"`
 	raw   *RawWhenCount `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleWhenCount) Raw() *RawWhenCount {

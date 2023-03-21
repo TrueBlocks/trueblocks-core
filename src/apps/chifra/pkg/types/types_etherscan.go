@@ -41,6 +41,8 @@ type RawEtherscan struct {
 	TransactionIndex  string `json:"transactionIndex"`
 	TxReceiptStatus   string `json:"txreceipt_status"`
 	Value             string `json:"value"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleEtherscan struct {
@@ -63,6 +65,8 @@ type SimpleEtherscan struct {
 	TransactionIndex uint64         `json:"transactionIndex"`
 	Value            base.Wei       `json:"value"`
 	raw              *RawEtherscan  `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleEtherscan) Raw() *RawEtherscan {

@@ -21,6 +21,8 @@ type RawTraceCount struct {
 	TracesCnt        string `json:"tracesCnt"`
 	TransactionHash  string `json:"transactionHash"`
 	TransactionIndex string `json:"transactionIndex"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleTraceCount struct {
@@ -30,6 +32,8 @@ type SimpleTraceCount struct {
 	TransactionHash  base.Hash      `json:"transactionHash"`
 	TransactionIndex base.Blknum    `json:"transactionIndex"`
 	raw              *RawTraceCount `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleTraceCount) Raw() *RawTraceCount {

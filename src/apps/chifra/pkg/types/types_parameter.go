@@ -21,6 +21,8 @@ type RawParameter struct {
 	StrDefault    string `json:"strDefault"`
 	ParameterType string `json:"type"`
 	Value         string `json:"value"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleParameter struct {
@@ -32,6 +34,8 @@ type SimpleParameter struct {
 	ParameterType string            `json:"type"`
 	Value         any               `json:"value,omitempty"`
 	raw           *RawParameter     `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleParameter) Raw() *RawParameter {

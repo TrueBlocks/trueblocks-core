@@ -22,6 +22,8 @@ type RawBlockCount struct {
 	TransactionsCnt string `json:"transactionsCnt"`
 	UnclesCnt       string `json:"unclesCnt"`
 	UniqsCnt        string `json:"uniqsCnt"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleBlockCount struct {
@@ -34,6 +36,8 @@ type SimpleBlockCount struct {
 	UnclesCnt       uint64         `json:"unclesCnt,omitempty"`
 	UniqsCnt        uint64         `json:"uniqsCnt,omitempty"`
 	raw             *RawBlockCount `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleBlockCount) Raw() *RawBlockCount {

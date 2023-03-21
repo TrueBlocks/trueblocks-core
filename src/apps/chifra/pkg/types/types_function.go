@@ -35,6 +35,8 @@ type RawFunction struct {
 	Signature       string `json:"signature"`
 	StateMutability string `json:"stateMutability"`
 	FunctionType    string `json:"type"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleFunction struct {
@@ -50,9 +52,11 @@ type SimpleFunction struct {
 	StateMutability string            `json:"stateMutability,omitempty"`
 	FunctionType    string            `json:"type"`
 	raw             *RawFunction      `json:"-"`
-	payable         bool
-	abiMethod       *abi.Method
-	abiEvent        *abi.Event
+	// EXISTING_CODE
+	payable   bool
+	abiMethod *abi.Method
+	abiEvent  *abi.Event
+	// EXISTING_CODE
 }
 
 func (s *SimpleFunction) Raw() *RawFunction {

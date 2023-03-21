@@ -40,6 +40,8 @@ type RawTransaction struct {
 	Type                 string   `json:"type"`                 // string
 	V                    string   `json:"v"`                    // hash
 	Value                string   `json:"value"`                // wei
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleTransaction struct {
@@ -71,6 +73,8 @@ type SimpleTransaction struct {
 	Traces               []SimpleTrace   `json:"traces"`
 	Message              string          `json:"-"`
 	raw                  *RawTransaction `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleTransaction) Raw() *RawTransaction {

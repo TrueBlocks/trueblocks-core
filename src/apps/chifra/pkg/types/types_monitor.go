@@ -3,7 +3,10 @@ package types
 // EXISTING_CODE
 // EXISTING_CODE
 
-type RawMonitor interface{}
+type RawMonitor interface {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
 
 type SimpleMonitor struct {
 	Address     string      `json:"address"`
@@ -11,6 +14,8 @@ type SimpleMonitor struct {
 	FileSize    int64       `json:"fileSize"`
 	LastScanned uint32      `json:"lastScanned"`
 	raw         *RawMonitor `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleMonitor) Raw() *RawMonitor {

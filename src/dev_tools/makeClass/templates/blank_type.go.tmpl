@@ -12,10 +12,14 @@ package types
 // EXISTING_CODE
 
 type [{RAW_NAME}] struct {
-[{RAWFIELDS}]}
+[{RAWFIELDS}]	// EXISTING_CODE
+	// EXISTING_CODE
+}
 
 type Simple[{CLASS_NAME}] struct {
-[{FIELDS}]}
+[{FIELDS}]	// EXISTING_CODE
+	// EXISTING_CODE
+}
 
 func (s *Simple[{CLASS_NAME}]) Raw() *[{RAW_NAME}] {
 	return s.raw

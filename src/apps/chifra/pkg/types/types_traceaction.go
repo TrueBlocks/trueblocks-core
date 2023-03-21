@@ -25,6 +25,8 @@ type RawTraceAction struct {
 	SelfDestructed string `json:"selfDestructed,omitempty"`
 	To             string `json:"to,omitempty"`
 	Value          string `json:"value,omitempty"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleTraceAction struct {
@@ -40,6 +42,8 @@ type SimpleTraceAction struct {
 	To             base.Address    `json:"to"`
 	Value          base.Wei        `json:"value"`
 	raw            *RawTraceAction `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleTraceAction) Raw() *RawTraceAction {

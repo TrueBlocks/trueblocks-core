@@ -5,13 +5,18 @@ import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 
 // EXISTING_CODE
 
-type RawTimestamp interface{}
+type RawTimestamp interface {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
 
 type SimpleTimestamp struct {
 	BlockNumber uint64         `json:"blockNumber"`
 	Timestamp   base.Timestamp `json:"timestamp"`
 	Diff        base.Timestamp `json:"diff"`
 	raw         *RawTimestamp  `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleTimestamp) Raw() *RawTimestamp {

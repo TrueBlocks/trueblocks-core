@@ -5,7 +5,10 @@ import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 
 // EXISTING_CODE
 
-type RawChunkRecord interface{}
+type RawChunkRecord interface {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
 
 type SimpleChunkRecord struct {
 	Range     string          `json:"range,omitempty"`
@@ -14,6 +17,8 @@ type SimpleChunkRecord struct {
 	IndexHash base.IpfsHash   `json:"indexHash,omitempty"`
 	IndexSize int64           `json:"indexSize,omitempty"`
 	raw       *RawChunkRecord `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleChunkRecord) Raw() *RawChunkRecord {

@@ -31,6 +31,8 @@ type RawTrace struct {
 	TransactionHash  string          `json:"transactionHash"`
 	TransactionIndex uint64          `json:"transactionPosition"`
 	Type             string          `json:"type"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleTrace struct {
@@ -48,6 +50,8 @@ type SimpleTrace struct {
 	TransactionIndex base.Blknum        `json:"transactionIndex"`
 	Type             string             `json:"type,omitempty"`
 	raw              *RawTrace          `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleTrace) Raw() *RawTrace {
