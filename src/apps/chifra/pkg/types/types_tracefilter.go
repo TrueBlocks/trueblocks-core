@@ -11,6 +11,7 @@ package types
 // EXISTING_CODE
 import (
 	"fmt"
+	"io"
 	"strings"
 )
 
@@ -73,13 +74,13 @@ func (s *SimpleTraceFilter) Model(showHidden bool, format string, extraOptions m
 	}
 }
 
-func (s *SimpleTraceFilter) Write(p []byte) (n int, err error) {
+func (s *SimpleTraceFilter) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimpleTraceFilter) Read(p []byte) (n int, err error) {
+func (s *SimpleTraceFilter) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
