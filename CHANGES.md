@@ -1,3 +1,5 @@
+Remove transactionLogIndex from Log
+
 Added --sleep and --per_page to chifra slurp
 Ported slurp to GoLang
 Removes zero-valued Nonce, MaxFeePerGas, and MaxPriorityFeePerGas from Transaction and Block data

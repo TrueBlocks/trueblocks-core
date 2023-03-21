@@ -9,7 +9,6 @@ articulatedLog      ,Function  ,           ,true   ,      ,        ,          , 
 compressedLog       ,string    ,           ,       ,      ,true    ,          ,        ,         ,10  ,12   ,Transfer(0xcfa...9f54... ,a truncated&#44; more readable version of the articulation
 transactionHash     ,hash      ,           ,       ,      ,true    ,          ,        ,         ,4   ,4    ,                         ,the hash of the transction
 transactionIndex    ,blknum    ,           ,       ,      ,true    ,          ,        ,         ,2   ,2    ,305                      ,the zero-indexed position of the transaction in the block
-transactionLogIndex ,blknum    ,           ,       ,      ,true    ,          ,        ,         ,    ,     ,                         ,
 timestamp           ,timestamp ,           ,       ,      ,true    ,          ,        ,         ,5   ,5    ,                         ,the timestamp of the block this log appears in
 type                ,string    ,           ,       ,      ,true    ,          ,        ,         ,    ,     ,                         ,
 unused              ,bool      ,           ,       ,      ,true    ,true      ,        ,         ,    ,     ,                         ,

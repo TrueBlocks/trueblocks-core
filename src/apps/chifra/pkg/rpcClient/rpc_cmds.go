@@ -43,17 +43,16 @@ type Traces struct {
 type Logs struct {
 	Jsonrpc string `json:"jsonrpc"`
 	Result  []struct {
-		Address             string   `json:"address"`
-		BlockHash           string   `json:"blockHash"`
-		BlockNumber         string   `json:"blockNumber"`
-		Data                string   `json:"data"`
-		LogIndex            string   `json:"logIndex"`
-		Removed             bool     `json:"removed"`
-		Topics              []string `json:"topics"`
-		TransactionHash     string   `json:"transactionHash"`
-		TransactionIndex    string   `json:"transactionIndex"`
-		TransactionLogIndex string   `json:"transactionLogIndex"`
-		Type                string   `json:"type"`
+		Address          string   `json:"address"`
+		BlockHash        string   `json:"blockHash"`
+		BlockNumber      string   `json:"blockNumber"`
+		Data             string   `json:"data"`
+		LogIndex         string   `json:"logIndex"`
+		Removed          bool     `json:"removed"`
+		Topics           []string `json:"topics"`
+		TransactionHash  string   `json:"transactionHash"`
+		TransactionIndex string   `json:"transactionIndex"`
+		Type             string   `json:"type"`
 	} `json:"result"`
 	ID int `json:"id"`
 }

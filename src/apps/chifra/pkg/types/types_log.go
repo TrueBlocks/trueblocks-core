@@ -14,31 +14,32 @@ import (
 )
 
 // EXISTING_CODE
+
 type RawLog struct {
-	Address          string   `json:"address"`          // address
-	BlockHash        string   `json:"blockHash"`        // hash
-	BlockNumber      string   `json:"blockNumber"`      // block number
-	Data             string   `json:"data"`             // byte data
-	LogIndex         string   `json:"logIndex"`         // int
-	Removed          bool     `json:"removed"`          // bool
-	Topics           []string `json:"topics"`           // array of hashes
-	TransactionHash  string   `json:"transactionHash"`  // hash
-	TransactionIndex string   `json:"transactionIndex"` // int
+	Address          string   `json:"address"`
+	BlockHash        string   `json:"blockHash"`
+	BlockNumber      string   `json:"blockNumber"`
+	Data             string   `json:"data"`
+	LogIndex         string   `json:"logIndex"`
+	Topics           []string `json:"topics"`
+	TransactionHash  string   `json:"transactionHash"`
+	TransactionIndex string   `json:"transactionIndex"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
 type SimpleLog struct {
 	Address          base.Address    `json:"address"`
-	ArticulatedLog   *SimpleFunction `json:"-"`
-	BlockNumber      uint64          `json:"blockNumber"`
+	ArticulatedLog   *SimpleFunction `json:"articulatedLog"`
+	BlockHash        base.Hash       `json:"blockHash"`
+	BlockNumber      base.Blknum     `json:"blockNumber"`
 	CompressedLog    string          `json:"compressedLog,omitempty"`
 	Data             string          `json:"data,omitempty"`
 	LogIndex         uint64          `json:"logIndex"`
 	Timestamp        base.Timestamp  `json:"timestamp,omitempty"`
 	Topics           []base.Hash     `json:"topics,omitempty"`
 	TransactionHash  base.Hash       `json:"transactionHash"`
-	TransactionIndex uint32          `json:"transactionIndex"`
+	TransactionIndex uint64          `json:"transactionIndex"`
 	raw              *RawLog         `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
