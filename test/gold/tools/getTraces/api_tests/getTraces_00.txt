@@ -17,6 +17,7 @@ traces?transactions=0x0cc945824def6a5c81d86ca56848f92163838bbd480a3bd2ff85f6d5b1
       },
       "blockHash": "0xd7ab17132d817d58c4f6d0ab5cebf169d3a56a9e6619fcd57e4073ed189d866b",
       "blockNumber": 2228842,
+      "error": "",
       "result": {
         "address": "",
         "code": "",

@@ -20,6 +20,7 @@ TEST[DATE|TIME] Format:  txt
       },
       "blockHash": "0x9ee74ad50cb24017ee6fa90cdabc13d00e714ab3692a689a4a22716bdd2de5a4",
       "blockNumber": 3189962,
+      "error": "",
       "result": {
         "address": "",
         "code": "",
@@ -48,6 +49,7 @@ TEST[DATE|TIME] Format:  txt
       },
       "blockHash": "0x9ee74ad50cb24017ee6fa90cdabc13d00e714ab3692a689a4a22716bdd2de5a4",
       "blockNumber": 3189962,
+      "error": "",
       "result": null,
       "subtraces": 0,
       "traceAddress": [

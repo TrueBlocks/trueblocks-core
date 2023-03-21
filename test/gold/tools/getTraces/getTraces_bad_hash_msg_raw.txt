@@ -20,6 +20,7 @@ TEST[DATE|TIME] Format:  txt
       },
       "blockHash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
       "blockNumber": 1001001,
+      "error": "",
       "result": {
         "address": "",
         "code": "",
@@ -48,6 +49,7 @@ TEST[DATE|TIME] Format:  txt
       },
       "blockHash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
       "blockNumber": 1001001,
+      "error": "",
       "result": {
         "address": "",
         "code": "",

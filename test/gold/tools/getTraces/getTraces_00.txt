@@ -20,6 +20,7 @@ TEST[DATE|TIME] Format:  txt
       },
       "blockHash": "0xd7ab17132d817d58c4f6d0ab5cebf169d3a56a9e6619fcd57e4073ed189d866b",
       "blockNumber": 2228842,
+      "error": "",
       "result": {
         "address": "",
         "code": "",
