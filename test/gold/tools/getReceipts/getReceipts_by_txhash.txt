@@ -9,6 +9,7 @@ TEST[DATE|TIME] Format:  json
       "logs": [
         {
           "address": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
+          "blockHash": "0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853",
           "blockNumber": 4000000,
           "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
           "logIndex": 59,
@@ -20,6 +21,7 @@ TEST[DATE|TIME] Format:  json
         },
         {
           "address": "0x11b1f00bccf07754e6f1996864531fa162145cde",
+          "blockHash": "0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853",
           "blockNumber": 4000000,
           "data": "0x000000000000000000000000209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
           "logIndex": 60,

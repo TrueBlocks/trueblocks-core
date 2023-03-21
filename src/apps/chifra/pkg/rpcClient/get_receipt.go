@@ -5,10 +5,13 @@
 package rpcClient
 
 import (
+	"fmt"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 	ethTypes "github.com/ethereum/go-ethereum/core/types"
 )
 
@@ -44,15 +47,20 @@ func GetTransactionReceipt(chain string, bn uint64, txid uint64, txHash *base.Ha
 		logs = append(logs, log)
 	}
 
+	cumulativeGasUsed, err := hexutil.DecodeUint64(rawReceipt.CumulativeGasUsed)
+	if err != nil {
+		return
+	}
+
 	receipt = types.SimpleReceipt{
 		BlockHash:         base.HexToHash(rawReceipt.BlockHash),
 		BlockNumber:       mustParseUint(rawReceipt.BlockNumber),
 		ContractAddress:   base.HexToAddress(rawReceipt.ContractAddress),
-		CumulativeGasUsed: rawReceipt.CumulativeGasUsed,
+		CumulativeGasUsed: fmt.Sprint(cumulativeGasUsed),
 		GasUsed:           mustParseUint(rawReceipt.GasUsed),
 		Logs:              logs,
 		Status:            uint32(mustParseUint(rawReceipt.Status)),
-		IsError:           rawReceipt.Status == "1",
+		IsError:           mustParseUint(rawReceipt.Status) == 0,
 		TransactionHash:   base.HexToHash(rawReceipt.TransactionHash),
 		TransactionIndex:  mustParseUint(rawReceipt.TransactionIndex),
 	}

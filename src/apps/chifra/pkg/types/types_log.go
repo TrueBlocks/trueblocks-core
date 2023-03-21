@@ -30,7 +30,7 @@ type RawLog struct {
 
 type SimpleLog struct {
 	Address          base.Address    `json:"address"`
-	ArticulatedLog   *SimpleFunction `json:"articulatedLog"`
+	ArticulatedLog   *SimpleFunction `json:"articulatedLog,omitempty"`
 	BlockHash        base.Hash       `json:"blockHash"`
 	BlockNumber      base.Blknum     `json:"blockNumber"`
 	CompressedLog    string          `json:"compressedLog,omitempty"`

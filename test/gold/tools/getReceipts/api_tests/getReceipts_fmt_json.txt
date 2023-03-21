@@ -16,6 +16,7 @@ receipts?transactions=2222222.0%202332332.0&fmt=json
       "logs": [
         {
           "address": "0x37a9679c41e99db270bda88de8ff50c0cd23f326",
+          "blockHash": "0x6881c5043f6f6beed5ca31023e3a3518bede50a13be5c521fa6e21577314fa04",
           "blockNumber": 2332332,
           "data": "0x000000000000000000000000000000000000000000000000031d958f80134000",
           "logIndex": 0,

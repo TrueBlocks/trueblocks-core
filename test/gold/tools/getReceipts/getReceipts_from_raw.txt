@@ -19,7 +19,6 @@ TEST[DATE|TIME] Format:  txt
           "blockNumber": "0x3d0900",
           "data": "0x000000000000000000000000000000000000000000000000000000000a21fe80",
           "logIndex": "0x4",
-          "removed": false,
           "topics": [
             "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
             "0x00000000000000000000000040584168524a928ae43b4e83893f963e467e9d73",
