@@ -7,8 +7,10 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/ethereum/go-ethereum"
 )
 
 func getRawTransaction(chain string, blockHash base.Hash, index uint64) (raw *types.RawTransaction, err error) {
@@ -27,26 +29,35 @@ func getRawTransaction(chain string, blockHash base.Hash, index uint64) (raw *ty
 		return nil, err
 	}
 
-	raw = &types.RawTransaction{
-		BlockHash:        response.Result.BlockHash,
-		BlockNumber:      response.Result.BlockNumber,
-		ChainId:          response.Result.ChainId,
-		From:             response.Result.From,
-		Gas:              response.Result.Gas,
-		GasPrice:         response.Result.GasPrice,
-		Hash:             response.Result.Hash,
-		Input:            response.Result.Input,
-		Nonce:            response.Result.Nonce,
-		R:                response.Result.R,
-		S:                response.Result.S,
-		To:               response.Result.To,
-		TransactionIndex: response.Result.TransactionIndex,
-		Type:             response.Result.Type,
-		V:                response.Result.V,
-		Value:            response.Result.Value,
-	}
-
+	raw = &response.Result
 	return
+}
+
+// TxNumberAndIdFromHash returns a transaction's blockNum and tx_id given its hash
+func TxNumberAndIdFromHash(provider string, hash string) (uint64, uint64, error) {
+	var trans Transaction
+	transPayload := rpc.Payload{
+		Method: "eth_getTransactionByHash",
+		Params: rpc.Params{hash},
+	}
+	// TODO: Use rpc.Query
+	err := rpc.FromRpc(provider, &transPayload, &trans)
+	if err != nil {
+		fmt.Println("rpc.FromRpc(traces) returned error")
+		logger.Fatal(err)
+	}
+	if trans.Result.BlockNumber == "" {
+		return 0, 0, fmt.Errorf("transaction at %s reported an error: %w", hash, ethereum.NotFound)
+	}
+	bn, err := strconv.ParseUint(trans.Result.BlockNumber[2:], 16, 32)
+	if err != nil {
+		return 0, 0, err
+	}
+	txid, err := strconv.ParseUint(trans.Result.TransactionIndex[2:], 16, 32)
+	if err != nil {
+		return 0, 0, err
+	}
+	return bn, txid, nil
 }
 
 func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, fetchTraces bool) (tx *types.SimpleTransaction, err error) {
