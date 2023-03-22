@@ -2,7 +2,6 @@ transactions?transactions=0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104
 {
   "data": [
     {
-      "accessList": null,
       "blockHash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
       "blockNumber": "0xf4629",
       "from": "0x30d285941dfb8bbbe4ec72b02c8d166be01322d2",
@@ -22,7 +21,6 @@ transactions?transactions=0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104
       "value": "0xdbbaa3d0ed1ad7"
     },
     {
-      "accessList": null,
       "blockHash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
       "blockNumber": "0xf4629",
       "from": "0x30d285941dfb8bbbe4ec72b02c8d166be01322d2",

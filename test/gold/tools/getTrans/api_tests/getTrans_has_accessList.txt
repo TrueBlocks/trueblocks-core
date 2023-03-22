@@ -1,0 +1,35 @@
+transactions?transactions=16500011.0&raw&fmt=json
+{
+  "data": [
+    {
+      "blockHash": "0xa4c20181abade48c65b7de2c0a4d0314f75e1956759a39bd58fa0b83a518b185",
+      "blockNumber": "0xfbc52b",
+      "chainId": "0x1",
+      "from": "0x252983ea0af117575c843514be54af8fe91ee8e9",
+      "gas": "0x51594",
+      "gasPrice": "0x58a1fc676",
+      "hash": "0x270f5fac7f7cd24d1f371022cd64883b8c16c0178bc51afa12b578514cff8f8f",
+      "input": "0x6301000000000000000008f0d180000000000000000814c37e180100000000000000000000000000000000396d1fe0e52260fac5e5542a773aa44fbcfedf7c193bc2c599d51a44d3fae010294c616388b506acda1bfaae4602",
+      "maxFeePerGas": "0x6a5bfbaf4",
+      "maxPriorityFeePerGas": "0x9dbc49e6",
+      "nonce": "0x1c11",
+      "r": "0x17b593281a0df0f7803779ae45bee46a292adfda8936e798ca2e13fb5314a5a5",
+      "s": "0xf9eed755f522d1d5eab64df7c0b580562742fc012236abe168c9e3791afa52e",
+      "to": "0x9507c04b10486547584c37bcbd931b2a4fee9a41",
+      "transactionIndex": "0x0",
+      "type": "0x2",
+      "v": "0x1",
+      "value": "0xfbc52b"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}
