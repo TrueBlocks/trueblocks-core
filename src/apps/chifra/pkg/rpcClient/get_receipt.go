@@ -33,7 +33,8 @@ func GetTransactionReceipt(chain string, bn uint64, txid uint64, txHash *base.Ha
 			Address:          base.HexToAddress(rawLog.Address),
 			LogIndex:         mustParseUint(rawLog.LogIndex),
 			BlockNumber:      mustParseUint(rawLog.BlockNumber),
-			TransactionIndex: uint32(mustParseUint(rawLog.TransactionIndex)),
+			BlockHash:        base.HexToHash(rawLog.BlockHash),
+			TransactionIndex: mustParseUint(rawLog.TransactionIndex),
 			TransactionHash:  base.HexToHash(tx.Hash().Hex()),
 			Timestamp:        0, // TODO: FIXME #2695
 			Data:             string(rawLog.Data),

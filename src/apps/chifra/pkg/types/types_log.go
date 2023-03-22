@@ -23,7 +23,6 @@ type RawLog struct {
 	BlockNumber      string   `json:"blockNumber"`
 	Data             string   `json:"data"`
 	LogIndex         string   `json:"logIndex"`
-	Removed          bool     `json:"removed"`
 	Topics           []string `json:"topics"`
 	TransactionHash  string   `json:"transactionHash"`
 	TransactionIndex string   `json:"transactionIndex"`
@@ -33,15 +32,16 @@ type RawLog struct {
 
 type SimpleLog struct {
 	Address          base.Address    `json:"address"`
-	ArticulatedLog   *SimpleFunction `json:"-"`
-	BlockNumber      uint64          `json:"blockNumber"`
+	ArticulatedLog   *SimpleFunction `json:"articulatedLog,omitempty"`
+	BlockHash        base.Hash       `json:"blockHash"`
+	BlockNumber      base.Blknum     `json:"blockNumber"`
 	CompressedLog    string          `json:"compressedLog,omitempty"`
 	Data             string          `json:"data,omitempty"`
 	LogIndex         uint64          `json:"logIndex"`
 	Timestamp        base.Timestamp  `json:"timestamp,omitempty"`
 	Topics           []base.Hash     `json:"topics,omitempty"`
 	TransactionHash  base.Hash       `json:"transactionHash"`
-	TransactionIndex uint32          `json:"transactionIndex"`
+	TransactionIndex uint64          `json:"transactionIndex"`
 	raw              *RawLog         `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
