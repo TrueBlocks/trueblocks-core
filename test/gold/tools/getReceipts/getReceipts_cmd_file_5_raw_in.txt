@@ -24,7 +24,6 @@ TEST[DATE|TIME] Format:  txt
       "effectiveGasPrice": "0x1f3305bc00",
       "from": "0xd6cb6744b7f2da784c5afd6b023d957188522198",
       "gasUsed": "0x5208",
-      "isError": "",
       "logs": [],
       "status": "0x1",
       "to": "0x4812cb964d05a791512268314071f16dcf8fa24f",
