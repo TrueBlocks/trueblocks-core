@@ -170,6 +170,9 @@ string_q specialCase(const string_q& modelName, const CMember& field, const stri
     } else if (name % "Transactions") {
         ret = isRaw ? "[]any" : "[]Tx";
 
+    } else if (name % "Topics") {
+        ret = isRaw ? "[]string" : "[]base.Hash";
+
     } else if (modelName == "Parameter" && name % "Value") {
         ret = isRaw ? "string" : "any";
 
