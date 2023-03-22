@@ -16,7 +16,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -31,12 +30,12 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	filenameChan := make(chan cache.IndexFileInfo)
 
 	var nRoutines int = 1
-	go cache.WalkIndexFolder(opts.Globals.Chain, paths.Index_Bloom, filenameChan)
+	go cache.WalkIndexFolder(opts.Globals.Chain, cache.Index_Bloom, filenameChan)
 
 	fileNames := []string{}
 	for result := range filenameChan {
 		switch result.Type {
-		case paths.Index_Bloom:
+		case cache.Index_Bloom:
 			skip := (opts.Globals.TestMode && len(fileNames) > maxTestItems) || !strings.HasSuffix(result.Path, ".bloom")
 			if !skip {
 				hit := false
@@ -51,7 +50,7 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 					fileNames = append(fileNames, result.Path)
 				}
 			}
-		case paths.None:
+		case cache.None:
 			nRoutines--
 			if nRoutines == 0 {
 				close(filenameChan)

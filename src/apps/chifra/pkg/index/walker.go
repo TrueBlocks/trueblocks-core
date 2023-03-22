@@ -5,7 +5,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 )
 
 type walkerFunc func(walker *IndexWalker, path string, first bool) (bool, error)
@@ -34,12 +33,12 @@ func (walker *IndexWalker) WalkBloomFilters(blockNums []uint64) error {
 	filenameChan := make(chan cache.IndexFileInfo)
 
 	var nRoutines int = 1
-	go cache.WalkIndexFolder(walker.chain, paths.Index_Bloom, filenameChan)
+	go cache.WalkIndexFolder(walker.chain, cache.Index_Bloom, filenameChan)
 
 	cnt := 0
 	for result := range filenameChan {
 		switch result.Type {
-		case paths.Index_Bloom:
+		case cache.Index_Bloom:
 			skip := (walker.testMode && cnt > walker.maxTests) || !strings.HasSuffix(result.Path, ".bloom")
 			if !skip && shouldDisplay(result, blockNums) {
 				ok, err := walker.visitFunc1(walker, result.Path, cnt == 0)
@@ -52,7 +51,7 @@ func (walker *IndexWalker) WalkBloomFilters(blockNums []uint64) error {
 					return nil
 				}
 			}
-		case paths.None:
+		case cache.None:
 			nRoutines--
 			if nRoutines == 0 {
 				close(filenameChan)

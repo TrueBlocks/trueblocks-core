@@ -38,7 +38,7 @@ func Test_exclude(t *testing.T) {
 	// 	},
 	// }
 
-	// result := exclude(utils.GetTestChain(), paths.Index_Final, onDisc, inManifest, nil)
+	// result := exclude(utils.GetTestChain(), cache.Index_Final, onDisc, inManifest, nil)
 	// if len(result) != 2 {
 	// 	t.Errorf("Wrong length: %d", len(result))
 	// }

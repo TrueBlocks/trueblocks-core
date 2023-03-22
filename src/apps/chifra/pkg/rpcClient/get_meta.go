@@ -9,7 +9,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -63,22 +62,22 @@ func GetMetaData(chain string, testmode bool) (*MetaData, error) {
 	filenameChan := make(chan cache.IndexFileInfo)
 
 	var nRoutines int = 4
-	go cache.WalkIndexFolder(chain, paths.Index_Final, filenameChan)
-	go cache.WalkIndexFolder(chain, paths.Index_Staging, filenameChan)
-	go cache.WalkIndexFolder(chain, paths.Index_Ripe, filenameChan)
-	go cache.WalkIndexFolder(chain, paths.Index_Unripe, filenameChan)
+	go cache.WalkIndexFolder(chain, cache.Index_Final, filenameChan)
+	go cache.WalkIndexFolder(chain, cache.Index_Staging, filenameChan)
+	go cache.WalkIndexFolder(chain, cache.Index_Ripe, filenameChan)
+	go cache.WalkIndexFolder(chain, cache.Index_Unripe, filenameChan)
 
 	for result := range filenameChan {
 		switch result.Type {
-		case paths.Index_Final:
+		case cache.Index_Final:
 			meta.Finalized = utils.Max(meta.Finalized, result.Range.Last)
-		case paths.Index_Staging:
+		case cache.Index_Staging:
 			meta.Staging = utils.Max(meta.Staging, result.Range.Last)
-		case paths.Index_Ripe:
+		case cache.Index_Ripe:
 			meta.Ripe = utils.Max(meta.Ripe, result.Range.Last)
-		case paths.Index_Unripe:
+		case cache.Index_Unripe:
 			meta.Unripe = utils.Max(meta.Unripe, result.Range.Last)
-		case paths.None:
+		case cache.None:
 			nRoutines--
 			if nRoutines == 0 {
 				close(filenameChan)

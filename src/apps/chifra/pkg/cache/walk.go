@@ -10,22 +10,21 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 )
 
 type IndexFileInfo struct {
-	Type  paths.CacheType
+	Type  CacheType
 	Path  string
 	Range base.FileRange
 }
 
-func WalkIndexFolder(chain string, cacheType paths.CacheType, filenameChan chan<- IndexFileInfo) {
+func WalkIndexFolder(chain string, cacheType CacheType, filenameChan chan<- IndexFileInfo) {
 	defer func() {
-		filenameChan <- IndexFileInfo{Type: paths.None}
+		filenameChan <- IndexFileInfo{Type: None}
 	}()
 
 	path := filepath.Join(config.GetPathToIndex(chain), tailFolder(chain, cacheType))
-	if cacheType == paths.Index_Bloom {
+	if cacheType == Index_Bloom {
 		path = ToBloomPath(path)
 	}
 
@@ -45,27 +44,27 @@ func WalkIndexFolder(chain string, cacheType paths.CacheType, filenameChan chan<
 	})
 }
 
-func tailFolder(chain string, ct paths.CacheType) string {
-	descrs := map[paths.CacheType]string{
-		paths.None:          "unknown",
-		paths.Index_Bloom:   "blooms",
-		paths.Index_Final:   "finalized",
-		paths.Index_Staging: "staging",
-		paths.Index_Ripe:    "ripe",
-		paths.Index_Unripe:  "unripe",
-		paths.Cache_Abis:    "abis",
+func tailFolder(chain string, ct CacheType) string {
+	descrs := map[CacheType]string{
+		None:          "unknown",
+		Index_Bloom:   "blooms",
+		Index_Final:   "finalized",
+		Index_Staging: "staging",
+		Index_Ripe:    "ripe",
+		Index_Unripe:  "unripe",
+		Cache_Abis:    "abis",
 	}
 	return descrs[ct]
 }
 
 type CacheFileInfo struct {
-	Type paths.CacheType
+	Type CacheType
 	Path string
 }
 
-func WalkCacheFolder(chain string, cacheType paths.CacheType, filenameChan chan<- CacheFileInfo) {
+func WalkCacheFolder(chain string, cacheType CacheType, filenameChan chan<- CacheFileInfo) {
 	defer func() {
-		filenameChan <- CacheFileInfo{Type: paths.None}
+		filenameChan <- CacheFileInfo{Type: None}
 	}()
 
 	path := filepath.Join(config.GetPathToCache(chain), tailFolder(chain, cacheType))

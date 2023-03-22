@@ -12,12 +12,12 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
@@ -53,7 +53,7 @@ func EstablishIndexChunk(chain string, fileRange base.FileRange) (bool, error) {
 	progressChannel := make(chan *progress.Progress)
 
 	go func() {
-		DownloadChunks(chain, chunks, paths.Index_Final, 4 /* poolSize */, progressChannel)
+		DownloadChunks(chain, chunks, cache.Index_Final, 4 /* poolSize */, progressChannel)
 		close(progressChannel)
 	}()
 

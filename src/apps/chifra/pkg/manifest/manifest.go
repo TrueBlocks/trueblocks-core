@@ -11,12 +11,12 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
@@ -56,11 +56,11 @@ type ChunkRecord struct {
 	IndexSize int64         `json:"indexSize,omitempty"`
 }
 
-func (ch *ChunkRecord) GetFullPath(chain string, cacheType paths.CacheType) string {
+func (ch *ChunkRecord) GetFullPath(chain string, cacheType cache.CacheType) string {
 	switch cacheType {
-	case paths.Index_Bloom:
+	case cache.Index_Bloom:
 		return fmt.Sprintf("%s.bloom", filepath.Join(config.GetPathToIndex(chain), "blooms", ch.Range))
-	case paths.Index_Final:
+	case cache.Index_Final:
 		return fmt.Sprintf("%s.bin", filepath.Join(config.GetPathToIndex(chain), "finalized", ch.Range))
 	}
 	logger.Fatal("unexpected chunkType in GetFullPath")
