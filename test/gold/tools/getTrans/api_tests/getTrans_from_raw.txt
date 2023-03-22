@@ -2,6 +2,7 @@ transactions?transactions=4000000.5&raw
 {
   "data": [
     {
+      "accessList": null,
       "blockHash": "0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853",
       "blockNumber": "0x3d0900",
       "chainId": "0x1",
