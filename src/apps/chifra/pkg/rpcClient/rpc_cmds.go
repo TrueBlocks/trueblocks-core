@@ -43,22 +43,21 @@ type Traces struct {
 type Logs struct {
 	Jsonrpc string `json:"jsonrpc"`
 	Result  []struct {
-		Address             string   `json:"address"`
-		BlockHash           string   `json:"blockHash"`
-		BlockNumber         string   `json:"blockNumber"`
-		Data                string   `json:"data"`
-		LogIndex            string   `json:"logIndex"`
-		Removed             bool     `json:"removed"`
-		Topics              []string `json:"topics"`
-		TransactionHash     string   `json:"transactionHash"`
-		TransactionIndex    string   `json:"transactionIndex"`
-		TransactionLogIndex string   `json:"transactionLogIndex"`
-		Type                string   `json:"type"`
+		Address          string   `json:"address"`
+		BlockHash        string   `json:"blockHash"`
+		BlockNumber      string   `json:"blockNumber"`
+		Data             string   `json:"data"`
+		LogIndex         string   `json:"logIndex"`
+		Removed          bool     `json:"removed"`
+		Topics           []string `json:"topics"`
+		TransactionHash  string   `json:"transactionHash"`
+		TransactionIndex string   `json:"transactionIndex"`
+		Type             string   `json:"type"`
 	} `json:"result"`
 	ID int `json:"id"`
 }
 
-// Transaction carries values returned by the eth_getTransacction RPC calls
+// Transaction carries values returned by the getTransaction RPC calls
 type Transaction struct {
 	Jsonrpc string `json:"jsonrpc"`
 	Result  struct {

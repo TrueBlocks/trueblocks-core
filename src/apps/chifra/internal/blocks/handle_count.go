@@ -80,7 +80,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 				}
 
 				if opts.Logs {
-					if blockCount.LogsCnt, err = rpcClient.GetLogCountByNumber(opts.Globals.Chain, bn); err != nil {
+					if blockCount.LogsCnt, err = rpcClient.GetLogCountByBlockNumber(opts.Globals.Chain, bn); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {
 							continue

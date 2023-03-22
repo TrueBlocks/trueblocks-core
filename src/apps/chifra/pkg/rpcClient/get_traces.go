@@ -32,6 +32,7 @@ func GetTracesByBlockNumber(chain string, bn uint64) ([]types.SimpleTrace, error
 	if rawTraces, err := rpc.QuerySlice[types.RawTrace](chain, method, params); err != nil {
 		return []types.SimpleTrace{}, err
 	} else {
+		// TODO: This could be loadTrace in the same way loadBlocks works
 		var ret []types.SimpleTrace
 		for _, rawTrace := range rawTraces {
 			trace := types.SimpleTrace{
@@ -94,6 +95,7 @@ func GetTracesByFilter(chain string, filter string) ([]types.SimpleTrace, error)
 	if rawTraces, err := rpc.QuerySlice[types.RawTrace](chain, method, params); err != nil {
 		return ret, fmt.Errorf("trace filter %s returned an error: %w", filter, ethereum.NotFound)
 	} else {
+		// TODO: This could be loadTrace in the same way loadBlocks works
 		for _, rawTrace := range rawTraces {
 			// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
 			rawTrace := rawTrace
@@ -200,6 +202,7 @@ func GetTracesByTransactionHash(chain string, txHash string, transaction *types.
 				result.SetRaw(rawTrace.Result)
 			}
 
+			// TODO: This could be loadTrace in the same way loadBlocks works
 			trace := types.SimpleTrace{
 				Error:            rawTrace.Error,
 				BlockHash:        base.HexToHash(rawTrace.BlockHash),
