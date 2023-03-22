@@ -22,25 +22,25 @@ import (
 // EXISTING_CODE
 
 type RawTransaction struct {
-	AccessList           []string `json:"accessList"`           // array of addresses
-	BlockHash            string   `json:"blockHash"`            // hash
-	BlockNumber          string   `json:"blockNumber"`          // base.Blknum
-	ChainId              string   `json:"chainId,omitempty"`    // string
-	From                 string   `json:"from"`                 // address
-	Gas                  string   `json:"gas"`                  // gas
-	GasPrice             string   `json:"gasPrice"`             // gas
-	Hash                 string   `json:"hash"`                 // hash
-	Input                string   `json:"input"`                // byte data
-	MaxFeePerGas         string   `json:"maxFeePerGas"`         // gas
-	MaxPriorityFeePerGas string   `json:"maxPriorityFeePerGas"` // gas
-	Nonce                string   `json:"nonce"`                // index
-	R                    string   `json:"r"`                    // hash
-	S                    string   `json:"s"`                    // hash
-	To                   string   `json:"to"`                   // address
-	TransactionIndex     string   `json:"transactionIndex"`     // index
-	Type                 string   `json:"type"`                 // string
-	V                    string   `json:"v"`                    // hash
-	Value                string   `json:"value"`                // wei
+	// AccessList           []string `json:"accessList"`           // array of addresses
+	BlockHash            string `json:"blockHash"`            // hash
+	BlockNumber          string `json:"blockNumber"`          // base.Blknum
+	ChainId              string `json:"chainId,omitempty"`    // string
+	From                 string `json:"from"`                 // address
+	Gas                  string `json:"gas"`                  // gas
+	GasPrice             string `json:"gasPrice"`             // gas
+	Hash                 string `json:"hash"`                 // hash
+	Input                string `json:"input"`                // byte data
+	MaxFeePerGas         string `json:"maxFeePerGas"`         // gas
+	MaxPriorityFeePerGas string `json:"maxPriorityFeePerGas"` // gas
+	Nonce                string `json:"nonce"`                // index
+	R                    string `json:"r"`                    // hash
+	S                    string `json:"s"`                    // hash
+	To                   string `json:"to"`                   // address
+	TransactionIndex     string `json:"transactionIndex"`     // index
+	Type                 string `json:"type"`                 // string
+	V                    string `json:"v"`                    // hash
+	Value                string `json:"value"`                // wei
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
