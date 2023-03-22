@@ -3,8 +3,8 @@ package index
 import (
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 )
 
 type walkerFunc func(walker *IndexWalker, path string, first bool) (bool, error)
@@ -30,15 +30,15 @@ func (walker *IndexWalker) MaxTests() int {
 }
 
 func (walker *IndexWalker) WalkBloomFilters(blockNums []uint64) error {
-	filenameChan := make(chan paths.IndexFileInfo)
+	filenameChan := make(chan cache.IndexFileInfo)
 
 	var nRoutines int = 1
-	go paths.WalkIndexFolder(walker.chain, paths.Index_Bloom, filenameChan)
+	go cache.WalkIndexFolder(walker.chain, cache.Index_Bloom, filenameChan)
 
 	cnt := 0
 	for result := range filenameChan {
 		switch result.Type {
-		case paths.Index_Bloom:
+		case cache.Index_Bloom:
 			skip := (walker.testMode && cnt > walker.maxTests) || !strings.HasSuffix(result.Path, ".bloom")
 			if !skip && shouldDisplay(result, blockNums) {
 				ok, err := walker.visitFunc1(walker, result.Path, cnt == 0)
@@ -51,7 +51,7 @@ func (walker *IndexWalker) WalkBloomFilters(blockNums []uint64) error {
 					return nil
 				}
 			}
-		case paths.None:
+		case cache.None:
 			nRoutines--
 			if nRoutines == 0 {
 				close(filenameChan)
@@ -72,7 +72,7 @@ func (walker *IndexWalker) WalkBloomFilters(blockNums []uint64) error {
 // there are 100 files in the range 100000-200000, we need to create block numbers that cover every
 // eventuallity. If on of the files has a two block range, we need to generate 50,000 block numbers. If we
 // used the range on the command line instead we'd only have to intersect one range.
-func shouldDisplay(result paths.IndexFileInfo, blockNums []uint64) bool {
+func shouldDisplay(result cache.IndexFileInfo, blockNums []uint64) bool {
 	if len(blockNums) == 0 {
 		return true
 	}

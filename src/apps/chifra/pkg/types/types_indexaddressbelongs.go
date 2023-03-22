@@ -1,9 +1,14 @@
 package types
 
+import "io"
+
 // EXISTING_CODE
 // EXISTING_CODE
 
-type RawIndexAddressBelongs interface{}
+type RawIndexAddressBelongs interface {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
 
 type SimpleIndexAddressBelongs struct {
 	Address string                  `json:"address"`
@@ -11,6 +16,8 @@ type SimpleIndexAddressBelongs struct {
 	Count   uint32                  `json:"count"`
 	Apps    []SimpleIndexAppearance `json:"apps"`
 	raw     *RawIndexAddressBelongs `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleIndexAddressBelongs) Raw() *RawIndexAddressBelongs {
@@ -34,13 +41,13 @@ func (s *SimpleIndexAddressBelongs) Model(showHidden bool, format string, extraO
 	}
 }
 
-func (s *SimpleIndexAddressBelongs) Write(p []byte) (n int, err error) {
+func (s *SimpleIndexAddressBelongs) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimpleIndexAddressBelongs) Read(p []byte) (n int, err error) {
+func (s *SimpleIndexAddressBelongs) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil

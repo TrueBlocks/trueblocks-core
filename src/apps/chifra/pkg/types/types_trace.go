@@ -11,6 +11,7 @@ package types
 // EXISTING_CODE
 import (
 	"fmt"
+	"io"
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -24,29 +25,34 @@ type RawTrace struct {
 	Action           RawTraceAction  `json:"action"`
 	BlockHash        string          `json:"blockHash"`
 	BlockNumber      uint64          `json:"blockNumber"`
-	Error            string          `json:"error,omitempty"`
+	Error            string          `json:"error"`
 	Result           *RawTraceResult `json:"result"`
 	Subtraces        uint64          `json:"subtraces"`
 	TraceAddress     []uint64        `json:"traceAddress"`
 	TransactionHash  string          `json:"transactionHash"`
 	TransactionIndex uint64          `json:"transactionPosition"`
-	Type             string          `json:"type"`
+	TraceType        string          `json:"type"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleTrace struct {
 	Action           *SimpleTraceAction `json:"action"`
 	ArticulatedTrace *SimpleFunction    `json:"articulatedTrace,omitempty"`
 	BlockHash        base.Hash          `json:"blockHash"`
-	BlockNumber      uint64             `json:"blockNumber"`
+	BlockNumber      base.Blknum        `json:"blockNumber"`
+	CompressedTrace  string             `json:"compressedTrace,omitempty"`
 	Error            string             `json:"error,omitempty"`
 	Result           *SimpleTraceResult `json:"result"`
 	Subtraces        uint64             `json:"subtraces"`
 	Timestamp        base.Timestamp     `json:"timestamp"`
 	TraceAddress     []uint64           `json:"traceAddress"`
 	TransactionHash  base.Hash          `json:"transactionHash"`
-	TransactionIndex uint64             `json:"transactionIndex"`
-	Type             string             `json:"type,omitempty"`
+	TransactionIndex base.Blknum        `json:"transactionIndex"`
+	TraceType        string             `json:"type,omitempty"`
 	raw              *RawTrace          `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleTrace) Raw() *RawTrace {
@@ -113,8 +119,8 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 		if len(s.Error) > 0 {
 			model["error"] = s.Error
 		}
-		if len(s.Type) > 0 {
-			model["type"] = s.Type
+		if len(s.TraceType) > 0 {
+			model["type"] = s.TraceType
 		}
 		if s.Action != nil {
 			model["action"] = s.Action.Model(showHidden, format, extraOptions).Data
@@ -176,13 +182,13 @@ func (s *SimpleTrace) Model(showHidden bool, format string, extraOptions map[str
 	}
 }
 
-func (s *SimpleTrace) Write(p []byte) (n int, err error) {
+func (s *SimpleTrace) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimpleTrace) Read(p []byte) (n int, err error) {
+func (s *SimpleTrace) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil

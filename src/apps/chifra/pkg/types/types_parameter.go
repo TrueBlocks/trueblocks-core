@@ -9,7 +9,10 @@
 package types
 
 // EXISTING_CODE
-import "fmt"
+import (
+	"fmt"
+	"io"
+)
 
 // EXISTING_CODE
 
@@ -21,6 +24,8 @@ type RawParameter struct {
 	StrDefault    string `json:"strDefault"`
 	ParameterType string `json:"type"`
 	Value         string `json:"value"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleParameter struct {
@@ -32,6 +37,8 @@ type SimpleParameter struct {
 	ParameterType string            `json:"type"`
 	Value         any               `json:"value,omitempty"`
 	raw           *RawParameter     `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleParameter) Raw() *RawParameter {
@@ -79,13 +86,13 @@ func (s *SimpleParameter) Model(showHidden bool, format string, extraOptions map
 	}
 }
 
-func (s *SimpleParameter) Write(p []byte) (n int, err error) {
+func (s *SimpleParameter) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimpleParameter) Read(p []byte) (n int, err error) {
+func (s *SimpleParameter) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil

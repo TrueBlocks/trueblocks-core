@@ -12,10 +12,14 @@ package types
 // EXISTING_CODE
 
 type [{RAW_NAME}] struct {
-[{RAWFIELDS}]}
+[{RAWFIELDS}]	// EXISTING_CODE
+	// EXISTING_CODE
+}
 
 type Simple[{CLASS_NAME}] struct {
-[{FIELDS}]}
+[{FIELDS}]	// EXISTING_CODE
+	// EXISTING_CODE
+}
 
 func (s *Simple[{CLASS_NAME}]) Raw() *[{RAW_NAME}] {
 	return s.raw
@@ -38,13 +42,13 @@ func (s *Simple[{CLASS_NAME}]) Model(showHidden bool, format string, extraOption
 	}
 }
 
-func (s *Simple[{CLASS_NAME}]) Write(p []byte) (n int, err error) {
+func (s *Simple[{CLASS_NAME}]) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *Simple[{CLASS_NAME}]) Read(p []byte) (n int, err error) {
+func (s *Simple[{CLASS_NAME}]) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil

@@ -2,6 +2,8 @@ package types
 
 // EXISTING_CODE
 import (
+	"io"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
@@ -11,6 +13,8 @@ type RawAppearance struct {
 	Address          string `json:"address"`
 	BlockNumber      uint32 `json:"blockNumber"`
 	TransactionIndex uint32 `json:"transactionIndex"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleAppearance struct {
@@ -21,6 +25,8 @@ type SimpleAppearance struct {
 	Timestamp        base.Timestamp `json:"timestamp"`
 	Date             string         `json:"date"`
 	raw              *RawAppearance `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleAppearance) Raw() *RawAppearance {
@@ -61,13 +67,13 @@ func (s *SimpleAppearance) Model(showHidden bool, format string, extraOptions ma
 	}
 }
 
-func (s *SimpleAppearance) Write(p []byte) (n int, err error) {
+func (s *SimpleAppearance) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimpleAppearance) Read(p []byte) (n int, err error) {
+func (s *SimpleAppearance) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil

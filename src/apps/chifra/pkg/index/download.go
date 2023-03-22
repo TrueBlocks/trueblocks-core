@@ -15,12 +15,12 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
@@ -61,7 +61,7 @@ type writeWorkerArguments struct {
 type workerFunction func(interface{})
 
 // getDownloadWorker returns a worker function that downloads a chunk
-func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkType paths.CacheType) workerFunction {
+func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkType cache.CacheType) workerFunction {
 	progressChannel := workerArgs.progressChannel
 
 	return func(param interface{}) {
@@ -76,7 +76,7 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 
 		default:
 			hash := chunk.BloomHash
-			if chunkType == paths.Index_Final {
+			if chunkType == cache.Index_Final {
 				hash = chunk.IndexHash
 			}
 			if hash != "" {
@@ -100,8 +100,8 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 				if workerArgs.ctx.Err() != nil {
 					// User hit control + c - clean up both peices for the current chunk
 					chunkPath := config.GetPathToIndex(chain) + "finalized/" + chunk.Range + ".bin"
-					RemoveLocalFile(paths.ToIndexPath(chunkPath), "user canceled", progressChannel)
-					RemoveLocalFile(paths.ToBloomPath(chunkPath), "user canceled", progressChannel)
+					RemoveLocalFile(cache.ToIndexPath(chunkPath), "user canceled", progressChannel)
+					RemoveLocalFile(cache.ToBloomPath(chunkPath), "user canceled", progressChannel)
 					progressChannel <- &progress.Progress{
 						Payload: &chunk,
 						Event:   progress.Error,
@@ -129,7 +129,7 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 }
 
 // getWriteWorker returns a worker function that writes chunk to disk
-func getWriteWorker(chain string, workerArgs writeWorkerArguments, chunkType paths.CacheType) workerFunction {
+func getWriteWorker(chain string, workerArgs writeWorkerArguments, chunkType cache.CacheType) workerFunction {
 	progressChannel := workerArgs.progressChannel
 
 	return func(resParam interface{}) {
@@ -170,7 +170,7 @@ func getWriteWorker(chain string, workerArgs writeWorkerArguments, chunkType pat
 
 // DownloadChunks downloads, unzips and saves the chunk of type indicated by chunkType
 // for each chunk in chunks. Progress is reported to progressChannel.
-func DownloadChunks(chain string, chunksToDownload []manifest.ChunkRecord, chunkType paths.CacheType, poolSize int, progressChannel ProgressChan) {
+func DownloadChunks(chain string, chunksToDownload []manifest.ChunkRecord, chunkType cache.CacheType, poolSize int, progressChannel ProgressChan) {
 	// Context lets us handle Ctrl-C easily
 	ctx, cancel := context.WithCancel(context.Background())
 	defer func() {
@@ -247,10 +247,10 @@ func DownloadChunks(chain string, chunksToDownload []manifest.ChunkRecord, chunk
 }
 
 // writeBytesToDisc save the downloaded bytes to disc
-func writeBytesToDisc(chain string, chunkType paths.CacheType, res *jobResult) error {
+func writeBytesToDisc(chain string, chunkType cache.CacheType, res *jobResult) error {
 	fullPath := config.GetPathToIndex(chain) + "finalized/" + res.rng + ".bin"
-	if chunkType == paths.Index_Bloom {
-		fullPath = paths.ToBloomPath(fullPath)
+	if chunkType == cache.Index_Bloom {
+		fullPath = cache.ToBloomPath(fullPath)
 	}
 	outputFile, err := os.OpenFile(fullPath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 	if err != nil {
@@ -264,7 +264,7 @@ func writeBytesToDisc(chain string, chunkType paths.CacheType, res *jobResult) e
 			outputFile.Close()
 			os.Remove(outputFile.Name())
 			col := colors.Magenta
-			if fullPath == paths.ToIndexPath(fullPath) {
+			if fullPath == cache.ToIndexPath(fullPath) {
 				col = colors.Yellow
 			}
 			logger.Warn("Failed download", col, res.rng, colors.Off, "(will retry)", strings.Repeat(" ", 30))

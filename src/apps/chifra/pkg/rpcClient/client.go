@@ -16,7 +16,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
-	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	ethTypes "github.com/ethereum/go-ethereum/core/types"
@@ -102,20 +101,14 @@ func GetIDs(provider string) (uint64, uint64, error) {
 
 // TODO: C++ code used to cache version info
 func GetVersion(chain string) (version string, err error) {
-	var response struct {
-		Result string `json:"result"`
-	}
-	payload := rpc.Payload{
-		Method: "web3_clientVersion",
-		Params: rpc.Params{},
-	}
+	method := "web3_clientVersion"
+	params := rpc.Params{}
 
-	// TODO: Use rpc.Query
-	err = rpc.FromRpc(config.GetRpcProvider(chain), &payload, &response)
-	if err != nil {
-		return
+	if result, err := rpc.Query[string](chain, method, params); err != nil {
+		return "", err
+	} else {
+		return *result, nil
 	}
-	return response.Result, err
 }
 
 // TxHashFromHash returns a transaction's hash if it's a valid transaction
@@ -161,33 +154,6 @@ func TxFromNumberAndId(chain string, blkNum, txId uint64) (ethTypes.Transaction,
 	}
 
 	return *tx, nil
-}
-
-// TxNumberAndIdFromHash returns a transaction's blockNum and tx_id given its hash
-func TxNumberAndIdFromHash(provider string, hash string) (uint64, uint64, error) {
-	var trans Transaction
-	transPayload := rpc.Payload{
-		Method: "eth_getTransactionByHash",
-		Params: rpc.Params{hash},
-	}
-	// TODO: Use rpc.Query
-	err := rpc.FromRpc(provider, &transPayload, &trans)
-	if err != nil {
-		fmt.Println("rpc.FromRpc(traces) returned error")
-		logger.Fatal(err)
-	}
-	if trans.Result.BlockNumber == "" {
-		return 0, 0, fmt.Errorf("transaction at %s reported an error: %w", hash, ethereum.NotFound)
-	}
-	bn, err := strconv.ParseUint(trans.Result.BlockNumber[2:], 16, 32)
-	if err != nil {
-		return 0, 0, err
-	}
-	txid, err := strconv.ParseUint(trans.Result.TransactionIndex[2:], 16, 32)
-	if err != nil {
-		return 0, 0, err
-	}
-	return bn, txid, nil
 }
 
 // TxCountByBlockNumber returns the number of transactions in a block

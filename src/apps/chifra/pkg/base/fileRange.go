@@ -2,7 +2,7 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package paths
+package base
 
 import (
 	"errors"
@@ -65,11 +65,8 @@ func (fR FileRange) String() string {
 }
 
 // RangeToFilename returns a fileName and and existance bool given a file range and a type
-func (r *FileRange) RangeToFilename(chain string, mode CacheType) (bool, string) {
+func (r *FileRange) RangeToFilename(chain string) (bool, string) {
 	fileName := config.GetPathToIndex(chain) + "finalized/" + r.String() + ".bin"
-	if mode == Index_Bloom {
-		fileName = ToBloomPath(fileName)
-	}
 	return file.FileExists(fileName), fileName
 }
 

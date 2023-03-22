@@ -9,7 +9,11 @@
 package types
 
 // EXISTING_CODE
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+import (
+	"io"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+)
 
 // EXISTING_CODE
 
@@ -17,13 +21,17 @@ type RawAppearanceCount struct {
 	Address  string `json:"address"`
 	FileSize string `json:"fileSize"`
 	NRecords string `json:"nRecords"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleAppearanceCount struct {
-	Address  base.Address `json:"address"`
-	FileSize uint64       `json:"fileSize"`
-	NRecords uint64       `json:"nRecords"`
-	raw      *RawAppearanceCount
+	Address  base.Address        `json:"address"`
+	FileSize uint64              `json:"fileSize"`
+	NRecords uint64              `json:"nRecords"`
+	raw      *RawAppearanceCount `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleAppearanceCount) Raw() *RawAppearanceCount {
@@ -58,13 +66,13 @@ func (s *SimpleAppearanceCount) Model(showHidden bool, format string, extraOptio
 	}
 }
 
-func (s *SimpleAppearanceCount) Write(p []byte) (n int, err error) {
+func (s *SimpleAppearanceCount) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimpleAppearanceCount) Read(p []byte) (n int, err error) {
+func (s *SimpleAppearanceCount) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil

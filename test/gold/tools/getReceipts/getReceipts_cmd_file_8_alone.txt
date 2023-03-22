@@ -23,6 +23,7 @@ TEST[DATE|TIME] Format:  json
       "logs": [
         {
           "address": "0xfe5f141bf94fe84bc28ded0ab966c16b17490657",
+          "blockHash": "0xccff406c95943cebea30307dd06824423f91240bd6aab7029d8003655ae7f23e",
           "blockNumber": 5644882,
           "data": "0x0000000000000000000000000000000000000000000c1d9f7605641474600000",
           "logIndex": 0,

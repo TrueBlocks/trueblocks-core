@@ -115,7 +115,7 @@ func getItem[Data cacheable](
 // TODO: Move to it's own type specific file (see https://github.com/TrueBlocks/trueblocks-core/pull/2584#discussion_r1031564867)
 // TODO: This also applies to Set/GetTransaction
 func SetBlock(chain string, block *types.SimpleBlock[types.SimpleTransaction]) (err error) {
-	filePath := getPathByBlock(ItemBlock, block.BlockNumber)
+	filePath := getPathByBlock(Cache_Blocks, block.BlockNumber)
 
 	return setItem(
 		chain,
@@ -127,7 +127,7 @@ func SetBlock(chain string, block *types.SimpleBlock[types.SimpleTransaction]) (
 
 // GetBlock reads block from the cache
 func GetBlock(chain string, blockNumber base.Blknum) (block *types.SimpleBlock[types.SimpleTransaction], err error) {
-	filePath := getPathByBlock(ItemBlock, blockNumber)
+	filePath := getPathByBlock(Cache_Blocks, blockNumber)
 
 	return getItem(
 		chain,
@@ -138,7 +138,7 @@ func GetBlock(chain string, blockNumber base.Blknum) (block *types.SimpleBlock[t
 
 // SetTransaction stores transaction in the cache
 func SetTransaction(chain string, tx *types.SimpleTransaction) (err error) {
-	filePath := getPathByBlock(ItemTransaction, tx.BlockNumber)
+	filePath := getPathByBlock(Cache_Transactions, tx.BlockNumber)
 
 	return setItem(
 		chain,
@@ -150,7 +150,7 @@ func SetTransaction(chain string, tx *types.SimpleTransaction) (err error) {
 
 // GetTransaction reads transaction from the cache
 func GetTransaction(chain string, blockNumber base.Blknum, txIndex uint64) (tx *types.SimpleTransaction, err error) {
-	filePath := getPathByBlockAndTransactionIndex(ItemTransaction, blockNumber, txIndex)
+	filePath := getPathByBlockAndTransactionIndex(Cache_Transactions, blockNumber, txIndex)
 
 	return getItem(
 		chain,
@@ -159,7 +159,7 @@ func GetTransaction(chain string, blockNumber base.Blknum, txIndex uint64) (tx *
 	)
 }
 
-var abisFilePath = path.Join(itemToDirectory[ItemABI], "known.bin")
+var abisFilePath = path.Join(cacheDirectories[Cache_Abis], "known.bin")
 
 // GetAbis reads all ABIs stored in the cache
 func GetAbis(chain string) (abis []types.SimpleFunction, err error) {
@@ -184,7 +184,7 @@ func SetAbis(chain string, abis []types.SimpleFunction) (err error) {
 func GetAbi(chain string, address base.Address) (simpleAbis []types.SimpleFunction, err error) {
 	fileName := address.Hex() + ".json"
 	filePath := path.Join(
-		itemToDirectory[ItemABI],
+		cacheDirectories[Cache_Abis],
 		fileName,
 	)
 	file, err := load(chain, filePath)
@@ -218,7 +218,7 @@ func GetAbi(chain string, address base.Address) (simpleAbis []types.SimpleFuncti
 // TODO: we cache abi.ABI, not types.SimpleFunction
 // func SetAbi(chain string, address base.Address, abi []types.SimpleFunction) (err error) {
 // 	filePath := path.Join(
-// 		itemToDirectory[ItemABI],
+// 		cacheDirectories[Cache_Abis],
 // 		address.Hex()+".json",
 // 	)
 
@@ -233,7 +233,7 @@ func GetAbi(chain string, address base.Address) (simpleAbis []types.SimpleFuncti
 // InsertAbi copies file (e.g. opened local file) into cache
 func InsertAbi(chain string, address base.Address, inputReader io.Reader) (err error) {
 	filePath := path.Join(
-		itemToDirectory[ItemABI],
+		cacheDirectories[Cache_Abis],
 		address.Hex()+".json",
 	)
 	cacheDir := getCacheAndChainPath(chain)

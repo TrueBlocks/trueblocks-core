@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"path/filepath"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 )
 
 type SimpleProgress struct {
@@ -38,8 +38,8 @@ func folderProgress(path string) string {
 		return "0"
 	}
 	early, _ := file.EarliestFileInFolder(path)
-	first := paths.RangeFromFilename(early).First
+	first := base.RangeFromFilename(early).First
 	late, _ := file.LatestFileInFolder(path)
-	last := paths.RangeFromFilename(late).First
+	last := base.RangeFromFilename(late).First
 	return fmt.Sprintf("%09d-%09d %d %d", first, last, (last - first + 1), count)
 }

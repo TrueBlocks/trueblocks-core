@@ -13,12 +13,15 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"strings"
 
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 )
 
+// `payable` was present in ABIs before Solidity 0.5.0 and was replaced by `stateMutability`
+// https://docs.soliditylang.org/en/develop/050-breaking-changes.html#command-line-and-json-interfaces
 // EXISTING_CODE
 
 type RawFunction struct {
@@ -33,6 +36,8 @@ type RawFunction struct {
 	Signature       string `json:"signature"`
 	StateMutability string `json:"stateMutability"`
 	FunctionType    string `json:"type"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleFunction struct {
@@ -47,12 +52,12 @@ type SimpleFunction struct {
 	Signature       string            `json:"signature,omitempty"`
 	StateMutability string            `json:"stateMutability,omitempty"`
 	FunctionType    string            `json:"type"`
-	// `payable` was present in ABIs before Solidity 0.5.0 and was replaced
-	// by `stateMutability`: https://docs.soliditylang.org/en/develop/050-breaking-changes.html#command-line-and-json-interfaces
+	raw             *RawFunction      `json:"-"`
+	// EXISTING_CODE
 	payable   bool
 	abiMethod *abi.Method
 	abiEvent  *abi.Event
-	raw       *RawFunction `json:"-"`
+	// EXISTING_CODE
 }
 
 func (s *SimpleFunction) Raw() *RawFunction {
@@ -124,13 +129,13 @@ func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[
 	}
 }
 
-func (s *SimpleFunction) Write(p []byte) (n int, err error) {
+func (s *SimpleFunction) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimpleFunction) Read(p []byte) (n int, err error) {
+func (s *SimpleFunction) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
@@ -333,16 +338,6 @@ func (s *SimpleFunction) GetAbiEvent() (abiEvent *abi.Event, err error) {
 		return
 	}
 	return s.abiEvent, nil
-}
-
-func joinParametersNames(params []SimpleParameter) (result string) {
-	for index, param := range params {
-		if index > 0 {
-			result += ","
-		}
-		result += param.DisplayName(index)
-	}
-	return
 }
 
 // TODO: I feel like we might be able to remove stateMutability since we don't really use it.

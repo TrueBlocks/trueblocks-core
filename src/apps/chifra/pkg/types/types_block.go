@@ -10,6 +10,8 @@ package types
 
 // EXISTING_CODE
 import (
+	"io"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
@@ -20,28 +22,31 @@ type BlockTransaction interface {
 // EXISTING_CODE
 
 type RawBlock struct {
-	Author           string   `json:"author,omitempty"`
-	Difficulty       string   `json:"difficulty"`
-	ExtraData        string   `json:"extraData,omitempty"`
-	GasLimit         string   `json:"gasLimit"`
-	GasUsed          string   `json:"gasUsed"`
-	Hash             string   `json:"hash"`
-	LogsBloom        string   `json:"logsBloom,omitempty"`
-	Miner            string   `json:"miner"`
-	MixHash          string   `json:"mixHash"`
-	Nonce            string   `json:"nonce"`
-	Number           string   `json:"number"`
-	ParentHash       string   `json:"parentHash"`
-	ReceiptsRoot     string   `json:"receiptsRoot"`
-	Sha3Uncles       string   `json:"sha3Uncles"`
-	Size             string   `json:"size"`
-	StateRoot        string   `json:"stateRoot"`
-	Timestamp        string   `json:"timestamp"`
-	TotalDifficulty  string   `json:"totalDifficulty"`
-	Transactions     []any    `json:"transactions"`
-	TransactionsRoot string   `json:"transactionsRoot"`
-	Uncles           []string `json:"uncles"`
-	// SealFields       []string      `json:"sealFields"`
+	Author           string   `json:"author,omitempty"`    // address
+	BaseFeePerGas    string   `json:"baseFeePerGas"`       // gas
+	Difficulty       string   `json:"difficulty"`          // int
+	ExtraData        string   `json:"extraData,omitempty"` // byte data
+	GasLimit         string   `json:"gasLimit"`            // gas
+	GasUsed          string   `json:"gasUsed"`             // gas
+	Hash             string   `json:"hash"`                // hash
+	LogsBloom        string   `json:"logsBloom,omitempty"` // byte data
+	Miner            string   `json:"miner"`               // address
+	MixHash          string   `json:"mixHash"`             // hash
+	Nonce            string   `json:"nonce"`               // hash
+	Number           string   `json:"number"`              // block number
+	ParentHash       string   `json:"parentHash"`          // hash
+	ReceiptsRoot     string   `json:"receiptsRoot"`        // hash
+	SealFields       []string `json:"sealFields"`          // array of hashes
+	Sha3Uncles       string   `json:"sha3Uncles"`          // hash
+	Size             string   `json:"size"`                // value
+	StateRoot        string   `json:"stateRoot"`           // hash
+	Timestamp        string   `json:"timestamp"`           // timestamp
+	TotalDifficulty  string   `json:"totalDifficulty"`     // value
+	Transactions     []any    `json:"transactions"`        // array of transactions or hash
+	TransactionsRoot string   `json:"transactionsRoot"`    // hash
+	Uncles           []string `json:"uncles"`              // array of hashes
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleBlock[Tx BlockTransaction] struct {
@@ -58,6 +63,8 @@ type SimpleBlock[Tx BlockTransaction] struct {
 	Transactions  []Tx           `json:"transactions"`
 	Uncles        []base.Hash    `json:"uncles"`
 	raw           *RawBlock      `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleBlock[Tx]) Raw() *RawBlock {
@@ -184,13 +191,13 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 	}
 }
 
-func (s *SimpleBlock[Tx]) Write(p []byte) (n int, err error) {
+func (s *SimpleBlock[Tx]) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimpleBlock[Tx]) Read(p []byte) (n int, err error) {
+func (s *SimpleBlock[Tx]) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil

@@ -1,14 +1,21 @@
 package types
 
+import "io"
+
 // EXISTING_CODE
 // EXISTING_CODE
 
-type RawIndexAppearance interface{}
+type RawIndexAppearance interface {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
 
 type SimpleIndexAppearance struct {
 	BlockNumber      uint32              `json:"blockNumber"`
 	TransactionIndex uint32              `json:"transactionIndex"`
 	raw              *RawIndexAppearance `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleIndexAppearance) Raw() *RawIndexAppearance {
@@ -32,13 +39,13 @@ func (s *SimpleIndexAppearance) Model(showHidden bool, format string, extraOptio
 	}
 }
 
-func (s *SimpleIndexAppearance) Write(p []byte) (n int, err error) {
+func (s *SimpleIndexAppearance) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimpleIndexAppearance) Read(p []byte) (n int, err error) {
+func (s *SimpleIndexAppearance) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil

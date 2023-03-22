@@ -2,22 +2,28 @@ package types
 
 // EXISTING_CODE
 import (
+	"io"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 )
 
 // EXISTING_CODE
 
-type RawIndex interface{}
+type RawIndex interface {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
 
 type SimpleIndex struct {
-	Range           paths.FileRange `json:"range"`
-	Magic           uint32          `json:"magic"`
-	Hash            base.Hash       `json:"hash"`
-	AddressCount    uint32          `json:"nAddresses"`
-	AppearanceCount uint32          `json:"nAppearances"`
-	Size            int64           `json:"fileSize"`
-	raw             *RawIndex       `json:"-"`
+	Range           base.FileRange `json:"range"`
+	Magic           uint32         `json:"magic"`
+	Hash            base.Hash      `json:"hash"`
+	AddressCount    uint32         `json:"nAddresses"`
+	AppearanceCount uint32         `json:"nAppearances"`
+	Size            int64          `json:"fileSize"`
+	raw             *RawIndex      `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleIndex) Raw() *RawIndex {
@@ -41,13 +47,13 @@ func (s *SimpleIndex) Model(showHidden bool, format string, extraOptions map[str
 	}
 }
 
-func (s *SimpleIndex) Write(p []byte) (n int, err error) {
+func (s *SimpleIndex) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimpleIndex) Read(p []byte) (n int, err error) {
+func (s *SimpleIndex) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil

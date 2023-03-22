@@ -28,81 +28,41 @@ func GetTransactionReceipt(chain string, bn uint64, txid uint64, txHash *base.Ha
 	logs := []types.SimpleLog{}
 	for _, rawLog := range rawReceipt.Logs {
 		rawLog := rawLog
-		logAddress := base.HexToAddress(rawLog.Address)
-		logIndex, parseErr := hexutil.DecodeUint64(rawLog.LogIndex)
-		if parseErr != nil {
-			err = parseErr
-			return
-		}
-
-		logBlockNumber, parseErr := hexutil.DecodeUint64(rawLog.BlockNumber)
-		if parseErr != nil {
-			err = parseErr
-			return
-		}
-
-		logTxIndex, parseErr := hexutil.DecodeUint64(rawLog.TransactionIndex)
-		if parseErr != nil {
-			err = parseErr
-			return
-		}
-
-		logTopics := make([]base.Hash, 0, len(rawLog.Topics))
-		for _, topic := range rawLog.Topics {
-			logTopics = append(logTopics, base.HexToHash(topic))
-		}
 
 		log := types.SimpleLog{
-			Address:          logAddress,
-			LogIndex:         logIndex,
-			BlockNumber:      logBlockNumber,
-			TransactionIndex: uint32(logTxIndex),
+			Address:          base.HexToAddress(rawLog.Address),
+			LogIndex:         mustParseUint(rawLog.LogIndex),
+			BlockNumber:      mustParseUint(rawLog.BlockNumber),
+			BlockHash:        base.HexToHash(rawLog.BlockHash),
+			TransactionIndex: mustParseUint(rawLog.TransactionIndex),
 			TransactionHash:  base.HexToHash(tx.Hash().Hex()),
 			Timestamp:        0, // TODO: FIXME #2695
-			Topics:           logTopics,
 			Data:             string(rawLog.Data),
-			CompressedLog:    "", // TODO: FIXME -- Note: we do this when displaying
 		}
+		for _, topic := range rawLog.Topics {
+			log.Topics = append(log.Topics, base.HexToHash(topic))
+		}
+
 		log.SetRaw(&rawLog)
 		logs = append(logs, log)
 	}
 
-	// Type-cast values that are not strings
-	blockNumber, err := hexutil.DecodeUint64(rawReceipt.BlockNumber)
-	if err != nil {
-		return
-	}
 	cumulativeGasUsed, err := hexutil.DecodeUint64(rawReceipt.CumulativeGasUsed)
-	if err != nil {
-		return
-	}
-	gasUsed, err := hexutil.DecodeUint64(rawReceipt.GasUsed)
-	if err != nil {
-		return
-	}
-	status, err := hexutil.DecodeUint64(rawReceipt.Status)
-	if err != nil {
-		return
-	}
-	transactionIndex, err := hexutil.DecodeUint64(rawReceipt.TransactionIndex)
 	if err != nil {
 		return
 	}
 
 	receipt = types.SimpleReceipt{
 		BlockHash:         base.HexToHash(rawReceipt.BlockHash),
-		BlockNumber:       blockNumber,
+		BlockNumber:       mustParseUint(rawReceipt.BlockNumber),
 		ContractAddress:   base.HexToAddress(rawReceipt.ContractAddress),
 		CumulativeGasUsed: fmt.Sprint(cumulativeGasUsed),
-		GasUsed:           gasUsed,
+		GasUsed:           mustParseUint(rawReceipt.GasUsed),
 		Logs:              logs,
-		Status:            uint32(status),
-		IsError:           status == 0,
+		Status:            uint32(mustParseUint(rawReceipt.Status)),
+		IsError:           mustParseUint(rawReceipt.Status) == 0,
 		TransactionHash:   base.HexToHash(rawReceipt.TransactionHash),
-		TransactionIndex:  transactionIndex,
-		// From:
-		// To:
-		// EffectiveGasPrice
+		TransactionIndex:  mustParseUint(rawReceipt.TransactionIndex),
 	}
 	receipt.SetRaw(rawReceipt)
 
@@ -112,7 +72,7 @@ func GetTransactionReceipt(chain string, bn uint64, txid uint64, txHash *base.Ha
 	londonBlock := uint64(12965000)
 	// TODO: chain specific
 	if tx != nil && chain == "mainnet" {
-		if blockNumber < londonBlock {
+		if receipt.BlockNumber < londonBlock {
 			gasPrice := txGasPrice
 			if gasPrice == 0 {
 				bn := tx.GasPrice()
@@ -120,6 +80,7 @@ func GetTransactionReceipt(chain string, bn uint64, txid uint64, txHash *base.Ha
 					gasPrice = bn.Uint64()
 				}
 			}
+			// TODO: This is very likely untested simply because our test cases are early blocks
 			receipt.EffectiveGasPrice = gasPrice
 		}
 	}

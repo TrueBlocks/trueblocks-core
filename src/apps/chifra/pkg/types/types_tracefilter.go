@@ -11,6 +11,7 @@ package types
 // EXISTING_CODE
 import (
 	"fmt"
+	"io"
 	"strings"
 )
 
@@ -23,6 +24,8 @@ type RawTraceFilter struct {
 	FromBlock   string `json:"fromBlock"`
 	ToAddress   string `json:"toAddress"`
 	ToBlock     string `json:"toBlock"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleTraceFilter struct {
@@ -33,6 +36,8 @@ type SimpleTraceFilter struct {
 	ToAddress   []string        `json:"toAddress,omitempty"`
 	ToBlock     string          `json:"toBlock,omitempty"`
 	raw         *RawTraceFilter `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleTraceFilter) Raw() *RawTraceFilter {
@@ -69,13 +74,13 @@ func (s *SimpleTraceFilter) Model(showHidden bool, format string, extraOptions m
 	}
 }
 
-func (s *SimpleTraceFilter) Write(p []byte) (n int, err error) {
+func (s *SimpleTraceFilter) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimpleTraceFilter) Read(p []byte) (n int, err error) {
+func (s *SimpleTraceFilter) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil

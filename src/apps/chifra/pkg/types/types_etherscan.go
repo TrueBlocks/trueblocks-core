@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"io"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -26,6 +27,7 @@ type RawEtherscan struct {
 	ContractAddress   string `json:"contractAddress"`
 	CumulativeGasUsed string `json:"cumulativeGasUsed"`
 	From              string `json:"from"`
+	FunctionName      string `json:"functionName"`
 	Gas               string `json:"gas"`
 	GasPrice          string `json:"gasPrice"`
 	GasUsed           string `json:"gasUsed"`
@@ -33,14 +35,15 @@ type RawEtherscan struct {
 	Hash              string `json:"hash"`
 	Input             string `json:"input"`
 	IsError           string `json:"isError"`
+	MethodId          string `json:"methodId"`
+	Nonce             string `json:"nonce"`
 	Timestamp         string `json:"timestamp"`
 	To                string `json:"to"`
 	TransactionIndex  string `json:"transactionIndex"`
 	TxReceiptStatus   string `json:"txreceipt_status"`
 	Value             string `json:"value"`
-	// FunctionName      string `json:"functionName"`
-	// MethodId         string `json:"methodId"`
-	// Nonce            string `json:"nonce"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleEtherscan struct {
@@ -63,11 +66,8 @@ type SimpleEtherscan struct {
 	TransactionIndex uint64         `json:"transactionIndex"`
 	Value            base.Wei       `json:"value"`
 	raw              *RawEtherscan  `json:"-"`
-	// ArticulatedTx    SimpleFunction `json:"articulatedTx"`
-	// CompressedTx     string         `json:"compressedTx"`
-	// EtherGasPrice    string      `json:"etherGasPrice"`
-	// ExtraValue1      Wei         `json:"extraValue1"`
-	// ExtraValue2      Wei         `json:"extraValue2"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleEtherscan) Raw() *RawEtherscan {
@@ -203,13 +203,13 @@ func (s *SimpleEtherscan) Model(showHidden bool, format string, extraOptions map
 	}
 }
 
-func (s *SimpleEtherscan) Write(p []byte) (n int, err error) {
+func (s *SimpleEtherscan) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimpleEtherscan) Read(p []byte) (n int, err error) {
+func (s *SimpleEtherscan) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil

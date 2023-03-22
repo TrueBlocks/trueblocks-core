@@ -2,19 +2,20 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package paths
+package cache
 
 import (
 	"io/fs"
 	"path/filepath"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
 type IndexFileInfo struct {
 	Type  CacheType
 	Path  string
-	Range FileRange
+	Range base.FileRange
 }
 
 func WalkIndexFolder(chain string, cacheType CacheType, filenameChan chan<- IndexFileInfo) {
@@ -36,7 +37,7 @@ func WalkIndexFolder(chain string, cacheType CacheType, filenameChan chan<- Inde
 			return err
 		}
 		if !info.IsDir() {
-			rng := RangeFromFilename(path)
+			rng := base.RangeFromFilename(path)
 			filenameChan <- IndexFileInfo{Type: cacheType, Path: path, Range: rng}
 		}
 		return nil

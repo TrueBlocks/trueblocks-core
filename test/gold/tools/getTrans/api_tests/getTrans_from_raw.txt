@@ -2,6 +2,7 @@ transactions?transactions=4000000.5&raw
 {
   "data": [
     {
+      "accessList": null,
       "blockHash": "0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853",
       "blockNumber": "0x3d0900",
       "chainId": "0x1",
@@ -10,6 +11,8 @@ transactions?transactions=4000000.5&raw
       "gasPrice": "0x5d21dba00",
       "hash": "0xfe52da8afe135e14a0855240e1ef4b44a0b4ebe374bd39de307cf0f3fabf0ff1",
       "input": "0xa9059cbb00000000000000000000000043a4210390998945dc7658a20b43c6c4189ac7d4000000000000000000000000000000000000000000000000000000000a21fe80",
+      "maxFeePerGas": "",
+      "maxPriorityFeePerGas": "",
       "nonce": "0x78f",
       "r": "0x700ded234c42a19d31b216f1524d857112ac268f69b4e9772488503829a63e70",
       "s": "0x504f5ec5c8bae3862f9032fdae24cb836516bdcf84ffb559d61c28249d52470b",

@@ -560,7 +560,7 @@ func WriteTrace(writer *bufio.Writer, trace *types.SimpleTrace) (err error) {
 		return
 	}
 
-	err = writeString(writer, &trace.Type)
+	err = writeString(writer, &trace.TraceType)
 	if err != nil {
 		return
 	}

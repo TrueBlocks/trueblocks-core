@@ -1,9 +1,14 @@
 package types
 
+import "io"
+
 // EXISTING_CODE
 // EXISTING_CODE
 
-type RawMonitor interface{}
+type RawMonitor interface {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
 
 type SimpleMonitor struct {
 	Address     string      `json:"address"`
@@ -11,6 +16,8 @@ type SimpleMonitor struct {
 	FileSize    int64       `json:"fileSize"`
 	LastScanned uint32      `json:"lastScanned"`
 	raw         *RawMonitor `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleMonitor) Raw() *RawMonitor {
@@ -34,13 +41,13 @@ func (s *SimpleMonitor) Model(showHidden bool, format string, extraOptions map[s
 	}
 }
 
-func (s *SimpleMonitor) Write(p []byte) (n int, err error) {
+func (s *SimpleMonitor) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimpleMonitor) Read(p []byte) (n int, err error) {
+func (s *SimpleMonitor) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil

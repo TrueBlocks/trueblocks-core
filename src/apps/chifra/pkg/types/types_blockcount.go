@@ -9,7 +9,11 @@
 package types
 
 // EXISTING_CODE
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+import (
+	"io"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+)
 
 // EXISTING_CODE
 
@@ -22,6 +26,8 @@ type RawBlockCount struct {
 	TransactionsCnt string `json:"transactionsCnt"`
 	UnclesCnt       string `json:"unclesCnt"`
 	UniqsCnt        string `json:"uniqsCnt"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleBlockCount struct {
@@ -33,7 +39,9 @@ type SimpleBlockCount struct {
 	TransactionsCnt uint64         `json:"transactionsCnt"`
 	UnclesCnt       uint64         `json:"unclesCnt,omitempty"`
 	UniqsCnt        uint64         `json:"uniqsCnt,omitempty"`
-	raw             *RawBlockCount
+	raw             *RawBlockCount `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleBlockCount) Raw() *RawBlockCount {
@@ -122,13 +130,13 @@ func (s *SimpleBlockCount) Model(showHidden bool, format string, extraOptions ma
 	}
 }
 
-func (s *SimpleBlockCount) Write(p []byte) (n int, err error) {
+func (s *SimpleBlockCount) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimpleBlockCount) Read(p []byte) (n int, err error) {
+func (s *SimpleBlockCount) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil

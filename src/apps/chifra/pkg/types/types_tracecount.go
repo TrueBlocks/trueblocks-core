@@ -10,6 +10,8 @@ package types
 
 // EXISTING_CODE
 import (
+	"io"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
@@ -21,6 +23,8 @@ type RawTraceCount struct {
 	TracesCnt        string `json:"tracesCnt"`
 	TransactionHash  string `json:"transactionHash"`
 	TransactionIndex string `json:"transactionIndex"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleTraceCount struct {
@@ -29,7 +33,9 @@ type SimpleTraceCount struct {
 	TracesCnt        uint64         `json:"tracesCnt"`
 	TransactionHash  base.Hash      `json:"transactionHash"`
 	TransactionIndex base.Blknum    `json:"transactionIndex"`
-	raw              *RawTraceCount
+	raw              *RawTraceCount `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleTraceCount) Raw() *RawTraceCount {
@@ -68,13 +74,13 @@ func (s *SimpleTraceCount) Model(showHidden bool, format string, extraOptions ma
 	}
 }
 
-func (s *SimpleTraceCount) Write(p []byte) (n int, err error) {
+func (s *SimpleTraceCount) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimpleTraceCount) Read(p []byte) (n int, err error) {
+func (s *SimpleTraceCount) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil

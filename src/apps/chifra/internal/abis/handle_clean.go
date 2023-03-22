@@ -23,12 +23,12 @@ func (opts *AbisOptions) HandleClean() error {
 
 	if len(opts.Addrs) == 0 {
 		// TODO: This code is not actually used
-		// filenameChan := make(chan paths.CacheFileInfo)
+		// filenameChan := make(chan cache.CacheFileInfo)
 		// var nRoutines int = 1
-		// go paths.WalkCacheFolder(opts.Globals.Chain, paths.Cache_Abis, filenameChan)
+		// go cache.WalkCacheFolder(opts.Globals.Chain, cache.Cache_Abis, filenameChan)
 		// for result := range filenameChan {
 		// 	switch result.Type {
-		// 	case paths.Cache_Abis:
+		// 	case cache.Cache_Abis:
 		// 		skip := !strings.HasSuffix(result.Path, ".json")
 		// 		if !skip {
 		// 			if file.FileSize(result.Path) == 0 {
@@ -38,7 +38,7 @@ func (opts *AbisOptions) HandleClean() error {
 		// 				// }
 		// 			}
 		// 		}
-		// 	case paths.None:
+		// 	case cache.None:
 		// 		nRoutines--
 		// 		if nRoutines == 0 {
 		// 			close(filenameChan)

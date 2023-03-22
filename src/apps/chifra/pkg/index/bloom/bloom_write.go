@@ -7,9 +7,9 @@ import (
 	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
@@ -17,7 +17,7 @@ import (
 
 // WriteBloom writes a single bloom filter to file
 func (bl *ChunkBloom) WriteBloom(chain, fileName string) ( /* changed */ bool, error) {
-	bloomFn := paths.ToBloomPath(fileName)
+	bloomFn := cache.ToBloomPath(fileName)
 	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
 
 	// Make a backup copy of the file in case the write fails so we can replace it...

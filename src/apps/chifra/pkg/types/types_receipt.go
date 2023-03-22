@@ -10,6 +10,8 @@ package types
 
 // EXISTING_CODE
 import (
+	"io"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
@@ -23,12 +25,14 @@ type RawReceipt struct {
 	EffectiveGasPrice string   `json:"effectiveGasPrice"`
 	From              string   `json:"from"`
 	GasUsed           string   `json:"gasUsed"`
-	IsError           string   `json:"isError"`
 	Logs              []RawLog `json:"logs"`
+	LogsBloom         string   `json:"logsBloom"`
 	Status            string   `json:"status"`
 	To                string   `json:"to"`
 	TransactionHash   string   `json:"transactionHash"`
 	TransactionIndex  string   `json:"transactionIndex"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleReceipt struct {
@@ -45,7 +49,9 @@ type SimpleReceipt struct {
 	To                base.Address `json:"to,omitempty"`
 	TransactionHash   base.Hash    `json:"transactionHash"`
 	TransactionIndex  base.Blknum  `json:"transactionIndex"`
-	raw               *RawReceipt
+	raw               *RawReceipt  `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleReceipt) Raw() *RawReceipt {
@@ -149,13 +155,13 @@ func (s *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[s
 	}
 }
 
-func (s *SimpleReceipt) Write(p []byte) (n int, err error) {
+func (s *SimpleReceipt) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimpleReceipt) Read(p []byte) (n int, err error) {
+func (s *SimpleReceipt) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil

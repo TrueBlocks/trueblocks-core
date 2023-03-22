@@ -1,11 +1,18 @@
 package types
 
 // EXISTING_CODE
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+import (
+	"io"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+)
 
 // EXISTING_CODE
 
-type RawChunkRecord interface{}
+type RawChunkRecord interface {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
 
 type SimpleChunkRecord struct {
 	Range     string          `json:"range,omitempty"`
@@ -14,6 +21,8 @@ type SimpleChunkRecord struct {
 	IndexHash base.IpfsHash   `json:"indexHash,omitempty"`
 	IndexSize int64           `json:"indexSize,omitempty"`
 	raw       *RawChunkRecord `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleChunkRecord) Raw() *RawChunkRecord {
@@ -37,13 +46,13 @@ func (s *SimpleChunkRecord) Model(showHidden bool, format string, extraOptions m
 	}
 }
 
-func (s *SimpleChunkRecord) Write(p []byte) (n int, err error) {
+func (s *SimpleChunkRecord) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimpleChunkRecord) Read(p []byte) (n int, err error) {
+func (s *SimpleChunkRecord) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil

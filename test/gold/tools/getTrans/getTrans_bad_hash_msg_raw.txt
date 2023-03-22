@@ -5,6 +5,7 @@ TEST[DATE|TIME] Format:  txt
 {
   "data": [
     {
+      "accessList": null,
       "blockHash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
       "blockNumber": "0xf4629",
       "from": "0x30d285941dfb8bbbe4ec72b02c8d166be01322d2",
@@ -12,6 +13,8 @@ TEST[DATE|TIME] Format:  txt
       "gasPrice": "0xba43b7400",
       "hash": "0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521",
       "input": "0x",
+      "maxFeePerGas": "",
+      "maxPriorityFeePerGas": "",
       "nonce": "0x0",
       "r": "0x6cf032bb112fa840de1fbeb245dbce71a896ff2d3cdbf14bec912cd67f601930",
       "s": "0x696a479e0d14232bf153bbad2ab867fbe48d6900e1702dcd1b7882e094e75707",
@@ -22,6 +25,7 @@ TEST[DATE|TIME] Format:  txt
       "value": "0xdbbaa3d0ed1ad7"
     },
     {
+      "accessList": null,
       "blockHash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
       "blockNumber": "0xf4629",
       "from": "0x30d285941dfb8bbbe4ec72b02c8d166be01322d2",
@@ -29,6 +33,8 @@ TEST[DATE|TIME] Format:  txt
       "gasPrice": "0xba43b7400",
       "hash": "0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521",
       "input": "0x",
+      "maxFeePerGas": "",
+      "maxPriorityFeePerGas": "",
       "nonce": "0x0",
       "r": "0x6cf032bb112fa840de1fbeb245dbce71a896ff2d3cdbf14bec912cd67f601930",
       "s": "0x696a479e0d14232bf153bbad2ab867fbe48d6900e1702dcd1b7882e094e75707",

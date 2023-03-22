@@ -15,6 +15,7 @@ receipts?transactions=1428993.*&fmt=json
       "logs": [
         {
           "address": "0x2bad3aa54d79b43cea3e859609d2de84e544ee74",
+          "blockHash": "0x62b58c97d649ee99110b028bc50537d8db0ff2c47412fb884d530696d1c1c272",
           "blockNumber": 1428993,
           "data": "0x0000000000000000000000006dfaa8ab22d36af0377c6565548a8895c661d18d00000000000000000000000000000000000000000000000000071afd498d0000",
           "logIndex": 0,
@@ -43,6 +44,7 @@ receipts?transactions=1428993.*&fmt=json
       "logs": [
         {
           "address": "0xf80ae7bfe8a3ab43e8b2c7aece33f5fbed4927df",
+          "blockHash": "0x62b58c97d649ee99110b028bc50537d8db0ff2c47412fb884d530696d1c1c272",
           "blockNumber": 1428993,
           "data": "0x0000000000000000000000000000000000000000000000001462698eade5e400",
           "logIndex": 1,

@@ -462,7 +462,7 @@ string_q getStorageAt(const string_q& addr, const hash_t& hash, blknum_t num) {
     //
     // Retrieving the value of pos0 is straight forward:
     //
-    // curl -X POST --data '{"jsonrpc":"2.0", "method": "eth_get StorageAt", "params":
+    // curl -X POST --data '{"jsonrpc":"2.0", "method": "eth_getStorageAt", "params":
     //               ["0x295a70b2de5e3953354a6a8344e616ed314d7251", "0x0", "latest"],
     //      "id": 1}' localhost:8545
     //
@@ -490,7 +490,7 @@ string_q getStorageAt(const string_q& addr, const hash_t& hash, blknum_t num) {
     //
     // Now to fetch the storage:
     //
-    //      curl -X POST --data '{"jsonrpc":"2.0", "method": "eth_get StorageAt", "params":
+    //      curl -X POST --data '{"jsonrpc":"2.0", "method": "eth_getStorageAt", "params":
     //                  ["0x295a70b2de5e3953354a6a8344e616ed314d7251",
     //                  "0x6661e9d6d8b923d5bbaab1b96e1dd51ff6ea2a93520fdc9eb75d059238b8c5e9", "latest"],
     //                  "id": 1}' localhost:8545

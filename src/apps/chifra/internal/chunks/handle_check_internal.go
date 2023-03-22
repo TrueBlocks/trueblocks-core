@@ -8,9 +8,9 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
@@ -38,7 +38,7 @@ func (opts *ChunksOptions) checkIndexChunkInternal(testId int, fileName string, 
 		}
 
 	} else {
-		rng := paths.RangeFromFilename(fileName)
+		rng := base.RangeFromFilename(fileName)
 		if !opts.Globals.TestMode {
 			testId = 0
 		}
@@ -62,14 +62,14 @@ func (opts *ChunksOptions) checkIndexChunkInternal(testId int, fileName string, 
 // 	report.VisitedCnt++
 // 	report.CheckedCnt++
 // 	var bl bloom.ChunkBloom
-// 	bPath := paths.ToBloomPath(fileName)
+// 	bPath := cache.ToBloomPath(fileName)
 // 	bl.ReadBloom(bPath)
 // 	versioned, err := bl.ReadBloom Header()
 // 	if err != nil {
 // 		report.MsgStrings = append(report.MsgStrings, fmt.Sprint(err))
 // 	} else if !versioned {
 // 	} else {
-// 		rng := paths.RangeFromFilename(fileName)
+// 		rng := base.RangeFromFilename(fileName)
 // 		if !opts.Globals.TestMode {
 // 			testId = 0
 // 		}

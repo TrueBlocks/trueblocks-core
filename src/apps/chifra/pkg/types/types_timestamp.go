@@ -1,17 +1,26 @@
 package types
 
 // EXISTING_CODE
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+import (
+	"io"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+)
 
 // EXISTING_CODE
 
-type RawTimestamp interface{}
+type RawTimestamp interface {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
 
 type SimpleTimestamp struct {
 	BlockNumber uint64         `json:"blockNumber"`
 	Timestamp   base.Timestamp `json:"timestamp"`
 	Diff        base.Timestamp `json:"diff"`
 	raw         *RawTimestamp  `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleTimestamp) Raw() *RawTimestamp {
@@ -35,13 +44,13 @@ func (s *SimpleTimestamp) Model(showHidden bool, format string, extraOptions map
 	}
 }
 
-func (s *SimpleTimestamp) Write(p []byte) (n int, err error) {
+func (s *SimpleTimestamp) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimpleTimestamp) Read(p []byte) (n int, err error) {
+func (s *SimpleTimestamp) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
