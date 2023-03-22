@@ -2,31 +2,31 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package paths
+package cache
 
 import (
 	"io/fs"
 	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 )
 
 type IndexFileInfo struct {
-	Type  CacheType
+	Type  paths.CacheType
 	Path  string
 	Range base.FileRange
 }
 
-func WalkIndexFolder(chain string, cacheType CacheType, filenameChan chan<- IndexFileInfo) {
+func WalkIndexFolder(chain string, cacheType paths.CacheType, filenameChan chan<- IndexFileInfo) {
 	defer func() {
-		filenameChan <- IndexFileInfo{Type: None}
+		filenameChan <- IndexFileInfo{Type: paths.None}
 	}()
 
 	path := filepath.Join(config.GetPathToIndex(chain), tailFolder(chain, cacheType))
-	if cacheType == Index_Bloom {
-		path = cache.ToBloomPath(path)
+	if cacheType == paths.Index_Bloom {
+		path = ToBloomPath(path)
 	}
 
 	filepath.Walk(path, func(path string, info fs.FileInfo, err error) error {
@@ -45,27 +45,27 @@ func WalkIndexFolder(chain string, cacheType CacheType, filenameChan chan<- Inde
 	})
 }
 
-func tailFolder(chain string, ct CacheType) string {
-	descrs := map[CacheType]string{
-		None:          "unknown",
-		Index_Bloom:   "blooms",
-		Index_Final:   "finalized",
-		Index_Staging: "staging",
-		Index_Ripe:    "ripe",
-		Index_Unripe:  "unripe",
-		Cache_Abis:    "abis",
+func tailFolder(chain string, ct paths.CacheType) string {
+	descrs := map[paths.CacheType]string{
+		paths.None:          "unknown",
+		paths.Index_Bloom:   "blooms",
+		paths.Index_Final:   "finalized",
+		paths.Index_Staging: "staging",
+		paths.Index_Ripe:    "ripe",
+		paths.Index_Unripe:  "unripe",
+		paths.Cache_Abis:    "abis",
 	}
 	return descrs[ct]
 }
 
 type CacheFileInfo struct {
-	Type CacheType
+	Type paths.CacheType
 	Path string
 }
 
-func WalkCacheFolder(chain string, cacheType CacheType, filenameChan chan<- CacheFileInfo) {
+func WalkCacheFolder(chain string, cacheType paths.CacheType, filenameChan chan<- CacheFileInfo) {
 	defer func() {
-		filenameChan <- CacheFileInfo{Type: None}
+		filenameChan <- CacheFileInfo{Type: paths.None}
 	}()
 
 	path := filepath.Join(config.GetPathToCache(chain), tailFolder(chain, cacheType))

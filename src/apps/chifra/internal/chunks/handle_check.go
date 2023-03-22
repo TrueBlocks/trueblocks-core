@@ -12,6 +12,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
@@ -27,10 +28,10 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	opts.Globals.Format = "json"
 
 	maxTestItems := 10
-	filenameChan := make(chan paths.IndexFileInfo)
+	filenameChan := make(chan cache.IndexFileInfo)
 
 	var nRoutines int = 1
-	go paths.WalkIndexFolder(opts.Globals.Chain, paths.Index_Bloom, filenameChan)
+	go cache.WalkIndexFolder(opts.Globals.Chain, paths.Index_Bloom, filenameChan)
 
 	fileNames := []string{}
 	for result := range filenameChan {
