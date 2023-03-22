@@ -1,4 +1,4 @@
-package paths
+package cache
 
 import "strings"
 

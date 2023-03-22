@@ -15,6 +15,7 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -100,8 +101,8 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 				if workerArgs.ctx.Err() != nil {
 					// User hit control + c - clean up both peices for the current chunk
 					chunkPath := config.GetPathToIndex(chain) + "finalized/" + chunk.Range + ".bin"
-					RemoveLocalFile(paths.ToIndexPath(chunkPath), "user canceled", progressChannel)
-					RemoveLocalFile(paths.ToBloomPath(chunkPath), "user canceled", progressChannel)
+					RemoveLocalFile(cache.ToIndexPath(chunkPath), "user canceled", progressChannel)
+					RemoveLocalFile(cache.ToBloomPath(chunkPath), "user canceled", progressChannel)
 					progressChannel <- &progress.Progress{
 						Payload: &chunk,
 						Event:   progress.Error,
@@ -250,7 +251,7 @@ func DownloadChunks(chain string, chunksToDownload []manifest.ChunkRecord, chunk
 func writeBytesToDisc(chain string, chunkType paths.CacheType, res *jobResult) error {
 	fullPath := config.GetPathToIndex(chain) + "finalized/" + res.rng + ".bin"
 	if chunkType == paths.Index_Bloom {
-		fullPath = paths.ToBloomPath(fullPath)
+		fullPath = cache.ToBloomPath(fullPath)
 	}
 	outputFile, err := os.OpenFile(fullPath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 	if err != nil {
@@ -264,7 +265,7 @@ func writeBytesToDisc(chain string, chunkType paths.CacheType, res *jobResult) e
 			outputFile.Close()
 			os.Remove(outputFile.Name())
 			col := colors.Magenta
-			if fullPath == paths.ToIndexPath(fullPath) {
+			if fullPath == cache.ToIndexPath(fullPath) {
 				col = colors.Yellow
 			}
 			logger.Warn("Failed download", col, res.rng, colors.Off, "(will retry)", strings.Repeat(" ", 30))

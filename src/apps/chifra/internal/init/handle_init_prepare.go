@@ -11,12 +11,12 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -31,7 +31,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 	// user has not specified `--all`, then we check the index portion, only if it exists, and then only for the correct header and file size. If a
 	// bloom filter is present on disc, but not in the manifest, then we delete both the bloom filte and the corresponding index portion if it exists.
 	cleanIndex := func(walker *index.IndexWalker, path string, first bool) (bool, error) {
-		if path != paths.ToBloomPath(path) {
+		if path != cache.ToBloomPath(path) {
 			logger.Fatal("should not happen ==> we're spinning through the bloom filters")
 		}
 
@@ -63,8 +63,8 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 			case validate.OKAY:
 				chunk.IndexHash = "" // we don't have to download it
 				chunk.IndexSize = 0
-				if file.FileExists(paths.ToIndexPath(path)) {
-					reportReason("The index file", indexStatus, paths.ToIndexPath(path), opts.Globals.Verbose)
+				if file.FileExists(cache.ToIndexPath(path)) {
+					reportReason("The index file", indexStatus, cache.ToIndexPath(path), opts.Globals.Verbose)
 				}
 			case validate.FILE_ERROR:
 				return false, err // bubble the error up
@@ -75,7 +75,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 			case validate.WRONG_MAGIC:
 				fallthrough
 			case validate.WRONG_HASH:
-				reportReason("The index file", indexStatus, paths.ToIndexPath(path), opts.Globals.Verbose)
+				reportReason("The index file", indexStatus, cache.ToIndexPath(path), opts.Globals.Verbose)
 			default:
 				logger.Fatal("should not happen ==> unknown return from IsValidChunk")
 			}
@@ -92,7 +92,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 				return false, err
 			}
 
-			indexPath := paths.ToIndexPath(path)
+			indexPath := cache.ToIndexPath(path)
 			if file.FileExists(indexPath) {
 				reportReason("The index file", validate.NOT_IN_MANIFEST, indexPath, opts.Globals.Verbose)
 				if err := os.Remove(indexPath); err != nil {

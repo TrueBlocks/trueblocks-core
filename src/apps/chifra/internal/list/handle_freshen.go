@@ -14,13 +14,13 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -162,7 +162,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 
 	if !opts.Globals.TestMode {
 		// TODO: Note we could actually test this if we had the concept of a FAKE_HEAD block
-		stagePath := paths.ToStagingPath(config.GetPathToIndex(opts.Globals.Chain) + "staging")
+		stagePath := cache.ToStagingPath(config.GetPathToIndex(opts.Globals.Chain) + "staging")
 		stageFn, _ := file.LatestFileInFolder(stagePath)
 		rng := base.RangeFromFilename(stageFn)
 		lines := []string{}
@@ -206,7 +206,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 		wg.Done()
 	}()
 
-	bloomFilename := paths.ToBloomPath(fileName)
+	bloomFilename := cache.ToBloomPath(fileName)
 
 	// We open the bloom filter and read its header but we do not read any of the
 	// actual bits in the blooms. The IsMember function reads individual bytes to
@@ -242,7 +242,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 		return
 	}
 
-	indexFilename := paths.ToIndexPath(fileName)
+	indexFilename := cache.ToIndexPath(fileName)
 	if !file.FileExists(indexFilename) {
 		_, err := index.EstablishIndexChunk(updater.Options.Globals.Chain, bl.Range)
 		if err != nil {

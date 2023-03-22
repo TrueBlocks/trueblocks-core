@@ -4,9 +4,9 @@ import (
 	"encoding/binary"
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/ethereum/go-ethereum/common"
 )
@@ -30,12 +30,12 @@ const (
 
 // IsValidChunk validates the bloom file's header and the index if told to do so. Note that in all cases, it resolves both.
 func IsValidChunk(path string, ch ChunkSizes, indexRequired bool) (ErrorType, ErrorType, error) {
-	if path != paths.ToBloomPath(path) {
+	if path != cache.ToBloomPath(path) {
 		logger.Fatal("should not happen ==> only process bloom folder paths in IsValidChunk")
 	}
 
 	var err error
-	indexPath := paths.ToIndexPath(path)
+	indexPath := cache.ToIndexPath(path)
 
 	// Resolve the status of the Bloom file first
 	bloom := FILE_MISSING
@@ -86,7 +86,7 @@ func checkHeader(path string) (ErrorType, error) {
 	}
 	defer ff.Close()
 
-	if path == paths.ToBloomPath(path) {
+	if path == cache.ToBloomPath(path) {
 		var magic uint16
 		err = binary.Read(ff, binary.LittleEndian, &magic)
 		if err != nil {
@@ -107,7 +107,7 @@ func checkHeader(path string) (ErrorType, error) {
 
 		return OKAY, nil
 
-	} else if path == paths.ToIndexPath(path) {
+	} else if path == cache.ToIndexPath(path) {
 		var magic uint32
 		err = binary.Read(ff, binary.LittleEndian, &magic)
 		if err != nil {

@@ -18,10 +18,10 @@ import (
 	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 )
 
@@ -44,12 +44,12 @@ func NewChunk(path string) (chunk Chunk, err error) {
 		return
 	}
 
-	chunk.Bloom, err = bloom.NewChunkBloom(paths.ToBloomPath(path))
+	chunk.Bloom, err = bloom.NewChunkBloom(cache.ToBloomPath(path))
 	if err != nil {
 		return
 	}
 
-	chunk.Data, err = NewChunkData(paths.ToIndexPath(path))
+	chunk.Data, err = NewChunkData(cache.ToIndexPath(path))
 	return
 }
 

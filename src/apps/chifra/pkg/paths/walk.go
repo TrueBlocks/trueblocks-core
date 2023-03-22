@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
@@ -25,7 +26,7 @@ func WalkIndexFolder(chain string, cacheType CacheType, filenameChan chan<- Inde
 
 	path := filepath.Join(config.GetPathToIndex(chain), tailFolder(chain, cacheType))
 	if cacheType == Index_Bloom {
-		path = ToBloomPath(path)
+		path = cache.ToBloomPath(path)
 	}
 
 	filepath.Walk(path, func(path string, info fs.FileInfo, err error) error {

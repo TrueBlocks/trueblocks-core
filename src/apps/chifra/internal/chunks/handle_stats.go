@@ -8,11 +8,11 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -24,7 +24,7 @@ func (opts *ChunksOptions) HandleStats(blockNums []uint64) error {
 	}
 
 	showFinalizedStats := func(walker *index.IndexWalker, path string, first bool) (bool, error) {
-		if path != paths.ToBloomPath(path) {
+		if path != cache.ToBloomPath(path) {
 			logger.Fatal("should not happen ==> we're spinning through the bloom filters")
 		}
 
@@ -61,8 +61,8 @@ func NewChunkStats(path string) types.ReportChunks {
 	ret.NAddrs = chunk.Data.Header.AddressCount
 	ret.NApps = chunk.Data.Header.AppearanceCount
 	ret.NBlooms = chunk.Bloom.Count
-	ret.BloomSz = file.FileSize(paths.ToBloomPath(path))
-	ret.ChunkSz = file.FileSize(paths.ToIndexPath(path))
+	ret.BloomSz = file.FileSize(cache.ToBloomPath(path))
+	ret.ChunkSz = file.FileSize(cache.ToIndexPath(path))
 
 	return finishStats(&ret)
 }

@@ -2,10 +2,10 @@ package pinning
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -47,8 +47,8 @@ func PinTimestamps(chain string, isRemote bool) error {
 }
 
 func PinChunk(chain, path string, isRemote bool) (PinResult, error) {
-	bloomFile := paths.ToBloomPath(path)
-	indexFile := paths.ToIndexPath(path)
+	bloomFile := cache.ToBloomPath(path)
+	indexFile := cache.ToIndexPath(path)
 
 	rng := base.RangeFromFilename(path)
 	result := PinResult{
