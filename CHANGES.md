@@ -1,3 +1,4 @@
+Made sure RPC and Raw data agrees
 Remove transactionLogIndex from Log
 
 Added --sleep and --per_page to chifra slurp
