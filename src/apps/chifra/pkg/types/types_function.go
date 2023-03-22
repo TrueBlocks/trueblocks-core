@@ -13,6 +13,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"strings"
 
 	"github.com/ethereum/go-ethereum/accounts/abi"
@@ -128,13 +129,13 @@ func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[
 	}
 }
 
-func (s *SimpleFunction) Write(p []byte) (n int, err error) {
+func (s *SimpleFunction) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimpleFunction) Read(p []byte) (n int, err error) {
+func (s *SimpleFunction) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
@@ -337,16 +338,6 @@ func (s *SimpleFunction) GetAbiEvent() (abiEvent *abi.Event, err error) {
 		return
 	}
 	return s.abiEvent, nil
-}
-
-func joinParametersNames(params []SimpleParameter) (result string) {
-	for index, param := range params {
-		if index > 0 {
-			result += ","
-		}
-		result += param.DisplayName(index)
-	}
-	return
 }
 
 // TODO: I feel like we might be able to remove stateMutability since we don't really use it.

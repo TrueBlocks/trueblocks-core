@@ -2,6 +2,8 @@ package types
 
 // EXISTING_CODE
 import (
+	"io"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
@@ -45,13 +47,13 @@ func (s *SimpleIndex) Model(showHidden bool, format string, extraOptions map[str
 	}
 }
 
-func (s *SimpleIndex) Write(p []byte) (n int, err error) {
+func (s *SimpleIndex) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimpleIndex) Read(p []byte) (n int, err error) {
+func (s *SimpleIndex) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil

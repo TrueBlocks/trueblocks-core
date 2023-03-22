@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"io"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -199,13 +200,13 @@ func (s *SimpleEtherscan) Model(showHidden bool, format string, extraOptions map
 	}
 }
 
-func (s *SimpleEtherscan) Write(p []byte) (n int, err error) {
+func (s *SimpleEtherscan) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimpleEtherscan) Read(p []byte) (n int, err error) {
+func (s *SimpleEtherscan) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil

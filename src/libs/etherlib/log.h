@@ -37,7 +37,6 @@ class CLog : public CBaseNode {
     string_q compressedLog;
     hash_t transactionHash;
     blknum_t transactionIndex;
-    blknum_t transactionLogIndex;
     timestamp_t timestamp;
     string_q type;
     bool unused;
@@ -117,7 +116,6 @@ inline void CLog::initialize(void) {
     compressedLog = "";
     transactionHash = "";
     transactionIndex = 0;
-    transactionLogIndex = 0;
     timestamp = 0;
     type = "";
     unused = false;
@@ -142,7 +140,6 @@ inline void CLog::duplicate(const CLog& lo) {
     compressedLog = lo.compressedLog;
     transactionHash = lo.transactionHash;
     transactionIndex = lo.transactionIndex;
-    transactionLogIndex = lo.transactionLogIndex;
     timestamp = lo.timestamp;
     type = lo.type;
     unused = lo.unused;

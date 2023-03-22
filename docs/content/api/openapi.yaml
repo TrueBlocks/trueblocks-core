@@ -2511,30 +2511,20 @@ components:
       description: "receipt data as returned from the RPC (with slight enhancements)"
       type: object
       properties:
-        blockNumber:
-          type: number
-          format: blknum
-        transactionIndex:
-          type: number
-          format: blknum
-        transactionHash:
-          type: string
-          format: hash
         blockHash:
           type: string
           format: hash
-        status:
+        blockNumber:
           type: number
-          format: uint32
-          description: "`1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise"
-        gasUsed:
-          type: string
-          format: gas
-          description: "the amount of gas actually used by the transaction"
+          format: blknum
         contractAddress:
           type: string
           format: address
           description: "the address of the newly created contract, if any"
+        gasUsed:
+          type: string
+          format: gas
+          description: "the amount of gas actually used by the transaction"
         isError:
           type: boolean
         logs:
@@ -2542,6 +2532,16 @@ components:
           items:
             $ref: "#/components/schemas/log"
           description: "a possibly empty array of logs"
+        status:
+          type: number
+          format: uint32
+          description: "`1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise"
+        transactionHash:
+          type: string
+          format: hash
+        transactionIndex:
+          type: number
+          format: blknum
     log:
       description: "log data as returned from the RPC (with slight enhancements)"
       type: object

@@ -2,6 +2,8 @@ package types
 
 // EXISTING_CODE
 import (
+	"io"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
@@ -46,13 +48,13 @@ func (s *SimpleBloom) Model(showHidden bool, format string, extraOptions map[str
 	}
 }
 
-func (s *SimpleBloom) Write(p []byte) (n int, err error) {
+func (s *SimpleBloom) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimpleBloom) Read(p []byte) (n int, err error) {
+func (s *SimpleBloom) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil

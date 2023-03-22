@@ -9,7 +9,11 @@
 package types
 
 // EXISTING_CODE
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+import (
+	"io"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+)
 
 // EXISTING_CODE
 
@@ -62,13 +66,13 @@ func (s *SimpleAppearanceCount) Model(showHidden bool, format string, extraOptio
 	}
 }
 
-func (s *SimpleAppearanceCount) Write(p []byte) (n int, err error) {
+func (s *SimpleAppearanceCount) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimpleAppearanceCount) Read(p []byte) (n int, err error) {
+func (s *SimpleAppearanceCount) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil

@@ -9,7 +9,11 @@
 package types
 
 // EXISTING_CODE
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+import (
+	"io"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+)
 
 // EXISTING_CODE
 
@@ -110,13 +114,13 @@ func (s *SimpleTraceAction) Model(showHidden bool, format string, extraOptions m
 	}
 }
 
-func (s *SimpleTraceAction) Write(p []byte) (n int, err error) {
+func (s *SimpleTraceAction) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimpleTraceAction) Read(p []byte) (n int, err error) {
+func (s *SimpleTraceAction) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil

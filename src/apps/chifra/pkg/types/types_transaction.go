@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"io"
 	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -271,13 +272,13 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 	}
 }
 
-func (s *SimpleTransaction) Write(p []byte) (n int, err error) {
+func (s *SimpleTransaction) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimpleTransaction) Read(p []byte) (n int, err error) {
+func (s *SimpleTransaction) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil

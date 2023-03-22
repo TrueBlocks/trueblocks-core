@@ -102,6 +102,9 @@ string_q CReceipt::getValueByName(const string_q& fieldName) const {
                 }
                 return retS;
             }
+            if (fieldName % "logsBloom") {
+                return logsBloom;
+            }
             break;
         case 's':
             if (fieldName % "status") {
@@ -187,6 +190,10 @@ bool CReceipt::setValueByName(const string_q& fieldNameIn, const string_q& field
                 }
                 return true;
             }
+            if (fieldName % "logsBloom") {
+                logsBloom = fieldValue;
+                return true;
+            }
             break;
         case 's':
             if (fieldName % "status") {
@@ -227,6 +234,7 @@ bool CReceipt::Serialize(CArchive& archive) {
     archive >> gasUsed;
     archive >> effectiveGasPrice;
     archive >> logs;
+    // archive >> logsBloom;
     archive >> status;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -246,6 +254,7 @@ bool CReceipt::SerializeC(CArchive& archive) const {
     archive << gasUsed;
     archive << effectiveGasPrice;
     archive << logs;
+    // archive << logsBloom;
     archive << status;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -303,11 +312,13 @@ void CReceipt::registerClass(void) {
     ADD_FIELD(CReceipt, "contractAddress", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReceipt, "cumulativeGasUsed", T_WEI | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CReceipt, "cumulativeGasUsed");
-    ADD_FIELD(CReceipt, "gasUsed", T_GAS, ++fieldNum);
-    ADD_FIELD(CReceipt, "effectiveGasPrice", T_GAS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReceipt, "from", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CReceipt, "from");
+    ADD_FIELD(CReceipt, "gasUsed", T_GAS, ++fieldNum);
+    ADD_FIELD(CReceipt, "effectiveGasPrice", T_GAS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReceipt, "logs", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CReceipt, "logsBloom", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CReceipt, "logsBloom");
     ADD_FIELD(CReceipt, "status", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CReceipt, "to", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CReceipt, "to");

@@ -1,5 +1,7 @@
 package types
 
+import "io"
+
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -39,13 +41,13 @@ func (s *SimpleIndexAddress) Model(showHidden bool, format string, extraOptions 
 	}
 }
 
-func (s *SimpleIndexAddress) Write(p []byte) (n int, err error) {
+func (s *SimpleIndexAddress) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimpleIndexAddress) Read(p []byte) (n int, err error) {
+func (s *SimpleIndexAddress) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil

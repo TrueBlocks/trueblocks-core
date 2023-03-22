@@ -1,5 +1,7 @@
 package types
 
+import "io"
+
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -42,13 +44,13 @@ func (s *SimpleWhenCount) Model(showHidden bool, format string, extraOptions map
 	}
 }
 
-func (s *SimpleWhenCount) Write(p []byte) (n int, err error) {
+func (s *SimpleWhenCount) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimpleWhenCount) Read(p []byte) (n int, err error) {
+func (s *SimpleWhenCount) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
