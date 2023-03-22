@@ -27,6 +27,7 @@ type RawEtherscan struct {
 	ContractAddress   string `json:"contractAddress"`
 	CumulativeGasUsed string `json:"cumulativeGasUsed"`
 	From              string `json:"from"`
+	FunctionName      string `json:"functionName"`
 	Gas               string `json:"gas"`
 	GasPrice          string `json:"gasPrice"`
 	GasUsed           string `json:"gasUsed"`
@@ -34,6 +35,8 @@ type RawEtherscan struct {
 	Hash              string `json:"hash"`
 	Input             string `json:"input"`
 	IsError           string `json:"isError"`
+	MethodId          string `json:"methodId"`
+	Nonce             string `json:"nonce"`
 	Timestamp         string `json:"timestamp"`
 	To                string `json:"to"`
 	TransactionIndex  string `json:"transactionIndex"`
