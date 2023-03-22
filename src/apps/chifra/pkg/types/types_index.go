@@ -5,7 +5,6 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 )
 
 // EXISTING_CODE
@@ -16,13 +15,13 @@ type RawIndex interface {
 }
 
 type SimpleIndex struct {
-	Range           paths.FileRange `json:"range"`
-	Magic           uint32          `json:"magic"`
-	Hash            base.Hash       `json:"hash"`
-	AddressCount    uint32          `json:"nAddresses"`
-	AppearanceCount uint32          `json:"nAppearances"`
-	Size            int64           `json:"fileSize"`
-	raw             *RawIndex       `json:"-"`
+	Range           base.FileRange `json:"range"`
+	Magic           uint32         `json:"magic"`
+	Hash            base.Hash      `json:"hash"`
+	AddressCount    uint32         `json:"nAddresses"`
+	AppearanceCount uint32         `json:"nAppearances"`
+	Size            int64          `json:"fileSize"`
+	raw             *RawIndex      `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

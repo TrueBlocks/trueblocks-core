@@ -6,10 +6,11 @@ import (
 	"os"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -31,7 +32,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 	index.CleanTemporaryFolders(indexPath, true)
 
 	truncateIndex := func(walker *index.IndexWalker, path string, first bool) (bool, error) {
-		if path != paths.ToBloomPath(path) {
+		if path != cache.ToBloomPath(path) {
 			logger.Fatal("should not happen ==> we're spinning through the bloom filters")
 		}
 
@@ -40,14 +41,14 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 			return true, nil
 		}
 
-		rng, err := paths.RangeFromFilenameE(path)
+		rng, err := base.RangeFromFilenameE(path)
 		if err != nil {
 			return false, err
 		}
-		testRange := paths.FileRange{First: opts.Truncate, Last: utils.NOPOS}
+		testRange := base.FileRange{First: opts.Truncate, Last: utils.NOPOS}
 		if rng.Intersects(testRange) {
-			os.Remove(paths.ToIndexPath(path))
-			os.Remove(paths.ToBloomPath(path))
+			os.Remove(cache.ToIndexPath(path))
+			os.Remove(cache.ToBloomPath(path))
 		}
 
 		return true, nil

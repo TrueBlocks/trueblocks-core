@@ -12,12 +12,12 @@ import (
 	"sync"
 	"time"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
@@ -66,7 +66,7 @@ func (opts *InitOptions) HandleInit() error {
 	indexDoneChannel := make(chan bool)
 	defer close(indexDoneChannel)
 
-	getChunks := func(chunkType paths.CacheType) {
+	getChunks := func(chunkType cache.CacheType) {
 		failedChunks, cancelled := opts.downloadAndReportProgress(chunksToDownload, chunkType, nCorrections)
 		if cancelled {
 			// The user hit the control+c, we don't want to continue...
@@ -85,7 +85,7 @@ func (opts *InitOptions) HandleInit() error {
 
 	// Set up a go routine to download the bloom filters...
 	go func() {
-		getChunks(paths.Index_Bloom)
+		getChunks(cache.Index_Bloom)
 		bloomsDoneChannel <- true
 	}()
 
@@ -93,7 +93,7 @@ func (opts *InitOptions) HandleInit() error {
 	// if opts.All {
 	// Set up another go routine to download the index chunks if the user told us to...
 	go func() {
-		getChunks(paths.Index_Final)
+		getChunks(cache.Index_Final)
 		indexDoneChannel <- true
 	}()
 
@@ -115,7 +115,7 @@ var nStarted12 int
 var nUpdated12 int
 
 // downloadAndReportProgress Downloads the chunks and reports progress to the progressChannel
-func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord, chunkType paths.CacheType, nTotal int) ([]manifest.ChunkRecord, bool) {
+func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord, chunkType cache.CacheType, nTotal int) ([]manifest.ChunkRecord, bool) {
 	failed := []manifest.ChunkRecord{}
 	cancelled := false
 

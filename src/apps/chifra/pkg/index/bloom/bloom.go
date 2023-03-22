@@ -13,9 +13,9 @@ import (
 	"unsafe"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
 
@@ -47,7 +47,7 @@ type BloomHeader struct {
 type ChunkBloom struct {
 	File       *os.File
 	SizeOnDisc int64
-	Range      paths.FileRange
+	Range      base.FileRange
 	HeaderSize int64
 	Header     BloomHeader
 	Count      uint32 // Do not change the size of this field, it's stored on disc
@@ -67,13 +67,13 @@ func (bl *ChunkBloom) String() string {
 // enough space for Count blooms but has not been read from disc. The file remains open for reading (if
 // there is no error) and is positioned at the start of the file.
 func NewChunkBloom(path string) (bl ChunkBloom, err error) {
-	path = paths.ToBloomPath(path)
+	path = cache.ToBloomPath(path)
 	if !file.FileExists(path) {
 		return bl, errors.New("required bloom file (" + path + ") missing")
 	}
 
 	bl.SizeOnDisc = file.FileSize(path)
-	bl.Range, err = paths.RangeFromFilenameE(path)
+	bl.Range, err = base.RangeFromFilenameE(path)
 	if err != nil {
 		return
 	}
@@ -107,7 +107,7 @@ func (bl *ChunkBloom) Close() {
 
 // ReadBloom reads the entire contents of the bloom filter
 func (bl *ChunkBloom) ReadBloom(fileName string) (err error) {
-	bl.Range, err = paths.RangeFromFilenameE(fileName)
+	bl.Range, err = base.RangeFromFilenameE(fileName)
 	if err != nil {
 		return err
 	}

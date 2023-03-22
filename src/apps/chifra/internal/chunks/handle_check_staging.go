@@ -7,9 +7,10 @@ package chunksPkg
 import (
 	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -17,7 +18,7 @@ import (
 // checks that the first block is one plus the last block in the finalized index and that the file contains
 // sequential blocks if allow_missing is not on.
 func (opts *ChunksOptions) CheckStaging(lastBlock uint64, allow_missing bool, report *types.ReportCheck) error {
-	stagePath := paths.ToStagingPath(config.GetPathToIndex(opts.Globals.Chain) + "staging")
+	stagePath := cache.ToStagingPath(config.GetPathToIndex(opts.Globals.Chain) + "staging")
 	stageFn, _ := file.LatestFileInFolder(stagePath)
 	if !file.FileExists(stageFn) {
 		return nil
@@ -26,7 +27,7 @@ func (opts *ChunksOptions) CheckStaging(lastBlock uint64, allow_missing bool, re
 	report.CheckedCnt++
 	// report.PassedCnt++
 	report.FailedCnt++
-	rng := paths.RangeFromFilename(stageFn)
+	rng := base.RangeFromFilename(stageFn)
 	r := rng.First < rng.Last
 	report.Result = rng.String() + fmt.Sprintf(" okay: %t", r)
 	return nil

@@ -8,13 +8,13 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -39,8 +39,8 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 
 		// we need to move the file to the end of the scraped range so we show progress
 		stageFn, _ := file.LatestFileInFolder(stageFolder) // it may not exist...
-		stageRange := paths.RangeFromFilename(stageFn)
-		newRange := paths.FileRange{First: stageRange.First, Last: blazeOpts.StartBlock + opts.BlockCnt - 1}
+		stageRange := base.RangeFromFilename(stageFn)
+		newRange := base.FileRange{First: stageRange.First, Last: blazeOpts.StartBlock + opts.BlockCnt - 1}
 		newFilename := filepath.Join(stageFolder, newRange.String()+".txt")
 		os.Rename(stageFn, newFilename)
 		os.Remove(stageFn) // seems redundant, but may not be on some operating systems
@@ -63,9 +63,9 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 	nAppsThen := int(file.FileSize(stageFn) / asciiAppearanceSize)
 
 	// ripeRange := rangeFromFileList(ripeFileList)
-	stageRange := paths.RangeFromFilename(stageFn)
+	stageRange := base.RangeFromFilename(stageFn)
 
-	curRange := paths.FileRange{First: blazeOpts.StartBlock, Last: blazeOpts.StartBlock + opts.BlockCnt - 1}
+	curRange := base.FileRange{First: blazeOpts.StartBlock, Last: blazeOpts.StartBlock + opts.BlockCnt - 1}
 	if file.FileExists(stageFn) {
 		curRange = stageRange
 	}
@@ -95,7 +95,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		os.Remove(ripePath) // if we fail halfway through, this will get noticed next time around and cleaned up
 		curCount := uint64(len(appearances))
 
-		ripeRange := paths.RangeFromFilename(ripePath)
+		ripeRange := base.RangeFromFilename(ripePath)
 		curRange.Last = ripeRange.Last
 
 		isSnap := (curRange.Last >= opts.Settings.First_snap && (curRange.Last%opts.Settings.Snap_to_grid) == 0)
@@ -142,7 +142,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 			return true, errors.New("Cannot find last block number at lineLast in consolidate: " + lineLast)
 		}
 		m, _ := rpcClient.GetMetaData(blazeOpts.Chain, opts.Globals.TestMode)
-		rng := paths.FileRange{First: m.Finalized + 1, Last: Last}
+		rng := base.FileRange{First: m.Finalized + 1, Last: Last}
 		f := fmt.Sprintf("%s.txt", rng)
 		fileName := filepath.Join(config.GetPathToIndex(blazeOpts.Chain), "staging", f)
 		err = file.LinesToAsciiFile(fileName, appearances)
@@ -180,10 +180,10 @@ func (opts *ScrapeOptions) Report(nAppsThen, nAppsNow int) {
 }
 
 func isListSequential(chain string, ripeFileList []os.DirEntry, allowMissing bool) error {
-	prev := paths.NotARange
+	prev := base.NotARange
 	for _, file := range ripeFileList {
-		fileRange := paths.RangeFromFilename(file.Name())
-		if prev != paths.NotARange && prev != fileRange {
+		fileRange := base.RangeFromFilename(file.Name())
+		if prev != base.NotARange && prev != fileRange {
 			if !prev.Preceeds(fileRange, !allowMissing) {
 				msg := fmt.Sprintf("Ripe files are not sequential (%s ==> %s)", prev, fileRange)
 				return errors.New(msg)

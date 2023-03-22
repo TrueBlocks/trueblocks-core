@@ -10,13 +10,13 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/ethereum/go-ethereum/common"
@@ -26,7 +26,7 @@ import (
 type AddressAppearanceMap map[string][]AppearanceRecord
 
 type WriteChunkReport struct {
-	Range        paths.FileRange
+	Range        base.FileRange
 	nAddresses   int
 	nAppearances int
 	Snapped      bool
@@ -91,7 +91,7 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 	// At this point, the two tables and the bloom filter are fully populated. We're ready to write to disc...
 
 	// First, we backup the existing chunk if there is one...
-	indexFn := paths.ToIndexPath(fileName)
+	indexFn := cache.ToIndexPath(fileName)
 	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
 	if backupFn, err := file.MakeBackup(tmpPath, indexFn); err == nil {
 		defer func() {
@@ -124,7 +124,7 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 				return nil, err
 			}
 
-			if _, err = bl.WriteBloom(chain, paths.ToBloomPath(indexFn)); err != nil {
+			if _, err = bl.WriteBloom(chain, cache.ToBloomPath(indexFn)); err != nil {
 				return nil, err
 			}
 
@@ -140,7 +140,7 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 			// fails we don't want to have to re-do this chunk, so remove this here.
 			os.Remove(backupFn)
 
-			rng := paths.RangeFromFilename(indexFn)
+			rng := base.RangeFromFilename(indexFn)
 			report := WriteChunkReport{ // For use in reporting...
 				Range:        rng,
 				nAddresses:   len(addressTable),

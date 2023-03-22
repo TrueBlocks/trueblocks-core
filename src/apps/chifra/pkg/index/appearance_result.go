@@ -4,13 +4,12 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 )
 
 // AppearanceResult carries the appearances found in a single ChunkData for the given address.
 type AppearanceResult struct {
 	Address    base.Address
-	Range      paths.FileRange
+	Range      base.FileRange
 	AppRecords *[]AppearanceRecord
 	Err        error
 }
