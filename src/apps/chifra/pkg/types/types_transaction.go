@@ -22,48 +22,56 @@ import (
 // EXISTING_CODE
 
 type RawTransaction struct {
-	BlockHash        string `json:"blockHash"`
-	BlockNumber      string `json:"blockNumber"`
-	ChainId          string `json:"chainId,omitempty"`
-	From             string `json:"from"`
-	Gas              string `json:"gas"`
-	GasPrice         string `json:"gasPrice"`
-	Hash             string `json:"hash"`
-	Input            string `json:"input"`
-	Nonce            string `json:"nonce"`
-	R                string `json:"r"`
-	S                string `json:"s"`
-	To               string `json:"to"`
-	TransactionIndex string `json:"transactionIndex"`
-	Type             string `json:"type"`
-	V                string `json:"v"`
-	Value            string `json:"value"`
+	AccessList           []string `json:"accessList"`           // array of addresses
+	BlockHash            string   `json:"blockHash"`            // hash
+	BlockNumber          string   `json:"blockNumber"`          // base.Blknum
+	ChainId              string   `json:"chainId,omitempty"`    // string
+	From                 string   `json:"from"`                 // address
+	Gas                  string   `json:"gas"`                  // gas
+	GasPrice             string   `json:"gasPrice"`             // gas
+	Hash                 string   `json:"hash"`                 // hash
+	Input                string   `json:"input"`                // byte data
+	MaxFeePerGas         string   `json:"maxFeePerGas"`         // gas
+	MaxPriorityFeePerGas string   `json:"maxPriorityFeePerGas"` // gas
+	Nonce                string   `json:"nonce"`                // index
+	R                    string   `json:"r"`                    // hash
+	S                    string   `json:"s"`                    // hash
+	To                   string   `json:"to"`                   // address
+	TransactionIndex     string   `json:"transactionIndex"`     // index
+	Type                 string   `json:"type"`                 // string
+	V                    string   `json:"v"`                    // hash
+	Value                string   `json:"value"`                // wei
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
 type SimpleTransaction struct {
-	Hash                 base.Hash       `json:"hash"`
+	ArticulatedTx        *SimpleFunction `json:"articulatedTx,omitempty"`
 	BlockHash            base.Hash       `json:"blockHash"`
 	BlockNumber          base.Blknum     `json:"blockNumber"`
-	TransactionIndex     uint64          `json:"transactionIndex"`
-	Nonce                uint64          `json:"nonce,omitempty"`
-	Timestamp            base.Timestamp  `json:"timestamp"`
+	CompressedTx         string          `json:"compressedTx"`
+	Date                 string          `json:"date"`
+	Encoding             string          `json:"encoding"`
+	Ether                string          `json:"ether"`
+	EtherGasPrice        string          `json:"etherGasPrice"`
 	From                 base.Address    `json:"from"`
-	To                   base.Address    `json:"to"`
-	Value                base.Wei        `json:"value"`
 	Gas                  base.Gas        `json:"gas"`
 	GasPrice             base.Gas        `json:"gasPrice"`
 	GasUsed              base.Gas        `json:"gasUsed"`
 	GasCost              base.Gas        `json:"gasCost"`
-	MaxFeePerGas         base.Gas        `json:"maxFeePerGas,omitempty"`
-	MaxPriorityFeePerGas base.Gas        `json:"maxPriorityFeePerGas,omitempty"`
+	HasToken             bool            `json:"hasToken,omitempty"`
+	Hash                 base.Hash       `json:"hash"`
 	Input                string          `json:"input"`
 	IsError              bool            `json:"isError,omitempty"`
-	HasToken             bool            `json:"hasToken,omitempty"`
+	MaxFeePerGas         base.Gas        `json:"maxFeePerGas,omitempty"`
+	MaxPriorityFeePerGas base.Gas        `json:"maxPriorityFeePerGas,omitempty"`
+	Nonce                uint64          `json:"nonce,omitempty"`
 	Receipt              *SimpleReceipt  `json:"receipt"`
+	TransactionIndex     base.Blknum     `json:"transactionIndex"`
+	Timestamp            base.Timestamp  `json:"timestamp"`
+	To                   base.Address    `json:"to"`
+	Value                base.Wei        `json:"value"`
 	Traces               []SimpleTrace   `json:"traces"`
-	ArticulatedTx        *SimpleFunction `json:"articulatedTx,omitempty"`
 	Message              string          `json:"-"`
 	raw                  *RawTransaction `json:"-"`
 	// EXISTING_CODE

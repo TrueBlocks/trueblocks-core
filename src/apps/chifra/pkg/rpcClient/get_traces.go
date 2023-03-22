@@ -43,7 +43,7 @@ func GetTracesByBlockNumber(chain string, bn uint64) ([]types.SimpleTrace, error
 				TransactionIndex: rawTrace.TransactionIndex,
 				TraceAddress:     rawTrace.TraceAddress,
 				Subtraces:        rawTrace.Subtraces,
-				Type:             rawTrace.Type,
+				TraceType:        rawTrace.TraceType,
 				// raw:              &rawTrace,
 				// Action:           rawTrace.Action,
 				// Result:           rawTrace.Result,
@@ -141,7 +141,7 @@ func GetTracesByFilter(chain string, filter string) ([]types.SimpleTrace, error)
 				TransactionIndex: rawTrace.TransactionIndex,
 				TraceAddress:     rawTrace.TraceAddress,
 				Subtraces:        rawTrace.Subtraces,
-				Type:             rawTrace.Type,
+				TraceType:        rawTrace.TraceType,
 				Action:           &action,
 				Result:           result,
 			}
@@ -211,7 +211,7 @@ func GetTracesByTransactionHash(chain string, txHash string, transaction *types.
 				TransactionIndex: rawTrace.TransactionIndex,
 				TraceAddress:     rawTrace.TraceAddress,
 				Subtraces:        rawTrace.Subtraces,
-				Type:             rawTrace.Type,
+				TraceType:        rawTrace.TraceType,
 				Action:           &action,
 				Result:           result,
 			}
