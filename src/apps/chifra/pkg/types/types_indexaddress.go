@@ -3,7 +3,10 @@ package types
 // EXISTING_CODE
 // EXISTING_CODE
 
-type RawIndexAddress interface{}
+type RawIndexAddress interface {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
 
 type SimpleIndexAddress struct {
 	Address string           `json:"address"`
@@ -11,6 +14,8 @@ type SimpleIndexAddress struct {
 	Offset  uint32           `json:"offset"`
 	Count   uint32           `json:"count"`
 	raw     *RawIndexAddress `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleIndexAddress) Raw() *RawIndexAddress {

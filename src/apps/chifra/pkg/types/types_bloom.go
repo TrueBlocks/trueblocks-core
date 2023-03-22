@@ -7,7 +7,10 @@ import (
 
 // EXISTING_CODE
 
-type RawBloom interface{}
+type RawBloom interface {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
 
 type SimpleBloom struct {
 	Range     base.FileRange `json:"range"`
@@ -18,6 +21,8 @@ type SimpleBloom struct {
 	Size      int64          `json:"size"`
 	Width     uint64         `json:"byteWidth"`
 	raw       *RawBloom      `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleBloom) Raw() *RawBloom {

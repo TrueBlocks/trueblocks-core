@@ -7,7 +7,10 @@ import (
 
 // EXISTING_CODE
 
-type RawIndex interface{}
+type RawIndex interface {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
 
 type SimpleIndex struct {
 	Range           base.FileRange `json:"range"`
@@ -17,6 +20,8 @@ type SimpleIndex struct {
 	AppearanceCount uint32         `json:"nAppearances"`
 	Size            int64          `json:"fileSize"`
 	raw             *RawIndex      `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleIndex) Raw() *RawIndex {

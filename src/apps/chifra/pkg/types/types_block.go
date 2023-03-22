@@ -42,6 +42,8 @@ type RawBlock struct {
 	TransactionsRoot string   `json:"transactionsRoot"`
 	Uncles           []string `json:"uncles"`
 	// SealFields       []string      `json:"sealFields"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleBlock[Tx BlockTransaction] struct {
@@ -58,6 +60,8 @@ type SimpleBlock[Tx BlockTransaction] struct {
 	Transactions  []Tx           `json:"transactions"`
 	Uncles        []base.Hash    `json:"uncles"`
 	raw           *RawBlock      `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleBlock[Tx]) Raw() *RawBlock {

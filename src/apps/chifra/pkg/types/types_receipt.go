@@ -28,6 +28,8 @@ type RawReceipt struct {
 	To                string   `json:"to"`
 	TransactionHash   string   `json:"transactionHash"`
 	TransactionIndex  string   `json:"transactionIndex"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleReceipt struct {
@@ -45,6 +47,8 @@ type SimpleReceipt struct {
 	TransactionHash   base.Hash    `json:"transactionHash"`
 	TransactionIndex  base.Blknum  `json:"transactionIndex"`
 	raw               *RawReceipt  `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleReceipt) Raw() *RawReceipt {

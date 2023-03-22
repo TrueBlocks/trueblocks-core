@@ -3,12 +3,17 @@ package types
 // EXISTING_CODE
 // EXISTING_CODE
 
-type RawIndexAppearance interface{}
+type RawIndexAppearance interface {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
 
 type SimpleIndexAppearance struct {
 	BlockNumber      uint32              `json:"blockNumber"`
 	TransactionIndex uint32              `json:"transactionIndex"`
 	raw              *RawIndexAppearance `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleIndexAppearance) Raw() *RawIndexAppearance {

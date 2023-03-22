@@ -11,6 +11,8 @@ type RawAppearance struct {
 	Address          string `json:"address"`
 	BlockNumber      uint32 `json:"blockNumber"`
 	TransactionIndex uint32 `json:"transactionIndex"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleAppearance struct {
@@ -21,6 +23,8 @@ type SimpleAppearance struct {
 	Timestamp        base.Timestamp `json:"timestamp"`
 	Date             string         `json:"date"`
 	raw              *RawAppearance `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleAppearance) Raw() *RawAppearance {

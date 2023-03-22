@@ -23,6 +23,8 @@ type RawTraceFilter struct {
 	FromBlock   string `json:"fromBlock"`
 	ToAddress   string `json:"toAddress"`
 	ToBlock     string `json:"toBlock"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleTraceFilter struct {
@@ -33,6 +35,8 @@ type SimpleTraceFilter struct {
 	ToAddress   []string        `json:"toAddress,omitempty"`
 	ToBlock     string          `json:"toBlock,omitempty"`
 	raw         *RawTraceFilter `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleTraceFilter) Raw() *RawTraceFilter {

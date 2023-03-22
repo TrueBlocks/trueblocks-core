@@ -3,7 +3,10 @@ package types
 // EXISTING_CODE
 // EXISTING_CODE
 
-type RawIndexAddressBelongs interface{}
+type RawIndexAddressBelongs interface {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
 
 type SimpleIndexAddressBelongs struct {
 	Address string                  `json:"address"`
@@ -11,6 +14,8 @@ type SimpleIndexAddressBelongs struct {
 	Count   uint32                  `json:"count"`
 	Apps    []SimpleIndexAppearance `json:"apps"`
 	raw     *RawIndexAddressBelongs `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleIndexAddressBelongs) Raw() *RawIndexAddressBelongs {

@@ -5,7 +5,10 @@ import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 
 // EXISTING_CODE
 
-type RawManifest interface{}
+type RawManifest interface {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
 
 type SimpleManifest struct {
 	Version string              `json:"version"`
@@ -13,6 +16,8 @@ type SimpleManifest struct {
 	Schemas base.IpfsHash       `json:"schemas"`
 	Chunks  []SimpleChunkRecord `json:"chunks"`
 	raw     *RawManifest        `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleManifest) Raw() *RawManifest {

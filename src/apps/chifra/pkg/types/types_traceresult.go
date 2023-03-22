@@ -21,6 +21,8 @@ type RawTraceResult struct {
 	Code    string `json:"code"`
 	GasUsed string `json:"gasUsed"`
 	Output  string `json:"output"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleTraceResult struct {
@@ -29,6 +31,8 @@ type SimpleTraceResult struct {
 	GasUsed base.Gas        `json:"gasUsed"`
 	Output  string          `json:"output"`
 	raw     *RawTraceResult `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleTraceResult) Raw() *RawTraceResult {

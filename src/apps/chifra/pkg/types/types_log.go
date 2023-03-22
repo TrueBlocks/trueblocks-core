@@ -25,6 +25,8 @@ type RawLog struct {
 	Topics           []string `json:"topics"`
 	TransactionHash  string   `json:"transactionHash"`
 	TransactionIndex string   `json:"transactionIndex"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleLog struct {
@@ -39,6 +41,8 @@ type SimpleLog struct {
 	TransactionHash  base.Hash       `json:"transactionHash"`
 	TransactionIndex uint32          `json:"transactionIndex"`
 	raw              *RawLog         `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleLog) Raw() *RawLog {

@@ -37,6 +37,8 @@ type RawTransaction struct {
 	Type             string `json:"type"`
 	V                string `json:"v"`
 	Value            string `json:"value"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleTransaction struct {
@@ -63,6 +65,8 @@ type SimpleTransaction struct {
 	ArticulatedTx        *SimpleFunction `json:"articulatedTx,omitempty"`
 	Message              string          `json:"-"`
 	raw                  *RawTransaction `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleTransaction) Raw() *RawTransaction {

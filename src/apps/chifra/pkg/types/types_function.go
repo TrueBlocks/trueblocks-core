@@ -19,6 +19,8 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
+// `payable` was present in ABIs before Solidity 0.5.0 and was replaced by `stateMutability`
+// https://docs.soliditylang.org/en/develop/050-breaking-changes.html#command-line-and-json-interfaces
 // EXISTING_CODE
 
 type RawFunction struct {
@@ -33,6 +35,8 @@ type RawFunction struct {
 	Signature       string `json:"signature"`
 	StateMutability string `json:"stateMutability"`
 	FunctionType    string `json:"type"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleFunction struct {
@@ -47,12 +51,12 @@ type SimpleFunction struct {
 	Signature       string            `json:"signature,omitempty"`
 	StateMutability string            `json:"stateMutability,omitempty"`
 	FunctionType    string            `json:"type"`
-	// `payable` was present in ABIs before Solidity 0.5.0 and was replaced
-	// by `stateMutability`: https://docs.soliditylang.org/en/develop/050-breaking-changes.html#command-line-and-json-interfaces
+	raw             *RawFunction      `json:"-"`
+	// EXISTING_CODE
 	payable   bool
 	abiMethod *abi.Method
 	abiEvent  *abi.Event
-	raw       *RawFunction `json:"-"`
+	// EXISTING_CODE
 }
 
 func (s *SimpleFunction) Raw() *RawFunction {
