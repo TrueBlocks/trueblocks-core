@@ -25,7 +25,7 @@ type SimpleNamedBlock struct {
 	Date        string         `json:"date"`
 	Name        string         `json:"name,omitempty"`
 	Timestamp   base.Timestamp `json:"timestamp"`
-	raw         *RawNamedBlock
+	raw         *RawNamedBlock `json:"-"`
 }
 
 func (s *SimpleNamedBlock) Raw() *RawNamedBlock {

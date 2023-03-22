@@ -14,9 +14,8 @@
 #include "options.h"
 
 string_q type_2_GoType(const CMember& field);
-string_q specialCase(const CMember& field, const string_q& name, const string_q& type, bool isRaw);
-string_q debug(const CMember& field);
-bool skipField(const CMember& field);
+string_q specialCase(const string_q& modelName, const CMember& field, const string_q& type, bool isRaw);
+bool skipField(const CMember& field, bool raw);
 
 //------------------------------------------------------------------------------------------------------------
 void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
@@ -41,21 +40,23 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
     size_t maxNameWid = 0, maxModelWid = 0, maxSimpWid = 0, maxRawWid = 0;
     size_t fieldNo = 0;
     for (CMember& field : model.fieldArray) {
-        if (skipField(field)) {
+        if (skipField(field, false)) {
             fieldNo++;
             continue;
         }
         string_q type = type_2_GoType(field);
-        string_q rawType = specialCase(field, field.name, type, true);
-        string_q simpType = specialCase(field, field.name, type, false);
+        string_q rawType = specialCase(model.base_name, field, type, true);
+        string_q simpType = specialCase(model.base_name, field, type, false);
+        maxSimpWid = max(maxSimpWid, simpType.length());
+        maxRawWid = max(maxRawWid, rawType.length());
         if (field.name != "raw") {
-            maxSimpWid = max(maxSimpWid, simpType.length());
-            maxRawWid = max(maxRawWid, rawType.length());
             field.name = firstUpper(field.name);
-            field.value = field.name;  // we need it and use it below
-            if (field.name == "Type") {
-                field.name = model.base_name + "Type";
-            }
+        }
+        field.value = field.name;  // we need it and use it below
+        if (field.name == "Type") {
+            field.name = model.base_name + "Type";
+        }
+        if (fieldNo < modelOrig.fieldArray.size()) {
             modelOrig.fieldArray[fieldNo].name = firstUpper(modelOrig.fieldArray[fieldNo].name);
             modelOrig.fieldArray[fieldNo].value = modelOrig.fieldArray[fieldNo].name;  // we need it and use it below
             if (modelOrig.fieldArray[fieldNo].name == "Type") {
@@ -71,66 +72,46 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
 
     string_q rawStr;
     for (const CMember& field : model.fieldArray) {
-        if (skipField(field))
+        if (skipField(field, true))
             continue;
         if (!(field.name % "raw")) {
             string_q type = type_2_GoType(field);
-            string_q spec = specialCase(field, field.name, type, true);
+            string_q spec = specialCase(model.base_name, field, type, true);
             string_q rawType = field.name % "raw" ? spec : padRight(spec, maxRawWid);
             if (spec.empty())
                 continue;
             ostringstream os;
             os << "\t";
             os << padRight(field.name, maxNameWid) << " " << rawType;
-            os << " `json:\"" << firstLower(field.value) << "\"`" << debug(field) << endl;
+            os << " `json:\"" << firstLower(field.value) << "\"`" << endl;
             rawStr += os.str();
         }
     }
 
     string_q fieldStr;
     for (const CMember& field : model.fieldArray) {
-        if (skipField(field))
+        if (skipField(field, false))
             continue;
         string_q type = type_2_GoType(field);
-        string_q spec = specialCase(field, field.name, type, false);
-        string_q simpType = (field.name % "raw") ? spec : padRight(spec, maxSimpWid);
+        string_q spec = specialCase(model.base_name, field, type, false);
+        string_q simpType = padRight(spec, maxSimpWid);
         ostringstream os;
         os << "\t" << padRight(field.name, maxNameWid) << " " << simpType;
         if (!(field.name % "raw")) {
             os << " `json:\"" << firstLower(field.value) << (field.memberFlags & IS_OMITEMPTY ? ",omitempty" : "")
-               << "\"`" << debug(field);
+               << "\"`";
+        } else {
+            os << " `json:\"-\"`";
         }
         os << endl;
         fieldStr += os.str();
     }
 
-    string_q modelStr;
-    for (const CMember& field : model.fieldArray) {
-        if (skipField(field))
-            continue;
-        ostringstream os;
-        if (!(field.name % "raw") && !(field.memberFlags & (IS_OMITEMPTY | IS_ARRAY))) {
-            os << "\t\t" << padRight("\"" + firstLower(field.value) + "\":", maxModelWid + 3) << " s."
-               << firstUpper(field.name) << "," << debug(field) << endl;
-        }
-        modelStr += os.str();
-    }
-
-    string_q orderStr;
-    for (const CMember& field : modelOrig.fieldArray) {
-        if (skipField(field))
-            continue;
-        ostringstream os;
-        if (!(field.name % "raw") && !(field.memberFlags & (IS_OMITEMPTY | IS_ARRAY))) {
-            os << "\t\t\"" << firstLower(field.value) << "\"," << debug(field) << endl;
-        }
-        orderStr += os.str();
-    }
-
     replaceAll(contents, "[{RAWFIELDS}]", rawStr);
     replaceAll(contents, "[{FIELDS}]", fieldStr);
-    replaceAll(contents, "[{MODEL_FIELDS}]", modelStr);
-    replaceAll(contents, "[{ORDER_FIELDS}]", orderStr);
+
+    // hackathon!
+    replaceAll(contents, "type SimpleBlock[Tx] struct {", "type SimpleBlock[Tx BlockTransaction] struct {");
 
     codewrite_t cw(fn, contents + "\n");
     cw.nSpaces = 0;
@@ -162,7 +143,8 @@ string_q type_2_GoType(const CMember& field) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-string_q specialCase(const CMember& field, const string_q& name, const string_q& type, bool isRaw) {
+string_q specialCase(const string_q& modelName, const CMember& field, const string_q& type, bool isRaw) {
+    string_q name = field.name;
     string ret;
     if (name % "CumulativeGasUsed" && !isRaw) {
         ret = "string";
@@ -185,6 +167,12 @@ string_q specialCase(const CMember& field, const string_q& name, const string_q&
     } else if ((name % "FromAddress" || name % "ToAddress") && type % "CAddressArray") {
         ret = isRaw ? "string" : "[]string";
 
+    } else if (name % "Transactions") {
+        ret = isRaw ? "[]any" : "[]Tx";
+
+    } else if (modelName == "Parameter" && name % "Value") {
+        ret = isRaw ? "string" : "any";
+
     } else {
         ret = (type == "CStringArray" ? "[]string" : isRaw ? "string" : type);
     }
@@ -192,17 +180,7 @@ string_q specialCase(const CMember& field, const string_q& name, const string_q&
 }
 
 //------------------------------------------------------------------------------------------------------------
-string_q debug(const CMember& field) {
-    ostringstream os;
-    // os << " //";
-    // os << " doc: " << field.doc;
-    // os << " disp: " << field.disp;
-    // os << " omit: " << (field.memberFlags & IS_OMITEMPTY);
-    return os.str();
-}
-
-//------------------------------------------------------------------------------------------------------------
-bool skipField(const CMember& field) {
+bool skipField(const CMember& field, bool raw) {
     return contains(field.name, "::") || field.name == "InputsDict" || field.name == "OutputsDict" ||
-           field.name == "Abi_source";
+           field.name == "Abi_source" || (!raw && field.name == "LogsBloom") || (raw && field.name == "IsError");
 }

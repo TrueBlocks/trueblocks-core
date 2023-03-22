@@ -20,10 +20,10 @@ type RawAppearanceCount struct {
 }
 
 type SimpleAppearanceCount struct {
-	Address  base.Address `json:"address"`
-	FileSize uint64       `json:"fileSize"`
-	NRecords uint64       `json:"nRecords"`
-	raw      *RawAppearanceCount
+	Address  base.Address        `json:"address"`
+	FileSize uint64              `json:"fileSize"`
+	NRecords uint64              `json:"nRecords"`
+	raw      *RawAppearanceCount `json:"-"`
 }
 
 func (s *SimpleAppearanceCount) Raw() *RawAppearanceCount {

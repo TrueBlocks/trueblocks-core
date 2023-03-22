@@ -33,7 +33,7 @@ type SimpleBlockCount struct {
 	TransactionsCnt uint64         `json:"transactionsCnt"`
 	UnclesCnt       uint64         `json:"unclesCnt,omitempty"`
 	UniqsCnt        uint64         `json:"uniqsCnt,omitempty"`
-	raw             *RawBlockCount
+	raw             *RawBlockCount `json:"-"`
 }
 
 func (s *SimpleBlockCount) Raw() *RawBlockCount {
