@@ -113,7 +113,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 			if !strings.HasSuffix(fileName, ".bloom") {
 				continue // sometimes there are .gz files in this folder, for example
 			}
-			fileRange, err := paths.RangeFromFilenameE(fileName)
+			fileRange, err := base.RangeFromFilenameE(fileName)
 			if err != nil {
 				// don't respond further -- there may be foreign files in the folder
 				fmt.Println(err)
@@ -164,7 +164,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 		// TODO: Note we could actually test this if we had the concept of a FAKE_HEAD block
 		stagePath := paths.ToStagingPath(config.GetPathToIndex(opts.Globals.Chain) + "staging")
 		stageFn, _ := file.LatestFileInFolder(stagePath)
-		rng := paths.RangeFromFilename(stageFn)
+		rng := base.RangeFromFilename(stageFn)
 		lines := []string{}
 		for addr, mon := range updater.MonitorMap {
 			if !rng.LaterThanB(uint64(mon.LastScanned)) { // the range preceeds the block number

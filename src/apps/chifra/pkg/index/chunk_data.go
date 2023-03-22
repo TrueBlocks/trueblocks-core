@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 )
 
@@ -31,7 +32,7 @@ const (
 type ChunkData struct {
 	File           *os.File
 	Header         IndexHeaderRecord
-	Range          paths.FileRange
+	Range          base.FileRange
 	AddrTableStart int64
 	AppTableStart  int64
 }
@@ -41,7 +42,7 @@ type ChunkData struct {
 func NewChunkData(path string) (chunk ChunkData, err error) {
 	indexPath := paths.ToIndexPath(path)
 
-	blkRange, err := paths.RangeFromFilenameE(indexPath)
+	blkRange, err := base.RangeFromFilenameE(indexPath)
 	if err != nil {
 		return ChunkData{}, err
 	}

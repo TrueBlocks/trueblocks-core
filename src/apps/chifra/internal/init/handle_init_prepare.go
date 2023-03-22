@@ -10,6 +10,7 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -34,7 +35,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 			logger.Fatal("should not happen ==> we're spinning through the bloom filters")
 		}
 
-		rng := paths.RangeFromFilename(path)
+		rng := base.RangeFromFilename(path)
 		chunk := man.ChunkMap[rng.String()]
 		if chunk != nil {
 			ch := validate.ChunkSizes{BloomSize: chunk.BloomSize, IndexSize: chunk.IndexSize}
@@ -125,8 +126,8 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 	nCorrections := 0
 	for _, chunk := range man.ChunkMap {
 		if chunk != nil {
-			rng := paths.RangeFromRangeString(chunk.Range)
-			_, indexPath := rng.RangeToFilename(opts.Globals.Chain, paths.Index_Final)
+			rng := base.RangeFromRangeString(chunk.Range)
+			_, indexPath := rng.RangeToFilename(opts.Globals.Chain)
 			if !opts.All && !file.FileExists(indexPath) {
 				chunk.IndexHash = ""
 				chunk.IndexSize = 0

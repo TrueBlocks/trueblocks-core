@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -94,7 +95,7 @@ func NewSimpleBloom(stats types.ReportChunks, bl bloom.ChunkBloom) types.SimpleB
 	ret.Magic = bl.Header.Magic
 	ret.Hash = bl.Header.Hash
 	ret.Size = stats.BloomSz
-	ret.Range = paths.FileRange{First: stats.Start, Last: stats.End}
+	ret.Range = base.FileRange{First: stats.Start, Last: stats.End}
 	ret.Count = stats.NBlooms
 	ret.Width = bloom.BLOOM_WIDTH_IN_BYTES
 	ret.NInserted = uint64(nInserted)

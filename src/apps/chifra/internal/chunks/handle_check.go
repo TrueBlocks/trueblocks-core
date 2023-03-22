@@ -11,6 +11,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
@@ -79,7 +80,7 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	// a string array of the actual files in the index
 	fnArray := []string{}
 	for _, fileName := range fileNames {
-		rng := paths.RangeFromFilename(fileName)
+		rng := base.RangeFromFilename(fileName)
 		fnArray = append(fnArray, rng.String())
 	}
 	sort.Slice(fnArray, func(i, j int) bool {

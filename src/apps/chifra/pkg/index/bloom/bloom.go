@@ -47,7 +47,7 @@ type BloomHeader struct {
 type ChunkBloom struct {
 	File       *os.File
 	SizeOnDisc int64
-	Range      paths.FileRange
+	Range      base.FileRange
 	HeaderSize int64
 	Header     BloomHeader
 	Count      uint32 // Do not change the size of this field, it's stored on disc
@@ -73,7 +73,7 @@ func NewChunkBloom(path string) (bl ChunkBloom, err error) {
 	}
 
 	bl.SizeOnDisc = file.FileSize(path)
-	bl.Range, err = paths.RangeFromFilenameE(path)
+	bl.Range, err = base.RangeFromFilenameE(path)
 	if err != nil {
 		return
 	}
@@ -107,7 +107,7 @@ func (bl *ChunkBloom) Close() {
 
 // ReadBloom reads the entire contents of the bloom filter
 func (bl *ChunkBloom) ReadBloom(fileName string) (err error) {
-	bl.Range, err = paths.RangeFromFilenameE(fileName)
+	bl.Range, err = base.RangeFromFilenameE(fileName)
 	if err != nil {
 		return err
 	}

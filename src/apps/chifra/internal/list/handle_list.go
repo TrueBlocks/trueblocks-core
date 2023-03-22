@@ -9,9 +9,9 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/bykof/gostradamus"
@@ -38,11 +38,11 @@ func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) e
 			return si < sj
 		})
 
-		exportRange := paths.FileRange{First: opts.FirstBlock, Last: opts.LastBlock}
+		exportRange := base.FileRange{First: opts.FirstBlock, Last: opts.LastBlock}
 		results := make([]types.RawAppearance, 0, mon.Count())
 		verboseResults := make([]types.SimpleAppearance, 0, mon.Count())
 		for record, app := range apps {
-			appRange := paths.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)}
+			appRange := base.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)}
 			if appRange.Intersects(exportRange) {
 				if opts.Globals.Verbose {
 					ts, err := tslib.FromBnToTs(opts.Globals.Chain, uint64(app.BlockNumber))

@@ -36,7 +36,7 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 			return false, err
 		}
 
-		rng, err := paths.RangeFromFilenameE(path)
+		rng, err := base.RangeFromFilenameE(path)
 		if err != nil {
 			return false, err
 		}

@@ -7,6 +7,7 @@ package chunksPkg
 import (
 	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
@@ -26,7 +27,7 @@ func (opts *ChunksOptions) CheckStaging(lastBlock uint64, allow_missing bool, re
 	report.CheckedCnt++
 	// report.PassedCnt++
 	report.FailedCnt++
-	rng := paths.RangeFromFilename(stageFn)
+	rng := base.RangeFromFilename(stageFn)
 	r := rng.First < rng.Last
 	report.Result = rng.String() + fmt.Sprintf(" okay: %t", r)
 	return nil

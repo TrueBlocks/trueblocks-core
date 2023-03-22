@@ -6,14 +6,14 @@ package index
 // TODO: Turn these tests back on if possible
 // func Test_EstablishValidFilename(t *testing.T) {
 // 	// Such a range should not be listed in manifest, so the function will fail and we can investigate
-// 	r := paths.FileRange{First: 0, Last: 1}
+// 	r := base.FileRange{First: 0, Last: 1}
 // 	_, err := EstablishIndexChunk("mainnet", r)
 // 	if err == nil {
 // 		t.Fatal("error expected")
 // 	}
 // }
 
-// func IndexPathFromRange(fileRange paths.FileRange) (string, error) {
+// func IndexPathFromRange(fileRange base.FileRange) (string, error) {
 // 	tmp := paths.New CachePath("mainnet", paths.Index_Final)
 // 	path := tmp.Get FullPath(paths.FilenameFromRange(fileRange, ""))
 // 	if file.FileExists(path) {
@@ -25,7 +25,7 @@ package index
 // func Test_EstablishChunk(t *testing.T) {
 
 // 	// TODO: This kills real data. Do we really want to do that? Remove this test.
-// 	fileRange := paths.FileRange{First: 1, Last: 590501}
+// 	fileRange := base.FileRange{First: 1, Last: 590501}
 // 	path, err := IndexPathFromRange(fileRange)
 // 	if err != nil {
 // 		t.Error(err)

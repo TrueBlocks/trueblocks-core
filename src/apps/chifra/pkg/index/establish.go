@@ -11,6 +11,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -24,8 +25,8 @@ import (
 
 // EstablishIndexChunk a filename to an index portion, finds the correspoding CID (hash)
 // entry in the manifest, and downloads the index chunk to the local drive
-func EstablishIndexChunk(chain string, fileRange paths.FileRange) (bool, error) {
-	exists, fileName := fileRange.RangeToFilename(chain, paths.Index_Final)
+func EstablishIndexChunk(chain string, fileRange base.FileRange) (bool, error) {
+	exists, fileName := fileRange.RangeToFilename(chain)
 
 	chunkManifest, err := manifest.ReadManifest(chain, manifest.FromCache)
 	if err != nil {
@@ -154,7 +155,7 @@ func HasValidIndexHeader(fileName string) (bool, error) {
 		return false, err
 	}
 
-	rng := paths.RangeFromFilename(fileName)
+	rng := base.RangeFromFilename(fileName)
 	if header.Magic != file.MagicNumber {
 		msg := fmt.Sprintf("%s: Magic number expected (0x%x) got (0x%x)", rng, header.Magic, file.MagicNumber)
 		return false, errors.New(msg)

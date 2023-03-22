@@ -26,7 +26,7 @@ import (
 type AddressAppearanceMap map[string][]AppearanceRecord
 
 type WriteChunkReport struct {
-	Range        paths.FileRange
+	Range        base.FileRange
 	nAddresses   int
 	nAppearances int
 	Snapped      bool
@@ -140,7 +140,7 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 			// fails we don't want to have to re-do this chunk, so remove this here.
 			os.Remove(backupFn)
 
-			rng := paths.RangeFromFilename(indexFn)
+			rng := base.RangeFromFilename(indexFn)
 			report := WriteChunkReport{ // For use in reporting...
 				Range:        rng,
 				nAddresses:   len(addressTable),

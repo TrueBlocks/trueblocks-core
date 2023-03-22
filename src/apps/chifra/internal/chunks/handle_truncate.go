@@ -6,6 +6,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -40,11 +41,11 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 			return true, nil
 		}
 
-		rng, err := paths.RangeFromFilenameE(path)
+		rng, err := base.RangeFromFilenameE(path)
 		if err != nil {
 			return false, err
 		}
-		testRange := paths.FileRange{First: opts.Truncate, Last: utils.NOPOS}
+		testRange := base.FileRange{First: opts.Truncate, Last: utils.NOPOS}
 		if rng.Intersects(testRange) {
 			os.Remove(paths.ToIndexPath(path))
 			os.Remove(paths.ToBloomPath(path))

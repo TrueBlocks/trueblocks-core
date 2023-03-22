@@ -10,7 +10,7 @@ import (
 )
 
 type PinResult struct {
-	Range   paths.FileRange         `json:"range,omitempty"`
+	Range   base.FileRange          `json:"range,omitempty"`
 	Local   types.SimpleChunkRecord `json:"local,omitempty"`
 	Remote  types.SimpleChunkRecord `json:"remote,omitempty"`
 	Matches bool                    `json:"matches,omitempty"`
@@ -50,7 +50,7 @@ func PinChunk(chain, path string, isRemote bool) (PinResult, error) {
 	bloomFile := paths.ToBloomPath(path)
 	indexFile := paths.ToIndexPath(path)
 
-	rng := paths.RangeFromFilename(path)
+	rng := base.RangeFromFilename(path)
 	result := PinResult{
 		Range:  rng,
 		Local:  types.SimpleChunkRecord{Range: rng.String()},
