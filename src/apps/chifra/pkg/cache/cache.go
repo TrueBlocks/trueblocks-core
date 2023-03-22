@@ -159,7 +159,7 @@ func GetTransaction(chain string, blockNumber base.Blknum, txIndex uint64) (tx *
 	)
 }
 
-var abisFilePath = path.Join(itemToDirectory[Cache_Abis], "known.bin")
+var abisFilePath = path.Join(cacheDirectories[Cache_Abis], "known.bin")
 
 // GetAbis reads all ABIs stored in the cache
 func GetAbis(chain string) (abis []types.SimpleFunction, err error) {
@@ -184,7 +184,7 @@ func SetAbis(chain string, abis []types.SimpleFunction) (err error) {
 func GetAbi(chain string, address base.Address) (simpleAbis []types.SimpleFunction, err error) {
 	fileName := address.Hex() + ".json"
 	filePath := path.Join(
-		itemToDirectory[Cache_Abis],
+		cacheDirectories[Cache_Abis],
 		fileName,
 	)
 	file, err := load(chain, filePath)
@@ -218,7 +218,7 @@ func GetAbi(chain string, address base.Address) (simpleAbis []types.SimpleFuncti
 // TODO: we cache abi.ABI, not types.SimpleFunction
 // func SetAbi(chain string, address base.Address, abi []types.SimpleFunction) (err error) {
 // 	filePath := path.Join(
-// 		itemToDirectory[Cache_Abis],
+// 		cacheDirectories[Cache_Abis],
 // 		address.Hex()+".json",
 // 	)
 
@@ -233,7 +233,7 @@ func GetAbi(chain string, address base.Address) (simpleAbis []types.SimpleFuncti
 // InsertAbi copies file (e.g. opened local file) into cache
 func InsertAbi(chain string, address base.Address, inputReader io.Reader) (err error) {
 	filePath := path.Join(
-		itemToDirectory[Cache_Abis],
+		cacheDirectories[Cache_Abis],
 		address.Hex()+".json",
 	)
 	cacheDir := getCacheAndChainPath(chain)

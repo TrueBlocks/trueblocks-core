@@ -15,7 +15,8 @@ const (
 	Cache_Traces
 )
 
-var itemToDirectory = map[CacheType]string{
+var cacheDirectories = map[CacheType]string{
+	None:               "unknown",
 	Index_Bloom:        "blooms",
 	Index_Final:        "finalized",
 	Index_Staging:      "staging",

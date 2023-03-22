@@ -22,7 +22,7 @@ func getDirStructureByBlock(blockNumber base.Blknum) (result string, paddedBn st
 
 func getPathByBlock(item CacheType, blockNumber base.Blknum) string {
 	parentDirs, bn := getDirStructureByBlock(blockNumber)
-	directory := itemToDirectory[item]
+	directory := cacheDirectories[item]
 	return path.Join(directory, parentDirs, bn+".bin")
 }
 
@@ -33,7 +33,7 @@ func getPathByBlockAndTransactionIndex(
 ) string {
 	txIndex := fmt.Sprintf("%05d", txId)
 	parentDirs, bn := getDirStructureByBlock(blockNumber)
-	directory := itemToDirectory[item]
+	directory := cacheDirectories[item]
 	return path.Join(directory, parentDirs, strings.Join(
 		[]string{bn, txIndex},
 		"-",

@@ -26,11 +26,13 @@ type Service struct {
 }
 
 func LocalDaemonRunning() bool {
+	// TODO: should be configurable (see #2804)
 	sh := shell.NewShell("localhost:5001")
 	_, err := sh.Add(strings.NewReader("hello world!"))
 	return err == nil
 }
 
+// TODO: should be configurable (see #2804)
 const (
 	ESTUARY_URL = "https://shuttle-4.estuary.tech/content/add"
 	PINATA_URL  = "https://api.pinata.cloud/pinning/pinFileToIPFS"
@@ -78,6 +80,7 @@ func EstuaryHeaders(s *Service, contentType string) map[string]string {
 	return headers
 }
 
+// TODO: should be configurable (see #2804)
 // export EST_UPLOAD_HOST=https://shuttle-4.estuary.tech
 // export ESTUARY_TOKEN=<MYTOKEN>
 // export EST_SAMPLE_LARGE_FILE=/Users/jrush/Development/estuary/main.go
