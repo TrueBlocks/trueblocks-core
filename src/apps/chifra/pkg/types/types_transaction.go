@@ -27,26 +27,26 @@ type StorageSlot struct {
 // EXISTING_CODE
 
 type RawTransaction struct {
-	AccessList           []StorageSlot `json:"accessList"`           // array of addresses and storage slots modified
-	BlockHash            string        `json:"blockHash"`            // hash
-	BlockNumber          string        `json:"blockNumber"`          // base.Blknum
-	ChainId              string        `json:"chainId,omitempty"`    // string
-	From                 string        `json:"from"`                 // address
-	Gas                  string        `json:"gas"`                  // gas
-	GasPrice             string        `json:"gasPrice"`             // gas
-	Hash                 string        `json:"hash"`                 // hash
-	Input                string        `json:"input"`                // byte data
-	MaxFeePerGas         string        `json:"maxFeePerGas"`         // gas
-	MaxPriorityFeePerGas string        `json:"maxPriorityFeePerGas"` // gas
-	Nonce                string        `json:"nonce"`                // index
-	R                    string        `json:"r"`                    // hash
-	S                    string        `json:"s"`                    // hash
-	To                   string        `json:"to"`                   // address
-	TransactionIndex     string        `json:"transactionIndex"`     // index
-	Type                 string        `json:"type"`                 // string
-	V                    string        `json:"v"`                    // hash
-	Value                string        `json:"value"`                // wei
+	AccessList           []StorageSlot `json:"accessList"`
+	BlockHash            string        `json:"blockHash"`
+	BlockNumber          string        `json:"blockNumber"`
+	ChainId              string        `json:"chainId"`
+	From                 string        `json:"from"`
+	Gas                  string        `json:"gas"`
+	GasPrice             string        `json:"gasPrice"`
+	Hash                 string        `json:"hash"`
+	Input                string        `json:"input"`
+	MaxFeePerGas         string        `json:"maxFeePerGas"`
+	MaxPriorityFeePerGas string        `json:"maxPriorityFeePerGas"`
+	Nonce                string        `json:"nonce"`
+	To                   string        `json:"to"`
+	TransactionIndex     string        `json:"transactionIndex"`
+	TransactionType      string        `json:"type"`
+	Value                string        `json:"value"`
 	// EXISTING_CODE
+	// R string `json:"r"`
+	// S string `json:"s"`
+	// V string `json:"v"`
 	// EXISTING_CODE
 }
 
@@ -72,14 +72,14 @@ type SimpleTransaction struct {
 	MaxPriorityFeePerGas base.Gas        `json:"maxPriorityFeePerGas,omitempty"`
 	Nonce                uint64          `json:"nonce,omitempty"`
 	Receipt              *SimpleReceipt  `json:"receipt"`
-	TransactionIndex     base.Blknum     `json:"transactionIndex"`
 	Timestamp            base.Timestamp  `json:"timestamp"`
 	To                   base.Address    `json:"to"`
-	Value                base.Wei        `json:"value"`
 	Traces               []SimpleTrace   `json:"traces"`
-	Message              string          `json:"-"`
+	TransactionIndex     base.Blknum     `json:"transactionIndex"`
+	Value                base.Wei        `json:"value"`
 	raw                  *RawTransaction `json:"-"`
 	// EXISTING_CODE
+	Message              string          `json:"-"`
 	// EXISTING_CODE
 }
 

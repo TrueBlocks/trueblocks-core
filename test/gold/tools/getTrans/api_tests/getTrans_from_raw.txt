@@ -14,12 +14,9 @@ transactions?transactions=4000000.5&raw
       "maxFeePerGas": "",
       "maxPriorityFeePerGas": "",
       "nonce": "0x78f",
-      "r": "0x700ded234c42a19d31b216f1524d857112ac268f69b4e9772488503829a63e70",
-      "s": "0x504f5ec5c8bae3862f9032fdae24cb836516bdcf84ffb559d61c28249d52470b",
       "to": "0x1a95b271b0535d15fa49932daba31ba612b52946",
       "transactionIndex": "0x5",
       "type": "0x0",
-      "v": "0x26",
       "value": "0x0"
     }
   ],

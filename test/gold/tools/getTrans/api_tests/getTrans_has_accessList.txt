@@ -71,12 +71,9 @@ transactions?transactions=16500011.0&raw&fmt=json
       "maxFeePerGas": "0x6a5bfbaf4",
       "maxPriorityFeePerGas": "0x9dbc49e6",
       "nonce": "0x1c11",
-      "r": "0x17b593281a0df0f7803779ae45bee46a292adfda8936e798ca2e13fb5314a5a5",
-      "s": "0xf9eed755f522d1d5eab64df7c0b580562742fc012236abe168c9e3791afa52e",
       "to": "0x9507c04b10486547584c37bcbd931b2a4fee9a41",
       "transactionIndex": "0x0",
       "type": "0x2",
-      "v": "0x1",
       "value": "0xfbc52b"
     }
   ],

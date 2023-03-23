@@ -5,6 +5,7 @@ transactions?transactions=0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5
       "accessList": [],
       "blockHash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
       "blockNumber": "0xf4629",
+      "chainId": "",
       "from": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
       "gas": "0x15f90",
       "gasPrice": "0xba43b7400",
@@ -13,12 +14,9 @@ transactions?transactions=0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5
       "maxFeePerGas": "",
       "maxPriorityFeePerGas": "",
       "nonce": "0x2a3f0",
-      "r": "0xa679d4f56102f1f79426197535412e845cf90ee9c7a6f635acce7f5836d599a5",
-      "s": "0x3eb6fd72a44ca685f9841ff06cffcf7412a5a8ab7fa307a7fc341f9bbd473864",
       "to": "0xd77ba7ef37f87d5246f35de898133e09c92ecaca",
       "transactionIndex": "0x1",
       "type": "0x0",
-      "v": "0x1b",
       "value": "0x1dd0b460c6bf1c00"
     }
   ],
