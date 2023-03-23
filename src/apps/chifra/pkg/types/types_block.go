@@ -60,7 +60,7 @@ type SimpleBlock[Tx BlockTransaction] struct {
 	ParentHash    base.Hash      `json:"parentHash"`
 	Timestamp     base.Timestamp `json:"timestamp"`
 	Transactions  []Tx           `json:"transactions"`
-	Uncles        []base.Hash    `json:"uncles"`
+	Uncles        []base.Hash    `json:"uncles,omitempty"`
 	raw           *RawBlock      `json:"-"`
 	// EXISTING_CODE
 	// Used to be Finalized which has since been removed. Until we implement IsBackLevel

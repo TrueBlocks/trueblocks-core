@@ -386,6 +386,10 @@ components:
           type: boolean
           example: true
           description: "flag indicating the system considers this data final"
+        uncles:
+          type: array
+          items:
+            $ref: "#/components/schemas/hash"
     transaction:
       description: "transaction data as returned from the RPC (with slight enhancements)"
       type: object

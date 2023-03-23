@@ -161,6 +161,9 @@ string_q specialCase(const CClassDefinition& model, const CMember& field, const 
     } else if (startsWith(name, "Articulated")) {
         ret = isRaw ? "" : "*SimpleFunction";
 
+    } else if (name % "Uncles") {
+        ret = isRaw ? "[]string" : "[]base.Hash";
+
     } else if ((name % "FromAddress" || name % "ToAddress") && type % "CAddressArray") {
         ret = isRaw ? "string" : "[]string";
 

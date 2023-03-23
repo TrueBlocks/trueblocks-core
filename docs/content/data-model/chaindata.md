@@ -44,6 +44,7 @@ Blocks consist of the following fields:
 | transactions  | a possibly empty array of transactions or transaction hashes  | [Transaction[]](/data-model/chaindata/#transaction) |
 | baseFeePerGas | the base fee for this block                                   | wei                                                 |
 | finalized     | flag indicating the system considers this data final          | bool                                                |
+| uncles        |                                                               | Hash                                                |
 
 ## Transaction
 
