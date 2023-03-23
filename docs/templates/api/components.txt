@@ -594,12 +594,12 @@ components:
           description: "the number of the block"
         transactionIndex:
           type: number
-          format: blknum
+          format: uint64
           example: 305
           description: "the zero-indexed position of the transaction in the block"
         logIndex:
           type: number
-          format: blknum
+          format: uint64
           example: 354
           description: "the zero-indexed position of this log relative to the block"
         transactionHash:

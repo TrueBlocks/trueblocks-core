@@ -171,8 +171,8 @@ Logs consist of the following fields:
 | Field            | Description                                                                                       | Type                                    |
 | ---------------- | ------------------------------------------------------------------------------------------------- | --------------------------------------- |
 | blockNumber      | the number of the block                                                                           | blknum                                  |
-| transactionIndex | the zero-indexed position of the transaction in the block                                         | blknum                                  |
-| logIndex         | the zero-indexed position of this log relative to the block                                       | blknum                                  |
+| transactionIndex | the zero-indexed position of the transaction in the block                                         | uint64                                  |
+| logIndex         | the zero-indexed position of this log relative to the block                                       | uint64                                  |
 | transactionHash  | the hash of the transction                                                                        | hash                                    |
 | timestamp        | the timestamp of the block this log appears in                                                    | timestamp                               |
 | address          | the smart contract that emitted this log                                                          | address                                 |

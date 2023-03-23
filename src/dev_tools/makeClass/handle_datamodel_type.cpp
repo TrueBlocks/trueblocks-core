@@ -38,36 +38,38 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
     model.fieldArray.push_back(raw);
 
     size_t maxNameWid = 0, maxModelWid = 0, maxSimpWid = 0, maxRawWid = 0;
-    size_t fieldNo = 0;
-    for (CMember& field : model.fieldArray) {
-        if (skipField(model, field, false)) {
-            fieldNo++;
+
+    for (size_t i = 0; i < model.fieldArray.size(); i++) {
+        CMember* field = &model.fieldArray[i];
+        if (skipField(model, *field, false)) {
             continue;
         }
-        string_q type = type_2_GoType(field);
-        string_q rawType = specialCase(model, field, type, true);
-        string_q simpType = specialCase(model, field, type, false);
+        // if (fieldNo < modelOrig.fieldArray.size()) {
+        if (field->name != "raw") {
+            field->name = firstUpper(field->name);
+        }
+        field->value = field->name;  // we need it and use it below
+        if (field->name == "Type") {
+            field->name = modelOrig.base_name + "Type";
+        }
+        // }
+
+        string_q type = type_2_GoType(*field);
+        string_q rawType = specialCase(model, *field, type, true);
+        string_q simpType = specialCase(model, *field, type, false);
         maxSimpWid = max(maxSimpWid, simpType.length());
         maxRawWid = max(maxRawWid, rawType.length());
-        if (field.name != "raw") {
-            field.name = firstUpper(field.name);
+        // if (field->name != "raw") {
+        //     field->name = firstUpper(field->name);
+        // }
+        // field.value = field.name;  // we need it and use it below
+        // if (field.name == "Type") {
+        //     field.name = model.base_name + "Type";
+        // }
+        maxNameWid = max(maxNameWid, field->name.length());
+        if (!(field->memberFlags & IS_OMITEMPTY)) {
+            maxModelWid = max(maxModelWid, field->name.length());
         }
-        field.value = field.name;  // we need it and use it below
-        if (field.name == "Type") {
-            field.name = model.base_name + "Type";
-        }
-        if (fieldNo < modelOrig.fieldArray.size()) {
-            modelOrig.fieldArray[fieldNo].name = firstUpper(modelOrig.fieldArray[fieldNo].name);
-            modelOrig.fieldArray[fieldNo].value = modelOrig.fieldArray[fieldNo].name;  // we need it and use it below
-            if (modelOrig.fieldArray[fieldNo].name == "Type") {
-                modelOrig.fieldArray[fieldNo].name = modelOrig.base_name + "Type";
-            }
-        }
-        maxNameWid = max(maxNameWid, field.name.length());
-        if (!(field.memberFlags & IS_OMITEMPTY)) {
-            maxModelWid = max(maxModelWid, field.name.length());
-        }
-        fieldNo++;
     }
 
     string_q rawStr;
@@ -202,6 +204,9 @@ string_q specialCase(const CClassDefinition& model, const CMember& field, const 
 bool skipField(const CClassDefinition& model, const CMember& field, bool raw) {
     return contains(field.name, "::") || field.name == "InputsDict" || field.name == "OutputsDict" ||
            field.name == "Abi_source" || (!raw && field.name == "LogsBloom") || (raw && field.name == "IsError") ||
-           (raw && field.name == "CompressedTrace") || (field.name == "raw" && raw) ||
-           (model.base_name == "Trace" && raw && field.name == "Timestamp");
+           (raw && startsWith(field.name, "Compressed")) || (field.name == "raw" && raw) ||
+           (model.base_name == "Trace" && raw && field.name == "Timestamp") ||
+           (model.base_name == "Log" && raw && field.name == "Timestamp") || field.name == "Topic0" ||
+           field.name == "Topic1" || field.name == "Topic2" || field.name == "Topic3" || field.name == "LogType" ||
+           field.name == "Unused";
 }
