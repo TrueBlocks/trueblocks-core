@@ -4,4 +4,4 @@ TEST[DATE|TIME] Format:  txt
 blockNumber	transactionIndex	timestamp	error	action::callType	action::from	action::to	action::value	action::ether	action::gas	result::gasUsed	action::input	result::output
 1001001	3	1455421883		call	0x30d285941dfb8bbbe4ec72b02c8d166be01322d2	0x9b0a028eafdecde3afc0fd00b7937098388b7c8a	61848232647269079	0.061848232647269079	0	0	0x	0x
 1001001	3	1455421883		call	0x30d285941dfb8bbbe4ec72b02c8d166be01322d2	0x9b0a028eafdecde3afc0fd00b7937098388b7c8a	61848232647269079	0.061848232647269079	0	0	0x	0x
-EROR[DATE|TIME] transaction at 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 reported an error: not found
+EROR[DATE|TIME] transaction at 0xd4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3.0 returned an error: not found
