@@ -160,7 +160,6 @@ func loadBlock[Tx types.BlockTransaction](chain string, bn uint64, isFinal bool,
 		GasUsed:     gasUsed,
 		Miner:       base.HexToAddress(rawBlock.Miner),
 		Difficulty:  difficulty,
-		Finalized:   isFinal,
 		Uncles:      uncles,
 	}
 	return

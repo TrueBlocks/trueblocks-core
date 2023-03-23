@@ -7,7 +7,6 @@ TEST[DATE|TIME] Format:  json
       "baseFeePerGas": 0,
       "blockNumber": 1001010,
       "difficulty": 12462338280735,
-      "finalized": true,
       "gasLimit": 3141592,
       "gasUsed": 42000,
       "hash": "0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b",

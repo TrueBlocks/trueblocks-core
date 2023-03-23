@@ -5,7 +5,9 @@ TEST[DATE|TIME] Format:  json
 {
   "data": [
     {
+      "author": "",
       "baseFeePerGas": "0x4ec637c90",
+      "number": "0xfbc52b",
       "difficulty": "0x0",
       "extraData": "0x68747470733a2f2f6574682d6275696c6465722e636f6d",
       "gasLimit": "0x1c9c380",
@@ -15,7 +17,6 @@ TEST[DATE|TIME] Format:  json
       "miner": "0xfeebabe6b0418ec13b30aadf129f5dcdd4f70cea",
       "mixHash": "0x4df2dac68b47ff5920fd0da5f20915089fc6dce99a40f4015b934c338d95706f",
       "nonce": "0x0000000000000000",
-      "number": "0xfbc52b",
       "parentHash": "0x7aa370bd46dbf4d3a77d3ab0dcdf1f360be94ce687a55a383f9f6e2d2699f600",
       "receiptsRoot": "0x8e52fec8b8fb4b1a0c01b31db069084fc032664c733565546007357913e7108f",
       "sealFields": null,

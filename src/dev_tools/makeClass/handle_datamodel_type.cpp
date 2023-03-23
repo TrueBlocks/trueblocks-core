@@ -197,7 +197,7 @@ bool skipField(const CClassDefinition& model, const CMember& field, bool raw) {
            (model.base_name == "Trace" && raw && field.name == "Timestamp") ||
            (model.base_name == "Log" && raw && field.name == "Timestamp") || field.name == "Topic0" ||
            field.name == "Topic1" || field.name == "Topic2" || field.name == "Topic3" || field.name == "LogType" ||
-           field.name == "Unused";
+           field.name == "Unused" || (model.base_name == "Block" && field.name == "Finalized");
 }
 
 //------------------------------------------------------------------------------------------------------------

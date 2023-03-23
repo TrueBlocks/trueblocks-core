@@ -2,7 +2,9 @@ blocks?blocks=2768801%201995314%201958017&raw
 {
   "data": [
     {
+      "author": "",
       "baseFeePerGas": "",
+      "number": "0x2a3fa1",
       "difficulty": "0x450cc7c5b8b2",
       "extraData": "0x65746865726d696e65202d20455531",
       "gasLimit": "0x3d2782",
@@ -12,7 +14,6 @@ blocks?blocks=2768801%201995314%201958017&raw
       "miner": "0xea674fdde714fd979de3edf0f56aa9716b898ec8",
       "mixHash": "0xdfee062a7acf6d35409c3155da11d95a558ccf01318e475b73a72f714233679f",
       "nonce": "0x00665788000c9623",
-      "number": "0x2a3fa1",
       "parentHash": "0xabc3e2787669f48ad8ab2e521cf914d779e6514f296914d12b0668af5b2f97d0",
       "receiptsRoot": "0x9989b7dd5d8fffe4dd198f9f2d6b20270172df22ecedc9a8def42ab11373201d",
       "sealFields": null,
@@ -63,7 +64,9 @@ blocks?blocks=2768801%201995314%201958017&raw
       "uncles": []
     },
     {
+      "author": "",
       "baseFeePerGas": "",
+      "number": "0x1e7232",
       "difficulty": "0x301f53282378",
       "extraData": "0x65746865726d696e652e6f7267202845553129",
       "gasLimit": "0x47e7c4",
@@ -73,7 +76,6 @@ blocks?blocks=2768801%201995314%201958017&raw
       "miner": "0xea674fdde714fd979de3edf0f56aa9716b898ec8",
       "mixHash": "0x5a2b52a63e49616e524a3c01d857eda64db35be95eda8e85bbfa4a2568c70587",
       "nonce": "0x275f84c6b800f047",
-      "number": "0x1e7232",
       "parentHash": "0xe19aa0276eee73e6d548e457eff67797dfec9142a8c9044b7494cf19fd5c55e4",
       "receiptsRoot": "0x4cb69dc923d85727887dec16306b0228323d8272b25369ba6215117f9bf46214",
       "sealFields": null,
@@ -139,7 +141,9 @@ blocks?blocks=2768801%201995314%201958017&raw
       "uncles": []
     },
     {
+      "author": "",
       "baseFeePerGas": "",
+      "number": "0x1de081",
       "difficulty": "0x2fb8651f992b",
       "extraData": "0x7777772e62772e636f6d",
       "gasLimit": "0x47c94c",
@@ -149,7 +153,6 @@ blocks?blocks=2768801%201995314%201958017&raw
       "miner": "0xbcdfc35b86bedf72f0cda046a3c16829a2ef41d1",
       "mixHash": "0xcdf70b9be58c13e922bed72d090c2d1b90751385319c51abdd9c1e58409a2de4",
       "nonce": "0x5bae65eb75b8f694",
-      "number": "0x1de081",
       "parentHash": "0x6b218fa2bfd0e3c331c5f442dc559208a1ee41e8a01c2c689b0f338a107d3708",
       "receiptsRoot": "0xe284ad251fe0ec20835fdf562aa24a52ef118d9383ba7609826fd5d164839d8f",
       "sealFields": null,

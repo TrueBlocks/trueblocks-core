@@ -1,3 +1,5 @@
+remove isFinalized from Block -- the user can make this decision themselves based on timestamp or blockNumber
+
 Added accessList ot transaction output
 
 Made sure RPC and Raw data agrees

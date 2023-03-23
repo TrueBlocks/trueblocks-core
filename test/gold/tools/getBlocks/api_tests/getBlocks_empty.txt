@@ -5,7 +5,6 @@ blocks?blocks=1001001
       "baseFeePerGas": 0,
       "blockNumber": 1001001,
       "difficulty": 12468438268070,
-      "finalized": true,
       "gasLimit": 3141592,
       "gasUsed": 84000,
       "hash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",

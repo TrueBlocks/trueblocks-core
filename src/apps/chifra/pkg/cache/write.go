@@ -178,7 +178,8 @@ func WriteBlock(writer *bufio.Writer, block *types.SimpleBlock[types.SimpleTrans
 		return
 	}
 
-	err = write(block.Finalized)
+	block.UnusedBool = true
+	err = write(block.UnusedBool)
 	if err != nil {
 		return
 	}

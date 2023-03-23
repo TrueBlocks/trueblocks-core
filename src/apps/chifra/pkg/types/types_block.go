@@ -53,7 +53,6 @@ type SimpleBlock[Tx BlockTransaction] struct {
 	BaseFeePerGas base.Wei       `json:"baseFeePerGas"`
 	BlockNumber   base.Blknum    `json:"blockNumber"`
 	Difficulty    uint64         `json:"difficulty"`
-	Finalized     bool           `json:"finalized"`
 	GasLimit      base.Gas       `json:"gasLimit"`
 	GasUsed       base.Gas       `json:"gasUsed"`
 	Hash          base.Hash      `json:"hash"`
@@ -64,6 +63,9 @@ type SimpleBlock[Tx BlockTransaction] struct {
 	Uncles        []base.Hash    `json:"uncles"`
 	raw           *RawBlock      `json:"-"`
 	// EXISTING_CODE
+	// Used to be Finalized which has since been removed. Until we implement IsBackLevel
+	// and upgrading cache items, this exists. We can remove it once we do so.
+	UnusedBool bool `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -109,7 +111,6 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 			Data: map[string]interface{}{
 				"hash":        s.Hash,
 				"blockNumber": s.BlockNumber,
-				"finalized":   s.Finalized,
 				"parentHash":  s.ParentHash,
 				"timestamp":   s.Timestamp,
 				"tx_hashes":   txHashes,
@@ -134,7 +135,6 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 		"difficulty":    s.Difficulty,
 		"timestamp":     s.Timestamp,
 		"baseFeePerGas": s.BaseFeePerGas.Uint64(),
-		"finalized":     s.Finalized,
 	}
 
 	order = []string{
@@ -144,7 +144,6 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 		"parentHash",
 		"miner",
 		"difficulty",
-		"finalized",
 		"baseFeePerGas",
 		"gasLimit",
 		"gasUsed",
@@ -161,7 +160,6 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 			if ok {
 				items := make([]map[string]interface{}, 0, len(txs))
 				for _, txObject := range txs {
-					extraOptions["finalized"] = s.Finalized
 					items = append(items, txObject.Model(showHidden, format, extraOptions).Data)
 				}
 				model["transactions"] = items
@@ -178,9 +176,6 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 		if extraOptions["list"] == true {
 			model["unclesCnt"] = len(s.Uncles)
 			order = append(order, "unclesCnt")
-		} else {
-			model["finalized"] = s.Finalized
-			order = append(order, "finalized")
 		}
 	}
 	// EXISTING_CODE
