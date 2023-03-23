@@ -90,6 +90,10 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
 
     //------------------------------------------------------------------------------------------------
     for (auto fld : classDef.fieldArray) {
+        if (fld.memberFlags & IS_GOONLY || fld.memberFlags & IS_RAWONLY) {
+            continue;
+        }
+
         // keep these in this scope since they may change per field
         string_q declareFmt = "`[{TYPE}]* [{NAME}];";
         string_q regAddFmt = "`ADD_FIELD(CL_NM, \"[{NAME}]\", T_TEXT, ++fieldNum);\n";
@@ -241,9 +245,14 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
 
     //------------------------------------------------------------------------------------------------
     map<uint64_t, string_q> dispMap;
-    for (auto fld : classDef.fieldArray)
+    for (auto fld : classDef.fieldArray) {
+        if (fld.memberFlags & IS_GOONLY || fld.memberFlags & IS_RAWONLY) {
+            continue;
+        }
         if (fld.disp > 0)
             dispMap[fld.disp] = fld.name;
+    }
+
     if (dispMap.size()) {
         string_q add = classDef.display_str;
         classDef.display_str = "";
@@ -362,14 +371,16 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
 
 //------------------------------------------------------------------------------------------------
 string_q getCaseGetCode(const CMemberArray& fieldsIn) {
-    if (fieldsIn.empty())
+    if (fieldsIn.empty()) {
         return "// No fields";
+    }
 
     map<char, CMemberArray> ch_map;
     for (auto f : fieldsIn) {
-        if (!(f.memberFlags & IS_MINIMAL)) {
-            ch_map[f.name[0]].push_back(f);
+        if (f.memberFlags & IS_GOONLY || f.memberFlags & IS_RAWONLY || f.memberFlags & IS_MINIMAL) {
+            continue;
         }
+        ch_map[f.name[0]].push_back(f);
     }
 
     ostringstream outStream;
@@ -551,9 +562,10 @@ string_q getCaseGetCode(const CMemberArray& fieldsIn) {
 string_q getCaseSetCode(const CMemberArray& fieldsIn) {
     map<char, CMemberArray> ch_map;
     for (auto f : fieldsIn) {
-        if (!(f.memberFlags & IS_MINIMAL)) {
-            ch_map[f.name[0]].push_back(f);
+        if (f.memberFlags & IS_GOONLY || f.memberFlags & IS_RAWONLY || f.memberFlags & IS_MINIMAL) {
+            continue;
         }
+        ch_map[f.name[0]].push_back(f);
     }
 
     ostringstream outStream;

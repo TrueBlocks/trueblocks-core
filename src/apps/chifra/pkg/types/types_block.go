@@ -36,7 +36,6 @@ type RawBlock struct {
 	Nonce            string   `json:"nonce"`
 	ParentHash       string   `json:"parentHash"`
 	ReceiptsRoot     string   `json:"receiptsRoot"`
-	SealFields       []string `json:"sealFields"`
 	Sha3Uncles       string   `json:"sha3Uncles"`
 	Size             string   `json:"size"`
 	StateRoot        string   `json:"stateRoot"`

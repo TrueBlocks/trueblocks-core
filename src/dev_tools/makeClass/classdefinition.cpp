@@ -729,12 +729,21 @@ void CClassDefinition::ReadSettings(const CToml& toml) {
             if (trim(line).empty()) {
                 continue;
             }
+            bool isGoOnly = contains(line, "goonly");
+            bool isRawOnly = contains(line, "rawonly");
+            line = substitute(substitute(line, "goonly", "true"), "rawonly", "true");
             CMember tmp;
             tmp.parseCSV(fields, line);
             if (tmp.memberFlags & IS_ARRAY) {
                 tmp.type = "C" + string_q(1, char(toupper(tmp.type[0]))) + tmp.type.substr(1, 100) + "Array";
             } else if (tmp.memberFlags & IS_OBJECT) {
                 tmp.type = "C" + string_q(1, char(toupper(tmp.type[0]))) + tmp.type.substr(1, 100);
+            }
+            if (isGoOnly) {
+                tmp.memberFlags |= IS_GOONLY;
+            }
+            if (isRawOnly) {
+                tmp.memberFlags |= IS_RAWONLY;
             }
             tmp.postProcessType();
             fieldArray.push_back(tmp);

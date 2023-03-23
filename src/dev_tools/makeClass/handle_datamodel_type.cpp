@@ -38,13 +38,10 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
     raw.name = "raw";
     model.fieldArray.push_back(raw);
 
-    size_t maxNameWid = 0, maxModelWid = 0, maxSimpWid = 0, maxRawWid = 0;
+    size_t maxRawNameWid = 0, maxSimpNameWid = 0, maxRawTypeWid = 0, maxSimpTypeWid = 0, maxModelWid = 0;
 
     for (size_t i = 0; i < model.fieldArray.size(); i++) {
         CMember* field = &model.fieldArray[i];
-        if (skipField(model, *field, false)) {
-            continue;
-        }
 
         if (field->name != "raw") {
             field->name = firstUpper(field->name);
@@ -57,11 +54,21 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
         string_q type = type_2_GoType(*field);
         string_q rawType = specialCase(model, *field, type, true);
         string_q simpType = specialCase(model, *field, type, false);
-        maxSimpWid = max(maxSimpWid, simpType.length());
-        maxRawWid = max(maxRawWid, rawType.length());
-        maxNameWid = max(maxNameWid, field->name.length());
-        if (!(field->memberFlags & IS_OMITEMPTY)) {
-            maxModelWid = max(maxModelWid, field->name.length());
+
+        if (!skipField(model, *field, true)) {
+            maxRawTypeWid = max(maxRawTypeWid, rawType.length());
+            maxRawNameWid = max(maxRawNameWid, field->name.length());
+            if (!(field->memberFlags & IS_OMITEMPTY)) {
+                maxModelWid = max(maxModelWid, field->name.length());
+            }
+        }
+
+        if (!skipField(model, *field, false)) {
+            maxSimpTypeWid = max(maxSimpTypeWid, simpType.length());
+            maxSimpNameWid = max(maxSimpNameWid, field->name.length());
+            if (!(field->memberFlags & IS_OMITEMPTY)) {
+                maxModelWid = max(maxModelWid, field->name.length());
+            }
         }
     }
 
@@ -75,13 +82,13 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
         if (spec.empty())
             continue;
 
-        string_q rawType = padRight(spec, maxRawWid);
+        string_q rawType = padRight(spec, maxRawTypeWid);
         string_q jName = jsonName(model, field, true);
         string_q oe = "";
 
         ostringstream os;
         os << "\t";
-        os << padRight(field.name, maxNameWid) << " " << rawType;
+        os << padRight(field.name, maxRawNameWid) << " " << rawType;
         os << substitute(substitute(STR_JSON_TAG, "[{NAME}]", jName), "[{OE}]", oe) << endl;
         rawStr += os.str();
     }
@@ -92,12 +99,12 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
             continue;
 
         string_q spec = specialCase(model, field, type_2_GoType(field), false);
-        string_q simpType = padRight(spec, maxSimpWid);
+        string_q simpType = padRight(spec, maxSimpTypeWid);
         string_q jName = jsonName(model, field, false);
         string_q oe = (field.memberFlags & IS_OMITEMPTY ? ",omitempty" : "");
 
         ostringstream os;
-        os << "\t" << padRight(field.name, maxNameWid) << " " << simpType;
+        os << "\t" << padRight(field.name, maxSimpNameWid) << " " << simpType;
         os << substitute(substitute(STR_JSON_TAG, "[{NAME}]", jName), "[{OE}]", oe);
         os << endl;
         fieldStr += os.str();
@@ -194,6 +201,10 @@ string_q specialCase(const CClassDefinition& model, const CMember& field, const 
 
 //------------------------------------------------------------------------------------------------------------
 bool skipField(const CClassDefinition& model, const CMember& field, bool raw) {
+    if (!raw && field.memberFlags & IS_RAWONLY) {
+        return true;
+    }
+
     return contains(field.name, "::") || field.name == "InputsDict" || field.name == "OutputsDict" ||
            field.name == "Abi_source" || (!raw && field.name == "LogsBloom") || (raw && field.name == "IsError") ||
            (raw && startsWith(field.name, "Compressed")) || (field.name == "raw" && raw) ||
