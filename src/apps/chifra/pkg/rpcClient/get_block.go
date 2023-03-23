@@ -126,7 +126,7 @@ func loadBlock[Tx types.BlockTransaction](chain string, bn uint64, isFinal bool,
 		return
 	}
 
-	blockNumber, err := hexutil.DecodeUint64(rawBlock.Number)
+	blockNumber, err := hexutil.DecodeUint64(rawBlock.BlockNumber)
 	if err != nil {
 		return
 	}

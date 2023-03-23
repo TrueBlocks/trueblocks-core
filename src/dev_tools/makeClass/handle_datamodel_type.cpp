@@ -15,6 +15,7 @@
 
 string_q type_2_GoType(const CMember& field);
 string_q specialCase(const CClassDefinition& model, const CMember& field, const string_q& type, bool isRaw);
+string_q jsonName(const CClassDefinition& model, const CMember& field, bool raw);
 bool skipField(const CClassDefinition& model, const CMember& field, bool raw);
 
 //------------------------------------------------------------------------------------------------------------
@@ -44,7 +45,7 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
         if (skipField(model, *field, false)) {
             continue;
         }
-        // if (fieldNo < modelOrig.fieldArray.size()) {
+
         if (field->name != "raw") {
             field->name = firstUpper(field->name);
         }
@@ -52,20 +53,12 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
         if (field->name == "Type") {
             field->name = modelOrig.base_name + "Type";
         }
-        // }
 
         string_q type = type_2_GoType(*field);
         string_q rawType = specialCase(model, *field, type, true);
         string_q simpType = specialCase(model, *field, type, false);
         maxSimpWid = max(maxSimpWid, simpType.length());
         maxRawWid = max(maxRawWid, rawType.length());
-        // if (field->name != "raw") {
-        //     field->name = firstUpper(field->name);
-        // }
-        // field.value = field.name;  // we need it and use it below
-        // if (field.name == "Type") {
-        //     field.name = model.base_name + "Type";
-        // }
         maxNameWid = max(maxNameWid, field->name.length());
         if (!(field->memberFlags & IS_OMITEMPTY)) {
             maxModelWid = max(maxModelWid, field->name.length());
@@ -83,15 +76,13 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
             continue;
 
         string_q rawType = padRight(spec, maxRawWid);
-        string_q jsonName = firstLower(field.value);
-        if (model.base_name == "Trace" && field.name == "TransactionIndex") {
-            jsonName = "transactionPosition";
-        }
+        string_q jName = jsonName(model, field, true);
+        string_q oe = "";
 
         ostringstream os;
         os << "\t";
         os << padRight(field.name, maxNameWid) << " " << rawType;
-        os << substitute(substitute(STR_JSON_TAG, "[{NAME}]", jsonName), "[{OE}]", "") << endl;
+        os << substitute(substitute(STR_JSON_TAG, "[{NAME}]", jName), "[{OE}]", oe) << endl;
         rawStr += os.str();
     }
 
@@ -99,17 +90,15 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
     for (const CMember& field : model.fieldArray) {
         if (skipField(model, field, false))
             continue;
-        string_q type = type_2_GoType(field);
-        string_q spec = specialCase(model, field, type, false);
+
+        string_q spec = specialCase(model, field, type_2_GoType(field), false);
         string_q simpType = padRight(spec, maxSimpWid);
+        string_q jName = jsonName(model, field, false);
+        string_q oe = (field.memberFlags & IS_OMITEMPTY ? ",omitempty" : "");
+
         ostringstream os;
         os << "\t" << padRight(field.name, maxNameWid) << " " << simpType;
-        if (!(field.name % "raw")) {
-            string_q oe = (field.memberFlags & IS_OMITEMPTY ? ",omitempty" : "");
-            os << substitute(substitute(STR_JSON_TAG, "[{NAME}]", firstLower(field.value)), "[{OE}]", oe);
-        } else {
-            os << " `json:\"-\"`";
-        }
+        os << substitute(substitute(STR_JSON_TAG, "[{NAME}]", jName), "[{OE}]", oe);
         os << endl;
         fieldStr += os.str();
     }
@@ -209,4 +198,24 @@ bool skipField(const CClassDefinition& model, const CMember& field, bool raw) {
            (model.base_name == "Log" && raw && field.name == "Timestamp") || field.name == "Topic0" ||
            field.name == "Topic1" || field.name == "Topic2" || field.name == "Topic3" || field.name == "LogType" ||
            field.name == "Unused";
+}
+
+//------------------------------------------------------------------------------------------------------------
+string_q jsonName(const CClassDefinition& model, const CMember& field, bool raw) {
+    if (field.name == "raw") {
+        return "-";
+    }
+
+    string_q name = firstLower(field.value);
+    if (!raw) {
+        return name;
+    }
+
+    if (model.base_name == "Trace" && field.name == "TransactionIndex") {
+        name = "transactionPosition";
+    } else if (model.base_name == "Block" && field.name == "BlockNumber") {
+        name = "number";
+    }
+
+    return name;
 }

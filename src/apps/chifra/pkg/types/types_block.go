@@ -22,29 +22,29 @@ type BlockTransaction interface {
 // EXISTING_CODE
 
 type RawBlock struct {
-	Author           string   `json:"author,omitempty"`    // address
-	BaseFeePerGas    string   `json:"baseFeePerGas"`       // gas
-	Difficulty       string   `json:"difficulty"`          // int
-	ExtraData        string   `json:"extraData,omitempty"` // byte data
-	GasLimit         string   `json:"gasLimit"`            // gas
-	GasUsed          string   `json:"gasUsed"`             // gas
-	Hash             string   `json:"hash"`                // hash
-	LogsBloom        string   `json:"logsBloom,omitempty"` // byte data
-	Miner            string   `json:"miner"`               // address
-	MixHash          string   `json:"mixHash"`             // hash
-	Nonce            string   `json:"nonce"`               // hash
-	Number           string   `json:"number"`              // block number
-	ParentHash       string   `json:"parentHash"`          // hash
-	ReceiptsRoot     string   `json:"receiptsRoot"`        // hash
-	SealFields       []string `json:"sealFields"`          // array of hashes
-	Sha3Uncles       string   `json:"sha3Uncles"`          // hash
-	Size             string   `json:"size"`                // value
-	StateRoot        string   `json:"stateRoot"`           // hash
-	Timestamp        string   `json:"timestamp"`           // timestamp
-	TotalDifficulty  string   `json:"totalDifficulty"`     // value
-	Transactions     []any    `json:"transactions"`        // array of transactions or hash
-	TransactionsRoot string   `json:"transactionsRoot"`    // hash
-	Uncles           []string `json:"uncles"`              // array of hashes
+	Author           string   `json:"author"`
+	BaseFeePerGas    string   `json:"baseFeePerGas"`
+	BlockNumber      string   `json:"number"`
+	Difficulty       string   `json:"difficulty"`
+	ExtraData        string   `json:"extraData"`
+	GasLimit         string   `json:"gasLimit"`
+	GasUsed          string   `json:"gasUsed"`
+	Hash             string   `json:"hash"`
+	LogsBloom        string   `json:"logsBloom"`
+	Miner            string   `json:"miner"`
+	MixHash          string   `json:"mixHash"`
+	Nonce            string   `json:"nonce"`
+	ParentHash       string   `json:"parentHash"`
+	ReceiptsRoot     string   `json:"receiptsRoot"`
+	SealFields       []string `json:"sealFields"`
+	Sha3Uncles       string   `json:"sha3Uncles"`
+	Size             string   `json:"size"`
+	StateRoot        string   `json:"stateRoot"`
+	Timestamp        string   `json:"timestamp"`
+	TotalDifficulty  string   `json:"totalDifficulty"`
+	Transactions     []any    `json:"transactions"`
+	TransactionsRoot string   `json:"transactionsRoot"`
+	Uncles           []string `json:"uncles"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
