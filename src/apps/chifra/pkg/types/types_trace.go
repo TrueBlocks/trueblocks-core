@@ -24,7 +24,7 @@ import (
 type RawTrace struct {
 	Action           RawTraceAction  `json:"action"`
 	BlockHash        string          `json:"blockHash"`
-	BlockNumber      uint64          `json:"blockNumber"`
+	BlockNumber      base.Blknum     `json:"blockNumber"`
 	Error            string          `json:"error"`
 	Result           *RawTraceResult `json:"result"`
 	Subtraces        uint64          `json:"subtraces"`
@@ -48,7 +48,7 @@ type SimpleTrace struct {
 	Timestamp        base.Timestamp     `json:"timestamp"`
 	TraceAddress     []uint64           `json:"traceAddress"`
 	TransactionHash  base.Hash          `json:"transactionHash"`
-	TransactionIndex base.Blknum        `json:"transactionIndex"`
+	TransactionIndex uint64             `json:"transactionIndex"`
 	TraceType        string             `json:"type,omitempty"`
 	raw              *RawTrace          `json:"-"`
 	// EXISTING_CODE

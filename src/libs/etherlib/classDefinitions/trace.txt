@@ -7,5 +7,5 @@ doc_group = 02-Chain Data
 doc_descr = trace data as returned from the RPC (with slight enhancements)
 doc_route = 206-trace
 doc_producer = traces, export, blocks
-# go_type = true
+go_type = true
 output = ../../libs/etherlib/

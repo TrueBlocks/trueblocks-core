@@ -14,8 +14,8 @@
 #include "options.h"
 
 string_q type_2_GoType(const CMember& field);
-string_q specialCase(const string_q& modelName, const CMember& field, const string_q& type, bool isRaw);
-bool skipField(const CMember& field, bool raw);
+string_q specialCase(const CClassDefinition& model, const CMember& field, const string_q& type, bool isRaw);
+bool skipField(const CClassDefinition& model, const CMember& field, bool raw);
 
 //------------------------------------------------------------------------------------------------------------
 void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
@@ -40,13 +40,13 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
     size_t maxNameWid = 0, maxModelWid = 0, maxSimpWid = 0, maxRawWid = 0;
     size_t fieldNo = 0;
     for (CMember& field : model.fieldArray) {
-        if (skipField(field, false)) {
+        if (skipField(model, field, false)) {
             fieldNo++;
             continue;
         }
         string_q type = type_2_GoType(field);
-        string_q rawType = specialCase(model.base_name, field, type, true);
-        string_q simpType = specialCase(model.base_name, field, type, false);
+        string_q rawType = specialCase(model, field, type, true);
+        string_q simpType = specialCase(model, field, type, false);
         maxSimpWid = max(maxSimpWid, simpType.length());
         maxRawWid = max(maxRawWid, rawType.length());
         if (field.name != "raw") {
@@ -71,35 +71,40 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
     }
 
     string_q rawStr;
+    const char* STR_JSON_TAG = " `json:\"[{NAME}][{OE}]\"`";
     for (const CMember& field : model.fieldArray) {
-        if (skipField(field, true))
+        if (skipField(model, field, true))
             continue;
-        if (!(field.name % "raw")) {
-            string_q type = type_2_GoType(field);
-            string_q spec = specialCase(model.base_name, field, type, true);
-            string_q rawType = field.name % "raw" ? spec : padRight(spec, maxRawWid);
-            if (spec.empty())
-                continue;
-            ostringstream os;
-            os << "\t";
-            os << padRight(field.name, maxNameWid) << " " << rawType;
-            os << " `json:\"" << firstLower(field.value) << "\"`" << endl;
-            rawStr += os.str();
+
+        string_q spec = specialCase(model, field, type_2_GoType(field), true);
+        if (spec.empty())
+            continue;
+
+        string_q rawType = padRight(spec, maxRawWid);
+        string_q jsonName = firstLower(field.value);
+        if (model.base_name == "Trace" && field.name == "TransactionIndex") {
+            jsonName = "transactionPosition";
         }
+
+        ostringstream os;
+        os << "\t";
+        os << padRight(field.name, maxNameWid) << " " << rawType;
+        os << substitute(substitute(STR_JSON_TAG, "[{NAME}]", jsonName), "[{OE}]", "") << endl;
+        rawStr += os.str();
     }
 
     string_q fieldStr;
     for (const CMember& field : model.fieldArray) {
-        if (skipField(field, false))
+        if (skipField(model, field, false))
             continue;
         string_q type = type_2_GoType(field);
-        string_q spec = specialCase(model.base_name, field, type, false);
+        string_q spec = specialCase(model, field, type, false);
         string_q simpType = padRight(spec, maxSimpWid);
         ostringstream os;
         os << "\t" << padRight(field.name, maxNameWid) << " " << simpType;
         if (!(field.name % "raw")) {
-            os << " `json:\"" << firstLower(field.value) << (field.memberFlags & IS_OMITEMPTY ? ",omitempty" : "")
-               << "\"`";
+            string_q oe = (field.memberFlags & IS_OMITEMPTY ? ",omitempty" : "");
+            os << substitute(substitute(STR_JSON_TAG, "[{NAME}]", firstLower(field.value)), "[{OE}]", oe);
         } else {
             os << " `json:\"-\"`";
         }
@@ -143,7 +148,8 @@ string_q type_2_GoType(const CMember& field) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-string_q specialCase(const string_q& modelName, const CMember& field, const string_q& type, bool isRaw) {
+string_q specialCase(const CClassDefinition& model, const CMember& field, const string_q& type, bool isRaw) {
+    string_q modelName = model.base_name;
     string_q name = field.name;
     string ret;
     if (name % "CumulativeGasUsed" && !isRaw) {
@@ -159,9 +165,9 @@ string_q specialCase(const string_q& modelName, const CMember& field, const stri
         ret = isRaw ? "string" : "[]SimpleParameter";
 
     } else if (name % "Result") {
-        ret = isRaw ? "RawTraceResult" : "*SimpleTraceResult";
+        ret = isRaw ? "*RawTraceResult" : "*SimpleTraceResult";
 
-    } else if (name % "ArticulatedTrace") {
+    } else if (startsWith(name, "Articulated")) {
         ret = isRaw ? "" : "*SimpleFunction";
 
     } else if ((name % "FromAddress" || name % "ToAddress") && type % "CAddressArray") {
@@ -169,6 +175,15 @@ string_q specialCase(const string_q& modelName, const CMember& field, const stri
 
     } else if (name % "Transactions") {
         ret = isRaw ? "[]any" : "[]Tx";
+
+    } else if (name % "TraceAddress") {
+        ret = "[]uint64";
+
+    } else if (modelName % "Trace" && (name % "Subtraces" || name % "TransactionIndex")) {
+        ret = "uint64";
+
+    } else if (modelName % "Trace" && (name % "BlockNumber")) {
+        ret = "base.Blknum";
 
     } else if (name % "Topics") {
         ret = isRaw ? "[]string" : "[]base.Hash";
@@ -179,11 +194,14 @@ string_q specialCase(const string_q& modelName, const CMember& field, const stri
     } else {
         ret = (type == "CStringArray" ? "[]string" : isRaw ? "string" : type);
     }
+
     return ret;
 }
 
 //------------------------------------------------------------------------------------------------------------
-bool skipField(const CMember& field, bool raw) {
+bool skipField(const CClassDefinition& model, const CMember& field, bool raw) {
     return contains(field.name, "::") || field.name == "InputsDict" || field.name == "OutputsDict" ||
-           field.name == "Abi_source" || (!raw && field.name == "LogsBloom") || (raw && field.name == "IsError");
+           field.name == "Abi_source" || (!raw && field.name == "LogsBloom") || (raw && field.name == "IsError") ||
+           (raw && field.name == "CompressedTrace") || (field.name == "raw" && raw) ||
+           (model.base_name == "Trace" && raw && field.name == "Timestamp");
 }
