@@ -19,7 +19,6 @@ TEST[DATE|TIME] Format:  json
       "nonce": "0x0000000000000000",
       "parentHash": "0x7aa370bd46dbf4d3a77d3ab0dcdf1f360be94ce687a55a383f9f6e2d2699f600",
       "receiptsRoot": "0x8e52fec8b8fb4b1a0c01b31db069084fc032664c733565546007357913e7108f",
-      "sealFields": null,
       "sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
       "size": "0xd02b",
       "stateRoot": "0xa0a6d4f3671e3480734a233f7d95127d68184f5283c7cc6e6e64717bade87160",
