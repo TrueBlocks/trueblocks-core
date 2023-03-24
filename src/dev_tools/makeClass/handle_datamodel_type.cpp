@@ -192,6 +192,18 @@ string_q specialCase(const CClassDefinition& model, const CMember& field, const 
     } else if (modelName == "Parameter" && name % "Value") {
         ret = isRaw ? "string" : "any";
 
+    } else if (name % "AccessList") {
+        ret = isRaw ? "[]StorageSlot" : "";
+
+    } else if (modelName % "Transaction" && name % "Receipt") {
+        ret = isRaw ? "" : "*SimpleReceipt";
+
+    } else if (modelName % "Transaction" && name % "Traces") {
+        ret = isRaw ? "" : "[]SimpleTrace";
+
+    } else if (modelName % "Transaction" && (name % "IsError" || name % "HasToken")) {
+        ret = isRaw ? "" : "bool";
+
     } else {
         ret = (type == "CStringArray" ? "[]string" : isRaw ? "string" : type);
     }
@@ -203,6 +215,20 @@ string_q specialCase(const CClassDefinition& model, const CMember& field, const 
 bool skipField(const CClassDefinition& model, const CMember& field, bool raw) {
     if (!raw && field.memberFlags & IS_RAWONLY) {
         return true;
+    }
+
+    if (model.base_name % "Transaction") {
+        if (field.name % "Cachebits" || field.name % "ExtraData" || field.name % "ExtraValue1" ||
+            field.name % "ExtraValue2" || field.name % "Finalized" || field.name % "FromName" ||
+            field.name % "ToName" || field.name % "Reserved2" || field.name % "Statements" || field.name % "Unused") {
+            return true;
+        } else if (raw) {
+            return field.name % "Date" || field.name % "Encoding" || field.name % "Ether" ||
+                   field.name % "EtherGasPrice" || field.name % "CompressedTx" || field.name % "GasUsed" ||
+                   field.name % "HasToken" || field.name % "IsError" || field.name % "Receipt" ||
+                   field.name % "Statements" || field.name % "Timestamp" || field.name % "Traces" || field.name % "raw";
+        }
+        return false;
     }
 
     return contains(field.name, "::") || field.name == "InputsDict" || field.name == "OutputsDict" ||

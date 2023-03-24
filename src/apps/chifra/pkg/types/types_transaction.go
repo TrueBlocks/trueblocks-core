@@ -51,26 +51,25 @@ type RawTransaction struct {
 }
 
 type SimpleTransaction struct {
-	ArticulatedTx        *SimpleFunction `json:"articulatedTx,omitempty"`
+	ArticulatedTx        *SimpleFunction `json:"articulatedTx"`
 	BlockHash            base.Hash       `json:"blockHash"`
 	BlockNumber          base.Blknum     `json:"blockNumber"`
 	CompressedTx         string          `json:"compressedTx"`
 	Date                 string          `json:"date"`
 	Encoding             string          `json:"encoding"`
 	Ether                string          `json:"ether"`
-	EtherGasPrice        string          `json:"etherGasPrice"`
+	EtherGasPrice        base.Gas        `json:"etherGasPrice"`
 	From                 base.Address    `json:"from"`
 	Gas                  base.Gas        `json:"gas"`
 	GasPrice             base.Gas        `json:"gasPrice"`
 	GasUsed              base.Gas        `json:"gasUsed"`
-	GasCost              base.Gas        `json:"gasCost"`
-	HasToken             bool            `json:"hasToken,omitempty"`
+	HasToken             bool            `json:"hasToken"`
 	Hash                 base.Hash       `json:"hash"`
 	Input                string          `json:"input"`
-	IsError              bool            `json:"isError,omitempty"`
-	MaxFeePerGas         base.Gas        `json:"maxFeePerGas,omitempty"`
-	MaxPriorityFeePerGas base.Gas        `json:"maxPriorityFeePerGas,omitempty"`
-	Nonce                uint64          `json:"nonce,omitempty"`
+	IsError              bool            `json:"isError"`
+	MaxFeePerGas         base.Gas        `json:"maxFeePerGas"`
+	MaxPriorityFeePerGas base.Gas        `json:"maxPriorityFeePerGas"`
+	Nonce                uint64          `json:"nonce"`
 	Receipt              *SimpleReceipt  `json:"receipt"`
 	Timestamp            base.Timestamp  `json:"timestamp"`
 	To                   base.Address    `json:"to"`
@@ -79,6 +78,7 @@ type SimpleTransaction struct {
 	Value                base.Wei        `json:"value"`
 	raw                  *RawTransaction `json:"-"`
 	// EXISTING_CODE
+	GasCost              base.Gas        `json:"gasCost"`
 	Message              string          `json:"-"`
 	// EXISTING_CODE
 }
