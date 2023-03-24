@@ -111,8 +111,13 @@ func loadTestNames(terms []string, parts Parts, all *map[base.Address]types.Simp
 	}
 }
 
-func CreateCustomName(output *os.File, name *types.SimpleName) (err error) {
-	return setCustomNameAndSave(output, name)
+func CreateCustomName(chain string, name *types.SimpleName) (err error) {
+	db, err := OpenDatabaseFile(chain, DatabaseCustom, os.O_WRONLY|os.O_TRUNC)
+	if err != nil {
+		return
+	}
+	defer db.Close()
+	return setCustomNameAndSave(db, name)
 }
 
 func ReadCustomName(address base.Address) (name *types.SimpleName) {
@@ -123,7 +128,16 @@ func ReadCustomName(address base.Address) (name *types.SimpleName) {
 	return nil
 }
 
-func UpdateCustomName(output *os.File, name *types.SimpleName) (result *types.SimpleName, err error) {
+func UpdateCustomName(chain string, name *types.SimpleName) (result *types.SimpleName, err error) {
+	db, err := OpenDatabaseFile(chain, DatabaseCustom, os.O_WRONLY|os.O_TRUNC)
+	if err != nil {
+		return
+	}
+	defer db.Close()
+	return setIfExists(db, name)
+}
+
+func setIfExists(output *os.File, name *types.SimpleName) (result *types.SimpleName, err error) {
 	if _, ok := loadedCustomNames[name.Address]; !ok {
 		return nil, fmt.Errorf("no custom name for address %s", name.Address.Hex())
 	}
@@ -131,7 +145,17 @@ func UpdateCustomName(output *os.File, name *types.SimpleName) (result *types.Si
 	return name, setCustomNameAndSave(output, name)
 }
 
-func ChangeCustomNameDeletedFlag(output *os.File, address base.Address, deleted bool) (name *types.SimpleName, err error) {
+func ChangeCustomNameDeletedFlag(chain string, address base.Address, deleted bool) (name *types.SimpleName, err error) {
+	db, err := OpenDatabaseFile(chain, DatabaseCustom, os.O_WRONLY|os.O_TRUNC)
+	if err != nil {
+		return
+	}
+	defer db.Close()
+
+	return changeDeleted(db, address, deleted)
+}
+
+func changeDeleted(output *os.File, address base.Address, deleted bool) (name *types.SimpleName, err error) {
 	if found, ok := loadedCustomNames[address]; ok {
 		found.Deleted = deleted
 		name = &found
@@ -143,7 +167,17 @@ func ChangeCustomNameDeletedFlag(output *os.File, address base.Address, deleted 
 	return
 }
 
-func RemoveCustomName(output *os.File, address base.Address) (name *types.SimpleName, err error) {
+func RemoveCustomName(chain string, address base.Address) (name *types.SimpleName, err error) {
+	db, err := OpenDatabaseFile(chain, DatabaseCustom, os.O_WRONLY|os.O_TRUNC)
+	if err != nil {
+		return
+	}
+	defer db.Close()
+
+	return removeIfExists(db, address)
+}
+
+func removeIfExists(output *os.File, address base.Address) (name *types.SimpleName, err error) {
 	found, ok := loadedCustomNames[address]
 	if !ok {
 		return nil, fmt.Errorf("no custom name for address %s", address.Hex())

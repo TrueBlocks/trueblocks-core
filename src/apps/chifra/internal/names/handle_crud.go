@@ -2,7 +2,6 @@ package namesPkg
 
 import (
 	"context"
-	"os"
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
@@ -83,26 +82,16 @@ func handleCreate(chain string, data *CrudData) (name *types.SimpleName, err err
 		Deleted:  false,
 		Petname:  names.AddrToPetname(data.Address.Value.Hex(), "-"),
 	}
-	db, err := names.OpenDatabaseFile(chain, names.DatabaseCustom, os.O_WRONLY|os.O_TRUNC)
-	if err != nil {
-		return
-	}
-	defer db.Close()
-	return name, names.CreateCustomName(db, name)
+
+	return name, names.CreateCustomName(chain, name)
 }
 
 func handleDelete(chain string, data *CrudData, deleted bool, remove bool) (name *types.SimpleName, err error) {
-	db, err := names.OpenDatabaseFile(chain, names.DatabaseCustom, os.O_WRONLY|os.O_TRUNC)
-	if err != nil {
-		return
-	}
-	defer db.Close()
-
 	if !remove {
-		name, err = names.ChangeCustomNameDeletedFlag(db, data.Address.Value, deleted)
+		name, err = names.ChangeCustomNameDeletedFlag(chain, data.Address.Value, deleted)
 		return
 	}
 
-	name, err = names.RemoveCustomName(db, data.Address.Value)
+	name, err = names.RemoveCustomName(chain, data.Address.Value)
 	return
 }

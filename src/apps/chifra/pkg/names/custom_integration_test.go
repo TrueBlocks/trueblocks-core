@@ -37,7 +37,7 @@ func TestCrudIntegration(t *testing.T) {
 	}
 
 	// Create
-	if err := CreateCustomName(tempFile, &expected); err != nil {
+	if err := setCustomNameAndSave(tempFile, &expected); err != nil {
 		t.Fatal(err)
 	}
 
@@ -68,7 +68,7 @@ func TestCrudIntegration(t *testing.T) {
 	}
 
 	// Update
-	updated, err := UpdateCustomName(tempFile, &types.SimpleName{
+	updated, err := setIfExists(tempFile, &types.SimpleName{
 		Name:    "new name",
 		Address: addr,
 	})
@@ -83,7 +83,7 @@ func TestCrudIntegration(t *testing.T) {
 	}
 
 	// Delete
-	deleted, err := ChangeCustomNameDeletedFlag(tempFile, addr, true)
+	deleted, err := changeDeleted(tempFile, addr, true)
 	if err != nil {
 		t.Fatal("delete:", err)
 	}
@@ -95,7 +95,7 @@ func TestCrudIntegration(t *testing.T) {
 	}
 
 	// Undelete
-	undeleted, err := ChangeCustomNameDeletedFlag(tempFile, addr, false)
+	undeleted, err := changeDeleted(tempFile, addr, false)
 	if err != nil {
 		t.Fatal("undelete:", err)
 	}
@@ -115,11 +115,11 @@ func TestCrudIntegration(t *testing.T) {
 
 	// Remove
 	// Set flag first
-	_, err = ChangeCustomNameDeletedFlag(tempFile, addr, true)
+	_, err = changeDeleted(tempFile, addr, true)
 	if err != nil {
 		t.Fatal("remove: delete:", err)
 	}
-	removed, err := RemoveCustomName(tempFile, addr)
+	removed, err := removeIfExists(tempFile, addr)
 	if err != nil {
 		t.Fatal("remove:", err)
 	}
