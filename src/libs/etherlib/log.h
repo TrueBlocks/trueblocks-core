@@ -30,13 +30,13 @@ class CLog : public CBaseNode {
     address_t address;
     hash_t blockHash;
     blknum_t blockNumber;
-    blknum_t logIndex;
+    uint64_t logIndex;
     CTopicArray topics;
     string_q data;
     CFunction articulatedLog;
     string_q compressedLog;
     hash_t transactionHash;
-    blknum_t transactionIndex;
+    uint64_t transactionIndex;
     timestamp_t timestamp;
     string_q type;
     bool unused;

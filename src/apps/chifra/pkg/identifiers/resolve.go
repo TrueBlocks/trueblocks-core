@@ -206,8 +206,7 @@ func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
 	}
 
 	if id.StartType == TransactionHash {
-		provider := config.GetRpcProvider(chain)
-		bn, txid, err := rpcClient.TxNumberAndIdFromHash(provider, id.Start.Hash)
+		bn, txid, err := rpcClient.GetAppearanceFromHash(chain, id.Start.Hash)
 		app := types.RawAppearance{BlockNumber: uint32(bn), TransactionIndex: uint32(txid)}
 		return append(txs, app), err
 	}

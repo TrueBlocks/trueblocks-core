@@ -386,6 +386,10 @@ components:
           type: boolean
           example: true
           description: "flag indicating the system considers this data final"
+        uncles:
+          type: array
+          items:
+            $ref: "#/components/schemas/hash"
     transaction:
       description: "transaction data as returned from the RPC (with slight enhancements)"
       type: object
@@ -536,7 +540,7 @@ components:
           description: "Equivalent to the queried value of `decimals` from an ERC20 contract or, if ETH or WEI then 18"
         amount:
           type: string
-          format: uint256
+          format: wei
           description: "the amount of the transfer in the units of the asset"
         spotPrice:
           type: number
@@ -594,12 +598,12 @@ components:
           description: "the number of the block"
         transactionIndex:
           type: number
-          format: blknum
+          format: uint64
           example: 305
           description: "the zero-indexed position of the transaction in the block"
         logIndex:
           type: number
-          format: blknum
+          format: uint64
           example: 354
           description: "the zero-indexed position of this log relative to the block"
         transactionHash:

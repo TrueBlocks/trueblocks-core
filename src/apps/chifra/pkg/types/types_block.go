@@ -22,29 +22,28 @@ type BlockTransaction interface {
 // EXISTING_CODE
 
 type RawBlock struct {
-	Author           string   `json:"author,omitempty"`    // address
-	BaseFeePerGas    string   `json:"baseFeePerGas"`       // gas
-	Difficulty       string   `json:"difficulty"`          // int
-	ExtraData        string   `json:"extraData,omitempty"` // byte data
-	GasLimit         string   `json:"gasLimit"`            // gas
-	GasUsed          string   `json:"gasUsed"`             // gas
-	Hash             string   `json:"hash"`                // hash
-	LogsBloom        string   `json:"logsBloom,omitempty"` // byte data
-	Miner            string   `json:"miner"`               // address
-	MixHash          string   `json:"mixHash"`             // hash
-	Nonce            string   `json:"nonce"`               // hash
-	Number           string   `json:"number"`              // block number
-	ParentHash       string   `json:"parentHash"`          // hash
-	ReceiptsRoot     string   `json:"receiptsRoot"`        // hash
-	SealFields       []string `json:"sealFields"`          // array of hashes
-	Sha3Uncles       string   `json:"sha3Uncles"`          // hash
-	Size             string   `json:"size"`                // value
-	StateRoot        string   `json:"stateRoot"`           // hash
-	Timestamp        string   `json:"timestamp"`           // timestamp
-	TotalDifficulty  string   `json:"totalDifficulty"`     // value
-	Transactions     []any    `json:"transactions"`        // array of transactions or hash
-	TransactionsRoot string   `json:"transactionsRoot"`    // hash
-	Uncles           []string `json:"uncles"`              // array of hashes
+	Author           string   `json:"author"`
+	BaseFeePerGas    string   `json:"baseFeePerGas"`
+	BlockNumber      string   `json:"number"`
+	Difficulty       string   `json:"difficulty"`
+	ExtraData        string   `json:"extraData"`
+	GasLimit         string   `json:"gasLimit"`
+	GasUsed          string   `json:"gasUsed"`
+	Hash             string   `json:"hash"`
+	LogsBloom        string   `json:"logsBloom"`
+	Miner            string   `json:"miner"`
+	MixHash          string   `json:"mixHash"`
+	Nonce            string   `json:"nonce"`
+	ParentHash       string   `json:"parentHash"`
+	ReceiptsRoot     string   `json:"receiptsRoot"`
+	Sha3Uncles       string   `json:"sha3Uncles"`
+	Size             string   `json:"size"`
+	StateRoot        string   `json:"stateRoot"`
+	Timestamp        string   `json:"timestamp"`
+	TotalDifficulty  string   `json:"totalDifficulty"`
+	Transactions     []any    `json:"transactions"`
+	TransactionsRoot string   `json:"transactionsRoot"`
+	Uncles           []string `json:"uncles"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -53,7 +52,6 @@ type SimpleBlock[Tx BlockTransaction] struct {
 	BaseFeePerGas base.Wei       `json:"baseFeePerGas"`
 	BlockNumber   base.Blknum    `json:"blockNumber"`
 	Difficulty    uint64         `json:"difficulty"`
-	Finalized     bool           `json:"finalized"`
 	GasLimit      base.Gas       `json:"gasLimit"`
 	GasUsed       base.Gas       `json:"gasUsed"`
 	Hash          base.Hash      `json:"hash"`
@@ -61,9 +59,12 @@ type SimpleBlock[Tx BlockTransaction] struct {
 	ParentHash    base.Hash      `json:"parentHash"`
 	Timestamp     base.Timestamp `json:"timestamp"`
 	Transactions  []Tx           `json:"transactions"`
-	Uncles        []base.Hash    `json:"uncles"`
+	Uncles        []base.Hash    `json:"uncles,omitempty"`
 	raw           *RawBlock      `json:"-"`
 	// EXISTING_CODE
+	// Used to be Finalized which has since been removed. Until we implement IsBackLevel
+	// and upgrading cache items, this exists. We can remove it once we do so.
+	UnusedBool bool `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -109,7 +110,6 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 			Data: map[string]interface{}{
 				"hash":        s.Hash,
 				"blockNumber": s.BlockNumber,
-				"finalized":   s.Finalized,
 				"parentHash":  s.ParentHash,
 				"timestamp":   s.Timestamp,
 				"tx_hashes":   txHashes,
@@ -134,7 +134,6 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 		"difficulty":    s.Difficulty,
 		"timestamp":     s.Timestamp,
 		"baseFeePerGas": s.BaseFeePerGas.Uint64(),
-		"finalized":     s.Finalized,
 	}
 
 	order = []string{
@@ -144,7 +143,6 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 		"parentHash",
 		"miner",
 		"difficulty",
-		"finalized",
 		"baseFeePerGas",
 		"gasLimit",
 		"gasUsed",
@@ -161,7 +159,6 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 			if ok {
 				items := make([]map[string]interface{}, 0, len(txs))
 				for _, txObject := range txs {
-					extraOptions["finalized"] = s.Finalized
 					items = append(items, txObject.Model(showHidden, format, extraOptions).Data)
 				}
 				model["transactions"] = items
@@ -178,9 +175,6 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 		if extraOptions["list"] == true {
 			model["unclesCnt"] = len(s.Uncles)
 			order = append(order, "unclesCnt")
-		} else {
-			model["finalized"] = s.Finalized
-			order = append(order, "finalized")
 		}
 	}
 	// EXISTING_CODE

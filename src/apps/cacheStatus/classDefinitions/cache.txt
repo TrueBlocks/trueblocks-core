@@ -7,4 +7,5 @@ doc_group = 04-Admin
 doc_descr = the base data model for each of the type-specific local binary caches
 doc_route = 409-cache
 doc_producer = config
+# go_type = true
 output = ../../apps/cacheStatus/

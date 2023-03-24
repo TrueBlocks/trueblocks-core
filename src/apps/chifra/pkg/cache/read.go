@@ -272,7 +272,7 @@ func ReadBlock(reader *bufio.Reader) (block *types.SimpleBlock[types.SimpleTrans
 		return
 	}
 
-	err = read(&block.Finalized)
+	err = read(&block.UnusedBool)
 	if err != nil {
 		return
 	}

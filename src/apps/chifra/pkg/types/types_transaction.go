@@ -19,62 +19,67 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
+type StorageSlot struct {
+	Address     base.Address `json:"address"`
+	StorageKeys []base.Hash  `json:"storageKeys"`
+}
+
 // EXISTING_CODE
 
 type RawTransaction struct {
-	// AccessList           []string `json:"accessList"`           // array of addresses
-	BlockHash            string `json:"blockHash"`            // hash
-	BlockNumber          string `json:"blockNumber"`          // base.Blknum
-	ChainId              string `json:"chainId,omitempty"`    // string
-	From                 string `json:"from"`                 // address
-	Gas                  string `json:"gas"`                  // gas
-	GasPrice             string `json:"gasPrice"`             // gas
-	Hash                 string `json:"hash"`                 // hash
-	Input                string `json:"input"`                // byte data
-	MaxFeePerGas         string `json:"maxFeePerGas"`         // gas
-	MaxPriorityFeePerGas string `json:"maxPriorityFeePerGas"` // gas
-	Nonce                string `json:"nonce"`                // index
-	R                    string `json:"r"`                    // hash
-	S                    string `json:"s"`                    // hash
-	To                   string `json:"to"`                   // address
-	TransactionIndex     string `json:"transactionIndex"`     // index
-	Type                 string `json:"type"`                 // string
-	V                    string `json:"v"`                    // hash
-	Value                string `json:"value"`                // wei
+	AccessList           []StorageSlot `json:"accessList"`
+	BlockHash            string        `json:"blockHash"`
+	BlockNumber          string        `json:"blockNumber"`
+	ChainId              string        `json:"chainId"`
+	From                 string        `json:"from"`
+	Gas                  string        `json:"gas"`
+	GasPrice             string        `json:"gasPrice"`
+	Hash                 string        `json:"hash"`
+	Input                string        `json:"input"`
+	MaxFeePerGas         string        `json:"maxFeePerGas"`
+	MaxPriorityFeePerGas string        `json:"maxPriorityFeePerGas"`
+	Nonce                string        `json:"nonce"`
+	To                   string        `json:"to"`
+	TransactionIndex     string        `json:"transactionIndex"`
+	TransactionType      string        `json:"type"`
+	Value                string        `json:"value"`
 	// EXISTING_CODE
+	// R string `json:"r"`
+	// S string `json:"s"`
+	// V string `json:"v"`
 	// EXISTING_CODE
 }
 
 type SimpleTransaction struct {
-	ArticulatedTx        *SimpleFunction `json:"articulatedTx,omitempty"`
+	ArticulatedTx        *SimpleFunction `json:"articulatedTx"`
 	BlockHash            base.Hash       `json:"blockHash"`
 	BlockNumber          base.Blknum     `json:"blockNumber"`
 	CompressedTx         string          `json:"compressedTx"`
 	Date                 string          `json:"date"`
 	Encoding             string          `json:"encoding"`
 	Ether                string          `json:"ether"`
-	EtherGasPrice        string          `json:"etherGasPrice"`
+	EtherGasPrice        base.Gas        `json:"etherGasPrice"`
 	From                 base.Address    `json:"from"`
 	Gas                  base.Gas        `json:"gas"`
 	GasPrice             base.Gas        `json:"gasPrice"`
 	GasUsed              base.Gas        `json:"gasUsed"`
-	GasCost              base.Gas        `json:"gasCost"`
-	HasToken             bool            `json:"hasToken,omitempty"`
+	HasToken             bool            `json:"hasToken"`
 	Hash                 base.Hash       `json:"hash"`
 	Input                string          `json:"input"`
-	IsError              bool            `json:"isError,omitempty"`
-	MaxFeePerGas         base.Gas        `json:"maxFeePerGas,omitempty"`
-	MaxPriorityFeePerGas base.Gas        `json:"maxPriorityFeePerGas,omitempty"`
-	Nonce                uint64          `json:"nonce,omitempty"`
+	IsError              bool            `json:"isError"`
+	MaxFeePerGas         base.Gas        `json:"maxFeePerGas"`
+	MaxPriorityFeePerGas base.Gas        `json:"maxPriorityFeePerGas"`
+	Nonce                uint64          `json:"nonce"`
 	Receipt              *SimpleReceipt  `json:"receipt"`
-	TransactionIndex     base.Blknum     `json:"transactionIndex"`
 	Timestamp            base.Timestamp  `json:"timestamp"`
 	To                   base.Address    `json:"to"`
-	Value                base.Wei        `json:"value"`
 	Traces               []SimpleTrace   `json:"traces"`
-	Message              string          `json:"-"`
+	TransactionIndex     base.Blknum     `json:"transactionIndex"`
+	Value                base.Wei        `json:"value"`
 	raw                  *RawTransaction `json:"-"`
 	// EXISTING_CODE
+	GasCost              base.Gas        `json:"gasCost"`
+	Message              string          `json:"-"`
 	// EXISTING_CODE
 }
 

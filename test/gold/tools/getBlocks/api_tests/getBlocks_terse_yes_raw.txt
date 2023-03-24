@@ -2,7 +2,9 @@ blocks?blocks=4001001&hashes&raw
 {
   "data": [
     {
+      "author": "",
       "baseFeePerGas": "",
+      "number": "0x3d0ce9",
       "difficulty": "0x4270d231be9d1",
       "extraData": "0x6e616e6f706f6f6c2e6f7267",
       "gasLimit": "0x66d39f",
@@ -12,10 +14,8 @@ blocks?blocks=4001001&hashes&raw
       "miner": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
       "mixHash": "0xa2a8914d6b54233c2a9579081b0ee5028dbae93856ae39732a0f270a3c05d1eb",
       "nonce": "0xe92332082b43307f",
-      "number": "0x3d0ce9",
       "parentHash": "0x7721d6149047de2b5ab2cfcf0204a7a3dcdc563635003926f8f76cd652b173cb",
       "receiptsRoot": "0x5ee66609bc1565ef8b28f61ea031a9ec8f31739c48364e662fe7977bc8fe5ffc",
-      "sealFields": null,
       "sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
       "size": "0x3329",
       "stateRoot": "0x713bf9e27e8fa7cbf2b5d627609c16d0f3e66dd6d66fa7e6fee73c5ecda23525",

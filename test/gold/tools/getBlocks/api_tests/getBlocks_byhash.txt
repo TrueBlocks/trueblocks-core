@@ -5,7 +5,6 @@ blocks?blocks=0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39
       "baseFeePerGas": 0,
       "blockNumber": 4000001,
       "difficulty": 1097113993909745,
-      "finalized": true,
       "gasLimit": 6712392,
       "gasUsed": 337966,
       "hash": "0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39",

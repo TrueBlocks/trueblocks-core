@@ -7,4 +7,5 @@ doc_descr = status-related data about the TrueBlocks system including the server
 doc_route = 401-config
 doc_alias = Status
 doc_producer = config
+# go_type = true
 output = ../../apps/cacheStatus/

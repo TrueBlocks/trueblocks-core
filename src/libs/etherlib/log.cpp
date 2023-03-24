@@ -374,7 +374,7 @@ void CLog::registerClass(void) {
     HIDE_FIELD(CLog, "blockHash");
     ADD_FIELD(CLog, "blockNumber", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CLog, "blockNumber");
-    ADD_FIELD(CLog, "logIndex", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CLog, "logIndex", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CLog, "topics", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CLog, "data", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_OBJECT(CLog, "articulatedLog", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CFunction));
@@ -382,9 +382,9 @@ void CLog::registerClass(void) {
     HIDE_FIELD(CLog, "compressedLog");
     ADD_FIELD(CLog, "transactionHash", T_HASH | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CLog, "transactionHash");
-    ADD_FIELD(CLog, "transactionIndex", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CLog, "transactionIndex", T_UNUMBER, ++fieldNum);
     HIDE_FIELD(CLog, "transactionIndex");
-    ADD_FIELD(CLog, "timestamp", T_TIMESTAMP, ++fieldNum);
+    ADD_FIELD(CLog, "timestamp", T_TIMESTAMP | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CLog, "timestamp");
     ADD_FIELD(CLog, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CLog, "type");
