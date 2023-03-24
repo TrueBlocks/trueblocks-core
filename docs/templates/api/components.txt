@@ -540,7 +540,7 @@ components:
           description: "Equivalent to the queried value of `decimals` from an ERC20 contract or, if ETH or WEI then 18"
         amount:
           type: string
-          format: uint256
+          format: wei
           description: "the amount of the transfer in the units of the asset"
         spotPrice:
           type: number
