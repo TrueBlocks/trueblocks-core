@@ -6,4 +6,5 @@ doc_group = 04-Admin
 doc_descr = an item in the Unchained Index cache
 doc_route = 411-indexCacheItem
 doc_producer = config
+go_type = true
 output = ../../apps/cacheStatus/

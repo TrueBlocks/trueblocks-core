@@ -7,4 +7,5 @@ doc_group = 04-Admin
 doc_descr = a configuration item carrying information about a single chain
 doc_route = 412-chain
 doc_producer = config
+go_type = true
 output = ../../libs/utillib/

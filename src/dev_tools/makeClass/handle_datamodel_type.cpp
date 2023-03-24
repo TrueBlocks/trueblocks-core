@@ -130,6 +130,10 @@ string_q type_2_GoType(const CMember& field) {
         return "base.Timestamp";
     if (type == "hash" || type == "bytes32")
         return "base.Hash";
+    if (type == "ipfshash")
+        return "base.IpfsHash";
+    if (type == "blockRange")
+        return "base.FileRange";
     if (type == "datetime" || type == "bytes")
         return "string";
     if (type == "address")
@@ -165,7 +169,7 @@ string_q specialCase(const CClassDefinition& model, const CMember& field, const 
     } else if (name % "Result") {
         ret = isRaw ? "*RawTraceResult" : "*SimpleTraceResult";
 
-    } else if (startsWith(name, "Articulated")) {
+    } else if (startsWith(name, "Articulated") || name % "CallResult") {
         ret = isRaw ? "" : "*SimpleFunction";
 
     } else if (name % "Uncles") {
@@ -176,6 +180,9 @@ string_q specialCase(const CClassDefinition& model, const CMember& field, const 
 
     } else if (name % "Transactions") {
         ret = isRaw ? "[]any" : "[]Tx";
+
+    } else if (modelName % "Manifest" && name % "Chunks") {
+        ret = isRaw ? "string" : "[]SimpleChunkRecord";
 
     } else if (name % "TraceAddress") {
         ret = "[]uint64";
