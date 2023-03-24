@@ -266,12 +266,10 @@ func (opts *NamesOptions) validateCrudData(data *CrudData) error {
 	if data.Address.Value.IsZero() {
 		return errors.New("address is required")
 	}
-	// TODO: make sure Autoname is something that we still want to support
 	if data.Name.Value == "" {
 		return errors.New("address is required")
 	}
 
-	// TODO: we should validate symbol and decimals if address is a token
 	return nil
 }
 

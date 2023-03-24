@@ -98,7 +98,6 @@ func LoadNamesMap(chain string, parts Parts, terms []string) (map[base.Address]t
 
 	// Load the custom names (note that these may overwrite the prefund and regular names)
 	if parts&Custom != 0 {
-		// customPath := filepath.Join(config.GetPathToChainConfig(chain), "names_custom.tab")
 		loadCustomMap(chain, terms, parts, &namesMap)
 	}
 
@@ -154,11 +153,6 @@ const (
 )
 
 func NewNameReader(source io.Reader, mode NameReaderMode) (NameReader, error) {
-	// file, err := os.OpenFile(path, os.O_RDONLY, 0)
-	// if err != nil {
-	// 	return NameReader{}, err
-	// }
-
 	reader := csv.NewReader(source)
 	reader.Comma = '\t'
 	if mode == NameReaderComma {
@@ -204,13 +198,14 @@ func OpenDatabaseFile(chain string, kind DatabaseFile, openFlag int) (*os.File, 
 	var permissions fs.FileMode = 0666
 
 	if kind == DatabaseCustom && os.Getenv("TEST_MODE") == "true" {
-		// Create temp database, just for tests
+		// Create temp database, just for tests. On Mac, the permissions must be set to 0777
 		if err := os.MkdirAll(path.Join(os.TempDir(), "trueblocks"), 0777); err != nil {
 			return nil, err
 		}
 
 		filePath = path.Join(os.TempDir(), "trueblocks", "names_custom.tab")
 		openFlag |= os.O_CREATE
+		// On Mac, the permissions must be set to 0777
 		permissions = 0777
 	}
 

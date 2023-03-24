@@ -23,19 +23,19 @@ func (opts *NamesOptions) HandleCrud() (err error) {
 		}
 	}
 	if opts.Delete {
-		name, err = handleDelete(opts.Globals.Chain, opts.crudData, true, false)
+		name, err = handleDelete(opts.Globals.Chain, opts.crudData)
 		if err != nil {
 			return
 		}
 	}
 	if opts.Undelete {
-		name, err = handleDelete(opts.Globals.Chain, opts.crudData, false, false)
+		name, err = handleUndelete(opts.Globals.Chain, opts.crudData)
 		if err != nil {
 			return
 		}
 	}
 	if opts.Remove {
-		name, err = handleDelete(opts.Globals.Chain, opts.crudData, true, true)
+		name, err = handleRemove(opts.Globals.Chain, opts.crudData)
 		// Remove doesn't print the removed item
 		return
 	}
@@ -86,12 +86,14 @@ func handleCreate(chain string, data *CrudData) (name *types.SimpleName, err err
 	return name, names.CreateCustomName(chain, name)
 }
 
-func handleDelete(chain string, data *CrudData, deleted bool, remove bool) (name *types.SimpleName, err error) {
-	if !remove {
-		name, err = names.ChangeCustomNameDeletedFlag(chain, data.Address.Value, deleted)
-		return
-	}
+func handleDelete(chain string, data *CrudData) (*types.SimpleName, error) {
+	return names.ChangeCustomNameDeletedFlag(chain, data.Address.Value, true)
+}
 
-	name, err = names.RemoveCustomName(chain, data.Address.Value)
-	return
+func handleUndelete(chain string, data *CrudData) (*types.SimpleName, error) {
+	return names.ChangeCustomNameDeletedFlag(chain, data.Address.Value, false)
+}
+
+func handleRemove(chain string, data *CrudData) (*types.SimpleName, error) {
+	return names.RemoveCustomName(chain, data.Address.Value)
 }

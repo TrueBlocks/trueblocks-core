@@ -13,9 +13,6 @@ import (
 )
 
 var loadedCustomNames map[base.Address]types.SimpleName = map[base.Address]types.SimpleName{}
-
-// type NamesMap map[base.Address]types.SimpleName
-
 var loadedCustomNamesMutex sync.Mutex
 
 // We don't want to save test names even in test database
