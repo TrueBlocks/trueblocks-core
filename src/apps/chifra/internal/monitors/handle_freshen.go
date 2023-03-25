@@ -13,5 +13,6 @@ func (opts *MonitorsOptions) FreshenMonitorsForWatch(addrs []string) error {
 	}
 
 	unused := make([]monitor.Monitor, 0, len(addrs))
-	return listOpts.HandleFreshenMonitors(&unused)
+	_, err := listOpts.HandleFreshenMonitors(&unused)
+	return err
 }

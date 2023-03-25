@@ -13,5 +13,6 @@ func (opts *ExportOptions) FreshenMonitorsForExport() error {
 	}
 
 	unused := make([]monitor.Monitor, 0, len(opts.Addrs))
-	return listOpts.HandleFreshenMonitors(&unused)
+	_, err := listOpts.HandleFreshenMonitors(&unused)
+	return err
 }

@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type severity int
@@ -118,4 +119,11 @@ func Fatal(v ...any) {
 
 func Panic(v ...any) {
 	log.Panic(v...)
+}
+
+func Progress2(tick bool, v ...any) {
+	if utils.IsTerminal() || !tick {
+		return
+	}
+	Progress(v...)
 }

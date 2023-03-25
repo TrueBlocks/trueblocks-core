@@ -142,7 +142,7 @@ func getWriteWorker(chain string, workerArgs writeWorkerArguments, chunkType cac
 		case <-workerArgs.ctx.Done():
 			return
 		default:
-			trapChannel := sigintTrap.Enable(workerArgs.ctx, workerArgs.cancel)
+			trapChannel := sigintTrap.Enable(workerArgs.ctx, workerArgs.cancel, func() { logger.Info("Finishing work...") })
 			err := writeBytesToDisc(chain, chunkType, res)
 			sigintTrap.Disable(trapChannel)
 			if errors.Is(workerArgs.ctx.Err(), context.Canceled) {

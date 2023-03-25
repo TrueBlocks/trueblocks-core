@@ -19,7 +19,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 var MonitorScraper Scraper
@@ -185,7 +184,7 @@ func getCommandsFromFile(globals globals.GlobalOptions) ([]SemiParse, error) {
 		logger.Warn("No --file option supplied. Using default.")
 		cmdLines = append(cmdLines, "export --appearances")
 	} else {
-		cmdLines = utils.AsciiFileToLines(commandFile)
+		cmdLines = file.AsciiFileToLines(commandFile)
 	}
 
 	for _, cmd := range cmdLines {

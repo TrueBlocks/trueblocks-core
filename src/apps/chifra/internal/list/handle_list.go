@@ -54,10 +54,10 @@ func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) e
 				appRange := base.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)}
 				if appRange.Intersects(exportRange) {
 					if nSeen < opts.FirstRecord {
-						// logger.Info("Skipping:", nExported, opts.FirstRecord)
+						logger.Progress2(true, "Skipping:", nExported, opts.FirstRecord)
 						continue
-					} else if nExported > opts.MaxRecords {
-						// logger.Info("Quitting:", nExported, opts.FirstRecord)
+					} else if opts.IsMax(nExported) {
+						logger.Progress2(true, "Quitting:", nExported, opts.FirstRecord)
 						return
 					}
 					nExported++
@@ -68,9 +68,11 @@ func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) e
 						TransactionIndex: app.TransactionId,
 					}
 
+					logger.Progress2(nSeen%723 == 0, "Processing: ", s.Address, " ", s.BlockNumber, ".", s.TransactionIndex)
 					if s.BlockNumber != currentBn {
 						currentTs, _ = tslib.FromBnToTs(chain, uint64(s.BlockNumber))
 					}
+
 					currentBn = s.BlockNumber
 					s.Timestamp = currentTs
 					s.Date = utils.FormattedDate(currentTs)
@@ -97,4 +99,12 @@ func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) e
 		Append:     opts.Globals.Append,
 		JsonIndent: "  ",
 	})
+}
+
+func (opts *ListOptions) IsMax(cnt uint64) bool {
+	max := opts.MaxRecords
+	if max == 250 && !opts.Globals.IsApiMode() {
+		max = utils.NOPOS
+	}
+	return cnt > max
 }
