@@ -19,6 +19,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/bykof/gostradamus"
 	"github.com/ethereum/go-ethereum/params"
 	"golang.org/x/term"
 )
@@ -221,4 +222,8 @@ func Str_2_BigInt(str string) big.Int {
 
 func WeiToEther(wei *big.Int) *big.Float {
 	return new(big.Float).Quo(new(big.Float).SetInt(wei), big.NewFloat(params.Ether))
+}
+
+func FormattedDate(ts int64) string {
+	return gostradamus.FromUnixTimestamp(ts).Format("2006-01-02 15:04:05 UTC")
 }

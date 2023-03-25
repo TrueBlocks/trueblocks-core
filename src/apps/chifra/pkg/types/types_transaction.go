@@ -78,8 +78,8 @@ type SimpleTransaction struct {
 	Value                base.Wei        `json:"value"`
 	raw                  *RawTransaction `json:"-"`
 	// EXISTING_CODE
-	GasCost              base.Gas        `json:"gasCost"`
-	Message              string          `json:"-"`
+	GasCost base.Gas `json:"gasCost"`
+	Message string   `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -100,7 +100,6 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 	if to == "0x0000000000000000000000000000000000000000" {
 		to = "0x0" // weird special case to preserve what RPC does
 	}
-	date := gostradamus.FromUnixTimestamp(s.Timestamp)
 
 	model = map[string]interface{}{
 		"blockNumber":      s.BlockNumber,
@@ -131,7 +130,8 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		"compressedTx",
 	}
 
-	model["date"] = date.Format("2006-01-02 15:04:05") + " UTC"
+	date := gostradamus.FromUnixTimestamp(s.Timestamp)
+	model["date"] = utils.FormattedDate(s.Timestamp)
 	model["gasCost"] = s.SetGasCost(s.Receipt)
 
 	// TODO: Shouldn't this use the SimpleFunction model - the answer is yes?

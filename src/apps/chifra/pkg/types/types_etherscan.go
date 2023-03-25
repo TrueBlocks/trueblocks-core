@@ -15,7 +15,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/bykof/gostradamus"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -88,8 +87,6 @@ func (s *SimpleEtherscan) Model(showHidden bool, format string, extraOptions map
 		to = "0x0" // weird special case to preserve what RPC does
 	}
 
-	date := gostradamus.FromUnixTimestamp(s.Timestamp)
-
 	model = map[string]interface{}{
 		"blockNumber": s.BlockNumber,
 		"date":        s.Date,
@@ -118,7 +115,7 @@ func (s *SimpleEtherscan) Model(showHidden bool, format string, extraOptions map
 
 	// var order []string
 
-	model["date"] = date.Format("2006-01-02 15:04:05") + " UTC"
+	model["date"] = utils.FormattedDate(s.Timestamp)
 	if strings.Contains(s.Input, "Reward") {
 		model["from"] = s.Input
 		s.Input = ""
