@@ -50,8 +50,8 @@ func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup) {
 				case monitor.SentinalAddr:
 					close(monitorChan)
 				default:
-					if result.Count() > 100000 {
-						fmt.Println("Ignoring too-large address", result.Address)
+					if result.Count() > 500000 {
+						logger.Warn("Ignoring too-large address", result.Address)
 						continue
 					}
 					monitors = append(monitors, result)

@@ -12,6 +12,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -32,12 +33,16 @@ func (mon *Monitor) Decache(chain string, processor func(string) bool) (err erro
 	}
 
 	caches := []string{"blocks", "txs", "traces", "recons"}
-	for _, cache := range caches {
+	for index, cache := range caches {
 		for _, app := range apps {
 			path := getCachePath(chain, cache, hexutil.Encode(mon.Address.Bytes()), app.BlockNumber, app.TransactionId)
 			if file.FileExists(path) {
 				if !processor(path) {
 					return nil
+				}
+			} else {
+				if index%20 == 0 {
+					logger.Progress("Already removed: ", path)
 				}
 			}
 		}
@@ -47,6 +52,12 @@ func (mon *Monitor) Decache(chain string, processor func(string) bool) (err erro
 	path := config.GetPathToCache(chain) + "abis/"
 	pathToAbi := filepath.Join(path, mon.Address.Hex()+".json")
 	processor(pathToAbi)
+
+	// Clean up the stage if there's anything there
+	path = filepath.Join(config.GetApiProvider(chain), "monitors/staging/", mon.Address.Hex()+".mon.bin")
+	if file.FileExists(path) {
+		err = os.Remove(path)
+	}
 
 	return err
 }
