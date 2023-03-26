@@ -102,7 +102,7 @@ Flags:
   -a, --api string      instruct the node to start the API server
                         One of [ off | on ] (default "on")
   -s, --scrape string   start the scraper, initialize it with either just blooms or entire index, generate for new blocks
-                        One of [ off | blooms | full-index ]
+                        One of [ off | blooms | index ]
   -m, --monitor         instruct the node to start the monitors tool
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)

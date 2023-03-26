@@ -18,7 +18,7 @@ func (opts *DaemonOptions) validateDaemon() error {
 		return opts.BadFlag
 	}
 
-	err := validate.ValidateEnum("scrape", opts.Scrape, "[off|blooms|full-index]")
+	err := validate.ValidateEnum("scrape", opts.Scrape, "[off|blooms|index]")
 	if err != nil {
 		return err
 	}

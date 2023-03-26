@@ -158,7 +158,7 @@ There were no changes to the [Specification for the Unchained Index](https://tru
 
 - Renamed the `serve` tool to `daemon` as its responsibilities have grown. `serve` still works (and will continue to work) but only starts the API server. In the future, `daemon` will allow you to start other long running processes (i.e. daemons) such as the `chifra scrape` and `chifra monitor --watch` tools.
 - Added option `--api` which takes on values of `[ on | off ]`.
-- Added option `--scrape` which takes on values of `[ off | blooms | full-index ]`. Currently non-functional.
+- Added option `--scrape` which takes on values of `[ off | blooms | index ]`. Currently non-functional.
 - Added option `--monitor` which eneables the monitor tool. Currently non-functional.
 
 **chifra scrape**
