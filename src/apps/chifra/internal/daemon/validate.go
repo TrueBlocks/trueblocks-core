@@ -22,6 +22,12 @@ func (opts *DaemonOptions) validateDaemon() error {
 	if err != nil {
 		return err
 	}
+	if len(opts.Scrape) > 0 && opts.Scrape != "index" {
+		return validate.Usage("Only the {0} option is available for {1}.", "index", "--scrape")
+	}
+	if opts.Monitor {
+		return validate.Usage("The {0} option is currenlty not available. Use {1} instead.", "--monitor", "chifra monitors --watch")
+	}
 
 	err = validate.ValidateEnum("api", opts.Api, "[off|on]")
 	if err != nil {
