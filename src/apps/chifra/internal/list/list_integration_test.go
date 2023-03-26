@@ -40,7 +40,7 @@ func Test_HandleFreshenMonitors(t *testing.T) {
 
 	os.Setenv("FAKE_FINAL_BLOCK", "2500000")
 	monitorArray := make([]monitor.Monitor, 0, len(listOpts.Addrs))
-	err := listOpts.HandleFreshenMonitors(&monitorArray)
+	_, err := listOpts.HandleFreshenMonitors(&monitorArray)
 	if err != nil {
 		t.Error(err)
 	}
@@ -53,7 +53,7 @@ func Test_HandleFreshenMonitors(t *testing.T) {
 	// }
 
 	os.Setenv("FAKE_FINAL_BLOCK", "")
-	err = listOpts.HandleFreshenMonitors(&monitorArray)
+	_, err = listOpts.HandleFreshenMonitors(&monitorArray)
 	if err != nil {
 		t.Error(err)
 	}

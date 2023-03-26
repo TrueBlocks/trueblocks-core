@@ -55,7 +55,7 @@ func (opts *ListOptions) ListInternal() (err error, handled bool) {
 
 	// We always freshen the monitors. This call fills the monitors array.
 	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
-	err = opts.HandleFreshenMonitors(&monitorArray)
+	_, err = opts.HandleFreshenMonitors(&monitorArray)
 	if err != nil {
 		return
 	}

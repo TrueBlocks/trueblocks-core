@@ -61,9 +61,8 @@ func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup) {
 				}
 			}
 
-			opts.Refresh(monitors)
-
-			if os.Getenv("RUN_ONCE") == "true" {
+			canceled, _ := opts.Refresh(monitors)
+			if canceled || os.Getenv("RUN_ONCE") == "true" {
 				return
 			}
 
@@ -92,16 +91,16 @@ func (sp SemiParse) String() string {
 
 const addrsPerBatch = 8
 
-func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) error {
+func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) (bool, error) {
 	theCmds, _ := getCommandsFromFile(opts.Globals)
 
 	batches := batchMonitors(monitors, addrsPerBatch)
 	for i := 0; i < len(batches); i++ {
 		addrs, countsBefore := preProcessBatch(batches[i], i, len(monitors))
 
-		err := opts.FreshenMonitorsForWatch(addrs)
-		if err != nil {
-			return err
+		canceled, err := opts.FreshenMonitorsForWatch(addrs)
+		if canceled || err != nil {
+			return canceled, err
 		}
 
 		for j := 0; j < len(batches[i]); j++ {
@@ -143,7 +142,7 @@ func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) error {
 			}
 		}
 	}
-	return nil
+	return false, nil
 }
 
 func batchMonitors(slice []monitor.Monitor, batchSize int) [][]monitor.Monitor {

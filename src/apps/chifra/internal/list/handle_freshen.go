@@ -64,12 +64,13 @@ func unlockForAddress(address string) {
 	mutex.Unlock()
 }
 
-func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) error {
+func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) (bool, error) {
 	for _, address := range opts.Addrs {
 		lockForAddress(address)
 		defer unlockForAddress(address) // reminder: this defers until the function returns, not this loop
 	}
 
+	canceled := false
 	var updater = MonitorUpdate{
 		MaxTasks:   12,
 		MonitorMap: make(AddressMonitorMap, len(opts.Addrs)),
@@ -81,7 +82,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 	for _, addr := range opts.Addrs {
 		err := needsMigration(addr)
 		if err != nil {
-			return err
+			return canceled, err
 		}
 
 		if updater.MonitorMap[base.HexToAddress(addr)] == nil {
@@ -100,7 +101,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 	bloomPath := config.GetPathToIndex(chain) + "blooms/"
 	files, err := os.ReadDir(bloomPath)
 	if err != nil {
-		return err
+		return canceled, err
 	}
 
 	var wg sync.WaitGroup
@@ -194,7 +195,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 		}
 	}
 
-	return updater.moveAllToProduction()
+	return canceled, updater.moveAllToProduction()
 }
 
 // visitChunkToFreshenFinal opens an index file, searches for the address(es) we're looking for and pushes
