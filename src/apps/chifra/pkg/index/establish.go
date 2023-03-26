@@ -50,7 +50,7 @@ func EstablishIndexChunk(chain string, fileRange base.FileRange) (bool, error) {
 	// Start downloading the filter
 	matchedPin.BloomHash = "" // we want to download only the index chunk
 	chunks := []manifest.ChunkRecord{matchedPin}
-	progressChannel := make(chan *progress.Progress)
+	progressChannel := make(chan *progress.ProgressMsg)
 
 	go func() {
 		DownloadChunks(chain, chunks, cache.Index_Final, 4 /* poolSize */, progressChannel)

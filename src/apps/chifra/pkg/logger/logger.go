@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type severity int
@@ -92,10 +93,6 @@ func toLog(sev severity, a ...interface{}) {
 	}
 }
 
-func Progress(v ...any) {
-	toLog(progress, v...)
-}
-
 func InfoTable(v ...any) {
 	toLog(infoC, v...)
 }
@@ -118,4 +115,11 @@ func Fatal(v ...any) {
 
 func Panic(v ...any) {
 	log.Panic(v...)
+}
+
+func Progress(tick bool, v ...any) {
+	if utils.IsTerminal() || !tick {
+		return
+	}
+	toLog(progress, v...)
 }
