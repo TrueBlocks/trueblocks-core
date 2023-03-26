@@ -51,6 +51,12 @@ func (mon *Monitor) Decache(chain string, processor func(string) bool) (err erro
 	pathToAbi := filepath.Join(path, mon.Address.Hex()+".json")
 	processor(pathToAbi)
 
+	// Clean up the stage if there's anything there
+	path = filepath.Join(config.GetApiProvider(chain), "monitors/staging/", mon.Address.Hex()+".mon.bin")
+	if file.FileExists(path) {
+		err = os.Remove(path)
+	}
+
 	return err
 }
 
