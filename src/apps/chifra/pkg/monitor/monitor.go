@@ -101,7 +101,7 @@ func (mon Monitor) String() string {
 // ToJSON returns a JSON object from a Monitor
 func (mon Monitor) ToJSON() string {
 	sm := types.SimpleMonitor{
-		Address:     mon.GetAddrStr(),
+		Address:     mon.Address.Hex(),
 		NRecords:    int(mon.Count()),
 		FileSize:    file.FileSize(mon.Path()),
 		LastScanned: mon.Header.LastScanned,
@@ -113,9 +113,9 @@ func (mon Monitor) ToJSON() string {
 // Path returns the path to the Monitor file
 func (mon *Monitor) Path() (path string) {
 	if mon.Staged {
-		path = config.GetPathToCache(mon.Chain) + "monitors/staging/" + mon.GetAddrStr() + Ext
+		path = config.GetPathToCache(mon.Chain) + "monitors/staging/" + mon.Address.Hex() + Ext
 	} else {
-		path = config.GetPathToCache(mon.Chain) + "monitors/" + mon.GetAddrStr() + Ext
+		path = config.GetPathToCache(mon.Chain) + "monitors/" + mon.Address.Hex() + Ext
 	}
 	return
 }
@@ -140,11 +140,6 @@ func (mon *Monitor) Count() uint32 {
 	w := uint32(index.AppRecordWidth)
 	n := uint32(s / w)
 	return n - 1
-}
-
-// GetAddrStr returns the Monitor's address as a string
-func (mon *Monitor) GetAddrStr() string {
-	return hexutil.Encode(mon.Address.Bytes())
 }
 
 // IsOpen returns true if the underlying monitor file is opened.
@@ -265,7 +260,7 @@ func (mon *Monitor) MoveToProduction() error {
 	}
 
 	if before != after {
-		msg := fmt.Sprintf("%s %d duplicates removed.", mon.GetAddrStr(), (before - after))
+		msg := fmt.Sprintf("%s %d duplicates removed.", mon.Address.Hex(), (before - after))
 		logger.Warn(msg)
 	}
 

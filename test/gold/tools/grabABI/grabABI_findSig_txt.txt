@@ -1,5 +1,5 @@
 chifra abis  --find 0x1aa3a008 --fmt txt
 TEST[DATE|TIME] Find:  [0x1aa3a008]
 TEST[DATE|TIME] Format:  txt
-PROG[DATE|TIME] Found 1 of 10x1aa3a008register()encoding	signature
+encoding	signature
 0x1aa3a008	register()

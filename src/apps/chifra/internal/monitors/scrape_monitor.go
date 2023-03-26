@@ -117,7 +117,7 @@ func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) (bool, error) {
 			}
 
 			for _, sp := range theCmds {
-				outputFn := sp.Folder + "/" + mon.GetAddrStr() + "." + sp.Fmt
+				outputFn := sp.Folder + "/" + mon.Address.Hex() + "." + sp.Fmt
 				exists := file.FileExists(outputFn)
 				countBefore := countsBefore[j]
 
@@ -129,7 +129,7 @@ func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) (bool, error) {
 						add += fmt.Sprintf(" --max_records %d", uint64(countAfter-countBefore+1)) // extra space won't hurt
 						add += " --append --no_header"
 					}
-					cmd += add + " " + mon.GetAddrStr()
+					cmd += add + " " + mon.Address.Hex()
 					cmd = strings.Replace(cmd, "  ", " ", -1)
 					o := opts
 					o.Globals.File = ""
@@ -221,7 +221,7 @@ const spaces = "                                                                
 func preProcessBatch(batch []monitor.Monitor, i, nMons int) ([]string, []uint32) {
 	var addrs []string
 	for j := 0; j < len(batch); j++ {
-		addrs = append(addrs, batch[j].GetAddrStr())
+		addrs = append(addrs, batch[j].Address.Hex())
 	}
 
 	fmt.Println(strings.Repeat(" ", 120), "\r")

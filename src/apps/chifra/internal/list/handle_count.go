@@ -16,7 +16,7 @@ func (opts *ListOptions) HandleListCount(monitorArray []monitor.Monitor) error {
 	for _, mon := range monitorArray {
 		if !opts.NoZero || mon.Count() > 0 {
 			simp := types.SimpleMonitor{
-				Address:     mon.GetAddrStr(),
+				Address:     mon.Address.Hex(),
 				NRecords:    int(mon.Count()),
 				FileSize:    file.FileSize(mon.Path()),
 				LastScanned: mon.Header.LastScanned,
