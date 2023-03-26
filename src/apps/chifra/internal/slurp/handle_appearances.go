@@ -9,7 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/bykof/gostradamus"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *SlurpOptions) HandleShowAppearances() error {
@@ -50,7 +50,7 @@ func (opts *SlurpOptions) HandleShowAppearances() error {
 							BlockNumber:      uint32(tx.BlockNumber),
 							TransactionIndex: uint32(tx.TransactionIndex),
 							Timestamp:        tx.Timestamp,
-							Date:             gostradamus.FromUnixTimestamp(tx.Timestamp).String(),
+							Date:             utils.FormattedDate(tx.Timestamp),
 						}
 						totalFiltered++
 					}
