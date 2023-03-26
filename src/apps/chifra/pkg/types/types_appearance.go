@@ -46,19 +46,25 @@ func (s *SimpleAppearance) Model(showHidden bool, format string, extraOptions ma
 		"address":          s.Address,
 		"blockNumber":      s.BlockNumber,
 		"transactionIndex": s.TransactionIndex,
-		"reason":           s.Reason,
-		"timestamp":        s.Timestamp,
-		"date":             s.Date,
 	}
-
 	order = []string{
 		"address",
 		"blockNumber",
 		"transactionIndex",
-		"reason",
-		"timestamp",
-		"date",
 	}
+
+	if showHidden {
+		// model["reason"] = s.Reason
+		model["timestamp"] = s.Timestamp
+		model["date"] = s.Date
+
+		order = append(order, []string{
+			// "reason",
+			"timestamp",
+			"date",
+		}...)
+	}
+
 	// EXISTING_CODE
 
 	return Model{
