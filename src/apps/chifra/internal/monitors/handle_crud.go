@@ -7,9 +7,7 @@ package monitorsPkg
 import (
 	"os"
 	"path/filepath"
-	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
@@ -32,9 +30,9 @@ func (opts *MonitorsOptions) HandleCrudCommands() error {
 
 		} else {
 			if opts.Decache {
-				logger.Progress(!testMode, "Decaching", addr)
+				logger.Info("Decaching", addr)
 				if opts.Globals.TestMode {
-					logger.Info("Decaching monitor for address ", addr, "not tested.")
+					logger.Info("Decaching monitor for address", addr, "not tested.")
 					return nil
 				}
 
@@ -45,18 +43,13 @@ func (opts *MonitorsOptions) HandleCrudCommands() error {
 						return true // continue processing
 					}
 
-					fileNameStr := fileName
-					if opts.Globals.TestMode {
-						fileNameStr = strings.Replace(fileNameStr, config.GetPathToCache(opts.Globals.Chain), "$cachePath/", -1)
-					}
-
 					itemsRemoved++
 					bytesRemoved += file.FileSize(fileName)
 					logger.Progress(!testMode && itemsRemoved%20 == 0, "Removed", itemsRemoved, "items and", bytesRemoved, "bytes.", fileName)
 
 					os.Remove(fileName)
 					if opts.Globals.Verbose {
-						logger.Info(fileNameStr, "was removed.")
+						logger.Info(fileName, "was removed.")
 					}
 					path, _ := filepath.Split(fileName)
 					if empty, _ := file.IsFolderEmpty(path); empty {

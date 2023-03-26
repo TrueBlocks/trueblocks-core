@@ -179,6 +179,7 @@ local   ,both ,fast  ,export   ,apps/acctExport ,monitors_statements      ,y    
 local   ,both ,fast  ,monitors ,apps/acctExport ,monitors_decache         ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & decache
 local   ,both ,fast  ,monitors ,apps/acctExport ,monitors_decache_again   ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & decache
 local   ,both ,fast  ,monitors ,apps/acctExport ,monitors_list2           ,n    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 0x001d14804b399c6ef80e64576f657660804fec0b & list & fmt = csv
+local   ,both ,fast  ,monitors ,apps/acctExport ,monitors_list_not_in     ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7512 & list
 
 # reverse does not work
 local   ,both ,fast  ,export   ,apps/acctExport ,statement_forward        ,y    ,addrs = 0x868b8fd259abfcfdf9634c343593b34ef359641d & last_block = 8769141 & accounting & statements & ether & fmt = json

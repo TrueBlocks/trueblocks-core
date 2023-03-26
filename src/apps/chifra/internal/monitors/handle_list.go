@@ -12,23 +12,6 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
-func GetAllMonitors(chain string) []monitor.Monitor {
-	monitorChan := make(chan monitor.Monitor)
-
-	var monitors []monitor.Monitor
-	go monitor.ListMonitors(chain, "monitors", monitorChan)
-
-	for result := range monitorChan {
-		switch result.Address {
-		case monitor.SentinalAddr:
-			close(monitorChan)
-		default:
-			monitors = append(monitors, result)
-		}
-	}
-	return monitors
-}
-
 // HandleList
 func (opts *MonitorsOptions) HandleList() error {
 	chain := opts.Globals.Chain
@@ -47,6 +30,23 @@ func (opts *MonitorsOptions) HandleList() error {
 	}
 
 	return globals.RenderSlice(&opts.Globals, objs)
+}
+
+func GetAllMonitors(chain string) []monitor.Monitor {
+	monitorChan := make(chan monitor.Monitor)
+
+	var monitors []monitor.Monitor
+	go monitor.ListMonitors(chain, "monitors", monitorChan)
+
+	for result := range monitorChan {
+		switch result.Address {
+		case monitor.SentinalAddr:
+			close(monitorChan)
+		default:
+			monitors = append(monitors, result)
+		}
+	}
+	return monitors
 }
 
 // TODO: Move this to utils package

@@ -76,7 +76,10 @@ func toLog(sev severity, a ...interface{}) {
 
 	fmt.Fprintf(os.Stderr, "%s[%s] ", severityToLabel[sev], timeDatePart)
 	if sev == progress {
-		for _, aa := range a {
+		for index, aa := range a {
+			if index > 0 {
+				fmt.Fprint(os.Stderr, ' ')
+			}
 			fmt.Fprint(os.Stderr, aa)
 		}
 		fmt.Fprint(os.Stderr, "\r")
@@ -118,7 +121,7 @@ func Panic(v ...any) {
 }
 
 func Progress(tick bool, v ...any) {
-	if utils.IsTerminal() || !tick {
+	if !utils.IsTerminal() || !tick {
 		return
 	}
 	toLog(progress, v...)

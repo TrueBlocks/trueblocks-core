@@ -41,7 +41,7 @@ func (mon *Monitor) Decache(chain string, processor func(string) bool) (err erro
 					return nil
 				}
 			} else {
-				logger.Progress(index%20 == 0, "Already removed: ", path)
+				logger.Progress(index%20 == 0, "Already removed:", path)
 			}
 		}
 	}
