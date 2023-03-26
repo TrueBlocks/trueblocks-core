@@ -12,12 +12,11 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
-// HandleClean
-func (opts *MonitorsOptions) HandleList() error {
+func GetAllMonitors(chain string) []monitor.Monitor {
 	monitorChan := make(chan monitor.Monitor)
 
 	var monitors []monitor.Monitor
-	go monitor.ListMonitors(opts.Globals.Chain, "monitors", monitorChan)
+	go monitor.ListMonitors(chain, "monitors", monitorChan)
 
 	for result := range monitorChan {
 		switch result.Address {
@@ -27,21 +26,26 @@ func (opts *MonitorsOptions) HandleList() error {
 			monitors = append(monitors, result)
 		}
 	}
+	return monitors
+}
 
+// HandleList
+func (opts *MonitorsOptions) HandleList() error {
+	chain := opts.Globals.Chain
+	monitorArray := GetAllMonitors(chain)
 	objs := []types.SimpleMonitor{}
-	for _, mon := range monitors {
-		obj := types.SimpleMonitor{
+	for _, mon := range monitorArray {
+		s := types.SimpleMonitor{
 			Address:     hexutil.Encode(mon.Address.Bytes()),
 			NRecords:    int(mon.Count()),
 			FileSize:    file.FileSize(mon.Path()),
 			LastScanned: mon.Header.LastScanned,
 		}
-		if len(opts.Addrs) == 0 || InStrArray(obj.Address, opts.Addrs) {
-			objs = append(objs, obj)
+		if len(opts.Addrs) == 0 || InStrArray(s.Address, opts.Addrs) {
+			objs = append(objs, s)
 		}
 	}
 
-	// TODO: Fix export without arrays
 	return globals.RenderSlice(&opts.Globals, objs)
 }
 

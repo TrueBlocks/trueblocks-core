@@ -5,12 +5,12 @@
 package listPkg
 
 import (
-	"fmt"
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -26,7 +26,7 @@ func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) e
 			return err
 		}
 		if len(apps) == 0 {
-			fmt.Println("No appearances found for", mon.GetAddrStr())
+			logger.Warn("No appearances found for", mon.GetAddrStr())
 			return nil
 		}
 

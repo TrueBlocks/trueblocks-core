@@ -5,6 +5,7 @@ package listPkg
 // be found in the LICENSE file.
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"sort"
@@ -15,12 +16,14 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -70,7 +73,17 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 		defer unlockForAddress(address) // reminder: this defers until the function returns, not this loop
 	}
 
+	var m sync.Once
 	canceled := false
+	ctx, cancel := context.WithCancel(context.Background())
+	cleanOnQuit := func() {
+		canceled = true
+		logger.Warn(colors.Yellow+"User hit control+c...", colors.Off)
+		cancel()
+	}
+	trapChannel := sigintTrap.Enable(ctx, cancel, cleanOnQuit)
+	defer sigintTrap.Disable(trapChannel)
+
 	var updater = MonitorUpdate{
 		MaxTasks:   12,
 		MonitorMap: make(AddressMonitorMap, len(opts.Addrs)),
@@ -109,6 +122,10 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 
 	taskCount := 0
 	for _, info := range files {
+		if canceled {
+			m.Do(func() { logger.Warn(colors.Yellow+"Finishing", taskCount, "current tasks...", colors.Off) })
+			continue
+		}
 		if !info.IsDir() {
 			fileName := bloomPath + "/" + info.Name()
 			if !strings.HasSuffix(fileName, ".bloom") {

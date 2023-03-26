@@ -55,20 +55,23 @@ func (opts *ListOptions) ListInternal() (err error, handled bool) {
 
 	// We always freshen the monitors. This call fills the monitors array.
 	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
-	_, err = opts.HandleFreshenMonitors(&monitorArray)
+	var canceled bool
+	canceled, err = opts.HandleFreshenMonitors(&monitorArray)
 	if err != nil {
 		return
 	}
 
-	if opts.Count {
-		err = opts.HandleListCount(monitorArray)
-		if err != nil {
-			return
-		}
-	} else if !opts.Silent {
-		err = opts.HandleListAppearances(monitorArray)
-		if err != nil {
-			return
+	if !canceled {
+		if opts.Count {
+			err = opts.HandleListCount(monitorArray)
+			if err != nil {
+				return
+			}
+		} else if !opts.Silent {
+			err = opts.HandleListAppearances(monitorArray)
+			if err != nil {
+				return
+			}
 		}
 	}
 	// EXISTING_CODE
