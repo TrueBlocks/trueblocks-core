@@ -71,7 +71,7 @@ string_q urlToString(const string_q& url, CURLCALLBACKFUNC noteFunc) {
         string_q msg = "curl_easy_perform() failed with: ";
         msg += curl_easy_strerror(res);
         errorMessage(msg);
-        quickQuitHandler(0);
+        // quickQuitHandler(0);
     }
     curl_easy_cleanup(curl);
     return result.response;

@@ -139,16 +139,13 @@ static const char* STR_ERROR_CURLERR =
 static const char* STR_ERROR_CURLEMPTY = "The Ethereum node (`[{PROVIDER}]`) returned an empty response.";
 
 //-------------------------------------------------------------------------
-void curlErrorAndExit(const string_q& msgIn, const string_q& curlErr, const string& method, const string& params) {
+void curlErrorMsg(const string_q& msgIn, const string_q& curlErr, const string& method, const string& params) {
     string_q errMsg = msgIn;
     replaceAll(errMsg, "[{METHOD}]", method);
     replaceAll(errMsg, "[{PARAMS}]", params);
     replaceAll(errMsg, "[{CURLERR}]", curlErr);
     replaceAll(errMsg, "[{PROVIDER}]", getCurlContext()->baseURL);
-
     errorMessage(errMsg);
-    quickQuitHandler(EXIT_FAILURE);
-
     return;
 }
 
@@ -176,13 +173,17 @@ string_q CCurlContext::perform(const string_q& method, const string_q& params, b
     CURLcode res = curl_easy_perform(curlHandle);
     if (res != CURLE_OK && !earlyAbort) {
         PRINT(result, "CURL ERROR")
-        curlErrorAndExit(STR_ERROR_CURLERR, curl_easy_strerror(res), method, params);
+        curlErrorMsg(STR_ERROR_CURLERR, curl_easy_strerror(res), method, params);
+        // quickQuitHandler(EXIT_FAILURE);
+        return "";
     }
     PRINT(result, "CURL OK")
 
     string_q check = substitute(substitute(result, "VM execution error", ""), "\"error\":", "");
     if (result.empty()) {
-        curlErrorAndExit(STR_ERROR_CURLEMPTY, "", method, params);
+        curlErrorMsg(STR_ERROR_CURLEMPTY, "", method, params);
+        // quickQuitHandler(EXIT_FAILURE);
+        return result;
 
     } else if (contains(check, "error")) {  // don't consider an error in the VM
         if (reportErrors) {
@@ -221,7 +222,8 @@ void checkNodeRequired(void) {
         return;
 
     // This reports the error and quits
-    curlErrorAndExit(STR_ERROR_CURLERR, "Could not connect to server", "web3_clientVersion", "");
+    curlErrorMsg(STR_ERROR_CURLERR, "Could not connect to server", "web3_clientVersion", "");
+    quickQuitHandler(EXIT_FAILURE);
 }
 
 //-------------------------------------------------------------------------
