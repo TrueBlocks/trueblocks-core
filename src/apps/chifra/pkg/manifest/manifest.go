@@ -18,7 +18,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
@@ -87,7 +86,7 @@ func ReadManifest(chain string, source Source) (*Manifest, error) {
 	}
 
 	manifestPath := filepath.Join(config.GetPathToChainConfig(chain), "manifest.json")
-	contents := utils.AsciiFileToString(manifestPath)
+	contents := file.AsciiFileToString(manifestPath)
 	if !file.FileExists(manifestPath) || len(contents) == 0 {
 		return nil, ErrManifestNotFound
 	}

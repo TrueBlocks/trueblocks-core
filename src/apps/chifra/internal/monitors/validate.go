@@ -11,7 +11,6 @@ import (
 
 	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -43,7 +42,7 @@ func (opts *MonitorsOptions) validateMonitors() error {
 			}
 
 			if file.FileExists(cmdFile) {
-				contents := utils.AsciiFileToString(cmdFile)
+				contents := file.AsciiFileToString(cmdFile)
 				cmds := strings.Split(contents, "\n")
 				if len(cmds) == 0 {
 					return validate.Usage("The command file you specified ({0}) was found but contained no commands.", cmdFile)

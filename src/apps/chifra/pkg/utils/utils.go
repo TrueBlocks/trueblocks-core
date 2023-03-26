@@ -8,6 +8,7 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"log"
 	"math/big"
 	"net/http"
 	"os"
@@ -17,8 +18,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/bykof/gostradamus"
 	"github.com/ethereum/go-ethereum/params"
 	"golang.org/x/term"
 )
@@ -39,14 +39,6 @@ func IsTerminal() bool {
 	return term.IsTerminal(int(os.Stdout.Fd()))
 }
 
-func AsciiFileToString(fileName string) string {
-	return file.AsciiFileToString(fileName)
-}
-
-func AsciiFileToLines(fileName string) []string {
-	return file.AsciiFileToLines(fileName)
-}
-
 func OpenBrowser(url string) {
 	var err error
 	switch runtime.GOOS {
@@ -60,7 +52,7 @@ func OpenBrowser(url string) {
 		err = fmt.Errorf("unsupported platform")
 	}
 	if err != nil {
-		logger.Fatal(err)
+		log.Fatal(err)
 	}
 }
 
@@ -185,7 +177,7 @@ func GetFields(t *reflect.Type, format string, header bool) (fields []string, se
 		}
 
 		if realType.Kind() != reflect.Struct {
-			logger.Fatal(realType.Name() + " is not a structure")
+			log.Fatal(realType.Name() + " is not a structure")
 		}
 		for i := 0; i < realType.NumField(); i++ {
 			field := realType.Field(i)
@@ -221,4 +213,8 @@ func Str_2_BigInt(str string) big.Int {
 
 func WeiToEther(wei *big.Int) *big.Float {
 	return new(big.Float).Quo(new(big.Float).SetInt(wei), big.NewFloat(params.Ether))
+}
+
+func FormattedDate(ts int64) string {
+	return gostradamus.FromUnixTimestamp(ts).Format("2006-01-02 15:04:05 UTC")
 }
