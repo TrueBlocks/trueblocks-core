@@ -5,9 +5,14 @@
 package monitorsPkg
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"context"
+	"fmt"
+	"sort"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
@@ -15,46 +20,55 @@ import (
 // HandleList
 func (opts *MonitorsOptions) HandleList() error {
 	chain := opts.Globals.Chain
-	monitorArray := GetAllMonitors(chain)
-	objs := []types.SimpleMonitor{}
-	for _, mon := range monitorArray {
-		s := types.SimpleMonitor{
-			Address:     hexutil.Encode(mon.Address.Bytes()),
-			NRecords:    int(mon.Count()),
-			FileSize:    file.FileSize(mon.Path()),
-			LastScanned: mon.Header.LastScanned,
-		}
-		if len(opts.Addrs) == 0 || InStrArray(s.Address, opts.Addrs) {
-			objs = append(objs, s)
+	monitorMap := monitor.GetMonitorMap(chain)
+	monitorArray := []monitor.Monitor{}
+	for _, mon := range monitorMap {
+		monitorArray = append(monitorArray, *mon)
+	}
+	sort.Slice(monitorArray, func(i, j int) bool {
+		return monitorArray[i].Address.Hex() < monitorArray[j].Address.Hex()
+	})
+
+	errors := make([]error, 0)
+	addrMap := map[base.Address]bool{}
+	for _, addr := range opts.Addrs {
+		a := base.HexToAddress(addr)
+		addrMap[a] = true
+		if monitorMap[a] == nil {
+			errors = append(errors, fmt.Errorf("address %s is not being monitored", addr))
 		}
 	}
 
-	return globals.RenderSlice(&opts.Globals, objs)
-}
+	ctx := context.Background()
+	fetchData := func(modelChan chan types.Modeler[types.RawMonitor], errorChan chan error) {
+		for _, e := range errors {
+			errorChan <- e
+		}
 
-func GetAllMonitors(chain string) []monitor.Monitor {
-	monitorChan := make(chan monitor.Monitor)
-
-	var monitors []monitor.Monitor
-	go monitor.ListMonitors(chain, "monitors", monitorChan)
-
-	for result := range monitorChan {
-		switch result.Address {
-		case monitor.SentinalAddr:
-			close(monitorChan)
-		default:
-			monitors = append(monitors, result)
+		for _, mon := range monitorArray {
+			if len(addrMap) == 0 || addrMap[mon.Address] {
+				s := types.SimpleMonitor{
+					Address:     hexutil.Encode(mon.Address.Bytes()),
+					NRecords:    int(mon.Count()),
+					FileSize:    file.FileSize(mon.Path()),
+					LastScanned: mon.Header.LastScanned,
+				}
+				modelChan <- &s
+			}
 		}
 	}
-	return monitors
-}
 
-// TODO: Move this to utils package
-func InStrArray(item string, items []string) bool {
-	for _, i := range items {
-		if i == item {
-			return true
-		}
-	}
-	return false
+	return output.StreamMany(ctx, fetchData, output.OutputOptions{
+		Writer:     opts.Globals.Writer,
+		Chain:      opts.Globals.Chain,
+		TestMode:   opts.Globals.TestMode,
+		NoHeader:   opts.Globals.NoHeader,
+		ShowRaw:    opts.Globals.ShowRaw,
+		Verbose:    opts.Globals.Verbose,
+		LogLevel:   opts.Globals.LogLevel,
+		Format:     opts.Globals.Format,
+		OutputFn:   opts.Globals.OutputFn,
+		Append:     opts.Globals.Append,
+		JsonIndent: "  ",
+	})
 }

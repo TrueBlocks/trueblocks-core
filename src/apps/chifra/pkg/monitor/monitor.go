@@ -277,3 +277,22 @@ func (mon *Monitor) MoveToProduction() error {
 
 	return err
 }
+
+func GetMonitorMap(chain string) map[base.Address]*Monitor {
+	monitorChan := make(chan Monitor)
+
+	go ListMonitors(chain, "monitors", monitorChan)
+
+	monMap := make(map[base.Address]*Monitor)
+	for mon := range monitorChan {
+		mon := mon
+		switch mon.Address {
+		case SentinalAddr:
+			close(monitorChan)
+		default:
+			monMap[mon.Address] = &mon
+		}
+	}
+
+	return monMap
+}
