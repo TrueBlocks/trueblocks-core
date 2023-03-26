@@ -12,6 +12,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -32,13 +33,15 @@ func (mon *Monitor) Decache(chain string, processor func(string) bool) (err erro
 	}
 
 	caches := []string{"blocks", "txs", "traces", "recons"}
-	for _, cache := range caches {
+	for index, cache := range caches {
 		for _, app := range apps {
 			path := getCachePath(chain, cache, hexutil.Encode(mon.Address.Bytes()), app.BlockNumber, app.TransactionId)
 			if file.FileExists(path) {
 				if !processor(path) {
 					return nil
 				}
+			} else {
+				logger.Progress(index%20 == 0, "Already removed: ", path)
 			}
 		}
 	}

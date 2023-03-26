@@ -71,7 +71,7 @@ func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup) {
 			if sleep > 0 {
 				ms := time.Duration(sleep*1000) * time.Millisecond
 				if !opts.Globals.TestMode {
-					logger.Info(fmt.Sprintf("Sleeping for %f seconds (%d milliseconds)", sleep, ms))
+					logger.Info(fmt.Sprintf("Sleeping for %g seconds", sleep))
 				}
 				time.Sleep(ms)
 			}

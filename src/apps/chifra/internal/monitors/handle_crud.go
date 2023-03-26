@@ -24,6 +24,7 @@ import (
 // Deleted     | Error  | Undelete | Remove | Remove and Decache         |
 // ------------|--------|------------------------------------------------|
 func (opts *MonitorsOptions) HandleCrudCommands() error {
+	testMode := opts.Globals.TestMode
 	for _, addr := range opts.Addrs {
 		m := monitor.NewMonitor(opts.Globals.Chain, addr, false)
 		if !file.FileExists(m.Path()) {
@@ -31,6 +32,7 @@ func (opts *MonitorsOptions) HandleCrudCommands() error {
 
 		} else {
 			if opts.Decache {
+				logger.Progress(!testMode, "Decaching", addr)
 				if opts.Globals.TestMode {
 					logger.Info("Decaching monitor for address ", addr, "not tested.")
 					return nil
@@ -50,6 +52,7 @@ func (opts *MonitorsOptions) HandleCrudCommands() error {
 
 					itemsRemoved++
 					bytesRemoved += file.FileSize(fileName)
+					logger.Progress(!testMode && itemsRemoved%20 == 0, "Removed", itemsRemoved, "items and", bytesRemoved, "bytes.", fileName)
 
 					os.Remove(fileName)
 					if opts.Globals.Verbose {
