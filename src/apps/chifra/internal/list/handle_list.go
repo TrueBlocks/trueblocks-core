@@ -20,6 +20,7 @@ import (
 
 func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) error {
 	chain := opts.Globals.Chain
+	isTestMode := opts.Globals.TestMode
 	exportRange := base.FileRange{First: opts.FirstBlock, Last: opts.LastBlock}
 	nExported := uint64(1)
 	nSeen := uint64(0)
@@ -54,10 +55,10 @@ func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) e
 				appRange := base.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)}
 				if appRange.Intersects(exportRange) {
 					if nSeen < opts.FirstRecord {
-						logger.Progress2(true, "Skipping:", nExported, opts.FirstRecord)
+						logger.Progress2(!isTestMode && true, "Skipping:", nExported, opts.FirstRecord)
 						continue
 					} else if opts.IsMax(nExported) {
-						logger.Progress2(true, "Quitting:", nExported, opts.FirstRecord)
+						logger.Progress2(!isTestMode && true, "Quitting:", nExported, opts.FirstRecord)
 						return
 					}
 					nExported++
@@ -68,7 +69,7 @@ func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) e
 						TransactionIndex: app.TransactionId,
 					}
 
-					logger.Progress2(nSeen%723 == 0, "Processing: ", s.Address, " ", s.BlockNumber, ".", s.TransactionIndex)
+					logger.Progress2(!isTestMode && nSeen%723 == 0, "Processing: ", s.Address, " ", s.BlockNumber, ".", s.TransactionIndex)
 					if s.BlockNumber != currentBn {
 						currentTs, _ = tslib.FromBnToTs(chain, uint64(s.BlockNumber))
 					}
