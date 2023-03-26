@@ -210,9 +210,11 @@ func ListMonitors(chain, folder string, monitorChan chan<- Monitor) {
 		monitorChan <- Monitor{Address: SentinalAddr}
 	}()
 
-	info, err := os.Stat("./addresses.tsv")
+	pwd, _ := os.Getwd()
+	path := filepath.Join(pwd, "addresses.tsv")
+	info, err := os.Stat(path)
 	if err == nil {
-		// If the shorthand file exists in the current folder, use it...
+		logger.Info("Reading address list from", path)
 		lines := file.AsciiFileToLines(info.Name())
 		logger.Info("Found", len(lines), "unique addresses in ./addresses.tsv")
 		addrMap := make(map[string]bool)
@@ -226,16 +228,16 @@ func ListMonitors(chain, folder string, monitorChan chan<- Monitor) {
 					}
 					addrMap[addr] = true
 				} else {
-					logger.Panic("Invalid line in file", info.Name())
+					logger.Warn("Invalid line in file", info.Name())
 				}
 			}
 		}
 		return
 	}
 
-	// ...otherwise freshen all existing monitors
-	pp := config.GetPathToCache(chain) + folder
-	filepath.Walk(pp, func(path string, info fs.FileInfo, err error) error {
+	logger.Info("Building address list from current monitors")
+	path = config.GetPathToCache(chain) + folder
+	filepath.Walk(path, func(path string, info fs.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}

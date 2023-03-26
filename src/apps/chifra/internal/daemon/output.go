@@ -21,7 +21,6 @@ import (
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -65,18 +64,15 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 		apiUrl = "http://localhost" + apiUrl
 	}
 
-	pad := func(strIn string) string {
-		return utils.PadRight(strIn, 18, ' ')
-	}
-
 	chain := opts.Globals.Chain
+	logger.InfoTable("Server URL:        ", apiUrl)
+	logger.InfoTable("RPC Provider:      ", config.GetRpcProvider(chain))
+	logger.InfoTable("Root Config Path:  ", config.GetPathToRootConfig())
+	logger.InfoTable("Chain Config Path: ", config.GetPathToChainConfig(chain))
+	logger.InfoTable("Cache Path:        ", config.GetPathToCache(chain))
+	logger.InfoTable("Index Path:        ", config.GetPathToIndex(chain))
+
 	meta, err := rpcClient.GetMetaData(chain, false)
-	logger.InfoTable(pad("Server URL:"), apiUrl)
-	logger.InfoTable(pad("RPC Provider:"), config.GetRpcProvider(chain))
-	logger.InfoTable(pad("Root Config Path:"), config.GetPathToRootConfig())
-	logger.InfoTable(pad("Chain Config Path:"), config.GetPathToChainConfig(chain))
-	logger.InfoTable(pad("Cache Path:"), config.GetPathToCache(chain))
-	logger.InfoTable(pad("Index Path:"), config.GetPathToIndex(chain))
 	if err != nil {
 		msg := fmt.Sprintf("%sCould not load RPC provider: %s%s", colors.Red, err, colors.Off)
 		logger.InfoTable("Progress:", msg)
@@ -84,7 +80,7 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 	} else {
 		nTs, _ := tslib.NTimestamps(opts.Globals.Chain)
 		msg := fmt.Sprintf("%d, %d, %d,  %d, ts: %d", meta.Latest, meta.Finalized, meta.Staging, meta.Unripe, nTs)
-		logger.InfoTable(pad("Progress:"), msg)
+		logger.InfoTable("Progress:          ", msg)
 	}
 
 	go opts.HandleScraper()
