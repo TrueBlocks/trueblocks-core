@@ -90,6 +90,7 @@ func GetListOptions(args []string, g *globals.GlobalOptions) *ListOptions {
 
 func (opts *ListOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
+	ported = true
 	// EXISTING_CODE
 	return
 }
