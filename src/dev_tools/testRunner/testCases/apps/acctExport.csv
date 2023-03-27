@@ -160,6 +160,7 @@ on      ,both ,fast  ,export   ,apps/acctExport ,accounting_intra_tokens  ,y    
 on      ,both ,fast  ,export   ,apps/acctExport ,statement_unfiltered     ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & statements & first_block = 8860513 & last_block = 8860531 & ether & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,statement_filtered       ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & statements & first_block = 8860513 & last_block = 8860531 & ether & asset = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 & fmt = json
 
+on      ,both ,fast  ,list     ,apps/acctExport ,list_prepare             ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & fmt = json
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_list1           ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & list & fmt = json
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_decache         ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & decache
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_decache_again   ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & decache
