@@ -1775,7 +1775,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/admin/#manifest">Manifest</a>, <a href="/data-model/admin/#pinnedchunk">Pinnedchunk</a>, <a href="/data-model/admin/#chunkindex">Chunkindex</a>, <a href="/data-model/admin/#chunkblooms">Chunkblooms</a>, <a href="/data-model/admin/#chunkaddresses">Chunkaddresses</a>, <a href="/data-model/admin/#chunkappearances">Chunkappearances</a>, and/or <a href="/data-model/admin/#chunkstats">Chunkstats</a> data. Corresponds to the <a href="/chifra/admin/#chifra-chunks">chifra chunks</a> command line.
+                    description: Produces <a href="/data-model/admin/#manifest">Manifest</a>, <a href="/data-model/admin/#pinnedchunk">Pinnedchunk</a>, <a href="/data-model/admin/#chunkindex">Chunkindex</a>, <a href="/data-model/admin/#chunkblooms">Chunkblooms</a>, <a href="/data-model/admin/#chunkaddresses">Chunkaddresses</a>, <a href="/data-model/admin/#chunkappearances">Chunkappearances</a>, <a href="/data-model/admin/#chunkstats">Chunkstats</a>, and/or <a href="/data-model/admin/#reportcheck">Reportcheck</a> data. Corresponds to the <a href="/chifra/admin/#chifra-chunks">chifra chunks</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -1786,6 +1786,7 @@ paths:
                         - $ref: "#/components/schemas/chunkAddresses"
                         - $ref: "#/components/schemas/chunkAppearances"
                         - $ref: "#/components/schemas/chunkStats"
+                        - $ref: "#/components/schemas/reportCheck"
                 example:
                   {
                     "data": [
@@ -3261,6 +3262,39 @@ components:
           format: address
         name:
           type: string
+    reportCheck:
+      description: "report on checking contents of chunks"
+      type: object
+      properties:
+        Reason:
+          type: string
+          description: "the reason for the test"
+        visitedCnt:
+          type: number
+          format: uint32
+          description: "the number of visited items in the cache"
+        checkedCnt:
+          type: number
+          format: uint32
+          description: "the number of checks"
+        skippedCnt:
+          type: number
+          format: uint32
+          description: "the number of skipped checks"
+        passedCnt:
+          type: number
+          format: uint32
+          description: "the number of passed checks"
+        failedCnt:
+          type: number
+          format: uint32
+          description: "the number of failed checks"
+        result:
+          type: string
+          description: "the result of the check"
+        msgStrings:
+          type: []string
+          description: "an array of messages explaining failed checks"
     indexCacheItem:
       description: "an item in the Unchained Index cache"
       type: object

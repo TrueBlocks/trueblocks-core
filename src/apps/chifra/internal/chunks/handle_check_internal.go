@@ -17,7 +17,7 @@ import (
 
 // CheckInternal reads the header of each chunk on disc looking for the Magic number and
 // the HeaderMagicHash for expected values.
-func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64, report *types.ReportCheck) error {
+func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64, report *types.SimpleReportCheck) error {
 	for testId, fileName := range fileNames {
 		opts.checkIndexChunkInternal(testId, fileName, report)
 		// opts.checkBloomInternal(testId, fileName, report)
@@ -25,7 +25,7 @@ func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64,
 	return nil
 }
 
-func (opts *ChunksOptions) checkIndexChunkInternal(testId int, fileName string, report *types.ReportCheck) {
+func (opts *ChunksOptions) checkIndexChunkInternal(testId int, fileName string, report *types.SimpleReportCheck) {
 	report.VisitedCnt++
 	report.CheckedCnt++
 	header, err := index.ReadChunkHeader(fileName, true)
@@ -58,7 +58,7 @@ func (opts *ChunksOptions) checkIndexChunkInternal(testId int, fileName string, 
 }
 
 // TODO: This work is incomplete
-// func (opts *ChunksOptions) checkBloomInternal(testId int, fileName string, report *types.ReportCheck) {
+// func (opts *ChunksOptions) checkBloomInternal(testId int, fileName string, report *types.SimpleReportCheck) {
 // 	report.VisitedCnt++
 // 	report.CheckedCnt++
 // 	var bl bloom.ChunkBloom

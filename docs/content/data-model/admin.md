@@ -280,6 +280,28 @@ CacheEntries consist of the following fields:
 | address |     | address |
 | name    |     | string  |
 
+## ReportCheck
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+ChunkCheck reports on the results of tests conducted under chifra chunks --check
+
+The following commands produce and manage ReportChecks:
+
+- [chifra chunks](/chifra/admin/#chifra-chunks)
+
+ReportChecks consist of the following fields:
+
+| Field      | Description                                   | Type     |
+| ---------- | --------------------------------------------- | -------- |
+| Reason     | the reason for the test                       | string   |
+| visitedCnt | the number of visited items in the cache      | uint32   |
+| checkedCnt | the number of checks                          | uint32   |
+| skippedCnt | the number of skipped checks                  | uint32   |
+| passedCnt  | the number of passed checks                   | uint32   |
+| failedCnt  | the number of failed checks                   | uint32   |
+| result     | the result of the check                       | string   |
+| msgStrings | an array of messages explaining failed checks | []string |
+
 ## IndexCacheItem
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
@@ -335,6 +357,7 @@ This documentation mentions the following basic data types.
 
 | Type      | Description                         | Notes          |
 | --------- | ----------------------------------- | -------------- |
+| []string  |                                     |                |
 | address   | an '0x'-prefixed 20-byte hex string | lowercase      |
 | blknum    | an alias for a uint64               |                |
 | bool      | either `true`, `false`, `1`, or `0` |                |
