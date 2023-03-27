@@ -15,7 +15,7 @@ import (
 
 // EXISTING_CODE
 
-type Rawhain struct {
+type RawChain struct {
 	ApiProvider    string `json:"apiProvider"`
 	Chain          string `json:"chain"`
 	ChainId        string `json:"chainId"`
@@ -28,29 +28,29 @@ type Rawhain struct {
 	// EXISTING_CODE
 }
 
-type Simplehain struct {
-	ApiProvider    string   `json:"apiProvider"`
-	Chain          string   `json:"chain"`
-	ChainId        uint64   `json:"chainId"`
-	IpfsGateway    string   `json:"ipfsGateway"`
-	LocalExplorer  string   `json:"localExplorer"`
-	RemoteExplorer string   `json:"remoteExplorer"`
-	RpcProvider    string   `json:"rpcProvider"`
-	Symbol         string   `json:"symbol"`
-	raw            *Rawhain `json:"-"`
+type SimpleChain struct {
+	ApiProvider    string    `json:"apiProvider"`
+	Chain          string    `json:"chain"`
+	ChainId        uint64    `json:"chainId"`
+	IpfsGateway    string    `json:"ipfsGateway"`
+	LocalExplorer  string    `json:"localExplorer"`
+	RemoteExplorer string    `json:"remoteExplorer"`
+	RpcProvider    string    `json:"rpcProvider"`
+	Symbol         string    `json:"symbol"`
+	raw            *RawChain `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *Simplehain) Raw() *Rawhain {
+func (s *SimpleChain) Raw() *RawChain {
 	return s.raw
 }
 
-func (s *Simplehain) SetRaw(raw *Rawhain) {
+func (s *SimpleChain) SetRaw(raw *RawChain) {
 	s.raw = raw
 }
 
-func (s *Simplehain) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleChain) Model(showHidden bool, format string, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -63,13 +63,13 @@ func (s *Simplehain) Model(showHidden bool, format string, extraOptions map[stri
 	}
 }
 
-func (s *Simplehain) WriteTo(w io.Writer) (n int64, err error) {
+func (s *SimpleChain) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *Simplehain) ReadFrom(r io.Reader) (n int64, err error) {
+func (s *SimpleChain) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
