@@ -15,30 +15,30 @@ import (
 
 // EXISTING_CODE
 
-type RawhunkAppearances struct {
+type RawChunkAppearances struct {
 	BlockNumber      string `json:"blockNumber"`
 	TransactionIndex string `json:"transactionIndex"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-type SimplehunkAppearances struct {
-	BlockNumber      uint64              `json:"blockNumber"`
-	TransactionIndex uint64              `json:"transactionIndex"`
-	raw              *RawhunkAppearances `json:"-"`
+type SimpleChunkAppearances struct {
+	BlockNumber      uint64               `json:"blockNumber"`
+	TransactionIndex uint64               `json:"transactionIndex"`
+	raw              *RawChunkAppearances `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *SimplehunkAppearances) Raw() *RawhunkAppearances {
+func (s *SimpleChunkAppearances) Raw() *RawChunkAppearances {
 	return s.raw
 }
 
-func (s *SimplehunkAppearances) SetRaw(raw *RawhunkAppearances) {
+func (s *SimpleChunkAppearances) SetRaw(raw *RawChunkAppearances) {
 	s.raw = raw
 }
 
-func (s *SimplehunkAppearances) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleChunkAppearances) Model(showHidden bool, format string, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -51,13 +51,13 @@ func (s *SimplehunkAppearances) Model(showHidden bool, format string, extraOptio
 	}
 }
 
-func (s *SimplehunkAppearances) WriteTo(w io.Writer) (n int64, err error) {
+func (s *SimpleChunkAppearances) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimplehunkAppearances) ReadFrom(r io.Reader) (n int64, err error) {
+func (s *SimpleChunkAppearances) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil

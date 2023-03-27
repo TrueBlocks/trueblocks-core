@@ -61,5 +61,6 @@ func (opts *ChunksOptions) HandleAppearances(blockNums []uint64) error {
 		10, /* maxTests */
 		showAppearances,
 	)
+
 	return walker.WalkBloomFilters(blockNums)
 }

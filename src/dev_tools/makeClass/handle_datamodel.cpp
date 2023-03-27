@@ -193,6 +193,14 @@ bool sortByDoc(const CMember& c1, const CMember& c2) {
 //------------------------------------------------------------------------------------------------------------
 string_q type_2_ModelName(const string_q& type, bool raw) {
     string_q ret = type;
+    replace(ret, "Array", "");
+    replace(ret, "CachePtr", "Cache");
+    return raw ? nextTokenClear(ret, '[') : ret;
+}
+
+//------------------------------------------------------------------------------------------------------------
+string_q type_2_TypeName(const string_q& type, bool raw) {
+    string_q ret = type;
     if (startsWith(ret, "C"))
         replace(ret, "C", "");
     replace(ret, "Array", "");
@@ -204,13 +212,13 @@ string_q type_2_ModelName(const string_q& type, bool raw) {
 string_q typeFmt(const CMember& fld) {
     if (fld.memberFlags & IS_ARRAY) {
         string_q ret = "          type: array\n          items:\n            $ref: \"#/components/schemas/++X++\"\n";
-        replace(ret, "++X++", firstLower(type_2_ModelName(fld.type, false)));
+        replace(ret, "++X++", firstLower(type_2_TypeName(fld.type, false)));
         return ret;
     }
 
     if (fld.memberFlags & IS_OBJECT) {
         string_q ret = "          type: object\n          items:\n            $ref: \"#/components/schemas/++X++\"\n";
-        replace(ret, "++X++", firstLower(type_2_ModelName(fld.type, false)));
+        replace(ret, "++X++", firstLower(type_2_TypeName(fld.type, false)));
         return ret;
     }
 
