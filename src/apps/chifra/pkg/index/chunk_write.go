@@ -177,10 +177,6 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 	}
 }
 
-type Renderer interface {
-	RenderObject(data interface{}, first bool) error
-}
-
 var spaces20 = strings.Repeat(" ", 20)
 
 func ResultToRecord(result *pinning.PinResult) manifest.ChunkRecord {
