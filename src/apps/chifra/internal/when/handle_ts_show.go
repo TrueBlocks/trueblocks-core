@@ -16,12 +16,6 @@ import (
 
 // HandleTimestampsShow handles chifra when --timestamps
 func (opts *WhenOptions) HandleTimestampsShow() error {
-	err := opts.Globals.RenderHeader(types.SimpleTimestamp{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.NoHeader, true)
-	defer opts.Globals.RenderFooter()
-	if err != nil {
-		return err
-	}
-
 	bnMap, err := identifiers.GetBlockNumberMap(opts.Globals.Chain, opts.BlockIds)
 	if err != nil {
 		return err
@@ -35,9 +29,8 @@ func (opts *WhenOptions) HandleTimestampsShow() error {
 
 	ctx := context.Background()
 	prev := base.Timestamp(0)
-	skip := uint64(100)
 	fetchData := func(modelChan chan types.Modeler[types.RawTimestamp], errorChan chan error) {
-		for bn := uint64(0); bn < cnt; bn += skip {
+		for bn := uint64(0); bn < cnt; bn++ {
 			if len(bnMap) == 0 || bnMap[bn] {
 				ts, err := tslib.FromBn(opts.Globals.Chain, bn)
 				if err != nil {
