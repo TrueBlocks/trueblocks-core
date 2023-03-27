@@ -1,12 +1,5 @@
 package types
 
-type ReportClean struct {
-	Addr     string `json:"addr"`
-	SizeThen uint32 `json:"sizeThen"`
-	SizeNow  uint32 `json:"sizeNow"`
-	Dups     uint32 `json:"dupsRemoved"`
-}
-
 type ReportCheck struct {
 	Reason     string   `json:"reason"`
 	VisitedCnt uint32   `json:"nVisits,omitempty"`

@@ -574,10 +574,12 @@ paths:
               schema:
                 properties:
                   data:
-                    description: A local file indicating a user's interest in an address. Includes caches for reconicilations, transactions, and appearances as well as an optional association to named account. Produces <a href="/data-model/accounts/#monitor">Monitor</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-monitors">chifra monitors</a> command line.
+                    description: Produces <a href="/data-model/accounts/#monitor">Monitor</a>, and/or <a href="/data-model/admin/#monitorclean">Monitorclean</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-monitors">chifra monitors</a> command line.
                     type: array
                     items:
-                      $ref: "#/components/schemas/monitor"
+                      oneOf:
+                        - $ref: "#/components/schemas/monitor"
+                        - $ref: "#/components/schemas/monitorClean"
         "400":
           description: bad input parameter
   /names:
@@ -3233,6 +3235,23 @@ components:
           items:
             $ref: "#/components/schemas/cacheEntry"
           description: "an array of cache items"
+    monitorClean:
+      description: "report on cleaning dups out of monitors"
+      type: object
+      properties:
+        address:
+          type: string
+          format: address
+          description: "the address being cleaned"
+        sizeThen:
+          type: int64
+          description: "the number of appearances in the monitor prior to cleaning"
+        sizeNow:
+          type: int64
+          description: "the number of appearances in the monitor after cleaning"
+        dups:
+          type: int64
+          description: "the number of duplicates removed"
     cacheEntry:
       description: "a single entry in the results of a status query when `--verbose` is enabled"
       type: object

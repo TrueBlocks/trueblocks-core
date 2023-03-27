@@ -19,7 +19,6 @@ import (
 // TODO: Fix export without arrays
 func RenderSlice[
 	T types.SimpleNamedBlock |
-		types.ReportClean |
 		types.ReportCheck |
 		types.SimpleFunction |
 		types.SimpleMonitor |

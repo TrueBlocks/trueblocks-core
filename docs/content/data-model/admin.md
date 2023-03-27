@@ -245,6 +245,24 @@ Caches consist of the following fields:
 | sizeInBytes | the size of the cache in bytes                          | uint64                                        |
 | items       | an array of cache items                                 | [CacheEntry[]](/data-model/admin/#cacheentry) |
 
+## MonitorClean
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+MonitorClean is a report on removing duplicates from monitors.
+
+The following commands produce and manage MonitorCleans:
+
+- [chifra monitors](/chifra/accounts/#chifra-monitors)
+
+MonitorCleans consist of the following fields:
+
+| Field    | Description                                                | Type    |
+| -------- | ---------------------------------------------------------- | ------- |
+| address  | the address being cleaned                                  | address |
+| sizeThen | the number of appearances in the monitor prior to cleaning | int64   |
+| sizeNow  | the number of appearances in the monitor after cleaning    | int64   |
+| dups     | the number of duplicates removed                           | int64   |
+
 ## CacheEntry
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
@@ -323,6 +341,7 @@ This documentation mentions the following basic data types.
 | datetime  | a JSON formatted date               | as a string    |
 | double    | a double precision float            | 64 bits        |
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
+| int64     |                                     |                |
 | ipfshash  | a multi-hash produced by IPFS       | mixed-case     |
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
