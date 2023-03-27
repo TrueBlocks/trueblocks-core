@@ -22,7 +22,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // Header is the header of the Monitor file. Note that it's the same width as an index.AppearanceRecord
@@ -93,9 +92,9 @@ func NewStagedMonitor(chain, addr string) (Monitor, error) {
 // String implements the Stringer interface
 func (mon Monitor) String() string {
 	if mon.Deleted {
-		return fmt.Sprintf("%s\t%d\t%d\t%d\t%t", hexutil.Encode(mon.Address.Bytes()), mon.Count(), file.FileSize(mon.Path()), mon.LastScanned, mon.Deleted)
+		return fmt.Sprintf("%s\t%d\t%d\t%d\t%t", mon.Address.Hex(), mon.Count(), file.FileSize(mon.Path()), mon.LastScanned, mon.Deleted)
 	}
-	return fmt.Sprintf("%s\t%d\t%d\t%d", hexutil.Encode(mon.Address.Bytes()), mon.Count(), file.FileSize(mon.Path()), mon.LastScanned)
+	return fmt.Sprintf("%s\t%d\t%d\t%d", mon.Address.Hex(), mon.Count(), file.FileSize(mon.Path()), mon.LastScanned)
 }
 
 // TODO: ...and this - making this the String and the above ToTxt?

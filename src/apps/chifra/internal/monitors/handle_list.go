@@ -13,7 +13,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // HandleList
@@ -40,7 +39,7 @@ func (opts *MonitorsOptions) HandleList() error {
 		for _, mon := range monArray {
 			if len(addrMap) == 0 || addrMap[mon.Address] {
 				s := types.SimpleMonitor{
-					Address:     hexutil.Encode(mon.Address.Bytes()),
+					Address:     mon.Address.Hex(),
 					NRecords:    int(mon.Count()),
 					FileSize:    file.FileSize(mon.Path()),
 					LastScanned: mon.Header.LastScanned,

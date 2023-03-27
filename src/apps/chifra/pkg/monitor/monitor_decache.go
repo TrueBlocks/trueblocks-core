@@ -13,7 +13,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // Decache removes a monitor and all cached data from the cache
@@ -35,7 +34,7 @@ func (mon *Monitor) Decache(chain string, processor func(string) bool) (err erro
 	caches := []string{"blocks", "txs", "traces", "recons"}
 	for index, cache := range caches {
 		for _, app := range apps {
-			path := getCachePath(chain, cache, hexutil.Encode(mon.Address.Bytes()), app.BlockNumber, app.TransactionId)
+			path := getCachePath(chain, cache, mon.Address.Hex(), app.BlockNumber, app.TransactionId)
 			if file.FileExists(path) {
 				if !processor(path) {
 					return nil
