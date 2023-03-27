@@ -11,7 +11,6 @@ import (
 // return lower case hex.
 type Address struct {
 	common.Address
-	addrStr string
 }
 
 // Hex returns string representation of an address
@@ -19,7 +18,7 @@ func (a *Address) Hex() string {
 	if a.IsZero() {
 		return "0x0"
 	}
-	return a.addrStr
+	return bytesToAddressString(a.Address.Bytes())
 }
 
 func (a *Address) String() string {
@@ -37,16 +36,12 @@ func (a Address) MarshalText() ([]byte, error) {
 // SetHex sets the address based on the provided string
 func (a *Address) SetHex(hexStr string) {
 	a.Address = common.HexToAddress(hexStr)
-	if hexStr == "0x0000000000000000000000000000000000000000" || hexStr == "0x0" {
-		a.addrStr = "0x0"
-		return
-	}
-	a.addrStr = "0x" + hex.EncodeToString(a.Bytes())
 }
 
 // IsZero returns true if an addres is a zero value or 0x0.
 func (a *Address) IsZero() bool {
-	return len(a.addrStr) == 0 || a.addrStr == "0x0"
+	v := bytesToAddressString(a.Address.Bytes())
+	return v == "0x0000000000000000000000000000000000000000"
 }
 
 // HexToAddress returns new address with the given string
@@ -58,6 +53,9 @@ func HexToAddress(hex string) (addr Address) {
 
 func BytesToAddress(b []byte) (addr Address) {
 	addr.SetBytes(b)
-	addr.addrStr = "0x" + hex.EncodeToString(b)
 	return
+}
+
+func bytesToAddressString(addressBytes []byte) string {
+	return "0x" + hex.EncodeToString(addressBytes)
 }
