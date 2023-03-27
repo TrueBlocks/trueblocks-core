@@ -7,7 +7,6 @@ package monitorsPkg
 import (
 	"context"
 	"fmt"
-	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -20,14 +19,7 @@ import (
 // HandleList
 func (opts *MonitorsOptions) HandleList() error {
 	chain := opts.Globals.Chain
-	monitorMap := monitor.GetMonitorMap(chain)
-	monitorArray := []monitor.Monitor{}
-	for _, mon := range monitorMap {
-		monitorArray = append(monitorArray, *mon)
-	}
-	sort.Slice(monitorArray, func(i, j int) bool {
-		return monitorArray[i].Address.Hex() < monitorArray[j].Address.Hex()
-	})
+	monitorMap, monArray := monitor.GetMonitorMap(chain)
 
 	errors := make([]error, 0)
 	addrMap := map[base.Address]bool{}
@@ -45,7 +37,7 @@ func (opts *MonitorsOptions) HandleList() error {
 			errorChan <- e
 		}
 
-		for _, mon := range monitorArray {
+		for _, mon := range monArray {
 			if len(addrMap) == 0 || addrMap[mon.Address] {
 				s := types.SimpleMonitor{
 					Address:     hexutil.Encode(mon.Address.Bytes()),

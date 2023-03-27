@@ -11,6 +11,7 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 	"sync"
 
@@ -273,12 +274,13 @@ func (mon *Monitor) MoveToProduction() error {
 	return err
 }
 
-func GetMonitorMap(chain string) map[base.Address]*Monitor {
+func GetMonitorMap(chain string) (map[base.Address]*Monitor, []*Monitor) {
 	monitorChan := make(chan Monitor)
 
 	go ListMonitors(chain, "monitors", monitorChan)
 
 	monMap := make(map[base.Address]*Monitor)
+	monArray := []*Monitor{}
 	for mon := range monitorChan {
 		mon := mon
 		switch mon.Address {
@@ -286,8 +288,13 @@ func GetMonitorMap(chain string) map[base.Address]*Monitor {
 			close(monitorChan)
 		default:
 			monMap[mon.Address] = &mon
+			monArray = append(monArray, &mon)
 		}
 	}
 
-	return monMap
+	sort.Slice(monArray, func(i, j int) bool {
+		return monArray[i].Address.Hex() < monArray[j].Address.Hex()
+	})
+
+	return monMap, monArray
 }
