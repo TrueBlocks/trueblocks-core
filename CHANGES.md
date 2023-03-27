@@ -1,3 +1,5 @@
+Removed a lot of RenderSlice/RenderObject stuff for StreamMany
+
 remove isFinalized from Block -- the user can make this decision themselves based on timestamp or blockNumber
 
 Added accessList ot transaction output
