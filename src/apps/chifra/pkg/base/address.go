@@ -46,8 +46,7 @@ func (a *Address) IsZero() bool {
 	// length, so the slice if filled with 0s. Comparing
 	// strings seem to be the simplest and most efficient
 	// way.
-	zero := common.HexToAddress("0x0")
-	return a.Address.Hex() == zero.Hex()
+	return a.Address.Hex() == "0x0000000000000000000000000000000000000000"
 }
 
 // HexToAddress returns new address with the given string
