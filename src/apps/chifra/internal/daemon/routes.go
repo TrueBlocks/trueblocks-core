@@ -10,6 +10,7 @@ package daemonPkg
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"time"
@@ -213,7 +214,31 @@ var routes = Routes{
 		HandleWebsockets(connectionPool, w, r)
 	}},
 	Route{"Index", "GET", "/", Index},
-	Route{"EditName", "POST", "/names", EditName},
+	Route{"CreateName", "POST", "/names", func(w http.ResponseWriter, r *http.Request) {
+		if err, _ := namesPkg.ServeNames(w, r); err != nil {
+			RespondWithError(w, http.StatusInternalServerError, err)
+		}
+	}},
+	Route{"EditName", "PUT", "/names", func(w http.ResponseWriter, r *http.Request) {
+		if err, _ := namesPkg.ServeNames(w, r); err != nil {
+			RespondWithError(w, http.StatusInternalServerError, err)
+		}
+	}},
+	Route{"DeleteName", "DELETE", "/names", func(w http.ResponseWriter, r *http.Request) {
+		params := r.URL.Query()
+		if !params.Has("delete") && !params.Has("undelete") && !params.Has("remove") {
+			RespondWithError(
+				w,
+				http.StatusBadRequest,
+				errors.New("one of following parameters is required: delete, undelete, remove"),
+			)
+			return
+		}
+
+		if err, _ := namesPkg.ServeNames(w, r); err != nil {
+			RespondWithError(w, http.StatusInternalServerError, err)
+		}
+	}},
 
 	// BEG_ROUTE_ITEMS
 	Route{"RouteList", "GET", "/list", RouteList},

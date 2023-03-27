@@ -190,6 +190,7 @@ func (s *SimpleName) Model(showHidden bool, format string, extraOptions map[stri
 			order = append(order, "iserc721")
 		}
 	}
+
 	// EXISTING_CODE
 
 	return Model{

@@ -116,7 +116,6 @@ func TestWriteAbis(t *testing.T) {
 	}
 	// Make sure we've written everything
 	writer.Flush()
-	// result := writeBuf.Bytes()
 
 	// Now read it and compare
 	reader := bufio.NewReader(&writeBuf)

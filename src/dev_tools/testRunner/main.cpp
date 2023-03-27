@@ -276,7 +276,22 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                 bool has_options = (!test.builtin && !test.options.empty());
                 bool has_post = !test.post.empty();
                 bool has_env = (envLines.size() > 0);
+
+                // Check if curl configuration file for the given test exists. We can use such
+                // files to send requests other than GET, e.g. when testing CRUD endpoints
+                CStringArray curlFileLines;
+                string_q curlFilePath = substitute(test.goldPath, "/api_tests", "") + test.name + "_curl.txt";
+                if (fileExists(curlFilePath))
+                    asciiFileToLines(curlFilePath, curlFileLines);
+
                 cmd << "curl -s ";
+                if (curlFileLines.size() > 0) {
+                    cmd << "--config " << curlFilePath << " ";
+                    for (auto curlArgument : curlFileLines) {
+                        // cmd << curlArgument << " ";
+                        prepender << "CURL: " << curlArgument << endl;
+                    }
+                }
                 cmd << "-H \"User-Agent: testRunner\" ";
                 if (has_env)
                     cmd << "-H \"X-TestRunner-Env: " << substitute(linesToString(envLines, '|'), " ", "") << "\" ";
