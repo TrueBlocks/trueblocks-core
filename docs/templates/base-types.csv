@@ -8,9 +8,11 @@ datetime,a JSON formatted date,as a string
 double,a double precision float,64 bits
 gas,an unsigned big number,as a string
 hash,an '0x'-prefixed 32-byte hex string,lowercase
+int64,a 64-bit signed integer,
 int256,a signed big number,as a string
 ipfshash,a multi-hash produced by IPFS,mixed-case
 string,a normal character string,
+[]string,an array of strings,
 timestamp,a 64-bit unsigned integer,Unix timestamp
 topic,an '0x'-prefixed 32-byte hex string,lowercase
 uint256,a 256-bit unsigned integer

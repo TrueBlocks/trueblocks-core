@@ -357,14 +357,14 @@ This documentation mentions the following basic data types.
 
 | Type      | Description                         | Notes          |
 | --------- | ----------------------------------- | -------------- |
-| []string  |                                     |                |
+| []string  | an array of strings                 |                |
 | address   | an '0x'-prefixed 20-byte hex string | lowercase      |
 | blknum    | an alias for a uint64               |                |
 | bool      | either `true`, `false`, `1`, or `0` |                |
 | datetime  | a JSON formatted date               | as a string    |
 | double    | a double precision float            | 64 bits        |
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
-| int64     |                                     |                |
+| int64     | a 64-bit signed integer             |                |
 | ipfshash  | a multi-hash produced by IPFS       | mixed-case     |
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
