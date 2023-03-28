@@ -62,14 +62,10 @@ func (opts *ListOptions) ListInternal() (err error, handled bool) {
 
 	if opts.Count {
 		err = opts.HandleListCount(monitorArray)
-		if err != nil {
-			return
-		}
+	} else if opts.Bounds {
+		err = opts.HandleBounds(monitorArray)
 	} else if !opts.Silent {
 		err = opts.HandleListAppearances(monitorArray)
-		if err != nil {
-			return
-		}
 	}
 	// EXISTING_CODE
 
@@ -87,6 +83,7 @@ func GetListOptions(args []string, g *globals.GlobalOptions) *ListOptions {
 
 func (opts *ListOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
+	ported = opts.Bounds || opts.Count
 	// EXISTING_CODE
 	return
 }
