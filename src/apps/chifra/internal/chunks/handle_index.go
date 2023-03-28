@@ -22,7 +22,7 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawIndex], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[RawChunkIndex], errorChan chan error) {
 		showIndex := func(walker *index.IndexWalker, path string, first bool) (bool, error) {
 			if path != cache.ToBloomPath(path) {
 				return false, fmt.Errorf("should not happen in showFinalizedStats")
@@ -44,7 +44,7 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 				return false, err
 			}
 
-			s := types.SimpleIndex{
+			s := SimpleChunkIndex{
 				Range:           rng,
 				Magic:           header.Magic,
 				Hash:            base.HexToHash(header.Hash.Hex()),
@@ -70,4 +70,40 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+}
+
+type RawChunkIndex interface{}
+
+type SimpleChunkIndex struct {
+	Range           base.FileRange `json:"range"`
+	Magic           uint32         `json:"magic"`
+	Hash            base.Hash      `json:"hash"`
+	AddressCount    uint32         `json:"nAddresses"`
+	AppearanceCount uint32         `json:"nAppearances"`
+	Size            int64          `json:"fileSize"`
+}
+
+func (s *SimpleChunkIndex) Raw() *RawChunkIndex {
+	return nil
+}
+
+func (s *SimpleChunkIndex) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
+	return types.Model{
+		Data: map[string]any{
+			"range":        s.Range,
+			"magic":        fmt.Sprintf("0x%x", s.Magic),
+			"hash":         s.Hash,
+			"nAddresses":   s.AddressCount,
+			"nAppearances": s.AppearanceCount,
+			"fileSize":     s.Size,
+		},
+		Order: []string{
+			"range",
+			"magic",
+			"hash",
+			"nAddresses",
+			"nAppearances",
+			"fileSize",
+		},
+	}
 }
