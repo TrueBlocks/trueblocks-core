@@ -124,7 +124,7 @@ func GetChunksOptions(args []string, g *globals.GlobalOptions) *ChunksOptions {
 
 func (opts *ChunksOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	ported = opts.Check || opts.Mode == "manifest" || opts.Mode == "stats" || (opts.Mode == "index" && len(opts.Belongs) == 0)
+	ported = opts.Check || opts.Mode == "manifest" || opts.Mode == "stats" || (opts.Mode == "index" && len(opts.Belongs) == 0) || opts.Mode == "appearances"
 	// EXISTING_CODE
 	return
 }

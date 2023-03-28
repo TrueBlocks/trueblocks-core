@@ -42,6 +42,20 @@ func (s *SimpleAppearance) Model(showHidden bool, format string, extraOptions ma
 	var order = []string{}
 
 	// EXISTING_CODE
+	if extraOptions["appearances"] == true {
+		model = map[string]interface{}{
+			"blockNumber":      s.BlockNumber,
+			"transactionIndex": s.TransactionIndex,
+		}
+		order = []string{
+			"blockNumber",
+			"transactionIndex",
+		}
+		return Model{
+			Data:  model,
+			Order: order,
+		}
+	}
 	model = map[string]interface{}{
 		"address":          s.Address,
 		"blockNumber":      s.BlockNumber,
