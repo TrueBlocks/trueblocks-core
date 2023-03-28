@@ -18,8 +18,7 @@ func (a *Address) Hex() string {
 	if a.IsZero() {
 		return "0x0"
 	}
-	// This is 1000 ns/op faster than strings.ToLower
-	return "0x" + hex.EncodeToString(a.Bytes())
+	return bytesToAddressString(a.Address.Bytes())
 }
 
 func (a *Address) String() string {
@@ -31,23 +30,18 @@ func (a Address) Format(s fmt.State, c rune) {
 }
 
 func (a Address) MarshalText() ([]byte, error) {
-	hex := a.Hex()
-	return []byte(hex), nil
+	return []byte(a.Hex()), nil
 }
 
 // SetHex sets the address based on the provided string
-func (a *Address) SetHex(hex string) {
-	a.Address = common.HexToAddress(hex)
+func (a *Address) SetHex(hexStr string) {
+	a.Address = common.HexToAddress(hexStr)
 }
 
 // IsZero returns true if an addres is a zero value or 0x0.
 func (a *Address) IsZero() bool {
-	// go-ethereum initializes Address.Bytes() with
-	// length, so the slice if filled with 0s. Comparing
-	// strings seem to be the simplest and most efficient
-	// way.
-	zero := common.HexToAddress("0x0")
-	return a.Address.Hex() == zero.Hex()
+	v := bytesToAddressString(a.Address.Bytes())
+	return v == "0x0000000000000000000000000000000000000000"
 }
 
 // HexToAddress returns new address with the given string
@@ -60,4 +54,8 @@ func HexToAddress(hex string) (addr Address) {
 func BytesToAddress(b []byte) (addr Address) {
 	addr.SetBytes(b)
 	return
+}
+
+func bytesToAddressString(addressBytes []byte) string {
+	return "0x" + hex.EncodeToString(addressBytes)
 }

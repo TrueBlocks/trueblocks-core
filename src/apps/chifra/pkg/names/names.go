@@ -4,7 +4,9 @@ import (
 	"encoding/csv"
 	"fmt"
 	"io"
+	"io/fs"
 	"os"
+	"path"
 	"path/filepath"
 	"sort"
 	"strings"
@@ -49,9 +51,10 @@ func LoadNamesArray(chain string, parts Parts, sortBy SortBy, terms []string) ([
 		return nil, err
 	} else {
 		for _, name := range namesMap {
+			// Custom names with Individual tag or tags under 30 are private during testing
 			isTesting := parts&Testing != 0
-			isIndiv := strings.Contains(name.Tags, "Individual")
-			if !isTesting || !isIndiv {
+			isPrivate := strings.Contains(name.Tags, "Individual") || (name.IsCustom && name.Tags < "3")
+			if !isTesting || !isPrivate {
 				names = append(names, name)
 			}
 		}
@@ -96,8 +99,7 @@ func LoadNamesMap(chain string, parts Parts, terms []string) (map[base.Address]t
 
 	// Load the custom names (note that these may overwrite the prefund and regular names)
 	if parts&Custom != 0 {
-		customPath := filepath.Join(config.GetPathToChainConfig(chain), "names_custom.tab")
-		loadCustomMap(chain, customPath, terms, parts, &namesMap)
+		loadCustomMap(chain, terms, parts, &namesMap)
 	}
 
 	return namesMap, nil
@@ -144,15 +146,17 @@ func (gr *NameReader) Read() (types.SimpleName, error) {
 	}, nil
 }
 
-func NewNameReader(path string) (NameReader, error) {
-	file, err := os.OpenFile(path, os.O_RDONLY, 0)
-	if err != nil {
-		return NameReader{}, err
-	}
+type NameReaderMode int
 
-	reader := csv.NewReader(file)
+const (
+	NameReaderTab NameReaderMode = iota
+	NameReaderComma
+)
+
+func NewNameReader(source io.Reader, mode NameReaderMode) (NameReader, error) {
+	reader := csv.NewReader(source)
 	reader.Comma = '\t'
-	if strings.HasSuffix(path, ".csv") {
+	if mode == NameReaderComma {
 		reader.Comma = ','
 	}
 
@@ -168,18 +172,49 @@ func NewNameReader(path string) (NameReader, error) {
 	for _, required := range requiredColumns {
 		_, ok := header[required]
 		if !ok {
-			err = fmt.Errorf(`required column "%s" missing in file %s`, required, path)
+			err = fmt.Errorf(`required column "%s" missing`, required) //, path)
 			return NameReader{}, err
 		}
 	}
 
 	r := NameReader{
-		file:      file,
+		// file:      file,
 		header:    header,
 		csvReader: *reader,
 	}
 
 	return r, nil
+}
+
+type DatabaseFile string
+
+const (
+	DatabaseRegular DatabaseFile = "names.tab"
+	DatabaseCustom  DatabaseFile = "names_custom.tab"
+	DatabasePrefund DatabaseFile = "allocs.csv"
+)
+
+func OpenDatabaseFile(chain string, kind DatabaseFile, openFlag int) (*os.File, error) {
+	filePath := filepath.Join(config.GetPathToChainConfig(chain), string(kind))
+	var permissions fs.FileMode = 0666
+
+	if kind == DatabaseCustom && os.Getenv("TEST_MODE") == "true" {
+		// Create temp database, just for tests. On Mac, the permissions must be set to 0777
+		if err := os.MkdirAll(path.Join(os.TempDir(), "trueblocks"), 0777); err != nil {
+			return nil, err
+		}
+
+		filePath = path.Join(os.TempDir(), "trueblocks", "names_custom.tab")
+		openFlag |= os.O_CREATE
+		// On Mac, the permissions must be set to 0777
+		permissions = 0777
+	}
+
+	return os.OpenFile(
+		filePath,
+		openFlag,
+		permissions,
+	)
 }
 
 /*

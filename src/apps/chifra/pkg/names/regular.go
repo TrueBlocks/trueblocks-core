@@ -2,6 +2,7 @@ package names
 
 import (
 	"io"
+	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -10,8 +11,13 @@ import (
 
 // loadRegularMap loads the regular names from the cache
 func loadRegularMap(chain string, thePath string, terms []string, parts Parts, ret *map[base.Address]types.SimpleName) error {
+	db, err := OpenDatabaseFile(chain, DatabaseRegular, os.O_RDONLY)
+	if err != nil {
+		return err
+	}
+	defer db.Close()
 	// TODO: This should use gocsv instead of the custom code below
-	reader, err := NewNameReader(thePath)
+	reader, err := NewNameReader(db, NameReaderTab)
 	if err != nil {
 		logger.Fatal(err)
 	}

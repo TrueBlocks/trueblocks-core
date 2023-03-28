@@ -64,14 +64,10 @@ func (opts *ListOptions) ListInternal() (err error, handled bool) {
 	if !canceled {
 		if opts.Count {
 			err = opts.HandleListCount(monitorArray)
-			if err != nil {
-				return
-			}
+		} else if opts.Bounds {
+			err = opts.HandleBounds(monitorArray)
 		} else if !opts.Silent {
 			err = opts.HandleListAppearances(monitorArray)
-			if err != nil {
-				return
-			}
 		}
 	}
 	// EXISTING_CODE

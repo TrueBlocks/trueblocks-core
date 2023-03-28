@@ -60,9 +60,11 @@ func init() {
 	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().MaxRecords, "max_records", "e", 250, "the maximum number of records to process")
 	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to export (inclusive, ignored when freshening)")
 	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to export (inclusive, ignored when freshening)")
+	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Bounds, "bounds", "", false, "report first and last block this address appears (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
 		listCmd.Flags().MarkHidden("appearances")
 		listCmd.Flags().MarkHidden("silent")
+		listCmd.Flags().MarkHidden("bounds")
 	}
 	globals.InitGlobals(listCmd, &listPkg.GetOptions().Globals)
 
