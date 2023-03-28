@@ -127,7 +127,7 @@ func (opts *ChunksOptions) IsPorted() (ported bool) {
 	ported = opts.Check ||
 		opts.Mode == "manifest" || opts.Mode == "stats" ||
 		(opts.Mode == "index" && len(opts.Belongs) == 0) || opts.Mode == "appearances" ||
-		opts.Mode == "blooms"
+		opts.Mode == "blooms" || opts.Pin
 	// EXISTING_CODE
 	return
 }
