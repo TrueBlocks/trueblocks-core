@@ -16,6 +16,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -60,27 +61,25 @@ func (opts *NamesOptions) NamesInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.IsPorted() {
-		handled = true
-		if opts.anyCrud() {
-			err = opts.HandleCrud()
-		} else if opts.Tags {
-			err = opts.HandleTags()
-		} else if opts.Addr {
-			err = opts.HandleAddr()
-		} else {
-			// Includes opts.Prefund
-			err = opts.HandleTerms()
-		}
-		return
-	}
-
-	if opts.Globals.IsApiMode() {
-		return nil, false
+	if !opts.IsPorted() {
+		logger.Fatal("Should not happen in NamesInternal")
 	}
 
 	handled = true
-	err = opts.Globals.PassItOn("ethNames", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
+	if opts.anyCrud() {
+		err = opts.HandleCrud()
+	} else if len(opts.Autoname) > 0 {
+		err = opts.HandleAutoname()
+	} else if opts.Clean {
+		err = opts.HandleClean()
+	} else if opts.Tags {
+		err = opts.HandleTags()
+	} else if opts.Addr {
+		err = opts.HandleAddr()
+	} else {
+		err = opts.HandleTerms()
+	}
+
 	// EXISTING_CODE
 
 	return
@@ -97,7 +96,7 @@ func GetNamesOptions(args []string, g *globals.GlobalOptions) *NamesOptions {
 
 func (opts *NamesOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	ported = !(opts.Clean || len(opts.Autoname) > 0)
+	ported = true
 	// EXISTING_CODE
 	return
 }
@@ -264,11 +263,15 @@ func (opts *NamesOptions) getCrudDataEnv() (data *CrudData, err error) {
 
 func (opts *NamesOptions) validateCrudData(data *CrudData) error {
 	if data.Address.Value.IsZero() {
+		// TODO(dawid-names): In the c++ this would pick up opts.Term[0] if it was present and use that
 		return errors.New("address is required")
 	}
 	if data.Name.Value == "" {
+		// TODO(dawid-names): In the c++ this would pick up opts.Term[0] if it was present and use that
 		return errors.New("address is required")
 	}
+	// TODO(dawid-names): I think a name is also required here (but not in AutoName mode in which case
+	// TODO(dawid-names): name is picked up from the contract)
 
 	return nil
 }
