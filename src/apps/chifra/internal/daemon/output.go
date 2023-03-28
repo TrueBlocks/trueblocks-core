@@ -52,6 +52,10 @@ func ServeDaemon(w http.ResponseWriter, r *http.Request) (err error, handled boo
 
 // DaemonInternal handles the internal workings of the daemon command.  Returns error and a bool if handled
 func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
+	if opts.Rpc {
+		return opts.HandleRpc(), true
+	}
+
 	err = opts.validateDaemon()
 	if err != nil {
 		return err, true

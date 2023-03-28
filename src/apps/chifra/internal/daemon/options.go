@@ -22,6 +22,7 @@ type DaemonOptions struct {
 	Api     string                `json:"api,omitempty"`     // Instruct the node to start the API server
 	Scrape  string                `json:"scrape,omitempty"`  // Start the scraper, initialize it with either just blooms or entire index, generate for new blocks
 	Monitor bool                  `json:"monitor,omitempty"` // Instruct the node to start the monitors tool
+	Rpc     bool                  `json:"rpc,omitempty"`
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 	// EXISTING_CODE
