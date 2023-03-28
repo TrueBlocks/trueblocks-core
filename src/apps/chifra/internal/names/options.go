@@ -9,7 +9,6 @@ package namesPkg
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -36,7 +35,7 @@ type NamesOptions struct {
 	Delete    bool                  `json:"delete,omitempty"`    // Delete a name, but do not remove it
 	Undelete  bool                  `json:"undelete,omitempty"`  // Undelete a previously deleted name
 	Remove    bool                  `json:"remove,omitempty"`    // Remove a previously deleted name
-	ToCustom  bool                  `json:"toCustom,omitempty"`  // For editCmd only, is the edited name a custom name or not
+	ToCustom  bool                  `json:"toCustom,omitempty"`  // This option has been deprecated
 	Named     bool                  `json:"named,omitempty"`     // Please use the --all option instead
 	Globals   globals.GlobalOptions `json:"globals,omitempty"`   // The global options
 	BadFlag   error                 `json:"badFlag,omitempty"`   // An error flag if needed
@@ -73,48 +72,6 @@ func (opts *NamesOptions) testLog() {
 func (opts *NamesOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
-}
-
-// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
-func (opts *NamesOptions) getEnvStr() []string {
-	envStr := []string{}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return envStr
-}
-
-// toCmdLine converts the option to a command line for calling out to the system.
-func (opts *NamesOptions) toCmdLine() string {
-	options := ""
-	if opts.Clean {
-		options += " --clean"
-	}
-	if len(opts.Autoname) > 0 {
-		options += " --autoname " + opts.Autoname
-	}
-	if opts.Create {
-		options += " --create"
-	}
-	if opts.Update {
-		options += " --update"
-	}
-	if opts.Delete {
-		options += " --delete"
-	}
-	if opts.Undelete {
-		options += " --undelete"
-	}
-	if opts.Remove {
-		options += " --remove"
-	}
-	if opts.ToCustom {
-		options += " --to_custom"
-	}
-	options += " " + strings.Join(opts.Terms, " ")
-	// EXISTING_CODE
-	// EXISTING_CODE
-	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
-	return options
 }
 
 // namesFinishParseApi finishes the parsing for server invocations. Returns a new NamesOptions.

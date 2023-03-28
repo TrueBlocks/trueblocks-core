@@ -71,14 +71,14 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12285,tools,Accounts,names,ethNames,prefund,p,,false,false,true,true,gocmd,switch,<boolean>,include prefund accounts in the search
 12290,tools,Accounts,names,ethNames,addr,a,,false,false,true,true,gocmd,switch,<boolean>,display only addresses in the results (useful for scripting&#44; assumes --no_header)
 12295,tools,Accounts,names,ethNames,tags,g,,false,false,true,true,gocmd,switch,<boolean>,export the list of tags and subtags only
-12300,tools,Accounts,names,ethNames,clean,C,,false,false,false,false,local,switch,<boolean>,clean the data (addrs to lower case&#44; sort by addr)
-12305,tools,Accounts,names,ethNames,autoname,A,,false,false,false,false,local,flag,<string>,an address assumed to be a token&#44; added automatically to names database if true
-12310,tools,Accounts,names,ethNames,create,,,false,false,false,true,local,switch,<boolean>,create a new name record
-12315,tools,Accounts,names,ethNames,update,,,false,false,false,true,local,switch,<boolean>,edit an existing name
-12320,tools,Accounts,names,ethNames,deleteMe,,,false,false,false,true,local,switch,<boolean>,delete a name&#44; but do not remove it
-12325,tools,Accounts,names,ethNames,undelete,,,false,false,false,true,local,switch,<boolean>,undelete a previously deleted name
-12330,tools,Accounts,names,ethNames,remove,,,false,false,false,true,local,switch,<boolean>,remove a previously deleted name
-12335,tools,Accounts,names,ethNames,to_custom,u,,false,false,false,false,header,switch,<boolean>,for editCmd only&#44; is the edited name a custom name or not
+12300,tools,Accounts,names,ethNames,clean,C,,false,false,false,false,gocmd,switch,<boolean>,clean the data (addrs to lower case&#44; sort by addr)
+12305,tools,Accounts,names,ethNames,autoname,A,,false,false,false,false,gocmd,flag,<string>,an address assumed to be a token&#44; added automatically to names database if true
+12310,tools,Accounts,names,ethNames,create,,,false,false,false,true,gocmd,switch,<boolean>,create a new name record
+12315,tools,Accounts,names,ethNames,update,,,false,false,false,true,gocmd,switch,<boolean>,edit an existing name
+12320,tools,Accounts,names,ethNames,deleteMe,,,false,false,false,true,gocmd,switch,<boolean>,delete a name&#44; but do not remove it
+12325,tools,Accounts,names,ethNames,undelete,,,false,false,false,true,gocmd,switch,<boolean>,undelete a previously deleted name
+12330,tools,Accounts,names,ethNames,remove,,,false,false,false,true,gocmd,switch,<boolean>,remove a previously deleted name
+12335,tools,Accounts,names,ethNames,to_custom,u,,false,false,false,false,deprecated,switch,<boolean>,this option has been deprecated
 12340,tools,Accounts,names,ethNames,named,n,,false,false,true,true,deprecated,switch,<boolean>,please use the --all option instead
 12345,tools,Accounts,names,ethNames,,,,false,false,true,true,--,description,,Query addresses or names of well known accounts.
 12350,tools,Accounts,names,ethNames,n1,,,false,false,false,false,--,note,,The tool will accept up to three terms&#44; each of which must match against any field in the database.

@@ -24,7 +24,6 @@ Flags:
       --delete            delete a name, but do not remove it (hidden)
       --undelete          undelete a previously deleted name (hidden)
       --remove            remove a previously deleted name (hidden)
-  -u, --to_custom         for editCmd only, is the edited name a custom name or not (hidden)
   -x, --fmt string        export format, one of [none|json*|txt|csv]
   -v, --verbose           enable verbose (increase detail with --log_level)
   -h, --help              display this help screen

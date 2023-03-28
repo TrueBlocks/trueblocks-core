@@ -67,7 +67,7 @@ func init() {
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Delete, "delete", "", false, "delete a name, but do not remove it (hidden)")
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Undelete, "undelete", "", false, "undelete a previously deleted name (hidden)")
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Remove, "remove", "", false, "remove a previously deleted name (hidden)")
-	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().ToCustom, "to_custom", "u", false, "for editCmd only, is the edited name a custom name or not (hidden)")
+	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().ToCustom, "to_custom", "u", false, "this option has been deprecated (hidden)")
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Named, "named", "n", false, "please use the --all option instead")
 	if os.Getenv("TEST_MODE") != "true" {
 		namesCmd.Flags().MarkHidden("clean")
