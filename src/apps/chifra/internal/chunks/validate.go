@@ -81,6 +81,9 @@ func (opts *ChunksOptions) validateChunks() error {
 			if len(opts.Blocks) == 0 {
 				return validate.Usage("You must specify at least one {0} with the {1} option", "block identifier", "--belongs")
 			}
+			if opts.Globals.Format != "json" {
+				return validate.Usage("The {0} option only works with {1}", "--belongs", "--fmt json")
+			}
 		}
 	}
 

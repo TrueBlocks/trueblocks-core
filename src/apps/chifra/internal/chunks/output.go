@@ -127,7 +127,7 @@ func (opts *ChunksOptions) IsPorted() (ported bool) {
 	ported = opts.Check ||
 		opts.Mode == "manifest" || opts.Mode == "stats" ||
 		(opts.Mode == "index" && len(opts.Belongs) == 0) || opts.Mode == "appearances" ||
-		opts.Mode == "blooms" || opts.Pin || opts.Mode == "status"
+		opts.Mode == "blooms" || opts.Pin || opts.Mode == "status" || len(opts.Belongs) > 0
 	// EXISTING_CODE
 	return
 }
@@ -136,7 +136,7 @@ func (opts *ChunksOptions) IsPorted() (ported bool) {
 func (opts *ChunksOptions) defaultFormat(def string) string {
 	if opts.Mode == "status" ||
 		(opts.Mode == "index" && opts.Check) ||
-		opts.Truncate != utils.NOPOS {
+		opts.Truncate != utils.NOPOS || len(opts.Belongs) > 0 {
 		return "json"
 	}
 	return def

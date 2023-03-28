@@ -61,6 +61,7 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 				Offset:  obj.Offset,
 				Count:   obj.Count,
 			}
+
 			if !opts.SaveAddrs {
 				err = opts.Globals.RenderObject(r, first && cnt == 0)
 				if err != nil {
@@ -123,5 +124,6 @@ func (opts *ChunksOptions) handleDetails(indexChunk *index.ChunkData, record *in
 	outFn := filepath.Join(outPath, hexutil.Encode(record.Address.Bytes())) + ".txt"
 	fmt.Printf("Wrote % 5d to %s\n", len(apps), outFn)
 	file.StringToAsciiFile(outFn, b.String())
+
 	return true, nil
 }
