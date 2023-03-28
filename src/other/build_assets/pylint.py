@@ -1758,7 +1758,7 @@ def GetIndentLevel(line):
     return 0
 
 
-def GetHeaderGuardCPPVariable(filename):
+def Get HeaderGuardCPPVariable(filename):
   """Returns the CPP variable that should be used as a header guard.
 
   Args:
@@ -1815,7 +1815,7 @@ def CheckForHeaderGuard(filename, clean_lines, error):
     if Search(r'pragma once', i):
       return
 
-  cppvar = GetHeaderGuardCPPVariable(filename)
+  cppvar = Get HeaderGuardCPPVariable(filename)
 
   ifndef = ''
   ifndef_linenum = 0
@@ -4311,7 +4311,7 @@ def CheckStyle(filename, clean_lines, linenum, file_extension, nesting_state,
   # Check if the line is a header guard.
   is_header_guard = False
   if IsHeaderExtension(file_extension):
-    cppvar = GetHeaderGuardCPPVariable(filename)
+    cppvar = Get HeaderGuardCPPVariable(filename)
     if (line.startswith('#ifndef %s' % cppvar) or
         line.startswith('#define %s' % cppvar) or
         line.startswith('#endif  // %s' % cppvar)):

@@ -33,6 +33,18 @@ func (s *SimpleIndexAddress) Model(showHidden bool, format string, extraOptions 
 	var order = []string{}
 
 	// EXISTING_CODE
+	model = map[string]interface{}{
+		"address": s.Address,
+		"range":   s.Range,
+		"offset":  s.Offset,
+		"count":   s.Count,
+	}
+	order = []string{
+		"address",
+		"range",
+		"offset",
+		"count",
+	}
 	// EXISTING_CODE
 
 	return Model{

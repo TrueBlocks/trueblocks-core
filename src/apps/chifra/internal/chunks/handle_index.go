@@ -17,6 +17,10 @@ import (
 )
 
 func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
+	if len(opts.Belongs) > 0 {
+		return opts.HandleIndexBelongs(blockNums)
+	}
+
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawIndex], errorChan chan error) {
 		showIndex := func(walker *index.IndexWalker, path string, first bool) (bool, error) {

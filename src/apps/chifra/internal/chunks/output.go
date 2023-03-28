@@ -15,9 +15,9 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/spf13/cobra"
 )
@@ -55,14 +55,18 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
+	if !opts.IsPorted() {
+		logger.Fatal("Should not happen in NamesInternal")
+	}
+
 	handled = true
 
 	blockNums, err := identifiers.GetBlockNumbers(opts.Globals.Chain, opts.BlockIds)
-	if opts.Globals.TestMode && len(blockNums) > 200 {
-		blockNums = blockNums[:200]
-	}
 	if err != nil {
 		return
+	}
+	if opts.Globals.TestMode && len(blockNums) > 200 {
+		blockNums = blockNums[:200]
 	}
 
 	if opts.Pin {
@@ -83,11 +87,7 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 			err = opts.HandleStatus(blockNums)
 
 		case "index":
-			if len(opts.Belongs) > 0 {
-				err = opts.HandleIndexBelongs(blockNums)
-			} else {
-				err = opts.HandleIndex(blockNums)
-			}
+			err = opts.HandleIndex(blockNums)
 
 		case "blooms":
 			err = opts.HandleBlooms(blockNums)
@@ -105,7 +105,7 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 			err = opts.HandleAppearances(blockNums)
 
 		default:
-			err = validate.Usage("Extractor for {0} not yet implemented.", opts.Mode)
+			logger.Fatal("Should not happen in NamesInternal")
 		}
 	}
 	// EXISTING_CODE
@@ -124,10 +124,7 @@ func GetChunksOptions(args []string, g *globals.GlobalOptions) *ChunksOptions {
 
 func (opts *ChunksOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	ported = opts.Check ||
-		opts.Mode == "manifest" || opts.Mode == "stats" ||
-		(opts.Mode == "index" && len(opts.Belongs) == 0) || opts.Mode == "appearances" ||
-		opts.Mode == "blooms" || opts.Pin || opts.Mode == "status" || len(opts.Belongs) > 0
+	ported = true
 	// EXISTING_CODE
 	return
 }

@@ -152,7 +152,6 @@ func MakeFirstUpperCase(s string) string {
 // block number gets larger than 1,4 billion, which may happen when the chain shards, but not until then.
 const EarliestEvmTs = 1438269971
 
-// TODO: Fix export without arrays
 func GetFields(t *reflect.Type, format string, header bool) (fields []string, sep string, quote string) {
 	sep = "\t"
 	quote = ""
