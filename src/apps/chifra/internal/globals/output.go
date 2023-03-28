@@ -66,3 +66,19 @@ func (opts *GlobalOptions) RenderFooter() error {
 	}
 	return nil
 }
+
+func (opts *GlobalOptions) OutputOpts() output.OutputOptions {
+	return output.OutputOptions{
+		Writer:     opts.Writer,
+		Chain:      opts.Chain,
+		TestMode:   opts.TestMode,
+		NoHeader:   opts.NoHeader,
+		ShowRaw:    opts.ShowRaw,
+		Verbose:    opts.Verbose,
+		LogLevel:   opts.LogLevel,
+		Format:     opts.Format,
+		OutputFn:   opts.OutputFn,
+		Append:     opts.Append,
+		JsonIndent: "  ",
+	}
+}
