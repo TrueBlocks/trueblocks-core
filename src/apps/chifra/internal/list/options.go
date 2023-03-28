@@ -30,6 +30,7 @@ type ListOptions struct {
 	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process
 	FirstBlock  uint64                `json:"firstBlock,omitempty"`  // First block to export (inclusive, ignored when freshening)
 	LastBlock   uint64                `json:"lastBlock,omitempty"`   // Last block to export (inclusive, ignored when freshening)
+	Bounds      bool                  `json:"bounds,omitempty"`      // Report first and last block this address appears
 	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
 	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
 	// EXISTING_CODE
@@ -53,6 +54,7 @@ func (opts *ListOptions) testLog() {
 	logger.TestLog(opts.MaxRecords != 250, "MaxRecords: ", opts.MaxRecords)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
+	logger.TestLog(opts.Bounds, "Bounds: ", opts.Bounds)
 	opts.Globals.TestLog()
 }
 
@@ -93,6 +95,8 @@ func listFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
 			opts.FirstBlock = globals.ToUint64(value[0])
 		case "lastBlock":
 			opts.LastBlock = globals.ToUint64(value[0])
+		case "bounds":
+			opts.Bounds = true
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "list")
