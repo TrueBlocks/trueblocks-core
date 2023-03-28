@@ -2,6 +2,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -40,6 +41,24 @@ func (s *SimpleBloom) Model(showHidden bool, format string, extraOptions map[str
 	var order = []string{}
 
 	// EXISTING_CODE
+	model = map[string]any{
+		"range":     s.Range,
+		"magic":     fmt.Sprintf("0x%x", s.Magic),
+		"hash":      s.Hash,
+		"nBlooms":   s.Count,
+		"nInserted": s.NInserted,
+		"size":      s.Size,
+		"byteWidth": s.Width,
+	}
+	order = []string{
+		"range",
+		"magic",
+		"hash",
+		"nBlooms",
+		"nInserted",
+		"size",
+		"byteWidth",
+	}
 	// EXISTING_CODE
 
 	return Model{
