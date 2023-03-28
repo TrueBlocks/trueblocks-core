@@ -13,9 +13,15 @@ import (
 )
 
 func TestCrudIntegration(t *testing.T) {
-	if err := os.MkdirAll(path.Join(os.TempDir(), "trueblocks"), 0777); err != nil {
+	tmpDirPath := path.Join(os.TempDir(), "trueblocks")
+	if err := os.MkdirAll(tmpDirPath, 0777); err != nil {
 		t.Fatal(err)
 	}
+	defer func() {
+		if err := os.RemoveAll(tmpDirPath); err != nil {
+			t.Fatal("os.RemoveAll:", err)
+		}
+	}()
 	loadTestDatabase := func() *os.File {
 		tempFile, err := os.OpenFile(
 			path.Join(os.TempDir(), "trueblocks", "names_custom.tab"),
