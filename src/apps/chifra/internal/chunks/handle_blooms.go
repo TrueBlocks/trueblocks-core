@@ -22,10 +22,7 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 	fetchData := func(modelChan chan types.Modeler[types.RawBloom], errorChan chan error) {
 		showBloom := func(walker *index.IndexWalker, path string, first bool) (bool, error) {
 			if path != cache.ToBloomPath(path) {
-				err := fmt.Errorf("should not happen in showFinalizedStats")
-				errorChan <- err
-				cancel()
-				return false, err
+				return false, fmt.Errorf("should not happen in showFinalizedStats")
 			}
 
 			var bl bloom.ChunkBloom
@@ -41,8 +38,6 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 
 			stats, err := GetChunkStats(path)
 			if err != nil {
-				errorChan <- err
-				cancel()
 				return false, err
 			}
 
@@ -68,22 +63,11 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 		)
 		if err := walker.WalkBloomFilters(blockNums); err != nil {
 			errorChan <- err
+			cancel()
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, output.OutputOptions{
-		Writer:     opts.Globals.Writer,
-		Chain:      opts.Globals.Chain,
-		TestMode:   opts.Globals.TestMode,
-		NoHeader:   opts.Globals.NoHeader,
-		ShowRaw:    opts.Globals.ShowRaw,
-		Verbose:    opts.Globals.Verbose,
-		LogLevel:   opts.Globals.LogLevel,
-		Format:     opts.Globals.Format,
-		OutputFn:   opts.Globals.OutputFn,
-		Append:     opts.Globals.Append,
-		JsonIndent: "  ",
-	})
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
 func displayBloom(bl *bloom.ChunkBloom, verbose int) {

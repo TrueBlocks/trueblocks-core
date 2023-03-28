@@ -21,10 +21,7 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 	fetchData := func(modelChan chan types.Modeler[types.RawIndex], errorChan chan error) {
 		showIndex := func(walker *index.IndexWalker, path string, first bool) (bool, error) {
 			if path != cache.ToBloomPath(path) {
-				err := fmt.Errorf("should not happen in showFinalizedStats")
-				errorChan <- err
-				cancel()
-				return false, nil
+				return false, fmt.Errorf("should not happen in showFinalizedStats")
 			}
 
 			path = cache.ToIndexPath(path)
@@ -40,9 +37,7 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 
 			rng, err := base.RangeFromFilenameE(path)
 			if err != nil {
-				errorChan <- err
-				cancel()
-				return false, nil
+				return false, err
 			}
 
 			s := types.SimpleIndex{
@@ -66,20 +61,9 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 		)
 		if err := walker.WalkBloomFilters(blockNums); err != nil {
 			errorChan <- err
+			cancel()
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, output.OutputOptions{
-		Writer:     opts.Globals.Writer,
-		Chain:      opts.Globals.Chain,
-		TestMode:   opts.Globals.TestMode,
-		NoHeader:   opts.Globals.NoHeader,
-		ShowRaw:    opts.Globals.ShowRaw,
-		Verbose:    opts.Globals.Verbose,
-		LogLevel:   opts.Globals.LogLevel,
-		Format:     opts.Globals.Format,
-		OutputFn:   opts.Globals.OutputFn,
-		Append:     opts.Globals.Append,
-		JsonIndent: "  ",
-	})
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }

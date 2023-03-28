@@ -21,10 +21,7 @@ func (opts *ChunksOptions) HandleAppearances(blockNums []uint64) error {
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
 		showAppearances := func(walker *index.IndexWalker, path string, first bool) (bool, error) {
 			if path != cache.ToBloomPath(path) {
-				err := fmt.Errorf("should not happen in showAppearances")
-				errorChan <- err
-				cancel()
-				return false, nil
+				return false, fmt.Errorf("should not happen in showAppearances")
 			}
 
 			path = cache.ToIndexPath(path)
@@ -41,9 +38,7 @@ func (opts *ChunksOptions) HandleAppearances(blockNums []uint64) error {
 
 			_, err = indexChunk.File.Seek(indexChunk.AppTableStart, io.SeekStart)
 			if err != nil {
-				errorChan <- err
-				cancel()
-				return false, nil
+				return false, err
 			}
 
 			for i := 0; i < int(indexChunk.Header.AppearanceCount); i++ {
@@ -53,8 +48,7 @@ func (opts *ChunksOptions) HandleAppearances(blockNums []uint64) error {
 				rec := index.AppearanceRecord{}
 				err := rec.ReadAppearance(indexChunk.File)
 				if err != nil {
-					errorChan <- err
-					return false, nil
+					return false, err
 				}
 				s := types.SimpleAppearance{
 					BlockNumber:      rec.BlockNumber,
@@ -75,23 +69,12 @@ func (opts *ChunksOptions) HandleAppearances(blockNums []uint64) error {
 
 		if err := walker.WalkBloomFilters(blockNums); err != nil {
 			errorChan <- err
+			cancel()
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, output.OutputOptions{
-		Writer:     opts.Globals.Writer,
-		Chain:      opts.Globals.Chain,
-		TestMode:   opts.Globals.TestMode,
-		NoHeader:   opts.Globals.NoHeader,
-		ShowRaw:    opts.Globals.ShowRaw,
-		Verbose:    opts.Globals.Verbose,
-		LogLevel:   opts.Globals.LogLevel,
-		Format:     opts.Globals.Format,
-		OutputFn:   opts.Globals.OutputFn,
-		Append:     opts.Globals.Append,
-		JsonIndent: "  ",
-		Extra: map[string]any{
-			"appearances": true,
-		},
-	})
+	extra := map[string]any{
+		"appearances": true,
+	}
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }

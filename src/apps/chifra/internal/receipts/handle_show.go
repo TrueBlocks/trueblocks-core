@@ -20,9 +20,8 @@ func (opts *ReceiptsOptions) HandleShowReceipts() error {
 	abiMap := make(abi.AbiInterfaceMap)
 	loadedMap := make(map[base.Address]bool)
 	chain := opts.Globals.Chain
-	ctx, cancel := context.WithCancel(context.Background())
 
-	// Note: Make sure to add an entry to enabledForCmd in src/apps/chifra/pkg/output/helpers.go
+	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawReceipt], errorChan chan error) {
 		// TODO: stream transaction identifiers
 		for idIndex, rng := range opts.TransactionIds {
@@ -93,20 +92,8 @@ func (opts *ReceiptsOptions) HandleShowReceipts() error {
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, output.OutputOptions{
-		Writer:     opts.Globals.Writer,
-		Chain:      opts.Globals.Chain,
-		TestMode:   opts.Globals.TestMode,
-		NoHeader:   opts.Globals.NoHeader,
-		ShowRaw:    opts.Globals.ShowRaw,
-		Verbose:    opts.Globals.Verbose,
-		LogLevel:   opts.Globals.LogLevel,
-		Format:     opts.Globals.Format,
-		OutputFn:   opts.Globals.OutputFn,
-		Append:     opts.Globals.Append,
-		JsonIndent: "  ",
-		Extra: map[string]interface{}{
-			"articulate": opts.Articulate,
-		},
-	})
+	extra := map[string]interface{}{
+		"articulate": opts.Articulate,
+	}
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }
