@@ -5,85 +5,106 @@
 package listPkg
 
 import (
+	"context"
 	"fmt"
 	"sort"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/bykof/gostradamus"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) error {
-	for _, mon := range monitorArray {
-		count := mon.Count()
-		apps := make([]index.AppearanceRecord, count)
-		err := mon.ReadAppearances(&apps)
-		if err != nil {
-			return err
-		}
-		if len(apps) == 0 {
-			fmt.Println("No appearances found for", mon.GetAddrStr())
-			return nil
-		}
+	chain := opts.Globals.Chain
+	testMode := opts.Globals.TestMode
+	exportRange := base.FileRange{First: opts.FirstBlock, Last: opts.LastBlock}
+	nExported := uint64(1)
+	nSeen := uint64(0)
 
-		sort.Slice(apps, func(i, j int) bool {
-			si := uint64(apps[i].BlockNumber)
-			si = (si << 32) + uint64(apps[i].TransactionId)
-			sj := uint64(apps[j].BlockNumber)
-			sj = (sj << 32) + uint64(apps[j].TransactionId)
-			return si < sj
-		})
+	ctx := context.Background()
+	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
+		for _, mon := range monitorArray {
+			count := mon.Count()
+			apps := make([]index.AppearanceRecord, count)
+			err := mon.ReadAppearances(&apps)
+			if err != nil {
+				errorChan <- err
+				return
+			}
+			if len(apps) == 0 {
+				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
+				return
+			}
 
-		exportRange := base.FileRange{First: opts.FirstBlock, Last: opts.LastBlock}
-		results := make([]types.RawAppearance, 0, mon.Count())
-		verboseResults := make([]types.SimpleAppearance, 0, mon.Count())
-		for record, app := range apps {
-			appRange := base.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)}
-			if appRange.Intersects(exportRange) {
-				if opts.Globals.Verbose {
-					ts, err := tslib.FromBnToTs(opts.Globals.Chain, uint64(app.BlockNumber))
-					if err != nil {
-						return err
+			sort.Slice(apps, func(i, j int) bool {
+				si := uint64(apps[i].BlockNumber)
+				si = (si << 32) + uint64(apps[i].TransactionId)
+				sj := uint64(apps[j].BlockNumber)
+				sj = (sj << 32) + uint64(apps[j].TransactionId)
+				return si < sj
+			})
+
+			currentBn := uint32(0)
+			currentTs := int64(0)
+			for i, app := range apps {
+				nSeen++
+				appRange := base.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)}
+				if appRange.Intersects(exportRange) {
+					if nSeen < opts.FirstRecord {
+						logger.Progress(!testMode && true, "Skipping:", nExported, opts.FirstRecord)
+						continue
+					} else if opts.IsMax(nExported) {
+						logger.Progress(!testMode && true, "Quitting:", nExported, opts.FirstRecord)
+						return
 					}
+					nExported++
+
+					logger.Progress(!testMode && nSeen%723 == 0, "Processing: ", mon.Address.Hex(), " ", app.BlockNumber, ".", app.TransactionId)
+					if app.BlockNumber != currentBn {
+						currentTs, _ = tslib.FromBnToTs(chain, uint64(app.BlockNumber))
+					}
+					currentBn = app.BlockNumber
+
 					s := types.SimpleAppearance{
 						Address:          mon.Address,
 						BlockNumber:      app.BlockNumber,
 						TransactionIndex: app.TransactionId,
-						Timestamp:        ts,
-						Date:             gostradamus.FromUnixTimestamp(ts).String(),
+						Timestamp:        currentTs,
+						Date:             utils.FormattedDate(currentTs),
 					}
-					if uint64(record+1) >= opts.FirstRecord && (opts.MaxRecords == 250 || uint64(len(verboseResults)) < opts.MaxRecords) {
-						verboseResults = append(verboseResults, s)
-					}
+
+					modelChan <- &s
 				} else {
-					s := types.RawAppearance{
-						Address:          mon.GetAddrStr(),
-						BlockNumber:      app.BlockNumber,
-						TransactionIndex: app.TransactionId,
-					}
-					if uint64(record+1) >= opts.FirstRecord && (opts.MaxRecords == 250 || uint64(len(results)) < opts.MaxRecords) {
-						results = append(results, s)
-					}
+					logger.Progress(!testMode && i%100 == 0, "Skipping:", app)
 				}
 			}
 		}
-
-		// TODO: Fix export without arrays
-		if opts.Globals.Verbose {
-			err = globals.RenderSlice(&opts.Globals, verboseResults)
-			if err != nil {
-				return err
-			}
-		} else {
-			err = globals.RenderSlice(&opts.Globals, results)
-			if err != nil {
-				return err
-			}
-		}
 	}
-	return nil
+
+	return output.StreamMany(ctx, fetchData, output.OutputOptions{
+		Writer:     opts.Globals.Writer,
+		Chain:      opts.Globals.Chain,
+		TestMode:   opts.Globals.TestMode,
+		NoHeader:   opts.Globals.NoHeader,
+		ShowRaw:    opts.Globals.ShowRaw,
+		Verbose:    opts.Globals.Verbose,
+		LogLevel:   opts.Globals.LogLevel,
+		Format:     opts.Globals.Format,
+		OutputFn:   opts.Globals.OutputFn,
+		Append:     opts.Globals.Append,
+		JsonIndent: "  ",
+	})
+}
+
+func (opts *ListOptions) IsMax(cnt uint64) bool {
+	max := opts.MaxRecords
+	if max == 250 && !opts.Globals.IsApiMode() {
+		max = utils.NOPOS
+	}
+	return cnt > max
 }

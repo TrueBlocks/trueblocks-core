@@ -49,6 +49,7 @@ Data models produced by this tool:
 - [chunkaddresses](/data-model/admin/#chunkaddresses)
 - [chunkappearances](/data-model/admin/#chunkappearances)
 - [chunkstats](/data-model/admin/#chunkstats)
+- [reportcheck](/data-model/admin/#reportcheck)
 
 Links:
 

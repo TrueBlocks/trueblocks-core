@@ -1274,6 +1274,23 @@ components:
           items:
             $ref: "#/components/schemas/cacheEntry"
           description: "an array of cache items"
+    monitorClean:
+      description: "report on cleaning dups out of monitors"
+      type: object
+      properties:
+        address:
+          type: string
+          format: address
+          description: "the address being cleaned"
+        sizeThen:
+          type: int64
+          description: "the number of appearances in the monitor prior to cleaning"
+        sizeNow:
+          type: int64
+          description: "the number of appearances in the monitor after cleaning"
+        dups:
+          type: int64
+          description: "the number of duplicates removed"
     cacheEntry:
       description: "a single entry in the results of a status query when `--verbose` is enabled"
       type: object
@@ -1283,6 +1300,39 @@ components:
           format: address
         name:
           type: string
+    reportCheck:
+      description: "report on checking contents of chunks"
+      type: object
+      properties:
+        Reason:
+          type: string
+          description: "the reason for the test"
+        visitedCnt:
+          type: number
+          format: uint32
+          description: "the number of visited items in the cache"
+        checkedCnt:
+          type: number
+          format: uint32
+          description: "the number of checks"
+        skippedCnt:
+          type: number
+          format: uint32
+          description: "the number of skipped checks"
+        passedCnt:
+          type: number
+          format: uint32
+          description: "the number of passed checks"
+        failedCnt:
+          type: number
+          format: uint32
+          description: "the number of failed checks"
+        result:
+          type: string
+          description: "the result of the check"
+        msgStrings:
+          type: []string
+          description: "an array of messages explaining failed checks"
     indexCacheItem:
       description: "an item in the Unchained Index cache"
       type: object

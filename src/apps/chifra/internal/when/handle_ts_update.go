@@ -41,7 +41,7 @@ func (opts *WhenOptions) HandleTimestampUpdate() error {
 		block, _ := rpcClient.GetBlockHeaderByNumber(opts.Globals.Chain, bn)
 		record := tslib.TimestampRecord{Bn: uint32(block.BlockNumber), Ts: uint32(block.Timestamp)}
 		timestamps = append(timestamps, record)
-		logger.Progress("Adding block ", bn, " to timestamp array")
+		logger.Progress(true, "Adding block", bn, "to timestamp array")
 		if bn%1000 == 0 {
 			logger.Info("Writing...", len(timestamps), "timestamps at block", bn)
 			tslib.Append(opts.Globals.Chain, timestamps)

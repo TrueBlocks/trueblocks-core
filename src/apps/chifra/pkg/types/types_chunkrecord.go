@@ -38,6 +38,20 @@ func (s *SimpleChunkRecord) Model(showHidden bool, format string, extraOptions m
 	var order = []string{}
 
 	// EXISTING_CODE
+	model = map[string]any{
+		"range":     s.Range,
+		"bloomHash": s.BloomHash,
+		"bloomSize": s.BloomSize,
+		"indexHash": s.IndexHash,
+		"indexSize": s.IndexSize,
+	}
+	order = []string{
+		"range",
+		"bloomHash",
+		"bloomSize",
+		"indexHash",
+		"indexSize",
+	}
 	// EXISTING_CODE
 
 	return Model{

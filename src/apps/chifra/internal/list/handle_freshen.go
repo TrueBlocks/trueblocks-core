@@ -5,6 +5,7 @@ package listPkg
 // be found in the LICENSE file.
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"sort"
@@ -15,12 +16,14 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -64,11 +67,22 @@ func unlockForAddress(address string) {
 	mutex.Unlock()
 }
 
-func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) error {
+func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) (bool, error) {
 	for _, address := range opts.Addrs {
 		lockForAddress(address)
 		defer unlockForAddress(address) // reminder: this defers until the function returns, not this loop
 	}
+
+	var m sync.Once
+	canceled := false
+	ctx, cancel := context.WithCancel(context.Background())
+	cleanOnQuit := func() {
+		canceled = true
+		logger.Warn(colors.Yellow+"User hit control+c...", colors.Off)
+		cancel()
+	}
+	trapChannel := sigintTrap.Enable(ctx, cancel, cleanOnQuit)
+	defer sigintTrap.Disable(trapChannel)
 
 	var updater = MonitorUpdate{
 		MaxTasks:   12,
@@ -81,7 +95,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 	for _, addr := range opts.Addrs {
 		err := needsMigration(addr)
 		if err != nil {
-			return err
+			return canceled, err
 		}
 
 		if updater.MonitorMap[base.HexToAddress(addr)] == nil {
@@ -100,7 +114,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 	bloomPath := config.GetPathToIndex(chain) + "blooms/"
 	files, err := os.ReadDir(bloomPath)
 	if err != nil {
-		return err
+		return canceled, err
 	}
 
 	var wg sync.WaitGroup
@@ -108,6 +122,10 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 
 	taskCount := 0
 	for _, info := range files {
+		if canceled {
+			m.Do(func() { logger.Warn(colors.Yellow+"Finishing", taskCount, "current tasks...", colors.Off) })
+			continue
+		}
 		if !info.IsDir() {
 			fileName := bloomPath + "/" + info.Name()
 			if !strings.HasSuffix(fileName, ".bloom") {
@@ -194,7 +212,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 		}
 	}
 
-	return updater.moveAllToProduction()
+	return canceled, updater.moveAllToProduction()
 }
 
 // visitChunkToFreshenFinal opens an index file, searches for the address(es) we're looking for and pushes
@@ -307,7 +325,7 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 				if err != nil {
 					logger.Error(err)
 				} else if !updater.Options.Globals.TestMode {
-					msg := fmt.Sprintf("%s appended %d apps at %s", mon.GetAddrStr(), nWritten, result.Range)
+					msg := fmt.Sprintf("%s appended %d apps at %s", mon.Address.Hex(), nWritten, result.Range)
 					logger.Info(msg)
 				}
 			}

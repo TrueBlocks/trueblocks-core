@@ -17,7 +17,7 @@ import (
 
 // EXISTING_CODE
 
-type RawhunkAddresses struct {
+type RawChunkAddresses struct {
 	Address string `json:"address"`
 	Count   string `json:"count"`
 	Offset  string `json:"offset"`
@@ -26,25 +26,25 @@ type RawhunkAddresses struct {
 	// EXISTING_CODE
 }
 
-type SimplehunkAddresses struct {
-	Address base.Address      `json:"address"`
-	Count   uint64            `json:"count"`
-	Offset  uint64            `json:"offset"`
-	Range   base.FileRange    `json:"range"`
-	raw     *RawhunkAddresses `json:"-"`
+type SimpleChunkAddresses struct {
+	Address base.Address       `json:"address"`
+	Count   uint64             `json:"count"`
+	Offset  uint64             `json:"offset"`
+	Range   base.FileRange     `json:"range"`
+	raw     *RawChunkAddresses `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *SimplehunkAddresses) Raw() *RawhunkAddresses {
+func (s *SimpleChunkAddresses) Raw() *RawChunkAddresses {
 	return s.raw
 }
 
-func (s *SimplehunkAddresses) SetRaw(raw *RawhunkAddresses) {
+func (s *SimpleChunkAddresses) SetRaw(raw *RawChunkAddresses) {
 	s.raw = raw
 }
 
-func (s *SimplehunkAddresses) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleChunkAddresses) Model(showHidden bool, format string, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -57,13 +57,13 @@ func (s *SimplehunkAddresses) Model(showHidden bool, format string, extraOptions
 	}
 }
 
-func (s *SimplehunkAddresses) WriteTo(w io.Writer) (n int64, err error) {
+func (s *SimpleChunkAddresses) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimplehunkAddresses) ReadFrom(r io.Reader) (n int64, err error) {
+func (s *SimpleChunkAddresses) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil

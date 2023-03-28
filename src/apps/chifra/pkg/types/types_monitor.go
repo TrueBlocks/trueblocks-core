@@ -33,6 +33,18 @@ func (s *SimpleMonitor) Model(showHidden bool, format string, extraOptions map[s
 	var order = []string{}
 
 	// EXISTING_CODE
+	model = map[string]any{
+		"address":     s.Address,
+		"nRecords":    s.NRecords,
+		"fileSize":    s.FileSize,
+		"lastScanned": s.LastScanned,
+	}
+	order = []string{
+		"address",
+		"nRecords",
+		"fileSize",
+		"lastScanned",
+	}
 	// EXISTING_CODE
 
 	return Model{

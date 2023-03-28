@@ -51,6 +51,7 @@ Notes:
 Data models produced by this tool:
 
 - [monitor](/data-model/accounts/#monitor)
+- [monitorclean](/data-model/admin/#monitorclean)
 
 <!-- markdownlint-disable MD041 -->
 ### Other Options

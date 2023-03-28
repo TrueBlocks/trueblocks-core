@@ -5,58 +5,56 @@
 package chunksPkg
 
 import (
-	"sort"
+	"context"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
+var sourceMap = map[bool]manifest.Source{
+	false: manifest.FromCache,
+	true:  manifest.FromContract,
+}
+
 func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
-	maxTestItems := 10
-
-	source := manifest.FromCache
-	if opts.Remote {
-		source = manifest.FromContract
-	}
-
-	man, err := manifest.ReadManifest(opts.Globals.Chain, source)
+	man, err := manifest.ReadManifest(opts.Globals.Chain, sourceMap[opts.Remote])
 	if err != nil {
 		return err
 	}
 
-	sort.Slice(man.Chunks, func(i, j int) bool {
-		iPin := man.Chunks[i]
-		jPin := man.Chunks[j]
-		return iPin.Range < jPin.Range
-	})
-
+	testMode := opts.Globals.TestMode
+	ctx := context.Background()
 	if opts.Globals.Format == "txt" || opts.Globals.Format == "csv" {
-		defer opts.Globals.RenderFooter()
-		err := opts.Globals.RenderHeader(types.SimpleChunkRecord{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.NoHeader, true)
-		if err != nil {
-			return err
-		}
-
-		pinList := make([]types.SimpleChunkRecord, len(man.Chunks))
-		for i := range man.Chunks {
-			pinList[i].Range = man.Chunks[i].Range
-			pinList[i].BloomHash = man.Chunks[i].BloomHash
-			pinList[i].BloomSize = man.Chunks[i].BloomSize
-			pinList[i].IndexHash = man.Chunks[i].IndexHash
-			pinList[i].IndexSize = man.Chunks[i].IndexSize
-		}
-
-		for i, r := range pinList {
-			if opts.Globals.TestMode && i > maxTestItems {
-				continue
-			}
-			err := opts.Globals.RenderObject(r, i == 0)
-			if err != nil {
-				return err
+		fetchData := func(modelChan chan types.Modeler[types.RawChunkRecord], errorChan chan error) {
+			for index, chunk := range man.Chunks {
+				if testMode && index > 10 {
+					continue
+				}
+				s := types.SimpleChunkRecord{
+					Range:     chunk.Range,
+					BloomHash: chunk.BloomHash,
+					BloomSize: chunk.BloomSize,
+					IndexHash: chunk.IndexHash,
+					IndexSize: chunk.IndexSize,
+				}
+				modelChan <- &s
 			}
 		}
 
-		return nil
+		return output.StreamMany(ctx, fetchData, output.OutputOptions{
+			Writer:     opts.Globals.Writer,
+			Chain:      opts.Globals.Chain,
+			TestMode:   opts.Globals.TestMode,
+			NoHeader:   opts.Globals.NoHeader,
+			ShowRaw:    opts.Globals.ShowRaw,
+			Verbose:    opts.Globals.Verbose,
+			LogLevel:   opts.Globals.LogLevel,
+			Format:     opts.Globals.Format,
+			OutputFn:   opts.Globals.OutputFn,
+			Append:     opts.Globals.Append,
+			JsonIndent: "  ",
+		})
 
 	} else {
 		defer opts.Globals.RenderFooter()
@@ -66,12 +64,12 @@ func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
 		}
 
 		if opts.Globals.TestMode {
-			if len(man.Chunks) > maxTestItems {
-				man.Chunks = man.Chunks[:maxTestItems]
+			if len(man.Chunks) > 10 {
+				man.Chunks = man.Chunks[:10]
 			}
 			man.Schemas = "--testing-hash--"
 		}
 
-		return opts.Globals.RenderManifest(opts.Globals.Writer, man)
+		return opts.Globals.RenderObject(man, true)
 	}
 }

@@ -323,6 +323,20 @@ bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q
 }
 */
 
+func GetBlockNumberMap(chain string, ids []Identifier) (map[uint64]bool, error) {
+	numMap := make(map[uint64]bool, 1000)
+	for _, br := range ids {
+		blockNums, err := br.ResolveBlocks(chain)
+		if err != nil {
+			return numMap, err
+		}
+		for _, bn := range blockNums {
+			numMap[bn] = true
+		}
+	}
+	return numMap, nil
+}
+
 func GetBlockNumbers(chain string, ids []Identifier) ([]uint64, error) {
 	var nums []uint64
 	for _, br := range ids {

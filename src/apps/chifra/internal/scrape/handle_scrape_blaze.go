@@ -88,11 +88,7 @@ func WriteTimestamps(chain string, tsArray []tslib.TimestampRecord, endPoint uin
 			}
 		}
 
-		if (bn % 13) == 0 {
-			msg := fmt.Sprintf("Checking or updating timestamps %-04d of %-04d (%d remaining)%s", bn, endPoint, endPoint-bn, spaces)
-			logger.Progress(msg)
-		}
-
+		logger.Progress((bn%13) == 0, fmt.Sprintf("Checking or updating timestamps %-04d of %-04d (%d remaining)%s", bn, endPoint, endPoint-bn, spaces))
 		if err = binary.Write(fp, binary.LittleEndian, &ts); err != nil {
 			return err
 		}

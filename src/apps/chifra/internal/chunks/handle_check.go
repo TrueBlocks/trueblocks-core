@@ -5,17 +5,18 @@
 package chunksPkg
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"sort"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -105,55 +106,55 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 		return remoteArray[i] < remoteArray[j]
 	})
 
-	reports := []types.ReportCheck{}
+	reports := []types.SimpleReportCheck{}
 
 	allowMissing := scrapeCfg.AllowMissing(opts.Globals.Chain)
-	seq := types.ReportCheck{Reason: "Filenames sequential"}
+	seq := types.SimpleReportCheck{Reason: "Filenames sequential"}
 	if err := opts.CheckSequential(fileNames, cacheArray, remoteArray, allowMissing, &seq); err != nil {
 		return err
 	}
 	reports = append(reports, seq)
 
-	intern := types.ReportCheck{Reason: "Internally consistent"}
+	intern := types.SimpleReportCheck{Reason: "Internally consistent"}
 	if err := opts.CheckInternal(fileNames, blockNums, &intern); err != nil {
 		return err
 	}
 	reports = append(reports, intern)
 
-	con := types.ReportCheck{Reason: "Consistent hashes"}
+	con := types.SimpleReportCheck{Reason: "Consistent hashes"}
 	if err := opts.CheckHashes(cacheManifest, remoteManifest, &con); err != nil {
 		return err
 	}
 	reports = append(reports, con)
 
-	sizes := types.ReportCheck{Reason: "Check file sizes"}
+	sizes := types.SimpleReportCheck{Reason: "Check file sizes"}
 	if err := opts.CheckSizes(fileNames, blockNums, cacheManifest, remoteManifest, &sizes); err != nil {
 		return err
 	}
 	reports = append(reports, sizes)
 
 	// compare remote manifest to cached manifest
-	r2c := types.ReportCheck{Reason: "Remote Manifest to Cached Manifest"}
+	r2c := types.SimpleReportCheck{Reason: "Remote Manifest to Cached Manifest"}
 	if err := opts.CheckManifest(remoteArray, cacheArray, &r2c); err != nil {
 		return err
 	}
 	reports = append(reports, r2c)
 
 	// compare with çached manifest with files on disc
-	d2c := types.ReportCheck{Reason: "Disc Files to Cached Manifest"}
+	d2c := types.SimpleReportCheck{Reason: "Disc Files to Cached Manifest"}
 	if err := opts.CheckManifest(fnArray, cacheArray, &d2c); err != nil {
 		return err
 	}
 	reports = append(reports, d2c)
 
 	// compare with remote manifest with files on disc
-	d2r := types.ReportCheck{Reason: "Disc Files to Remote Manifest"}
+	d2r := types.SimpleReportCheck{Reason: "Disc Files to Remote Manifest"}
 	if err := opts.CheckManifest(fnArray, remoteArray, &d2r); err != nil {
 		return err
 	}
 	reports = append(reports, d2r)
 
-	// stage := types.ReportCheck{Reason: "Check staging folder"}
+	// stage := types.SimpleReportCheck{Reason: "Check staging folder"}
 	// if err := opts.CheckStaging(0, allowMissing, &stage); err != nil {
 	// 	return err
 	// }
@@ -169,5 +170,26 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 			reports[i].SkippedCnt = reports[i].VisitedCnt - reports[i].CheckedCnt
 		}
 	}
-	return globals.RenderSlice(&opts.Globals, reports)
+
+	ctx := context.Background()
+	fetchData := func(modelChan chan types.Modeler[types.RawReportCheck], errorChan chan error) {
+		for _, report := range reports {
+			report := report
+			modelChan <- &report
+		}
+	}
+
+	return output.StreamMany(ctx, fetchData, output.OutputOptions{
+		Writer:     opts.Globals.Writer,
+		Chain:      opts.Globals.Chain,
+		TestMode:   opts.Globals.TestMode,
+		NoHeader:   opts.Globals.NoHeader,
+		ShowRaw:    opts.Globals.ShowRaw,
+		Verbose:    opts.Globals.Verbose,
+		LogLevel:   opts.Globals.LogLevel,
+		Format:     opts.Globals.Format,
+		OutputFn:   opts.Globals.OutputFn,
+		Append:     opts.Globals.Append,
+		JsonIndent: "  ",
+	})
 }

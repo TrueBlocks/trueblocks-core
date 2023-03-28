@@ -1,0 +1,10 @@
+[settings]
+class = CReportCheck
+fields = reportcheck.csv
+disabled = true
+doc_group = 04-Admin
+doc_descr = report on checking contents of chunks
+doc_route = 410-reportCheck
+doc_producer = chunks
+go_type = true
+output =

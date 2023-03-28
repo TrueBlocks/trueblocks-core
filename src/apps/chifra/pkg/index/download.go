@@ -36,7 +36,7 @@ type jobResult struct {
 	theChunk *manifest.ChunkRecord
 }
 
-type ProgressChan chan<- *progress.Progress
+type ProgressChan chan<- *progress.ProgressMsg
 
 // WorkerArguments are types meant to hold worker function arguments. We cannot
 // pass the arguments directly, because a worker function is expected to take one
@@ -84,7 +84,7 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 				// TODO: Do we really need the colored display?
 				msg := fmt.Sprintf("%v", chunk)
 				msg = strings.Replace(msg, hash.String(), colors.BrightCyan+hash.String()+colors.Off, -1)
-				progressChannel <- &progress.Progress{
+				progressChannel <- &progress.ProgressMsg{
 					Payload: &chunk,
 					Event:   progress.Start,
 					Message: msg,
@@ -102,7 +102,7 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 					chunkPath := config.GetPathToIndex(chain) + "finalized/" + chunk.Range + ".bin"
 					RemoveLocalFile(cache.ToIndexPath(chunkPath), "user canceled", progressChannel)
 					RemoveLocalFile(cache.ToBloomPath(chunkPath), "user canceled", progressChannel)
-					progressChannel <- &progress.Progress{
+					progressChannel <- &progress.ProgressMsg{
 						Payload: &chunk,
 						Event:   progress.Error,
 						Message: workerArgs.ctx.Err().Error(),
@@ -117,7 +117,7 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 						theChunk: &chunk,
 					}
 				} else {
-					progressChannel <- &progress.Progress{
+					progressChannel <- &progress.ProgressMsg{
 						Payload: &chunk,
 						Event:   progress.Error,
 						Message: err.Error(),
@@ -142,7 +142,7 @@ func getWriteWorker(chain string, workerArgs writeWorkerArguments, chunkType cac
 		case <-workerArgs.ctx.Done():
 			return
 		default:
-			trapChannel := sigintTrap.Enable(workerArgs.ctx, workerArgs.cancel)
+			trapChannel := sigintTrap.Enable(workerArgs.ctx, workerArgs.cancel, func() { logger.Info("Finishing work...") })
 			err := writeBytesToDisc(chain, chunkType, res)
 			sigintTrap.Disable(trapChannel)
 			if errors.Is(workerArgs.ctx.Err(), context.Canceled) {
@@ -151,7 +151,7 @@ func getWriteWorker(chain string, workerArgs writeWorkerArguments, chunkType cac
 			}
 
 			if err != nil {
-				progressChannel <- &progress.Progress{
+				progressChannel <- &progress.ProgressMsg{
 					Payload: res.theChunk,
 					Event:   progress.Error,
 					Message: err.Error(),
@@ -159,7 +159,7 @@ func getWriteWorker(chain string, workerArgs writeWorkerArguments, chunkType cac
 				return
 			}
 
-			progressChannel <- &progress.Progress{
+			progressChannel <- &progress.ProgressMsg{
 				Payload: res.theChunk,
 				Event:   progress.Finished,
 				Message: chunkType.String(),
@@ -169,7 +169,7 @@ func getWriteWorker(chain string, workerArgs writeWorkerArguments, chunkType cac
 }
 
 // DownloadChunks downloads, unzips and saves the chunk of type indicated by chunkType
-// for each chunk in chunks. Progress is reported to progressChannel.
+// for each chunk in chunks. ProgressMsg is reported to progressChannel.
 func DownloadChunks(chain string, chunksToDownload []manifest.ChunkRecord, chunkType cache.CacheType, poolSize int, progressChannel ProgressChan) {
 	// Context lets us handle Ctrl-C easily
 	ctx, cancel := context.WithCancel(context.Background())
@@ -235,13 +235,13 @@ func DownloadChunks(chain string, chunksToDownload []manifest.ChunkRecord, chunk
 	writeWg.Wait()
 
 	if errors.Is(ctx.Err(), context.Canceled) {
-		progressChannel <- &progress.Progress{
+		progressChannel <- &progress.ProgressMsg{
 			Event: progress.Cancelled,
 		}
 		return
 	}
 
-	progressChannel <- &progress.Progress{
+	progressChannel <- &progress.ProgressMsg{
 		Event: progress.AllDone,
 	}
 }
@@ -282,12 +282,12 @@ func RemoveLocalFile(fullPath, reason string, progressChannel ProgressChan) bool
 	if file.FileExists(fullPath) {
 		err := os.Remove(fullPath)
 		if err != nil {
-			progressChannel <- &progress.Progress{
+			progressChannel <- &progress.ProgressMsg{
 				Event:   progress.Error,
 				Message: fmt.Sprintf("Failed to remove file %s [%s]", fullPath, err.Error()),
 			}
 		} else {
-			progressChannel <- &progress.Progress{
+			progressChannel <- &progress.ProgressMsg{
 				Event:   progress.Update,
 				Message: fmt.Sprintf("File %s removed [%s]", fullPath, reason),
 			}

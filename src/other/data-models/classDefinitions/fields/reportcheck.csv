@@ -1,0 +1,9 @@
+name       ,type     ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,noaddfld ,doc ,disp ,example ,description
+Reason     ,string   ,           ,       ,      ,        ,          ,        ,         ,  1 ,     ,        ,the reason for the test
+visitedCnt ,uint32   ,           ,       ,      ,        ,          ,        ,         ,  2 ,     ,        ,the number of visited items in the cache
+checkedCnt ,uint32   ,           ,       ,      ,        ,          ,        ,         ,  3 ,     ,        ,the number of checks
+skippedCnt ,uint32   ,           ,       ,      ,        ,          ,        ,         ,  4 ,     ,        ,the number of skipped checks
+passedCnt  ,uint32   ,           ,       ,      ,        ,          ,        ,         ,  5 ,     ,        ,the number of passed checks
+failedCnt  ,uint32   ,           ,       ,      ,        ,          ,        ,         ,  6 ,     ,        ,the number of failed checks
+result     ,string   ,           ,       ,      ,        ,          ,        ,         ,  7 ,     ,        ,the result of the check
+msgStrings ,[]string ,           ,       ,      ,        ,          ,        ,         ,  8 ,     ,        ,an array of messages explaining failed checks

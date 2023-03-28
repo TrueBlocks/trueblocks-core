@@ -187,8 +187,8 @@ func GetTestMonitor(t *testing.T) Monitor {
 		t.Error("Expected:", strings.ToLower(testAddr), "Got:", mon.Address)
 	}
 
-	if mon.GetAddrStr() != strings.ToLower(testAddr) {
-		t.Error("Expected:", strings.ToLower(testAddr), "Got:", mon.GetAddrStr())
+	if mon.Address.Hex() != strings.ToLower(testAddr) {
+		t.Error("Expected:", strings.ToLower(testAddr), "Got:", mon.Address.Hex())
 	}
 
 	// The file should exist...

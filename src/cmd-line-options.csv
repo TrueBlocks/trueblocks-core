@@ -225,7 +225,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 13111,apps,Admin,daemon,flame,port,p,:8080,false,false,true,true,header,flag,<string>,specify the server's port
 13114,apps,Admin,daemon,flame,api,a,on,false,false,true,false,gocmd,flag,enum[off|on*]>,instruct the node to start the API server
-13112,apps,Admin,daemon,flame,scrape,s,,false,false,true,false,gocmd,flag,enum[off|blooms|full-index]>,start the scraper&#44; initialize it with either just blooms or entire index&#44; generate for new blocks
+13112,apps,Admin,daemon,flame,scrape,s,,false,false,true,false,gocmd,flag,enum[off|blooms|index]>,start the scraper&#44; initialize it with either just blooms or entire index&#44; generate for new blocks
 13113,apps,Admin,daemon,flame,monitor,m,,false,false,true,false,gocmd,switch,<boolean>,instruct the node to start the monitors tool
 13115,apps,Admin,daemon,flame,,,,false,false,true,true,--,description,,Initalize and control long-running processes such as the API and the scrapers.
 13116,apps,Admin,daemon,flame,n1,,,false,false,false,false,--,note,,To start API open terminal window and run chifra daemon.

@@ -17,7 +17,7 @@ import (
 
 // EXISTING_CODE
 
-type RawhunkBlooms struct {
+type RawChunkBlooms struct {
 	Count     string `json:"count"`
 	Hash      string `json:"hash"`
 	Magic     string `json:"magic"`
@@ -29,28 +29,28 @@ type RawhunkBlooms struct {
 	// EXISTING_CODE
 }
 
-type SimplehunkBlooms struct {
-	Count     uint64         `json:"count"`
-	Hash      base.Hash      `json:"hash"`
-	Magic     string         `json:"magic"`
-	NInserted uint64         `json:"nInserted"`
-	Range     base.FileRange `json:"range"`
-	Size      uint64         `json:"size"`
-	Width     uint64         `json:"width"`
-	raw       *RawhunkBlooms `json:"-"`
+type SimpleChunkBlooms struct {
+	Count     uint64          `json:"count"`
+	Hash      base.Hash       `json:"hash"`
+	Magic     string          `json:"magic"`
+	NInserted uint64          `json:"nInserted"`
+	Range     base.FileRange  `json:"range"`
+	Size      uint64          `json:"size"`
+	Width     uint64          `json:"width"`
+	raw       *RawChunkBlooms `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *SimplehunkBlooms) Raw() *RawhunkBlooms {
+func (s *SimpleChunkBlooms) Raw() *RawChunkBlooms {
 	return s.raw
 }
 
-func (s *SimplehunkBlooms) SetRaw(raw *RawhunkBlooms) {
+func (s *SimpleChunkBlooms) SetRaw(raw *RawChunkBlooms) {
 	s.raw = raw
 }
 
-func (s *SimplehunkBlooms) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleChunkBlooms) Model(showHidden bool, format string, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -63,13 +63,13 @@ func (s *SimplehunkBlooms) Model(showHidden bool, format string, extraOptions ma
 	}
 }
 
-func (s *SimplehunkBlooms) WriteTo(w io.Writer) (n int64, err error) {
+func (s *SimpleChunkBlooms) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimplehunkBlooms) ReadFrom(r io.Reader) (n int64, err error) {
+func (s *SimpleChunkBlooms) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil

@@ -36,6 +36,16 @@ func (s *SimpleTimestamp) Model(showHidden bool, format string, extraOptions map
 	var order = []string{}
 
 	// EXISTING_CODE
+	model = map[string]any{
+		"blockNumber": s.BlockNumber,
+		"timestamp":   s.Timestamp,
+		"diff":        s.Diff,
+	}
+	order = []string{
+		"blockNumber",
+		"timestamp",
+		"diff",
+	}
 	// EXISTING_CODE
 
 	return Model{

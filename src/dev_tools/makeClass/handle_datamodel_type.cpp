@@ -166,7 +166,7 @@ string_q specialCase(const CClassDefinition& model, const CMember& field, const 
     } else if (name % "Components" || name % "Inputs" || name % "Outputs") {
         ret = isRaw ? "string" : "[]SimpleParameter";
 
-    } else if (name % "Result") {
+    } else if (startsWith(modelName, "Trace") && name % "Result") {
         ret = isRaw ? "*RawTraceResult" : "*SimpleTraceResult";
 
     } else if (startsWith(name, "Articulated") || name % "CallResult") {

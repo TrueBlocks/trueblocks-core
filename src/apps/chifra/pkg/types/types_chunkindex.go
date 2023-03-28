@@ -17,7 +17,7 @@ import (
 
 // EXISTING_CODE
 
-type RawhunkIndex struct {
+type RawChunkIndex struct {
 	AddressCount    string `json:"addressCount"`
 	AppearanceCount string `json:"appearanceCount"`
 	Hash            string `json:"hash"`
@@ -28,27 +28,27 @@ type RawhunkIndex struct {
 	// EXISTING_CODE
 }
 
-type SimplehunkIndex struct {
+type SimpleChunkIndex struct {
 	AddressCount    uint64         `json:"addressCount"`
 	AppearanceCount uint64         `json:"appearanceCount"`
 	Hash            base.Hash      `json:"hash"`
 	Magic           string         `json:"magic"`
 	Range           base.FileRange `json:"range"`
 	Size            uint64         `json:"size"`
-	raw             *RawhunkIndex  `json:"-"`
+	raw             *RawChunkIndex `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *SimplehunkIndex) Raw() *RawhunkIndex {
+func (s *SimpleChunkIndex) Raw() *RawChunkIndex {
 	return s.raw
 }
 
-func (s *SimplehunkIndex) SetRaw(raw *RawhunkIndex) {
+func (s *SimpleChunkIndex) SetRaw(raw *RawChunkIndex) {
 	s.raw = raw
 }
 
-func (s *SimplehunkIndex) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleChunkIndex) Model(showHidden bool, format string, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -61,13 +61,13 @@ func (s *SimplehunkIndex) Model(showHidden bool, format string, extraOptions map
 	}
 }
 
-func (s *SimplehunkIndex) WriteTo(w io.Writer) (n int64, err error) {
+func (s *SimpleChunkIndex) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimplehunkIndex) ReadFrom(r io.Reader) (n int64, err error) {
+func (s *SimpleChunkIndex) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil

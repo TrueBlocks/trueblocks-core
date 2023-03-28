@@ -5,52 +5,61 @@
 package monitorsPkg
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"context"
+	"fmt"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
-// HandleClean
+// HandleList
 func (opts *MonitorsOptions) HandleList() error {
-	monitorChan := make(chan monitor.Monitor)
+	chain := opts.Globals.Chain
+	monitorMap, monArray := monitor.GetMonitorMap(chain)
 
-	var monitors []monitor.Monitor
-	go monitor.ListMonitors(opts.Globals.Chain, "monitors", monitorChan)
-
-	for result := range monitorChan {
-		switch result.Address {
-		case monitor.SentinalAddr:
-			close(monitorChan)
-		default:
-			monitors = append(monitors, result)
+	errors := make([]error, 0)
+	addrMap := map[base.Address]bool{}
+	for _, addr := range opts.Addrs {
+		a := base.HexToAddress(addr)
+		addrMap[a] = true
+		if monitorMap[a] == nil {
+			errors = append(errors, fmt.Errorf("address %s is not being monitored", addr))
 		}
 	}
 
-	objs := []types.SimpleMonitor{}
-	for _, mon := range monitors {
-		obj := types.SimpleMonitor{
-			Address:     hexutil.Encode(mon.Address.Bytes()),
-			NRecords:    int(mon.Count()),
-			FileSize:    file.FileSize(mon.Path()),
-			LastScanned: mon.Header.LastScanned,
+	ctx := context.Background()
+	fetchData := func(modelChan chan types.Modeler[types.RawMonitor], errorChan chan error) {
+		for _, e := range errors {
+			errorChan <- e
 		}
-		if len(opts.Addrs) == 0 || InStrArray(obj.Address, opts.Addrs) {
-			objs = append(objs, obj)
+
+		for _, mon := range monArray {
+			if len(addrMap) == 0 || addrMap[mon.Address] {
+				s := types.SimpleMonitor{
+					Address:     mon.Address.Hex(),
+					NRecords:    int(mon.Count()),
+					FileSize:    file.FileSize(mon.Path()),
+					LastScanned: mon.Header.LastScanned,
+				}
+				modelChan <- &s
+			}
 		}
 	}
 
-	// TODO: Fix export without arrays
-	return globals.RenderSlice(&opts.Globals, objs)
-}
-
-// TODO: Move this to utils package
-func InStrArray(item string, items []string) bool {
-	for _, i := range items {
-		if i == item {
-			return true
-		}
-	}
-	return false
+	return output.StreamMany(ctx, fetchData, output.OutputOptions{
+		Writer:     opts.Globals.Writer,
+		Chain:      opts.Globals.Chain,
+		TestMode:   opts.Globals.TestMode,
+		NoHeader:   opts.Globals.NoHeader,
+		ShowRaw:    opts.Globals.ShowRaw,
+		Verbose:    opts.Globals.Verbose,
+		LogLevel:   opts.Globals.LogLevel,
+		Format:     opts.Globals.Format,
+		OutputFn:   opts.Globals.OutputFn,
+		Append:     opts.Globals.Append,
+		JsonIndent: "  ",
+	})
 }

@@ -6,10 +6,12 @@ package chunksPkg
 
 import (
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -36,7 +38,7 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 		}
 
 		// TODO: Fix export without arrays
-		stats := NewChunkStats(path)
+		stats := NewChunkStats2(path)
 		obj := NewSimpleBloom(stats, bl)
 		err := opts.Globals.RenderObject(obj, first)
 		if err != nil {
@@ -85,7 +87,7 @@ func displayBloom(bl *bloom.ChunkBloom, verbose int) {
 	}
 }
 
-func NewSimpleBloom(stats types.ReportChunks, bl bloom.ChunkBloom) types.SimpleBloom {
+func NewSimpleBloom(stats ReportChunks, bl bloom.ChunkBloom) types.SimpleBloom {
 	nInserted := 0
 	for _, bl := range bl.Blooms {
 		nInserted += int(bl.NInserted)
@@ -101,4 +103,58 @@ func NewSimpleBloom(stats types.ReportChunks, bl bloom.ChunkBloom) types.SimpleB
 	ret.NInserted = uint64(nInserted)
 
 	return ret
+}
+
+type ReportChunks struct {
+	Start         uint64  `json:"start"`
+	End           uint64  `json:"end"`
+	NAddrs        uint32  `json:"nAddrs"`
+	NApps         uint32  `json:"nApps"`
+	NBlocks       uint64  `json:"nBlocks"`
+	NBlooms       uint32  `json:"nBlooms"`
+	RecWid        uint64  `json:"recWid"`
+	BloomSz       int64   `json:"bloomSz"`
+	ChunkSz       int64   `json:"chunkSz"`
+	AddrsPerBlock float64 `json:"addrsPerBlock"`
+	AppsPerBlock  float64 `json:"appsPerBlock"`
+	AppsPerAddr   float64 `json:"appsPerAddr"`
+	Ratio         float64 `json:"ratio"`
+}
+
+func NewChunkStats2(path string) ReportChunks {
+	chunk, err := index.NewChunk(path)
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println(err)
+	}
+	defer chunk.Close()
+
+	var ret ReportChunks
+	ret.Start = chunk.Range.First
+	ret.End = chunk.Range.Last
+	ret.NAddrs = chunk.Data.Header.AddressCount
+	ret.NApps = chunk.Data.Header.AppearanceCount
+	ret.NBlooms = chunk.Bloom.Count
+	ret.BloomSz = file.FileSize(cache.ToBloomPath(path))
+	ret.ChunkSz = file.FileSize(cache.ToIndexPath(path))
+
+	return finishStats2(&ret)
+}
+
+func finishStats2(stats *ReportChunks) ReportChunks {
+	stats.NBlocks = stats.End - stats.Start + 1
+	if stats.NBlocks > 0 {
+		stats.AddrsPerBlock = float64(stats.NAddrs) / float64(stats.NBlocks)
+		stats.AppsPerBlock = float64(stats.NApps) / float64(stats.NBlocks)
+	}
+
+	if stats.NAddrs > 0 {
+		stats.AppsPerAddr = float64(stats.NApps) / float64(stats.NAddrs)
+	}
+
+	stats.RecWid = 4 + bloom.BLOOM_WIDTH_IN_BYTES
+	if stats.BloomSz > 0 {
+		stats.Ratio = float64(stats.ChunkSz) / float64(stats.BloomSz)
+	}
+
+	return *stats
 }

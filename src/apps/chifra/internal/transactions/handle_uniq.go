@@ -7,7 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/bykof/gostradamus"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum"
 )
 
@@ -32,7 +32,7 @@ func (opts *TransactionsOptions) HandleUniq() (err error, disp bool) {
 					BlockNumber:      app.BlockNumber,
 					TransactionIndex: app.TransactionIndex,
 					Timestamp:        ts,
-					Date:             gostradamus.FromUnixTimestamp(ts).String(),
+					Date:             utils.FormattedDate(ts),
 				}
 			}
 		}

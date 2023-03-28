@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type severity int
@@ -75,7 +76,10 @@ func toLog(sev severity, a ...interface{}) {
 
 	fmt.Fprintf(os.Stderr, "%s[%s] ", severityToLabel[sev], timeDatePart)
 	if sev == progress {
-		for _, aa := range a {
+		for index, aa := range a {
+			if index > 0 {
+				fmt.Fprint(os.Stderr, ' ')
+			}
 			fmt.Fprint(os.Stderr, aa)
 		}
 		fmt.Fprint(os.Stderr, "\r")
@@ -90,10 +94,6 @@ func toLog(sev severity, a ...interface{}) {
 	} else {
 		fmt.Fprintln(os.Stderr, a...)
 	}
-}
-
-func Progress(v ...any) {
-	toLog(progress, v...)
 }
 
 func InfoTable(v ...any) {
@@ -118,4 +118,11 @@ func Fatal(v ...any) {
 
 func Panic(v ...any) {
 	log.Panic(v...)
+}
+
+func Progress(tick bool, v ...any) {
+	if !utils.IsTerminal() || !tick {
+		return
+	}
+	toLog(progress, v...)
 }

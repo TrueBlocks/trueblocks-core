@@ -50,7 +50,7 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	err = opts.FreshenMonitorsForExport()
+	_, err = opts.FreshenMonitorsForExport()
 	if err != nil {
 		return err, true
 	}
