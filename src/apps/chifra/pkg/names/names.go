@@ -51,9 +51,10 @@ func LoadNamesArray(chain string, parts Parts, sortBy SortBy, terms []string) ([
 		return nil, err
 	} else {
 		for _, name := range namesMap {
+			// Custom names with Individual tag or tags under 30 are private during testing
 			isTesting := parts&Testing != 0
-			isIndiv := strings.Contains(name.Tags, "Individual")
-			if !isTesting || !isIndiv {
+			isPrivate := strings.Contains(name.Tags, "Individual") || (name.IsCustom && name.Tags < "3")
+			if !isTesting || !isPrivate {
 				names = append(names, name)
 			}
 		}
