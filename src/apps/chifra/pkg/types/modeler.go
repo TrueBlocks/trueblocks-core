@@ -2,10 +2,6 @@ package types
 
 import "io"
 
-type Modeler2 interface {
-	Model(showHidden bool, format string, extraOptions map[string]any) Model
-}
-
 type Modeler[Raw RawData] interface {
 	Model(showHidden bool, format string, extraOptions map[string]any) Model
 	Raw() *Raw
