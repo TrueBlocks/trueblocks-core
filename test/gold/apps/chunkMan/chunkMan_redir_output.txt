@@ -5,6 +5,6 @@ TEST[DATE|TIME] OutputFn:  output_test_file
 TEST[DATE|TIME] Format:  txt
 ----
 Results in ./output_test_file
-range	magic	hash	addressCount	appearanceCount	size
-001963091-002067748	"0xdeadbeef"	0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1	104763	2000021	18933576
+range	magic	hash	nAddresses	nAppearances	fileSize
+001963091-002067748	0xdeadbeef	0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1	104763	2000021	18933576
 
