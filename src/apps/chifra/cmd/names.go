@@ -86,6 +86,7 @@ func init() {
 
 	// EXISTING_CODE
 	namesCmd.Flags().MarkDeprecated("named", "please use the --all option instead")
+	namesCmd.Flags().MarkDeprecated("to_custom", "this option has been deprecated")
 	// EXISTING_CODE
 
 	chifraCmd.AddCommand(namesCmd)
