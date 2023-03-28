@@ -157,18 +157,18 @@ ChunkBlooms consist of the following fields:
 | size      | The size on disc in bytes of this bloom file                       | uint64     |
 | width     | The width of the bloom filter                                      | uint64     |
 
-## ChunkAddresses
+## ChunkAddress
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
 The `addresses` data model is produced by `chifra chunks` and represents the records found in the
 addresses table of each Unchained Index chunk. The `offset` and `count` fields represent the
 location and number of records in the `appearances` table to which the address table is related.
 
-The following commands produce and manage ChunkAddresses:
+The following commands produce and manage ChunkAddress:
 
 - [chifra chunks](/chifra/admin/#chifra-chunks)
 
-ChunkAddresses consist of the following fields:
+ChunkAddress consist of the following fields:
 
 | Field   | Description                                                               | Type       |
 | ------- | ------------------------------------------------------------------------- | ---------- |
@@ -176,24 +176,6 @@ ChunkAddresses consist of the following fields:
 | range   | The block range of the chunk from which this address record was taken     | blockRange |
 | offset  | The offset into the appearance table of the first record for this address | uint64     |
 | count   | The number of records in teh appearance table for this address            | uint64     |
-
-## ChunkAppearances
-
-<!-- markdownlint-disable MD033 MD036 MD041 -->
-The `appearances` data model is the second of two tables inside of the Unchained Index chunks. The
-other is the `addresses` table which relates the addresses in that table to this table via the
-`offset` and `count` fields.
-
-The following commands produce and manage ChunkAppearances:
-
-- [chifra chunks](/chifra/admin/#chifra-chunks)
-
-ChunkAppearances consist of the following fields:
-
-| Field            | Description                              | Type   |
-| ---------------- | ---------------------------------------- | ------ |
-| blockNumber      | The block number of this appearance      | uint64 |
-| transactionIndex | The transaction index of this appearance | uint64 |
 
 ## ChunkStats
 

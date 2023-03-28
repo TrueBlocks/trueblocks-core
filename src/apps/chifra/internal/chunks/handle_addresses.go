@@ -18,7 +18,7 @@ import (
 
 func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawIndexAddress], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[RawChunkAddress], errorChan chan error) {
 		showAddresses := func(walker *index.IndexWalker, path string, first bool) (bool, error) {
 			if path != cache.ToBloomPath(path) {
 				return false, fmt.Errorf("should not happen in showFinalizedStats")
@@ -48,7 +48,7 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 					return false, err
 				}
 
-				s := types.SimpleIndexAddress{
+				s := SimpleChunkAddress{
 					Address: hexutil.Encode(obj.Address.Bytes()),
 					Range:   indexChunk.Range.String(),
 					Offset:  obj.Offset,
@@ -74,4 +74,34 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+}
+
+type RawChunkAddress interface{}
+
+type SimpleChunkAddress struct {
+	Address string `json:"address"`
+	Range   string `json:"range"`
+	Offset  uint32 `json:"offset"`
+	Count   uint32 `json:"count"`
+}
+
+func (s *SimpleChunkAddress) Raw() *RawChunkAddress {
+	return nil
+}
+
+func (s *SimpleChunkAddress) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
+	return types.Model{
+		Data: map[string]interface{}{
+			"address": s.Address,
+			"range":   s.Range,
+			"offset":  s.Offset,
+			"count":   s.Count,
+		},
+		Order: []string{
+			"address",
+			"range",
+			"offset",
+			"count",
+		},
+	}
 }

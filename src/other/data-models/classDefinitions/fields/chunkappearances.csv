@@ -1,3 +1,0 @@
-name             ,type   ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,noaddfld ,doc ,disp ,example ,description
-blockNumber      ,uint64 ,           ,       ,      ,        ,          ,        ,         ,  1 ,     ,        ,The block number of this appearance      ,
-transactionIndex ,uint64 ,           ,       ,      ,        ,          ,        ,         ,  2 ,     ,        ,The transaction index of this appearance ,
