@@ -5,8 +5,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"html/template"
+	"io"
 	"os"
 	"path/filepath"
+	"reflect"
 	"sort"
 	"strings"
 
@@ -16,8 +19,9 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
@@ -121,7 +125,7 @@ func (m *Manifest) SaveManifest(chain string) error {
 		return fmt.Errorf("locking file: %s", err)
 	}
 
-	return output.OutputObject(&m, w, "json", false, true, nil)
+	return OutputManifest(&m, w, "json", false, true, nil)
 }
 
 // TODO: Protect against overwriting files on disc
@@ -172,8 +176,52 @@ func UpdateManifest(chain string, chunk ChunkRecord) error {
 	defer file.Unlock(w)
 
 	logger.Info("Updating manifest with", len(man.Chunks), "chunks", spaces)
-	return output.OutputObject(man, w, "json", false, true, nil)
+	return OutputManifest(man, w, "json", false, true, nil)
 }
 
-// TODO: There's got to be a better way
+// TODO: There's got to be a better way - this should use StreamMany
 var spaces = strings.Repeat(" ", 40)
+
+func OutputManifest(data interface{}, w io.Writer, format string, hideHeader, first bool, meta *rpcClient.MetaData) error {
+	var outputBytes []byte
+	var err error
+
+	preceeds := ""
+	switch format {
+	case "json":
+		outputBytes, err = json.MarshalIndent(data, "", "  ")
+		if err != nil {
+			return err
+		}
+		if !first {
+			preceeds = ","
+		}
+	default:
+		if format == "csv" || format == "txt" || (strings.Contains(format, "\t") || strings.Contains(format, ",")) {
+			tt := reflect.TypeOf(data)
+			rowTemplate, err := GetTemplate(&tt, format)
+			if err != nil {
+				return err
+			}
+			return rowTemplate.Execute(w, data)
+		}
+		return fmt.Errorf("unsupported format %s", format)
+	}
+	w.Write([]byte(preceeds))
+	w.Write(outputBytes)
+
+	return nil
+}
+
+func GetTemplate(t *reflect.Type, format string) (*template.Template, error) {
+	fields, sep, quote := utils.GetFields(t, format, false)
+	var sb strings.Builder
+	for i, field := range fields {
+		if i > 0 {
+			sb.WriteString(sep)
+		}
+		sb.WriteString(quote + "{{." + field + "}}" + quote)
+	}
+	tt, err := template.New("").Parse(sb.String() + "\n")
+	return tt, err
+}

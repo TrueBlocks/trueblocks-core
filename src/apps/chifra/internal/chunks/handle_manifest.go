@@ -42,34 +42,34 @@ func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
 			}
 		}
 
-		return output.StreamMany(ctx, fetchData, output.OutputOptions{
-			Writer:     opts.Globals.Writer,
-			Chain:      opts.Globals.Chain,
-			TestMode:   opts.Globals.TestMode,
-			NoHeader:   opts.Globals.NoHeader,
-			ShowRaw:    opts.Globals.ShowRaw,
-			Verbose:    opts.Globals.Verbose,
-			LogLevel:   opts.Globals.LogLevel,
-			Format:     opts.Globals.Format,
-			OutputFn:   opts.Globals.OutputFn,
-			Append:     opts.Globals.Append,
-			JsonIndent: "  ",
-		})
+		return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 
 	} else {
-		defer opts.Globals.RenderFooter()
-		err = opts.Globals.RenderHeader(types.SimpleManifest{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.NoHeader, true)
-		if err != nil {
-			return err
-		}
-
-		if opts.Globals.TestMode {
-			if len(man.Chunks) > 10 {
-				man.Chunks = man.Chunks[:10]
+		fetchData := func(modelChan chan types.Modeler[types.RawManifest], errorChan chan error) {
+			if opts.Globals.TestMode {
+				if len(man.Chunks) > 10 {
+					man.Chunks = man.Chunks[:10]
+				}
+				man.Schemas = "--testing-hash--"
 			}
-			man.Schemas = "--testing-hash--"
+
+			s := types.SimpleManifest{
+				Version: man.Version,
+				Chain:   man.Chain,
+				Schemas: man.Schemas,
+			}
+			for _, chunk := range man.Chunks {
+				s.Chunks = append(s.Chunks, types.SimpleChunkRecord{
+					Range:     chunk.Range,
+					BloomHash: chunk.BloomHash,
+					BloomSize: chunk.BloomSize,
+					IndexHash: chunk.IndexHash,
+					IndexSize: chunk.IndexSize,
+				})
+			}
+			modelChan <- &s
 		}
 
-		return opts.Globals.RenderObject(man, true)
+		return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 	}
 }

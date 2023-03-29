@@ -1775,16 +1775,16 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/admin/#manifest">Manifest</a>, <a href="/data-model/admin/#pinnedchunk">Pinnedchunk</a>, <a href="/data-model/admin/#chunkindex">Chunkindex</a>, <a href="/data-model/admin/#chunkblooms">Chunkblooms</a>, <a href="/data-model/admin/#chunkaddresses">Chunkaddresses</a>, <a href="/data-model/admin/#chunkappearances">Chunkappearances</a>, <a href="/data-model/admin/#chunkstats">Chunkstats</a>, and/or <a href="/data-model/admin/#reportcheck">Reportcheck</a> data. Corresponds to the <a href="/chifra/admin/#chifra-chunks">chifra chunks</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/admin/#manifest">Manifest</a>, <a href="/data-model/admin/#pinnedchunk">Pinnedchunk</a>, <a href="/data-model/admin/#chunkindex">Chunkindex</a>, <a href="/data-model/admin/#chunkblooms">Chunkblooms</a>, <a href="/data-model/admin/#chunkaddress">Chunkaddress</a>, <a href="/data-model/admin/#chunkstats">Chunkstats</a>, and/or <a href="/data-model/admin/#reportcheck">Reportcheck</a> data. Corresponds to the <a href="/chifra/admin/#chifra-chunks">chifra chunks</a> command line.
                     type: array
                     items:
                       oneOf:
+                        - $ref: "#/components/schemas/appearance"
                         - $ref: "#/components/schemas/manifest"
                         - $ref: "#/components/schemas/pinnedChunk"
                         - $ref: "#/components/schemas/chunkIndex"
                         - $ref: "#/components/schemas/chunkBlooms"
-                        - $ref: "#/components/schemas/chunkAddresses"
-                        - $ref: "#/components/schemas/chunkAppearances"
+                        - $ref: "#/components/schemas/chunkAddress"
                         - $ref: "#/components/schemas/chunkStats"
                         - $ref: "#/components/schemas/reportCheck"
                 example:
@@ -1963,7 +1963,7 @@ paths:
 components:
   schemas:
     appearance:
-      description: "an appearance (`<blockNumber,transactionIndex>`) of an address anywhere on the chain"
+      description: "an appearance (`<blockNumber,transactionIndex>`) of an address anywhere on the chain (note that in some cases, not all fields will appear depending on the command)"
       type: object
       properties:
         address:
@@ -3121,7 +3121,7 @@ components:
           type: number
           format: uint64
           description: "The width of the bloom filter"
-    chunkAddresses:
+    chunkAddress:
       description: "internal-use only data model detailing a single address record in the address table of an index chunk"
       type: object
       properties:
@@ -3141,18 +3141,6 @@ components:
           type: number
           format: uint64
           description: "The number of records in teh appearance table for this address"
-    chunkAppearances:
-      description: "internal-use only data model detailing a single appearance record in the appearance table of an index chunk"
-      type: object
-      properties:
-        blockNumber:
-          type: number
-          format: uint64
-          description: "The block number of this appearance"
-        transactionIndex:
-          type: number
-          format: uint64
-          description: "The transaction index of this appearance"
     chunkStats:
       description: "summary statistics about an Unchained Index bloom filter and index chunk"
       type: object

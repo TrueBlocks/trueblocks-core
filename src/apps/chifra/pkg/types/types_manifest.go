@@ -37,6 +37,18 @@ func (s *SimpleManifest) Model(showHidden bool, format string, extraOptions map[
 	var order = []string{}
 
 	// EXISTING_CODE
+	model = map[string]any{
+		"version": s.Version,
+		"chain":   s.Chain,
+		"schemas": s.Schemas,
+		"chunks":  s.Chunks,
+	}
+	order = []string{
+		"version",
+		"chain",
+		"schemas",
+		"chunks",
+	}
 	// EXISTING_CODE
 
 	return Model{

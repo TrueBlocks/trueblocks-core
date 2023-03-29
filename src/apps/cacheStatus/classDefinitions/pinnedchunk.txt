@@ -4,10 +4,10 @@ fields = pinnedchunk.csv
 includes = utillib.h
 sort = v1.range < v2.range
 equals = range == it.range
-disabled = true
 doc_group = 04-Admin
 doc_descr = a single record in the manifest detailing the IPFS hases and file sizes for each bloom filter and index chunk
 doc_route = 403-pinnedChunk
 doc_producer = chunks, init, scrape
-go_type = true
+disabled = true
+go_type = false
 output = ../../apps/cacheStatus/

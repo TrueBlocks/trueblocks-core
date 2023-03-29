@@ -1,7 +1,7 @@
 components:
   schemas:
     appearance:
-      description: "an appearance (`<blockNumber,transactionIndex>`) of an address anywhere on the chain"
+      description: "an appearance (`<blockNumber,transactionIndex>`) of an address anywhere on the chain (note that in some cases, not all fields will appear depending on the command)"
       type: object
       properties:
         address:
@@ -1159,7 +1159,7 @@ components:
           type: number
           format: uint64
           description: "The width of the bloom filter"
-    chunkAddresses:
+    chunkAddress:
       description: "internal-use only data model detailing a single address record in the address table of an index chunk"
       type: object
       properties:
@@ -1179,18 +1179,6 @@ components:
           type: number
           format: uint64
           description: "The number of records in teh appearance table for this address"
-    chunkAppearances:
-      description: "internal-use only data model detailing a single appearance record in the appearance table of an index chunk"
-      type: object
-      properties:
-        blockNumber:
-          type: number
-          format: uint64
-          description: "The block number of this appearance"
-        transactionIndex:
-          type: number
-          format: uint64
-          description: "The transaction index of this appearance"
     chunkStats:
       description: "summary statistics about an Unchained Index bloom filter and index chunk"
       type: object

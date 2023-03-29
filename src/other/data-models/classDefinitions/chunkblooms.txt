@@ -5,5 +5,5 @@ doc_group = 04-Admin
 doc_descr = internal-use only data model detailing a single bloom filter file
 doc_route = 405-chunkBlooms
 doc_producer = chunks
-go_type = true
+go_type = false
 output =

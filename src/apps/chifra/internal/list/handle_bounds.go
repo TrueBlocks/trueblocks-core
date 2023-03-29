@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
@@ -47,26 +46,11 @@ func (opts *ListOptions) HandleBounds(monitorArray []monitor.Monitor) error {
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, output.OutputOptions{
-		Writer:     opts.Globals.Writer,
-		Chain:      opts.Globals.Chain,
-		TestMode:   opts.Globals.TestMode,
-		NoHeader:   opts.Globals.NoHeader,
-		ShowRaw:    opts.Globals.ShowRaw,
-		Verbose:    opts.Globals.Verbose,
-		LogLevel:   opts.Globals.LogLevel,
-		Format:     opts.Globals.Format,
-		OutputFn:   opts.Globals.OutputFn,
-		Append:     opts.Globals.Append,
-		JsonIndent: "  ",
-		Extra: map[string]interface{}{
-			"verbose": opts.Globals.Verbose,
-		},
-	})
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
-type RawGeneric struct {
-}
+type RawGeneric interface{}
+
 type SimpleGeneric struct {
 	First types.RawAppearance
 	Last  types.RawAppearance
@@ -77,43 +61,19 @@ func (s *SimpleGeneric) Raw() *RawGeneric {
 	return s.raw
 }
 
-func (s *SimpleGeneric) SetRaw(raw *RawGeneric) {
-	s.raw = raw
-}
-
 func (s *SimpleGeneric) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
-	var model = map[string]interface{}{}
-	var order = []string{}
-
-	// EXISTING_CODE
-	model = map[string]interface{}{
-		"address": s.First.Address,
-		"first":   fmt.Sprintf("%d.%d", s.First.BlockNumber, s.First.TransactionIndex),
-		"last":    fmt.Sprintf("%d.%d", s.Last.BlockNumber, s.Last.TransactionIndex),
-		"range":   (s.Last.BlockNumber - s.First.BlockNumber),
-	}
-	order = []string{
-		"address",
-		"first",
-		"last",
-		"range",
-	}
-	// EXISTING_CODE
-
 	return types.Model{
-		Data:  model,
-		Order: order,
+		Data: map[string]interface{}{
+			"address": s.First.Address,
+			"first":   fmt.Sprintf("%d.%d", s.First.BlockNumber, s.First.TransactionIndex),
+			"last":    fmt.Sprintf("%d.%d", s.Last.BlockNumber, s.Last.TransactionIndex),
+			"range":   (s.Last.BlockNumber - s.First.BlockNumber),
+		},
+		Order: []string{
+			"address",
+			"first",
+			"last",
+			"range",
+		},
 	}
-}
-
-func (s *SimpleGeneric) WriteTo(w io.Writer) (n int64, err error) {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return 0, nil
-}
-
-func (s *SimpleGeneric) ReadFrom(r io.Reader) (n int64, err error) {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return 0, nil
 }

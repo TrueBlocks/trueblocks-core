@@ -11,11 +11,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // CheckSizes compares the file on disc to the file size suggested in the manifest
-func (opts *ChunksOptions) CheckSizes(fileNames []string, blockNums []uint64, cacheManifest *manifest.Manifest, remoteManifest *manifest.Manifest, report *types.SimpleReportCheck) error {
+func (opts *ChunksOptions) CheckSizes(fileNames []string, blockNums []uint64, cacheManifest *manifest.Manifest, remoteManifest *manifest.Manifest, report *SimpleReportCheck) error {
 
 	theManifest := cacheManifest
 	if len(cacheManifest.Chunks) > len(remoteManifest.Chunks) {

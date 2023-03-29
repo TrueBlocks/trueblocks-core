@@ -7,6 +7,7 @@ package monitorsPkg
 import (
 	"context"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -18,10 +19,10 @@ func (opts *MonitorsOptions) HandleClean() error {
 	_, monArray := monitor.GetMonitorMap(opts.Globals.Chain)
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawMonitorClean], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[RawMonitorClean], errorChan chan error) {
 		for _, mon := range monArray {
 			addr := mon.Address.Hex()
-			s := types.SimpleMonitorClean{
+			s := SimpleMonitorClean{
 				Address: mon.Address,
 			}
 			if testMode {
@@ -48,17 +49,35 @@ func (opts *MonitorsOptions) HandleClean() error {
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, output.OutputOptions{
-		Writer:     opts.Globals.Writer,
-		Chain:      opts.Globals.Chain,
-		TestMode:   opts.Globals.TestMode,
-		NoHeader:   opts.Globals.NoHeader,
-		ShowRaw:    opts.Globals.ShowRaw,
-		Verbose:    opts.Globals.Verbose,
-		LogLevel:   opts.Globals.LogLevel,
-		Format:     opts.Globals.Format,
-		OutputFn:   opts.Globals.OutputFn,
-		Append:     opts.Globals.Append,
-		JsonIndent: "  ",
-	})
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+}
+
+type RawMonitorClean interface{}
+
+type SimpleMonitorClean struct {
+	Address  base.Address `json:"address"`
+	Dups     int64        `json:"dups"`
+	SizeNow  int64        `json:"sizeNow"`
+	SizeThen int64        `json:"sizeThen"`
+}
+
+func (s *SimpleMonitorClean) Raw() *RawMonitorClean {
+	return nil
+}
+
+func (s *SimpleMonitorClean) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
+	return types.Model{
+		Data: map[string]any{
+			"address":  s.Address,
+			"sizeNow":  s.SizeNow,
+			"sizeThen": s.SizeThen,
+			"dups":     s.Dups,
+		},
+		Order: []string{
+			"address",
+			"sizeNow",
+			"sizeThen",
+			"dups",
+		},
+	}
 }

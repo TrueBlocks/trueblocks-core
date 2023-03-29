@@ -106,55 +106,55 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 		return remoteArray[i] < remoteArray[j]
 	})
 
-	reports := []types.SimpleReportCheck{}
+	reports := []SimpleReportCheck{}
 
 	allowMissing := scrapeCfg.AllowMissing(opts.Globals.Chain)
-	seq := types.SimpleReportCheck{Reason: "Filenames sequential"}
+	seq := SimpleReportCheck{Reason: "Filenames sequential"}
 	if err := opts.CheckSequential(fileNames, cacheArray, remoteArray, allowMissing, &seq); err != nil {
 		return err
 	}
 	reports = append(reports, seq)
 
-	intern := types.SimpleReportCheck{Reason: "Internally consistent"}
+	intern := SimpleReportCheck{Reason: "Internally consistent"}
 	if err := opts.CheckInternal(fileNames, blockNums, &intern); err != nil {
 		return err
 	}
 	reports = append(reports, intern)
 
-	con := types.SimpleReportCheck{Reason: "Consistent hashes"}
+	con := SimpleReportCheck{Reason: "Consistent hashes"}
 	if err := opts.CheckHashes(cacheManifest, remoteManifest, &con); err != nil {
 		return err
 	}
 	reports = append(reports, con)
 
-	sizes := types.SimpleReportCheck{Reason: "Check file sizes"}
+	sizes := SimpleReportCheck{Reason: "Check file sizes"}
 	if err := opts.CheckSizes(fileNames, blockNums, cacheManifest, remoteManifest, &sizes); err != nil {
 		return err
 	}
 	reports = append(reports, sizes)
 
 	// compare remote manifest to cached manifest
-	r2c := types.SimpleReportCheck{Reason: "Remote Manifest to Cached Manifest"}
+	r2c := SimpleReportCheck{Reason: "Remote Manifest to Cached Manifest"}
 	if err := opts.CheckManifest(remoteArray, cacheArray, &r2c); err != nil {
 		return err
 	}
 	reports = append(reports, r2c)
 
 	// compare with çached manifest with files on disc
-	d2c := types.SimpleReportCheck{Reason: "Disc Files to Cached Manifest"}
+	d2c := SimpleReportCheck{Reason: "Disc Files to Cached Manifest"}
 	if err := opts.CheckManifest(fnArray, cacheArray, &d2c); err != nil {
 		return err
 	}
 	reports = append(reports, d2c)
 
 	// compare with remote manifest with files on disc
-	d2r := types.SimpleReportCheck{Reason: "Disc Files to Remote Manifest"}
+	d2r := SimpleReportCheck{Reason: "Disc Files to Remote Manifest"}
 	if err := opts.CheckManifest(fnArray, remoteArray, &d2r); err != nil {
 		return err
 	}
 	reports = append(reports, d2r)
 
-	// stage := types.SimpleReportCheck{Reason: "Check staging folder"}
+	// stage := SimpleReportCheck{Reason: "Check staging folder"}
 	// if err := opts.CheckStaging(0, allowMissing, &stage); err != nil {
 	// 	return err
 	// }
@@ -172,24 +172,66 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	}
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawReportCheck], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[RawReportCheck], errorChan chan error) {
 		for _, report := range reports {
 			report := report
 			modelChan <- &report
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, output.OutputOptions{
-		Writer:     opts.Globals.Writer,
-		Chain:      opts.Globals.Chain,
-		TestMode:   opts.Globals.TestMode,
-		NoHeader:   opts.Globals.NoHeader,
-		ShowRaw:    opts.Globals.ShowRaw,
-		Verbose:    opts.Globals.Verbose,
-		LogLevel:   opts.Globals.LogLevel,
-		Format:     opts.Globals.Format,
-		OutputFn:   opts.Globals.OutputFn,
-		Append:     opts.Globals.Append,
-		JsonIndent: "  ",
-	})
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+}
+
+type RawReportCheck interface{}
+
+type SimpleReportCheck struct {
+	Reason     string   `json:"reason"`
+	CheckedCnt uint32   `json:"checkedCnt"`
+	FailedCnt  uint32   `json:"failedCnt"`
+	MsgStrings []string `json:"msgStrings"`
+	PassedCnt  uint32   `json:"passedCnt"`
+	Result     string   `json:"result"`
+	SkippedCnt uint32   `json:"skippedCnt"`
+	VisitedCnt uint32   `json:"visitedCnt"`
+}
+
+func (s *SimpleReportCheck) Raw() *RawReportCheck {
+	return nil
+}
+
+func (s *SimpleReportCheck) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
+	model := map[string]any{
+		"reason":     s.Reason,
+		"result":     s.Result,
+		"checkedCnt": s.CheckedCnt,
+	}
+	if s.VisitedCnt > 0 {
+		model["visitedCnt"] = s.VisitedCnt
+	}
+	if s.PassedCnt > 0 {
+		model["passedCnt"] = s.PassedCnt
+	}
+	if s.SkippedCnt > 0 {
+		model["skippedCnt"] = s.SkippedCnt
+	}
+	if s.FailedCnt > 0 {
+		model["failedCnt"] = s.FailedCnt
+	}
+	if len(s.MsgStrings) > 0 {
+		model["msgStrings"] = s.MsgStrings
+	}
+
+	return types.Model{
+		Data: model,
+		Order: []string{
+			"reason",
+			"result",
+			"checkedCnt",
+			"visitedCnt",
+			"passedCnt",
+			"skippedCnt",
+			"failedCnt",
+			"msgStrings",
+		},
+	}
 }

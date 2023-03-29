@@ -5,68 +5,105 @@
 package chunksPkg
 
 import (
+	"context"
+	"fmt"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
-	defer opts.Globals.RenderFooter()
-	err := opts.Globals.RenderHeader(types.SimpleIndex{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.NoHeader, true)
-	if err != nil {
-		return err
+	if len(opts.Belongs) > 0 {
+		return opts.HandleIndexBelongs(blockNums)
 	}
 
-	showIndex := func(walker *index.IndexWalker, path string, first bool) (bool, error) {
-		if path != cache.ToBloomPath(path) {
-			logger.Fatal("should not happen ==> we're spinning through the bloom filters")
-		}
+	ctx, cancel := context.WithCancel(context.Background())
+	fetchData := func(modelChan chan types.Modeler[RawChunkIndex], errorChan chan error) {
+		showIndex := func(walker *index.IndexWalker, path string, first bool) (bool, error) {
+			if path != cache.ToBloomPath(path) {
+				return false, fmt.Errorf("should not happen in showFinalizedStats")
+			}
 
-		path = cache.ToIndexPath(path)
-		if !file.FileExists(path) {
-			// Weird case when bloom files exist, but index files don't
+			path = cache.ToIndexPath(path)
+			if !file.FileExists(path) {
+				// Bloom files exist, but index files don't. It's okay.
+				return true, nil
+			}
+
+			header, err := index.ReadChunkHeader(path, true)
+			if err != nil {
+				return false, err
+			}
+
+			rng, err := base.RangeFromFilenameE(path)
+			if err != nil {
+				return false, err
+			}
+
+			s := SimpleChunkIndex{
+				Range:           rng,
+				Magic:           header.Magic,
+				Hash:            base.HexToHash(header.Hash.Hex()),
+				AddressCount:    header.AddressCount,
+				AppearanceCount: header.AppearanceCount,
+				Size:            file.FileSize(path),
+			}
+
+			modelChan <- &s
 			return true, nil
 		}
 
-		header, err := index.ReadChunkHeader(path, true)
-		if err != nil {
-			return false, err
+		walker := index.NewIndexWalker(
+			opts.Globals.Chain,
+			opts.Globals.TestMode,
+			100, /* maxTests */
+			showIndex,
+		)
+		if err := walker.WalkBloomFilters(blockNums); err != nil {
+			errorChan <- err
+			cancel()
 		}
-
-		rng, err := base.RangeFromFilenameE(path)
-		if err != nil {
-			return false, err
-		}
-
-		obj := types.SimpleIndex{
-			Range:           rng,
-			Magic:           header.Magic,
-			Hash:            base.HexToHash(header.Hash.Hex()),
-			AddressCount:    header.AddressCount,
-			AppearanceCount: header.AppearanceCount,
-			Size:            file.FileSize(path),
-		}
-
-		// TODO: Feature - customize display strings
-		// opts.Globals.Format = "Magic,Hash,Size,AppearanceCount,AddressCount,Range"
-		// opts.Globals.Format = "Range\tAppearanceCount\tAddressCount"
-		// TODO: Fix export without arrays
-		err = opts.Globals.RenderObject(obj, first)
-		if err != nil {
-			return false, err
-		}
-
-		return true, nil
 	}
 
-	walker := index.NewIndexWalker(
-		opts.Globals.Chain,
-		opts.Globals.TestMode,
-		100, /* maxTests */
-		showIndex,
-	)
-	return walker.WalkBloomFilters(blockNums)
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+}
+
+type RawChunkIndex interface{}
+
+type SimpleChunkIndex struct {
+	Range           base.FileRange `json:"range"`
+	Magic           uint32         `json:"magic"`
+	Hash            base.Hash      `json:"hash"`
+	AddressCount    uint32         `json:"nAddresses"`
+	AppearanceCount uint32         `json:"nAppearances"`
+	Size            int64          `json:"fileSize"`
+}
+
+func (s *SimpleChunkIndex) Raw() *RawChunkIndex {
+	return nil
+}
+
+func (s *SimpleChunkIndex) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
+	return types.Model{
+		Data: map[string]any{
+			"range":        s.Range,
+			"magic":        fmt.Sprintf("0x%x", s.Magic),
+			"hash":         s.Hash,
+			"nAddresses":   s.AddressCount,
+			"nAppearances": s.AppearanceCount,
+			"fileSize":     s.Size,
+		},
+		Order: []string{
+			"range",
+			"magic",
+			"hash",
+			"nAddresses",
+			"nAppearances",
+			"fileSize",
+		},
+	}
 }

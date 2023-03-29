@@ -274,12 +274,12 @@ Notes:
 
 Data models produced by this tool:
 
+- [appearance](/data-model/accounts/#appearance)
 - [manifest](/data-model/admin/#manifest)
 - [pinnedchunk](/data-model/admin/#pinnedchunk)
 - [chunkindex](/data-model/admin/#chunkindex)
 - [chunkblooms](/data-model/admin/#chunkblooms)
-- [chunkaddresses](/data-model/admin/#chunkaddresses)
-- [chunkappearances](/data-model/admin/#chunkappearances)
+- [chunkaddress](/data-model/admin/#chunkaddress)
 - [chunkstats](/data-model/admin/#chunkstats)
 - [reportcheck](/data-model/admin/#reportcheck)
 

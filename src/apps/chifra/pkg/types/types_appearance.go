@@ -1,3 +1,11 @@
+// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
+ */
+
 package types
 
 // EXISTING_CODE
@@ -42,6 +50,20 @@ func (s *SimpleAppearance) Model(showHidden bool, format string, extraOptions ma
 	var order = []string{}
 
 	// EXISTING_CODE
+	if extraOptions["appearances"] == true {
+		model = map[string]interface{}{
+			"blockNumber":      s.BlockNumber,
+			"transactionIndex": s.TransactionIndex,
+		}
+		order = []string{
+			"blockNumber",
+			"transactionIndex",
+		}
+		return Model{
+			Data:  model,
+			Order: order,
+		}
+	}
 	model = map[string]interface{}{
 		"address":          s.Address,
 		"blockNumber":      s.BlockNumber,

@@ -45,6 +45,7 @@ The following commands produce and manage Appearances:
 - [chifra list](/chifra/accounts/#chifra-list)
 - [chifra export](/chifra/accounts/#chifra-export)
 - [chifra blocks](/chifra/chaindata/#chifra-blocks)
+- [chifra chunks](/chifra/admin/#chifra-chunks)
 
 Appearances consist of the following fields:
 
