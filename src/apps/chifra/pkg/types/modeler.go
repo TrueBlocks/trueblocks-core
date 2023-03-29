@@ -19,7 +19,7 @@ type Model struct {
 
 // TODO: BOGUS - The auto code generation should check that all auto generated fields are included here
 type RawData interface {
-	RawReceipt | RawWhenCount | RawNamedBlock | RawBlock | RawBlockCount | RawTraceAction |
+	RawReceipt | RawWhenCount | RawNamedBlock | RawBlock | RawTraceAction |
 		RawTraceResult | RawTrace | RawTraceCount | RawFunction | RawParameter | RawAppearance |
 		RawReportCheck
 }
