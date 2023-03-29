@@ -6,5 +6,6 @@ doc_group = 04-Admin
 doc_descr = report on cleaning dups out of monitors
 doc_route = 409-monitorClean
 doc_producer = monitors
-go_type = true
+disable = true
+go_type = false
 output =
