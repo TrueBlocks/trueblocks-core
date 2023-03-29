@@ -19,7 +19,7 @@ import (
 
 func (opts *TracesOptions) HandleCounts() error {
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawTraceCount], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[RawTraceCount], errorChan chan error) {
 		for _, ids := range opts.TransactionIds {
 			txIds, err := ids.ResolveTxs(opts.Globals.Chain)
 			if err != nil {
@@ -63,7 +63,7 @@ func (opts *TracesOptions) HandleCounts() error {
 					return
 				}
 
-				counter := types.SimpleTraceCount{
+				counter := SimpleTraceCount{
 					BlockNumber:      uint64(id.BlockNumber),
 					TransactionIndex: uint64(id.TransactionIndex),
 					TransactionHash:  base.HexToHash(txHash),
@@ -76,4 +76,37 @@ func (opts *TracesOptions) HandleCounts() error {
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+}
+
+type RawTraceCount interface{}
+
+type SimpleTraceCount struct {
+	BlockNumber      base.Blknum    `json:"blockNumber"`
+	Timestamp        base.Timestamp `json:"timestamp"`
+	TracesCnt        uint64         `json:"tracesCnt"`
+	TransactionHash  base.Hash      `json:"transactionHash"`
+	TransactionIndex base.Blknum    `json:"transactionIndex"`
+}
+
+func (s *SimpleTraceCount) Raw() *RawTraceCount {
+	return nil
+}
+
+func (s *SimpleTraceCount) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
+	return types.Model{
+		Data: map[string]interface{}{
+			"blockNumber":      s.BlockNumber,
+			"timestamp":        s.Timestamp,
+			"tracesCnt":        s.TracesCnt,
+			"transactionHash":  s.TransactionHash,
+			"transactionIndex": s.TransactionIndex,
+		},
+		Order: []string{
+			"blockNumber",
+			"transactionIndex",
+			"transactionHash",
+			"timestamp",
+			"tracesCnt",
+		},
+	}
 }
