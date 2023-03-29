@@ -5,7 +5,6 @@ import (
 	"net/rpc"
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -21,15 +20,22 @@ func (opts *NamesOptions) HandleTerms() error {
 	if err == nil {
 		// RPC server is running and available
 		fetchData = func(modelChan chan types.Modeler[types.RawName], errorChan chan error) {
-			for _, term := range opts.Terms {
-				// TODO: this is not really correct. Term can be something else.
-				a := base.HexToAddress(term)
-				var name *types.SimpleName
-				if err = client.Call("Rpc.ReadName", &a, &name); err != nil {
-					errorChan <- err
-				}
-				modelChan <- name
+			var results []types.SimpleName
+			args := struct {
+				Parts names.Parts
+				Terms []string
+			}{
+				Parts: opts.getType(),
+				Terms: opts.Terms,
 			}
+			if err = client.Call("Rpc.SearchNames", &args, &results); err != nil {
+				errorChan <- err
+			}
+			for _, result := range results {
+				result := result
+				modelChan <- &result
+			}
+			// }
 		}
 	} else {
 		// TODO(rpc): we don't have to print here

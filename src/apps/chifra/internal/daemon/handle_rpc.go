@@ -15,10 +15,25 @@ const sockPath = "/tmp/trueblocks.sock"
 
 type Rpc struct{}
 
-func (r *Rpc) ReadName(address *base.Address, reply *types.SimpleName) error {
+func (r *Rpc) ReadCustomName(address *base.Address, reply *types.SimpleName) error {
 	logger.Info("Handling ReadName")
 	n := names.ReadCustomName(*address)
 	*reply = *n
+	return nil
+}
+
+type SearchNamesArgs struct {
+	Parts names.Parts
+	Terms []string
+}
+
+func (r *Rpc) SearchNames(args *SearchNamesArgs, reply *[]types.SimpleName) error {
+	logger.Info("Handling SearchNames")
+	found, err := names.LoadNamesArray("mainnet", args.Parts, names.SortByAddress, args.Terms)
+	if err != nil {
+		return err
+	}
+	*reply = found
 	return nil
 }
 
