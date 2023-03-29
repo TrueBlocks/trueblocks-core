@@ -11,13 +11,12 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // CheckStaging looks the stage and makes sure the blocks in the file agree with the file's name. It also
 // checks that the first block is one plus the last block in the finalized index and that the file contains
 // sequential blocks if allow_missing is not on.
-func (opts *ChunksOptions) CheckStaging(lastBlock uint64, allow_missing bool, report *types.SimpleReportCheck) error {
+func (opts *ChunksOptions) CheckStaging(lastBlock uint64, allow_missing bool, report *SimpleReportCheck) error {
 	stagePath := cache.ToStagingPath(config.GetPathToIndex(opts.Globals.Chain) + "staging")
 	stageFn, _ := file.LatestFileInFolder(stagePath)
 	if !file.FileExists(stageFn) {
@@ -33,7 +32,7 @@ func (opts *ChunksOptions) CheckStaging(lastBlock uint64, allow_missing bool, re
 	return nil
 }
 
-// func (opts *ChunksOptions) checkHashes(which string, man *manifest.Manifest, report *types.SimpleReportCheck) error {
+// func (opts *ChunksOptions) checkHashes(which string, man *manifest.Manifest, report *SimpleReportCheck) error {
 // 	for _, chunk := range man.Chunks {
 // 		report.VisitedCnt++
 // 		report.CheckedCnt++
