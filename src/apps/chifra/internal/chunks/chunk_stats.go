@@ -10,14 +10,14 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func GetChunkStats(path string) (s types.SimpleChunkStats, err error) {
+func GetChunkStats(path string) (s SimpleChunkStats, err error) {
 	chunk, err := index.NewChunk(path)
 	if err != nil && !os.IsNotExist(err) {
 		return s, err
 	}
 	defer chunk.Close()
 
-	s = types.SimpleChunkStats{
+	s = SimpleChunkStats{
 		Start:   chunk.Range.First,
 		End:     chunk.Range.Last,
 		NBlocks: chunk.Range.Last - chunk.Range.First + 1,
@@ -43,4 +43,61 @@ func GetChunkStats(path string) (s types.SimpleChunkStats, err error) {
 	}
 
 	return s, nil
+}
+
+type RawChunkStats interface{}
+
+type SimpleChunkStats struct {
+	AddrsPerBlock float64 `json:"addrsPerBlock"`
+	AppsPerAddr   float64 `json:"appsPerAddr"`
+	AppsPerBlock  float64 `json:"appsPerBlock"`
+	BloomSz       uint64  `json:"bloomSz"`
+	ChunkSz       uint64  `json:"chunkSz"`
+	End           uint64  `json:"end"`
+	NAddrs        uint64  `json:"nAddrs"`
+	NApps         uint64  `json:"nApps"`
+	NBlocks       uint64  `json:"nBlocks"`
+	NBlooms       uint64  `json:"nBlooms"`
+	Ratio         float64 `json:"ratio"`
+	RecWid        uint64  `json:"recWid"`
+	Start         uint64  `json:"start"`
+}
+
+func (s *SimpleChunkStats) Raw() *RawChunkStats {
+	return nil
+}
+
+func (s *SimpleChunkStats) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
+	return types.Model{
+		Data: map[string]any{
+			"addrsPerBlock": s.AddrsPerBlock,
+			"appsPerAddr":   s.AppsPerAddr,
+			"appsPerBlock":  s.AppsPerBlock,
+			"bloomSz":       s.BloomSz,
+			"chunkSz":       s.ChunkSz,
+			"end":           s.End,
+			"nAddrs":        s.NAddrs,
+			"nApps":         s.NApps,
+			"nBlocks":       s.NBlocks,
+			"nBlooms":       s.NBlooms,
+			"ratio":         s.Ratio,
+			"recWid":        s.RecWid,
+			"start":         s.Start,
+		},
+		Order: []string{
+			"start",
+			"end",
+			"nAddrs",
+			"nApps",
+			"nBlocks",
+			"nBlooms",
+			"recWid",
+			"bloomSz",
+			"chunkSz",
+			"addrsPerBlock",
+			"appsPerBlock",
+			"appsPerAddr",
+			"ratio",
+		},
+	}
 }
