@@ -2,13 +2,18 @@ package namesPkg
 
 import (
 	"context"
-	"net/rpc"
+	"io"
+	"net"
 	"os"
 
+	pb "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/grpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 func (opts *NamesOptions) HandleTerms() error {
@@ -16,24 +21,39 @@ func (opts *NamesOptions) HandleTerms() error {
 	var fetchData func(modelChan chan types.Modeler[types.RawName], errorChan chan error)
 
 	// Try RPC
-	client, err := rpc.Dial("unix", "/tmp/trueblocks.sock")
+	// client, err := rpc.Dial("unix", )
+	dialer := func(ctx context.Context, addr string) (net.Conn, error) {
+		var d net.Dialer
+		return d.DialContext(ctx, "unix", addr)
+	}
+	options := []grpc.DialOption{
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+		grpc.WithBlock(),
+		grpc.WithContextDialer(dialer),
+	}
+	conn, err := grpc.Dial("/tmp/trueblocks.sock", options...)
 	if err == nil {
+		defer conn.Close()
+		client := pb.NewNamesClient(conn)
 		// RPC server is running and available
 		fetchData = func(modelChan chan types.Modeler[types.RawName], errorChan chan error) {
-			var results []types.SimpleName
-			args := struct {
-				Parts names.Parts
-				Terms []string
-			}{
-				Parts: opts.getType(),
+			stream, err := client.SearchStream(context.Background(), &pb.SearchRequest{
+				Parts: utils.PointerOf(int64(opts.getType())),
 				Terms: opts.Terms,
-			}
-			if err = client.Call("Rpc.SearchNames", &args, &results); err != nil {
+				Sort:  utils.PointerOf(int64(names.SortByAddress)),
+			})
+			if err != nil {
 				errorChan <- err
 			}
-			for _, result := range results {
-				result := result
-				modelChan <- &result
+			for {
+				result, err := stream.Recv()
+				if err == io.EOF {
+					break
+				}
+				if err != nil {
+					errorChan <- err
+				}
+				modelChan <- types.NewNameFromGrpc(result)
 			}
 			// }
 		}

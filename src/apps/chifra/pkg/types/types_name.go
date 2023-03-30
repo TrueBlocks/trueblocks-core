@@ -13,7 +13,9 @@ import (
 	"io"
 	"strings"
 
+	pb "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/grpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
@@ -212,4 +214,44 @@ func (s *SimpleName) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
+func (s *SimpleName) ToMessage() *pb.Name {
+	return &pb.Name{
+		Address:    utils.PointerOf(s.Address.Hex()),
+		Decimals:   utils.PointerOf(s.Decimals),
+		Deleted:    utils.PointerOf(s.Deleted),
+		IsContract: utils.PointerOf(s.IsContract),
+		IsCustom:   utils.PointerOf(s.IsCustom),
+		IsErc20:    utils.PointerOf(s.IsErc20),
+		IsErc721:   utils.PointerOf(s.IsErc721),
+		IsPrefund:  utils.PointerOf(s.IsPrefund),
+		Name:       utils.PointerOf(s.Name),
+		Petname:    utils.PointerOf(s.Petname),
+		Source:     utils.PointerOf(s.Source),
+		Symbol:     utils.PointerOf(s.Symbol),
+		Tags:       utils.PointerOf(s.Tags),
+	}
+}
+
+func (s *SimpleName) Send(stream pb.Names_SearchStreamServer) error {
+	return stream.Send(s.ToMessage())
+}
+
+func NewNameFromGrpc(gRpcName *pb.Name) *SimpleName {
+	return &SimpleName{
+		Address:    base.HexToAddress(*gRpcName.Address),
+		Decimals:   *gRpcName.Decimals,
+		Deleted:    *gRpcName.Deleted,
+		IsContract: *gRpcName.IsContract,
+		IsCustom:   *gRpcName.IsCustom,
+		IsErc20:    *gRpcName.IsErc20,
+		IsErc721:   *gRpcName.IsErc721,
+		IsPrefund:  *gRpcName.IsPrefund,
+		Name:       *gRpcName.Name,
+		Petname:    *gRpcName.Petname,
+		Source:     *gRpcName.Source,
+		Symbol:     *gRpcName.Symbol,
+		Tags:       *gRpcName.Tags,
+	}
+}
+
 // EXISTING_CODE

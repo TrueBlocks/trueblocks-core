@@ -217,3 +217,7 @@ func WeiToEther(wei *big.Int) *big.Float {
 func FormattedDate(ts int64) string {
 	return gostradamus.FromUnixTimestamp(ts).Format("2006-01-02 15:04:05 UTC")
 }
+
+func PointerOf[T any](value T) *T {
+	return &value
+}

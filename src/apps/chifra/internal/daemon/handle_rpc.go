@@ -1,39 +1,55 @@
 package daemonPkg
 
 import (
+	"context"
+	"fmt"
 	"net"
-	"net/rpc"
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	pb "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/grpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"google.golang.org/grpc"
 )
 
 const sockPath = "/tmp/trueblocks.sock"
 
-type Rpc struct{}
-
-func (r *Rpc) ReadCustomName(address *base.Address, reply *types.SimpleName) error {
-	logger.Info("Handling ReadName")
-	n := names.ReadCustomName(*address)
-	*reply = *n
-	return nil
+type grpcServer struct {
+	pb.UnimplementedNamesServer
 }
 
-type SearchNamesArgs struct {
-	Parts names.Parts
-	Terms []string
-}
-
-func (r *Rpc) SearchNames(args *SearchNamesArgs, reply *[]types.SimpleName) error {
+// Search looks up name by given terms
+func (g *grpcServer) Search(ctx context.Context, request *pb.SearchRequest) (*pb.SearchResponse, error) {
 	logger.Info("Handling SearchNames")
-	found, err := names.LoadNamesArray("mainnet", args.Parts, names.SortByAddress, args.Terms)
+	found, err := names.LoadNamesArray("mainnet", names.Parts(request.GetParts()), names.SortByAddress, request.GetTerms())
+	if err != nil {
+		return nil, err
+	}
+	pnames := make([]*pb.Name, 0, len(found))
+
+	for _, name := range found {
+		pnames = append(pnames, name.ToMessage())
+	}
+
+	return &pb.SearchResponse{
+		Names: pnames,
+	}, nil
+}
+
+// SearchStream is like Search, but it streams the response
+func (g *grpcServer) SearchStream(request *pb.SearchRequest, stream pb.Names_SearchStreamServer) error {
+	logger.Info("Handling SearchStream")
+	found, err := names.LoadNamesArray("mainnet", names.Parts(request.GetParts()), names.SortByAddress, request.GetTerms())
 	if err != nil {
 		return err
 	}
-	*reply = found
+
+	for _, name := range found {
+		if err := name.Send(stream); err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -48,12 +64,19 @@ func (opts *DaemonOptions) HandleRpc() error {
 		return err
 	}
 
-	r := new(Rpc)
-	rpc.Register(r)
+	// r := new(Rpc)
+	// rpc.Register(r)
+	r := grpc.NewServer()
+	pb.RegisterNamesServer(r, &grpcServer{})
+
 	listener, err := net.Listen("unix", sockPath)
 	if err != nil {
 		return err
 	}
-	rpc.Accept(listener)
+
+	if err := r.Serve(listener); err != nil {
+		return fmt.Errorf("failed to serve: %v", err)
+	}
+
 	return nil
 }

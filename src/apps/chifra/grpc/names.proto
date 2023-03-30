@@ -1,0 +1,32 @@
+option go_package = "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/grpc";
+
+service Names {
+    rpc Search (SearchRequest) returns (SearchResponse) {}
+    rpc SearchStream (SearchRequest) returns (stream Name) {}
+}
+
+message SearchRequest {
+    required int64 parts = 1;
+    repeated string terms = 2;
+    required int64 sort = 3;
+}
+
+message SearchResponse {
+    repeated Name names = 1;
+}
+
+message Name {
+    required string address = 1;
+    optional uint64 decimals = 2;
+    optional bool deleted = 3;
+    optional bool isContract = 4;
+    optional bool isCustom = 5;
+    optional bool isErc20 = 6;
+    optional bool isErc721 = 7;
+    optional bool isPrefund = 8;
+    required string name = 9;
+    optional string petname = 10;
+    optional string source = 11;
+    optional string symbol = 12;
+    optional string tags = 13;
+}
