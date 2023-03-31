@@ -107,6 +107,7 @@ bool COptions::handle_status(ostream& os) {
             LOG4("forEvery monitors");
             if (details) {
                 forEveryFileInFolder(thePath, noteMonitor, &counter);
+                monitors.isValid = true;
             } else {
                 forEveryFileInFolder(thePath, noteMonitor_light, &counter);
                 monitors.isValid = true;
@@ -134,6 +135,7 @@ bool COptions::handle_status(ostream& os) {
             counter.monitorArray = &names.items;
             if (details) {
                 forEveryFileInFolder(thePath, noteMonitor, &counter);
+                names.isValid = true;
             } else {
                 forEveryFileInFolder(thePath, noteMonitor_light, &counter);
                 names.isValid = true;
@@ -230,6 +232,7 @@ bool COptions::handle_status(ostream& os) {
             counter.monitorArray = &slurps.items;
             if (details) {
                 forEveryFileInFolder(thePath, noteMonitor, &counter);
+                slurps.isValid = true;
             } else {
                 HIDE_FIELD(CSlurpCache, "addrs");
                 forEveryFileInFolder(thePath, noteMonitor_light, &counter);

@@ -1,7 +1,6 @@
 chifra config  show --module abis
 TEST[DATE|TIME] Modes:  [show]
 TEST[DATE|TIME] Module:  [abis]
-TEST[DATE|TIME] Depth:  0
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",

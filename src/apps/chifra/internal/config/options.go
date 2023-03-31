@@ -24,7 +24,6 @@ type ConfigOptions struct {
 	Modes      []string              `json:"modes,omitempty"`      // Either show or edit the configuration
 	Module     []string              `json:"module,omitempty"`     // The type of information to show or edit
 	Types      []string              `json:"types,omitempty"`      // For caches module only, which type(s) of cache to report
-	Depth      uint64                `json:"depth,omitempty"`      // For caches module only, number of levels deep to report
 	Terse      bool                  `json:"terse,omitempty"`      // Show a terse summary report for mode show
 	Paths      bool                  `json:"paths,omitempty"`      // Show the configuration paths for the system
 	FirstBlock uint64                `json:"firstBlock,omitempty"` // First block to process (inclusive -- testing only)
@@ -36,7 +35,6 @@ type ConfigOptions struct {
 }
 
 var defaultConfigOptions = ConfigOptions{
-	Depth:     utils.NOPOS,
 	LastBlock: utils.NOPOS,
 }
 
@@ -45,7 +43,6 @@ func (opts *ConfigOptions) testLog() {
 	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
 	logger.TestLog(len(opts.Module) > 0, "Module: ", opts.Module)
 	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
-	logger.TestLog(opts.Depth != utils.NOPOS, "Depth: ", opts.Depth)
 	logger.TestLog(opts.Terse, "Terse: ", opts.Terse)
 	logger.TestLog(opts.Paths, "Paths: ", opts.Paths)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
@@ -76,9 +73,6 @@ func (opts *ConfigOptions) toCmdLine() string {
 	for _, types := range opts.Types {
 		options += " --types " + types
 	}
-	if opts.Depth != utils.NOPOS {
-		options += (" --depth " + fmt.Sprintf("%d", opts.Depth))
-	}
 	if opts.Terse {
 		options += " --terse"
 	}
@@ -99,7 +93,6 @@ func (opts *ConfigOptions) toCmdLine() string {
 func configFinishParseApi(w http.ResponseWriter, r *http.Request) *ConfigOptions {
 	copy := defaultConfigOptions
 	opts := &copy
-	opts.Depth = utils.NOPOS
 	opts.FirstBlock = 0
 	opts.LastBlock = utils.NOPOS
 	for key, value := range r.URL.Query() {
@@ -119,8 +112,6 @@ func configFinishParseApi(w http.ResponseWriter, r *http.Request) *ConfigOptions
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Types = append(opts.Types, s...)
 			}
-		case "depth":
-			opts.Depth = globals.ToUint64(value[0])
 		case "terse":
 			opts.Terse = true
 		case "paths":

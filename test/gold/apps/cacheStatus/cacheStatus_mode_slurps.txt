@@ -2,7 +2,6 @@ chifra config  show --module caches --types slurps
 TEST[DATE|TIME] Modes:  [show]
 TEST[DATE|TIME] Module:  [caches]
 TEST[DATE|TIME] Types:  [slurps]
-TEST[DATE|TIME] Depth:  0
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",

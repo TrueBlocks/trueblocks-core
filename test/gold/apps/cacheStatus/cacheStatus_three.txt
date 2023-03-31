@@ -2,7 +2,6 @@ chifra config  show --module abis --module caches --module monitors --types slur
 TEST[DATE|TIME] Modes:  [show]
 TEST[DATE|TIME] Module:  [abis caches monitors]
 TEST[DATE|TIME] Types:  [slurps]
-TEST[DATE|TIME] Depth:  0
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",

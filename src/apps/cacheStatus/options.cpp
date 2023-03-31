@@ -24,7 +24,6 @@ static const COption params[] = {
     COption("modes", "", "list<enum[show*|edit]>", OPT_POSITIONAL, "either show or edit the configuration"),
     COption("module", "", "list<enum[index|monitors|names|abis|caches|some*|all]>", OPT_FLAG, "the type of information to show or edit"),  // NOLINT
     COption("types", "t", "list<enum[blocks|txs|traces|slurps|all*]>", OPT_FLAG, "for caches module only, which type(s) of cache to report"),  // NOLINT
-    COption("depth", "p", "<uint64>", OPT_HIDDEN | OPT_FLAG, "for caches module only, number of levels deep to report"),
     COption("terse", "e", "", OPT_HIDDEN | OPT_SWITCH, "show a terse summary report for mode show"),
     COption("first_block", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive -- testing only)"),  // NOLINT
     COption("last_block", "L", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive -- testing only)"),
@@ -70,12 +69,6 @@ bool COptions::parseArguments(string_q& command) {
             types.push_back(types_tmp);
         } else if (arg == "-t" || arg == "--types") {
             return flag_required("types");
-
-        } else if (startsWith(arg, "-p:") || startsWith(arg, "--depth:")) {
-            if (!confirmUint("depth", depth, arg))
-                return false;
-        } else if (arg == "-p" || arg == "--depth") {
-            return flag_required("depth");
 
         } else if (arg == "-e" || arg == "--terse") {
             terse = true;
@@ -145,8 +138,6 @@ bool COptions::parseArguments(string_q& command) {
     mode = "|" + trim(mode, '|') + "|";
 
     if (contains(mode, "|caches")) {
-        if (depth != NOPOS && depth > 3)
-            return usage("--depth parameter must be less than 4.");
         replaceAll(mode, "|caches", "");
         ASSERT(endsWith(mode, '|'));
         bool hasAll = false;
@@ -193,7 +184,6 @@ void COptions::Init(void) {
     // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT
-    depth = NOPOS;
     terse = false;
     // END_CODE_INIT
 
