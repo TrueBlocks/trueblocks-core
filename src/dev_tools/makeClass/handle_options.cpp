@@ -50,7 +50,7 @@ bool COptions::handle_options(void) {
         // TODO: search for go-port
         if (tool.first == "apps/blockScrape" || tool.first == "tools/grabABI" || tool.first == "tools/getReceipts" ||
             tool.first == "tools/getLogs" || tool.first == "tools/getTraces" || tool.first == "tools/ethslurp" ||
-            tool.first == "tools/ethNames") {
+            tool.first == "tools/ethNames" || tool.first == "apps/daemon") {
             continue;
         }
         optionStream << "    // clang-format off" << endl;
