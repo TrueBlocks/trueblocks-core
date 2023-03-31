@@ -18,9 +18,9 @@ const (
 
 // AddressRecord is a single record in the Address table
 type AddressRecord struct {
-	Address base.Address
-	Offset  uint32
-	Count   uint32
+	Address base.Address `json:"address"`
+	Offset  uint32       `json:"offset"`
+	Count   uint32       `json:"count"`
 }
 
 func (addressRec *AddressRecord) ReadAddress(file *os.File) (err error) {

@@ -19,7 +19,7 @@ import (
 
 func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[RawChunkBloom], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		showBloom := func(walker *index.IndexWalker, path string, first bool) (bool, error) {
 			if path != cache.ToBloomPath(path) {
 				return false, fmt.Errorf("should not happen in showFinalizedStats")
@@ -41,7 +41,7 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 				return false, err
 			}
 
-			s := SimpleChunkBloom{
+			s := simpleChunkBloom{
 				Magic:     bl.Header.Magic,
 				Hash:      bl.Header.Hash,
 				Size:      int64(stats.BloomSz),
@@ -101,9 +101,7 @@ func displayBloom(bl *bloom.ChunkBloom, verbose int) {
 	}
 }
 
-type RawChunkBloom interface{}
-
-type SimpleChunkBloom struct {
+type simpleChunkBloom struct {
 	Range     base.FileRange `json:"range"`
 	Magic     uint16         `json:"magic"`
 	Hash      base.Hash      `json:"hash"`
@@ -113,11 +111,11 @@ type SimpleChunkBloom struct {
 	Width     uint64         `json:"byteWidth"`
 }
 
-func (s *SimpleChunkBloom) Raw() *RawChunkBloom {
+func (s *simpleChunkBloom) Raw() *types.RawModeler {
 	return nil
 }
 
-func (s *SimpleChunkBloom) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
+func (s *simpleChunkBloom) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
 	return types.Model{
 		Data: map[string]any{
 			"range":     s.Range,

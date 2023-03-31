@@ -19,10 +19,10 @@ func (opts *MonitorsOptions) HandleClean() error {
 	_, monArray := monitor.GetMonitorMap(opts.Globals.Chain)
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[RawMonitorClean], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		for _, mon := range monArray {
 			addr := mon.Address.Hex()
-			s := SimpleMonitorClean{
+			s := simpleMonitorClean{
 				Address: mon.Address,
 			}
 			if testMode {
@@ -52,20 +52,18 @@ func (opts *MonitorsOptions) HandleClean() error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
-type RawMonitorClean interface{}
-
-type SimpleMonitorClean struct {
+type simpleMonitorClean struct {
 	Address  base.Address `json:"address"`
 	Dups     int64        `json:"dups"`
 	SizeNow  int64        `json:"sizeNow"`
 	SizeThen int64        `json:"sizeThen"`
 }
 
-func (s *SimpleMonitorClean) Raw() *RawMonitorClean {
+func (s *simpleMonitorClean) Raw() *types.RawModeler {
 	return nil
 }
 
-func (s *SimpleMonitorClean) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
+func (s *simpleMonitorClean) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
 	return types.Model{
 		Data: map[string]any{
 			"address":  s.Address,

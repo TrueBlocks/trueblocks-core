@@ -18,7 +18,7 @@ import (
 
 func (opts *ChunksOptions) HandleIndexBelongs(blockNums []uint64) error {
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[RawAppearanceTable], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		showAddressesBelongs := func(walker *index.IndexWalker, path string, first bool) (bool, error) {
 			if path != cache.ToBloomPath(path) {
 				return false, fmt.Errorf("should not happen in showFinalizedStats")
@@ -47,7 +47,7 @@ func (opts *ChunksOptions) HandleIndexBelongs(blockNums []uint64) error {
 					continue
 				}
 
-				s := SimpleAppearanceTable{}
+				s := simpleAppearanceTable{}
 				err := s.AddressRecord.ReadAddress(indexChunk.File)
 				if err != nil {
 					return false, err
@@ -81,29 +81,24 @@ func (opts *ChunksOptions) HandleIndexBelongs(blockNums []uint64) error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
-type RawAppearanceTable interface {
-}
-
-type SimpleAppearanceTable struct {
+type simpleAppearanceTable struct {
 	AddressRecord index.AddressRecord
 	Appearances   []index.AppearanceRecord
 }
 
-func (s *SimpleAppearanceTable) Raw() *RawAppearanceTable {
+func (s *simpleAppearanceTable) Raw() *types.RawModeler {
 	return nil
 }
 
-func (s *SimpleAppearanceTable) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
-	model := map[string]any{
-		"addressRecord": s.AddressRecord,
-		"appearances":   s.Appearances,
-	}
-	order := []string{
-		"addressRecord",
-		"appearances",
-	}
+func (s *simpleAppearanceTable) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
 	return types.Model{
-		Data:  model,
-		Order: order,
+		Data: map[string]any{
+			"addressRecord": s.AddressRecord,
+			"appearances":   s.Appearances,
+		},
+		Order: []string{
+			"addressRecord",
+			"appearances",
+		},
 	}
 }
