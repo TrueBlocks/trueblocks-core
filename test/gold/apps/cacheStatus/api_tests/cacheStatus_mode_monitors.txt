@@ -19,9 +19,28 @@ config?modes=show&module=monitors
       "hasPinkey": false,
       "caches": [
         {
-          "addrs": [
-            "---address---",
-            "---address---"
+          "addrs": [],
+          "items": [
+            {
+              "deleted": false,
+              "type": "",
+              "nApps": 0,
+              "firstApp": 0,
+              "latestApp": 0,
+              "sizeInBytes": 0,
+              "tags": "--tags--",
+              "address": "---address---",
+              "name": "--name--",
+              "symbol": "--symbol--",
+              "source": "--source--",
+              "decimals": 0,
+              "petname": "--petname--",
+              "isCustom": false,
+              "isPrefund": false,
+              "isContract": false,
+              "isErc20": false,
+              "isErc721": false
+            }
           ],
           "type": "CMonitorCache",
           "path": "monitorsPath",

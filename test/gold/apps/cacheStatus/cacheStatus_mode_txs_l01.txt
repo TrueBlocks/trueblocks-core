@@ -1,7 +1,6 @@
-chifra config  show --module caches --types txs --details
+chifra config  show --module caches --types txs
 TEST[DATE|TIME] Modes:  [show]
 TEST[DATE|TIME] Module:  [caches]
-TEST[DATE|TIME] Details:  true
 TEST[DATE|TIME] Types:  [txs]
 TEST[DATE|TIME] Depth:  0
 {
@@ -19,10 +18,6 @@ TEST[DATE|TIME] Depth:  0
   "hasEskey": true,
   "caches": [
     {
-      "items": [
-        "Testing/00/00/00",
-        "Testing/00/01/00"
-      ],
       "type": "CChainCache",
       "path": "txsPath",
       "nFiles": 0,

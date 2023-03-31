@@ -23,7 +23,6 @@ import (
 type ConfigOptions struct {
 	Modes      []string              `json:"modes,omitempty"`      // Either show or edit the configuration
 	Module     []string              `json:"module,omitempty"`     // The type of information to show or edit
-	Details    bool                  `json:"details,omitempty"`    // Include details about items found in monitors, slurps, abis, or price caches
 	Types      []string              `json:"types,omitempty"`      // For caches module only, which type(s) of cache to report
 	Depth      uint64                `json:"depth,omitempty"`      // For caches module only, number of levels deep to report
 	Terse      bool                  `json:"terse,omitempty"`      // Show a terse summary report for mode show
@@ -45,7 +44,6 @@ var defaultConfigOptions = ConfigOptions{
 func (opts *ConfigOptions) testLog() {
 	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
 	logger.TestLog(len(opts.Module) > 0, "Module: ", opts.Module)
-	logger.TestLog(opts.Details, "Details: ", opts.Details)
 	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
 	logger.TestLog(opts.Depth != utils.NOPOS, "Depth: ", opts.Depth)
 	logger.TestLog(opts.Terse, "Terse: ", opts.Terse)
@@ -74,9 +72,6 @@ func (opts *ConfigOptions) toCmdLine() string {
 	options := ""
 	for _, module := range opts.Module {
 		options += " --module " + module
-	}
-	if opts.Details {
-		options += " --details"
 	}
 	for _, types := range opts.Types {
 		options += " --types " + types
@@ -119,8 +114,6 @@ func configFinishParseApi(w http.ResponseWriter, r *http.Request) *ConfigOptions
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Module = append(opts.Module, s...)
 			}
-		case "details":
-			opts.Details = true
 		case "types":
 			for _, val := range value {
 				s := strings.Split(val, " ") // may contain space separated items

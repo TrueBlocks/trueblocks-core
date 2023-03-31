@@ -47,10 +47,7 @@ config?
           "isValid": true
         },
         {
-          "addrs": [
-            "---address---",
-            "---address---"
-          ],
+          "addrs": [],
           "type": "CMonitorCache",
           "path": "monitorsPath",
           "nFiles": 0,

@@ -1,4 +1,4 @@
-config?details&modes=show&module=abis
+config?modes=show&module=abis
 {
   "data": [
     {
@@ -19,30 +19,6 @@ config?details&modes=show&module=abis
       "hasPinkey": false,
       "caches": [
         {
-          "items": [
-            {
-              "type": "CAbiCacheItem",
-              "nFunctions": 36963,
-              "nEvents": 36963,
-              "nOther": 36963,
-              "nApps": 0,
-              "firstApp": 0,
-              "latestApp": 0,
-              "sizeInBytes": 36963,
-              "tags": "",
-              "address": "---address---",
-              "name": "--name--",
-              "symbol": "",
-              "source": "",
-              "decimals": 0,
-              "petname": "--petname--",
-              "isCustom": false,
-              "isPrefund": false,
-              "isContract": false,
-              "isErc20": false,
-              "isErc721": false
-            }
-          ],
           "type": "CAbiCache",
           "path": "abisPath",
           "nFiles": 0,

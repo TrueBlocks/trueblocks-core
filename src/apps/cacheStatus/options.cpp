@@ -23,7 +23,6 @@ static const COption params[] = {
     // clang-format off
     COption("modes", "", "list<enum[show*|edit]>", OPT_POSITIONAL, "either show or edit the configuration"),
     COption("module", "", "list<enum[index|monitors|names|abis|caches|some*|all]>", OPT_FLAG, "the type of information to show or edit"),  // NOLINT
-    COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors, slurps, abis, or price caches"),  // NOLINT
     COption("types", "t", "list<enum[blocks|txs|traces|slurps|all*]>", OPT_FLAG, "for caches module only, which type(s) of cache to report"),  // NOLINT
     COption("depth", "p", "<uint64>", OPT_HIDDEN | OPT_FLAG, "for caches module only, number of levels deep to report"),
     COption("terse", "e", "", OPT_HIDDEN | OPT_SWITCH, "show a terse summary report for mode show"),
@@ -63,9 +62,6 @@ bool COptions::parseArguments(string_q& command) {
             module.push_back(module_tmp);
         } else if (arg == "--module") {
             return flag_required("module");
-
-        } else if (arg == "-d" || arg == "--details") {
-            details = true;
 
         } else if (startsWith(arg, "-t:") || startsWith(arg, "--types:")) {
             string_q types_tmp;
@@ -149,8 +145,6 @@ bool COptions::parseArguments(string_q& command) {
     mode = "|" + trim(mode, '|') + "|";
 
     if (contains(mode, "|caches")) {
-        if (details && depth == NOPOS)
-            depth = 0;
         if (depth != NOPOS && depth > 3)
             return usage("--depth parameter must be less than 4.");
         replaceAll(mode, "|caches", "");
@@ -164,19 +158,26 @@ bool COptions::parseArguments(string_q& command) {
         mode += (hasAll ? "blocks|txs|traces|slurps|" : "");
     }
 
-    if (!details) {
-        HIDE_FIELD(CMonitorCache, "items");
-        HIDE_FIELD(CSlurpCache, "items");
-        HIDE_FIELD(CAbiCache, "items");
-        HIDE_FIELD(CChainCache, "items");
-        HIDE_FIELD(CAbiCache, "items");
-        HIDE_FIELD(CAbiCacheItem, "items");
-        HIDE_FIELD(CChainCache, "items");
-        HIDE_FIELD(CIndexCache, "items");
-        HIDE_FIELD(CMonitorCache, "items");
-        HIDE_FIELD(CNameCache, "items");
-        HIDE_FIELD(CSlurpCache, "items");
+    HIDE_FIELD(CSlurpCache, "items");
+    HIDE_FIELD(CAbiCache, "items");
+    HIDE_FIELD(CChainCache, "items");
+    HIDE_FIELD(CAbiCache, "items");
+    HIDE_FIELD(CAbiCacheItem, "items");
+    HIDE_FIELD(CChainCache, "items");
+    HIDE_FIELD(CIndexCache, "items");
+    HIDE_FIELD(CMonitorCache, "items");
+    HIDE_FIELD(CNameCache, "items");
+    HIDE_FIELD(CSlurpCache, "items");
+
+    for (auto mod : module) {
+        if (mod == "monitors" || mod == "some" || mode == "all") {
+            SHOW_FIELD(CMonitorCache, "items");
+        }
+        if (mod == "index" || mod == "some" || mode == "all") {
+            SHOW_FIELD(CIndexCache, "items");
+        }
     }
+
     if (isTestMode()) {
         HIDE_FIELD(CChain, "ipfsGateway");
     }
@@ -192,7 +193,6 @@ void COptions::Init(void) {
     // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT
-    details = false;
     depth = NOPOS;
     terse = false;
     // END_CODE_INIT

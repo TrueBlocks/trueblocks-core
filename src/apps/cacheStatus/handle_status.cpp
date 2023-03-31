@@ -60,6 +60,7 @@ bool COptions::handle_status(ostream& os) {
     CIndexCache index;
     if (contains(mode, "|index|")) {
         LOG8("Reporting on index");
+        bool details = true;
         if (!index.readBinaryCache(indexFolder_finalized, "index", details)) {
             LOG8("Regenerating cache");
             index.type = index.getRuntimeClass()->m_ClassName;
@@ -91,6 +92,7 @@ bool COptions::handle_status(ostream& os) {
     CMonitorCache monitors;
     if (contains(mode, "|monitors|")) {
         LOG8("Reporting on monitors");
+        bool details = true;
         if (!monitors.readBinaryCache(cacheFolder_monitors, "monitors", details)) {
             CMonitor m;
             string_q thePath = m.getPathToMonitor("", false);
@@ -121,6 +123,7 @@ bool COptions::handle_status(ostream& os) {
     CNameCache names;
     if (contains(mode, "|names|")) {
         LOG8("Reporting on names");
+        bool details = false;
         if (!names.readBinaryCache(cacheFolder_names, "names", details)) {
             string_q thePath = cacheFolder_names;
             names.type = names.getRuntimeClass()->m_ClassName;
@@ -144,6 +147,7 @@ bool COptions::handle_status(ostream& os) {
     CAbiCache abi_cache;
     if (contains(mode, "|abis|")) {
         LOG8("Reporting on abis");
+        bool details = false;
         if (!abi_cache.readBinaryCache(cacheFolder_abis, "abis", details)) {
             string_q thePath = cacheFolder_abis;
             abi_cache.type = abi_cache.getRuntimeClass()->m_ClassName;
@@ -164,6 +168,7 @@ bool COptions::handle_status(ostream& os) {
     CChainCache blocks;
     if (contains(mode, "|blocks|") || contains(mode, "|data|")) {
         LOG8("Reporting on blocks");
+        bool details = false;
         if (!blocks.readBinaryCache(cacheFolder_blocks, "blocks", details)) {
             string_q thePath = cacheFolder_blocks;
             blocks.type = blocks.getRuntimeClass()->m_ClassName;
@@ -180,6 +185,7 @@ bool COptions::handle_status(ostream& os) {
     CChainCache txs;
     if (contains(mode, "|txs|") || contains(mode, "|data|")) {
         LOG8("Reporting on txs");
+        bool details = false;
         if (!txs.readBinaryCache(cacheFolder_txs, "txs", details)) {
             string_q thePath = cacheFolder_txs;
             txs.type = txs.getRuntimeClass()->m_ClassName;
@@ -196,6 +202,7 @@ bool COptions::handle_status(ostream& os) {
     CChainCache traces;
     if (contains(mode, "|traces|") || contains(mode, "|data|")) {
         LOG8("Reporting on traces");
+        bool details = false;
         if (!traces.readBinaryCache(cacheFolder_traces, "traces", details)) {
             string_q thePath = cacheFolder_traces;
             traces.type = traces.getRuntimeClass()->m_ClassName;
@@ -212,6 +219,7 @@ bool COptions::handle_status(ostream& os) {
     CSlurpCache slurps;
     if (contains(mode, "|slurps|")) {
         LOG8("Reporting on slurps");
+        bool details = false;
         if (!slurps.readBinaryCache(cacheFolder_slurps, "slurps", details)) {
             string_q thePath = cacheFolder_slurps;
             slurps.type = slurps.getRuntimeClass()->m_ClassName;

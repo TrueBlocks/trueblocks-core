@@ -19,6 +19,7 @@ config?modes=show&module=index&firstBlock=1000000&lastBlock=2500000
       "hasPinkey": false,
       "caches": [
         {
+          "items": [],
           "type": "CIndexCache",
           "path": "indexPath",
           "nFiles": 0,

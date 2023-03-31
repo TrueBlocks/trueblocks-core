@@ -56,7 +56,6 @@ func init() {
 
 	configCmd.Flags().StringSliceVarP(&configPkg.GetOptions().Module, "module", "", nil, `the type of information to show or edit
 One or more of [ index | monitors | names | abis | caches | some | all ]`)
-	configCmd.Flags().BoolVarP(&configPkg.GetOptions().Details, "details", "d", false, "include details about items found in monitors, slurps, abis, or price caches")
 	configCmd.Flags().StringSliceVarP(&configPkg.GetOptions().Types, "types", "t", nil, `for caches module only, which type(s) of cache to report
 One or more of [ blocks | txs | traces | slurps | all ]`)
 	configCmd.Flags().Uint64VarP(&configPkg.GetOptions().Depth, "depth", "p", 0, "for caches module only, number of levels deep to report (hidden)")
