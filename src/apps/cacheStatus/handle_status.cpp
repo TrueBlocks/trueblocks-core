@@ -18,7 +18,7 @@ extern bool getChainList(CChainArray& chains);
 extern bool getKeyList(CKeyArray& keys);
 //--------------------------------------------------------------------------------
 bool COptions::handle_status(ostream& os) {
-    if (terse) {
+    if (!verbose) {
         string_q fmt = STR_TERSE_REPORT;
         if (getEnvStr("LOG_TIMING_OFF") == "true") {
             // Do nothing
@@ -107,10 +107,8 @@ bool COptions::handle_status(ostream& os) {
             LOG4("forEvery monitors");
             if (details) {
                 forEveryFileInFolder(thePath, noteMonitor, &counter);
-                monitors.isValid = true;
             } else {
                 forEveryFileInFolder(thePath, noteMonitor_light, &counter);
-                monitors.isValid = true;
             }
             LOG4("forEvery monitors done");
             LOG8("\tWriting monitors cache");
@@ -135,10 +133,8 @@ bool COptions::handle_status(ostream& os) {
             counter.monitorArray = &names.items;
             if (details) {
                 forEveryFileInFolder(thePath, noteMonitor, &counter);
-                names.isValid = true;
             } else {
                 forEveryFileInFolder(thePath, noteMonitor_light, &counter);
-                names.isValid = true;
             }
             LOG8("\tre-writing names cache");
             names.writeBinaryCache("names", details);
@@ -232,11 +228,9 @@ bool COptions::handle_status(ostream& os) {
             counter.monitorArray = &slurps.items;
             if (details) {
                 forEveryFileInFolder(thePath, noteMonitor, &counter);
-                slurps.isValid = true;
             } else {
                 HIDE_FIELD(CSlurpCache, "addrs");
                 forEveryFileInFolder(thePath, noteMonitor_light, &counter);
-                slurps.isValid = true;
             }
             LOG8("\tre-writing slurps cache");
             slurps.writeBinaryCache("slurps", details);

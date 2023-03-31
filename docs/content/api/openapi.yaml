@@ -1563,14 +1563,6 @@ paths:
                 - caches
                 - some
                 - all
-        - name: terse
-          description: show a terse summary report for mode show
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
       responses:
         "200":
           description: returns the requested data

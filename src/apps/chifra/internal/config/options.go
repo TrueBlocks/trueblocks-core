@@ -24,7 +24,6 @@ type ConfigOptions struct {
 	Modes      []string              `json:"modes,omitempty"`      // Either show or edit the configuration
 	Module     []string              `json:"module,omitempty"`     // The type of information to show or edit
 	Types      []string              `json:"types,omitempty"`      // For caches module only, which type(s) of cache to report
-	Terse      bool                  `json:"terse,omitempty"`      // Show a terse summary report for mode show
 	Paths      bool                  `json:"paths,omitempty"`      // Show the configuration paths for the system
 	FirstBlock uint64                `json:"firstBlock,omitempty"` // First block to process (inclusive -- testing only)
 	LastBlock  uint64                `json:"lastBlock,omitempty"`  // Last block to process (inclusive -- testing only)
@@ -43,7 +42,6 @@ func (opts *ConfigOptions) testLog() {
 	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
 	logger.TestLog(len(opts.Module) > 0, "Module: ", opts.Module)
 	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
-	logger.TestLog(opts.Terse, "Terse: ", opts.Terse)
 	logger.TestLog(opts.Paths, "Paths: ", opts.Paths)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
@@ -72,9 +70,6 @@ func (opts *ConfigOptions) toCmdLine() string {
 	}
 	for _, types := range opts.Types {
 		options += " --types " + types
-	}
-	if opts.Terse {
-		options += " --terse"
 	}
 	if opts.FirstBlock != 0 {
 		options += (" --first_block " + fmt.Sprintf("%d", opts.FirstBlock))
@@ -112,8 +107,6 @@ func configFinishParseApi(w http.ResponseWriter, r *http.Request) *ConfigOptions
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Types = append(opts.Types, s...)
 			}
-		case "terse":
-			opts.Terse = true
 		case "paths":
 			opts.Paths = true
 		case "firstBlock":
@@ -150,7 +143,6 @@ func configFinishParse(args []string) *ConfigOptions {
 	}
 	if len(opts.Modes) == 0 {
 		opts.Modes = []string{"show"}
-		opts.Terse = true
 	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {

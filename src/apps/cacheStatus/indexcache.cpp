@@ -224,7 +224,6 @@ void CIndexCache::registerClass(void) {
     ADD_FIELD(CIndexCache, "nFiles", T_NUMBER, ++fieldNum);
     ADD_FIELD(CIndexCache, "nFolders", T_NUMBER, ++fieldNum);
     ADD_FIELD(CIndexCache, "sizeInBytes", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CIndexCache, "isValid", T_BOOL, ++fieldNum);
     // EXISTING_CODE
 }
 
