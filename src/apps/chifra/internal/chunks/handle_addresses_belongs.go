@@ -82,8 +82,8 @@ func (opts *ChunksOptions) HandleIndexBelongs(blockNums []uint64) error {
 }
 
 type simpleAppearanceTable struct {
-	AddressRecord index.AddressRecord
-	Appearances   []index.AppearanceRecord
+	AddressRecord index.AddressRecord      `json:"addressRecord"`
+	Appearances   []index.AppearanceRecord `json:"appearances"`
 }
 
 func (s *simpleAppearanceTable) Raw() *types.RawModeler {
