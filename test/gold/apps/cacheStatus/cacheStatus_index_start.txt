@@ -1,7 +1,6 @@
-chifra config  show --module index --first_block 100
+chifra config  show --module index
 TEST[DATE|TIME] Modes:  [show]
 TEST[DATE|TIME] Module:  [index]
-TEST[DATE|TIME] FirstBlock:  100
 --TIME-- Client:       Client version (testing, archive, tracing)
 --TIME-- TrueBlocks:   GHC-TrueBlocks//vers-beta--git-hash---git-ts- (eskey, no pinkey)
 --TIME-- RPC Provider: --providers-- - mainnet (1,1)

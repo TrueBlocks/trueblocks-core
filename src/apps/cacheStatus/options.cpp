@@ -24,8 +24,6 @@ static const COption params[] = {
     COption("modes", "", "list<enum[show*|edit]>", OPT_POSITIONAL, "either show or edit the configuration"),
     COption("module", "", "list<enum[index|monitors|names|abis|caches|some*|all]>", OPT_FLAG, "the type of information to show or edit"),  // NOLINT
     COption("types", "t", "list<enum[blocks|txs|traces|slurps|all*]>", OPT_FLAG, "for caches module only, which type(s) of cache to report"),  // NOLINT
-    COption("first_block", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive -- testing only)"),  // NOLINT
-    COption("last_block", "L", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive -- testing only)"),
     COption("", "", "", OPT_DESCRIPTION, "Report on and edit the configuration of the TrueBlocks system."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -41,11 +39,7 @@ bool COptions::parseArguments(string_q& command) {
     CStringArray modes;
     CStringArray module;
     CStringArray types;
-    blknum_t first_block = 0;
-    blknum_t last_block = NOPOS;
     // END_CODE_LOCAL_INIT
-
-    blknum_t latest = NOPOS;  // getLatestBlock_client();
 
     Init();
     explode(arguments, command, ' ');
@@ -68,18 +62,6 @@ bool COptions::parseArguments(string_q& command) {
             types.push_back(types_tmp);
         } else if (arg == "-t" || arg == "--types") {
             return flag_required("types");
-
-        } else if (startsWith(arg, "-F:") || startsWith(arg, "--first_block:")) {
-            if (!confirmBlockNum("first_block", first_block, arg, latest))
-                return false;
-        } else if (arg == "-F" || arg == "--first_block") {
-            return flag_required("first_block");
-
-        } else if (startsWith(arg, "-L:") || startsWith(arg, "--last_block:")) {
-            if (!confirmBlockNum("last_block", last_block, arg, latest))
-                return false;
-        } else if (arg == "-L" || arg == "--last_block") {
-            return flag_required("last_block");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -120,11 +102,6 @@ bool COptions::parseArguments(string_q& command) {
         mode += (m + "|");
     origMode = mode;
 
-    if (!isTestMode() && (first_block != 0 || (last_block != NOPOS && last_block != 0)))
-        return usage("--first_block (" + uint_2_Str(first_block) + ") and --last_block (" + uint_2_Str(last_block) +
-                     ") are only available during testing.");
-    scanRange = make_pair(first_block, last_block);
-
     if (mode.empty() || contains(mode, "some"))
         mode = "index|monitors|names|slurps";
     if (contains(mode, "all")) {
@@ -156,14 +133,23 @@ bool COptions::parseArguments(string_q& command) {
     HIDE_FIELD(CNameCache, "items");
     HIDE_FIELD(CSlurpCache, "items");
 
+    blknum_t first_block = 0;
+    blknum_t last_block = NOPOS;
+    if (isTestMode()) {
+        first_block = 1000000;
+        last_block = 2200000;
+    }
     for (auto mod : module) {
         if (mod == "monitors" || mod == "some" || mode == "all") {
             SHOW_FIELD(CMonitorCache, "items");
         }
         if (mod == "index" || mod == "some" || mode == "all") {
             SHOW_FIELD(CIndexCache, "items");
+            first_block = 0;
+            last_block = NOPOS;
         }
     }
+    scanRange = make_pair(first_block, last_block);
 
     if (isTestMode()) {
         HIDE_FIELD(CChain, "ipfsGateway");
