@@ -23,12 +23,7 @@ static const COption params[] = {
     // clang-format off
     COption("modes", "", "list<enum[show*|edit]>", OPT_POSITIONAL, "either show or edit the configuration"),
     COption("module", "", "list<enum[index|monitors|names|abis|caches|some*|all]>", OPT_FLAG, "the type of information to show or edit"),  // NOLINT
-    COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors, slurps, abis, or price caches"),  // NOLINT
     COption("types", "t", "list<enum[blocks|txs|traces|slurps|all*]>", OPT_FLAG, "for caches module only, which type(s) of cache to report"),  // NOLINT
-    COption("depth", "p", "<uint64>", OPT_HIDDEN | OPT_FLAG, "for caches module only, number of levels deep to report"),
-    COption("terse", "e", "", OPT_HIDDEN | OPT_SWITCH, "show a terse summary report for mode show"),
-    COption("first_block", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive -- testing only)"),  // NOLINT
-    COption("last_block", "L", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive -- testing only)"),
     COption("", "", "", OPT_DESCRIPTION, "Report on and edit the configuration of the TrueBlocks system."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -44,11 +39,7 @@ bool COptions::parseArguments(string_q& command) {
     CStringArray modes;
     CStringArray module;
     CStringArray types;
-    blknum_t first_block = 0;
-    blknum_t last_block = NOPOS;
     // END_CODE_LOCAL_INIT
-
-    blknum_t latest = NOPOS;  // getLatestBlock_client();
 
     Init();
     explode(arguments, command, ' ');
@@ -64,9 +55,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "--module") {
             return flag_required("module");
 
-        } else if (arg == "-d" || arg == "--details") {
-            details = true;
-
         } else if (startsWith(arg, "-t:") || startsWith(arg, "--types:")) {
             string_q types_tmp;
             if (!confirmEnum("types", types_tmp, arg))
@@ -74,27 +62,6 @@ bool COptions::parseArguments(string_q& command) {
             types.push_back(types_tmp);
         } else if (arg == "-t" || arg == "--types") {
             return flag_required("types");
-
-        } else if (startsWith(arg, "-p:") || startsWith(arg, "--depth:")) {
-            if (!confirmUint("depth", depth, arg))
-                return false;
-        } else if (arg == "-p" || arg == "--depth") {
-            return flag_required("depth");
-
-        } else if (arg == "-e" || arg == "--terse") {
-            terse = true;
-
-        } else if (startsWith(arg, "-F:") || startsWith(arg, "--first_block:")) {
-            if (!confirmBlockNum("first_block", first_block, arg, latest))
-                return false;
-        } else if (arg == "-F" || arg == "--first_block") {
-            return flag_required("first_block");
-
-        } else if (startsWith(arg, "-L:") || startsWith(arg, "--last_block:")) {
-            if (!confirmBlockNum("last_block", last_block, arg, latest))
-                return false;
-        } else if (arg == "-L" || arg == "--last_block") {
-            return flag_required("last_block");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -135,11 +102,6 @@ bool COptions::parseArguments(string_q& command) {
         mode += (m + "|");
     origMode = mode;
 
-    if (!isTestMode() && (first_block != 0 || (last_block != NOPOS && last_block != 0)))
-        return usage("--first_block (" + uint_2_Str(first_block) + ") and --last_block (" + uint_2_Str(last_block) +
-                     ") are only available during testing.");
-    scanRange = make_pair(first_block, last_block);
-
     if (mode.empty() || contains(mode, "some"))
         mode = "index|monitors|names|slurps";
     if (contains(mode, "all")) {
@@ -149,10 +111,6 @@ bool COptions::parseArguments(string_q& command) {
     mode = "|" + trim(mode, '|') + "|";
 
     if (contains(mode, "|caches")) {
-        if (details && depth == NOPOS)
-            depth = 0;
-        if (depth != NOPOS && depth > 3)
-            return usage("--depth parameter must be less than 4.");
         replaceAll(mode, "|caches", "");
         ASSERT(endsWith(mode, '|'));
         bool hasAll = false;
@@ -164,19 +122,35 @@ bool COptions::parseArguments(string_q& command) {
         mode += (hasAll ? "blocks|txs|traces|slurps|" : "");
     }
 
-    if (!details) {
-        HIDE_FIELD(CMonitorCache, "items");
-        HIDE_FIELD(CSlurpCache, "items");
-        HIDE_FIELD(CAbiCache, "items");
-        HIDE_FIELD(CChainCache, "items");
-        HIDE_FIELD(CAbiCache, "items");
-        HIDE_FIELD(CAbiCacheItem, "items");
-        HIDE_FIELD(CChainCache, "items");
-        HIDE_FIELD(CIndexCache, "items");
-        HIDE_FIELD(CMonitorCache, "items");
-        HIDE_FIELD(CNameCache, "items");
-        HIDE_FIELD(CSlurpCache, "items");
+    HIDE_FIELD(CSlurpCache, "items");
+    HIDE_FIELD(CAbiCache, "items");
+    HIDE_FIELD(CChainCache, "items");
+    HIDE_FIELD(CAbiCache, "items");
+    HIDE_FIELD(CAbiCacheItem, "items");
+    HIDE_FIELD(CChainCache, "items");
+    HIDE_FIELD(CIndexCache, "items");
+    HIDE_FIELD(CMonitorCache, "items");
+    HIDE_FIELD(CNameCache, "items");
+    HIDE_FIELD(CSlurpCache, "items");
+
+    blknum_t first_block = 0;
+    blknum_t last_block = NOPOS;
+    if (isTestMode()) {
+        first_block = 1000000;
+        last_block = 2200000;
     }
+    for (auto mod : module) {
+        if (mod == "monitors" || mod == "some" || mode == "all") {
+            SHOW_FIELD(CMonitorCache, "items");
+        }
+        if (mod == "index" || mod == "some" || mode == "all") {
+            SHOW_FIELD(CIndexCache, "items");
+            first_block = 0;
+            last_block = NOPOS;
+        }
+    }
+    scanRange = make_pair(first_block, last_block);
+
     if (isTestMode()) {
         HIDE_FIELD(CChain, "ipfsGateway");
     }
@@ -192,9 +166,6 @@ void COptions::Init(void) {
     // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT
-    details = false;
-    depth = NOPOS;
-    terse = false;
     // END_CODE_INIT
 
     meta = getMetaData();
@@ -308,7 +279,6 @@ bool countFilesInCache(const string_q& path, void* data) {
     } else {
         if (!isTestMode())
             counter->noteFile(path);
-        counter->isValid = true;
         if (isTestMode()) {
             counter->items.push_back("Testing/00/00/00/file1.bin");
             counter->items.push_back("Testing/00/01/00/file2.bin");
@@ -332,7 +302,6 @@ bool countFiles(const string_q& path, void* data) {
     } else if (endsWith(path, ".bin") || endsWith(path, ".json")) {
         if (!isTestMode())
             counter->noteFile(path);
-        counter->isValid = true;
     }
     return !shouldQuit();
 }

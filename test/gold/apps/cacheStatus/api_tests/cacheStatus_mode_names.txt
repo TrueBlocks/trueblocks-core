@@ -1,4 +1,4 @@
-config?modes=show&module=names
+config?modes=show&module=names&verbose
 {
   "data": [
     {

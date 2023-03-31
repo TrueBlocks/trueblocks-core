@@ -37,11 +37,9 @@
 class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
-    bool details;
-    uint64_t depth;
-    bool terse;
     // END_CODE_DECLARE
 
+    uint64_t depth{1};
     CStatus status;
     string_q mode;
     string_q origMode;

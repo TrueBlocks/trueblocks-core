@@ -1,8 +1,8 @@
-chifra config  show --module caches --types slurps
+chifra config  show --module caches --types slurps --verbose
 TEST[DATE|TIME] Modes:  [show]
 TEST[DATE|TIME] Module:  [caches]
 TEST[DATE|TIME] Types:  [slurps]
-TEST[DATE|TIME] Depth:  0
+TEST[DATE|TIME] Verbose:  true
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",

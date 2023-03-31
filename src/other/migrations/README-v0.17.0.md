@@ -154,7 +154,6 @@ Here's a table showing which endpoints changed. Previously the API endpoints wer
 |              |              | --types                   |             |
 |              |              | --depth                   |             |
 |              |              | --report                  |             |
-|              |              | --terse                   |             |
 |              |              | --migrate                 |             |
 |              |              | --first_block             | firstBlock  |
 |              |              | --last_block              | lastBlock   |

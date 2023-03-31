@@ -12,7 +12,7 @@ import (
 
 // CheckHashes looks at all the hashes in both the locally cached manifest and the manifest retrieved from
 // the smart contract and simply checks the lengths of the bloom and index IPFS hashes.
-func (opts *ChunksOptions) CheckHashes(cacheMan *manifest.Manifest, contractMan *manifest.Manifest, report *SimpleReportCheck) error {
+func (opts *ChunksOptions) CheckHashes(cacheMan *manifest.Manifest, contractMan *manifest.Manifest, report *simpleReportCheck) error {
 	if err := opts.checkHashes("cache", cacheMan, report); err != nil {
 		return err
 	}
@@ -22,7 +22,7 @@ func (opts *ChunksOptions) CheckHashes(cacheMan *manifest.Manifest, contractMan 
 	return nil
 }
 
-func (opts *ChunksOptions) checkHashes(which string, man *manifest.Manifest, report *SimpleReportCheck) error {
+func (opts *ChunksOptions) checkHashes(which string, man *manifest.Manifest, report *simpleReportCheck) error {
 	for _, chunk := range man.Chunks {
 		report.VisitedCnt++
 		report.CheckedCnt++

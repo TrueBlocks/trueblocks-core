@@ -72,7 +72,7 @@ Get more help on any sub-command with `chifra <cmd> --help`. Full documentation 
 Let's look at the first subcommand, called `config`.
 
 ```[shell]
-chifra config --terse
+chifra config
 ```
 
 If you get a bunch of JSON data, congratulations, your installation is working.  Try this command which shows every 10th block between the first and the 100,000th:

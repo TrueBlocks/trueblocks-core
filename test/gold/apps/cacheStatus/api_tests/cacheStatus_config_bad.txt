@@ -1,4 +1,4 @@
-config?modes=show&module=config
+config?modes=show&module=config&verbose
 {
   "errors": [
     "The module option (config) must be one of [ index | monitors | names | abis | caches | some | all ]"

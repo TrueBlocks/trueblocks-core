@@ -1,8 +1,8 @@
-chifra config  show --module abis --module caches --module monitors --types slurps
+chifra config  show --module abis --module caches --module monitors --types slurps --verbose
 TEST[DATE|TIME] Modes:  [show]
 TEST[DATE|TIME] Module:  [abis caches monitors]
 TEST[DATE|TIME] Types:  [slurps]
-TEST[DATE|TIME] Depth:  0
+TEST[DATE|TIME] Verbose:  true
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",
@@ -18,9 +18,20 @@ TEST[DATE|TIME] Depth:  0
   "hasEskey": true,
   "caches": [
     {
-      "addrs": [
-        "---address---",
-        "---address---"
+      "items": [
+        {
+          "deleted": false,
+          "nApps": 0,
+          "firstApp": 0,
+          "latestApp": 0,
+          "tags": "--tags--",
+          "address": "---address---",
+          "name": "--name--",
+          "symbol": "--symbol--",
+          "source": "--source--",
+          "decimals": 0,
+          "petname": "--petname--"
+        }
       ],
       "type": "CMonitorCache",
       "path": "monitorsPath",

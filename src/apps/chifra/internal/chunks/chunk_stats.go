@@ -10,14 +10,14 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func GetChunkStats(path string) (s SimpleChunkStats, err error) {
+func GetChunkStats(path string) (s simpleChunkStats, err error) {
 	chunk, err := index.NewChunk(path)
 	if err != nil && !os.IsNotExist(err) {
 		return s, err
 	}
 	defer chunk.Close()
 
-	s = SimpleChunkStats{
+	s = simpleChunkStats{
 		Start:   chunk.Range.First,
 		End:     chunk.Range.Last,
 		NBlocks: chunk.Range.Last - chunk.Range.First + 1,
@@ -45,9 +45,7 @@ func GetChunkStats(path string) (s SimpleChunkStats, err error) {
 	return s, nil
 }
 
-type RawChunkStats interface{}
-
-type SimpleChunkStats struct {
+type simpleChunkStats struct {
 	AddrsPerBlock float64 `json:"addrsPerBlock"`
 	AppsPerAddr   float64 `json:"appsPerAddr"`
 	AppsPerBlock  float64 `json:"appsPerBlock"`
@@ -63,11 +61,11 @@ type SimpleChunkStats struct {
 	Start         uint64  `json:"start"`
 }
 
-func (s *SimpleChunkStats) Raw() *RawChunkStats {
+func (s *simpleChunkStats) Raw() *types.RawModeler {
 	return nil
 }
 
-func (s *SimpleChunkStats) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
+func (s *simpleChunkStats) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
 	return types.Model{
 		Data: map[string]any{
 			"addrsPerBlock": s.AddrsPerBlock,

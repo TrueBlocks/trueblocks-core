@@ -13,16 +13,11 @@ Aliases:
   config, status
 
 Flags:
-      --module strings     the type of information to show or edit
-                           One or more of [ index | monitors | names | abis | caches | some | all ]
-  -d, --details            include details about items found in monitors, slurps, abis, or price caches
-  -t, --types strings      for caches module only, which type(s) of cache to report
-                           One or more of [ blocks | txs | traces | slurps | all ]
-  -p, --depth uint         for caches module only, number of levels deep to report (hidden)
-  -e, --terse              show a terse summary report for mode show (hidden)
-  -a, --paths              show the configuration paths for the system (hidden)
-  -F, --first_block uint   first block to process (inclusive -- testing only) (hidden)
-  -L, --last_block uint    last block to process (inclusive -- testing only) (hidden)
-  -x, --fmt string         export format, one of [none|json*|txt|csv]
-  -v, --verbose            enable verbose (increase detail with --log_level)
-  -h, --help               display this help screen
+      --module strings   the type of information to show or edit
+                         One or more of [ index | monitors | names | abis | caches | some | all ]
+  -t, --types strings    for caches module only, which type(s) of cache to report
+                         One or more of [ blocks | txs | traces | slurps | all ]
+  -a, --paths            show the configuration paths for the system (hidden)
+  -x, --fmt string       export format, one of [none|json*|txt|csv]
+  -v, --verbose          enable verbose (increase detail with --log_level)
+  -h, --help             display this help screen

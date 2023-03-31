@@ -1,9 +1,9 @@
-chifra config  show --module index --first_block 1000000 --last_block 2500000
+chifra config  show --module index --fmt json --verbose
 TEST[DATE|TIME] Modes:  [show]
 TEST[DATE|TIME] Module:  [index]
-TEST[DATE|TIME] Depth:  0
-TEST[DATE|TIME] FirstBlock:  1000000
-TEST[DATE|TIME] LastBlock:  2500000
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Format:  json
+{ "data": [
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",
@@ -19,6 +19,21 @@ TEST[DATE|TIME] LastBlock:  2500000
   "hasEskey": true,
   "caches": [
     {
+      "items": [
+        {
+          "type": "CIndexCacheItem",
+          "nAddrs": 8893,
+          "nApps": 8893,
+          "firstApp": 0,
+          "latestApp": 0,
+          "firstTs": 1438269975,
+          "latestTs": 1438269975,
+          "filename": "/--index-path--/000000000-000000000.bin",
+          "fileDate": "1700-01-01 00:00:01 UTC",
+          "indexSizeBytes": 320192,
+          "bloomSizeBytes": 131114
+        }
+      ],
       "type": "CIndexCache",
       "path": "indexPath",
       "nFiles": 0,
@@ -28,4 +43,4 @@ TEST[DATE|TIME] LastBlock:  2500000
     }
   ],
   "date": "--date--"
-}
+}] }

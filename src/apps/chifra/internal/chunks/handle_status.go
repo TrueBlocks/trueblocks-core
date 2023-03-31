@@ -11,9 +11,9 @@ import (
 
 func (opts *ChunksOptions) HandleStatus(blockNums []uint64) error {
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[RawChunkStatus], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		settings, _ := scrapeCfg.GetSettings(opts.Globals.Chain, "blockScrape.toml", nil)
-		s := SimpleChunkStatus{
+		s := simpleChunkStatus{
 			Config: settings,
 		}
 		if opts.Globals.TestMode {
@@ -30,19 +30,16 @@ func (opts *ChunksOptions) HandleStatus(blockNums []uint64) error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
-type RawChunkStatus interface {
-}
-
-type SimpleChunkStatus struct {
+type simpleChunkStatus struct {
 	Progress index.SimpleProgress
 	Config   scrapeCfg.ScrapeSettings
 }
 
-func (s *SimpleChunkStatus) Raw() *RawChunkStatus {
+func (s *simpleChunkStatus) Raw() *types.RawModeler {
 	return nil
 }
 
-func (s *SimpleChunkStatus) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
+func (s *simpleChunkStatus) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
 	model := map[string]any{
 		"config":   s.Config,
 		"progress": s.Progress,

@@ -261,6 +261,7 @@ var routes = Routes{
 	Route{"RouteExplore", "GET", "/explore", RouteExplore},
 	Route{"RouteSlurp", "GET", "/slurp", RouteSlurp},
 	// END_ROUTE_ITEMS
+	Route{"RouteStatus", "GET", "/status", RouteConfig}, // an alias
 	Route{"DeleteMonitors", "DELETE", "/monitors", RouteMonitors},
 }
 

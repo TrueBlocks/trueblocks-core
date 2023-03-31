@@ -5,8 +5,6 @@
 package configPkg
 
 import (
-	"strconv"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -15,10 +13,6 @@ func (opts *ConfigOptions) validateConfig() error {
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
-	}
-
-	if opts.Depth != uint64(0xffffffffffffffff) && opts.Depth > 3 {
-		return validate.Usage("The {0} option ({1}) must {2}.", "--depth", strconv.FormatUint(opts.Depth, 10), "be less than four (4)")
 	}
 
 	err := validate.ValidateEnumSlice("--types", opts.Types, "[blocks|txs|traces|slurps|all]")

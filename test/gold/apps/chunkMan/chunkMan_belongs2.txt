@@ -7,9 +7,9 @@ TEST[DATE|TIME] Format:  json
   "data": [
     {
       "addressRecord": {
-        "Address": "0x0000000000000214156104345760006001905490",
-        "Offset": 3,
-        "Count": 1
+        "address": "0x0000000000000214156104345760006001905490",
+        "offset": 3,
+        "count": 1
       },
       "appearances": [
         {

@@ -1,4 +1,4 @@
-config?modes=show&module=some&verbose
+config?modes=show&fmt=json&verbose
 {
   "data": [
     {
@@ -39,23 +39,6 @@ config?modes=show&module=some&verbose
       ],
       "caches": [
         {
-          "items": [
-            {
-              "type": "CIndexCacheItem",
-              "nAddrs": 8893,
-              "nApps": 8893,
-              "firstApp": 0,
-              "latestApp": 0,
-              "firstTs": 1438269975,
-              "latestTs": 1438269975,
-              "filename": "/--index-path--/000000000-000000000.bin",
-              "fileDate": "1700-01-01 00:00:01 UTC",
-              "indexSizeBytes": 320192,
-              "indexHash": "",
-              "bloomSizeBytes": 131114,
-              "bloomHash": ""
-            }
-          ],
           "type": "CIndexCache",
           "path": "indexPath",
           "nFiles": 0,
@@ -65,28 +48,6 @@ config?modes=show&module=some&verbose
         },
         {
           "addrs": [],
-          "items": [
-            {
-              "deleted": false,
-              "type": "",
-              "nApps": 0,
-              "firstApp": 0,
-              "latestApp": 0,
-              "sizeInBytes": 0,
-              "tags": "--tags--",
-              "address": "---address---",
-              "name": "--name--",
-              "symbol": "--symbol--",
-              "source": "--source--",
-              "decimals": 0,
-              "petname": "--petname--",
-              "isCustom": false,
-              "isPrefund": false,
-              "isContract": false,
-              "isErc20": false,
-              "isErc721": false
-            }
-          ],
           "type": "CMonitorCache",
           "path": "monitorsPath",
           "nFiles": 0,

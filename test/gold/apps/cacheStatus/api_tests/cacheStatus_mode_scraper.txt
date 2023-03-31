@@ -1,4 +1,4 @@
-config?modes=show&module=index
+config?modes=show&module=index&verbose
 {
   "data": [
     {
@@ -19,6 +19,23 @@ config?modes=show&module=index
       "hasPinkey": false,
       "caches": [
         {
+          "items": [
+            {
+              "type": "CIndexCacheItem",
+              "nAddrs": 8893,
+              "nApps": 8893,
+              "firstApp": 0,
+              "latestApp": 0,
+              "firstTs": 1438269975,
+              "latestTs": 1438269975,
+              "filename": "/--index-path--/000000000-000000000.bin",
+              "fileDate": "1700-01-01 00:00:01 UTC",
+              "indexSizeBytes": 320192,
+              "indexHash": "",
+              "bloomSizeBytes": 131114,
+              "bloomHash": ""
+            }
+          ],
           "type": "CIndexCache",
           "path": "indexPath",
           "nFiles": 0,

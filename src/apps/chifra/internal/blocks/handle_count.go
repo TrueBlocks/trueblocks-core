@@ -26,7 +26,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[RawBlockCount], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		for _, br := range opts.BlockIds {
 			blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
 			if err != nil {
@@ -50,7 +50,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 					return
 				}
 
-				blockCount := SimpleBlockCount{
+				blockCount := simpleBlockCount{
 					BlockNumber:     block.BlockNumber,
 					Timestamp:       block.Timestamp,
 					TransactionsCnt: uint64(len(block.Transactions)),
@@ -105,9 +105,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }
 
-type RawBlockCount interface{}
-
-type SimpleBlockCount struct {
+type simpleBlockCount struct {
 	AppsCnt         uint64         `json:"appsCnt,omitempty"`
 	BlockNumber     base.Blknum    `json:"blockNumber"`
 	LogsCnt         uint64         `json:"logsCnt,omitempty"`
@@ -118,11 +116,11 @@ type SimpleBlockCount struct {
 	UniqsCnt        uint64         `json:"uniqsCnt,omitempty"`
 }
 
-func (s *SimpleBlockCount) Raw() *RawBlockCount {
+func (s *simpleBlockCount) Raw() *types.RawModeler {
 	return nil
 }
 
-func (s *SimpleBlockCount) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
+func (s *simpleBlockCount) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
 	model := map[string]interface{}{
 		"blockNumber":     s.BlockNumber,
 		"timestamp":       s.Timestamp,

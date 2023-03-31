@@ -1,32 +1,14 @@
 chifra config  show --module names --output output_test_file
 TEST[DATE|TIME] Modes:  [show]
 TEST[DATE|TIME] Module:  [names]
-TEST[DATE|TIME] Depth:  0
 TEST[DATE|TIME] OutputFn:  output_test_file
 ----
 Results in ./output_test_file
-{
-  "clientVersion": "Client version",
-  "clientIds": "chainId: 1 networkId: 1",
-  "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-",
-  "rpcProvider": "--providers--",
-  "configPath": "--paths--",
-  "cachePath": "--paths--",
-  "indexPath": "--paths--",
-  "host": "--hostname-- (--username--)",
-  "isTesting": true,
-  "isArchive": true,
-  "isTracing": true,
-  "hasEskey": true,
-  "caches": [
-    {
-      "type": "CNameCache",
-      "path": "namesPath",
-      "nFiles": 0,
-      "nFolders": 0,
-      "sizeInBytes": 0,
-      "isValid": true
-    }
-  ],
-  "date": "--date--"
-}
+--TIME-- Client:       Client version (testing, archive, tracing)
+--TIME-- TrueBlocks:   GHC-TrueBlocks//vers-beta--git-hash---git-ts- (eskey, no pinkey)
+--TIME-- RPC Provider: --providers-- - mainnet (1,1)
+--TIME-- Config Path:  --paths--
+--TIME-- Cache Path:   --paths--
+--TIME-- Index Path:   --paths--
+--TIME-- Progress:     --client--, --final--, --staging--, --unripe-- ts: --ts--
+

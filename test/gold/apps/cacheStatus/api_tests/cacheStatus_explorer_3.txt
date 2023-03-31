@@ -1,4 +1,4 @@
-config?modes=show&module=caches&types=txs&details&depth=0
+config?modes=show&module=index&fmt=json&verbose
 {
   "data": [
     {
@@ -20,15 +20,28 @@ config?modes=show&module=caches&types=txs&details&depth=0
       "caches": [
         {
           "items": [
-            "Testing/00/00/00",
-            "Testing/00/01/00"
+            {
+              "type": "CIndexCacheItem",
+              "nAddrs": 8893,
+              "nApps": 8893,
+              "firstApp": 0,
+              "latestApp": 0,
+              "firstTs": 1438269975,
+              "latestTs": 1438269975,
+              "filename": "/--index-path--/000000000-000000000.bin",
+              "fileDate": "1700-01-01 00:00:01 UTC",
+              "indexSizeBytes": 320192,
+              "indexHash": "",
+              "bloomSizeBytes": 131114,
+              "bloomHash": ""
+            }
           ],
-          "type": "CChainCache",
-          "path": "txsPath",
+          "type": "CIndexCache",
+          "path": "indexPath",
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "isValid": false
+          "isValid": true
         }
       ],
       "date": "--date--"

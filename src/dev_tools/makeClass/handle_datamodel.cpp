@@ -45,12 +45,14 @@ bool COptions::handle_datamodel(void) {
     yamlStream << "components:" << endl;
     yamlStream << "  schemas:" << endl;
 
+    bool badShit = false;
     for (auto model : dataModels) {
         string_q groupLow = toLower(substitute(model.doc_group, " ", ""));
         string_q groupFn = getDocsPathTemplates("model-groups/" + groupLow + ".md");
         if (!fileExists(groupFn)) {
             LOG_WARN("Missing data model intro file: ", bYellow, getPathToTemplates(groupFn), cOff);
-            exit(0);
+            badShit = true;
+            continue;
         }
 
         sort(model.fieldArray.begin(), model.fieldArray.end(), sortByDoc);
@@ -83,7 +85,8 @@ bool COptions::handle_datamodel(void) {
         string_q modelFn = getDocsPathTemplates("model-intros/" + model.doc_route + ".md");
         if (!fileExists(modelFn)) {
             LOG_WARN("Missing data model intro file: ", bYellow, getPathToTemplates(modelFn), cOff);
-            exit(0);
+            badShit = true;
+            continue;
         } else {
             docStream << STR_MODEL_HEADER << asciiFileToString(modelFn) << get_producer_table(model, endpointArray)
                       << STR_MODEL_FOOTER << endl;
@@ -137,6 +140,9 @@ bool COptions::handle_datamodel(void) {
         if (!model.go_model.empty()) {
             generate_go_type(this, model);
         }
+    }
+    if (badShit) {
+        exit(0);
     }
 
     yamlStream << STR_YAML_TAIL;

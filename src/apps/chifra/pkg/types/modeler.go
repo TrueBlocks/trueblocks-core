@@ -2,12 +2,12 @@ package types
 
 import "io"
 
-type Modeler[Raw RawData] interface {
+type Modeler[RT RawData] interface {
 	Model(showHidden bool, format string, extraOptions map[string]any) Model
-	Raw() *Raw
+	Raw() *RT
 }
 
-type Cacheable[Raw RawData] interface {
+type Cacheable interface {
 	WriteTo(w io.Writer) (n int64, err error)
 	ReadFrom(r io.Reader) (n int64, err error)
 }
@@ -17,8 +17,11 @@ type Model struct {
 	Order []string
 }
 
+type RawModeler interface{}
+
 // TODO: BOGUS - The auto code generation should check that all auto generated fields are included here
 type RawData interface {
-	RawReceipt | RawWhenCount | RawNamedBlock | RawBlock | RawTraceAction |
-		RawTraceResult | RawTrace | RawFunction | RawParameter | RawAppearance
+	RawBlock | RawTransaction | RawReceipt | RawLog |
+		RawTrace | RawTraceAction | RawTraceResult |
+		RawFunction | RawParameter | RawAppearance | RawModeler
 }

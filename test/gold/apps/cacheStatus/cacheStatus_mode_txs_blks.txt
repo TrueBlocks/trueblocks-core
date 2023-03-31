@@ -1,8 +1,8 @@
-chifra config  show --module caches --types txs --types blocks
+chifra config  show --module caches --types txs --types blocks --verbose
 TEST[DATE|TIME] Modes:  [show]
 TEST[DATE|TIME] Module:  [caches]
 TEST[DATE|TIME] Types:  [txs blocks]
-TEST[DATE|TIME] Depth:  0
+TEST[DATE|TIME] Verbose:  true
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",
@@ -22,14 +22,16 @@ TEST[DATE|TIME] Depth:  0
       "path": "blocksPath",
       "nFiles": 0,
       "nFolders": 0,
-      "sizeInBytes": 0
+      "sizeInBytes": 0,
+      "isValid": true
     },
     {
       "type": "CChainCache",
       "path": "txsPath",
       "nFiles": 0,
       "nFolders": 0,
-      "sizeInBytes": 0
+      "sizeInBytes": 0,
+      "isValid": true
     }
   ],
   "date": "--date--"

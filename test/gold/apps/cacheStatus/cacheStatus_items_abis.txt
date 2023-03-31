@@ -1,46 +1,10 @@
-chifra config  --details show --module abis
+chifra config  show --module abis
 TEST[DATE|TIME] Modes:  [show]
 TEST[DATE|TIME] Module:  [abis]
-TEST[DATE|TIME] Details:  true
-TEST[DATE|TIME] Depth:  0
-{
-  "clientVersion": "Client version",
-  "clientIds": "chainId: 1 networkId: 1",
-  "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-",
-  "rpcProvider": "--providers--",
-  "configPath": "--paths--",
-  "cachePath": "--paths--",
-  "indexPath": "--paths--",
-  "host": "--hostname-- (--username--)",
-  "isTesting": true,
-  "isArchive": true,
-  "isTracing": true,
-  "hasEskey": true,
-  "caches": [
-    {
-      "items": [
-        {
-          "type": "CAbiCacheItem",
-          "nFunctions": 36963,
-          "nEvents": 36963,
-          "nOther": 36963,
-          "nApps": 0,
-          "firstApp": 0,
-          "latestApp": 0,
-          "sizeInBytes": 36963,
-          "address": "---address---",
-          "name": "--name--",
-          "decimals": 0,
-          "petname": "--petname--"
-        }
-      ],
-      "type": "CAbiCache",
-      "path": "abisPath",
-      "nFiles": 0,
-      "nFolders": 0,
-      "sizeInBytes": 0,
-      "isValid": true
-    }
-  ],
-  "date": "--date--"
-}
+--TIME-- Client:       Client version (testing, archive, tracing)
+--TIME-- TrueBlocks:   GHC-TrueBlocks//vers-beta--git-hash---git-ts- (eskey, no pinkey)
+--TIME-- RPC Provider: --providers-- - mainnet (1,1)
+--TIME-- Config Path:  --paths--
+--TIME-- Cache Path:   --paths--
+--TIME-- Index Path:   --paths--
+--TIME-- Progress:     --client--, --final--, --staging--, --unripe-- ts: --ts--

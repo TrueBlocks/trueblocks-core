@@ -1,4 +1,4 @@
-config?modes=show&module=abis&module=caches&module=monitors&types=slurps
+config?modes=show&module=abis&module=caches&module=monitors&types=slurps&verbose
 {
   "errors": [
     "chifra config - Invalid option 'caches' for 'modes'. One or more of [show|edit] required."

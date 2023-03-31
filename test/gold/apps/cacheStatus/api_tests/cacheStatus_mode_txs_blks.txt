@@ -1,4 +1,4 @@
-config?modes=show&module=caches&types=txs&types=blocks
+config?modes=show&module=caches&types=txs&types=blocks&verbose
 {
   "errors": [
     "chifra config - Invalid option 'blocks' for 'modes'. One or more of [show|edit] required."

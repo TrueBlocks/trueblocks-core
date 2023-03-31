@@ -1,4 +1,4 @@
-config?modes=show&module=index&firstBlock=1000000&lastBlock=2500000
+config?modes=show&module=monitors&fmt=json&verbose
 {
   "data": [
     {
@@ -19,8 +19,31 @@ config?modes=show&module=index&firstBlock=1000000&lastBlock=2500000
       "hasPinkey": false,
       "caches": [
         {
-          "type": "CIndexCache",
-          "path": "indexPath",
+          "addrs": [],
+          "items": [
+            {
+              "deleted": false,
+              "type": "",
+              "nApps": 0,
+              "firstApp": 0,
+              "latestApp": 0,
+              "sizeInBytes": 0,
+              "tags": "--tags--",
+              "address": "---address---",
+              "name": "--name--",
+              "symbol": "--symbol--",
+              "source": "--source--",
+              "decimals": 0,
+              "petname": "--petname--",
+              "isCustom": false,
+              "isPrefund": false,
+              "isContract": false,
+              "isErc20": false,
+              "isErc721": false
+            }
+          ],
+          "type": "CMonitorCache",
+          "path": "monitorsPath",
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,

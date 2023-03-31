@@ -51,7 +51,6 @@ Aliases:
 Flags:
       --module strings   the type of information to show or edit
                          One or more of [ index | monitors | names | abis | caches | some | all ]
-  -d, --details          include details about items found in monitors, slurps, abis, or price caches
   -t, --types strings    for caches module only, which type(s) of cache to report
                          One or more of [ blocks | txs | traces | slurps | all ]
   -x, --fmt string       export format, one of [none|json*|txt|csv]

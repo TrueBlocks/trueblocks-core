@@ -19,7 +19,7 @@ import (
 
 func (opts *TracesOptions) HandleCounts() error {
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[RawTraceCount], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		for _, ids := range opts.TransactionIds {
 			txIds, err := ids.ResolveTxs(opts.Globals.Chain)
 			if err != nil {
@@ -63,7 +63,7 @@ func (opts *TracesOptions) HandleCounts() error {
 					return
 				}
 
-				counter := SimpleTraceCount{
+				counter := simpleTraceCount{
 					BlockNumber:      uint64(id.BlockNumber),
 					TransactionIndex: uint64(id.TransactionIndex),
 					TransactionHash:  base.HexToHash(txHash),
@@ -78,9 +78,7 @@ func (opts *TracesOptions) HandleCounts() error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
-type RawTraceCount interface{}
-
-type SimpleTraceCount struct {
+type simpleTraceCount struct {
 	BlockNumber      base.Blknum    `json:"blockNumber"`
 	Timestamp        base.Timestamp `json:"timestamp"`
 	TracesCnt        uint64         `json:"tracesCnt"`
@@ -88,11 +86,11 @@ type SimpleTraceCount struct {
 	TransactionIndex base.Blknum    `json:"transactionIndex"`
 }
 
-func (s *SimpleTraceCount) Raw() *RawTraceCount {
+func (s *simpleTraceCount) Raw() *types.RawModeler {
 	return nil
 }
 
-func (s *SimpleTraceCount) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
+func (s *simpleTraceCount) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
 	return types.Model{
 		Data: map[string]interface{}{
 			"blockNumber":      s.BlockNumber,

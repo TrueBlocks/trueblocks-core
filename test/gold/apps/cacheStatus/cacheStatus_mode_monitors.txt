@@ -1,7 +1,7 @@
-chifra config  show --module monitors
+chifra config  show --module monitors --verbose
 TEST[DATE|TIME] Modes:  [show]
 TEST[DATE|TIME] Module:  [monitors]
-TEST[DATE|TIME] Depth:  0
+TEST[DATE|TIME] Verbose:  true
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",
@@ -17,9 +17,20 @@ TEST[DATE|TIME] Depth:  0
   "hasEskey": true,
   "caches": [
     {
-      "addrs": [
-        "---address---",
-        "---address---"
+      "items": [
+        {
+          "deleted": false,
+          "nApps": 0,
+          "firstApp": 0,
+          "latestApp": 0,
+          "tags": "--tags--",
+          "address": "---address---",
+          "name": "--name--",
+          "symbol": "--symbol--",
+          "source": "--source--",
+          "decimals": 0,
+          "petname": "--petname--"
+        }
       ],
       "type": "CMonitorCache",
       "path": "monitorsPath",

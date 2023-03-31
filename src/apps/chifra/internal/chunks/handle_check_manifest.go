@@ -23,7 +23,7 @@ type CompareState struct {
 // CheckManifest takes two arrays (either onDisc vs. LocalManifest, onDisc vs. RemoteManifest, or LocalManifest
 // vs. RemoteManifest) and compares them for equality. If everything is up to date, all three arrays should
 // be identical. Only the block ranges are in the arrays.
-func (opts *ChunksOptions) CheckManifest(arrayA, arrayB []string, report *SimpleReportCheck) error {
+func (opts *ChunksOptions) CheckManifest(arrayA, arrayB []string, report *simpleReportCheck) error {
 	comp := CompareState{
 		testMode: opts.Globals.TestMode,
 		details:  opts.Globals.Verbose,
@@ -45,7 +45,7 @@ func (opts *ChunksOptions) CheckManifest(arrayA, arrayB []string, report *Simple
 }
 
 // TODO: Can this be made concurrent?
-func (comp *CompareState) checkArrays(report *SimpleReportCheck) error {
+func (comp *CompareState) checkArrays(report *simpleReportCheck) error {
 	marker := ""
 	if comp.testMode {
 		marker = " (testing)"

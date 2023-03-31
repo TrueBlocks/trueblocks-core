@@ -5,15 +5,19 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *ListOptions) HandleBounds(monitorArray []monitor.Monitor) error {
+	chain := opts.Globals.Chain
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[RawGeneric], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		if len(monitorArray) == 0 {
 			errorChan <- errors.New("no monitors found in HandleBounds")
 			return
@@ -29,18 +33,23 @@ func (opts *ListOptions) HandleBounds(monitorArray []monitor.Monitor) error {
 				errorChan <- err
 				return
 			}
+			firstTs, _ := tslib.FromBnToTs(chain, uint64(apps[0].BlockNumber))
+			lastTs, _ := tslib.FromBnToTs(chain, uint64(apps[len(apps)-1].BlockNumber))
 
-			s := SimpleGeneric{
-				First: types.RawAppearance{
+			s := simpleBounds{
+				Count: uint64(count),
+				FirstApp: types.RawAppearance{
 					Address:          mon.Address.Hex(),
 					BlockNumber:      apps[0].BlockNumber,
 					TransactionIndex: apps[0].TransactionId,
 				},
-				Last: types.RawAppearance{
+				FirstTs: firstTs,
+				LastApp: types.RawAppearance{
 					Address:          mon.Address.Hex(),
 					BlockNumber:      apps[len(apps)-1].BlockNumber,
 					TransactionIndex: apps[len(apps)-1].TransactionId,
 				},
+				LastTs: lastTs,
 			}
 			modelChan <- &s
 		}
@@ -49,31 +58,43 @@ func (opts *ListOptions) HandleBounds(monitorArray []monitor.Monitor) error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
-type RawGeneric interface{}
-
-type SimpleGeneric struct {
-	First types.RawAppearance
-	Last  types.RawAppearance
-	raw   *RawGeneric
+type simpleBounds struct {
+	Count    uint64              `json:"count"`
+	FirstApp types.RawAppearance `json:"firstApp"`
+	FirstTs  base.Timestamp      `json:"firstTs"`
+	LastApp  types.RawAppearance `json:"lastApp"`
+	LastTs   base.Timestamp      `json:"lastTs"`
 }
 
-func (s *SimpleGeneric) Raw() *RawGeneric {
-	return s.raw
+func (s *simpleBounds) Raw() *types.RawModeler {
+	return nil
 }
 
-func (s *SimpleGeneric) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
+func (s *simpleBounds) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
 	return types.Model{
 		Data: map[string]interface{}{
-			"address": s.First.Address,
-			"first":   fmt.Sprintf("%d.%d", s.First.BlockNumber, s.First.TransactionIndex),
-			"last":    fmt.Sprintf("%d.%d", s.Last.BlockNumber, s.Last.TransactionIndex),
-			"range":   (s.Last.BlockNumber - s.First.BlockNumber),
+			"address":   s.FirstApp.Address,
+			"count":     s.Count,
+			"firstApp":  fmt.Sprintf("%d.%d", s.FirstApp.BlockNumber, s.FirstApp.TransactionIndex),
+			"firstTs":   s.FirstTs,
+			"firstDate": utils.FormattedDate(s.FirstTs),
+			"lastApp":   fmt.Sprintf("%d.%d", s.LastApp.BlockNumber, s.LastApp.TransactionIndex),
+			"lastTs":    s.LastTs,
+			"lastDate":  utils.FormattedDate(s.LastTs),
+			"blockSpan": (s.LastApp.BlockNumber - s.FirstApp.BlockNumber),
+			"blockFreq": uint64(s.LastApp.BlockNumber-s.FirstApp.BlockNumber) / s.Count,
 		},
 		Order: []string{
 			"address",
-			"first",
-			"last",
-			"range",
+			"count",
+			"firstApp",
+			"firstTs",
+			"firstDate",
+			"lastApp",
+			"lastTs",
+			"lastDate",
+			"blockSpan",
+			"blockFreq",
 		},
 	}
 }

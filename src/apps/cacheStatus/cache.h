@@ -115,7 +115,7 @@ inline void CCache::initialize(void) {
     nFiles = 0;
     nFolders = 0;
     sizeInBytes = 0;
-    isValid = false;
+    isValid = true;
     items.clear();
 
     // EXISTING_CODE
