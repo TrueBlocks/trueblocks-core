@@ -1,6 +1,7 @@
-chifra config  show --module config
+chifra config  show --module config --verbose
 TEST[DATE|TIME] Modes:  [show]
 TEST[DATE|TIME] Module:  [config]
+TEST[DATE|TIME] Verbose:  true
 Error: The module option (config) must be one of [ index | monitors | names | abis | caches | some | all ]
 Usage:
   chifra config <mode> [mode...] [flags]
@@ -17,7 +18,6 @@ Flags:
                            One or more of [ index | monitors | names | abis | caches | some | all ]
   -t, --types strings      for caches module only, which type(s) of cache to report
                            One or more of [ blocks | txs | traces | slurps | all ]
-  -e, --terse              show a terse summary report for mode show (hidden)
   -a, --paths              show the configuration paths for the system (hidden)
   -F, --first_block uint   first block to process (inclusive -- testing only) (hidden)
   -L, --last_block uint    last block to process (inclusive -- testing only) (hidden)

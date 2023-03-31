@@ -1,7 +1,8 @@
-chifra config  show --module caches --types txs --types blocks
+chifra config  show --module caches --types txs --types blocks --verbose
 TEST[DATE|TIME] Modes:  [show]
 TEST[DATE|TIME] Module:  [caches]
 TEST[DATE|TIME] Types:  [txs blocks]
+TEST[DATE|TIME] Verbose:  true
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",

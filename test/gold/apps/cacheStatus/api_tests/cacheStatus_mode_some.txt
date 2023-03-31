@@ -1,4 +1,4 @@
-config?modes=show&module=some
+config?modes=show&module=some&verbose
 {
   "data": [
     {
@@ -112,20 +112,7 @@ config?modes=show&module=some
           "isValid": true
         }
       ],
-      "keys": [
-        {
-          "provider": "etherscan",
-          "apiKey": "--api-key--",
-          "jwt": "--jwt--",
-          "secret": "--secret"
-        },
-        {
-          "provider": "pinata",
-          "apiKey": "--api-key--",
-          "jwt": "--jwt--",
-          "secret": "--secret"
-        }
-      ],
+      "keys": [],
       "date": "--date--"
     }
   ],

@@ -240,7 +240,9 @@ bool COptions::handle_status(ostream& os) {
 
     if (origMode.empty() || contains(origMode, "all") || contains(origMode, "some")) {
         getChainList(status.chains);
-        getKeyList(status.keys);
+        if (!isApiMode() && !isTestMode()) {
+            getKeyList(status.keys);
+        }
     } else {
         HIDE_FIELD(CStatus, "chains");
         HIDE_FIELD(CStatus, "keys");
@@ -622,7 +624,9 @@ bool getKeyList(CKeyArray& keys) {
             archive << keys;
             archive.Release();
         }
-    } else {
+    }
+
+    if (isTestMode() || isApiMode()) {
         for (auto& key : keys) {
             key.apiKey = "--api-key--";
             key.jwt = "--jwt--";

@@ -1,6 +1,7 @@
-chifra config  show --module names
+chifra config  show --module names --verbose
 TEST[DATE|TIME] Modes:  [show]
 TEST[DATE|TIME] Module:  [names]
+TEST[DATE|TIME] Verbose:  true
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",

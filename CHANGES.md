@@ -1,3 +1,4 @@
+Removes the --terse option from chifra status
 Removes --save_addrs from chifra chunks addresses (rarely used, unncessarily complicated)
 remove isFinalized from Block -- the user can make this decision themselves based on timestamp or blockNumber
 

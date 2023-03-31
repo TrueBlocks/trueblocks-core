@@ -6,67 +6,18 @@ TEST[DATE|TIME] OutputFn:  output_test_file
 TEST[DATE|TIME] Append:  true
 ----
 Results in ./output_test_file
-{
-  "clientVersion": "Client version",
-  "clientIds": "chainId: 1 networkId: 1",
-  "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-",
-  "rpcProvider": "--providers--",
-  "configPath": "--paths--",
-  "cachePath": "--paths--",
-  "indexPath": "--paths--",
-  "host": "--hostname-- (--username--)",
-  "isTesting": true,
-  "isArchive": true,
-  "isTracing": true,
-  "hasEskey": true,
-  "caches": [
-    {
-      "type": "CNameCache",
-      "path": "namesPath",
-      "nFiles": 0,
-      "nFolders": 0,
-      "sizeInBytes": 0,
-      "isValid": true
-    }
-  ],
-  "date": "--date--"
-}{
-  "clientVersion": "Client version",
-  "clientIds": "chainId: 1 networkId: 1",
-  "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-",
-  "rpcProvider": "--providers--",
-  "configPath": "--paths--",
-  "cachePath": "--paths--",
-  "indexPath": "--paths--",
-  "host": "--hostname-- (--username--)",
-  "isTesting": true,
-  "isArchive": true,
-  "isTracing": true,
-  "hasEskey": true,
-  "caches": [
-    {
-      "items": [
-        {
-          "type": "CIndexCacheItem",
-          "nAddrs": 8893,
-          "nApps": 8893,
-          "firstApp": 0,
-          "latestApp": 0,
-          "firstTs": 1438269975,
-          "latestTs": 1438269975,
-          "filename": "/--index-path--/000000000-000000000.bin",
-          "fileDate": "1700-01-01 00:00:01 UTC",
-          "indexSizeBytes": 320192,
-          "bloomSizeBytes": 131114
-        }
-      ],
-      "type": "CIndexCache",
-      "path": "indexPath",
-      "nFiles": 0,
-      "nFolders": 0,
-      "sizeInBytes": 0,
-      "isValid": true
-    }
-  ],
-  "date": "--date--"
-}
+--TIME-- Client:       Client version (testing, archive, tracing)
+--TIME-- TrueBlocks:   GHC-TrueBlocks//vers-beta--git-hash---git-ts- (eskey, no pinkey)
+--TIME-- RPC Provider: --providers-- - mainnet (1,1)
+--TIME-- Config Path:  --paths--
+--TIME-- Cache Path:   --paths--
+--TIME-- Index Path:   --paths--
+--TIME-- Progress:     --client--, --final--, --staging--, --unripe-- ts: --ts--
+--TIME-- Client:       Client version (testing, archive, tracing)
+--TIME-- TrueBlocks:   GHC-TrueBlocks//vers-beta--git-hash---git-ts- (eskey, no pinkey)
+--TIME-- RPC Provider: --providers-- - mainnet (1,1)
+--TIME-- Config Path:  --paths--
+--TIME-- Cache Path:   --paths--
+--TIME-- Index Path:   --paths--
+--TIME-- Progress:     --client--, --final--, --staging--, --unripe-- ts: --ts--
+

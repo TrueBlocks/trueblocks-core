@@ -1,7 +1,8 @@
-chifra config  show --module abis --module caches --module monitors --types slurps
+chifra config  show --module abis --module caches --module monitors --types slurps --verbose
 TEST[DATE|TIME] Modes:  [show]
 TEST[DATE|TIME] Module:  [abis caches monitors]
 TEST[DATE|TIME] Types:  [slurps]
+TEST[DATE|TIME] Verbose:  true
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",

@@ -1,6 +1,7 @@
-chifra config  show --module some
+chifra config  show --module some --verbose
 TEST[DATE|TIME] Modes:  [show]
 TEST[DATE|TIME] Module:  [some]
+TEST[DATE|TIME] Verbose:  true
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",
@@ -96,20 +97,6 @@ TEST[DATE|TIME] Module:  [some]
       "nFolders": 0,
       "sizeInBytes": 0,
       "isValid": true
-    }
-  ],
-  "keys": [
-    {
-      "provider": "etherscan",
-      "apiKey": "--api-key--",
-      "jwt": "--jwt--",
-      "secret": "--secret"
-    },
-    {
-      "provider": "pinata",
-      "apiKey": "--api-key--",
-      "jwt": "--jwt--",
-      "secret": "--secret"
     }
   ],
   "date": "--date--"
