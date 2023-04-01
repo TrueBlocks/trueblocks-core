@@ -27,6 +27,7 @@ extern string_q get_copyopts(const CCommandOption& cmd);
 extern string_q get_positionals2(const CCommandOption& cmd);
 extern string_q get_use(const CCommandOption& cmd);
 extern string_q clean_go_positionals(const string_q& in, bool hasEns);
+extern string_q clean_positionals(const string& progName, const string_q& strIn);
 
 extern const char* STR_REQUEST_CASE1;
 extern const char* STR_REQUEST_CASE2;
@@ -266,8 +267,10 @@ string_q get_use(const CCommandOption& cmd) {
                 ostringstream os;
                 forEveryEnum(visitEnumItem2, p.data_type, &os);
                 os << " ]";
-                arguments << substitute(os.str(), "One of",
-                                        contains(p.data_type, "list") ? "\tOne or more of" : "\tOne of");
+                string_q str =
+                    substitute(os.str(), "One of", contains(p.data_type, "list") ? "\tOne or more of" : "\tOne of");
+                // replace(str, "", "");
+                arguments << str;
             }
         }
     }
@@ -280,14 +283,18 @@ string_q get_use(const CCommandOption& cmd) {
             positionals << p.data_type;
         }
     }
+
     string_q ret = "[{ROUTE}] [flags][{TYPES}][{POSITIONALS}]";
-    if (contains(toLower(cmd.tool), "scrape"))
+    if (contains(toLower(cmd.tool), "scrape")) {
         ret = "[{ROUTE}] [flags]";
+    }
     replace(ret, "[{TYPES}]", clean_positionals(cmd.api_route, positionals.str()));
     replace(ret, "[{POSITIONALS}]", arguments.str());
     replace(ret, "[flags] <mode> [blocks...]", "<mode> [flags] [blocks...]");
     replace(ret, "[flags] <mode> [mode...]", "<mode> [mode...] [flags]");
     replace(ret, "[flags] <mode>", "<mode> [flags]");
+    replace(ret, "enum[index|monitors|names|abis|caches|some*|all]", " <mode>\n");
+    replace(ret, "enum[show*|edit]", " <mode>\n");
     return ret;
 }
 
@@ -615,12 +622,18 @@ string_q clean_go_positionals(const string_q& in, bool hasEns) {
 }
 
 const char* STR_POSITIONALS1 = "\toptions += \" \" + strings.Join(opts.[{VARIABLE}], \" \")";
+const char* STR_POSITIONALS2 = "\toptions += \" \" + opts.[{VARIABLE}]";
 //---------------------------------------------------------------------------------------------------
 string_q get_positionals2(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.members))
-        if (p.option_type == "positional")
-            os << p.Format(STR_POSITIONALS1) << endl;
+        if (p.option_type == "positional") {
+            if (cmd.api_route == "status") {
+                os << p.Format(STR_POSITIONALS2) << endl;
+            } else {
+                os << p.Format(STR_POSITIONALS1) << endl;
+            }
+        }
     if (os.str().empty())
         os << substitute(STR_POSITIONALS1, "[{VARIABLE}]", "[]string{}") << endl;
     return os.str();
@@ -704,6 +717,58 @@ string_q get_copyopts(const CCommandOption& cmd) {
         }
     }
     return os.str();
+}
+
+//--------------------------------------------------------------------------------
+string_q clean_positionals(const string_q& progName, const string_q& strIn) {
+    if (contains(strIn, "<")) {
+        ostringstream os;
+        os << (strIn == "list<addr>" ? "<address> [address...]" : "");
+        os << (strIn == "list<blknum>" ? "<block> [block...]" : "");
+        os << (strIn == "list<tx_id>" ? "<tx_id> [tx_id...]" : "");
+        os << (startsWith(strIn, "list<addr> list<topic> list<fourbyte>")
+                   ? "<address> [address...] [topics...] [fourbytes...]"
+                   : "");
+        os << (startsWith(strIn, "list<enum") ? "<mode> [mode...]" : "");
+
+        if (contains(toLower(progName), "tokens")) {
+            os << (strIn == "list<addr> list<blknum>" ? "<address> <address> [address...] [block...]" : "");
+
+        } else if (contains(toLower(progName), "chunks")) {
+            os << (strIn == "enum[status|manifest|index|blooms|addresses|appearances|stats] list<blknum>"
+                       ? "<mode> [blocks...] [address...]"
+                       : "");
+
+        } else {
+            os << (strIn == "list<addr> list<blknum>" ? "<address> [address...] [block...]" : "");
+        }
+
+        if (contains(toLower(progName), "when"))
+            os << (strIn == "list<string>" ? "< block | date > [ block... | date... ]" : "");
+        else
+            os << (strIn == "list<string>" ? "<term> [term...]" : "");
+
+        if (os.str().empty()) {
+            cerr << "Could not convert " << strIn << " for tool " << progName << endl;
+            os << strIn;
+        }
+
+        os << endl;
+        return " " + os.str();
+    }
+    string_q strOut = strIn;
+    replaceAll(strOut, "addrs blocks", "<address> [address...] [block...]");
+    replaceAll(strOut, "transactions", "<tx_id> [tx_id...]");
+    if (contains(progName, "when"))
+        replaceAll(strOut, "blocks", "< block | date > [ block... | date... ]");
+    else
+        replaceAll(strOut, "blocks", "<block> [block...]");
+    replaceAll(strOut, "addrs topics fourbytes", "<address> [address...] [topics] [fourbytes]");
+    replaceAll(strOut, "addrs", "<address> [address...]");
+    replaceAll(strOut, "files", "<file> [file...]");
+    replaceAll(strOut, "terms", "<term> [term...]");
+    replaceAll(strOut, "modes", "<mode> [mode...]");
+    return trim(strOut);
 }
 
 const char* STR_REQUEST_CASE1 =

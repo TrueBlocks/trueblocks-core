@@ -6,7 +6,6 @@ package exportPkg
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -129,10 +128,10 @@ func (opts *ExportOptions) validateExport() error {
 		}
 	}
 
-	err := opts.Globals.Validate()
-	if err != nil && strings.Contains(err.Error(), "option (ofx) must be one of") {
-		// not an error
-		err = nil
-	}
-	return err
+	return opts.Globals.Validate()
+	// if err != nil && strings.Contains(err.Error(), "option (ofx) must be one of") {
+	// 	// not an error
+	// 	err = nil
+	// }
+	// return err
 }

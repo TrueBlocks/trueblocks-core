@@ -1,4 +1,4 @@
-config?modes=show&module=caches&types=junk&verbose
+status?mode=caches&types=junk&verbose
 {
   "errors": [
     "The --types option (junk) must be one of [ blocks | txs | traces | slurps | all ]"

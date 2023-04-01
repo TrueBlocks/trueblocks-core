@@ -1,6 +1,5 @@
-chifra config  show --module index --verbose
-TEST[DATE|TIME] Modes:  [show]
-TEST[DATE|TIME] Module:  [index]
+chifra status  index --verbose
+TEST[DATE|TIME] Mode:  index
 TEST[DATE|TIME] Verbose:  true
 {
   "clientVersion": "Client version",

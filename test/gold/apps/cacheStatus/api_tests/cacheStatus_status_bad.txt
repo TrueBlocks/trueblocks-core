@@ -1,0 +1,6 @@
+status?mode=config&verbose
+{
+  "errors": [
+    "The mode option (config) must be one of [ index | monitors | names | abis | caches | some | all ]"
+  ]
+}

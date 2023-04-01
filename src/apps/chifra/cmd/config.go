@@ -33,16 +33,13 @@ var configCmd = &cobra.Command{
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &configPkg.GetOptions().Globals
 	}),
-	Aliases: []string{
-		"status",
-	},
 }
 
-const usageConfig = `config <mode> [mode...] [flags]
+const usageConfig = `config [flags] <mode>
 
 Arguments:
-  modes - either show or edit the configuration
-	One or more of [ show | edit ]`
+  mode - either show or edit the configuration
+	One of [ show | edit ]`
 
 const shortConfig = "report on and edit the configuration of the TrueBlocks system"
 
@@ -54,10 +51,6 @@ const notesConfig = ``
 func init() {
 	configCmd.Flags().SortFlags = false
 
-	configCmd.Flags().StringSliceVarP(&configPkg.GetOptions().Module, "module", "", nil, `the type of information to show or edit
-One or more of [ index | monitors | names | abis | caches | some | all ]`)
-	configCmd.Flags().StringSliceVarP(&configPkg.GetOptions().Types, "types", "t", nil, `for caches module only, which type(s) of cache to report
-One or more of [ blocks | txs | traces | slurps | all ]`)
 	configCmd.Flags().BoolVarP(&configPkg.GetOptions().Paths, "paths", "a", false, "show the configuration paths for the system (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
 		configCmd.Flags().MarkHidden("paths")

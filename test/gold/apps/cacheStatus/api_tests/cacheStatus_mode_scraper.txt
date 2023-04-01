@@ -1,4 +1,4 @@
-config?modes=show&module=index&verbose
+status?mode=index&verbose
 {
   "data": [
     {

@@ -1,5 +1,4 @@
-chifra config  show --fmt json --verbose
-TEST[DATE|TIME] Modes:  [show]
+chifra status  --fmt json --verbose
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Format:  json
 { "data": [

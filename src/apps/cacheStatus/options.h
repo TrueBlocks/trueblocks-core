@@ -37,11 +37,11 @@
 class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
+    string_q mode;
     // END_CODE_DECLARE
 
     uint64_t depth{1};
     CStatus status;
-    string_q mode;
     string_q origMode;
     CIndexHashMap bloomHashes;
     CIndexHashMap indexHashes;

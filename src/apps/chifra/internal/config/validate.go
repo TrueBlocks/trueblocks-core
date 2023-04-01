@@ -15,17 +15,7 @@ func (opts *ConfigOptions) validateConfig() error {
 		return opts.BadFlag
 	}
 
-	err := validate.ValidateEnumSlice("--types", opts.Types, "[blocks|txs|traces|slurps|all]")
-	if err != nil {
-		return err
-	}
-
-	err = validate.ValidateEnumSlice("module", opts.Module, "[index|monitors|names|abis|caches|some|all]")
-	if err != nil {
-		return err
-	}
-
-	err = validate.ValidateEnumSlice("modes", opts.Modes, "[show|edit]")
+	err := validate.ValidateEnum("modes", opts.Mode, "[show|edit]")
 	if err != nil {
 		return err
 	}

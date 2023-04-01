@@ -21,10 +21,9 @@ extern bool isRunning(const string_q& prog);
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("modes", "", "list<enum[show*|edit]>", OPT_POSITIONAL, "either show or edit the configuration"),
-    COption("module", "", "list<enum[index|monitors|names|abis|caches|some*|all]>", OPT_FLAG, "the type of information to show or edit"),  // NOLINT
-    COption("types", "t", "list<enum[blocks|txs|traces|slurps|all*]>", OPT_FLAG, "for caches module only, which type(s) of cache to report"),  // NOLINT
-    COption("", "", "", OPT_DESCRIPTION, "Report on and edit the configuration of the TrueBlocks system."),
+    COption("mode", "", "enum[index|monitors|names|abis|caches|some*|all]", OPT_POSITIONAL, "the name of the binary cache to report on"),  // NOLINT
+    COption("types", "t", "list<enum[blocks|txs|traces|slurps|all*]>", OPT_FLAG, "for caches mode only, which type(s) of cache to report"),  // NOLINT
+    COption("", "", "", OPT_DESCRIPTION, "Report on the state of the internal binary caches."),
     // clang-format on
     // END_CODE_OPTIONS
 };
@@ -36,8 +35,6 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
-    CStringArray modes;
-    CStringArray module;
     CStringArray types;
     // END_CODE_LOCAL_INIT
 
@@ -47,14 +44,6 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (startsWith(arg, "--module:")) {
-            string_q module_tmp;
-            if (!confirmEnum("module", module_tmp, arg))
-                return false;
-            module.push_back(module_tmp);
-        } else if (arg == "--module") {
-            return flag_required("module");
-
         } else if (startsWith(arg, "-t:") || startsWith(arg, "--types:")) {
             string_q types_tmp;
             if (!confirmEnum("types", types_tmp, arg))
@@ -70,10 +59,10 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else {
-            string_q modes_tmp;
-            if (!confirmEnum("modes", modes_tmp, arg))
+            if (!mode.empty())
+                return usage("Please specify only one mode.");
+            if (!confirmEnum("mode", mode, arg))
                 return false;
-            modes.push_back(modes_tmp);
 
             // END_CODE_AUTO
         }
@@ -98,8 +87,6 @@ bool COptions::parseArguments(string_q& command) {
     establishIndexFolders();
     establishCacheFolders();
 
-    for (auto m : module)
-        mode += (m + "|");
     origMode = mode;
 
     if (mode.empty() || contains(mode, "some"))
@@ -139,15 +126,14 @@ bool COptions::parseArguments(string_q& command) {
         first_block = 1000000;
         last_block = 2200000;
     }
-    for (auto mod : module) {
-        if (mod == "monitors" || mod == "some" || mode == "all") {
-            SHOW_FIELD(CMonitorCache, "items");
-        }
-        if (mod == "index" || mod == "some" || mode == "all") {
-            SHOW_FIELD(CIndexCache, "items");
-            first_block = 0;
-            last_block = NOPOS;
-        }
+
+    if (mode == "monitors" || mode == "some" || mode == "all") {
+        SHOW_FIELD(CMonitorCache, "items");
+    }
+    if (mode == "index" || mode == "some" || mode == "all") {
+        SHOW_FIELD(CIndexCache, "items");
+        first_block = 0;
+        last_block = NOPOS;
     }
     scanRange = make_pair(first_block, last_block);
 

@@ -1,4 +1,4 @@
-config?modes=show&module=names&verbose
+status?mode=names&verbose
 {
   "data": [
     {

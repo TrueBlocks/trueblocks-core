@@ -1,6 +1,5 @@
-chifra config  show --module caches --types slurps --verbose
-TEST[DATE|TIME] Modes:  [show]
-TEST[DATE|TIME] Module:  [caches]
+chifra status  caches --types slurps --verbose
+TEST[DATE|TIME] Mode:  caches
 TEST[DATE|TIME] Types:  [slurps]
 TEST[DATE|TIME] Verbose:  true
 {

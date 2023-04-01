@@ -1,0 +1,9 @@
+chifra config  --paths
+TEST[DATE|TIME] Mode:  show
+TEST[DATE|TIME] Paths:  true
+
+chifra status --paths:
+31-03|21:41:21.839 Config Path:  /Users/jrush/Library/Application Support/TrueBlocks/
+31-03|21:41:21.839 Cache Path:   /Users/jrush/Data/trueblocks/v0.40.0/cache/mainnet/
+31-03|21:41:21.839 Index Path:   /Users/jrush/Data/trueblocks/v0.40.0/unchained/mainnet/
+

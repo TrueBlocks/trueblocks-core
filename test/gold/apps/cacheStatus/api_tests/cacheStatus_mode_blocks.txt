@@ -1,4 +1,4 @@
-config?modes=show&module=caches&types=blocks
+status?mode=caches&types=blocks
 {
   "data": [
     {

@@ -61,7 +61,6 @@ func init() {
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Hashes, "hashes", "e", false, "display only transaction hashes, default is to display full transaction detail")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Uncles, "uncles", "c", false, "display uncle blocks (if any) instead of the requested block")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Traces, "traces", "t", false, "export the traces from the block as opposed to the block data")
-	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Trace, "trace", "", false, "please use --traces option instead (hidden)")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Apps, "apps", "s", false, "display a list of uniq address appearances in the block")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Uniq, "uniq", "u", false, "display a list of uniq address appearances per transaction")
 	blocksCmd.Flags().StringVarP(&blocksPkg.GetOptions().Flow, "flow", "f", "", `for the uniq and apps options only, export only from or to (including trace from or to)
@@ -76,7 +75,6 @@ One of [ from | to | reward ]`)
 	blocksCmd.Flags().Uint64VarP(&blocksPkg.GetOptions().List, "list", "l", 0, "summary list of blocks running backwards from latest block minus num (hidden)")
 	blocksCmd.Flags().Uint64VarP(&blocksPkg.GetOptions().ListCount, "list_count", "C", 0, "the number of blocks to report for --list option (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
-		blocksCmd.Flags().MarkHidden("trace")
 		blocksCmd.Flags().MarkHidden("logs")
 		blocksCmd.Flags().MarkHidden("emitter")
 		blocksCmd.Flags().MarkHidden("topic")
@@ -91,7 +89,6 @@ One of [ from | to | reward ]`)
 	blocksCmd.SetOut(os.Stderr)
 
 	// EXISTING_CODE
-	blocksCmd.Flags().MarkDeprecated("trace", "please use --traces instead")
 	// EXISTING_CODE
 
 	chifraCmd.AddCommand(blocksCmd)

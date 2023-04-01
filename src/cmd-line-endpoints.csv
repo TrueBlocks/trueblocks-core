@@ -19,7 +19,8 @@ num ,group       ,is_visible ,is_visible_docs ,api_group ,api_route    ,tool    
 03  ,Chain State ,true       ,true            ,tools     ,tokens       ,getTokens                ,Get token balance(s) ,Retrieve token balance(s) for one or more addresses at given block(s).
 
 04  ,Admin       ,false      ,true            ,          ,             ,                         ,                     ,Control the scraper and build the index
-04  ,Admin       ,true       ,true            ,apps      ,config       ,cacheStatus              ,Manage config        ,Report on and edit the configuration of the TrueBlocks system.
+04  ,Admin       ,true       ,true            ,apps      ,config       ,config                   ,Manage config        ,Report on and edit the configuration of the TrueBlocks system.
+04  ,Admin       ,true       ,true            ,apps      ,status       ,cacheStatus              ,Get status on caches ,Report on the state of the internal binary caches.
 04  ,Admin       ,true       ,true            ,apps      ,daemon       ,flame                    ,                     ,Initalize and control long-running processes such as the API and the scrapers.
 04  ,Admin       ,true       ,true            ,apps      ,scrape       ,blockScrape              ,Scrape index         ,Scan the chain and update the TrueBlocks index of appearances.
 04  ,Admin       ,true       ,true            ,apps      ,chunks       ,chunkMan                 ,Manage chunks        ,Manage&#44; investigate&#44; and display the Unchained Index.

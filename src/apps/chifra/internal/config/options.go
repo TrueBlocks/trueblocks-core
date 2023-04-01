@@ -9,9 +9,7 @@ package configPkg
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -20,9 +18,7 @@ import (
 
 // ConfigOptions provides all command options for the chifra config command.
 type ConfigOptions struct {
-	Modes   []string              `json:"modes,omitempty"`   // Either show or edit the configuration
-	Module  []string              `json:"module,omitempty"`  // The type of information to show or edit
-	Types   []string              `json:"types,omitempty"`   // For caches module only, which type(s) of cache to report
+	Mode    string                `json:"mode,omitempty"`    // Either show or edit the configuration
 	Paths   bool                  `json:"paths,omitempty"`   // Show the configuration paths for the system
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
@@ -34,9 +30,7 @@ var defaultConfigOptions = ConfigOptions{}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *ConfigOptions) testLog() {
-	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
-	logger.TestLog(len(opts.Module) > 0, "Module: ", opts.Module)
-	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
+	logger.TestLog(len(opts.Mode) > 0, "Mode: ", opts.Mode)
 	logger.TestLog(opts.Paths, "Paths: ", opts.Paths)
 	opts.Globals.TestLog()
 }
@@ -47,51 +41,14 @@ func (opts *ConfigOptions) String() string {
 	return string(b)
 }
 
-// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
-func (opts *ConfigOptions) getEnvStr() []string {
-	envStr := []string{}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return envStr
-}
-
-// toCmdLine converts the option to a command line for calling out to the system.
-func (opts *ConfigOptions) toCmdLine() string {
-	options := ""
-	for _, module := range opts.Module {
-		options += " --module " + module
-	}
-	for _, types := range opts.Types {
-		options += " --types " + types
-	}
-	options += " " + strings.Join(opts.Modes, " ")
-	// EXISTING_CODE
-	// EXISTING_CODE
-	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
-	return options
-}
-
 // configFinishParseApi finishes the parsing for server invocations. Returns a new ConfigOptions.
 func configFinishParseApi(w http.ResponseWriter, r *http.Request) *ConfigOptions {
 	copy := defaultConfigOptions
 	opts := &copy
 	for key, value := range r.URL.Query() {
 		switch key {
-		case "modes":
-			for _, val := range value {
-				s := strings.Split(val, " ") // may contain space separated items
-				opts.Modes = append(opts.Modes, s...)
-			}
-		case "module":
-			for _, val := range value {
-				s := strings.Split(val, " ") // may contain space separated items
-				opts.Module = append(opts.Module, s...)
-			}
-		case "types":
-			for _, val := range value {
-				s := strings.Split(val, " ") // may contain space separated items
-				opts.Types = append(opts.Types, s...)
-			}
+		case "mode":
+			opts.Mode = value[0]
 		case "paths":
 			opts.Paths = true
 		default:
@@ -117,13 +74,11 @@ func configFinishParse(args []string) *ConfigOptions {
 	defFmt = ""
 	for _, mode := range args {
 		if mode == "show" || mode == "edit" {
-			opts.Modes = append(opts.Modes, mode)
-		} else {
-			opts.Module = append(opts.Module, mode)
+			opts.Mode = mode
 		}
 	}
-	if len(opts.Modes) == 0 {
-		opts.Modes = []string{"show"}
+	if len(opts.Mode) == 0 {
+		opts.Mode = "show"
 	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {

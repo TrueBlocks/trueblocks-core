@@ -15,6 +15,8 @@ import (
 	"net/http"
 	"time"
 
+	statusPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/status"
+
 	// BEG_ROUTE_PKGS
 
 	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
@@ -205,6 +207,15 @@ func RouteSlurp(w http.ResponseWriter, r *http.Request) {
 
 // END_ROUTE_CODE
 
+// RouteStatus Report on the status of the TrueBlocks system.
+func RouteStatus(w http.ResponseWriter, r *http.Request) {
+	if err, handled := statusPkg.ServeStatus(w, r); err != nil {
+		RespondWithError(w, http.StatusInternalServerError, err)
+	} else if !handled {
+		CallOne(w, r, config.GetPathToCommands("cacheStatus"), "", "status")
+	}
+}
+
 func Index(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "https://trueblocks.io/docs/", http.StatusMovedPermanently)
 }
@@ -261,7 +272,7 @@ var routes = Routes{
 	Route{"RouteExplore", "GET", "/explore", RouteExplore},
 	Route{"RouteSlurp", "GET", "/slurp", RouteSlurp},
 	// END_ROUTE_ITEMS
-	Route{"RouteStatus", "GET", "/status", RouteConfig}, // an alias
+	Route{"RouteStatus", "GET", "/status", RouteStatus},
 	Route{"DeleteMonitors", "DELETE", "/monitors", RouteMonitors},
 }
 

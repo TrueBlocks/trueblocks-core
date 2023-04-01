@@ -99,7 +99,6 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12510,tools,ChainData,blocks,getBlocks,hashes,e,,false,false,true,true,header,switch,<boolean>,display only transaction hashes&#44; default is to display full transaction detail
 12520,tools,ChainData,blocks,getBlocks,uncles,c,,false,false,true,true,header,switch,<boolean>,display uncle blocks (if any) instead of the requested block
 12530,tools,ChainData,blocks,getBlocks,traces,t,,false,false,true,true,header,switch,<boolean>,export the traces from the block as opposed to the block data
-12532,tools,ChainData,blocks,getBlocks,trace,,,false,false,false,false,local,deprecated,<boolean>,please use --traces option instead
 12540,tools,ChainData,blocks,getBlocks,apps,s,,false,false,true,true,local,switch,<boolean>,display a list of uniq address appearances in the block
 12560,tools,ChainData,blocks,getBlocks,uniq,u,,false,false,true,true,local,switch,<boolean>,display a list of uniq address appearances per transaction
 12565,tools,ChainData,blocks,getBlocks,flow,f,,false,false,true,true,header,flag,enum[from|to|reward],for the uniq and apps options only&#44; export only from or to (including trace from or to)
@@ -132,7 +131,6 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13540,tools,ChainData,transactions,getTrans,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
 13560,tools,ChainData,transactions,getTrans,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the retrieved data if ABIs can be found
 13580,tools,ChainData,transactions,getTrans,traces,t,,false,false,true,true,header,switch,<boolean>,include the transaction's traces in the results
-13682,tools,ChainData,transactions,getTrans,trace,,,false,false,false,false,local,deprecated,<boolean>,please use the --traces option instead
 13605,tools,ChainData,transactions,getTrans,uniq,u,,false,false,true,true,header,switch,<boolean>,display a list of uniq addresses found in the transaction
 13610,tools,ChainData,transactions,getTrans,flow,f,,false,false,true,true,header,flag,enum[from|to],for the uniq option only&#44; export only from or to (including trace from or to)
 13615,tools,ChainData,transactions,getTrans,reconcile,r,,false,false,true,true,local,deprecated,<address>,please use --account_for option instead
@@ -200,7 +198,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 13260,tools,ChainState,tokens,getTokens,addrs,,,true,false,true,true,header,positional,list<addr>,two or more addresses (0x...)&#44; the first is an ERC20 token&#44; balances for the rest are reported
 13280,tools,ChainState,tokens,getTokens,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest'
-13300,tools,ChainState,tokens,getTokens,parts,p,,false,false,true,true,local,flag,list<enum[name|symbol|decimals|totalSupply|version|none|all*]>,which parts of the token information to retrieve
+13300,tools,ChainState,tokens,getTokens,parts,p,,false,false,true,true,local,flag,list<enum[name|symbol|decimals|totalSupply|version|all*]>,which parts of the token information to retrieve
 13320,tools,ChainState,tokens,getTokens,by_acct,b,,false,false,true,true,header,switch,<boolean>,consider each address an ERC20 token except the last&#44; whose balance is reported for each token
 13340,tools,ChainState,tokens,getTokens,no_zero,n,,false,false,true,true,header,switch,<boolean>,suppress the display of zero balance accounts
 13360,tools,ChainState,tokens,getTokens,,,,false,false,true,true,--,description,,Retrieve token balance(s) for one or more addresses at given block(s).
@@ -232,12 +230,13 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13117,apps,Admin,daemon,flame,n2,,,false,false,false,false,--,note,,See the API documentation (https://trueblocks.io/api) for more information.
 13119,apps,Admin,daemon,flame,a1,,,false,false,false,false,--,alias,,serve
 
-10700,apps,Admin,config,cacheStatus,modes,,,false,false,true,true,local,positional,list<enum[show*|edit]>,either show or edit the configuration
-10710,apps,Admin,config,cacheStatus,module,,,false,false,true,true,local,flag,list<enum[index|monitors|names|abis|caches|some*|all]>,the type of information to show or edit
-10730,apps,Admin,config,cacheStatus,types,t,,false,false,true,false,local,flag,list<enum[blocks|txs|traces|slurps|all*]>,for caches module only&#44; which type(s) of cache to report
-10770,apps,Admin,config,cacheStatus,paths,a,,false,false,false,false,gocmd,switch,<boolean>,show the configuration paths for the system
-10860,apps,Admin,config,cacheStatus,,,,false,false,true,true,--,description,,Report on and edit the configuration of the TrueBlocks system.
-10865,apps,Admin,config,cacheStatus,a1,,,false,false,false,false,--,alias,,status
+10700,apps,Admin,config,config,mode,,,false,false,true,true,gocmd,positional,enum[show*|edit],either show or edit the configuration
+10770,apps,Admin,config,config,paths,a,,false,false,false,false,gocmd,switch,<boolean>,show the configuration paths for the system
+10860,apps,Admin,config,config,,,,false,false,true,true,--,description,,Report on and edit the configuration of the TrueBlocks system.
+
+20710,apps,Admin,status,cacheStatus,mode,,,false,false,true,true,local,positional,enum[index|monitors|names|abis|caches|some*|all],the name of the binary cache to report on
+20730,apps,Admin,status,cacheStatus,types,t,,false,false,true,false,local,flag,list<enum[blocks|txs|traces|slurps|all*]>,for caches mode only&#44; which type(s) of cache to report
+20860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the state of the internal binary caches.
 
 31900,apps,Admin,chunks,chunkMan,mode,,,true,false,true,true,local,positional,enum[status|manifest|index|blooms|addresses|appearances|stats],the type of data to process
 31905,apps,Admin,chunks,chunkMan,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of blocks to intersect with chunk ranges

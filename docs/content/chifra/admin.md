@@ -39,23 +39,16 @@ Purpose:
   Report on and edit the configuration of the TrueBlocks system.
 
 Usage:
-  chifra config <mode> [mode...] [flags]
+  chifra config [flags] <mode>
 
 Arguments:
-  modes - either show or edit the configuration
-	One or more of [ show | edit ]
-
-Aliases:
-  config, status
+  mode - either show or edit the configuration
+	One of [ show | edit ]
 
 Flags:
-      --module strings   the type of information to show or edit
-                         One or more of [ index | monitors | names | abis | caches | some | all ]
-  -t, --types strings    for caches module only, which type(s) of cache to report
-                         One or more of [ blocks | txs | traces | slurps | all ]
-  -x, --fmt string       export format, one of [none|json*|txt|csv]
-  -v, --verbose          enable verbose (increase detail with --log_level)
-  -h, --help             display this help screen
+  -x, --fmt string   export format, one of [none|json*|txt|csv]
+  -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen
 ```
 
 Data models produced by this tool:
@@ -71,6 +64,37 @@ Links:
 
 - [api docs](/api/#operation/admin-config)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/config)
+
+## chifra status
+
+
+```[plaintext]
+Purpose:
+  Report on the state of the internal binary caches.
+
+Usage:
+  chifra status [flags] <mode>
+
+Arguments:
+  mode - the name of the binary cache to report on
+	One of [ index | monitors | names | abis | caches | some | all ]
+
+Flags:
+  -t, --types strings   for caches mode only, which type(s) of cache to report
+                        One or more of [ blocks | txs | traces | slurps | all ]
+  -x, --fmt string      export format, one of [none|json*|txt|csv]
+  -v, --verbose         enable verbose (increase detail with --log_level)
+  -h, --help            display this help screen
+```
+
+Data models produced by this tool:
+
+- none
+
+Links:
+
+- [api docs](/api/#operation/admin-status)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/status)
 
 ## chifra daemon
 

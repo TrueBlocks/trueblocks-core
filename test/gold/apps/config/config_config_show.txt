@@ -1,0 +1,3 @@
+chifra config  show
+TEST[DATE|TIME] Mode:  show
+WARN[DATE|TIME] The config tool is current unavailable. Please use the 'chifra status' tool instead.

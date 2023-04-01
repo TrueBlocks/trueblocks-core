@@ -108,7 +108,7 @@ Arguments:
 
 Flags:
   -p, --parts strings   which parts of the token information to retrieve
-                        One or more of [ name | symbol | decimals | totalSupply | version | none | all ]
+                        One or more of [ name | symbol | decimals | totalSupply | version | all ]
   -b, --by_acct         consider each address an ERC20 token except the last, whose balance is reported for each token
   -n, --no_zero         suppress the display of zero balance accounts
   -x, --fmt string      export format, one of [none|json*|txt|csv]

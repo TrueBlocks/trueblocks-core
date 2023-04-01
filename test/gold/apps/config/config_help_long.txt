@@ -1,0 +1,16 @@
+chifra config  --help
+Purpose:
+  Report on and edit the configuration of the TrueBlocks system.
+
+Usage:
+  chifra config [flags] <mode>
+
+Arguments:
+  mode - either show or edit the configuration
+	One of [ show | edit ]
+
+Flags:
+  -a, --paths        show the configuration paths for the system (hidden)
+  -x, --fmt string   export format, one of [none|json*|txt|csv]
+  -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen

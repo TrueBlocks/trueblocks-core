@@ -62,7 +62,7 @@ func (opts *BlocksOptions) HandleTrace() error {
 		"count":     opts.Count,
 		"uncles":    opts.Uncles,
 		"logs":      opts.Logs,
-		"traces":    opts.Trace,
+		"traces":    opts.Traces,
 		"addresses": opts.Uniq || opts.Apps,
 	}
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
