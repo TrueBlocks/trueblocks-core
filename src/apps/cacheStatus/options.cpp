@@ -68,10 +68,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // cerr << string_q(120, '-') << endl;
-    // cerr << mode << endl;
-    // cerr << string_q(120, '-') << endl;
-
     CStringArray cachePaths = {
         cacheFolder_abis,
         cacheFolder_blocks,
@@ -93,7 +89,7 @@ bool COptions::parseArguments(string_q& command) {
 
     origMode = mode;
 
-    if (!verbose && (mode.empty() || contains(mode, "some"))) {
+    if (mode.empty() || contains(mode, "some")) {
         mode = "index|monitors|names|slurps";
 
     } else if (contains(mode, "all")) {
@@ -114,19 +110,6 @@ bool COptions::parseArguments(string_q& command) {
         }
         mode += (hasAll ? "blocks|txs|traces|slurps|" : "");
     }
-
-    // if (!verbose && mode.empty()) {
-    //     HIDE_FIELD(CSlurpCache, "items");
-    //     HIDE_FIELD(CAbiCache, "items");
-    //     HIDE_FIELD(CChainCache, "items");
-    //     HIDE_FIELD(CAbiCache, "items");
-    //     HIDE_FIELD(CAbiCacheItem, "items");
-    //     HIDE_FIELD(CChainCache, "items");
-    //     HIDE_FIELD(CIndexCache, "items");
-    //     HIDE_FIELD(CMonitorCache, "items");
-    //     HIDE_FIELD(CNameCache, "items");
-    //     HIDE_FIELD(CSlurpCache, "items");
-    // }
 
     blknum_t first_block = 0;
     blknum_t last_block = NOPOS;
