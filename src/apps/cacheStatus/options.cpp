@@ -59,10 +59,8 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else {
-            if (!mode.empty()) {
-                cerr << "One mode only" << endl;
-                return false; // "Please send only one mode"; //usage("Please specify only one mode.");
-            }
+            if (!mode.empty())
+                return usage("Please specify only one mode.");
             if (!confirmEnum("mode", mode, arg))
                 return false;
 

@@ -4,6 +4,7 @@ Purpose:
 
 Usage:
   chifra status [flags] <mode>
+
 Arguments:
   mode - the name of the binary cache to report on
 	One of [ index | monitors | names | abis | caches | some | all ]

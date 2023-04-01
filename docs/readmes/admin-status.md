@@ -7,12 +7,13 @@ Purpose:
 
 Usage:
   chifra status [flags] <mode>
+
 Arguments:
-  mode - the name of the binary cache module to report on
+  mode - the name of the binary cache to report on
 	One of [ index | monitors | names | abis | caches | some | all ]
 
 Flags:
-  -t, --types strings   for caches module only, which type(s) of cache to report
+  -t, --types strings   for caches mode only, which type(s) of cache to report
                         One or more of [ blocks | txs | traces | slurps | all ]
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)

@@ -36,6 +36,7 @@ var statusCmd = &cobra.Command{
 }
 
 const usageStatus = `status [flags] <mode>
+
 Arguments:
   mode - the name of the binary cache to report on
 	One of [ index | monitors | names | abis | caches | some | all ]`

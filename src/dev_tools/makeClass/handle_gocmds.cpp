@@ -266,8 +266,10 @@ string_q get_use(const CCommandOption& cmd) {
                 ostringstream os;
                 forEveryEnum(visitEnumItem2, p.data_type, &os);
                 os << " ]";
-                arguments << substitute(os.str(), "One of",
-                                        contains(p.data_type, "list") ? "\tOne or more of" : "\tOne of");
+                string_q str =
+                    substitute(os.str(), "One of", contains(p.data_type, "list") ? "\tOne or more of" : "\tOne of");
+                // replace(str, "", "");
+                arguments << str;
             }
         }
     }
@@ -280,14 +282,18 @@ string_q get_use(const CCommandOption& cmd) {
             positionals << p.data_type;
         }
     }
+
     string_q ret = "[{ROUTE}] [flags][{TYPES}][{POSITIONALS}]";
-    if (contains(toLower(cmd.tool), "scrape"))
+    if (contains(toLower(cmd.tool), "scrape")) {
         ret = "[{ROUTE}] [flags]";
+    }
     replace(ret, "[{TYPES}]", clean_positionals(cmd.api_route, positionals.str()));
     replace(ret, "[{POSITIONALS}]", arguments.str());
     replace(ret, "[flags] <mode> [blocks...]", "<mode> [flags] [blocks...]");
     replace(ret, "[flags] <mode> [mode...]", "<mode> [mode...] [flags]");
     replace(ret, "[flags] <mode>", "<mode> [flags]");
+    replace(ret, "enum[index|monitors|names|abis|caches|some*|all]", " <mode>\n");
+    replace(ret, "enum[show*|edit]", " <mode>\n");
     return ret;
 }
 
@@ -615,12 +621,18 @@ string_q clean_go_positionals(const string_q& in, bool hasEns) {
 }
 
 const char* STR_POSITIONALS1 = "\toptions += \" \" + strings.Join(opts.[{VARIABLE}], \" \")";
+const char* STR_POSITIONALS2 = "\toptions += \" \" + opts.[{VARIABLE}]";
 //---------------------------------------------------------------------------------------------------
 string_q get_positionals2(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.members))
-        if (p.option_type == "positional")
-            os << p.Format(STR_POSITIONALS1) << endl;
+        if (p.option_type == "positional") {
+            if (cmd.api_route == "status") {
+                os << p.Format(STR_POSITIONALS2) << endl;
+            } else {
+                os << p.Format(STR_POSITIONALS1) << endl;
+            }
+        }
     if (os.str().empty())
         os << substitute(STR_POSITIONALS1, "[{VARIABLE}]", "[]string{}") << endl;
     return os.str();

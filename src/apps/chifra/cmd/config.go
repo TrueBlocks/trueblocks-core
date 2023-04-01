@@ -35,7 +35,8 @@ var configCmd = &cobra.Command{
 	}),
 }
 
-const usageConfig = `config [flags]enum[show*|edit]
+const usageConfig = `config [flags] <mode>
+
 Arguments:
   mode - either show or edit the configuration
 	One of [ show | edit ]`

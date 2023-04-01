@@ -5,6 +5,7 @@ TEST[DATE|TIME] Verbose:  true
 Error: The --types option (junk) must be one of [ blocks | txs | traces | slurps | all ]
 Usage:
   chifra status [flags] <mode>
+
 Arguments:
   mode - the name of the binary cache to report on
 	One of [ index | monitors | names | abis | caches | some | all ]

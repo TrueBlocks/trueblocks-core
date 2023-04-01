@@ -20,6 +20,7 @@ on      ,cmd  ,fast  ,null    ,apps/chifra ,help_traces         ,n    ,modes = t
 on      ,cmd  ,fast  ,null    ,apps/chifra ,help_state          ,n    ,modes = state & help & log_level = 2
 on      ,cmd  ,fast  ,null    ,apps/chifra ,help_tokens         ,n    ,modes = tokens & help & log_level = 2
 on      ,cmd  ,fast  ,null    ,apps/chifra ,help_scrape         ,n    ,modes = scrape & help & log_level = 2
+on      ,cmd  ,fast  ,null    ,apps/chifra ,help_config         ,n    ,modes = config & help & log_level = 2
 on      ,cmd  ,fast  ,null    ,apps/chifra ,help_status         ,n    ,modes = status & help & log_level = 2
 on      ,cmd  ,fast  ,null    ,apps/chifra ,help_when           ,n    ,modes = when & help & log_level = 2
 on      ,both ,fast  ,names   ,apps/chifra ,run_names           ,y    ,modes = names & terms = 50-Tokens & expand
@@ -37,6 +38,3 @@ local   ,both ,fast  ,slurp   ,apps/chifra ,run_slurp           ,y    ,modes = s
 # These fail because of some weird `isValid == false` when running remotely
 local   ,both ,fast  ,config  ,apps/chifra ,run_status          ,y    ,modes = config & modes = show & module = all
 local   ,both ,fast  ,config  ,apps/chifra ,run_status_details  ,y    ,modes = config & modes = show & module = all & details & first_block = 1400000 & last_block = 2000000
-
-# This fails because of the help text being weird
-local   ,cmd  ,fast  ,null    ,apps/chifra ,help_config         ,n    ,modes = config & help & log_level = 2

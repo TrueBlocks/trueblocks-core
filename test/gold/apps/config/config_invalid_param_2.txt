@@ -3,7 +3,8 @@ Error:
   unknown shorthand flag: 'l' in -l
 
 Usage:
-  chifra config [flags]enum[show*|edit]
+  chifra config [flags] <mode>
+
 Arguments:
   mode - either show or edit the configuration
 	One of [ show | edit ]
