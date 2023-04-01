@@ -19,6 +19,8 @@ status?mode=caches&types=slurps&verbose
       "hasPinkey": false,
       "caches": [
         {
+          "addrs": [],
+          "items": [],
           "type": "CSlurpCache",
           "path": "slurpsPath",
           "nFiles": 0,

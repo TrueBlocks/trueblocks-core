@@ -234,7 +234,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10770,apps,Admin,config,config,paths,a,,false,false,false,false,gocmd,switch,<boolean>,show the configuration paths for the system
 10860,apps,Admin,config,config,,,,false,false,true,true,--,description,,Report on and edit the configuration of the TrueBlocks system.
 
-20710,apps,Admin,status,cacheStatus,mode,,,false,false,true,true,local,positional,enum[index|monitors|names|abis|caches|some*|all],the name of the binary cache to report on
+20710,apps,Admin,status,cacheStatus,mode,,,false,false,true,true,local,positional,enum[index|monitors|names|abis|caches|some*|all],the (optional) name of the binary cache to report on&#44; terse otherwise
 20730,apps,Admin,status,cacheStatus,types,t,,false,false,true,false,local,flag,list<enum[blocks|txs|traces|slurps|all*]>,for caches mode only&#44; which type(s) of cache to report
 20860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the state of the internal binary caches.
 

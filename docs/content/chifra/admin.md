@@ -39,7 +39,7 @@ Purpose:
   Report on and edit the configuration of the TrueBlocks system.
 
 Usage:
-  chifra config [flags] <mode>
+  chifra config <mode> [flags]
 
 Arguments:
   mode - either show or edit the configuration
@@ -73,10 +73,10 @@ Purpose:
   Report on the state of the internal binary caches.
 
 Usage:
-  chifra status [flags] <mode>
+  chifra status <mode> [flags]
 
 Arguments:
-  mode - the name of the binary cache to report on
+  mode - the (optional) name of the binary cache to report on, terse otherwise
 	One of [ index | monitors | names | abis | caches | some | all ]
 
 Flags:

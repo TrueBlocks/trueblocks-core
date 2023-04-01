@@ -1,14 +1,49 @@
---TIME-- Client:       Client version (testing, archive, tracing)
---TIME-- TrueBlocks:   GHC-TrueBlocks//vers-beta--git-hash---git-ts- (eskey, no pinkey)
---TIME-- RPC Provider: --providers-- - mainnet (1,1)
---TIME-- Config Path:  --paths--
---TIME-- Cache Path:   --paths--
---TIME-- Index Path:   --paths--
---TIME-- Progress:     --client--, --final--, --staging--, --unripe-- ts: --ts--
---TIME-- Client:       Client version (testing, archive, tracing)
---TIME-- TrueBlocks:   GHC-TrueBlocks//vers-beta--git-hash---git-ts- (eskey, no pinkey)
---TIME-- RPC Provider: --providers-- - mainnet (1,1)
---TIME-- Config Path:  --paths--
---TIME-- Cache Path:   --paths--
---TIME-- Index Path:   --paths--
---TIME-- Progress:     --client--, --final--, --staging--, --unripe-- ts: --ts--
+{
+  "clientVersion": "Client version",
+  "clientIds": "chainId: 1 networkId: 1",
+  "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-",
+  "rpcProvider": "--providers--",
+  "configPath": "--paths--",
+  "cachePath": "--paths--",
+  "indexPath": "--paths--",
+  "host": "--hostname-- (--username--)",
+  "isTesting": true,
+  "isArchive": true,
+  "isTracing": true,
+  "hasEskey": true,
+  "caches": [
+    {
+      "type": "CNameCache",
+      "path": "namesPath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "isValid": true
+    }
+  ],
+  "date": "--date--"
+}{
+  "clientVersion": "Client version",
+  "clientIds": "chainId: 1 networkId: 1",
+  "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-",
+  "rpcProvider": "--providers--",
+  "configPath": "--paths--",
+  "cachePath": "--paths--",
+  "indexPath": "--paths--",
+  "host": "--hostname-- (--username--)",
+  "isTesting": true,
+  "isArchive": true,
+  "isTracing": true,
+  "hasEskey": true,
+  "caches": [
+    {
+      "type": "CIndexCache",
+      "path": "indexPath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "isValid": true
+    }
+  ],
+  "date": "--date--"
+}

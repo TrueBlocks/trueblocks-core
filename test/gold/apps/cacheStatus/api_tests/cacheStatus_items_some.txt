@@ -1,4 +1,4 @@
-status?details&modes=some&firstBlock=3000000&lastBlock=3100000
+status?mode=some
 {
   "data": [
     {
@@ -17,6 +17,26 @@ status?details&modes=some&firstBlock=3000000&lastBlock=3100000
       "isTracing": true,
       "hasEskey": true,
       "hasPinkey": false,
+      "chains": [
+        {
+          "chain": "mainnet",
+          "chainId": 1,
+          "symbol": "ETH",
+          "rpcProvider": "--provider-mainnet--",
+          "apiProvider": "--provider-mainnet--",
+          "remoteExplorer": "--explorer-mainnet--",
+          "localExplorer": "--explorer-mainnet--"
+        },
+        {
+          "chain": "gnosis",
+          "chainId": 100,
+          "symbol": "XDAI",
+          "rpcProvider": "--provider-gnosis--",
+          "apiProvider": "--provider-gnosis--",
+          "remoteExplorer": "--explorer-gnosis--",
+          "localExplorer": "--explorer-gnosis--"
+        }
+      ],
       "caches": [
         {
           "items": [],
@@ -28,28 +48,9 @@ status?details&modes=some&firstBlock=3000000&lastBlock=3100000
           "isValid": true
         },
         {
-          "addrs": [],
-          "items": [
-            {
-              "deleted": false,
-              "type": "",
-              "nApps": 0,
-              "firstApp": 0,
-              "latestApp": 0,
-              "sizeInBytes": 0,
-              "tags": "--tags--",
-              "address": "---address---",
-              "name": "--name--",
-              "symbol": "--symbol--",
-              "source": "--source--",
-              "decimals": 0,
-              "description": "",
-              "isCustom": false,
-              "isPrefund": false,
-              "isContract": false,
-              "isErc20": false,
-              "isErc721": false
-            }
+          "addrs": [
+            "---address---",
+            "---address---"
           ],
           "type": "CMonitorCache",
           "path": "monitorsPath",
@@ -69,7 +70,6 @@ status?details&modes=some&firstBlock=3000000&lastBlock=3100000
           "isValid": true
         },
         {
-          "addrs": [],
           "items": [],
           "type": "CSlurpCache",
           "path": "slurpsPath",
@@ -79,28 +79,7 @@ status?details&modes=some&firstBlock=3000000&lastBlock=3100000
           "isValid": true
         }
       ],
-      "chains": [
-        {
-          "chain": "mainnet",
-          "chainId": 1,
-          "symbol": "ETH",
-          "rpcProvider": "--provider-mainnet--",
-          "apiProvider": "--provider-mainnet--",
-          "remoteExplorer": "--explorer-mainnet--",
-          "localExplorer": "--explorer-mainnet--",
-          "ipfsGateway": "--gateway-mainnet--"
-        },
-        {
-          "chain": "gnosis",
-          "chainId": 100,
-          "symbol": "XDAI",
-          "rpcProvider": "--provider-gnosis--",
-          "apiProvider": "--provider-gnosis--",
-          "remoteExplorer": "--explorer-gnosis--",
-          "localExplorer": "--explorer-gnosis--",
-          "ipfsGateway": "--gateway-gnosis--"
-        }
-      ],
+      "keys": [],
       "date": "--date--"
     }
   ],

@@ -13,7 +13,7 @@ Purpose:
   Report on and edit the configuration of the TrueBlocks system.
 
 Usage:
-  chifra config [flags] <mode>
+  chifra config <mode> [flags]
 
 Arguments:
   mode - either show or edit the configuration

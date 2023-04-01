@@ -50,6 +50,10 @@ func (opts *StatusOptions) StatusInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
+	if opts.IsPorted() {
+		return opts.HandleStatusTerse(), true
+	}
+
 	if opts.Globals.IsApiMode() {
 		return nil, false
 	}
@@ -72,7 +76,7 @@ func GetStatusOptions(args []string, g *globals.GlobalOptions) *StatusOptions {
 
 func (opts *StatusOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	ported = false
+	ported = len(opts.Mode) == 0 && !opts.Globals.Verbose
 	// EXISTING_CODE
 	return
 }

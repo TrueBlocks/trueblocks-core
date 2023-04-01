@@ -2,44 +2,39 @@ enabled ,mode ,speed ,route  ,path/tool        ,filename            ,post ,optio
 on      ,cmd  ,fast  ,status ,apps/cacheStatus ,RESET               ,n    ,RESET
 on      ,cmd  ,fast  ,status ,apps/cacheStatus ,help                ,n    ,@h
 on      ,cmd  ,fast  ,status ,apps/cacheStatus ,help_long           ,n    ,help
-on      ,cmd  ,fast  ,status ,apps/cacheStatus ,invalid_param_2     ,y    ,@l & junk
 
 on      ,both ,fast  ,status ,apps/cacheStatus ,no_params           ,y    ,
 on      ,both ,fast  ,status ,apps/cacheStatus ,invalid_param_1     ,y    ,junk
-on      ,both ,fast  ,status ,apps/cacheStatus ,mode_none           ,y    ,
+on      ,cmd  ,fast  ,status ,apps/cacheStatus ,invalid_param_2     ,y    ,@l & junk
+on      ,both ,fast  ,status ,apps/cacheStatus ,status_bad          ,y    ,mode = config & verbose
+
 on      ,both ,fast  ,status ,apps/cacheStatus ,index_start         ,y    ,mode = index
+on      ,both ,fast  ,status ,apps/cacheStatus ,items_abis          ,y    ,mode = abis
+on      ,both ,fast  ,status ,apps/cacheStatus ,items_scrap_mon     ,y    ,mode = index
+on      ,both ,fast  ,status ,apps/cacheStatus ,items_slurps        ,y    ,mode = caches & types = slurps
+
 on      ,both ,slow  ,status ,apps/cacheStatus ,mode_names          ,y    ,mode = names & verbose
 on      ,both ,slow  ,status ,apps/cacheStatus ,mode_abis           ,y    ,mode = abis & verbose
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_txs            ,y    ,mode = caches & types = txs & verbose
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_cache_fail     ,y    ,mode = caches & types = junk & verbose
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_txs_l01        ,y    ,mode = caches & types = txs & verbose
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_slurps         ,y    ,mode = caches & types = slurps & verbose
-on      ,both ,fast  ,status ,apps/cacheStatus ,status_bad          ,y    ,mode = config & verbose
-on      ,both ,fast  ,status ,apps/cacheStatus ,items_abis          ,y    ,mode = abis
-on      ,both ,fast  ,status ,apps/cacheStatus ,items_scrap_mon     ,y    ,mode = index
-on      ,both ,fast  ,status ,apps/cacheStatus ,report              ,n    ,report & fmt = txt
-on      ,both ,fast  ,status ,apps/cacheStatus ,report_json         ,y    ,report & fmt = json
-
-on      ,both ,slow  ,status ,apps/cacheStatus ,redir_output        ,y    ,mode = names & output = output_test_file
-on      ,both ,slow  ,status ,apps/cacheStatus ,redir_output_append ,n    ,mode = index & output = output_test_file & no_header & append
-
-on      ,both ,fast  ,status ,apps/cacheStatus ,items_slurps        ,y    ,mode = caches & types = slurps
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_traces         ,y    ,mode = caches & types = traces
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_blocks         ,y    ,mode = caches & types = blocks
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_cache_all      ,y    ,mode = caches & types = all
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_all            ,y    ,mode = all
+on      ,both ,slow  ,status ,apps/cacheStatus ,mode_monitors       ,y    ,mode = monitors & verbose
 
-on      ,both ,fast  ,status ,apps/cacheStatus ,explorer_1          ,y    ,fmt = json & verbose
-
-# Not sure why these fail
 local   ,both ,fast  ,status ,apps/cacheStatus ,items_monitors      ,y    ,mode = monitors
 local   ,both ,fast  ,status ,apps/cacheStatus ,items_some          ,y    ,mode = some
 local   ,both ,fast  ,status ,apps/cacheStatus ,items_three         ,y    ,mode = abis & mode = caches & mode = monitors & types = slurps
-
-local   ,both ,fast  ,status ,apps/cacheStatus ,explorer_2          ,y    ,mode = monitors & fmt = json & verbose
-local   ,both ,fast  ,status ,apps/cacheStatus ,explorer_3          ,y    ,mode = index & fmt = json & verbose
+local   ,both ,fast  ,status ,apps/cacheStatus ,three               ,y    ,mode = abis & mode = caches & mode = monitors & types = slurps & verbose
+local   ,both ,fast  ,status ,apps/cacheStatus ,mode_none           ,y    ,
 local   ,both ,fast  ,status ,apps/cacheStatus ,mode_scraper        ,y    ,mode = index & verbose
-local   ,both ,slow  ,status ,apps/cacheStatus ,mode_monitors       ,y    ,mode = monitors & verbose
 local   ,both ,fast  ,status ,apps/cacheStatus ,mode_some           ,y    ,mode = some & verbose
 local   ,both ,fast  ,status ,apps/cacheStatus ,mode_txs_blks       ,y    ,mode = caches & types = txs & types = blocks & verbose
-local   ,both ,fast  ,status ,apps/cacheStatus ,three               ,y    ,mode = abis & mode = caches & mode = monitors & types = slurps & verbose
+local   ,both ,fast  ,status ,apps/cacheStatus ,explorer_1          ,y    ,fmt = json & verbose
+local   ,both ,fast  ,status ,apps/cacheStatus ,explorer_2          ,y    ,mode = monitors & fmt = json & verbose
+local   ,both ,fast  ,status ,apps/cacheStatus ,explorer_3          ,y    ,mode = index & fmt = json & verbose
+local   ,both ,slow  ,status ,apps/cacheStatus ,redir_output        ,y    ,mode = names & output = output_test_file
+local   ,both ,slow  ,status ,apps/cacheStatus ,redir_output_append ,n    ,mode = index & output = output_test_file & no_header & append

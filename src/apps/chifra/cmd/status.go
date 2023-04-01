@@ -35,10 +35,10 @@ var statusCmd = &cobra.Command{
 	}),
 }
 
-const usageStatus = `status [flags] <mode>
+const usageStatus = `status <mode> [flags]
 
 Arguments:
-  mode - the name of the binary cache to report on
+  mode - the (optional) name of the binary cache to report on, terse otherwise
 	One of [ index | monitors | names | abis | caches | some | all ]`
 
 const shortStatus = "report on the state of the internal binary caches"

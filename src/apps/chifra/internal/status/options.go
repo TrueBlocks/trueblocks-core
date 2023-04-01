@@ -20,7 +20,7 @@ import (
 
 // StatusOptions provides all command options for the chifra status command.
 type StatusOptions struct {
-	Mode    string                `json:"mode,omitempty"`    // The name of the binary cache to report on
+	Mode    string                `json:"mode,omitempty"`    // The (optional) name of the binary cache to report on, terse otherwise
 	Types   []string              `json:"types,omitempty"`   // For caches mode only, which type(s) of cache to report
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
@@ -98,8 +98,8 @@ func statusFinishParse(args []string) *StatusOptions {
 	defFmt := "txt"
 	// EXISTING_CODE
 	defFmt = ""
-	for _, mode := range args {
-		opts.Mode = mode
+	for _, arg := range args {
+		opts.Mode = arg
 	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {

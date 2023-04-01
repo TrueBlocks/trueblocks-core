@@ -6,10 +6,10 @@ Purpose:
   Report on the state of the internal binary caches.
 
 Usage:
-  chifra status [flags] <mode>
+  chifra status <mode> [flags]
 
 Arguments:
-  mode - the name of the binary cache to report on
+  mode - the (optional) name of the binary cache to report on, terse otherwise
 	One of [ index | monitors | names | abis | caches | some | all ]
 
 Flags:

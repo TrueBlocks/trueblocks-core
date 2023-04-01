@@ -196,3 +196,13 @@ func GetPinningKeys(chain string) (string, string, string) {
 	c := keys["estuary"].ApiKey
 	return a, b, c
 }
+
+func HasPinningKeys(chain string) bool {
+	a, b, c := GetPinningKeys(chain)
+	return len(a)+len(b)+len(c) > 0
+}
+
+func HasEsKeys(chain string) bool {
+	keys := GetRootConfig().Keys
+	return len(keys["etherscan"].ApiKey) > 0
+}

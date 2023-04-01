@@ -28,7 +28,6 @@
 #include "namecache.h"
 #include "slurpcache.h"
 #include "status.h"
-#include "statusterse.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES

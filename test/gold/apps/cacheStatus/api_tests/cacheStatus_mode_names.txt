@@ -20,6 +20,7 @@ status?mode=names&verbose
       "caches": [
         {
           "addrs": [],
+          "items": [],
           "type": "CNameCache",
           "path": "namesPath",
           "nFiles": 0,

@@ -72,9 +72,9 @@ func configFinishParse(args []string) *ConfigOptions {
 	defFmt := "txt"
 	// EXISTING_CODE
 	defFmt = ""
-	for _, mode := range args {
-		if mode == "show" || mode == "edit" {
-			opts.Mode = mode
+	for _, arg := range args {
+		if arg == "show" || arg == "edit" {
+			opts.Mode = arg
 		}
 	}
 	if len(opts.Mode) == 0 {

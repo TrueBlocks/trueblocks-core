@@ -3,7 +3,7 @@ Error:
   unknown shorthand flag: 'l' in -l
 
 Usage:
-  chifra config [flags] <mode>
+  chifra config <mode> [flags]
 
 Arguments:
   mode - either show or edit the configuration

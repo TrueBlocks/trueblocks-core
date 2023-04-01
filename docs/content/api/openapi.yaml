@@ -1591,7 +1591,7 @@ paths:
       operationId: admin-status
       parameters:
         - name: mode
-          description: the name of the binary cache to report on
+          description: the (optional) name of the binary cache to report on, terse otherwise
           required: false
           style: form
           in: query

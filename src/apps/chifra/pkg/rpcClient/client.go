@@ -218,6 +218,20 @@ func IsTracingNode(testMode bool, chain string) bool {
 	return true
 }
 
+func IsArchiveNode(testMode bool, chain string) bool {
+	return true
+	// TODO: from C++ code
+	// const CToml* config = getGlobalConfig("blockScrape");
+	// if (!config->getConfigBool("requires", "archive", true))
+	//     return true;
+
+	// // An archive node better have a balance at the end of block zero the same as
+	// // the allocation amount for that account. We use the largest allocation so as
+	// // to ensure we get an actual balance
+	// Allocation largest = largestPrefund();
+	// return getBalanceAt(largest.address, 0) == largest.amount;
+}
+
 /*
 // Functions available in the client
 func NewClient(c *rpc.Client) *Client

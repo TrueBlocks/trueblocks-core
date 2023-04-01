@@ -21,7 +21,7 @@ extern bool isRunning(const string_q& prog);
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("mode", "", "enum[index|monitors|names|abis|caches|some*|all]", OPT_POSITIONAL, "the name of the binary cache to report on"),  // NOLINT
+    COption("mode", "", "enum[index|monitors|names|abis|caches|some*|all]", OPT_POSITIONAL, "the (optional) name of the binary cache to report on, terse otherwise"),  // NOLINT
     COption("types", "t", "list<enum[blocks|txs|traces|slurps|all*]>", OPT_FLAG, "for caches mode only, which type(s) of cache to report"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Report on the state of the internal binary caches."),
     // clang-format on
@@ -68,6 +68,10 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    // cerr << string_q(120, '-') << endl;
+    // cerr << mode << endl;
+    // cerr << string_q(120, '-') << endl;
+
     CStringArray cachePaths = {
         cacheFolder_abis,
         cacheFolder_blocks,
@@ -89,12 +93,14 @@ bool COptions::parseArguments(string_q& command) {
 
     origMode = mode;
 
-    if (mode.empty() || contains(mode, "some"))
+    if (!verbose && (mode.empty() || contains(mode, "some"))) {
         mode = "index|monitors|names|slurps";
-    if (contains(mode, "all")) {
+
+    } else if (contains(mode, "all")) {
         mode = "index|monitors|names|abis|caches";
         types.push_back("all");
     }
+
     mode = "|" + trim(mode, '|') + "|";
 
     if (contains(mode, "|caches")) {
@@ -109,16 +115,18 @@ bool COptions::parseArguments(string_q& command) {
         mode += (hasAll ? "blocks|txs|traces|slurps|" : "");
     }
 
-    HIDE_FIELD(CSlurpCache, "items");
-    HIDE_FIELD(CAbiCache, "items");
-    HIDE_FIELD(CChainCache, "items");
-    HIDE_FIELD(CAbiCache, "items");
-    HIDE_FIELD(CAbiCacheItem, "items");
-    HIDE_FIELD(CChainCache, "items");
-    HIDE_FIELD(CIndexCache, "items");
-    HIDE_FIELD(CMonitorCache, "items");
-    HIDE_FIELD(CNameCache, "items");
-    HIDE_FIELD(CSlurpCache, "items");
+    // if (!verbose && mode.empty()) {
+    //     HIDE_FIELD(CSlurpCache, "items");
+    //     HIDE_FIELD(CAbiCache, "items");
+    //     HIDE_FIELD(CChainCache, "items");
+    //     HIDE_FIELD(CAbiCache, "items");
+    //     HIDE_FIELD(CAbiCacheItem, "items");
+    //     HIDE_FIELD(CChainCache, "items");
+    //     HIDE_FIELD(CIndexCache, "items");
+    //     HIDE_FIELD(CMonitorCache, "items");
+    //     HIDE_FIELD(CNameCache, "items");
+    //     HIDE_FIELD(CSlurpCache, "items");
+    // }
 
     blknum_t first_block = 0;
     blknum_t last_block = NOPOS;
@@ -206,7 +214,6 @@ COptions::COptions(void) {
     Init();
 
     CStatus::registerClass();
-    CStatusTerse::registerClass();
     CCache::registerClass();
     CIndexCache::registerClass();
     CIndexCacheItem::registerClass();

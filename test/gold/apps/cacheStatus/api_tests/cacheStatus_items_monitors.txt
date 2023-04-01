@@ -1,4 +1,4 @@
-status?details&modes=monitors
+status?mode=monitors
 {
   "data": [
     {
@@ -19,28 +19,9 @@ status?details&modes=monitors
       "hasPinkey": false,
       "caches": [
         {
-          "addrs": [],
-          "items": [
-            {
-              "deleted": false,
-              "type": "",
-              "nApps": 0,
-              "firstApp": 0,
-              "latestApp": 0,
-              "sizeInBytes": 0,
-              "tags": "--tags--",
-              "address": "---address---",
-              "name": "--name--",
-              "symbol": "--symbol--",
-              "source": "--source--",
-              "decimals": 0,
-              "description": "",
-              "isCustom": false,
-              "isPrefund": false,
-              "isContract": false,
-              "isErc20": false,
-              "isErc721": false
-            }
+          "addrs": [
+            "---address---",
+            "---address---"
           ],
           "type": "CMonitorCache",
           "path": "monitorsPath",
@@ -50,7 +31,6 @@ status?details&modes=monitors
           "isValid": true
         }
       ],
-      "chains": [],
       "date": "--date--"
     }
   ],

@@ -3,16 +3,31 @@ status?mode=caches&types=traces
   "data": [
     {
       "clientVersion": "Client version",
+      "clientIds": "chainId: 1 networkId: 1",
       "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-",
       "rpcProvider": "--providers--",
       "configPath": "--paths--",
       "cachePath": "--paths--",
       "indexPath": "--paths--",
+      "host": "--hostname-- (--username--)",
       "isTesting": true,
+      "isApi": true,
+      "isScraping": false,
       "isArchive": true,
       "isTracing": true,
       "hasEskey": true,
       "hasPinkey": false,
+      "caches": [
+        {
+          "items": [],
+          "type": "CChainCache",
+          "path": "tracesPath",
+          "nFiles": 0,
+          "nFolders": 0,
+          "sizeInBytes": 0,
+          "isValid": true
+        }
+      ],
       "date": "--date--"
     }
   ],

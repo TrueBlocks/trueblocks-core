@@ -4,10 +4,10 @@ TEST[DATE|TIME] Types:  [junk]
 TEST[DATE|TIME] Verbose:  true
 Error: The --types option (junk) must be one of [ blocks | txs | traces | slurps | all ]
 Usage:
-  chifra status [flags] <mode>
+  chifra status <mode> [flags]
 
 Arguments:
-  mode - the name of the binary cache to report on
+  mode - the (optional) name of the binary cache to report on, terse otherwise
 	One of [ index | monitors | names | abis | caches | some | all ]
 
 Flags:
