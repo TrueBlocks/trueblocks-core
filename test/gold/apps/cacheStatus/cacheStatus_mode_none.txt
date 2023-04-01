@@ -1,5 +1,4 @@
-chifra config  
-TEST[DATE|TIME] Modes:  [show]
+chifra status  
 --TIME-- Client:       Client version (testing, archive, tracing)
 --TIME-- TrueBlocks:   GHC-TrueBlocks//vers-beta--git-hash---git-ts- (eskey, no pinkey)
 --TIME-- RPC Provider: --providers-- - mainnet (1,1)

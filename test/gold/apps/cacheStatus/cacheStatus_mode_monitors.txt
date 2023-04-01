@@ -1,6 +1,5 @@
-chifra config  show --module monitors --verbose
-TEST[DATE|TIME] Modes:  [show]
-TEST[DATE|TIME] Module:  [monitors]
+chifra status  monitors --verbose
+TEST[DATE|TIME] Mode:  monitors
 TEST[DATE|TIME] Verbose:  true
 {
   "clientVersion": "Client version",

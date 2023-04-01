@@ -1,6 +1,6 @@
-config?report&fmt=json
+status?report&fmt=json
 {
   "errors": [
-    "Invalid key (report) in config route."
+    "Invalid key (report) in status route."
   ]
 }

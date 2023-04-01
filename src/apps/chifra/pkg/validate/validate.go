@@ -93,7 +93,7 @@ func IsZeroAddress(val string) bool {
 
 func ValidateAddresses(args []string) error {
 	for _, arg := range args {
-		if strings.HasPrefix(arg, "0x") && !IsValidAddress(arg) {
+		if !IsValidAddress(arg) {
 			return Usage("The value {0} is not a valid address.", arg)
 		}
 	}

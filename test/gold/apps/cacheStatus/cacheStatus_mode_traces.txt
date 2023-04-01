@@ -1,6 +1,5 @@
-chifra config  show --module caches --types traces
-TEST[DATE|TIME] Modes:  [show]
-TEST[DATE|TIME] Module:  [caches]
+chifra status  caches --types traces
+TEST[DATE|TIME] Mode:  caches
 TEST[DATE|TIME] Types:  [traces]
 --TIME-- Client:       Client version (testing, archive, tracing)
 --TIME-- TrueBlocks:   GHC-TrueBlocks//vers-beta--git-hash---git-ts- (eskey, no pinkey)

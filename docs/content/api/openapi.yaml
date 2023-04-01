@@ -1476,7 +1476,6 @@ paths:
                 - decimals
                 - totalSupply
                 - version
-                - none
                 - all
         - name: byAcct
           description: >
@@ -1532,37 +1531,17 @@ paths:
       description: Report on and edit the configuration of the TrueBlocks system. Corresponds to the <a href="/chifra/admin/#chifra-config">chifra config</a> command line.
       operationId: admin-config
       parameters:
-        - name: modes
+        - name: mode
           description: either show or edit the configuration
           required: false
           style: form
           in: query
           explode: true
           schema:
-            type: array
-            items:
-              type: string
-              enum:
-                - show
-                - edit
-        - name: module
-          description: the type of information to show or edit
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-              enum:
-                - index
-                - monitors
-                - names
-                - abis
-                - caches
-                - some
-                - all
+            type: string
+            enum:
+              - show
+              - edit
       responses:
         "200":
           description: returns the requested data
@@ -1601,6 +1580,44 @@ paths:
                         },
                       ],
                   }
+        "400":
+          description: bad input parameter
+  /status:
+    get:
+      tags:
+        - Admin
+      summary: Get status on caches
+      description: Report on the state of the internal binary caches. Corresponds to the <a href="/chifra/admin/#chifra-status">chifra status</a> command line.
+      operationId: admin-status
+      parameters:
+        - name: mode
+          description: the name of the binary cache to report on
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+            enum:
+              - index
+              - monitors
+              - names
+              - abis
+              - caches
+              - some
+              - all
+      responses:
+        "200":
+          description: returns the requested data
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    description: 
+                    type: array
+                    items:
+                      
         "400":
           description: bad input parameter
   /scrape:

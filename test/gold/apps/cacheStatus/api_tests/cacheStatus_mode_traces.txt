@@ -1,4 +1,4 @@
-config?modes=show&module=caches&types=traces
+status?mode=caches&types=traces
 {
   "data": [
     {

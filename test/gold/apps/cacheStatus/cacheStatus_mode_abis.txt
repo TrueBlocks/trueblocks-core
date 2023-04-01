@@ -1,6 +1,5 @@
-chifra config  show --module abis --verbose
-TEST[DATE|TIME] Modes:  [show]
-TEST[DATE|TIME] Module:  [abis]
+chifra status  abis --verbose
+TEST[DATE|TIME] Mode:  abis
 TEST[DATE|TIME] Verbose:  true
 {
   "clientVersion": "Client version",

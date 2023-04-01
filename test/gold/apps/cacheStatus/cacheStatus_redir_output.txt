@@ -1,6 +1,5 @@
-chifra config  show --module names --output output_test_file
-TEST[DATE|TIME] Modes:  [show]
-TEST[DATE|TIME] Module:  [names]
+chifra status  names --output output_test_file
+TEST[DATE|TIME] Mode:  names
 TEST[DATE|TIME] OutputFn:  output_test_file
 ----
 Results in ./output_test_file

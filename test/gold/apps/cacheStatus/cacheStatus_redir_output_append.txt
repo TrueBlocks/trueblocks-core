@@ -1,6 +1,5 @@
-chifra config  show --module index --output output_test_file --no_header --append
-TEST[DATE|TIME] Modes:  [show]
-TEST[DATE|TIME] Module:  [index]
+chifra status  index --output output_test_file --no_header --append
+TEST[DATE|TIME] Mode:  index
 TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] OutputFn:  output_test_file
 TEST[DATE|TIME] Append:  true

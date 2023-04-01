@@ -78,15 +78,15 @@ class COptionsBase {
 
     // usage related
     bool usage(const string_q& errMsg = "") const;
-    string_q get_header(void) const;
-    string_q get_purpose(void) const;
-    string_q get_description(void) const;
-    string_q get_notes(void) const;
-    string_q get_configs(void) const;
-    string_q get_version(void) const;
-    string_q get_options(void) const;
+    // string_q get_header(void) const;
+    // string_q get_purpose(void) const;
+    // string_q get_description(void) const;
+    // string_q get_notes(void) const;
+    // string_q get_configs(void) const;
+    // string_q get_version(void) const;
+    // string_q get_options(void) const;
     string_q get_errmsg(const string_q& errMsg) const;
-    string_q get_positionals(COptionArray& pos) const;
+    // string_q get_positionals(COptionArray& pos) const;
 
     string_q format_notes(const CStringArray& strs) const;
     bool flag_required(const string_q& command) const;

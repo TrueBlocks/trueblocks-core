@@ -17,7 +17,7 @@ func (opts *TokensOptions) validateTokens() error {
 		return opts.BadFlag
 	}
 
-	err := validate.ValidateEnumSlice("--parts", opts.Parts, "[name|symbol|decimals|totalSupply|version|none|all]")
+	err := validate.ValidateEnumSlice("--parts", opts.Parts, "[name|symbol|decimals|totalSupply|version|all]")
 	if err != nil {
 		return err
 	}

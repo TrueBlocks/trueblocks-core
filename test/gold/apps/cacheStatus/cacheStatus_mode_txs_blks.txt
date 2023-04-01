@@ -1,6 +1,5 @@
-chifra config  show --module caches --types txs --types blocks --verbose
-TEST[DATE|TIME] Modes:  [show]
-TEST[DATE|TIME] Module:  [caches]
+chifra status  caches --types txs --types blocks --verbose
+TEST[DATE|TIME] Mode:  caches
 TEST[DATE|TIME] Types:  [txs blocks]
 TEST[DATE|TIME] Verbose:  true
 {

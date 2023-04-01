@@ -28,162 +28,163 @@ namespace qblocks {
 static ostream& out = cerr;
 //--------------------------------------------------------------------------------
 bool COptionsBase::usage(const string_q& errMsg) const {
-    bool quitting = !(errMsg.empty() || contains(errMsg, "Invalid option:") || isApiMode());
-    out << get_errmsg(errMsg + (quitting ? " Quitting..." : ""));
-    out << get_purpose();
-    out << get_header();
-    out << get_description();
-    out << get_notes();
-    out << get_configs();
-    out << get_version();
+    // bool quitting = !(errMsg.empty() || contains(errMsg, "Invalid option:") || isApiMode());
+    // out << get_errmsg(errMsg + (quitting ? " Quitting..." : ""));
+    // out << get_purpose();
+    // out << get_header();
+    // out << get_description();
+    // out << get_notes();
+    // out << get_configs();
+    // out << get_version();
     return false;
 }
 
-//--------------------------------------------------------------------------------
-string_q COptionsBase::get_header(void) const {
-    ostringstream os;
-    os << endl;
-    os << "Usage:" << endl;
-    os << "  " << getProgName() << " " << get_options() << endl;
-    return os.str();
-}
+// //--------------------------------------------------------------------------------
+// string_q COptionsBase::get_header(void) const {
+//     ostringstream os;
+//     // os << endl;
+//     // os << "Usage:" << endl;
+//     // os << "  " << getProgName() << " " << get_options() << endl;
+//     return os.str();
+// }
 
-//--------------------------------------------------------------------------------
-string_q COptionsBase::get_purpose(void) const {
-    ostringstream os;
-    os << "Purpose:" << endl;
-    string_q purpose;
-    for (auto option : parameters)
-        if (option.longName.empty())  // program description
-            purpose = substitute(option.description, "|", "\n            ");
-    os << "  " << purpose << endl;
-    return colorize(os.str());
-}
+// //--------------------------------------------------------------------------------
+// string_q COptionsBase::get_purpose(void) const {
+//     ostringstream os;
+//     os << "Purpose:" << endl;
+//     string_q purpose;
+//     for (auto option : parameters)
+//         if (option.longName.empty())  // program description
+//             purpose = substitute(option.description, "|", "\n            ");
+//     os << "  " << purpose << endl;
+//     return colorize(os.str());
+// }
 
-//--------------------------------------------------------------------------------
-bool isPublic(const COption& opt) {
-    return (opt.is_visible && !opt.is_deprecated && !opt.longName.empty());
-}
-//--------------------------------------------------------------------------------
-bool isPublic2(const COption& opt) {
-    return (!opt.is_deprecated && !opt.longName.empty());
-}
+// //--------------------------------------------------------------------------------
+// bool isPublic(const COption& opt) {
+//     return (opt.is_visible && !opt.is_deprecated && !opt.longName.empty());
+// }
+// //--------------------------------------------------------------------------------
+// bool isPublic2(const COption& opt) {
+//     return (!opt.is_deprecated && !opt.longName.empty());
+// }
 
-//--------------------------------------------------------------------------------
-string_q COptionsBase::get_description(void) const {
-    ostringstream os, hidden, extra;
+// //--------------------------------------------------------------------------------
+// string_q COptionsBase::get_description(void) const {
+// ostringstream os;
+// , hidden, extra;
 
-    size_t widths[5];
-    bzero(widths, sizeof(widths));
-    for (auto option : parameters) {
-        if (option.is_visible) {
-            if (isPublic2(option)) {
-                widths[0] = max(widths[0], option.getHotKey().length());
-                widths[1] = max(widths[1], option.getLongKey().length());
-                widths[2] = max(widths[2], option.getDescription().length());
-            }
-        }
-    }
-    widths[0] = max(widths[0], size_t(3));
+// size_t widths[5];
+// bzero(widths, sizeof(widths));
+// for (auto option : parameters) {
+//     if (option.is_visible) {
+//         if (isPublic2(option)) {
+//             widths[0] = max(widths[0], option.getHotKey().length());
+//             widths[1] = max(widths[1], option.getLongKey().length());
+//             widths[2] = max(widths[2], option.getDescription().length());
+//         }
+//     }
+// }
+// widths[0] = max(widths[0], size_t(3));
 
-    //---------------------------------------------------------------------------------------------------
-    static COption opts[] = {
-        COption("fmt", "x", "enum[none|json*|txt|csv]", OPT_FLAG, "export format"),
-        COption("verbose", "v", "<uint>", OPT_VERBOSE, "set verbose level (optional level defaults to 1)"),
-        COption("help", "h", "<boolean>", OPT_HELP, "display this help screen"),
-    };
-    static size_t nOpts = sizeof(opts) / sizeof(COption);
-    for (size_t i = 0; i < nOpts; i++) {
-        bool show = false;
-        show |= (i == 0 && isEnabled(OPT_FMT));
-        show |= (i == 1 && isEnabled(OPT_VERBOSE));
-        show |= (i == 2 && isEnabled(OPT_HELP));
-        if (show) {
-            COption* param = &opts[i];
-            if (isPublic(opts[i])) {
-                widths[0] = max(widths[0], param->getHotKey().length());
-                widths[1] = max(widths[1], param->getLongKey().length());
-                widths[2] = max(widths[2], param->getDescription().length());
-            }
-            extra << param->oneDescription(widths);
-        }
-    }
+// //---------------------------------------------------------------------------------------------------
+// static COption opts[] = {
+//     COption("fmt", "x", "enum[none|json*|txt|csv]", OPT_FLAG, "export format"),
+//     COption("verbose", "v", "<uint>", OPT_VERBOSE, "set verbose level (optional level defaults to 1)"),
+//     COption("help", "h", "<boolean>", OPT_HELP, "display this help screen"),
+// };
+// static size_t nOpts = sizeof(opts) / sizeof(COption);
+// for (size_t i = 0; i < nOpts; i++) {
+//     bool show = false;
+//     show |= (i == 0 && isEnabled(OPT_FMT));
+//     show |= (i == 1 && isEnabled(OPT_VERBOSE));
+//     show |= (i == 2 && isEnabled(OPT_HELP));
+//     if (show) {
+//         COption* param = &opts[i];
+//         if (isPublic(opts[i])) {
+//             widths[0] = max(widths[0], param->getHotKey().length());
+//             widths[1] = max(widths[1], param->getLongKey().length());
+//             widths[2] = max(widths[2], param->getDescription().length());
+//         }
+//         extra << param->oneDescription(widths);
+//     }
+// }
 
-    COptionArray positionals;
-    get_positionals(positionals);
-    if (positionals.size()) {
-        os << endl << "Arguments:" << endl;
-        for (auto option : positionals) {
-            string_q req = (option.is_required ? " (required)" : "");
-            os << "  " << option.longName << " - " << option.description << req << endl;
-        }
-    }
-    os << endl << "Flags:" << endl;
+// COptionArray positionals;
+// get_positionals(positionals);
+// if (positionals.size()) {
+//     os << endl << "Arguments:" << endl;
+//     for (auto option : positionals) {
+//         string_q req = (option.is_required ? " (required)" : "");
+//         os << "  " << option.longName << " - " << option.description << req << endl;
+//     }
+// }
+// os << endl << "Flags:" << endl;
 
-    for (auto option : parameters) {
-        if (!option.is_visible) {
-            if (!option.is_deprecated && !option.longName.empty()) {
-                os << option.oneDescription(widths);
-            }
-        } else if (isPublic(option)) {
-            os << option.oneDescription(widths);
-        }
-    }
+// for (auto option : parameters) {
+//     if (!option.is_visible) {
+//         if (!option.is_deprecated && !option.longName.empty()) {
+//             os << option.oneDescription(widths);
+//         }
+//     } else if (isPublic(option)) {
+//         os << option.oneDescription(widths);
+//     }
+// }
 
-    if (!hidden.str().empty() && (isTestMode() || verbose > 1)) {
-        os << endl;
-        os << "    #### Hidden options" << endl;
-        os << hidden.str();
-        os << "    #### Hidden options" << endl;
-        os << endl;
-    }
+// if (!hidden.str().empty() && (isTestMode() || verbose > 1)) {
+//     os << endl;
+//     os << "    #### Hidden options" << endl;
+//     os << hidden.str();
+//     os << "    #### Hidden options" << endl;
+//     os << endl;
+// }
 
-    os << extra.str();
-    os << endl;
-    if (isEnabled(OPT_FMT) || isEnabled(OPT_VERBOSE) || isEnabled(OPT_HELP))
-        os << "Global Flags:\n";
-    os << (isEnabled(OPT_FMT) ? "  -x, --fmt string     export format, one of [none|json*|txt|csv]\n" : "");
-    os << (isEnabled(OPT_VERBOSE) ? "  -v, --verbose uint   set verbose level (optional level defaults to 1)\n" : "");
-    os << (isEnabled(OPT_HELP) ? "  -h, --help           display this help screen\n" : "");
+// os << extra.str();
+// os << endl;
+// if (isEnabled(OPT_FMT) || isEnabled(OPT_VERBOSE) || isEnabled(OPT_HELP))
+//     os << "Global Flags:\n";
+// os << (isEnabled(OPT_FMT) ? "  -x, --fmt string     export format, one of [none|json*|txt|csv]\n" : "");
+// os << (isEnabled(OPT_VERBOSE) ? "  -v, --verbose uint   set verbose level (optional level defaults to 1)\n" :
+// ""); os << (isEnabled(OPT_HELP) ? "  -h, --help           display this help screen\n" : "");
 
-    return os.str();
-}
+// return os.str();
+// }
 
-//--------------------------------------------------------------------------------
-string_q COptionsBase::get_notes(void) const {
-    if (!notes.size())
-        return "";
+// //--------------------------------------------------------------------------------
+// string_q COptionsBase::get_notes(void) const {
+//     if (!notes.size())
+//         return "";
 
-    ostringstream os;
-    if (verbose || isTestMode()) {
-        os << endl << "Notes:" << endl;
-        os << format_notes(notes);
-        os << endl;
-    }
-    return os.str();
-}
+//     ostringstream os;
+//     if (verbose || isTestMode()) {
+//         os << endl << "Notes:" << endl;
+//         os << format_notes(notes);
+//         os << endl;
+//     }
+//     return os.str();
+// }
 
-//--------------------------------------------------------------------------------
-string_q COptionsBase::get_configs(void) const {
-    if (!configs.size())
-        return "";
+// //--------------------------------------------------------------------------------
+// string_q COptionsBase::get_configs(void) const {
+//     if (!configs.size())
+//         return "";
+//
+//     ostringstream os;
+//     if (verbose) {
+//         if (notes.size() == 0)
+//             os << endl;
+//         os << "Configurable Items:" << endl;
+//         os << format_notes(configs);
+//         os << endl;
+//     }
+//
+//     return os.str();
+// }
 
-    ostringstream os;
-    if (verbose) {
-        if (notes.size() == 0)
-            os << endl;
-        os << "Configurable Items:" << endl;
-        os << format_notes(configs);
-        os << endl;
-    }
-
-    return os.str();
-}
-
-//--------------------------------------------------------------------------------
-string_q COptionsBase::get_version(void) const {
-    return "";
-}
+// //--------------------------------------------------------------------------------
+// string_q COptionsBase::get_version(void) const {
+//     return "";
+// }
 
 //--------------------------------------------------------------------------------
 string_q COptionsBase::get_errmsg(const string_q& errMsgIn) const {
@@ -202,7 +203,7 @@ string_q COptionsBase::get_errmsg(const string_q& errMsgIn) const {
     return os.str();
 }
 
-//--------------------------------------------------------------------------------
+// //--------------------------------------------------------------------------------
 string_q clean_positionals(const string_q& progName, const string_q& strIn) {
     if (contains(strIn, "<")) {
         ostringstream os;
@@ -255,56 +256,56 @@ string_q clean_positionals(const string_q& progName, const string_q& strIn) {
 }
 
 //--------------------------------------------------------------------------------
-string_q COptionsBase::get_positionals(COptionArray& pos) const {
-    ostringstream os;
-    for (auto option : parameters) {
-        if (option.is_positional) {
-            pos.push_back(option);
-            if (!os.str().empty())
-                os << " ";
-            string_q str = clean_positionals(getProgName(), option.longName);
-            if (!option.is_required) {
-                replace(str, "<mode> [mode...]", "[mode...]");
-                replace(str, "<term> [term...]", "[term...]");
-            }
-            os << str;
-        }
-    }
-    string_q ret = os.str();
-    replace(ret, "&lt;address&gt; [address...] &lt;block&gt; [block...]", "&lt;address&gt; [address...] [block...]");
-    replace(ret, "<address> [address...] <block> [block...]", "<address> [address...] [block...]");
-    replace(ret, "<address> [address...] topics fourbytes", "<address> [address...] [topics] [fourbytes]");
-    replace(ret, "&lt;address&gt; [address...] topics fourbytes", "&lt;address&gt; [address...] [topics] [fourbytes]");
-    return ret;
-}
+// string_q COptionsBase::get_positionals(COptionArray& pos) const {
+//     ostringstream os;
+//     for (auto option : parameters) {
+//         if (option.is_positional) {
+//             pos.push_back(option);
+//             if (!os.str().empty())
+//                 os << " ";
+//             string_q str = clean_positionals(getProgName(), option.longName);
+//             if (!option.is_required) {
+//                 replace(str, "<mode> [mode...]", "[mode...]");
+//                 replace(str, "<term> [term...]", "[term...]");
+//             }
+//             os << str;
+//         }
+//     }
+//     string_q ret = os.str();
+//     replace(ret, "&lt;address&gt; [address...] &lt;block&gt; [block...]", "&lt;address&gt; [address...] [block...]");
+//     replace(ret, "<address> [address...] <block> [block...]", "<address> [address...] [block...]");
+//     replace(ret, "<address> [address...] topics fourbytes", "<address> [address...] [topics] [fourbytes]");
+//     replace(ret, "&lt;address&gt; [address...] topics fourbytes", "&lt;address&gt; [address...] [topics]
+//     [fourbytes]"); return ret;
+// }
 
 //--------------------------------------------------------------------------------
-string_q COptionsBase::get_options(void) const {
-    ostringstream shorts;
-    for (const auto& option : parameters) {
-        if (!option.is_positional && (!option.is_visible || option.is_deprecated)) {
-            // not an option
-        } else if (!option.is_positional && !option.hotKey.empty()) {
-            shorts << option.hotKey << "|";
-        }
-    }
-    if (isEnabled(OPT_VERBOSE))
-        shorts << "-v|";
-    if (isEnabled(OPT_HELP))
-        shorts << "-h";
-    shorts.str("");
-    shorts.clear();
-    shorts << "flags";
+// string_q COptionsBase::get_options(void) const {
+//     ostringstream shorts;
+//     // for (const auto& option : parameters) {
+//     //     if (!option.is_positional && (!option.is_visible || option.is_deprecated)) {
+//     //         // not an option
+//     //     } else if (!option.is_positional && !option.hotKey.empty()) {
+//     //         shorts << option.hotKey << "|";
+//     //     }
+//     // }
+//     // if (isEnabled(OPT_VERBOSE))
+//     //     shorts << "-v|";
+//     // if (isEnabled(OPT_HELP))
+//     //     shorts << "-h";
+//     // shorts.str("");
+//     // shorts.clear();
+//     shorts << "flags";
 
-    ostringstream os;
-    if (!shorts.str().empty())
-        os << "[" << shorts.str() << "] ";
+//     ostringstream os;
+//     if (!shorts.str().empty())
+//         os << "[" << shorts.str() << "] ";
 
-    COptionArray unused;
-    os << get_positionals(unused);
+//     // COptionArray unused;
+//     // os << get_positionals(unused);
 
-    return trim(os.str());
-}
+//     return trim(os.str());
+// }
 
 //--------------------------------------------------------------------------------
 string_q colorize(const string_q& strIn) {

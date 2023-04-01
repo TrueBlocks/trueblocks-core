@@ -1,4 +1,4 @@
-config?modes=show&module=names&output=output_test_file
+status?mode=names&output=output_test_file
 {
   "errors": [
     "The --output option is not available in Api Mode."
