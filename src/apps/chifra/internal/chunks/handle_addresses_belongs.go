@@ -19,9 +19,9 @@ import (
 func (opts *ChunksOptions) HandleIndexBelongs(blockNums []uint64) error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-		showAddressesBelongs := func(walker *index.IndexWalker, path string, first bool) (bool, error) {
+		showAddressesBelongs := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
 			if path != cache.ToBloomPath(path) {
-				return false, fmt.Errorf("should not happen in showFinalizedStats")
+				return false, fmt.Errorf("should not happen in showAddressesBelongs")
 			}
 
 			path = cache.ToIndexPath(path)
@@ -65,7 +65,7 @@ func (opts *ChunksOptions) HandleIndexBelongs(blockNums []uint64) error {
 			return true, nil
 		}
 
-		walker := index.NewIndexWalker(
+		walker := index.NewCacheWalker(
 			opts.Globals.Chain,
 			opts.Globals.TestMode,
 			10000, /* maxTests */

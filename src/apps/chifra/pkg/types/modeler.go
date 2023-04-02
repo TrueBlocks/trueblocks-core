@@ -19,7 +19,6 @@ type Model struct {
 
 type RawModeler interface{}
 
-// TODO: BOGUS - The auto code generation should check that all auto generated fields are included here
 type RawData interface {
 	RawBlock | RawTransaction | RawReceipt | RawLog |
 		RawTrace | RawTraceAction | RawTraceResult |

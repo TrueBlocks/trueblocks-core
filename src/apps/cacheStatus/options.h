@@ -84,6 +84,3 @@ class CItemCounter : public CCache {
     CItemCounter(void) : CCache() {
     }
 };
-
-extern bool countFiles(const string_q& path, void* data);
-extern bool countFilesInCache(const string_q& path, void* data);

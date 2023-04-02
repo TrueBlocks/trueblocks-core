@@ -17,7 +17,6 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-extern bool isRunning(const string_q& prog);
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
@@ -180,7 +179,7 @@ void COptions::Init(void) {
         status.clientIds = "chainId: " + uint_2_Str(meta.chainId) + " networkId: " + uint_2_Str(meta.networkId);
     }
     status.trueblocksVersion = getVersionStr();
-    status.isScraping = isTestMode() ? false : (isRunning("chifra scrape") || isRunning("blockScrape"));
+    status.isScraping = false;  // isTestMode() ? false : (isRunning("chifra scrape") || isRunning("blockScrape"));
     status.isTesting = isTestMode();
     status.isApi = isApiMode();
     status.isArchive = isArchiveNode();
@@ -228,77 +227,4 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//---------------------------------------------------------------------------
-bool countFilesInCache(const string_q& path, void* data) {
-    CChainCache* counter = reinterpret_cast<CChainCache*>(data);
-    if (endsWith(path, '/')) {
-        if (contains(path, "/0")) {
-            uint64_t d = countOf(path, '/') - 1;
-            uint64_t m = counter->max_depth;
-            if (d == m) {
-                if (isTestMode()) {
-                    counter->items.push_back("Testing/00/00/00");
-                    counter->items.push_back("Testing/00/01/00");
-                    return false;
-                } else {
-                    counter->items.push_back(substitute(path, counter->path, ""));
-                }
-            }
-            if (!isTestMode()) {
-                counter->noteFolder(path);
-            }
-        }
-        return forEveryFileInFolder(path + "*", countFilesInCache, data);
-
-    } else {
-        if (!isTestMode())
-            counter->noteFile(path);
-        if (isTestMode()) {
-            counter->items.push_back("Testing/00/00/00/file1.bin");
-            counter->items.push_back("Testing/00/01/00/file2.bin");
-            return false;
-
-        } else if (counter->max_depth == countOf(path, '/')) {
-            counter->items.push_back(substitute(path, counter->path, ""));
-        }
-    }
-    return !shouldQuit();
-}
-
-//---------------------------------------------------------------------------
-bool countFiles(const string_q& path, void* data) {
-    CCache* counter = reinterpret_cast<CCache*>(data);
-    if (endsWith(path, '/')) {
-        if (!isTestMode() && !contains(path, "monitors/staging"))
-            counter->noteFolder(path);
-        return forEveryFileInFolder(path + "*", countFiles, data);
-
-    } else if (endsWith(path, ".bin") || endsWith(path, ".json")) {
-        if (!isTestMode())
-            counter->noteFile(path);
-    }
-    return !shouldQuit();
-}
-
-//----------------------------------------------------------------------------
-bool isRunning(const string_q& progName) {
-    string_q cmd = "pgrep -lfa \"" + progName + "\"";
-    string_q result = doCommand(cmd);
-    CStringArray lines;
-    explode(lines, result, '\n');
-    result = "";
-    for (auto line : lines) {
-        if (!contains(line, "sh -c")) {
-            // each line is of form: 'pid program options'. Skip over pid
-            nextTokenClear(line, ' ');
-            if (startsWith(line, progName)) {
-                result += line + "\n";
-            }
-        }
-    }
-    if (isTestMode())
-        LOG4("\n", cmd, "\n", result, " ", !result.empty());
-    return contains(result, progName);
 }

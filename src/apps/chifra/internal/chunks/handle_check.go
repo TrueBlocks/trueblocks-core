@@ -9,7 +9,6 @@ import (
 	"errors"
 	"fmt"
 	"sort"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
@@ -28,16 +27,16 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	opts.Globals.Format = "json"
 
 	maxTestItems := 10
-	filenameChan := make(chan cache.IndexFileInfo)
+	filenameChan := make(chan cache.CacheFileInfo)
 
 	var nRoutines int = 1
-	go cache.WalkIndexFolder(opts.Globals.Chain, cache.Index_Bloom, filenameChan)
+	go cache.WalkCacheFolder(opts.Globals.Chain, cache.Index_Bloom, nil, filenameChan)
 
 	fileNames := []string{}
 	for result := range filenameChan {
 		switch result.Type {
 		case cache.Index_Bloom:
-			skip := (opts.Globals.TestMode && len(fileNames) > maxTestItems) || !strings.HasSuffix(result.Path, ".bloom")
+			skip := (opts.Globals.TestMode && len(fileNames) > maxTestItems) || !cache.IsCacheType(result.Path, cache.Index_Bloom)
 			if !skip {
 				hit := false
 				for _, block := range blockNums {

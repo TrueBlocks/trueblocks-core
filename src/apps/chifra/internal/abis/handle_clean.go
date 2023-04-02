@@ -29,7 +29,7 @@ func (opts *AbisOptions) HandleClean() error {
 		// for result := range filenameChan {
 		// 	switch result.Type {
 		// 	case cache.Cache_Abis:
-		// 		skip := !strings.HasSuffix(result.Path, ".json")
+		// 		skip := !cache.IsCacheType(result.Path, cache.Cache_Abis)
 		// 		if !skip {
 		// 			if file.FileSize(result.Path) == 0 {
 		// 				logger.Info("Removing empty abi: "+strings.Replace(result.Path, config.GetPathToCache(opts.Globals.Chain)+"abis/", "", -1), file.FileSize(result.Path))
