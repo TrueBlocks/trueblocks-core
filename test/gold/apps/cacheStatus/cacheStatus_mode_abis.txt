@@ -1,6 +1,7 @@
-chifra status  abis --verbose
-TEST[DATE|TIME] Mode:  abis
+chifra status  abis --verbose --log_level 2
+TEST[DATE|TIME] Modes:  [abis]
 TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] LogLevel:  2
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",

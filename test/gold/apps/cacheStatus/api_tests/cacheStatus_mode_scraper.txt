@@ -1,4 +1,4 @@
-status?mode=index&verbose
+status?modes=index&verbose
 {
   "data": [
     {

@@ -1,6 +1,5 @@
-chifra status  caches --types slurps --verbose
-TEST[DATE|TIME] Mode:  caches
-TEST[DATE|TIME] Types:  [slurps]
+chifra status  slurps --verbose
+TEST[DATE|TIME] Modes:  [slurps]
 TEST[DATE|TIME] Verbose:  true
 {
   "clientVersion": "Client version",

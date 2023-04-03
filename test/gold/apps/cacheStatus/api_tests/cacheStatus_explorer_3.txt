@@ -1,4 +1,4 @@
-status?mode=index&fmt=json&verbose
+status?modes=index&fmt=json&verbose&logLevel=2
 {
   "data": [
     {

@@ -20,8 +20,7 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("mode", "", "enum[index|monitors|names|abis|caches|some*|all]", OPT_POSITIONAL, "the (optional) name of the binary cache to report on, terse otherwise"),  // NOLINT
-    COption("types", "t", "list<enum[blocks|txs|traces|slurps|all*]>", OPT_FLAG, "for caches mode only, which type(s) of cache to report"),  // NOLINT
+    COption("modes", "", "list<enum[index|monitors|names|abis|slurps|blocks|txs|traces|some*|all]>", OPT_POSITIONAL, "the (optional) name of the binary cache to report on, terse otherwise"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Report on the state of the internal binary caches."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -34,7 +33,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
-    CStringArray types;
+    CStringArray modes;
     // END_CODE_LOCAL_INIT
 
     Init();
@@ -43,14 +42,6 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (startsWith(arg, "-t:") || startsWith(arg, "--types:")) {
-            string_q types_tmp;
-            if (!confirmEnum("types", types_tmp, arg))
-                return false;
-            types.push_back(types_tmp);
-        } else if (arg == "-t" || arg == "--types") {
-            return flag_required("types");
-
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -58,10 +49,10 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else {
-            if (!mode.empty())
-                return usage("Please specify only one mode.");
-            if (!confirmEnum("mode", mode, arg))
+            string_q modes_tmp;
+            if (!confirmEnum("modes", modes_tmp, arg))
                 return false;
+            modes.push_back(modes_tmp);
 
             // END_CODE_AUTO
         }
@@ -86,29 +77,25 @@ bool COptions::parseArguments(string_q& command) {
     establishIndexFolders();
     establishCacheFolders();
 
+    for (auto m : modes) {
+        mode += (m + "|");
+    }
     origMode = mode;
 
     if (mode.empty() || contains(mode, "some")) {
-        mode = "index|monitors|names|slurps";
+        mode = "index|monitors|names|abis|slurps";
 
     } else if (contains(mode, "all")) {
-        mode = "index|monitors|names|abis|caches";
-        types.push_back("all");
+        mode = "index|monitors|names|abis|slurps|blocks|txs|traces";
     }
-
     mode = "|" + trim(mode, '|') + "|";
 
-    if (contains(mode, "|caches")) {
-        replaceAll(mode, "|caches", "");
-        ASSERT(endsWith(mode, '|'));
-        bool hasAll = false;
-        for (auto t : types) {
-            hasAll |= (t == "all");
-            if (t != "all")
-                mode += (t + "|");
-        }
-        mode += (hasAll ? "blocks|txs|traces|slurps|" : "");
-    }
+    HIDE_FIELD(CAbiCache, "items");
+    HIDE_FIELD(CChainCache, "items");
+    HIDE_FIELD(CIndexCache, "items");
+    HIDE_FIELD(CMonitorCache, "items");
+    HIDE_FIELD(CNameCache, "items");
+    HIDE_FIELD(CSlurpCache, "items");
 
     blknum_t first_block = 0;
     blknum_t last_block = NOPOS;
@@ -117,13 +104,47 @@ bool COptions::parseArguments(string_q& command) {
         last_block = 2200000;
     }
 
-    if (mode == "monitors" || mode == "some" || mode == "all") {
-        SHOW_FIELD(CMonitorCache, "items");
-    }
-    if (mode == "index" || mode == "some" || mode == "all") {
-        SHOW_FIELD(CIndexCache, "items");
-        first_block = 0;
-        last_block = NOPOS;
+    for (auto m : modes) {
+        if (m == "all") {
+            SHOW_FIELD(CAbiCache, "items");
+            SHOW_FIELD(CChainCache, "items");
+            SHOW_FIELD(CIndexCache, "items");
+            SHOW_FIELD(CMonitorCache, "items");
+            SHOW_FIELD(CNameCache, "items");
+            SHOW_FIELD(CSlurpCache, "items");
+            SHOW_FIELD(CMonitorCacheItem, "deleted");
+            first_block = 0;
+            last_block = NOPOS;
+        } else if (m == "some") {
+            SHOW_FIELD(CIndexCache, "items");
+            SHOW_FIELD(CMonitorCache, "items");
+            SHOW_FIELD(CNameCache, "items");
+            SHOW_FIELD(CSlurpCache, "items");
+            SHOW_FIELD(CMonitorCacheItem, "deleted");
+            first_block = 0;
+            last_block = NOPOS;
+        } else if (m == "abis") {
+            SHOW_FIELD(CAbiCache, "items");
+        } else if (m == "caches") {
+            SHOW_FIELD(CChainCache, "items");
+        } else if (m == "index") {
+            SHOW_FIELD(CIndexCache, "items");
+            first_block = 0;
+            last_block = NOPOS;
+        } else if (m == "monitors") {
+            SHOW_FIELD(CMonitorCache, "items");
+            SHOW_FIELD(CMonitorCacheItem, "deleted");
+        } else if (m == "names") {
+            SHOW_FIELD(CNameCache, "items");
+        } else if (m == "slurps") {
+            SHOW_FIELD(CSlurpCache, "items");
+        } else if (m == "blocks") {
+            SHOW_FIELD(CSlurpCache, "items");
+        } else if (m == "txs") {
+            SHOW_FIELD(CSlurpCache, "items");
+        } else if (m == "traces") {
+            SHOW_FIELD(CSlurpCache, "items");
+        }
     }
     scanRange = make_pair(first_block, last_block);
 
@@ -218,6 +239,7 @@ COptions::COptions(void) {
 
     // BEG_CODE_NOTES
     // clang-format off
+    notes.push_back("The `some` mode includes index, monitors, names, slurps, and abis.");
     // clang-format on
     // END_CODE_NOTES
 

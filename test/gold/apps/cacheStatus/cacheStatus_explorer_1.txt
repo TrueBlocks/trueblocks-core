@@ -50,11 +50,34 @@ TEST[DATE|TIME] Format:  json
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "isValid": true
+      "isValid": true,
+      "items": [
+        {
+          "deleted": false,
+          "nApps": 0,
+          "firstApp": 0,
+          "latestApp": 0,
+          "tags": "--tags--",
+          "address": "---address---",
+          "name": "--name--",
+          "symbol": "--symbol--",
+          "source": "--source--",
+          "decimals": 0,
+          "petname": "--petname--"
+        }
+      ]
     },
     {
       "type": "CNameCache",
       "path": "namesPath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "isValid": true
+    },
+    {
+      "type": "CAbiCache",
+      "path": "abisPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,

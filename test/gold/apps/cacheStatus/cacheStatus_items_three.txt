@@ -1,8 +1,6 @@
-chifra config  --details abis caches monitors --types slurps
-TEST[DATE|TIME] Modes:  [abis caches monitors]
-TEST[DATE|TIME] Details:  true
-TEST[DATE|TIME] Types:  [slurps]
-TEST[DATE|TIME] Depth:  0
+chifra status  abis monitors slurps --log_level 2
+TEST[DATE|TIME] Modes:  [abis monitors slurps]
+TEST[DATE|TIME] LogLevel:  2
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",
@@ -28,7 +26,9 @@ TEST[DATE|TIME] Depth:  0
           "address": "---address---",
           "name": "--name--",
           "symbol": "--symbol--",
-          "source": "--source--"
+          "source": "--source--",
+          "decimals": 0,
+          "petname": "--petname--"
         }
       ],
       "type": "CMonitorCache",
@@ -50,7 +50,9 @@ TEST[DATE|TIME] Depth:  0
           "latestApp": 0,
           "sizeInBytes": 36963,
           "address": "---address---",
-          "name": "--name--"
+          "name": "--name--",
+          "decimals": 0,
+          "petname": "--petname--"
         }
       ],
       "type": "CAbiCache",

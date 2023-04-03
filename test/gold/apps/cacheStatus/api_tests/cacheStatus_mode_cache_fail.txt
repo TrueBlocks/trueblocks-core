@@ -1,6 +1,6 @@
-status?mode=caches&types=junk&verbose
+status?modes=junk&verbose
 {
   "errors": [
-    "The --types option (junk) must be one of [ blocks | txs | traces | slurps | all ]"
+    "The mode option (junk) must be one of [ index | monitors | names | abis | slurps | blocks | txs | traces | some | all ]"
   ]
 }

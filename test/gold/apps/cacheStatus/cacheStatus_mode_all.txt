@@ -1,5 +1,5 @@
 chifra status  all
-TEST[DATE|TIME] Mode:  all
+TEST[DATE|TIME] Modes:  [all]
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",
@@ -35,6 +35,21 @@ TEST[DATE|TIME] Mode:  all
   ],
   "caches": [
     {
+      "items": [
+        {
+          "type": "CIndexCacheItem",
+          "nAddrs": 8893,
+          "nApps": 8893,
+          "firstApp": 0,
+          "latestApp": 0,
+          "firstTs": 1438269975,
+          "latestTs": 1438269975,
+          "filename": "/--index-path--/000000000-000000000.bin",
+          "fileDate": "1700-01-01 00:00:01 UTC",
+          "indexSizeBytes": 320192,
+          "bloomSizeBytes": 131114
+        }
+      ],
       "type": "CIndexCache",
       "path": "indexPath",
       "nFiles": 0,
@@ -43,9 +58,20 @@ TEST[DATE|TIME] Mode:  all
       "isValid": true
     },
     {
-      "addrs": [
-        "---address---",
-        "---address---"
+      "items": [
+        {
+          "deleted": false,
+          "nApps": 0,
+          "firstApp": 0,
+          "latestApp": 0,
+          "tags": "--tags--",
+          "address": "---address---",
+          "name": "--name--",
+          "symbol": "--symbol--",
+          "source": "--source--",
+          "decimals": 0,
+          "petname": "--petname--"
+        }
       ],
       "type": "CMonitorCache",
       "path": "monitorsPath",

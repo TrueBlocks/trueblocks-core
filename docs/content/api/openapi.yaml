@@ -1590,22 +1590,27 @@ paths:
       description: Report on the state of the internal binary caches. Corresponds to the <a href="/chifra/admin/#chifra-status">chifra status</a> command line.
       operationId: admin-status
       parameters:
-        - name: mode
+        - name: modes
           description: the (optional) name of the binary cache to report on, terse otherwise
           required: false
           style: form
           in: query
           explode: true
           schema:
-            type: string
-            enum:
-              - index
-              - monitors
-              - names
-              - abis
-              - caches
-              - some
-              - all
+            type: array
+            items:
+              type: string
+              enum:
+                - index
+                - monitors
+                - names
+                - abis
+                - slurps
+                - blocks
+                - txs
+                - traces
+                - some
+                - all
       responses:
         "200":
           description: returns the requested data

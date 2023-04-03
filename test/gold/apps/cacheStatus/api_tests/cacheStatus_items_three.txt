@@ -1,4 +1,4 @@
-status?details&modes=abis%20caches%20monitors&types=slurps
+status?modes=abis&modes=monitors&modes=slurps&logLevel=2
 {
   "data": [
     {
@@ -34,7 +34,7 @@ status?details&modes=abis%20caches%20monitors&types=slurps
               "symbol": "--symbol--",
               "source": "--source--",
               "decimals": 0,
-              "description": "",
+              "petname": "--petname--",
               "isCustom": false,
               "isPrefund": false,
               "isContract": false,
@@ -66,7 +66,7 @@ status?details&modes=abis%20caches%20monitors&types=slurps
               "symbol": "",
               "source": "",
               "decimals": 0,
-              "description": "",
+              "petname": "--petname--",
               "isCustom": false,
               "isPrefund": false,
               "isContract": false,
@@ -92,7 +92,6 @@ status?details&modes=abis%20caches%20monitors&types=slurps
           "isValid": true
         }
       ],
-      "chains": [],
       "date": "--date--"
     }
   ],

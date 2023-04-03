@@ -1,6 +1,5 @@
-chifra status  caches --types traces
-TEST[DATE|TIME] Mode:  caches
-TEST[DATE|TIME] Types:  [traces]
+chifra status  traces
+TEST[DATE|TIME] Modes:  [traces]
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",

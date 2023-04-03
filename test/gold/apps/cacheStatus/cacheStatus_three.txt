@@ -1,6 +1,5 @@
-chifra status  abis caches monitors --types slurps --verbose
-TEST[DATE|TIME] Mode:  monitors
-TEST[DATE|TIME] Types:  [slurps]
+chifra status  abis monitors slurps --verbose
+TEST[DATE|TIME] Modes:  [abis monitors slurps]
 TEST[DATE|TIME] Verbose:  true
 {
   "clientVersion": "Client version",

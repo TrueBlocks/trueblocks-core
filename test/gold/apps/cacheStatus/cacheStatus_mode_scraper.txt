@@ -1,5 +1,5 @@
 chifra status  index --verbose
-TEST[DATE|TIME] Mode:  index
+TEST[DATE|TIME] Modes:  [index]
 TEST[DATE|TIME] Verbose:  true
 {
   "clientVersion": "Client version",

@@ -35,24 +35,24 @@ var statusCmd = &cobra.Command{
 	}),
 }
 
-const usageStatus = `status <mode> [flags]
+const usageStatus = `status <mode> [mode...] [flags]
 
 Arguments:
-  mode - the (optional) name of the binary cache to report on, terse otherwise
-	One of [ index | monitors | names | abis | caches | some | all ]`
+  modes - the (optional) name of the binary cache to report on, terse otherwise
+	One or more of [ index | monitors | names | abis | slurps | blocks | txs | traces | some | all ]`
 
 const shortStatus = "report on the state of the internal binary caches"
 
 const longStatus = `Purpose:
   Report on the state of the internal binary caches.`
 
-const notesStatus = ``
+const notesStatus = `
+Notes:
+  - The some mode includes index, monitors, names, slurps, and abis.`
 
 func init() {
 	statusCmd.Flags().SortFlags = false
 
-	statusCmd.Flags().StringSliceVarP(&statusPkg.GetOptions().Types, "types", "t", nil, `for caches mode only, which type(s) of cache to report
-One or more of [ blocks | txs | traces | slurps | all ]`)
 	globals.InitGlobals(statusCmd, &statusPkg.GetOptions().Globals)
 
 	statusCmd.SetUsageTemplate(UsageWithNotes(notesStatus))

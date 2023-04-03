@@ -1,4 +1,4 @@
-status?mode=some&verbose
+status?modes=some&verbose
 {
   "data": [
     {
@@ -96,6 +96,7 @@ status?mode=some&verbose
         },
         {
           "addrs": [],
+          "items": [],
           "type": "CNameCache",
           "path": "namesPath",
           "nFiles": 0,
@@ -104,6 +105,16 @@ status?mode=some&verbose
           "isValid": true
         },
         {
+          "type": "CAbiCache",
+          "path": "abisPath",
+          "nFiles": 0,
+          "nFolders": 0,
+          "sizeInBytes": 0,
+          "isValid": true,
+          "items": []
+        },
+        {
+          "items": [],
           "type": "CSlurpCache",
           "path": "slurpsPath",
           "nFiles": 0,

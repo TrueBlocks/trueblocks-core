@@ -24,7 +24,7 @@ extern string_q get_setopts(const CCommandOption& cmd);
 extern string_q get_testlogs(const CCommandOption& cmd);
 extern string_q get_godefaults(const CCommandOption& cmd);
 extern string_q get_copyopts(const CCommandOption& cmd);
-extern string_q get_positionals2(const CCommandOption& cmd);
+extern string_q get_positionals(const CCommandOption& cmd);
 extern string_q get_use(const CCommandOption& cmd);
 extern string_q clean_go_positionals(const string_q& in, bool hasEns);
 extern string_q clean_positionals(const string& progName, const string_q& strIn);
@@ -128,7 +128,7 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     }
     replaceAll(source, "[{TEST_LOGS}]", get_testlogs(p));
     replaceAll(source, "[{DASH_STR}]", get_copyopts(p));
-    replaceAll(source, "[{POSITIONALS}]", get_positionals2(p));
+    replaceAll(source, "[{POSITIONALS}]", get_positionals(p));
     replaceAll(source, "[{GODEFS}]", get_godefaults(p));
     replaceAll(source, "opts.LastBlock != utils.NOPOS", "opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS");
     source = clean_go_positionals(source, hasEns);
@@ -621,21 +621,16 @@ string_q clean_go_positionals(const string_q& in, bool hasEns) {
     return ret;
 }
 
-const char* STR_POSITIONALS1 = "\toptions += \" \" + strings.Join(opts.[{VARIABLE}], \" \")";
-const char* STR_POSITIONALS2 = "\toptions += \" \" + opts.[{VARIABLE}]";
+const char* STR_POSITIONALS = "\toptions += \" \" + strings.Join(opts.[{VARIABLE}], \" \")";
 //---------------------------------------------------------------------------------------------------
-string_q get_positionals2(const CCommandOption& cmd) {
+string_q get_positionals(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.members))
         if (p.option_type == "positional") {
-            if (cmd.api_route == "status") {
-                os << p.Format(STR_POSITIONALS2) << endl;
-            } else {
-                os << p.Format(STR_POSITIONALS1) << endl;
-            }
+            os << p.Format(STR_POSITIONALS) << endl;
         }
     if (os.str().empty())
-        os << substitute(STR_POSITIONALS1, "[{VARIABLE}]", "[]string{}") << endl;
+        os << substitute(STR_POSITIONALS, "[{VARIABLE}]", "[]string{}") << endl;
     return os.str();
 }
 

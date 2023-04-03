@@ -20,8 +20,7 @@ import (
 
 // StatusOptions provides all command options for the chifra status command.
 type StatusOptions struct {
-	Mode    string                `json:"mode,omitempty"`    // The (optional) name of the binary cache to report on, terse otherwise
-	Types   []string              `json:"types,omitempty"`   // For caches mode only, which type(s) of cache to report
+	Modes   []string              `json:"modes,omitempty"`   // The (optional) name of the binary cache to report on, terse otherwise
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 	// EXISTING_CODE
@@ -32,8 +31,7 @@ var defaultStatusOptions = StatusOptions{}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *StatusOptions) testLog() {
-	logger.TestLog(len(opts.Mode) > 0, "Mode: ", opts.Mode)
-	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
+	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
 	opts.Globals.TestLog()
 }
 
@@ -54,10 +52,7 @@ func (opts *StatusOptions) getEnvStr() []string {
 // toCmdLine converts the option to a command line for calling out to the system.
 func (opts *StatusOptions) toCmdLine() string {
 	options := ""
-	for _, types := range opts.Types {
-		options += " --types " + types
-	}
-	options += " " + opts.Mode
+	options += " " + strings.Join(opts.Modes, " ")
 	// EXISTING_CODE
 	// EXISTING_CODE
 	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
@@ -70,12 +65,10 @@ func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions
 	opts := &copy
 	for key, value := range r.URL.Query() {
 		switch key {
-		case "mode":
-			opts.Mode = value[0]
-		case "types":
+		case "modes":
 			for _, val := range value {
 				s := strings.Split(val, " ") // may contain space separated items
-				opts.Types = append(opts.Types, s...)
+				opts.Modes = append(opts.Modes, s...)
 			}
 		default:
 			if !globals.IsGlobalOption(key) {
@@ -98,9 +91,7 @@ func statusFinishParse(args []string) *StatusOptions {
 	defFmt := "txt"
 	// EXISTING_CODE
 	defFmt = ""
-	for _, arg := range args {
-		opts.Mode = arg
-	}
+	opts.Modes = append(opts.Modes, args...)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

@@ -1,4 +1,4 @@
-status?mode=abis&verbose
+status?modes=abis&verbose&logLevel=2
 {
   "data": [
     {

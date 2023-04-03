@@ -1,6 +1,5 @@
-chifra status  caches --types all
-TEST[DATE|TIME] Mode:  caches
-TEST[DATE|TIME] Types:  [all]
+chifra status  all
+TEST[DATE|TIME] Modes:  [all]
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",
@@ -14,7 +13,89 @@ TEST[DATE|TIME] Types:  [all]
   "isArchive": true,
   "isTracing": true,
   "hasEskey": true,
+  "chains": [
+    {
+      "chain": "mainnet",
+      "chainId": 1,
+      "symbol": "ETH",
+      "rpcProvider": "--provider-mainnet--",
+      "apiProvider": "--provider-mainnet--",
+      "remoteExplorer": "--explorer-mainnet--",
+      "localExplorer": "--explorer-mainnet--"
+    },
+    {
+      "chain": "gnosis",
+      "chainId": 100,
+      "symbol": "XDAI",
+      "rpcProvider": "--provider-gnosis--",
+      "apiProvider": "--provider-gnosis--",
+      "remoteExplorer": "--explorer-gnosis--",
+      "localExplorer": "--explorer-gnosis--"
+    }
+  ],
   "caches": [
+    {
+      "items": [
+        {
+          "type": "CIndexCacheItem",
+          "nAddrs": 8893,
+          "nApps": 8893,
+          "firstApp": 0,
+          "latestApp": 0,
+          "firstTs": 1438269975,
+          "latestTs": 1438269975,
+          "filename": "/--index-path--/000000000-000000000.bin",
+          "fileDate": "1700-01-01 00:00:01 UTC",
+          "indexSizeBytes": 320192,
+          "bloomSizeBytes": 131114
+        }
+      ],
+      "type": "CIndexCache",
+      "path": "indexPath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "isValid": true
+    },
+    {
+      "items": [
+        {
+          "deleted": false,
+          "nApps": 0,
+          "firstApp": 0,
+          "latestApp": 0,
+          "tags": "--tags--",
+          "address": "---address---",
+          "name": "--name--",
+          "symbol": "--symbol--",
+          "source": "--source--",
+          "decimals": 0,
+          "petname": "--petname--"
+        }
+      ],
+      "type": "CMonitorCache",
+      "path": "monitorsPath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "isValid": true
+    },
+    {
+      "type": "CNameCache",
+      "path": "namesPath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "isValid": true
+    },
+    {
+      "type": "CAbiCache",
+      "path": "abisPath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "isValid": true
+    },
     {
       "items": [
         "Testing/00/00/00",

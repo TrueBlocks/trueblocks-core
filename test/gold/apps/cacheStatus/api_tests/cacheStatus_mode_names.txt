@@ -1,4 +1,4 @@
-status?mode=names&verbose
+status?modes=names&verbose
 {
   "data": [
     {

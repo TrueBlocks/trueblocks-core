@@ -1,4 +1,4 @@
-status?mode=caches&types=blocks
+status?modes=blocks
 {
   "data": [
     {
@@ -19,16 +19,16 @@ status?mode=caches&types=blocks
       "hasPinkey": false,
       "caches": [
         {
-          "items": [
-            "Testing/00/00/00",
-            "Testing/00/01/00"
-          ],
           "type": "CChainCache",
           "path": "blocksPath",
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "isValid": true
+          "isValid": true,
+          "items": [
+            "Testing/00/00/00",
+            "Testing/00/01/00"
+          ]
         }
       ],
       "date": "--date--"

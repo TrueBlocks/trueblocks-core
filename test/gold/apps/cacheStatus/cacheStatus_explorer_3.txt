@@ -1,6 +1,7 @@
-chifra status  index --fmt json --verbose
-TEST[DATE|TIME] Mode:  index
+chifra status  index --fmt json --verbose --log_level 2
+TEST[DATE|TIME] Modes:  [index]
 TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] LogLevel:  2
 TEST[DATE|TIME] Format:  json
 { "data": [
 {

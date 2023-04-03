@@ -1,5 +1,5 @@
 chifra status  abis
-TEST[DATE|TIME] Mode:  abis
+TEST[DATE|TIME] Modes:  [abis]
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",

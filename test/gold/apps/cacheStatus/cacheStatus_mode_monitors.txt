@@ -1,5 +1,5 @@
 chifra status  monitors --verbose
-TEST[DATE|TIME] Mode:  monitors
+TEST[DATE|TIME] Modes:  [monitors]
 TEST[DATE|TIME] Verbose:  true
 {
   "clientVersion": "Client version",

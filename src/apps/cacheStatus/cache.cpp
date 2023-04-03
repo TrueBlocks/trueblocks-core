@@ -293,6 +293,7 @@ void CCache::registerClass(void) {
     builtIns.push_back(_biCCache);
 
     // EXISTING_CODE
+    SHOW_FIELD(CCache, "items");
     // EXISTING_CODE
 }
 

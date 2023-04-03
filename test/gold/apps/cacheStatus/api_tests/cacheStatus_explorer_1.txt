@@ -44,7 +44,8 @@ status?fmt=json&verbose
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "isValid": true
+          "isValid": true,
+          "items": []
         },
         {
           "addrs": [],
@@ -53,7 +54,29 @@ status?fmt=json&verbose
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "isValid": true
+          "isValid": true,
+          "items": [
+            {
+              "deleted": false,
+              "type": "",
+              "nApps": 0,
+              "firstApp": 0,
+              "latestApp": 0,
+              "sizeInBytes": 0,
+              "tags": "--tags--",
+              "address": "---address---",
+              "name": "--name--",
+              "symbol": "--symbol--",
+              "source": "--source--",
+              "decimals": 0,
+              "petname": "--petname--",
+              "isCustom": false,
+              "isPrefund": false,
+              "isContract": false,
+              "isErc20": false,
+              "isErc721": false
+            }
+          ]
         },
         {
           "addrs": [],
@@ -62,7 +85,17 @@ status?fmt=json&verbose
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "isValid": true
+          "isValid": true,
+          "items": []
+        },
+        {
+          "type": "CAbiCache",
+          "path": "abisPath",
+          "nFiles": 0,
+          "nFolders": 0,
+          "sizeInBytes": 0,
+          "isValid": true,
+          "items": []
         },
         {
           "type": "CSlurpCache",
@@ -70,7 +103,8 @@ status?fmt=json&verbose
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "isValid": true
+          "isValid": true,
+          "items": []
         }
       ],
       "keys": [],

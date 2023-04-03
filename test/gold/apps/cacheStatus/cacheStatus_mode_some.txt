@@ -1,5 +1,5 @@
 chifra status  some --verbose
-TEST[DATE|TIME] Mode:  some
+TEST[DATE|TIME] Modes:  [some]
 TEST[DATE|TIME] Verbose:  true
 {
   "clientVersion": "Client version",
@@ -84,6 +84,14 @@ TEST[DATE|TIME] Verbose:  true
     {
       "type": "CNameCache",
       "path": "namesPath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "isValid": true
+    },
+    {
+      "type": "CAbiCache",
+      "path": "abisPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,

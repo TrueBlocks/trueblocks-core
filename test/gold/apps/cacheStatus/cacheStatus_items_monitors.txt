@@ -1,7 +1,5 @@
-chifra config  --details monitors
+chifra status  monitors
 TEST[DATE|TIME] Modes:  [monitors]
-TEST[DATE|TIME] Details:  true
-TEST[DATE|TIME] Depth:  0
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",
@@ -27,7 +25,9 @@ TEST[DATE|TIME] Depth:  0
           "address": "---address---",
           "name": "--name--",
           "symbol": "--symbol--",
-          "source": "--source--"
+          "source": "--source--",
+          "decimals": 0,
+          "petname": "--petname--"
         }
       ],
       "type": "CMonitorCache",

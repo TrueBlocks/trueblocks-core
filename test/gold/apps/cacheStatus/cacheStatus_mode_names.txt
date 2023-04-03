@@ -1,5 +1,5 @@
 chifra status  names --verbose
-TEST[DATE|TIME] Mode:  names
+TEST[DATE|TIME] Modes:  [names]
 TEST[DATE|TIME] Verbose:  true
 {
   "clientVersion": "Client version",

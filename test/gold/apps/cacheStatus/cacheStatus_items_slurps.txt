@@ -1,6 +1,5 @@
-chifra status  caches --types slurps
-TEST[DATE|TIME] Mode:  caches
-TEST[DATE|TIME] Types:  [slurps]
+chifra status  slurps
+TEST[DATE|TIME] Modes:  [slurps]
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",

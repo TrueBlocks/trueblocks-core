@@ -1,5 +1,5 @@
 chifra status  names --output output_test_file
-TEST[DATE|TIME] Mode:  names
+TEST[DATE|TIME] Modes:  [names]
 TEST[DATE|TIME] OutputFn:  output_test_file
 ----
 Results in ./output_test_file

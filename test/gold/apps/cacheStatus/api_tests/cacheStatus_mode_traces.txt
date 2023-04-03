@@ -1,4 +1,4 @@
-status?mode=caches&types=traces
+status?modes=traces
 {
   "data": [
     {
@@ -19,13 +19,13 @@ status?mode=caches&types=traces
       "hasPinkey": false,
       "caches": [
         {
-          "items": [],
           "type": "CChainCache",
           "path": "tracesPath",
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "isValid": true
+          "isValid": true,
+          "items": []
         }
       ],
       "date": "--date--"

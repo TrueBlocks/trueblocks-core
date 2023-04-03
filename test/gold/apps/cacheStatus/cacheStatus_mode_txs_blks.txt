@@ -1,6 +1,5 @@
-chifra status  caches --types txs --types blocks --verbose
-TEST[DATE|TIME] Mode:  caches
-TEST[DATE|TIME] Types:  [txs blocks]
+chifra status  txs blocks --verbose
+TEST[DATE|TIME] Modes:  [txs blocks]
 TEST[DATE|TIME] Verbose:  true
 {
   "clientVersion": "Client version",
@@ -22,7 +21,11 @@ TEST[DATE|TIME] Verbose:  true
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "isValid": true
+      "isValid": true,
+      "items": [
+        "Testing/00/00/00",
+        "Testing/00/01/00"
+      ]
     },
     {
       "type": "CChainCache",
@@ -30,7 +33,11 @@ TEST[DATE|TIME] Verbose:  true
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "isValid": true
+      "isValid": true,
+      "items": [
+        "Testing/00/00/00",
+        "Testing/00/01/00"
+      ]
     }
   ],
   "date": "--date--"
