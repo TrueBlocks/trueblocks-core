@@ -48,7 +48,7 @@ func (walker *CacheWalker) WalkBloomFilters(blockNums []uint64) error {
 					return nil
 				}
 			}
-		case cache.None:
+		case cache.Cache_NotACache:
 			nRoutines--
 			if nRoutines == 0 {
 				close(filenameChan)
@@ -71,7 +71,7 @@ func (walker *CacheWalker) WalkBloomFilters(blockNums []uint64) error {
 // used the range on the command line instead we'd only have to intersect one range.
 
 func (walker *CacheWalker) shouldDisplay(result cache.CacheFileInfo, cnt int, blockNums []uint64) bool {
-	if !cache.IsCacheType(result.Path, result.Type) {
+	if !cache.IsCacheType(result.Path, result.Type, true /* checkExt */) {
 		return false
 	}
 

@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -36,7 +37,7 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	for result := range filenameChan {
 		switch result.Type {
 		case cache.Index_Bloom:
-			skip := (opts.Globals.TestMode && len(fileNames) > maxTestItems) || !cache.IsCacheType(result.Path, cache.Index_Bloom)
+			skip := (opts.Globals.TestMode && len(fileNames) > maxTestItems) || !cache.IsCacheType(result.Path, cache.Index_Bloom, true /* checkExt */)
 			if !skip {
 				hit := false
 				for _, block := range blockNums {
@@ -50,11 +51,13 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 					fileNames = append(fileNames, result.Path)
 				}
 			}
-		case cache.None:
+		case cache.Cache_NotACache:
 			nRoutines--
 			if nRoutines == 0 {
 				close(filenameChan)
 			}
+		default:
+			logger.Fatal("You may only traverse the bloom folder")
 		}
 	}
 

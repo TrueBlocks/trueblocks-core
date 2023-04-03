@@ -16,22 +16,26 @@ import (
 )
 
 type simpleStatus struct {
-	ClientVersion string `json:"clientVersion"`
-	Version       string `json:"trueblocksVersion"`
-	RPCProvider   string `json:"rpcProvider"`
-	RootConfig    string `json:"rootConfig"`
-	ChainConfig   string `json:"chainConfig"`
-	CachePath     string `json:"cachePath"`
-	IndexPath     string `json:"indexPath"`
-	Progress      string `json:"progress"`
-	IsTesting     bool   `json:"isTesting"`
-	IsArchive     bool   `json:"isArchive"`
-	IsTracing     bool   `json:"isTracing"`
-	HasEsKey      bool   `json:"hasEsKey"`
-	HasPinKey     bool   `json:"hasPinKey"`
-	Chain         string `json:"chain"`
-	ChainId       string `json:"chainId"`
-	NetworkId     string `json:"networkId"`
+	CachePath     string `json:"cachePath,omitempty"`
+	Chain         string `json:"chain,omitempty"`
+	ChainConfig   string `json:"chainConfig,omitempty"`
+	ChainId       string `json:"chainId,omitempty"`
+	ClientVersion string `json:"clientVersion,omitempty"`
+	HasEsKey      bool   `json:"hasEsKey,omitempty"`
+	HasPinKey     bool   `json:"hasPinKey,omitempty"`
+	// TODO: BOGUS - add this it used to be in the old code
+	// Host          string `json:"host,omitempty"`
+	IndexPath string `json:"indexPath,omitempty"`
+	// TODO: BOGUS - add this it used to be in the old code
+	// IsApi         bool   `json:"isApi,omitempty"`
+	IsArchive   bool   `json:"isArchive,omitempty"`
+	IsTesting   bool   `json:"isTesting,omitempty"`
+	IsTracing   bool   `json:"isTracing,omitempty"`
+	NetworkId   string `json:"networkId,omitempty"`
+	Progress    string `json:"progress,omitempty"`
+	RootConfig  string `json:"rootConfig,omitempty"`
+	RPCProvider string `json:"rpcProvider,omitempty"`
+	Version     string `json:"trueblocksVersion,omitempty"`
 }
 
 func (s *simpleStatus) Raw() *types.RawModeler {
@@ -39,37 +43,49 @@ func (s *simpleStatus) Raw() *types.RawModeler {
 }
 
 func (s *simpleStatus) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
+	// isApi := extraOptions != nil && extraOptions["isApi"] == true
+	model := map[string]interface{}{
+		"cachePath":     s.CachePath,
+		"chainConfig":   s.ChainConfig,
+		"clientVersion": s.ClientVersion,
+		"hasEsKey":      s.HasEsKey,
+		"hasPinKey":     s.HasPinKey,
+		// "host":              s.Host,
+		"indexPath": s.IndexPath,
+		// "isApi":             isApi,
+		"isArchive":         s.IsArchive,
+		"isTesting":         s.IsTesting,
+		"isTracing":         s.IsTracing,
+		"rootConfig":        s.RootConfig,
+		"rpcProvider":       s.RPCProvider,
+		"trueblocksVersion": s.Version,
+	}
+
+	order := []string{
+		"cachePath",
+		"chainConfig",
+		"clientVersion",
+		"hasEsKey",
+		"hasPinKey",
+		// "host",
+		"indexPath",
+		// "isApi",
+		"isArchive",
+		"isTesting",
+		"isTracing",
+		"rootConfig",
+		"rpcProvider",
+		"trueblocksVersion",
+	}
+
+	if extraOptions != nil && extraOptions["showProgress"] == true {
+		model["progress"] = s.Progress
+		order = append(order, "progress")
+	}
+
 	return types.Model{
-		Data: map[string]interface{}{
-			"clientVersion":     s.ClientVersion,
-			"trueblocksVersion": s.Version,
-			"rpcProvider":       s.RPCProvider,
-			"rootConfig":        s.RootConfig,
-			"chainConfig":       s.ChainConfig,
-			"cachePath":         s.CachePath,
-			"indexPath":         s.IndexPath,
-			"progress":          s.Progress,
-			"isTesting":         s.IsTesting,
-			"isArchive":         s.IsArchive,
-			"isTracing":         s.IsTracing,
-			"hasEsKey":          s.HasEsKey,
-			"hasPinKey":         s.HasPinKey,
-		},
-		Order: []string{
-			"clientVersion",
-			"trueblocksVersion",
-			"rpcProvider",
-			"rootConfig",
-			"chainConfig",
-			"cachePath",
-			"indexPath",
-			"progress",
-			"isTesting",
-			"isArchive",
-			"isTracing",
-			"hasEsKey",
-			"hasPinKey",
-		},
+		Data:  model,
+		Order: order,
 	}
 }
 

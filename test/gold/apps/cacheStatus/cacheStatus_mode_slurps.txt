@@ -1,27 +1,33 @@
 chifra status  slurps --verbose
 TEST[DATE|TIME] Modes:  [slurps]
 TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Format:  json
+
 {
-  "clientVersion": "Client version",
-  "clientIds": "chainId: 1 networkId: 1",
-  "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-",
-  "rpcProvider": "--providers--",
-  "configPath": "--paths--",
-  "cachePath": "--paths--",
-  "indexPath": "--paths--",
-  "host": "--hostname-- (--username--)",
-  "isTesting": true,
-  "isArchive": true,
-  "isTracing": true,
-  "hasEskey": true,
-  "caches": [
+  "data": [
     {
-      "type": "CSlurpCache",
-      "path": "slurpsPath",
-      "nFiles": 0,
-      "nFolders": 0,
-      "sizeInBytes": 0
+      "cachePath": "--paths--",
+      "caches": [
+        {
+          "cacheName": "slurpsCache",
+          "lastCached": "2015-07-31 23:59:35 +0000 UTC",
+          "nFiles": 48879,
+          "nFolders": 57005,
+          "path": "--paths--",
+          "sizeInBytes": "0xdeadbeef"
+        }
+      ],
+      "chainConfig": "--paths--",
+      "clientVersion": "Client version",
+      "hasEsKey": true,
+      "hasPinKey": false,
+      "indexPath": "--paths--",
+      "isArchive": true,
+      "isTesting": true,
+      "isTracing": true,
+      "rootConfig": "--paths--",
+      "rpcProvider": "--providers--",
+      "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-"
     }
-  ],
-  "date": "--date--"
+  ]
 }

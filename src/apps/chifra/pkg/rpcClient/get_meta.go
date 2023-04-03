@@ -77,7 +77,7 @@ func GetMetaData(chain string, testmode bool) (*MetaData, error) {
 			meta.Ripe = utils.Max(meta.Ripe, result.Range.Last)
 		case cache.Index_Unripe:
 			meta.Unripe = utils.Max(meta.Unripe, result.Range.Last)
-		case cache.None:
+		case cache.Cache_NotACache:
 			nRoutines--
 			if nRoutines == 0 {
 				close(filenameChan)

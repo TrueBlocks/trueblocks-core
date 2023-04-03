@@ -80,12 +80,12 @@ func GetStatusOptions(args []string, g *globals.GlobalOptions) *StatusOptions {
 
 func (opts *StatusOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	// if len(opts.Modes) == 0 {
-	// 	return !opts.Globals.Verbose
-	// } else if len(opts.Modes) == 1 && opts.Modes[0] == "names" {
-	// 	return true
-	// }
-	ported = len(opts.Modes) == 0 && !opts.Globals.Verbose
+	if len(opts.Modes) == 0 {
+		return !opts.Globals.Verbose
+	} else if len(opts.Modes) == 1 && (opts.Modes[0] == "names" || opts.Modes[0] == "slurps") {
+		return true
+	}
+	// ported = len(opts.Modes) == 0 && !opts.Globals.Verbose
 	// EXISTING_CODE
 	return
 }

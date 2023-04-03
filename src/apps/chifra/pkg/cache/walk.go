@@ -19,7 +19,7 @@ func WalkCacheFolder(chain string, cacheType CacheType, regExp *regexp.Regexp, f
 
 func walkFolder(path string, cacheType CacheType, regExp *regexp.Regexp, filenameChan chan<- CacheFileInfo) {
 	defer func() {
-		filenameChan <- CacheFileInfo{Type: None}
+		filenameChan <- CacheFileInfo{Type: Cache_NotACache}
 	}()
 
 	filepath.Walk(path, func(path string, info fs.FileInfo, err error) error {
@@ -30,10 +30,15 @@ func walkFolder(path string, cacheType CacheType, regExp *regexp.Regexp, filenam
 			// fmt.Printf("prevent panic by handling failure accessing a path %q: %v\n", path, err)
 			return err
 		}
-		if !info.IsDir() && (regExp == nil || regExp.MatchString(info.Name())) {
+
+		if info.IsDir() {
+			filenameChan <- CacheFileInfo{Type: cacheType, Path: path, IsDir: true}
+
+		} else if regExp == nil || regExp.MatchString(info.Name()) {
 			rng := base.RangeFromFilename(path)
 			filenameChan <- CacheFileInfo{Type: cacheType, Path: path, Range: rng}
 		}
+
 		return nil
 	})
 }
@@ -42,4 +47,5 @@ type CacheFileInfo struct {
 	Type  CacheType
 	Path  string
 	Range base.FileRange
+	IsDir bool
 }

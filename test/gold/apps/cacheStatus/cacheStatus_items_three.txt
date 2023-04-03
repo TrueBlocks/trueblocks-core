@@ -1,6 +1,8 @@
 chifra status  abis monitors slurps --log_level 2
 TEST[DATE|TIME] Modes:  [abis monitors slurps]
 TEST[DATE|TIME] LogLevel:  2
+TEST[DATE|TIME] Format:  json
+{ "data": [
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",
@@ -69,4 +71,4 @@ TEST[DATE|TIME] LogLevel:  2
     }
   ],
   "date": "--date--"
-}
+}] }

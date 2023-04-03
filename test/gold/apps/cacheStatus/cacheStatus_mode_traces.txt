@@ -1,5 +1,7 @@
 chifra status  traces
 TEST[DATE|TIME] Modes:  [traces]
+TEST[DATE|TIME] Format:  json
+{ "data": [
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",
@@ -23,4 +25,4 @@ TEST[DATE|TIME] Modes:  [traces]
     }
   ],
   "date": "--date--"
-}
+}] }

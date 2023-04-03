@@ -90,8 +90,10 @@ func statusFinishParse(args []string) *StatusOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	// EXISTING_CODE
-	defFmt = ""
 	opts.Modes = append(opts.Modes, args...)
+	if len(opts.Modes) > 0 {
+		defFmt = "json"
+	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

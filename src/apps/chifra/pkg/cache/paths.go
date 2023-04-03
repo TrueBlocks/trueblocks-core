@@ -78,7 +78,7 @@ func GetRootPathFromCacheType(chain string, cacheType CacheType) string {
 		fallthrough
 	case Index_Maps:
 		return filepath.Join(config.GetPathToIndex(chain), cacheDirectories[cacheType]) + "/"
-	case None:
+	case Cache_NotACache:
 		fallthrough
 	default:
 		logger.Fatal("Should never happen in GetRootPathFromCacheType")

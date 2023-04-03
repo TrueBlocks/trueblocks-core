@@ -1,4 +1,5 @@
 chifra status  
+TEST[DATE|TIME] Format:  txt
 INFO[DATE|TIME] Client:            Client version (archive, testing, tracing)
 INFO[DATE|TIME] TrueBlocks:        GHC-TrueBlocks//vers-beta--git-hash---git-ts- (eskey, no pinKey)
 INFO[DATE|TIME] RPC Provider:      --providers-- - mainnet (1/1)

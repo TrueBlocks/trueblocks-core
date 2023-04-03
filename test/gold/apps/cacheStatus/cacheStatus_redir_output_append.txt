@@ -3,32 +3,41 @@ TEST[DATE|TIME] Modes:  [index]
 TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] OutputFn:  output_test_file
 TEST[DATE|TIME] Append:  true
+TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
+{ "outputFilename": "--output_filename--" }
 ----
 Results in ./output_test_file
 {
-  "clientVersion": "Client version",
-  "clientIds": "chainId: 1 networkId: 1",
-  "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-",
-  "rpcProvider": "--providers--",
-  "configPath": "--paths--",
-  "cachePath": "--paths--",
-  "indexPath": "--paths--",
-  "host": "--hostname-- (--username--)",
-  "isTesting": true,
-  "isArchive": true,
-  "isTracing": true,
-  "hasEskey": true,
-  "caches": [
+  "data": [
     {
-      "type": "CNameCache",
-      "path": "namesPath",
-      "nFiles": 0,
-      "nFolders": 0,
-      "sizeInBytes": 0
+      "cachePath": "--paths--",
+      "caches": [
+        {
+          "cacheName": "namesCache",
+          "lastCached": "2015-07-31 23:59:35 +0000 UTC",
+          "nFiles": 2,
+          "nFolders": 1,
+          "path": "--paths--",
+          "sizeInBytes": 101112
+        }
+      ],
+      "chainConfig": "--paths--",
+      "clientVersion": "Client version",
+      "hasEsKey": true,
+      "hasPinKey": false,
+      "indexPath": "--paths--",
+      "isArchive": true,
+      "isTesting": true,
+      "isTracing": true,
+      "rootConfig": "--paths--",
+      "rpcProvider": "--providers--",
+      "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-"
     }
-  ],
-  "date": "--date--"
-}{
+  ]
+}
+{ "data": [
+{
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",
   "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-",
@@ -66,4 +75,4 @@ Results in ./output_test_file
     }
   ],
   "date": "--date--"
-}
+}] }

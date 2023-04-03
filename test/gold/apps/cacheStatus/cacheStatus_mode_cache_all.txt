@@ -1,5 +1,7 @@
 chifra status  all
 TEST[DATE|TIME] Modes:  [all]
+TEST[DATE|TIME] Format:  json
+{ "data": [
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",
@@ -130,4 +132,4 @@ TEST[DATE|TIME] Modes:  [all]
     }
   ],
   "date": "--date--"
-}
+}] }

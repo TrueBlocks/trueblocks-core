@@ -1,6 +1,7 @@
 chifra status  junk --verbose
 TEST[DATE|TIME] Modes:  [junk]
 TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Format:  json
 Error: The mode option (junk) must be one of [ index | monitors | names | abis | slurps | blocks | txs | traces | some | all ]
 Usage:
   chifra status <mode> [mode...] [flags]

@@ -7,7 +7,7 @@ import (
 type CacheType uint
 
 const (
-	None CacheType = iota
+	Cache_NotACache CacheType = iota
 	Cache_Abis
 	Cache_Blocks
 	Cache_Monitors
@@ -27,7 +27,7 @@ const (
 
 func (ct CacheType) String() string {
 	descrs := map[CacheType]string{
-		None:               "unknown",
+		Cache_NotACache:    "unknown",
 		Cache_Abis:         "abis",
 		Cache_Blocks:       "blocks",
 		Cache_Monitors:     "monitors",
@@ -48,7 +48,7 @@ func (ct CacheType) String() string {
 }
 
 var cacheDirectories = map[CacheType]string{
-	None:               "unknown",
+	Cache_NotACache:    "unknown",
 	Cache_Abis:         "abis",
 	Cache_Blocks:       "blocks",
 	Cache_Monitors:     "monitors",
@@ -67,7 +67,7 @@ var cacheDirectories = map[CacheType]string{
 }
 
 var cacheExtensions = map[CacheType]string{
-	None:               "unknown",
+	Cache_NotACache:    "unknown",
 	Cache_Abis:         "json",
 	Cache_Blocks:       "bin",
 	Cache_Monitors:     "mon.bin",
@@ -85,12 +85,58 @@ var cacheExtensions = map[CacheType]string{
 	Index_Maps:         "bin",
 }
 
-func IsCacheType(path string, cT CacheType) bool {
+func IsCacheType(path string, cT CacheType, checkExt bool) bool {
 	if !strings.Contains(path, cacheDirectories[cT]) {
 		return false
 	}
-	if !strings.HasSuffix(path, cacheExtensions[cT]) {
+	if checkExt && !strings.HasSuffix(path, cacheExtensions[cT]) {
 		return false
 	}
 	return true
+}
+
+func GetCacheTypes(t []string) []CacheType {
+	var types []CacheType
+	for _, v := range t {
+		switch v {
+		case "abis":
+			types = append(types, Cache_Abis)
+		case "blocks":
+			types = append(types, Cache_Blocks)
+		case "monitors":
+			types = append(types, Cache_Monitors)
+		case "names":
+			types = append(types, Cache_Names)
+		case "recons":
+			types = append(types, Cache_Recons)
+		case "slurps":
+			types = append(types, Cache_Slurps)
+		case "tmp":
+			types = append(types, Cache_Tmp)
+		case "traces":
+			types = append(types, Cache_Traces)
+		case "txs":
+			types = append(types, Cache_Transactions)
+		case "blooms":
+			types = append(types, Index_Bloom)
+		case "index":
+			fallthrough
+		case "finalized":
+			types = append(types, Index_Final)
+		case "ripe":
+			types = append(types, Index_Ripe)
+		case "staging":
+			types = append(types, Index_Staging)
+		case "unripe":
+			types = append(types, Index_Unripe)
+		case "maps":
+			types = append(types, Index_Maps)
+		}
+	}
+	/*
+		all:     abis|monitors|names|slurps|blocks|traces|txs|recons|tmp|blooms|index|finalized|staging|ripe|unripe|maps
+		cmd:     abis|monitors|names|slurps|blocks|traces|txs|index|some|all
+		missing: recons|tmp|blooms|finalized|staging|ripe|unripe|maps
+	*/
+	return types
 }

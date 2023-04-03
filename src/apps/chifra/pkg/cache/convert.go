@@ -4,7 +4,7 @@ import "strings"
 
 // ToBloomPath returns a path pointing to the bloom filter given either a path to itself or its associated index data
 func ToBloomPath(pathIn string) string {
-	if IsCacheType(pathIn, Index_Bloom) {
+	if IsCacheType(pathIn, Index_Bloom, true /* checkExt */) {
 		return pathIn
 	}
 	ret := strings.Replace(pathIn, ".bin", ".bloom", -1)

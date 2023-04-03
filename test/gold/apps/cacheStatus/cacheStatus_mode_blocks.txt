@@ -1,5 +1,7 @@
 chifra status  blocks
 TEST[DATE|TIME] Modes:  [blocks]
+TEST[DATE|TIME] Format:  json
+{ "data": [
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",
@@ -27,4 +29,4 @@ TEST[DATE|TIME] Modes:  [blocks]
     }
   ],
   "date": "--date--"
-}
+}] }

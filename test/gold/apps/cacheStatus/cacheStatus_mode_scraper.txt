@@ -1,6 +1,8 @@
 chifra status  index --verbose
 TEST[DATE|TIME] Modes:  [index]
 TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Format:  json
+{ "data": [
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",
@@ -39,4 +41,4 @@ TEST[DATE|TIME] Verbose:  true
     }
   ],
   "date": "--date--"
-}
+}] }
