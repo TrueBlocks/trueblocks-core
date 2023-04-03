@@ -71,9 +71,6 @@ string_q CCache::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'i':
-            if (fieldName % "isValid") {
-                return bool_2_Str(isValid);
-            }
             if (fieldName % "items" || fieldName % "itemsCnt") {
                 size_t cnt = items.size();
                 if (endsWith(toLower(fieldName), "cnt"))
@@ -111,6 +108,11 @@ string_q CCache::getValueByName(const string_q& fieldName) const {
                 return type;
             }
             break;
+        case 'u':
+            if (fieldName % "unused") {
+                return bool_2_Str(unused);
+            }
+            break;
         default:
             break;
     }
@@ -132,10 +134,6 @@ bool CCache::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
 
     switch (tolower(fieldName[0])) {
         case 'i':
-            if (fieldName % "isValid") {
-                isValid = str_2_Bool(fieldValue);
-                return true;
-            }
             if (fieldName % "items") {
                 CCacheEntry obj;
                 string_q str = fieldValue;
@@ -174,6 +172,12 @@ bool CCache::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
                 return true;
             }
             break;
+        case 'u':
+            if (fieldName % "unused") {
+                unused = str_2_Bool(fieldValue);
+                return true;
+            }
+            break;
         default:
             break;
     }
@@ -204,7 +208,7 @@ bool CCache::Serialize(CArchive& archive) {
     archive >> nFiles;
     archive >> nFolders;
     archive >> sizeInBytes;
-    archive >> isValid;
+    archive >> unused;
     // archive >> items;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -224,7 +228,7 @@ bool CCache::SerializeC(CArchive& archive) const {
     archive << nFiles;
     archive << nFolders;
     archive << sizeInBytes;
-    archive << isValid;
+    archive << unused;
     // archive << items;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -280,7 +284,7 @@ void CCache::registerClass(void) {
     ADD_FIELD(CCache, "nFiles", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CCache, "nFolders", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CCache, "sizeInBytes", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CCache, "isValid", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCache, "unused", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCache, "items", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CCache, "items");
 
@@ -294,6 +298,7 @@ void CCache::registerClass(void) {
 
     // EXISTING_CODE
     SHOW_FIELD(CCache, "items");
+    HIDE_FIELD(CCache, "unused");
     // EXISTING_CODE
 }
 

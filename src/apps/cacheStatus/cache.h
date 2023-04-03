@@ -30,7 +30,7 @@ class CCache : public CBaseNode {
     uint64_t nFiles;
     uint64_t nFolders;
     uint64_t sizeInBytes;
-    bool isValid;
+    bool unused;
     CCacheEntryArray items;
 
   public:
@@ -115,7 +115,7 @@ inline void CCache::initialize(void) {
     nFiles = 0;
     nFolders = 0;
     sizeInBytes = 0;
-    isValid = true;
+    unused = true;
     items.clear();
 
     // EXISTING_CODE
@@ -132,7 +132,7 @@ inline void CCache::duplicate(const CCache& ca) {
     nFiles = ca.nFiles;
     nFolders = ca.nFolders;
     sizeInBytes = ca.sizeInBytes;
-    isValid = ca.isValid;
+    unused = ca.unused;
     items = ca.items;
 
     // EXISTING_CODE

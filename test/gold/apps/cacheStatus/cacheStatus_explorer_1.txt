@@ -41,8 +41,7 @@ TEST[DATE|TIME] Format:  json
       "path": "indexPath",
       "nFiles": 0,
       "nFolders": 0,
-      "sizeInBytes": 0,
-      "isValid": true
+      "sizeInBytes": 0
     },
     {
       "type": "CMonitorCache",
@@ -50,7 +49,6 @@ TEST[DATE|TIME] Format:  json
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "isValid": true,
       "items": [
         {
           "deleted": false,
@@ -72,24 +70,21 @@ TEST[DATE|TIME] Format:  json
       "path": "namesPath",
       "nFiles": 0,
       "nFolders": 0,
-      "sizeInBytes": 0,
-      "isValid": true
+      "sizeInBytes": 0
     },
     {
       "type": "CAbiCache",
       "path": "abisPath",
       "nFiles": 0,
       "nFolders": 0,
-      "sizeInBytes": 0,
-      "isValid": true
+      "sizeInBytes": 0
     },
     {
       "type": "CSlurpCache",
       "path": "slurpsPath",
       "nFiles": 0,
       "nFolders": 0,
-      "sizeInBytes": 0,
-      "isValid": true
+      "sizeInBytes": 0
     }
   ],
   "date": "--date--"

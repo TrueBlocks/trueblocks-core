@@ -26,21 +26,21 @@ func (opts *StatusOptions) HandleShow() error {
 
 		counterMap := make(map[cache.CacheType]*simpleSingleCacheStats)
 		types := []cache.CacheType{
-			cache.Cache_Abis,
-			cache.Cache_Blocks,
-			cache.Cache_Monitors,
+			// cache.Cache_Abis,
+			// cache.Cache_Blocks,
+			// cache.Cache_Monitors,
 			cache.Cache_Names,
-			cache.Cache_Recons,
-			cache.Cache_Slurps,
-			cache.Cache_Tmp,
-			cache.Cache_Traces,
-			cache.Cache_Transactions,
-			cache.Index_Bloom,
-			cache.Index_Final,
-			cache.Index_Ripe,
-			cache.Index_Staging,
-			cache.Index_Unripe,
-			cache.Index_Maps,
+			// cache.Cache_Recons,
+			// cache.Cache_Slurps,
+			// cache.Cache_Tmp,
+			// cache.Cache_Traces,
+			// cache.Cache_Transactions,
+			// cache.Index_Bloom,
+			// cache.Index_Final,
+			// cache.Index_Ripe,
+			// cache.Index_Staging,
+			// cache.Index_Unripe,
+			// cache.Index_Maps,
 		}
 		nRoutines = len(types)
 		for _, t := range types {

@@ -34,8 +34,7 @@ TEST[DATE|TIME] Modes:  [monitors]
       "path": "monitorsPath",
       "nFiles": 0,
       "nFolders": 0,
-      "sizeInBytes": 0,
-      "isValid": true
+      "sizeInBytes": 0
     }
   ],
   "date": "--date--"

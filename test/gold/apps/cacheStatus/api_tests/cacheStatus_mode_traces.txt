@@ -24,7 +24,6 @@ status?modes=traces
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "isValid": true,
           "items": []
         }
       ],

@@ -60,8 +60,7 @@ status?modes=all
           "path": "indexPath",
           "nFiles": 0,
           "nFolders": 0,
-          "sizeInBytes": 0,
-          "isValid": true
+          "sizeInBytes": 0
         },
         {
           "addrs": [],
@@ -91,8 +90,7 @@ status?modes=all
           "path": "monitorsPath",
           "nFiles": 0,
           "nFolders": 0,
-          "sizeInBytes": 0,
-          "isValid": true
+          "sizeInBytes": 0
         },
         {
           "addrs": [],
@@ -101,8 +99,7 @@ status?modes=all
           "path": "namesPath",
           "nFiles": 0,
           "nFolders": 0,
-          "sizeInBytes": 0,
-          "isValid": true
+          "sizeInBytes": 0
         },
         {
           "items": [],
@@ -110,8 +107,7 @@ status?modes=all
           "path": "abisPath",
           "nFiles": 0,
           "nFolders": 0,
-          "sizeInBytes": 0,
-          "isValid": true
+          "sizeInBytes": 0
         },
         {
           "items": [
@@ -122,8 +118,7 @@ status?modes=all
           "path": "blocksPath",
           "nFiles": 0,
           "nFolders": 0,
-          "sizeInBytes": 0,
-          "isValid": true
+          "sizeInBytes": 0
         },
         {
           "items": [
@@ -134,8 +129,7 @@ status?modes=all
           "path": "txsPath",
           "nFiles": 0,
           "nFolders": 0,
-          "sizeInBytes": 0,
-          "isValid": true
+          "sizeInBytes": 0
         },
         {
           "items": [],
@@ -143,8 +137,7 @@ status?modes=all
           "path": "tracesPath",
           "nFiles": 0,
           "nFolders": 0,
-          "sizeInBytes": 0,
-          "isValid": true
+          "sizeInBytes": 0
         },
         {
           "items": [],
@@ -152,8 +145,7 @@ status?modes=all
           "path": "slurpsPath",
           "nFiles": 0,
           "nFolders": 0,
-          "sizeInBytes": 0,
-          "isValid": true
+          "sizeInBytes": 0
         }
       ],
       "keys": [],

@@ -46,8 +46,7 @@ status?modes=abis&modes=monitors&modes=slurps&logLevel=2
           "path": "monitorsPath",
           "nFiles": 0,
           "nFolders": 0,
-          "sizeInBytes": 0,
-          "isValid": true
+          "sizeInBytes": 0
         },
         {
           "items": [
@@ -78,8 +77,7 @@ status?modes=abis&modes=monitors&modes=slurps&logLevel=2
           "path": "abisPath",
           "nFiles": 0,
           "nFolders": 0,
-          "sizeInBytes": 0,
-          "isValid": true
+          "sizeInBytes": 0
         },
         {
           "addrs": [],
@@ -88,8 +86,7 @@ status?modes=abis&modes=monitors&modes=slurps&logLevel=2
           "path": "slurpsPath",
           "nFiles": 0,
           "nFolders": 0,
-          "sizeInBytes": 0,
-          "isValid": true
+          "sizeInBytes": 0
         }
       ],
       "date": "--date--"

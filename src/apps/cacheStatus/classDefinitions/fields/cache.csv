@@ -4,5 +4,5 @@ path        ,string    ,           ,       ,      ,        ,          ,        ,
 nFiles      ,uint64    ,           ,       ,      ,        ,          ,        ,         ,  3 ,     ,        ,the number of files in the cache
 nFolders    ,uint64    ,           ,       ,      ,        ,          ,        ,         ,  4 ,     ,        ,the number of subfolders in the cache
 sizeInBytes ,uint64    ,           ,       ,      ,        ,          ,        ,         ,  5 ,     ,        ,the size of the cache in bytes
-isValid     ,bool      ,true       ,       ,      ,        ,          ,        ,         ,    ,     ,        ,unused
+unused      ,bool      ,true       ,       ,      ,        ,          ,        ,         ,    ,     ,        ,unused
 items       ,CacheEntry,           ,true   ,true  ,true    ,          ,        ,         ,  6 ,     ,        ,an array of cache items

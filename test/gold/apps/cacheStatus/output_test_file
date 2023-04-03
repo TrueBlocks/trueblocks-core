@@ -17,8 +17,7 @@
       "path": "namesPath",
       "nFiles": 0,
       "nFolders": 0,
-      "sizeInBytes": 0,
-      "isValid": true
+      "sizeInBytes": 0
     }
   ],
   "date": "--date--"
@@ -56,8 +55,7 @@
       "path": "indexPath",
       "nFiles": 0,
       "nFolders": 0,
-      "sizeInBytes": 0,
-      "isValid": true
+      "sizeInBytes": 0
     }
   ],
   "date": "--date--"

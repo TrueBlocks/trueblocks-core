@@ -24,8 +24,7 @@ Results in ./output_test_file
       "path": "namesPath",
       "nFiles": 0,
       "nFolders": 0,
-      "sizeInBytes": 0,
-      "isValid": true
+      "sizeInBytes": 0
     }
   ],
   "date": "--date--"
@@ -63,8 +62,7 @@ Results in ./output_test_file
       "path": "indexPath",
       "nFiles": 0,
       "nFolders": 0,
-      "sizeInBytes": 0,
-      "isValid": true
+      "sizeInBytes": 0
     }
   ],
   "date": "--date--"

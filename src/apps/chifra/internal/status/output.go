@@ -51,11 +51,11 @@ func (opts *StatusOptions) StatusInternal() (err error, handled bool) {
 
 	// EXISTING_CODE
 	if opts.IsPorted() {
-		// if opts.Mode == "names" {
-		// 	return opts.HandleShow(), true
-		// } else {
-		return opts.HandleStatusTerse(), true
-		// }
+		if len(opts.Modes) > 0 {
+			return opts.HandleShow(), true
+		} else {
+			return opts.HandleStatusTerse(), true
+		}
 	}
 
 	if opts.Globals.IsApiMode() {
@@ -80,7 +80,11 @@ func GetStatusOptions(args []string, g *globals.GlobalOptions) *StatusOptions {
 
 func (opts *StatusOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	// ported = opts.Mode == "names" || (len(opts.Mode) == 0 && !opts.Globals.Verbose)
+	// if len(opts.Modes) == 0 {
+	// 	return !opts.Globals.Verbose
+	// } else if len(opts.Modes) == 1 && opts.Modes[0] == "names" {
+	// 	return true
+	// }
 	ported = len(opts.Modes) == 0 && !opts.Globals.Verbose
 	// EXISTING_CODE
 	return

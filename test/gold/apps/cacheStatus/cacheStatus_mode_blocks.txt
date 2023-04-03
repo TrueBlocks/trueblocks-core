@@ -20,7 +20,6 @@ TEST[DATE|TIME] Modes:  [blocks]
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "isValid": true,
       "items": [
         "Testing/00/00/00",
         "Testing/00/01/00"

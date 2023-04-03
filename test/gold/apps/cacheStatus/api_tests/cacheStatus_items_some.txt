@@ -60,8 +60,7 @@ status?modes=some
           "path": "indexPath",
           "nFiles": 0,
           "nFolders": 0,
-          "sizeInBytes": 0,
-          "isValid": true
+          "sizeInBytes": 0
         },
         {
           "addrs": [],
@@ -91,8 +90,7 @@ status?modes=some
           "path": "monitorsPath",
           "nFiles": 0,
           "nFolders": 0,
-          "sizeInBytes": 0,
-          "isValid": true
+          "sizeInBytes": 0
         },
         {
           "addrs": [],
@@ -101,8 +99,7 @@ status?modes=some
           "path": "namesPath",
           "nFiles": 0,
           "nFolders": 0,
-          "sizeInBytes": 0,
-          "isValid": true
+          "sizeInBytes": 0
         },
         {
           "type": "CAbiCache",
@@ -110,7 +107,6 @@ status?modes=some
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "isValid": true,
           "items": []
         },
         {
@@ -119,8 +115,7 @@ status?modes=some
           "path": "slurpsPath",
           "nFiles": 0,
           "nFolders": 0,
-          "sizeInBytes": 0,
-          "isValid": true
+          "sizeInBytes": 0
         }
       ],
       "keys": [],

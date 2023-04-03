@@ -44,7 +44,6 @@ status?fmt=json&verbose
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "isValid": true,
           "items": []
         },
         {
@@ -54,7 +53,6 @@ status?fmt=json&verbose
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "isValid": true,
           "items": [
             {
               "deleted": false,
@@ -85,7 +83,6 @@ status?fmt=json&verbose
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "isValid": true,
           "items": []
         },
         {
@@ -94,7 +91,6 @@ status?fmt=json&verbose
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "isValid": true,
           "items": []
         },
         {
@@ -103,7 +99,6 @@ status?fmt=json&verbose
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "isValid": true,
           "items": []
         }
       ],
