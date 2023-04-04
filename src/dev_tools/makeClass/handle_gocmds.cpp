@@ -20,6 +20,7 @@ extern string_q get_requestopts(const CCommandOption& cmd);
 extern string_q get_defaults_apis(const CCommandOption& cmd);
 extern string_q get_config_override(const CCommandOption& cmd);
 extern string_q get_config_package(const CCommandOption& cmd);
+extern string_q get_cache_package(const CCommandOption& cmd);
 extern string_q get_setopts(const CCommandOption& cmd);
 extern string_q get_testlogs(const CCommandOption& cmd);
 extern string_q get_godefaults(const CCommandOption& cmd);
@@ -120,6 +121,7 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     replaceAll(source, "[{DEFAULTS_API}]", get_defaults_apis(p));
     replaceAll(source, "[{CONFIG_OVERRIDE}]", get_config_override(p));
     replaceAll(source, "[{CONFIGPKG}]", get_config_package(p));
+    replaceAll(source, "[{CACHEPKG}]", get_cache_package(p));
 
     string_q req = get_requestopts(p);
     replaceAll(source, "[{REQUEST_OPTS}]", req);
@@ -514,6 +516,13 @@ string_q get_config_package(const CCommandOption& cmd) {
     for (auto p : *((CCommandOptionArray*)cmd.members))
         if (p.generate == "config")
             return "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/" + cmd.api_route + "Cfg\"\n";
+    return "";
+}
+
+string_q get_cache_package(const CCommandOption& cmd) {
+    if (cmd.api_route == "status") {
+        return "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache\"\n";
+    }
     return "";
 }
 

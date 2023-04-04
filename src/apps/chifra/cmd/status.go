@@ -39,7 +39,7 @@ const usageStatus = `status <mode> [mode...] [flags]
 
 Arguments:
   modes - the (optional) name of the binary cache to report on, terse otherwise
-	One or more of [ index | monitors | names | abis | slurps | blocks | txs | traces | some | all ]`
+	One or more of [ abis | blocks | monitors | names | recons | slurps | tmp | traces | txs | blooms | index | ripe | staging | unripe | maps | some | all ]`
 
 const shortStatus = "report on the state of the internal binary caches"
 
@@ -48,7 +48,9 @@ const longStatus = `Purpose:
 
 const notesStatus = `
 Notes:
-  - The some mode includes index, monitors, names, slurps, and abis.`
+  - The some mode includes index, monitors, names, slurps, and abis.
+  - If no mode is supplied, a terse report is generated.
+  - This tool ignores the --format option, all results other than terse are json.`
 
 func init() {
 	statusCmd.Flags().SortFlags = false

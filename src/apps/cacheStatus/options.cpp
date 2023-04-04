@@ -20,7 +20,7 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("modes", "", "list<enum[index|monitors|names|abis|slurps|blocks|txs|traces|some*|all]>", OPT_POSITIONAL, "the (optional) name of the binary cache to report on, terse otherwise"),  // NOLINT
+    COption("modes", "", "list<enum[abis|blocks|monitors|names|recons|slurps|tmp|traces|txs|blooms|index|ripe|staging|unripe|maps|some*|all]>", OPT_POSITIONAL, "the (optional) name of the binary cache to report on, terse otherwise"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Report on the state of the internal binary caches."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -82,12 +82,11 @@ bool COptions::parseArguments(string_q& command) {
     }
     origMode = mode;
 
-    if (mode.empty() || contains(mode, "some")) {
-        mode = "index|monitors|names|abis|slurps";
-
-    } else if (contains(mode, "all")) {
-        mode = "index|monitors|names|abis|slurps|blocks|txs|traces";
-    }
+    // if (mode.empty() || contains(mode, "some")) {
+    //     mode = "index|monitors|names|abis|slurps";
+    // } else if (contains(mode, "all")) {
+    //     mode = "index|monitors|names|abis|slurps|blocks|txs|traces";
+    // }
     mode = "|" + trim(mode, '|') + "|";
 
     HIDE_FIELD(CAbiCache, "items");
@@ -240,6 +239,8 @@ COptions::COptions(void) {
     // BEG_CODE_NOTES
     // clang-format off
     notes.push_back("The `some` mode includes index, monitors, names, slurps, and abis.");
+    notes.push_back("If no mode is supplied, a terse report is generated.");
+    notes.push_back("This tool ignores the `--format` option, all results other than terse are json.");
     // clang-format on
     // END_CODE_NOTES
 

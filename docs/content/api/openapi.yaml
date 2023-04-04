@@ -1601,14 +1601,21 @@ paths:
             items:
               type: string
               enum:
-                - index
+                - abis
+                - blocks
                 - monitors
                 - names
-                - abis
+                - recons
                 - slurps
-                - blocks
-                - txs
+                - tmp
                 - traces
+                - txs
+                - blooms
+                - index
+                - ripe
+                - staging
+                - unripe
+                - maps
                 - some
                 - all
       responses:

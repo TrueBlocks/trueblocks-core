@@ -15,7 +15,8 @@ func (opts *StatusOptions) validateStatus() error {
 		return opts.BadFlag
 	}
 
-	err := validate.ValidateEnumSlice("mode", opts.Modes, "[index|monitors|names|abis|slurps|blocks|txs|traces|some|all]")
+	options := `[abis|blocks|monitors|names|recons|slurps|tmp|traces|txs|blooms|index|ripe|staging|unripe|maps|some|all]`
+	err := validate.ValidateEnumSlice("mode", opts.Modes, options)
 	if err != nil {
 		return err
 	}

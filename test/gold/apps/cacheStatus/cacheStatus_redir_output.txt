@@ -3,7 +3,6 @@ TEST[DATE|TIME] Modes:  [names]
 TEST[DATE|TIME] OutputFn:  output_test_file
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
-
 ----
 Results in ./output_test_file
 {
@@ -13,11 +12,11 @@ Results in ./output_test_file
       "caches": [
         {
           "cacheName": "namesCache",
-          "lastCached": "2015-07-31 23:59:35 +0000 UTC",
-          "nFiles": 2,
-          "nFolders": 1,
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 101112
+          "sizeInBytes": 789
         }
       ],
       "chainConfig": "--paths--",

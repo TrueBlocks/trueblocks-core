@@ -27,8 +27,8 @@ func getDirStructureByBlock(bn base.Blknum, txId uint64) (dir string, paddedBn s
 
 func getPathByBlock(item CacheType, bn base.Blknum) string {
 	parentDirs, paddedBn, _ := getDirStructureByBlock(bn, 0)
-	directory := cacheDirectories[item]
-	extension := cacheExtensions[item]
+	directory := cacheTypeToFolder[item]
+	extension := cacheTypeToExt[item]
 	return filepath.Join(directory, parentDirs, paddedBn+"."+extension)
 }
 
@@ -38,8 +38,8 @@ func getPathByBlockAndTransactionIndex(
 	txId uint64,
 ) string {
 	parentDirs, paddedBn, paddedTx := getDirStructureByBlock(bn, txId)
-	directory := cacheDirectories[item]
-	extension := cacheExtensions[item]
+	directory := cacheTypeToFolder[item]
+	extension := cacheTypeToExt[item]
 	return filepath.Join(directory, parentDirs, strings.Join(
 		[]string{paddedBn, paddedTx},
 		"-",
@@ -65,7 +65,7 @@ func GetRootPathFromCacheType(chain string, cacheType CacheType) string {
 	case Cache_Traces:
 		fallthrough
 	case Cache_Transactions:
-		return filepath.Join(config.GetPathToCache(chain), cacheDirectories[cacheType]) + "/"
+		return filepath.Join(config.GetPathToCache(chain), cacheTypeToFolder[cacheType]) + "/"
 	case Index_Bloom:
 		fallthrough
 	case Index_Final:
@@ -77,7 +77,7 @@ func GetRootPathFromCacheType(chain string, cacheType CacheType) string {
 	case Index_Unripe:
 		fallthrough
 	case Index_Maps:
-		return filepath.Join(config.GetPathToIndex(chain), cacheDirectories[cacheType]) + "/"
+		return filepath.Join(config.GetPathToIndex(chain), cacheTypeToFolder[cacheType]) + "/"
 	case Cache_NotACache:
 		fallthrough
 	default:

@@ -5,6 +5,7 @@
 package cache
 
 import (
+	"context"
 	"io/fs"
 	"path/filepath"
 	"regexp"
@@ -12,12 +13,18 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
-func WalkCacheFolder(chain string, cacheType CacheType, regExp *regexp.Regexp, filenameChan chan<- CacheFileInfo) {
+func WalkCacheFolderWithContext(ctx context.Context, chain string, cacheType CacheType, regExp *regexp.Regexp, filenameChan chan<- CacheFileInfo) {
 	path := GetRootPathFromCacheType(chain, cacheType)
-	walkFolder(path, cacheType, regExp, filenameChan)
+	walkFolder(ctx, path, cacheType, regExp, filenameChan)
 }
 
-func walkFolder(path string, cacheType CacheType, regExp *regexp.Regexp, filenameChan chan<- CacheFileInfo) {
+func WalkCacheFolder(chain string, cacheType CacheType, regExp *regexp.Regexp, filenameChan chan<- CacheFileInfo) {
+	unusedContext := context.Background()
+	path := GetRootPathFromCacheType(chain, cacheType)
+	walkFolder(unusedContext, path, cacheType, regExp, filenameChan)
+}
+
+func walkFolder(ctx context.Context, path string, cacheType CacheType, regExp *regexp.Regexp, filenameChan chan<- CacheFileInfo) {
 	defer func() {
 		filenameChan <- CacheFileInfo{Type: Cache_NotACache}
 	}()
@@ -37,6 +44,12 @@ func walkFolder(path string, cacheType CacheType, regExp *regexp.Regexp, filenam
 		} else if regExp == nil || regExp.MatchString(info.Name()) {
 			rng := base.RangeFromFilename(path)
 			filenameChan <- CacheFileInfo{Type: cacheType, Path: path, Range: rng}
+		}
+
+		select {
+		case <-ctx.Done():
+			return ctx.Err()
+		default:
 		}
 
 		return nil

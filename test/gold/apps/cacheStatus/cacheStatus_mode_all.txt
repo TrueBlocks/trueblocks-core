@@ -1,135 +1,169 @@
-chifra status  all
+chifra status  all --verbose
 TEST[DATE|TIME] Modes:  [all]
+TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Format:  json
-{ "data": [
 {
-  "clientVersion": "Client version",
-  "clientIds": "chainId: 1 networkId: 1",
-  "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-",
-  "rpcProvider": "--providers--",
-  "configPath": "--paths--",
-  "cachePath": "--paths--",
-  "indexPath": "--paths--",
-  "host": "--hostname-- (--username--)",
-  "isTesting": true,
-  "isArchive": true,
-  "isTracing": true,
-  "hasEskey": true,
-  "chains": [
+  "data": [
     {
-      "chain": "mainnet",
-      "chainId": 1,
-      "symbol": "ETH",
-      "rpcProvider": "--provider-mainnet--",
-      "apiProvider": "--provider-mainnet--",
-      "remoteExplorer": "--explorer-mainnet--",
-      "localExplorer": "--explorer-mainnet--"
-    },
-    {
-      "chain": "gnosis",
-      "chainId": 100,
-      "symbol": "XDAI",
-      "rpcProvider": "--provider-gnosis--",
-      "apiProvider": "--provider-gnosis--",
-      "remoteExplorer": "--explorer-gnosis--",
-      "localExplorer": "--explorer-gnosis--"
-    }
-  ],
-  "caches": [
-    {
-      "items": [
+      "cachePath": "--paths--",
+      "caches": [
         {
-          "type": "CIndexCacheItem",
-          "nAddrs": 8893,
-          "nApps": 8893,
-          "firstApp": 0,
-          "latestApp": 0,
-          "firstTs": 1438269975,
-          "latestTs": 1438269975,
-          "filename": "/--index-path--/000000000-000000000.bin",
-          "fileDate": "1700-01-01 00:00:01 UTC",
-          "indexSizeBytes": 320192,
-          "bloomSizeBytes": 131114
+          "cacheName": "bloomCache",
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789
+        },
+        {
+          "cacheName": "indexCache",
+          "items": [
+            {
+              "bloomHash": "",
+              "bloomSizeBytes": 131114,
+              "fileDate": "1700-01-01 00:00:01 UTC",
+              "filename": "/--index-path--/000000000-000000000.bin",
+              "firstApp": 0,
+              "firstTs": 1438269975,
+              "indexHash": "",
+              "indexSizeBytes": 320192,
+              "latestApp": 0,
+              "latestTs": 1438269975,
+              "nAddrs": 8893,
+              "nApps": 8893,
+              "type": "CIndexCacheItem"
+            }
+          ],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789
+        },
+        {
+          "cacheName": "stagingCache",
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789
+        },
+        {
+          "cacheName": "unripeCache",
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789
+        },
+        {
+          "cacheName": "monitorsCache",
+          "items": [
+            {
+              "address": "---address---",
+              "decimals": 0,
+              "deleted": false,
+              "firstApp": 0,
+              "isContract": false,
+              "isCustom": false,
+              "isErc20": false,
+              "isErc721": false,
+              "isPrefund": false,
+              "latestApp": 0,
+              "nApps": 0,
+              "name": "--name--",
+              "petname": "--petname--",
+              "sizeInBytes": 0,
+              "source": "--source--",
+              "symbol": "--symbol--",
+              "tags": "--tags--",
+              "type": ""
+            }
+          ],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789
+        },
+        {
+          "cacheName": "namesCache",
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789
+        },
+        {
+          "cacheName": "abisCache",
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789
+        },
+        {
+          "cacheName": "slurpsCache",
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789
+        },
+        {
+          "cacheName": "blocksCache",
+          "items": [
+            "Testing/00/00/00",
+            "Testing/00/01/00"
+          ],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789
+        },
+        {
+          "cacheName": "tracesCache",
+          "items": [
+            "Testing/00/00/00",
+            "Testing/00/01/00"
+          ],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789
+        },
+        {
+          "cacheName": "transactionsCache",
+          "items": [
+            "Testing/00/00/00",
+            "Testing/00/01/00"
+          ],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789
         }
       ],
-      "type": "CIndexCache",
-      "path": "indexPath",
-      "nFiles": 0,
-      "nFolders": 0,
-      "sizeInBytes": 0
-    },
-    {
-      "items": [
-        {
-          "deleted": false,
-          "nApps": 0,
-          "firstApp": 0,
-          "latestApp": 0,
-          "tags": "--tags--",
-          "address": "---address---",
-          "name": "--name--",
-          "symbol": "--symbol--",
-          "source": "--source--",
-          "decimals": 0,
-          "petname": "--petname--"
-        }
-      ],
-      "type": "CMonitorCache",
-      "path": "monitorsPath",
-      "nFiles": 0,
-      "nFolders": 0,
-      "sizeInBytes": 0
-    },
-    {
-      "type": "CNameCache",
-      "path": "namesPath",
-      "nFiles": 0,
-      "nFolders": 0,
-      "sizeInBytes": 0
-    },
-    {
-      "type": "CAbiCache",
-      "path": "abisPath",
-      "nFiles": 0,
-      "nFolders": 0,
-      "sizeInBytes": 0
-    },
-    {
-      "items": [
-        "Testing/00/00/00",
-        "Testing/00/01/00"
-      ],
-      "type": "CChainCache",
-      "path": "blocksPath",
-      "nFiles": 0,
-      "nFolders": 0,
-      "sizeInBytes": 0
-    },
-    {
-      "items": [
-        "Testing/00/00/00",
-        "Testing/00/01/00"
-      ],
-      "type": "CChainCache",
-      "path": "txsPath",
-      "nFiles": 0,
-      "nFolders": 0,
-      "sizeInBytes": 0
-    },
-    {
-      "type": "CChainCache",
-      "path": "tracesPath",
-      "nFiles": 0,
-      "nFolders": 0,
-      "sizeInBytes": 0
-    },
-    {
-      "type": "CSlurpCache",
-      "path": "slurpsPath",
-      "nFiles": 0,
-      "nFolders": 0,
-      "sizeInBytes": 0
+      "chainConfig": "--paths--",
+      "clientVersion": "Client version",
+      "hasEsKey": true,
+      "hasPinKey": false,
+      "indexPath": "--paths--",
+      "isArchive": true,
+      "isTesting": true,
+      "isTracing": true,
+      "rootConfig": "--paths--",
+      "rpcProvider": "--providers--",
+      "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-"
     }
-  ],
-  "date": "--date--"
-}] }
+  ]
+}

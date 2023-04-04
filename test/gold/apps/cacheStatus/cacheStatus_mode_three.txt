@@ -1,0 +1,65 @@
+chifra status  abis monitors slurps --verbose
+TEST[DATE|TIME] Modes:  [abis monitors slurps]
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "cachePath": "--paths--",
+      "caches": [
+        {
+          "cacheName": "abisCache",
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789
+        },
+        {
+          "cacheName": "monitorsCache",
+          "items": [
+            {
+              "address": "---address---",
+              "decimals": 0,
+              "deleted": false,
+              "firstApp": 0,
+              "latestApp": 0,
+              "nApps": 0,
+              "name": "--name--",
+              "petname": "--petname--",
+              "source": "--source--",
+              "symbol": "--symbol--",
+              "tags": "--tags--"
+            }
+          ],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789
+        },
+        {
+          "cacheName": "slurpsCache",
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789
+        }
+      ],
+      "chainConfig": "--paths--",
+      "clientVersion": "Client version",
+      "hasEsKey": true,
+      "hasPinKey": false,
+      "indexPath": "--paths--",
+      "isArchive": true,
+      "isTesting": true,
+      "isTracing": true,
+      "rootConfig": "--paths--",
+      "rpcProvider": "--providers--",
+      "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-"
+    }
+  ]
+}

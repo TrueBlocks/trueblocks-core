@@ -25,29 +25,26 @@ const (
 	Index_Maps
 )
 
-func (ct CacheType) String() string {
-	descrs := map[CacheType]string{
-		Cache_NotACache:    "unknown",
-		Cache_Abis:         "abis",
-		Cache_Blocks:       "blocks",
-		Cache_Monitors:     "monitors",
-		Cache_Names:        "names",
-		Cache_Recons:       "reconciliations",
-		Cache_Slurps:       "slurps",
-		Cache_Tmp:          "tmp",
-		Cache_Traces:       "traces",
-		Cache_Transactions: "transactions",
-		Index_Bloom:        "bloom",
-		Index_Final:        "index",
-		Index_Ripe:         "ripe",
-		Index_Staging:      "staging",
-		Index_Unripe:       "unripe",
-		Index_Maps:         "neighbors",
-	}
-	return descrs[ct]
+var cacheTypeToName = map[CacheType]string{
+	Cache_NotACache:    "unknown",
+	Cache_Abis:         "abis",
+	Cache_Blocks:       "blocks",
+	Cache_Monitors:     "monitors",
+	Cache_Names:        "names",
+	Cache_Recons:       "reconciliations",
+	Cache_Slurps:       "slurps",
+	Cache_Tmp:          "tmp",
+	Cache_Traces:       "traces",
+	Cache_Transactions: "transactions",
+	Index_Bloom:        "bloom",
+	Index_Final:        "index",
+	Index_Ripe:         "ripe",
+	Index_Staging:      "staging",
+	Index_Unripe:       "unripe",
+	Index_Maps:         "neighbors",
 }
 
-var cacheDirectories = map[CacheType]string{
+var cacheTypeToFolder = map[CacheType]string{
 	Cache_NotACache:    "unknown",
 	Cache_Abis:         "abis",
 	Cache_Blocks:       "blocks",
@@ -66,7 +63,7 @@ var cacheDirectories = map[CacheType]string{
 	Index_Maps:         "maps",
 }
 
-var cacheExtensions = map[CacheType]string{
+var cacheTypeToExt = map[CacheType]string{
 	Cache_NotACache:    "unknown",
 	Cache_Abis:         "json",
 	Cache_Blocks:       "bin",
@@ -85,20 +82,37 @@ var cacheExtensions = map[CacheType]string{
 	Index_Maps:         "bin",
 }
 
+func (ct CacheType) String() string {
+	return cacheTypeToName[ct]
+}
+
 func IsCacheType(path string, cT CacheType, checkExt bool) bool {
-	if !strings.Contains(path, cacheDirectories[cT]) {
+	if !strings.Contains(path, cacheTypeToFolder[cT]) {
 		return false
 	}
-	if checkExt && !strings.HasSuffix(path, cacheExtensions[cT]) {
+	if checkExt && !strings.HasSuffix(path, cacheTypeToExt[cT]) {
 		return false
 	}
 	return true
 }
 
-func GetCacheTypes(t []string) []CacheType {
+// TODO: BOGUS Needs a mutex
+var cmdToCacheType = map[string]CacheType{}
+
+func CmdToCacheType(s string) CacheType {
+	if len(cmdToCacheType) == 0 {
+		for k, v := range cacheTypeToFolder {
+			cmdToCacheType[v] = k
+		}
+	}
+	return cmdToCacheType[s]
+}
+
+func GetCacheTypes(strs []string) []CacheType {
 	var types []CacheType
-	for _, v := range t {
-		switch v {
+	for _, str := range strs {
+
+		switch str {
 		case "abis":
 			types = append(types, Cache_Abis)
 		case "blocks":
@@ -131,6 +145,25 @@ func GetCacheTypes(t []string) []CacheType {
 			types = append(types, Index_Unripe)
 		case "maps":
 			types = append(types, Index_Maps)
+		case "some":
+			types = append(types, Index_Bloom)
+			types = append(types, Index_Final)
+			types = append(types, Cache_Monitors)
+			types = append(types, Cache_Names)
+			types = append(types, Cache_Abis)
+			types = append(types, Cache_Slurps)
+		case "all":
+			types = append(types, Index_Bloom)
+			types = append(types, Index_Final)
+			types = append(types, Index_Staging)
+			types = append(types, Index_Unripe)
+			types = append(types, Cache_Monitors)
+			types = append(types, Cache_Names)
+			types = append(types, Cache_Abis)
+			types = append(types, Cache_Slurps)
+			types = append(types, Cache_Blocks)
+			types = append(types, Cache_Traces)
+			types = append(types, Cache_Transactions)
 		}
 	}
 	/*

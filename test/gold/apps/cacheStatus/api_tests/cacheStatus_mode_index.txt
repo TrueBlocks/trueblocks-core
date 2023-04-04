@@ -1,0 +1,56 @@
+status?modes=index&verbose
+{
+  "data": [
+    {
+      "cachePath": "--paths--",
+      "caches": [
+        {
+          "cacheName": "indexCache",
+          "items": [
+            {
+              "bloomHash": "",
+              "bloomSizeBytes": 131114,
+              "fileDate": "1700-01-01 00:00:01 UTC",
+              "filename": "/--index-path--/000000000-000000000.bin",
+              "firstApp": 0,
+              "firstTs": 1438269975,
+              "indexHash": "",
+              "indexSizeBytes": 320192,
+              "latestApp": 0,
+              "latestTs": 1438269975,
+              "nAddrs": 8893,
+              "nApps": 8893,
+              "type": "CIndexCacheItem"
+            }
+          ],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789
+        }
+      ],
+      "chainConfig": "--paths--",
+      "clientVersion": "Client version",
+      "hasEsKey": true,
+      "hasPinKey": false,
+      "indexPath": "--paths--",
+      "isArchive": true,
+      "isTesting": true,
+      "isTracing": true,
+      "rootConfig": "--paths--",
+      "rpcProvider": "--providers--",
+      "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

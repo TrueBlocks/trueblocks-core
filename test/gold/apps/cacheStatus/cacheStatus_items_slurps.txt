@@ -1,7 +1,6 @@
 chifra status  slurps
 TEST[DATE|TIME] Modes:  [slurps]
 TEST[DATE|TIME] Format:  json
-
 {
   "data": [
     {
@@ -9,11 +8,11 @@ TEST[DATE|TIME] Format:  json
       "caches": [
         {
           "cacheName": "slurpsCache",
-          "lastCached": "2015-07-31 23:59:35 +0000 UTC",
-          "nFiles": 48879,
-          "nFolders": 57005,
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": "0xdeadbeef"
+          "sizeInBytes": 789
         }
       ],
       "chainConfig": "--paths--",

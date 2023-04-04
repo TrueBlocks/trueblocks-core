@@ -1,0 +1,6 @@
+status?modes=junk&verbose
+{
+  "errors": [
+    "The mode option (junk) must be one of [ abis | blocks | monitors | names | recons | slurps | tmp | traces | txs | blooms | index | ripe | staging | unripe | maps | some | all ]"
+  ]
+}

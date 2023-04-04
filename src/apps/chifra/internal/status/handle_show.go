@@ -14,8 +14,17 @@ import (
 
 func (opts *StatusOptions) HandleShow() error {
 	chain := opts.Globals.Chain
+	nProcessed := 0
+	nSeen := 0
+	firstRecord := 0
+	maxRecords := 5000
+	if opts.Globals.TestMode {
+		maxRecords = 100
+	}
 
-	ctx := context.Background()
+	renderCtx := context.Background()
+	walkContext, cancel := context.WithCancel(context.Background())
+
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		now := time.Now()
 		if opts.Globals.TestMode {
@@ -24,20 +33,12 @@ func (opts *StatusOptions) HandleShow() error {
 
 		filenameChan := make(chan cache.CacheFileInfo)
 		var nRoutines int
-		// var estimated bool
 
 		counterMap := make(map[cache.CacheType]*simpleSingleCacheStats)
-		types := cache.GetCacheTypes(opts.Modes)
-		nRoutines = len(types)
-		for _, t := range types {
-			d := now.String()
-			if opts.Globals.TestMode {
-				d = "2015-07-31 23:59:35 +0000 UTC"
-			}
-			counterMap[t] = &simpleSingleCacheStats{CacheName: t.String() + "Cache", LastCached: d}
-			// counterMap[cache.Cache_Abis].Estimated = estimated
-			// var exp = regexp.MustCompile(`0[xX][c-fC-F]+`)
-			go cache.WalkCacheFolder(chain, t, nil, filenameChan)
+		nRoutines = len(opts.ModeTypes)
+		for _, t := range opts.ModeTypes {
+			counterMap[t] = &simpleSingleCacheStats{CacheName: t.String() + "Cache", LastCached: now.String()}
+			go cache.WalkCacheFolderWithContext(walkContext, chain, t, nil, filenameChan)
 		}
 
 		for result := range filenameChan {
@@ -46,29 +47,35 @@ func (opts *StatusOptions) HandleShow() error {
 				nRoutines--
 				if nRoutines == 0 {
 					close(filenameChan)
-					fmt.Println()
+					logger.Progress(true, "                                           ")
 				}
 			default:
-				if cache.IsCacheType(result.Path, result.Type, !result.IsDir /* checkExt */) {
-					if result.IsDir {
-						counterMap[result.Type].NFolders++
-						counterMap[result.Type].Path = cache.GetRootPathFromCacheType(chain, result.Type)
+				if nSeen >= firstRecord {
+					if cache.IsCacheType(result.Path, result.Type, !result.IsDir /* checkExt */) {
+						if result.IsDir {
+							counterMap[result.Type].NFolders++
+							counterMap[result.Type].Path = cache.GetRootPathFromCacheType(chain, result.Type)
+						} else {
+							counterMap[result.Type].NFiles++
+							counterMap[result.Type].SizeInBytes += file.FileSize(result.Path)
+						}
+
+						logger.Progress(
+							nSeen%100 == 0,
+							fmt.Sprintf("Found %d %s files: %d %d %d %d", counterMap[result.Type].NFiles, result.Type, nSeen, firstRecord, nProcessed, maxRecords))
+
+						nProcessed++
+
 					} else {
-						counterMap[result.Type].NFiles++
-						counterMap[result.Type].SizeInBytes += file.FileSize(result.Path)
+						logger.Progress(true, fmt.Sprintf("Skipped %s", result.Path))
 					}
-					if opts.Globals.TestMode {
-						counterMap[result.Type].NFiles = 0xbeef
-						counterMap[result.Type].NFolders = 0xdead
-						counterMap[result.Type].SizeInBytes = 0xdeadbeef
-						continue
-					}
-					logger.Progress(
-						(counterMap[result.Type].NFiles+1)%100 == 0,
-						fmt.Sprintf("Found %d %s files", counterMap[result.Type].NFiles, result.Type))
-					// } else {
-					// 	logger.Progress(true, fmt.Sprintf("Skipped %s", result.Path))
+
 				}
+				nSeen++
+			}
+
+			if nProcessed >= maxRecords {
+				cancel()
 			}
 		}
 
@@ -82,7 +89,7 @@ func (opts *StatusOptions) HandleShow() error {
 			Status: *status,
 		}
 
-		for _, t := range types {
+		for _, t := range opts.ModeTypes {
 			if counterMap[t] != nil {
 				s.Caches = append(s.Caches, *counterMap[t])
 			}
@@ -94,9 +101,10 @@ func (opts *StatusOptions) HandleShow() error {
 	extra := map[string]interface{}{
 		"showProgress": false,
 		"testMode":     opts.Globals.TestMode,
+		// "isApi":        isApi,
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(renderCtx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }
 
 type simpleCacheStats struct {
@@ -110,9 +118,16 @@ func (s *simpleCacheStats) Raw() *types.RawModeler {
 
 func (s *simpleCacheStats) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
 	model := s.Status.Model(showHidden, format, extraOptions)
-	if extraOptions != nil && extraOptions["testMode"] == true {
+	if extraOptions["testMode"] == true {
 		for i := 0; i < len(s.Caches); i++ {
 			s.Caches[i].Path = "--paths--"
+			s.Caches[i].LastCached = "--lastCached--"
+			s.Caches[i].NFiles = 123
+			s.Caches[i].NFolders = 456
+			s.Caches[i].SizeInBytes = 789
+			// if showHidden {
+			// 	s.Caches[i].Items = append(s.Caches[i].Items, "item1", "item2", "item3")
+			// }
 		}
 	}
 	model.Data["caches"] = s.Caches
@@ -121,13 +136,13 @@ func (s *simpleCacheStats) Model(showHidden bool, format string, extraOptions ma
 }
 
 type simpleSingleCacheStats struct {
-	CacheName   string `json:"cacheName,omitempty"`
-	Estimated   bool   `json:"estimated,omitempty"`
+	CacheName string `json:"cacheName,omitempty"`
+	// Items       []string `json:"items,omitempty"`
 	LastCached  string `json:"lastCached,omitempty"`
-	NFiles      int    `json:"nFiles,omitempty"`
-	NFolders    int    `json:"nFolders,omitempty"`
-	Path        string `json:"path,omitempty"`
-	SizeInBytes int64  `json:"sizeInBytes,omitempty"`
+	NFiles      int    `json:"nFiles"`
+	NFolders    int    `json:"nFolders"`
+	Path        string `json:"path"`
+	SizeInBytes int64  `json:"sizeInBytes"`
 }
 
 //     if (!names.readBinaryCache(cacheFolder_names, "names", verbose)) {

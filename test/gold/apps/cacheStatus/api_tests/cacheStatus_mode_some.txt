@@ -2,131 +2,112 @@ status?modes=some&verbose
 {
   "data": [
     {
-      "clientVersion": "Client version",
-      "clientIds": "chainId: 1 networkId: 1",
-      "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-",
-      "rpcProvider": "--providers--",
-      "configPath": "--paths--",
       "cachePath": "--paths--",
-      "indexPath": "--paths--",
-      "host": "--hostname-- (--username--)",
-      "isTesting": true,
-      "isApi": true,
-      "isScraping": false,
-      "isArchive": true,
-      "isTracing": true,
-      "hasEskey": true,
-      "hasPinkey": false,
-      "chains": [
-        {
-          "chain": "mainnet",
-          "chainId": 1,
-          "symbol": "ETH",
-          "rpcProvider": "--provider-mainnet--",
-          "apiProvider": "--provider-mainnet--",
-          "remoteExplorer": "--explorer-mainnet--",
-          "localExplorer": "--explorer-mainnet--"
-        },
-        {
-          "chain": "gnosis",
-          "chainId": 100,
-          "symbol": "XDAI",
-          "rpcProvider": "--provider-gnosis--",
-          "apiProvider": "--provider-gnosis--",
-          "remoteExplorer": "--explorer-gnosis--",
-          "localExplorer": "--explorer-gnosis--"
-        }
-      ],
       "caches": [
         {
+          "cacheName": "bloomCache",
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789
+        },
+        {
+          "cacheName": "indexCache",
           "items": [
             {
-              "type": "CIndexCacheItem",
+              "bloomSizeBytes": 131114,
+              "fileDate": "1700-01-01 00:00:01 UTC",
+              "filename": "/--index-path--/000000000-000000000.bin",
+              "firstApp": 0,
+              "firstTs": 1438269975,
+              "indexSizeBytes": 320192,
+              "latestApp": 0,
+              "latestTs": 1438269975,
               "nAddrs": 8893,
               "nApps": 8893,
-              "firstApp": 0,
-              "latestApp": 0,
-              "firstTs": 1438269975,
-              "latestTs": 1438269975,
-              "filename": "/--index-path--/000000000-000000000.bin",
-              "fileDate": "1700-01-01 00:00:01 UTC",
-              "indexSizeBytes": 320192,
-              "indexHash": "",
-              "bloomSizeBytes": 131114,
-              "bloomHash": ""
+              "type": "CIndexCacheItem"
             }
           ],
-          "type": "CIndexCache",
-          "path": "indexPath",
-          "nFiles": 0,
-          "nFolders": 0,
-          "sizeInBytes": 0
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789
         },
         {
-          "addrs": [],
+          "cacheName": "monitorsCache",
           "items": [
             {
+              "address": "---address---",
+              "decimals": 0,
               "deleted": false,
-              "type": "",
-              "nApps": 0,
               "firstApp": 0,
               "latestApp": 0,
-              "sizeInBytes": 0,
-              "tags": "--tags--",
-              "address": "---address---",
+              "nApps": 0,
               "name": "--name--",
-              "symbol": "--symbol--",
-              "source": "--source--",
-              "decimals": 0,
               "petname": "--petname--",
-              "isCustom": false,
-              "isPrefund": false,
-              "isContract": false,
-              "isErc20": false,
-              "isErc721": false
+              "source": "--source--",
+              "symbol": "--symbol--",
+              "tags": "--tags--"
             }
           ],
-          "type": "CMonitorCache",
-          "path": "monitorsPath",
-          "nFiles": 0,
-          "nFolders": 0,
-          "sizeInBytes": 0
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789
         },
         {
-          "addrs": [],
+          "cacheName": "namesCache",
           "items": [],
-          "type": "CNameCache",
-          "path": "namesPath",
-          "nFiles": 0,
-          "nFolders": 0,
-          "sizeInBytes": 0
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789
         },
         {
-          "type": "CAbiCache",
-          "path": "abisPath",
-          "nFiles": 0,
-          "nFolders": 0,
-          "sizeInBytes": 0,
-          "items": []
-        },
-        {
+          "cacheName": "abisCache",
           "items": [],
-          "type": "CSlurpCache",
-          "path": "slurpsPath",
-          "nFiles": 0,
-          "nFolders": 0,
-          "sizeInBytes": 0
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789
+        },
+        {
+          "cacheName": "slurpsCache",
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789
         }
       ],
-      "keys": [],
-      "date": "--date--"
+      "chainConfig": "--paths--",
+      "clientVersion": "Client version",
+      "hasEsKey": true,
+      "hasPinKey": false,
+      "indexPath": "--paths--",
+      "isArchive": true,
+      "isTesting": true,
+      "isTracing": true,
+      "rootConfig": "--paths--",
+      "rpcProvider": "--providers--",
+      "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-"
     }
   ],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
+    "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
   }
 }

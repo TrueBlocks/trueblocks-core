@@ -31,6 +31,20 @@ func Test_getPaths(t *testing.T) {
 	}
 }
 
+func Test_cmdToCacheType(t *testing.T) {
+	e := Cache_Blocks
+	g := CmdToCacheType("blocks")
+	if e != g {
+		t.Error("cmdToCacheType", "wanted", e, "got", g)
+	}
+
+	e = Cache_NotACache
+	g = CmdToCacheType("no")
+	if e != g {
+		t.Error("cmdToCacheType", "wanted", e, "got", g)
+	}
+}
+
 func Test_cacheLayout(t *testing.T) {
 	indexPath := strings.Trim(config.GetPathToIndex(utils.GetTestChain()), "/")
 	cachePath := strings.Trim(config.GetPathToCache(utils.GetTestChain()), "/")
@@ -159,8 +173,8 @@ func getCacheItem(chain string, cT CacheType, param string) *cacheItem {
 	root := strings.Join(parts[:len(parts)-1], "/")
 	subFolder := parts[len(parts)-1]
 	ext := ""
-	if len(cacheExtensions[cT]) > 0 {
-		ext = "." + cacheExtensions[cT]
+	if len(cacheTypeToExt[cT]) > 0 {
+		ext = "." + cacheTypeToExt[cT]
 	}
 	extra := ""
 	if cT == Cache_Blocks {

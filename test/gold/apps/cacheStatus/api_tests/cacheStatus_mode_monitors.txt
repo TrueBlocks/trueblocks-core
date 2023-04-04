@@ -2,61 +2,60 @@ status?modes=monitors&verbose
 {
   "data": [
     {
-      "clientVersion": "Client version",
-      "clientIds": "chainId: 1 networkId: 1",
-      "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-",
-      "rpcProvider": "--providers--",
-      "configPath": "--paths--",
       "cachePath": "--paths--",
-      "indexPath": "--paths--",
-      "host": "--hostname-- (--username--)",
-      "isTesting": true,
-      "isApi": true,
-      "isScraping": false,
-      "isArchive": true,
-      "isTracing": true,
-      "hasEskey": true,
-      "hasPinkey": false,
       "caches": [
         {
-          "addrs": [],
+          "cacheName": "monitorsCache",
           "items": [
             {
-              "deleted": false,
-              "type": "",
-              "nApps": 0,
-              "firstApp": 0,
-              "latestApp": 0,
-              "sizeInBytes": 0,
-              "tags": "--tags--",
               "address": "---address---",
-              "name": "--name--",
-              "symbol": "--symbol--",
-              "source": "--source--",
               "decimals": 0,
-              "petname": "--petname--",
-              "isCustom": false,
-              "isPrefund": false,
+              "deleted": false,
+              "firstApp": 0,
               "isContract": false,
+              "isCustom": false,
               "isErc20": false,
-              "isErc721": false
+              "isErc721": false,
+              "isPrefund": false,
+              "latestApp": 0,
+              "nApps": 0,
+              "name": "--name--",
+              "petname": "--petname--",
+              "sizeInBytes": 0,
+              "source": "--source--",
+              "symbol": "--symbol--",
+              "tags": "--tags--",
+              "type": ""
             }
           ],
-          "type": "CMonitorCache",
-          "path": "monitorsPath",
-          "nFiles": 0,
-          "nFolders": 0,
-          "sizeInBytes": 0
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789
         }
       ],
-      "date": "--date--"
+      "chainConfig": "--paths--",
+      "clientVersion": "Client version",
+      "hasEsKey": true,
+      "hasPinKey": false,
+      "indexPath": "--paths--",
+      "isArchive": true,
+      "isTesting": true,
+      "isTracing": true,
+      "rootConfig": "--paths--",
+      "rpcProvider": "--providers--",
+      "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-"
     }
   ],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
+    "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
   }
 }

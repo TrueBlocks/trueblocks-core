@@ -14,6 +14,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -24,6 +25,7 @@ type StatusOptions struct {
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 	// EXISTING_CODE
+	ModeTypes []cache.CacheType `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -79,6 +81,7 @@ func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
+	opts.ModeTypes = cache.GetCacheTypes(opts.Modes)
 	// EXISTING_CODE
 
 	return opts
@@ -91,6 +94,7 @@ func statusFinishParse(args []string) *StatusOptions {
 	defFmt := "txt"
 	// EXISTING_CODE
 	opts.Modes = append(opts.Modes, args...)
+	opts.ModeTypes = cache.GetCacheTypes(opts.Modes)
 	if len(opts.Modes) > 0 {
 		defFmt = "json"
 	}

@@ -1,6 +1,6 @@
 status?modes=config&verbose
 {
   "errors": [
-    "The mode option (config) must be one of [ index | monitors | names | abis | slurps | blocks | txs | traces | some | all ]"
+    "The mode option (config) must be one of [ abis | blocks | monitors | names | recons | slurps | tmp | traces | txs | blooms | index | ripe | staging | unripe | maps | some | all ]"
   ]
 }
