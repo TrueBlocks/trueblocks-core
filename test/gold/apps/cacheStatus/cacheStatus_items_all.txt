@@ -1,5 +1,6 @@
-chifra status  all
+chifra status  all --max_records 100
 TEST[DATE|TIME] Modes:  [all]
+TEST[DATE|TIME] MaxRecords:  100
 TEST[DATE|TIME] Format:  json
 {
   "data": [
@@ -8,6 +9,7 @@ TEST[DATE|TIME] Format:  json
       "caches": [
         {
           "cacheName": "bloomCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -16,6 +18,7 @@ TEST[DATE|TIME] Format:  json
         },
         {
           "cacheName": "indexCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -24,6 +27,7 @@ TEST[DATE|TIME] Format:  json
         },
         {
           "cacheName": "stagingCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -32,6 +36,7 @@ TEST[DATE|TIME] Format:  json
         },
         {
           "cacheName": "unripeCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -40,6 +45,7 @@ TEST[DATE|TIME] Format:  json
         },
         {
           "cacheName": "monitorsCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -48,6 +54,7 @@ TEST[DATE|TIME] Format:  json
         },
         {
           "cacheName": "namesCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -56,6 +63,7 @@ TEST[DATE|TIME] Format:  json
         },
         {
           "cacheName": "abisCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -64,6 +72,7 @@ TEST[DATE|TIME] Format:  json
         },
         {
           "cacheName": "slurpsCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -72,6 +81,7 @@ TEST[DATE|TIME] Format:  json
         },
         {
           "cacheName": "blocksCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -80,6 +90,7 @@ TEST[DATE|TIME] Format:  json
         },
         {
           "cacheName": "tracesCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -88,6 +99,7 @@ TEST[DATE|TIME] Format:  json
         },
         {
           "cacheName": "transactionsCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

@@ -1,5 +1,6 @@
-chifra status  staging --verbose
+chifra status  staging --verbose --max_records 100
 TEST[DATE|TIME] Modes:  [staging]
+TEST[DATE|TIME] MaxRecords:  100
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Format:  json
 {

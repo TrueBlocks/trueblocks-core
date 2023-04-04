@@ -39,7 +39,7 @@ const usageStatus = `status <mode> [mode...] [flags]
 
 Arguments:
   modes - the (optional) name of the binary cache to report on, terse otherwise
-	One or more of [ abis | blocks | monitors | names | recons | slurps | tmp | traces | txs | blooms | index | ripe | staging | unripe | maps | some | all ]`
+	One or more of [ index | blooms | blocks | txs | traces | monitors | names | abis | recons | slurps | staging | unripe | maps | some | all ]`
 
 const shortStatus = "report on the state of the internal binary caches"
 
@@ -50,13 +50,14 @@ const notesStatus = `
 Notes:
   - The some mode includes index, monitors, names, slurps, and abis.
   - If no mode is supplied, a terse report is generated.
-  - This tool ignores the --format option, all results other than terse are json.`
+  - This tool ignores the --format option, all results other than terse are json.
+  - The blooms and index modes produce the same results.`
 
 func init() {
 	statusCmd.Flags().SortFlags = false
 
 	statusCmd.Flags().Uint64VarP(&statusPkg.GetOptions().FirstRecord, "first_record", "c", 1, "the first record to process")
-	statusCmd.Flags().Uint64VarP(&statusPkg.GetOptions().MaxRecords, "max_records", "e", 250, "the maximum number of records to process")
+	statusCmd.Flags().Uint64VarP(&statusPkg.GetOptions().MaxRecords, "max_records", "e", 10000, "the maximum number of records to process")
 	globals.InitGlobals(statusCmd, &statusPkg.GetOptions().Globals)
 
 	statusCmd.SetUsageTemplate(UsageWithNotes(notesStatus))

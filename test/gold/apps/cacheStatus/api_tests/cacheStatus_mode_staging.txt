@@ -1,4 +1,4 @@
-status?modes=staging&verbose
+status?modes=staging&verbose&maxRecords=100
 {
   "data": [
     {

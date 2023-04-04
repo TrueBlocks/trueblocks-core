@@ -1,4 +1,4 @@
-status?modes=recons
+status?modes=recons&maxRecords=100
 {
   "data": [
     {
@@ -6,6 +6,7 @@ status?modes=recons
       "caches": [
         {
           "cacheName": "reconciliationsCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

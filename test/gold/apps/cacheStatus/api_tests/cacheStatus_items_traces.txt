@@ -1,4 +1,4 @@
-status?modes=traces
+status?modes=traces&maxRecords=100
 {
   "data": [
     {
@@ -6,6 +6,7 @@ status?modes=traces
       "caches": [
         {
           "cacheName": "tracesCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

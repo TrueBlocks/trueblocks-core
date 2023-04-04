@@ -1,4 +1,4 @@
-status?modes=all
+status?modes=all&maxRecords=100
 {
   "data": [
     {
@@ -6,6 +6,7 @@ status?modes=all
       "caches": [
         {
           "cacheName": "bloomCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -14,6 +15,7 @@ status?modes=all
         },
         {
           "cacheName": "indexCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -22,6 +24,7 @@ status?modes=all
         },
         {
           "cacheName": "stagingCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -30,6 +33,7 @@ status?modes=all
         },
         {
           "cacheName": "unripeCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -38,6 +42,7 @@ status?modes=all
         },
         {
           "cacheName": "monitorsCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -46,6 +51,7 @@ status?modes=all
         },
         {
           "cacheName": "namesCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -54,6 +60,7 @@ status?modes=all
         },
         {
           "cacheName": "abisCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -62,6 +69,7 @@ status?modes=all
         },
         {
           "cacheName": "slurpsCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -70,6 +78,7 @@ status?modes=all
         },
         {
           "cacheName": "blocksCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -78,6 +87,7 @@ status?modes=all
         },
         {
           "cacheName": "tracesCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -86,6 +96,7 @@ status?modes=all
         },
         {
           "cacheName": "transactionsCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

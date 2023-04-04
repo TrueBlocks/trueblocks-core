@@ -1,4 +1,4 @@
-status?modes=abis&modes=monitors&modes=slurps
+status?modes=abis&modes=monitors&modes=slurps&maxRecords=100
 {
   "data": [
     {
@@ -6,6 +6,7 @@ status?modes=abis&modes=monitors&modes=slurps
       "caches": [
         {
           "cacheName": "abisCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -14,6 +15,7 @@ status?modes=abis&modes=monitors&modes=slurps
         },
         {
           "cacheName": "monitorsCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -22,6 +24,7 @@ status?modes=abis&modes=monitors&modes=slurps
         },
         {
           "cacheName": "slurpsCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

@@ -1,5 +1,6 @@
-chifra status  index --fmt json --verbose
+chifra status  index --fmt json --verbose --max_records 100
 TEST[DATE|TIME] Modes:  [index]
+TEST[DATE|TIME] MaxRecords:  100
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Format:  json
 {

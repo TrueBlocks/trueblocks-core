@@ -1,4 +1,4 @@
-status?modes=abis&modes=monitors&modes=slurps&verbose
+status?modes=abis&modes=monitors&modes=slurps&verbose&maxRecords=100
 {
   "data": [
     {

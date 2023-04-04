@@ -5,6 +5,7 @@
       "caches": [
         {
           "cacheName": "namesCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -33,6 +34,7 @@
       "caches": [
         {
           "cacheName": "indexCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

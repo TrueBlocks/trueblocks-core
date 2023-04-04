@@ -1,4 +1,4 @@
-status?modes=monitors
+status?modes=monitors&maxRecords=100
 {
   "data": [
     {
@@ -6,6 +6,7 @@ status?modes=monitors
       "caches": [
         {
           "cacheName": "monitorsCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

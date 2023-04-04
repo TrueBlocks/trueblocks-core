@@ -1,4 +1,4 @@
-status?modes=staging
+status?modes=staging&maxRecords=100
 {
   "data": [
     {
@@ -6,6 +6,7 @@ status?modes=staging
       "caches": [
         {
           "cacheName": "stagingCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

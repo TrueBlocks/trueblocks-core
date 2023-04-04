@@ -1,4 +1,4 @@
-status?modes=recons&verbose
+status?modes=recons&verbose&maxRecords=100
 {
   "data": [
     {

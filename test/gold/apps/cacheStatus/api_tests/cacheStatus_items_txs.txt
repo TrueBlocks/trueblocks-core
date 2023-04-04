@@ -1,4 +1,4 @@
-status?modes=txs
+status?modes=txs&maxRecords=100
 {
   "data": [
     {
@@ -6,6 +6,7 @@ status?modes=txs
       "caches": [
         {
           "cacheName": "transactionsCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

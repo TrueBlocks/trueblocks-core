@@ -458,9 +458,5 @@ bool CMonitor::readAppearances(MONAPPFUNC func, void* data) {
     return true;
 }
 
-//----------------------------------------------------------------
-bool isMonitorFilePath(const string_q& path) {
-    return endsWith(path, "mon.bin");
-}
 // EXISTING_CODE
 }  // namespace qblocks

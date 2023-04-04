@@ -1,5 +1,6 @@
-chifra status  index --output output_test_file --no_header --append
+chifra status  index --output output_test_file --no_header --append --max_records 100
 TEST[DATE|TIME] Modes:  [index]
+TEST[DATE|TIME] MaxRecords:  100
 TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] OutputFn:  output_test_file
 TEST[DATE|TIME] Append:  true
@@ -14,6 +15,7 @@ Results in ./output_test_file
       "caches": [
         {
           "cacheName": "namesCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

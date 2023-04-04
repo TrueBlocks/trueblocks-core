@@ -1,4 +1,4 @@
-status?modes=index
+status?modes=index&maxRecords=100
 {
   "data": [
     {
@@ -6,6 +6,7 @@ status?modes=index
       "caches": [
         {
           "cacheName": "indexCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

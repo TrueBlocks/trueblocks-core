@@ -1,4 +1,4 @@
-status?modes=unripe
+status?modes=unripe&maxRecords=100
 {
   "data": [
     {
@@ -6,6 +6,7 @@ status?modes=unripe
       "caches": [
         {
           "cacheName": "unripeCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

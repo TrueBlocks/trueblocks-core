@@ -1,4 +1,4 @@
-status?modes=blocks
+status?modes=blocks&maxRecords=100
 {
   "data": [
     {
@@ -6,6 +6,7 @@ status?modes=blocks
       "caches": [
         {
           "cacheName": "blocksCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

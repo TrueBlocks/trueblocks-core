@@ -1,5 +1,6 @@
-chifra status  names --output output_test_file
+chifra status  names --output output_test_file --max_records 100
 TEST[DATE|TIME] Modes:  [names]
+TEST[DATE|TIME] MaxRecords:  100
 TEST[DATE|TIME] OutputFn:  output_test_file
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
@@ -12,6 +13,7 @@ Results in ./output_test_file
       "caches": [
         {
           "cacheName": "namesCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

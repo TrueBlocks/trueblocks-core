@@ -1,4 +1,4 @@
-status?modes=abis&verbose
+status?modes=abis&verbose&maxRecords=100
 {
   "data": [
     {
@@ -6,6 +6,7 @@ status?modes=abis&verbose
       "caches": [
         {
           "cacheName": "abisCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

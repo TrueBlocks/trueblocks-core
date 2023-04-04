@@ -1,4 +1,4 @@
-status?modes=maps
+status?modes=maps&maxRecords=100
 {
   "data": [
     {
@@ -6,6 +6,7 @@ status?modes=maps
       "caches": [
         {
           "cacheName": "neighborsCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

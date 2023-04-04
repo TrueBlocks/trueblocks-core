@@ -1,5 +1,6 @@
-chifra status  abis monitors slurps --verbose
+chifra status  abis monitors slurps --verbose --max_records 100
 TEST[DATE|TIME] Modes:  [abis monitors slurps]
+TEST[DATE|TIME] MaxRecords:  100
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Format:  json
 {

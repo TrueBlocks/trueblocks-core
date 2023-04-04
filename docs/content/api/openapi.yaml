@@ -1595,18 +1595,16 @@ paths:
             items:
               type: string
               enum:
-                - abis
+                - index
+                - blooms
                 - blocks
+                - txs
+                - traces
                 - monitors
                 - names
+                - abis
                 - recons
                 - slurps
-                - tmp
-                - traces
-                - txs
-                - blooms
-                - index
-                - ripe
                 - staging
                 - unripe
                 - maps

@@ -1,4 +1,4 @@
-status?modes=maps&verbose
+status?modes=maps&verbose&maxRecords=100
 {
   "data": [
     {

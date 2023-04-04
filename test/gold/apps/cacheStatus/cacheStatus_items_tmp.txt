@@ -1,31 +1,25 @@
-chifra status  tmp
+chifra status  tmp --max_records 100
 TEST[DATE|TIME] Modes:  [tmp]
+TEST[DATE|TIME] MaxRecords:  100
 TEST[DATE|TIME] Format:  json
-{
-  "data": [
-    {
-      "cachePath": "--paths--",
-      "caches": [
-        {
-          "cacheName": "tmpCache",
-          "lastCached": "--lastCached--",
-          "nFiles": 123,
-          "nFolders": 456,
-          "path": "--paths--",
-          "sizeInBytes": 789
-        }
-      ],
-      "chainConfig": "--paths--",
-      "clientVersion": "Client version",
-      "hasEsKey": true,
-      "hasPinKey": false,
-      "indexPath": "--paths--",
-      "isArchive": true,
-      "isTesting": true,
-      "isTracing": true,
-      "rootConfig": "--paths--",
-      "rpcProvider": "--providers--",
-      "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-"
-    }
-  ]
-}
+Error: The mode option (tmp) must be one of [ index | blooms | blocks | txs | traces | monitors | names | abis | recons | slurps | staging | unripe | maps | some | all ]
+Usage:
+  chifra status <mode> [mode...] [flags]
+
+Arguments:
+  modes - the (optional) name of the binary cache to report on, terse otherwise
+	One or more of [ index | blooms | blocks | txs | traces | monitors | names | abis | recons | slurps | staging | unripe | maps | some | all ]
+
+Flags:
+  -c, --first_record uint   the first record to process (default 1)
+  -e, --max_records uint    the maximum number of records to process (default 250)
+  -x, --fmt string          export format, one of [none|json*|txt|csv]
+  -v, --verbose             enable verbose (increase detail with --log_level)
+  -h, --help                display this help screen
+
+Notes:
+  - The some mode includes index, monitors, names, slurps, and abis.
+  - If no mode is supplied, a terse report is generated.
+  - This tool ignores the --format option, all results other than terse are json.
+  - The blooms and index modes produce the same results.
+

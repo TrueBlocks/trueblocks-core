@@ -1,6 +1,6 @@
 status?modes=junk
 {
   "errors": [
-    "The mode option (junk) must be one of [ abis | blocks | monitors | names | recons | slurps | tmp | traces | txs | blooms | index | ripe | staging | unripe | maps | some | all ]"
+    "The mode option (junk) must be one of [ index | blooms | blocks | txs | traces | monitors | names | abis | recons | slurps | staging | unripe | maps | some | all ]"
   ]
 }

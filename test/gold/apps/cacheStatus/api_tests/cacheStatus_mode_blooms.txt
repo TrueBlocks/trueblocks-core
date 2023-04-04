@@ -1,4 +1,4 @@
-status?modes=blooms&verbose
+status?modes=blooms&verbose&maxRecords=3
 {
   "data": [
     {
@@ -6,7 +6,41 @@ status?modes=blooms&verbose
       "caches": [
         {
           "cacheName": "bloomCache",
-          "items": [],
+          "items": [
+            {
+              "bloomSizeBytes": 131114,
+              "fileDate": "--fileDate--",
+              "filename": "$indexPath/blooms/000000000-000000000.bloom",
+              "firstApp": 0,
+              "firstTs": 1438269975,
+              "indexSizeBytes": 320192,
+              "latestApp": 0,
+              "latestTs": 1438269975,
+              "type": "indexCacheItem"
+            },
+            {
+              "bloomSizeBytes": 131114,
+              "fileDate": "--fileDate--",
+              "filename": "$indexPath/blooms/000000001-000590502.bloom",
+              "firstApp": 1,
+              "firstTs": 1438269988,
+              "indexSizeBytes": 16821060,
+              "latestApp": 590502,
+              "latestTs": 1448383558,
+              "type": "indexCacheItem"
+            },
+            {
+              "bloomSizeBytes": 524342,
+              "fileDate": "--fileDate--",
+              "filename": "$indexPath/blooms/000590503-000864335.bloom",
+              "firstApp": 590503,
+              "firstTs": 1448383562,
+              "indexSizeBytes": 20604588,
+              "latestApp": 864335,
+              "latestTs": 1453071545,
+              "type": "indexCacheItem"
+            }
+          ],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

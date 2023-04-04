@@ -1,4 +1,4 @@
-status?modes=blooms
+status?modes=blooms&maxRecords=100
 {
   "data": [
     {
@@ -6,6 +6,7 @@ status?modes=blooms
       "caches": [
         {
           "cacheName": "bloomCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

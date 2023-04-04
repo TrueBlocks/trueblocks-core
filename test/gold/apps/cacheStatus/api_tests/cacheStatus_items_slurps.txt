@@ -1,4 +1,4 @@
-status?modes=slurps
+status?modes=slurps&maxRecords=100
 {
   "data": [
     {
@@ -6,6 +6,7 @@ status?modes=slurps
       "caches": [
         {
           "cacheName": "slurpsCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

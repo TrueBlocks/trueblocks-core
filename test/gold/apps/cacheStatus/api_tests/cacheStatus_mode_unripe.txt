@@ -1,4 +1,4 @@
-status?modes=unripe&verbose
+status?modes=unripe&verbose&maxRecords=100
 {
   "data": [
     {

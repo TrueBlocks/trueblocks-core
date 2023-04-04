@@ -1,4 +1,4 @@
-status?modes=monitors&verbose
+status?modes=monitors&verbose&maxRecords=100
 {
   "data": [
     {

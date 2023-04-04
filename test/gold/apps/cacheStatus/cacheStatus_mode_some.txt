@@ -1,5 +1,6 @@
-chifra status  some --verbose
+chifra status  some --verbose --max_records 100
 TEST[DATE|TIME] Modes:  [some]
+TEST[DATE|TIME] MaxRecords:  100
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Format:  json
 {

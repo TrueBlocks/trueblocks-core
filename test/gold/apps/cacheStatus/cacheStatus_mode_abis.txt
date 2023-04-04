@@ -1,5 +1,6 @@
-chifra status  abis --verbose
+chifra status  abis --verbose --max_records 100
 TEST[DATE|TIME] Modes:  [abis]
+TEST[DATE|TIME] MaxRecords:  100
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Format:  json
 {

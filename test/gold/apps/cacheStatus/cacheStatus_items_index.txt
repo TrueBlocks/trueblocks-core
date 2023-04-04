@@ -1,5 +1,6 @@
-chifra status  index
+chifra status  index --max_records 100
 TEST[DATE|TIME] Modes:  [index]
+TEST[DATE|TIME] MaxRecords:  100
 TEST[DATE|TIME] Format:  json
 {
   "data": [
@@ -8,6 +9,7 @@ TEST[DATE|TIME] Format:  json
       "caches": [
         {
           "cacheName": "indexCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

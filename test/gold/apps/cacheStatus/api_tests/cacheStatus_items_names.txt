@@ -1,4 +1,4 @@
-status?modes=names
+status?modes=names&maxRecords=100
 {
   "data": [
     {
@@ -6,6 +6,7 @@ status?modes=names
       "caches": [
         {
           "cacheName": "namesCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

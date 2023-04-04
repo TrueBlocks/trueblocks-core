@@ -1,4 +1,4 @@
-status?modes=some
+status?modes=some&maxRecords=100
 {
   "data": [
     {
@@ -6,6 +6,7 @@ status?modes=some
       "caches": [
         {
           "cacheName": "bloomCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -14,6 +15,7 @@ status?modes=some
         },
         {
           "cacheName": "indexCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -22,6 +24,7 @@ status?modes=some
         },
         {
           "cacheName": "monitorsCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -30,6 +33,7 @@ status?modes=some
         },
         {
           "cacheName": "namesCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -38,6 +42,7 @@ status?modes=some
         },
         {
           "cacheName": "abisCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -46,6 +51,7 @@ status?modes=some
         },
         {
           "cacheName": "slurpsCache",
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

@@ -1,4 +1,4 @@
-status?fmt=json&verbose
+status?fmt=json&verbose&maxRecords=100
 {
   "data": [
     {
