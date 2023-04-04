@@ -1618,6 +1618,24 @@ paths:
                 - maps
                 - some
                 - all
+        - name: firstRecord
+          description: the first record to process
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: uint64
+        - name: maxRecords
+          description: the maximum number of records to process
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: uint64
       responses:
         "200":
           description: returns the requested data

@@ -234,11 +234,13 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10770,apps,Admin,config,config,paths,a,,false,false,false,false,gocmd,switch,<boolean>,show the configuration paths for the system
 10860,apps,Admin,config,config,,,,false,false,true,true,--,description,,Report on and edit the configuration of the TrueBlocks system.
 
-20810,apps,Admin,status,cacheStatus,modes,,,false,false,true,true,local,positional,list<enum[abis|blocks|monitors|names|recons|slurps|tmp|traces|txs|blooms|index|ripe|staging|unripe|maps|some*|all]>,the (optional) name of the binary cache to report on&#44; terse otherwise
-20815,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the state of the internal binary caches.
-20820,apps,Admin,status,cacheStatus,n1,,,false,false,false,false,--,note,,The `some` mode includes index&#44; monitors&#44; names&#44; slurps&#44; and abis.
-20825,apps,Admin,status,cacheStatus,n2,,,false,false,false,false,--,note,,If no mode is supplied&#44; a terse report is generated.
-20830,apps,Admin,status,cacheStatus,n3,,,false,false,false,false,--,note,,This tool ignores the `--format` option&#44; all results other than terse are json.
+20810,apps,Admin,status,cacheStatus,modes,,,false,false,true,true,gocmd,positional,list<enum[abis|blocks|monitors|names|recons|slurps|tmp|traces|txs|blooms|index|ripe|staging|unripe|maps|some*|all]>,the (optional) name of the binary cache to report on&#44; terse otherwise
+20815,apps,Admin,status,cacheStatus,first_record,c,1,false,false,true,true,gocmd,flag,<uint64>,the first record to process
+20820,apps,Admin,status,cacheStatus,max_records,e,250,false,false,true,true,gocmd,flag,<uint64>,the maximum number of records to process
+20825,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the state of the internal binary caches.
+20830,apps,Admin,status,cacheStatus,n1,,,false,false,false,false,--,note,,The `some` mode includes index&#44; monitors&#44; names&#44; slurps&#44; and abis.
+20835,apps,Admin,status,cacheStatus,n2,,,false,false,false,false,--,note,,If no mode is supplied&#44; a terse report is generated.
+20840,apps,Admin,status,cacheStatus,n3,,,false,false,false,false,--,note,,This tool ignores the `--format` option&#44; all results other than terse are json.
 
 31900,apps,Admin,chunks,chunkMan,mode,,,true,false,true,true,local,positional,enum[status|manifest|index|blooms|addresses|appearances|stats],the type of data to process
 31905,apps,Admin,chunks,chunkMan,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of blocks to intersect with chunk ranges

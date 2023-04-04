@@ -13,9 +13,11 @@ Arguments:
 	One or more of [ abis | blocks | monitors | names | recons | slurps | tmp | traces | txs | blooms | index | ripe | staging | unripe | maps | some | all ]
 
 Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv]
-  -v, --verbose      enable verbose (increase detail with --log_level)
-  -h, --help         display this help screen
+  -c, --first_record uint   the first record to process (default 1)
+  -e, --max_records uint    the maximum number of records to process (default 250)
+  -x, --fmt string          export format, one of [none|json*|txt|csv]
+  -v, --verbose             enable verbose (increase detail with --log_level)
+  -h, --help                display this help screen
 
 Notes:
   - The some mode includes index, monitors, names, slurps, and abis.

@@ -20,7 +20,6 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("modes", "", "list<enum[abis|blocks|monitors|names|recons|slurps|tmp|traces|txs|blooms|index|ripe|staging|unripe|maps|some*|all]>", OPT_POSITIONAL, "the (optional) name of the binary cache to report on, terse otherwise"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Report on the state of the internal binary caches."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -33,7 +32,6 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
-    CStringArray modes;
     // END_CODE_LOCAL_INIT
 
     Init();
@@ -47,12 +45,6 @@ bool COptions::parseArguments(string_q& command) {
             if (!builtInCmd(arg)) {
                 return invalid_option(arg);
             }
-
-        } else {
-            string_q modes_tmp;
-            if (!confirmEnum("modes", modes_tmp, arg))
-                return false;
-            modes.push_back(modes_tmp);
 
             // END_CODE_AUTO
         }
@@ -77,6 +69,7 @@ bool COptions::parseArguments(string_q& command) {
     establishIndexFolders();
     establishCacheFolders();
 
+    CStringArray modes;
     for (auto m : modes) {
         mode += (m + "|");
     }

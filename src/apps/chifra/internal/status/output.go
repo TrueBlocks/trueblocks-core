@@ -13,6 +13,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -50,20 +51,16 @@ func (opts *StatusOptions) StatusInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.IsPorted() {
-		if len(opts.ModeTypes) > 0 {
-			return opts.HandleShow(), true
-		} else {
-			return opts.HandleStatusTerse(), true
-		}
-	}
-
-	if opts.Globals.IsApiMode() {
-		return nil, false
+	if !opts.IsPorted() {
+		logger.Fatal("Should not happen in NamesInternal")
 	}
 
 	handled = true
-	err = opts.Globals.PassItOn("cacheStatus", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
+	if len(opts.ModeTypes) > 0 {
+		err = opts.HandleShow()
+	} else {
+		err = opts.HandleStatusTerse()
+	}
 	// EXISTING_CODE
 
 	return
@@ -80,29 +77,6 @@ func GetStatusOptions(args []string, g *globals.GlobalOptions) *StatusOptions {
 
 func (opts *StatusOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	// if len(opts.ModeTypes) == 0 {
-	// 	return !opts.Globals.Verbose
-	// } else if len(opts.ModeTypes) == 1 {
-	// 	switch opts.ModeTypes[0] {
-	// 	case cache.Cache_Monitors:
-	// 		fallthrough
-	// 	case cache.Cache_Abis:
-	// 		fallthrough
-	// 	case cache.Cache_Transactions:
-	// 		fallthrough
-	// 	case cache.Cache_Traces:
-	// 		return !opts.Globals.Verbose && opts.Globals.LogLevel == 0
-	// 	// case cache.Cache_Blocks:
-	// 	// 	fallthrough
-	// 	// case cache.Index_Bloom:
-	// 	// 	return !opts.Globals.Verbose && opts.Globals.LogLevel == 0
-	// 	case cache.Cache_Names:
-	// 		fallthrough
-	// 	case cache.Cache_Slurps:
-	// 		return true
-	// 	}
-	// }
-	// ported = len(opts.Modes) == 0 && !opts.Globals.Verbose
 	ported = true
 	// EXISTING_CODE
 	return
