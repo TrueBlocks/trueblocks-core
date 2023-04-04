@@ -9,3 +9,4 @@ doc_route = 409-cache
 doc_producer = config
 # go_type = true
 output = ../../apps/cacheStatus/
+disabled = true

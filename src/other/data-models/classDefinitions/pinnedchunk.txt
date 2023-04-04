@@ -11,3 +11,4 @@ doc_producer = chunks, init, scrape
 disabled = true
 go_type = false
 output = ../../apps/cacheStatus/
+disabled = true

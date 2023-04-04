@@ -9,3 +9,4 @@ doc_route = 402-manifest
 doc_producer = chunks, init, scrape
 # go_type = true
 output = ../../apps/cacheStatus/
+disabled = true

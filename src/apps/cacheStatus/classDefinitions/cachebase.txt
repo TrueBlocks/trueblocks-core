@@ -1,6 +1,0 @@
-[settings]
-class = CCacheBase
-base_class = CName
-fields = cachebase.csv
-includes = etherlib.h
-output = ../../apps/cacheStatus/

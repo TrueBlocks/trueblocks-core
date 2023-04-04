@@ -51,7 +51,7 @@ bool COptions::handle_options(void) {
         if (tool.first == "apps/blockScrape" || tool.first == "tools/grabABI" || tool.first == "tools/getReceipts" ||
             tool.first == "tools/getLogs" || tool.first == "tools/getTraces" || tool.first == "tools/ethslurp" ||
             tool.first == "tools/ethNames" || tool.first == "apps/daemon" || tool.first == "apps/config" ||
-            tool.first == "apps/status") {
+            tool.first == "apps/cacheStatus") {
             continue;
         }
         optionStream << "    // clang-format off" << endl;

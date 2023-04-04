@@ -8,3 +8,4 @@ doc_route = 411-indexCacheItem
 doc_producer = config
 go_type = true
 output = ../../apps/cacheStatus/
+disabled = true

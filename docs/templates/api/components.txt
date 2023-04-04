@@ -1235,6 +1235,23 @@ components:
           type: number
           format: double
           description: "the ratio of appearances to addresses"
+    monitorClean:
+      description: "report on cleaning dups out of monitors"
+      type: object
+      properties:
+        address:
+          type: string
+          format: address
+          description: "the address being cleaned"
+        sizeThen:
+          type: int64
+          description: "the number of appearances in the monitor prior to cleaning"
+        sizeNow:
+          type: int64
+          description: "the number of appearances in the monitor after cleaning"
+        dups:
+          type: int64
+          description: "the number of duplicates removed"
     cache:
       description: "the base data model for each of the type-specific local binary caches"
       type: object
@@ -1262,23 +1279,6 @@ components:
           items:
             $ref: "#/components/schemas/cacheEntry"
           description: "an array of cache items"
-    monitorClean:
-      description: "report on cleaning dups out of monitors"
-      type: object
-      properties:
-        address:
-          type: string
-          format: address
-          description: "the address being cleaned"
-        sizeThen:
-          type: int64
-          description: "the number of appearances in the monitor prior to cleaning"
-        sizeNow:
-          type: int64
-          description: "the number of appearances in the monitor after cleaning"
-        dups:
-          type: int64
-          description: "the number of duplicates removed"
     cacheEntry:
       description: "a single entry in the results of a status query when `--verbose` is enabled"
       type: object
