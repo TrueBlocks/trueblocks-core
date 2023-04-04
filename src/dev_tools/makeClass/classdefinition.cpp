@@ -640,8 +640,8 @@ void checkSorts(const string_q& className, const CStringArray& fields, const CSt
     }
     if (!which) {
         cerr << "Could not find field '" << field << "' in the following fields:\n";
-        for (auto field : fields)
-            cerr << "\t" << field << "\n";
+        for (auto fld : fields)
+            cerr << "\t" << fld << "\n";
         cerr << "\n";
         exit(0);
     }

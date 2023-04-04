@@ -37,7 +37,7 @@ as well as current status information about the system including version informa
 
 The following commands produce and manage Statuses:
 
-- [chifra config](/chifra/admin/#chifra-config)
+- [chifra status](/chifra/admin/#chifra-status)
 
 Statuses consist of the following fields:
 
@@ -232,7 +232,7 @@ information for the given cache. See the source code for more information.
 
 The following commands produce and manage Caches:
 
-- [chifra config](/chifra/admin/#chifra-config)
+- [chifra status](/chifra/admin/#chifra-status)
 
 Caches consist of the following fields:
 
@@ -253,7 +253,7 @@ tool.
 
 The following commands produce and manage CacheEntries:
 
-- [chifra config](/chifra/admin/#chifra-config)
+- [chifra status](/chifra/admin/#chifra-status)
 
 CacheEntries consist of the following fields:
 
@@ -291,7 +291,7 @@ The `indexCacheItem` is used to present a single Unchained Index chunk in the Ex
 
 The following commands produce and manage IndexCacheItems:
 
-- [chifra config](/chifra/admin/#chifra-config)
+- [chifra status](/chifra/admin/#chifra-status)
 
 IndexCacheItems consist of the following fields:
 
@@ -318,6 +318,7 @@ configuration file.
 
 The following commands produce and manage Chains:
 
+- [chifra status](/chifra/admin/#chifra-status)
 - [chifra config](/chifra/admin/#chifra-config)
 
 Chains consist of the following fields:

@@ -152,7 +152,7 @@ The following commands produce and manage Monitors:
 - [chifra monitors](/chifra/accounts/#chifra-monitors)
 - [chifra list](/chifra/accounts/#chifra-list)
 - [chifra export](/chifra/accounts/#chifra-export)
-- [chifra config](/chifra/admin/#chifra-config)
+- [chifra status](/chifra/admin/#chifra-status)
 
 Monitors consist of the following fields:
 

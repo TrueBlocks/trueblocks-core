@@ -1550,16 +1550,10 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/admin/#status">Status</a>, <a href="/data-model/admin/#cache">Cache</a>, <a href="/data-model/admin/#cacheentry">Cacheentry</a>, <a href="/data-model/admin/#indexcacheitem">Indexcacheitem</a>, and/or <a href="/data-model/admin/#chain">Chain</a> data. Corresponds to the <a href="/chifra/admin/#chifra-config">chifra config</a> command line.
+                    description: A configuration item carrying information about a single chain. Produces <a href="/data-model/admin/#chain">Chain</a> data. Corresponds to the <a href="/chifra/admin/#chifra-config">chifra config</a> command line.
                     type: array
                     items:
-                      oneOf:
-                        - $ref: "#/components/schemas/monitor"
-                        - $ref: "#/components/schemas/config"
-                        - $ref: "#/components/schemas/cache"
-                        - $ref: "#/components/schemas/cacheEntry"
-                        - $ref: "#/components/schemas/indexCacheItem"
-                        - $ref: "#/components/schemas/chain"
+                      $ref: "#/components/schemas/chain"
                 example:
                   {
                     "data":
@@ -1644,10 +1638,16 @@ paths:
               schema:
                 properties:
                   data:
-                    description: 
+                    description: Produces <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/admin/#status">Status</a>, <a href="/data-model/admin/#cache">Cache</a>, <a href="/data-model/admin/#cacheentry">Cacheentry</a>, <a href="/data-model/admin/#indexcacheitem">Indexcacheitem</a>, and/or <a href="/data-model/admin/#chain">Chain</a> data. Corresponds to the <a href="/chifra/admin/#chifra-status">chifra status</a> command line.
                     type: array
                     items:
-                      
+                      oneOf:
+                        - $ref: "#/components/schemas/monitor"
+                        - $ref: "#/components/schemas/config"
+                        - $ref: "#/components/schemas/cache"
+                        - $ref: "#/components/schemas/cacheEntry"
+                        - $ref: "#/components/schemas/indexCacheItem"
+                        - $ref: "#/components/schemas/chain"
         "400":
           description: bad input parameter
   /scrape:

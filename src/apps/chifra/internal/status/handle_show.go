@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -125,24 +126,29 @@ func (s *simpleCacheStats) Model(showHidden bool, format string, extraOptions ma
 			s.Caches[i].NFiles = 123
 			s.Caches[i].NFolders = 456
 			s.Caches[i].SizeInBytes = 789
-			// if showHidden {
-			// 	s.Caches[i].Items = append(s.Caches[i].Items, "item1", "item2", "item3")
-			// }
+			if showHidden {
+				s.Caches[i].Items = append(s.Caches[i].Items, "item1", "item2", "item3")
+			}
 		}
 	}
 	model.Data["caches"] = s.Caches
 	model.Order = append(model.Order, "caches")
+	if showHidden {
+		model.Data["chains"] = config.GetRootConfig().Chains
+		model.Order = append(model.Order, "chains")
+	}
+
 	return model
 }
 
 type simpleSingleCacheStats struct {
-	CacheName string `json:"cacheName,omitempty"`
-	// Items       []string `json:"items,omitempty"`
-	LastCached  string `json:"lastCached,omitempty"`
-	NFiles      int    `json:"nFiles"`
-	NFolders    int    `json:"nFolders"`
-	Path        string `json:"path"`
-	SizeInBytes int64  `json:"sizeInBytes"`
+	CacheName   string   `json:"cacheName,omitempty"`
+	Items       []string `json:"items,omitempty"`
+	LastCached  string   `json:"lastCached,omitempty"`
+	NFiles      int      `json:"nFiles"`
+	NFolders    int      `json:"nFolders"`
+	Path        string   `json:"path"`
+	SizeInBytes int64    `json:"sizeInBytes"`
 }
 
 //     if (!names.readBinaryCache(cacheFolder_names, "names", verbose)) {
