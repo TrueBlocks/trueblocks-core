@@ -2,6 +2,7 @@ package cache
 
 import (
 	"strings"
+	"sync"
 )
 
 type CacheType uint
@@ -44,6 +45,7 @@ var cacheTypeToName = map[CacheType]string{
 	Index_Maps:         "neighbors",
 }
 
+// cacheTypeToFolder is a map of cache types to the folder name (also, it acts as the mode in chifra status)
 var cacheTypeToFolder = map[CacheType]string{
 	Cache_NotACache:    "unknown",
 	Cache_Abis:         "abis",
@@ -86,6 +88,24 @@ func (ct CacheType) String() string {
 	return cacheTypeToName[ct]
 }
 
+var strToCacheType = map[string]CacheType{}
+var strToCacheTypeMutex sync.RWMutex
+
+func StrToCacheType(s string) CacheType {
+	if len(strToCacheType) == 0 {
+		strToCacheTypeMutex.Lock()
+		defer strToCacheTypeMutex.Unlock()
+		for k, v := range cacheTypeToFolder {
+			strToCacheType[v] = k
+		}
+	}
+	return strToCacheType[s]
+}
+
+func (ct CacheType) CacheTypeToStr() string {
+	return cacheTypeToFolder[ct]
+}
+
 func IsCacheType(path string, cT CacheType, checkExt bool) bool {
 	if !strings.Contains(path, cacheTypeToFolder[cT]) {
 		return false
@@ -94,18 +114,6 @@ func IsCacheType(path string, cT CacheType, checkExt bool) bool {
 		return false
 	}
 	return true
-}
-
-// TODO: BOGUS Needs a mutex
-var cmdToCacheType = map[string]CacheType{}
-
-func CmdToCacheType(s string) CacheType {
-	if len(cmdToCacheType) == 0 {
-		for k, v := range cacheTypeToFolder {
-			cmdToCacheType[v] = k
-		}
-	}
-	return cmdToCacheType[s]
 }
 
 func GetCacheTypes(strs []string) []CacheType {
@@ -146,7 +154,6 @@ func GetCacheTypes(strs []string) []CacheType {
 		case "maps":
 			types = append(types, Index_Maps)
 		case "some":
-			types = append(types, Index_Bloom)
 			types = append(types, Index_Final)
 			types = append(types, Cache_Monitors)
 			types = append(types, Cache_Names)

@@ -5,7 +5,7 @@ status?modes=names&verbose&maxRecords=2
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheName": "namesCache",
+          "cacheType": "namesCache",
           "items": [
             {
               "fileDate": "--fileDate--",

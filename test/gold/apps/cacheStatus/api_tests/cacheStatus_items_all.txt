@@ -5,7 +5,7 @@ status?modes=all&maxRecords=100
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheName": "bloomCache",
+          "cacheType": "bloomCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -14,7 +14,7 @@ status?modes=all&maxRecords=100
           "sizeInBytes": 789
         },
         {
-          "cacheName": "indexCache",
+          "cacheType": "indexCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -23,7 +23,7 @@ status?modes=all&maxRecords=100
           "sizeInBytes": 789
         },
         {
-          "cacheName": "stagingCache",
+          "cacheType": "stagingCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -32,7 +32,7 @@ status?modes=all&maxRecords=100
           "sizeInBytes": 789
         },
         {
-          "cacheName": "unripeCache",
+          "cacheType": "unripeCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -41,7 +41,7 @@ status?modes=all&maxRecords=100
           "sizeInBytes": 789
         },
         {
-          "cacheName": "monitorsCache",
+          "cacheType": "monitorsCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -50,7 +50,7 @@ status?modes=all&maxRecords=100
           "sizeInBytes": 789
         },
         {
-          "cacheName": "namesCache",
+          "cacheType": "namesCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -59,7 +59,7 @@ status?modes=all&maxRecords=100
           "sizeInBytes": 789
         },
         {
-          "cacheName": "abisCache",
+          "cacheType": "abisCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -68,7 +68,7 @@ status?modes=all&maxRecords=100
           "sizeInBytes": 789
         },
         {
-          "cacheName": "slurpsCache",
+          "cacheType": "slurpsCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -77,7 +77,7 @@ status?modes=all&maxRecords=100
           "sizeInBytes": 789
         },
         {
-          "cacheName": "blocksCache",
+          "cacheType": "blocksCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -86,7 +86,7 @@ status?modes=all&maxRecords=100
           "sizeInBytes": 789
         },
         {
-          "cacheName": "tracesCache",
+          "cacheType": "tracesCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -95,7 +95,7 @@ status?modes=all&maxRecords=100
           "sizeInBytes": 789
         },
         {
-          "cacheName": "transactionsCache",
+          "cacheType": "transactionsCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,

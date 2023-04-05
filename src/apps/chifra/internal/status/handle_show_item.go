@@ -69,7 +69,7 @@ func (opts *StatusOptions) getCacheItem(cT cache.CacheType, path string) (map[st
 			"indexSizeBytes": file.FileSize(cache.ToIndexPath(path)),
 			"latestApp":      fileRange.Last,
 			"latestTs":       latestTs,
-			"type":           cT.String() + "CacheItem",
+			"itemType":       cT.CacheTypeToStr() + "CacheItem",
 		}, nil
 	case cache.Cache_Monitors:
 		fallthrough
@@ -81,14 +81,14 @@ func (opts *StatusOptions) getCacheItem(cT cache.CacheType, path string) (map[st
 			"fileDate":    date,
 			"filename":    cacheDisplay,
 			"sizeInBytes": size,
-			"type":        cT.String() + "CacheItem",
+			"itemType":    cT.CacheTypeToStr() + "CacheItem",
 		}, nil
 	default:
 		return map[string]interface{}{
 			"fileDate":    date,
 			"filename":    cacheDisplay,
 			"sizeInBytes": size,
-			"type":        cT.String() + "CacheItem",
+			"itemType":    cT.CacheTypeToStr() + "CacheItem",
 		}, nil
 	}
 }

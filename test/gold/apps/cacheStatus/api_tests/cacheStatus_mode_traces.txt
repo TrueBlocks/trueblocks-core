@@ -5,7 +5,7 @@ status?modes=traces&verbose&maxRecords=10
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheName": "tracesCache",
+          "cacheType": "tracesCache",
           "items": [
             {
               "fileDate": "--fileDate--",

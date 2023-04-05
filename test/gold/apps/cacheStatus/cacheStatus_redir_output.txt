@@ -12,7 +12,7 @@ Results in ./output_test_file
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheName": "namesCache",
+          "cacheType": "namesCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,

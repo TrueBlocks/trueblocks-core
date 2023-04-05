@@ -5,7 +5,7 @@ status?modes=abis&modes=monitors&modes=slurps&verbose&maxRecords=2
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheName": "abisCache",
+          "cacheType": "abisCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -14,7 +14,7 @@ status?modes=abis&modes=monitors&modes=slurps&verbose&maxRecords=2
           "sizeInBytes": 789
         },
         {
-          "cacheName": "monitorsCache",
+          "cacheType": "monitorsCache",
           "items": [
             {
               "address": "--address--",
@@ -38,7 +38,7 @@ status?modes=abis&modes=monitors&modes=slurps&verbose&maxRecords=2
           "sizeInBytes": 789
         },
         {
-          "cacheName": "slurpsCache",
+          "cacheType": "slurpsCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,

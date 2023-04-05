@@ -5,7 +5,7 @@ status?modes=unripe&maxRecords=100
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheName": "unripeCache",
+          "cacheType": "unripeCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,

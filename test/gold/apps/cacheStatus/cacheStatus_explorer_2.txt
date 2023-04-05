@@ -9,7 +9,7 @@ TEST[DATE|TIME] Format:  json
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheName": "monitorsCache",
+          "cacheType": "monitorsCache",
           "items": [
             {
               "address": "--address--",

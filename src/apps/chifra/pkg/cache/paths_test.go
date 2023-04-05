@@ -33,13 +33,13 @@ func Test_getPaths(t *testing.T) {
 
 func Test_cmdToCacheType(t *testing.T) {
 	e := Cache_Blocks
-	g := CmdToCacheType("blocks")
+	g := StrToCacheType("blocks")
 	if e != g {
 		t.Error("cmdToCacheType", "wanted", e, "got", g)
 	}
 
 	e = Cache_NotACache
-	g = CmdToCacheType("no")
+	g = StrToCacheType("no")
 	if e != g {
 		t.Error("cmdToCacheType", "wanted", e, "got", g)
 	}

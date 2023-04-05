@@ -9,7 +9,7 @@ TEST[DATE|TIME] Format:  json
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheName": "abisCache",
+          "cacheType": "abisCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -18,7 +18,7 @@ TEST[DATE|TIME] Format:  json
           "sizeInBytes": 789
         },
         {
-          "cacheName": "monitorsCache",
+          "cacheType": "monitorsCache",
           "items": [
             {
               "address": "--address--",
@@ -42,7 +42,7 @@ TEST[DATE|TIME] Format:  json
           "sizeInBytes": 789
         },
         {
-          "cacheName": "slurpsCache",
+          "cacheType": "slurpsCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,

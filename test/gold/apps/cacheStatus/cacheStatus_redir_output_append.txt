@@ -14,7 +14,7 @@ Results in ./output_test_file
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheName": "namesCache",
+          "cacheType": "namesCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -43,7 +43,7 @@ Results in ./output_test_file
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheName": "indexCache",
+          "cacheType": "indexCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,

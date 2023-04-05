@@ -5,7 +5,7 @@ status?modes=names&maxRecords=100
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheName": "namesCache",
+          "cacheType": "namesCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,

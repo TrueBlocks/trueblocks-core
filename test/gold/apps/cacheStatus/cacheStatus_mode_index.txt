@@ -9,7 +9,7 @@ TEST[DATE|TIME] Format:  json
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheName": "indexCache",
+          "cacheType": "indexCache",
           "items": [
             {
               "bloomSizeBytes": 131114,

@@ -5,7 +5,7 @@ status?modes=txs&verbose&maxRecords=10
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheName": "transactionsCache",
+          "cacheType": "transactionsCache",
           "items": [
             {
               "fileDate": "--fileDate--",

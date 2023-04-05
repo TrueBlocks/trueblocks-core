@@ -5,7 +5,7 @@ status?modes=index&maxRecords=100
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheName": "indexCache",
+          "cacheType": "indexCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,

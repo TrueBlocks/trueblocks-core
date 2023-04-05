@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -29,9 +30,10 @@ func (opts *StatusOptions) HandleShow() error {
 
 		counterMap := make(map[cache.CacheType]*simpleSingleCacheStats)
 		nRoutines = len(opts.ModeTypes)
-		for _, t := range opts.ModeTypes {
-			counterMap[t] = NewSingleCacheStats(t, now)
-			go cache.WalkCacheFolderWithContext(walkContext, chain, t, nil, filenameChan)
+		for _, mT := range opts.ModeTypes {
+			mT := mT
+			counterMap[mT] = NewSingleCacheStats(mT, now)
+			go cache.WalkCacheFolderWithContext(walkContext, chain, mT, nil, filenameChan)
 		}
 
 		for result := range filenameChan {
@@ -45,12 +47,12 @@ func (opts *StatusOptions) HandleShow() error {
 				}
 			default:
 				if cache.IsCacheType(result.Path, cT, !result.IsDir /* checkExt */) {
-					nSeen++
-					if nSeen >= opts.FirstRecord {
-						if result.IsDir {
-							counterMap[cT].NFolders++
-							counterMap[cT].Path = cache.GetRootPathFromCacheType(chain, cT)
-						} else {
+					if result.IsDir {
+						counterMap[cT].NFolders++
+						counterMap[cT].Path = cache.GetRootPathFromCacheType(chain, cT)
+					} else {
+						nSeen++
+						if nSeen >= opts.FirstRecord {
 							counterMap[cT].NFiles++
 							counterMap[cT].SizeInBytes += file.FileSize(result.Path)
 							if opts.Globals.Verbose {
@@ -58,18 +60,22 @@ func (opts *StatusOptions) HandleShow() error {
 								counterMap[cT].Items = append(counterMap[cT].Items, cI)
 							}
 						}
-
-						if (counterMap[cT].NFolders + counterMap[cT].NFiles) >= int(opts.MaxRecords) {
-							cancel()
-						}
-
-						logger.Progress(
-							nSeen%100 == 0,
-							fmt.Sprintf("Found %d %s files", counterMap[cT].NFiles, cT))
-
-					} else {
-						logger.Progress(true, fmt.Sprintf("Skipped %s", result.Path))
 					}
+
+					if counterMap[cT].NFiles >= int(opts.MaxRecords) {
+						cancel()
+					}
+
+					logger.Progress(
+						nSeen%100 == 0,
+						fmt.Sprintf("Found %d %s files", counterMap[cT].NFiles, cT))
+
+					if (nSeen+1)%100000 == 0 {
+						logger.Info(colors.Green, "Progress:", colors.Off, counterMap[cT])
+					}
+
+				} else {
+					logger.Progress(true, fmt.Sprintf("Skipped %s", result.Path))
 				}
 			}
 		}
@@ -84,9 +90,10 @@ func (opts *StatusOptions) HandleShow() error {
 			Status: *status,
 		}
 
-		for _, t := range opts.ModeTypes {
-			if counterMap[t] != nil {
-				s.Caches = append(s.Caches, *counterMap[t])
+		for _, mT := range opts.ModeTypes {
+			mT := mT
+			if counterMap[mT] != nil {
+				s.Caches = append(s.Caches, *counterMap[mT])
 			}
 		}
 
@@ -134,7 +141,7 @@ func (s *simpleCacheStats) Model(showHidden bool, format string, extraOptions ma
 
 func NewSingleCacheStats(t cache.CacheType, now time.Time) *simpleSingleCacheStats {
 	return &simpleSingleCacheStats{
-		CacheName:   t.String() + "Cache",
+		CacheType:   t.CacheTypeToStr() + "Cache",
 		Items:       make([]any, 0),
 		LastCached:  now.Format("2006-01-02 15:04:05"),
 		NFiles:      0,
@@ -145,7 +152,7 @@ func NewSingleCacheStats(t cache.CacheType, now time.Time) *simpleSingleCacheSta
 }
 
 type simpleSingleCacheStats struct {
-	CacheName   string `json:"cacheName,omitempty"`
+	CacheType   string `json:"cacheType,omitempty"`
 	Items       []any  `json:"items,"`
 	LastCached  string `json:"lastCached,omitempty"`
 	NFiles      int    `json:"nFiles"`

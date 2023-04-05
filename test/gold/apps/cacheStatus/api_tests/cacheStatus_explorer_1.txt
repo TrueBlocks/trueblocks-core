@@ -5,7 +5,7 @@ status?fmt=json&verbose&maxRecords=100
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheName": "indexCache"
+          "cacheType": "indexCache"
           "nFiles": 123,
           "nFolders": 456,
           "path": "indexPath",
@@ -34,28 +34,28 @@ status?fmt=json&verbose&maxRecords=100
               "type": ""
             }
           ],
-          "cacheName": "monitorsCache"
+          "cacheType": "monitorsCache"
           "nFiles": 123,
           "nFolders": 456,
           "path": "monitorsPath",
           "sizeInBytes": 789,
         },
         {
-          "cacheName": "namesCache"
+          "cacheType": "namesCache"
           "nFiles": 123,
           "nFolders": 456,
           "path": "namesPath",
           "sizeInBytes": 789,
         },
         {
-          "cacheName": "abisCache"
+          "cacheType": "abisCache"
           "nFiles": 123,
           "nFolders": 456,
           "path": "abisPath",
           "sizeInBytes": 789,
         },
         {
-          "cacheName": "slurpsCache"
+          "cacheType": "slurpsCache"
           "nFiles": 123,
           "nFolders": 456,
           "path": "slurpsPath",

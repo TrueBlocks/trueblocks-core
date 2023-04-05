@@ -8,7 +8,7 @@ TEST[DATE|TIME] Format:  json
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheName": "unripeCache",
+          "cacheType": "unripeCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,

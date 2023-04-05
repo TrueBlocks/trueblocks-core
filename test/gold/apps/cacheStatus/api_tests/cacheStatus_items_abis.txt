@@ -5,7 +5,7 @@ status?modes=abis&maxRecords=100
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheName": "abisCache",
+          "cacheType": "abisCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,

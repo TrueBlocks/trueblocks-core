@@ -5,7 +5,7 @@ status?modes=recons&verbose&maxRecords=100
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheName": "reconciliationsCache",
+          "cacheType": "reconciliationsCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
