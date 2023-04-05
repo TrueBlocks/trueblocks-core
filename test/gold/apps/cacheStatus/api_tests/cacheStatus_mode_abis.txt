@@ -1,4 +1,4 @@
-status?modes=abis&verbose&maxRecords=100
+status?modes=abis&verbose&maxRecords=2
 {
   "data": [
     {
@@ -6,7 +6,22 @@ status?modes=abis&verbose&maxRecords=100
       "caches": [
         {
           "cacheName": "abisCache",
-          "items": [],
+          "items": [
+            {
+              "address": "--address--",
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/abis/--address--",
+              "sizeInBytes": 123456789,
+              "type": "abisCacheItem"
+            },
+            {
+              "address": "--address--",
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/abis/--address--",
+              "sizeInBytes": 123456789,
+              "type": "abisCacheItem"
+            }
+          ],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

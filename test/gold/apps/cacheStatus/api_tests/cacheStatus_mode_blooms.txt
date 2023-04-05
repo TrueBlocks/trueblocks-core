@@ -16,7 +16,7 @@ status?modes=blooms&verbose&maxRecords=2
               "indexSizeBytes": 320192,
               "latestApp": 0,
               "latestTs": 1438269975,
-              "type": "indexCacheItem"
+              "type": "bloomCacheItem"
             },
             {
               "bloomSizeBytes": 131114,
@@ -27,7 +27,7 @@ status?modes=blooms&verbose&maxRecords=2
               "indexSizeBytes": 16821060,
               "latestApp": 590502,
               "latestTs": 1448383558,
-              "type": "indexCacheItem"
+              "type": "bloomCacheItem"
             }
           ],
           "lastCached": "--lastCached--",

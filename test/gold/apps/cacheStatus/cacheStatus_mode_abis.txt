@@ -1,6 +1,6 @@
-chifra status  abis --verbose --max_records 100
+chifra status  abis --verbose --max_records 2
 TEST[DATE|TIME] Modes:  [abis]
-TEST[DATE|TIME] MaxRecords:  100
+TEST[DATE|TIME] MaxRecords:  2
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Format:  json
 {
@@ -12,18 +12,18 @@ TEST[DATE|TIME] Format:  json
           "cacheName": "abisCache",
           "items": [
             {
-              "address": "---address---",
-              "decimals": 0,
-              "firstApp": 0,
-              "latestApp": 0,
-              "nApps": 0,
-              "nEvents": 36963,
-              "nFunctions": 36963,
-              "nOther": 36963,
-              "name": "--name--",
-              "petname": "--petname--",
-              "sizeInBytes": 36963,
-              "type": "CAbiCacheItem"
+              "address": "--address--",
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/abis/--address--",
+              "sizeInBytes": 123456789,
+              "type": "abisCacheItem"
+            },
+            {
+              "address": "--address--",
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/abis/--address--",
+              "sizeInBytes": 123456789,
+              "type": "abisCacheItem"
             }
           ],
           "lastCached": "--lastCached--",

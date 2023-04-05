@@ -1,4 +1,4 @@
-status?modes=blocks&verbose&maxRecords=100
+status?modes=blocks&verbose&maxRecords=10
 {
   "data": [
     {
@@ -7,8 +7,24 @@ status?modes=blocks&verbose&maxRecords=100
         {
           "cacheName": "blocksCache",
           "items": [
-            "Testing/00/00/00",
-            "Testing/00/01/00"
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "sizeInBytes": 123456789,
+              "type": "blocksCacheItem"
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "sizeInBytes": 123456789,
+              "type": "blocksCacheItem"
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "sizeInBytes": 123456789,
+              "type": "blocksCacheItem"
+            }
           ],
           "lastCached": "--lastCached--",
           "nFiles": 123,

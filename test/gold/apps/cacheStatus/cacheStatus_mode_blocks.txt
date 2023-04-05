@@ -1,6 +1,6 @@
-chifra status  blocks --verbose --max_records 100
+chifra status  blocks --verbose --max_records 10
 TEST[DATE|TIME] Modes:  [blocks]
-TEST[DATE|TIME] MaxRecords:  100
+TEST[DATE|TIME] MaxRecords:  10
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Format:  json
 {
@@ -11,8 +11,24 @@ TEST[DATE|TIME] Format:  json
         {
           "cacheName": "blocksCache",
           "items": [
-            "Testing/00/00/00",
-            "Testing/00/01/00"
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "sizeInBytes": 123456789,
+              "type": "blocksCacheItem"
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "sizeInBytes": 123456789,
+              "type": "blocksCacheItem"
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "sizeInBytes": 123456789,
+              "type": "blocksCacheItem"
+            }
           ],
           "lastCached": "--lastCached--",
           "nFiles": 123,

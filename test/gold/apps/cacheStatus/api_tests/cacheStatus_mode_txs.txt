@@ -1,4 +1,4 @@
-status?modes=txs&verbose&maxRecords=100
+status?modes=txs&verbose&maxRecords=10
 {
   "data": [
     {
@@ -7,8 +7,24 @@ status?modes=txs&verbose&maxRecords=100
         {
           "cacheName": "transactionsCache",
           "items": [
-            "Testing/00/00/00",
-            "Testing/00/01/00"
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "sizeInBytes": 123456789,
+              "type": "transactionsCacheItem"
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "sizeInBytes": 123456789,
+              "type": "transactionsCacheItem"
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "sizeInBytes": 123456789,
+              "type": "transactionsCacheItem"
+            }
           ],
           "lastCached": "--lastCached--",
           "nFiles": 123,

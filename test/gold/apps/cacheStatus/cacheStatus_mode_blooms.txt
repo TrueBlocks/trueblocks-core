@@ -20,7 +20,7 @@ TEST[DATE|TIME] Format:  json
               "indexSizeBytes": 320192,
               "latestApp": 0,
               "latestTs": 1438269975,
-              "type": "indexCacheItem"
+              "type": "bloomCacheItem"
             },
             {
               "bloomSizeBytes": 131114,
@@ -31,7 +31,7 @@ TEST[DATE|TIME] Format:  json
               "indexSizeBytes": 16821060,
               "latestApp": 590502,
               "latestTs": 1448383558,
-              "type": "indexCacheItem"
+              "type": "bloomCacheItem"
             }
           ],
           "lastCached": "--lastCached--",

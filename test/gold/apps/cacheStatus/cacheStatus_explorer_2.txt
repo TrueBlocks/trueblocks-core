@@ -1,6 +1,6 @@
-chifra status  monitors --fmt json --verbose --max_records 100
+chifra status  monitors --fmt json --verbose --max_records 2
 TEST[DATE|TIME] Modes:  [monitors]
-TEST[DATE|TIME] MaxRecords:  100
+TEST[DATE|TIME] MaxRecords:  2
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Format:  json
 {
@@ -12,17 +12,18 @@ TEST[DATE|TIME] Format:  json
           "cacheName": "monitorsCache",
           "items": [
             {
-              "address": "---address---",
-              "decimals": 0,
-              "deleted": false,
-              "firstApp": 0,
-              "latestApp": 0,
-              "nApps": 0,
-              "name": "--name--",
-              "petname": "--petname--",
-              "source": "--source--",
-              "symbol": "--symbol--",
-              "tags": "--tags--"
+              "address": "--address--",
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/monitors/--address--",
+              "sizeInBytes": 123456789,
+              "type": "monitorsCacheItem"
+            },
+            {
+              "address": "--address--",
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/monitors/--address--",
+              "sizeInBytes": 123456789,
+              "type": "monitorsCacheItem"
             }
           ],
           "lastCached": "--lastCached--",

@@ -58,7 +58,7 @@ func Test_cacheLayout(t *testing.T) {
 		tt.expected.rootPart = strings.ReplaceAll(tt.expected.rootPart, "[{IndexPath}]", indexPath)
 
 		t.Run(tt.name, func(t *testing.T) {
-			gotten := getCacheItem(tt.expected.chain, tt.expected.cacheType, tt.param)
+			gotten := getCacheData(tt.expected.chain, tt.expected.cacheType, tt.param)
 
 			e := tt.expected.rootPart
 			g := gotten.rootPart
@@ -163,7 +163,7 @@ func (c *cacheItem) GetFullPath(param string) string {
 	return ret
 }
 
-func getCacheItem(chain string, cT CacheType, param string) *cacheItem {
+func getCacheData(chain string, cT CacheType, param string) *cacheItem {
 	path := strings.Trim(GetRootPathFromCacheType(chain, cT), "/")
 	parts := strings.Split(path, "/")
 	if len(parts) < 1 {

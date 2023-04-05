@@ -1,6 +1,6 @@
-chifra status  traces --verbose --max_records 100
+chifra status  traces --verbose --max_records 10
 TEST[DATE|TIME] Modes:  [traces]
-TEST[DATE|TIME] MaxRecords:  100
+TEST[DATE|TIME] MaxRecords:  10
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Format:  json
 {
@@ -10,7 +10,32 @@ TEST[DATE|TIME] Format:  json
       "caches": [
         {
           "cacheName": "tracesCache",
-          "items": [],
+          "items": [
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "sizeInBytes": 123456789,
+              "type": "tracesCacheItem"
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "sizeInBytes": 123456789,
+              "type": "tracesCacheItem"
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "sizeInBytes": 123456789,
+              "type": "tracesCacheItem"
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "sizeInBytes": 123456789,
+              "type": "tracesCacheItem"
+            }
+          ],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

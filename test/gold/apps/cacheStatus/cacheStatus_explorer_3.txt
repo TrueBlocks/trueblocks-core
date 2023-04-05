@@ -1,6 +1,6 @@
-chifra status  index --fmt json --verbose --max_records 100
+chifra status  index --fmt json --verbose --max_records 2
 TEST[DATE|TIME] Modes:  [index]
-TEST[DATE|TIME] MaxRecords:  100
+TEST[DATE|TIME] MaxRecords:  2
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Format:  json
 {
@@ -13,16 +13,25 @@ TEST[DATE|TIME] Format:  json
           "items": [
             {
               "bloomSizeBytes": 131114,
-              "fileDate": "1700-01-01 00:00:01 UTC",
-              "filename": "/--index-path--/000000000-000000000.bin",
+              "fileDate": "--fileDate--",
+              "filename": "$indexPath/finalized/000000000-000000000.bin",
               "firstApp": 0,
               "firstTs": 1438269975,
               "indexSizeBytes": 320192,
               "latestApp": 0,
               "latestTs": 1438269975,
-              "nAddrs": 8893,
-              "nApps": 8893,
-              "type": "CIndexCacheItem"
+              "type": "indexCacheItem"
+            },
+            {
+              "bloomSizeBytes": 131114,
+              "fileDate": "--fileDate--",
+              "filename": "$indexPath/finalized/000000001-000590502.bin",
+              "firstApp": 1,
+              "firstTs": 1438269988,
+              "indexSizeBytes": 16821060,
+              "latestApp": 590502,
+              "latestTs": 1448383558,
+              "type": "indexCacheItem"
             }
           ],
           "lastCached": "--lastCached--",

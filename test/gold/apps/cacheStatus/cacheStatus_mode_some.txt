@@ -1,6 +1,6 @@
-chifra status  some --verbose --max_records 100
+chifra status  some --verbose --max_records 2
 TEST[DATE|TIME] Modes:  [some]
-TEST[DATE|TIME] MaxRecords:  100
+TEST[DATE|TIME] MaxRecords:  2
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Format:  json
 {
@@ -65,7 +65,20 @@ TEST[DATE|TIME] Format:  json
         },
         {
           "cacheName": "namesCache",
-          "items": [],
+          "items": [
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/names/allocs.bin",
+              "sizeInBytes": 123456789,
+              "type": "namesCacheItem"
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/names/names.bin",
+              "sizeInBytes": 123456789,
+              "type": "namesCacheItem"
+            }
+          ],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

@@ -1,4 +1,4 @@
-status?modes=traces&verbose&maxRecords=100
+status?modes=traces&verbose&maxRecords=10
 {
   "data": [
     {
@@ -6,7 +6,32 @@ status?modes=traces&verbose&maxRecords=100
       "caches": [
         {
           "cacheName": "tracesCache",
-          "items": [],
+          "items": [
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "sizeInBytes": 123456789,
+              "type": "tracesCacheItem"
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "sizeInBytes": 123456789,
+              "type": "tracesCacheItem"
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "sizeInBytes": 123456789,
+              "type": "tracesCacheItem"
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "sizeInBytes": 123456789,
+              "type": "tracesCacheItem"
+            }
+          ],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

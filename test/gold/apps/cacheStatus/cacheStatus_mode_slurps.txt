@@ -1,6 +1,6 @@
-chifra status  slurps --verbose --max_records 100
+chifra status  slurps --verbose --max_records 2
 TEST[DATE|TIME] Modes:  [slurps]
-TEST[DATE|TIME] MaxRecords:  100
+TEST[DATE|TIME] MaxRecords:  2
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Format:  json
 {

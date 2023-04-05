@@ -35,7 +35,8 @@ func (opts *StatusOptions) HandleShow() error {
 		}
 
 		for result := range filenameChan {
-			switch result.Type {
+			cT := result.Type
+			switch cT {
 			case cache.Cache_NotACache:
 				nRoutines--
 				if nRoutines == 0 {
@@ -43,38 +44,28 @@ func (opts *StatusOptions) HandleShow() error {
 					logger.Progress(true, "                                           ")
 				}
 			default:
-				if cache.IsCacheType(result.Path, result.Type, !result.IsDir /* checkExt */) {
+				if cache.IsCacheType(result.Path, cT, !result.IsDir /* checkExt */) {
 					nSeen++
 					if nSeen >= opts.FirstRecord {
 						if result.IsDir {
-							counterMap[result.Type].NFolders++
-							counterMap[result.Type].Path = cache.GetRootPathFromCacheType(chain, result.Type)
+							counterMap[cT].NFolders++
+							counterMap[cT].Path = cache.GetRootPathFromCacheType(chain, cT)
 						} else {
-							counterMap[result.Type].NFiles++
-							counterMap[result.Type].SizeInBytes += file.FileSize(result.Path)
+							counterMap[cT].NFiles++
+							counterMap[cT].SizeInBytes += file.FileSize(result.Path)
 							if opts.Globals.Verbose {
-								switch result.Type {
-								case cache.Index_Maps:
-									fallthrough
-								case cache.Index_Bloom:
-									fallthrough
-								case cache.Index_Final:
-									iM, _ := opts.getIndexModel(result.Type, result.Path)
-									counterMap[result.Type].Items = append(counterMap[result.Type].Items, iM)
-									// default:
-									// 	x := make([]any, 0)
-									// 	counterMap[result.Type].Items = x
-								}
+								cI, _ := opts.getCacheItem(cT, result.Path)
+								counterMap[cT].Items = append(counterMap[cT].Items, cI)
 							}
 						}
 
-						if (counterMap[result.Type].NFolders + counterMap[result.Type].NFiles) >= int(opts.MaxRecords) {
+						if (counterMap[cT].NFolders + counterMap[cT].NFiles) >= int(opts.MaxRecords) {
 							cancel()
 						}
 
 						logger.Progress(
 							nSeen%100 == 0,
-							fmt.Sprintf("Found %d %s files", counterMap[result.Type].NFiles, result.Type))
+							fmt.Sprintf("Found %d %s files", counterMap[cT].NFiles, cT))
 
 					} else {
 						logger.Progress(true, fmt.Sprintf("Skipped %s", result.Path))

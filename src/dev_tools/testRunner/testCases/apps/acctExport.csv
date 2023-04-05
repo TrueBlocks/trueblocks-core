@@ -104,6 +104,7 @@ on      ,both ,fast  ,export   ,apps/acctExport ,export_logs_emit_by_fail ,y    
 
 on      ,both ,fast  ,export   ,apps/acctExport ,export_logs_factory      ,y    ,addrs = 0x8b3b3b624c3c0397d3da8fd861512393d51dcbac & factory & traces & last_block = 1603174
 on      ,both ,fast  ,export   ,apps/acctExport ,export_traces            ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & last_block = 1506480 & max_records = 5 & traces & fmt = json
+on      ,both ,fast  ,export   ,apps/acctExport ,export_traces_cache      ,y    ,addrs = 0xd714dd60e22bbb1cbafd0e40de5cfa7bbdd3f3c8 & max_records = 10 & cache_traces & traces
 
 on      ,both ,fast  ,export   ,apps/acctExport ,export_backcompat        ,n    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_record = 0 & max_records = 1 & staging & unripe
 on      ,both ,fast  ,export   ,apps/acctExport ,export_stage             ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & staging

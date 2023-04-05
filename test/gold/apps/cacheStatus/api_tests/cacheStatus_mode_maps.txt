@@ -16,7 +16,7 @@ status?modes=maps&verbose&maxRecords=2
               "indexSizeBytes": 106716,
               "latestApp": 0,
               "latestTs": 1438269975,
-              "type": "indexCacheItem"
+              "type": "neighborsCacheItem"
             },
             {
               "bloomSizeBytes": 0,
@@ -27,7 +27,7 @@ status?modes=maps&verbose&maxRecords=2
               "indexSizeBytes": 24000000,
               "latestApp": 590502,
               "latestTs": 1448383558,
-              "type": "indexCacheItem"
+              "type": "neighborsCacheItem"
             }
           ],
           "lastCached": "--lastCached--",

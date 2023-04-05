@@ -1,4 +1,4 @@
-status?modes=monitors&fmt=json&verbose&maxRecords=100
+status?modes=monitors&fmt=json&verbose&maxRecords=2
 {
   "data": [
     {
@@ -8,24 +8,18 @@ status?modes=monitors&fmt=json&verbose&maxRecords=100
           "cacheName": "monitorsCache",
           "items": [
             {
-              "address": "---address---",
-              "decimals": 0,
-              "deleted": false,
-              "firstApp": 0,
-              "isContract": false,
-              "isCustom": false,
-              "isErc20": false,
-              "isErc721": false,
-              "isPrefund": false,
-              "latestApp": 0,
-              "nApps": 0,
-              "name": "--name--",
-              "petname": "--petname--",
-              "sizeInBytes": 0,
-              "source": "--source--",
-              "symbol": "--symbol--",
-              "tags": "--tags--",
-              "type": ""
+              "address": "--address--",
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/monitors/--address--",
+              "sizeInBytes": 123456789,
+              "type": "monitorsCacheItem"
+            },
+            {
+              "address": "--address--",
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/monitors/--address--",
+              "sizeInBytes": 123456789,
+              "type": "monitorsCacheItem"
             }
           ],
           "lastCached": "--lastCached--",

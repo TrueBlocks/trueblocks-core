@@ -1,4 +1,4 @@
-status?modes=some&verbose&maxRecords=100
+status?modes=some&verbose&maxRecords=2
 {
   "data": [
     {
@@ -61,7 +61,20 @@ status?modes=some&verbose&maxRecords=100
         },
         {
           "cacheName": "namesCache",
-          "items": [],
+          "items": [
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/names/allocs.bin",
+              "sizeInBytes": 123456789,
+              "type": "namesCacheItem"
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/names/names.bin",
+              "sizeInBytes": 123456789,
+              "type": "namesCacheItem"
+            }
+          ],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
