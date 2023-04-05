@@ -1,4 +1,4 @@
-status?modes=index&verbose&maxRecords=3
+status?modes=index&verbose&maxRecords=2
 {
   "data": [
     {
@@ -27,17 +27,6 @@ status?modes=index&verbose&maxRecords=3
               "indexSizeBytes": 16821060,
               "latestApp": 590502,
               "latestTs": 1448383558,
-              "type": "indexCacheItem"
-            },
-            {
-              "bloomSizeBytes": 524342,
-              "fileDate": "--fileDate--",
-              "filename": "$indexPath/finalized/000590503-000864335.bin",
-              "firstApp": 590503,
-              "firstTs": 1448383562,
-              "indexSizeBytes": 20604588,
-              "latestApp": 864335,
-              "latestTs": 1453071545,
               "type": "indexCacheItem"
             }
           ],

@@ -1,9 +1,9 @@
-chifra status  ripe --verbose --max_records 2
-TEST[DATE|TIME] Modes:  [ripe]
-TEST[DATE|TIME] MaxRecords:  2
+chifra status  names --verbose --max_records 0
+TEST[DATE|TIME] Modes:  [names]
+TEST[DATE|TIME] MaxRecords:  0
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Format:  json
-Error: The mode option (ripe) must be one of [ index | blooms | blocks | txs | traces | monitors | names | abis | recons | slurps | staging | unripe | maps | some | all ]
+Error: --max_records must be greater than zero
 Usage:
   chifra status <mode> [mode...] [flags]
 

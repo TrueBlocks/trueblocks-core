@@ -1,6 +1,6 @@
-chifra status  index --verbose --max_records 3
+chifra status  index --verbose --max_records 2
 TEST[DATE|TIME] Modes:  [index]
-TEST[DATE|TIME] MaxRecords:  3
+TEST[DATE|TIME] MaxRecords:  2
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Format:  json
 {
@@ -31,17 +31,6 @@ TEST[DATE|TIME] Format:  json
               "indexSizeBytes": 16821060,
               "latestApp": 590502,
               "latestTs": 1448383558,
-              "type": "indexCacheItem"
-            },
-            {
-              "bloomSizeBytes": 524342,
-              "fileDate": "--fileDate--",
-              "filename": "$indexPath/finalized/000590503-000864335.bin",
-              "firstApp": 590503,
-              "firstTs": 1448383562,
-              "indexSizeBytes": 20604588,
-              "latestApp": 864335,
-              "latestTs": 1453071545,
               "type": "indexCacheItem"
             }
           ],

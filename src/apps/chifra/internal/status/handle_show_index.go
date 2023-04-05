@@ -15,7 +15,7 @@ import (
 func (opts *StatusOptions) getIndexModel(cT cache.CacheType, path string) (map[string]any, error) {
 	testMode := opts.Globals.TestMode
 	chain := opts.Globals.Chain
-	if cT != cache.Index_Bloom && cT != cache.Index_Final {
+	if cT != cache.Index_Bloom && cT != cache.Index_Final && cT != cache.Index_Maps {
 		logger.Fatal("Invalid cache type", cT.String())
 	}
 

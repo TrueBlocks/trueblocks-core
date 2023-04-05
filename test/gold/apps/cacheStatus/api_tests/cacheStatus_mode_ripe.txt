@@ -1,4 +1,4 @@
-status?modes=ripe&verbose&maxRecords=3
+status?modes=ripe&verbose&maxRecords=2
 {
   "errors": [
     "The mode option (ripe) must be one of [ index | blooms | blocks | txs | traces | monitors | names | abis | recons | slurps | staging | unripe | maps | some | all ]"

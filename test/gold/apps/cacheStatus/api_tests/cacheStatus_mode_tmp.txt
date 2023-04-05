@@ -1,4 +1,4 @@
-status?modes=tmp&verbose&maxRecords=100
+status?modes=tmp&verbose&maxRecords=2
 {
   "errors": [
     "The mode option (tmp) must be one of [ index | blooms | blocks | txs | traces | monitors | names | abis | recons | slurps | staging | unripe | maps | some | all ]"

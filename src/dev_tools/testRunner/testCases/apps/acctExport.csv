@@ -118,6 +118,8 @@ on      ,both ,fast  ,export   ,apps/acctExport ,accounting_ofx           ,y    
 
 on      ,both ,fast  ,export   ,apps/acctExport ,neighbor1                ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors
 on      ,both ,fast  ,export   ,apps/acctExport ,neighbor2                ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors
+on      ,both ,fast  ,export   ,apps/acctExport ,neighbor3                ,y    ,addrs = 0xffeac0305ede3a915295ec8e61c7f881006f4474 & neighbors & first_block = 0 & last_block = 10
+on      ,both ,fast  ,export   ,apps/acctExport ,neighbor4                ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & neighbors & first_block = 0 & last_block = 10
 on      ,both ,fast  ,export   ,apps/acctExport ,neighbor1_csv            ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors & fmt = csv
 on      ,both ,fast  ,export   ,apps/acctExport ,neighbor2_csv            ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors & fmt = csv
 

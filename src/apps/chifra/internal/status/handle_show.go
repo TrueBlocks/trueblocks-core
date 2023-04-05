@@ -19,9 +19,6 @@ func (opts *StatusOptions) HandleShow() error {
 	renderCtx := context.Background()
 	walkContext, cancel := context.WithCancel(context.Background())
 
-	firstRecord := opts.FirstRecord
-	maxRecords := opts.MaxRecords
-	nProcessed := uint64(0)
 	nSeen := uint64(0)
 
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
@@ -33,11 +30,10 @@ func (opts *StatusOptions) HandleShow() error {
 		counterMap := make(map[cache.CacheType]*simpleSingleCacheStats)
 		nRoutines = len(opts.ModeTypes)
 		for _, t := range opts.ModeTypes {
-			counterMap[t] = &simpleSingleCacheStats{CacheName: t.String() + "Cache", LastCached: now.String()}
+			counterMap[t] = NewSingleCacheStats(t, now)
 			go cache.WalkCacheFolderWithContext(walkContext, chain, t, nil, filenameChan)
 		}
 
-		stop := false
 		for result := range filenameChan {
 			switch result.Type {
 			case cache.Cache_NotACache:
@@ -49,7 +45,7 @@ func (opts *StatusOptions) HandleShow() error {
 			default:
 				if cache.IsCacheType(result.Path, result.Type, !result.IsDir /* checkExt */) {
 					nSeen++
-					if nSeen >= firstRecord {
+					if nSeen >= opts.FirstRecord {
 						if result.IsDir {
 							counterMap[result.Type].NFolders++
 							counterMap[result.Type].Path = cache.GetRootPathFromCacheType(chain, result.Type)
@@ -58,37 +54,32 @@ func (opts *StatusOptions) HandleShow() error {
 							counterMap[result.Type].SizeInBytes += file.FileSize(result.Path)
 							if opts.Globals.Verbose {
 								switch result.Type {
+								case cache.Index_Maps:
+									fallthrough
 								case cache.Index_Bloom:
 									fallthrough
 								case cache.Index_Final:
 									iM, _ := opts.getIndexModel(result.Type, result.Path)
 									counterMap[result.Type].Items = append(counterMap[result.Type].Items, iM)
-								default:
-									x := make([]any, 0)
-									counterMap[result.Type].Items = x
+									// default:
+									// 	x := make([]any, 0)
+									// 	counterMap[result.Type].Items = x
 								}
-							} else {
-								x := make([]any, 0)
-								counterMap[result.Type].Items = x
 							}
 						}
-						nProcessed++
-						if nProcessed >= maxRecords {
-							stop = true
+
+						if (counterMap[result.Type].NFolders + counterMap[result.Type].NFiles) >= int(opts.MaxRecords) {
+							cancel()
 						}
 
 						logger.Progress(
 							nSeen%100 == 0,
-							fmt.Sprintf("Found %d %s files: %d %d %d %d", counterMap[result.Type].NFiles, result.Type, nSeen, firstRecord, nProcessed, maxRecords))
+							fmt.Sprintf("Found %d %s files", counterMap[result.Type].NFiles, result.Type))
 
 					} else {
 						logger.Progress(true, fmt.Sprintf("Skipped %s", result.Path))
 					}
 				}
-			}
-
-			if stop {
-				cancel()
 			}
 		}
 
@@ -148,6 +139,18 @@ func (s *simpleCacheStats) Model(showHidden bool, format string, extraOptions ma
 	// }
 
 	return model
+}
+
+func NewSingleCacheStats(t cache.CacheType, now time.Time) *simpleSingleCacheStats {
+	return &simpleSingleCacheStats{
+		CacheName:   t.String() + "Cache",
+		Items:       make([]any, 0),
+		LastCached:  now.Format("2006-01-02 15:04:05"),
+		NFiles:      0,
+		NFolders:    0,
+		Path:        "",
+		SizeInBytes: 0,
+	}
 }
 
 type simpleSingleCacheStats struct {

@@ -1,6 +1,6 @@
-chifra status  maps --verbose --max_records 100
+chifra status  maps --verbose --max_records 2
 TEST[DATE|TIME] Modes:  [maps]
-TEST[DATE|TIME] MaxRecords:  100
+TEST[DATE|TIME] MaxRecords:  2
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Format:  json
 {
@@ -10,7 +10,30 @@ TEST[DATE|TIME] Format:  json
       "caches": [
         {
           "cacheName": "neighborsCache",
-          "items": [],
+          "items": [
+            {
+              "bloomSizeBytes": 0,
+              "fileDate": "--fileDate--",
+              "filename": "$indexPath/maps/000000000-000000000.bin",
+              "firstApp": 0,
+              "firstTs": 1438269975,
+              "indexSizeBytes": 106716,
+              "latestApp": 0,
+              "latestTs": 1438269975,
+              "type": "indexCacheItem"
+            },
+            {
+              "bloomSizeBytes": 0,
+              "fileDate": "--fileDate--",
+              "filename": "$indexPath/maps/000000001-000590502.bin",
+              "firstApp": 1,
+              "firstTs": 1438269988,
+              "indexSizeBytes": 24000000,
+              "latestApp": 590502,
+              "latestTs": 1448383558,
+              "type": "indexCacheItem"
+            }
+          ],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

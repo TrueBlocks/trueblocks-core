@@ -1,6 +1,6 @@
-chifra status  tmp --verbose --max_records 100
+chifra status  tmp --verbose --max_records 2
 TEST[DATE|TIME] Modes:  [tmp]
-TEST[DATE|TIME] MaxRecords:  100
+TEST[DATE|TIME] MaxRecords:  2
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Format:  json
 Error: The mode option (tmp) must be one of [ index | blooms | blocks | txs | traces | monitors | names | abis | recons | slurps | staging | unripe | maps | some | all ]
@@ -13,7 +13,7 @@ Arguments:
 
 Flags:
   -c, --first_record uint   the first record to process (default 1)
-  -e, --max_records uint    the maximum number of records to process (default 250)
+  -e, --max_records uint    the maximum number of records to process (default 10000)
   -x, --fmt string          export format, one of [none|json*|txt|csv]
   -v, --verbose             enable verbose (increase detail with --log_level)
   -h, --help                display this help screen

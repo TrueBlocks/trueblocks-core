@@ -21,5 +21,9 @@ func (opts *StatusOptions) validateStatus() error {
 		return err
 	}
 
+	if opts.MaxRecords == 0 {
+		return validate.Usage("{0} must be greater than zero", "--max_records")
+	}
+
 	return opts.Globals.Validate()
 }
