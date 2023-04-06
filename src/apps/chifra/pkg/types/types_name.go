@@ -13,9 +13,9 @@ import (
 	"io"
 	"strings"
 
-	pb "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/grpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/proto"
 )
 
 // EXISTING_CODE
@@ -214,8 +214,8 @@ func (s *SimpleName) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
-func (s *SimpleName) ToMessage() *pb.Name {
-	return &pb.Name{
+func (s *SimpleName) ToMessage() *proto.Name {
+	return &proto.Name{
 		Address:    utils.PointerOf(s.Address.Hex()),
 		Decimals:   utils.PointerOf(s.Decimals),
 		Deleted:    utils.PointerOf(s.Deleted),
@@ -232,11 +232,11 @@ func (s *SimpleName) ToMessage() *pb.Name {
 	}
 }
 
-func (s *SimpleName) Send(stream pb.Names_SearchStreamServer) error {
+func (s *SimpleName) Send(stream proto.Names_SearchStreamServer) error {
 	return stream.Send(s.ToMessage())
 }
 
-func NewNameFromGrpc(gRpcName *pb.Name) *SimpleName {
+func NewNameFromGrpc(gRpcName *proto.Name) *SimpleName {
 	return &SimpleName{
 		Address:    base.HexToAddress(*gRpcName.Address),
 		Decimals:   *gRpcName.Decimals,

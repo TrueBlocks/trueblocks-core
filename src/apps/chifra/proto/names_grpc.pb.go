@@ -4,7 +4,7 @@
 // - protoc             v3.21.11
 // source: names.proto
 
-package grpc
+package proto
 
 import (
 	context "context"

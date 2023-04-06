@@ -2,64 +2,35 @@ package namesPkg
 
 import (
 	"context"
+	"errors"
 	"io"
-	"net"
 	"os"
 
-	pb "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/grpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/proto"
 )
 
 func (opts *NamesOptions) HandleTerms() error {
-	ctx := context.Background()
 	var fetchData func(modelChan chan types.Modeler[types.RawName], errorChan chan error)
 
 	// Try RPC
-	// client, err := rpc.Dial("unix", )
-	dialer := func(ctx context.Context, addr string) (net.Conn, error) {
-		var d net.Dialer
-		return d.DialContext(ctx, "unix", addr)
-	}
-	options := []grpc.DialOption{
-		grpc.WithTransportCredentials(insecure.NewCredentials()),
-		grpc.WithBlock(),
-		grpc.WithContextDialer(dialer),
-	}
-	conn, err := grpc.Dial("/tmp/trueblocks.sock", options...)
-	if err == nil {
+	grpcCtx, grpcCancel := proto.GetContext()
+	defer grpcCancel()
+	conn, client, grpcErr := proto.Connect(grpcCtx)
+	if grpcErr == nil {
 		defer conn.Close()
-		client := pb.NewNamesClient(conn)
 		// RPC server is running and available
 		fetchData = func(modelChan chan types.Modeler[types.RawName], errorChan chan error) {
-			stream, err := client.SearchStream(context.Background(), &pb.SearchRequest{
-				Parts: utils.PointerOf(int64(opts.getType())),
-				Terms: opts.Terms,
-				Sort:  utils.PointerOf(int64(names.SortByAddress)),
-			})
-			if err != nil {
-				errorChan <- err
-			}
-			for {
-				result, err := stream.Recv()
-				if err == io.EOF {
-					break
-				}
-				if err != nil {
-					errorChan <- err
-				}
-				modelChan <- types.NewNameFromGrpc(result)
-			}
-			// }
+			opts.fetchFromGrpc(client, modelChan, errorChan)
 		}
 	} else {
-		// TODO(rpc): we don't have to print here
-		logger.Info("Not using RPC server because of error", err)
+		if !errors.Is(grpcErr, context.DeadlineExceeded) {
+			logger.Error("gRPC connection error:", grpcErr)
+		}
 
 		namesArray, err := names.LoadNamesArray(opts.Globals.Chain, opts.getType(), names.SortByAddress, opts.Terms)
 		if err != nil {
@@ -82,6 +53,10 @@ func (opts *NamesOptions) HandleTerms() error {
 		"expand":  opts.Expand,
 		"prefund": opts.Prefund,
 	}
+	if opts.Addr {
+		extra["single"] = "address"
+	}
+	ctx := context.Background()
 	return output.StreamMany(ctx, fetchData, output.OutputOptions{
 		Writer:     opts.Globals.Writer,
 		Chain:      opts.Globals.Chain,
@@ -96,4 +71,25 @@ func (opts *NamesOptions) HandleTerms() error {
 		JsonIndent: "  ",
 		Extra:      extra,
 	})
+}
+
+func (opts *NamesOptions) fetchFromGrpc(client proto.NamesClient, modelChan chan types.Modeler[types.RawName], errorChan chan error) {
+	stream, err := client.SearchStream(context.Background(), &proto.SearchRequest{
+		Parts: utils.PointerOf(int64(opts.getType())),
+		Terms: opts.Terms,
+		Sort:  utils.PointerOf(int64(names.SortByAddress)),
+	})
+	if err != nil {
+		errorChan <- err
+	}
+	for {
+		result, err := stream.Recv()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			errorChan <- err
+		}
+		modelChan <- types.NewNameFromGrpc(result)
+	}
 }

@@ -1,4 +1,4 @@
-option go_package = "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/grpc";
+option go_package = "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/proto";
 
 service Names {
     rpc Search (SearchRequest) returns (SearchResponse) {}
