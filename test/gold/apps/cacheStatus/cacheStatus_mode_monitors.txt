@@ -15,15 +15,15 @@ TEST[DATE|TIME] Format:  json
               "address": "--address--",
               "fileDate": "--fileDate--",
               "filename": "$cachePath/monitors/--address--",
-              "sizeInBytes": 123456789,
-              "type": "monitorsCacheItem"
+              "itemType": "monitorsCacheItem",
+              "sizeInBytes": 123456789
             },
             {
               "address": "--address--",
               "fileDate": "--fileDate--",
               "filename": "$cachePath/monitors/--address--",
-              "sizeInBytes": 123456789,
-              "type": "monitorsCacheItem"
+              "itemType": "monitorsCacheItem",
+              "sizeInBytes": 123456789
             }
           ],
           "lastCached": "--lastCached--",

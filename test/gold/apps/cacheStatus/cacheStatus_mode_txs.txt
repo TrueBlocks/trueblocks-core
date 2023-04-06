@@ -9,25 +9,73 @@ TEST[DATE|TIME] Format:  json
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheType": "transactionsCache",
+          "cacheType": "txsCache",
           "items": [
             {
               "fileDate": "--fileDate--",
               "filename": "$cachePath/data-model/file.bin",
-              "sizeInBytes": 123456789,
-              "type": "transactionsCacheItem"
+              "itemType": "txsCacheItem",
+              "sizeInBytes": 123456789
             },
             {
               "fileDate": "--fileDate--",
               "filename": "$cachePath/data-model/file.bin",
-              "sizeInBytes": 123456789,
-              "type": "transactionsCacheItem"
+              "itemType": "txsCacheItem",
+              "sizeInBytes": 123456789
             },
             {
               "fileDate": "--fileDate--",
               "filename": "$cachePath/data-model/file.bin",
-              "sizeInBytes": 123456789,
-              "type": "transactionsCacheItem"
+              "itemType": "txsCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "txsCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "txsCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "txsCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "txsCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "txsCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "txsCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "txsCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "txsCacheItem",
+              "sizeInBytes": 123456789
             }
           ],
           "lastCached": "--lastCached--",

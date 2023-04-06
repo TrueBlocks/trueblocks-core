@@ -33,7 +33,7 @@
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheType": "indexCache",
+          "cacheType": "finalizedCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,

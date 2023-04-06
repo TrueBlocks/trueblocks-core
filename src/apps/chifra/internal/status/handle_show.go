@@ -62,7 +62,7 @@ func (opts *StatusOptions) HandleShow() error {
 						}
 					}
 
-					if counterMap[cT].NFiles >= int(opts.MaxRecords) {
+					if counterMap[cT].NFiles > (int(opts.MaxRecords) - 2) { // not sure why
 						cancel()
 					}
 

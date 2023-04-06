@@ -14,14 +14,14 @@ TEST[DATE|TIME] Format:  json
             {
               "fileDate": "--fileDate--",
               "filename": "$cachePath/data-model/file.bin",
-              "sizeInBytes": 123456789,
-              "type": "namesCacheItem"
+              "itemType": "namesCacheItem",
+              "sizeInBytes": 123456789
             },
             {
               "fileDate": "--fileDate--",
               "filename": "$cachePath/data-model/file.bin",
-              "sizeInBytes": 123456789,
-              "type": "namesCacheItem"
+              "itemType": "namesCacheItem",
+              "sizeInBytes": 123456789
             }
           ],
           "lastCached": "--lastCached--",

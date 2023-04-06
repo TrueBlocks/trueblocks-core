@@ -15,15 +15,15 @@ TEST[DATE|TIME] Format:  json
               "address": "--address--",
               "fileDate": "--fileDate--",
               "filename": "$cachePath/abis/--address--",
-              "sizeInBytes": 123456789,
-              "type": "abisCacheItem"
+              "itemType": "abisCacheItem",
+              "sizeInBytes": 123456789
             },
             {
               "address": "--address--",
               "fileDate": "--fileDate--",
               "filename": "$cachePath/abis/--address--",
-              "sizeInBytes": 123456789,
-              "type": "abisCacheItem"
+              "itemType": "abisCacheItem",
+              "sizeInBytes": 123456789
             }
           ],
           "lastCached": "--lastCached--",

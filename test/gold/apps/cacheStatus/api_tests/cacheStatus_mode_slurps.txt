@@ -6,7 +6,22 @@ status?modes=slurps&verbose&maxRecords=2
       "caches": [
         {
           "cacheType": "slurpsCache",
-          "items": [],
+          "items": [
+            {
+              "address": "--address--",
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/slurps/--address--",
+              "itemType": "slurpsCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "address": "--address--",
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/slurps/--address--",
+              "itemType": "slurpsCacheItem",
+              "sizeInBytes": 123456789
+            }
+          ],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

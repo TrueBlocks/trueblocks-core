@@ -745,6 +745,29 @@ components:
           type: string
           format: bytes
           description: "the result of the call of this trace"
+    namedBlock:
+      description: "a block that has been given a particular name such as `first` or `latest`"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          example: 4370000
+          description: "the number of the block"
+        timestamp:
+          type: number
+          format: timestamp
+          example: 1508131331
+          description: "the Unix timestamp of the block"
+        date:
+          type: string
+          format: datetime
+          example: "2017-10-16 05:22:11 UTC"
+          description: "Human readable version of timestamp"
+        name:
+          type: string
+          example: "byzantium"
+          description: "an optional name for the block"
     blockCount:
       description: "counts of various parts of the block data such as tx_count, trace_count, etc."
       type: object
@@ -789,29 +812,6 @@ components:
           format: uint64
           example: 40
           description: "the number of address appearances in the block per transaction"
-    namedBlock:
-      description: "a block that has been given a particular name such as `first` or `latest`"
-      type: object
-      properties:
-        blockNumber:
-          type: number
-          format: blknum
-          example: 4370000
-          description: "the number of the block"
-        timestamp:
-          type: number
-          format: timestamp
-          example: 1508131331
-          description: "the Unix timestamp of the block"
-        date:
-          type: string
-          format: datetime
-          example: "2017-10-16 05:22:11 UTC"
-          description: "Human readable version of timestamp"
-        name:
-          type: string
-          example: "byzantium"
-          description: "an optional name for the block"
     traceCount:
       description: "counts the number of traces in a transaction"
       type: object
@@ -989,69 +989,6 @@ components:
         isErc721:
           type: boolean
           description: "`true` if the address is an ERC720, `false` otherwise"
-    config:
-      description: "status-related data about the TrueBlocks system including the server and local binary caches"
-      type: object
-      properties:
-        clientVersion:
-          type: string
-          description: "the version string as reported by the rpcProvider"
-        clientIds:
-          type: string
-          description: "netword_id and chain_id from the rpcProvider"
-        trueblocksVersion:
-          type: string
-          description: "the TrueBlocks version string"
-        rpcProvider:
-          type: string
-          description: "the current rpcProvider"
-        configPath:
-          type: string
-          description: "the path to config files"
-        cachePath:
-          type: string
-          description: "the path to the local binary caches"
-        indexPath:
-          type: string
-          description: "the path to the local binary indexes"
-        host:
-          type: string
-          description: "the host portion of the local API server"
-        isTesting:
-          type: boolean
-          description: "`true` if the server is running in test mode"
-        isApi:
-          type: boolean
-          description: "`true` if the server is running in API mode"
-        isScraping:
-          type: boolean
-          description: "`true` if the index scraper is running"
-        isArchive:
-          type: boolean
-          description: "`true` if the rpcProvider is an archive node"
-        isTracing:
-          type: boolean
-          description: "`true` if the rpcProvider provides Parity traces"
-        hasEskey:
-          type: boolean
-          description: "`true` if an Etherscan key is present"
-        hasPinkey:
-          type: boolean
-          description: "`true` if a Pinata API key is present"
-        ts:
-          type: number
-          format: timestamp
-          description: "the timestamp when this status data was produced"
-        chains:
-          type: array
-          items:
-            $ref: "#/components/schemas/chain"
-          description: "the list of configured chains"
-        caches:
-          type: array
-          items:
-            $ref: "#/components/schemas/cache"
-          description: "a collection of information concerning the binary caches"
     manifest:
       description: "a JSON object containing records for each bloom filter and index chunk in the Unchained Index"
       type: object
@@ -1279,15 +1216,6 @@ components:
           items:
             $ref: "#/components/schemas/cacheEntry"
           description: "an array of cache items"
-    cacheEntry:
-      description: "a single entry in the results of a status query when `--verbose` is enabled"
-      type: object
-      properties:
-        address:
-          type: string
-          format: address
-        name:
-          type: string
     reportCheck:
       description: "report on checking contents of chunks"
       type: object
@@ -1321,6 +1249,15 @@ components:
         msgStrings:
           type: []string
           description: "an array of messages explaining failed checks"
+    cacheEntry:
+      description: "a single entry in the results of a status query when `--verbose` is enabled"
+      type: object
+      properties:
+        address:
+          type: string
+          format: address
+        name:
+          type: string
     indexCacheItem:
       description: "an item in the Unchained Index cache"
       type: object

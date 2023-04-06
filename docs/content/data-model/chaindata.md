@@ -278,29 +278,6 @@ TraceResults consist of the following fields:
 | gasUsed | the amount of gas used by this trace                                           | gas     |
 | output  | the result of the call of this trace                                           | bytes   |
 
-## BlockCount
-
-<!-- markdownlint-disable MD033 MD036 MD041 -->
-`chifra blocks --count` returns the number of various types of data in a block. For example, `transactionCnt` is the number of transactions in the block, 
-and so on.
-
-The following commands produce and manage BlockCounts:
-
-- [chifra blocks](/chifra/chaindata/#chifra-blocks)
-
-BlockCounts consist of the following fields:
-
-| Field           | Description                                                    | Type      |
-| --------------- | -------------------------------------------------------------- | --------- |
-| blockNumber     | the block's block number                                       | blknum    |
-| timestamp       | the timestamp of the block                                     | timestamp |
-| transactionsCnt | the number transactions in the block                           | uint64    |
-| unclesCnt       | the number of uncles in the block                              | uint64    |
-| logsCnt         | the number of logs in the block                                | uint64    |
-| tracesCnt       | the number of traces in the block                              | uint64    |
-| appsCnt         | the number of address appearances in the block                 | uint64    |
-| uniqsCnt        | the number of address appearances in the block per transaction | uint64    |
-
 ## NamedBlock
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
@@ -323,6 +300,29 @@ NamedBlocks consist of the following fields:
 | timestamp   | the Unix timestamp of the block     | timestamp |
 | date        | Human readable version of timestamp | datetime  |
 | name        | an optional name for the block      | string    |
+
+## BlockCount
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+`chifra blocks --count` returns the number of various types of data in a block. For example, `transactionCnt` is the number of transactions in the block, 
+and so on.
+
+The following commands produce and manage BlockCounts:
+
+- [chifra blocks](/chifra/chaindata/#chifra-blocks)
+
+BlockCounts consist of the following fields:
+
+| Field           | Description                                                    | Type      |
+| --------------- | -------------------------------------------------------------- | --------- |
+| blockNumber     | the block's block number                                       | blknum    |
+| timestamp       | the timestamp of the block                                     | timestamp |
+| transactionsCnt | the number transactions in the block                           | uint64    |
+| unclesCnt       | the number of uncles in the block                              | uint64    |
+| logsCnt         | the number of logs in the block                                | uint64    |
+| tracesCnt       | the number of traces in the block                              | uint64    |
+| appsCnt         | the number of address appearances in the block                 | uint64    |
+| uniqsCnt        | the number of address appearances in the block per transaction | uint64    |
 
 ## TraceCount
 

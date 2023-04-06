@@ -9,7 +9,7 @@ TEST[DATE|TIME] Format:  json
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheType": "neighborsCache",
+          "cacheType": "mapsCache",
           "items": [
             {
               "bloomSizeBytes": 0,
@@ -18,9 +18,9 @@ TEST[DATE|TIME] Format:  json
               "firstApp": 0,
               "firstTs": 1438269975,
               "indexSizeBytes": 106716,
+              "itemType": "mapsCacheItem",
               "latestApp": 0,
-              "latestTs": 1438269975,
-              "type": "neighborsCacheItem"
+              "latestTs": 1438269975
             },
             {
               "bloomSizeBytes": 0,
@@ -29,9 +29,9 @@ TEST[DATE|TIME] Format:  json
               "firstApp": 1,
               "firstTs": 1438269988,
               "indexSizeBytes": 24000000,
+              "itemType": "mapsCacheItem",
               "latestApp": 590502,
-              "latestTs": 1448383558,
-              "type": "neighborsCacheItem"
+              "latestTs": 1448383558
             }
           ],
           "lastCached": "--lastCached--",

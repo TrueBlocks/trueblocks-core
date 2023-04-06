@@ -10,20 +10,62 @@ status?modes=blocks&verbose&maxRecords=10
             {
               "fileDate": "--fileDate--",
               "filename": "$cachePath/data-model/file.bin",
-              "sizeInBytes": 123456789,
-              "type": "blocksCacheItem"
+              "itemType": "blocksCacheItem",
+              "sizeInBytes": 123456789
             },
             {
               "fileDate": "--fileDate--",
               "filename": "$cachePath/data-model/file.bin",
-              "sizeInBytes": 123456789,
-              "type": "blocksCacheItem"
+              "itemType": "blocksCacheItem",
+              "sizeInBytes": 123456789
             },
             {
               "fileDate": "--fileDate--",
               "filename": "$cachePath/data-model/file.bin",
-              "sizeInBytes": 123456789,
-              "type": "blocksCacheItem"
+              "itemType": "blocksCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "blocksCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "blocksCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "blocksCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "blocksCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "blocksCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "blocksCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "blocksCacheItem",
+              "sizeInBytes": 123456789
             }
           ],
           "lastCached": "--lastCached--",

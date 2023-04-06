@@ -10,26 +10,62 @@ status?modes=traces&verbose&maxRecords=10
             {
               "fileDate": "--fileDate--",
               "filename": "$cachePath/data-model/file.bin",
-              "sizeInBytes": 123456789,
-              "type": "tracesCacheItem"
+              "itemType": "tracesCacheItem",
+              "sizeInBytes": 123456789
             },
             {
               "fileDate": "--fileDate--",
               "filename": "$cachePath/data-model/file.bin",
-              "sizeInBytes": 123456789,
-              "type": "tracesCacheItem"
+              "itemType": "tracesCacheItem",
+              "sizeInBytes": 123456789
             },
             {
               "fileDate": "--fileDate--",
               "filename": "$cachePath/data-model/file.bin",
-              "sizeInBytes": 123456789,
-              "type": "tracesCacheItem"
+              "itemType": "tracesCacheItem",
+              "sizeInBytes": 123456789
             },
             {
               "fileDate": "--fileDate--",
               "filename": "$cachePath/data-model/file.bin",
-              "sizeInBytes": 123456789,
-              "type": "tracesCacheItem"
+              "itemType": "tracesCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "tracesCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "tracesCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "tracesCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "tracesCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "tracesCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "tracesCacheItem",
+              "sizeInBytes": 123456789
             }
           ],
           "lastCached": "--lastCached--",
