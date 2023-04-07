@@ -62,7 +62,8 @@ bool COptions::handle_sdk_ts_types(CStringArray& typesOut) {
         ostringstream fieldStream;
         for (auto field : model.fieldArray) {
             if (endsWith(field.type, "Map") || field.type == "CKeyArray" || field.type == "Value" ||
-                field.type == "topic" || startsWith(field.name, "unused") || contains(field.name, "::")) {
+                field.type == "topic" || startsWith(field.name, "unused") || contains(field.name, "::") ||
+                containsI(field.type, "storageslot")) {
                 continue;
             }
             bool isArray = contains(field.type, "Array");
@@ -73,7 +74,11 @@ bool COptions::handle_sdk_ts_types(CStringArray& typesOut) {
             if (isArray) {
                 ft = ft + "[]";
             }
-            ft = substitute(substitute(ft, "String", "string"), "Topic", "topic");
+            ft = substitute(ft, "String", "string");
+            ft = substitute(ft, "Topic", "topic");
+            ft = substitute(ft, "Address", "address");
+            ft = substitute(ft, "Hash", "hash");
+            ft = substitute(ft, "[]string", "string[]");
             replace(ft, "bool", "boolean");
 
             bool isOptional = field.memberFlags & IS_OMITEMPTY;
