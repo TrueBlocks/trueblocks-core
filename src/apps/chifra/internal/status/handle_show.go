@@ -3,6 +3,7 @@ package statusPkg
 import (
 	"context"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
@@ -30,7 +31,7 @@ func (opts *StatusOptions) HandleShow() error {
 		for _, mT := range opts.ModeTypes {
 			mT := mT
 			counterMap[mT] = NewSingleCacheStats(mT, now)
-			var t Thing
+			var t CacheWalker
 			t.ctx, t.cancel = context.WithCancel(context.Background())
 			go cache.WalkCacheFolder(t.ctx, chain, mT, &t, filenameChan)
 		}
@@ -52,8 +53,8 @@ func (opts *StatusOptions) HandleShow() error {
 						counterMap[cT].NFolders++
 						counterMap[cT].Path = cache.GetRootPathFromCacheType(chain, cT)
 					} else {
-						result.Data.(*Thing).counter++
-						if result.Data.(*Thing).counter >= opts.FirstRecord {
+						result.Data.(*CacheWalker).counter++
+						if result.Data.(*CacheWalker).counter >= opts.FirstRecord {
 							counterMap[cT].NFiles++
 							counterMap[cT].SizeInBytes += file.FileSize(result.Path)
 							if opts.Globals.Verbose && counterMap[cT].NFiles <= int(opts.MaxRecords) {
@@ -64,14 +65,14 @@ func (opts *StatusOptions) HandleShow() error {
 					}
 
 					if counterMap[cT].NFiles > int(opts.MaxRecords) {
-						result.Data.(*Thing).cancel()
+						result.Data.(*CacheWalker).cancel()
 					}
 
 					logger.Progress(
-						result.Data.(*Thing).counter%100 == 0,
+						result.Data.(*CacheWalker).counter%100 == 0,
 						fmt.Sprintf("Found %d %s files", counterMap[cT].NFiles, cT))
 
-					if (result.Data.(*Thing).counter+1)%100000 == 0 {
+					if (result.Data.(*CacheWalker).counter+1)%100000 == 0 {
 						logger.Info(colors.Green, "Progress:", colors.Off, counterMap[cT])
 					}
 
@@ -91,11 +92,22 @@ func (opts *StatusOptions) HandleShow() error {
 			Status: *status,
 		}
 
+		totalRecords := 0
 		for _, mT := range opts.ModeTypes {
 			mT := mT
 			if counterMap[mT] != nil {
 				s.Caches = append(s.Caches, *counterMap[mT])
+				totalRecords += counterMap[mT].NFiles
 			}
+		}
+
+		if totalRecords == 0 {
+			str := ""
+			for _, m := range opts.Modes {
+				str += fmt.Sprintf("%s ", m)
+			}
+			errorChan <- fmt.Errorf("no files were found in the [" + strings.Trim(str, " ") + "] caches")
+			return
 		}
 
 		modelChan <- &s
@@ -162,7 +174,7 @@ type simpleSingleCacheStats struct {
 	SizeInBytes int64  `json:"sizeInBytes"`
 }
 
-type Thing struct {
+type CacheWalker struct {
 	ctx     context.Context
 	cancel  context.CancelFunc
 	counter uint64

@@ -34,6 +34,7 @@ on      ,both ,fast  ,status ,apps/cacheStatus ,mode_abis           ,y    ,modes
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_blocks         ,y    ,modes = blocks & verbose & max_records = 2
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_monitors       ,y    ,modes = monitors & verbose & max_records = 2
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_names          ,y    ,modes = names & verbose & max_records = 2
+on      ,both ,fast  ,status ,apps/cacheStatus ,mode_slurps         ,y    ,modes = slurps & verbose & max_records = 2
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_tmp            ,y    ,modes = tmp & verbose & max_records = 2
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_traces         ,y    ,modes = traces & verbose & max_records = 2
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_txs            ,y    ,modes = txs & verbose & max_records = 2
@@ -57,4 +58,3 @@ on      ,both ,slow  ,status ,apps/cacheStatus ,redir_output_append ,n    ,modes
 # the path routines for recons cache and slurps are not yet implemented
 local   ,both ,fast  ,status ,apps/cacheStatus ,items_recons        ,y    ,modes = recons & max_records = 100
 local   ,both ,fast  ,status ,apps/cacheStatus ,mode_recons         ,y    ,modes = recons & verbose & max_records = 2
-local   ,both ,fast  ,status ,apps/cacheStatus ,mode_slurps         ,y    ,modes = slurps & verbose & max_records = 2
