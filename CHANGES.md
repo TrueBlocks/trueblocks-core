@@ -1,3 +1,4 @@
+THE ENTIRE DATA MODEL FOR CACHES CHANGED
 Removed none value from getToken --parts
 Previously deprecated option chifra blocks --trace removed. Use chifra blocks --traces
 Removes the --terse option from chifra status
