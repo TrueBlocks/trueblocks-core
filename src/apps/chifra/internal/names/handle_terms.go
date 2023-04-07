@@ -10,7 +10,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/proto"
 )
 
@@ -62,9 +61,9 @@ func (opts *NamesOptions) HandleTerms() error {
 
 func (opts *NamesOptions) fetchFromGrpc(client proto.NamesClient, modelChan chan types.Modeler[types.RawName], errorChan chan error) {
 	stream, err := client.SearchStream(context.Background(), &proto.SearchRequest{
-		Parts: utils.PointerOf(int64(opts.getType())),
+		Parts: int64(opts.getType()),
 		Terms: opts.Terms,
-		Sort:  utils.PointerOf(int64(names.SortByAddress)),
+		Sort:  int64(names.SortByAddress),
 	})
 	if err != nil {
 		errorChan <- err

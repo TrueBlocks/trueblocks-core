@@ -1,14 +1,18 @@
+syntax = "proto3";
 option go_package = "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/proto";
 
 service Names {
-    rpc Search (SearchRequest) returns (SearchResponse) {}
-    rpc SearchStream (SearchRequest) returns (stream Name) {}
+    // Search
+    rpc Search(SearchRequest) returns (SearchResponse) {}
+    rpc SearchStream(SearchRequest) returns (stream Name) {}
+    // CRUD
+    rpc Create(Name) returns (CreateResponse) {}
 }
 
 message SearchRequest {
-    required int64 parts = 1;
+    int64 parts = 1;
     repeated string terms = 2;
-    required int64 sort = 3;
+    int64 sort = 3;
 }
 
 message SearchResponse {
@@ -16,7 +20,7 @@ message SearchResponse {
 }
 
 message Name {
-    required string address = 1;
+    string address = 1;
     optional uint64 decimals = 2;
     optional bool deleted = 3;
     optional bool isContract = 4;
@@ -24,9 +28,14 @@ message Name {
     optional bool isErc20 = 6;
     optional bool isErc721 = 7;
     optional bool isPrefund = 8;
-    required string name = 9;
+    string name = 9;
     optional string petname = 10;
     optional string source = 11;
     optional string symbol = 12;
     optional string tags = 13;
+}
+
+message CreateResponse {
+    bool success = 1;
+    optional string error = 2;
 }

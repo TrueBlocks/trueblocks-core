@@ -216,7 +216,7 @@ func (s *SimpleName) ReadFrom(r io.Reader) (n int64, err error) {
 // EXISTING_CODE
 func (s *SimpleName) ToMessage() *proto.Name {
 	return &proto.Name{
-		Address:    utils.PointerOf(s.Address.Hex()),
+		Address:    s.Address.Hex(),
 		Decimals:   utils.PointerOf(s.Decimals),
 		Deleted:    utils.PointerOf(s.Deleted),
 		IsContract: utils.PointerOf(s.IsContract),
@@ -224,7 +224,7 @@ func (s *SimpleName) ToMessage() *proto.Name {
 		IsErc20:    utils.PointerOf(s.IsErc20),
 		IsErc721:   utils.PointerOf(s.IsErc721),
 		IsPrefund:  utils.PointerOf(s.IsPrefund),
-		Name:       utils.PointerOf(s.Name),
+		Name:       s.Name,
 		Petname:    utils.PointerOf(s.Petname),
 		Source:     utils.PointerOf(s.Source),
 		Symbol:     utils.PointerOf(s.Symbol),
@@ -238,7 +238,7 @@ func (s *SimpleName) Send(stream proto.Names_SearchStreamServer) error {
 
 func NewNameFromGrpc(gRpcName *proto.Name) *SimpleName {
 	return &SimpleName{
-		Address:    base.HexToAddress(*gRpcName.Address),
+		Address:    base.HexToAddress(gRpcName.Address),
 		Decimals:   *gRpcName.Decimals,
 		Deleted:    *gRpcName.Deleted,
 		IsContract: *gRpcName.IsContract,
@@ -246,7 +246,7 @@ func NewNameFromGrpc(gRpcName *proto.Name) *SimpleName {
 		IsErc20:    *gRpcName.IsErc20,
 		IsErc721:   *gRpcName.IsErc721,
 		IsPrefund:  *gRpcName.IsPrefund,
-		Name:       *gRpcName.Name,
+		Name:       gRpcName.Name,
 		Petname:    *gRpcName.Petname,
 		Source:     *gRpcName.Source,
 		Symbol:     *gRpcName.Symbol,
