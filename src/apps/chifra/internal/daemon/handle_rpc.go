@@ -12,12 +12,12 @@ import (
 	"google.golang.org/grpc"
 )
 
-type grpcServer struct {
+type chifraRpcServer struct {
 	proto.UnimplementedNamesServer
 }
 
 // Search looks up name by given terms
-func (g *grpcServer) Search(ctx context.Context, request *proto.SearchRequest) (*proto.SearchResponse, error) {
+func (g *chifraRpcServer) Search(ctx context.Context, request *proto.SearchRequest) (*proto.SearchResponse, error) {
 	logger.Info("Handling SearchNames")
 	found, err := names.LoadNamesArray("mainnet", names.Parts(request.GetParts()), names.SortByAddress, request.GetTerms())
 	if err != nil {
@@ -35,7 +35,7 @@ func (g *grpcServer) Search(ctx context.Context, request *proto.SearchRequest) (
 }
 
 // SearchStream is like Search, but it streams the response
-func (g *grpcServer) SearchStream(request *proto.SearchRequest, stream proto.Names_SearchStreamServer) error {
+func (g *chifraRpcServer) SearchStream(request *proto.SearchRequest, stream proto.Names_SearchStreamServer) error {
 	logger.Info("Handling SearchStream")
 	found, err := names.LoadNamesArray("mainnet", names.Parts(request.GetParts()), names.SortByAddress, request.GetTerms())
 	if err != nil {
@@ -56,21 +56,19 @@ func (opts *DaemonOptions) HandleRpc() error {
 		return err
 	}
 
-	// TODO(names): temp
-	_, err := names.LoadNamesMap("mainnet", names.Regular|names.Custom, nil)
-	if err != nil {
+	if err := names.PrepareRpc(); err != nil {
 		return err
 	}
 
-	r := grpc.NewServer()
-	proto.RegisterNamesServer(r, &grpcServer{})
+	rpcServer := grpc.NewServer()
+	proto.RegisterNamesServer(rpcServer, &chifraRpcServer{})
 
 	listener, err := net.Listen("unix", proto.SocketAddress())
 	if err != nil {
 		return err
 	}
 
-	if err := r.Serve(listener); err != nil {
+	if err := rpcServer.Serve(listener); err != nil {
 		return fmt.Errorf("failed to serve: %v", err)
 	}
 
