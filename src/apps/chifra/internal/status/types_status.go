@@ -23,9 +23,7 @@ type simpleStatus struct {
 	ClientVersion string `json:"clientVersion,omitempty"`
 	HasEsKey      bool   `json:"hasEsKey,omitempty"`
 	HasPinKey     bool   `json:"hasPinKey,omitempty"`
-	// TODO: BOGUS - add this it used to be in the old code
-	// Host          string `json:"host,omitempty"`
-	IndexPath string `json:"indexPath,omitempty"`
+	IndexPath     string `json:"indexPath,omitempty"`
 	// TODO: BOGUS - add this it used to be in the old code
 	// IsApi         bool   `json:"isApi,omitempty"`
 	IsArchive   bool   `json:"isArchive,omitempty"`
@@ -50,8 +48,7 @@ func (s *simpleStatus) Model(showHidden bool, format string, extraOptions map[st
 		"clientVersion": s.ClientVersion,
 		"hasEsKey":      s.HasEsKey,
 		"hasPinKey":     s.HasPinKey,
-		// "host":              s.Host,
-		"indexPath": s.IndexPath,
+		"indexPath":     s.IndexPath,
 		// "isApi":             isApi,
 		"isArchive":         s.IsArchive,
 		"isTesting":         s.IsTesting,
@@ -67,7 +64,6 @@ func (s *simpleStatus) Model(showHidden bool, format string, extraOptions map[st
 		"clientVersion",
 		"hasEsKey",
 		"hasPinKey",
-		// "host",
 		"indexPath",
 		// "isApi",
 		"isArchive",
@@ -98,10 +94,12 @@ func ToProgress(chain string, meta *rpcClient.MetaData) string {
 func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
+
 	meta, err := rpcClient.GetMetaData(chain, false)
 	if err != nil {
 		return nil, err
 	}
+
 	vers, err := rpcClient.GetVersion(chain)
 	if err != nil {
 		return nil, err

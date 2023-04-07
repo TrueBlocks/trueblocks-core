@@ -98,7 +98,7 @@ TEST[DATE|TIME] Format:  json
           "sizeInBytes": 789
         },
         {
-          "cacheType": "transactionsCache",
+          "cacheType": "txsCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,

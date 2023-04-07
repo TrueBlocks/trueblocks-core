@@ -8,23 +8,16 @@ import (
 	"context"
 	"io/fs"
 	"path/filepath"
-	"regexp"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
-func WalkCacheFolderWithContext(ctx context.Context, chain string, cacheType CacheType, regExp *regexp.Regexp, filenameChan chan<- CacheFileInfo) {
+func WalkCacheFolder(ctx context.Context, chain string, cacheType CacheType, data *interface{}, filenameChan chan<- CacheFileInfo) {
 	path := GetRootPathFromCacheType(chain, cacheType)
-	walkFolder(ctx, path, cacheType, regExp, filenameChan)
+	walkFolder(ctx, path, cacheType, data, filenameChan)
 }
 
-func WalkCacheFolder(chain string, cacheType CacheType, regExp *regexp.Regexp, filenameChan chan<- CacheFileInfo) {
-	unusedContext := context.Background()
-	path := GetRootPathFromCacheType(chain, cacheType)
-	walkFolder(unusedContext, path, cacheType, regExp, filenameChan)
-}
-
-func walkFolder(ctx context.Context, path string, cacheType CacheType, regExp *regexp.Regexp, filenameChan chan<- CacheFileInfo) {
+func walkFolder(ctx context.Context, path string, cacheType CacheType, data *interface{}, filenameChan chan<- CacheFileInfo) {
 	defer func() {
 		filenameChan <- CacheFileInfo{Type: Cache_NotACache}
 	}()
@@ -39,11 +32,12 @@ func walkFolder(ctx context.Context, path string, cacheType CacheType, regExp *r
 		}
 
 		if info.IsDir() {
-			filenameChan <- CacheFileInfo{Type: cacheType, Path: path, IsDir: true}
+			filenameChan <- CacheFileInfo{Type: cacheType, Path: path, IsDir: true, Data: data}
 
-		} else if regExp == nil || regExp.MatchString(info.Name()) {
+		} else {
+			// TODO: This does not need to be part of walker. It could be in the caller and sent through the data pointer
 			rng := base.RangeFromFilename(path)
-			filenameChan <- CacheFileInfo{Type: cacheType, Path: path, Range: rng}
+			filenameChan <- CacheFileInfo{Type: cacheType, Path: path, Range: rng, Data: data}
 		}
 
 		select {
@@ -61,4 +55,5 @@ type CacheFileInfo struct {
 	Path  string
 	Range base.FileRange
 	IsDir bool
+	Data  *interface{}
 }

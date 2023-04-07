@@ -5,6 +5,7 @@
 package rpcClient
 
 import (
+	"context"
 	"encoding/json"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
@@ -62,10 +63,10 @@ func GetMetaData(chain string, testmode bool) (*MetaData, error) {
 	filenameChan := make(chan cache.CacheFileInfo)
 
 	var nRoutines int = 4
-	go cache.WalkCacheFolder(chain, cache.Index_Final, nil, filenameChan)
-	go cache.WalkCacheFolder(chain, cache.Index_Staging, nil, filenameChan)
-	go cache.WalkCacheFolder(chain, cache.Index_Ripe, nil, filenameChan)
-	go cache.WalkCacheFolder(chain, cache.Index_Unripe, nil, filenameChan)
+	go cache.WalkCacheFolder(context.Background(), chain, cache.Index_Final, nil, filenameChan)
+	go cache.WalkCacheFolder(context.Background(), chain, cache.Index_Staging, nil, filenameChan)
+	go cache.WalkCacheFolder(context.Background(), chain, cache.Index_Ripe, nil, filenameChan)
+	go cache.WalkCacheFolder(context.Background(), chain, cache.Index_Unripe, nil, filenameChan)
 
 	for result := range filenameChan {
 		switch result.Type {

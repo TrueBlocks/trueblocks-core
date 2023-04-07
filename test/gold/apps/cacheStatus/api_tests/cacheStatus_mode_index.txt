@@ -5,7 +5,7 @@ status?modes=index&verbose&maxRecords=2
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheType": "finalizedCache",
+          "cacheType": "indexCache",
           "items": [
             {
               "bloomSizeBytes": 131114,

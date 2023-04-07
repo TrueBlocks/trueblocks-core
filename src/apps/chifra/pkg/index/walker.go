@@ -1,6 +1,8 @@
 package index
 
 import (
+	"context"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
@@ -31,7 +33,7 @@ func (walker *CacheWalker) WalkBloomFilters(blockNums []uint64) error {
 	filenameChan := make(chan cache.CacheFileInfo)
 
 	var nRoutines int = 1
-	go cache.WalkCacheFolder(walker.chain, cache.Index_Bloom, nil, filenameChan)
+	go cache.WalkCacheFolder(context.Background(), walker.chain, cache.Index_Bloom, nil, filenameChan)
 
 	cnt := 0
 	for result := range filenameChan {

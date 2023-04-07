@@ -10,15 +10,15 @@ status?modes=abis&modes=monitors&modes=slurps&verbose&maxRecords=2
             {
               "address": "--address--",
               "fileDate": "--fileDate--",
-              "filename": "$cachePath/slurps/--address--",
-              "itemType": "slurpsCacheItem",
+              "filename": "$cachePath/abis/--address--",
+              "itemType": "abisCacheItem",
               "sizeInBytes": 123456789
             },
             {
               "address": "--address--",
               "fileDate": "--fileDate--",
-              "filename": "$cachePath/slurps/--address--",
-              "itemType": "slurpsCacheItem",
+              "filename": "$cachePath/abis/--address--",
+              "itemType": "abisCacheItem",
               "sizeInBytes": 123456789
             }
           ],
@@ -35,15 +35,15 @@ status?modes=abis&modes=monitors&modes=slurps&verbose&maxRecords=2
               "address": "--address--",
               "fileDate": "--fileDate--",
               "filename": "$cachePath/monitors/--address--",
-              "sizeInBytes": 123456789,
-              "type": "monitorsCacheItem"
+              "itemType": "monitorsCacheItem",
+              "sizeInBytes": 123456789
             },
             {
               "address": "--address--",
               "fileDate": "--fileDate--",
               "filename": "$cachePath/monitors/--address--",
-              "sizeInBytes": 123456789,
-              "type": "monitorsCacheItem"
+              "itemType": "monitorsCacheItem",
+              "sizeInBytes": 123456789
             }
           ],
           "lastCached": "--lastCached--",

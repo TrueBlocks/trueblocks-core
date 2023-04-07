@@ -31,7 +31,7 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	filenameChan := make(chan cache.CacheFileInfo)
 
 	var nRoutines int = 1
-	go cache.WalkCacheFolder(opts.Globals.Chain, cache.Index_Bloom, nil, filenameChan)
+	go cache.WalkCacheFolder(context.Background(), opts.Globals.Chain, cache.Index_Bloom, nil, filenameChan)
 
 	fileNames := []string{}
 	for result := range filenameChan {

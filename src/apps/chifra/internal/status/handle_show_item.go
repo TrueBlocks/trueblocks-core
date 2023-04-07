@@ -26,30 +26,7 @@ func (opts *StatusOptions) getCacheItem(cT cache.CacheType, path string) (map[st
 		size = 123456789
 	}
 
-	indexDisplay := path
-	if testMode {
-		indexDisplay = strings.Replace(indexDisplay, config.GetPathToIndex(chain), "$indexPath/", 1)
-	}
-
-	address := ""
-	parts := strings.Split(path, "/")
-	for _, part := range parts {
-		if strings.HasPrefix(part, "0x") {
-			address = part
-			break
-		}
-	}
-
-	cacheDisplay := path
-	if testMode {
-		cacheDisplay = strings.Replace(cacheDisplay, config.GetPathToCache(chain), "$cachePath/", 1)
-		if len(address) > 0 {
-			cacheDisplay = strings.Replace(cacheDisplay, address, "--address--", -1)
-			address = "--address--"
-		} else if strings.Contains(path, "txs") || strings.Contains(path, "traces") || strings.Contains(path, "blocks") {
-			cacheDisplay = "$cachePath/data-model/file.bin"
-		}
-	}
+	display := path
 
 	switch cT {
 	case cache.Index_Maps:
@@ -57,38 +34,57 @@ func (opts *StatusOptions) getCacheItem(cT cache.CacheType, path string) (map[st
 	case cache.Index_Bloom:
 		fallthrough
 	case cache.Index_Final:
+		if testMode {
+			display = strings.Replace(display, config.GetPathToIndex(chain), "$indexPath/", 1)
+		}
 		fileRange := base.RangeFromFilename(path)
 		firstTs, _ := tslib.FromBnToTs(chain, fileRange.First)
 		latestTs, _ := tslib.FromBnToTs(chain, fileRange.Last)
 		return map[string]interface{}{
 			"bloomSizeBytes": file.FileSize(cache.ToBloomPath(path)),
 			"fileDate":       date,
-			"filename":       indexDisplay,
+			"filename":       display,
 			"firstApp":       fileRange.First,
 			"firstTs":        firstTs,
 			"indexSizeBytes": file.FileSize(cache.ToIndexPath(path)),
+			"itemType":       cT.CacheItemName(),
 			"latestApp":      fileRange.Last,
 			"latestTs":       latestTs,
-			"itemType":       cT.CacheTypeToStr() + "CacheItem",
 		}, nil
 	case cache.Cache_Monitors:
 		fallthrough
 	case cache.Cache_Slurps:
 		fallthrough
 	case cache.Cache_Abis:
+		address := ""
+		parts := strings.Split(path, "/")
+		for _, part := range parts {
+			if strings.HasPrefix(part, "0x") {
+				address = part
+				break
+			}
+		}
+		if testMode {
+			display = strings.Replace(display, config.GetPathToCache(chain), "$cachePath/", 1)
+			display = strings.Replace(display, address, "--address--", -1)
+			address = "--address--"
+		}
 		return map[string]interface{}{
 			"address":     address,
 			"fileDate":    date,
-			"filename":    cacheDisplay,
+			"filename":    display,
+			"itemType":    cT.CacheItemName(),
 			"sizeInBytes": size,
-			"itemType":    cT.CacheTypeToStr() + "CacheItem",
 		}, nil
 	default:
+		if testMode {
+			display = "$cachePath/data-model/file.bin"
+		}
 		return map[string]interface{}{
 			"fileDate":    date,
-			"filename":    cacheDisplay,
+			"filename":    display,
+			"itemType":    cT.CacheItemName(),
 			"sizeInBytes": size,
-			"itemType":    cT.CacheTypeToStr() + "CacheItem",
 		}, nil
 	}
 }

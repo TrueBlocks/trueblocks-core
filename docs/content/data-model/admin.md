@@ -21,6 +21,47 @@ sharing the indexes via IPFS and pinning the same are also produced by tools in 
 
 Each data structure is created by one or more tools which are detailed below.
 
+## Status
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+The [chifra config](/chifra/admin/#chifra-config) tool reports on the state (and size) of the
+various TrueBlocks local binary caches. TrueBlocks produces nine difference caches: `abis`, `blocks`,
+`monitors`, `names`, `objs`, `recons`, `slurps`, `traces`, `txs`. In general practice, these caches
+may take up a few GB of hard drive space, however, for very popular smart contract the size of the
+caches may grow rather large. Keep an eye on it.
+
+The `status` data model is a complex beast. It contains various information including a list of
+registered chains, information about many of the internal binary caches maintained by `chifra`
+as well as current status information about the system including version information for both
+`chifra` and the node it's running against.
+
+The following commands produce and manage Statuses:
+
+- [chifra status](/chifra/admin/#chifra-status)
+
+Statuses consist of the following fields:
+
+| Field             | Description                                              | Type                                |
+| ----------------- | -------------------------------------------------------- | ----------------------------------- |
+| clientVersion     | the version string as reported by the rpcProvider        | string                              |
+| clientIds         | netword_id and chain_id from the rpcProvider             | string                              |
+| trueblocksVersion | the TrueBlocks version string                            | string                              |
+| rpcProvider       | the current rpcProvider                                  | string                              |
+| configPath        | the path to config files                                 | string                              |
+| cachePath         | the path to the local binary caches                      | string                              |
+| indexPath         | the path to the local binary indexes                     | string                              |
+| host              | the host portion of the local API server                 | string                              |
+| isTesting         | `true` if the server is running in test mode             | bool                                |
+| isApi             | `true` if the server is running in API mode              | bool                                |
+| isScraping        | `true` if the index scraper is running                   | bool                                |
+| isArchive         | `true` if the rpcProvider is an archive node             | bool                                |
+| isTracing         | `true` if the rpcProvider provides Parity traces         | bool                                |
+| hasEskey          | `true` if an Etherscan key is present                    | bool                                |
+| hasPinkey         | `true` if a Pinata API key is present                    | bool                                |
+| ts                | the timestamp when this status data was produced         | timestamp                           |
+| chains            | the list of configured chains                            | [Chain[]](/data-model/admin/#chain) |
+| caches            | a collection of information concerning the binary caches | [Cache[]](/data-model/admin/#cache) |
+
 ## Manifest
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
@@ -204,6 +245,23 @@ Caches consist of the following fields:
 | sizeInBytes | the size of the cache in bytes                          | uint64                                        |
 | items       | an array of cache items                                 | [CacheEntry[]](/data-model/admin/#cacheentry) |
 
+## CacheEntry
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+The `cacheEntry` data model is used to display various caches displayed from the `chifra config`
+tool.
+
+The following commands produce and manage CacheEntries:
+
+- [chifra status](/chifra/admin/#chifra-status)
+
+CacheEntries consist of the following fields:
+
+| Field   | Description | Type    |
+| ------- | --- | ------- |
+| address |     | address |
+| name    |     | string  |
+
 ## ReportCheck
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
@@ -225,23 +283,6 @@ ReportChecks consist of the following fields:
 | failedCnt  | the number of failed checks                   | uint32   |
 | result     | the result of the check                       | string   |
 | msgStrings | an array of messages explaining failed checks | []string |
-
-## CacheEntry
-
-<!-- markdownlint-disable MD033 MD036 MD041 -->
-The `cacheEntry` data model is used to display various caches displayed from the `chifra config`
-tool.
-
-The following commands produce and manage CacheEntries:
-
-- [chifra status](/chifra/admin/#chifra-status)
-
-CacheEntries consist of the following fields:
-
-| Field   | Description | Type    |
-| ------- | --- | ------- |
-| address |     | address |
-| name    |     | string  |
 
 ## IndexCacheItem
 
@@ -302,6 +343,7 @@ This documentation mentions the following basic data types.
 | []string  | an array of strings                 |                |
 | address   | an '0x'-prefixed 20-byte hex string | lowercase      |
 | blknum    | an alias for a uint64               |                |
+| bool      | either `true`, `false`, `1`, or `0` |                |
 | datetime  | a JSON formatted date               | as a string    |
 | double    | a double precision float            | 64 bits        |
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |

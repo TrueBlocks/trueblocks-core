@@ -5,15 +5,6 @@ status?modes=some&maxRecords=100
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheType": "bloomCache",
-          "items": [],
-          "lastCached": "--lastCached--",
-          "nFiles": 123,
-          "nFolders": 456,
-          "path": "--paths--",
-          "sizeInBytes": 789
-        },
-        {
           "cacheType": "indexCache",
           "items": [],
           "lastCached": "--lastCached--",

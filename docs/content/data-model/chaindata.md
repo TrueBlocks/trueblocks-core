@@ -278,29 +278,6 @@ TraceResults consist of the following fields:
 | gasUsed | the amount of gas used by this trace                                           | gas     |
 | output  | the result of the call of this trace                                           | bytes   |
 
-## NamedBlock
-
-<!-- markdownlint-disable MD033 MD036 MD041 -->
-Left to its own devices, the blockchain would try to convince us that only hashes and bytes are
-important, but being human beings we know that this is not true. TrueBlocks `articulates` various
-types of data with [chifra names](/chifra/accounts/#chifra-names) detailing the names for
-addresses, `-articulate` describing the Functions and Events of a transaction, and
-[chifra when](/chifra/chaindata/#chifra-when) describing dated blocks. Dated blocks assign a
-human-readable date to blocks given block numbers or timestamps and visa versa.
-
-The following commands produce and manage NamedBlocks:
-
-- [chifra when](/chifra/chaindata/#chifra-when)
-
-NamedBlocks consist of the following fields:
-
-| Field       | Description                         | Type      |
-| ----------- | ----------------------------------- | --------- |
-| blockNumber | the number of the block             | blknum    |
-| timestamp   | the Unix timestamp of the block     | timestamp |
-| date        | Human readable version of timestamp | datetime  |
-| name        | an optional name for the block      | string    |
-
 ## BlockCount
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
@@ -323,6 +300,29 @@ BlockCounts consist of the following fields:
 | tracesCnt       | the number of traces in the block                              | uint64    |
 | appsCnt         | the number of address appearances in the block                 | uint64    |
 | uniqsCnt        | the number of address appearances in the block per transaction | uint64    |
+
+## NamedBlock
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+Left to its own devices, the blockchain would try to convince us that only hashes and bytes are
+important, but being human beings we know that this is not true. TrueBlocks `articulates` various
+types of data with [chifra names](/chifra/accounts/#chifra-names) detailing the names for
+addresses, `-articulate` describing the Functions and Events of a transaction, and
+[chifra when](/chifra/chaindata/#chifra-when) describing dated blocks. Dated blocks assign a
+human-readable date to blocks given block numbers or timestamps and visa versa.
+
+The following commands produce and manage NamedBlocks:
+
+- [chifra when](/chifra/chaindata/#chifra-when)
+
+NamedBlocks consist of the following fields:
+
+| Field       | Description                         | Type      |
+| ----------- | ----------------------------------- | --------- |
+| blockNumber | the number of the block             | blknum    |
+| timestamp   | the Unix timestamp of the block     | timestamp |
+| date        | Human readable version of timestamp | datetime  |
+| name        | an optional name for the block      | string    |
 
 ## TraceCount
 

@@ -102,8 +102,16 @@ func StrToCacheType(s string) CacheType {
 	return strToCacheType[s]
 }
 
-func (ct CacheType) CacheTypeToStr() string {
-	return cacheTypeToFolder[ct]
+func (ct CacheType) CacheName() string {
+	// TODO: Names of caches, names of folders, names of commands are all different. This is a mess.
+	ret := cacheTypeToFolder[ct] + "Cache"
+	ret = strings.Replace(ret, "blooms", "bloom", -1)
+	ret = strings.Replace(ret, "finalized", "index", -1)
+	return ret
+}
+
+func (ct CacheType) CacheItemName() string {
+	return ct.CacheName() + "Item"
 }
 
 func IsCacheType(path string, cT CacheType, checkExt bool) bool {

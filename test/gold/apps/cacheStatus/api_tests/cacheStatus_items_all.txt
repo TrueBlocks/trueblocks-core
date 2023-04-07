@@ -95,7 +95,7 @@ status?modes=all&maxRecords=100
           "sizeInBytes": 789
         },
         {
-          "cacheType": "transactionsCache",
+          "cacheType": "txsCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
