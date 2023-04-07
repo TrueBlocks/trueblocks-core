@@ -141,6 +141,7 @@ on      ,both ,fast  ,export   ,apps/acctExport ,accounting_tokens_1      ,y    
 on      ,both ,fast  ,monitors ,apps/acctExport ,accounting_cleanup_2     ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete & remove & fmt = json
 on      ,both ,fast  ,list     ,apps/acctExport ,accounting_list_2        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,accounting_tokens_2      ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & accounting & last_block = 9231343 & articulate & ether & fmt = json
+on      ,both ,fast  ,export   ,apps/acctExport ,accounting_to_cache      ,y    ,addrs = 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c & last_block = 100 & accounting & statements
 
 on      ,both ,slow  ,export   ,apps/acctExport ,monitors_seed_1          ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & last_block = 9000000 & fmt = json
 
