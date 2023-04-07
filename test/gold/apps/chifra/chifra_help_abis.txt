@@ -1,4 +1,4 @@
-chifra  abis --help --log_level 2
+chifra  abis --help
 Purpose:
   Fetches the ABI for a smart contract.
 

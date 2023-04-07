@@ -58,7 +58,7 @@ func Test_cacheLayout(t *testing.T) {
 		tt.expected.rootPart = strings.ReplaceAll(tt.expected.rootPart, "[{IndexPath}]", indexPath)
 
 		t.Run(tt.name, func(t *testing.T) {
-			gotten := getCacheData(tt.expected.chain, tt.expected.cacheType, tt.param)
+			gotten := getCacheTestData(tt.expected.chain, tt.expected.cacheType, tt.param)
 
 			e := tt.expected.rootPart
 			g := gotten.rootPart
@@ -89,7 +89,7 @@ func Test_cacheLayout(t *testing.T) {
 			}
 
 			e = tt.expected.theAnswer
-			g = gotten.GetFullPath(tt.param)
+			g = gotten.getFullPathForTest(tt.param)
 			// fmt.Println(e, g, e == g)
 			if e != g {
 				t.Error(tt.name, "theAnswer", "wanted", e, "got", g)
@@ -132,7 +132,7 @@ type cacheItem struct {
 	theAnswer string
 }
 
-func (c *cacheItem) GetFullPath(param string) string {
+func (c *cacheItem) getFullPathForTest(param string) string {
 	var ret string
 	switch c.cacheType {
 	case Index_Ripe:
@@ -150,6 +150,24 @@ func (c *cacheItem) GetFullPath(param string) string {
 		parts := strings.Split(param, ".")
 		_, paddedBn, paddedTx := getDirStructureByBlock(mustParseUint(parts[0]), mustParseUint(parts[1]))
 		param = paddedBn + "." + paddedTx
+	case Cache_Abis:
+		fallthrough
+	case Cache_Names:
+		fallthrough
+	case Cache_Monitors:
+		fallthrough
+	case Cache_Slurps:
+		fallthrough
+	case Cache_Tmp:
+		// don't fallthrough
+	default:
+		parts := strings.Split(param, "-")
+		if len(parts) < 2 {
+			return ""
+		}
+		_, p1, _ := getDirStructureByBlock(mustParseUint(strings.TrimLeft(parts[0], "0")), 0)
+		_, p2, _ := getDirStructureByBlock(mustParseUint(strings.TrimLeft(parts[1], "0")), 0)
+		param = p1 + "-" + p2
 	}
 
 	indexPath := strings.Trim(config.GetPathToIndex(utils.GetTestChain()), "/")
@@ -159,11 +177,10 @@ func (c *cacheItem) GetFullPath(param string) string {
 	ret = strings.Replace(ret, cachePath+"/", "", -1)
 	ret = strings.Replace(ret, indexPath+"/", "", -1)
 
-	// fmt.Println(c, ret)
 	return ret
 }
 
-func getCacheData(chain string, cT CacheType, param string) *cacheItem {
+func getCacheTestData(chain string, cT CacheType, param string) *cacheItem {
 	path := strings.Trim(GetRootPathFromCacheType(chain, cT), "/")
 	parts := strings.Split(path, "/")
 	if len(parts) < 1 {
@@ -259,7 +276,7 @@ var tests = []struct {
 		wantErr: false,
 	},
 	{
-		// TODO: BOGUS TURN THIS ON
+		// BOGUS: TURN THIS ON
 		on:    false,
 		param: "0xf503017d7baf7fbc0fff7492b751025c6a78179b|9320587|31",
 		expected: cacheItem{
@@ -326,27 +343,27 @@ var tests = []struct {
 	},
 	{
 		on:    true,
-		param: "0010000000-0010200000",
+		param: "001000000-001020000",
 		expected: cacheItem{
 			cacheType: Index_Bloom,
 			rootPart:  `[{IndexPath}]`,
 			typePart:  "blooms",
 			extraPart: "",
 			extension: ".bloom",
-			theAnswer: "blooms/0010000000-0010200000.bloom",
+			theAnswer: "blooms/001000000-001020000.bloom",
 		},
 		wantErr: false,
 	},
 	{
 		on:    true,
-		param: "0010000000-0010200000",
+		param: "001000000-001020000",
 		expected: cacheItem{
 			cacheType: Index_Final,
 			rootPart:  `[{IndexPath}]`,
 			typePart:  "finalized",
 			extraPart: "",
 			extension: ".bin",
-			theAnswer: "finalized/0010000000-0010200000.bin",
+			theAnswer: "finalized/001000000-001020000.bin",
 		},
 		wantErr: false,
 	},
@@ -390,7 +407,7 @@ var tests = []struct {
 		wantErr: false,
 	},
 	{
-		// TODO: BOGUS TURN THIS ON
+		on:    true,
 		param: "1-2",
 		expected: cacheItem{
 			cacheType: Index_Maps,

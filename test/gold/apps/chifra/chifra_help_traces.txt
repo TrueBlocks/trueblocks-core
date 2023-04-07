@@ -1,4 +1,4 @@
-chifra  traces --help --log_level 2
+chifra  traces --help
 Purpose:
   Retrieve traces for the given transaction(s).
 

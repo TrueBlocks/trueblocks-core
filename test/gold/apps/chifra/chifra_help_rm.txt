@@ -1,4 +1,4 @@
-chifra  monitors --delete --help --log_level 2
+chifra  monitors --delete --help
 Purpose:
   Add, remove, clean, and list address monitors.
 

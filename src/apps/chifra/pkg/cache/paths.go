@@ -32,18 +32,12 @@ func getPathByBlock(item CacheType, bn base.Blknum) string {
 	return filepath.Join(directory, parentDirs, paddedBn+"."+extension)
 }
 
-func getPathByBlockAndTransactionIndex(
-	item CacheType,
-	bn base.Blknum,
-	txId uint64,
-) string {
+func getPathByBlockAndTransactionIndex(item CacheType, bn base.Blknum, txId uint64) string {
 	parentDirs, paddedBn, paddedTx := getDirStructureByBlock(bn, txId)
 	directory := cacheTypeToFolder[item]
 	extension := cacheTypeToExt[item]
-	return filepath.Join(directory, parentDirs, strings.Join(
-		[]string{paddedBn, paddedTx},
-		"-",
-	)+"."+extension)
+	fileName := strings.Join([]string{paddedBn, paddedTx}, "-")
+	return filepath.Join(directory, parentDirs, fileName+"."+extension)
 }
 
 func GetRootPathFromCacheType(chain string, cacheType CacheType) string {

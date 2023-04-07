@@ -47,14 +47,13 @@ func (opts *StatusOptions) HandleShow() error {
 					logger.Progress(true, "                                           ")
 				}
 			default:
-				// fmt.Println(result.Path)
 				if cache.IsCacheType(result.Path, cT, !result.IsDir /* checkExt */) {
 					if result.IsDir {
 						counterMap[cT].NFolders++
 						counterMap[cT].Path = cache.GetRootPathFromCacheType(chain, cT)
 					} else {
-						result.Data.(*CacheWalker).counter++
-						if result.Data.(*CacheWalker).counter >= opts.FirstRecord {
+						result.Data.(*CacheWalker).nSeen++
+						if result.Data.(*CacheWalker).nSeen >= opts.FirstRecord {
 							counterMap[cT].NFiles++
 							counterMap[cT].SizeInBytes += file.FileSize(result.Path)
 							if opts.Globals.Verbose && counterMap[cT].NFiles <= int(opts.MaxRecords) {
@@ -69,11 +68,11 @@ func (opts *StatusOptions) HandleShow() error {
 					}
 
 					logger.Progress(
-						result.Data.(*CacheWalker).counter%100 == 0,
+						result.Data.(*CacheWalker).nSeen%100 == 0,
 						fmt.Sprintf("Found %d %s files", counterMap[cT].NFiles, cT))
 
-					if (result.Data.(*CacheWalker).counter+1)%100000 == 0 {
-						logger.Info(colors.Green, "Progress:", colors.Off, counterMap[cT])
+					if (result.Data.(*CacheWalker).nSeen+1)%100000 == 0 {
+						logger.Info(colors.Green, "Progress:", colors.Off, "Found", counterMap[cT].NFiles+1, "files in", counterMap[cT].NFolders, "folders")
 					}
 
 				} else {
@@ -177,5 +176,5 @@ type simpleSingleCacheStats struct {
 type CacheWalker struct {
 	ctx     context.Context
 	cancel  context.CancelFunc
-	counter uint64
+	nSeen   uint64
 }

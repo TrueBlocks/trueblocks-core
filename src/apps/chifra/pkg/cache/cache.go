@@ -252,7 +252,9 @@ func InsertAbi(chain string, address base.Address, inputReader io.Reader) (err e
 	return
 }
 
-// TODO: BOGUS Things not cached here:
+// TODO: The following data types have cache folders, but they do not have code above to read or write the cache. In some cases
+// the code is in the `cache` package, in other cases it's elsewhere or non-existant. We should move all of the code to this
+// package and remove the code from the other packages.
 // Cache_Monitors
 // Cache_Names
 // Cache_Recons

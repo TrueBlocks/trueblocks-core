@@ -1,12 +1,25 @@
-status?modes=recons&verbose&maxRecords=100
+status?modes=recons&verbose&maxRecords=2
 {
   "data": [
     {
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheType": "reconciliationsCache",
-          "items": [],
+          "cacheType": "reconsCache",
+          "items": [
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "reconsCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "reconsCacheItem",
+              "sizeInBytes": 123456789
+            }
+          ],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

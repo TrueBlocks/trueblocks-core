@@ -1,4 +1,4 @@
-chifra  status --help --log_level 2
+chifra  status --help
 Purpose:
   Report on the state of the internal binary caches.
 

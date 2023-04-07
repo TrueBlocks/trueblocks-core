@@ -1,4 +1,4 @@
-chifra  when --help --log_level 2
+chifra  when --help
 Purpose:
   Find block(s) based on date, blockNum, timestamp, or 'special'.
 

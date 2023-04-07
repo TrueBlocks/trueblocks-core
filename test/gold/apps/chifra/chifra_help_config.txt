@@ -1,4 +1,4 @@
-chifra  config --help --log_level 2
+chifra  config --help
 Purpose:
   Report on and edit the configuration of the TrueBlocks system.
 
