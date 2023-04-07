@@ -1,4 +1,4 @@
-status?modes=abis&modes=monitors&modes=slurps&verbose&maxRecords=2
+status?modes=abis&modes=monitors&modes=txs&verbose&maxRecords=2
 {
   "data": [
     {
@@ -53,20 +53,18 @@ status?modes=abis&modes=monitors&modes=slurps&verbose&maxRecords=2
           "sizeInBytes": 789
         },
         {
-          "cacheType": "slurpsCache",
+          "cacheType": "txsCache",
           "items": [
             {
-              "address": "--address--",
               "fileDate": "--fileDate--",
-              "filename": "$cachePath/slurps/--address--",
-              "itemType": "slurpsCacheItem",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "txsCacheItem",
               "sizeInBytes": 123456789
             },
             {
-              "address": "--address--",
               "fileDate": "--fileDate--",
-              "filename": "$cachePath/slurps/--address--",
-              "itemType": "slurpsCacheItem",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "txsCacheItem",
               "sizeInBytes": 123456789
             }
           ],

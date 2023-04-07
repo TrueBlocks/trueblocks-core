@@ -6,7 +6,30 @@ status?modes=all&verbose&maxRecords=2
       "caches": [
         {
           "cacheType": "bloomCache",
-          "items": [],
+          "items": [
+            {
+              "bloomSizeBytes": 131114,
+              "fileDate": "--fileDate--",
+              "filename": "$indexPath/blooms/000000000-000000000.bloom",
+              "firstApp": 0,
+              "firstTs": 1438269975,
+              "indexSizeBytes": 320192,
+              "itemType": "bloomCacheItem",
+              "latestApp": 0,
+              "latestTs": 1438269975
+            },
+            {
+              "bloomSizeBytes": 131114,
+              "fileDate": "--fileDate--",
+              "filename": "$indexPath/blooms/000000001-000590502.bloom",
+              "firstApp": 1,
+              "firstTs": 1438269988,
+              "indexSizeBytes": 16821060,
+              "itemType": "bloomCacheItem",
+              "latestApp": 590502,
+              "latestTs": 1448383558
+            }
+          ],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -17,19 +40,26 @@ status?modes=all&verbose&maxRecords=2
           "cacheType": "indexCache",
           "items": [
             {
-              "bloomHash": "",
               "bloomSizeBytes": 131114,
-              "fileDate": "1700-01-01 00:00:01 UTC",
-              "filename": "/--index-path--/000000000-000000000.bin",
+              "fileDate": "--fileDate--",
+              "filename": "$indexPath/finalized/000000000-000000000.bin",
               "firstApp": 0,
               "firstTs": 1438269975,
-              "indexHash": "",
               "indexSizeBytes": 320192,
+              "itemType": "indexCacheItem",
               "latestApp": 0,
-              "latestTs": 1438269975,
-              "nAddrs": 8893,
-              "nApps": 8893,
-              "type": "CIndexCacheItem"
+              "latestTs": 1438269975
+            },
+            {
+              "bloomSizeBytes": 131114,
+              "fileDate": "--fileDate--",
+              "filename": "$indexPath/finalized/000000001-000590502.bin",
+              "firstApp": 1,
+              "firstTs": 1438269988,
+              "indexSizeBytes": 16821060,
+              "itemType": "indexCacheItem",
+              "latestApp": 590502,
+              "latestTs": 1448383558
             }
           ],
           "lastCached": "--lastCached--",
@@ -60,24 +90,18 @@ status?modes=all&verbose&maxRecords=2
           "cacheType": "monitorsCache",
           "items": [
             {
-              "address": "---address---",
-              "decimals": 0,
-              "deleted": false,
-              "firstApp": 0,
-              "isContract": false,
-              "isCustom": false,
-              "isErc20": false,
-              "isErc721": false,
-              "isPrefund": false,
-              "latestApp": 0,
-              "nApps": 0,
-              "name": "--name--",
-              "petname": "--petname--",
-              "sizeInBytes": 0,
-              "source": "--source--",
-              "symbol": "--symbol--",
-              "tags": "--tags--",
-              "type": ""
+              "address": "--address--",
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/monitors/--address--",
+              "itemType": "monitorsCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "address": "--address--",
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/monitors/--address--",
+              "itemType": "monitorsCacheItem",
+              "sizeInBytes": 123456789
             }
           ],
           "lastCached": "--lastCached--",
@@ -88,7 +112,20 @@ status?modes=all&verbose&maxRecords=2
         },
         {
           "cacheType": "namesCache",
-          "items": [],
+          "items": [
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "namesCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "namesCacheItem",
+              "sizeInBytes": 123456789
+            }
+          ],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -97,7 +134,22 @@ status?modes=all&verbose&maxRecords=2
         },
         {
           "cacheType": "abisCache",
-          "items": [],
+          "items": [
+            {
+              "address": "--address--",
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/abis/--address--",
+              "itemType": "abisCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "address": "--address--",
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/abis/--address--",
+              "itemType": "abisCacheItem",
+              "sizeInBytes": 123456789
+            }
+          ],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
@@ -116,8 +168,18 @@ status?modes=all&verbose&maxRecords=2
         {
           "cacheType": "blocksCache",
           "items": [
-            "Testing/00/00/00",
-            "Testing/00/01/00"
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "blocksCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "blocksCacheItem",
+              "sizeInBytes": 123456789
+            }
           ],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -128,8 +190,18 @@ status?modes=all&verbose&maxRecords=2
         {
           "cacheType": "tracesCache",
           "items": [
-            "Testing/00/00/00",
-            "Testing/00/01/00"
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "tracesCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "tracesCacheItem",
+              "sizeInBytes": 123456789
+            }
           ],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -138,10 +210,20 @@ status?modes=all&verbose&maxRecords=2
           "sizeInBytes": 789
         },
         {
-          "cacheType": "transactionsCache",
+          "cacheType": "txsCache",
           "items": [
-            "Testing/00/00/00",
-            "Testing/00/01/00"
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "txsCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "txsCacheItem",
+              "sizeInBytes": 123456789
+            }
           ],
           "lastCached": "--lastCached--",
           "nFiles": 123,

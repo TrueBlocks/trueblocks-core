@@ -1,6 +1,6 @@
-chifra status  txs --verbose --max_records 10
+chifra status  txs --verbose --max_records 2
 TEST[DATE|TIME] Modes:  [txs]
-TEST[DATE|TIME] MaxRecords:  10
+TEST[DATE|TIME] MaxRecords:  2
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Format:  json
 {
@@ -11,60 +11,6 @@ TEST[DATE|TIME] Format:  json
         {
           "cacheType": "txsCache",
           "items": [
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "txsCacheItem",
-              "sizeInBytes": 123456789
-            },
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "txsCacheItem",
-              "sizeInBytes": 123456789
-            },
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "txsCacheItem",
-              "sizeInBytes": 123456789
-            },
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "txsCacheItem",
-              "sizeInBytes": 123456789
-            },
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "txsCacheItem",
-              "sizeInBytes": 123456789
-            },
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "txsCacheItem",
-              "sizeInBytes": 123456789
-            },
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "txsCacheItem",
-              "sizeInBytes": 123456789
-            },
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "txsCacheItem",
-              "sizeInBytes": 123456789
-            },
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "txsCacheItem",
-              "sizeInBytes": 123456789
-            },
             {
               "fileDate": "--fileDate--",
               "filename": "$cachePath/data-model/file.bin",

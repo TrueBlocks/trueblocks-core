@@ -75,6 +75,9 @@ func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
+	if len(opts.Modes) == 0 && opts.Globals.Verbose {
+		opts.Modes = append(opts.Modes, "some")
+	}
 	opts.ModeTypes = cache.GetCacheTypes(opts.Modes)
 	// EXISTING_CODE
 
@@ -88,6 +91,9 @@ func statusFinishParse(args []string) *StatusOptions {
 	defFmt := "txt"
 	// EXISTING_CODE
 	opts.Modes = append(opts.Modes, args...)
+	if len(opts.Modes) == 0 && opts.Globals.Verbose {
+		opts.Modes = append(opts.Modes, "some")
+	}
 	opts.ModeTypes = cache.GetCacheTypes(opts.Modes)
 	if len(opts.Modes) > 0 {
 		defFmt = "json"

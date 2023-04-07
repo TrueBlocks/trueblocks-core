@@ -1,65 +1,119 @@
-status?fmt=json&verbose&maxRecords=100
+status?fmt=json&verbose&maxRecords=2
 {
   "data": [
     {
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheType": "indexCache"
-          "nFiles": 123,
-          "nFolders": 456,
-          "path": "indexPath",
-          "sizeInBytes": 789,
-        },
-        {
+          "cacheType": "indexCache",
           "items": [
             {
-              "address": "---address---",
-              "decimals": 0,
-              "deleted": false,
+              "bloomSizeBytes": 131114,
+              "fileDate": "--fileDate--",
+              "filename": "$indexPath/finalized/000000000-000000000.bin",
               "firstApp": 0,
-              "isContract": false,
-              "isCustom": false,
-              "isErc20": false,
-              "isErc721": false,
-              "isPrefund": false,
+              "firstTs": 1438269975,
+              "indexSizeBytes": 320192,
+              "itemType": "indexCacheItem",
               "latestApp": 0,
-              "nApps": 0,
-              "name": "--name--",
-              "petname": "--petname--",
-              "sizeInBytes": 0,
-              "source": "--source--",
-              "symbol": "--symbol--",
-              "tags": "--tags--",
-              "type": ""
+              "latestTs": 1438269975
+            },
+            {
+              "bloomSizeBytes": 131114,
+              "fileDate": "--fileDate--",
+              "filename": "$indexPath/finalized/000000001-000590502.bin",
+              "firstApp": 1,
+              "firstTs": 1438269988,
+              "indexSizeBytes": 16821060,
+              "itemType": "indexCacheItem",
+              "latestApp": 590502,
+              "latestTs": 1448383558
             }
           ],
-          "cacheType": "monitorsCache"
+          "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
-          "path": "monitorsPath",
-          "sizeInBytes": 789,
+          "path": "--paths--",
+          "sizeInBytes": 789
         },
         {
-          "cacheType": "namesCache"
+          "cacheType": "monitorsCache",
+          "items": [
+            {
+              "address": "--address--",
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/monitors/--address--",
+              "itemType": "monitorsCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "address": "--address--",
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/monitors/--address--",
+              "itemType": "monitorsCacheItem",
+              "sizeInBytes": 123456789
+            }
+          ],
+          "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
-          "path": "namesPath",
-          "sizeInBytes": 789,
+          "path": "--paths--",
+          "sizeInBytes": 789
         },
         {
-          "cacheType": "abisCache"
+          "cacheType": "namesCache",
+          "items": [
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "namesCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "namesCacheItem",
+              "sizeInBytes": 123456789
+            }
+          ],
+          "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
-          "path": "abisPath",
-          "sizeInBytes": 789,
+          "path": "--paths--",
+          "sizeInBytes": 789
         },
         {
-          "cacheType": "slurpsCache"
+          "cacheType": "abisCache",
+          "items": [
+            {
+              "address": "--address--",
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/abis/--address--",
+              "itemType": "abisCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "address": "--address--",
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/abis/--address--",
+              "itemType": "abisCacheItem",
+              "sizeInBytes": 123456789
+            }
+          ],
+          "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
-          "path": "slurpsPath",
-          "sizeInBytes": 789,
+          "path": "--paths--",
+          "sizeInBytes": 789
+        },
+        {
+          "cacheType": "slurpsCache",
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789
         }
       ],
       "chainConfig": "--paths--",

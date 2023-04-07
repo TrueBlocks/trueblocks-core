@@ -25,7 +25,7 @@ func (opts *AbisOptions) HandleClean() error {
 		// TODO: This code is not actually used
 		// filenameChan := make(chan cache.CacheFileInfo)
 		// var nRoutines int = 1
-		// go cache.WalkCacheFolder(context.Background(), opts.Globals.Chain, cache.Cache_Abis, filenameChan)
+		// go cache.WalkCacheFolder(context.Background(), opts.Globals.Chain, cache.Cache_Abis, nil, filenameChan)
 		// for result := range filenameChan {
 		// 	switch result.Type {
 		// 	case cache.Cache_Abis:

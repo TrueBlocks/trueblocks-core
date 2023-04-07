@@ -12,12 +12,12 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
-func WalkCacheFolder(ctx context.Context, chain string, cacheType CacheType, data *interface{}, filenameChan chan<- CacheFileInfo) {
+func WalkCacheFolder(ctx context.Context, chain string, cacheType CacheType, data interface{}, filenameChan chan<- CacheFileInfo) {
 	path := GetRootPathFromCacheType(chain, cacheType)
 	walkFolder(ctx, path, cacheType, data, filenameChan)
 }
 
-func walkFolder(ctx context.Context, path string, cacheType CacheType, data *interface{}, filenameChan chan<- CacheFileInfo) {
+func walkFolder(ctx context.Context, path string, cacheType CacheType, data interface{}, filenameChan chan<- CacheFileInfo) {
 	defer func() {
 		filenameChan <- CacheFileInfo{Type: Cache_NotACache}
 	}()
@@ -55,5 +55,5 @@ type CacheFileInfo struct {
 	Path  string
 	Range base.FileRange
 	IsDir bool
-	Data  *interface{}
+	Data  interface{}
 }

@@ -1,5 +1,5 @@
-chifra status  abis monitors slurps --verbose --max_records 2
-TEST[DATE|TIME] Modes:  [abis monitors slurps]
+chifra status  abis monitors txs --verbose --max_records 2
+TEST[DATE|TIME] Modes:  [abis monitors txs]
 TEST[DATE|TIME] MaxRecords:  2
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Format:  json
@@ -46,8 +46,8 @@ TEST[DATE|TIME] Format:  json
               "address": "--address--",
               "fileDate": "--fileDate--",
               "filename": "$cachePath/monitors/--address--",
-              "sizeInBytes": 123456789,
-              "type": "monitorsCacheItem"
+              "itemType": "monitorsCacheItem",
+              "sizeInBytes": 123456789
             }
           ],
           "lastCached": "--lastCached--",
@@ -57,20 +57,18 @@ TEST[DATE|TIME] Format:  json
           "sizeInBytes": 789
         },
         {
-          "cacheType": "slurpsCache",
+          "cacheType": "txsCache",
           "items": [
             {
-              "address": "--address--",
               "fileDate": "--fileDate--",
-              "filename": "$cachePath/slurps/--address--",
-              "itemType": "slurpsCacheItem",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "txsCacheItem",
               "sizeInBytes": 123456789
             },
             {
-              "address": "--address--",
               "fileDate": "--fileDate--",
-              "filename": "$cachePath/slurps/--address--",
-              "itemType": "slurpsCacheItem",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "txsCacheItem",
               "sizeInBytes": 123456789
             }
           ],

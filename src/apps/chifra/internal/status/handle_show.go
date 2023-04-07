@@ -18,9 +18,6 @@ func (opts *StatusOptions) HandleShow() error {
 	testMode := opts.Globals.TestMode
 
 	renderCtx := context.Background()
-	walkContext, cancel := context.WithCancel(context.Background())
-
-	nSeen := uint64(0)
 
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		now := time.Now()
@@ -33,11 +30,14 @@ func (opts *StatusOptions) HandleShow() error {
 		for _, mT := range opts.ModeTypes {
 			mT := mT
 			counterMap[mT] = NewSingleCacheStats(mT, now)
-			go cache.WalkCacheFolder(walkContext, chain, mT, nil, filenameChan)
+			var t Thing
+			t.ctx, t.cancel = context.WithCancel(context.Background())
+			go cache.WalkCacheFolder(t.ctx, chain, mT, &t, filenameChan)
 		}
 
 		for result := range filenameChan {
 			cT := result.Type
+
 			switch cT {
 			case cache.Cache_NotACache:
 				nRoutines--
@@ -46,31 +46,32 @@ func (opts *StatusOptions) HandleShow() error {
 					logger.Progress(true, "                                           ")
 				}
 			default:
+				// fmt.Println(result.Path)
 				if cache.IsCacheType(result.Path, cT, !result.IsDir /* checkExt */) {
 					if result.IsDir {
 						counterMap[cT].NFolders++
 						counterMap[cT].Path = cache.GetRootPathFromCacheType(chain, cT)
 					} else {
-						nSeen++
-						if nSeen >= opts.FirstRecord {
+						result.Data.(*Thing).counter++
+						if result.Data.(*Thing).counter >= opts.FirstRecord {
 							counterMap[cT].NFiles++
 							counterMap[cT].SizeInBytes += file.FileSize(result.Path)
-							if opts.Globals.Verbose {
+							if opts.Globals.Verbose && counterMap[cT].NFiles <= int(opts.MaxRecords) {
 								cI, _ := opts.getCacheItem(cT, result.Path)
 								counterMap[cT].Items = append(counterMap[cT].Items, cI)
 							}
 						}
 					}
 
-					if counterMap[cT].NFiles >= int(opts.MaxRecords) {
-						cancel()
+					if counterMap[cT].NFiles > int(opts.MaxRecords) {
+						result.Data.(*Thing).cancel()
 					}
 
 					logger.Progress(
-						nSeen%100 == 0,
+						result.Data.(*Thing).counter%100 == 0,
 						fmt.Sprintf("Found %d %s files", counterMap[cT].NFiles, cT))
 
-					if (nSeen+1)%100000 == 0 {
+					if (result.Data.(*Thing).counter+1)%100000 == 0 {
 						logger.Info(colors.Green, "Progress:", colors.Off, counterMap[cT])
 					}
 
@@ -159,4 +160,10 @@ type simpleSingleCacheStats struct {
 	NFolders    int    `json:"nFolders"`
 	Path        string `json:"path"`
 	SizeInBytes int64  `json:"sizeInBytes"`
+}
+
+type Thing struct {
+	ctx     context.Context
+	cancel  context.CancelFunc
+	counter uint64
 }

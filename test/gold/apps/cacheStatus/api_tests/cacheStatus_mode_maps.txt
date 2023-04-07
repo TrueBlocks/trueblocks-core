@@ -27,7 +27,7 @@ status?modes=maps&verbose&maxRecords=2
               "indexSizeBytes": 24000000,
               "itemType": "mapsCacheItem",
               "latestApp": 590502,
-              "latestTs": 1463064944
+              "latestTs": 1448383558
             }
           ],
           "lastCached": "--lastCached--",
