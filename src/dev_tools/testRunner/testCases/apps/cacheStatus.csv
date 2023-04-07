@@ -18,7 +18,7 @@ on      ,both ,fast  ,status ,apps/cacheStatus ,items_slurps        ,y    ,modes
 on      ,both ,fast  ,status ,apps/cacheStatus ,items_tmp           ,y    ,modes = tmp & max_records = 100
 on      ,both ,fast  ,status ,apps/cacheStatus ,items_traces        ,y    ,modes = traces & max_records = 100
 on      ,both ,fast  ,status ,apps/cacheStatus ,items_txs           ,y    ,modes = txs & max_records = 100
-on      ,both ,fast  ,status ,apps/cacheStatus ,items_recons        ,y    ,modes = recons & max_records = 100
+local   ,both ,fast  ,status ,apps/cacheStatus ,items_recons        ,y    ,modes = recons & max_records = 100
 on      ,both ,fast  ,status ,apps/cacheStatus ,items_blooms        ,y    ,modes = blooms & max_records = 100
 on      ,both ,fast  ,status ,apps/cacheStatus ,items_index         ,y    ,modes = index & max_records = 100
 on      ,both ,fast  ,status ,apps/cacheStatus ,items_ripe          ,y    ,modes = ripe & max_records = 100
@@ -39,7 +39,7 @@ on      ,both ,fast  ,status ,apps/cacheStatus ,mode_slurps         ,y    ,modes
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_tmp            ,y    ,modes = tmp & verbose & max_records = 2
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_traces         ,y    ,modes = traces & verbose & max_records = 2
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_txs            ,y    ,modes = txs & verbose & max_records = 2
-on      ,both ,fast  ,status ,apps/cacheStatus ,mode_recons         ,y    ,modes = recons & verbose & max_records = 2
+local   ,both ,fast  ,status ,apps/cacheStatus ,mode_recons         ,y    ,modes = recons & verbose & max_records = 2
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_blooms         ,y    ,modes = blooms & verbose & max_records = 2
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_index          ,y    ,modes = index & verbose & max_records = 2
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_ripe           ,y    ,modes = ripe & verbose & max_records = 2
