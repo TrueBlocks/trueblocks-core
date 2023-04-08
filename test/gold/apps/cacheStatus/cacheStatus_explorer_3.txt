@@ -41,6 +41,26 @@ TEST[DATE|TIME] Format:  json
           "sizeInBytes": 789
         }
       ],
+      "chains": [
+        {
+          "chain": "mainnet",
+          "chainId": 1,
+          "symbol": "ETH",
+          "rpcProvider": "--provider-mainnet--",
+          "apiProvider": "--provider-mainnet--",
+          "remoteExplorer": "--explorer-mainnet--",
+          "localExplorer": "--explorer-mainnet--"
+        },
+        {
+          "chain": "gnosis",
+          "chainId": 100,
+          "symbol": "XDAI",
+          "rpcProvider": "--provider-gnosis--",
+          "apiProvider": "--provider-gnosis--",
+          "remoteExplorer": "--explorer-gnosis--",
+          "localExplorer": "--explorer-gnosis--"
+        }
+      ],
       "chainConfig": "--paths--",
       "clientVersion": "Client version",
       "hasEsKey": true,
