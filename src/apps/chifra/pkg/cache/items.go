@@ -125,60 +125,63 @@ func IsCacheType(path string, cT CacheType, checkExt bool) bool {
 }
 
 func GetCacheTypes(strs []string) []CacheType {
+	haveit := map[string]bool{} // removes dups
 	var types []CacheType
 	for _, str := range strs {
-
-		switch str {
-		case "abis":
-			types = append(types, Cache_Abis)
-		case "blocks":
-			types = append(types, Cache_Blocks)
-		case "monitors":
-			types = append(types, Cache_Monitors)
-		case "names":
-			types = append(types, Cache_Names)
-		case "recons":
-			types = append(types, Cache_Recons)
-		case "slurps":
-			types = append(types, Cache_Slurps)
-		case "tmp":
-			types = append(types, Cache_Tmp)
-		case "traces":
-			types = append(types, Cache_Traces)
-		case "txs":
-			types = append(types, Cache_Transactions)
-		case "blooms":
-			types = append(types, Index_Bloom)
-		case "index":
-			fallthrough
-		case "finalized":
-			types = append(types, Index_Final)
-		case "ripe":
-			types = append(types, Index_Ripe)
-		case "staging":
-			types = append(types, Index_Staging)
-		case "unripe":
-			types = append(types, Index_Unripe)
-		case "maps":
-			types = append(types, Index_Maps)
-		case "some":
-			types = append(types, Index_Final)
-			types = append(types, Cache_Monitors)
-			types = append(types, Cache_Names)
-			types = append(types, Cache_Abis)
-			types = append(types, Cache_Slurps)
-		case "all":
-			types = append(types, Index_Bloom)
-			types = append(types, Index_Final)
-			types = append(types, Index_Staging)
-			types = append(types, Index_Unripe)
-			types = append(types, Cache_Monitors)
-			types = append(types, Cache_Names)
-			types = append(types, Cache_Abis)
-			types = append(types, Cache_Slurps)
-			types = append(types, Cache_Blocks)
-			types = append(types, Cache_Traces)
-			types = append(types, Cache_Transactions)
+		if !haveit[str] {
+			haveit[str] = true
+			switch str {
+			case "abis":
+				types = append(types, Cache_Abis)
+			case "blocks":
+				types = append(types, Cache_Blocks)
+			case "monitors":
+				types = append(types, Cache_Monitors)
+			case "names":
+				types = append(types, Cache_Names)
+			case "recons":
+				types = append(types, Cache_Recons)
+			case "slurps":
+				types = append(types, Cache_Slurps)
+			case "tmp":
+				types = append(types, Cache_Tmp)
+			case "traces":
+				types = append(types, Cache_Traces)
+			case "txs":
+				types = append(types, Cache_Transactions)
+			case "blooms":
+				types = append(types, Index_Bloom)
+			case "index":
+				fallthrough
+			case "finalized":
+				types = append(types, Index_Final)
+			case "ripe":
+				types = append(types, Index_Ripe)
+			case "staging":
+				types = append(types, Index_Staging)
+			case "unripe":
+				types = append(types, Index_Unripe)
+			case "maps":
+				types = append(types, Index_Maps)
+			case "some":
+				types = append(types, Index_Final)
+				types = append(types, Cache_Monitors)
+				types = append(types, Cache_Names)
+				types = append(types, Cache_Abis)
+				types = append(types, Cache_Slurps)
+			case "all":
+				types = append(types, Index_Bloom)
+				types = append(types, Index_Final)
+				types = append(types, Index_Staging)
+				types = append(types, Index_Unripe)
+				types = append(types, Cache_Monitors)
+				types = append(types, Cache_Names)
+				types = append(types, Cache_Abis)
+				types = append(types, Cache_Slurps)
+				types = append(types, Cache_Blocks)
+				types = append(types, Cache_Traces)
+				types = append(types, Cache_Transactions)
+			}
 		}
 	}
 	/*
