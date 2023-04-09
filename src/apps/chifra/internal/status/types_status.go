@@ -24,16 +24,15 @@ type simpleStatus struct {
 	HasEsKey      bool   `json:"hasEsKey,omitempty"`
 	HasPinKey     bool   `json:"hasPinKey,omitempty"`
 	IndexPath     string `json:"indexPath,omitempty"`
-	// TODO: BOGUS - add this it used to be in the old code
-	// IsApi         bool   `json:"isApi,omitempty"`
-	IsArchive   bool   `json:"isArchive,omitempty"`
-	IsTesting   bool   `json:"isTesting,omitempty"`
-	IsTracing   bool   `json:"isTracing,omitempty"`
-	NetworkId   string `json:"networkId,omitempty"`
-	Progress    string `json:"progress,omitempty"`
-	RootConfig  string `json:"rootConfig,omitempty"`
-	RPCProvider string `json:"rpcProvider,omitempty"`
-	Version     string `json:"trueblocksVersion,omitempty"`
+	IsApi         bool   `json:"isApi,omitempty"`
+	IsArchive     bool   `json:"isArchive,omitempty"`
+	IsTesting     bool   `json:"isTesting,omitempty"`
+	IsTracing     bool   `json:"isTracing,omitempty"`
+	NetworkId     string `json:"networkId,omitempty"`
+	Progress      string `json:"progress,omitempty"`
+	RootConfig    string `json:"rootConfig,omitempty"`
+	RPCProvider   string `json:"rpcProvider,omitempty"`
+	Version       string `json:"trueblocksVersion,omitempty"`
 }
 
 func (s *simpleStatus) Raw() *types.RawModeler {
@@ -43,13 +42,13 @@ func (s *simpleStatus) Raw() *types.RawModeler {
 func (s *simpleStatus) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
 	// isApi := extraOptions != nil && extraOptions["isApi"] == true
 	model := map[string]interface{}{
-		"cachePath":     s.CachePath,
-		"chainConfig":   s.ChainConfig,
-		"clientVersion": s.ClientVersion,
-		"hasEsKey":      s.HasEsKey,
-		"hasPinKey":     s.HasPinKey,
-		"indexPath":     s.IndexPath,
-		// "isApi":             isApi,
+		"cachePath":         s.CachePath,
+		"chainConfig":       s.ChainConfig,
+		"clientVersion":     s.ClientVersion,
+		"hasEsKey":          s.HasEsKey,
+		"hasPinKey":         s.HasPinKey,
+		"indexPath":         s.IndexPath,
+		"isApi":             s.IsApi,
 		"isArchive":         s.IsArchive,
 		"isTesting":         s.IsTesting,
 		"isTracing":         s.IsTracing,
@@ -65,7 +64,7 @@ func (s *simpleStatus) Model(showHidden bool, format string, extraOptions map[st
 		"hasEsKey",
 		"hasPinKey",
 		"indexPath",
-		// "isApi",
+		"isApi",
 		"isArchive",
 		"isTesting",
 		"isTracing",
@@ -115,6 +114,7 @@ func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 		IndexPath:     config.GetPathToIndex(chain),
 		Progress:      ToProgress(chain, meta),
 		IsTesting:     testMode,
+		IsApi:         opts.Globals.IsApiMode(),
 		IsArchive:     rpcClient.IsArchiveNode(testMode, chain),
 		IsTracing:     rpcClient.IsTracingNode(testMode, chain),
 		HasEsKey:      config.HasEsKeys(chain),
