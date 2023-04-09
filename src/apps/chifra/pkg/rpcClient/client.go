@@ -209,7 +209,7 @@ func BlockHashFromNumber(provider string, blkNum uint64) (string, error) {
 	return block.Hash().Hex(), nil
 }
 
-// TODO: This needs to be implemented in a cross-chain, cross-client manner
+// TODO: BOGUS This needs to be implemented in a cross-chain, cross-client manner
 func IsTracingNode(testMode bool, chain string) bool {
 	// TODO: We can test this with a unit test
 	if testMode && chain == "non-tracing" {
@@ -220,7 +220,7 @@ func IsTracingNode(testMode bool, chain string) bool {
 
 func IsArchiveNode(testMode bool, chain string) bool {
 	return true
-	// TODO: from C++ code
+	// TODO: BOGUS from C++ code
 	// const CToml* config = getGlobalConfig("blockScrape");
 	// if (!config->getConfigBool("requires", "archive", true))
 	//     return true;

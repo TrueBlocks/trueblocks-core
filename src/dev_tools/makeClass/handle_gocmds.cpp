@@ -310,6 +310,8 @@ string_q get_notes2(const CCommandOption& cmd) {
             os << endl;
         }
         os << "  - " << substitute(p.description, "`", "");
+        // TODO: Coloring in notes (search in makeClass for this note)
+        // os << "  - " << substitute(p.description, "`", "++");
     }
 
     return trim(substitute(os.str(), "|", "\n    "));

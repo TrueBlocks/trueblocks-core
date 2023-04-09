@@ -49,9 +49,7 @@ const longStatus = `Purpose:
 const notesStatus = `
 Notes:
   - The some mode includes index, monitors, names, slurps, and abis.
-  - If no mode is supplied, a terse report is generated.
-  - This tool ignores the --format option, all results other than terse are json.
-  - The blooms and index modes produce the same results.`
+  - If no mode is supplied, a terse report is generated.`
 
 func init() {
 	statusCmd.Flags().SortFlags = false
