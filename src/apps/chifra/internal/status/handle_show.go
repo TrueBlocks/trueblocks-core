@@ -63,7 +63,7 @@ func (opts *StatusOptions) HandleShow() error {
 						}
 					}
 
-					if counterMap[cT].NFiles > int(opts.MaxRecords) {
+					if counterMap[cT].NFiles >= int(opts.MaxRecords) {
 						result.Data.(*CacheWalker).cancel()
 					}
 
@@ -72,7 +72,7 @@ func (opts *StatusOptions) HandleShow() error {
 						fmt.Sprintf("Found %d %s files", counterMap[cT].NFiles, cT))
 
 					if (result.Data.(*CacheWalker).nSeen+1)%100000 == 0 {
-						logger.Info(colors.Green, "Progress:", colors.Off, "Found", counterMap[cT].NFiles+1, "files in", counterMap[cT].NFolders, "folders")
+						logger.Info(colors.Green, "Progress:", colors.Off, "Found", counterMap[cT].NFiles, "files and", counterMap[cT].NFolders, "folders after", result.Data.(*CacheWalker).nSeen+1, "files")
 					}
 
 				} else {
@@ -174,7 +174,7 @@ type simpleSingleCacheStats struct {
 }
 
 type CacheWalker struct {
-	ctx     context.Context
-	cancel  context.CancelFunc
-	nSeen   uint64
+	ctx    context.Context
+	cancel context.CancelFunc
+	nSeen  uint64
 }
