@@ -26,6 +26,7 @@ Results in ./output_test_file
       "hasEsKey": true,
       "hasPinKey": false,
       "indexPath": "--paths--",
+      "isApi": false,
       "isArchive": true,
       "isTesting": true,
       "isTracing": true,

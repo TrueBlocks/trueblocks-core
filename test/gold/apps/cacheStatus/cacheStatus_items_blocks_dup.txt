@@ -1,11 +1,14 @@
-status?modes=index&maxRecords=100
+chifra status  blocks --max_records 100 blocks blocks
+TEST[DATE|TIME] Modes:  [blocks blocks blocks]
+TEST[DATE|TIME] MaxRecords:  100
+TEST[DATE|TIME] Format:  json
 {
   "data": [
     {
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheType": "indexCache",
+          "cacheType": "blocksCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -19,7 +22,7 @@ status?modes=index&maxRecords=100
       "hasEsKey": true,
       "hasPinKey": false,
       "indexPath": "--paths--",
-      "isApi": true,
+      "isApi": false,
       "isArchive": true,
       "isTesting": true,
       "isTracing": true,
@@ -27,15 +30,5 @@ status?modes=index&maxRecords=100
       "rpcProvider": "--providers--",
       "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-"
     }
-  ],
-  "meta": {
-    "client": "0xdeadbeef",
-    "finalized": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "unripe": "0xdeadbeef",
-    "chainId": 1,
-    "networkId": 1,
-    "chain": "mainnet"
-  }
+  ]
 }

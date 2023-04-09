@@ -1,11 +1,11 @@
-status?modes=index&maxRecords=100
+status?modes=blocks&maxRecords=100&modes=blocks&modes=blocks
 {
   "data": [
     {
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheType": "indexCache",
+          "cacheType": "blocksCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,

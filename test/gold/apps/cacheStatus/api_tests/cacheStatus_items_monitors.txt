@@ -19,6 +19,7 @@ status?modes=monitors&maxRecords=100
       "hasEsKey": true,
       "hasPinKey": false,
       "indexPath": "--paths--",
+      "isApi": true,
       "isArchive": true,
       "isTesting": true,
       "isTracing": true,

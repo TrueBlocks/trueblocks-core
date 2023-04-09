@@ -22,6 +22,7 @@ TEST[DATE|TIME] Format:  json
       "hasEsKey": true,
       "hasPinKey": false,
       "indexPath": "--paths--",
+      "isApi": false,
       "isArchive": true,
       "isTesting": true,
       "isTracing": true,
