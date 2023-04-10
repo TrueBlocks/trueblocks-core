@@ -81,6 +81,7 @@ func (opts *ChunksOptions) HandleIndexBelongs(blockNums []uint64) error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
+// TODO: BOGUS - MUST DOCUMENT
 type simpleAppearanceTable struct {
 	AddressRecord index.AddressRecord      `json:"addressRecord"`
 	Appearances   []index.AppearanceRecord `json:"appearances"`

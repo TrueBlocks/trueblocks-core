@@ -184,6 +184,7 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
+// TODO: BOGUS - MUST DOCUMENT
 type simpleReportCheck struct {
 	Reason     string   `json:"reason"`
 	CheckedCnt uint32   `json:"checkedCnt"`

@@ -101,6 +101,7 @@ func displayBloom(bl *bloom.ChunkBloom, verbose int) {
 	}
 }
 
+// TODO: BOGUS - MUST DOCUMENT
 type simpleChunkBloom struct {
 	Range     base.FileRange `json:"range"`
 	Magic     uint16         `json:"magic"`

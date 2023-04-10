@@ -58,6 +58,7 @@ func (opts *ListOptions) HandleBounds(monitorArray []monitor.Monitor) error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
+// TODO: BOGUS - MUST DOCUMENT
 type simpleBounds struct {
 	Count    uint64              `json:"count"`
 	FirstApp types.RawAppearance `json:"firstApp"`

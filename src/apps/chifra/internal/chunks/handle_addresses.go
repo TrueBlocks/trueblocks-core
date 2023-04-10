@@ -76,6 +76,7 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
+// TODO: BOGUS - MUST DOCUMENT
 type simpleChunkAddress struct {
 	Address string `json:"address"`
 	Range   string `json:"range"`

@@ -45,6 +45,7 @@ func GetChunkStats(path string) (s simpleChunkStats, err error) {
 	return s, nil
 }
 
+// TODO: BOGUS - MUST DOCUMENT
 type simpleChunkStats struct {
 	AddrsPerBlock float64 `json:"addrsPerBlock"`
 	AppsPerAddr   float64 `json:"appsPerAddr"`

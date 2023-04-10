@@ -30,6 +30,7 @@ func (opts *ChunksOptions) HandleStatus(blockNums []uint64) error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
+// TODO: BOGUS - MUST DOCUMENT
 type simpleChunkStatus struct {
 	Progress index.SimpleProgress
 	Config   scrapeCfg.ScrapeSettings
