@@ -72,7 +72,7 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
-// TODO: BOGUS - MUST DOCUMENT
+// TODO: BOGUS2 - MUST DOCUMENT
 type simpleChunkIndex struct {
 	Range           base.FileRange `json:"range"`
 	Magic           uint32         `json:"magic"`

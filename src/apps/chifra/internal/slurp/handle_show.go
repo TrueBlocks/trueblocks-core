@@ -293,7 +293,7 @@ type rawEtherscan struct {
 	Value             string `json:"value"`
 }
 
-// TODO: BOGUS - MUST DOCUMENT
+// TODO: BOGUS2 - MUST DOCUMENT
 type simpleEtherscan struct {
 	BlockHash        base.Hash      `json:"blockHash"`
 	BlockNumber      uint64         `json:"blockNumber"`

@@ -15,7 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
-// TODO: BOGUS - MUST DOCUMENT
+// TODO: BOGUS2 - MUST DOCUMENT
 type simpleStatus struct {
 	CachePath     string `json:"cachePath,omitempty"`
 	Chain         string `json:"chain,omitempty"`

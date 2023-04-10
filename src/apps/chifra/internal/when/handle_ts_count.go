@@ -38,7 +38,7 @@ func (opts *WhenOptions) HandleTimestampCount() error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
-// TODO: BOGUS - MUST DOCUMENT
+// TODO: BOGUS2 - MUST DOCUMENT
 type simpleWhenCount struct {
 	Count uint64 `json:"count"`
 }

@@ -52,7 +52,7 @@ func (opts *MonitorsOptions) HandleClean() error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
-// TODO: BOGUS - MUST DOCUMENT
+// TODO: BOGUS2 - MUST DOCUMENT
 type simpleMonitorClean struct {
 	Address  base.Address `json:"address"`
 	Dups     int64        `json:"dups"`

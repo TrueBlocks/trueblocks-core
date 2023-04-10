@@ -121,7 +121,7 @@ func (opts *StatusOptions) HandleShow() error {
 	return output.StreamMany(renderCtx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }
 
-// TODO: BOGUS - MUST DOCUMENT
+// TODO: BOGUS2 - MUST DOCUMENT
 type simpleCacheStats struct {
 	Status simpleStatus             `json:"status,omitempty"`
 	Caches []simpleSingleCacheStats `json:"caches,omitempty"`
@@ -164,7 +164,7 @@ func NewSingleCacheStats(t cache.CacheType, now time.Time) *simpleSingleCacheSta
 	}
 }
 
-// TODO: BOGUS - MUST DOCUMENT
+// TODO: BOGUS2 - MUST DOCUMENT
 type simpleSingleCacheStats struct {
 	CacheType   string `json:"cacheType,omitempty"`
 	Items       []any  `json:"items,"`

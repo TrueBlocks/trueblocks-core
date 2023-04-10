@@ -78,7 +78,7 @@ func (opts *TracesOptions) HandleCounts() error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
-// TODO: BOGUS - MUST DOCUMENT
+// TODO: BOGUS2 - MUST DOCUMENT
 type simpleTraceCount struct {
 	BlockNumber      base.Blknum    `json:"blockNumber"`
 	Timestamp        base.Timestamp `json:"timestamp"`

@@ -105,7 +105,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }
 
-// TODO: BOGUS - MUST DOCUMENT
+// TODO: BOGUS2 - MUST DOCUMENT
 type simpleBlockCount struct {
 	AppsCnt         uint64         `json:"appsCnt,omitempty"`
 	BlockNumber     base.Blknum    `json:"blockNumber"`
