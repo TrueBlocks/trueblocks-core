@@ -4,6 +4,10 @@
 
 (November 23, 2021)
 
+## IMPORTANT NOTE
+
+This migration has been retired. If your data is prior to this version, you must clear your cache and index folders and start from scratch
+
 ## Why the Change?
 
 Version 0.17.0 is another major upgrade to our code. We added a Typescript SDK and as a result, in order to make the SDK more consistent, some of the API endpoints changed.
@@ -154,7 +158,6 @@ Here's a table showing which endpoints changed. Previously the API endpoints wer
 |              |              | --types                   |             |
 |              |              | --depth                   |             |
 |              |              | --report                  |             |
-|              |              | --migrate                 |             |
 |              |              | --first_block             | firstBlock  |
 |              |              | --last_block              | lastBlock   |
 |              |              |                           |             |

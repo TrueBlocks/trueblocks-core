@@ -2,6 +2,10 @@
 
 (May 1, 2022)
 
+## IMPORTANT NOTE
+
+This migration has been retired. If your data is prior to this version, you must clear your cache and index folders and start from scratch
+
 ## Why the Change?
 
 This migration moves a significant part of our code (the creation and updating of address monitors) to native GoLang code. Go's ability to run concurrently allows a significant performance improvement (more than 25x) of the initial scan for an address's history.
