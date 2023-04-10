@@ -1,3 +1,129 @@
+Data Models
+
+block
+  added `author`, `receiptsRoot`, `sha3Uncles`, `size`, `stateRoot`, `totalDifficulty`, `extraData`, `logsBloom`, `mixHash`, `nonce`, `transactionsRoot`, `uncles` to `chifra blocks --raw`.
+
+Function
+  Made `stateMutability` and `signature` be omitempty
+
+Log
+  Made `topics`, `data`, `articulatedLog`, `compressedLog`, and `timestamp` omitempty
+
+Receipt
+  Adds `logsBloom` but only for `chifra receipts --raw`
+
+Trace
+  Makes `articulatedTrace` field omitempty
+
+Transaction
+  Added `accessList` and `chainId` to `chifra transactions --raw`
+
+
+Ported to GoLang
+  "logs", "traces", "slurp",    "names",  "daemon", "config", "status"
+
+chifra export
+  No longer errors out if the node software fails to deliver valid data. This allows for continuing to stream data
+  even when the node is flaky (Erigon). This is in preparation for better error handling.
+
+chifra abis
+  We no longer print `stateMutability` values if they hold their default `view` type
+  
+Completely removes support for migrations older than v0.40.0 - June 2022
+
+chifra config --terse no longer works. Use chifra status (with no options) instead.
+
+Removes classDefinition code from c++ library testing code - not used not needed
+
+chifra blocks
+  Removed support for previously deprecated `chifra blocks --trace` (use `chifra blocks --traces` instead)
+  Removes `finalized` as unused from chifra blocks
+  better JSON output (obey omitempty)
+
+chifra tokens
+  Removed support for previously deprecated `chifra tokens --parts none` (no replacement)
+
+chifra transactions
+  Removed support for previously deprecated `chifra transactions --trace` (use `chifra transactions --traces` instead)
+  better JSON output (obey omitempty)
+  BOGUS - PUT IT BACK - Removes `nonce` from transaction output
+
+chifra status
+  Complete port to GoLang
+
+chifra names
+  ported entirely to GoLang
+
+chifra slurp
+  ported entirely to GoLang
+  A number of non-breaking changes to the JSON output. Better formatting. Obey omitempty
+  Added `--per_page` to control how many records to ask for from Etherscan
+  Added `--sleep` to slow down access to Etherscan
+  Added `1155` option to `types` option
+
+chifra config
+  Separated `status` tool from `config` tool.
+  Temporarily disabled `config` tool
+  Added some test cases
+  Changed `mode` to `modes` as it now accepts mutliple options per command line
+
+chifra status
+  Separated `status` tool from `config` tool.
+  Status now only handles reporting on caches.
+  Breaking change to the data
+  BOGUS - MUST UPDATE DOCS FOR THE STATUS DATA
+  Adds bloom, blocks, txs, traces, recons, slurps, staging, unripe, and maps to `modes`
+  Removes `--parts` option
+  Adds `--first_record` and `--max_records`.
+
+chifra chunks
+  A number of simple cleanups for displaying the data
+  Removed `--save_addrs` option as unused
+
+
+chifra logs
+  ported entirely to GoLang
+
+chifra names
+  Removes `--to_custom` option
+  Much better support for CRUD operations
+  Preparation for switching to a gRPC server for names for both API and command line versions of `chifra names`
+
+chifra list
+  Adds `--bounds` option to show first and latest appearance, timestamps and dates.
+  Improves date output format to agree with other tools
+  Removes quotes from csv files
+
+chifra
+  Additional tests for all subcommands
+
+chifra traces
+  ported entirely to GoLang
+  better JSON output (obey omitempty)
+  removed as unused `--skip_ddos` and `--max` permanently
+  fixed incorrect JSON output for the `traceAddress` field - previously we output strings, now we output an integer array as it should be (breaking)
+  `value` field is now exported as a string to preserve 18 decimal places. Previously only exported numbers which JavaScript could not preserve
+  By shifting to GoLang tracing we removed a "fake" trace that had callType == "creation". This trace was completely manufactured by us as an indication
+  of a smart contract creation. In the new version, instead we now include the actual trace returned by the node which contains either an empty call type
+  or a call type of "creation" but also includes the `init` code in the traceAction and the `code` in the traceResult. The traceResult always did display
+  the newly created contract's address.
+
+chifra daemon
+  Changed `chifra daemon --scrape full-index` to `chifra daemon --scrape index`.
+
+chifra receipt
+  Adds blockHash and transactionHash to JSON output
+
+chifra logs
+  Added `timestamp` to logs export
+
+chifra status
+  ported entirely to GoLang
+
+Removed a fair amount of the C++ library testing code as being not needed and in preparation for porting to C++
+
+Re-wrote logger package to more closely mimic the new GoLang structured log package which we will be switching to soon - if you depend on our logging messages for anything, please note that they will change.
+
 THE ENTIRE DATA MODEL FOR CACHES CHANGED
 Removed none value from getToken --parts
 Previously deprecated option chifra blocks --trace removed. Use chifra blocks --traces
