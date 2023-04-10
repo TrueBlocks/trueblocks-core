@@ -88,7 +88,6 @@ Notes:
 
 Data models produced by this tool:
 
-- [monitor](/data-model/accounts/#monitor)
 - [status](/data-model/admin/#status)
 - [cache](/data-model/admin/#cache)
 - [cacheentry](/data-model/admin/#cacheentry)
