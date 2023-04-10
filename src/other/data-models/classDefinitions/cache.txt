@@ -7,6 +7,6 @@ doc_group = 04-Admin
 doc_descr = the base data model for each of the type-specific local binary caches
 doc_route = 409-cache
 doc_producer = status
-# go_type = true
-output = ../../apps/cacheStatus/
-disabled = true
+
+cpp_output =
+go_output = src/apps/chifra/internal/status/

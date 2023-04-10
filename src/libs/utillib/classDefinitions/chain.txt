@@ -7,5 +7,6 @@ doc_group = 04-Admin
 doc_descr = a configuration item carrying information about a single chain
 doc_route = 412-chain
 doc_producer = status, config
-go_type = false
-output = ../../libs/utillib/
+
+cpp_output = src/libs/utillib/
+go_output =

@@ -2,4 +2,6 @@
 class = CTreeRoot
 fields = branch.csv
 includes = etherlib.h|treenode.h|leaf.h|branch.h|infix.h
-output = ../../libs/acctlib/
+
+cpp_output = src/libs/acctlib/
+go_output =

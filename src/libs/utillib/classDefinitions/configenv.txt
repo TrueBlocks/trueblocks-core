@@ -3,4 +3,6 @@ class = CConfigEnv
 fields = confident.csv
 includes = basetypes.h|basenode.h|exportcontext.h|sfarchive.h
 cpp_includes =
-output = ../../libs/utillib/
+
+cpp_output = src/libs/utillib/
+go_output =

@@ -525,7 +525,7 @@ void CMember::postProcessType(void) {
     if (startsWith(type, 'C'))
         memberFlags |= IS_OBJECT;
     CStringArray builtinTypes = {
-        "CStringArray", "CBlkNumArray", "CAddressArray", "CBigUintArray", "CTopicArray",
+        "CStringArray", "CBlknumArray", "CAddressArray", "CBigUintArray", "CTopicArray",
     };
     for (auto b : builtinTypes) {
         if (type == b) {

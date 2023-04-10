@@ -348,7 +348,7 @@ bool isDef(const CCommandOption& p) {
         return true;
     if (p.def_val == "false")
         return true;
-    if (contains(p.go_type, "[]"))
+    if (contains(p.go_intype, "[]"))
         return true;
     if (p.longName == "sleep")
         return true;
@@ -437,13 +437,13 @@ string_q get_optfields(const CCommandOption& cmd) {
         replace(p.longName, "deleteMe", "delete");
         string_q var = p.Format("[{VARIABLE}]");
         varWidth = max(var.length(), varWidth);
-        string_q type = p.Format("[{GO_TYPE}]");
+        string_q type = p.Format("[{GO_INTYPE}]");
         typeWidth = max(type.length(), typeWidth);
-        if (contains(var, "Blocks") && contains(p.go_type, "[]string")) {
+        if (contains(var, "Blocks") && contains(p.go_intype, "[]string")) {
             varWidth = max(string_q("BlockIds").length(), varWidth);
             typeWidth = max(string_q("[]identifiers.Identifier").length(), typeWidth);
         }
-        if (contains(var, "Transactions") && contains(p.go_type, "[]string")) {
+        if (contains(var, "Transactions") && contains(p.go_intype, "[]string")) {
             varWidth = max(string_q("TransactionIds").length(), varWidth);
             typeWidth = max(string_q("[]identifiers.Identifier").length(), typeWidth);
         }
@@ -473,7 +473,7 @@ string_q get_optfields(const CCommandOption& cmd) {
                    << " | --------- |" << endl;
             }
             string_q x = substitute(p.Format("[{LONGNAME}]"), "_", "&lowbar;");
-            dd << "| " << padRight(x, 18) << " | " << padRight(p.Format("[{GO_TYPE}]"), 12) << " | "
+            dd << "| " << padRight(x, 18) << " | " << padRight(p.Format("[{GO_INTYPE}]"), 12) << " | "
                << padRight(p.Format("[{DEF_VAL}]"), 12) << " | " << p.Format("[{DESCRIPTION}]") << " |" << endl;
             appendToAsciiFile(configDocs, dd.str());
             hasConfig = true;
@@ -481,12 +481,12 @@ string_q get_optfields(const CCommandOption& cmd) {
         }
         replace(p.longName, "deleteMe", "delete");
         string_q var = p.Format("[{VARIABLE}]");
-        string_q type = p.Format("[{GO_TYPE}]");
+        string_q type = p.Format("[{GO_INTYPE}]");
         ONE(os, var, varWidth, type, typeWidth, p.description);
-        if (contains(var, "Blocks") && contains(p.go_type, "[]string")) {
+        if (contains(var, "Blocks") && contains(p.go_intype, "[]string")) {
             ONE(os, "BlockIds", varWidth, "[]identifiers.Identifier", typeWidth, "block identifiers");
         }
-        if (contains(var, "Transactions") && contains(p.go_type, "[]string")) {
+        if (contains(var, "Transactions") && contains(p.go_intype, "[]string")) {
             ONE(os, "TransactionIds", varWidth, "[]identifiers.Identifier", typeWidth, "transaction identifiers");
         }
     }
@@ -542,7 +542,7 @@ string_q get_defaults_apis(const CCommandOption& cmd) {
         if (p.data_type == "<blknum>" || p.data_type == "<uint64>" || p.data_type == "<double>") {
             string_q fmt = "\topts.[{VARIABLE}] = [{DEF_VAL}]";
             if (p.generate == "config") {
-                if (p.go_type == "float64") {
+                if (p.go_intype == "float64") {
                     fmt = "\topts.Settings.[{VARIABLE}] = float64([{DEF_VAL}])";
                 } else {
                     fmt = "\topts.Settings.[{VARIABLE}] = [{DEF_VAL}]";
@@ -574,17 +574,17 @@ string_q get_requestopts(const CCommandOption& cmd) {
 }
 
 string_q get_goDefault(const CCommandOption& p) {
-    if (p.go_type == "[]string") {
+    if (p.go_intype == "[]string") {
         return "nil";
-    } else if (p.go_type == "float64") {
+    } else if (p.go_intype == "float64") {
         if (contains(p.def_val, "NOPOS")) {
             return "0.0";
         } else if (!p.def_val.empty())
             return p.def_val;
         return "0.0";
-    } else if (p.go_type == "string") {
+    } else if (p.go_intype == "string") {
         return p.def_val;
-    } else if (p.go_type == "uint64") {
+    } else if (p.go_intype == "uint64") {
         if (contains(p.def_val, "NOPOS")) {
             return "0";
         } else if (!p.def_val.empty() && !startsWith(p.def_val, "(")) {
@@ -693,22 +693,22 @@ string_q get_copyopts(const CCommandOption& cmd) {
         replace(p.longName, "deleteMe", "delete");
         if (p.option_type != "positional") {
             string_q format;
-            if (p.go_type == "[]string") {
+            if (p.go_intype == "[]string") {
                 format =
                     "\tfor _, [{SINGULAR}] := range opts.[{VARIABLE}] {\n"
                     "\t\toptions += \" --[{LONGNAME}] \" + [{SINGULAR}]\n"
                     "\t}";
-            } else if (p.go_type == "string") {
+            } else if (p.go_intype == "string") {
                 format =
                     "\tif len(opts.[{VARIABLE}]) > 0 {\n"
                     "\t\toptions += \" --[{LONGNAME}] \" + opts.[{VARIABLE}]\n"
                     "\t}";
-            } else if (p.go_type == "uint64" || p.go_type == "uint32") {
+            } else if (p.go_intype == "uint64" || p.go_intype == "uint32") {
                 format =
                     "\tif opts.[{VARIABLE}] != [{DEF_VAL}] {\n"
                     "\t\toptions += (\" --[{LONGNAME}] \" + fmt.Sprintf(\"%d\", opts.[{VARIABLE}]))\n"
                     "\t}";
-            } else if (p.go_type == "float64") {
+            } else if (p.go_intype == "float64") {
                 format =
                     "\tif opts.[{VARIABLE}] != [{DEF_VAL}] {\n"
                     "\t\toptions += (\" --[{LONGNAME}] \" + fmt.Sprintf(\"%.1f\", opts.[{VARIABLE}]))\n"

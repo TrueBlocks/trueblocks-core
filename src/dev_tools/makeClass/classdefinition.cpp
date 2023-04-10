@@ -102,6 +102,9 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
             if (fieldName % "contained_by") {
                 return contained_by;
             }
+            if (fieldName % "cpp_output") {
+                return cpp_output;
+            }
             break;
         case 'd':
             if (fieldName % "display_str") {
@@ -124,6 +127,9 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
             }
             if (fieldName % "doc_producer") {
                 return doc_producer;
+            }
+            if (fieldName % "disabled") {
+                return bool_2_Str(disabled);
             }
             break;
         case 'e':
@@ -163,6 +169,9 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
             if (fieldName % "go_model") {
                 return go_model;
             }
+            if (fieldName % "go_output") {
+                return go_output;
+            }
             break;
         case 'h':
             if (fieldName % "head_includes") {
@@ -172,11 +181,6 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
         case 'i':
             if (fieldName % "input_path") {
                 return input_path;
-            }
-            break;
-        case 'o':
-            if (fieldName % "output") {
-                return output;
             }
             break;
         case 's':
@@ -263,6 +267,10 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
                 contained_by = fieldValue;
                 return true;
             }
+            if (fieldName % "cpp_output") {
+                cpp_output = fieldValue;
+                return true;
+            }
             break;
         case 'd':
             if (fieldName % "display_str") {
@@ -291,6 +299,10 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
             }
             if (fieldName % "doc_producer") {
                 doc_producer = fieldValue;
+                return true;
+            }
+            if (fieldName % "disabled") {
+                disabled = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -325,6 +337,10 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
                 go_model = fieldValue;
                 return true;
             }
+            if (fieldName % "go_output") {
+                go_output = fieldValue;
+                return true;
+            }
             break;
         case 'h':
             if (fieldName % "head_includes") {
@@ -335,12 +351,6 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
         case 'i':
             if (fieldName % "input_path") {
                 input_path = fieldValue;
-                return true;
-            }
-            break;
-        case 'o':
-            if (fieldName % "output") {
-                output = fieldValue;
                 return true;
             }
             break;
@@ -397,7 +407,6 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     archive >> go_model;
     archive >> head_includes;
     archive >> src_includes;
-    archive >> output;
     archive >> display_str;
     archive >> sort_str;
     archive >> eq_str;
@@ -410,6 +419,9 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     archive >> doc_route;
     archive >> doc_alias;
     archive >> doc_producer;
+    archive >> cpp_output;
+    archive >> go_output;
+    archive >> disabled;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -437,7 +449,6 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     archive << go_model;
     archive << head_includes;
     archive << src_includes;
-    archive << output;
     archive << display_str;
     archive << sort_str;
     archive << eq_str;
@@ -450,6 +461,9 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     archive << doc_route;
     archive << doc_alias;
     archive << doc_producer;
+    archive << cpp_output;
+    archive << go_output;
+    archive << disabled;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -513,7 +527,6 @@ void CClassDefinition::registerClass(void) {
     ADD_FIELD(CClassDefinition, "go_model", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "head_includes", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "src_includes", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CClassDefinition, "output", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "display_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "sort_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "eq_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -528,6 +541,9 @@ void CClassDefinition::registerClass(void) {
     ADD_FIELD(CClassDefinition, "doc_route", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "doc_alias", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "doc_producer", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CClassDefinition, "cpp_output", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CClassDefinition, "go_output", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CClassDefinition, "disabled", T_BOOL | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CClassDefinition, "schema");
@@ -690,7 +706,12 @@ void CClassDefinition::ReadSettings(const CToml& toml) {
     doc_route = toml.getConfigStr("settings", "doc_route", "");
     doc_alias = toml.getConfigStr("settings", "doc_alias", "");
     doc_order = nextTokenClear(doc_group, '-') + nextTokenClear(doc_route, '-');
-    if (toml.getConfigBool("settings", "go_type", false)) {
+
+    cpp_output = toml.getConfigStr("settings", "cpp_output", "");
+    disabled = cpp_output.empty();
+
+    go_output = toml.getConfigStr("settings", "go_output", "");
+    if (!go_output.empty() && contains(go_output, "pkg")) {
         string_q def = class_name;
         replace(def, "C", "");
         go_model = toml.getConfigStr("settings", "go_model", def);

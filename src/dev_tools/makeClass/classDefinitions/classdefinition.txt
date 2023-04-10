@@ -2,4 +2,6 @@
 class = CClassDefinition
 fields = classdefinition.csv
 includes = etherlib.h|member.h
-output = ../../dev_tools/makeClass
+
+cpp_output = src/dev_tools/makeClass
+go_output =

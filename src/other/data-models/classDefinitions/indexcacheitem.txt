@@ -6,6 +6,6 @@ doc_group = 04-Admin
 doc_descr = an item in the Unchained Index cache
 doc_route = 411-indexCacheItem
 doc_producer = status
-go_type = true
-output = ../../apps/cacheStatus/
-disabled = true
+
+cpp_output =
+go_output = src/apps/chifra/internal/status/

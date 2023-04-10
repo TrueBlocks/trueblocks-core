@@ -2,4 +2,6 @@
 class = CRPCResult
 fields = rpcresult.csv
 includes = utillib.h
-output = ../../libs/utillib/
+
+cpp_output = src/libs/utillib/
+go_output =

@@ -136,7 +136,7 @@ inline bool listBlocks(uint64_t bn, void* data) {
 class COptionsBlockList {
   public:
     const COptionsBase* opts;
-    CBlkNumArray numList;
+    CBlknumArray numList;
     CStringArray hashList;
     HASHFINDFUNC hashFind;
     blknum_t start;

@@ -26,7 +26,7 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CLeaf : public CTreeNode {
   public:
-    CBlkNumArray blocks;
+    CBlknumArray blocks;
     uint64_t counter;
 
   public:
