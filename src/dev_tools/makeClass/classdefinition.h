@@ -67,9 +67,7 @@ class CClassDefinition : public CBaseNode {
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    string_q outputPath(const string_q& t) const {
-        return substitute(substitute(input_path, "classDefinitions/", ""), ".txt", t);
-    }
+    string_q ouputPath(const string_q& t) const;
     void ReadSettings(const CToml& toml);
     // EXISTING_CODE
     bool operator==(const CClassDefinition& it) const;

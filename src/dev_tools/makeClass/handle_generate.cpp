@@ -288,7 +288,6 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     bool isBase = (classDef.base_class == "CBaseNode");
     bool isContained = !classDef.contained_by.empty();
 
-    string_q headerFile = classDef.outputPath(".h");
     string_q headSource = asciiFileToString(getPathToTemplates("blank.h"));
     replace(headSource, "// clang-format off\n", "");
     replace(headSource, "// clang-format on\n", "");
@@ -322,10 +321,10 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(headSource, "[{NAMESPACE2}]", "}  // namespace qblocks\n");
     replaceAll(headSource, "public:\n\n  public:", "public:");
     expandTabbys(headSource);
+    string_q headerFile = classDef.ouputPath(".h");
     counter.nProcessed += writeCodeIn(this, codewrite_t(headerFile, headSource));
 
     //------------------------------------------------------------------------------------------------
-    string_q srcFile = classDef.outputPath(".cpp");
     string_q srcSource = asciiFileToString(getPathToTemplates("blank.cpp"));
     replace(srcSource, "// clang-format off\n", "");
     replace(srcSource, "// clang-format on\n", "");
@@ -364,9 +363,15 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(srcSource, "[{NAMESPACE2}]", "}  // namespace qblocks\n");
     replaceAll(srcSource, "[{FN}]", classDef.short_fn);
     expandTabbys(srcSource);
+    string_q srcFile = classDef.ouputPath(".cpp");
     counter.nProcessed += writeCodeIn(this, codewrite_t(srcFile, srcSource));
 
     return true;
+}
+
+//------------------------------------------------------------------------------------------------
+string_q CClassDefinition::ouputPath(const string_q& t) const {
+    return (cpp_output + toLower(base_name) + t);
 }
 
 //------------------------------------------------------------------------------------------------

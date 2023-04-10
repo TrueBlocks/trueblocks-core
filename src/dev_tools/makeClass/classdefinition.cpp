@@ -692,29 +692,39 @@ void CClassDefinition::ReadSettings(const CToml& toml) {
     contained_by = toml.getConfigStr("settings", "contained_by", "");
     doc_producer = toml.getConfigStr("settings", "doc_producer", "");
     sort_str = toml.getConfigStr("settings", "sort", "");
+    eq_str = toml.getConfigStr("settings", "equals", "");
+
     if (contains(sort_str, ";")) {
         LOG_ERR("makeClass: do not include semicolon in sort string ", sort_str);
         exit(0);
     }
-    eq_str = toml.getConfigStr("settings", "equals", "");
     if (contains(eq_str, ";")) {
         LOG_ERR("makeClass: do not include semicolon in equals string ", eq_str);
         exit(0);
     }
+
     doc_group = toml.getConfigStr("settings", "doc_group", "");
     doc_descr = toml.getConfigStr("settings", "doc_descr", "");
     doc_route = toml.getConfigStr("settings", "doc_route", "");
     doc_alias = toml.getConfigStr("settings", "doc_alias", "");
     doc_order = nextTokenClear(doc_group, '-') + nextTokenClear(doc_route, '-');
 
-    cpp_output = toml.getConfigStr("settings", "cpp_output", "");
-    disabled = cpp_output.empty();
-
-    go_output = toml.getConfigStr("settings", "go_output", "");
+    cpp_output = substitute(toml.getConfigStr("settings", "cpp_output", ""), "src/", "./");
+    go_output = substitute(toml.getConfigStr("settings", "go_output", ""), "src/", "./");
+    if (cpp_output.empty()) {
+        disabled = true;
+    } else {
+        if (!endsWith(cpp_output, "/")) {
+            cpp_output += "/";
+        }
+    }
     if (!go_output.empty() && contains(go_output, "pkg")) {
         string_q def = class_name;
         replace(def, "C", "");
         go_model = toml.getConfigStr("settings", "go_model", def);
+        if (!endsWith(go_output, "/")) {
+            go_output += "/";
+        }
     }
 
     //------------------------------------------------------------------------------------------------
@@ -727,12 +737,12 @@ void CClassDefinition::ReadSettings(const CToml& toml) {
     base_upper = toUpper(base_name);
     base_base = toProper(extract(base_class, 1));
 
-    string_q fn = toml.getFilename();
-    replace(fn, "classDefinitions/", "classDefinitions/fields/");
-    replace(fn, ".txt", ".csv");
+    string_q fn =
+        substitute(substitute(toml.getFilename(), "classDefinitions/", "classDefinitions/fields/"), ".txt", ".csv");
     if (fileExists(fn)) {
         string_q contents = asciiFileToString(fn);
         string_q header = nextTokenClear(contents, '\n');
+
         CStringArray fields;
         explode(fields, header, ',');
         for (auto& fld : fields) {
@@ -742,17 +752,21 @@ void CClassDefinition::ReadSettings(const CToml& toml) {
                 fld = "is_" + fld;
             }
         }
+
         CStringArray lines;
         explode(lines, contents, '\n');
         checkSorts(class_name, fields, lines, "doc");
         checkSorts(class_name, fields, lines, "disp");
+
         for (auto line : lines) {
             if (trim(line).empty()) {
                 continue;
             }
+
             bool isGoOnly = contains(line, "goonly");
             bool isRawOnly = contains(line, "rawonly");
             line = substitute(substitute(line, "goonly", "true"), "rawonly", "true");
+
             CMember tmp;
             tmp.parseCSV(fields, line);
             if (tmp.memberFlags & IS_ARRAY) {
@@ -760,12 +774,15 @@ void CClassDefinition::ReadSettings(const CToml& toml) {
             } else if (tmp.memberFlags & IS_OBJECT) {
                 tmp.type = "C" + string_q(1, char(toupper(tmp.type[0]))) + tmp.type.substr(1, 100);
             }
+
             if (isGoOnly) {
                 tmp.memberFlags |= IS_GOONLY;
             }
+
             if (isRawOnly) {
                 tmp.memberFlags |= IS_RAWONLY;
             }
+
             tmp.postProcessType();
             fieldArray.push_back(tmp);
         }
