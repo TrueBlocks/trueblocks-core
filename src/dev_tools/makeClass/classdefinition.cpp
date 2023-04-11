@@ -718,7 +718,7 @@ void CClassDefinition::ReadSettings(const CToml& toml) {
             cpp_output += "/";
         }
     }
-    if (!go_output.empty() && contains(go_output, "pkg")) {
+    if (!go_output.empty()) {
         string_q def = class_name;
         replace(def, "C", "");
         go_model = toml.getConfigStr("settings", "go_model", def);

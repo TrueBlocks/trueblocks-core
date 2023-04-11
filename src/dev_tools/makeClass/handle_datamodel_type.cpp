@@ -26,7 +26,6 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
         modelOrig.fieldArray[i] = modelIn.fieldArray[i];
     }
 
-    string_q fn = getPathToSource("apps/chifra/pkg/types/types_" + toLower(model.base_name) + ".go");
     string_q contents = asciiFileToString(getPathToTemplates("blank_type.go.tmpl"));
     replaceAll(contents, "[{CLASS_NAME}]", type_2_ModelName(model.go_model, false));
     replaceAll(contents, "[{RAW_NAME}]", "Raw" + type_2_ModelName(model.go_model, true));
@@ -115,6 +114,10 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
 
     // hackathon!
     replaceAll(contents, "type SimpleBlock[Tx] struct {", "type SimpleBlock[Tx BlockTransaction] struct {");
+
+    string_q fn = substitute(
+        substitute(getPathToSource(modelIn.go_output + "types_" + toLower(model.base_name) + ".go"), "//", "/"), "/./",
+        "/");
 
     codewrite_t cw(fn, contents + "\n");
     cw.nSpaces = 0;

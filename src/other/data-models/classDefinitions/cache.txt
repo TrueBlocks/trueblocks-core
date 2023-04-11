@@ -9,4 +9,4 @@ doc_route = 409-cache
 doc_producer = status
 
 cpp_output =
-go_output = src/apps/chifra/internal/status/
+# go_output = src/apps/chifra/internal/status/
