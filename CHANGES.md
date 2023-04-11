@@ -1,3 +1,5 @@
+Removes `status` from `chifra chunks` command as unused - use `chifra status --verbose` instead.
+
 pinnedChunk renamed to chunkRecord (docs only)
 
 Data Models

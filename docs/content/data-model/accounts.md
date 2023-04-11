@@ -258,6 +258,25 @@ AppearanceCounts consist of the following fields:
 | nRecords | the number of appearances for the given address           | uint64  |
 | fileSize | the size of the monitor file containing those appearances | uint64  |
 
+## Bounds
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+The Bounds data model displays information about a given address including how many times it's appeared on the chain and when the first and most recent blocks, timestamps, and dates are.
+
+The following commands produce and manage Bounds:
+
+- [chifra list](/chifra/accounts/#chifra-list)
+
+Bounds consist of the following fields:
+
+| Field     | Description                                                                  | Type          |
+| --------- | ---------------------------------------------------------------------------- | ------------- |
+| count     | the number of appearances for this address                                   | uint64        |
+| firstApp  | the block number and transaction id of the first appearance of this address  | RawAppearance |
+| firstTs   | the timestamp of the first appearance of this address                        | timestamp     |
+| latestApp | the block number and transaction id of the latest appearance of this address | RawAppearance |
+| latestTs  | the timestamp of the latest appearance of this address                       | timestamp     |
+
 ## Base types
 
 This documentation mentions the following basic data types.

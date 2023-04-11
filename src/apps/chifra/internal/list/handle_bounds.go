@@ -31,7 +31,7 @@ func (opts *ListOptions) HandleBounds(monitorArray []monitor.Monitor) error {
 				return
 			}
 			firstTs, _ := tslib.FromBnToTs(chain, uint64(apps[0].BlockNumber))
-			lastTs, _ := tslib.FromBnToTs(chain, uint64(apps[len(apps)-1].BlockNumber))
+			latestTs, _ := tslib.FromBnToTs(chain, uint64(apps[len(apps)-1].BlockNumber))
 
 			s := simpleBounds{
 				Count: uint64(count),
@@ -41,12 +41,12 @@ func (opts *ListOptions) HandleBounds(monitorArray []monitor.Monitor) error {
 					TransactionIndex: apps[0].TransactionId,
 				},
 				FirstTs: firstTs,
-				LastApp: types.RawAppearance{
+				LatestApp: types.RawAppearance{
 					Address:          mon.Address.Hex(),
 					BlockNumber:      apps[len(apps)-1].BlockNumber,
 					TransactionIndex: apps[len(apps)-1].TransactionId,
 				},
-				LastTs: lastTs,
+				LatestTs: latestTs,
 			}
 			modelChan <- &s
 		}

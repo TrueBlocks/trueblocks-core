@@ -204,6 +204,24 @@ ChunkStats consist of the following fields:
 | appsPerAddr   | the average number of appearances per address    | double |
 | ratio         | the ratio of appearances to addresses            | double |
 
+## MonitorClean
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+MonitorClean is a report on removing duplicates from monitors.
+
+The following commands produce and manage MonitorCleans:
+
+- [chifra monitors](/chifra/accounts/#chifra-monitors)
+
+MonitorCleans consist of the following fields:
+
+| Field    | Description                                                | Type    |
+| -------- | ---------------------------------------------------------- | ------- |
+| address  | the address being cleaned                                  | address |
+| sizeThen | the number of appearances in the monitor prior to cleaning | int64   |
+| sizeNow  | the number of appearances in the monitor after cleaning    | int64   |
+| dups     | the number of duplicates removed                           | int64   |
+
 ## Cache
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
@@ -225,24 +243,6 @@ Caches consist of the following fields:
 | nFolders    | the number of subfolders in the cache                   | uint64                                        |
 | sizeInBytes | the size of the cache in bytes                          | uint64                                        |
 | items       | an array of cache items                                 | [CacheEntry[]](/data-model/admin/#cacheentry) |
-
-## MonitorClean
-
-<!-- markdownlint-disable MD033 MD036 MD041 -->
-MonitorClean is a report on removing duplicates from monitors.
-
-The following commands produce and manage MonitorCleans:
-
-- [chifra monitors](/chifra/accounts/#chifra-monitors)
-
-MonitorCleans consist of the following fields:
-
-| Field    | Description                                                | Type    |
-| -------- | ---------------------------------------------------------- | ------- |
-| address  | the address being cleaned                                  | address |
-| sizeThen | the number of appearances in the monitor prior to cleaning | int64   |
-| sizeNow  | the number of appearances in the monitor after cleaning    | int64   |
-| dups     | the number of duplicates removed                           | int64   |
 
 ## CacheEntry
 

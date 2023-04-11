@@ -3,7 +3,7 @@ class = CMonitorClean
 fields = monitorclean.csv
 doc_group = 04-Admin
 doc_descr = report on cleaning dups out of monitors
-doc_route = 409-monitorClean
+doc_route = 408-monitorClean
 doc_producer = monitors
 
 cpp_output =

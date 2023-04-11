@@ -9,7 +9,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// TODO: BOGUS2 - MUST DOCUMENT
 type simpleAppearanceTable struct {
 	AddressRecord index.AddressRecord      `json:"addressRecord"`
 	Appearances   []index.AppearanceRecord `json:"appearances"`

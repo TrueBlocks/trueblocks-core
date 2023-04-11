@@ -1,0 +1,10 @@
+[settings]
+class = CTimestamp
+fields = timestamp.csv
+doc_group = 02-Chain Data
+doc_descr = the timestamp, date and difference in timestamp of previous block produced by chifra when
+doc_route = 213-timestamp
+doc_producer = when
+
+cpp_output =
+go_output = src/apps/chifra/internal/when

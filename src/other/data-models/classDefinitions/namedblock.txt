@@ -4,7 +4,7 @@ fields = namedblock.csv
 includes = etherlib.h
 doc_group = 02-Chain Data
 doc_descr = a block that has been given a particular name such as `first` or `latest`
-doc_route = 209-namedBlock
+doc_route = 212-namedBlock
 doc_producer = when
 
 cpp_output =

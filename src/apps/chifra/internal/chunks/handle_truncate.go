@@ -64,7 +64,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 		return err
 	}
 
-	logger.Info("Trucated index to", truncateIndex, "...")
+	logger.Info("Trucated index to", opts.Truncate, "...")
 	return nil
 }
 
