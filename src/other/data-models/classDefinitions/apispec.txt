@@ -1,7 +1,0 @@
-[settings]
-class = CApiSpec
-fields = apispec.csv
-includes = utillib.h
-
-cpp_output = src/libs/acctlib/
-go_output =

@@ -42,6 +42,7 @@ Notes:
 
 Data models produced by this tool:
 
+- [block](/data-model/chaindata/#block)
 - [namedblock](/data-model/chaindata/#namedblock)
 
 <!-- markdownlint-disable MD041 -->

@@ -1305,10 +1305,12 @@ paths:
               schema:
                 properties:
                   data:
-                    description: A block that has been given a particular name such as `first` or `latest`. Produces <a href="/data-model/chaindata/#namedblock">Namedblock</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-when">chifra when</a> command line.
+                    description: Produces <a href="/data-model/chaindata/#block">Block</a>, and/or <a href="/data-model/chaindata/#namedblock">Namedblock</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-when">chifra when</a> command line.
                     type: array
                     items:
-                      $ref: "#/components/schemas/namedBlock"
+                      oneOf:
+                        - $ref: "#/components/schemas/block"
+                        - $ref: "#/components/schemas/namedBlock"
         "400":
           description: bad input parameter
   /state:
@@ -1696,12 +1698,12 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/admin/#manifest">Manifest</a>, and/or <a href="/data-model/admin/#pinnedchunk">Pinnedchunk</a> data. Corresponds to the <a href="/chifra/admin/#chifra-scrape">chifra scrape</a> command line.
+                    description: Produces <a href="/data-model/admin/#manifest">Manifest</a>, and/or <a href="/data-model/admin/#chunkrecord">Chunkrecord</a> data. Corresponds to the <a href="/chifra/admin/#chifra-scrape">chifra scrape</a> command line.
                     type: array
                     items:
                       oneOf:
                         - $ref: "#/components/schemas/manifest"
-                        - $ref: "#/components/schemas/pinnedChunk"
+                        - $ref: "#/components/schemas/chunkRecord"
         "400":
           description: bad input parameter
   /chunks:
@@ -1801,13 +1803,13 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/admin/#manifest">Manifest</a>, <a href="/data-model/admin/#pinnedchunk">Pinnedchunk</a>, <a href="/data-model/admin/#chunkindex">Chunkindex</a>, <a href="/data-model/admin/#chunkbloom">Chunkbloom</a>, <a href="/data-model/admin/#chunkaddress">Chunkaddress</a>, <a href="/data-model/admin/#chunkstats">Chunkstats</a>, and/or <a href="/data-model/admin/#reportcheck">Reportcheck</a> data. Corresponds to the <a href="/chifra/admin/#chifra-chunks">chifra chunks</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/admin/#manifest">Manifest</a>, <a href="/data-model/admin/#chunkrecord">Chunkrecord</a>, <a href="/data-model/admin/#chunkindex">Chunkindex</a>, <a href="/data-model/admin/#chunkbloom">Chunkbloom</a>, <a href="/data-model/admin/#chunkaddress">Chunkaddress</a>, <a href="/data-model/admin/#chunkstats">Chunkstats</a>, and/or <a href="/data-model/admin/#reportcheck">Reportcheck</a> data. Corresponds to the <a href="/chifra/admin/#chifra-chunks">chifra chunks</a> command line.
                     type: array
                     items:
                       oneOf:
                         - $ref: "#/components/schemas/appearance"
                         - $ref: "#/components/schemas/manifest"
-                        - $ref: "#/components/schemas/pinnedChunk"
+                        - $ref: "#/components/schemas/chunkRecord"
                         - $ref: "#/components/schemas/chunkIndex"
                         - $ref: "#/components/schemas/chunkBloom"
                         - $ref: "#/components/schemas/chunkAddress"
@@ -1866,12 +1868,12 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/admin/#manifest">Manifest</a>, and/or <a href="/data-model/admin/#pinnedchunk">Pinnedchunk</a> data. Corresponds to the <a href="/chifra/admin/#chifra-init">chifra init</a> command line.
+                    description: Produces <a href="/data-model/admin/#manifest">Manifest</a>, and/or <a href="/data-model/admin/#chunkrecord">Chunkrecord</a> data. Corresponds to the <a href="/chifra/admin/#chifra-init">chifra init</a> command line.
                     type: array
                     items:
                       oneOf:
                         - $ref: "#/components/schemas/manifest"
-                        - $ref: "#/components/schemas/pinnedChunk"
+                        - $ref: "#/components/schemas/chunkRecord"
         "400":
           description: bad input parameter
   /slurp:
@@ -3061,9 +3063,9 @@ components:
         chunks:
           type: array
           items:
-            $ref: "#/components/schemas/pinnedChunk"
+            $ref: "#/components/schemas/chunkRecord"
           description: "a list of the IPFS hashes of all of the chunks in the unchained index"
-    pinnedChunk:
+    chunkRecord:
       description: "a single record in the manifest detailing the IPFS hases and file sizes for each bloom filter and index chunk"
       type: object
       properties:
@@ -3081,14 +3083,12 @@ components:
           format: ipfshash
           example: "QmTbYpR...qWLj44"
           description: "the IPFS hash of the index chunk at that range"
-        firstApp:
-          type: number
-          format: blknum
-          description: "the first appearance in the chunk"
-        latestApp:
-          type: number
-          format: blknum
-          description: "the latest appearance in the chunk"
+        bloomSize:
+          type: int64
+          description: "the size of the bloom filter in bytes"
+        indexSize:
+          type: int64
+          description: "the size of the index portion in bytes"
     chunkIndex:
       description: "internal-use only data model detailing a single index chunk file"
       type: object

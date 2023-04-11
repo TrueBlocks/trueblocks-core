@@ -1073,9 +1073,9 @@ components:
         chunks:
           type: array
           items:
-            $ref: "#/components/schemas/pinnedChunk"
+            $ref: "#/components/schemas/chunkRecord"
           description: "a list of the IPFS hashes of all of the chunks in the unchained index"
-    pinnedChunk:
+    chunkRecord:
       description: "a single record in the manifest detailing the IPFS hases and file sizes for each bloom filter and index chunk"
       type: object
       properties:
@@ -1093,14 +1093,12 @@ components:
           format: ipfshash
           example: "QmTbYpR...qWLj44"
           description: "the IPFS hash of the index chunk at that range"
-        firstApp:
-          type: number
-          format: blknum
-          description: "the first appearance in the chunk"
-        latestApp:
-          type: number
-          format: blknum
-          description: "the latest appearance in the chunk"
+        bloomSize:
+          type: int64
+          description: "the size of the bloom filter in bytes"
+        indexSize:
+          type: int64
+          description: "the size of the index portion in bytes"
     chunkIndex:
       description: "internal-use only data model detailing a single index chunk file"
       type: object

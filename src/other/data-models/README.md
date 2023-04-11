@@ -2,33 +2,34 @@ List of types that support the Modeler interface
 
 | Path                | File                     | Type                  | Documented        | gen-c++ | gen-go |
 | ------------------- | ------------------------ | --------------------- | ----------------- | ------- | ------ |
-| ./internal/blocks   | types_blockcount.go      | simpleBlockCount      | blockCount        |         | x      |
 | ./internal/chunks   | types_appearanceTable.go | simpleAppearanceTable | <--- missing ---> |         |        |
-| ./internal/chunks   | types_chunkaddress.go    | simpleChunkAddress    | chunkAddress      |         | x      |
 | ./internal/chunks   | types_chunkbloom.go      | simpleChunkBloom      | <--- missing ---> |         | x      |
+| ./internal/chunks   | types_chunkStatus.go     | simpleChunkStatus     | <--- missing ---> |         |        |
+| ./internal/list     | types_bounds.go          | simpleBounds          | <--- missing ---> |         |        |
+| ./internal/status   | types_cache.go           | simpleCacheItem       | <--- missing ---> |         |        |
+| ./internal/status   | types_status.go          | simpleStatus          | <--- missing ---> |         | x      |
+| ./internal/when     | types_timestamp.go       | simpleTimestamp       | <--- missing ---> |         |        |
+| ./internal/when     | types_timestampCount.go  | simpleTimestampCount  | <--- missing ---> |         |        |
+| ./internal/status   | types_cache.go           | simpleCache           | cache             |         | x      | not turned on |
+| ./internal/blocks   | types_blockcount.go      | simpleBlockCount      | blockCount        |         | x      |
+| ./internal/chunks   | types_chunkaddress.go    | simpleChunkAddress    | chunkAddress      |         | x      |
 | ./internal/chunks   | types_chunkindex.go      | simpleChunkIndex      | chunkIndex        |         | x      |
 | ./internal/chunks   | types_chunkstats.go      | simpleChunkStats      | chunkStats        |         | x      |
-| ./internal/chunks   | types_chunkStatus.go     | simpleChunkStatus     | <--- missing ---> |         |        |
 | ./internal/chunks   | types_manifest.go        | simpleManifest        | manifest          |         | x      |
 | ./internal/chunks   | types_reportcheck.go     | simpleReportCheck     | reportCheck       |         | x      |
-| ./internal/list     | types_bounds.go          | simpleBounds          | <--- missing ---> |         |        |
 | ./internal/monitors | types_monitorclean.go    | simpleMonitorClean    | monitorClean      |         | x      |
-| ./internal/status   | types_cache.go           | simpleCache           | cache             |         | x      |
-| ./internal/status   | types_cache.go           | simpleCacheItem       | <--- missing ---> |         |        |
 | ./internal/status   | types_cacheentry.go      | simpleCacheEntry      | cacheEntry        |         | x      |
-| ./internal/status   | types_status.go          | simpleStatus          | <--- missing ---> |         | x      |
 | ./internal/traces   | types_tracecount.go      | simpleTraceCount      | traceCount        |         | x      |
-| ./internal/when     | types_timestamp.go       | simpleTimestamp       | <--- missing ---> |         |        |
-| ./internal/when     | types_whenCount.go       | simpleTimestampCount  | <--- missing ---> |         |        |
 |                     |                          |                       |                   |         |        |
-| ./pkg/types         | types_appearance.go      | SimpleAppearance      | appearance        | x       |        |
-| ./pkg/types         | types_block.go           | SimpleBlock           | block             | x       | x      |
 | ./pkg/types         | types_chunkrecord.go     | SimpleChunkRecord     | <--- missing ---> |         |        |
 | ./pkg/types         | types_etherscan.go       | SimpleEtherscan       | <--- missing ---> |         |        |
+| ./pkg/types         | types_monitor.go         | SimpleMonitor         | monitor           | x       |        | not turned on |
+| ./pkg/types         | types_appearance.go      | SimpleAppearance      | appearance        | x       |        | not turned on |
+| ./pkg/types         | types_block.go           | SimpleBlock           | block             | x       | x      |
+| ./pkg/types         | types_chunkrecord.go     | SimpleChunkRecord     | chunkRecord       |         | x      |
 | ./pkg/types         | types_ethstate.go        | SimpleEthState        | ethState          | x       | x      |
 | ./pkg/types         | types_function.go        | SimpleFunction        | function          | x       | x      |
 | ./pkg/types         | types_log.go             | SimpleLog             | log               | x       | x      |
-| ./pkg/types         | types_monitor.go         | SimpleMonitor         | monitor           | x       |        |
 | ./pkg/types         | types_name.go            | SimpleName            | name              | x       | x      |
 | ./pkg/types         | types_namedblock.go      | SimpleNamedBlock      | namedBlock        |         | x      |
 | ./pkg/types         | types_parameter.go       | SimpleParameter       | parameter         | x       | x      |
@@ -46,4 +47,7 @@ List of types that support the Modeler interface
 | ./api               | openapi.yaml             | <--- missing --->     | appearanceCount   |         |        |
 | ./api               | openapi.yaml             | <--- missing --->     | chain             | x       |        |
 | ./api               | openapi.yaml             | <--- missing --->     | ethCall           | x       |        |
-| ./api               | openapi.yaml             | <--- missing --->     | pinnedChunk       |         | x      |
+|                     |                          |                       |                   |         |        |
+|                     |                          |                       | logfilter         |         |        |
+|                     |                          |                       | chain             |         |        |
+|                     |                          |                       | key               |         |        |

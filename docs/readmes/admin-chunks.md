@@ -44,7 +44,7 @@ Data models produced by this tool:
 
 - [appearance](/data-model/accounts/#appearance)
 - [manifest](/data-model/admin/#manifest)
-- [pinnedchunk](/data-model/admin/#pinnedchunk)
+- [chunkrecord](/data-model/admin/#chunkrecord)
 - [chunkindex](/data-model/admin/#chunkindex)
 - [chunkbloom](/data-model/admin/#chunkbloom)
 - [chunkaddress](/data-model/admin/#chunkaddress)

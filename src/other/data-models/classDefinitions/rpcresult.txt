@@ -1,7 +1,0 @@
-[settings]
-class = CRPCResult
-fields = rpcresult.csv
-includes = utillib.h
-
-cpp_output = src/libs/utillib/
-go_output =

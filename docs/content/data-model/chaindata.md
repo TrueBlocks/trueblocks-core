@@ -29,6 +29,7 @@ blocks' transactions.
 The following commands produce and manage Blocks:
 
 - [chifra blocks](/chifra/chaindata/#chifra-blocks)
+- [chifra when](/chifra/chaindata/#chifra-when)
 
 Blocks consist of the following fields:
 

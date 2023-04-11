@@ -1,8 +1,0 @@
-[settings]
-class = COption
-fields = option.csv
-includes = basetypes.h|basenode.h|sfarchive.h
-cpp_includes = markdown.h|exportcontext.h
-
-cpp_output = src/libs/utillib/
-go_output =

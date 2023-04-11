@@ -1,3 +1,5 @@
+pinnedChunk renamed to chunkRecord (docs only)
+
 Data Models
 
 block
