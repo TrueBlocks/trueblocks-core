@@ -1,3 +1,0 @@
-displayStrsTest  CBranch
-------------------------------CBranch------------------------------
-Unknown node of type CBranch not created.

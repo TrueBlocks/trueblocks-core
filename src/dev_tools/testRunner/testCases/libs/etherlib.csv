@@ -49,12 +49,7 @@ on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CName            ,n    ,v
 on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CMonitor         ,n    ,val = CMonitor
 on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CAcctCacheItem   ,n    ,val = CAcctCacheItem
 on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CBlock           ,n    ,val = CBlock
-on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CBranch          ,n    ,val = CBranch
-on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CInfix           ,n    ,val = CInfix
-on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CLeaf            ,n    ,val = CLeaf
 on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CRPCResult       ,n    ,val = CRPCResult
-on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CTreeNode        ,n    ,val = CTreeNode
-on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CTreeRoot        ,n    ,val = CTreeRoot
 
 on      ,cmd  ,slow  ,null  ,etherlib/forEveryTest    ,00               ,n    ,val = 0
 on      ,cmd  ,slow  ,null  ,etherlib/forEveryTest    ,01               ,n    ,val = 1

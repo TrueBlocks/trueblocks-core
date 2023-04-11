@@ -1,8 +1,0 @@
-[settings]
-class = CTreeNode
-fields = treenode.csv
-includes = etherlib.h
-cpp_includes = treeroot.h
-
-cpp_output = src/libs/acctlib/
-go_output =
