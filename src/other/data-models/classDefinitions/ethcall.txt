@@ -11,4 +11,4 @@ doc_route = 302-ethCall
 doc_producer = state
 
 cpp_output = src/libs/etherlib/
-go_output =
+# go_output = src/apps/chifra/pkg/types

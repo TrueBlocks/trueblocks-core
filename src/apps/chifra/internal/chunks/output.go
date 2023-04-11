@@ -83,9 +83,6 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 
 	} else {
 		switch opts.Mode {
-		case "status":
-			err = opts.HandleStatus(blockNums)
-
 		case "index":
 			err = opts.HandleIndex(blockNums)
 
@@ -131,8 +128,7 @@ func (opts *ChunksOptions) IsPorted() (ported bool) {
 
 // EXISTING_CODE
 func (opts *ChunksOptions) defaultFormat(def string) string {
-	if opts.Mode == "status" ||
-		(opts.Mode == "index" && opts.Check) ||
+	if (opts.Mode == "index" && opts.Check) ||
 		opts.Truncate != utils.NOPOS || len(opts.Belongs) > 0 {
 		return "json"
 	}

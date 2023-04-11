@@ -64,7 +64,8 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 		return err
 	}
 
-	return opts.HandleStatus(blockNums)
+	logger.Info("Trucated index to", truncateIndex, "...")
+	return nil
 }
 
 var warning = `Are sure you want to remove index chunks after and including block {0} (Yy)? `

@@ -1723,7 +1723,6 @@ paths:
           schema:
             type: string
             enum:
-              - status
               - manifest
               - index
               - blooms
