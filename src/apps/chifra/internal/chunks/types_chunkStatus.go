@@ -8,7 +8,7 @@ import (
 
 // TODO: BOGUS2 - MUST DOCUMENT
 type simpleChunkStatus struct {
-	Progress index.SimpleProgress
+	Progress index.FolderProgress
 	Config   scrapeCfg.ScrapeSettings
 }
 

@@ -42,12 +42,12 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 			}
 
 			s := simpleChunkBloom{
-				Magic:     bl.Header.Magic,
+				Magic:     fmt.Sprintf("0x%x", bl.Header.Magic),
 				Hash:      bl.Header.Hash,
-				Size:      int64(stats.BloomSz),
+				Size:      stats.BloomSz,
 				Range:     base.FileRange{First: stats.Start, Last: stats.End},
-				Count:     uint32(stats.NBlooms),
-				Width:     bloom.BLOOM_WIDTH_IN_BYTES,
+				NBlooms:   stats.NBlooms,
+				ByteWidth: bloom.BLOOM_WIDTH_IN_BYTES,
 				NInserted: uint64(nInserted),
 			}
 
@@ -100,4 +100,3 @@ func displayBloom(bl *bloom.ChunkBloom, verbose int) {
 		fmt.Println()
 	}
 }
-

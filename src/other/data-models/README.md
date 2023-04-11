@@ -13,6 +13,7 @@ List of types that support the Modeler interface
 | ./internal/monitors | handle_clean.go:             | simpleMonitorClean    | monitorClean    | monitors --clean                                                   |
 | ./internal/chunks   | handle_check.go:             | simpleReportCheck     | reportCheck     | chunks index --check                                               |
 | ./internal/when     | handle_ts_count.go:          | simpleWhenCount       | `missing`       | when --timestamps --count                                          |
+| ./pkg/types/        | types_manifest.go:           | simpleManifest        | manifest        | chunks manifest                                                    |
 |                     |                              |                       |                 |                                                                    |
 | ./pkg/types/        | types_appearance.go:         | SimpleAppearance      | appearance      | chunks appearances, list, slurp --appearances, transactions --uniq |
 | ./pkg/types/        | types_block.go:              | SimpleBlock           | block           |                                                                    |
@@ -22,7 +23,6 @@ List of types that support the Modeler interface
 | ./pkg/types/        | types_function.go:           | SimpleFunction        | function        | abis, all --articulate uses                                        |
 | ./pkg/types/        | types_indexappearance.go:    | SimpleIndexAppearance | `missing`       | currently unused                                                   |
 | ./pkg/types/        | types_log.go:                | SimpleLog             | log             | logs                                                               |
-| ./pkg/types/        | types_manifest.go:           | SimpleManifest        | manifest        | chunks manifest                                                    |
 | ./pkg/types/        | types_monitor.go:            | SimpleMonitor         | monitor         | list --count, monitors --list                                      |
 | ./pkg/types/        | types_name.go:               | SimpleName            | name            | names                                                              |
 | ./pkg/types/        | types_namedblock.go:         | SimpleNamedBlock      | namedBlock      | when                                                               |

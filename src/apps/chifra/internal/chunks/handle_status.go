@@ -17,11 +17,11 @@ func (opts *ChunksOptions) HandleStatus(blockNums []uint64) error {
 			Config: settings,
 		}
 		if opts.Globals.TestMode {
-			s.Progress = index.SimpleProgress{
+			s.Progress = index.FolderProgress{
 				Chain: opts.Globals.Chain,
 			}
 		} else {
-			s.Progress, _ = index.GetProgress(opts.Globals.Chain)
+			s.Progress, _ = index.GetFolderProgress(opts.Globals.Chain)
 		}
 
 		modelChan <- &s

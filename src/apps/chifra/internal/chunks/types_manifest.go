@@ -16,27 +16,38 @@ import (
 
 // EXISTING_CODE
 
-type simpleChunkBlooms struct {
-	Count     uint64         `json:"count"`
-	Hash      base.Hash      `json:"hash"`
-	Magic     string         `json:"magic"`
-	NInserted uint64         `json:"nInserted"`
-	Range     base.FileRange `json:"range"`
-	Size      uint64         `json:"size"`
-	Width     uint64         `json:"width"`
+type simpleManifest struct {
+	Chain     string                    `json:"chain"`
+	Chunks    []types.SimpleChunkRecord `json:"chunks"`
+	Databases base.IpfsHash             `json:"databases"`
+	Schemas   base.IpfsHash             `json:"schemas"`
+	Version   string                    `json:"version"`
 	// EXISTING_CODE
+	// Databases base.IpfsHash       `json:"databases"`
 	// EXISTING_CODE
 }
 
-func (s *simpleChunkBlooms) Raw() *types.RawModeler {
+func (s *simpleManifest) Raw() *types.RawModeler {
 	return nil
 }
 
-func (s *simpleChunkBlooms) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
+func (s *simpleManifest) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
 	// EXISTING_CODE
+	model = map[string]any{
+		"version": s.Version,
+		"chain":   s.Chain,
+		"schemas": s.Schemas,
+		"chunks":  s.Chunks,
+	}
+	order = []string{
+		"version",
+		"chain",
+		"schemas",
+		"chunks",
+	}
 	// EXISTING_CODE
 
 	return types.Model{

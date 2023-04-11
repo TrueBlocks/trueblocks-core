@@ -1128,7 +1128,7 @@ components:
           type: number
           format: uint64
           description: "The size of the chunk in bytes"
-    chunkBlooms:
+    chunkBloom:
       description: "internal-use only data model detailing a single bloom filter file"
       type: object
       properties:
@@ -1143,7 +1143,7 @@ components:
           type: string
           format: hash
           description: "The hash of the specification under which this chunk was generated"
-        count:
+        nBlooms:
           type: number
           format: uint64
           description: "The number of individual bloom filters in this bloom file"
@@ -1155,7 +1155,7 @@ components:
           type: number
           format: uint64
           description: "The size on disc in bytes of this bloom file"
-        width:
+        byteWidth:
           type: number
           format: uint64
           description: "The width of the bloom filter"

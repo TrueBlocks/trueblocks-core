@@ -45,7 +45,7 @@ func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
 		return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 
 	} else {
-		fetchData := func(modelChan chan types.Modeler[types.RawManifest], errorChan chan error) {
+		fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 			if opts.Globals.TestMode {
 				if len(man.Chunks) > 10 {
 					man.Chunks = man.Chunks[:10]
@@ -53,7 +53,7 @@ func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
 				man.Schemas = "--testing-hash--"
 			}
 
-			s := types.SimpleManifest{
+			s := simpleManifest{
 				Version: man.Version,
 				Chain:   man.Chain,
 				Schemas: man.Schemas,

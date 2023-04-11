@@ -8,4 +8,4 @@ doc_route = 402-manifest
 doc_producer = chunks, init, scrape
 
 cpp_output =
-go_output =
+go_output = src/apps/chifra/internal/chunks

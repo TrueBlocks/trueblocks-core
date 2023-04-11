@@ -1801,7 +1801,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/admin/#manifest">Manifest</a>, <a href="/data-model/admin/#pinnedchunk">Pinnedchunk</a>, <a href="/data-model/admin/#chunkindex">Chunkindex</a>, <a href="/data-model/admin/#chunkblooms">Chunkblooms</a>, <a href="/data-model/admin/#chunkaddress">Chunkaddress</a>, <a href="/data-model/admin/#chunkstats">Chunkstats</a>, and/or <a href="/data-model/admin/#reportcheck">Reportcheck</a> data. Corresponds to the <a href="/chifra/admin/#chifra-chunks">chifra chunks</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/admin/#manifest">Manifest</a>, <a href="/data-model/admin/#pinnedchunk">Pinnedchunk</a>, <a href="/data-model/admin/#chunkindex">Chunkindex</a>, <a href="/data-model/admin/#chunkbloom">Chunkbloom</a>, <a href="/data-model/admin/#chunkaddress">Chunkaddress</a>, <a href="/data-model/admin/#chunkstats">Chunkstats</a>, and/or <a href="/data-model/admin/#reportcheck">Reportcheck</a> data. Corresponds to the <a href="/chifra/admin/#chifra-chunks">chifra chunks</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -1809,7 +1809,7 @@ paths:
                         - $ref: "#/components/schemas/manifest"
                         - $ref: "#/components/schemas/pinnedChunk"
                         - $ref: "#/components/schemas/chunkIndex"
-                        - $ref: "#/components/schemas/chunkBlooms"
+                        - $ref: "#/components/schemas/chunkBloom"
                         - $ref: "#/components/schemas/chunkAddress"
                         - $ref: "#/components/schemas/chunkStats"
                         - $ref: "#/components/schemas/reportCheck"
@@ -3116,7 +3116,7 @@ components:
           type: number
           format: uint64
           description: "The size of the chunk in bytes"
-    chunkBlooms:
+    chunkBloom:
       description: "internal-use only data model detailing a single bloom filter file"
       type: object
       properties:
@@ -3131,7 +3131,7 @@ components:
           type: string
           format: hash
           description: "The hash of the specification under which this chunk was generated"
-        count:
+        nBlooms:
           type: number
           format: uint64
           description: "The number of individual bloom filters in this bloom file"
@@ -3143,7 +3143,7 @@ components:
           type: number
           format: uint64
           description: "The size on disc in bytes of this bloom file"
-        width:
+        byteWidth:
           type: number
           format: uint64
           description: "The width of the bloom filter"

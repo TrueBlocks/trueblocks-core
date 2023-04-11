@@ -18,8 +18,8 @@ import (
 
 func (opts *ChunksOptions) HandlePinManifest(blockNums []uint64) error {
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawManifest], errorChan chan error) {
-		man := types.SimpleManifest{
+	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+		man := simpleManifest{
 			Version: version.ManifestVersion,
 			Chain:   opts.Globals.Chain,
 			Schemas: unchained.Schemas,

@@ -9,7 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
-type SimpleProgress struct {
+type FolderProgress struct {
 	Finalized string `json:"finalized"`
 	Blooms    string `json:"blooms"`
 	Staging   string `json:"staging"`
@@ -19,9 +19,9 @@ type SimpleProgress struct {
 	Chain     string `json:"chain"`
 }
 
-func GetProgress(chain string) (SimpleProgress, error) {
+func GetFolderProgress(chain string) (FolderProgress, error) {
 	indexPath := config.GetPathToIndex(chain)
-	var ret SimpleProgress
+	var ret FolderProgress
 	ret.Finalized = folderProgress(filepath.Join(indexPath, "finalized"))
 	ret.Blooms = folderProgress(filepath.Join(indexPath, "blooms"))
 	ret.Staging = folderProgress(filepath.Join(indexPath, "staging"))

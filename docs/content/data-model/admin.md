@@ -133,7 +133,7 @@ ChunkIndexes consist of the following fields:
 | nAppearances | The number of appearances in this chunk                            | uint64     |
 | size         | The size of the chunk in bytes                                     | uint64     |
 
-## ChunkBlooms
+## ChunkBloom
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
 The `blooms` data model represents the bloom filter files that front the Unchained Index index
@@ -152,10 +152,10 @@ ChunkBlooms consist of the following fields:
 | range     | The block range (inclusive) covered by this chunk                  | blockRange |
 | magic     | An internal use only magic number to indicate file format          | string     |
 | hash      | The hash of the specification under which this chunk was generated | hash       |
-| count     | The number of individual bloom filters in this bloom file          | uint64     |
+| nBlooms   | The number of individual bloom filters in this bloom file          | uint64     |
 | nInserted | The number of addresses inserted into the bloom file               | uint64     |
 | size      | The size on disc in bytes of this bloom file                       | uint64     |
-| width     | The width of the bloom filter                                      | uint64     |
+| byteWidth | The width of the bloom filter                                      | uint64     |
 
 ## ChunkAddress
 

@@ -21,6 +21,8 @@ Transaction
 ChunkIndex
   Renamed `addressCount` to `nAddresses` and `appearanceCount` to `nAppearances`
 
+ChunkBloom added
+
 Ported to GoLang
   "logs", "traces", "slurp",    "names",  "daemon", "config", "status"
 
@@ -84,7 +86,6 @@ chifra status
 chifra chunks
   A number of simple cleanups for displaying the data
   Removed `--save_addrs` option as unused
-
 
 chifra logs
   ported entirely to GoLang

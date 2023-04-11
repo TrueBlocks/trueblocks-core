@@ -303,7 +303,7 @@ Data models produced by this tool:
 - [manifest](/data-model/admin/#manifest)
 - [pinnedchunk](/data-model/admin/#pinnedchunk)
 - [chunkindex](/data-model/admin/#chunkindex)
-- [chunkblooms](/data-model/admin/#chunkblooms)
+- [chunkbloom](/data-model/admin/#chunkbloom)
 - [chunkaddress](/data-model/admin/#chunkaddress)
 - [chunkstats](/data-model/admin/#chunkstats)
 - [reportcheck](/data-model/admin/#reportcheck)
