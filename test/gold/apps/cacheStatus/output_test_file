@@ -4,7 +4,7 @@
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheType": "namesCache",
+          "type": "namesCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -34,7 +34,7 @@
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheType": "indexCache",
+          "type": "indexCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,

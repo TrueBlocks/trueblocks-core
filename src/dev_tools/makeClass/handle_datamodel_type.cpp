@@ -26,16 +26,24 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
         modelOrig.fieldArray[i] = modelIn.fieldArray[i];
     }
 
+    bool isInternal = contains(modelIn.go_output, "/internal/");
     string_q contents = asciiFileToString(getPathToTemplates("blank_type.go.tmpl"));
+    if (isInternal) {
+        contents = asciiFileToString(getPathToTemplates("blank_type_int.go.tmpl"));
+    }
     replaceAll(contents, "[{CLASS_NAME}]", type_2_ModelName(model.go_model, false));
     replaceAll(contents, "[{RAW_NAME}]", "Raw" + type_2_ModelName(model.go_model, true));
+    replaceAll(contents, "[{ROUTE}]",
+               substitute(substitute(modelIn.go_output, "./apps/chifra/internal/", ""), "/", ""));
 
     sort(model.fieldArray.begin(), model.fieldArray.end());
 
-    CMember raw;
-    raw.type = "*Raw" + type_2_ModelName(model.go_model, true);
-    raw.name = "raw";
-    model.fieldArray.push_back(raw);
+    if (!isInternal) {
+        CMember raw;
+        raw.type = "*Raw" + type_2_ModelName(model.go_model, true);
+        raw.name = "raw";
+        model.fieldArray.push_back(raw);
+    }
 
     size_t maxRawNameWid = 0, maxSimpNameWid = 0, maxRawTypeWid = 0, maxSimpTypeWid = 0, maxModelWid = 0;
 

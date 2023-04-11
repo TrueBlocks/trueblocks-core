@@ -5,7 +5,7 @@ status?modes=maps&verbose&maxRecords=2
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheType": "mapsCache",
+          "type": "mapsCache",
           "items": [
             {
               "bloomSizeBytes": 0,

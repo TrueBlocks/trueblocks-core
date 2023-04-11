@@ -1,5 +1,14 @@
+// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
+ */
+
 package statusPkg
 
+// EXISTING_CODE
 import (
 	"fmt"
 	"io"
@@ -15,7 +24,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
-// TODO: BOGUS2 - MUST DOCUMENT
+// EXISTING_CODE
+
 type simpleStatus struct {
 	CachePath     string `json:"cachePath,omitempty"`
 	Chain         string `json:"chain,omitempty"`
@@ -34,6 +44,8 @@ type simpleStatus struct {
 	RootConfig    string `json:"rootConfig,omitempty"`
 	RPCProvider   string `json:"rpcProvider,omitempty"`
 	Version       string `json:"trueblocksVersion,omitempty"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *simpleStatus) Raw() *types.RawModeler {
@@ -41,8 +53,11 @@ func (s *simpleStatus) Raw() *types.RawModeler {
 }
 
 func (s *simpleStatus) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
-	// isApi := extraOptions != nil && extraOptions["isApi"] == true
-	model := map[string]interface{}{
+	var model = map[string]interface{}{}
+	var order = []string{}
+
+	// EXISTING_CODE
+	model = map[string]interface{}{
 		"cachePath":         s.CachePath,
 		"chainConfig":       s.ChainConfig,
 		"clientVersion":     s.ClientVersion,
@@ -57,8 +72,7 @@ func (s *simpleStatus) Model(showHidden bool, format string, extraOptions map[st
 		"rpcProvider":       s.RPCProvider,
 		"trueblocksVersion": s.Version,
 	}
-
-	order := []string{
+	order = []string{
 		"cachePath",
 		"chainConfig",
 		"clientVersion",
@@ -78,6 +92,7 @@ func (s *simpleStatus) Model(showHidden bool, format string, extraOptions map[st
 		model["progress"] = s.Progress
 		order = append(order, "progress")
 	}
+	// EXISTING_CODE
 
 	return types.Model{
 		Data:  model,
@@ -85,6 +100,7 @@ func (s *simpleStatus) Model(showHidden bool, format string, extraOptions map[st
 	}
 }
 
+// EXISTING_CODE
 func ToProgress(chain string, meta *rpcClient.MetaData) string {
 	nTs, _ := tslib.NTimestamps(chain)
 	format := "%d, %d, %d, %d ts: %d"
@@ -185,3 +201,4 @@ INFO Cache Path:        {{.CachePath}}
 INFO Index Path:        {{.IndexPath}}
 INFO Progress:          {{.Progress}}
 `
+// EXISTING_CODE

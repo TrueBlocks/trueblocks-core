@@ -26,7 +26,7 @@ func (opts *StatusOptions) HandleShow() error {
 		filenameChan := make(chan cache.CacheFileInfo)
 		var nRoutines int
 
-		counterMap := make(map[cache.CacheType]*simpleSingleCacheStats)
+		counterMap := make(map[cache.CacheType]*simpleCacheItem)
 		nRoutines = len(opts.ModeTypes)
 		for _, mT := range opts.ModeTypes {
 			mT := mT
@@ -56,14 +56,14 @@ func (opts *StatusOptions) HandleShow() error {
 						if result.Data.(*CacheWalker).nSeen >= opts.FirstRecord {
 							counterMap[cT].NFiles++
 							counterMap[cT].SizeInBytes += file.FileSize(result.Path)
-							if opts.Globals.Verbose && counterMap[cT].NFiles <= int(opts.MaxRecords) {
+							if opts.Globals.Verbose && counterMap[cT].NFiles <= opts.MaxRecords {
 								cI, _ := opts.getCacheItem(cT, result.Path)
 								counterMap[cT].Items = append(counterMap[cT].Items, cI)
 							}
 						}
 					}
 
-					if counterMap[cT].NFiles >= int(opts.MaxRecords) {
+					if counterMap[cT].NFiles >= opts.MaxRecords {
 						result.Data.(*CacheWalker).cancel()
 					}
 
@@ -87,11 +87,11 @@ func (opts *StatusOptions) HandleShow() error {
 			return
 		}
 
-		s := simpleCacheStats{
+		s := simpleCache{
 			Status: *status,
 		}
 
-		totalRecords := 0
+		totalRecords := uint64(0)
 		for _, mT := range opts.ModeTypes {
 			mT := mT
 			if counterMap[mT] != nil {
@@ -119,60 +119,6 @@ func (opts *StatusOptions) HandleShow() error {
 	}
 
 	return output.StreamMany(renderCtx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
-}
-
-// TODO: BOGUS2 - MUST DOCUMENT
-type simpleCacheStats struct {
-	Status simpleStatus             `json:"status,omitempty"`
-	Caches []simpleSingleCacheStats `json:"caches,omitempty"`
-}
-
-func (s *simpleCacheStats) Raw() *types.RawModeler {
-	return nil
-}
-
-func (s *simpleCacheStats) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
-	model := s.Status.Model(showHidden, format, extraOptions)
-	if extraOptions["testMode"] == true {
-		for i := 0; i < len(s.Caches); i++ {
-			s.Caches[i].Path = "--paths--"
-			s.Caches[i].LastCached = "--lastCached--"
-			s.Caches[i].NFiles = 123
-			s.Caches[i].NFolders = 456
-			s.Caches[i].SizeInBytes = 789
-		}
-	}
-	model.Data["caches"] = s.Caches
-	model.Order = append(model.Order, "caches")
-	// if showHidden {
-	// 	model.Data["chains"] = config.GetRootConfig().Chains
-	// 	model.Order = append(model.Order, "chains")
-	// }
-
-	return model
-}
-
-func NewSingleCacheStats(t cache.CacheType, now time.Time) *simpleSingleCacheStats {
-	return &simpleSingleCacheStats{
-		CacheType:   t.CacheName(),
-		Items:       make([]any, 0),
-		LastCached:  now.Format("2006-01-02 15:04:05"),
-		NFiles:      0,
-		NFolders:    0,
-		Path:        "",
-		SizeInBytes: 0,
-	}
-}
-
-// TODO: BOGUS2 - MUST DOCUMENT
-type simpleSingleCacheStats struct {
-	CacheType   string `json:"cacheType,omitempty"`
-	Items       []any  `json:"items,"`
-	LastCached  string `json:"lastCached,omitempty"`
-	NFiles      int    `json:"nFiles"`
-	NFolders    int    `json:"nFolders"`
-	Path        string `json:"path"`
-	SizeInBytes int64  `json:"sizeInBytes"`
 }
 
 type CacheWalker struct {

@@ -5,7 +5,7 @@ status?modes=maps&maxRecords=100
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheType": "mapsCache",
+          "type": "mapsCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,

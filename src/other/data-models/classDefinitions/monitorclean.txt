@@ -7,4 +7,4 @@ doc_route = 409-monitorClean
 doc_producer = monitors
 
 cpp_output =
-# go_output = src/apps/chifra/internal/monitors/
+go_output = src/apps/chifra/internal/monitors/

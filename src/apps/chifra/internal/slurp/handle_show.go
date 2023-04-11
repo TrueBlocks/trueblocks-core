@@ -15,8 +15,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 type Paginator struct {
@@ -37,7 +35,7 @@ func (opts *SlurpOptions) HandleShowSlurps() error {
 	logger.Info("Processing", opts.Addrs, "--types:", opts.Types, opts.Blocks)
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[rawEtherscan], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawEtherscan], errorChan chan error) {
 		totalFetched := 0
 		totalFiltered := 0
 		for _, addr := range opts.Addrs {
@@ -117,11 +115,11 @@ func (opts *SlurpOptions) getEtherscanUrl(addr string, tt string, paginator *Pag
 	return ret
 }
 
-func (opts *SlurpOptions) GetTransactionsFromEtherscan(chain string, addr, tt string, paginator *Paginator) ([]simpleEtherscan, int, error) {
+func (opts *SlurpOptions) GetTransactionsFromEtherscan(chain string, addr, tt string, paginator *Paginator) ([]types.SimpleEtherscan, int, error) {
 	url := opts.getEtherscanUrl(addr, tt, paginator)
 	logger.Info("Processing", url)
 
-	var ret []simpleEtherscan
+	var ret []types.SimpleEtherscan
 
 	key := config.GetRootConfig().Keys["etherscan"].ApiKey
 	if key == "" {
@@ -156,7 +154,7 @@ func (opts *SlurpOptions) GetTransactionsFromEtherscan(chain string, addr, tt st
 	}
 
 	for _, esTx := range fromEs.Result {
-		rawTx := rawEtherscan{
+		rawTx := types.RawEtherscan{
 			BlockHash:        esTx.BlockHash,
 			BlockNumber:      esTx.BlockNumber,
 			From:             esTx.From,
@@ -170,7 +168,7 @@ func (opts *SlurpOptions) GetTransactionsFromEtherscan(chain string, addr, tt st
 		}
 		// Nonce:            esTx.Nonce,
 
-		t := simpleEtherscan{
+		t := types.SimpleEtherscan{
 			Hash:             base.HexToHash(rawTx.Hash),
 			BlockHash:        base.HexToHash(rawTx.BlockHash),
 			BlockNumber:      mustParseUint(rawTx.BlockNumber),
@@ -270,163 +268,8 @@ func (opts *SlurpOptions) isInRange(bn uint, errorChan chan error) bool {
 	return false
 }
 
-type rawEtherscan struct {
-	BlockHash         string `json:"blockHash"`
-	BlockNumber       string `json:"blockNumber"`
-	ContractAddress   string `json:"contractAddress"`
-	CumulativeGasUsed string `json:"cumulativeGasUsed"`
-	From              string `json:"from"`
-	FunctionName      string `json:"functionName"`
-	Gas               string `json:"gas"`
-	GasPrice          string `json:"gasPrice"`
-	GasUsed           string `json:"gasUsed"`
-	HasToken          string `json:"hasToken"`
-	Hash              string `json:"hash"`
-	Input             string `json:"input"`
-	IsError           string `json:"isError"`
-	MethodId          string `json:"methodId"`
-	Nonce             string `json:"nonce"`
-	Timestamp         string `json:"timestamp"`
-	To                string `json:"to"`
-	TransactionIndex  string `json:"transactionIndex"`
-	TxReceiptStatus   string `json:"txreceipt_status"`
-	Value             string `json:"value"`
-}
-
-// TODO: BOGUS2 - MUST DOCUMENT
-type simpleEtherscan struct {
-	BlockHash        base.Hash      `json:"blockHash"`
-	BlockNumber      uint64         `json:"blockNumber"`
-	ContractAddress  base.Address   `json:"contractAddress"`
-	Date             string         `json:"date"`
-	Ether            string         `json:"ether"`
-	From             base.Address   `json:"from"`
-	Gas              base.Gas       `json:"gas"`
-	GasPrice         base.Gas       `json:"gasPrice"`
-	GasUsed          base.Gas       `json:"gasUsed"`
-	GasCost          base.Gas       `json:"gasCost"`
-	HasToken         bool           `json:"hasToken"`
-	Hash             base.Hash      `json:"hash"`
-	Input            string         `json:"input"`
-	IsError          bool           `json:"isError"`
-	Timestamp        base.Timestamp `json:"timestamp"`
-	To               base.Address   `json:"to"`
-	TransactionIndex uint64         `json:"transactionIndex"`
-	Value            base.Wei       `json:"value"`
-	raw              *rawEtherscan  `json:"-"`
-}
-
-func (s *simpleEtherscan) Raw() *rawEtherscan {
-	return s.raw
-}
-
-func (s *simpleEtherscan) SetRaw(r *rawEtherscan) {
-	s.raw = r
-}
-
-func (s *simpleEtherscan) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
-	var model = map[string]interface{}{}
-	var order = []string{}
-
-	to := hexutil.Encode(s.To.Bytes())
-	if to == "0x0000000000000000000000000000000000000000" {
-		to = "0x0" // weird special case to preserve what RPC does
-	}
-
-	model = map[string]interface{}{
-		"blockNumber": s.BlockNumber,
-		"date":        s.Date,
-		"ether":       s.Ether,
-		"from":        s.From,
-		"timestamp":   s.Timestamp,
-		"to":          s.To,
-		"value":       s.Value.String(),
-	}
-	model["date"] = utils.FormattedDate(s.Timestamp)
-
-	if strings.Contains(s.Input, "Reward") {
-		model["from"] = s.Input
-		s.Input = ""
-		order = []string{
-			"blockNumber",
-			"timestamp",
-			"date",
-			"from",
-			"to",
-			"value",
-			"ether",
-		}
-
-	} else {
-		order = []string{
-			"blockNumber",
-			"transactionIndex",
-			"timestamp",
-			"date",
-			"from",
-			"to",
-			"hasToken",
-			"isError",
-			"hash",
-			"gasPrice",
-			"gasUsed",
-			"gasCost",
-			"value",
-			"ether",
-			"input",
-		}
-
-		model["gas"] = s.Gas
-		model["gasCost"] = s.SetGasCost()
-		model["gasPrice"] = s.GasPrice
-		model["gasUsed"] = s.GasUsed
-		model["hash"] = s.Hash
-	}
-
-	if s.HasToken {
-		model["hasToken"] = s.HasToken
-	}
-	if s.IsError {
-		model["isError"] = s.IsError
-	}
-	model["ether"] = utils.WeiToEther(&s.Value).Text('f', 18)
-	if s.BlockHash != base.HexToHash("0xdeadbeef") {
-		model["blockHash"] = s.BlockHash
-	}
-	if s.TransactionIndex != 80809 {
-		model["transactionIndex"] = s.TransactionIndex
-	}
-
-	if format == "json" {
-		a := s.ContractAddress.Hex()
-		if strings.HasPrefix(a, "0x") && len(a) == 42 {
-			model["contractAddress"] = a
-		}
-		if len(s.Input) > 0 && s.Input != "deprecated" {
-			model["input"] = s.Input
-		}
-	} else {
-		model["hasToken"] = s.HasToken
-		model["isError"] = s.IsError
-		if s.Input == "deprecated" {
-			s.Input = "0x"
-		}
-		model["input"] = s.Input
-	}
-
-	return types.Model{
-		Data:  model,
-		Order: order,
-	}
-}
-
-func (s *simpleEtherscan) SetGasCost() base.Gas {
-	s.GasCost = s.GasPrice * s.GasUsed
-	return s.GasCost
-}
-
 type etherscanResponse struct {
-	Message string         `json:"message"`
-	Result  []rawEtherscan `json:"result"`
-	Status  string         `json:"status"`
+	Message string               `json:"message"`
+	Result  []types.RawEtherscan `json:"result"`
+	Status  string               `json:"status"`
 }

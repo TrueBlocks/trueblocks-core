@@ -45,12 +45,12 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 			}
 
 			s := simpleChunkIndex{
-				Range:           rng,
-				Magic:           header.Magic,
-				Hash:            base.HexToHash(header.Hash.Hex()),
-				AddressCount:    header.AddressCount,
-				AppearanceCount: header.AppearanceCount,
-				Size:            file.FileSize(path),
+				Range:        rng,
+				Magic:        fmt.Sprintf("0x%x", header.Magic),
+				Hash:         base.HexToHash(header.Hash.Hex()),
+				NAddresses:   uint64(header.AddressCount),
+				NAppearances: uint64(header.AppearanceCount),
+				Size:         uint64(file.FileSize(path)),
 			}
 
 			modelChan <- &s
@@ -70,39 +70,4 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
-}
-
-// TODO: BOGUS2 - MUST DOCUMENT
-type simpleChunkIndex struct {
-	Range           base.FileRange `json:"range"`
-	Magic           uint32         `json:"magic"`
-	Hash            base.Hash      `json:"hash"`
-	AddressCount    uint32         `json:"nAddresses"`
-	AppearanceCount uint32         `json:"nAppearances"`
-	Size            int64          `json:"fileSize"`
-}
-
-func (s *simpleChunkIndex) Raw() *types.RawModeler {
-	return nil
-}
-
-func (s *simpleChunkIndex) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
-	return types.Model{
-		Data: map[string]any{
-			"range":        s.Range,
-			"magic":        fmt.Sprintf("0x%x", s.Magic),
-			"hash":         s.Hash,
-			"nAddresses":   s.AddressCount,
-			"nAppearances": s.AppearanceCount,
-			"fileSize":     s.Size,
-		},
-		Order: []string{
-			"range",
-			"magic",
-			"hash",
-			"nAddresses",
-			"nAppearances",
-			"fileSize",
-		},
-	}
 }

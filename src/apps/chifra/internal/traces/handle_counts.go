@@ -77,35 +77,3 @@ func (opts *TracesOptions) HandleCounts() error {
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
-
-// TODO: BOGUS2 - MUST DOCUMENT
-type simpleTraceCount struct {
-	BlockNumber      base.Blknum    `json:"blockNumber"`
-	Timestamp        base.Timestamp `json:"timestamp"`
-	TracesCnt        uint64         `json:"tracesCnt"`
-	TransactionHash  base.Hash      `json:"transactionHash"`
-	TransactionIndex base.Blknum    `json:"transactionIndex"`
-}
-
-func (s *simpleTraceCount) Raw() *types.RawModeler {
-	return nil
-}
-
-func (s *simpleTraceCount) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
-	return types.Model{
-		Data: map[string]interface{}{
-			"blockNumber":      s.BlockNumber,
-			"timestamp":        s.Timestamp,
-			"tracesCnt":        s.TracesCnt,
-			"transactionHash":  s.TransactionHash,
-			"transactionIndex": s.TransactionIndex,
-		},
-		Order: []string{
-			"blockNumber",
-			"transactionIndex",
-			"transactionHash",
-			"timestamp",
-			"tracesCnt",
-		},
-	}
-}

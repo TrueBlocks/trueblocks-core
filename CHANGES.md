@@ -18,10 +18,15 @@ Trace
 Transaction
   Added `accessList` and `chainId` to `chifra transactions --raw`
 
+ChunkIndex
+  Renamed `addressCount` to `nAddresses` and `appearanceCount` to `nAppearances`
 
 Ported to GoLang
   "logs", "traces", "slurp",    "names",  "daemon", "config", "status"
 
+chifra chunks
+  Export `range` as a string not an object
+  
 chifra export
   No longer errors out if the node software fails to deliver valid data. This allows for continuing to stream data
   even when the node is flaky (Erigon). This is in preparation for better error handling.

@@ -8,4 +8,4 @@ doc_route = 210-traceCount
 doc_producer = traces
 
 cpp_output =
-# go_output = src/apps/chifra/internal/traces
+go_output = src/apps/chifra/internal/traces

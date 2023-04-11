@@ -1636,14 +1636,13 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/admin/#status">Status</a>, <a href="/data-model/admin/#cache">Cache</a>, <a href="/data-model/admin/#cacheentry">Cacheentry</a>, <a href="/data-model/admin/#indexcacheitem">Indexcacheitem</a>, and/or <a href="/data-model/admin/#chain">Chain</a> data. Corresponds to the <a href="/chifra/admin/#chifra-status">chifra status</a> command line.
+                    description: Produces <a href="/data-model/admin/#status">Status</a>, <a href="/data-model/admin/#cache">Cache</a>, <a href="/data-model/admin/#cacheentry">Cacheentry</a>, and/or <a href="/data-model/admin/#chain">Chain</a> data. Corresponds to the <a href="/chifra/admin/#chifra-status">chifra status</a> command line.
                     type: array
                     items:
                       oneOf:
                         - $ref: "#/components/schemas/config"
                         - $ref: "#/components/schemas/cache"
                         - $ref: "#/components/schemas/cacheEntry"
-                        - $ref: "#/components/schemas/indexCacheItem"
                         - $ref: "#/components/schemas/chain"
         "400":
           description: bad input parameter
@@ -3105,11 +3104,11 @@ components:
           type: string
           format: hash
           description: "The hash of the specification under which this chunk was generated"
-        addressCount:
+        nAddresses:
           type: number
           format: uint64
           description: "The number of addresses in this chunk"
-        appearanceCount:
+        nAppearances:
           type: number
           format: uint64
           description: "The number of appearances in this chunk"
@@ -3224,23 +3223,6 @@ components:
           type: number
           format: double
           description: "the ratio of appearances to addresses"
-    monitorClean:
-      description: "report on cleaning dups out of monitors"
-      type: object
-      properties:
-        address:
-          type: string
-          format: address
-          description: "the address being cleaned"
-        sizeThen:
-          type: int64
-          description: "the number of appearances in the monitor prior to cleaning"
-        sizeNow:
-          type: int64
-          description: "the number of appearances in the monitor after cleaning"
-        dups:
-          type: int64
-          description: "the number of duplicates removed"
     cache:
       description: "the base data model for each of the type-specific local binary caches"
       type: object
@@ -3268,15 +3250,23 @@ components:
           items:
             $ref: "#/components/schemas/cacheEntry"
           description: "an array of cache items"
-    cacheEntry:
-      description: "a single entry in the results of a status query when `--verbose` is enabled"
+    monitorClean:
+      description: "report on cleaning dups out of monitors"
       type: object
       properties:
         address:
           type: string
           format: address
-        name:
-          type: string
+          description: "the address being cleaned"
+        sizeThen:
+          type: int64
+          description: "the number of appearances in the monitor prior to cleaning"
+        sizeNow:
+          type: int64
+          description: "the number of appearances in the monitor after cleaning"
+        dups:
+          type: int64
+          description: "the number of duplicates removed"
     reportCheck:
       description: "report on checking contents of chunks"
       type: object
@@ -3310,57 +3300,15 @@ components:
         msgStrings:
           type: []string
           description: "an array of messages explaining failed checks"
-    indexCacheItem:
-      description: "an item in the Unchained Index cache"
+    cacheEntry:
+      description: "a single entry in the results of a status query when `--verbose` is enabled"
       type: object
       properties:
-        nAddrs:
-          type: number
-          format: uint32
-          description: "the number of addresses in this chunk"
-        nApps:
-          type: number
-          format: uint32
-          description: "the number of appearances in this chunk"
-        firstApp:
-          type: number
-          format: blknum
-          description: "the first appearance in this chunk"
-        latestApp:
-          type: number
-          format: blknum
-          description: "the last appeaerance in this chunk"
-        firstTs:
-          type: number
-          format: timestamp
-          description: "the first timestamp in this chunk"
-        latestTs:
-          type: number
-          format: timestamp
-          description: "the last timestamp in this chunk"
-        filename:
+        address:
           type: string
-          description: "the filename of this chunk"
-        fileDate:
+          format: address
+        name:
           type: string
-          format: datetime
-          description: "the file date of this chunk"
-        indexSizeBytes:
-          type: number
-          format: uint32
-          description: "the size in bytes of the index portion of this chunk"
-        indexHash:
-          type: string
-          format: ipfshash
-          description: "the IPFS hash of the index portion of this chunk"
-        bloomSizeBytes:
-          type: number
-          format: uint32
-          description: "the size in bytes of the bloom filter for this chunk"
-        bloomHash:
-          type: string
-          format: ipfshash
-          description: "the IPFS has of the bloom filter for this chunk"
     chain:
       description: "a configuration item carrying information about a single chain"
       type: object

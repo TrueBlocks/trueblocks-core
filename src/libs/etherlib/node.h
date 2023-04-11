@@ -13,13 +13,19 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 #include "node_curl.h"
-#include "cacheentry.h"
 #include "rewards.h"
 #include "logfilter.h"
 #include "ethcall.h"
 #include "metadata.h"
 
 namespace qblocks {
+
+//-------------------------------------------------------------------------
+typedef uint32_t cache_t;
+#define CT_BLOCKS uint32_t(1 << 0)
+#define CT_TXS uint32_t(1 << 2)
+#define CT_TRACES uint32_t(1 << 3)
+#define CT_RECONS uint32_t(1 << 7)
 
 //-------------------------------------------------------------------------
 // setup and tear down of the library

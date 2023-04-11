@@ -13,7 +13,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
@@ -49,10 +48,10 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 				}
 
 				s := simpleChunkAddress{
-					Address: hexutil.Encode(obj.Address.Bytes()),
-					Range:   indexChunk.Range.String(),
-					Offset:  obj.Offset,
-					Count:   obj.Count,
+					Address: obj.Address,
+					Range:   indexChunk.Range,
+					Offset:  uint64(obj.Offset),
+					Count:   uint64(obj.Count),
 				}
 
 				modelChan <- &s
@@ -74,33 +73,4 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
-}
-
-// TODO: BOGUS2 - MUST DOCUMENT
-type simpleChunkAddress struct {
-	Address string `json:"address"`
-	Range   string `json:"range"`
-	Offset  uint32 `json:"offset"`
-	Count   uint32 `json:"count"`
-}
-
-func (s *simpleChunkAddress) Raw() *types.RawModeler {
-	return nil
-}
-
-func (s *simpleChunkAddress) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
-	return types.Model{
-		Data: map[string]interface{}{
-			"address": s.Address,
-			"range":   s.Range,
-			"offset":  s.Offset,
-			"count":   s.Count,
-		},
-		Order: []string{
-			"address",
-			"range",
-			"offset",
-			"count",
-		},
-	}
 }

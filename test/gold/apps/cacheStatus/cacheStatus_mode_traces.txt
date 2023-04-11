@@ -9,7 +9,7 @@ TEST[DATE|TIME] Format:  json
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheType": "tracesCache",
+          "type": "tracesCache",
           "items": [
             {
               "fileDate": "--fileDate--",

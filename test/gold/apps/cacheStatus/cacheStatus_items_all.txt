@@ -8,7 +8,7 @@ TEST[DATE|TIME] Format:  json
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheType": "bloomCache",
+          "type": "bloomCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -17,7 +17,7 @@ TEST[DATE|TIME] Format:  json
           "sizeInBytes": 789
         },
         {
-          "cacheType": "indexCache",
+          "type": "indexCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -26,7 +26,7 @@ TEST[DATE|TIME] Format:  json
           "sizeInBytes": 789
         },
         {
-          "cacheType": "stagingCache",
+          "type": "stagingCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -35,7 +35,7 @@ TEST[DATE|TIME] Format:  json
           "sizeInBytes": 789
         },
         {
-          "cacheType": "unripeCache",
+          "type": "unripeCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -44,7 +44,7 @@ TEST[DATE|TIME] Format:  json
           "sizeInBytes": 789
         },
         {
-          "cacheType": "monitorsCache",
+          "type": "monitorsCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -53,7 +53,7 @@ TEST[DATE|TIME] Format:  json
           "sizeInBytes": 789
         },
         {
-          "cacheType": "namesCache",
+          "type": "namesCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -62,7 +62,7 @@ TEST[DATE|TIME] Format:  json
           "sizeInBytes": 789
         },
         {
-          "cacheType": "abisCache",
+          "type": "abisCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -71,7 +71,7 @@ TEST[DATE|TIME] Format:  json
           "sizeInBytes": 789
         },
         {
-          "cacheType": "slurpsCache",
+          "type": "slurpsCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -80,7 +80,7 @@ TEST[DATE|TIME] Format:  json
           "sizeInBytes": 789
         },
         {
-          "cacheType": "blocksCache",
+          "type": "blocksCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -89,7 +89,7 @@ TEST[DATE|TIME] Format:  json
           "sizeInBytes": 789
         },
         {
-          "cacheType": "tracesCache",
+          "type": "tracesCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -98,7 +98,7 @@ TEST[DATE|TIME] Format:  json
           "sizeInBytes": 789
         },
         {
-          "cacheType": "txsCache",
+          "type": "txsCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,

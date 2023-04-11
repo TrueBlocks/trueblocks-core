@@ -5,7 +5,7 @@ status?modes=blocks&maxRecords=100&modes=blocks&modes=blocks
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheType": "blocksCache",
+          "type": "blocksCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,

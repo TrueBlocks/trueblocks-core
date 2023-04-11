@@ -5,7 +5,7 @@ status?modes=monitors&verbose&maxRecords=2
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheType": "monitorsCache",
+          "type": "monitorsCache",
           "items": [
             {
               "address": "--address--",

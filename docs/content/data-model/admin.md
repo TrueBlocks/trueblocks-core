@@ -124,14 +124,14 @@ The following commands produce and manage ChunkIndexes:
 
 ChunkIndexes consist of the following fields:
 
-| Field           | Description                                                        | Type       |
-| --------------- | ------------------------------------------------------------------ | ---------- |
-| range           | The block range (inclusive) covered by this chunk                  | blockRange |
-| magic           | An internal use only magic number to indicate file format          | string     |
-| hash            | The hash of the specification under which this chunk was generated | hash       |
-| addressCount    | The number of addresses in this chunk                              | uint64     |
-| appearanceCount | The number of appearances in this chunk                            | uint64     |
-| size            | The size of the chunk in bytes                                     | uint64     |
+| Field        | Description                                                        | Type       |
+| ------------ | ------------------------------------------------------------------ | ---------- |
+| range        | The block range (inclusive) covered by this chunk                  | blockRange |
+| magic        | An internal use only magic number to indicate file format          | string     |
+| hash         | The hash of the specification under which this chunk was generated | hash       |
+| nAddresses   | The number of addresses in this chunk                              | uint64     |
+| nAppearances | The number of appearances in this chunk                            | uint64     |
+| size         | The size of the chunk in bytes                                     | uint64     |
 
 ## ChunkBlooms
 
@@ -205,24 +205,6 @@ ChunkStats consist of the following fields:
 | appsPerAddr   | the average number of appearances per address    | double |
 | ratio         | the ratio of appearances to addresses            | double |
 
-## MonitorClean
-
-<!-- markdownlint-disable MD033 MD036 MD041 -->
-MonitorClean is a report on removing duplicates from monitors.
-
-The following commands produce and manage MonitorCleans:
-
-- [chifra monitors](/chifra/accounts/#chifra-monitors)
-
-MonitorCleans consist of the following fields:
-
-| Field    | Description                                                | Type    |
-| -------- | ---------------------------------------------------------- | ------- |
-| address  | the address being cleaned                                  | address |
-| sizeThen | the number of appearances in the monitor prior to cleaning | int64   |
-| sizeNow  | the number of appearances in the monitor after cleaning    | int64   |
-| dups     | the number of duplicates removed                           | int64   |
-
 ## Cache
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
@@ -245,22 +227,23 @@ Caches consist of the following fields:
 | sizeInBytes | the size of the cache in bytes                          | uint64                                        |
 | items       | an array of cache items                                 | [CacheEntry[]](/data-model/admin/#cacheentry) |
 
-## CacheEntry
+## MonitorClean
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
-The `cacheEntry` data model is used to display various caches displayed from the `chifra config`
-tool.
+MonitorClean is a report on removing duplicates from monitors.
 
-The following commands produce and manage CacheEntries:
+The following commands produce and manage MonitorCleans:
 
-- [chifra status](/chifra/admin/#chifra-status)
+- [chifra monitors](/chifra/accounts/#chifra-monitors)
 
-CacheEntries consist of the following fields:
+MonitorCleans consist of the following fields:
 
-| Field   | Description | Type    |
-| ------- | --- | ------- |
-| address |     | address |
-| name    |     | string  |
+| Field    | Description                                                | Type    |
+| -------- | ---------------------------------------------------------- | ------- |
+| address  | the address being cleaned                                  | address |
+| sizeThen | the number of appearances in the monitor prior to cleaning | int64   |
+| sizeNow  | the number of appearances in the monitor after cleaning    | int64   |
+| dups     | the number of duplicates removed                           | int64   |
 
 ## ReportCheck
 
@@ -284,31 +267,22 @@ ReportChecks consist of the following fields:
 | result     | the result of the check                       | string   |
 | msgStrings | an array of messages explaining failed checks | []string |
 
-## IndexCacheItem
+## CacheEntry
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
-The `indexCacheItem` is used to present a single Unchained Index chunk in the Explorer app.
+The `cacheEntry` data model is used to display various caches displayed from the `chifra config`
+tool.
 
-The following commands produce and manage IndexCacheItems:
+The following commands produce and manage CacheEntries:
 
 - [chifra status](/chifra/admin/#chifra-status)
 
-IndexCacheItems consist of the following fields:
+CacheEntries consist of the following fields:
 
-| Field          | Description                                          | Type      |
-| -------------- | ---------------------------------------------------- | --------- |
-| nAddrs         | the number of addresses in this chunk                | uint32    |
-| nApps          | the number of appearances in this chunk              | uint32    |
-| firstApp       | the first appearance in this chunk                   | blknum    |
-| latestApp      | the last appeaerance in this chunk                   | blknum    |
-| firstTs        | the first timestamp in this chunk                    | timestamp |
-| latestTs       | the last timestamp in this chunk                     | timestamp |
-| filename       | the filename of this chunk                           | string    |
-| fileDate       | the file date of this chunk                          | datetime  |
-| indexSizeBytes | the size in bytes of the index portion of this chunk | uint32    |
-| indexHash      | the IPFS hash of the index portion of this chunk     | ipfshash  |
-| bloomSizeBytes | the size in bytes of the bloom filter for this chunk | uint32    |
-| bloomHash      | the IPFS has of the bloom filter for this chunk      | ipfshash  |
+| Field   | Description | Type    |
+| ------- | --- | ------- |
+| address |     | address |
+| name    |     | string  |
 
 ## Chain
 
@@ -344,7 +318,6 @@ This documentation mentions the following basic data types.
 | address   | an '0x'-prefixed 20-byte hex string | lowercase      |
 | blknum    | an alias for a uint64               |                |
 | bool      | either `true`, `false`, `1`, or `0` |                |
-| datetime  | a JSON formatted date               | as a string    |
 | double    | a double precision float            | 64 bits        |
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
 | int64     | a 64-bit signed integer             |                |

@@ -5,7 +5,7 @@ status?modes=recons&verbose&maxRecords=2
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheType": "reconsCache",
+          "type": "reconsCache",
           "items": [
             {
               "fileDate": "--fileDate--",

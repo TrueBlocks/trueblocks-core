@@ -9,7 +9,7 @@ TEST[DATE|TIME] Format:  json
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheType": "bloomCache",
+          "type": "bloomCache",
           "items": [
             {
               "bloomSizeBytes": 131114,
@@ -41,7 +41,7 @@ TEST[DATE|TIME] Format:  json
           "sizeInBytes": 789
         },
         {
-          "cacheType": "indexCache",
+          "type": "indexCache",
           "items": [
             {
               "bloomSizeBytes": 131114,
@@ -73,7 +73,7 @@ TEST[DATE|TIME] Format:  json
           "sizeInBytes": 789
         },
         {
-          "cacheType": "stagingCache",
+          "type": "stagingCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -82,7 +82,7 @@ TEST[DATE|TIME] Format:  json
           "sizeInBytes": 789
         },
         {
-          "cacheType": "unripeCache",
+          "type": "unripeCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -91,7 +91,7 @@ TEST[DATE|TIME] Format:  json
           "sizeInBytes": 789
         },
         {
-          "cacheType": "monitorsCache",
+          "type": "monitorsCache",
           "items": [
             {
               "address": "--address--",
@@ -115,7 +115,7 @@ TEST[DATE|TIME] Format:  json
           "sizeInBytes": 789
         },
         {
-          "cacheType": "namesCache",
+          "type": "namesCache",
           "items": [
             {
               "fileDate": "--fileDate--",
@@ -137,7 +137,7 @@ TEST[DATE|TIME] Format:  json
           "sizeInBytes": 789
         },
         {
-          "cacheType": "abisCache",
+          "type": "abisCache",
           "items": [
             {
               "address": "--address--",
@@ -161,7 +161,7 @@ TEST[DATE|TIME] Format:  json
           "sizeInBytes": 789
         },
         {
-          "cacheType": "slurpsCache",
+          "type": "slurpsCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
@@ -170,7 +170,7 @@ TEST[DATE|TIME] Format:  json
           "sizeInBytes": 789
         },
         {
-          "cacheType": "blocksCache",
+          "type": "blocksCache",
           "items": [
             {
               "fileDate": "--fileDate--",
@@ -192,7 +192,7 @@ TEST[DATE|TIME] Format:  json
           "sizeInBytes": 789
         },
         {
-          "cacheType": "tracesCache",
+          "type": "tracesCache",
           "items": [
             {
               "fileDate": "--fileDate--",
@@ -214,7 +214,7 @@ TEST[DATE|TIME] Format:  json
           "sizeInBytes": 789
         },
         {
-          "cacheType": "txsCache",
+          "type": "txsCache",
           "items": [
             {
               "fileDate": "--fileDate--",

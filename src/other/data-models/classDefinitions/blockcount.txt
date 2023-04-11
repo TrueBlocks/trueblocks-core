@@ -9,4 +9,4 @@ doc_route = 209-blockCount
 doc_producer = blocks
 
 cpp_output =
-# go_output = src/apps/chifra/internal/blocks/
+go_output = src/apps/chifra/internal/blocks/

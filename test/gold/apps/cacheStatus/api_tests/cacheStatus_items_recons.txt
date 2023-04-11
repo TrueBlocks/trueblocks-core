@@ -5,7 +5,7 @@ status?modes=recons&maxRecords=100
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheType": "reconsCache",
+          "type": "reconsCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,

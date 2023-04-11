@@ -80,26 +80,3 @@ func (opts *ChunksOptions) HandleIndexBelongs(blockNums []uint64) error {
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
-
-// TODO: BOGUS2 - MUST DOCUMENT
-type simpleAppearanceTable struct {
-	AddressRecord index.AddressRecord      `json:"addressRecord"`
-	Appearances   []index.AppearanceRecord `json:"appearances"`
-}
-
-func (s *simpleAppearanceTable) Raw() *types.RawModeler {
-	return nil
-}
-
-func (s *simpleAppearanceTable) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
-	return types.Model{
-		Data: map[string]any{
-			"addressRecord": s.AddressRecord,
-			"appearances":   s.Appearances,
-		},
-		Order: []string{
-			"addressRecord",
-			"appearances",
-		},
-	}
-}

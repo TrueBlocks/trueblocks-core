@@ -8,7 +8,7 @@ TEST[DATE|TIME] Format:  json
       "cachePath": "--paths--",
       "caches": [
         {
-          "cacheType": "mapsCache",
+          "type": "mapsCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,

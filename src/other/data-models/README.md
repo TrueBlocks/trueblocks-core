@@ -21,7 +21,6 @@ List of types that support the Modeler interface
 | ./pkg/types/        | types_ethstate.go:           | SimpleEthState        | ethState        | state                                                              |
 | ./pkg/types/        | types_function.go:           | SimpleFunction        | function        | abis, all --articulate uses                                        |
 | ./pkg/types/        | types_indexappearance.go:    | SimpleIndexAppearance | `missing`       | currently unused                                                   |
-| ./pkg/types/        | types_indexcacheitem.go:     | SimpleIndexCacheItem  | indexCacheItem  | currently unused                                                   |
 | ./pkg/types/        | types_log.go:                | SimpleLog             | log             | logs                                                               |
 | ./pkg/types/        | types_manifest.go:           | SimpleManifest        | manifest        | chunks manifest                                                    |
 | ./pkg/types/        | types_monitor.go:            | SimpleMonitor         | monitor         | list --count, monitors --list                                      |
