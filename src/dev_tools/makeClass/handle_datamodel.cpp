@@ -188,11 +188,17 @@ bool COptions::handle_datamodel(void) {
 
 //------------------------------------------------------------------------------------------------------------
 bool sortByDataModelName(const CClassDefinition& c1, const CClassDefinition& c2) {
+    if (c1.doc_order == c2.doc_order) {
+        return c1.class_name < c2.class_name;
+    }
     return c1.doc_order < c2.doc_order;
 }
 
 //------------------------------------------------------------------------------------------------------------
 bool sortByDoc(const CMember& c1, const CMember& c2) {
+    if (c1.doc == c2.doc) {
+        return c1.name < c2.name;
+    }
     return c1.doc < c2.doc;
 }
 

@@ -245,6 +245,23 @@ MonitorCleans consist of the following fields:
 | sizeNow  | the number of appearances in the monitor after cleaning    | int64   |
 | dups     | the number of duplicates removed                           | int64   |
 
+## CacheEntry
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+The `cacheEntry` data model is used to display various caches displayed from the `chifra config`
+tool.
+
+The following commands produce and manage CacheEntries:
+
+- [chifra status](/chifra/admin/#chifra-status)
+
+CacheEntries consist of the following fields:
+
+| Field   | Description | Type    |
+| ------- | --- | ------- |
+| address |     | address |
+| name    |     | string  |
+
 ## ReportCheck
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
@@ -266,23 +283,6 @@ ReportChecks consist of the following fields:
 | failedCnt  | the number of failed checks                   | uint32   |
 | result     | the result of the check                       | string   |
 | msgStrings | an array of messages explaining failed checks | []string |
-
-## CacheEntry
-
-<!-- markdownlint-disable MD033 MD036 MD041 -->
-The `cacheEntry` data model is used to display various caches displayed from the `chifra config`
-tool.
-
-The following commands produce and manage CacheEntries:
-
-- [chifra status](/chifra/admin/#chifra-status)
-
-CacheEntries consist of the following fields:
-
-| Field   | Description | Type    |
-| ------- | --- | ------- |
-| address |     | address |
-| name    |     | string  |
 
 ## Chain
 

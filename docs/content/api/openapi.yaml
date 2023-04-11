@@ -3267,6 +3267,15 @@ components:
         dups:
           type: int64
           description: "the number of duplicates removed"
+    cacheEntry:
+      description: "a single entry in the results of a status query when `--verbose` is enabled"
+      type: object
+      properties:
+        address:
+          type: string
+          format: address
+        name:
+          type: string
     reportCheck:
       description: "report on checking contents of chunks"
       type: object
@@ -3300,15 +3309,6 @@ components:
         msgStrings:
           type: []string
           description: "an array of messages explaining failed checks"
-    cacheEntry:
-      description: "a single entry in the results of a status query when `--verbose` is enabled"
-      type: object
-      properties:
-        address:
-          type: string
-          format: address
-        name:
-          type: string
     chain:
       description: "a configuration item carrying information about a single chain"
       type: object
