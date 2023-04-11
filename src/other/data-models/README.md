@@ -1,49 +1,49 @@
 List of types that support the Modeler interface
 
-| Path                | File                         | Type                  | Doc             | Where                                                              |
-| ------------------- | ---------------------------- | --------------------- | --------------- | ------------------------------------------------------------------ |
-| ./internal/chunks   | handle_addresses_belongs.go: | simpleAppearanceTable | `missing`       | chunks index --belongs                                             |
-| ./internal/blocks   | handle_count.go:             | simpleBlockCount      | blockCount      | blocks --count                                                     |
-| ./internal/list     | handle_bounds.go:            | simpleBounds          | `missing`       | list --bounds                                                      |
-| ./internal/chunks   | handle_addresses.go:         | simpleChunkAddress    | chunkAddress    | chunks addresses                                                   |
-| ./internal/chunks   | handle_blooms.go:            | simpleChunkBloom      | chunkBlooms     | chunks blooms                                                      |
-| ./internal/chunks   | handle_index.go:             | simpleChunkIndex      | chunkIndex      | chunks index                                                       |
-| ./internal/chunks   | chunk_stats.go:              | simpleChunkStats      | chunkStats      | chunks stats                                                       |
-| ./internal/chunks   | handle_status.go:            | simpleChunkStatus     | `missing`       | chunks status                                                      |
-| ./internal/monitors | handle_clean.go:             | simpleMonitorClean    | monitorClean    | monitors --clean                                                   |
-| ./internal/chunks   | handle_check.go:             | simpleReportCheck     | reportCheck     | chunks index --check                                               |
-| ./internal/when     | handle_ts_count.go:          | simpleWhenCount       | `missing`       | when --timestamps --count                                          |
-| ./pkg/types/        | types_manifest.go:           | simpleManifest        | manifest        | chunks manifest                                                    |
-|                     |                              |                       |                 |                                                                    |
-| ./pkg/types/        | types_appearance.go:         | SimpleAppearance      | appearance      | chunks appearances, list, slurp --appearances, transactions --uniq |
-| ./pkg/types/        | types_block.go:              | SimpleBlock           | block           |                                                                    |
-| ./pkg/types/        | types_chunkrecord.go:        | SimpleChunkRecord     | `missing`       | chunks manifest, scrape --pin                                      |
-| ./pkg/types/        | types_etherscan.go:          | simpleEtherscan       | `missing`       | slurp                                                              |
-| ./pkg/types/        | types_ethstate.go:           | SimpleEthState        | ethState        | state                                                              |
-| ./pkg/types/        | types_function.go:           | SimpleFunction        | function        | abis, all --articulate uses                                        |
-| ./pkg/types/        | types_indexappearance.go:    | SimpleIndexAppearance | `missing`       | currently unused                                                   |
-| ./pkg/types/        | types_log.go:                | SimpleLog             | log             | logs                                                               |
-| ./pkg/types/        | types_monitor.go:            | SimpleMonitor         | monitor         | list --count, monitors --list                                      |
-| ./pkg/types/        | types_name.go:               | SimpleName            | name            | names                                                              |
-| ./pkg/types/        | types_namedblock.go:         | SimpleNamedBlock      | namedBlock      | when                                                               |
-| ./pkg/types/        | types_parameter.go:          | SimpleParameter       | parameter       | abis, all --articulate uses                                        |
-| ./pkg/types/        | types_receipt.go:            | SimpleReceipt         | receipt         | blocks, transactions                                               |
-| ./pkg/types/        | types_reconciliation.go:     | SimpleReconciliation  | reconciliation  | chifra export --accounting                                         |
-| ./pkg/types/        | types_timestamp.go:          | SimpleTimestamp       | `missing`       | when --timestamps                                                  |
-| ./pkg/types/        | types_tokenbalance.go:       | SimpleTokenBalance    | tokenBalance    | currently unused                                                   |
-| ./pkg/types/        | types_trace.go:              | SimpleTrace           | trace           | blocks --trace, transactions --trace, trace                        |
-| ./pkg/types/        | types_traceaction.go:        | SimpleTraceAction     | traceAction     | --trace uses                                                       |
-| ./internal/         | traces/handle_counts.go:     | simpleTraceCount      | traceCount      | traces --count                                                     |
-| ./pkg/types/        | types_tracefilter.go:        | SimpleTraceFilter     | traceFilter     | traces --filter                                                    |
-| ./pkg/types/        | types_traceresult.go:        | SimpleTraceResult     | traceResult     | --trace uses                                                       |
-| ./pkg/types/        | types_transaction.go:        | SimpleTransaction     | transaction     | blocks, transactions                                               |
-| ./pkg/types/        | types_transfer.go:           | SimpleTransfer        | transfer        | currently unused                                                   |
-|                     |                              |                       |                 |                                                                    |
-| `missing`           | `missing`                    | `missing`             | abi             |                                                                    |
-| `missing`           | `missing`                    | `missing`             | appearanceCount |                                                                    |
-| `missing`           | `missing`                    | `missing`             | cache           |                                                                    |
-| `missing`           | `missing`                    | `missing`             | cacheEntry      |                                                                    |
-| `missing`           | `missing`                    | `missing`             | chain           |                                                                    |
-| `missing`           | `missing`                    | `missing`             | config          |                                                                    |
-| `missing`           | `missing`                    | `missing`             | ethCall         |                                                                    |
-| `missing`           | `missing`                    | `missing`             | pinnedChunk     |                                                                    |
+| Path                | File                     | Type                  | Documented        | gen-c++ | gen-go |
+| ------------------- | ------------------------ | --------------------- | ----------------- | ------- | ------ |
+| ./internal/blocks   | types_blockcount.go      | simpleBlockCount      | blockCount        |         | x      |
+| ./internal/chunks   | types_appearanceTable.go | simpleAppearanceTable | <--- missing ---> |         |        |
+| ./internal/chunks   | types_chunkaddress.go    | simpleChunkAddress    | chunkAddress      |         | x      |
+| ./internal/chunks   | types_chunkbloom.go      | simpleChunkBloom      | <--- missing ---> |         | x      |
+| ./internal/chunks   | types_chunkindex.go      | simpleChunkIndex      | chunkIndex        |         | x      |
+| ./internal/chunks   | types_chunkstats.go      | simpleChunkStats      | chunkStats        |         | x      |
+| ./internal/chunks   | types_chunkStatus.go     | simpleChunkStatus     | <--- missing ---> |         |        |
+| ./internal/chunks   | types_manifest.go        | simpleManifest        | manifest          |         | x      |
+| ./internal/chunks   | types_reportcheck.go     | simpleReportCheck     | reportCheck       |         | x      |
+| ./internal/list     | types_bounds.go          | simpleBounds          | <--- missing ---> |         |        |
+| ./internal/monitors | types_monitorclean.go    | simpleMonitorClean    | monitorClean      |         | x      |
+| ./internal/status   | types_cache.go           | simpleCache           | cache             |         | x      |
+| ./internal/status   | types_cache.go           | simpleCacheItem       | <--- missing ---> |         |        |
+| ./internal/status   | types_cacheentry.go      | simpleCacheEntry      | cacheEntry        |         | x      |
+| ./internal/status   | types_status.go          | simpleStatus          | <--- missing ---> |         | x      |
+| ./internal/traces   | types_tracecount.go      | simpleTraceCount      | traceCount        |         | x      |
+| ./internal/when     | types_timestamp.go       | simpleTimestamp       | <--- missing ---> |         |        |
+| ./internal/when     | types_whenCount.go       | simpleTimestampCount  | <--- missing ---> |         |        |
+|                     |                          |                       |                   |         |        |
+| ./pkg/types         | types_appearance.go      | SimpleAppearance      | appearance        | x       |        |
+| ./pkg/types         | types_block.go           | SimpleBlock           | block             | x       | x      |
+| ./pkg/types         | types_chunkrecord.go     | SimpleChunkRecord     | <--- missing ---> |         |        |
+| ./pkg/types         | types_etherscan.go       | SimpleEtherscan       | <--- missing ---> |         |        |
+| ./pkg/types         | types_ethstate.go        | SimpleEthState        | ethState          | x       | x      |
+| ./pkg/types         | types_function.go        | SimpleFunction        | function          | x       | x      |
+| ./pkg/types         | types_log.go             | SimpleLog             | log               | x       | x      |
+| ./pkg/types         | types_monitor.go         | SimpleMonitor         | monitor           | x       |        |
+| ./pkg/types         | types_name.go            | SimpleName            | name              | x       | x      |
+| ./pkg/types         | types_namedblock.go      | SimpleNamedBlock      | namedBlock        |         | x      |
+| ./pkg/types         | types_parameter.go       | SimpleParameter       | parameter         | x       | x      |
+| ./pkg/types         | types_receipt.go         | SimpleReceipt         | receipt           | x       | x      |
+| ./pkg/types         | types_reconciliation.go  | SimpleReconciliation  | reconciliation    | x       | x      |
+| ./pkg/types         | types_tokenbalance.go    | SimpleTokenBalance    | tokenBalance      | x       | x      |
+| ./pkg/types         | types_trace.go           | SimpleTrace           | trace             | x       | x      |
+| ./pkg/types         | types_traceaction.go     | SimpleTraceAction     | traceAction       | x       | x      |
+| ./pkg/types         | types_tracefilter.go     | SimpleTraceFilter     | traceFilter       |         | x      |
+| ./pkg/types         | types_traceresult.go     | SimpleTraceResult     | traceResult       | x       | x      |
+| ./pkg/types         | types_transaction.go     | SimpleTransaction     | transaction       | x       | x      |
+| ./pkg/types         | types_transfer.go        | SimpleTransfer        | transfer          | x       | x      |
+|                     |                          |                       |                   |         |        |
+| ./api               | openapi.yaml             | <--- missing --->     | abi               |         |        |
+| ./api               | openapi.yaml             | <--- missing --->     | appearanceCount   |         |        |
+| ./api               | openapi.yaml             | <--- missing --->     | chain             | x       |        |
+| ./api               | openapi.yaml             | <--- missing --->     | ethCall           | x       |        |
+| ./api               | openapi.yaml             | <--- missing --->     | pinnedChunk       |         | x      |

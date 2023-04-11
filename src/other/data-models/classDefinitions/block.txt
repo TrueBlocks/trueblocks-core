@@ -6,8 +6,7 @@ cpp_includes = appearance.h
 doc_group = 02-Chain Data
 doc_descr = block data as returned from the RPC (with slight enhancements)
 doc_route = 201-block
-doc_producer = blocks
-
+doc_producer = blocks, when
 cpp_output = src/libs/etherlib/
 go_output = src/apps/chifra/pkg/types
 go_model = Block[Tx]

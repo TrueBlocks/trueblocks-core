@@ -7,15 +7,15 @@ package whenPkg
 import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 
 // TODO: BOGUS2 - MUST DOCUMENT
-type simpleWhenCount struct {
+type simpleTimestampCount struct {
 	Count uint64 `json:"count"`
 }
 
-func (s *simpleWhenCount) Raw() *types.RawModeler {
+func (s *simpleTimestampCount) Raw() *types.RawModeler {
 	return nil
 }
 
-func (s *simpleWhenCount) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
+func (s *simpleTimestampCount) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
 	return types.Model{
 		Data: map[string]interface{}{
 			"count": s.Count,
