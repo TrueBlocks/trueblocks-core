@@ -90,7 +90,7 @@ Data models produced by this tool:
 
 - [status](/data-model/admin/#status)
 - [cache](/data-model/admin/#cache)
-- [cacheentry](/data-model/admin/#cacheentry)
+- [cacheitem](/data-model/admin/#cacheitem)
 - [chain](/data-model/admin/#chain)
 
 Links:

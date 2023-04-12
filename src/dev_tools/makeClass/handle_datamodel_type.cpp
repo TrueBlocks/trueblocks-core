@@ -207,6 +207,9 @@ string_q specialCase(const CClassDefinition& model, const CMember& field, const 
     } else if (modelName % "Trace" && (name % "BlockNumber")) {
         ret = "base.Blknum";
 
+    } else if (modelName % "CacheItem" && name % "Items" && !isRaw) {
+        ret = "[]any";
+
     } else if (name % "Topics") {
         ret = isRaw ? "[]string" : "[]base.Hash";
 

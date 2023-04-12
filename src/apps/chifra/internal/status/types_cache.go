@@ -10,9 +10,6 @@ package statusPkg
 
 // EXISTING_CODE
 import (
-	"time"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -66,27 +63,4 @@ func (s *simpleCache) Model(showHidden bool, format string, extraOptions map[str
 }
 
 // EXISTING_CODE
-// TODO: BOGUS2 - MUST DOCUMENT
-type simpleCacheItem struct {
-	CacheType   string `json:"type"`
-	Items       []any  `json:"items"`
-	LastCached  string `json:"lastCached,omitempty"`
-	NFiles      uint64 `json:"nFiles"`
-	NFolders    uint64 `json:"nFolders"`
-	Path        string `json:"path"`
-	SizeInBytes int64  `json:"sizeInBytes"`
-}
-
-func NewSingleCacheStats(t cache.CacheType, now time.Time) *simpleCacheItem {
-	return &simpleCacheItem{
-		CacheType:   t.CacheName(),
-		Items:       make([]any, 0),
-		LastCached:  now.Format("2006-01-02 15:04:05"),
-		NFiles:      0,
-		NFolders:    0,
-		Path:        "",
-		SizeInBytes: 0,
-	}
-}
-
 // EXISTING_CODE

@@ -13,8 +13,7 @@ List of types that support the Modeler interface
 | ./internal/list     | types_bounds.go          | simpleBounds          | bounds            |         | x      |
 | ./internal/monitors | types_monitorclean.go    | simpleMonitorClean    | monitorClean      |         | x      |
 | ./internal/status   | types_cache.go           | simpleCache           | cache             |         | x      | not turned on |
-| ./internal/status   | types_cache.go           | simpleCacheItem       | <--- missing ---> |         |        |
-| ./internal/status   | types_cacheentry.go      | simpleCacheEntry      | cacheEntry        |         | x      |
+| ./internal/status   | types_cacheitem.go       | simpleCacheItem       | cacheItem         |         |        |
 | ./internal/status   | types_status.go          | simpleStatus          | <--- missing ---> |         | x      |
 | ./internal/traces   | types_tracecount.go      | simpleTraceCount      | traceCount        |         | x      |
 | ./internal/when     | types_timestamp.go       | simpleTimestamp       | timestamp         |         |        |

@@ -331,8 +331,8 @@ string_q plural(const string_q& in) {
     string_q ret = firstUpper(in);
     if (ret == "Status") {
         ret = "Statuses";
-    } else if (ret == "CacheEntry") {
-        ret = "CacheEntries";
+    } else if (ret == "CacheItem") {
+        ret = "CacheItems";
     } else if (ret == "ChunkIndex") {
         ret = "ChunkIndexes";
     } else if (!endsWith(in, "s")) {

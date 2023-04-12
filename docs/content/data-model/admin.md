@@ -235,31 +235,36 @@ The following commands produce and manage Caches:
 
 Caches consist of the following fields:
 
-| Field       | Description                                             | Type                                          |
-| ----------- | ------------------------------------------------------- | --------------------------------------------- |
-| type        | the type of the cache (one of the nine different types) | string                                        |
-| path        | the physical path to the cache on the hard drive        | string                                        |
-| nFiles      | the number of files in the cache                        | uint64                                        |
-| nFolders    | the number of subfolders in the cache                   | uint64                                        |
-| sizeInBytes | the size of the cache in bytes                          | uint64                                        |
-| items       | an array of cache items                                 | [CacheEntry[]](/data-model/admin/#cacheentry) |
+| Field       | Description                                             | Type                                        |
+| ----------- | ------------------------------------------------------- | ------------------------------------------- |
+| type        | the type of the cache (one of the nine different types) | string                                      |
+| path        | the physical path to the cache on the hard drive        | string                                      |
+| nFiles      | the number of files in the cache                        | uint64                                      |
+| nFolders    | the number of subfolders in the cache                   | uint64                                      |
+| sizeInBytes | the size of the cache in bytes                          | uint64                                      |
+| items       | an array of cache items                                 | [CacheItem[]](/data-model/admin/#cacheitem) |
 
-## CacheEntry
+## CacheItem
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
-The `cacheEntry` data model is used to display various caches displayed from the `chifra config`
+The `cacheItem` data model is used to display various caches displayed from the `chifra config`
 tool.
 
-The following commands produce and manage CacheEntries:
+The following commands produce and manage CacheItems:
 
 - [chifra status](/chifra/admin/#chifra-status)
 
-CacheEntries consist of the following fields:
+CacheItems consist of the following fields:
 
-| Field   | Description | Type    |
-| ------- | --- | ------- |
-| address |     | address |
-| name    |     | string  |
+| Field       | Description                                         | Type      |
+| ----------- | --------------------------------------------------- | --------- |
+| type        | the type of the cache                               | string    |
+| items       | the individual items in the cache (if --verbose)    | Any       |
+| lastCached  | the date of the most recent item added to the cache | string    |
+| nFiles      | the number of items in the cache                    | uint64    |
+| nFolders    | the number of folders holding that many items       | uint64    |
+| path        | the path to the top of the given cache              | string    |
+| sizeInBytes | the size of the cache in bytes                      | int64     |
 
 ## ReportCheck
 

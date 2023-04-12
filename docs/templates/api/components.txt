@@ -1324,17 +1324,37 @@ components:
         items:
           type: array
           items:
-            $ref: "#/components/schemas/cacheEntry"
+            $ref: "#/components/schemas/cacheItem"
           description: "an array of cache items"
-    cacheEntry:
+    cacheItem:
       description: "a single entry in the results of a status query when `--verbose` is enabled"
       type: object
       properties:
-        address:
+        type:
           type: string
-          format: address
-        name:
+          description: "the type of the cache"
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/any"
+          description: "the individual items in the cache (if --verbose)"
+        lastCached:
           type: string
+          description: "the date of the most recent item added to the cache"
+        nFiles:
+          type: number
+          format: uint64
+          description: "the number of items in the cache"
+        nFolders:
+          type: number
+          format: uint64
+          description: "the number of folders holding that many items"
+        path:
+          type: string
+          description: "the path to the top of the given cache"
+        sizeInBytes:
+          type: int64
+          description: "the size of the cache in bytes"
     reportCheck:
       description: "report on checking contents of chunks"
       type: object
