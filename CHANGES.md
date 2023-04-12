@@ -1,154 +1,241 @@
-Removes `status` from `chifra chunks` command as unused - use `chifra status --verbose` instead.
+## v0.62.0 (2023/04/12)
 
-pinnedChunk renamed to chunkRecord (docs only)
+This release focuses on porting the C++ code to GoLang. We're almost done. Many of the tools (`a`, `b`, `c`, etc.) are now fully ported to GoLang or well on the way to being fully ported. The largest remaining work is porting the binary cache code, the `neighborhood` processing, and the GoLang account reconciliations.
 
-Data Models
+## Specification
 
-block
+There were no changes to the [Specification for the Unchained Index](https://trueblocks.io/papers/2023/specification-for-the-unchained-index-v0.51.0-beta.pdf) since the last release.
+
+## Breaking Changes
+
+- Bumped version to v0.65.0.
+- x
+- x
+- Removes support for migrations prior to v0.40.0.
+- There were breaking changes in the `chifra blocks`, `chifra transactions`, `chifra traces`, `chifra logs` , and `chifra state` tools. See notes below.
+
+## Bug Fixes
+
+- x
+- x
+
+## System Wide Changes
+
+Ported to GoLang: `names`, `slurp`, `logs`, `traces`, `daemon`, `config`, `status`
+Removes classDefinition code from c++ library testing code - not used not needed
+Many additional tests for all subcommands
+Removed a fair amount of the C++ library testing code as being not needed and in preparation for porting to C++
+Re-wrote logger package to more closely mimic the new GoLang structured log package which we will be switching to soon - if you depend on our logging messages for anything, please note that they will change.
+Made sure RPC and Raw data agrees
+- x
+- x
+
+## Changes to Data Models
+
+Block
   added `author`, `receiptsRoot`, `sha3Uncles`, `size`, `stateRoot`, `totalDifficulty`, `extraData`, `logsBloom`, `mixHash`, `nonce`, `transactionsRoot`, `uncles` to `chifra blocks --raw`.
-
 Function
   Made `stateMutability` and `signature` be omitempty
-
 Log
   Made `topics`, `data`, `articulatedLog`, `compressedLog`, and `timestamp` omitempty
-
+  Removed `transactionLogIndex` field as unused.
 Receipt
   Adds `logsBloom` but only for `chifra receipts --raw`
-
 Trace
   Makes `articulatedTrace` field omitempty
-
 Transaction
   Added `accessList` and `chainId` to `chifra transactions --raw`
-
 ChunkIndex
   Renamed `addressCount` to `nAddresses` and `appearanceCount` to `nAppearances`
-
 ChunkBloom added
-
-Ported to GoLang
-  "logs", "traces", "slurp",    "names",  "daemon", "config", "status"
-
-chifra chunks
-  Export `range` as a string not an object
-  
-chifra export
-  No longer errors out if the node software fails to deliver valid data. This allows for continuing to stream data
-  even when the node is flaky (Erigon). This is in preparation for better error handling.
-
-chifra abis
-  We no longer print `stateMutability` values if they hold their default `view` type
-  
-Completely removes support for migrations older than v0.40.0 - June 2022
-
-chifra config --terse no longer works. Use chifra status (with no options) instead.
-
-Removes classDefinition code from c++ library testing code - not used not needed
-
-chifra blocks
-  Removed support for previously deprecated `chifra blocks --trace` (use `chifra blocks --traces` instead)
-  Removes `finalized` as unused from chifra blocks
-  better JSON output (obey omitempty)
-
-chifra tokens
-  Removed support for previously deprecated `chifra tokens --parts none` (no replacement)
-
-chifra transactions
-  Removed support for previously deprecated `chifra transactions --trace` (use `chifra transactions --traces` instead)
-  better JSON output (obey omitempty)
-  BOGUS - PUT IT BACK - Removes `nonce` from transaction output
-
-chifra status
-  Complete port to GoLang
-
-chifra names
-  ported entirely to GoLang
-
-chifra slurp
-  ported entirely to GoLang
-  A number of non-breaking changes to the JSON output. Better formatting. Obey omitempty
-  Added `--per_page` to control how many records to ask for from Etherscan
-  Added `--sleep` to slow down access to Etherscan
-  Added `1155` option to `types` option
-
-chifra config
-  Separated `status` tool from `config` tool.
-  Temporarily disabled `config` tool
-  Added some test cases
-  Changed `mode` to `modes` as it now accepts mutliple options per command line
-
-chifra status
-  Separated `status` tool from `config` tool.
-  Status now only handles reporting on caches.
-  Breaking change to the data
-  BOGUS - MUST UPDATE DOCS FOR THE STATUS DATA
-  Adds bloom, blocks, txs, traces, recons, slurps, staging, unripe, and maps to `modes`
-  Removes `--parts` option
-  Adds `--first_record` and `--max_records`.
-
-chifra chunks
-  A number of simple cleanups for displaying the data
-  Removed `--save_addrs` option as unused
-
-chifra logs
-  ported entirely to GoLang
-
-chifra names
-  Removes `--to_custom` option
-  Much better support for CRUD operations
-  Preparation for switching to a gRPC server for names for both API and command line versions of `chifra names`
-
-chifra list
-  Adds `--bounds` option to show first and latest appearance, timestamps and dates.
-  Improves date output format to agree with other tools
-  Removes quotes from csv files
-
-chifra
-  Additional tests for all subcommands
-
-chifra traces
-  ported entirely to GoLang
-  better JSON output (obey omitempty)
-  removed as unused `--skip_ddos` and `--max` permanently
-  fixed incorrect JSON output for the `traceAddress` field - previously we output strings, now we output an integer array as it should be (breaking)
-  `value` field is now exported as a string to preserve 18 decimal places. Previously only exported numbers which JavaScript could not preserve
-  By shifting to GoLang tracing we removed a "fake" trace that had callType == "creation". This trace was completely manufactured by us as an indication
-  of a smart contract creation. In the new version, instead we now include the actual trace returned by the node which contains either an empty call type
-  or a call type of "creation" but also includes the `init` code in the traceAction and the `code` in the traceResult. The traceResult always did display
-  the newly created contract's address.
-
-chifra daemon
-  Changed `chifra daemon --scrape full-index` to `chifra daemon --scrape index`.
-
-chifra receipt
-  Adds blockHash and transactionHash to JSON output
-
-chifra logs
-  Added `timestamp` to logs export
-
-chifra status
-  ported entirely to GoLang
-
-Removed a fair amount of the C++ library testing code as being not needed and in preparation for porting to C++
-
-Re-wrote logger package to more closely mimic the new GoLang structured log package which we will be switching to soon - if you depend on our logging messages for anything, please note that they will change.
-
 THE ENTIRE DATA MODEL FOR CACHES CHANGED
 Removed none value from getToken --parts
 Previously deprecated option chifra blocks --trace removed. Use chifra blocks --traces
 Removes the --terse option from chifra status
 Removes --save_addrs from chifra chunks addresses (rarely used, unncessarily complicated)
 remove isFinalized from Block -- the user can make this decision themselves based on timestamp or blockNumber
-
-Added accessList ot transaction output
-
-Made sure RPC and Raw data agrees
 Remove transactionLogIndex from Log
-
-Added --sleep and --per_page to chifra slurp
-Ported slurp to GoLang
 Removes zero-valued Nonce, MaxFeePerGas, and MaxPriorityFeePerGas from Transaction and Block data
+
+
+- `Blocks` data model:
+  - Added `uncles` field.
+- `ChunkBloom` data model:
+  - Renames `count` to `nBlooms` to be consistent with other tools.
+  - Renames `width` to `byteWidth` to be consistent with other tools.
+- `ChunkIndex` data model:
+  - Renames `addressCount` to `nAddresses` to be consistent with other tools.
+  - Renames `appearanceCount` to `nAppearances` to be consistent with other tools.
+- `ChunkRecord` data model (formerly `PinnedChunk`:
+  - Removes `firstApp` and `lastApp`. Same data is available from the `range` field.
+  - Added `bloomSize` and `indexSize` which is useful for cache management.
+- Renames data models
+  - `Cache` to `Status`
+  - `CacheEntry` to `CacheItem`
+  - `ChunkAddresses` to `ChunkAddress`
+  - `ChunkAppearances` to `ChunkAppearance`
+  - `ChunkBlooms` to `ChunkBloom`
+  - `PinnedChunk` to `ChunkRecord`
+- New data models:
+  - `Bounds` (for `chifra list --bounds`)
+  - `Etherscan` (for `chifra slurp`)
+  - `MonitorClean` (for `chifra monitors --clean`)
+  - `ReportCheck` (for `chifra chunks index --check`)
+  - `Timestamp` (for `chifra when --timestamps`)
+  - `TimestampCount` (for `chifra when --timestamps --count`)
+  - `TraceFilter` (for `chifra traces <filter>`)
+
+## Tool Specific Changes
+
+**chifra list**
+
+- Adds `--bounds` option to show first and latest appearance, timestamps and dates.
+- Better JSON exporting, better formatting, now obeys `omitempty` for all appropriate fields.
+- Improves date output format to agree with other tools.
+- Removes quotes from csv files (same for all other tools that are ported to GoLang).
+
+**chifra export**
+
+- No longer errors out if the node software fails to deliver valid data. This allows for continuing to stream data even when the node is flaky (Erigon). This is in preparation for better error handling.
+
+**chifra monitors**
+
+- No appreciable changes.
+
+**chifra names**
+
+- Ported entirely to GoLang.
+- Removes `--to_custom` option as unused.
+- Better JSON exporting, better formatting, now obeys `omitempty` for all appropriate fields.
+- Much better support for CRUD operations.
+- Preparation for switching to a gRPC server for names for both API and command line versions.
+- `--autoname` and `--clean` options are temporarily suspended. Will be re-enabled later.
+
+**chifra abis**
+
+- Better JSON exporting, better formatting, now obeys `omitempty` for all appropriate fields.
+
+**chifra blocks**
+
+- Better JSON exporting, better formatting, now obeys `omitempty` for all appropriate fields.
+- Now displays all fields when using `--raw` option.
+- **Breaking:** Removes support for previously deprecated `chifra blocks --trace` option. Use `chifra blocks --traces` instead.
+- **Breaking:** Removes `finalized` field as it was incorrect and unused
+
+**chifra transactions**
+
+- Better JSON exporting, better formatting, now obeys `omitempty` for `maxFeePerGas`, `maxPriorityFeePerGas`, `nonce`, `articulatedTx::inputs`, and `articulatedTx::outputs` fields.
+- Now displays all fields (including `accessList`) when using `--raw` option.
+- **Breaking:** Removes support for previously deprecated `chifra transactions --trace` option. Use `chifra transactions --traces` instead.
+- **Breaking:** No longer displays `r`, `s`, or `v` values in `--raw` display.
+
+**chifra receipts**
+
+- Ported entirely to GoLang.
+- Better JSON exporting, better formatting, now obeys `omitempty` for all appropriate fields.
+- Adds `blockHash` and `transactionHash` to JSON output.
+- Adds `logsBloom` to `--raw` output.
+
+**chifra logs**
+
+- Ported entirely to GoLang.
+- Better JSON exporting, better formatting, now obeys `omitempty` for all appropriate fields.
+- Added `timestamp` to the export.
+- **Breaking:** Removes RPC results wrapper from `--raw` output.
+
+**chifra traces**
+
+- Ported entirely to GoLang.
+- Better JSON exporting, better formatting, now obeys `omitempty` for all appropriate fields. Does not export field if it holds its default value (except for arrays which export `[]`).
+- **Breaking:** Removed previously unused `--skip_ddos` and `--max` options permanently.
+- **Breaking:** Fixed incorrect JSON output for the `traceAddress` field - previously we export a string. We now export an integer array.
+- **Breaking:** The `value` field is now exported as a string to preserve accuracy. Previously exported numbers which JavaScript could not properly parse.
+- **Breaking:** A previously generated "fake" trace with `callType == "creation"` was removed. This trace was manufactured by TrueBlocks to indicate a smart contract creation. Now, instead, we export the actual trace returned by the RPC which contains a `callType` of `"creation"` but also includes the `init` code data in the `traceAction` and the `code` in the `traceResult`.
+
+**chifra when**
+
+- Better documents `--timestamp` related options.
+
+**chifra state**
+
+- **Breaking:** Removes `nonce` from the `parts` option (may return at a future date).
+
+**chifra tokens**
+
+- Removes support for previously deprecated `none` option to `chifra tokens --parts`. No replacement.
+
+**chifra config**
+
+- **Breaking:** This tool has been temporarily suspended. It will re-emerge soon as a way to edit and display configuration information.
+- All features previously available with this tool are now available under the previously aliased `chifra status` tool.
+
+**chifra status**
+
+- Ported entirely to GoLang.
+- Separated `status` tool from `config` tool. `status` tool now displays information about the caches. `config` is now related to configuration information, but is currently disabled.
+- Many breaking changes to the data types and data formats produced by this `admin` specific tool. Instead of documenting here, please see the documentation for details.
+- Expanded types of cache reports produced to now include `[ index | blooms | blocks | txs | traces | monitors | names | abis | recons | slurps | staging | unripe | maps | some | all ]`
+- Adds `--first_record` and `--max_records` to limit reporting of large caches.
+- **Breaking:** Removes the `--parts` option due to expansion of `modes` option.
+
+**chifra daemon**
+
+- Changed `chifra daemon --scrape full-index` to `chifra daemon --scrape index`.
+- Began process of enabling `chifra daemon --monitors` and `chifra daemon --scrape`. Not yet ready for prime time.
+
+**chifra scrape**
+
+- No appreciable changes.
+
+**chifra chunks**
+
+- Better JSON exporting, better formatting, now obeys `omitempty` for all appropriate fields.
+- Possible breaking changes to field names of some exported data. Please see the documentation for this tool if you experience problems.
+- **Breaking:** Export `range` field as a string not an object.
+- **Breaking:** Removes `--save_addrs` option as unused.
+- **Breaking:** Removes `status` option from `chifra chunks` command as unused - use `chifra status --verbose` instead.
+- **Breaking:** `chifra chunks --belongs` now only works with `--fmt json`.
+
+**chifra init**
+
+- No appreciable changes.
+
+**chifra explore**
+
+- No appreciable changes.
+
+**chifra slurp**
+
+- Ported entirely to GoLang.
+- Better JSON exporting, better formatting, now obeys `omitempty` for all appropriate fields.
+- Added `--per_page` to control how many records to ask for from Etherscan.
+- Added `--sleep` to slow down access to Etherscan.
+- Added `1155` option to the `types` option.
+- Added a number of test cases to better cover the code.
+
+**makeClass**
+
+- No appreciable changes.
+
+**testRunner**
+
+- No appreciable changes.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
