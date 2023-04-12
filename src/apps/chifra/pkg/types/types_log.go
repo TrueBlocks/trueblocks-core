@@ -9,7 +9,11 @@
 package types
 
 // EXISTING_CODE
-import "github.com/ethereum/go-ethereum/common"
+import (
+	"io"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+)
 
 // EXISTING_CODE
 
@@ -19,23 +23,28 @@ type RawLog struct {
 	BlockNumber      string   `json:"blockNumber"`
 	Data             string   `json:"data"`
 	LogIndex         string   `json:"logIndex"`
-	Removed          bool     `json:"removed"`
 	Topics           []string `json:"topics"`
 	TransactionHash  string   `json:"transactionHash"`
 	TransactionIndex string   `json:"transactionIndex"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleLog struct {
-	Address          Address         `json:"address"`
-	ArticulatedLog   *SimpleFunction `json:"-"`
-	BlockNumber      uint64          `json:"blockNumber"`
+	Address          base.Address    `json:"address"`
+	ArticulatedLog   *SimpleFunction `json:"articulatedLog,omitempty"`
+	BlockHash        base.Hash       `json:"blockHash"`
+	BlockNumber      base.Blknum     `json:"blockNumber"`
 	CompressedLog    string          `json:"compressedLog,omitempty"`
 	Data             string          `json:"data,omitempty"`
 	LogIndex         uint64          `json:"logIndex"`
-	Timestamp        uint64          `json:"timestamp,omitempty"`
-	Topics           []common.Hash   `json:"topics,omitempty"`
-	TransactionIndex uint32          `json:"transactionIndex"`
+	Timestamp        base.Timestamp  `json:"timestamp,omitempty"`
+	Topics           []base.Hash     `json:"topics,omitempty"`
+	TransactionHash  base.Hash       `json:"transactionHash"`
+	TransactionIndex uint64          `json:"transactionIndex"`
 	raw              *RawLog         `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleLog) Raw() *RawLog {
@@ -47,48 +56,77 @@ func (s *SimpleLog) SetRaw(raw *RawLog) {
 }
 
 func (s *SimpleLog) Model(showHidden bool, format string, extraOptions map[string]any) Model {
-	// EXISTING_CODE
-	// EXISTING_CODE
+	var model = map[string]interface{}{}
+	var order = []string{}
 
-	model := map[string]interface{}{
+	// EXISTING_CODE
+	model = map[string]interface{}{
 		"address":          s.Address,
-		"articulatedLog":   s.ArticulatedLog,
 		"blockNumber":      s.BlockNumber,
 		"logIndex":         s.LogIndex,
 		"timestamp":        s.Timestamp,
 		"transactionIndex": s.TransactionIndex,
+		"transactionHash":  s.TransactionHash,
 	}
 
-	order := []string{
-		"topic3",
-		"blockHash",
-		"transactionLogIndex",
-		"topic2",
-		"topic1",
-		"topic0",
-		"type",
+	order = []string{
 		"blockNumber",
 		"transactionIndex",
 		"logIndex",
 		"transactionHash",
 		"timestamp",
 		"address",
+		"topic0",
+		"topic1",
+		"topic2",
+		"topic3",
 		"data",
-		"articulatedLog",
 	}
 
-	// EXISTING_CODE
-	if format != "json" {
-		if len(s.Data) > 0 && s.Data != "0x" {
-			model["data"] = s.Data
+	isArticulated := extraOptions["articulate"] == true && s.ArticulatedLog != nil
+	var articulatedLog = make(map[string]any)
+	if isArticulated {
+		articulatedLog["name"] = s.ArticulatedLog.Name
+		inputModels := ParametersToMap(s.ArticulatedLog.Inputs)
+		if inputModels != nil {
+			articulatedLog["inputs"] = inputModels
 		}
-		model["compressedLog"] = s.CompressedLog
-		order = append(order, "compressedLog")
-	} else {
+	}
+
+	if format == "json" {
 		if len(s.Data) > 0 && s.Data != "0x" {
 			model["data"] = s.Data
 		} else {
 			model["data"] = ""
+		}
+		if isArticulated {
+			model["articulatedLog"] = articulatedLog
+		}
+
+		model["topics"] = s.Topics
+
+	} else {
+		if len(s.Data) > 0 && s.Data != "0x" {
+			model["data"] = s.Data
+		}
+
+		if isArticulated {
+			model["compressedLog"] = MakeCompressed(articulatedLog)
+			order = append(order, "compressedLog")
+		}
+
+		model["topic0"] = s.Topics[0]
+		model["topic1"] = ""
+		if len(s.Topics) > 1 {
+			model["topic1"] = s.Topics[1]
+		}
+		model["topic2"] = ""
+		if len(s.Topics) > 2 {
+			model["topic2"] = s.Topics[2]
+		}
+		model["topic3"] = ""
+		if len(s.Topics) > 3 {
+			model["topic3"] = s.Topics[3]
 		}
 	}
 	// EXISTING_CODE
@@ -97,6 +135,18 @@ func (s *SimpleLog) Model(showHidden bool, format string, extraOptions map[strin
 		Data:  model,
 		Order: order,
 	}
+}
+
+func (s *SimpleLog) WriteTo(w io.Writer) (n int64, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
+}
+
+func (s *SimpleLog) ReadFrom(r io.Reader) (n int64, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
 }
 
 // EXISTING_CODE

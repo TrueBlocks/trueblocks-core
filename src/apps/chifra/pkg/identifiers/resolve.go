@@ -8,7 +8,9 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -72,16 +74,12 @@ func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
 		dt = dt.FloorYear()
 	}
 
-	blockZeroTs, err := rpcClient.GetBlockZeroTs(chain)
-	if err != nil {
-		return utils.EarliestEvmTs, err
-	}
-
-	firstDate := gostradamus.FromUnixTimestamp(int64(blockZeroTs))
+	firstDate := gostradamus.FromUnixTimestamp(rpc.GetBlockTimestamp(chain, 0))
 	if dt.Time().Before(firstDate.Time()) {
 		dt = firstDate
 	}
-	ts := uint64(dt.UnixTimestamp())
+
+	ts := dt.UnixTimestamp()
 	return tslib.FromTsToBn(chain, ts)
 }
 
@@ -123,7 +121,7 @@ func (id *Identifier) nextBlock(chain string, current uint64) (uint64, error) {
 				// should not happen
 			}
 
-			ts := uint64(dt.UnixTimestamp())
+			ts := dt.UnixTimestamp()
 			bn, err = tslib.FromTsToBn(chain, ts)
 			if err != nil {
 				return bn, err
@@ -148,12 +146,12 @@ func (p *Point) resolvePoint(chain string) uint64 {
 		bn, _ = tslib.FromNameToBn(chain, p.Special)
 	} else if p.Number >= utils.EarliestEvmTs {
 		var err error
-		bn, err = tslib.FromTsToBn(chain, uint64(p.Number))
+		bn, err = tslib.FromTsToBn(chain, base.Timestamp(p.Number))
 		if err == tslib.ErrInTheFuture {
 			provider := config.GetRpcProvider(chain)
 			latest := rpcClient.BlockNumber(provider)
-			tsFuture := rpcClient.GetBlockTimestamp(provider, latest)
-			secs := (tsFuture - uint64(p.Number))
+			tsFuture := rpc.GetBlockTimestamp(chain, latest)
+			secs := uint64(tsFuture - base.Timestamp(p.Number))
 			blks := (secs / 13)
 			bn = latest + blks
 		}
@@ -208,8 +206,7 @@ func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
 	}
 
 	if id.StartType == TransactionHash {
-		provider := config.GetRpcProvider(chain)
-		bn, txid, err := rpcClient.TxNumberAndIdFromHash(provider, id.Start.Hash)
+		bn, txid, err := rpcClient.GetAppearanceFromHash(chain, id.Start.Hash)
 		app := types.RawAppearance{BlockNumber: uint32(bn), TransactionIndex: uint32(txid)}
 		return append(txs, app), err
 	}
@@ -325,6 +322,20 @@ bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q
     return false;
 }
 */
+
+func GetBlockNumberMap(chain string, ids []Identifier) (map[uint64]bool, error) {
+	numMap := make(map[uint64]bool, 1000)
+	for _, br := range ids {
+		blockNums, err := br.ResolveBlocks(chain)
+		if err != nil {
+			return numMap, err
+		}
+		for _, bn := range blockNums {
+			numMap[bn] = true
+		}
+	}
+	return numMap, nil
+}
 
 func GetBlockNumbers(chain string, ids []Identifier) ([]uint64, error) {
 	var nums []uint64

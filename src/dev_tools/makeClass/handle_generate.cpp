@@ -46,16 +46,17 @@ extern const char* STR_DELETE_CMDS;
 extern const char* STR_DEFAULT_TAGS;
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, bool asJs) {
-    CClassDefinition classDef(toml);
-    classDef.short_fn = classDefIn.short_fn;
-    classDef.input_path = classDefIn.input_path;
-
-    //------------------------------------------------------------------------------------------------
-    if (toml.getConfigBool("settings", "disabled", false)) {
+    CClassDefinition classDef;
+    classDef.ReadSettings(toml);
+    if (classDef.disabled) {
         if (verbose)
             cerr << "    disabled class not processed " << classDefIn.short_fn << "\n";
         return true;
     }
+
+    //------------------------------------------------------------------------------------------------
+    classDef.short_fn = classDefIn.short_fn;
+    classDef.input_path = classDefIn.input_path;
 
     //------------------------------------------------------------------------------------------------
     counter.nVisited++;
@@ -89,6 +90,10 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
 
     //------------------------------------------------------------------------------------------------
     for (auto fld : classDef.fieldArray) {
+        if (fld.memberFlags & IS_GOONLY || fld.memberFlags & IS_RAWONLY) {
+            continue;
+        }
+
         // keep these in this scope since they may change per field
         string_q declareFmt = "`[{TYPE}]* [{NAME}];";
         string_q regAddFmt = "`ADD_FIELD(CL_NM, \"[{NAME}]\", T_TEXT, ++fieldNum);\n";
@@ -152,7 +157,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
             replaceAll(fieldGetStr, "[{FIELD}]", fld.name);
             if (fld.name == "topics") {
                 replaceAll(fieldGetStr, "THING", "topic_2_Str");
-            } else if (contains(fld.type, "CBlkNumArray")) {
+            } else if (contains(fld.type, "CBlknumArray")) {
                 replaceAll(fieldGetStr, "THING", "uint_2_Str");
             } else if (contains(fld.type, "CBigUintArray")) {
                 replaceAll(fieldGetStr, "THING", "bnu_2_Str");
@@ -240,9 +245,14 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
 
     //------------------------------------------------------------------------------------------------
     map<uint64_t, string_q> dispMap;
-    for (auto fld : classDef.fieldArray)
+    for (auto fld : classDef.fieldArray) {
+        if (fld.memberFlags & IS_GOONLY || fld.memberFlags & IS_RAWONLY) {
+            continue;
+        }
         if (fld.disp > 0)
             dispMap[fld.disp] = fld.name;
+    }
+
     if (dispMap.size()) {
         string_q add = classDef.display_str;
         classDef.display_str = "";
@@ -278,7 +288,6 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     bool isBase = (classDef.base_class == "CBaseNode");
     bool isContained = !classDef.contained_by.empty();
 
-    string_q headerFile = classDef.outputPath(".h");
     string_q headSource = asciiFileToString(getPathToTemplates("blank.h"));
     replace(headSource, "// clang-format off\n", "");
     replace(headSource, "// clang-format on\n", "");
@@ -312,10 +321,10 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(headSource, "[{NAMESPACE2}]", "}  // namespace qblocks\n");
     replaceAll(headSource, "public:\n\n  public:", "public:");
     expandTabbys(headSource);
+    string_q headerFile = classDef.ouputPath(".h");
     counter.nProcessed += writeCodeIn(this, codewrite_t(headerFile, headSource));
 
     //------------------------------------------------------------------------------------------------
-    string_q srcFile = classDef.outputPath(".cpp");
     string_q srcSource = asciiFileToString(getPathToTemplates("blank.cpp"));
     replace(srcSource, "// clang-format off\n", "");
     replace(srcSource, "// clang-format on\n", "");
@@ -354,21 +363,29 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(srcSource, "[{NAMESPACE2}]", "}  // namespace qblocks\n");
     replaceAll(srcSource, "[{FN}]", classDef.short_fn);
     expandTabbys(srcSource);
+    string_q srcFile = classDef.ouputPath(".cpp");
     counter.nProcessed += writeCodeIn(this, codewrite_t(srcFile, srcSource));
 
     return true;
 }
 
 //------------------------------------------------------------------------------------------------
+string_q CClassDefinition::ouputPath(const string_q& t) const {
+    return (cpp_output + toLower(base_name) + t);
+}
+
+//------------------------------------------------------------------------------------------------
 string_q getCaseGetCode(const CMemberArray& fieldsIn) {
-    if (fieldsIn.empty())
+    if (fieldsIn.empty()) {
         return "// No fields";
+    }
 
     map<char, CMemberArray> ch_map;
     for (auto f : fieldsIn) {
-        if (!(f.memberFlags & IS_MINIMAL)) {
-            ch_map[f.name[0]].push_back(f);
+        if (f.memberFlags & IS_GOONLY || f.memberFlags & IS_RAWONLY || f.memberFlags & IS_MINIMAL) {
+            continue;
         }
+        ch_map[f.name[0]].push_back(f);
     }
 
     ostringstream outStream;
@@ -550,9 +567,10 @@ string_q getCaseGetCode(const CMemberArray& fieldsIn) {
 string_q getCaseSetCode(const CMemberArray& fieldsIn) {
     map<char, CMemberArray> ch_map;
     for (auto f : fieldsIn) {
-        if (!(f.memberFlags & IS_MINIMAL)) {
-            ch_map[f.name[0]].push_back(f);
+        if (f.memberFlags & IS_GOONLY || f.memberFlags & IS_RAWONLY || f.memberFlags & IS_MINIMAL) {
+            continue;
         }
+        ch_map[f.name[0]].push_back(f);
     }
 
     ostringstream outStream;
@@ -637,7 +655,7 @@ string_q getCaseSetCode(const CMemberArray& fieldsIn) {
                 } else if (startsWith(p.type, "bytes")) {
                     outStream << (p.name + " = toLower(fieldValue);\n````return true;");
 
-                } else if (contains(p.type, "CStringArray") || contains(p.type, "CBlkNumArray")) {
+                } else if (contains(p.type, "CStringArray") || contains(p.type, "CBlknumArray")) {
                     const char* STR_ARRAY_SET =
                         "string_q str = fieldValue;\n"
                         "while (!str.empty()) {\n"
@@ -646,7 +664,7 @@ string_q getCaseSetCode(const CMemberArray& fieldsIn) {
                         "return true;";
                     string_q str = substitute(STR_ARRAY_SET, "\n", "\n````");
                     replaceAll(str, "[{NAME}]", p.name);
-                    if (contains(p.type, "CBlkNumArray"))
+                    if (contains(p.type, "CBlknumArray"))
                         replaceAll(str, "nextTokenClear(str, ',')", "str_2_Uint(nextTokenClear(str, ','))");
                     outStream << (str);
 

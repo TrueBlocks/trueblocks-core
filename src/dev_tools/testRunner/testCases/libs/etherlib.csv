@@ -26,13 +26,12 @@ on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,00               ,n    ,v
 on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,01               ,n    ,val = 1
 on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,02               ,n    ,val = 2
 on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,CAbi             ,n    ,val = CAbi
-on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,CCachedAccount   ,n    ,val = CCachedAccount
 on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,CMonitor         ,n    ,val = CMonitor
 on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,CApiSpec         ,n    ,val = CApiSpec
 on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,CBlock           ,n    ,val = CBlock
 on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,CFunction        ,n    ,val = CFunction
 on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,CReconciliation  ,n    ,val = CReconciliation
-on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,CLog        ,n    ,val = CLog
+on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,CLog             ,n    ,val = CLog
 on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,CNewBlock        ,n    ,val = CNewBlock
 on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,CNewReceipt      ,n    ,val = CNewReceipt
 on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,CParameter       ,n    ,val = CParameter
@@ -50,12 +49,7 @@ on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CName            ,n    ,v
 on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CMonitor         ,n    ,val = CMonitor
 on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CAcctCacheItem   ,n    ,val = CAcctCacheItem
 on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CBlock           ,n    ,val = CBlock
-on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CBranch          ,n    ,val = CBranch
-on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CInfix           ,n    ,val = CInfix
-on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CLeaf            ,n    ,val = CLeaf
 on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CRPCResult       ,n    ,val = CRPCResult
-on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CTreeNode        ,n    ,val = CTreeNode
-on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CTreeRoot        ,n    ,val = CTreeRoot
 
 on      ,cmd  ,slow  ,null  ,etherlib/forEveryTest    ,00               ,n    ,val = 0
 on      ,cmd  ,slow  ,null  ,etherlib/forEveryTest    ,01               ,n    ,val = 1
@@ -80,8 +74,6 @@ on      ,cmd  ,fast  ,null  ,etherlib/printFloatTest  ,nc_03            ,n    ,@
 on      ,cmd  ,fast  ,null  ,etherlib/printFloatTest  ,nc_long_01       ,n    ,testNum = 1
 on      ,cmd  ,fast  ,null  ,etherlib/printFloatTest  ,nc_long_02       ,n    ,testNum = 2
 on      ,cmd  ,fast  ,null  ,etherlib/printFloatTest  ,nc_long_03       ,n    ,testNum = 3
-
-on      ,cmd  ,fast  ,null  ,etherlib/serializeTest   ,00               ,n    ,
 
 on      ,cmd  ,fast  ,null  ,etherlib/sha3Test        ,00               ,n    ,
 on      ,cmd  ,fast  ,null  ,etherlib/sha3Test        ,01               ,n    ,@t

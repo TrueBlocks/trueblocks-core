@@ -10,7 +10,9 @@ package types
 
 // EXISTING_CODE
 import (
-	"github.com/ethereum/go-ethereum/common"
+	"io"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
 type BlockTransaction interface {
@@ -20,17 +22,18 @@ type BlockTransaction interface {
 // EXISTING_CODE
 
 type RawBlock struct {
-	Author           string   `json:"author,omitempty"`
+	Author           string   `json:"author"`
+	BaseFeePerGas    string   `json:"baseFeePerGas"`
+	BlockNumber      string   `json:"number"`
 	Difficulty       string   `json:"difficulty"`
-	ExtraData        string   `json:"extraData,omitempty"`
+	ExtraData        string   `json:"extraData"`
 	GasLimit         string   `json:"gasLimit"`
 	GasUsed          string   `json:"gasUsed"`
 	Hash             string   `json:"hash"`
-	LogsBloom        string   `json:"logsBloom,omitempty"`
+	LogsBloom        string   `json:"logsBloom"`
 	Miner            string   `json:"miner"`
 	MixHash          string   `json:"mixHash"`
 	Nonce            string   `json:"nonce"`
-	Number           string   `json:"number"`
 	ParentHash       string   `json:"parentHash"`
 	ReceiptsRoot     string   `json:"receiptsRoot"`
 	Sha3Uncles       string   `json:"sha3Uncles"`
@@ -41,23 +44,28 @@ type RawBlock struct {
 	Transactions     []any    `json:"transactions"`
 	TransactionsRoot string   `json:"transactionsRoot"`
 	Uncles           []string `json:"uncles"`
-	// SealFields       []string      `json:"sealFields"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleBlock[Tx BlockTransaction] struct {
-	BaseFeePerGas Wei           `json:"baseFeePerGas"`
-	BlockNumber   uint64        `json:"blockNumber"`
-	Difficulty    uint64        `json:"difficulty"`
-	Finalized     bool          `json:"finalized"`
-	GasLimit      Gas           `json:"gasLimit"`
-	GasUsed       Gas           `json:"gasUsed"`
-	Hash          common.Hash   `json:"hash"`
-	Miner         Address       `json:"miner"`
-	ParentHash    common.Hash   `json:"parentHash"`
-	Timestamp     int64         `json:"timestamp"`
-	Transactions  []Tx          `json:"transactions"`
-	Uncles        []common.Hash `json:"uncles"`
-	raw           *RawBlock
+	BaseFeePerGas base.Wei       `json:"baseFeePerGas"`
+	BlockNumber   base.Blknum    `json:"blockNumber"`
+	Difficulty    uint64         `json:"difficulty"`
+	GasLimit      base.Gas       `json:"gasLimit"`
+	GasUsed       base.Gas       `json:"gasUsed"`
+	Hash          base.Hash      `json:"hash"`
+	Miner         base.Address   `json:"miner"`
+	ParentHash    base.Hash      `json:"parentHash"`
+	Timestamp     base.Timestamp `json:"timestamp"`
+	Transactions  []Tx           `json:"transactions"`
+	Uncles        []base.Hash    `json:"uncles,omitempty"`
+	raw           *RawBlock      `json:"-"`
+	// EXISTING_CODE
+	// Used to be Finalized which has since been removed. Until we implement IsBackLevel
+	// and upgrading cache items, this exists. We can remove it once we do so.
+	UnusedBool bool `json:"-"`
+	// EXISTING_CODE
 }
 
 func (s *SimpleBlock[Tx]) Raw() *RawBlock {
@@ -69,6 +77,9 @@ func (s *SimpleBlock[Tx]) SetRaw(raw *RawBlock) {
 }
 
 func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+	var model = map[string]interface{}{}
+	var order = []string{}
+
 	// EXISTING_CODE
 	if extraOptions["count"] == true {
 		return Model{
@@ -99,7 +110,6 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 			Data: map[string]interface{}{
 				"hash":        s.Hash,
 				"blockNumber": s.BlockNumber,
-				"finalized":   s.Finalized,
 				"parentHash":  s.ParentHash,
 				"timestamp":   s.Timestamp,
 				"tx_hashes":   txHashes,
@@ -113,9 +123,8 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 			},
 		}
 	}
-	// EXISTING_CODE
 
-	model := map[string]interface{}{
+	model = map[string]interface{}{
 		"gasUsed":       s.GasUsed,
 		"gasLimit":      s.GasLimit,
 		"hash":          s.Hash,
@@ -125,27 +134,8 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 		"difficulty":    s.Difficulty,
 		"timestamp":     s.Timestamp,
 		"baseFeePerGas": s.BaseFeePerGas.Uint64(),
-		"finalized":     s.Finalized,
 	}
 
-	order := []string{
-		"transactionsCnt",
-		"gasUsed",
-		"name",
-		"gasLimit",
-		"hash",
-		"blockNumber",
-		"parentHash",
-		"miner",
-		"difficulty",
-		"timestamp",
-		"baseFeePerGas",
-		"finalized",
-		"unclesCnt",
-	}
-
-	// EXISTING_CODE
-	// reorder
 	order = []string{
 		"blockNumber",
 		"timestamp",
@@ -153,7 +143,6 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 		"parentHash",
 		"miner",
 		"difficulty",
-		"finalized",
 		"baseFeePerGas",
 		"gasLimit",
 		"gasUsed",
@@ -170,7 +159,6 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 			if ok {
 				items := make([]map[string]interface{}, 0, len(txs))
 				for _, txObject := range txs {
-					extraOptions["finalized"] = s.Finalized
 					items = append(items, txObject.Model(showHidden, format, extraOptions).Data)
 				}
 				model["transactions"] = items
@@ -187,9 +175,6 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 		if extraOptions["list"] == true {
 			model["unclesCnt"] = len(s.Uncles)
 			order = append(order, "unclesCnt")
-		} else {
-			model["finalized"] = s.Finalized
-			order = append(order, "finalized")
 		}
 	}
 	// EXISTING_CODE
@@ -200,9 +185,17 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 	}
 }
 
-// EXISTING_CODE
-func (s *SimpleBlock[Tx]) GetTimestamp() uint64 {
-	return uint64(s.Timestamp)
+func (s *SimpleBlock[Tx]) WriteTo(w io.Writer) (n int64, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
 }
 
+func (s *SimpleBlock[Tx]) ReadFrom(r io.Reader) (n int64, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
+}
+
+// EXISTING_CODE
 // EXISTING_CODE

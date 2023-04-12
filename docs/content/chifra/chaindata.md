@@ -265,6 +265,7 @@ Data models produced by this tool:
 - [traceaction](/data-model/chaindata/#traceaction)
 - [traceresult](/data-model/chaindata/#traceresult)
 - [tracecount](/data-model/chaindata/#tracecount)
+- [tracefilter](/data-model/chaindata/#tracefilter)
 
 Links:
 
@@ -315,7 +316,10 @@ Notes:
 
 Data models produced by this tool:
 
+- [block](/data-model/chaindata/#block)
 - [namedblock](/data-model/chaindata/#namedblock)
+- [timestamp](/data-model/chaindata/#timestamp)
+- [timestampcount](/data-model/chaindata/#timestampcount)
 
 Links:
 

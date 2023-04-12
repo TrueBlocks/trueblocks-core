@@ -51,7 +51,7 @@ You will see a long list of commands similar to this
     init          initialize the TrueBlocks system by downloading from IPFS
   Other:
     explore       open a local or remote explorer for one or more addresses, blocks, or transactions
-    slurp         fetch data from EtherScan for any address
+    slurp         fetch data from Etherscan for any address
 ```
 
 ---

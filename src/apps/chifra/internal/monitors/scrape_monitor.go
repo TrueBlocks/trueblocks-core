@@ -7,7 +7,6 @@ package monitorsPkg
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -20,7 +19,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 var MonitorScraper Scraper
@@ -51,26 +49,31 @@ func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup) {
 				case monitor.SentinalAddr:
 					close(monitorChan)
 				default:
-					if result.Count() > 100000 {
-						fmt.Println("Ignoring too-large address", result.Address)
+					if result.Count() > 500000 {
+						logger.Warn("Ignoring too-large address", result.Address)
 						continue
 					}
 					monitors = append(monitors, result)
 					count++
 					if result.Count() > 0 {
-						logger.Log(logger.Info, "     ", count, ": ", result, "                                        ")
+						logger.Info("     ", count, ": ", result, "                                        ")
 					}
 				}
 			}
 
-			opts.Refresh(monitors)
-
-			if os.Getenv("RUN_ONCE") == "true" {
+			canceled, _ := opts.Refresh(monitors)
+			if canceled || os.Getenv("RUN_ONCE") == "true" {
 				return
 			}
 
-			fmt.Println("Sleeping for", opts.Sleep, "seconds.")
-			time.Sleep(time.Duration(opts.Sleep) * time.Second)
+			sleep := opts.Sleep
+			if sleep > 0 {
+				ms := time.Duration(sleep*1000) * time.Millisecond
+				if !opts.Globals.TestMode {
+					logger.Info(fmt.Sprintf("Sleeping for %g seconds", sleep))
+				}
+				time.Sleep(ms)
+			}
 		}
 	}
 }
@@ -88,16 +91,16 @@ func (sp SemiParse) String() string {
 
 const addrsPerBatch = 8
 
-func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) error {
+func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) (bool, error) {
 	theCmds, _ := getCommandsFromFile(opts.Globals)
 
 	batches := batchMonitors(monitors, addrsPerBatch)
 	for i := 0; i < len(batches); i++ {
 		addrs, countsBefore := preProcessBatch(batches[i], i, len(monitors))
 
-		err := opts.FreshenMonitorsForWatch(addrs)
-		if err != nil {
-			return err
+		canceled, err := opts.FreshenMonitorsForWatch(addrs)
+		if canceled || err != nil {
+			return canceled, err
 		}
 
 		for j := 0; j < len(batches[i]); j++ {
@@ -114,7 +117,7 @@ func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) error {
 			}
 
 			for _, sp := range theCmds {
-				outputFn := sp.Folder + "/" + mon.GetAddrStr() + "." + sp.Fmt
+				outputFn := sp.Folder + "/" + mon.Address.Hex() + "." + sp.Fmt
 				exists := file.FileExists(outputFn)
 				countBefore := countsBefore[j]
 
@@ -126,7 +129,7 @@ func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) error {
 						add += fmt.Sprintf(" --max_records %d", uint64(countAfter-countBefore+1)) // extra space won't hurt
 						add += " --append --no_header"
 					}
-					cmd += add + " " + mon.GetAddrStr()
+					cmd += add + " " + mon.Address.Hex()
 					cmd = strings.Replace(cmd, "  ", " ", -1)
 					o := opts
 					o.Globals.File = ""
@@ -139,7 +142,7 @@ func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) error {
 			}
 		}
 	}
-	return nil
+	return false, nil
 }
 
 func batchMonitors(slice []monitor.Monitor, batchSize int) [][]monitor.Monitor {
@@ -177,10 +180,10 @@ func getCommandsFromFile(globals globals.GlobalOptions) ([]SemiParse, error) {
 		commandFile = "./commands.fil"
 	}
 	if !file.FileExists(commandFile) {
-		logger.Log(logger.Warning, "No --file option supplied. Using default.")
+		logger.Warn("No --file option supplied. Using default.")
 		cmdLines = append(cmdLines, "export --appearances")
 	} else {
-		cmdLines = utils.AsciiFileToLines(commandFile)
+		cmdLines = file.AsciiFileToLines(commandFile)
 	}
 
 	for _, cmd := range cmdLines {
@@ -204,10 +207,10 @@ func getCommandsFromFile(globals globals.GlobalOptions) ([]SemiParse, error) {
 		}
 	}
 
-	logger.Log(logger.Info, "Found", len(ret), "commands to process in ./"+globals.File)
+	logger.Info("Found", len(ret), "commands to process in ./"+globals.File)
 	for i, cmd := range ret {
 		msg := fmt.Sprintf("\t%d. %s", i, cmd.CmdLine)
-		logger.Log(logger.Info, msg)
+		logger.Info(msg)
 	}
 
 	return ret, nil
@@ -218,7 +221,7 @@ const spaces = "                                                                
 func preProcessBatch(batch []monitor.Monitor, i, nMons int) ([]string, []uint32) {
 	var addrs []string
 	for j := 0; j < len(batch); j++ {
-		addrs = append(addrs, batch[j].GetAddrStr())
+		addrs = append(addrs, batch[j].Address.Hex())
 	}
 
 	fmt.Println(strings.Repeat(" ", 120), "\r")
@@ -262,7 +265,7 @@ func establishExportPaths(chain string) {
 	cwd, _ := os.Getwd()
 	exportPath := cwd + "/exports/"
 	if err := file.EstablishFolders(exportPath, nil); err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 
 	exportPath = cwd + "/exports/" + chain + "/"
@@ -273,7 +276,7 @@ func establishExportPaths(chain string) {
 	}
 
 	if err := file.EstablishFolders(exportPath, folders); err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 }
 

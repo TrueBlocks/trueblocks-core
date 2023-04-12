@@ -1,0 +1,25 @@
+chifra slurp  0x1324e7b922b30B49Ab8EA81086341cc41C249346 --types junk
+TEST[DATE|TIME] Addrs:  [0x1324e7b922b30b49ab8ea81086341cc41c249346]
+TEST[DATE|TIME] Types:  [junk]
+TEST[DATE|TIME] Format:  txt
+Error: The --types option (junk) must be one of [ ext | int | token | nfts | 1155 | miner | uncles | all ]
+Usage:
+  chifra slurp [flags] <address> [address...] [block...]
+
+Arguments:
+  addrs - one or more addresses to slurp from Etherscan (required)
+  blocks - an optional range of blocks to slurp
+
+Flags:
+  -t, --types strings   which types of transactions to request
+                        One or more of [ ext | int | token | nfts | 1155 | miner | uncles | all ]
+  -p, --appearances     show only the blocknumber.tx_id appearances of the exported transactions
+  -P, --per_page uint   the number of records to request on each page (default 5000)
+  -s, --sleep float     seconds to sleep between requests (default 0.25)
+  -x, --fmt string      export format, one of [none|json*|txt|csv]
+  -v, --verbose         enable verbose (increase detail with --log_level)
+  -h, --help            display this help screen
+
+Notes:
+  - Portions of this software are Powered by Etherscan.io APIs.
+

@@ -9,36 +9,45 @@
 package types
 
 // EXISTING_CODE
+import (
+	"io"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+)
 
 // EXISTING_CODE
 
 type RawTraceAction struct {
-	SelfDestructed string `json:"selfDestructed,omitempty"`
-	From           string `json:"from,omitempty"`
-	CallType       string `json:"callType,omitempty"`
-	Gas            string `json:"gas,omitempty"`
-	Input          string `json:"input,omitempty"`
-	To             string `json:"to,omitempty"`
-	Value          string `json:"value,omitempty"`
-	Balance        string `json:"balance,omitempty"`
-	Init           string `json:"init,omitempty"`
-	RefundAddress  string `json:"refundAddress,omitempty"`
-	Address        string `json:"address,omitempty"`
+	Address        string `json:"address"`
+	Balance        string `json:"balance"`
+	CallType       string `json:"callType"`
+	From           string `json:"from"`
+	Gas            string `json:"gas"`
+	Init           string `json:"init"`
+	Input          string `json:"input"`
+	RefundAddress  string `json:"refundAddress"`
+	SelfDestructed string `json:"selfDestructed"`
+	To             string `json:"to"`
+	Value          string `json:"value"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleTraceAction struct {
-	SelfDestructed Address `json:"selfDestructed,omitempty"`
-	From           Address `json:"from"`
-	CallType       string  `json:"callType"`
-	Gas            Gas     `json:"gas"`
-	Input          string  `json:"input,omitempty"`
-	To             Address `json:"to"`
-	Value          Wei     `json:"value"`
-	Balance        Wei     `json:"balance,omitempty"`
-	Init           string  `json:"init,omitempty"`
-	RefundAddress  Address `json:"refundAddress,omitempty"`
-	Address        Address `json:"address,omitempty"`
-	raw            *RawTraceAction
+	Address        base.Address    `json:"address,omitempty"`
+	Balance        base.Wei        `json:"balance,omitempty"`
+	CallType       string          `json:"callType"`
+	From           base.Address    `json:"from"`
+	Gas            base.Gas        `json:"gas"`
+	Init           string          `json:"init,omitempty"`
+	Input          string          `json:"input,omitempty"`
+	RefundAddress  base.Address    `json:"refundAddress,omitempty"`
+	SelfDestructed base.Address    `json:"selfDestructed,omitempty"`
+	To             base.Address    `json:"to"`
+	Value          base.Wei        `json:"value"`
+	raw            *RawTraceAction `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleTraceAction) Raw() *RawTraceAction {
@@ -50,11 +59,8 @@ func (s *SimpleTraceAction) SetRaw(raw *RawTraceAction) {
 }
 
 func (s *SimpleTraceAction) Model(showHidden bool, format string, extraOptions map[string]any) Model {
-	// EXISTING_CODE
-	// EXISTING_CODE
-
-	model := map[string]interface{}{}
-	order := []string{}
+	var model = map[string]interface{}{}
+	var order = []string{}
 
 	// EXISTING_CODE
 	if format == "json" {
@@ -106,6 +112,18 @@ func (s *SimpleTraceAction) Model(showHidden bool, format string, extraOptions m
 		Data:  model,
 		Order: order,
 	}
+}
+
+func (s *SimpleTraceAction) WriteTo(w io.Writer) (n int64, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
+}
+
+func (s *SimpleTraceAction) ReadFrom(r io.Reader) (n int64, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
 }
 
 // EXISTING_CODE

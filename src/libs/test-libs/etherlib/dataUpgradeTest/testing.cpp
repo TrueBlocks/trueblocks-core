@@ -152,16 +152,6 @@ CBaseNode* getNode(const string_q& nodeType) {
         node = CFunction::createObject();
     else if (nodeType == "CParameter")
         node = CParameter::createObject();
-    else if (nodeType == "CBranch")
-        node = CBranch::createObject();
-    else if (nodeType == "CInfix")
-        node = CInfix::createObject();
-    else if (nodeType == "CLeaf")
-        node = CLeaf::createObject();
-    else if (nodeType == "CTreeNode")
-        node = CTreeNode::createObject();
-    else if (nodeType == "CTreeRoot")
-        node = CTreeRoot::createObject();
     else if (nodeType == "CMonitor")
         node = CMonitor::createObject();
     else if (nodeType == "CApiSpec")

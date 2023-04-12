@@ -38,7 +38,7 @@ class CTransfer : public CBaseNode {
     address_t assetAddr;
     string_q assetSymbol;
     uint64_t decimals;
-    biguint_t amount;
+    wei_t amount;
     double spotPrice;
     string_q priceSource;
     string_q encoding;

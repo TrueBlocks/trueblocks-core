@@ -5,9 +5,11 @@ package monitorsPkg
 // be found in the LICENSE file.
 
 import (
-	"log"
+	"fmt"
 	"os"
 	"time"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type Scraper struct {
@@ -31,7 +33,7 @@ func (scraper *Scraper) ChangeState(onOff bool, tmpPath string) bool {
 	fileName := tmpPath + scraper.Name + ".txt"
 	err := os.WriteFile(fileName, []byte(str), 0644) // Uses os.O_WRONLY|os.O_CREATE|os.O_TRUNC
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 	return prev
 }
@@ -43,6 +45,14 @@ func (scraper *Scraper) Pause() {
 		if state != scraper.Running {
 			break
 		}
-		time.Sleep(time.Duration(500) * time.Millisecond)
+
+		sleep := .5
+		if sleep > 0 {
+			ms := time.Duration(sleep*1000) * time.Millisecond
+			if false { // opts.Globals.TestMode {
+				logger.Info(fmt.Sprintf("Sleeping for %g seconds", sleep))
+			}
+			time.Sleep(ms)
+		}
 	}
 }

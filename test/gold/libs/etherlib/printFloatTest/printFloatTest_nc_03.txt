@@ -1,18 +1,1 @@
 printFloatTest   -t 3
-
-  Invalid argument: -t:3. Quitting...
-
-Purpose:
-  This program tests floating point printing and conversions.
-
-
-Usage:
-  printFloatTest [flags]
-
-Flags:
-  -t, --testNum [1|2]   which test to run (either 1 and 2)
-
-Global Flags:
-  -x, --fmt string     export format, one of [none|json*|txt|csv]
-  -v, --verbose uint   set verbose level (optional level defaults to 1)
-  -h, --help           display this help screen

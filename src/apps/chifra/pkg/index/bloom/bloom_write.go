@@ -6,9 +6,10 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
@@ -16,7 +17,7 @@ import (
 
 // WriteBloom writes a single bloom filter to file
 func (bl *ChunkBloom) WriteBloom(chain, fileName string) ( /* changed */ bool, error) {
-	bloomFn := paths.ToBloomPath(fileName)
+	bloomFn := cache.ToBloomPath(fileName)
 	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
 
 	// Make a backup copy of the file in case the write fails so we can replace it...
@@ -34,7 +35,7 @@ func (bl *ChunkBloom) WriteBloom(chain, fileName string) ( /* changed */ bool, e
 
 			fp.Seek(0, io.SeekStart) // already true, but can't hurt
 			bl.Header.Magic = file.SmallMagicNumber
-			bl.Header.Hash = common.BytesToHash(crypto.Keccak256([]byte(version.ManifestVersion)))
+			bl.Header.Hash = base.HexToHash(common.BytesToHash(crypto.Keccak256([]byte(version.ManifestVersion))).Hex())
 			if err = binary.Write(fp, binary.LittleEndian, bl.Header); err != nil {
 				return false, err
 			}

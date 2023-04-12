@@ -78,17 +78,7 @@ class COptionsBase {
 
     // usage related
     bool usage(const string_q& errMsg = "") const;
-    string_q get_header(void) const;
-    string_q get_purpose(void) const;
-    string_q get_description(void) const;
-    string_q get_notes(void) const;
-    string_q get_configs(void) const;
-    string_q get_version(void) const;
-    string_q get_options(void) const;
-    string_q get_errmsg(const string_q& errMsg) const;
-    string_q get_positionals(COptionArray& pos) const;
 
-    string_q format_notes(const CStringArray& strs) const;
     bool flag_required(const string_q& command) const;
     bool invalid_option(const string_q& arg) const;
 
@@ -146,7 +136,7 @@ inline bool listBlocks(uint64_t bn, void* data) {
 class COptionsBlockList {
   public:
     const COptionsBase* opts;
-    CBlkNumArray numList;
+    CBlknumArray numList;
     CStringArray hashList;
     HASHFINDFUNC hashFind;
     blknum_t start;
@@ -213,7 +203,5 @@ inline bool isReserved(const string_q& command) {
         "wei|ether|cmd|api_mode|file|";
     return contains(STR_RESERVED, "|" + command + "|");
 }
-
-extern string_q clean_positionals(const string& progName, const string_q& strIn);
 
 }  // namespace qblocks

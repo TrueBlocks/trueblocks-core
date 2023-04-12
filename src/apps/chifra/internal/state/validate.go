@@ -23,6 +23,10 @@ func (opts *StateOptions) validateState() error {
 		return err
 	}
 
+	if strings.Contains(strings.Join(opts.Parts, " "), "nonce") {
+		return validate.Usage("The {0} value is currently not available{1}.", "nonce", " with the --parts option")
+	}
+
 	if len(opts.Globals.File) > 0 {
 		// do nothing for now
 
@@ -87,6 +91,10 @@ func (opts *StateOptions) validateState() error {
 				return err
 			}
 
+			err = validate.ValidateAddresses(opts.Addrs)
+			if err != nil {
+				return err
+			}
 		}
 	}
 

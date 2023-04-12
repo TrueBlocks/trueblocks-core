@@ -1,15 +1,16 @@
 package pinning
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 type PinResult struct {
-	Range   paths.FileRange         `json:"range,omitempty"`
+	Range   base.FileRange          `json:"range,omitempty"`
 	Local   types.SimpleChunkRecord `json:"local,omitempty"`
 	Remote  types.SimpleChunkRecord `json:"remote,omitempty"`
 	Matches bool                    `json:"matches,omitempty"`
@@ -21,7 +22,7 @@ type PinResult struct {
 // TODO: BOGUS - WE HAVE TO HAVE A SOLUTION FOR THE TIMESTAMP FILE --PIN --REMOTE ON THE CHIFRA WHEN ROUTINES?
 func PinTimestamps(chain string, isRemote bool) error {
 	path := config.GetPathToIndex(chain) + "ts.bin"
-	var hash types.IpfsHash
+	var hash base.IpfsHash
 	var err error
 	if LocalDaemonRunning() {
 		localService, _ := NewPinningService(chain, Local)
@@ -40,16 +41,16 @@ func PinTimestamps(chain string, isRemote bool) error {
 	}
 
 	fn := config.GetPathToCache(chain) + "/tmp/ts.ipfs_hash.fil"
-	logger.Log(logger.Info, "Pinning timestamp file", fn, "to", hash)
+	logger.Info("Pinning timestamp file", fn, "to", hash)
 	file.StringToAsciiFile(fn, hash.String())
 	return nil
 }
 
 func PinChunk(chain, path string, isRemote bool) (PinResult, error) {
-	bloomFile := paths.ToBloomPath(path)
-	indexFile := paths.ToIndexPath(path)
+	bloomFile := cache.ToBloomPath(path)
+	indexFile := cache.ToIndexPath(path)
 
-	rng := paths.RangeFromFilename(path)
+	rng := base.RangeFromFilename(path)
 	result := PinResult{
 		Range:  rng,
 		Local:  types.SimpleChunkRecord{Range: rng.String()},
@@ -92,7 +93,7 @@ func PinChunk(chain, path string, isRemote bool) (PinResult, error) {
 	return result, nil
 }
 
-func (p *Service) PinFile(filepath string, local bool) (types.IpfsHash, error) {
+func (p *Service) PinFile(filepath string, local bool) (base.IpfsHash, error) {
 	if local {
 		return p.pinFileLocally(filepath)
 	}

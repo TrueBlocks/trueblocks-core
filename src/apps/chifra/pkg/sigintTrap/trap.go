@@ -7,7 +7,6 @@ package sigintTrap
 import (
 	"context"
 	"errors"
-	"fmt"
 	"os"
 	"os/signal"
 	"sync"
@@ -16,13 +15,11 @@ import (
 var ErrInterrupted = errors.New("interrupted")
 var SigintMessageOnce sync.Once
 
-func DisplaySigintMessage() {
-	fmt.Println("\nFinishing work...")
-}
+type CleanupFunction func()
 
 // Enable enables the trap, by blocking control-C. It returns
 // a channel that will get a value when user presses ctrl-C.
-func Enable(ctx context.Context, cancel context.CancelFunc) chan os.Signal {
+func Enable(ctx context.Context, cancel context.CancelFunc, cleanUp CleanupFunction) chan os.Signal {
 	signals := make(chan os.Signal, 1)
 	signal.Notify(signals, os.Interrupt)
 
@@ -30,7 +27,7 @@ func Enable(ctx context.Context, cancel context.CancelFunc) chan os.Signal {
 		for {
 			select {
 			case <-signals:
-				SigintMessageOnce.Do(DisplaySigintMessage)
+				SigintMessageOnce.Do(cleanUp)
 				cancel()
 				return
 			case <-ctx.Done():

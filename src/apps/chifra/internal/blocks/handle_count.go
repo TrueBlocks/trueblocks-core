@@ -25,9 +25,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
-
-	// Note: Make sure to add an entry to enabledForCmd in src/apps/chifra/pkg/output/helpers.go
-	fetchData := func(modelChan chan types.Modeler[types.RawBlockCount], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		for _, br := range opts.BlockIds {
 			blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
 			if err != nil {
@@ -51,7 +49,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 					return
 				}
 
-				blockCount := types.SimpleBlockCount{
+				blockCount := simpleBlockCount{
 					BlockNumber:     block.BlockNumber,
 					Timestamp:       block.Timestamp,
 					TransactionsCnt: uint64(len(block.Transactions)),
@@ -69,7 +67,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 				}
 
 				if opts.Traces {
-					if blockCount.TracesCnt, err = types.GetTraceCountByBlockNumber(opts.Globals.Chain, bn); err != nil {
+					if blockCount.TracesCnt, err = rpcClient.GetTraceCountByBlockNumber(opts.Globals.Chain, bn); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {
 							continue
@@ -80,7 +78,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 				}
 
 				if opts.Logs {
-					if blockCount.LogsCnt, err = rpcClient.GetLogCountByNumber(opts.Globals.Chain, bn); err != nil {
+					if blockCount.LogsCnt, err = rpcClient.GetLogCountByBlockNumber(opts.Globals.Chain, bn); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {
 							continue
@@ -95,25 +93,13 @@ func (opts *BlocksOptions) HandleCounts() error {
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, output.OutputOptions{
-		Writer:     opts.Globals.Writer,
-		Chain:      opts.Globals.Chain,
-		TestMode:   opts.Globals.TestMode,
-		NoHeader:   opts.Globals.NoHeader,
-		ShowRaw:    opts.Globals.ShowRaw,
-		Verbose:    opts.Globals.Verbose,
-		LogLevel:   opts.Globals.LogLevel,
-		Format:     opts.Globals.Format,
-		OutputFn:   opts.Globals.OutputFn,
-		Append:     opts.Globals.Append,
-		JsonIndent: "  ",
-		Extra: map[string]interface{}{
-			"count":  opts.Count,
-			"uncles": opts.Uncles,
-			"logs":   opts.Logs,
-			"traces": opts.Traces,
-			"apps":   opts.Apps,
-			"uniqs":  opts.Uniq,
-		},
-	})
+	extra := map[string]interface{}{
+		"count":  opts.Count,
+		"uncles": opts.Uncles,
+		"logs":   opts.Logs,
+		"traces": opts.Traces,
+		"apps":   opts.Apps,
+		"uniqs":  opts.Uniq,
+	}
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }

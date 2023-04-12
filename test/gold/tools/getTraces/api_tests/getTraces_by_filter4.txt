@@ -8,7 +8,7 @@ traces?fmt=json&filter=0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd78
         "gas": 9000,
         "input": "0x",
         "to": "0x8bbb73bcb5d553b5a556358d27625323fd781d37",
-        "value": 1.0709e+21
+        "value": "1070900000000000000000"
       },
       "blockHash": "0xd41acd1affdddd519190f912bed89e3db49d015b269e50e901c64e816f2ebd74",
       "blockNumber": 3068200,
@@ -18,17 +18,20 @@ traces?fmt=json&filter=0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd78
       },
       "subtraces": 0,
       "timestamp": 1485449341,
-      "traceAddress": null,
+      "traceAddress": [],
       "transactionHash": "0x512934968f8c24e95fe571a2cc84f79a082c994ca8a9fd263c3486ba56f4b77f",
       "transactionIndex": 1,
       "type": "call"
     }
   ],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
+    "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
   }
 }

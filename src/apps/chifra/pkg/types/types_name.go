@@ -10,7 +10,10 @@ package types
 
 // EXISTING_CODE
 import (
+	"io"
 	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
 // EXISTING_CODE
@@ -29,23 +32,27 @@ type RawName struct {
 	Source     string `json:"source"`
 	Symbol     string `json:"symbol"`
 	Tags       string `json:"tags"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleName struct {
-	Address    Address `json:"address"`
-	Decimals   uint64  `json:"decimals"`
-	Deleted    bool    `json:"deleted,omitempty"`
-	IsContract bool    `json:"isContract,omitempty"`
-	IsCustom   bool    `json:"isCustom,omitempty"`
-	IsErc20    bool    `json:"isErc20,omitempty"`
-	IsErc721   bool    `json:"isErc721,omitempty"`
-	IsPrefund  bool    `json:"isPrefund,omitempty"`
-	Name       string  `json:"name"`
-	Petname    string  `json:"petname"`
-	Source     string  `json:"source"`
-	Symbol     string  `json:"symbol"`
-	Tags       string  `json:"tags"`
-	raw        *RawName
+	Address    base.Address `json:"address"`
+	Decimals   uint64       `json:"decimals"`
+	Deleted    bool         `json:"deleted,omitempty"`
+	IsContract bool         `json:"isContract,omitempty"`
+	IsCustom   bool         `json:"isCustom,omitempty"`
+	IsErc20    bool         `json:"isErc20,omitempty"`
+	IsErc721   bool         `json:"isErc721,omitempty"`
+	IsPrefund  bool         `json:"isPrefund,omitempty"`
+	Name       string       `json:"name"`
+	Petname    string       `json:"petname"`
+	Source     string       `json:"source"`
+	Symbol     string       `json:"symbol"`
+	Tags       string       `json:"tags"`
+	raw        *RawName     `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleName) Raw() *RawName {
@@ -57,10 +64,11 @@ func (s *SimpleName) SetRaw(raw *RawName) {
 }
 
 func (s *SimpleName) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+	var model = map[string]interface{}{}
+	var order = []string{}
+
 	// EXISTING_CODE
 	if extraOptions["single"] == "tags" || extraOptions["single"] == "address" {
-		model := map[string]interface{}{}
-		order := []string{}
 		if extraOptions["single"] == "tags" {
 			model["tags"] = s.Tags
 		} else {
@@ -72,9 +80,8 @@ func (s *SimpleName) Model(showHidden bool, format string, extraOptions map[stri
 			Order: order,
 		}
 	}
-	// EXISTING_CODE
 
-	model := map[string]interface{}{
+	model = map[string]interface{}{
 		"address":  s.Address,
 		"decimals": s.Decimals,
 		"name":     s.Name,
@@ -84,7 +91,7 @@ func (s *SimpleName) Model(showHidden bool, format string, extraOptions map[stri
 		"tags":     s.Tags,
 	}
 
-	order := []string{
+	order = []string{
 		"tags",
 		"address",
 		"name",
@@ -94,8 +101,7 @@ func (s *SimpleName) Model(showHidden bool, format string, extraOptions map[stri
 		"petname",
 	}
 
-	// EXISTING_CODE
-	if len(s.Address.Bytes()) > 0 && s.Address != HexToAddress("0x0") {
+	if len(s.Address.Bytes()) > 0 && s.Address != base.HexToAddress("0x0") {
 		model["address"] = strings.ToLower(s.Address.String())
 	}
 
@@ -184,12 +190,25 @@ func (s *SimpleName) Model(showHidden bool, format string, extraOptions map[stri
 			order = append(order, "iserc721")
 		}
 	}
+
 	// EXISTING_CODE
 
 	return Model{
 		Data:  model,
 		Order: order,
 	}
+}
+
+func (s *SimpleName) WriteTo(w io.Writer) (n int64, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
+}
+
+func (s *SimpleName) ReadFrom(r io.Reader) (n int64, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
 }
 
 // EXISTING_CODE

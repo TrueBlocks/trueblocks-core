@@ -5,61 +5,76 @@
 package chunksPkg
 
 import (
+	"context"
+	"fmt"
 	"io"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func (opts *ChunksOptions) HandleAppearances(blockNums []uint64) error {
-	defer opts.Globals.RenderFooter()
-	err := opts.Globals.RenderHeader(types.SimpleIndexAppearance{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.NoHeader, true)
-	if err != nil {
-		return err
-	}
-
-	showAppearances := func(walker *index.IndexWalker, path string, first bool) (bool, error) {
-		if path != paths.ToBloomPath(path) {
-			logger.Fatal("should not happen ==> we're spinning through the bloom filters")
-		}
-
-		path = paths.ToIndexPath(path)
-
-		indexChunk, err := index.NewChunkData(path)
-		if err != nil {
-			return false, err
-		}
-		defer indexChunk.Close()
-
-		_, err = indexChunk.File.Seek(indexChunk.AppTableStart, io.SeekStart)
-		if err != nil {
-			return false, err
-		}
-
-		for i := 0; i < int(indexChunk.Header.AppearanceCount); i++ {
-			if opts.Globals.TestMode && i > walker.MaxTests() {
-				continue
+	ctx, cancel := context.WithCancel(context.Background())
+	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
+		showAppearances := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
+			if path != cache.ToBloomPath(path) {
+				return false, fmt.Errorf("should not happen in showAppearances")
 			}
-			obj := index.AppearanceRecord{}
-			err := obj.ReadAppearance(indexChunk.File)
+
+			path = cache.ToIndexPath(path)
+			if !file.FileExists(path) {
+				// Bloom files exist, but index files don't. It's okay.
+				return true, nil
+			}
+
+			indexChunk, err := index.NewChunkData(path)
 			if err != nil {
 				return false, err
 			}
-			err = opts.Globals.RenderObject(obj, first && i == 0)
+			defer indexChunk.Close()
+
+			_, err = indexChunk.File.Seek(indexChunk.AppTableStart, io.SeekStart)
 			if err != nil {
 				return false, err
 			}
+
+			for i := 0; i < int(indexChunk.Header.AppearanceCount); i++ {
+				if opts.Globals.TestMode && i > walker.MaxTests() {
+					continue
+				}
+				rec := index.AppearanceRecord{}
+				err := rec.ReadAppearance(indexChunk.File)
+				if err != nil {
+					return false, err
+				}
+				s := types.SimpleAppearance{
+					BlockNumber:      rec.BlockNumber,
+					TransactionIndex: rec.TransactionId,
+				}
+				modelChan <- &s
+			}
+
+			return true, nil
 		}
-		return true, nil
+
+		walker := index.NewCacheWalker(
+			opts.Globals.Chain,
+			opts.Globals.TestMode,
+			10, /* maxTests */
+			showAppearances,
+		)
+
+		if err := walker.WalkBloomFilters(blockNums); err != nil {
+			errorChan <- err
+			cancel()
+		}
 	}
 
-	walker := index.NewIndexWalker(
-		opts.Globals.Chain,
-		opts.Globals.TestMode,
-		10, /* maxTests */
-		showAppearances,
-	)
-	return walker.WalkBloomFilters(blockNums)
+	extra := map[string]any{
+		"appearances": true,
+	}
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }

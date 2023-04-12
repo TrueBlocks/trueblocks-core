@@ -10,63 +10,77 @@ package types
 
 // EXISTING_CODE
 import (
+	"io"
 	"math/big"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/bykof/gostradamus"
-	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
+
+type StorageSlot struct {
+	Address     base.Address `json:"address"`
+	StorageKeys []base.Hash  `json:"storageKeys"`
+}
 
 // EXISTING_CODE
 
 type RawTransaction struct {
-	BlockHash        string `json:"blockHash"`
-	BlockNumber      string `json:"blockNumber"`
-	ChainId          string `json:"chainId,omitempty"`
-	From             string `json:"from"`
-	Gas              string `json:"gas"`
-	GasPrice         string `json:"gasPrice"`
-	Hash             string `json:"hash"`
-	Input            string `json:"input"`
-	Nonce            string `json:"nonce"`
-	R                string `json:"r"`
-	S                string `json:"s"`
-	To               string `json:"to"`
-	TransactionIndex string `json:"transactionIndex"`
-	Type             string `json:"type"`
-	V                string `json:"v"`
-	Value            string `json:"value"`
+	AccessList           []StorageSlot `json:"accessList"`
+	BlockHash            string        `json:"blockHash"`
+	BlockNumber          string        `json:"blockNumber"`
+	ChainId              string        `json:"chainId"`
+	From                 string        `json:"from"`
+	Gas                  string        `json:"gas"`
+	GasPrice             string        `json:"gasPrice"`
+	Hash                 string        `json:"hash"`
+	Input                string        `json:"input"`
+	MaxFeePerGas         string        `json:"maxFeePerGas"`
+	MaxPriorityFeePerGas string        `json:"maxPriorityFeePerGas"`
+	Nonce                string        `json:"nonce"`
+	To                   string        `json:"to"`
+	TransactionIndex     string        `json:"transactionIndex"`
+	TransactionType      string        `json:"type"`
+	Value                string        `json:"value"`
+	// EXISTING_CODE
+	// R string `json:"r"`
+	// S string `json:"s"`
+	// V string `json:"v"`
+	// EXISTING_CODE
 }
 
 type SimpleTransaction struct {
-	Hash                 common.Hash     `json:"hash"`
-	BlockHash            common.Hash     `json:"blockHash"`
-	BlockNumber          Blknum          `json:"blockNumber"`
-	TransactionIndex     uint64          `json:"transactionIndex"`
-	Nonce                uint64          `json:"nonce"`
-	Timestamp            int64           `json:"timestamp"`
-	From                 Address         `json:"from"`
-	To                   Address         `json:"to"`
-	Value                Wei             `json:"value"`
-	ExtraValue1          Wei             `json:"extraValue1"`
-	ExtraValue2          Wei             `json:"extraValue2"`
-	Gas                  Gas             `json:"gas"`
-	GasPrice             Gas             `json:"gasPrice"`
-	GasUsed              Gas             `json:"gasUsed"`
-	GasCost              Gas             `json:"gasCost"`
-	MaxFeePerGas         Gas             `json:"maxFeePerGas"`
-	MaxPriorityFeePerGas Gas             `json:"maxPriorityFeePerGas"`
+	ArticulatedTx        *SimpleFunction `json:"articulatedTx"`
+	BlockHash            base.Hash       `json:"blockHash"`
+	BlockNumber          base.Blknum     `json:"blockNumber"`
+	CompressedTx         string          `json:"compressedTx"`
+	Date                 string          `json:"date"`
+	Encoding             string          `json:"encoding"`
+	Ether                string          `json:"ether"`
+	EtherGasPrice        base.Gas        `json:"etherGasPrice"`
+	From                 base.Address    `json:"from"`
+	Gas                  base.Gas        `json:"gas"`
+	GasPrice             base.Gas        `json:"gasPrice"`
+	GasUsed              base.Gas        `json:"gasUsed"`
+	HasToken             bool            `json:"hasToken"`
+	Hash                 base.Hash       `json:"hash"`
 	Input                string          `json:"input"`
-	IsError              bool            `json:"isError,omitempty"`
-	HasToken             bool            `json:"hasToken,omitempty"`
-	Cachebits            uint8           `json:"cachebits"`
-	Reserved2            uint8           `json:"reserved2"`
+	IsError              bool            `json:"isError"`
+	MaxFeePerGas         base.Gas        `json:"maxFeePerGas"`
+	MaxPriorityFeePerGas base.Gas        `json:"maxPriorityFeePerGas"`
+	Nonce                uint64          `json:"nonce"`
 	Receipt              *SimpleReceipt  `json:"receipt"`
+	Timestamp            base.Timestamp  `json:"timestamp"`
+	To                   base.Address    `json:"to"`
 	Traces               []SimpleTrace   `json:"traces"`
-	ArticulatedTx        *SimpleFunction `json:"articulatedTx,omitempty"`
-	Message              string          `json:"-"`
-	raw                  *RawTransaction
+	TransactionIndex     base.Blknum     `json:"transactionIndex"`
+	Value                base.Wei        `json:"value"`
+	raw                  *RawTransaction `json:"-"`
+	// EXISTING_CODE
+	GasCost base.Gas `json:"gasCost"`
+	Message string   `json:"-"`
+	// EXISTING_CODE
 }
 
 func (s *SimpleTransaction) Raw() *RawTransaction {
@@ -78,16 +92,16 @@ func (s *SimpleTransaction) SetRaw(raw *RawTransaction) {
 }
 
 func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+	var model = map[string]interface{}{}
+	var order = []string{}
+
 	// EXISTING_CODE
 	to := hexutil.Encode(s.To.Bytes())
 	if to == "0x0000000000000000000000000000000000000000" {
 		to = "0x0" // weird special case to preserve what RPC does
 	}
 
-	date := gostradamus.FromUnixTimestamp(int64(s.Timestamp))
-	// EXISTING_CODE
-
-	model := map[string]interface{}{
+	model = map[string]interface{}{
 		"blockNumber":      s.BlockNumber,
 		"from":             s.From,
 		"gasPrice":         s.GasPrice,
@@ -99,7 +113,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		"value":            s.Value.String(),
 	}
 
-	order := []string{
+	order = []string{
 		"blockNumber",
 		"transactionIndex",
 		"date",
@@ -116,20 +130,49 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		"compressedTx",
 	}
 
-	// EXISTING_CODE
-	model["date"] = date.Format("2006-01-02 15:04:05") + " UTC"
+	date := gostradamus.FromUnixTimestamp(s.Timestamp)
+	model["date"] = utils.FormattedDate(s.Timestamp)
 	model["gasCost"] = s.SetGasCost(s.Receipt)
+
+	// TODO: Shouldn't this use the SimpleFunction model - the answer is yes?
+	var articulatedTx map[string]interface{}
+	isArticulated := extraOptions["articulate"] == true && s.ArticulatedTx != nil
+	if isArticulated {
+		articulatedTx = map[string]interface{}{
+			"name": s.ArticulatedTx.Name,
+		}
+		inputModels := ParametersToMap(s.ArticulatedTx.Inputs)
+		if inputModels != nil {
+			articulatedTx["inputs"] = inputModels
+		}
+		outputModels := ParametersToMap(s.ArticulatedTx.Outputs)
+		if outputModels != nil {
+			articulatedTx["outputs"] = outputModels
+		}
+		sm := s.ArticulatedTx.StateMutability
+		if sm != "" && sm != "nonpayable" && sm != "view" {
+			articulatedTx["stateMutability"] = sm
+		}
+	}
 
 	if format == "json" {
 		model["blockHash"] = s.BlockHash
-		model["nonce"] = s.Nonce
+		if s.Nonce > 0 {
+			model["nonce"] = s.Nonce
+		}
 		model["value"] = s.Value.String()
 		model["gas"] = s.Gas
 
 		// TODO: this value could be created when RPC is queried and cached
-		model["ether"] = utils.WeiToEther(&s.Value)
-		model["maxFeePerGas"] = s.MaxPriorityFeePerGas
-		model["maxPriorityFeePerGas"] = s.MaxPriorityFeePerGas
+		// if s.Value > 0 {
+		model["ether"] = utils.WeiToEther(&s.Value).Text('f', 18)
+		// }
+		if s.MaxFeePerGas > 0 {
+			model["maxFeePerGas"] = s.MaxFeePerGas
+		}
+		if s.MaxPriorityFeePerGas > 0 {
+			model["maxPriorityFeePerGas"] = s.MaxPriorityFeePerGas
+		}
 		model["input"] = s.Input
 		if s.HasToken {
 			model["hasToken"] = s.HasToken
@@ -143,7 +186,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 			model["time"] = date.Format("15:04:05") + " UTC"
 		}
 
-		model["receipt"] = nil
+		// model["receipt"] = nil
 		if s.Receipt != nil {
 			contractAddress := s.Receipt.ContractAddress.Hex()
 
@@ -195,21 +238,9 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 			model["traces"] = traceModels
 		}
 
-		if extraOptions["articulate"] == true && s.ArticulatedTx != nil {
-			inputModels := ParametersToMap(s.ArticulatedTx.Inputs)
-			outputModels := ParametersToMap(s.ArticulatedTx.Outputs)
-			// TODO: Shouldn't this be a SimpleFunction?
-			articulatedTx := map[string]any{
-				"name":    s.ArticulatedTx.Name,
-				"inputs":  inputModels,
-				"outputs": outputModels,
-			}
-			if s.ArticulatedTx.StateMutability != "" && s.ArticulatedTx.StateMutability != "nonpayable" {
-				articulatedTx["stateMutability"] = s.ArticulatedTx.StateMutability
-			}
-			if format == "json" {
-				model["articulatedTx"] = articulatedTx
-			}
+		if isArticulated {
+			model["articulatedTx"] = articulatedTx
+
 		} else {
 			if s.Message != "" {
 				model["message"] = s.Message
@@ -234,21 +265,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		}
 		model["encoding"] = enc
 
-		if extraOptions["articulate"] == true && s.ArticulatedTx != nil {
-			inputModels := ParametersToMap(s.ArticulatedTx.Inputs)
-			outputModels := ParametersToMap(s.ArticulatedTx.Outputs)
-			// TODO: Shouldn't this be a SimpleFunction?
-			articulatedTx := map[string]any{
-				"name":    s.ArticulatedTx.Name,
-				"inputs":  inputModels,
-				"outputs": outputModels,
-			}
-			if s.ArticulatedTx.StateMutability != "" && s.ArticulatedTx.StateMutability != "nonpayable" {
-				articulatedTx["stateMutability"] = s.ArticulatedTx.StateMutability
-			}
-			if format == "json" {
-				model["articulatedTx"] = articulatedTx
-			}
+		if isArticulated {
 			model["compressedTx"] = MakeCompressed(articulatedTx)
 		} else if s.Message != "" {
 			model["encoding"] = ""
@@ -268,8 +285,23 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 	}
 }
 
+func (s *SimpleTransaction) WriteTo(w io.Writer) (n int64, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
+}
+
+func (s *SimpleTransaction) ReadFrom(r io.Reader) (n int64, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
+}
+
 // EXISTING_CODE
-func (s *SimpleTransaction) SetGasCost(receipt *SimpleReceipt) Gas {
+func (s *SimpleTransaction) SetGasCost(receipt *SimpleReceipt) base.Gas {
+	if receipt == nil {
+		return 0
+	}
 	s.GasCost = s.GasPrice * receipt.GasUsed
 	return s.GasCost
 }

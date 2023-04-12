@@ -6,10 +6,10 @@ package daemonPkg
 
 import (
 	"fmt"
-	"log"
 	"net"
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/gorilla/websocket"
 )
 
@@ -72,7 +72,9 @@ func (c *Connection) RemoteAddr() net.Addr {
 
 // Log writes a log messages to the server's stderr
 func (c *Connection) Log(s string, args ...interface{}) {
-	log.Printf("%s %s\n", c.RemoteAddr(), fmt.Sprintf(s, args...))
+	subMsg := fmt.Sprintf(s, args...)
+	msg := fmt.Sprintf("%s %s", c.RemoteAddr(), subMsg)
+	logger.Info(msg)
 }
 
 // ConnectionPool is the collection of all connections
@@ -131,7 +133,7 @@ func HandleWebsockets(pool *ConnectionPool, w http.ResponseWriter, r *http.Reque
 
 	c, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
-		log.Print("upgrade:", err)
+		logger.Error("upgrade:", err)
 		return
 	}
 

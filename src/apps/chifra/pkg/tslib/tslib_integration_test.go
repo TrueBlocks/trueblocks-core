@@ -10,13 +10,14 @@ package tslib
 import (
 	"testing"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type Expected struct {
 	name string
 	bn   uint64
-	ts   uint64
+	ts   base.Timestamp
 	date string
 }
 

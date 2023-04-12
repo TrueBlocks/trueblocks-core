@@ -84,7 +84,7 @@ func screenWidth() uint {
 
 	if int(retCode) == -1 {
 		// This is okay if we're debugging in VSCode for example
-		// log.Println("System call to syscall.SYS_IOCTL returned: ", errno)
+		// logger.Error("System call to syscall.SYS_IOCTL returned: ", errno)
 		return 120 // default reasonably
 	}
 	return uint(ws.Col)

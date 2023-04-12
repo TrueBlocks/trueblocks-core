@@ -13,6 +13,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -50,16 +51,16 @@ func (opts *ConfigOptions) ConfigInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.IsPorted() {
-		return opts.HandlePaths()
-	}
-
-	if opts.Globals.IsApiMode() {
-		return nil, false
+	if !opts.IsPorted() {
+		logger.Fatal("Should not happen.")
 	}
 
 	handled = true
-	err = opts.Globals.PassItOn("cacheStatus", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
+	if opts.Paths {
+		err = opts.HandlePaths()
+	} else {
+		logger.Warn("The config tool is current unavailable. Please use the 'chifra status' tool instead.")
+	}
 	// EXISTING_CODE
 
 	return
@@ -76,7 +77,7 @@ func GetConfigOptions(args []string, g *globals.GlobalOptions) *ConfigOptions {
 
 func (opts *ConfigOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	ported = opts.Paths && opts.Globals.Format != "json"
+	ported = true
 	// EXISTING_CODE
 	return
 }

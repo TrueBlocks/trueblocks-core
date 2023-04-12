@@ -23,22 +23,22 @@ func (opts *AbisOptions) HandleClean() error {
 
 	if len(opts.Addrs) == 0 {
 		// TODO: This code is not actually used
-		// filenameChan := make(chan paths.CacheFileInfo)
+		// filenameChan := make(chan cache.CacheFileInfo)
 		// var nRoutines int = 1
-		// go paths.WalkCacheFolder(opts.Globals.Chain, paths.Cache_Abis, filenameChan)
+		// go cache.WalkCacheFolder(context.Background(), opts.Globals.Chain, cache.Cache_Abis, nil, filenameChan)
 		// for result := range filenameChan {
 		// 	switch result.Type {
-		// 	case paths.Cache_Abis:
-		// 		skip := !strings.HasSuffix(result.Path, ".json")
+		// 	case cache.Cache_Abis:
+		// 		skip := !cache.IsCacheType(result.Path, cache.Cache_Abis, true /* checkExt */)
 		// 		if !skip {
 		// 			if file.FileSize(result.Path) == 0 {
-		// 				logger.Log(logger.Info, "Removing empty abi: "+strings.Replace(result.Path, config.GetPathToCache(opts.Globals.Chain)+"abis/", "", -1), file.FileSize(result.Path))
+		// 				logger.Info("Removing empty abi: "+strings.Replace(result.Path, config.GetPathToCache(opts.Globals.Chain)+"abis/", "", -1), file.FileSize(result.Path))
 		// 				// if err := cleanOneAbi(result.Path, ""); err != nil {
 		// 				// 	return err
 		// 				// }
 		// 			}
 		// 		}
-		// 	case paths.None:
+		// 	case cache.Cache_NotACache:
 		// 		nRoutines--
 		// 		if nRoutines == 0 {
 		// 			close(filenameChan)
@@ -63,7 +63,7 @@ func cleanOneAbi(abiFolder, addr string) error {
 	}
 
 	if !file.FileExists(fn) {
-		logger.Log(logger.Info, colors.Red, "Abi", addr, "not found", colors.Off)
+		logger.Info(colors.Red, "Abi", addr, "not found", colors.Off)
 		return nil
 	}
 
@@ -71,6 +71,6 @@ func cleanOneAbi(abiFolder, addr string) error {
 		return err
 	}
 
-	logger.Log(logger.Info, colors.Green, "Abi for", addr, "removed", colors.Off)
+	logger.Info(colors.Green, "Abi for", addr, "removed", colors.Off)
 	return nil
 }

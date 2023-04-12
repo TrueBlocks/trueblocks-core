@@ -69,13 +69,13 @@ Get more help on any sub-command with `chifra <cmd> --help`. Full documentation 
 
 **Getting data**
 
-Let's look at the first subcommand, called `config`.
+Let's look at the first subcommand, called `status`.
 
 ```[shell]
-chifra config --terse
+chifra status
 ```
 
-If you get a bunch of JSON data, congratulations, your installation is working.  Try this command which shows every 10th block between the first and the 100,000th:
+If you get a bunch of data, congratulations, your installation is working.  Try this command which shows every 10th block between the first and the 100,000th:
 
 ```[shell]
 chifra blocks 0-100000:10
@@ -92,7 +92,7 @@ Depending on your setup, you may get the following error message when you run so
 ```[shell]
   Warning: A request to your Ethereum node (http://localhost:8545)
   resulted in the following error [Could not connect to server].
-  Specify a valid rpcProvider by editing $CONFIG/trueblocks.toml.
+  Specify a valid rpcProvider by editing $rootPath/trueblocks.toml.
 ```
 
 Edit the file as instructed. You may find helpful [answers on our FAQ](https://trueblocks.io/blog/faq/).

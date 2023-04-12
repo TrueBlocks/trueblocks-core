@@ -123,9 +123,6 @@ string_q CLog::getValueByName(const string_q& fieldName) const {
             if (fieldName % "transactionIndex") {
                 return uint_2_Str(transactionIndex);
             }
-            if (fieldName % "transactionLogIndex") {
-                return uint_2_Str(transactionLogIndex);
-            }
             if (fieldName % "timestamp") {
                 return ts_2_Str(timestamp);
             }
@@ -243,10 +240,6 @@ bool CLog::setValueByName(const string_q& fieldNameIn, const string_q& fieldValu
                 transactionIndex = str_2_Uint(fieldValue);
                 return true;
             }
-            if (fieldName % "transactionLogIndex") {
-                transactionLogIndex = str_2_Uint(fieldValue);
-                return true;
-            }
             if (fieldName % "timestamp") {
                 timestamp = str_2_Ts(fieldValue);
                 return true;
@@ -298,7 +291,6 @@ bool CLog::Serialize(CArchive& archive) {
     // archive >> compressedLog;
     // archive >> transactionHash;
     // archive >> transactionIndex;
-    // archive >> transactionLogIndex;
     // archive >> timestamp;
     // archive >> type;
     // archive >> unused;
@@ -325,7 +317,6 @@ bool CLog::SerializeC(CArchive& archive) const {
     // archive << compressedLog;
     // archive << transactionHash;
     // archive << transactionIndex;
-    // archive << transactionLogIndex;
     // archive << timestamp;
     // archive << type;
     // archive << unused;
@@ -383,7 +374,7 @@ void CLog::registerClass(void) {
     HIDE_FIELD(CLog, "blockHash");
     ADD_FIELD(CLog, "blockNumber", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CLog, "blockNumber");
-    ADD_FIELD(CLog, "logIndex", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CLog, "logIndex", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CLog, "topics", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CLog, "data", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_OBJECT(CLog, "articulatedLog", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CFunction));
@@ -391,11 +382,9 @@ void CLog::registerClass(void) {
     HIDE_FIELD(CLog, "compressedLog");
     ADD_FIELD(CLog, "transactionHash", T_HASH | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CLog, "transactionHash");
-    ADD_FIELD(CLog, "transactionIndex", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CLog, "transactionIndex", T_UNUMBER, ++fieldNum);
     HIDE_FIELD(CLog, "transactionIndex");
-    ADD_FIELD(CLog, "transactionLogIndex", T_BLOCKNUM, ++fieldNum);
-    HIDE_FIELD(CLog, "transactionLogIndex");
-    ADD_FIELD(CLog, "timestamp", T_TIMESTAMP, ++fieldNum);
+    ADD_FIELD(CLog, "timestamp", T_TIMESTAMP | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CLog, "timestamp");
     ADD_FIELD(CLog, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CLog, "type");

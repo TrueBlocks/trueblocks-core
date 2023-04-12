@@ -9,9 +9,9 @@ import (
 	"path/filepath"
 	"unsafe"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
@@ -48,7 +48,7 @@ func readIndexHeader(fl *os.File) (header IndexHeaderRecord, err error) {
 }
 
 func ReadChunkHeader(fileName string, checkHash bool) (header IndexHeaderRecord, err error) {
-	fileName = paths.ToIndexPath(fileName)
+	fileName = cache.ToIndexPath(fileName)
 	ff, err := os.OpenFile(fileName, os.O_RDONLY, 0)
 	if err != nil {
 		return IndexHeaderRecord{}, err
@@ -76,7 +76,7 @@ func WriteChunkHeaderHash(chain, fileName string, headerHash common.Hash) ( /* c
 	var err error
 
 	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
-	indexFn := paths.ToIndexPath(fileName)
+	indexFn := cache.ToIndexPath(fileName)
 	if !file.FileExists(indexFn) {
 		return false, nil
 	}

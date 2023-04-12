@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-    fmt.Println("Temporarily disabled")
+	fmt.Println("Temporarily disabled")
 }
 
 /*
@@ -18,7 +18,7 @@ import (
 func main() {
 	db, err := sql.Open("sqlite3", "./txs-with-indexes.db")
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 	defer db.Close()
 
@@ -31,7 +31,7 @@ func main() {
 
 		rows, err := db.Query(fmt.Sprintf("select txAddressID, blockIndex, transactionIndex from txs where txAddressID = (SELECT addressID from addresses where addresses.address = '%s')", address))
 		if err != nil {
-			log.Fatal(err)
+			logger.Fatal(err)
 		}
 		defer rows.Close()
 		for rows.Next() {
@@ -40,13 +40,13 @@ func main() {
 			var transactionIndex int
 			err = rows.Scan(&address, &blockIndex, &transactionIndex)
 			if err != nil {
-				log.Fatal(err)
+				logger.Fatal(err)
 			}
 			fmt.Println(address, blockIndex, transactionIndex)
 		}
 		err = rows.Err()
 		if err != nil {
-			log.Fatal(err)
+			logger.Fatal(err)
 		}
 	}
 }

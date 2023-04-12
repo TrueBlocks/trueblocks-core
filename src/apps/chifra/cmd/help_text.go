@@ -25,13 +25,14 @@ const helpText = `  Accounts:
     tokens        retrieve token balance(s) for one or more addresses at given block(s)
   Admin:
     config        report on and edit the configuration of the TrueBlocks system
+    status        report on the state of the internal binary caches
     daemon        initalize and control long-running processes such as the API and the scrapers
     scrape        scan the chain and update the TrueBlocks index of appearances
     chunks        manage, investigate, and display the Unchained Index
     init          initialize the TrueBlocks system by downloading from IPFS
   Other:
     explore       open a local or remote explorer for one or more addresses, blocks, or transactions
-    slurp         fetch data from EtherScan for any address
+    slurp         fetch data from Etherscan for any address
   Flags:
     -h, --help    display this help screen
 

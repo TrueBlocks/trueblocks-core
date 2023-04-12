@@ -6,7 +6,6 @@ package exportPkg
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -86,7 +85,7 @@ func (opts *ExportOptions) validateExport() error {
 		}
 
 		if opts.Globals.Chain != "mainnet" {
-			logger.Log(logger.Warning, "The --accounting option reports a spotPrice of one for all assets on non-mainnet chains.")
+			logger.Warn("The --accounting option reports a spotPrice of one for all assets on non-mainnet chains.")
 		}
 
 		if opts.Statements {
@@ -117,7 +116,7 @@ func (opts *ExportOptions) validateExport() error {
 	}
 
 	if !validate.CanArticulate(opts.Articulate) {
-		return validate.Usage("The {0} option requires an EtherScan API key.", "--articulate")
+		return validate.Usage("The {0} option requires an Etherscan API key.", "--articulate")
 	}
 
 	// Note that this does not return if the index is not initialized
@@ -129,10 +128,10 @@ func (opts *ExportOptions) validateExport() error {
 		}
 	}
 
-	err := opts.Globals.Validate()
-	if err != nil && strings.Contains(err.Error(), "option (ofx) must be one of") {
-		// not an error
-		err = nil
-	}
-	return err
+	return opts.Globals.Validate()
+	// if err != nil && strings.Contains(err.Error(), "option (ofx) must be one of") {
+	// 	// not an error
+	// 	err = nil
+	// }
+	// return err
 }

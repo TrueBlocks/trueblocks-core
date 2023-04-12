@@ -1,5 +1,0 @@
-[settings]
-class = CCache
-fields = cache.csv
-includes = etherlib.h
-output = ../../libs/test-libs/etherlib/serializeTest

@@ -3,72 +3,32 @@ TEST[DATE|TIME] Mode:  index
 TEST[DATE|TIME] Blocks:  [2287625]
 TEST[DATE|TIME] Belongs:  [0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9]
 TEST[DATE|TIME] Format:  csv
-"address","offset","count","apps"
-"0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9","8211","67"
-"2283440","0"
-"2283441","0"
-"2283474","0"
-"2283475","0"
-"2283963","0"
-"2283978","0"
-"2283981","0"
-"2283989","0"
-"2287654","0"
-"2287674","0"
-"2287678","0"
-"2287724","0"
-"2287736","0"
-"2287740","0"
-"2287742","0"
-"2287754","0"
-"2287766","0"
-"2287770","0"
-"2287773","0"
-"2287778","0"
-"2287783","0"
-"2287788","0"
-"2287792","0"
-"2287811","0"
-"2287819","0"
-"2287825","0"
-"2287838","0"
-"2287914","0"
-"2287922","0"
-"2287923","6"
-"2287926","2"
-"2287929","1"
-"2287935","2"
-"2287937","0"
-"2287942","2"
-"2287944","4"
-"2287947","1"
-"2287951","0"
-"2287956","0"
-"2287959","1"
-"2287961","1"
-"2287964","0"
-"2287966","0"
-"2287969","1"
-"2287973","0"
-"2287976","0"
-"2287978","0"
-"2287980","2"
-"2287982","4"
-"2287989","16"
-"2287991","8"
-"2287995","2"
-"2287997","17"
-"2288003","3"
-"2288007","20"
-"2288011","1"
-"2288018","2"
-"2288020","4"
-"2288022","1"
-"2288025","0"
-"2288030","1"
-"2288032","3"
-"2288034","5"
-"2288037","4"
-"2288042","0"
-"2288047","0"
-"2288338","0"
+Error: The --belongs option only works with --fmt json
+Usage:
+  chifra chunks <mode> [flags] [blocks...] [address...]
+
+Arguments:
+  mode - the type of data to process (required)
+	One of [ manifest | index | blooms | addresses | appearances | stats ]
+  blocks - an optional list of blocks to intersect with chunk ranges
+
+Flags:
+  -c, --check             check the manifest, index, or blooms for internal consistency
+  -i, --pin               pin the manifest or each index chunk and bloom
+  -p, --publish           publish the manifest to the Unchained Index smart contract
+  -n, --truncate uint     truncate the entire index at this block (requires a block identifier)
+  -m, --remote            prior to processing, retreive the manifest from the Unchained Index smart contract
+  -b, --belongs strings   in index mode only, checks the address(es) for inclusion in the given index chunk
+  -s, --sleep float       for --remote pinning only, seconds to sleep between API calls
+  -x, --fmt string        export format, one of [none|json*|txt|csv]
+  -v, --verbose           enable verbose (increase detail with --log_level)
+  -h, --help              display this help screen
+
+Notes:
+  - Mode determines which type of data to display or process.
+  - Certain options are only available in certain modes.
+  - If blocks are provided, only chunks intersecting with those blocks are displayed.
+  - The --truncate option updates data, but does not --pin or --publish.
+  - You may combine the --pin and --publish options.
+  - The --belongs option is only available in the index mode.
+

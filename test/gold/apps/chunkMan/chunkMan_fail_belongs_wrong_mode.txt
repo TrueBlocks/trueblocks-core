@@ -1,14 +1,14 @@
 chifra chunks  addresses --belongs 0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9
 TEST[DATE|TIME] Mode:  addresses
 TEST[DATE|TIME] Belongs:  [0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9]
-TEST[DATE|TIME] Format:  txt
+TEST[DATE|TIME] Format:  json
 Error: The --belongs option requires the index mode.
 Usage:
   chifra chunks <mode> [flags] [blocks...] [address...]
 
 Arguments:
   mode - the type of data to process (required)
-	One of [ status | manifest | index | blooms | addresses | appearances | stats ]
+	One of [ manifest | index | blooms | addresses | appearances | stats ]
   blocks - an optional list of blocks to intersect with chunk ranges
 
 Flags:
@@ -18,7 +18,6 @@ Flags:
   -n, --truncate uint     truncate the entire index at this block (requires a block identifier)
   -m, --remote            prior to processing, retreive the manifest from the Unchained Index smart contract
   -b, --belongs strings   in index mode only, checks the address(es) for inclusion in the given index chunk
-  -a, --save_addrs        write addresses to a file during presentation - warning takes forever (hidden)
   -s, --sleep float       for --remote pinning only, seconds to sleep between API calls
   -x, --fmt string        export format, one of [none|json*|txt|csv]
   -v, --verbose           enable verbose (increase detail with --log_level)

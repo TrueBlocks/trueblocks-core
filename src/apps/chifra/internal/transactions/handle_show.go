@@ -8,15 +8,16 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
 )
 
-func (opts *TransactionsOptions) HandleShow() (err error) {
+func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 	abiMap := make(abi.AbiInterfaceMap)
-	loadedMap := make(map[types.Address]bool)
+	loadedMap := make(map[base.Address]bool)
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -44,6 +45,7 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 						if err = abi.LoadAbi(chain, tx.To, abiMap); err != nil {
 							// continue processing even with an error
 							errorChan <- err
+							err = nil
 						}
 					}
 
@@ -53,6 +55,7 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 							if err = abi.LoadAbi(chain, log.Address, abiMap); err != nil {
 								// continue processing even with an error
 								errorChan <- err
+								err = nil
 							}
 						}
 						if err == nil {
@@ -70,6 +73,7 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 							if err = abi.LoadAbi(chain, trace.Action.To, abiMap); err != nil {
 								// continue processing even with an error
 								errorChan <- err
+								err = nil
 							}
 						}
 						if err == nil {
@@ -114,21 +118,9 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, output.OutputOptions{
-		Writer:     opts.Globals.Writer,
-		Chain:      opts.Globals.Chain,
-		TestMode:   opts.Globals.TestMode,
-		NoHeader:   opts.Globals.NoHeader,
-		ShowRaw:    opts.Globals.ShowRaw,
-		Verbose:    opts.Globals.Verbose,
-		LogLevel:   opts.Globals.LogLevel,
-		Format:     opts.Globals.Format,
-		OutputFn:   opts.Globals.OutputFn,
-		Append:     opts.Globals.Append,
-		JsonIndent: "  ",
-		Extra: map[string]interface{}{
-			"articulate": opts.Articulate,
-			"traces":     opts.Traces,
-		},
-	})
+	extra := map[string]interface{}{
+		"articulate": opts.Articulate,
+		"traces":     opts.Traces,
+	}
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }

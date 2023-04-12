@@ -2,131 +2,103 @@ package rpcClient
 
 import (
 	"fmt"
-	"math/big"
-	"strconv"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum/common"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func getRawTransaction(chain string, blockHash common.Hash, index uint64) (raw *types.RawTransaction, err error) {
-	var response struct {
-		Result types.RawTransaction `json:"result"`
-	}
-	payload := rpc.Payload{
-		Method: "eth_getTransactionByBlockHashAndIndex",
-		Params: rpc.Params{
-			blockHash.Hex(),
-			fmt.Sprintf("0x%x", index),
-		},
+var (
+	notAnInt = utils.NOPOS
+	notAHash = base.Hash{}
+)
+
+func getRawTransaction(chain string, blkHash base.Hash, txHash base.Hash, bn base.Blknum, txid uint64) (raw *types.RawTransaction, err error) {
+	method := "eth_getTransactionByBlockNumberAndIndex"
+	params := rpc.Params{fmt.Sprintf("0x%x", bn), fmt.Sprintf("0x%x", txid)}
+	if txHash != notAHash {
+		method = "eth_getTransactionByHash"
+		params = rpc.Params{txHash.Hex()}
+	} else if blkHash != notAHash {
+		method = "eth_getTransactionByBlockHashAndIndex"
+		params = rpc.Params{blkHash.Hex(), fmt.Sprintf("0x%x", txid)}
 	}
 
-	if err = rpc.FromRpc(config.GetRpcProvider(chain), &payload, &response); err != nil {
-		return nil, err
+	if result, err := rpc.Query[types.RawTransaction](chain, method, params); err != nil {
+		return &types.RawTransaction{}, err
+	} else {
+		if result.AccessList == nil {
+			result.AccessList = make([]types.StorageSlot, 0)
+		}
+		return result, nil
 	}
+}
 
-	raw = &types.RawTransaction{
-		BlockHash:        response.Result.BlockHash,
-		BlockNumber:      response.Result.BlockNumber,
-		ChainId:          response.Result.ChainId,
-		From:             response.Result.From,
-		Gas:              response.Result.Gas,
-		GasPrice:         response.Result.GasPrice,
-		Hash:             response.Result.Hash,
-		Input:            response.Result.Input,
-		Nonce:            response.Result.Nonce,
-		R:                response.Result.R,
-		S:                response.Result.S,
-		To:               response.Result.To,
-		TransactionIndex: response.Result.TransactionIndex,
-		Type:             response.Result.Type,
-		V:                response.Result.V,
-		Value:            response.Result.Value,
+func GetRawTransactionByHashAndId(chain string, blkHash base.Hash, txid uint64) (raw *types.RawTransaction, err error) {
+	return getRawTransaction(chain, blkHash, notAHash, notAnInt, txid)
+}
+
+func GetRawTransactionByHash(chain string, txHash base.Hash) (raw *types.RawTransaction, err error) {
+	return getRawTransaction(chain, notAHash, txHash, notAnInt, notAnInt)
+}
+
+func GetRawTransactionByBlockAndId(chain string, bn base.Blknum, txid uint64) (raw *types.RawTransaction, err error) {
+	return getRawTransaction(chain, notAHash, notAHash, bn, txid)
+}
+
+func GetAppearanceFromHash(chain string, hash string) (uint64, uint64, error) {
+	if rawTx, err := GetRawTransactionByHash(chain, base.HexToHash(hash)); err != nil {
+		return 0, 0, err
+	} else {
+		return mustParseUint(rawTx.BlockNumber), mustParseUint(rawTx.TransactionIndex), nil
 	}
-
-	return
 }
 
 func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, fetchTraces bool) (tx *types.SimpleTransaction, err error) {
-	blockNumber := uint64(appearance.BlockNumber)
-	txIndex := uint64(appearance.TransactionIndex)
-	block, err := GetBlockByNumber(chain, blockNumber, false)
-	if err != nil {
-		return
-	}
-	rawTx, err := getRawTransaction(chain, block.Hash, txIndex)
-	if err != nil {
-		return
-	}
-	txHash := common.HexToHash(rawTx.Hash)
-	receipt, err := GetTransactionReceipt(
-		chain,
-		blockNumber,
-		txIndex,
-		nil,
-		0,
-	)
-	if err != nil {
-		return
-	}
-	value := big.NewInt(0)
-	value.SetString(rawTx.Value, 0)
+	bn := uint64(appearance.BlockNumber)
+	txid := uint64(appearance.TransactionIndex)
 
-	hasToken := false
-	if len(rawTx.Input) >= 10 {
-		hasToken = IsTokenRelated(rawTx.Input[:10])
-	}
-	txBlockNumber, err := strconv.ParseUint(rawTx.BlockNumber, 0, 64)
+	rawTx, err := GetRawTransactionByBlockAndId(chain, bn, txid)
 	if err != nil {
 		return
 	}
-	nonce, err := strconv.ParseUint(rawTx.Nonce, 0, 64)
+
+	receipt, err := GetTransactionReceipt(chain, bn, txid, nil, 0)
 	if err != nil {
 		return
 	}
-	gas, err := strconv.ParseUint(rawTx.Gas, 0, 64)
-	if err != nil {
-		return
-	}
-	gasPrice, err := strconv.ParseUint(rawTx.GasPrice, 0, 64)
-	if err != nil {
-		return
+
+	isTokenRelated := func(input string) bool {
+		if len(input) < 10 {
+			return false
+		}
+		return IsTokenRelated(input[:10])
 	}
 
 	tx = &types.SimpleTransaction{
-		Hash:             txHash,
-		BlockHash:        common.HexToHash(rawTx.BlockHash),
-		BlockNumber:      txBlockNumber,
-		TransactionIndex: txIndex,
-		Nonce:            nonce,
-		Timestamp:        block.Timestamp,
-		From:             types.HexToAddress(rawTx.From),
-		To:               types.HexToAddress(rawTx.To),
-		Value:            *value,
-		Gas:              gas,
-		GasPrice:         gasPrice,
+		Hash:             base.HexToHash(rawTx.Hash),
+		BlockHash:        base.HexToHash(rawTx.BlockHash),
+		BlockNumber:      bn,
+		TransactionIndex: txid,
+		Nonce:            mustParseUint(rawTx.Nonce),
+		Timestamp:        rpc.GetBlockTimestamp(chain, bn),
+		From:             base.HexToAddress(rawTx.From),
+		To:               base.HexToAddress(rawTx.To),
+		Gas:              mustParseUint(rawTx.Gas),
+		GasPrice:         mustParseUint(rawTx.GasPrice),
 		GasUsed:          receipt.GasUsed,
-		// TODO:
-		// MaxFeePerGas:
-		// MaxPriorityFeePerGas:
-		Input:    rawTx.Input,
-		IsError:  receipt.IsError,
-		HasToken: hasToken,
-		Receipt:  &receipt,
-		// ExtraValue1          Wei
-		// ExtraValue2          Wei
-		// Cachebits            uint8           `json:"cachebits"`
-		// Reserved2            uint8           `json:"reserved2"`
-		// Traces               []SimpleTrace   `json:"traces"`
-		// ArticulatedTx        *SimpleFunction `json:"articulatedTx"`
+		Input:            rawTx.Input,
+		IsError:          receipt.IsError,
+		HasToken:         isTokenRelated(rawTx.Input),
+		Receipt:          &receipt,
 	}
+	tx.Value.SetString(rawTx.Value, 0)
 	tx.SetGasCost(&receipt)
 	tx.SetRaw(rawTx)
 
 	if fetchTraces {
-		traces, err := types.GetTracesByTransactionHash(chain, txHash.Hex(), tx)
+		traces, err := GetTracesByTransactionHash(chain, tx.Hash.Hex(), tx)
 		if err != nil {
 			return nil, err
 		}

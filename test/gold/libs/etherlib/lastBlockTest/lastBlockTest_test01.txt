@@ -1,6 +1,6 @@
 lastBlockTest  recurse
 Recursive from ../
-Found 115 (115) files
+Found 107 (107) files
 ../abiTest/abiTest_01.txt
 ../abiTest/abiTest_02.txt
 ../abiTest/abiTest_03.txt
@@ -46,7 +46,6 @@ Found 115 (115) files
 ../dataUpgradeTest/dataUpgradeTest_CAbi.txt
 ../dataUpgradeTest/dataUpgradeTest_CApiSpec.txt
 ../dataUpgradeTest/dataUpgradeTest_CBlock.txt
-../dataUpgradeTest/dataUpgradeTest_CCachedAccount.txt
 ../dataUpgradeTest/dataUpgradeTest_CFunction.txt
 ../dataUpgradeTest/dataUpgradeTest_CLog.txt
 ../dataUpgradeTest/dataUpgradeTest_CMonitor.txt
@@ -70,14 +69,9 @@ Found 115 (115) files
 ../decodeAbiTest/speed_test.txt
 ../displayStrsTest/displayStrsTest_CAcctCacheItem.txt
 ../displayStrsTest/displayStrsTest_CBlock.txt
-../displayStrsTest/displayStrsTest_CBranch.txt
-../displayStrsTest/displayStrsTest_CInfix.txt
-../displayStrsTest/displayStrsTest_CLeaf.txt
 ../displayStrsTest/displayStrsTest_CMonitor.txt
 ../displayStrsTest/displayStrsTest_CName.txt
 ../displayStrsTest/displayStrsTest_CRPCResult.txt
-../displayStrsTest/displayStrsTest_CTreeNode.txt
-../displayStrsTest/displayStrsTest_CTreeRoot.txt
 ../displayStrsTest/displayStrsTest_README.txt
 ../forEveryTest/forEveryTest_00.txt
 ../forEveryTest/forEveryTest_01.txt
@@ -110,8 +104,6 @@ Found 115 (115) files
 ../printFloatTest/printFloatTest_nc_long_02.txt
 ../printFloatTest/printFloatTest_nc_long_03.txt
 ../reconTest/reconTest_00.txt
-../serializeTest/serializeTest_00.txt
-../serializeTest/serializeTest_README.txt
 ../sha3Test/sha3Test_00.txt
 ../sha3Test/sha3Test_01.txt
 ../traceTest/sed_file

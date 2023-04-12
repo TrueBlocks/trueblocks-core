@@ -68,6 +68,7 @@ Data models produced by this tool:
 - [appearance](/data-model/accounts/#appearance)
 - [monitor](/data-model/accounts/#monitor)
 - [appearancecount](/data-model/accounts/#appearancecount)
+- [bounds](/data-model/accounts/#bounds)
 
 Links:
 
@@ -215,6 +216,7 @@ Notes:
 Data models produced by this tool:
 
 - [monitor](/data-model/accounts/#monitor)
+- [monitorclean](/data-model/admin/#monitorclean)
 
 Links:
 

@@ -2,6 +2,10 @@
 
 (Mar 30, 2022)
 
+## IMPORTANT NOTE
+
+This migration has been retired. If your data is prior to this version, you must clear your cache and index folders and start from scratch
+
 ## Why the Change?
 
 A few days ago, we discoverd that Erigon's `devel` branch had a bug that we at TrueBlocks did not notice. During that time, our indexing scraper continued running and producing pinned data to our Unchained Index manifest. Subsequently, if you ran a command called `chifra init`, which downloads those files from IPFS, you may have gotten incorrect index files and bloom filters.
@@ -30,7 +34,7 @@ Stop any long running TrueBlocks processes (such as the `chifra scrape` or `chif
 Run this command:
 
 ```[shell]
-chifra config --terse
+chifra status
 ```
 
 Notice the `indexPath` value (<indexPath>). Change into that directory:
@@ -55,7 +59,7 @@ You should see something similar to the following:
 
 ### Remove incorrect files and sub-folders
 
-Make sure you're in the folder <indexPath> and that you see the above folder tree. `pwd` should report the same folder as `chifra config --terse` does for `indexPath`.
+Make sure you're in the folder <indexPath> and that you see the above folder tree. `pwd` should report the same folder as `chifra status` does for `indexPath`.
 
 Complete the following commands:
 

@@ -71,7 +71,7 @@ func TestWriteBlock(t *testing.T) {
 
 // 		block, err := ReadBlock(inputReader)
 // 		if err != nil && err.Error() == "invalid schema" {
-// 			log.Println("File too old")
+// 			logger.Error("File too old", err)
 // 			continue
 // 		}
 
@@ -116,7 +116,6 @@ func TestWriteAbis(t *testing.T) {
 	}
 	// Make sure we've written everything
 	writer.Flush()
-	// result := writeBuf.Bytes()
 
 	// Now read it and compare
 	reader := bufio.NewReader(&writeBuf)

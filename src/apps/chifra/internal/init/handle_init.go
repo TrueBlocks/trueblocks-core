@@ -10,13 +10,14 @@ import (
 	"runtime"
 	"strings"
 	"sync"
+	"time"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
@@ -50,12 +51,12 @@ func (opts *InitOptions) HandleInit() error {
 	chunksToDownload, nCorrections := opts.prepareDownloadList(chain, remoteManifest, []uint64{})
 
 	// Tell the user what we're doing
-	logger.Log(logger.InfoC, "Unchained Index:", unchained.Address_V2)
-	logger.Log(logger.InfoC, "Schemas:", unchained.Schemas)
-	logger.Log(logger.InfoC, "Config Folder:", config.GetPathToChainConfig(chain))
-	logger.Log(logger.InfoC, "Index Folder:", config.GetPathToIndex(chain))
-	logger.Log(logger.InfoC, "Chunks in Manifest:", fmt.Sprintf("%d", len(remoteManifest.Chunks)))
-	logger.Log(logger.InfoC, "Corrections Needed:", fmt.Sprintf("%d", nCorrections))
+	logger.InfoTable("Unchained Index:", unchained.Address_V2)
+	logger.InfoTable("Schemas:", unchained.Schemas)
+	logger.InfoTable("Config Folder:", config.GetPathToChainConfig(chain))
+	logger.InfoTable("Index Folder:", config.GetPathToIndex(chain))
+	logger.InfoTable("Chunks in Manifest:", fmt.Sprintf("%d", len(remoteManifest.Chunks)))
+	logger.InfoTable("Corrections Needed:", fmt.Sprintf("%d", nCorrections))
 
 	// Open a channel to receive a message when all the blooms have been downloaded...
 	bloomsDoneChannel := make(chan bool)
@@ -65,7 +66,7 @@ func (opts *InitOptions) HandleInit() error {
 	indexDoneChannel := make(chan bool)
 	defer close(indexDoneChannel)
 
-	getChunks := func(chunkType paths.CacheType) {
+	getChunks := func(chunkType cache.CacheType) {
 		failedChunks, cancelled := opts.downloadAndReportProgress(chunksToDownload, chunkType, nCorrections)
 		if cancelled {
 			// The user hit the control+c, we don't want to continue...
@@ -76,7 +77,7 @@ func (opts *InitOptions) HandleInit() error {
 		if len(failedChunks) > 0 {
 			// ...if there were failed downloads, try them again (3 times if necessary)...
 			retry(failedChunks, 3, func(items []manifest.ChunkRecord) ([]manifest.ChunkRecord, bool) {
-				logger.Log(logger.Info, "Retrying", len(items), "bloom(s)")
+				logger.Info("Retrying", len(items), "bloom(s)")
 				return opts.downloadAndReportProgress(items, chunkType, nCorrections)
 			})
 		}
@@ -84,7 +85,7 @@ func (opts *InitOptions) HandleInit() error {
 
 	// Set up a go routine to download the bloom filters...
 	go func() {
-		getChunks(paths.Index_Bloom)
+		getChunks(cache.Index_Bloom)
 		bloomsDoneChannel <- true
 	}()
 
@@ -92,7 +93,7 @@ func (opts *InitOptions) HandleInit() error {
 	// if opts.All {
 	// Set up another go routine to download the index chunks if the user told us to...
 	go func() {
-		getChunks(paths.Index_Final)
+		getChunks(cache.Index_Final)
 		indexDoneChannel <- true
 	}()
 
@@ -114,7 +115,7 @@ var nStarted12 int
 var nUpdated12 int
 
 // downloadAndReportProgress Downloads the chunks and reports progress to the progressChannel
-func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord, chunkType paths.CacheType, nTotal int) ([]manifest.ChunkRecord, bool) {
+func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord, chunkType cache.CacheType, nTotal int) ([]manifest.ChunkRecord, bool) {
 	failed := []manifest.ChunkRecord{}
 	cancelled := false
 
@@ -142,7 +143,7 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord
 
 		if event.Event == progress.AllDone {
 			msg := fmt.Sprintf("%sCompleted initializing %s files.%s", colors.BrightWhite, chunkType, colors.Off)
-			logger.Log(logger.Info, msg, strings.Repeat(" ", 60))
+			logger.Info(msg, strings.Repeat(" ", 60))
 			break
 		}
 
@@ -150,7 +151,7 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord
 		m.Lock() // To conflict progress printing
 		switch event.Event {
 		case progress.Error:
-			logger.Log(logger.Error, event.Message)
+			logger.Error(event.Message)
 			if ok {
 				failed = append(failed, *chunk)
 			}
@@ -158,16 +159,16 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord
 		case progress.Start:
 			nStarted12++
 			if nProcessed12 < 20 { // we don't need too many of these
-				logger.Log(logger.Info, "Started download ", nStarted12, " of ", nTotal, " ", event.Message)
+				logger.Info("Started download ", nStarted12, " of ", nTotal, " ", event.Message)
 			}
 			if nStarted12 == poolSize*3 {
 				msg := fmt.Sprintf("%sPlease wait...%s", colors.BrightWhite, colors.Off)
-				logger.Log(logger.Info, msg)
+				logger.Info(msg)
 			}
 
 		case progress.Update:
 			msg := fmt.Sprintf("%s%s%s", colors.Yellow, event.Message, colors.Off)
-			logger.Log(logger.Info, msg, spaces)
+			logger.Info(msg, spaces)
 			nUpdated12++
 
 		case progress.Finished:
@@ -177,18 +178,21 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord
 				col = colors.Magenta
 			}
 			msg := fmt.Sprintf("Unchained %s%s%s file for range %s%s%s (% 4d of %4d)", col, event.Message, colors.Off, col, rng, colors.Off, nProcessed12, nTotal)
-			logger.Log(logger.Info, msg, spaces)
+			logger.Info(msg, spaces)
 
 		default:
-			logger.Log(logger.Info, event.Message, rng, spaces)
+			logger.Info(event.Message, rng, spaces)
 		}
 		m.Unlock()
 
-		// if opts.Sleep != 0.0 {
-		// 	logger.Log(logger.Info, "")
-		// 	logger.Log(logger.Info, "Sleeping between downloads for", opts.Sleep, "seconds")
-		// 	time.Sleep(time.Duration(opts.Sleep*1000) * time.Millisecond)
-		// }
+		sleep := opts.Sleep
+		if sleep > 0 {
+			ms := time.Duration(sleep*1000) * time.Millisecond
+			if !opts.Globals.TestMode {
+				logger.Info(fmt.Sprintf("Sleeping for %g seconds", sleep))
+			}
+			time.Sleep(ms)
+		}
 	}
 
 	return failed, cancelled
@@ -219,7 +223,7 @@ func retry(failedChunks []manifest.ChunkRecord, nTimes int, downloadChunksFunc f
 			break
 		}
 
-		logger.Log(logger.Warning, colors.Yellow, "Retrying", len(chunksToRetry), "downloads", colors.Off)
+		logger.Warn(colors.Yellow, "Retrying", len(chunksToRetry), "downloads", colors.Off)
 		if chunksToRetry, cancelled = downloadChunksFunc(chunksToRetry); cancelled {
 			break
 		}

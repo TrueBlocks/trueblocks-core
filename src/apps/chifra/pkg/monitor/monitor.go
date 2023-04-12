@@ -9,19 +9,19 @@ import (
 	"errors"
 	"fmt"
 	"io/fs"
-	"log"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 	"sync"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // Header is the header of the Monitor file. Note that it's the same width as an index.AppearanceRecord
@@ -35,10 +35,10 @@ type Header struct {
 
 // Monitor carries information about a Monitor file and its header
 type Monitor struct {
-	Address types.Address `json:"address"`
-	Staged  bool          `json:"-"`
-	Chain   string        `json:"-"`
-	ReadFp  *os.File      `json:"-"`
+	Address base.Address `json:"address"`
+	Staged  bool         `json:"-"`
+	Chain   string       `json:"-"`
+	ReadFp  *os.File     `json:"-"`
 	Header
 }
 
@@ -51,11 +51,11 @@ const (
 func NewMonitor(chain, addr string, create bool) Monitor {
 	mon := new(Monitor)
 	mon.Header = Header{Magic: file.SmallMagicNumber}
-	mon.Address = types.HexToAddress(addr)
+	mon.Address = base.HexToAddress(addr)
 	mon.Chain = chain
 	_, err := mon.Reload(create)
 	if err != nil {
-		logger.Log(logger.Error, err)
+		logger.Error(err)
 	}
 	return *mon
 }
@@ -64,7 +64,7 @@ func NewMonitor(chain, addr string, create bool) Monitor {
 func NewStagedMonitor(chain, addr string) (Monitor, error) {
 	mon := Monitor{
 		Header:  Header{Magic: file.SmallMagicNumber},
-		Address: types.HexToAddress(addr),
+		Address: base.HexToAddress(addr),
 		Chain:   chain,
 	}
 
@@ -92,16 +92,16 @@ func NewStagedMonitor(chain, addr string) (Monitor, error) {
 // String implements the Stringer interface
 func (mon Monitor) String() string {
 	if mon.Deleted {
-		return fmt.Sprintf("%s\t%d\t%d\t%d\t%t", hexutil.Encode(mon.Address.Bytes()), mon.Count(), file.FileSize(mon.Path()), mon.LastScanned, mon.Deleted)
+		return fmt.Sprintf("%s\t%d\t%d\t%d\t%t", mon.Address.Hex(), mon.Count(), file.FileSize(mon.Path()), mon.LastScanned, mon.Deleted)
 	}
-	return fmt.Sprintf("%s\t%d\t%d\t%d", hexutil.Encode(mon.Address.Bytes()), mon.Count(), file.FileSize(mon.Path()), mon.LastScanned)
+	return fmt.Sprintf("%s\t%d\t%d\t%d", mon.Address.Hex(), mon.Count(), file.FileSize(mon.Path()), mon.LastScanned)
 }
 
 // TODO: ...and this - making this the String and the above ToTxt?
 // ToJSON returns a JSON object from a Monitor
 func (mon Monitor) ToJSON() string {
 	sm := types.SimpleMonitor{
-		Address:     mon.GetAddrStr(),
+		Address:     mon.Address.Hex(),
 		NRecords:    int(mon.Count()),
 		FileSize:    file.FileSize(mon.Path()),
 		LastScanned: mon.Header.LastScanned,
@@ -113,9 +113,9 @@ func (mon Monitor) ToJSON() string {
 // Path returns the path to the Monitor file
 func (mon *Monitor) Path() (path string) {
 	if mon.Staged {
-		path = config.GetPathToCache(mon.Chain) + "monitors/staging/" + mon.GetAddrStr() + Ext
+		path = config.GetPathToCache(mon.Chain) + "monitors/staging/" + mon.Address.Hex() + Ext
 	} else {
-		path = config.GetPathToCache(mon.Chain) + "monitors/" + mon.GetAddrStr() + Ext
+		path = config.GetPathToCache(mon.Chain) + "monitors/" + mon.Address.Hex() + Ext
 	}
 	return
 }
@@ -142,9 +142,9 @@ func (mon *Monitor) Count() uint32 {
 	return n - 1
 }
 
-// GetAddrStr returns the Monitor's address as a string
-func (mon *Monitor) GetAddrStr() string {
-	return hexutil.Encode(mon.Address.Bytes())
+// IsOpen returns true if the underlying monitor file is opened.
+func (mon *Monitor) IsOpen() bool {
+	return mon.ReadFp != nil
 }
 
 // Close closes an open Monitor if it's open, does nothing otherwise
@@ -196,7 +196,7 @@ func addressFromPath(path string) (string, error) {
 }
 
 // SentinalAddr is a marker to signify the end of the monitor list produced by ListMonitors
-var SentinalAddr = types.HexToAddress("0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead")
+var SentinalAddr = base.HexToAddress("0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead")
 
 // ListMonitors puts a list of Monitors into the monitorChannel. The list of monitors is built from
 // a file called addresses.tsv in the current folder or, if not present, from existing monitors
@@ -205,11 +205,13 @@ func ListMonitors(chain, folder string, monitorChan chan<- Monitor) {
 		monitorChan <- Monitor{Address: SentinalAddr}
 	}()
 
-	info, err := os.Stat("./addresses.tsv")
+	pwd, _ := os.Getwd()
+	path := filepath.Join(pwd, "addresses.tsv")
+	info, err := os.Stat(path)
 	if err == nil {
-		// If the shorthand file exists in the current folder, use it...
+		logger.Info("Reading address list from", path)
 		lines := file.AsciiFileToLines(info.Name())
-		logger.Log(logger.Info, "Found", len(lines), "unique addresses in ./addresses.tsv")
+		logger.Info("Found", len(lines), "unique addresses in ./addresses.tsv")
 		addrMap := make(map[string]bool)
 		for _, line := range lines {
 			if !strings.HasPrefix(line, "#") {
@@ -221,16 +223,16 @@ func ListMonitors(chain, folder string, monitorChan chan<- Monitor) {
 					}
 					addrMap[addr] = true
 				} else {
-					log.Panic("Invalid line in file", info.Name())
+					logger.Warn("Invalid line in file", info.Name())
 				}
 			}
 		}
 		return
 	}
 
-	// ...otherwise freshen all existing monitors
-	pp := config.GetPathToCache(chain) + folder
-	filepath.Walk(pp, func(path string, info fs.FileInfo, err error) error {
+	logger.Info("Building address list from current monitors")
+	path = config.GetPathToCache(chain) + folder
+	filepath.Walk(path, func(path string, info fs.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
@@ -258,8 +260,8 @@ func (mon *Monitor) MoveToProduction() error {
 	}
 
 	if before != after {
-		msg := fmt.Sprintf("%s %d duplicates removed.", mon.GetAddrStr(), (before - after))
-		logger.Log(logger.Warning, msg)
+		msg := fmt.Sprintf("%s %d duplicates removed.", mon.Address.Hex(), (before - after))
+		logger.Warn(msg)
 	}
 
 	oldPath := mon.Path()
@@ -269,4 +271,29 @@ func (mon *Monitor) MoveToProduction() error {
 	monitorMutex.Unlock()
 
 	return err
+}
+
+func GetMonitorMap(chain string) (map[base.Address]*Monitor, []*Monitor) {
+	monitorChan := make(chan Monitor)
+
+	go ListMonitors(chain, "monitors", monitorChan)
+
+	monMap := make(map[base.Address]*Monitor)
+	monArray := []*Monitor{}
+	for mon := range monitorChan {
+		mon := mon
+		switch mon.Address {
+		case SentinalAddr:
+			close(monitorChan)
+		default:
+			monMap[mon.Address] = &mon
+			monArray = append(monArray, &mon)
+		}
+	}
+
+	sort.Slice(monArray, func(i, j int) bool {
+		return monArray[i].Address.Hex() < monArray[j].Address.Hex()
+	})
+
+	return monMap, monArray
 }

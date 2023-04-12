@@ -8,7 +8,7 @@ import (
 	"os"
 	"sort"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
 const (
@@ -18,16 +18,16 @@ const (
 
 // AddressRecord is a single record in the Address table
 type AddressRecord struct {
-	Address types.Address
-	Offset  uint32
-	Count   uint32
+	Address base.Address `json:"address"`
+	Offset  uint32       `json:"offset"`
+	Count   uint32       `json:"count"`
 }
 
 func (addressRec *AddressRecord) ReadAddress(file *os.File) (err error) {
 	return binary.Read(file, binary.LittleEndian, addressRec)
 }
 
-func (chunk *ChunkData) searchForAddressRecord(address types.Address) int {
+func (chunk *ChunkData) searchForAddressRecord(address base.Address) int {
 	compareFunc := func(pos int) bool {
 		if pos == -1 {
 			return false

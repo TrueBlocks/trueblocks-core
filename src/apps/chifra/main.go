@@ -20,7 +20,7 @@ import (
 func main() {
 	// pprofFile, pprofErr := os.Create("cpu.pprof")
 	// if pprofErr != nil {
-	// 	log.Fatal(pprofErr)
+	// 	logger.Fatal(pprofErr)
 	// }
 	// pprof.StartCPUProfile(pprofFile)
 	// defer pprof.StopCPUProfile()

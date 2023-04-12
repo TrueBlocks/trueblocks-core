@@ -1,0 +1,6 @@
+config?modes=show
+{
+  "errors": [
+    "Invalid key (modes) in config route."
+  ]
+}

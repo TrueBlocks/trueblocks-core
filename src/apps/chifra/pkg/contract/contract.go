@@ -4,6 +4,7 @@ import (
 	"context"
 	"math/big"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -12,7 +13,7 @@ import (
 
 // isContractAt checks if an account is/has been a contract at the given block. Block number can be nil,
 // in which case the latest block is used.
-func IsContractAt(chain string, address types.Address, block *types.SimpleNamedBlock) (contract bool, err error) {
+func IsContractAt(chain string, address base.Address, block *types.SimpleNamedBlock) (contract bool, err error) {
 	provider := config.GetRpcProvider(chain)
 	client := rpcClient.GetClient(provider)
 	defer client.Close()

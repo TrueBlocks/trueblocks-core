@@ -40,7 +40,6 @@ class CClassDefinition : public CBaseNode {
     string_q go_model;
     string_q head_includes;
     string_q src_includes;
-    string_q output;
     string_q display_str;
     string_q sort_str;
     string_q eq_str;
@@ -53,6 +52,9 @@ class CClassDefinition : public CBaseNode {
     string_q doc_route;
     string_q doc_alias;
     string_q doc_producer;
+    string_q cpp_output;
+    string_q go_output;
+    bool disabled;
 
   public:
     CClassDefinition(void);
@@ -65,10 +67,8 @@ class CClassDefinition : public CBaseNode {
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    string_q outputPath(const string_q& t) const {
-        return substitute(substitute(input_path, "classDefinitions/", ""), ".txt", t);
-    }
-    explicit CClassDefinition(const CToml& toml);
+    string_q ouputPath(const string_q& t) const;
+    void ReadSettings(const CToml& toml);
     // EXISTING_CODE
     bool operator==(const CClassDefinition& it) const;
     bool operator!=(const CClassDefinition& it) const {
@@ -135,7 +135,6 @@ inline void CClassDefinition::initialize(void) {
     go_model = "";
     head_includes = "";
     src_includes = "";
-    output = "";
     display_str = "";
     sort_str = "";
     eq_str = "";
@@ -148,6 +147,9 @@ inline void CClassDefinition::initialize(void) {
     doc_route = "";
     doc_alias = "";
     doc_producer = "";
+    cpp_output = "";
+    go_output = "";
+    disabled = false;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -172,7 +174,6 @@ inline void CClassDefinition::duplicate(const CClassDefinition& cl) {
     go_model = cl.go_model;
     head_includes = cl.head_includes;
     src_includes = cl.src_includes;
-    output = cl.output;
     display_str = cl.display_str;
     sort_str = cl.sort_str;
     eq_str = cl.eq_str;
@@ -185,6 +186,9 @@ inline void CClassDefinition::duplicate(const CClassDefinition& cl) {
     doc_route = cl.doc_route;
     doc_alias = cl.doc_alias;
     doc_producer = cl.doc_producer;
+    cpp_output = cl.cpp_output;
+    go_output = cl.go_output;
+    disabled = cl.disabled;
 
     // EXISTING_CODE
     // EXISTING_CODE

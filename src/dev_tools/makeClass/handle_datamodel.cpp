@@ -45,11 +45,14 @@ bool COptions::handle_datamodel(void) {
     yamlStream << "components:" << endl;
     yamlStream << "  schemas:" << endl;
 
+    bool badStuff = false;
     for (auto model : dataModels) {
         string_q groupLow = toLower(substitute(model.doc_group, " ", ""));
         string_q groupFn = getDocsPathTemplates("model-groups/" + groupLow + ".md");
         if (!fileExists(groupFn)) {
             LOG_WARN("Missing data model intro file: ", bYellow, getPathToTemplates(groupFn), cOff);
+            badStuff = true;
+            continue;
         }
 
         sort(model.fieldArray.begin(), model.fieldArray.end(), sortByDoc);
@@ -82,6 +85,8 @@ bool COptions::handle_datamodel(void) {
         string_q modelFn = getDocsPathTemplates("model-intros/" + model.doc_route + ".md");
         if (!fileExists(modelFn)) {
             LOG_WARN("Missing data model intro file: ", bYellow, getPathToTemplates(modelFn), cOff);
+            badStuff = true;
+            continue;
         } else {
             docStream << STR_MODEL_HEADER << asciiFileToString(modelFn) << get_producer_table(model, endpointArray)
                       << STR_MODEL_FOOTER << endl;
@@ -95,6 +100,7 @@ bool COptions::handle_datamodel(void) {
         fieldStream << markDownRow("Field", "Description", "Type", fieldWidths);
         fieldStream << markDownRow("-", "", "", fieldWidths);
 
+        size_t cnt = 0;
         ostringstream yamlPropStream;
         for (auto fld : model.fieldArray) {
             if (fld.doc) {
@@ -104,7 +110,12 @@ bool COptions::handle_datamodel(void) {
                 yamlPropStream << fld.Format("[          description: \"{DESCRIPTION}\"\n]");
                 fieldStream << markDownRow(fld.name, fld.description, type_2_Link(dataModels, fld), fieldWidths);
                 addToTypeMap(typeMaps, model.doc_group, fld.type);
+                cnt++;
             }
+        }
+        if (cnt == 0) {
+            cerr << bRed << "Data model for " << model.class_name << " has zero documented fields." << cOff << endl;
+            exit(0);
         }
 
         string_q head = model.Format(STR_YAML_MODELHEADER);
@@ -129,6 +140,9 @@ bool COptions::handle_datamodel(void) {
         if (!model.go_model.empty()) {
             generate_go_type(this, model);
         }
+    }
+    if (badStuff) {
+        exit(0);
     }
 
     yamlStream << STR_YAML_TAIL;
@@ -174,21 +188,33 @@ bool COptions::handle_datamodel(void) {
 
 //------------------------------------------------------------------------------------------------------------
 bool sortByDataModelName(const CClassDefinition& c1, const CClassDefinition& c2) {
+    if (c1.doc_order == c2.doc_order) {
+        return c1.class_name < c2.class_name;
+    }
     return c1.doc_order < c2.doc_order;
 }
 
 //------------------------------------------------------------------------------------------------------------
 bool sortByDoc(const CMember& c1, const CMember& c2) {
+    if (c1.doc == c2.doc) {
+        return c1.name < c2.name;
+    }
     return c1.doc < c2.doc;
 }
 
 //------------------------------------------------------------------------------------------------------------
 string_q type_2_ModelName(const string_q& type, bool raw) {
     string_q ret = type;
+    replace(ret, "Array", "");
+    return raw ? nextTokenClear(ret, '[') : ret;
+}
+
+//------------------------------------------------------------------------------------------------------------
+string_q type_2_TypeName(const string_q& type, bool raw) {
+    string_q ret = type;
     if (startsWith(ret, "C"))
         replace(ret, "C", "");
     replace(ret, "Array", "");
-    replace(ret, "CachePtr", "Cache");
     return raw ? nextTokenClear(ret, '[') : ret;
 }
 
@@ -196,13 +222,13 @@ string_q type_2_ModelName(const string_q& type, bool raw) {
 string_q typeFmt(const CMember& fld) {
     if (fld.memberFlags & IS_ARRAY) {
         string_q ret = "          type: array\n          items:\n            $ref: \"#/components/schemas/++X++\"\n";
-        replace(ret, "++X++", firstLower(type_2_ModelName(fld.type, false)));
+        replace(ret, "++X++", firstLower(type_2_TypeName(fld.type, false)));
         return ret;
     }
 
     if (fld.memberFlags & IS_OBJECT) {
         string_q ret = "          type: object\n          items:\n            $ref: \"#/components/schemas/++X++\"\n";
-        replace(ret, "++X++", firstLower(type_2_ModelName(fld.type, false)));
+        replace(ret, "++X++", firstLower(type_2_TypeName(fld.type, false)));
         return ret;
     }
 
@@ -303,8 +329,8 @@ string_q plural(const string_q& in) {
     string_q ret = firstUpper(in);
     if (ret == "Status") {
         ret = "Statuses";
-    } else if (ret == "CacheEntry") {
-        ret = "CacheEntries";
+    } else if (ret == "CacheItem") {
+        ret = "CacheItems";
     } else if (ret == "ChunkIndex") {
         ret = "ChunkIndexes";
     } else if (!endsWith(in, "s")) {

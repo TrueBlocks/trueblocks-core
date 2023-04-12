@@ -3,10 +3,10 @@ package rpc
 import (
 	"context"
 	"fmt"
-	"log"
 	"math/big"
 	"sync"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	ethTypes "github.com/ethereum/go-ethereum/core/types"
@@ -37,8 +37,8 @@ func GetClient(provider string) *ethclient.Client {
 		// TODO: If we make this a cached item, it needs to be cached per chain, see timestamps
 		ec, err := ethclient.Dial(provider)
 		if err != nil || ec == nil {
-			log.Println("Missdial(" + provider + "):")
-			log.Fatalln(err)
+			logger.Error("Missdial("+provider+"):", err)
+			logger.Fatal("")
 		}
 		perProviderClientMap[provider] = ec
 	}
@@ -84,17 +84,24 @@ func TxFromNumberAndId(chain string, blkNum, txId uint64) (ethTypes.Transaction,
 	return *tx, nil
 }
 
-// TODO: DUPLICATED DUE TO CYCLICAL IMPORT
-func GetBlockTimestamp(chain string, bn uint64) int64 {
+// GetBlockTimestamp returns the timestamp associated with a given block
+func GetBlockTimestamp(chain string, bn uint64) base.Timestamp {
 	provider := config.GetRpcProvider(chain)
 	ec := GetClient(provider)
 	defer ec.Close()
 
 	r, err := ec.HeaderByNumber(context.Background(), big.NewInt(int64(bn)))
 	if err != nil {
-		logger.Log(logger.Error, "Could not connect to RPC client", err)
+		logger.Error("Could not connect to RPC client", err)
 		return 0
 	}
 
-	return int64(r.Time)
+	ts := base.Timestamp(r.Time)
+	if ts == 0 {
+		// The RPC does not return a timestamp for block zero, so we simulate it with ts from block one less 13 seconds
+		// TODO: Chain specific
+		return GetBlockTimestamp(chain, 1) - 13
+	}
+
+	return ts
 }

@@ -29,6 +29,7 @@ blocks' transactions.
 The following commands produce and manage Blocks:
 
 - [chifra blocks](/chifra/chaindata/#chifra-blocks)
+- [chifra when](/chifra/chaindata/#chifra-when)
 
 Blocks consist of the following fields:
 
@@ -44,6 +45,7 @@ Blocks consist of the following fields:
 | transactions  | a possibly empty array of transactions or transaction hashes  | [Transaction[]](/data-model/chaindata/#transaction) |
 | baseFeePerGas | the base fee for this block                                   | wei                                                 |
 | finalized     | flag indicating the system considers this data final          | bool                                                |
+| uncles        |                                                               | Hash                                                |
 
 ## Transaction
 
@@ -118,7 +120,7 @@ Transfers consist of the following fields:
 | assetAddr        | 0xeeee...eeee for ETH reconcilations, the token address otherwise                              | address   |
 | assetSymbol      | either ETH, WEI or the symbol of the asset being reconciled as queried from the chain          | string    |
 | decimals         | Equivalent to the queried value of `decimals` from an ERC20 contract or, if ETH or WEI then 18 | uint64    |
-| amount           | the amount of the transfer in the units of the asset                                           | uint256   |
+| amount           | the amount of the transfer in the units of the asset                                           | wei       |
 | spotPrice        | The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction       | double    |
 | priceSource      | The on-chain source from which the spot price was taken                                        | string    |
 | encoding         | The four-byte encoding of the transaction's function call                                      | string    |
@@ -142,15 +144,15 @@ Receipts consist of the following fields:
 
 | Field            | Description                                                                | Type                                |
 | ---------------- | -------------------------------------------------------------------------- | ----------------------------------- |
-| blockNumber      |                                                                            | blknum                              |
-| transactionIndex |                                                                            | blknum                              |
-| transactionHash  |                                                                            | hash                                |
 | blockHash        |                                                                            | hash                                |
-| status           | `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise | uint32                              |
-| gasUsed          | the amount of gas actually used by the transaction                         | gas                                 |
+| blockNumber      |                                                                            | blknum                              |
 | contractAddress  | the address of the newly created contract, if any                          | address                             |
+| gasUsed          | the amount of gas actually used by the transaction                         | gas                                 |
 | isError          |                                                                            | bool                                |
 | logs             | a possibly empty array of logs                                             | [Log[]](/data-model/chaindata/#log) |
+| status           | `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise | uint32                              |
+| transactionHash  |                                                                            | hash                                |
+| transactionIndex |                                                                            | blknum                              |
 
 ## Log
 
@@ -171,8 +173,8 @@ Logs consist of the following fields:
 | Field            | Description                                                                                       | Type                                    |
 | ---------------- | ------------------------------------------------------------------------------------------------- | --------------------------------------- |
 | blockNumber      | the number of the block                                                                           | blknum                                  |
-| transactionIndex | the zero-indexed position of the transaction in the block                                         | blknum                                  |
-| logIndex         | the zero-indexed position of this log relative to the block                                       | blknum                                  |
+| transactionIndex | the zero-indexed position of the transaction in the block                                         | uint64                                  |
+| logIndex         | the zero-indexed position of this log relative to the block                                       | uint64                                  |
 | transactionHash  | the hash of the transction                                                                        | hash                                    |
 | timestamp        | the timestamp of the block this log appears in                                                    | timestamp                               |
 | address          | the smart contract that emitted this log                                                          | address                                 |
@@ -277,6 +279,45 @@ TraceResults consist of the following fields:
 | gasUsed | the amount of gas used by this trace                                           | gas     |
 | output  | the result of the call of this trace                                           | bytes   |
 
+## TraceCount
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+`chifra trace --count` returns the number of traces the given transaction.
+
+The following commands produce and manage TraceCounts:
+
+- [chifra traces](/chifra/chaindata/#chifra-traces)
+
+TraceCounts consist of the following fields:
+
+| Field            | Description                             | Type      |
+| ---------------- | --------------------------------------- | --------- |
+| blockNumber      | the block number                        | blknum    |
+| transactionIndex | the transaction index                   | blknum    |
+| transactionHash  | the transaction's hash                  | hash      |
+| timestamp        | the timestamp of the block              | timestamp |
+| tracesCnt        | the number of traces in the transaction | uint64    |
+
+## TraceFilter
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+The `traceFilter` is an internal data structure used to query using the `chifra traces --filter` command. Its use may, in the future, be expanded for other use cases. Note that all fields are optional, but not all may be empty at the same time.
+
+The following commands produce and manage TraceFilters:
+
+- [chifra traces](/chifra/chaindata/#chifra-traces)
+
+TraceFilters consist of the following fields:
+
+| Field       | Description                                                    | Type          |
+| ----------- | -------------------------------------------------------------- | ------------- |
+| fromBlock   | The first block to include in the queried list of traces.      | string        |
+| toBlock     | The last block to include in the queried list of traces.       | string        |
+| fromAddress | If included, only traces `from` this address will be included. | Address       |
+| toAddress   | If included, only traces `to` this address will be included.   | Address       |
+| after       | Only traces after this many traces are included.               | uint64        |
+| count       | Only this many traces are included.                            | uint64        |
+
 ## BlockCount
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
@@ -323,24 +364,37 @@ NamedBlocks consist of the following fields:
 | date        | Human readable version of timestamp | datetime  |
 | name        | an optional name for the block      | string    |
 
-## TraceCount
+## Timestamp
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
-`chifra trace --count` returns the number of traces the given transaction.
+Shows the blockNumber, timestamp and difference in seconds between blocks found in the timestamp database.
 
-The following commands produce and manage TraceCounts:
+The following commands produce and manage Timestamps:
 
-- [chifra traces](/chifra/chaindata/#chifra-traces)
+- [chifra when](/chifra/chaindata/#chifra-when)
 
-TraceCounts consist of the following fields:
+Timestamps consist of the following fields:
 
-| Field            | Description                             | Type      |
-| ---------------- | --------------------------------------- | --------- |
-| blockNumber      | the block number                        | blknum    |
-| transactionIndex | the transaction index                   | blknum    |
-| transactionHash  | the transaction's hash                  | hash      |
-| timestamp        | the timestamp of the block              | timestamp |
-| tracesCnt        | the number of traces in the transaction | uint64    |
+| Field       | Description                                | Type      |
+| ----------- | ------------------------------------------ | --------- |
+| blockNumber | the number of the block                    | blknum    |
+| timestamp   | the Unix timestamp of the block            | timestamp |
+| diff        | the number of seconds since the last block | timestamp |
+
+## TimestampCount
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+Shows the number of timestamps in the timestamps database.
+
+The following commands produce and manage TimestampCounts:
+
+- [chifra when](/chifra/chaindata/#chifra-when)
+
+TimestampCounts consist of the following fields:
+
+| Field | Description                                         | Type   |
+| ----- | --------------------------------------------------- | ------ |
+| count | the number of timestamps in the timestamps database | uint64 |
 
 ## Base types
 
@@ -358,7 +412,6 @@ This documentation mentions the following basic data types.
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
-| uint256   | a 256-bit unsigned integer          |                |
 | uint32    | a 32-bit unsigned integer           |                |
 | uint64    | a 64-bit unsigned integer           |                |
 | uint8     | an alias for the boolean type       |                |

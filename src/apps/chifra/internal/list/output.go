@@ -55,20 +55,19 @@ func (opts *ListOptions) ListInternal() (err error, handled bool) {
 
 	// We always freshen the monitors. This call fills the monitors array.
 	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
-	err = opts.HandleFreshenMonitors(&monitorArray)
+	var canceled bool
+	canceled, err = opts.HandleFreshenMonitors(&monitorArray)
 	if err != nil {
 		return
 	}
 
-	if opts.Count {
-		err = opts.HandleListCount(monitorArray)
-		if err != nil {
-			return
-		}
-	} else if !opts.Silent {
-		err = opts.HandleListAppearances(monitorArray)
-		if err != nil {
-			return
+	if !canceled {
+		if opts.Count {
+			err = opts.HandleListCount(monitorArray)
+		} else if opts.Bounds {
+			err = opts.HandleBounds(monitorArray)
+		} else if !opts.Silent {
+			err = opts.HandleListAppearances(monitorArray)
 		}
 	}
 	// EXISTING_CODE
@@ -87,6 +86,7 @@ func GetListOptions(args []string, g *globals.GlobalOptions) *ListOptions {
 
 func (opts *ListOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
+	ported = true
 	// EXISTING_CODE
 	return
 }

@@ -33,9 +33,9 @@ func fromRemote(chain string) (*Manifest, error) {
 
 	gatewayUrl := config.GetIpfsGateway(chain)
 
-	logger.Log(logger.InfoC, "Chain:", chain)
-	logger.Log(logger.InfoC, "Gateway:", gatewayUrl)
-	logger.Log(logger.InfoC, "CID:", cid)
+	logger.InfoTable("Chain:", chain)
+	logger.InfoTable("Gateway:", gatewayUrl)
+	logger.InfoTable("CID:", cid)
 
 	return downloadManifest(chain, gatewayUrl, cid)
 }

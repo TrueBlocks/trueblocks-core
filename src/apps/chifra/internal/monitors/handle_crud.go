@@ -7,9 +7,7 @@ package monitorsPkg
 import (
 	"os"
 	"path/filepath"
-	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
@@ -24,6 +22,7 @@ import (
 // Deleted     | Error  | Undelete | Remove | Remove and Decache         |
 // ------------|--------|------------------------------------------------|
 func (opts *MonitorsOptions) HandleCrudCommands() error {
+	testMode := opts.Globals.TestMode
 	for _, addr := range opts.Addrs {
 		m := monitor.NewMonitor(opts.Globals.Chain, addr, false)
 		if !file.FileExists(m.Path()) {
@@ -31,8 +30,9 @@ func (opts *MonitorsOptions) HandleCrudCommands() error {
 
 		} else {
 			if opts.Decache {
+				logger.Info("Decaching", addr)
 				if opts.Globals.TestMode {
-					logger.Log(logger.Info, "Decaching monitor for address ", addr, "not tested.")
+					logger.Info("Decaching monitor for address", addr, "not tested.")
 					return nil
 				}
 
@@ -43,23 +43,19 @@ func (opts *MonitorsOptions) HandleCrudCommands() error {
 						return true // continue processing
 					}
 
-					fileNameStr := fileName
-					if opts.Globals.TestMode {
-						fileNameStr = strings.Replace(fileNameStr, config.GetPathToCache(opts.Globals.Chain), "$cachePath/", -1)
-					}
-
 					itemsRemoved++
 					bytesRemoved += file.FileSize(fileName)
+					logger.Progress(!testMode && itemsRemoved%20 == 0, "Removed", itemsRemoved, "items and", bytesRemoved, "bytes.", fileName)
 
 					os.Remove(fileName)
 					if opts.Globals.Verbose {
-						logger.Log(logger.Info, fileNameStr, "was removed.")
+						logger.Info(fileName, "was removed.")
 					}
 					path, _ := filepath.Split(fileName)
 					if empty, _ := file.IsFolderEmpty(path); empty {
 						os.RemoveAll(path)
 						if opts.Globals.Verbose {
-							logger.Log(logger.Info, "Empty folder", path, "was removed.")
+							logger.Info("Empty folder", path, "was removed.")
 						}
 					}
 
@@ -71,16 +67,16 @@ func (opts *MonitorsOptions) HandleCrudCommands() error {
 				if err != nil {
 					return err
 				}
-				logger.Log(logger.Info, itemsRemoved, "items totaling", bytesRemoved, "bytes were removed from the cache.")
+				logger.Info(itemsRemoved, "items totaling", bytesRemoved, "bytes were removed from the cache.")
 
 				// We've visited them all, so delete the monitor itself
 				m.Delete()
-				logger.Log(logger.Info, ("Monitor " + addr + " was deleted but not removed."))
+				logger.Info(("Monitor " + addr + " was deleted but not removed."))
 				wasRemoved, err := m.Remove()
 				if !wasRemoved || err != nil {
-					logger.Log(logger.Info, ("Monitor for " + addr + " was not removed (" + err.Error() + ")"))
+					logger.Info(("Monitor for " + addr + " was not removed (" + err.Error() + ")"))
 				} else {
-					logger.Log(logger.Info, ("Monitor for " + addr + " was permanently removed."))
+					logger.Info(("Monitor for " + addr + " was permanently removed."))
 				}
 
 			} else if opts.Undelete && !m.IsDeleted() {
@@ -110,20 +106,20 @@ func (opts *MonitorsOptions) HandleCrudCommands() error {
 		m := monitor.NewMonitor(opts.Globals.Chain, addr, false)
 		if opts.Undelete {
 			m.UnDelete()
-			logger.Log(logger.Info, ("Monitor " + addr + " was undeleted."))
+			logger.Info(("Monitor " + addr + " was undeleted."))
 
 		} else {
 			if opts.Delete {
 				m.Delete()
-				logger.Log(logger.Info, ("Monitor " + addr + " was deleted but not removed."))
+				logger.Info(("Monitor " + addr + " was deleted but not removed."))
 			}
 
 			if opts.Remove {
 				wasRemoved, err := m.Remove()
 				if !wasRemoved || err != nil {
-					logger.Log(logger.Info, ("Monitor for " + addr + " was not removed (" + err.Error() + ")"))
+					logger.Info(("Monitor for " + addr + " was not removed (" + err.Error() + ")"))
 				} else {
-					logger.Log(logger.Info, ("Monitor for " + addr + " was permanently removed."))
+					logger.Info(("Monitor for " + addr + " was permanently removed."))
 				}
 			}
 		}

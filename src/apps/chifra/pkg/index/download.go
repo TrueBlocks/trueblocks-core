@@ -15,12 +15,12 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
@@ -36,7 +36,7 @@ type jobResult struct {
 	theChunk *manifest.ChunkRecord
 }
 
-type ProgressChan chan<- *progress.Progress
+type ProgressChan chan<- *progress.ProgressMsg
 
 // WorkerArguments are types meant to hold worker function arguments. We cannot
 // pass the arguments directly, because a worker function is expected to take one
@@ -61,7 +61,7 @@ type writeWorkerArguments struct {
 type workerFunction func(interface{})
 
 // getDownloadWorker returns a worker function that downloads a chunk
-func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkType paths.CacheType) workerFunction {
+func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkType cache.CacheType) workerFunction {
 	progressChannel := workerArgs.progressChannel
 
 	return func(param interface{}) {
@@ -76,7 +76,7 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 
 		default:
 			hash := chunk.BloomHash
-			if chunkType == paths.Index_Final {
+			if chunkType == cache.Index_Final {
 				hash = chunk.IndexHash
 			}
 			if hash != "" {
@@ -84,7 +84,7 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 				// TODO: Do we really need the colored display?
 				msg := fmt.Sprintf("%v", chunk)
 				msg = strings.Replace(msg, hash.String(), colors.BrightCyan+hash.String()+colors.Off, -1)
-				progressChannel <- &progress.Progress{
+				progressChannel <- &progress.ProgressMsg{
 					Payload: &chunk,
 					Event:   progress.Start,
 					Message: msg,
@@ -100,9 +100,9 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 				if workerArgs.ctx.Err() != nil {
 					// User hit control + c - clean up both peices for the current chunk
 					chunkPath := config.GetPathToIndex(chain) + "finalized/" + chunk.Range + ".bin"
-					RemoveLocalFile(paths.ToIndexPath(chunkPath), "user canceled", progressChannel)
-					RemoveLocalFile(paths.ToBloomPath(chunkPath), "user canceled", progressChannel)
-					progressChannel <- &progress.Progress{
+					RemoveLocalFile(cache.ToIndexPath(chunkPath), "user canceled", progressChannel)
+					RemoveLocalFile(cache.ToBloomPath(chunkPath), "user canceled", progressChannel)
+					progressChannel <- &progress.ProgressMsg{
 						Payload: &chunk,
 						Event:   progress.Error,
 						Message: workerArgs.ctx.Err().Error(),
@@ -117,7 +117,7 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 						theChunk: &chunk,
 					}
 				} else {
-					progressChannel <- &progress.Progress{
+					progressChannel <- &progress.ProgressMsg{
 						Payload: &chunk,
 						Event:   progress.Error,
 						Message: err.Error(),
@@ -129,7 +129,7 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 }
 
 // getWriteWorker returns a worker function that writes chunk to disk
-func getWriteWorker(chain string, workerArgs writeWorkerArguments, chunkType paths.CacheType) workerFunction {
+func getWriteWorker(chain string, workerArgs writeWorkerArguments, chunkType cache.CacheType) workerFunction {
 	progressChannel := workerArgs.progressChannel
 
 	return func(resParam interface{}) {
@@ -142,7 +142,7 @@ func getWriteWorker(chain string, workerArgs writeWorkerArguments, chunkType pat
 		case <-workerArgs.ctx.Done():
 			return
 		default:
-			trapChannel := sigintTrap.Enable(workerArgs.ctx, workerArgs.cancel)
+			trapChannel := sigintTrap.Enable(workerArgs.ctx, workerArgs.cancel, func() { logger.Info("Finishing work...") })
 			err := writeBytesToDisc(chain, chunkType, res)
 			sigintTrap.Disable(trapChannel)
 			if errors.Is(workerArgs.ctx.Err(), context.Canceled) {
@@ -151,7 +151,7 @@ func getWriteWorker(chain string, workerArgs writeWorkerArguments, chunkType pat
 			}
 
 			if err != nil {
-				progressChannel <- &progress.Progress{
+				progressChannel <- &progress.ProgressMsg{
 					Payload: res.theChunk,
 					Event:   progress.Error,
 					Message: err.Error(),
@@ -159,7 +159,7 @@ func getWriteWorker(chain string, workerArgs writeWorkerArguments, chunkType pat
 				return
 			}
 
-			progressChannel <- &progress.Progress{
+			progressChannel <- &progress.ProgressMsg{
 				Payload: res.theChunk,
 				Event:   progress.Finished,
 				Message: chunkType.String(),
@@ -169,8 +169,8 @@ func getWriteWorker(chain string, workerArgs writeWorkerArguments, chunkType pat
 }
 
 // DownloadChunks downloads, unzips and saves the chunk of type indicated by chunkType
-// for each chunk in chunks. Progress is reported to progressChannel.
-func DownloadChunks(chain string, chunksToDownload []manifest.ChunkRecord, chunkType paths.CacheType, poolSize int, progressChannel ProgressChan) {
+// for each chunk in chunks. ProgressMsg is reported to progressChannel.
+func DownloadChunks(chain string, chunksToDownload []manifest.ChunkRecord, chunkType cache.CacheType, poolSize int, progressChannel ProgressChan) {
 	// Context lets us handle Ctrl-C easily
 	ctx, cancel := context.WithCancel(context.Background())
 	defer func() {
@@ -235,22 +235,22 @@ func DownloadChunks(chain string, chunksToDownload []manifest.ChunkRecord, chunk
 	writeWg.Wait()
 
 	if errors.Is(ctx.Err(), context.Canceled) {
-		progressChannel <- &progress.Progress{
+		progressChannel <- &progress.ProgressMsg{
 			Event: progress.Cancelled,
 		}
 		return
 	}
 
-	progressChannel <- &progress.Progress{
+	progressChannel <- &progress.ProgressMsg{
 		Event: progress.AllDone,
 	}
 }
 
 // writeBytesToDisc save the downloaded bytes to disc
-func writeBytesToDisc(chain string, chunkType paths.CacheType, res *jobResult) error {
+func writeBytesToDisc(chain string, chunkType cache.CacheType, res *jobResult) error {
 	fullPath := config.GetPathToIndex(chain) + "finalized/" + res.rng + ".bin"
-	if chunkType == paths.Index_Bloom {
-		fullPath = paths.ToBloomPath(fullPath)
+	if chunkType == cache.Index_Bloom {
+		fullPath = cache.ToBloomPath(fullPath)
 	}
 	outputFile, err := os.OpenFile(fullPath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 	if err != nil {
@@ -264,10 +264,10 @@ func writeBytesToDisc(chain string, chunkType paths.CacheType, res *jobResult) e
 			outputFile.Close()
 			os.Remove(outputFile.Name())
 			col := colors.Magenta
-			if fullPath == paths.ToIndexPath(fullPath) {
+			if fullPath == cache.ToIndexPath(fullPath) {
 				col = colors.Yellow
 			}
-			logger.Log(logger.Warning, "Failed download", col, res.rng, colors.Off, "(will retry)", strings.Repeat(" ", 30))
+			logger.Warn("Failed download", col, res.rng, colors.Off, "(will retry)", strings.Repeat(" ", 30))
 		}
 		// Information about this error
 		// https://community.k6.io/t/warn-0040-request-failed-error-stream-error-stream-id-3-internal-error/777/2
@@ -282,12 +282,12 @@ func RemoveLocalFile(fullPath, reason string, progressChannel ProgressChan) bool
 	if file.FileExists(fullPath) {
 		err := os.Remove(fullPath)
 		if err != nil {
-			progressChannel <- &progress.Progress{
+			progressChannel <- &progress.ProgressMsg{
 				Event:   progress.Error,
 				Message: fmt.Sprintf("Failed to remove file %s [%s]", fullPath, err.Error()),
 			}
 		} else {
-			progressChannel <- &progress.Progress{
+			progressChannel <- &progress.ProgressMsg{
 				Event:   progress.Update,
 				Message: fmt.Sprintf("File %s removed [%s]", fullPath, reason),
 			}

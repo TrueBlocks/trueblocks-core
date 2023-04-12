@@ -1,6 +1,0 @@
-config?modes=show&module=config
-{
-  "errors": [
-    "The module option (config) must be one of [ index | monitors | names | abis | caches | some | all ]"
-  ]
-}

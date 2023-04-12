@@ -32,24 +32,6 @@ string_q showResult(const string_q& result, const string_q& msg, const string_q&
 
     if (!result.empty()) {
         os << result << endl;
-        // string_q res = result;
-        // clean String(res, false);
-        // replaceAny(res, "{}[]", "");
-        // replaceAll(res, ",", "\n");
-        // replaceAll(res, "\"result\":", "");
-        // CStringArray lines;
-        // explode(lines, res, '\n');
-        // sort(lines.begin(), lines.end());
-        // os << "result:\n";
-        // for (auto line : lines) {
-        //     replaceAny(line, "\n", "");
-        //     if (!line.empty() && !contains(line, "\"id\":") && !contains(line, "\"chainId\":") &&
-        //         !contains(line, "\"condition\":") && !contains(line, "\"creates\":") &&
-        //         !contains(line, "\"publicKey\":") && !contains(line, "\"jsonrpc\":") && !contains(line, "\"raw\":")
-        //         && !contains(line, "\"standardV\":") && !contains(line, "\"transactionLogIndex\":") &&
-        //         !contains(line, "\"type\":") && !contains(line, "\"author\":") && !contains(line, "\"sealFields\":"))
-        //         os << "--[" << line << "]--" << endl;
-        // }
     }
     os << string_q(20, '-') << curlId << string_q(20, '-') << curlId << string_q(20, '-') << endl;
 

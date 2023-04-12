@@ -3,21 +3,22 @@ package pinning
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	shell "github.com/ipfs/go-ipfs-api"
 )
 
-func (p *Service) pinFileLocally(filepath string) (types.IpfsHash, error) {
+func (p *Service) pinFileLocally(filepath string) (base.IpfsHash, error) {
 	file, err := os.OpenFile(filepath, os.O_RDONLY, 0)
 	if err != nil {
 		return "", err
 	}
 	defer file.Close()
 
+	// TODO: should be configurable (see #2804)
 	sh := shell.NewShell("localhost:5001")
 	cid, err := sh.Add(file, shell.Pin(true))
 	if err != nil {
 		return "", err
 	}
-	return types.IpfsHash(cid), nil
+	return base.IpfsHash(cid), nil
 }

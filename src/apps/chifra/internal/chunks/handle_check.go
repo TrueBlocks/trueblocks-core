@@ -5,16 +5,18 @@
 package chunksPkg
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"sort"
-	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -26,16 +28,16 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	opts.Globals.Format = "json"
 
 	maxTestItems := 10
-	filenameChan := make(chan paths.IndexFileInfo)
+	filenameChan := make(chan cache.CacheFileInfo)
 
 	var nRoutines int = 1
-	go paths.WalkIndexFolder(opts.Globals.Chain, paths.Index_Bloom, filenameChan)
+	go cache.WalkCacheFolder(context.Background(), opts.Globals.Chain, cache.Index_Bloom, nil, filenameChan)
 
 	fileNames := []string{}
 	for result := range filenameChan {
 		switch result.Type {
-		case paths.Index_Bloom:
-			skip := (opts.Globals.TestMode && len(fileNames) > maxTestItems) || !strings.HasSuffix(result.Path, ".bloom")
+		case cache.Index_Bloom:
+			skip := (opts.Globals.TestMode && len(fileNames) > maxTestItems) || !cache.IsCacheType(result.Path, cache.Index_Bloom, true /* checkExt */)
 			if !skip {
 				hit := false
 				for _, block := range blockNums {
@@ -49,11 +51,13 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 					fileNames = append(fileNames, result.Path)
 				}
 			}
-		case paths.None:
+		case cache.Cache_NotACache:
 			nRoutines--
 			if nRoutines == 0 {
 				close(filenameChan)
 			}
+		default:
+			logger.Fatal("You may only traverse the bloom folder")
 		}
 	}
 
@@ -79,7 +83,7 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	// a string array of the actual files in the index
 	fnArray := []string{}
 	for _, fileName := range fileNames {
-		rng := paths.RangeFromFilename(fileName)
+		rng := base.RangeFromFilename(fileName)
 		fnArray = append(fnArray, rng.String())
 	}
 	sort.Slice(fnArray, func(i, j int) bool {
@@ -104,55 +108,55 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 		return remoteArray[i] < remoteArray[j]
 	})
 
-	reports := []types.ReportCheck{}
+	reports := []simpleReportCheck{}
 
 	allowMissing := scrapeCfg.AllowMissing(opts.Globals.Chain)
-	seq := types.ReportCheck{Reason: "Filenames sequential"}
+	seq := simpleReportCheck{Reason: "Filenames sequential"}
 	if err := opts.CheckSequential(fileNames, cacheArray, remoteArray, allowMissing, &seq); err != nil {
 		return err
 	}
 	reports = append(reports, seq)
 
-	intern := types.ReportCheck{Reason: "Internally consistent"}
+	intern := simpleReportCheck{Reason: "Internally consistent"}
 	if err := opts.CheckInternal(fileNames, blockNums, &intern); err != nil {
 		return err
 	}
 	reports = append(reports, intern)
 
-	con := types.ReportCheck{Reason: "Consistent hashes"}
+	con := simpleReportCheck{Reason: "Consistent hashes"}
 	if err := opts.CheckHashes(cacheManifest, remoteManifest, &con); err != nil {
 		return err
 	}
 	reports = append(reports, con)
 
-	sizes := types.ReportCheck{Reason: "Check file sizes"}
+	sizes := simpleReportCheck{Reason: "Check file sizes"}
 	if err := opts.CheckSizes(fileNames, blockNums, cacheManifest, remoteManifest, &sizes); err != nil {
 		return err
 	}
 	reports = append(reports, sizes)
 
 	// compare remote manifest to cached manifest
-	r2c := types.ReportCheck{Reason: "Remote Manifest to Cached Manifest"}
+	r2c := simpleReportCheck{Reason: "Remote Manifest to Cached Manifest"}
 	if err := opts.CheckManifest(remoteArray, cacheArray, &r2c); err != nil {
 		return err
 	}
 	reports = append(reports, r2c)
 
 	// compare with çached manifest with files on disc
-	d2c := types.ReportCheck{Reason: "Disc Files to Cached Manifest"}
+	d2c := simpleReportCheck{Reason: "Disc Files to Cached Manifest"}
 	if err := opts.CheckManifest(fnArray, cacheArray, &d2c); err != nil {
 		return err
 	}
 	reports = append(reports, d2c)
 
 	// compare with remote manifest with files on disc
-	d2r := types.ReportCheck{Reason: "Disc Files to Remote Manifest"}
+	d2r := simpleReportCheck{Reason: "Disc Files to Remote Manifest"}
 	if err := opts.CheckManifest(fnArray, remoteArray, &d2r); err != nil {
 		return err
 	}
 	reports = append(reports, d2r)
 
-	// stage := types.ReportCheck{Reason: "Check staging folder"}
+	// stage := simpleReportCheck{Reason: "Check staging folder"}
 	// if err := opts.CheckStaging(0, allowMissing, &stage); err != nil {
 	// 	return err
 	// }
@@ -168,5 +172,14 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 			reports[i].SkippedCnt = reports[i].VisitedCnt - reports[i].CheckedCnt
 		}
 	}
-	return globals.RenderSlice(&opts.Globals, reports)
+
+	ctx := context.Background()
+	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+		for _, report := range reports {
+			report := report
+			modelChan <- &report
+		}
+	}
+
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }

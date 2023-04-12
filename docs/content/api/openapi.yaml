@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.60.0-beta
+  version: 0.62.0-beta
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra daemon`, you can
@@ -174,13 +174,14 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, and/or <a href="/data-model/accounts/#appearancecount">Appearancecount</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-list">chifra list</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/accounts/#appearancecount">Appearancecount</a>, and/or <a href="/data-model/accounts/#bounds">Bounds</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-list">chifra list</a> command line.
                     type: array
                     items:
                       oneOf:
                         - $ref: "#/components/schemas/appearance"
                         - $ref: "#/components/schemas/monitor"
                         - $ref: "#/components/schemas/appearanceCount"
+                        - $ref: "#/components/schemas/bounds"
                 example:
                   {
                     "data": [
@@ -574,10 +575,12 @@ paths:
               schema:
                 properties:
                   data:
-                    description: A local file indicating a user's interest in an address. Includes caches for reconicilations, transactions, and appearances as well as an optional association to named account. Produces <a href="/data-model/accounts/#monitor">Monitor</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-monitors">chifra monitors</a> command line.
+                    description: Produces <a href="/data-model/accounts/#monitor">Monitor</a>, and/or <a href="/data-model/admin/#monitorclean">Monitorclean</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-monitors">chifra monitors</a> command line.
                     type: array
                     items:
-                      $ref: "#/components/schemas/monitor"
+                      oneOf:
+                        - $ref: "#/components/schemas/monitor"
+                        - $ref: "#/components/schemas/monitorClean"
         "400":
           description: bad input parameter
   /names:
@@ -1223,7 +1226,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">Traceaction</a>, <a href="/data-model/chaindata/#traceresult">Traceresult</a>, and/or <a href="/data-model/chaindata/#tracecount">Tracecount</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-traces">chifra traces</a> command line.
+                    description: Produces <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">Traceaction</a>, <a href="/data-model/chaindata/#traceresult">Traceresult</a>, <a href="/data-model/chaindata/#tracecount">Tracecount</a>, and/or <a href="/data-model/chaindata/#tracefilter">Tracefilter</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-traces">chifra traces</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -1231,6 +1234,7 @@ paths:
                         - $ref: "#/components/schemas/traceAction"
                         - $ref: "#/components/schemas/traceResult"
                         - $ref: "#/components/schemas/traceCount"
+                        - $ref: "#/components/schemas/traceFilter"
         "400":
           description: bad input parameter
   /when:
@@ -1302,10 +1306,14 @@ paths:
               schema:
                 properties:
                   data:
-                    description: A block that has been given a particular name such as `first` or `latest`. Produces <a href="/data-model/chaindata/#namedblock">Namedblock</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-when">chifra when</a> command line.
+                    description: Produces <a href="/data-model/chaindata/#block">Block</a>, <a href="/data-model/chaindata/#namedblock">Namedblock</a>, <a href="/data-model/chaindata/#timestamp">Timestamp</a>, and/or <a href="/data-model/chaindata/#timestampcount">Timestampcount</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-when">chifra when</a> command line.
                     type: array
                     items:
-                      $ref: "#/components/schemas/namedBlock"
+                      oneOf:
+                        - $ref: "#/components/schemas/block"
+                        - $ref: "#/components/schemas/namedBlock"
+                        - $ref: "#/components/schemas/timestamp"
+                        - $ref: "#/components/schemas/timestampCount"
         "400":
           description: bad input parameter
   /state:
@@ -1473,7 +1481,6 @@ paths:
                 - decimals
                 - totalSupply
                 - version
-                - none
                 - all
         - name: byAcct
           description: >
@@ -1529,54 +1536,17 @@ paths:
       description: Report on and edit the configuration of the TrueBlocks system. Corresponds to the <a href="/chifra/admin/#chifra-config">chifra config</a> command line.
       operationId: admin-config
       parameters:
-        - name: modes
+        - name: mode
           description: either show or edit the configuration
           required: false
           style: form
           in: query
           explode: true
           schema:
-            type: array
-            items:
-              type: string
-              enum:
-                - show
-                - edit
-        - name: module
-          description: the type of information to show or edit
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-              enum:
-                - index
-                - monitors
-                - names
-                - abis
-                - caches
-                - some
-                - all
-        - name: details
-          description: >
-            include details about items found in monitors, slurps, abis, or price caches
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: terse
-          description: show a terse summary report for mode show
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
+            type: string
+            enum:
+              - show
+              - edit
       responses:
         "200":
           description: returns the requested data
@@ -1585,16 +1555,10 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/admin/#status">Status</a>, <a href="/data-model/admin/#cache">Cache</a>, <a href="/data-model/admin/#cacheentry">Cacheentry</a>, <a href="/data-model/admin/#indexcacheitem">Indexcacheitem</a>, and/or <a href="/data-model/admin/#chain">Chain</a> data. Corresponds to the <a href="/chifra/admin/#chifra-config">chifra config</a> command line.
+                    description: A configuration item carrying information about a single chain. Produces <a href="/data-model/admin/#chain">Chain</a> data. Corresponds to the <a href="/chifra/admin/#chifra-config">chifra config</a> command line.
                     type: array
                     items:
-                      oneOf:
-                        - $ref: "#/components/schemas/monitor"
-                        - $ref: "#/components/schemas/config"
-                        - $ref: "#/components/schemas/cache"
-                        - $ref: "#/components/schemas/cacheEntry"
-                        - $ref: "#/components/schemas/indexCacheItem"
-                        - $ref: "#/components/schemas/chain"
+                      $ref: "#/components/schemas/chain"
                 example:
                   {
                     "data":
@@ -1615,6 +1579,75 @@ paths:
                         },
                       ],
                   }
+        "400":
+          description: bad input parameter
+  /status:
+    get:
+      tags:
+        - Admin
+      summary: Get status on caches
+      description: Report on the state of the internal binary caches. Corresponds to the <a href="/chifra/admin/#chifra-status">chifra status</a> command line.
+      operationId: admin-status
+      parameters:
+        - name: modes
+          description: the (optional) name of the binary cache to report on, terse otherwise
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - index
+                - blooms
+                - blocks
+                - txs
+                - traces
+                - monitors
+                - names
+                - abis
+                - recons
+                - slurps
+                - staging
+                - unripe
+                - maps
+                - some
+                - all
+        - name: firstRecord
+          description: the first record to process
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: uint64
+        - name: maxRecords
+          description: the maximum number of records to process
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: uint64
+      responses:
+        "200":
+          description: returns the requested data
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    description: Produces <a href="/data-model/admin/#status">Status</a>, <a href="/data-model/admin/#cacheitem">Cacheitem</a>, and/or <a href="/data-model/admin/#chain">Chain</a> data. Corresponds to the <a href="/chifra/admin/#chifra-status">chifra status</a> command line.
+                    type: array
+                    items:
+                      oneOf:
+                        - $ref: "#/components/schemas/config"
+                        - $ref: "#/components/schemas/cacheItem"
+                        - $ref: "#/components/schemas/chain"
         "400":
           description: bad input parameter
   /scrape:
@@ -1667,12 +1700,12 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/admin/#manifest">Manifest</a>, and/or <a href="/data-model/admin/#pinnedchunk">Pinnedchunk</a> data. Corresponds to the <a href="/chifra/admin/#chifra-scrape">chifra scrape</a> command line.
+                    description: Produces <a href="/data-model/admin/#manifest">Manifest</a>, and/or <a href="/data-model/admin/#chunkrecord">Chunkrecord</a> data. Corresponds to the <a href="/chifra/admin/#chifra-scrape">chifra scrape</a> command line.
                     type: array
                     items:
                       oneOf:
                         - $ref: "#/components/schemas/manifest"
-                        - $ref: "#/components/schemas/pinnedChunk"
+                        - $ref: "#/components/schemas/chunkRecord"
         "400":
           description: bad input parameter
   /chunks:
@@ -1692,7 +1725,6 @@ paths:
           schema:
             type: string
             enum:
-              - status
               - manifest
               - index
               - blooms
@@ -1772,17 +1804,18 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/admin/#manifest">Manifest</a>, <a href="/data-model/admin/#pinnedchunk">Pinnedchunk</a>, <a href="/data-model/admin/#chunkindex">Chunkindex</a>, <a href="/data-model/admin/#chunkblooms">Chunkblooms</a>, <a href="/data-model/admin/#chunkaddresses">Chunkaddresses</a>, <a href="/data-model/admin/#chunkappearances">Chunkappearances</a>, and/or <a href="/data-model/admin/#chunkstats">Chunkstats</a> data. Corresponds to the <a href="/chifra/admin/#chifra-chunks">chifra chunks</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/admin/#manifest">Manifest</a>, <a href="/data-model/admin/#chunkrecord">Chunkrecord</a>, <a href="/data-model/admin/#chunkindex">Chunkindex</a>, <a href="/data-model/admin/#chunkbloom">Chunkbloom</a>, <a href="/data-model/admin/#chunkaddress">Chunkaddress</a>, <a href="/data-model/admin/#chunkstats">Chunkstats</a>, and/or <a href="/data-model/admin/#reportcheck">Reportcheck</a> data. Corresponds to the <a href="/chifra/admin/#chifra-chunks">chifra chunks</a> command line.
                     type: array
                     items:
                       oneOf:
+                        - $ref: "#/components/schemas/appearance"
                         - $ref: "#/components/schemas/manifest"
-                        - $ref: "#/components/schemas/pinnedChunk"
+                        - $ref: "#/components/schemas/chunkRecord"
                         - $ref: "#/components/schemas/chunkIndex"
-                        - $ref: "#/components/schemas/chunkBlooms"
-                        - $ref: "#/components/schemas/chunkAddresses"
-                        - $ref: "#/components/schemas/chunkAppearances"
+                        - $ref: "#/components/schemas/chunkBloom"
+                        - $ref: "#/components/schemas/chunkAddress"
                         - $ref: "#/components/schemas/chunkStats"
+                        - $ref: "#/components/schemas/reportCheck"
                 example:
                   {
                     "data": [
@@ -1836,12 +1869,12 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/admin/#manifest">Manifest</a>, and/or <a href="/data-model/admin/#pinnedchunk">Pinnedchunk</a> data. Corresponds to the <a href="/chifra/admin/#chifra-init">chifra init</a> command line.
+                    description: Produces <a href="/data-model/admin/#manifest">Manifest</a>, and/or <a href="/data-model/admin/#chunkrecord">Chunkrecord</a> data. Corresponds to the <a href="/chifra/admin/#chifra-init">chifra init</a> command line.
                     type: array
                     items:
                       oneOf:
                         - $ref: "#/components/schemas/manifest"
-                        - $ref: "#/components/schemas/pinnedChunk"
+                        - $ref: "#/components/schemas/chunkRecord"
         "400":
           description: bad input parameter
   /slurp:
@@ -1849,7 +1882,7 @@ paths:
       tags:
         - Other
       summary: Slurp Etherscan
-      description: Fetch data from EtherScan for any address. Corresponds to the <a href="/chifra/other/#chifra-slurp">chifra slurp</a> command line.
+      description: Fetch data from Etherscan for any address. Corresponds to the <a href="/chifra/other/#chifra-slurp">chifra slurp</a> command line.
       operationId: other-slurp
       parameters:
         - name: addrs
@@ -1889,6 +1922,7 @@ paths:
                 - int
                 - token
                 - nfts
+                - "1155"
                 - miner
                 - uncles
                 - all
@@ -1900,6 +1934,24 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: perPage
+          description: the number of records to request on each page
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: uint64
+        - name: sleep
+          description: seconds to sleep between requests
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: double
       responses:
         "200":
           description: returns the requested data
@@ -1919,7 +1971,6 @@ paths:
                       "blockHash": "0xeab8fe9da0b41b2c003db620bb9adbedd5fcc7222cc50d53431aa1df47a20dda",
                       "blockNumber": "46217",
                       "transactionIndex": "0",
-                      "nonce": "0",
                       "timestamp": "1438919451",
                       "from": "0xc8ebccc5f5689fa8659d83713341e5ad19349448",
                       "to": "0xc8ebccc5f5689fa8659d83713341e5ad19349448",
@@ -1941,7 +1992,7 @@ paths:
 components:
   schemas:
     appearance:
-      description: "an appearance (`<blockNumber,transactionIndex>`) of an address anywhere on the chain"
+      description: "an appearance (`<blockNumber,transactionIndex>`) of an address anywhere on the chain (note that in some cases, not all fields will appear depending on the command)"
       type: object
       properties:
         address:
@@ -2273,6 +2324,28 @@ components:
           type: number
           format: uint64
           description: "the size of the monitor file containing those appearances"
+    bounds:
+      description: "show first block and last block an address appears in along with timestamps and dates"
+      type: object
+      properties:
+        count:
+          type: number
+          format: uint64
+          description: "the number of appearances for this address"
+        firstApp:
+          type: RawAppearance
+          description: "the block number and transaction id of the first appearance of this address"
+        firstTs:
+          type: number
+          format: timestamp
+          description: "the timestamp of the first appearance of this address"
+        latestApp:
+          type: RawAppearance
+          description: "the block number and transaction id of the latest appearance of this address"
+        latestTs:
+          type: number
+          format: timestamp
+          description: "the timestamp of the latest appearance of this address"
     block:
       description: "block data as returned from the RPC (with slight enhancements)"
       type: object
@@ -2326,6 +2399,10 @@ components:
           type: boolean
           example: true
           description: "flag indicating the system considers this data final"
+        uncles:
+          type: array
+          items:
+            $ref: "#/components/schemas/hash"
     transaction:
       description: "transaction data as returned from the RPC (with slight enhancements)"
       type: object
@@ -2476,7 +2553,7 @@ components:
           description: "Equivalent to the queried value of `decimals` from an ERC20 contract or, if ETH or WEI then 18"
         amount:
           type: string
-          format: uint256
+          format: wei
           description: "the amount of the transfer in the units of the asset"
         spotPrice:
           type: number
@@ -2492,30 +2569,20 @@ components:
       description: "receipt data as returned from the RPC (with slight enhancements)"
       type: object
       properties:
-        blockNumber:
-          type: number
-          format: blknum
-        transactionIndex:
-          type: number
-          format: blknum
-        transactionHash:
-          type: string
-          format: hash
         blockHash:
           type: string
           format: hash
-        status:
+        blockNumber:
           type: number
-          format: uint32
-          description: "`1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise"
-        gasUsed:
-          type: string
-          format: gas
-          description: "the amount of gas actually used by the transaction"
+          format: blknum
         contractAddress:
           type: string
           format: address
           description: "the address of the newly created contract, if any"
+        gasUsed:
+          type: string
+          format: gas
+          description: "the amount of gas actually used by the transaction"
         isError:
           type: boolean
         logs:
@@ -2523,6 +2590,16 @@ components:
           items:
             $ref: "#/components/schemas/log"
           description: "a possibly empty array of logs"
+        status:
+          type: number
+          format: uint32
+          description: "`1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise"
+        transactionHash:
+          type: string
+          format: hash
+        transactionIndex:
+          type: number
+          format: blknum
     log:
       description: "log data as returned from the RPC (with slight enhancements)"
       type: object
@@ -2534,12 +2611,12 @@ components:
           description: "the number of the block"
         transactionIndex:
           type: number
-          format: blknum
+          format: uint64
           example: 305
           description: "the zero-indexed position of the transaction in the block"
         logIndex:
           type: number
-          format: blknum
+          format: uint64
           example: 354
           description: "the zero-indexed position of this log relative to the block"
         transactionHash:
@@ -2681,6 +2758,63 @@ components:
           type: string
           format: bytes
           description: "the result of the call of this trace"
+    traceCount:
+      description: "counts the number of traces in a transaction"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          example: 10
+          description: "the block number"
+        transactionIndex:
+          type: number
+          format: blknum
+          example: 10
+          description: "the transaction index"
+        transactionHash:
+          type: string
+          format: hash
+          example: "10"
+          description: "the transaction's hash"
+        timestamp:
+          type: number
+          format: timestamp
+          example: 10
+          description: "the timestamp of the block"
+        tracesCnt:
+          type: number
+          format: uint64
+          example: 30
+          description: "the number of traces in the transaction"
+    traceFilter:
+      description: "used by chifra traces --filter option to query for traces"
+      type: object
+      properties:
+        fromBlock:
+          type: string
+          description: "The first block to include in the queried list of traces."
+        toBlock:
+          type: string
+          description: "The last block to include in the queried list of traces."
+        fromAddress:
+          type: array
+          items:
+            $ref: "#/components/schemas/address"
+          description: "If included, only traces `from` this address will be included."
+        toAddress:
+          type: array
+          items:
+            $ref: "#/components/schemas/address"
+          description: "If included, only traces `to` this address will be included."
+        after:
+          type: number
+          format: uint64
+          description: "Only traces after this many traces are included."
+        count:
+          type: number
+          format: uint64
+          description: "Only this many traces are included."
     blockCount:
       description: "counts of various parts of the block data such as tx_count, trace_count, etc."
       type: object
@@ -2748,35 +2882,33 @@ components:
           type: string
           example: "byzantium"
           description: "an optional name for the block"
-    traceCount:
-      description: "counts the number of traces in a transaction"
+    timestamp:
+      description: "the timestamp, date and difference in timestamp of previous block produced by chifra when"
       type: object
       properties:
         blockNumber:
           type: number
           format: blknum
-          example: 10
-          description: "the block number"
-        transactionIndex:
-          type: number
-          format: blknum
-          example: 10
-          description: "the transaction index"
-        transactionHash:
-          type: string
-          format: hash
-          example: "10"
-          description: "the transaction's hash"
+          example: 4370000
+          description: "the number of the block"
         timestamp:
           type: number
           format: timestamp
-          example: 10
-          description: "the timestamp of the block"
-        tracesCnt:
+          example: 1508131331
+          description: "the Unix timestamp of the block"
+        diff:
+          type: number
+          format: timestamp
+          example: 12
+          description: "the number of seconds since the last block"
+    timestampCount:
+      description: "the number of timestamps in the timestamps database"
+      type: object
+      properties:
+        count:
           type: number
           format: uint64
-          example: 30
-          description: "the number of traces in the transaction"
+          description: "the number of timestamps in the timestamps database"
     ethState:
       description: "the on-chain state of a given address including ETH balance, nonce, and smart contract byte code if present"
       type: object
@@ -2942,7 +3074,7 @@ components:
           description: "`true` if the rpcProvider provides Parity traces"
         hasEskey:
           type: boolean
-          description: "`true` if an EtherScan key is present"
+          description: "`true` if an Etherscan key is present"
         hasPinkey:
           type: boolean
           description: "`true` if a Pinata API key is present"
@@ -2958,7 +3090,7 @@ components:
         caches:
           type: array
           items:
-            $ref: "#/components/schemas/cache"
+            $ref: "#/components/schemas/cacheItem"
           description: "a collection of information concerning the binary caches"
     manifest:
       description: "a JSON object containing records for each bloom filter and index chunk in the Unchained Index"
@@ -2981,9 +3113,9 @@ components:
         chunks:
           type: array
           items:
-            $ref: "#/components/schemas/pinnedChunk"
+            $ref: "#/components/schemas/chunkRecord"
           description: "a list of the IPFS hashes of all of the chunks in the unchained index"
-    pinnedChunk:
+    chunkRecord:
       description: "a single record in the manifest detailing the IPFS hases and file sizes for each bloom filter and index chunk"
       type: object
       properties:
@@ -3001,14 +3133,12 @@ components:
           format: ipfshash
           example: "QmTbYpR...qWLj44"
           description: "the IPFS hash of the index chunk at that range"
-        firstApp:
-          type: number
-          format: blknum
-          description: "the first appearance in the chunk"
-        latestApp:
-          type: number
-          format: blknum
-          description: "the latest appearance in the chunk"
+        bloomSize:
+          type: int64
+          description: "the size of the bloom filter in bytes"
+        indexSize:
+          type: int64
+          description: "the size of the index portion in bytes"
     chunkIndex:
       description: "internal-use only data model detailing a single index chunk file"
       type: object
@@ -3024,11 +3154,11 @@ components:
           type: string
           format: hash
           description: "The hash of the specification under which this chunk was generated"
-        addressCount:
+        nAddresses:
           type: number
           format: uint64
           description: "The number of addresses in this chunk"
-        appearanceCount:
+        nAppearances:
           type: number
           format: uint64
           description: "The number of appearances in this chunk"
@@ -3036,7 +3166,7 @@ components:
           type: number
           format: uint64
           description: "The size of the chunk in bytes"
-    chunkBlooms:
+    chunkBloom:
       description: "internal-use only data model detailing a single bloom filter file"
       type: object
       properties:
@@ -3051,7 +3181,7 @@ components:
           type: string
           format: hash
           description: "The hash of the specification under which this chunk was generated"
-        count:
+        nBlooms:
           type: number
           format: uint64
           description: "The number of individual bloom filters in this bloom file"
@@ -3063,11 +3193,11 @@ components:
           type: number
           format: uint64
           description: "The size on disc in bytes of this bloom file"
-        width:
+        byteWidth:
           type: number
           format: uint64
           description: "The width of the bloom filter"
-    chunkAddresses:
+    chunkAddress:
       description: "internal-use only data model detailing a single address record in the address table of an index chunk"
       type: object
       properties:
@@ -3087,18 +3217,6 @@ components:
           type: number
           format: uint64
           description: "The number of records in teh appearance table for this address"
-    chunkAppearances:
-      description: "internal-use only data model detailing a single appearance record in the appearance table of an index chunk"
-      type: object
-      properties:
-        blockNumber:
-          type: number
-          format: uint64
-          description: "The block number of this appearance"
-        transactionIndex:
-          type: number
-          format: uint64
-          description: "The transaction index of this appearance"
     chunkStats:
       description: "summary statistics about an Unchained Index bloom filter and index chunk"
       type: object
@@ -3155,93 +3273,85 @@ components:
           type: number
           format: double
           description: "the ratio of appearances to addresses"
-    cache:
-      description: "the base data model for each of the type-specific local binary caches"
-      type: object
-      properties:
-        type:
-          type: string
-          description: "the type of the cache (one of the nine different types)"
-        path:
-          type: string
-          description: "the physical path to the cache on the hard drive"
-        nFiles:
-          type: number
-          format: uint64
-          description: "the number of files in the cache"
-        nFolders:
-          type: number
-          format: uint64
-          description: "the number of subfolders in the cache"
-        sizeInBytes:
-          type: number
-          format: uint64
-          description: "the size of the cache in bytes"
-        items:
-          type: array
-          items:
-            $ref: "#/components/schemas/cacheEntry"
-          description: "an array of cache items"
-    cacheEntry:
-      description: "a single entry in the results of a status query when `--verbose` is enabled"
+    monitorClean:
+      description: "report on cleaning dups out of monitors"
       type: object
       properties:
         address:
           type: string
           format: address
-        name:
-          type: string
-    indexCacheItem:
-      description: "an item in the Unchained Index cache"
+          description: "the address being cleaned"
+        sizeThen:
+          type: int64
+          description: "the number of appearances in the monitor prior to cleaning"
+        sizeNow:
+          type: int64
+          description: "the number of appearances in the monitor after cleaning"
+        dups:
+          type: int64
+          description: "the number of duplicates removed"
+    cacheItem:
+      description: "a single entry in the results of a status query when `--verbose` is enabled"
       type: object
       properties:
-        nAddrs:
+        type:
+          type: string
+          description: "the type of the cache"
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/any"
+          description: "the individual items in the cache (if --verbose)"
+        lastCached:
+          type: string
+          description: "the date of the most recent item added to the cache"
+        nFiles:
+          type: number
+          format: uint64
+          description: "the number of items in the cache"
+        nFolders:
+          type: number
+          format: uint64
+          description: "the number of folders holding that many items"
+        path:
+          type: string
+          description: "the path to the top of the given cache"
+        sizeInBytes:
+          type: int64
+          description: "the size of the cache in bytes"
+    reportCheck:
+      description: "report on checking contents of chunks"
+      type: object
+      properties:
+        Reason:
+          type: string
+          description: "the reason for the test"
+        visitedCnt:
           type: number
           format: uint32
-          description: "the number of addresses in this chunk"
-        nApps:
+          description: "the number of visited items in the cache"
+        checkedCnt:
           type: number
           format: uint32
-          description: "the number of appearances in this chunk"
-        firstApp:
-          type: number
-          format: blknum
-          description: "the first appearance in this chunk"
-        latestApp:
-          type: number
-          format: blknum
-          description: "the last appeaerance in this chunk"
-        firstTs:
-          type: number
-          format: timestamp
-          description: "the first timestamp in this chunk"
-        latestTs:
-          type: number
-          format: timestamp
-          description: "the last timestamp in this chunk"
-        filename:
-          type: string
-          description: "the filename of this chunk"
-        fileDate:
-          type: string
-          format: datetime
-          description: "the file date of this chunk"
-        indexSizeBytes:
+          description: "the number of checks"
+        skippedCnt:
           type: number
           format: uint32
-          description: "the size in bytes of the index portion of this chunk"
-        indexHash:
-          type: string
-          format: ipfshash
-          description: "the IPFS hash of the index portion of this chunk"
-        bloomSizeBytes:
+          description: "the number of skipped checks"
+        passedCnt:
           type: number
           format: uint32
-          description: "the size in bytes of the bloom filter for this chunk"
-        bloomHash:
+          description: "the number of passed checks"
+        failedCnt:
+          type: number
+          format: uint32
+          description: "the number of failed checks"
+        result:
           type: string
-          format: ipfshash
-          description: "the IPFS has of the bloom filter for this chunk"
+          description: "the result of the check"
+        msgStrings:
+          type: []string
+          description: "an array of messages explaining failed checks"
     chain:
       description: "a configuration item carrying information about a single chain"
       type: object
@@ -3264,7 +3374,7 @@ components:
           description: "A valid API provider for the explorer"
         remoteExplorer:
           type: string
-          description: "A remote explorer for the chain such as EtherScan"
+          description: "A remote explorer for the chain such as Etherscan"
         localExplorer:
           type: string
           description: "The local explorer for the chain (typically TrueBlocks Explorer)"

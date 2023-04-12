@@ -5,7 +5,6 @@
 package config
 
 import (
-	"log"
 	"os"
 	"os/user"
 	"path/filepath"
@@ -125,7 +124,7 @@ func IsAtLeastVersion(needle string) bool {
 func GetPathToRootConfig() string {
 	configPath, err := PathFromXDG("XDG_CONFIG_HOME")
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	} else if len(configPath) > 0 {
 		return configPath
 	}
@@ -196,4 +195,14 @@ func GetPinningKeys(chain string) (string, string, string) {
 	b := keys["pinata"].Secret
 	c := keys["estuary"].ApiKey
 	return a, b, c
+}
+
+func HasPinningKeys(chain string) bool {
+	a, b, c := GetPinningKeys(chain)
+	return len(a)+len(b)+len(c) > 0
+}
+
+func HasEsKeys(chain string) bool {
+	keys := GetRootConfig().Keys
+	return len(keys["etherscan"].ApiKey) > 0
 }

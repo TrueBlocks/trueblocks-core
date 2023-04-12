@@ -71,9 +71,37 @@ Additional help topics:{{range .Commands}}{{if .IsAdditionalHelpTopicCommand}}
 
 Use "{{.CommandPath}} [command] --help" for more information about a command.{{end}}
 `
-    usage := t + notes
-    if usage != "" && usage[len(usage)-1] != '\n' {
-        usage += "\n"
-    }
+
+	usage := t + coloredNotes(notes)
+	if usage != "" && usage[len(usage)-1] != '\n' {
+		usage += "\n"
+	}
 	return usage
+}
+
+// TODO: Coloring in notes (search in makeClass for this note)
+func coloredNotes(notes string) string {
+	// if !strings.Contains(notes, "++") {
+	// 	return notes
+	// }
+	// if os.Getenv("NO_COLOR") == "true" {
+	// 	return strings.Replace(notes, "++", "", -1)
+	// }
+	// cnt := 0
+	// for {
+	// 	if !strings.Contains(notes, "++") {
+	// 		break
+	// 	}
+	// 	if cnt%2 == 0 {
+	// 		notes = strings.Replace(notes, "++", colors.Cyan, 1)
+	// 	} else {
+	// 		notes = strings.Replace(notes, "++", colors.Off, 1)
+	// 	}
+	// 	cnt++
+	// }
+	// if cnt%2 == 1 {
+	// 	logger.Panic("Mismatched backticks in notes. Quitting...")
+	// }
+
+	return notes
 }

@@ -3,7 +3,7 @@
 
 While it's useful, it has two shortcomings. First, it is fully centralized, pulling its data from
 [http://etherscan.io](http://etherscan.io). Second, is that it does not report every transaction
-for a given account. This is actually a shortcoming with EtherScan. It's too complicated to explain
+for a given account. This is actually a shortcoming with Etherscan. It's too complicated to explain
 here, but see our blog.
 
 While `[{NAME}]` has its shortcomings, it does provides some nice features. You may use it to pull

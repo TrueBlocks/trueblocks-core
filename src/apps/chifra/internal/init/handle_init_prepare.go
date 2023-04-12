@@ -10,12 +10,13 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -29,12 +30,12 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 	// filters are required. If the user has specified `--all`, we insist that the corresponding index portion is also present and valid. If the
 	// user has not specified `--all`, then we check the index portion, only if it exists, and then only for the correct header and file size. If a
 	// bloom filter is present on disc, but not in the manifest, then we delete both the bloom filte and the corresponding index portion if it exists.
-	cleanIndex := func(walker *index.IndexWalker, path string, first bool) (bool, error) {
-		if path != paths.ToBloomPath(path) {
+	cleanIndex := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
+		if path != cache.ToBloomPath(path) {
 			logger.Fatal("should not happen ==> we're spinning through the bloom filters")
 		}
 
-		rng := paths.RangeFromFilename(path)
+		rng := base.RangeFromFilename(path)
 		chunk := man.ChunkMap[rng.String()]
 		if chunk != nil {
 			ch := validate.ChunkSizes{BloomSize: chunk.BloomSize, IndexSize: chunk.IndexSize}
@@ -62,8 +63,8 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 			case validate.OKAY:
 				chunk.IndexHash = "" // we don't have to download it
 				chunk.IndexSize = 0
-				if file.FileExists(paths.ToIndexPath(path)) {
-					reportReason("The index file", indexStatus, paths.ToIndexPath(path), opts.Globals.Verbose)
+				if file.FileExists(cache.ToIndexPath(path)) {
+					reportReason("The index file", indexStatus, cache.ToIndexPath(path), opts.Globals.Verbose)
 				}
 			case validate.FILE_ERROR:
 				return false, err // bubble the error up
@@ -74,7 +75,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 			case validate.WRONG_MAGIC:
 				fallthrough
 			case validate.WRONG_HASH:
-				reportReason("The index file", indexStatus, paths.ToIndexPath(path), opts.Globals.Verbose)
+				reportReason("The index file", indexStatus, cache.ToIndexPath(path), opts.Globals.Verbose)
 			default:
 				logger.Fatal("should not happen ==> unknown return from IsValidChunk")
 			}
@@ -91,7 +92,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 				return false, err
 			}
 
-			indexPath := paths.ToIndexPath(path)
+			indexPath := cache.ToIndexPath(path)
 			if file.FileExists(indexPath) {
 				reportReason("The index file", validate.NOT_IN_MANIFEST, indexPath, opts.Globals.Verbose)
 				if err := os.Remove(indexPath); err != nil {
@@ -103,7 +104,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 		}
 	}
 
-	walker := index.NewIndexWalker(
+	walker := index.NewCacheWalker(
 		opts.Globals.Chain,
 		opts.Globals.TestMode,
 		10, /* maxTests */
@@ -125,8 +126,8 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 	nCorrections := 0
 	for _, chunk := range man.ChunkMap {
 		if chunk != nil {
-			rng := paths.RangeFromRangeString(chunk.Range)
-			_, indexPath := rng.RangeToFilename(opts.Globals.Chain, paths.Index_Final)
+			rng := base.RangeFromRangeString(chunk.Range)
+			_, indexPath := rng.RangeToFilename(opts.Globals.Chain)
 			if !opts.All && !file.FileExists(indexPath) {
 				chunk.IndexHash = ""
 				chunk.IndexSize = 0
@@ -141,7 +142,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 			chunksNeeded = append(chunksNeeded, *chunk)
 			if opts.Globals.Verbose {
 				msg := fmt.Sprintf("%s%s%s%v", colors.BrightBlack, "The chunk needs to be downloaded", colors.Off, chunk)
-				logger.Log(logger.Info, msg)
+				logger.Info(msg)
 			}
 		}
 	}
@@ -176,5 +177,5 @@ func reportReason(prefix string, status validate.ErrorType, path string, verbose
 	}
 
 	msg := fmt.Sprintf("%s%s %-30.30s%s%s", col, prefix, reasons[status], colors.Off, path)
-	logger.Log(logger.Warning, msg)
+	logger.Warn(msg)
 }

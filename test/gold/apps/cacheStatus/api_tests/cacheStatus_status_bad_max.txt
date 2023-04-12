@@ -1,0 +1,6 @@
+status?modes=names&verbose&maxRecords=0
+{
+  "errors": [
+    "--max_records must be greater than zero"
+  ]
+}

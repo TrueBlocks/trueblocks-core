@@ -5,68 +5,50 @@
 package whenPkg
 
 import (
+	"context"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // HandleTimestampsShow handles chifra when --timestamps
 func (opts *WhenOptions) HandleTimestampsShow() error {
-	cnt, err := tslib.NTimestamps(opts.Globals.Chain)
+	bnMap, err := identifiers.GetBlockNumberMap(opts.Globals.Chain, opts.BlockIds)
 	if err != nil {
 		return err
 	}
 
-	err = opts.Globals.RenderHeader(types.SimpleTimestamp{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.NoHeader, true)
-	defer opts.Globals.RenderFooter()
+	var cnt uint64
+	cnt, err = tslib.NTimestamps(opts.Globals.Chain)
 	if err != nil {
 		return err
 	}
 
-	prev := types.SimpleTimestamp{}
-	blockNums, err := identifiers.GetBlockNumbers(opts.Globals.Chain, opts.BlockIds)
-	if err != nil {
-		return err
-	}
-
-	if len(blockNums) > 0 {
-		for i, bn := range blockNums {
-			if bn < cnt {
-				if err = opts.showOneBlock(&prev, bn, i == 0); err != nil {
-					return err
-				}
-			}
-		}
-	} else {
+	ctx := context.Background()
+	prev := base.Timestamp(0)
+	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		for bn := uint64(0); bn < cnt; bn++ {
-			if err = opts.showOneBlock(&prev, bn, bn == 0); err != nil {
-				return err
+			if len(bnMap) == 0 || bnMap[bn] {
+				ts, err := tslib.FromBn(opts.Globals.Chain, bn)
+				if err != nil {
+					errorChan <- err
+				}
+				s := simpleTimestamp{
+					BlockNumber: uint64(ts.Bn),
+					Timestamp:   base.Timestamp(ts.Ts),
+					Diff:        base.Timestamp(ts.Ts) - prev,
+				}
+				if bn == 0 {
+					s.Diff = 0
+				}
+				modelChan <- &s
+				prev = s.Timestamp
 			}
 		}
 	}
 
-	return nil
-}
-
-func (opts *WhenOptions) showOneBlock(prev *types.SimpleTimestamp, bn uint64, first bool) error {
-	ts, err := tslib.FromBn(opts.Globals.Chain, bn)
-	if err != nil {
-		return err
-	}
-	obj := types.SimpleTimestamp{
-		BlockNumber: uint64(ts.Bn),
-		Timestamp:   uint64(ts.Ts),
-		Diff:        uint64(ts.Ts - uint32(prev.Timestamp)),
-	}
-	if first {
-		// Report zero diff at first block
-		obj.Diff = 0
-	}
-	err = opts.Globals.RenderObject(obj, bn == 0)
-	if err != nil {
-		return err
-	}
-	*prev = obj
-
-	return nil
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }

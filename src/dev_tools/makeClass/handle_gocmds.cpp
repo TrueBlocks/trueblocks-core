@@ -20,13 +20,15 @@ extern string_q get_requestopts(const CCommandOption& cmd);
 extern string_q get_defaults_apis(const CCommandOption& cmd);
 extern string_q get_config_override(const CCommandOption& cmd);
 extern string_q get_config_package(const CCommandOption& cmd);
+extern string_q get_cache_package(const CCommandOption& cmd);
 extern string_q get_setopts(const CCommandOption& cmd);
 extern string_q get_testlogs(const CCommandOption& cmd);
 extern string_q get_godefaults(const CCommandOption& cmd);
 extern string_q get_copyopts(const CCommandOption& cmd);
-extern string_q get_positionals2(const CCommandOption& cmd);
+extern string_q get_positionals(const CCommandOption& cmd);
 extern string_q get_use(const CCommandOption& cmd);
 extern string_q clean_go_positionals(const string_q& in, bool hasEns);
+extern string_q clean_positionals(const string& progName, const string_q& strIn);
 
 extern const char* STR_REQUEST_CASE1;
 extern const char* STR_REQUEST_CASE2;
@@ -119,6 +121,7 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     replaceAll(source, "[{DEFAULTS_API}]", get_defaults_apis(p));
     replaceAll(source, "[{CONFIG_OVERRIDE}]", get_config_override(p));
     replaceAll(source, "[{CONFIGPKG}]", get_config_package(p));
+    replaceAll(source, "[{CACHEPKG}]", get_cache_package(p));
 
     string_q req = get_requestopts(p);
     replaceAll(source, "[{REQUEST_OPTS}]", req);
@@ -127,7 +130,7 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     }
     replaceAll(source, "[{TEST_LOGS}]", get_testlogs(p));
     replaceAll(source, "[{DASH_STR}]", get_copyopts(p));
-    replaceAll(source, "[{POSITIONALS}]", get_positionals2(p));
+    replaceAll(source, "[{POSITIONALS}]", get_positionals(p));
     replaceAll(source, "[{GODEFS}]", get_godefaults(p));
     replaceAll(source, "opts.LastBlock != utils.NOPOS", "opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS");
     source = clean_go_positionals(source, hasEns);
@@ -266,8 +269,10 @@ string_q get_use(const CCommandOption& cmd) {
                 ostringstream os;
                 forEveryEnum(visitEnumItem2, p.data_type, &os);
                 os << " ]";
-                arguments << substitute(os.str(), "One of",
-                                        contains(p.data_type, "list") ? "\tOne or more of" : "\tOne of");
+                string_q str =
+                    substitute(os.str(), "One of", contains(p.data_type, "list") ? "\tOne or more of" : "\tOne of");
+                // replace(str, "", "");
+                arguments << str;
             }
         }
     }
@@ -280,11 +285,15 @@ string_q get_use(const CCommandOption& cmd) {
             positionals << p.data_type;
         }
     }
+
     string_q ret = "[{ROUTE}] [flags][{TYPES}][{POSITIONALS}]";
-    if (contains(toLower(cmd.tool), "scrape"))
+    if (contains(toLower(cmd.tool), "scrape")) {
         ret = "[{ROUTE}] [flags]";
+    }
     replace(ret, "[{TYPES}]", clean_positionals(cmd.api_route, positionals.str()));
     replace(ret, "[{POSITIONALS}]", arguments.str());
+    replace(ret, "enum[index|monitors|names|abis|caches|some*|all]", " <mode>\n");
+    replace(ret, "enum[show*|edit]", " <mode>\n");
     replace(ret, "[flags] <mode> [blocks...]", "<mode> [flags] [blocks...]");
     replace(ret, "[flags] <mode> [mode...]", "<mode> [mode...] [flags]");
     replace(ret, "[flags] <mode>", "<mode> [flags]");
@@ -301,6 +310,8 @@ string_q get_notes2(const CCommandOption& cmd) {
             os << endl;
         }
         os << "  - " << substitute(p.description, "`", "");
+        // TODO: Coloring in notes (search in makeClass for this note)
+        // os << "  - " << substitute(p.description, "`", "++");
     }
 
     return trim(substitute(os.str(), "|", "\n    "));
@@ -337,7 +348,7 @@ bool isDef(const CCommandOption& p) {
         return true;
     if (p.def_val == "false")
         return true;
-    if (contains(p.go_type, "[]"))
+    if (contains(p.go_intype, "[]"))
         return true;
     if (p.longName == "sleep")
         return true;
@@ -426,13 +437,13 @@ string_q get_optfields(const CCommandOption& cmd) {
         replace(p.longName, "deleteMe", "delete");
         string_q var = p.Format("[{VARIABLE}]");
         varWidth = max(var.length(), varWidth);
-        string_q type = p.Format("[{GO_TYPE}]");
+        string_q type = p.Format("[{GO_INTYPE}]");
         typeWidth = max(type.length(), typeWidth);
-        if (contains(var, "Blocks") && contains(p.go_type, "[]string")) {
+        if (contains(var, "Blocks") && contains(p.go_intype, "[]string")) {
             varWidth = max(string_q("BlockIds").length(), varWidth);
             typeWidth = max(string_q("[]identifiers.Identifier").length(), typeWidth);
         }
-        if (contains(var, "Transactions") && contains(p.go_type, "[]string")) {
+        if (contains(var, "Transactions") && contains(p.go_intype, "[]string")) {
             varWidth = max(string_q("TransactionIds").length(), varWidth);
             typeWidth = max(string_q("[]identifiers.Identifier").length(), typeWidth);
         }
@@ -462,7 +473,7 @@ string_q get_optfields(const CCommandOption& cmd) {
                    << " | --------- |" << endl;
             }
             string_q x = substitute(p.Format("[{LONGNAME}]"), "_", "&lowbar;");
-            dd << "| " << padRight(x, 18) << " | " << padRight(p.Format("[{GO_TYPE}]"), 12) << " | "
+            dd << "| " << padRight(x, 18) << " | " << padRight(p.Format("[{GO_INTYPE}]"), 12) << " | "
                << padRight(p.Format("[{DEF_VAL}]"), 12) << " | " << p.Format("[{DESCRIPTION}]") << " |" << endl;
             appendToAsciiFile(configDocs, dd.str());
             hasConfig = true;
@@ -470,12 +481,12 @@ string_q get_optfields(const CCommandOption& cmd) {
         }
         replace(p.longName, "deleteMe", "delete");
         string_q var = p.Format("[{VARIABLE}]");
-        string_q type = p.Format("[{GO_TYPE}]");
+        string_q type = p.Format("[{GO_INTYPE}]");
         ONE(os, var, varWidth, type, typeWidth, p.description);
-        if (contains(var, "Blocks") && contains(p.go_type, "[]string")) {
+        if (contains(var, "Blocks") && contains(p.go_intype, "[]string")) {
             ONE(os, "BlockIds", varWidth, "[]identifiers.Identifier", typeWidth, "block identifiers");
         }
-        if (contains(var, "Transactions") && contains(p.go_type, "[]string")) {
+        if (contains(var, "Transactions") && contains(p.go_intype, "[]string")) {
             ONE(os, "TransactionIds", varWidth, "[]identifiers.Identifier", typeWidth, "transaction identifiers");
         }
     }
@@ -510,6 +521,13 @@ string_q get_config_package(const CCommandOption& cmd) {
     return "";
 }
 
+string_q get_cache_package(const CCommandOption& cmd) {
+    if (cmd.api_route == "status") {
+        return "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache\"\n";
+    }
+    return "";
+}
+
 string_q get_defaults_apis(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.members)) {
@@ -524,7 +542,7 @@ string_q get_defaults_apis(const CCommandOption& cmd) {
         if (p.data_type == "<blknum>" || p.data_type == "<uint64>" || p.data_type == "<double>") {
             string_q fmt = "\topts.[{VARIABLE}] = [{DEF_VAL}]";
             if (p.generate == "config") {
-                if (p.go_type == "float64") {
+                if (p.go_intype == "float64") {
                     fmt = "\topts.Settings.[{VARIABLE}] = float64([{DEF_VAL}])";
                 } else {
                     fmt = "\topts.Settings.[{VARIABLE}] = [{DEF_VAL}]";
@@ -556,17 +574,17 @@ string_q get_requestopts(const CCommandOption& cmd) {
 }
 
 string_q get_goDefault(const CCommandOption& p) {
-    if (p.go_type == "[]string") {
+    if (p.go_intype == "[]string") {
         return "nil";
-    } else if (p.go_type == "float64") {
+    } else if (p.go_intype == "float64") {
         if (contains(p.def_val, "NOPOS")) {
             return "0.0";
         } else if (!p.def_val.empty())
             return p.def_val;
         return "0.0";
-    } else if (p.go_type == "string") {
+    } else if (p.go_intype == "string") {
         return p.def_val;
-    } else if (p.go_type == "uint64") {
+    } else if (p.go_intype == "uint64") {
         if (contains(p.def_val, "NOPOS")) {
             return "0";
         } else if (!p.def_val.empty() && !startsWith(p.def_val, "(")) {
@@ -614,15 +632,16 @@ string_q clean_go_positionals(const string_q& in, bool hasEns) {
     return ret;
 }
 
-const char* STR_POSITIONALS1 = "\toptions += \" \" + strings.Join(opts.[{VARIABLE}], \" \")";
+const char* STR_POSITIONALS = "\toptions += \" \" + strings.Join(opts.[{VARIABLE}], \" \")";
 //---------------------------------------------------------------------------------------------------
-string_q get_positionals2(const CCommandOption& cmd) {
+string_q get_positionals(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.members))
-        if (p.option_type == "positional")
-            os << p.Format(STR_POSITIONALS1) << endl;
+        if (p.option_type == "positional") {
+            os << p.Format(STR_POSITIONALS) << endl;
+        }
     if (os.str().empty())
-        os << substitute(STR_POSITIONALS1, "[{VARIABLE}]", "[]string{}") << endl;
+        os << substitute(STR_POSITIONALS, "[{VARIABLE}]", "[]string{}") << endl;
     return os.str();
 }
 
@@ -674,22 +693,22 @@ string_q get_copyopts(const CCommandOption& cmd) {
         replace(p.longName, "deleteMe", "delete");
         if (p.option_type != "positional") {
             string_q format;
-            if (p.go_type == "[]string") {
+            if (p.go_intype == "[]string") {
                 format =
                     "\tfor _, [{SINGULAR}] := range opts.[{VARIABLE}] {\n"
                     "\t\toptions += \" --[{LONGNAME}] \" + [{SINGULAR}]\n"
                     "\t}";
-            } else if (p.go_type == "string") {
+            } else if (p.go_intype == "string") {
                 format =
                     "\tif len(opts.[{VARIABLE}]) > 0 {\n"
                     "\t\toptions += \" --[{LONGNAME}] \" + opts.[{VARIABLE}]\n"
                     "\t}";
-            } else if (p.go_type == "uint64" || p.go_type == "uint32") {
+            } else if (p.go_intype == "uint64" || p.go_intype == "uint32") {
                 format =
                     "\tif opts.[{VARIABLE}] != [{DEF_VAL}] {\n"
                     "\t\toptions += (\" --[{LONGNAME}] \" + fmt.Sprintf(\"%d\", opts.[{VARIABLE}]))\n"
                     "\t}";
-            } else if (p.go_type == "float64") {
+            } else if (p.go_intype == "float64") {
                 format =
                     "\tif opts.[{VARIABLE}] != [{DEF_VAL}] {\n"
                     "\t\toptions += (\" --[{LONGNAME}] \" + fmt.Sprintf(\"%.1f\", opts.[{VARIABLE}]))\n"
@@ -704,6 +723,58 @@ string_q get_copyopts(const CCommandOption& cmd) {
         }
     }
     return os.str();
+}
+
+//--------------------------------------------------------------------------------
+string_q clean_positionals(const string_q& progName, const string_q& strIn) {
+    if (contains(strIn, "<")) {
+        ostringstream os;
+        os << (strIn == "list<addr>" ? "<address> [address...]" : "");
+        os << (strIn == "list<blknum>" ? "<block> [block...]" : "");
+        os << (strIn == "list<tx_id>" ? "<tx_id> [tx_id...]" : "");
+        os << (startsWith(strIn, "list<addr> list<topic> list<fourbyte>")
+                   ? "<address> [address...] [topics...] [fourbytes...]"
+                   : "");
+        os << (startsWith(strIn, "list<enum") ? "<mode> [mode...]" : "");
+
+        if (contains(toLower(progName), "tokens")) {
+            os << (strIn == "list<addr> list<blknum>" ? "<address> <address> [address...] [block...]" : "");
+
+        } else if (contains(toLower(progName), "chunks")) {
+            os << (strIn == "enum[manifest|index|blooms|addresses|appearances|stats] list<blknum>"
+                       ? "<mode> [blocks...] [address...]"
+                       : "");
+
+        } else {
+            os << (strIn == "list<addr> list<blknum>" ? "<address> [address...] [block...]" : "");
+        }
+
+        if (contains(toLower(progName), "when"))
+            os << (strIn == "list<string>" ? "< block | date > [ block... | date... ]" : "");
+        else
+            os << (strIn == "list<string>" ? "<term> [term...]" : "");
+
+        if (os.str().empty()) {
+            cerr << "Could not convert " << strIn << " for tool " << progName << endl;
+            os << strIn;
+        }
+
+        os << endl;
+        return " " + os.str();
+    }
+    string_q strOut = strIn;
+    replaceAll(strOut, "addrs blocks", "<address> [address...] [block...]");
+    replaceAll(strOut, "transactions", "<tx_id> [tx_id...]");
+    if (contains(progName, "when"))
+        replaceAll(strOut, "blocks", "< block | date > [ block... | date... ]");
+    else
+        replaceAll(strOut, "blocks", "<block> [block...]");
+    replaceAll(strOut, "addrs topics fourbytes", "<address> [address...] [topics] [fourbytes]");
+    replaceAll(strOut, "addrs", "<address> [address...]");
+    replaceAll(strOut, "files", "<file> [file...]");
+    replaceAll(strOut, "terms", "<term> [term...]");
+    replaceAll(strOut, "modes", "<mode> [mode...]");
+    return trim(strOut);
 }
 
 const char* STR_REQUEST_CASE1 =

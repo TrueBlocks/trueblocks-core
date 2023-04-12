@@ -7,19 +7,23 @@ package monitor
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 // Decache removes a monitor and all cached data from the cache
 func (mon *Monitor) Decache(chain string, processor func(string) bool) (err error) {
+	if mon.IsOpen() {
+		defer mon.Close()
+	}
+
 	if mon.Count() == 0 {
 		return nil
 	}
-	defer mon.Close()
 
 	apps := make([]index.AppearanceRecord, mon.Count())
 	err = mon.ReadAppearances(&apps)
@@ -28,15 +32,28 @@ func (mon *Monitor) Decache(chain string, processor func(string) bool) (err erro
 	}
 
 	caches := []string{"blocks", "txs", "traces", "recons"}
-	for _, cache := range caches {
+	for index, cache := range caches {
 		for _, app := range apps {
-			path := getCachePath(chain, cache, hexutil.Encode(mon.Address.Bytes()), app.BlockNumber, app.TransactionId)
+			path := getCachePath(chain, cache, mon.Address.Hex(), app.BlockNumber, app.TransactionId)
 			if file.FileExists(path) {
 				if !processor(path) {
 					return nil
 				}
+			} else {
+				logger.Progress(index%20 == 0, "Already removed:", path)
 			}
 		}
+	}
+
+	// Remove the abi file if it exists
+	path := config.GetPathToCache(chain) + "abis/"
+	pathToAbi := filepath.Join(path, mon.Address.Hex()+".json")
+	processor(pathToAbi)
+
+	// Clean up the stage if there's anything there
+	path = filepath.Join(config.GetApiProvider(chain), "monitors/staging/", mon.Address.Hex()+".mon.bin")
+	if file.FileExists(path) {
+		err = os.Remove(path)
 	}
 
 	return err

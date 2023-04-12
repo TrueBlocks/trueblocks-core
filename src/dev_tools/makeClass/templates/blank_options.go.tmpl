@@ -14,7 +14,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-[{CONFIGPKG}]	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
+[{CACHEPKG}][{CONFIGPKG}]	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -23,7 +23,8 @@ import (
 
 // [{PROPER}]Options provides all command options for the chifra [{LOWER}] command.
 type [{PROPER}]Options struct {
-[{OPT_FIELDS}]
+[{OPT_FIELDS}]	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 var default[{PROPER}]Options = [{PROPER}]Options{[{GODEFS}]}

@@ -3,6 +3,7 @@ package outputHelpers
 import (
 	"io"
 	"os"
+	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -10,13 +11,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var enabledForCmds = map[string]bool{
-	"blocks":   true,
-	"receipts": true,
-	"when":     true,
-}
+var enabledForCmds = map[string]bool{}
+var enabledForCmdsMutex sync.RWMutex
 
 func SetEnabledForCmds(cmd string, enabled bool) {
+	enabledForCmdsMutex.Lock()
+	defer enabledForCmdsMutex.Unlock()
 	enabledForCmds[cmd] = enabled
 }
 
@@ -99,7 +99,10 @@ func SetWriterForCommand(cmdName string, opts *globals.GlobalOptions) {
 
 // InitJsonWriterApi inits JsonWriter for API responses
 func InitJsonWriterApi(cmdName string, w io.Writer, opts *globals.GlobalOptions) {
-	if enabledForCmds[cmdName] && opts.Format == "json" {
+	_, ok := opts.Writer.(*output.JsonWriter)
+	enabledForCmdsMutex.RLock()
+	defer enabledForCmdsMutex.RUnlock()
+	if enabledForCmds[cmdName] && opts.Format == "json" && !ok {
 		jw := output.NewDefaultJsonWriter(w, false)
 		jw.ShouldWriteMeta = true
 		jw.GetMeta = func() (*rpcClient.MetaData, error) {

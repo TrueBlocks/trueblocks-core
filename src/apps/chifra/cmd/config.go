@@ -33,16 +33,13 @@ var configCmd = &cobra.Command{
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &configPkg.GetOptions().Globals
 	}),
-	Aliases: []string{
-		"status",
-	},
 }
 
-const usageConfig = `config <mode> [mode...] [flags]
+const usageConfig = `config <mode> [flags]
 
 Arguments:
-  modes - either show or edit the configuration
-	One or more of [ show | edit ]`
+  mode - either show or edit the configuration
+	One of [ show | edit ]`
 
 const shortConfig = "report on and edit the configuration of the TrueBlocks system"
 
@@ -54,22 +51,9 @@ const notesConfig = ``
 func init() {
 	configCmd.Flags().SortFlags = false
 
-	configCmd.Flags().StringSliceVarP(&configPkg.GetOptions().Module, "module", "", nil, `the type of information to show or edit
-One or more of [ index | monitors | names | abis | caches | some | all ]`)
-	configCmd.Flags().BoolVarP(&configPkg.GetOptions().Details, "details", "d", false, "include details about items found in monitors, slurps, abis, or price caches")
-	configCmd.Flags().StringSliceVarP(&configPkg.GetOptions().Types, "types", "t", nil, `for caches module only, which type(s) of cache to report
-One or more of [ blocks | txs | traces | slurps | all ]`)
-	configCmd.Flags().Uint64VarP(&configPkg.GetOptions().Depth, "depth", "p", 0, "for caches module only, number of levels deep to report (hidden)")
-	configCmd.Flags().BoolVarP(&configPkg.GetOptions().Terse, "terse", "e", false, "show a terse summary report for mode show (hidden)")
 	configCmd.Flags().BoolVarP(&configPkg.GetOptions().Paths, "paths", "a", false, "show the configuration paths for the system (hidden)")
-	configCmd.Flags().Uint64VarP(&configPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to process (inclusive -- testing only) (hidden)")
-	configCmd.Flags().Uint64VarP(&configPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to process (inclusive -- testing only) (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
-		configCmd.Flags().MarkHidden("depth")
-		configCmd.Flags().MarkHidden("terse")
 		configCmd.Flags().MarkHidden("paths")
-		configCmd.Flags().MarkHidden("first_block")
-		configCmd.Flags().MarkHidden("last_block")
 	}
 	globals.InitGlobals(configCmd, &configPkg.GetOptions().Globals)
 

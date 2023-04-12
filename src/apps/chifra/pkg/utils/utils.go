@@ -18,8 +18,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/bykof/gostradamus"
 	"github.com/ethereum/go-ethereum/params"
 	"golang.org/x/term"
 )
@@ -38,14 +37,6 @@ func IsServerWriter(w io.Writer) bool {
 
 func IsTerminal() bool {
 	return term.IsTerminal(int(os.Stdout.Fd()))
-}
-
-func AsciiFileToString(fileName string) string {
-	return file.AsciiFileToString(fileName)
-}
-
-func AsciiFileToLines(fileName string) []string {
-	return file.AsciiFileToLines(fileName)
 }
 
 func OpenBrowser(url string) {
@@ -111,11 +102,15 @@ func ToCamelCase(in string) string {
 	return strings.Join(arr, "")
 }
 
+// TODO: Might be nice if the below two values were the same so we could cast between them.
+// TODO: Trouble is that these values may be stored on disc.
+
 // maximum uint64
-const NOPOS = ^uint64(0)
+const NOPOS = uint64(^uint64(0))
+const NOPOSI = int64(0xdeadbeef)
 
 // Min calculates the minimum between two unsigned integers (golang has no such function)
-func Min[T int | float64 | uint32 | uint64](x, y T) T {
+func Min[T int | float64 | uint32 | int64 | uint64](x, y T) T {
 	if x < y {
 		return x
 	}
@@ -123,7 +118,7 @@ func Min[T int | float64 | uint32 | uint64](x, y T) T {
 }
 
 // Max calculates the max between two unsigned integers (golang has no such function)
-func Max[T int | float64 | uint32 | uint64](x, y T) T {
+func Max[T int | float64 | uint32 | int64 | uint64](x, y T) T {
 	if x > y {
 		return x
 	}
@@ -157,7 +152,6 @@ func MakeFirstUpperCase(s string) string {
 // block number gets larger than 1,4 billion, which may happen when the chain shards, but not until then.
 const EarliestEvmTs = 1438269971
 
-// TODO: Fix export without arrays
 func GetFields(t *reflect.Type, format string, header bool) (fields []string, sep string, quote string) {
 	sep = "\t"
 	quote = ""
@@ -182,7 +176,7 @@ func GetFields(t *reflect.Type, format string, header bool) (fields []string, se
 		}
 
 		if realType.Kind() != reflect.Struct {
-			logger.Fatal(realType.Name() + " is not a structure")
+			log.Fatal(realType.Name() + " is not a structure")
 		}
 		for i := 0; i < realType.NumField(); i++ {
 			field := realType.Field(i)
@@ -218,4 +212,8 @@ func Str_2_BigInt(str string) big.Int {
 
 func WeiToEther(wei *big.Int) *big.Float {
 	return new(big.Float).Quo(new(big.Float).SetInt(wei), big.NewFloat(params.Ether))
+}
+
+func FormattedDate(ts int64) string {
+	return gostradamus.FromUnixTimestamp(ts).Format("2006-01-02 15:04:05 UTC")
 }

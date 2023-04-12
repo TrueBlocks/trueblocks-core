@@ -1,3 +1,0 @@
-name    ,type   ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,noaddfld ,doc ,disp ,example ,description
-blocks  ,blknum ,           ,       ,true  ,        ,          ,        ,         ,    ,     ,        ,
-counter ,uint64 ,           ,       ,      ,        ,          ,        ,         ,    ,     ,        ,

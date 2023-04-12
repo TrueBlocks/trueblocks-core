@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
-func (bl *ChunkBloom) isMemberBytes(addr types.Address) bool {
+func (bl *ChunkBloom) isMemberBytes(addr base.Address) bool {
 	whichBits := bl.WhichBits(addr)
 	for _, bb := range bl.Blooms {
 		var tester = bitChecker{bytes: bb.Bytes, whichBits: whichBits}
@@ -19,7 +19,7 @@ func (bl *ChunkBloom) isMemberBytes(addr types.Address) bool {
 	return false
 }
 
-func (bl *ChunkBloom) IsMember(addr types.Address) bool {
+func (bl *ChunkBloom) IsMember(addr base.Address) bool {
 	whichBits := bl.WhichBits(addr)
 	offset := uint32(bl.HeaderSize) + 4 // the end of Count
 	for j := 0; j < int(bl.Count); j++ {

@@ -10,9 +10,12 @@ package daemonPkg
 
 import (
 	"encoding/json"
-	"log"
+	"errors"
+	"fmt"
 	"net/http"
 	"time"
+
+	statusPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/status"
 
 	// BEG_ROUTE_PKGS
 
@@ -36,6 +39,7 @@ import (
 	transactionsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/transactions"
 	whenPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/when"
 	config "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/gorilla/mux"
 	"golang.org/x/time/rate"
@@ -192,7 +196,7 @@ func RouteExplore(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// RouteSlurp Fetch data from EtherScan for any address.
+// RouteSlurp Fetch data from Etherscan for any address.
 func RouteSlurp(w http.ResponseWriter, r *http.Request) {
 	if err, handled := slurpPkg.ServeSlurp(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
@@ -203,6 +207,15 @@ func RouteSlurp(w http.ResponseWriter, r *http.Request) {
 
 // END_ROUTE_CODE
 
+// RouteStatus Report on the status of the TrueBlocks system.
+func RouteStatus(w http.ResponseWriter, r *http.Request) {
+	if err, handled := statusPkg.ServeStatus(w, r); err != nil {
+		RespondWithError(w, http.StatusInternalServerError, err)
+	} else if !handled {
+		CallOne(w, r, config.GetPathToCommands("cacheStatus"), "", "status")
+	}
+}
+
 func Index(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "https://trueblocks.io/docs/", http.StatusMovedPermanently)
 }
@@ -212,7 +225,31 @@ var routes = Routes{
 		HandleWebsockets(connectionPool, w, r)
 	}},
 	Route{"Index", "GET", "/", Index},
-	Route{"EditName", "POST", "/names", EditName},
+	Route{"CreateName", "POST", "/names", func(w http.ResponseWriter, r *http.Request) {
+		if err, _ := namesPkg.ServeNames(w, r); err != nil {
+			RespondWithError(w, http.StatusInternalServerError, err)
+		}
+	}},
+	Route{"EditName", "PUT", "/names", func(w http.ResponseWriter, r *http.Request) {
+		if err, _ := namesPkg.ServeNames(w, r); err != nil {
+			RespondWithError(w, http.StatusInternalServerError, err)
+		}
+	}},
+	Route{"DeleteName", "DELETE", "/names", func(w http.ResponseWriter, r *http.Request) {
+		params := r.URL.Query()
+		if !params.Has("delete") && !params.Has("undelete") && !params.Has("remove") {
+			RespondWithError(
+				w,
+				http.StatusBadRequest,
+				errors.New("one of following parameters is required: delete, undelete, remove"),
+			)
+			return
+		}
+
+		if err, _ := namesPkg.ServeNames(w, r); err != nil {
+			RespondWithError(w, http.StatusInternalServerError, err)
+		}
+	}},
 
 	// BEG_ROUTE_ITEMS
 	Route{"RouteList", "GET", "/list", RouteList},
@@ -235,6 +272,7 @@ var routes = Routes{
 	Route{"RouteExplore", "GET", "/explore", RouteExplore},
 	Route{"RouteSlurp", "GET", "/slurp", RouteSlurp},
 	// END_ROUTE_ITEMS
+	Route{"RouteStatus", "GET", "/status", RouteStatus},
 	Route{"DeleteMonitors", "DELETE", "/monitors", RouteMonitors},
 }
 
@@ -320,15 +358,8 @@ func Logger(inner http.Handler, name string) http.Handler {
 		if utils.IsTestModeServer(r) {
 			t = "-test"
 		}
-		log.Printf(
-			"%d %s%s %s %s %s",
-			nProcessed,
-			r.Method,
-			t,
-			r.RequestURI,
-			name,
-			time.Since(start),
-		)
+		msg := fmt.Sprintf("%d %s%s %s %s %s", nProcessed, r.Method, t, r.RequestURI, name, time.Since(start))
+		logger.Info(msg)
 		nProcessed++
 	})
 }

@@ -405,44 +405,5 @@ COption::COption(const string_q& ln, const string_q& sn, const string_q& t, size
     }
 }
 
-//--------------------------------------------------------------------------------
-string_q COption::readmeDash(const string_q& str) const {
-    return str;
-}
-
-//--------------------------------------------------------------------------------
-string_q COption::getLongKey(void) const {
-    string_q lName = longName;
-    lName = (is_positional ? substitute(lName, "-", "") : lName);
-    return readmeDash(lName);
-}
-
-//--------------------------------------------------------------------------------
-string_q COption::getHotKey(void) const {
-    return is_positional ? "" : readmeDash(hotKey);
-}
-
-//--------------------------------------------------------------------------------
-string_q COption::oneDescription(size_t* widths) const {
-    ostringstream os;
-    if (is_positional)
-        return "";
-    // TODO(tjayrush): Weird chifra-new code
-    if (getLongKey() == "--fmt <val>" || getLongKey() == "--help" || getLongKey() == "--verbose")
-        return "";
-    os << "  ";
-    os << getHotKey();
-    os << (getHotKey().empty() ? "    " : ", ");
-    os << padRight(getLongKey().empty() ? "" : getLongKey(), widths[1] + 3);
-    os << getDescription() << (is_visible ? "" : " (hidden)") << endl;
-    return os.str();
-}
-
-//--------------------------------------------------------------------------------
-string_q COption::getDescription(void) const {
-    string_q descr = trim(description);
-    descr = (descr + (is_required && is_positional ? " (required)" : ""));
-    return descr;
-}
 // EXISTING_CODE
 }  // namespace qblocks

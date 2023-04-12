@@ -1,4 +1,4 @@
-chifra  state --help --log_level 2
+chifra  state --help
 Purpose:
   Retrieve account balance(s) for one or more addresses at given block(s).
 

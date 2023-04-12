@@ -1,46 +1,34 @@
-chifra config  --details show --module abis
-TEST[DATE|TIME] Modes:  [show]
-TEST[DATE|TIME] Module:  [abis]
-TEST[DATE|TIME] Details:  true
-TEST[DATE|TIME] Depth:  0
+chifra status  abis --max_records 100
+TEST[DATE|TIME] Modes:  [abis]
+TEST[DATE|TIME] MaxRecords:  100
+TEST[DATE|TIME] Format:  json
 {
-  "clientVersion": "Client version",
-  "clientIds": "chainId: 1 networkId: 1",
-  "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-",
-  "rpcProvider": "--providers--",
-  "configPath": "--paths--",
-  "cachePath": "--paths--",
-  "indexPath": "--paths--",
-  "host": "--hostname-- (--username--)",
-  "isTesting": true,
-  "isArchive": true,
-  "isTracing": true,
-  "hasEskey": true,
-  "caches": [
+  "data": [
     {
-      "items": [
+      "cachePath": "--paths--",
+      "caches": [
         {
-          "type": "CAbiCacheItem",
-          "nFunctions": 36963,
-          "nEvents": 36963,
-          "nOther": 36963,
-          "nApps": 0,
-          "firstApp": 0,
-          "latestApp": 0,
-          "sizeInBytes": 36963,
-          "address": "---address---",
-          "name": "--name--",
-          "decimals": 0,
-          "petname": "--petname--"
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789,
+          "type": "abisCache"
         }
       ],
-      "type": "CAbiCache",
-      "path": "abisPath",
-      "nFiles": 0,
-      "nFolders": 0,
-      "sizeInBytes": 0,
-      "isValid": true
+      "chainConfig": "--paths--",
+      "clientVersion": "Client version",
+      "hasEsKey": true,
+      "hasPinKey": false,
+      "indexPath": "--paths--",
+      "isApi": false,
+      "isArchive": true,
+      "isTesting": true,
+      "isTracing": true,
+      "rootConfig": "--paths--",
+      "rpcProvider": "--providers--",
+      "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-"
     }
-  ],
-  "date": "--date--"
+  ]
 }

@@ -13,13 +13,19 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 #include "node_curl.h"
-#include "cacheentry.h"
 #include "rewards.h"
 #include "logfilter.h"
 #include "ethcall.h"
 #include "metadata.h"
 
 namespace qblocks {
+
+//-------------------------------------------------------------------------
+typedef uint32_t cache_t;
+#define CT_BLOCKS uint32_t(1 << 0)
+#define CT_TXS uint32_t(1 << 2)
+#define CT_TRACES uint32_t(1 << 3)
+#define CT_RECONS uint32_t(1 << 7)
 
 //-------------------------------------------------------------------------
 // setup and tear down of the library
@@ -41,7 +47,6 @@ extern bool getReceipt(CReceipt& receipt, const hash_t& txHash);
 extern bool getLog(CLog& log, const hash_t& txHash);
 extern void getTraces(CTraceArray& traces, const hash_t& txHash, const CTransaction* pT);
 extern void getStateDiffAddrs(CAddressArray& addrs, const hash_t& txHash);
-extern void getTracesByFilter(CTraceArray& traces, const CTraceFilter& filter);
 extern size_t getTraceCount(const hash_t& hashIn);
 extern bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, bool skipDdos);
 extern bool getFullReceipt(CTransaction* trans, bool needsTrace);

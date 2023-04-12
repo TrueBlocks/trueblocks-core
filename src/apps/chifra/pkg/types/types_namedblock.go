@@ -9,6 +9,12 @@
 package types
 
 // EXISTING_CODE
+import (
+	"io"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+)
+
 // EXISTING_CODE
 
 type RawNamedBlock struct {
@@ -16,14 +22,18 @@ type RawNamedBlock struct {
 	Date        string `json:"date"`
 	Name        string `json:"name"`
 	Timestamp   string `json:"timestamp"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleNamedBlock struct {
-	BlockNumber uint64 `json:"blockNumber"`
-	Date        string `json:"date"`
-	Name        string `json:"name,omitempty"`
-	Timestamp   int64  `json:"timestamp"`
-	raw         *RawNamedBlock
+	BlockNumber base.Blknum    `json:"blockNumber"`
+	Date        string         `json:"date"`
+	Name        string         `json:"name,omitempty"`
+	Timestamp   base.Timestamp `json:"timestamp"`
+	raw         *RawNamedBlock `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleNamedBlock) Raw() *RawNamedBlock {
@@ -35,24 +45,27 @@ func (s *SimpleNamedBlock) SetRaw(raw *RawNamedBlock) {
 }
 
 func (s *SimpleNamedBlock) Model(showHidden bool, format string, extraOptions map[string]any) Model {
-	// EXISTING_CODE
-	// EXISTING_CODE
+	var model = map[string]interface{}{}
+	var order = []string{}
 
-	model := map[string]interface{}{
+	// EXISTING_CODE
+	model = map[string]interface{}{
 		"blockNumber": s.BlockNumber,
 		"date":        s.Date,
 		"timestamp":   s.Timestamp,
 	}
 
-	order := []string{
+	order = []string{
 		"blockNumber",
 		"timestamp",
 		"date",
 	}
 
-	// EXISTING_CODE
-	// TODO: Can we automate omitempty?
-	if format != "json" || len(s.Name) > 0 {
+	if format == "json" {
+		if len(s.Name) > 0 {
+			model["name"] = s.Name
+		}
+	} else {
 		model["name"] = s.Name
 		order = append(order, "name")
 	}
@@ -64,9 +77,17 @@ func (s *SimpleNamedBlock) Model(showHidden bool, format string, extraOptions ma
 	}
 }
 
-// EXISTING_CODE
-func (s *SimpleNamedBlock) GetTimestamp() int64 {
-	return s.Timestamp
+func (s *SimpleNamedBlock) WriteTo(w io.Writer) (n int64, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
 }
 
+func (s *SimpleNamedBlock) ReadFrom(r io.Reader) (n int64, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
+}
+
+// EXISTING_CODE
 // EXISTING_CODE

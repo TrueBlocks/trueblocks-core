@@ -1,0 +1,6 @@
+chifra monitors  0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7512 --list
+TEST[DATE|TIME] Addrs:  [0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7512]
+TEST[DATE|TIME] List:  true
+TEST[DATE|TIME] Format:  txt
+INFO[DATE|TIME] Building address list from current monitors
+EROR[DATE|TIME] address 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7512 is not being monitored

@@ -9,15 +9,15 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
@@ -26,7 +26,7 @@ import (
 type AddressAppearanceMap map[string][]AppearanceRecord
 
 type WriteChunkReport struct {
-	Range        paths.FileRange
+	Range        base.FileRange
 	nAddresses   int
 	nAppearances int
 	Snapped      bool
@@ -39,10 +39,10 @@ func (c *WriteChunkReport) Report() {
 	if c.Snapped {
 		str = fmt.Sprintf("%sWrote %d address and %d appearance records to $INDEX/%s.bin %s%s%s", colors.BrightBlue, c.nAddresses, c.nAppearances, c.Range, colors.Yellow, "(snapped to grid)", colors.Off)
 	}
-	logger.Log(logger.Info, str)
+	logger.Info(str)
 	if c.Pinned {
 		str := fmt.Sprintf("%sPinned chunk $INDEX/%s.bin (%s,%s)%s", colors.BrightBlue, c.Range, c.PinRecord.IndexHash, c.PinRecord.BloomHash, colors.Off)
-		logger.Log(logger.Info, str)
+		logger.Info(str)
 	}
 }
 
@@ -74,7 +74,7 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 		appearanceTable = append(appearanceTable, apps...)
 
 		// ...add the address to the bloom filter...
-		address := types.HexToAddress(addrStr)
+		address := base.HexToAddress(addrStr)
 		bl.AddToSet(address)
 
 		// ...and append the record to the addressTable.
@@ -91,7 +91,7 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 	// At this point, the two tables and the bloom filter are fully populated. We're ready to write to disc...
 
 	// First, we backup the existing chunk if there is one...
-	indexFn := paths.ToIndexPath(fileName)
+	indexFn := cache.ToIndexPath(fileName)
 	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
 	if backupFn, err := file.MakeBackup(tmpPath, indexFn); err == nil {
 		defer func() {
@@ -124,7 +124,7 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 				return nil, err
 			}
 
-			if _, err = bl.WriteBloom(chain, paths.ToBloomPath(indexFn)); err != nil {
+			if _, err = bl.WriteBloom(chain, cache.ToBloomPath(indexFn)); err != nil {
 				return nil, err
 			}
 
@@ -140,7 +140,7 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 			// fails we don't want to have to re-do this chunk, so remove this here.
 			os.Remove(backupFn)
 
-			rng := paths.RangeFromFilename(indexFn)
+			rng := base.RangeFromFilename(indexFn)
 			report := WriteChunkReport{ // For use in reporting...
 				Range:        rng,
 				nAddresses:   len(addressTable),
@@ -175,10 +175,6 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 	} else {
 		return nil, err
 	}
-}
-
-type Renderer interface {
-	RenderObject(data interface{}, first bool) error
 }
 
 var spaces20 = strings.Repeat(" ", 20)

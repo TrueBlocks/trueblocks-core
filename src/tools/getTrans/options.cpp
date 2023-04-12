@@ -54,11 +54,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-t" || arg == "--traces") {
             traces = true;
 
-        } else if (arg == "--trace") {
-            // clang-format off
-            return usage("the --trace option is deprecated, please use the --traces option instead");  // NOLINT
-            // clang-format on
-
         } else if (arg == "-u" || arg == "--uniq") {
             uniq = true;
 

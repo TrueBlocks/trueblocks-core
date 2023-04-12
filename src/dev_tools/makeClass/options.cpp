@@ -176,11 +176,15 @@ bool COptions::parseArguments(string_q& command) {
 
     for (auto classDefIn : classDefs) {
         CToml toml(classDefIn.input_path);
-        CClassDefinition classDef(toml);
+        CClassDefinition classDef;
+        classDef.ReadSettings(toml);
         classDef.short_fn = classDefIn.short_fn;
         classDef.input_path = classDefIn.input_path;
         if (!classDef.doc_route.empty()) {
             dataModels.push_back(classDef);
+        } else if (!classDef.go_model.empty()) {
+            LOG_WARN("go_type is on, but doc_route is not in ", classDef.class_name);
+            exit(0);
         }
     }
 
@@ -299,7 +303,6 @@ bool listClasses(const string_q& path, void* data) {
             CClassDefinition cl;
             cl.short_fn = class_name;
             cl.input_path = path;
-            LOG8("Adding: ", cl.short_fn, " ", cl.input_path, " ", cl.outputPath(".cpp"));
             opts->classDefs.push_back(cl);
         }
     }

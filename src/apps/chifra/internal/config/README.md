@@ -13,33 +13,20 @@ Purpose:
   Report on and edit the configuration of the TrueBlocks system.
 
 Usage:
-  chifra config <mode> [mode...] [flags]
+  chifra config <mode> [flags]
 
 Arguments:
-  modes - either show or edit the configuration
-	One or more of [ show | edit ]
-
-Aliases:
-  config, status
+  mode - either show or edit the configuration
+	One of [ show | edit ]
 
 Flags:
-      --module strings   the type of information to show or edit
-                         One or more of [ index | monitors | names | abis | caches | some | all ]
-  -d, --details          include details about items found in monitors, slurps, abis, or price caches
-  -t, --types strings    for caches module only, which type(s) of cache to report
-                         One or more of [ blocks | txs | traces | slurps | all ]
-  -x, --fmt string       export format, one of [none|json*|txt|csv]
-  -v, --verbose          enable verbose (increase detail with --log_level)
-  -h, --help             display this help screen
+  -x, --fmt string   export format, one of [none|json*|txt|csv]
+  -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen
 ```
 
 Data models produced by this tool:
 
-- [monitor](/data-model/accounts/#monitor)
-- [status](/data-model/admin/#status)
-- [cache](/data-model/admin/#cache)
-- [cacheentry](/data-model/admin/#cacheentry)
-- [indexcacheitem](/data-model/admin/#indexcacheitem)
 - [chain](/data-model/admin/#chain)
 
 <!-- markdownlint-disable MD041 -->

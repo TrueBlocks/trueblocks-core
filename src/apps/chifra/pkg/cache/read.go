@@ -7,8 +7,8 @@ import (
 	"errors"
 	"math/big"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 // TODO(cache): I don't think we want to hard code this version value here. We want to read it programmatically
@@ -37,8 +37,8 @@ func createReadFn(reader *bufio.Reader) readBytes {
 // files
 type ArrayItem interface {
 	~string |
-		common.Hash |
-		types.Address |
+		base.Hash |
+		base.Address |
 		types.SimpleTransaction |
 		types.SimpleTrace |
 		types.SimpleParameter |
@@ -99,24 +99,24 @@ func readCString(reader *bufio.Reader, str *cString) (err error) {
 	return
 }
 
-func readAddress(reader *bufio.Reader, target *types.Address) (err error) {
+func readAddress(reader *bufio.Reader, target *base.Address) (err error) {
 	str := &cString{}
 	err = readCString(reader, str)
 	if err != nil {
 		return
 	}
-	addr := types.HexToAddress(string(str.content))
+	addr := base.HexToAddress(string(str.content))
 	*target = addr
 	return
 }
 
-func readHash(reader *bufio.Reader, target *common.Hash) (err error) {
+func readHash(reader *bufio.Reader, target *base.Hash) (err error) {
 	str := &cString{}
 	err = readCString(reader, str)
 	if err != nil {
 		return
 	}
-	hash := common.HexToHash(string(str.content))
+	hash := base.HexToHash(string(str.content))
 	*target = hash
 	return
 }
@@ -272,7 +272,7 @@ func ReadBlock(reader *bufio.Reader) (block *types.SimpleBlock[types.SimpleTrans
 		return
 	}
 
-	err = read(&block.Finalized)
+	err = read(&block.UnusedBool)
 	if err != nil {
 		return
 	}
@@ -354,12 +354,14 @@ func ReadTransaction(reader *bufio.Reader) (tx *types.SimpleTransaction, err err
 		return
 	}
 
-	err = readBigUint(reader, &tx.ExtraValue1)
+	var extraValue1 big.Int
+	err = readBigUint(reader, &extraValue1)
 	if err != nil {
 		return
 	}
 
-	err = readBigUint(reader, &tx.ExtraValue2)
+	var extraValue2 big.Int
+	err = readBigUint(reader, &extraValue2)
 	if err != nil {
 		return
 	}
@@ -399,12 +401,14 @@ func ReadTransaction(reader *bufio.Reader) (tx *types.SimpleTransaction, err err
 		return
 	}
 
-	err = read(&tx.Cachebits)
+	var cachebits uint8
+	err = read(&cachebits)
 	if err != nil {
 		return
 	}
 
-	err = read(&tx.Reserved2)
+	var reserved2 uint8
+	err = read(&reserved2)
 	if err != nil {
 		return
 	}
@@ -690,7 +694,7 @@ func ReadTrace(reader *bufio.Reader) (trace *types.SimpleTrace, err error) {
 		return
 	}
 
-	err = readString(reader, &trace.Type)
+	err = readString(reader, &trace.TraceType)
 	if err != nil {
 		return
 	}
@@ -834,7 +838,7 @@ func ReadAbis(reader *bufio.Reader) (result []types.SimpleFunction, err error) {
 	}
 
 	// This address is always empty
-	var address types.Address
+	var address base.Address
 	if err = readAddress(reader, &address); err != nil {
 		return
 	}

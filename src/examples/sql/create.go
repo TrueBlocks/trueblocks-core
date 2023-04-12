@@ -33,7 +33,7 @@ func deleteDatabase(databasePath string) {
 func createEmptyDatabase(databasePath string) {
 	db, err := sql.Open("sqlite3", databasePath)
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 	defer db.Close()
 
@@ -55,7 +55,8 @@ func createEmptyDatabase(databasePath string) {
 	fmt.Println("Creating DB")
 	_, err = db.Exec(sqlStmt)
 	if err != nil {
-		log.Printf("%q: %s\n", err, sqlStmt)
+		msg := fmt.Sprintf("%q: %s", err, sqlStmt)
+		logger.Info(msg)
 		return
 	}
 }
@@ -82,24 +83,26 @@ func readFile(path string) ([]Appearance, error) {
 	headerByteSlice := make([]byte, 44)
 	_, err = f.Read(headerByteSlice)
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 	nAddresses := binary.LittleEndian.Uint32(headerByteSlice[44-8 : 44-4])
 	nAppearances := binary.LittleEndian.Uint32(headerByteSlice[44-4:])
 
-	log.Printf("Number Addresses: %s\n", nAddresses)
-	log.Printf("Number Appearances: %s\n", nAppearances)
+	msg := fmt.Sprintf("Number Addresses: %s\n", nAddresses)
+	logger.Info(msg)
+	msg = fmt.Sprintf("Number Appearances: %s\n", nAppearances)
+	logger.Info(msg)
 
 	addressByteSlice := make([]byte, 28*nAddresses)
 	_, err = f.Read(addressByteSlice)
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 
 	appearanceByteSlice := make([]byte, 8*nAppearances)
 	_, err = f.Read(appearanceByteSlice)
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 
 	for i := 0; int64(i) < int64(nAddresses); i++ {
@@ -123,29 +126,29 @@ func readFile(path string) ([]Appearance, error) {
 func fillDatabase(databasePath string, indexFolderPath string) {
 	db, err := sql.Open("sqlite3", databasePath)
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 	defer db.Close()
 
 	tx, err := db.Begin()
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 	addressesInsertStmt, err := tx.Prepare("INSERT OR IGNORE INTO addresses(address) VALUES(?)")
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 	defer addressesInsertStmt.Close()
 
 	txsInsertStmt, err := tx.Prepare("INSERT INTO txs(txAddressID, blockIndex, transactionIndex) VALUES( (SELECT addressID FROM addresses WHERE addresses.address=?), ?, ?);")
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 	defer txsInsertStmt.Close()
 
 	files, err := os.ReadDir(indexFolderPath)
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 	// For each file, read in all the addresses, and their appearances
 	var i = 0
@@ -162,12 +165,12 @@ func fillDatabase(databasePath string, indexFolderPath string) {
 			// First we insert the address, if it needs to be inserted
 			_, err = addressesInsertStmt.Exec(appearance.address)
 			if err != nil {
-				log.Fatal(err)
+				logger.Fatal(err)
 			}
 			// Then, we insert the transaction
 			_, err = txsInsertStmt.Exec(appearance.address, appearance.blockIndex, appearance.transactionIndex)
 			if err != nil {
-				log.Fatal(err)
+				logger.Fatal(err)
 			}
 		}
 		if i == 15 {

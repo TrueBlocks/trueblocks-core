@@ -1,6 +1,0 @@
-config?modes=show&module=caches&types=junk
-{
-  "errors": [
-    "The --types option (junk) must be one of [ blocks | txs | traces | slurps | all ]"
-  ]
-}

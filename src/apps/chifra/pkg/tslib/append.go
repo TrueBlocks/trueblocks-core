@@ -9,7 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
-func Append(chain string, tsArray []Timestamp) error {
+func Append(chain string, tsArray []TimestampRecord) error {
 	tsFn := config.GetPathToIndex(chain) + "ts.bin"
 	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
 	if backupFn, err := file.MakeBackup(tmpPath, tsFn); err == nil {

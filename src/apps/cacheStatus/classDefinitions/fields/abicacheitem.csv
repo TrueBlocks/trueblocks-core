@@ -1,5 +1,0 @@
-name       ,type   ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,noaddfld ,doc ,disp ,example ,description
-type       ,string ,           ,       ,      ,        ,          ,        ,         ,    ,     ,        ,
-nFunctions ,uint64 ,           ,       ,      ,        ,          ,        ,         ,    ,     ,        ,
-nEvents    ,uint64 ,           ,       ,      ,        ,          ,        ,         ,    ,     ,        ,
-nOther     ,uint64 ,           ,       ,      ,        ,          ,        ,         ,    ,     ,        ,

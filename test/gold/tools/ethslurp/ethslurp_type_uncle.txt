@@ -1,7 +1,61 @@
-chifra slurp  0xc8ebccc5f5689fa8659d83713341e5ad19349448 --types uncles 1-10
-TEST[DATE|TIME] Addrs:  [0xc8ebccc5f5689fa8659d83713341e5ad19349448]
-TEST[DATE|TIME] Blocks:  [1-10]
+chifra slurp  0x05a56e2d52c817161883f50c441c3228cfe54d9f --types uncles 1-1000 --fmt json
+TEST[DATE|TIME] Addrs:  [0x05a56e2d52c817161883f50c441c3228cfe54d9f]
+TEST[DATE|TIME] Blocks:  [1-1000]
 TEST[DATE|TIME] Types:  [uncles]
-TEST[DATE|TIME] Format:  txt
-                                                                                                                        hash	blockHash	blockNumber	transactionIndex	nonce	timestamp	from	to	value	gas	gasPrice	maxFeePerGas	maxPriorityFeePerGas	input	isError	hasToken	gasUsed	date	ether
-0x0	0x0	1	99998	0	1438270018	0xUncleReward	0x0	3750000000000000000	0	0	0	0		0	0	0	2015-07-30 15:26:58 UTC	3.750000000000000000
+TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] Processing [0x05a56e2d52c817161883f50c441c3228cfe54d9f] --types: [uncles] [1-1000]
+INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&action=getminedblocks&blocktype=uncles&address=0x05a56e2d52c817161883f50c441c3228cfe54d9f&page=1&offset=100
+{
+  "data": [
+    {
+      "blockNumber": 983,
+      "date": "2015-07-30 16:01:43 UTC",
+      "ether": "3.750000000000000000",
+      "from": "0xUncleReward",
+      "timestamp": 1438272103,
+      "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "transactionIndex": 99998,
+      "value": "3750000000000000000"
+    },
+    {
+      "blockNumber": 561,
+      "date": "2015-07-30 15:48:53 UTC",
+      "ether": "3.750000000000000000",
+      "from": "0xUncleReward",
+      "timestamp": 1438271333,
+      "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "transactionIndex": 99998,
+      "value": "3750000000000000000"
+    },
+    {
+      "blockNumber": 498,
+      "date": "2015-07-30 15:46:48 UTC",
+      "ether": "3.750000000000000000",
+      "from": "0xUncleReward",
+      "timestamp": 1438271208,
+      "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "transactionIndex": 99998,
+      "value": "3750000000000000000"
+    },
+    {
+      "blockNumber": 244,
+      "date": "2015-07-30 15:38:54 UTC",
+      "ether": "3.750000000000000000",
+      "from": "0xUncleReward",
+      "timestamp": 1438270734,
+      "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "transactionIndex": 99998,
+      "value": "3750000000000000000"
+    },
+    {
+      "blockNumber": 54,
+      "date": "2015-07-30 15:31:56 UTC",
+      "ether": "3.750000000000000000",
+      "from": "0xUncleReward",
+      "timestamp": 1438270316,
+      "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "transactionIndex": 99998,
+      "value": "3750000000000000000"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 chunks?mode=header
 {
   "errors": [
-    "The mode option (header) must be one of [ status | manifest | index | blooms | addresses | appearances | stats ]"
+    "The mode option (header) must be one of [ manifest | index | blooms | addresses | appearances | stats ]"
   ]
 }

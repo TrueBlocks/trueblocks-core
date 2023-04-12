@@ -22,19 +22,20 @@ import (
 
 // ChunksOptions provides all command options for the chifra chunks command.
 type ChunksOptions struct {
-	Mode      string                   `json:"mode,omitempty"`      // The type of data to process
-	Blocks    []string                 `json:"blocks,omitempty"`    // An optional list of blocks to intersect with chunk ranges
-	BlockIds  []identifiers.Identifier `json:"blockIds,omitempty"`  // Block identifiers
-	Check     bool                     `json:"check,omitempty"`     // Check the manifest, index, or blooms for internal consistency
-	Pin       bool                     `json:"pin,omitempty"`       // Pin the manifest or each index chunk and bloom
-	Publish   bool                     `json:"publish,omitempty"`   // Publish the manifest to the Unchained Index smart contract
-	Truncate  uint64                   `json:"truncate,omitempty"`  // Truncate the entire index at this block (requires a block identifier)
-	Remote    bool                     `json:"remote,omitempty"`    // Prior to processing, retreive the manifest from the Unchained Index smart contract
-	Belongs   []string                 `json:"belongs,omitempty"`   // In index mode only, checks the address(es) for inclusion in the given index chunk
-	SaveAddrs bool                     `json:"saveAddrs,omitempty"` // Write addresses to a file during presentation - warning takes forever
-	Sleep     float64                  `json:"sleep,omitempty"`     // For --remote pinning only, seconds to sleep between API calls
-	Globals   globals.GlobalOptions    `json:"globals,omitempty"`   // The global options
-	BadFlag   error                    `json:"badFlag,omitempty"`   // An error flag if needed
+	Mode     string                   `json:"mode,omitempty"`     // The type of data to process
+	Blocks   []string                 `json:"blocks,omitempty"`   // An optional list of blocks to intersect with chunk ranges
+	BlockIds []identifiers.Identifier `json:"blockIds,omitempty"` // Block identifiers
+	Check    bool                     `json:"check,omitempty"`    // Check the manifest, index, or blooms for internal consistency
+	Pin      bool                     `json:"pin,omitempty"`      // Pin the manifest or each index chunk and bloom
+	Publish  bool                     `json:"publish,omitempty"`  // Publish the manifest to the Unchained Index smart contract
+	Truncate uint64                   `json:"truncate,omitempty"` // Truncate the entire index at this block (requires a block identifier)
+	Remote   bool                     `json:"remote,omitempty"`   // Prior to processing, retreive the manifest from the Unchained Index smart contract
+	Belongs  []string                 `json:"belongs,omitempty"`  // In index mode only, checks the address(es) for inclusion in the given index chunk
+	Sleep    float64                  `json:"sleep,omitempty"`    // For --remote pinning only, seconds to sleep between API calls
+	Globals  globals.GlobalOptions    `json:"globals,omitempty"`  // The global options
+	BadFlag  error                    `json:"badFlag,omitempty"`  // An error flag if needed
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 var defaultChunksOptions = ChunksOptions{
@@ -51,7 +52,6 @@ func (opts *ChunksOptions) testLog() {
 	logger.TestLog(opts.Truncate != utils.NOPOS, "Truncate: ", opts.Truncate)
 	logger.TestLog(opts.Remote, "Remote: ", opts.Remote)
 	logger.TestLog(len(opts.Belongs) > 0, "Belongs: ", opts.Belongs)
-	logger.TestLog(opts.SaveAddrs, "SaveAddrs: ", opts.SaveAddrs)
 	logger.TestLog(opts.Sleep != float64(0.0), "Sleep: ", opts.Sleep)
 	opts.Globals.TestLog()
 }
@@ -92,8 +92,6 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Belongs = append(opts.Belongs, s...)
 			}
-		case "saveAddrs":
-			opts.SaveAddrs = true
 		case "sleep":
 			opts.Sleep = globals.ToFloat64(value[0])
 		default:

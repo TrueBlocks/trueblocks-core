@@ -10,7 +10,9 @@ package types
 
 // EXISTING_CODE
 import (
-	"github.com/ethereum/go-ethereum/common"
+	"io"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
 // EXISTING_CODE
@@ -23,29 +25,33 @@ type RawReceipt struct {
 	EffectiveGasPrice string   `json:"effectiveGasPrice"`
 	From              string   `json:"from"`
 	GasUsed           string   `json:"gasUsed"`
-	IsError           string   `json:"isError"`
 	Logs              []RawLog `json:"logs"`
+	LogsBloom         string   `json:"logsBloom"`
 	Status            string   `json:"status"`
 	To                string   `json:"to"`
 	TransactionHash   string   `json:"transactionHash"`
 	TransactionIndex  string   `json:"transactionIndex"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleReceipt struct {
-	BlockHash         common.Hash `json:"blockHash,omitempty"`
-	BlockNumber       uint64      `json:"blockNumber"`
-	ContractAddress   Address     `json:"contractAddress,omitempty"`
-	CumulativeGasUsed string      `json:"cumulativeGasUsed,omitempty"`
-	EffectiveGasPrice Gas         `json:"effectiveGasPrice,omitempty"`
-	From              Address     `json:"from,omitempty"`
-	GasUsed           Gas         `json:"gasUsed"`
-	IsError           bool        `json:"isError,omitempty"`
-	Logs              []SimpleLog `json:"logs"`
-	Status            uint32      `json:"status"`
-	To                Address     `json:"to,omitempty"`
-	TransactionHash   common.Hash `json:"transactionHash"`
-	TransactionIndex  uint64      `json:"transactionIndex"`
-	raw               *RawReceipt
+	BlockHash         base.Hash    `json:"blockHash,omitempty"`
+	BlockNumber       base.Blknum  `json:"blockNumber"`
+	ContractAddress   base.Address `json:"contractAddress,omitempty"`
+	CumulativeGasUsed string       `json:"cumulativeGasUsed,omitempty"`
+	EffectiveGasPrice base.Gas     `json:"effectiveGasPrice,omitempty"`
+	From              base.Address `json:"from,omitempty"`
+	GasUsed           base.Gas     `json:"gasUsed"`
+	IsError           bool         `json:"isError,omitempty"`
+	Logs              []SimpleLog  `json:"logs"`
+	Status            uint32       `json:"status"`
+	To                base.Address `json:"to,omitempty"`
+	TransactionHash   base.Hash    `json:"transactionHash"`
+	TransactionIndex  base.Blknum  `json:"transactionIndex"`
+	raw               *RawReceipt  `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleReceipt) Raw() *RawReceipt {
@@ -57,10 +63,11 @@ func (s *SimpleReceipt) SetRaw(raw *RawReceipt) {
 }
 
 func (s *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[string]any) Model {
-	// EXISTING_CODE
-	// EXISTING_CODE
+	var model = map[string]interface{}{}
+	var order = []string{}
 
-	model := map[string]interface{}{
+	// EXISTING_CODE
+	model = map[string]interface{}{
 		"blockNumber":      s.BlockNumber,
 		"gasUsed":          s.GasUsed,
 		"status":           s.Status,
@@ -68,7 +75,7 @@ func (s *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[s
 		"transactionIndex": s.TransactionIndex,
 	}
 
-	order := []string{
+	order = []string{
 		"blockNumber",
 		"transactionIndex",
 		"transactionHash",
@@ -76,7 +83,6 @@ func (s *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[s
 		"gasUsed",
 	}
 
-	// EXISTING_CODE
 	if format == "json" {
 		if !s.ContractAddress.IsZero() {
 			model["contractAddress"] = s.ContractAddress
@@ -96,11 +102,13 @@ func (s *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[s
 					"topics":   log.Topics,
 					"data":     log.Data,
 				}
-				if extraOptions["articulate"] == true && log.ArticulatedLog != nil {
-					inputModels := ParametersToMap(log.ArticulatedLog.Inputs)
+				if log.ArticulatedLog != nil {
 					articulatedLog := map[string]any{
-						"name":   log.ArticulatedLog.Name,
-						"inputs": inputModels,
+						"name": log.ArticulatedLog.Name,
+					}
+					inputModels := ParametersToMap(log.ArticulatedLog.Inputs)
+					if inputModels != nil {
+						articulatedLog["inputs"] = inputModels
 					}
 					logModel["articulatedLog"] = articulatedLog
 				}
@@ -145,6 +153,18 @@ func (s *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[s
 		Data:  model,
 		Order: order,
 	}
+}
+
+func (s *SimpleReceipt) WriteTo(w io.Writer) (n int64, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
+}
+
+func (s *SimpleReceipt) ReadFrom(r io.Reader) (n int64, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
 }
 
 // EXISTING_CODE

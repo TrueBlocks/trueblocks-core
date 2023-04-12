@@ -1,44 +1,87 @@
 package namesPkg
 
-import "fmt"
+import (
+	"context"
+	"strconv"
 
-func (opts *NamesOptions) HandleCrud() error {
-	fmt.Println(opts)
-	return nil
-	// namesArray, err := names.LoadNamesArray(opts.Globals.Chain, opts.getType(), names.SortByAddress, opts.Terms)
-	// if err != nil {
-	// 	return err
-	// }
-	// if len(namesArray) == 0 {
-	// 	logger.Log(logger.Warning, "No results for", os.Args)
-	// 	return nil
-	// }
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+)
 
-	// ctx := context.Background()
+func (opts *NamesOptions) HandleCrud() (err error) {
+	parts := opts.getType()
+	if _, err = names.LoadNamesMap(opts.Globals.Chain, parts, nil); err != nil {
+		return err
+	}
 
-	// // Note: Make sure to add an entry to enabledForCmd in src/apps/chifra/pkg/output/helpers.go
-	// fetchData := func(modelChan chan types.Modeler[types.RawName], errorChan chan error) {
-	// 	for _, name := range namesArray {
-	// 		name := name
-	// 		modelChan <- &name
-	// 	}
-	// }
+	var name *types.SimpleName
+	if opts.Create || opts.Update {
+		name, err = handleCreate(opts.Globals.Chain, opts.crudData)
+		if err != nil {
+			return
+		}
+	}
+	if opts.Delete {
+		name, err = handleDelete(opts.Globals.Chain, opts.crudData)
+		if err != nil {
+			return
+		}
+	}
+	if opts.Undelete {
+		name, err = handleUndelete(opts.Globals.Chain, opts.crudData)
+		if err != nil {
+			return
+		}
+	}
+	if opts.Remove {
+		name, err = handleRemove(opts.Globals.Chain, opts.crudData)
+		// Remove doesn't print the removed item
+		return
+	}
 
-	// return output.StreamMany(ctx, fetchData, output.OutputOptions{
-	// 	Writer:     opts.Globals.Writer,
-	// 	Chain:      opts.Globals.Chain,
-	// 	TestMode:   opts.Globals.TestMode,
-	// 	NoHeader:   opts.Globals.NoHeader,
-	// 	ShowRaw:    opts.Globals.ShowRaw,
-	// 	Verbose:    opts.Globals.Verbose,
-	// 	LogLevel:   opts.Globals.LogLevel,
-	// 	Format:     opts.Globals.Format,
-	// 	OutputFn:   opts.Globals.OutputFn,
-	// 	Append:     opts.Globals.Append,
-	// 	JsonIndent: "  ",
-	// 	Extra: map[string]interface{}{
-	// 		"expand":  opts.Expand,
-	// 		"prefund": opts.Prefund,
-	// 	},
-	// })
+	ctx := context.Background()
+	fetchData := func(modelChan chan types.Modeler[types.RawName], errorChan chan error) {
+		modelChan <- name
+	}
+
+	extra := map[string]interface{}{
+		"crud": true,
+	}
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+}
+
+func handleCreate(chain string, data *CrudData) (name *types.SimpleName, err error) {
+	var decimals uint64
+	if data.Decimals.Updated {
+		decimals, err = strconv.ParseUint(data.Decimals.Value, 10, 64)
+		if err != nil {
+			return
+		}
+	}
+
+	name = &types.SimpleName{
+		Address:  data.Address.Value,
+		Name:     data.Name.Value,
+		Tags:     data.Tag.Value,
+		Source:   data.Source.Value,
+		Symbol:   data.Symbol.Value,
+		Decimals: decimals,
+		Deleted:  false,
+		Petname:  names.AddrToPetname(data.Address.Value.Hex(), "-"),
+	}
+
+	return name, names.CreateCustomName(chain, name)
+}
+
+func handleDelete(chain string, data *CrudData) (*types.SimpleName, error) {
+	return names.ChangeCustomNameDeletedFlag(chain, data.Address.Value, true)
+}
+
+func handleUndelete(chain string, data *CrudData) (*types.SimpleName, error) {
+	return names.ChangeCustomNameDeletedFlag(chain, data.Address.Value, false)
+}
+
+func handleRemove(chain string, data *CrudData) (*types.SimpleName, error) {
+	return names.RemoveCustomName(chain, data.Address.Value)
 }

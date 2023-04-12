@@ -39,39 +39,63 @@ Purpose:
   Report on and edit the configuration of the TrueBlocks system.
 
 Usage:
-  chifra config <mode> [mode...] [flags]
+  chifra config <mode> [flags]
 
 Arguments:
-  modes - either show or edit the configuration
-	One or more of [ show | edit ]
-
-Aliases:
-  config, status
+  mode - either show or edit the configuration
+	One of [ show | edit ]
 
 Flags:
-      --module strings   the type of information to show or edit
-                         One or more of [ index | monitors | names | abis | caches | some | all ]
-  -d, --details          include details about items found in monitors, slurps, abis, or price caches
-  -t, --types strings    for caches module only, which type(s) of cache to report
-                         One or more of [ blocks | txs | traces | slurps | all ]
-  -x, --fmt string       export format, one of [none|json*|txt|csv]
-  -v, --verbose          enable verbose (increase detail with --log_level)
-  -h, --help             display this help screen
+  -x, --fmt string   export format, one of [none|json*|txt|csv]
+  -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen
 ```
 
 Data models produced by this tool:
 
-- [monitor](/data-model/accounts/#monitor)
-- [status](/data-model/admin/#status)
-- [cache](/data-model/admin/#cache)
-- [cacheentry](/data-model/admin/#cacheentry)
-- [indexcacheitem](/data-model/admin/#indexcacheitem)
 - [chain](/data-model/admin/#chain)
 
 Links:
 
 - [api docs](/api/#operation/admin-config)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/config)
+
+## chifra status
+
+
+```[plaintext]
+Purpose:
+  Report on the state of the internal binary caches.
+
+Usage:
+  chifra status <mode> [mode...] [flags]
+
+Arguments:
+  modes - the (optional) name of the binary cache to report on, terse otherwise
+	One or more of [ index | blooms | blocks | txs | traces | monitors | names | abis | recons | slurps | staging | unripe | maps | some | all ]
+
+Flags:
+  -c, --first_record uint   the first record to process (default 1)
+  -e, --max_records uint    the maximum number of records to process (default 10000)
+  -x, --fmt string          export format, one of [none|json*|txt|csv]
+  -v, --verbose             enable verbose (increase detail with --log_level)
+  -h, --help                display this help screen
+
+Notes:
+  - The some mode includes index, monitors, names, slurps, and abis.
+  - If no mode is supplied, a terse report is generated.
+```
+
+Data models produced by this tool:
+
+- [status](/data-model/admin/#status)
+- [cacheitem](/data-model/admin/#cacheitem)
+- [chain](/data-model/admin/#chain)
+
+Links:
+
+- [api docs](/api/#operation/admin-status)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/status)
 
 ## chifra daemon
 
@@ -102,7 +126,7 @@ Flags:
   -a, --api string      instruct the node to start the API server
                         One of [ off | on ] (default "on")
   -s, --scrape string   start the scraper, initialize it with either just blooms or entire index, generate for new blocks
-                        One of [ off | blooms | full-index ]
+                        One of [ off | blooms | index ]
   -m, --monitor         instruct the node to start the monitors tool
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)
@@ -163,7 +187,7 @@ Flags:
 Data models produced by this tool:
 
 - [manifest](/data-model/admin/#manifest)
-- [pinnedchunk](/data-model/admin/#pinnedchunk)
+- [chunkrecord](/data-model/admin/#chunkrecord)
 
 Links:
 
@@ -248,7 +272,7 @@ Usage:
 
 Arguments:
   mode - the type of data to process (required)
-	One of [ status | manifest | index | blooms | addresses | appearances | stats ]
+	One of [ manifest | index | blooms | addresses | appearances | stats ]
   blocks - an optional list of blocks to intersect with chunk ranges
 
 Flags:
@@ -274,13 +298,14 @@ Notes:
 
 Data models produced by this tool:
 
+- [appearance](/data-model/accounts/#appearance)
 - [manifest](/data-model/admin/#manifest)
-- [pinnedchunk](/data-model/admin/#pinnedchunk)
+- [chunkrecord](/data-model/admin/#chunkrecord)
 - [chunkindex](/data-model/admin/#chunkindex)
-- [chunkblooms](/data-model/admin/#chunkblooms)
-- [chunkaddresses](/data-model/admin/#chunkaddresses)
-- [chunkappearances](/data-model/admin/#chunkappearances)
+- [chunkbloom](/data-model/admin/#chunkbloom)
+- [chunkaddress](/data-model/admin/#chunkaddress)
 - [chunkstats](/data-model/admin/#chunkstats)
+- [reportcheck](/data-model/admin/#reportcheck)
 
 Links:
 
@@ -332,7 +357,7 @@ Notes:
 Data models produced by this tool:
 
 - [manifest](/data-model/admin/#manifest)
-- [pinnedchunk](/data-model/admin/#pinnedchunk)
+- [chunkrecord](/data-model/admin/#chunkrecord)
 
 Links:
 

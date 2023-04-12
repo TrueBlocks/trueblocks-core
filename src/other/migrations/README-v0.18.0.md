@@ -4,6 +4,10 @@
 
 (December 10, 2021)
 
+## IMPORTANT NOTE
+
+This migration has been retired. If your data is prior to this version, you must clear your cache and index folders and start from scratch
+
 ## Why the Change?
 
 We corrected a previous mistake in the headers of .txt and .csv output. Previously all the field names were lower case. In this release we now export field names in these two formats to agree with the JSON output. The following field names changed, but only in the casing.

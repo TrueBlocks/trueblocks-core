@@ -22,7 +22,7 @@ func (opts *ReceiptsOptions) validateReceipts() error {
 			return validate.Usage("Please supply one or more transaction identifiers.")
 		}
 		if !validate.CanArticulate(opts.Articulate) {
-			return validate.Usage("The {0} option requires an EtherScan API key.", "--articulate")
+			return validate.Usage("The {0} option requires an Etherscan API key.", "--articulate")
 		}
 	}
 

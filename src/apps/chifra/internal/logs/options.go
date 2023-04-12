@@ -9,7 +9,6 @@ package logsPkg
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -26,6 +25,8 @@ type LogsOptions struct {
 	Articulate     bool                     `json:"articulate,omitempty"`     // Articulate the retrieved data if ABIs can be found
 	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
 	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 var defaultLogsOptions = LogsOptions{}
@@ -41,27 +42,6 @@ func (opts *LogsOptions) testLog() {
 func (opts *LogsOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
-}
-
-// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
-func (opts *LogsOptions) getEnvStr() []string {
-	envStr := []string{}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return envStr
-}
-
-// toCmdLine converts the option to a command line for calling out to the system.
-func (opts *LogsOptions) toCmdLine() string {
-	options := ""
-	if opts.Articulate {
-		options += " --articulate"
-	}
-	options += " " + strings.Join(opts.Transactions, " ")
-	// EXISTING_CODE
-	// EXISTING_CODE
-	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
-	return options
 }
 
 // logsFinishParseApi finishes the parsing for server invocations. Returns a new LogsOptions.

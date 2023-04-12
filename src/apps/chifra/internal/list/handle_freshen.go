@@ -5,8 +5,8 @@ package listPkg
 // be found in the LICENSE file.
 
 import (
+	"context"
 	"fmt"
-	"log"
 	"os"
 	"sort"
 	"strconv"
@@ -14,19 +14,22 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 // AddressMonitorMap carries arrays of appearances that have not yet been written to the monitor file
-type AddressMonitorMap map[types.Address]*monitor.Monitor
+type AddressMonitorMap map[base.Address]*monitor.Monitor
 
 // MonitorUpdate stores the original 'chifra list' command line options plus
 type MonitorUpdate struct {
@@ -40,6 +43,7 @@ const maxTestingBlock = 15000000
 
 // mutexesPerAddress map stores mutex for each address that is being/has been freshened
 var mutexesPerAddress = make(map[string]*sync.Mutex)
+var mutexesPerAddressMutex sync.Mutex
 
 // lockForAddress locks the mutex for the given address
 func lockForAddress(address string) {
@@ -49,6 +53,8 @@ func lockForAddress(address string) {
 		return
 	}
 
+	mutexesPerAddressMutex.Lock()
+	defer mutexesPerAddressMutex.Unlock()
 	newMutex := &sync.Mutex{}
 	mutexesPerAddress[address] = newMutex
 	newMutex.Lock()
@@ -64,11 +70,22 @@ func unlockForAddress(address string) {
 	mutex.Unlock()
 }
 
-func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) error {
+func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) (bool, error) {
 	for _, address := range opts.Addrs {
 		lockForAddress(address)
 		defer unlockForAddress(address) // reminder: this defers until the function returns, not this loop
 	}
+
+	var m sync.Once
+	canceled := false
+	ctx, cancel := context.WithCancel(context.Background())
+	cleanOnQuit := func() {
+		canceled = true
+		logger.Warn(colors.Yellow+"User hit control+c...", colors.Off)
+		cancel()
+	}
+	trapChannel := sigintTrap.Enable(ctx, cancel, cleanOnQuit)
+	defer sigintTrap.Disable(trapChannel)
 
 	var updater = MonitorUpdate{
 		MaxTasks:   12,
@@ -81,10 +98,10 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 	for _, addr := range opts.Addrs {
 		err := needsMigration(addr)
 		if err != nil {
-			return err
+			return canceled, err
 		}
 
-		if updater.MonitorMap[types.HexToAddress(addr)] == nil {
+		if updater.MonitorMap[base.HexToAddress(addr)] == nil {
 			mon, _ := monitor.NewStagedMonitor(opts.Globals.Chain, addr)
 			mon.ReadMonitorHeader()
 			if uint64(mon.LastScanned) < updater.FirstBlock {
@@ -100,7 +117,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 	bloomPath := config.GetPathToIndex(chain) + "blooms/"
 	files, err := os.ReadDir(bloomPath)
 	if err != nil {
-		return err
+		return canceled, err
 	}
 
 	var wg sync.WaitGroup
@@ -108,12 +125,16 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 
 	taskCount := 0
 	for _, info := range files {
+		if canceled {
+			m.Do(func() { logger.Warn(colors.Yellow+"Finishing", taskCount, "current tasks...", colors.Off) })
+			continue
+		}
 		if !info.IsDir() {
 			fileName := bloomPath + "/" + info.Name()
-			if !strings.HasSuffix(fileName, ".bloom") {
+			if !cache.IsCacheType(fileName, cache.Index_Bloom, true /* checkExt */) {
 				continue // sometimes there are .gz files in this folder, for example
 			}
-			fileRange, err := paths.RangeFromFilenameE(fileName)
+			fileRange, err := base.RangeFromFilenameE(fileName)
 			if err != nil {
 				// don't respond further -- there may be foreign files in the folder
 				fmt.Println(err)
@@ -162,9 +183,9 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 
 	if !opts.Globals.TestMode {
 		// TODO: Note we could actually test this if we had the concept of a FAKE_HEAD block
-		stagePath := paths.ToStagingPath(config.GetPathToIndex(opts.Globals.Chain) + "staging")
+		stagePath := cache.ToStagingPath(config.GetPathToIndex(opts.Globals.Chain) + "staging")
 		stageFn, _ := file.LatestFileInFolder(stagePath)
-		rng := paths.RangeFromFilename(stageFn)
+		rng := base.RangeFromFilename(stageFn)
 		lines := []string{}
 		for addr, mon := range updater.MonitorMap {
 			if !rng.LaterThanB(uint64(mon.LastScanned)) { // the range preceeds the block number
@@ -194,7 +215,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 		}
 	}
 
-	return updater.moveAllToProduction()
+	return canceled, updater.moveAllToProduction()
 }
 
 // visitChunkToFreshenFinal opens an index file, searches for the address(es) we're looking for and pushes
@@ -206,7 +227,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 		wg.Done()
 	}()
 
-	bloomFilename := paths.ToBloomPath(fileName)
+	bloomFilename := cache.ToBloomPath(fileName)
 
 	// We open the bloom filter and read its header but we do not read any of the
 	// actual bits in the blooms. The IsMember function reads individual bytes to
@@ -242,7 +263,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 		return
 	}
 
-	indexFilename := paths.ToIndexPath(fileName)
+	indexFilename := cache.ToIndexPath(fileName)
 	if !file.FileExists(indexFilename) {
 		_, err := index.EstablishIndexChunk(updater.Options.Globals.Chain, bl.Range)
 		if err != nil {
@@ -291,7 +312,7 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 			mon.Close()
 			err := mon.WriteAppearancesAppend(lastScanned, nil)
 			if err != nil {
-				log.Println(err)
+				logger.Error(err)
 			}
 		}
 
@@ -305,9 +326,10 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 			if nWritten > 0 {
 				_, err := mon.WriteAppearances(*result.AppRecords, true /* append */)
 				if err != nil {
-					log.Println(err)
+					logger.Error(err)
 				} else if !updater.Options.Globals.TestMode {
-					log.Printf("%s appended %d apps at %s\n", mon.GetAddrStr(), nWritten, result.Range)
+					msg := fmt.Sprintf("%s appended %d apps at %s", mon.Address.Hex(), nWritten, result.Range)
+					logger.Info(msg)
 				}
 			}
 		}
@@ -315,7 +337,7 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 }
 
 func needsMigration(addr string) error {
-	mon := monitor.Monitor{Address: types.HexToAddress(addr)}
+	mon := monitor.Monitor{Address: base.HexToAddress(addr)}
 	path := strings.Replace(mon.Path(), ".mon.bin", ".acct.bin", -1)
 	if file.FileExists(path) {
 		path = strings.Replace(path, config.GetPathToCache(mon.Chain), "./", -1)

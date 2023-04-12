@@ -1,23 +1,23 @@
 package index
 
 import (
-	"log"
-	"strings"
+	"context"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-type walkerFunc func(walker *IndexWalker, path string, first bool) (bool, error)
+type walkerFunc func(walker *CacheWalker, path string, first bool) (bool, error)
 
-type IndexWalker struct {
+type CacheWalker struct {
 	chain      string
 	testMode   bool
 	maxTests   int
 	visitFunc1 walkerFunc
 }
 
-func NewIndexWalker(chain string, testMode bool, maxTests int, visitFunc walkerFunc) IndexWalker {
-	return IndexWalker{
+func NewCacheWalker(chain string, testMode bool, maxTests int, visitFunc walkerFunc) CacheWalker {
+	return CacheWalker{
 		chain:      chain,
 		testMode:   testMode,
 		maxTests:   maxTests,
@@ -25,22 +25,21 @@ func NewIndexWalker(chain string, testMode bool, maxTests int, visitFunc walkerF
 	}
 }
 
-func (walker *IndexWalker) MaxTests() int {
+func (walker *CacheWalker) MaxTests() int {
 	return walker.maxTests
 }
 
-func (walker *IndexWalker) WalkBloomFilters(blockNums []uint64) error {
-	filenameChan := make(chan paths.IndexFileInfo)
+func (walker *CacheWalker) WalkBloomFilters(blockNums []uint64) error {
+	filenameChan := make(chan cache.CacheFileInfo)
 
 	var nRoutines int = 1
-	go paths.WalkIndexFolder(walker.chain, paths.Index_Bloom, filenameChan)
+	go cache.WalkCacheFolder(context.Background(), walker.chain, cache.Index_Bloom, nil, filenameChan)
 
 	cnt := 0
 	for result := range filenameChan {
 		switch result.Type {
-		case paths.Index_Bloom:
-			skip := (walker.testMode && cnt > walker.maxTests) || !strings.HasSuffix(result.Path, ".bloom")
-			if !skip && shouldDisplay(result, blockNums) {
+		case cache.Index_Bloom:
+			if walker.shouldDisplay(result, cnt, blockNums) {
 				ok, err := walker.visitFunc1(walker, result.Path, cnt == 0)
 				if err != nil {
 					return err
@@ -51,14 +50,14 @@ func (walker *IndexWalker) WalkBloomFilters(blockNums []uint64) error {
 					return nil
 				}
 			}
-		case paths.None:
+		case cache.Cache_NotACache:
 			nRoutines--
 			if nRoutines == 0 {
 				close(filenameChan)
 				continue
 			}
 		default:
-			log.Fatal("You may only traverse the bloom folder")
+			logger.Fatal("You may only traverse the bloom folder")
 		}
 	}
 
@@ -72,10 +71,20 @@ func (walker *IndexWalker) WalkBloomFilters(blockNums []uint64) error {
 // there are 100 files in the range 100000-200000, we need to create block numbers that cover every
 // eventuallity. If on of the files has a two block range, we need to generate 50,000 block numbers. If we
 // used the range on the command line instead we'd only have to intersect one range.
-func shouldDisplay(result paths.IndexFileInfo, blockNums []uint64) bool {
+
+func (walker *CacheWalker) shouldDisplay(result cache.CacheFileInfo, cnt int, blockNums []uint64) bool {
+	if !cache.IsCacheType(result.Path, result.Type, true /* checkExt */) {
+		return false
+	}
+
+	if walker.testMode && cnt > walker.maxTests {
+		return false
+	}
+
 	if len(blockNums) == 0 {
 		return true
 	}
+
 	hit := false
 	for _, bn := range blockNums {
 		h := result.Range.IntersectsB(bn)
@@ -84,5 +93,6 @@ func shouldDisplay(result paths.IndexFileInfo, blockNums []uint64) bool {
 			break
 		}
 	}
+
 	return hit
 }

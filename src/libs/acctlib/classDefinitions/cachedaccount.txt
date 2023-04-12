@@ -1,5 +1,0 @@
-[settings]
-class = CCachedAccount
-fields = cachedaccount.csv
-includes = etherlib.h
-output = ../../libs/acctlib/

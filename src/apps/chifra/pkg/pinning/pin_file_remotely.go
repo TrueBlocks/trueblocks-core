@@ -12,10 +12,10 @@ import (
 	fp "path/filepath"
 	"time"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
-func (s *Service) pinFileRemotely(filepath string) (types.IpfsHash, error) {
+func (s *Service) pinFileRemotely(filepath string) (base.IpfsHash, error) {
 	if s.PinUrl == "" {
 		return "", fmt.Errorf("empty remote pinning URL")
 	}
@@ -83,5 +83,5 @@ func (s *Service) pinFileRemotely(filepath string) (types.IpfsHash, error) {
 	if err := json.Unmarshal(data, &dat); err != nil {
 		return "", err
 	}
-	return types.IpfsHash(dat.IpfsHash), nil
+	return base.IpfsHash(dat.IpfsHash), nil
 }

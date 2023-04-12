@@ -1,8 +1,0 @@
-[settings]
-class = CLeaf
-base_class = CTreeNode
-fields = leaf.csv
-includes = etherlib.h|treenode.h
-cpp_includes = treeroot.h
-output = ../../libs/acctlib/
-disabled = true

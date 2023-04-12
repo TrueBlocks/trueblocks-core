@@ -6,6 +6,7 @@ import (
 	"reflect"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
@@ -32,7 +33,7 @@ func ArticulateFunction(function *types.SimpleFunction, inputData string, output
 	return
 }
 
-func ArticulateArguments(args abi.Arguments, data string, topics []common.Hash, destination []types.SimpleParameter) (err error) {
+func ArticulateArguments(args abi.Arguments, data string, topics []base.Hash, destination []types.SimpleParameter) (err error) {
 	dataBytes, err := hex.DecodeString(data)
 	if err != nil {
 		return
@@ -98,7 +99,11 @@ func ArticulateArguments(args abi.Arguments, data string, topics []common.Hash, 
 
 	// Set values of indexed arguments
 	out := make(map[string]interface{}, len(indexed))
-	if err = abi.ParseTopicsIntoMap(out, indexed, topics[1:]); err != nil {
+	tops := []common.Hash{}
+	for _, hash := range topics {
+		tops = append(tops, common.HexToHash(hash.Hex()))
+	}
+	if err = abi.ParseTopicsIntoMap(out, indexed, tops[1:]); err != nil {
 		return err
 	}
 	for name, value := range out {
@@ -195,7 +200,7 @@ func formatValue(argType *abi.Type, value any) (result any, err error) {
 			result = fmt.Sprint(value)
 			return
 		}
-		ourAddr := types.HexToAddress(addr.Hex())
+		ourAddr := base.HexToAddress(addr.Hex())
 		result = ourAddr.Hex()
 	case abi.HashTy:
 		result = strings.ToLower(fmt.Sprint(value))
@@ -209,7 +214,7 @@ func formatValue(argType *abi.Type, value any) (result any, err error) {
 func articulateFixedBytes(abiType *abi.Type, data any) string {
 	addressLike, ok := data.([20]byte)
 	if ok && abiType.Size == 20 {
-		addr := types.BytesToAddress(addressLike[:])
+		addr := base.BytesToAddress(addressLike[:])
 		return addr.Hex()
 	}
 

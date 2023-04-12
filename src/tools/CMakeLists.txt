@@ -11,11 +11,7 @@ include_directories(${BASE_INCLUDE})
 # message (WARNING  "*** Entering tools folder ***")
 
 # Compilation order of the src subdirectories
-add_subdirectory(ethNames)
-add_subdirectory(ethslurp)
 add_subdirectory(getBlocks)
-add_subdirectory(getLogs)
 add_subdirectory(getState)
 add_subdirectory(getTokens)
-add_subdirectory(getTraces)
 add_subdirectory(getTrans)

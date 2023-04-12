@@ -6,7 +6,7 @@ This folder contains various tools and python scripts that provide simple, helpf
 
 `Usage:` ethscan.py [ block | hash | accounts ]
 
-`Purpose:` Opens EtherScan (http://etherscan.com) website to either a given block number, a given block or transaction hash, or a given Ethereum address. You may specify any number of the above in any combination.
+`Purpose:` Opens Etherscan (http://etherscan.com) website to either a given block number, a given block or transaction hash, or a given Ethereum address. You may specify any number of the above in any combination.
 
 ---
 

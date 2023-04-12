@@ -1,17 +1,165 @@
-chifra slurp  wolfofethereum.eth --types int 12524380-13675400
+chifra slurp  wolfofethereum.eth --types int 12524380-13675400 --fmt json
 TEST[DATE|TIME] Addrs:  [0x0559a413a3ab19508a144aeebc474eb14c5e76ce]
 TEST[DATE|TIME] Blocks:  [12524380-13675400]
 TEST[DATE|TIME] Types:  [int]
-TEST[DATE|TIME] Format:  txt
-                                                                                                                        hash	blockHash	blockNumber	transactionIndex	nonce	timestamp	from	to	value	gas	gasPrice	maxFeePerGas	maxPriorityFeePerGas	input	isError	hasToken	gasUsed	date	ether
-0x73dfde0d7e37278eb238f30f9a5b82f565b6b773a21c52c2f2d04375f092adb0	0x0	12573540	24	0	1622883603	0xe592427a0aece92de3edee1f18e0157c05861564	0x0559a413a3ab19508a144aeebc474eb14c5e76ce	535375575077256861	31600	0	0	0		0	0	0	2021-06-05 09:00:03 UTC	0.535375575077256861
-0x4a09fd4f2684f707eeaee8f887f089a7627c852d50f5aa8a37fff0c86de4dfdd	0x0	13237992	291	0	1631811331	0x7a250d5630b4cf539739df2c5dacb4c659f2488d	0x0559a413a3ab19508a144aeebc474eb14c5e76ce	1108526223144894232	61500	0	0	0		0	0	0	2021-09-16 16:55:31 UTC	1.108526223144894232
-0xa844d70c9f09b89e3ff520b0541077d8dc1deb9c20badc92d3e9bf5516d2e978	0x0	13504765	287	0	1635411471	0x7a250d5630b4cf539739df2c5dacb4c659f2488d	0x0559a413a3ab19508a144aeebc474eb14c5e76ce	982071181332412	30156	0	0	0		0	0	0	2021-10-28 08:57:51 UTC	0.000982071181332412
-0xec77ef97b71b7522bc102dfe349cefc0db37ace2e8181fc658fc4531e40acaf3	0x0	13504782	85	0	1635411596	0x7a250d5630b4cf539739df2c5dacb4c659f2488d	0x0559a413a3ab19508a144aeebc474eb14c5e76ce	43979427230	39091	0	0	0		0	0	0	2021-10-28 08:59:56 UTC	0.000000043979427230
-0xa545c732879d935731694d74cdea92179092cf3012f7a5cb525fda8a0c05a7ef	0x0	13504795	260	0	1635411689	0x7a250d5630b4cf539739df2c5dacb4c659f2488d	0x0559a413a3ab19508a144aeebc474eb14c5e76ce	79134607067002	39093	0	0	0		0	0	0	2021-10-28 09:01:29 UTC	0.000079134607067002
-0xf7c033eb2bfca99dc4759c7f1dd395a29da9ef7882af1ea41114b7c20e01a35d	0x0	13504809	418	0	1635411888	0x7a250d5630b4cf539739df2c5dacb4c659f2488d	0x0559a413a3ab19508a144aeebc474eb14c5e76ce	98929662182086	39095	0	0	0		0	0	0	2021-10-28 09:04:48 UTC	0.000098929662182086
-0xc2d11f9ce576dc4be79279ae1c2d0f25d054987de5207115c6d9e5b4addeca3e	0x0	13588029	197	0	1636540877	0x283af0b28c62c092c9727f1ee09c02ca627eb7f5	0x0559a413a3ab19508a144aeebc474eb14c5e76ce	634208316482001	2300	0	0	0		0	0	0	2021-11-10 10:41:17 UTC	0.000634208316482001
-0x2ebb85075f8a7fca411a61d2d5f9fc09aaaccf34ea1afc9c74c0b1963756ba45	0x0	13616283	198	0	1636923887	0x283af0b28c62c092c9727f1ee09c02ca627eb7f5	0x0559a413a3ab19508a144aeebc474eb14c5e76ce	14088069173148217	2300	0	0	0		0	0	0	2021-11-14 21:04:47 UTC	0.014088069173148217
-0x0eae729d9d10a0dac76ad42be242ba6090f1a373fec13feebfd1945b41967945	0x0	13672959	244	0	1637699348	0xe592427a0aece92de3edee1f18e0157c05861564	0x0559a413a3ab19508a144aeebc474eb14c5e76ce	1891138061225612052	39084	0	0	0		0	0	0	2021-11-23 20:29:08 UTC	1.891138061225612052
-0x7afaaf8de41ca677cde68de2345ed6650713fb20eb1b3ebb85a675631c101585	0x0	13673025	0	0	1637700452	0xe592427a0aece92de3edee1f18e0157c05861564	0x0559a413a3ab19508a144aeebc474eb14c5e76ce	3827879102472904389	49433	0	0	0		0	0	0	2021-11-23 20:47:32 UTC	3.827879102472904389
-0xb99c7a595a5d4f3dcc9c2afbdf63f52208ac57db266de57dd5d9b7525797c323	0x0	13673164	200	0	1637702373	0xe592427a0aece92de3edee1f18e0157c05861564	0x0559a413a3ab19508a144aeebc474eb14c5e76ce	23340146911393484	37960	0	0	0		0	0	0	2021-11-23 21:19:33 UTC	0.023340146911393484
+TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] Processing [0x0559a413a3ab19508a144aeebc474eb14c5e76ce] --types: [int] [12524380-13675400]
+INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&action=txlistinternal&address=0x0559a413a3ab19508a144aeebc474eb14c5e76ce&page=1&offset=100
+{
+  "data": [
+    {
+      "blockNumber": 12573540,
+      "date": "2021-06-05 09:00:03 UTC",
+      "ether": "0.535375575077256861",
+      "from": "0xe592427a0aece92de3edee1f18e0157c05861564",
+      "gas": 31600,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0x73dfde0d7e37278eb238f30f9a5b82f565b6b773a21c52c2f2d04375f092adb0",
+      "timestamp": 1622883603,
+      "to": "0x0559a413a3ab19508a144aeebc474eb14c5e76ce",
+      "value": "535375575077256861"
+    },
+    {
+      "blockNumber": 13237992,
+      "date": "2021-09-16 16:55:31 UTC",
+      "ether": "1.108526223144894232",
+      "from": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
+      "gas": 61500,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0x4a09fd4f2684f707eeaee8f887f089a7627c852d50f5aa8a37fff0c86de4dfdd",
+      "timestamp": 1631811331,
+      "to": "0x0559a413a3ab19508a144aeebc474eb14c5e76ce",
+      "value": "1108526223144894232"
+    },
+    {
+      "blockNumber": 13504765,
+      "date": "2021-10-28 08:57:51 UTC",
+      "ether": "0.000982071181332412",
+      "from": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
+      "gas": 30156,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0xa844d70c9f09b89e3ff520b0541077d8dc1deb9c20badc92d3e9bf5516d2e978",
+      "timestamp": 1635411471,
+      "to": "0x0559a413a3ab19508a144aeebc474eb14c5e76ce",
+      "value": "982071181332412"
+    },
+    {
+      "blockNumber": 13504782,
+      "date": "2021-10-28 08:59:56 UTC",
+      "ether": "0.000000043979427230",
+      "from": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
+      "gas": 39091,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0xec77ef97b71b7522bc102dfe349cefc0db37ace2e8181fc658fc4531e40acaf3",
+      "timestamp": 1635411596,
+      "to": "0x0559a413a3ab19508a144aeebc474eb14c5e76ce",
+      "value": "43979427230"
+    },
+    {
+      "blockNumber": 13504795,
+      "date": "2021-10-28 09:01:29 UTC",
+      "ether": "0.000079134607067002",
+      "from": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
+      "gas": 39093,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0xa545c732879d935731694d74cdea92179092cf3012f7a5cb525fda8a0c05a7ef",
+      "timestamp": 1635411689,
+      "to": "0x0559a413a3ab19508a144aeebc474eb14c5e76ce",
+      "value": "79134607067002"
+    },
+    {
+      "blockNumber": 13504809,
+      "date": "2021-10-28 09:04:48 UTC",
+      "ether": "0.000098929662182086",
+      "from": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
+      "gas": 39095,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0xf7c033eb2bfca99dc4759c7f1dd395a29da9ef7882af1ea41114b7c20e01a35d",
+      "timestamp": 1635411888,
+      "to": "0x0559a413a3ab19508a144aeebc474eb14c5e76ce",
+      "value": "98929662182086"
+    },
+    {
+      "blockNumber": 13588029,
+      "date": "2021-11-10 10:41:17 UTC",
+      "ether": "0.000634208316482001",
+      "from": "0x283af0b28c62c092c9727f1ee09c02ca627eb7f5",
+      "gas": 2300,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0xc2d11f9ce576dc4be79279ae1c2d0f25d054987de5207115c6d9e5b4addeca3e",
+      "timestamp": 1636540877,
+      "to": "0x0559a413a3ab19508a144aeebc474eb14c5e76ce",
+      "value": "634208316482001"
+    },
+    {
+      "blockNumber": 13616283,
+      "date": "2021-11-14 21:04:47 UTC",
+      "ether": "0.014088069173148217",
+      "from": "0x283af0b28c62c092c9727f1ee09c02ca627eb7f5",
+      "gas": 2300,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0x2ebb85075f8a7fca411a61d2d5f9fc09aaaccf34ea1afc9c74c0b1963756ba45",
+      "timestamp": 1636923887,
+      "to": "0x0559a413a3ab19508a144aeebc474eb14c5e76ce",
+      "value": "14088069173148217"
+    },
+    {
+      "blockNumber": 13672959,
+      "date": "2021-11-23 20:29:08 UTC",
+      "ether": "1.891138061225612052",
+      "from": "0xe592427a0aece92de3edee1f18e0157c05861564",
+      "gas": 39084,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0x0eae729d9d10a0dac76ad42be242ba6090f1a373fec13feebfd1945b41967945",
+      "timestamp": 1637699348,
+      "to": "0x0559a413a3ab19508a144aeebc474eb14c5e76ce",
+      "value": "1891138061225612052"
+    },
+    {
+      "blockNumber": 13673025,
+      "date": "2021-11-23 20:47:32 UTC",
+      "ether": "3.827879102472904389",
+      "from": "0xe592427a0aece92de3edee1f18e0157c05861564",
+      "gas": 49433,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0x7afaaf8de41ca677cde68de2345ed6650713fb20eb1b3ebb85a675631c101585",
+      "timestamp": 1637700452,
+      "to": "0x0559a413a3ab19508a144aeebc474eb14c5e76ce",
+      "value": "3827879102472904389"
+    },
+    {
+      "blockNumber": 13673164,
+      "date": "2021-11-23 21:19:33 UTC",
+      "ether": "0.023340146911393484",
+      "from": "0xe592427a0aece92de3edee1f18e0157c05861564",
+      "gas": 37960,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0xb99c7a595a5d4f3dcc9c2afbdf63f52208ac57db266de57dd5d9b7525797c323",
+      "timestamp": 1637702373,
+      "to": "0x0559a413a3ab19508a144aeebc474eb14c5e76ce",
+      "value": "23340146911393484"
+    }
+  ]
+}

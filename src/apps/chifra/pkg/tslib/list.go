@@ -24,7 +24,7 @@ func GetSpecials(chain string) (specials []types.SimpleNamedBlock, err error) {
 		// It's okay if there are no specials for a certain chain
 		if chain == "mainnet" {
 			// should not happen, but we want to know if it does
-			logger.Log(logger.Info, "No special block file found for chain", chain)
+			logger.Info("No special block file found for chain", chain)
 		}
 		return specials, nil
 	}

@@ -6,15 +6,21 @@ TEST[DATE|TIME] Format:  txt
   "data": [
     {
       "action": {
-        "from": "0xb97073b754660bb356dfe12f78ae366d77dbc80f",
+        "address": "",
+        "balance": "",
         "callType": "call",
+        "from": "0xb97073b754660bb356dfe12f78ae366d77dbc80f",
         "gas": "0x2b1b",
+        "init": "",
         "input": "0xd8963b9100000000000000000000000000a3819199113fc6a6e6ba1298afde7377e2009b",
+        "refundAddress": "",
+        "selfDestructed": "",
         "to": "0xd450aafdb8a225c901d5379a3d0ff8fea1344bfa",
         "value": "0x0"
       },
       "blockHash": "0x9ee74ad50cb24017ee6fa90cdabc13d00e714ab3692a689a4a22716bdd2de5a4",
       "blockNumber": 3189962,
+      "error": "",
       "result": {
         "address": "",
         "code": "",
@@ -29,12 +35,21 @@ TEST[DATE|TIME] Format:  txt
     },
     {
       "action": {
+        "address": "0xd450aafdb8a225c901d5379a3d0ff8fea1344bfa",
         "balance": "0x16345785d8a0000",
+        "callType": "",
+        "from": "",
+        "gas": "",
+        "init": "",
+        "input": "",
         "refundAddress": "0x00a3819199113fc6a6e6ba1298afde7377e2009b",
-        "address": "0xd450aafdb8a225c901d5379a3d0ff8fea1344bfa"
+        "selfDestructed": "",
+        "to": "",
+        "value": ""
       },
       "blockHash": "0x9ee74ad50cb24017ee6fa90cdabc13d00e714ab3692a689a4a22716bdd2de5a4",
       "blockNumber": 3189962,
+      "error": "",
       "result": null,
       "subtraces": 0,
       "traceAddress": [

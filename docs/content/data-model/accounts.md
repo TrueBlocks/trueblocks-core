@@ -45,6 +45,7 @@ The following commands produce and manage Appearances:
 - [chifra list](/chifra/accounts/#chifra-list)
 - [chifra export](/chifra/accounts/#chifra-export)
 - [chifra blocks](/chifra/chaindata/#chifra-blocks)
+- [chifra chunks](/chifra/admin/#chifra-chunks)
 
 Appearances consist of the following fields:
 
@@ -151,7 +152,6 @@ The following commands produce and manage Monitors:
 - [chifra monitors](/chifra/accounts/#chifra-monitors)
 - [chifra list](/chifra/accounts/#chifra-list)
 - [chifra export](/chifra/accounts/#chifra-export)
-- [chifra config](/chifra/admin/#chifra-config)
 
 Monitors consist of the following fields:
 
@@ -219,9 +219,9 @@ and Event signatures for a given smart contract. Along with [Names](/data-model/
 use of ABIs goes a very long way towards making your Ethereum data much more understandable.
 
 Similar to names of addresses, ABI files are not available on-chain which means they must be
-acquired somewhere. Unfortunately, the Ethereum community has not yet understand that EtherScan
+acquired somewhere. Unfortunately, the Ethereum community has not yet understand that Etherscan
 is not a good place to store this very important information. For this reason, TrueBlocks uses
-EtherScan to acquire ABI files and therefor one needs to get an EtherScan API key to use this
+Etherscan to acquire ABI files and therefor one needs to get an Etherscan API key to use this
 function.
 
 The following commands produce and manage Abis:
@@ -237,7 +237,7 @@ Abis consist of the following fields:
 
 ### Notes
 
-See the [chifra abis](/chifra/accounts/#chifra-abis) command line for information about getting an EtherScan key.
+See the [chifra abis](/chifra/accounts/#chifra-abis) command line for information about getting an Etherscan key.
 
 ## AppearanceCount
 
@@ -257,6 +257,25 @@ AppearanceCounts consist of the following fields:
 | address  | the address for this count                                | address |
 | nRecords | the number of appearances for the given address           | uint64  |
 | fileSize | the size of the monitor file containing those appearances | uint64  |
+
+## Bounds
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+The Bounds data model displays information about a given address including how many times it's appeared on the chain and when the first and most recent blocks, timestamps, and dates are.
+
+The following commands produce and manage Bounds:
+
+- [chifra list](/chifra/accounts/#chifra-list)
+
+Bounds consist of the following fields:
+
+| Field     | Description                                                                  | Type          |
+| --------- | ---------------------------------------------------------------------------- | ------------- |
+| count     | the number of appearances for this address                                   | uint64        |
+| firstApp  | the block number and transaction id of the first appearance of this address  | RawAppearance |
+| firstTs   | the timestamp of the first appearance of this address                        | timestamp     |
+| latestApp | the block number and transaction id of the latest appearance of this address | RawAppearance |
+| latestTs  | the timestamp of the latest appearance of this address                       | timestamp     |
 
 ## Base types
 

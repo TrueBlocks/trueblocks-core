@@ -8,6 +8,7 @@ import (
 	"path"
 	"path/filepath"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/contract"
@@ -173,7 +174,7 @@ func getKnownAbiPaths() (filePaths []string, err error) {
 }
 
 // LoadAbiFromAddress loads ABI from local file or cache
-func LoadAbiFromAddress(chain string, address types.Address, destination AbiInterfaceMap) (err error) {
+func LoadAbiFromAddress(chain string, address base.Address, destination AbiInterfaceMap) (err error) {
 	localFileName := address.Hex() + ".json"
 	localFile, err := os.OpenFile(localFileName, os.O_RDONLY, 0)
 	if os.IsNotExist(err) {
@@ -209,7 +210,7 @@ func LoadAbiFromAddress(chain string, address types.Address, destination AbiInte
 }
 
 // LoadAbi tries to load ABI from any source (local file, cache, download from 3rd party)
-func LoadAbi(chain string, address types.Address, destination AbiInterfaceMap) (err error) {
+func LoadAbi(chain string, address base.Address, destination AbiInterfaceMap) (err error) {
 	if err = PreloadKnownAbis(chain, destination); err != nil {
 		return
 	}
@@ -235,7 +236,7 @@ func LoadAbi(chain string, address types.Address, destination AbiInterfaceMap) (
 		return
 	}
 	if !contract {
-		// logger.Log(logger.Info, "Address", address, "is not a smart contract. Skipping...")
+		// logger.Info("Address", address, "is not a smart contract. Skipping...")
 		return
 	}
 	// Fetch ABI from a provider

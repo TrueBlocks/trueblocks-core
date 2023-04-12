@@ -1,6 +1,6 @@
 blocks?blocks=2222222&trace
 {
   "errors": [
-    "chifra blocks - the --trace option is deprecated, please use --traces option instead"
+    "Invalid key (trace) in blocks route."
   ]
 }

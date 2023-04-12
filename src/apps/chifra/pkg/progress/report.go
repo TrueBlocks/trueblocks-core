@@ -16,12 +16,12 @@ const (
 	Cancelled
 )
 
-type Progress struct {
+type ProgressMsg struct {
 	Event   Event
 	Message string
 	Payload interface{}
 }
 
-func MakeChan() chan *Progress {
-	return make(chan *Progress, 100)
+func MakeChan() chan *ProgressMsg {
+	return make(chan *ProgressMsg, 100)
 }

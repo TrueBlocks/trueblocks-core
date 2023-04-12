@@ -7,14 +7,13 @@ package chunksPkg
 import (
 	"fmt"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // CheckSequential checks that the range of blocks in each of three arrays (onDisc, LocalManifest, RemoteManifest)
 // "cover" the range without gaps. (There may be a bug for allow_missing chains where gaps are allowed.)
-func (opts *ChunksOptions) CheckSequential(fnArray, cacheArray, remoteArray []string, allowMissing bool, report *types.ReportCheck) error {
+func (opts *ChunksOptions) CheckSequential(fnArray, cacheArray, remoteArray []string, allowMissing bool, report *simpleReportCheck) error {
 	if err := opts.checkSequential("disc", fnArray, allowMissing, report); err != nil {
 		return err
 	}
@@ -31,17 +30,17 @@ func (opts *ChunksOptions) CheckSequential(fnArray, cacheArray, remoteArray []st
 }
 
 // TODO: Can this be made concurrent?
-func (opts *ChunksOptions) checkSequential(which string, array []string, allowMissing bool, report *types.ReportCheck) error {
-	prev := paths.NotARange
+func (opts *ChunksOptions) checkSequential(which string, array []string, allowMissing bool, report *simpleReportCheck) error {
+	prev := base.NotARange
 	for _, item := range array {
-		var fR paths.FileRange
+		var fR base.FileRange
 		var err error
-		if fR, err = paths.RangeFromFilenameE(item); err != nil {
+		if fR, err = base.RangeFromFilenameE(item); err != nil {
 			return err
 		}
 
 		w := utils.MakeFirstUpperCase(which)
-		if prev != paths.NotARange {
+		if prev != base.NotARange {
 			report.VisitedCnt++
 			report.CheckedCnt++
 			if prev != fR {

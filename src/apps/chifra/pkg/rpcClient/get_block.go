@@ -10,11 +10,11 @@ import (
 	"math/big"
 	"strconv"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
-	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -39,7 +39,7 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, isFinal bool) (types.Simpl
 		return block, err
 	}
 
-	timestamp, _ := strconv.ParseInt(rawBlock.Timestamp, 0, 64)
+	ts, _ := strconv.ParseInt(rawBlock.Timestamp, 0, 64)
 	block.Transactions = make([]types.SimpleTransaction, 0, len(rawBlock.Transactions))
 	for _, rawTx := range rawBlock.Transactions {
 		// cast transaction to a concrete type
@@ -49,7 +49,7 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, isFinal bool) (types.Simpl
 			return block, err
 		}
 
-		txHash := common.HexToHash(fmt.Sprint(t["hash"]))
+		txHash := base.HexToHash(fmt.Sprint(t["hash"]))
 		txGasPrice := mustParseUint(t["gasPrice"])
 		input := fmt.Sprint(t["input"])
 		value := big.NewInt(0)
@@ -70,13 +70,13 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, isFinal bool) (types.Simpl
 
 		tx := types.SimpleTransaction{
 			Hash:                 txHash,
-			BlockHash:            common.HexToHash(fmt.Sprint(t["blockHash"])),
+			BlockHash:            base.HexToHash(fmt.Sprint(t["blockHash"])),
 			BlockNumber:          mustParseUint(t["blockNumber"]),
 			TransactionIndex:     mustParseUint(t["transactionIndex"]),
 			Nonce:                mustParseUint(t["nonce"]),
-			Timestamp:            timestamp,
-			From:                 types.HexToAddress(fmt.Sprint(t["from"])),
-			To:                   types.HexToAddress(fmt.Sprint(t["to"])),
+			Timestamp:            ts,
+			From:                 base.HexToAddress(fmt.Sprint(t["from"])),
+			To:                   base.HexToAddress(fmt.Sprint(t["to"])),
 			Value:                *value,
 			Gas:                  mustParseUint(t["gas"]),
 			GasPrice:             txGasPrice,
@@ -87,10 +87,6 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, isFinal bool) (types.Simpl
 			IsError:              receipt.IsError,
 			HasToken:             hasToken,
 			Receipt:              &receipt,
-			// ExtraValue1          Wei
-			// ExtraValue2          Wei
-			// Cachebits            uint8           `json:"cachebits"`
-			// Reserved2            uint8           `json:"reserved2"`
 			// Traces               []SimpleTrace   `json:"traces"`
 			// ArticulatedTx        *SimpleFunction `json:"articulatedTx"`
 		}
@@ -125,12 +121,12 @@ func loadBlock[Tx types.BlockTransaction](chain string, bn uint64, isFinal bool,
 		return
 	}
 
-	timestamp, err := hexutil.DecodeUint64(rawBlock.Timestamp)
+	ts, err := hexutil.DecodeUint64(rawBlock.Timestamp)
 	if err != nil {
 		return
 	}
 
-	blockNumber, err := hexutil.DecodeUint64(rawBlock.Number)
+	blockNumber, err := hexutil.DecodeUint64(rawBlock.BlockNumber)
 	if err != nil {
 		return
 	}
@@ -150,21 +146,20 @@ func loadBlock[Tx types.BlockTransaction](chain string, bn uint64, isFinal bool,
 		return
 	}
 
-	uncles := make([]common.Hash, 0, len(rawBlock.Uncles))
+	uncles := make([]base.Hash, 0, len(rawBlock.Uncles))
 	for _, uncle := range rawBlock.Uncles {
-		uncles = append(uncles, common.HexToHash(uncle))
+		uncles = append(uncles, base.HexToHash(uncle))
 	}
 
 	block = types.SimpleBlock[Tx]{
 		BlockNumber: blockNumber,
-		Timestamp:   int64(timestamp),
-		Hash:        common.HexToHash(rawBlock.Hash),
-		ParentHash:  common.HexToHash(rawBlock.ParentHash),
+		Timestamp:   base.Timestamp(ts), // note that we turn Ethereum's timestamps into types.Timestamp upon read.
+		Hash:        base.HexToHash(rawBlock.Hash),
+		ParentHash:  base.HexToHash(rawBlock.ParentHash),
 		GasLimit:    gasLimit,
 		GasUsed:     gasUsed,
-		Miner:       types.HexToAddress(rawBlock.Miner),
+		Miner:       base.HexToAddress(rawBlock.Miner),
 		Difficulty:  difficulty,
-		Finalized:   isFinal,
 		Uncles:      uncles,
 	}
 	return
@@ -187,12 +182,7 @@ func getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error)
 
 	if bn == 0 {
 		// The RPC does not return a timestamp for the zero block, so we make one
-		var ts uint64
-		ts, err = GetBlockZeroTs(chain)
-		if err != nil {
-			return &types.RawBlock{}, err
-		}
-		response.Result.Timestamp = fmt.Sprintf("0x%x", ts)
+		response.Result.Timestamp = fmt.Sprintf("0x%x", rpc.GetBlockTimestamp(chain, 0))
 	}
 
 	rawBlock := &response.Result

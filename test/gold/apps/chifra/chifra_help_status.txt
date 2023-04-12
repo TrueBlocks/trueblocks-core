@@ -1,28 +1,21 @@
-chifra  config show --help --log_level 2
+chifra  status --help
 Purpose:
-  Report on and edit the configuration of the TrueBlocks system.
+  Report on the state of the internal binary caches.
 
 Usage:
-  chifra config <mode> [mode...] [flags]
+  chifra status <mode> [mode...] [flags]
 
 Arguments:
-  modes - either show or edit the configuration
-	One or more of [ show | edit ]
-
-Aliases:
-  config, status
+  modes - the (optional) name of the binary cache to report on, terse otherwise
+	One or more of [ index | blooms | blocks | txs | traces | monitors | names | abis | recons | slurps | staging | unripe | maps | some | all ]
 
 Flags:
-      --module strings     the type of information to show or edit
-                           One or more of [ index | monitors | names | abis | caches | some | all ]
-  -d, --details            include details about items found in monitors, slurps, abis, or price caches
-  -t, --types strings      for caches module only, which type(s) of cache to report
-                           One or more of [ blocks | txs | traces | slurps | all ]
-  -p, --depth uint         for caches module only, number of levels deep to report (hidden)
-  -e, --terse              show a terse summary report for mode show (hidden)
-  -a, --paths              show the configuration paths for the system (hidden)
-  -F, --first_block uint   first block to process (inclusive -- testing only) (hidden)
-  -L, --last_block uint    last block to process (inclusive -- testing only) (hidden)
-  -x, --fmt string         export format, one of [none|json*|txt|csv]
-  -v, --verbose            enable verbose (increase detail with --log_level)
-  -h, --help               display this help screen
+  -c, --first_record uint   the first record to process (default 1)
+  -e, --max_records uint    the maximum number of records to process (default 10000)
+  -x, --fmt string          export format, one of [none|json*|txt|csv]
+  -v, --verbose             enable verbose (increase detail with --log_level)
+  -h, --help                display this help screen
+
+Notes:
+  - The some mode includes index, monitors, names, slurps, and abis.
+  - If no mode is supplied, a terse report is generated.

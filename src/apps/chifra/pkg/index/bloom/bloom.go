@@ -9,15 +9,14 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"os"
 	"unsafe"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 const (
@@ -38,8 +37,8 @@ type BloomBytes struct {
 }
 
 type BloomHeader struct {
-	Magic uint16      `json:"magic"`
-	Hash  common.Hash `json:"hash"`
+	Magic uint16    `json:"magic"`
+	Hash  base.Hash `json:"hash"`
 }
 
 // ChunkBloom structures contain an array of BloomBytes each BLOOM_WIDTH_IN_BYTES wide. A new BloomBytes is added to
@@ -48,7 +47,7 @@ type BloomHeader struct {
 type ChunkBloom struct {
 	File       *os.File
 	SizeOnDisc int64
-	Range      paths.FileRange
+	Range      base.FileRange
 	HeaderSize int64
 	Header     BloomHeader
 	Count      uint32 // Do not change the size of this field, it's stored on disc
@@ -68,13 +67,13 @@ func (bl *ChunkBloom) String() string {
 // enough space for Count blooms but has not been read from disc. The file remains open for reading (if
 // there is no error) and is positioned at the start of the file.
 func NewChunkBloom(path string) (bl ChunkBloom, err error) {
-	path = paths.ToBloomPath(path)
+	path = cache.ToBloomPath(path)
 	if !file.FileExists(path) {
 		return bl, errors.New("required bloom file (" + path + ") missing")
 	}
 
 	bl.SizeOnDisc = file.FileSize(path)
-	bl.Range, err = paths.RangeFromFilenameE(path)
+	bl.Range, err = base.RangeFromFilenameE(path)
 	if err != nil {
 		return
 	}
@@ -108,7 +107,7 @@ func (bl *ChunkBloom) Close() {
 
 // ReadBloom reads the entire contents of the bloom filter
 func (bl *ChunkBloom) ReadBloom(fileName string) (err error) {
-	bl.Range, err = paths.RangeFromFilenameE(fileName)
+	bl.Range, err = base.RangeFromFilenameE(fileName)
 	if err != nil {
 		return err
 	}
@@ -174,7 +173,7 @@ func (bl *ChunkBloom) ReadBloomHeader() error {
 }
 
 // AddToSet adds an address to a bloom filter
-func (bl *ChunkBloom) AddToSet(addr types.Address) {
+func (bl *ChunkBloom) AddToSet(addr base.Address) {
 	if len(bl.Blooms) == 0 {
 		bl.Blooms = append(bl.Blooms, BloomBytes{})
 		bl.Blooms[bl.Count].Bytes = make([]byte, BLOOM_WIDTH_IN_BYTES)
@@ -202,10 +201,10 @@ func (bl *ChunkBloom) AddToSet(addr types.Address) {
 // WhichBits returns the five bits calculated from an address used to determine if the address is
 // in the bloom filter. We get the five bits by cutting the 20-byte address into five equal four-byte
 // parts, turning those four bytes into an 32-bit integer modulo the width of a bloom array item.
-func (bl *ChunkBloom) WhichBits(addr types.Address) (bits [5]uint32) {
+func (bl *ChunkBloom) WhichBits(addr base.Address) (bits [5]uint32) {
 	slice := addr.Bytes()
 	if len(slice) != 20 {
-		log.Fatal("address is not 20 bytes long - should not happen")
+		logger.Fatal("address is not 20 bytes long - should not happen")
 	}
 
 	cnt := 0

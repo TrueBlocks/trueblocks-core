@@ -1,3 +1,0 @@
-displayStrsTest  CTreeNode
-------------------------------CTreeNode------------------------------
-Unknown node of type CTreeNode not created.

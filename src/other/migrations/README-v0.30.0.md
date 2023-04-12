@@ -2,6 +2,10 @@
 
 (May 1, 2022)
 
+## IMPORTANT NOTE
+
+This migration has been retired. If your data is prior to this version, you must clear your cache and index folders and start from scratch
+
 ## Why the Change?
 
 This migration moves a significant part of our code (the creation and updating of address monitors) to native GoLang code. Go's ability to run concurrently allows a significant performance improvement (more than 25x) of the initial scan for an address's history.
@@ -20,7 +24,7 @@ This is a simple proceedure.
 
 Stop any long running TrueBlocks processes (such as the `chifra scrape` or `chifra serve`). Do not restart them until the migration is complete.
 
-You may wish to make a backup copy of your cache (although, being a cache, any cached files can be re-created, so this is optional). Find your `cachePath` with `chifra config --terse`.
+You may wish to make a backup copy of your cache (although, being a cache, any cached files can be re-created, so this is optional). Find your `cachePath` with `chifra status`.
 
 ## Instructions
 
@@ -48,7 +52,7 @@ You may wish to complete the above command for any other chains you're working w
 
 ### What should I do if there's a problem
 
-Because this migration involves upgrading the cache, any damaged or incompletely migrated files can be removed. They will be re-created during normal operation. In the unlikely event of a problem, you may remove the contents of the `monitors` subfolder in your `cachePath` (find `cachePath` with `chifra config --terse`).
+Because this migration involves upgrading the cache, any damaged or incompletely migrated files can be removed. They will be re-created during normal operation. In the unlikely event of a problem, you may remove the contents of the `monitors` subfolder in your `cachePath` (find `cachePath` with `chifra status`).
 
 After deleting the contents of the `monitors` folder (do not delete the folder itself), run `chifra config --migrate cache` again. It should report a sucessful migration. Your old monitors will be re-created the next time you query your addresses.
 

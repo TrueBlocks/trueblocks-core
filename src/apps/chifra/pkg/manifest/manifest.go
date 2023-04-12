@@ -5,18 +5,20 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"html/template"
+	"io"
 	"os"
 	"path/filepath"
+	"reflect"
 	"sort"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
@@ -33,7 +35,7 @@ type Manifest struct {
 	Chain string `json:"chain"`
 
 	// An IPFS hash pointing to documentation describing the binary format of the files in the index
-	Schemas types.IpfsHash `json:"schemas"`
+	Schemas base.IpfsHash `json:"schemas"`
 
 	// An IPFS hash pointing to documentation describing the binary format of the files in the index
 	Config scrapeCfg.ScrapeSettings `json:"config"`
@@ -49,22 +51,11 @@ type Manifest struct {
 // covering that block range, and a hash of the Bloom filter covering that chunk. The format of the chunk and the Bloom
 // filter are detailed in the manifest's Schema record.
 type ChunkRecord struct {
-	Range     string         `json:"range"`
-	BloomHash types.IpfsHash `json:"bloomHash"`
-	BloomSize int64          `json:"bloomSize"`
-	IndexHash types.IpfsHash `json:"indexHash,omitempty"`
-	IndexSize int64          `json:"indexSize,omitempty"`
-}
-
-func (ch *ChunkRecord) GetFullPath(chain string, cacheType paths.CacheType) string {
-	switch cacheType {
-	case paths.Index_Bloom:
-		return fmt.Sprintf("%s.bloom", filepath.Join(config.GetPathToIndex(chain), "blooms", ch.Range))
-	case paths.Index_Final:
-		return fmt.Sprintf("%s.bin", filepath.Join(config.GetPathToIndex(chain), "finalized", ch.Range))
-	}
-	logger.Fatal("unexpected chunkType in GetFullPath")
-	return ""
+	Range     string        `json:"range"`
+	BloomHash base.IpfsHash `json:"bloomHash"`
+	BloomSize int64         `json:"bloomSize"`
+	IndexHash base.IpfsHash `json:"indexHash,omitempty"`
+	IndexSize int64         `json:"indexSize,omitempty"`
 }
 
 type Source uint
@@ -87,7 +78,7 @@ func ReadManifest(chain string, source Source) (*Manifest, error) {
 	}
 
 	manifestPath := filepath.Join(config.GetPathToChainConfig(chain), "manifest.json")
-	contents := utils.AsciiFileToString(manifestPath)
+	contents := file.AsciiFileToString(manifestPath)
 	if !file.FileExists(manifestPath) || len(contents) == 0 {
 		return nil, ErrManifestNotFound
 	}
@@ -122,7 +113,7 @@ func (m *Manifest) SaveManifest(chain string) error {
 		return fmt.Errorf("locking file: %s", err)
 	}
 
-	return output.OutputObject(&m, w, "json", false, true, nil)
+	return OutputManifest(&m, w, "json", false, true, nil)
 }
 
 // TODO: Protect against overwriting files on disc
@@ -147,11 +138,11 @@ func UpdateManifest(chain string, chunk ChunkRecord) error {
 	// Make sure this chunk is only added once
 	_, ok := man.ChunkMap[chunk.Range]
 	if ok {
-		// logger.Log(logger.Info, "Replacing chunk at", chunk.Range)
+		// logger.Info("Replacing chunk at", chunk.Range)
 		*man.ChunkMap[chunk.Range] = chunk
 	} else {
 		// Create somewhere to put it if it's not already there
-		// logger.Log(logger.Info, "Adding chunk at", chunk.Range)
+		// logger.Info("Adding chunk at", chunk.Range)
 		man.Chunks = append(man.Chunks, chunk)
 		man.ChunkMap[chunk.Range] = &chunk
 		sort.Slice(man.Chunks, func(i, j int) bool {
@@ -172,9 +163,53 @@ func UpdateManifest(chain string, chunk ChunkRecord) error {
 	}
 	defer file.Unlock(w)
 
-	logger.Log(logger.Info, "Updating manifest with", len(man.Chunks), "chunks", spaces)
-	return output.OutputObject(man, w, "json", false, true, nil)
+	logger.Info("Updating manifest with", len(man.Chunks), "chunks", spaces)
+	return OutputManifest(man, w, "json", false, true, nil)
 }
 
-// TODO: There's got to be a better way
+// TODO: There's got to be a better way - this should use StreamMany
 var spaces = strings.Repeat(" ", 40)
+
+func OutputManifest(data interface{}, w io.Writer, format string, hideHeader, first bool, meta *rpcClient.MetaData) error {
+	var outputBytes []byte
+	var err error
+
+	preceeds := ""
+	switch format {
+	case "json":
+		outputBytes, err = json.MarshalIndent(data, "", "  ")
+		if err != nil {
+			return err
+		}
+		if !first {
+			preceeds = ","
+		}
+	default:
+		if format == "csv" || format == "txt" || (strings.Contains(format, "\t") || strings.Contains(format, ",")) {
+			tt := reflect.TypeOf(data)
+			rowTemplate, err := GetTemplate(&tt, format)
+			if err != nil {
+				return err
+			}
+			return rowTemplate.Execute(w, data)
+		}
+		return fmt.Errorf("unsupported format %s", format)
+	}
+	w.Write([]byte(preceeds))
+	w.Write(outputBytes)
+
+	return nil
+}
+
+func GetTemplate(t *reflect.Type, format string) (*template.Template, error) {
+	fields, sep, quote := utils.GetFields(t, format, false)
+	var sb strings.Builder
+	for i, field := range fields {
+		if i > 0 {
+			sb.WriteString(sep)
+		}
+		sb.WriteString(quote + "{{." + field + "}}" + quote)
+	}
+	tt, err := template.New("").Parse(sb.String() + "\n")
+	return tt, err
+}

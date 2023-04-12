@@ -1,4 +1,4 @@
-chifra  receipts --help --log_level 2
+chifra  receipts --help
 Purpose:
   Retrieve receipts for the given transaction(s).
 

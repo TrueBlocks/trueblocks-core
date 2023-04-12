@@ -7,7 +7,6 @@ package rpcClient
 import (
 	"context"
 	"fmt"
-	"log"
 	"math/big"
 	"strconv"
 	"strings"
@@ -17,7 +16,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
-	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	ethTypes "github.com/ethereum/go-ethereum/core/types"
@@ -37,8 +35,8 @@ func GetClient(provider string) *ethclient.Client {
 		// TODO: If we make this a cached item, it needs to be cached per chain, see timestamps
 		ec, err := ethclient.Dial(provider)
 		if err != nil || ec == nil {
-			log.Println("Missdial(" + provider + "):")
-			log.Fatalln(err)
+			logger.Error("Missdial("+provider+"):", err)
+			logger.Fatal("")
 		}
 		perProviderClientMap[provider] = ec
 	}
@@ -53,7 +51,7 @@ func BlockNumber(provider string) uint64 {
 
 	r, err := ec.BlockNumber(context.Background())
 	if err != nil {
-		logger.Log(logger.Error, "Could not connect to RPC client")
+		logger.Error("Could not connect to RPC client")
 		return 0
 	}
 
@@ -103,20 +101,14 @@ func GetIDs(provider string) (uint64, uint64, error) {
 
 // TODO: C++ code used to cache version info
 func GetVersion(chain string) (version string, err error) {
-	var response struct {
-		Result string `json:"result"`
-	}
-	payload := rpc.Payload{
-		Method: "web3_clientVersion",
-		Params: rpc.Params{},
-	}
+	method := "web3_clientVersion"
+	params := rpc.Params{}
 
-	// TODO: Use rpc.Query
-	err = rpc.FromRpc(config.GetRpcProvider(chain), &payload, &response)
-	if err != nil {
-		return
+	if result, err := rpc.Query[string](chain, method, params); err != nil {
+		return "", err
+	} else {
+		return *result, nil
 	}
-	return response.Result, err
 }
 
 // TxHashFromHash returns a transaction's hash if it's a valid transaction
@@ -162,33 +154,6 @@ func TxFromNumberAndId(chain string, blkNum, txId uint64) (ethTypes.Transaction,
 	}
 
 	return *tx, nil
-}
-
-// TxNumberAndIdFromHash returns a transaction's blockNum and tx_id given its hash
-func TxNumberAndIdFromHash(provider string, hash string) (uint64, uint64, error) {
-	var trans Transaction
-	transPayload := rpc.Payload{
-		Method: "eth_getTransactionByHash",
-		Params: rpc.Params{hash},
-	}
-	// TODO: Use rpc.Query
-	err := rpc.FromRpc(provider, &transPayload, &trans)
-	if err != nil {
-		fmt.Println("rpc.FromRpc(traces) returned error")
-		log.Fatal(err)
-	}
-	if trans.Result.BlockNumber == "" {
-		return 0, 0, fmt.Errorf("transaction at %s reported an error: %w", hash, ethereum.NotFound)
-	}
-	bn, err := strconv.ParseUint(trans.Result.BlockNumber[2:], 16, 32)
-	if err != nil {
-		return 0, 0, err
-	}
-	txid, err := strconv.ParseUint(trans.Result.TransactionIndex[2:], 16, 32)
-	if err != nil {
-		return 0, 0, err
-	}
-	return bn, txid, nil
 }
 
 // TxCountByBlockNumber returns the number of transactions in a block
@@ -244,13 +209,27 @@ func BlockHashFromNumber(provider string, blkNum uint64) (string, error) {
 	return block.Hash().Hex(), nil
 }
 
-// TODO: This needs to be implemented in a cross-chain, cross-client manner
+// TODO: BOGUS This needs to be implemented in a cross-chain, cross-client manner
 func IsTracingNode(testMode bool, chain string) bool {
 	// TODO: We can test this with a unit test
 	if testMode && chain == "non-tracing" {
 		return false
 	}
 	return true
+}
+
+func IsArchiveNode(testMode bool, chain string) bool {
+	return true
+	// TODO: BOGUS from C++ code
+	// const CToml* config = getGlobalConfig("blockScrape");
+	// if (!config->getConfigBool("requires", "archive", true))
+	//     return true;
+
+	// // An archive node better have a balance at the end of block zero the same as
+	// // the allocation amount for that account. We use the largest allocation so as
+	// // to ensure we get an actual balance
+	// Allocation largest = largestPrefund();
+	// return getBalanceAt(largest.address, 0) == largest.amount;
 }
 
 /*
@@ -281,31 +260,9 @@ func (ec *Client) TransactionCount(ctx context.Context, blockHash common.Hash) (
 func (ec *Client) TransactionSender(ctx context.Context, tx *types.Transaction, block common.Hash, index uint) (common.Address, error)
 */
 
-func GetBlockTimestamp(provider string, bn uint64) uint64 {
-	ec := GetClient(provider)
-	defer ec.Close()
-
-	r, err := ec.HeaderByNumber(context.Background(), big.NewInt(int64(bn)))
-	if err != nil {
-		logger.Log(logger.Error, "Could not connect to RPC client", err)
-		return 0
-	}
-
-	return r.Time
-}
-
 // DecodeHex decodes a string with hex into a slice of bytes
 func DecodeHex(hex string) []byte {
 	return hexutil.MustDecode(hex)
-}
-
-// GetBlockZeroTs for some reason block zero does not return a timestamp, so we assign block one's ts minus 14 seconds
-func GetBlockZeroTs(chain string) (uint64, error) {
-	ts := GetBlockTimestamp(config.GetRpcProvider(chain), 0)
-	if ts == 0 {
-		ts = GetBlockTimestamp(config.GetRpcProvider(chain), 1) - 13
-	}
-	return ts, nil
 }
 
 func GetCodeAt(chain, addr string, bn uint64) ([]byte, error) {

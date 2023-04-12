@@ -26,7 +26,6 @@ type TransactionsOptions struct {
 	TransactionIds []identifiers.Identifier `json:"transactionIds,omitempty"` // Transaction identifiers
 	Articulate     bool                     `json:"articulate,omitempty"`     // Articulate the retrieved data if ABIs can be found
 	Traces         bool                     `json:"traces,omitempty"`         // Include the transaction's traces in the results
-	Trace          bool                     `json:"trace,omitempty"`          // Please use the --traces option instead
 	Uniq           bool                     `json:"uniq,omitempty"`           // Display a list of uniq addresses found in the transaction
 	Flow           string                   `json:"flow,omitempty"`           // For the uniq option only, export only from or to (including trace from or to)
 	Reconcile      string                   `json:"reconcile,omitempty"`      // Please use --account_for option instead
@@ -35,6 +34,8 @@ type TransactionsOptions struct {
 	Source         bool                     `json:"source,omitempty"`         // Find the source of the funds sent to the receiver
 	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
 	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 var defaultTransactionsOptions = TransactionsOptions{}
@@ -109,8 +110,6 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 			opts.Articulate = true
 		case "traces":
 			opts.Traces = true
-		case "trace":
-			opts.Trace = true
 		case "uniq":
 			opts.Uniq = true
 		case "flow":
@@ -136,9 +135,6 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 	if len(opts.AccountFor) == 0 && len(opts.Reconcile) > 0 {
 		opts.AccountFor = opts.Reconcile
 	}
-	if !opts.Traces {
-		opts.Traces = opts.Trace
-	}
 	// EXISTING_CODE
 
 	return opts
@@ -154,10 +150,6 @@ func transactionsFinishParse(args []string) *TransactionsOptions {
 	opts.AccountFor, _ = ens.ConvertOneEns(opts.Globals.Chain, opts.AccountFor)
 	if len(opts.AccountFor) == 0 && len(opts.Reconcile) > 0 {
 		opts.AccountFor = opts.Reconcile
-	}
-	if !opts.Traces && opts.Trace {
-		opts.Traces = true
-		logger.Log(logger.Warning, "Note: the --trace option has been replaced with --traces")
 	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {

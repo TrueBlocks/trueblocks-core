@@ -11,7 +11,6 @@ package daemonPkg
 // EXISTING_CODE
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"strings"
 
@@ -22,7 +21,6 @@ import (
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -45,7 +43,7 @@ func ServeDaemon(w http.ResponseWriter, r *http.Request) (err error, handled boo
 	outputHelpers.SetEnabledForCmds("daemon", opts.IsPorted())
 	outputHelpers.InitJsonWriterApi("daemon", w, &opts.Globals)
 	// EXISTING_CODE
-	log.Fatal("Should not happen. Daemon is an invalid route for server")
+	logger.Fatal("Should not happen. Daemon is an invalid route for server")
 	// EXISTING_CODE
 	err, handled = opts.DaemonInternal()
 	outputHelpers.CloseJsonWriterIfNeededApi("daemon", err, &opts.Globals)
@@ -66,26 +64,23 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 		apiUrl = "http://localhost" + apiUrl
 	}
 
-	pad := func(strIn string) string {
-		return utils.PadRight(strIn, 18, ' ')
-	}
-
 	chain := opts.Globals.Chain
+	logger.InfoTable("Server URL:        ", apiUrl)
+	logger.InfoTable("RPC Provider:      ", config.GetRpcProvider(chain))
+	logger.InfoTable("Root Config Path:  ", config.GetPathToRootConfig())
+	logger.InfoTable("Chain Config Path: ", config.GetPathToChainConfig(chain))
+	logger.InfoTable("Cache Path:        ", config.GetPathToCache(chain))
+	logger.InfoTable("Index Path:        ", config.GetPathToIndex(chain))
+
 	meta, err := rpcClient.GetMetaData(chain, false)
-	logger.Log(logger.InfoC, pad("Server URL:"), apiUrl)
-	logger.Log(logger.InfoC, pad("RPC Provider:"), config.GetRpcProvider(chain))
-	logger.Log(logger.InfoC, pad("Root Config Path:"), config.GetPathToRootConfig())
-	logger.Log(logger.InfoC, pad("Chain Config Path:"), config.GetPathToChainConfig(chain))
-	logger.Log(logger.InfoC, pad("Cache Path:"), config.GetPathToCache(chain))
-	logger.Log(logger.InfoC, pad("Index Path:"), config.GetPathToIndex(chain))
 	if err != nil {
 		msg := fmt.Sprintf("%sCould not load RPC provider: %s%s", colors.Red, err, colors.Off)
-		logger.Log(logger.InfoC, pad("Progress:"), msg)
-		log.Fatalf("")
+		logger.InfoTable("Progress:", msg)
+		logger.Fatal("")
 	} else {
 		nTs, _ := tslib.NTimestamps(opts.Globals.Chain)
 		msg := fmt.Sprintf("%d, %d, %d,  %d, ts: %d", meta.Latest, meta.Finalized, meta.Staging, meta.Unripe, nTs)
-		logger.Log(logger.InfoC, pad("Progress:"), msg)
+		logger.InfoTable("Progress:          ", msg)
 	}
 
 	go opts.HandleScraper()
@@ -94,7 +89,7 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 	// Start listening to the web sockets
 	RunWebsocketPool()
 	// Start listening for requests
-	log.Fatal(http.ListenAndServe(opts.Port, NewRouter()))
+	logger.Fatal(http.ListenAndServe(opts.Port, NewRouter()))
 
 	// EXISTING_CODE
 

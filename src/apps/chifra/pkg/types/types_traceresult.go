@@ -10,6 +10,9 @@ package types
 
 // EXISTING_CODE
 import (
+	"io"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -20,14 +23,18 @@ type RawTraceResult struct {
 	Code    string `json:"code"`
 	GasUsed string `json:"gasUsed"`
 	Output  string `json:"output"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleTraceResult struct {
-	Address Address `json:"address,omitempty"`
-	Code    string  `json:"code,omitempty"`
-	GasUsed Gas     `json:"gasUsed"`
-	Output  string  `json:"output"`
-	raw     *RawTraceResult
+	Address base.Address    `json:"address,omitempty"`
+	Code    string          `json:"code,omitempty"`
+	GasUsed base.Gas        `json:"gasUsed"`
+	Output  string          `json:"output"`
+	raw     *RawTraceResult `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleTraceResult) Raw() *RawTraceResult {
@@ -39,20 +46,20 @@ func (s *SimpleTraceResult) SetRaw(raw *RawTraceResult) {
 }
 
 func (s *SimpleTraceResult) Model(showHidden bool, format string, extraOptions map[string]any) Model {
-	// EXISTING_CODE
-	// EXISTING_CODE
+	var model = map[string]interface{}{}
+	var order = []string{}
 
-	model := map[string]interface{}{
+	// EXISTING_CODE
+	model = map[string]interface{}{
 		"gasUsed": s.GasUsed,
 		"output":  s.Output,
 	}
 
-	order := []string{
+	order = []string{
 		"gasUsed",
 		"output",
 	}
 
-	// EXISTING_CODE
 	if format == "json" {
 		if !s.Address.IsZero() {
 			model["address"] = s.Address
@@ -82,6 +89,18 @@ func (s *SimpleTraceResult) Model(showHidden bool, format string, extraOptions m
 		Data:  model,
 		Order: order,
 	}
+}
+
+func (s *SimpleTraceResult) WriteTo(w io.Writer) (n int64, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
+}
+
+func (s *SimpleTraceResult) ReadFrom(r io.Reader) (n int64, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
 }
 
 // EXISTING_CODE

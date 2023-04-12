@@ -6,6 +6,7 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/contract"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -24,7 +25,7 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 	fetchData := func(modelChan chan types.Modeler[types.RawFunction], errorChan chan error) {
 		// Note here, that known ABIs are not downloaded. They are only loaded from the local cache.
 		for _, addr := range opts.Addrs {
-			address := types.HexToAddress(addr)
+			address := base.HexToAddress(addr)
 			if err = abi.LoadAbiFromAddress(opts.Globals.Chain, address, result); err != nil {
 				if !os.IsNotExist(err) {
 					// The error was not due to a missing file...
@@ -36,7 +37,7 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 					errorChan <- err
 					cancel()
 				} else if !contract {
-					logger.Log(logger.Info, "Address", address, "is not a smart contract. Skipping...")
+					logger.Info("Address", address, "is not a smart contract. Skipping...")
 					continue
 				} else {
 					// It's okay to not find the ABI. We report an error, but do not stop processing
@@ -59,20 +60,8 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, output.OutputOptions{
-		Writer:     opts.Globals.Writer,
-		Chain:      opts.Globals.Chain,
-		TestMode:   opts.Globals.TestMode,
-		NoHeader:   opts.Globals.NoHeader,
-		ShowRaw:    opts.Globals.ShowRaw,
-		Verbose:    opts.Globals.Verbose,
-		LogLevel:   opts.Globals.LogLevel,
-		Format:     opts.Globals.Format,
-		OutputFn:   opts.Globals.OutputFn,
-		Append:     opts.Globals.Append,
-		JsonIndent: "  ",
-		Extra: map[string]interface{}{
-			"verbose": opts.Globals.Verbose,
-		},
-	})
+	extra := map[string]interface{}{
+		"verbose": opts.Globals.Verbose,
+	}
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }

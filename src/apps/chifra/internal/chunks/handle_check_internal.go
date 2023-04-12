@@ -8,16 +8,15 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
 
 // CheckInternal reads the header of each chunk on disc looking for the Magic number and
 // the HeaderMagicHash for expected values.
-func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64, report *types.ReportCheck) error {
+func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64, report *simpleReportCheck) error {
 	for testId, fileName := range fileNames {
 		opts.checkIndexChunkInternal(testId, fileName, report)
 		// opts.checkBloomInternal(testId, fileName, report)
@@ -25,7 +24,7 @@ func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64,
 	return nil
 }
 
-func (opts *ChunksOptions) checkIndexChunkInternal(testId int, fileName string, report *types.ReportCheck) {
+func (opts *ChunksOptions) checkIndexChunkInternal(testId int, fileName string, report *simpleReportCheck) {
 	report.VisitedCnt++
 	report.CheckedCnt++
 	header, err := index.ReadChunkHeader(fileName, true)
@@ -38,7 +37,7 @@ func (opts *ChunksOptions) checkIndexChunkInternal(testId int, fileName string, 
 		}
 
 	} else {
-		rng := paths.RangeFromFilename(fileName)
+		rng := base.RangeFromFilename(fileName)
 		if !opts.Globals.TestMode {
 			testId = 0
 		}
@@ -58,18 +57,18 @@ func (opts *ChunksOptions) checkIndexChunkInternal(testId int, fileName string, 
 }
 
 // TODO: This work is incomplete
-// func (opts *ChunksOptions) checkBloomInternal(testId int, fileName string, report *types.ReportCheck) {
+// func (opts *ChunksOptions) checkBloomInternal(testId int, fileName string, report *simpleReportCheck) {
 // 	report.VisitedCnt++
 // 	report.CheckedCnt++
 // 	var bl bloom.ChunkBloom
-// 	bPath := paths.ToBloomPath(fileName)
+// 	bPath := cache.ToBloomPath(fileName)
 // 	bl.ReadBloom(bPath)
 // 	versioned, err := bl.ReadBloom Header()
 // 	if err != nil {
 // 		report.MsgStrings = append(report.MsgStrings, fmt.Sprint(err))
 // 	} else if !versioned {
 // 	} else {
-// 		rng := paths.RangeFromFilename(fileName)
+// 		rng := base.RangeFromFilename(fileName)
 // 		if !opts.Globals.TestMode {
 // 			testId = 0
 // 		}

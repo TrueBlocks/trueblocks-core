@@ -13,12 +13,15 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"strings"
 
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 )
 
+// `payable` was present in ABIs before Solidity 0.5.0 and was replaced by `stateMutability`
+// https://docs.soliditylang.org/en/develop/050-breaking-changes.html#command-line-and-json-interfaces
 // EXISTING_CODE
 
 type RawFunction struct {
@@ -33,6 +36,8 @@ type RawFunction struct {
 	Signature       string `json:"signature"`
 	StateMutability string `json:"stateMutability"`
 	FunctionType    string `json:"type"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleFunction struct {
@@ -47,12 +52,12 @@ type SimpleFunction struct {
 	Signature       string            `json:"signature,omitempty"`
 	StateMutability string            `json:"stateMutability,omitempty"`
 	FunctionType    string            `json:"type"`
-	// `payable` was present in ABIs before Solidity 0.5.0 and was replaced
-	// by `stateMutability`: https://docs.soliditylang.org/en/develop/050-breaking-changes.html#command-line-and-json-interfaces
+	raw             *RawFunction      `json:"-"`
+	// EXISTING_CODE
 	payable   bool
 	abiMethod *abi.Method
 	abiEvent  *abi.Event
-	raw       *RawFunction
+	// EXISTING_CODE
 }
 
 func (s *SimpleFunction) Raw() *RawFunction {
@@ -64,8 +69,10 @@ func (s *SimpleFunction) SetRaw(raw *RawFunction) {
 }
 
 func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+	var model = map[string]interface{}{}
+	var order = []string{}
+
 	// EXISTING_CODE
-	// Used by chifra abis --find
 	if extraOptions["encodingSignatureOnly"] == true {
 		return Model{
 			Data: map[string]any{
@@ -75,24 +82,21 @@ func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[
 			Order: []string{"encoding", "signature"},
 		}
 	}
-	// EXISTING_CODE
 
-	model := map[string]interface{}{
+	model = map[string]interface{}{
 		"encoding":  s.Encoding,
 		"name":      s.Name,
 		"signature": s.Signature,
 		"type":      s.FunctionType,
 	}
 
-	order := []string{
+	order = []string{
 		"encoding",
 		"type",
 		"name",
 		"signature",
 	}
 
-	// EXISTING_CODE
-	// re-ordering
 	if format == "json" {
 		getParameterModels := func(params []SimpleParameter) []map[string]any {
 			result := make([]map[string]any, len(params))
@@ -103,20 +107,38 @@ func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[
 			return result
 		}
 		if extraOptions["verbose"] == true {
-			model["inputs"] = getParameterModels(s.Inputs)
-			model["outputs"] = getParameterModels(s.Outputs)
+			inputs := getParameterModels(s.Inputs)
+			if inputs != nil {
+				model["inputs"] = inputs
+			}
+			outputs := getParameterModels(s.Outputs)
+			if outputs != nil {
+				model["outputs"] = outputs
+			}
 		}
-		if s.StateMutability != "" && s.StateMutability != "nonpayable" {
-			model["stateMutability"] = s.StateMutability
+		sm := s.StateMutability
+		if sm != "" && sm != "nonpayable" && sm != "view" {
+			model["stateMutability"] = sm
 		}
 	}
-
 	// EXISTING_CODE
 
 	return Model{
 		Data:  model,
 		Order: order,
 	}
+}
+
+func (s *SimpleFunction) WriteTo(w io.Writer) (n int64, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
+}
+
+func (s *SimpleFunction) ReadFrom(r io.Reader) (n int64, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
 }
 
 // EXISTING_CODE
@@ -127,7 +149,7 @@ func FunctionFromAbiEvent(ethEvent *abi.Event, abiSource string) *SimpleFunction
 	function := &SimpleFunction{
 		Encoding:     encSig,
 		Signature:    ethEvent.Sig,
-		Name:         ethEvent.Name,
+		Name:         ethEvent.RawName,
 		AbiSource:    abiSource,
 		FunctionType: "event",
 		Anonymous:    ethEvent.Anonymous,
@@ -157,7 +179,7 @@ func FunctionFromAbiMethod(ethMethod *abi.Method, abiSource string) *SimpleFunct
 	inputs := argumentsToSimpleParameters(ethMethod.Inputs)
 	outputs := argumentsToSimpleParameters(ethMethod.Outputs)
 	stateMutability := "nonpayable"
-	if ethMethod.StateMutability != "" && ethMethod.StateMutability != "nonpayable" {
+	if ethMethod.StateMutability != "" && ethMethod.StateMutability != "nonpayable" && ethMethod.StateMutability != "view" {
 		stateMutability = ethMethod.StateMutability
 	} else if ethMethod.Payable {
 		stateMutability = "payable"
@@ -165,7 +187,7 @@ func FunctionFromAbiMethod(ethMethod *abi.Method, abiSource string) *SimpleFunct
 	function := &SimpleFunction{
 		Encoding:        fourByte,
 		Signature:       ethMethod.Sig,
-		Name:            ethMethod.Name,
+		Name:            ethMethod.RawName,
 		AbiSource:       abiSource,
 		FunctionType:    functionType,
 		Constant:        ethMethod.Constant,
@@ -316,16 +338,6 @@ func (s *SimpleFunction) GetAbiEvent() (abiEvent *abi.Event, err error) {
 		return
 	}
 	return s.abiEvent, nil
-}
-
-func joinParametersNames(params []SimpleParameter) (result string) {
-	for index, param := range params {
-		if index > 0 {
-			result += ","
-		}
-		result += param.DisplayName(index)
-	}
-	return
 }
 
 // TODO: I feel like we might be able to remove stateMutability since we don't really use it.

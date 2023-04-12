@@ -23,6 +23,8 @@ type InitOptions struct {
 	Sleep      float64               `json:"sleep,omitempty"`      // Seconds to sleep between downloads
 	Globals    globals.GlobalOptions `json:"globals,omitempty"`    // The global options
 	BadFlag    error                 `json:"badFlag,omitempty"`    // An error flag if needed
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 var defaultInitOptions = InitOptions{}

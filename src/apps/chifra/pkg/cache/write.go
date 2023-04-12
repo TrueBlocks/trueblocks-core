@@ -8,8 +8,8 @@ import (
 	"math/big"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 type writeBytes = func(data any) error
@@ -39,12 +39,12 @@ func writeString(writer *bufio.Writer, str *string) (err error) {
 	return
 }
 
-func writeHash(writer *bufio.Writer, hash *common.Hash) (err error) {
+func writeHash(writer *bufio.Writer, hash *base.Hash) (err error) {
 	value := lowercaseHex(hash.Hex())
 	return writeString(writer, &value)
 }
 
-func writeAddress(writer *bufio.Writer, address *types.Address) (err error) {
+func writeAddress(writer *bufio.Writer, address *base.Address) (err error) {
 	value := lowercaseHex(address.Hex())
 	if value == "0x0000000000000000000000000000000000000000" {
 		value = "0x0"
@@ -178,7 +178,8 @@ func WriteBlock(writer *bufio.Writer, block *types.SimpleBlock[types.SimpleTrans
 		return
 	}
 
-	err = write(block.Finalized)
+	block.UnusedBool = true
+	err = write(block.UnusedBool)
 	if err != nil {
 		return
 	}
@@ -253,12 +254,14 @@ func WriteTransaction(writer *bufio.Writer, tx *types.SimpleTransaction) (err er
 		return
 	}
 
-	err = writeBigUint(writer, &tx.ExtraValue1)
+	var extraValue1 big.Int
+	err = writeBigUint(writer, &extraValue1)
 	if err != nil {
 		return
 	}
 
-	err = writeBigUint(writer, &tx.ExtraValue2)
+	var extraValue2 big.Int
+	err = writeBigUint(writer, &extraValue2)
 	if err != nil {
 		return
 	}
@@ -298,12 +301,14 @@ func WriteTransaction(writer *bufio.Writer, tx *types.SimpleTransaction) (err er
 		return
 	}
 
-	err = write(&tx.Cachebits)
+	var cachebits uint8
+	err = write(&cachebits)
 	if err != nil {
 		return
 	}
 
-	err = write(&tx.Reserved2)
+	var reserved2 uint8
+	err = write(&reserved2)
 	if err != nil {
 		return
 	}
@@ -556,7 +561,7 @@ func WriteTrace(writer *bufio.Writer, trace *types.SimpleTrace) (err error) {
 		return
 	}
 
-	err = writeString(writer, &trace.Type)
+	err = writeString(writer, &trace.TraceType)
 	if err != nil {
 		return
 	}
@@ -682,7 +687,7 @@ func WriteAbis(writer *bufio.Writer, abis []types.SimpleFunction) (err error) {
 	}
 
 	// This address is always empty
-	address := types.Address{}
+	address := base.Address{}
 	if err = writeAddress(writer, &address); err != nil {
 		return
 	}

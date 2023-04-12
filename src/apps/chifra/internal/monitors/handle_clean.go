@@ -5,59 +5,48 @@
 package monitorsPkg
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"context"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // HandleClean
 func (opts *MonitorsOptions) HandleClean() error {
-	monitorChan := make(chan monitor.Monitor)
+	testMode := opts.Globals.TestMode
+	_, monArray := monitor.GetMonitorMap(opts.Globals.Chain)
 
-	var monitors []monitor.Monitor
-	go monitor.ListMonitors(opts.Globals.Chain, "monitors", monitorChan)
-
-	for result := range monitorChan {
-		switch result.Address {
-		case monitor.SentinalAddr:
-			close(monitorChan)
-		default:
-			monitors = append(monitors, result)
-		}
-	}
-
-	objs := []types.ReportClean{}
-	for _, mon := range monitors {
-		if opts.Globals.TestMode {
-			addr := mon.GetAddrStr()
-			if addr == "0x001d14804b399c6ef80e64576f657660804fec0b" ||
-				addr == "0x0029218e1dab069656bfb8a75947825e7989b987" {
-				objs = append(objs, types.ReportClean{
-					Addr:     addr,
-					SizeThen: 10,
-					SizeNow:  8,
-					Dups:     10 - 8,
-				})
+	ctx := context.Background()
+	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+		for _, mon := range monArray {
+			addr := mon.Address.Hex()
+			s := simpleMonitorClean{
+				Address: mon.Address,
 			}
-		} else {
-			obj := types.ReportClean{
-				Addr: mon.GetAddrStr(),
-			}
-			logger.Log(logger.Info, "Cleaning", obj.Addr, mon.Count())
-			var err error
-			obj.SizeThen, obj.SizeNow, err = mon.RemoveDups()
-			if err != nil {
-				return err
+			if testMode {
+				if addr == "0x001d14804b399c6ef80e64576f657660804fec0b" ||
+					addr == "0x0029218e1dab069656bfb8a75947825e7989b987" {
+					s.SizeThen = 10
+					s.SizeNow = 8
+					s.Dups = 10 - 8
+				}
+			} else {
+				then, now, err := mon.RemoveDups()
+				if err != nil {
+					errorChan <- err
+					return
+				}
+				s.SizeThen = int64(then)
+				s.SizeNow = int64(now)
+				s.Dups = s.SizeThen - s.SizeNow
 			}
 
-			obj.Dups = obj.SizeThen - obj.SizeNow
-			if obj.SizeThen > 0 {
-				objs = append(objs, obj)
+			if s.SizeThen > 0 {
+				modelChan <- &s
 			}
 		}
 	}
 
-	// TODO: Fix export without arrays
-	return globals.RenderSlice(&opts.Globals, objs)
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }

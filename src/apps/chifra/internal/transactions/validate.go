@@ -54,7 +54,7 @@ func (opts *TransactionsOptions) validateTransactions() error {
 		}
 
 		if !validate.CanArticulate(opts.Articulate) {
-			return validate.Usage("The {0} option requires an EtherScan API key.", "--articulate")
+			return validate.Usage("The {0} option requires an Etherscan API key.", "--articulate")
 		}
 	}
 

@@ -1,19 +1,40 @@
+// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
+ */
+
 package types
+
+// EXISTING_CODE
+import (
+	"io"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+)
+
+// EXISTING_CODE
 
 type RawAppearance struct {
 	Address          string `json:"address"`
 	BlockNumber      uint32 `json:"blockNumber"`
 	TransactionIndex uint32 `json:"transactionIndex"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleAppearance struct {
-	Address          Address `json:"address"`
-	BlockNumber      uint32  `json:"blockNumber"`
-	TransactionIndex uint32  `json:"transactionIndex"`
-	Reason           string  `json:"reason,omitempty"`
-	Timestamp        uint64  `json:"timestamp"`
-	Date             string  `json:"date"`
-	raw              *RawAppearance
+	Address          base.Address   `json:"address"`
+	BlockNumber      uint32         `json:"blockNumber"`
+	TransactionIndex uint32         `json:"transactionIndex"`
+	Reason           string         `json:"reason,omitempty"`
+	Timestamp        base.Timestamp `json:"timestamp"`
+	Date             string         `json:"date"`
+	raw              *RawAppearance `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleAppearance) Raw() *RawAppearance {
@@ -25,26 +46,66 @@ func (s *SimpleAppearance) SetRaw(raw *RawAppearance) {
 }
 
 func (s *SimpleAppearance) Model(showHidden bool, format string, extraOptions map[string]any) Model {
-	model := map[string]interface{}{
+	var model = map[string]interface{}{}
+	var order = []string{}
+
+	// EXISTING_CODE
+	if extraOptions["appearances"] == true {
+		model = map[string]interface{}{
+			"blockNumber":      s.BlockNumber,
+			"transactionIndex": s.TransactionIndex,
+		}
+		order = []string{
+			"blockNumber",
+			"transactionIndex",
+		}
+		return Model{
+			Data:  model,
+			Order: order,
+		}
+	}
+	model = map[string]interface{}{
 		"address":          s.Address,
 		"blockNumber":      s.BlockNumber,
 		"transactionIndex": s.TransactionIndex,
-		"reason":           s.Reason,
-		"timestamp":        s.Timestamp,
-		"date":             s.Date,
 	}
-
-	order := []string{
+	order = []string{
 		"address",
 		"blockNumber",
 		"transactionIndex",
-		"reason",
-		"timestamp",
-		"date",
 	}
+
+	if showHidden {
+		// model["reason"] = s.Reason
+		model["timestamp"] = s.Timestamp
+		model["date"] = s.Date
+
+		order = append(order, []string{
+			// "reason",
+			"timestamp",
+			"date",
+		}...)
+	}
+
+	// EXISTING_CODE
 
 	return Model{
 		Data:  model,
 		Order: order,
 	}
 }
+
+func (s *SimpleAppearance) WriteTo(w io.Writer) (n int64, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
+}
+
+func (s *SimpleAppearance) ReadFrom(r io.Reader) (n int64, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
+}
+
+// EXISTING_CODE
+// EXISTING_CODE

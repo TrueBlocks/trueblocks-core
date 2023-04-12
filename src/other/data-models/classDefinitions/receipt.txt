@@ -1,0 +1,14 @@
+[settings]
+class = CReceipt
+fields = receipt.csv
+includes = utillib.h|abi.h|log.h
+cpp_includes = etherlib.h
+equals = (getValueByName("transactionHash") == it.getValueByName("transactionHash"))
+contained_by = Transaction
+doc_group = 02-Chain Data
+doc_descr = receipt data as returned from the RPC (with slight enhancements)
+doc_route = 204-receipt
+doc_producer = receipts, export
+
+cpp_output = src/libs/etherlib/
+go_output = src/apps/chifra/pkg/types

@@ -47,9 +47,7 @@ func (opts *AbisOptions) HandleAbiFind() error {
 				str, _ := hex.DecodeString(arg[2:])
 				if bytes.Equal(sigBytes[:len(str)], str) {
 					scanBar.Found++
-					if len(opts.Find) < 2 || !opts.Globals.TestMode {
-						logger.Log(logger.Progress, "Found ", scanBar.Found, " of ", scanBar.Wanted, arg, testSig)
-					}
+					logger.Progress(!testMode || len(opts.Find) < 2, "Found", scanBar.Found, "of", scanBar.Wanted, arg, testSig)
 					found := types.SimpleFunction{Encoding: arg, Signature: testSig.(string)}
 					if testMode {
 						mutex.Lock()
@@ -120,22 +118,10 @@ func (opts *AbisOptions) HandleAbiFind() error {
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, output.OutputOptions{
-		Writer:     opts.Globals.Writer,
-		Chain:      opts.Globals.Chain,
-		TestMode:   opts.Globals.TestMode,
-		NoHeader:   opts.Globals.NoHeader,
-		ShowRaw:    opts.Globals.ShowRaw,
-		Verbose:    opts.Globals.Verbose,
-		LogLevel:   opts.Globals.LogLevel,
-		Format:     opts.Globals.Format,
-		OutputFn:   opts.Globals.OutputFn,
-		Append:     opts.Globals.Append,
-		JsonIndent: "  ",
-		Extra: map[string]interface{}{
-			"encodingSignatureOnly": true,
-		},
-	})
+	extra := map[string]interface{}{
+		"encodingSignatureOnly": true,
+	}
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }
 
 func (opts *AbisOptions) hitsHint(test string) bool {

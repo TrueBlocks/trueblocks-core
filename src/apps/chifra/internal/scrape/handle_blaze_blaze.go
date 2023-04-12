@@ -40,7 +40,7 @@ type BlazeOptions struct {
 	UnripeDist    uint64                     `json:"unripe"`
 	RpcProvider   string                     `json:"rpcProvider"`
 	AppearanceMap index.AddressAppearanceMap `json:"-"`
-	TsArray       []tslib.Timestamp          `json:"-"`
+	TsArray       []tslib.TimestampRecord    `json:"-"`
 	ProcessedMap  map[int]bool               `json:"-"`
 	BlockWg       sync.WaitGroup             `json:"-"`
 	AppearanceWg  sync.WaitGroup             `json:"-"`
@@ -82,7 +82,7 @@ func (opts *BlazeOptions) HandleBlaze1(meta *rpcClient.MetaData, blocks []int) (
 	//
 	blockChannel := make(chan int)
 	appearanceChannel := make(chan ScrapedData)
-	tsChannel := make(chan tslib.Timestamp)
+	tsChannel := make(chan tslib.TimestampRecord)
 
 	opts.BlockWg.Add(int(opts.NChannels))
 	for i := 0; i < int(opts.NChannels); i++ {
@@ -119,7 +119,7 @@ func (opts *BlazeOptions) HandleBlaze1(meta *rpcClient.MetaData, blocks []int) (
 // var beenHere = false
 
 // BlazeProcessBlocks Processes the block channel and for each block query the node for both traces and logs. Send results down appearanceChannel.
-func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChannel chan int, appearanceChannel chan ScrapedData, tsChannel chan tslib.Timestamp) (err error) {
+func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChannel chan int, appearanceChannel chan ScrapedData, tsChannel chan tslib.TimestampRecord) (err error) {
 	defer opts.BlockWg.Done()
 
 	for blockNum := range blockChannel {
@@ -160,9 +160,9 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 			logs:        logs,
 		}
 
-		ts := tslib.Timestamp{
+		ts := tslib.TimestampRecord{
 			Bn: uint32(blockNum),
-			Ts: uint32(rpcClient.GetBlockTimestamp(opts.RpcProvider, uint64(blockNum))),
+			Ts: uint32(rpc.GetBlockTimestamp(opts.Chain, uint64(blockNum))),
 		}
 		tsChannel <- ts
 	}
@@ -199,7 +199,7 @@ func (opts *BlazeOptions) BlazeProcessAppearances(meta *rpcClient.MetaData, appe
 }
 
 // BlazeProcessTimestamps processes timestamp data (currently by printing to a temporary file)
-func (opts *BlazeOptions) BlazeProcessTimestamps(tsChannel chan tslib.Timestamp) (err error) {
+func (opts *BlazeOptions) BlazeProcessTimestamps(tsChannel chan tslib.TimestampRecord) (err error) {
 	defer opts.TsWg.Done()
 
 	for ts := range tsChannel {
@@ -335,7 +335,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 						receipt, err := rpcClient.GetTransactionReceipt(opts.Chain, uint64(bn), uint64(txid), nil, 0)
 						if err != nil {
 							msg := fmt.Sprintf("rpcCall failed at block %d, tx %d hash %s err %s", bn, txid, traces.Result[i].TransactionHash, err)
-							logger.Log(logger.Warning, colors.Red, msg, colors.Off)
+							logger.Warn(colors.Red, msg, colors.Off)
 							// TODO: This is possibly an error in Erigon - remove it when they fix this issue:
 							// TODO: https://github.com/ledgerwatch/erigon/issues/6956. It may require a
 							// TODO: full resync. Yes, the problem appears to be this specific. The follow
@@ -367,7 +367,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 							if len(fixMap[key]) > 0 {
 								// both are true - the error is `empty hex string` and we have a fix
 								msg = fmt.Sprintf("Corrected %d, tx %d adds %s", bn, txid, fixMap[key])
-								logger.Log(logger.Warning, colors.Red, msg, colors.Off)
+								logger.Warn(colors.Red, msg, colors.Off)
 								opts.AddToMaps(fixMap[key], bn, txid, addressMap)
 							}
 
@@ -532,6 +532,6 @@ func (opts *BlazeOptions) syncedReporting(bn int, force bool) {
 			dist = (opts.RipeBlock - uint64(bn))
 		}
 		msg := fmt.Sprintf("Scraping %-04d of %-04d at block %d of %d (%d blocks from head)", opts.NProcessed, opts.BlockCount, bn, opts.RipeBlock, dist)
-		logger.Log(logger.Progress, msg)
+		logger.Progress(true, msg)
 	}
 }
