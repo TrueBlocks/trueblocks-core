@@ -26,17 +26,24 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
         modelOrig.fieldArray[i] = modelIn.fieldArray[i];
     }
 
-    string_q fn = getPathToSource("apps/chifra/pkg/types/types_" + toLower(model.base_name) + ".go");
+    bool isInternal = contains(modelIn.go_output, "/internal/");
     string_q contents = asciiFileToString(getPathToTemplates("blank_type.go.tmpl"));
+    if (isInternal) {
+        contents = asciiFileToString(getPathToTemplates("blank_type_int.go.tmpl"));
+    }
     replaceAll(contents, "[{CLASS_NAME}]", type_2_ModelName(model.go_model, false));
     replaceAll(contents, "[{RAW_NAME}]", "Raw" + type_2_ModelName(model.go_model, true));
+    replaceAll(contents, "[{ROUTE}]",
+               substitute(substitute(modelIn.go_output, "./apps/chifra/internal/", ""), "/", ""));
 
     sort(model.fieldArray.begin(), model.fieldArray.end());
 
-    CMember raw;
-    raw.type = "*Raw" + type_2_ModelName(model.go_model, true);
-    raw.name = "raw";
-    model.fieldArray.push_back(raw);
+    if (!isInternal) {
+        CMember raw;
+        raw.type = "*Raw" + type_2_ModelName(model.go_model, true);
+        raw.name = "raw";
+        model.fieldArray.push_back(raw);
+    }
 
     size_t maxRawNameWid = 0, maxSimpNameWid = 0, maxRawTypeWid = 0, maxSimpTypeWid = 0, maxModelWid = 0;
 
@@ -116,6 +123,10 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
     // hackathon!
     replaceAll(contents, "type SimpleBlock[Tx] struct {", "type SimpleBlock[Tx BlockTransaction] struct {");
 
+    string_q fn = substitute(
+        substitute(getPathToSource(modelIn.go_output + "types_" + toLower(model.base_name) + ".go"), "//", "/"), "/./",
+        "/");
+
     codewrite_t cw(fn, contents + "\n");
     cw.nSpaces = 0;
     writeCodeIn(opts, cw);
@@ -182,7 +193,10 @@ string_q specialCase(const CClassDefinition& model, const CMember& field, const 
         ret = isRaw ? "[]any" : "[]Tx";
 
     } else if (modelName % "Manifest" && name % "Chunks") {
-        ret = isRaw ? "string" : "[]SimpleChunkRecord";
+        ret = isRaw ? "string" : "[]types.SimpleChunkRecord";
+
+    } else if (modelName % "Bounds" && (name % "FirstApp" || name % "LatestApp")) {
+        ret = isRaw ? "string" : "types.RawAppearance";
 
     } else if (name % "TraceAddress") {
         ret = "[]uint64";
@@ -192,6 +206,9 @@ string_q specialCase(const CClassDefinition& model, const CMember& field, const 
 
     } else if (modelName % "Trace" && (name % "BlockNumber")) {
         ret = "base.Blknum";
+
+    } else if (modelName % "CacheItem" && name % "Items" && !isRaw) {
+        ret = "[]any";
 
     } else if (name % "Topics") {
         ret = isRaw ? "[]string" : "[]base.Hash";

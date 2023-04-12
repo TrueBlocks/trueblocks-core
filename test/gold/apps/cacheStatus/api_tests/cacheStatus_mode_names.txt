@@ -1,41 +1,54 @@
-status?mode=names&verbose
+status?modes=names&verbose&maxRecords=2
 {
   "data": [
     {
-      "clientVersion": "Client version",
-      "clientIds": "chainId: 1 networkId: 1",
-      "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-",
-      "rpcProvider": "--providers--",
-      "configPath": "--paths--",
       "cachePath": "--paths--",
-      "indexPath": "--paths--",
-      "host": "--hostname-- (--username--)",
-      "isTesting": true,
-      "isApi": true,
-      "isScraping": false,
-      "isArchive": true,
-      "isTracing": true,
-      "hasEskey": true,
-      "hasPinkey": false,
       "caches": [
         {
-          "addrs": [],
-          "type": "CNameCache",
-          "path": "namesPath",
-          "nFiles": 0,
-          "nFolders": 0,
-          "sizeInBytes": 0,
-          "isValid": true
+          "items": [
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "namesCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "namesCacheItem",
+              "sizeInBytes": 123456789
+            }
+          ],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789,
+          "type": "namesCache"
         }
       ],
-      "date": "--date--"
+      "chainConfig": "--paths--",
+      "clientVersion": "Client version",
+      "hasEsKey": true,
+      "hasPinKey": false,
+      "indexPath": "--paths--",
+      "isApi": true,
+      "isArchive": true,
+      "isTesting": true,
+      "isTracing": true,
+      "rootConfig": "--paths--",
+      "rpcProvider": "--providers--",
+      "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-"
     }
   ],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
+    "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
   }
 }

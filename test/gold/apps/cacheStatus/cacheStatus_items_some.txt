@@ -1,90 +1,70 @@
-chifra config  --details some --first_block 3000000 --last_block 3100000
+chifra status  some --max_records 100
 TEST[DATE|TIME] Modes:  [some]
-TEST[DATE|TIME] Details:  true
-TEST[DATE|TIME] Depth:  0
-TEST[DATE|TIME] FirstBlock:  3000000
-TEST[DATE|TIME] LastBlock:  3100000
+TEST[DATE|TIME] MaxRecords:  100
+TEST[DATE|TIME] Format:  json
 {
-  "clientVersion": "Client version",
-  "clientIds": "chainId: 1 networkId: 1",
-  "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-",
-  "rpcProvider": "--providers--",
-  "configPath": "--paths--",
-  "cachePath": "--paths--",
-  "indexPath": "--paths--",
-  "host": "--hostname-- (--username--)",
-  "isTesting": true,
-  "isArchive": true,
-  "isTracing": true,
-  "hasEskey": true,
-  "caches": [
+  "data": [
     {
-      "type": "CIndexCache",
-      "path": "indexPath",
-      "nFiles": 0,
-      "nFolders": 0,
-      "sizeInBytes": 0,
-      "isValid": true
-    },
-    {
-      "items": [
+      "cachePath": "--paths--",
+      "caches": [
         {
-          "deleted": false,
-          "nApps": 0,
-          "firstApp": 0,
-          "latestApp": 0,
-          "tags": "--tags--",
-          "address": "---address---",
-          "name": "--name--",
-          "symbol": "--symbol--",
-          "source": "--source--"
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789,
+          "type": "indexCache"
+        },
+        {
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789,
+          "type": "monitorsCache"
+        },
+        {
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789,
+          "type": "namesCache"
+        },
+        {
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789,
+          "type": "abisCache"
+        },
+        {
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789,
+          "type": "slurpsCache"
         }
       ],
-      "type": "CMonitorCache",
-      "path": "monitorsPath",
-      "nFiles": 0,
-      "nFolders": 0,
-      "sizeInBytes": 0,
-      "isValid": true
-    },
-    {
-      "type": "CNameCache",
-      "path": "namesPath",
-      "nFiles": 0,
-      "nFolders": 0,
-      "sizeInBytes": 0,
-      "isValid": true
-    },
-    {
-      "type": "CSlurpCache",
-      "path": "slurpsPath",
-      "nFiles": 0,
-      "nFolders": 0,
-      "sizeInBytes": 0,
-      "isValid": true
+      "chainConfig": "--paths--",
+      "clientVersion": "Client version",
+      "hasEsKey": true,
+      "hasPinKey": false,
+      "indexPath": "--paths--",
+      "isApi": false,
+      "isArchive": true,
+      "isTesting": true,
+      "isTracing": true,
+      "rootConfig": "--paths--",
+      "rpcProvider": "--providers--",
+      "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-"
     }
-  ],
-  "chains": [
-    {
-      "chain": "mainnet",
-      "chainId": 1,
-      "symbol": "ETH",
-      "rpcProvider": "--provider-mainnet--",
-      "apiProvider": "--provider-mainnet--",
-      "remoteExplorer": "--explorer-mainnet--",
-      "localExplorer": "--explorer-mainnet--",
-      "ipfsGateway": "--gateway-mainnet--"
-    },
-    {
-      "chain": "gnosis",
-      "chainId": 100,
-      "symbol": "XDAI",
-      "rpcProvider": "--provider-gnosis--",
-      "apiProvider": "--provider-gnosis--",
-      "remoteExplorer": "--explorer-gnosis--",
-      "localExplorer": "--explorer-gnosis--",
-      "ipfsGateway": "--gateway-gnosis--"
-    }
-  ],
-  "date": "--date--"
+  ]
 }

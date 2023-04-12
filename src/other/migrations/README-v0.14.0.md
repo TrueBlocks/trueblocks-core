@@ -4,6 +4,10 @@
 
 (October 3, 2021)
 
+## IMPORTANT NOTE
+
+This migration has been retired. If your data is prior to this version, you must clear your cache and index folders and start from scratch
+
 ## Why the Change?
 
 Version 0.14.0 was a major change to our code base, but requires only a minor migration, as no internal data structures have changed.

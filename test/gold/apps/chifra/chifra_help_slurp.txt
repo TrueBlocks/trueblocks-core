@@ -1,4 +1,4 @@
-chifra  slurp --help --log_level 2
+chifra  slurp --help
 Purpose:
   Fetch data from Etherscan for any address.
 

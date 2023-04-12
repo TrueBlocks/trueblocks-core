@@ -18,8 +18,8 @@ import (
 
 func (opts *ChunksOptions) HandlePinManifest(blockNums []uint64) error {
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawManifest], errorChan chan error) {
-		man := types.SimpleManifest{
+	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+		man := simpleManifest{
 			Version: version.ManifestVersion,
 			Chain:   opts.Globals.Chain,
 			Schemas: unchained.Schemas,
@@ -31,9 +31,9 @@ func (opts *ChunksOptions) HandlePinManifest(blockNums []uint64) error {
 			return
 		}
 
-		pinChunk := func(walker *index.IndexWalker, path string, first bool) (bool, error) {
+		pinChunk := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
 			if path != cache.ToBloomPath(path) {
-				return false, fmt.Errorf("should not happen in showFinalizedStats")
+				return false, fmt.Errorf("should not happen in pinChunk")
 			}
 
 			result, err := pinning.PinChunk(opts.Globals.Chain, path, opts.Remote)
@@ -65,7 +65,7 @@ func (opts *ChunksOptions) HandlePinManifest(blockNums []uint64) error {
 			return true, nil
 		}
 
-		walker := index.NewIndexWalker(
+		walker := index.NewCacheWalker(
 			opts.Globals.Chain,
 			opts.Globals.TestMode,
 			100, /* maxTests */

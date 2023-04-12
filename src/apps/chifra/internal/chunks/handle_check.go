@@ -9,12 +9,12 @@ import (
 	"errors"
 	"fmt"
 	"sort"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -28,16 +28,16 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	opts.Globals.Format = "json"
 
 	maxTestItems := 10
-	filenameChan := make(chan cache.IndexFileInfo)
+	filenameChan := make(chan cache.CacheFileInfo)
 
 	var nRoutines int = 1
-	go cache.WalkIndexFolder(opts.Globals.Chain, cache.Index_Bloom, filenameChan)
+	go cache.WalkCacheFolder(context.Background(), opts.Globals.Chain, cache.Index_Bloom, nil, filenameChan)
 
 	fileNames := []string{}
 	for result := range filenameChan {
 		switch result.Type {
 		case cache.Index_Bloom:
-			skip := (opts.Globals.TestMode && len(fileNames) > maxTestItems) || !strings.HasSuffix(result.Path, ".bloom")
+			skip := (opts.Globals.TestMode && len(fileNames) > maxTestItems) || !cache.IsCacheType(result.Path, cache.Index_Bloom, true /* checkExt */)
 			if !skip {
 				hit := false
 				for _, block := range blockNums {
@@ -51,11 +51,13 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 					fileNames = append(fileNames, result.Path)
 				}
 			}
-		case cache.None:
+		case cache.Cache_NotACache:
 			nRoutines--
 			if nRoutines == 0 {
 				close(filenameChan)
 			}
+		default:
+			logger.Fatal("You may only traverse the bloom folder")
 		}
 	}
 
@@ -180,56 +182,4 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
-}
-
-type simpleReportCheck struct {
-	Reason     string   `json:"reason"`
-	CheckedCnt uint32   `json:"checkedCnt"`
-	FailedCnt  uint32   `json:"failedCnt"`
-	MsgStrings []string `json:"msgStrings"`
-	PassedCnt  uint32   `json:"passedCnt"`
-	Result     string   `json:"result"`
-	SkippedCnt uint32   `json:"skippedCnt"`
-	VisitedCnt uint32   `json:"visitedCnt"`
-}
-
-func (s *simpleReportCheck) Raw() *types.RawModeler {
-	return nil
-}
-
-func (s *simpleReportCheck) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
-	model := map[string]any{
-		"reason":     s.Reason,
-		"result":     s.Result,
-		"checkedCnt": s.CheckedCnt,
-	}
-	if s.VisitedCnt > 0 {
-		model["visitedCnt"] = s.VisitedCnt
-	}
-	if s.PassedCnt > 0 {
-		model["passedCnt"] = s.PassedCnt
-	}
-	if s.SkippedCnt > 0 {
-		model["skippedCnt"] = s.SkippedCnt
-	}
-	if s.FailedCnt > 0 {
-		model["failedCnt"] = s.FailedCnt
-	}
-	if len(s.MsgStrings) > 0 {
-		model["msgStrings"] = s.MsgStrings
-	}
-
-	return types.Model{
-		Data: model,
-		Order: []string{
-			"reason",
-			"result",
-			"checkedCnt",
-			"visitedCnt",
-			"passedCnt",
-			"skippedCnt",
-			"failedCnt",
-			"msgStrings",
-		},
-	}
 }

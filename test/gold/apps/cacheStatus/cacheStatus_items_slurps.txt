@@ -1,10 +1,10 @@
-chifra status  caches --types slurps
-TEST[DATE|TIME] Mode:  caches
-TEST[DATE|TIME] Types:  [slurps]
---TIME-- Client:       Client version (testing, archive, tracing)
---TIME-- TrueBlocks:   GHC-TrueBlocks//vers-beta--git-hash---git-ts- (eskey, no pinkey)
---TIME-- RPC Provider: --providers-- - mainnet (1,1)
---TIME-- Config Path:  --paths--
---TIME-- Cache Path:   --paths--
---TIME-- Index Path:   --paths--
---TIME-- Progress:     --client--, --final--, --staging--, --unripe-- ts: --ts--
+chifra status  slurps --max_records 100
+TEST[DATE|TIME] Modes:  [slurps]
+TEST[DATE|TIME] MaxRecords:  100
+TEST[DATE|TIME] Format:  json
+{
+  "data": [],
+  "errors": [
+    "no files were found in the [slurps] caches"
+  ]
+}

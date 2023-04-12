@@ -1,57 +1,84 @@
-status?mode=index&fmt=json&verbose
+status?modes=index&fmt=json&verbose&maxRecords=2
 {
   "data": [
     {
-      "clientVersion": "Client version",
-      "clientIds": "chainId: 1 networkId: 1",
-      "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-",
-      "rpcProvider": "--providers--",
-      "configPath": "--paths--",
       "cachePath": "--paths--",
-      "indexPath": "--paths--",
-      "host": "--hostname-- (--username--)",
-      "isTesting": true,
-      "isApi": true,
-      "isScraping": false,
-      "isArchive": true,
-      "isTracing": true,
-      "hasEskey": true,
-      "hasPinkey": false,
       "caches": [
         {
+          "type": "indexCache",
           "items": [
             {
-              "type": "CIndexCacheItem",
-              "nAddrs": 8893,
-              "nApps": 8893,
-              "firstApp": 0,
-              "latestApp": 0,
-              "firstTs": 1438269975,
-              "latestTs": 1438269975,
-              "filename": "/--index-path--/000000000-000000000.bin",
-              "fileDate": "1700-01-01 00:00:01 UTC",
-              "indexSizeBytes": 320192,
-              "indexHash": "",
               "bloomSizeBytes": 131114,
-              "bloomHash": ""
+              "fileDate": "--fileDate--",
+              "filename": "$indexPath/finalized/000000000-000000000.bin",
+              "firstApp": 0,
+              "firstTs": 1438269975,
+              "indexSizeBytes": 320192,
+              "itemType": "indexCacheItem",
+              "latestApp": 0,
+              "latestTs": 1438269975
+            },
+            {
+              "bloomSizeBytes": 131114,
+              "fileDate": "--fileDate--",
+              "filename": "$indexPath/finalized/000000001-000590502.bin",
+              "firstApp": 1,
+              "firstTs": 1438269988,
+              "indexSizeBytes": 16821060,
+              "itemType": "indexCacheItem",
+              "latestApp": 590502,
+              "latestTs": 1448383558
             }
           ],
-          "type": "CIndexCache",
-          "path": "indexPath",
-          "nFiles": 0,
-          "nFolders": 0,
-          "sizeInBytes": 0,
-          "isValid": true
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789
         }
       ],
-      "date": "--date--"
+      "chains": [
+        {
+          "chain": "mainnet",
+          "chainId": 1,
+          "symbol": "ETH",
+          "rpcProvider": "--provider-mainnet--",
+          "apiProvider": "--provider-mainnet--",
+          "remoteExplorer": "--explorer-mainnet--",
+          "localExplorer": "--explorer-mainnet--"
+        },
+        {
+          "chain": "gnosis",
+          "chainId": 100,
+          "symbol": "XDAI",
+          "rpcProvider": "--provider-gnosis--",
+          "apiProvider": "--provider-gnosis--",
+          "remoteExplorer": "--explorer-gnosis--",
+          "localExplorer": "--explorer-gnosis--"
+        }
+      ],
+      "chainConfig": "--paths--",
+      "clientVersion": "Client version",
+      "hasEsKey": true,
+      "hasPinKey": false,
+      "indexPath": "--paths--",
+      "isApi": true,
+      "isArchive": true,
+      "isTesting": true,
+      "isTracing": true,
+      "rootConfig": "--paths--",
+      "rpcProvider": "--providers--",
+      "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-"
     }
   ],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
+    "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
   }
 }

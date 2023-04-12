@@ -13,7 +13,7 @@ Purpose:
   Report on and edit the configuration of the TrueBlocks system.
 
 Usage:
-  chifra config [flags] <mode>
+  chifra config <mode> [flags]
 
 Arguments:
   mode - either show or edit the configuration
@@ -27,11 +27,6 @@ Flags:
 
 Data models produced by this tool:
 
-- [monitor](/data-model/accounts/#monitor)
-- [status](/data-model/admin/#status)
-- [cache](/data-model/admin/#cache)
-- [cacheentry](/data-model/admin/#cacheentry)
-- [indexcacheitem](/data-model/admin/#indexcacheitem)
 - [chain](/data-model/admin/#chain)
 
 Links:

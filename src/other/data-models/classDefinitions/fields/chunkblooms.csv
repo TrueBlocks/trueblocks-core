@@ -1,8 +1,0 @@
-name      ,type       ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,noaddfld ,doc ,disp ,example ,description
-range     ,blockRange ,           ,       ,      ,        ,          ,        ,         ,  1 ,     ,        ,The block range (inclusive) covered by this chunk                  ,
-magic     ,string     ,           ,       ,      ,        ,          ,        ,         ,  2 ,     ,        ,An internal use only magic number to indicate file format          ,
-hash      ,hash       ,           ,       ,      ,        ,          ,        ,         ,  3 ,     ,        ,The hash of the specification under which this chunk was generated ,
-count     ,uint64     ,           ,       ,      ,        ,          ,        ,         ,  4 ,     ,        ,The number of individual bloom filters in this bloom file          ,
-nInserted ,uint64     ,           ,       ,      ,        ,          ,        ,         ,  5 ,     ,        ,The number of addresses inserted into the bloom file               ,
-size      ,uint64     ,           ,       ,      ,        ,          ,        ,         ,  6 ,     ,        ,The size on disc in bytes of this bloom file                       ,
-width     ,uint64     ,           ,       ,      ,        ,          ,        ,         ,  7 ,     ,        ,The width of the bloom filter                                      ,

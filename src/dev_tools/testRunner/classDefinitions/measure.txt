@@ -2,4 +2,6 @@
 class = CMeasure
 fields = measure.csv
 includes = etherlib.h
-output = ../../dev_tools/testRunner
+
+cpp_output = src/dev_tools/testRunner
+go_output =

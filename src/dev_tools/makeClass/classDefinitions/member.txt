@@ -4,4 +4,6 @@ fields = member.csv
 includes = utillib.h
 sort = v1.name < v2.name
 equals = name == it.name
-output = ../../dev_tools/makeClass
+
+cpp_output = src/dev_tools/makeClass
+go_output =

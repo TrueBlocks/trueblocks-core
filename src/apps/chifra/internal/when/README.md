@@ -42,7 +42,10 @@ Notes:
 
 Data models produced by this tool:
 
+- [block](/data-model/chaindata/#block)
 - [namedblock](/data-model/chaindata/#namedblock)
+- [timestamp](/data-model/chaindata/#timestamp)
+- [timestampcount](/data-model/chaindata/#timestampcount)
 
 <!-- markdownlint-disable MD041 -->
 ### Other Options

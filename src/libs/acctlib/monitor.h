@@ -186,6 +186,5 @@ extern const char* STR_DISPLAY_MONITOR;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern bool isMonitorFilePath(const string_q& path);
 // EXISTING_CODE
 }  // namespace qblocks

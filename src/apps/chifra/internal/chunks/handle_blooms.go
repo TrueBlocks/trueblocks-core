@@ -20,9 +20,9 @@ import (
 func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-		showBloom := func(walker *index.IndexWalker, path string, first bool) (bool, error) {
+		showBloom := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
 			if path != cache.ToBloomPath(path) {
-				return false, fmt.Errorf("should not happen in showFinalizedStats")
+				return false, fmt.Errorf("should not happen in showBloom")
 			}
 
 			var bl bloom.ChunkBloom
@@ -42,12 +42,12 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 			}
 
 			s := simpleChunkBloom{
-				Magic:     bl.Header.Magic,
+				Magic:     fmt.Sprintf("0x%x", bl.Header.Magic),
 				Hash:      bl.Header.Hash,
-				Size:      int64(stats.BloomSz),
+				Size:      stats.BloomSz,
 				Range:     base.FileRange{First: stats.Start, Last: stats.End},
-				Count:     uint32(stats.NBlooms),
-				Width:     bloom.BLOOM_WIDTH_IN_BYTES,
+				NBlooms:   stats.NBlooms,
+				ByteWidth: bloom.BLOOM_WIDTH_IN_BYTES,
 				NInserted: uint64(nInserted),
 			}
 
@@ -55,7 +55,7 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 			return true, nil
 		}
 
-		walker := index.NewIndexWalker(
+		walker := index.NewCacheWalker(
 			opts.Globals.Chain,
 			opts.Globals.TestMode,
 			10, /* maxTests */
@@ -98,42 +98,5 @@ func displayBloom(bl *bloom.ChunkBloom, verbose int) {
 			}
 		}
 		fmt.Println()
-	}
-}
-
-type simpleChunkBloom struct {
-	Range     base.FileRange `json:"range"`
-	Magic     uint16         `json:"magic"`
-	Hash      base.Hash      `json:"hash"`
-	Count     uint32         `json:"nBlooms"`
-	NInserted uint64         `json:"nInserted"`
-	Size      int64          `json:"size"`
-	Width     uint64         `json:"byteWidth"`
-}
-
-func (s *simpleChunkBloom) Raw() *types.RawModeler {
-	return nil
-}
-
-func (s *simpleChunkBloom) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
-	return types.Model{
-		Data: map[string]any{
-			"range":     s.Range,
-			"magic":     fmt.Sprintf("0x%x", s.Magic),
-			"hash":      s.Hash,
-			"nBlooms":   s.Count,
-			"nInserted": s.NInserted,
-			"size":      s.Size,
-			"byteWidth": s.Width,
-		},
-		Order: []string{
-			"range",
-			"magic",
-			"hash",
-			"nBlooms",
-			"nInserted",
-			"size",
-			"byteWidth",
-		},
 	}
 }

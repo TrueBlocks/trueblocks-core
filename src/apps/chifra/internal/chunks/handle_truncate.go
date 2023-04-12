@@ -31,7 +31,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 	indexPath := config.GetPathToIndex(opts.Globals.Chain)
 	index.CleanTemporaryFolders(indexPath, true)
 
-	truncateIndex := func(walker *index.IndexWalker, path string, first bool) (bool, error) {
+	truncateIndex := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
 		if path != cache.ToBloomPath(path) {
 			logger.Fatal("should not happen ==> we're spinning through the bloom filters")
 		}
@@ -54,7 +54,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 		return true, nil
 	}
 
-	walker := index.NewIndexWalker(
+	walker := index.NewCacheWalker(
 		opts.Globals.Chain,
 		opts.Globals.TestMode,
 		100, /* maxTests */
@@ -64,7 +64,8 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 		return err
 	}
 
-	return opts.HandleStatus(blockNums)
+	logger.Info("Trucated index to", opts.Truncate, "...")
+	return nil
 }
 
 var warning = `Are sure you want to remove index chunks after and including block {0} (Yy)? `

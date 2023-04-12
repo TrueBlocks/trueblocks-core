@@ -7,7 +7,6 @@ package monitorsPkg
 import (
 	"context"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -50,32 +49,4 @@ func (opts *MonitorsOptions) HandleClean() error {
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
-}
-
-type simpleMonitorClean struct {
-	Address  base.Address `json:"address"`
-	Dups     int64        `json:"dups"`
-	SizeNow  int64        `json:"sizeNow"`
-	SizeThen int64        `json:"sizeThen"`
-}
-
-func (s *simpleMonitorClean) Raw() *types.RawModeler {
-	return nil
-}
-
-func (s *simpleMonitorClean) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
-	return types.Model{
-		Data: map[string]any{
-			"address":  s.Address,
-			"sizeNow":  s.SizeNow,
-			"sizeThen": s.SizeThen,
-			"dups":     s.Dups,
-		},
-		Order: []string{
-			"address",
-			"sizeNow",
-			"sizeThen",
-			"dups",
-		},
-	}
 }

@@ -9,31 +9,37 @@ package statusPkg
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 // StatusOptions provides all command options for the chifra status command.
 type StatusOptions struct {
-	Mode    string                `json:"mode,omitempty"`    // The name of the binary cache to report on
-	Types   []string              `json:"types,omitempty"`   // For caches mode only, which type(s) of cache to report
-	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
-	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
+	Modes       []string              `json:"modes,omitempty"`       // The (optional) name of the binary cache to report on, terse otherwise
+	FirstRecord uint64                `json:"firstRecord,omitempty"` // The first record to process
+	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process
+	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
+	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
 	// EXISTING_CODE
+	ModeTypes []cache.CacheType `json:"-"`
 	// EXISTING_CODE
 }
 
-var defaultStatusOptions = StatusOptions{}
+var defaultStatusOptions = StatusOptions{
+	FirstRecord: 1,
+	MaxRecords:  10000,
+}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *StatusOptions) testLog() {
-	logger.TestLog(len(opts.Mode) > 0, "Mode: ", opts.Mode)
-	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
+	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
+	logger.TestLog(opts.FirstRecord != 1, "FirstRecord: ", opts.FirstRecord)
+	logger.TestLog(opts.MaxRecords != 10000, "MaxRecords: ", opts.MaxRecords)
 	opts.Globals.TestLog()
 }
 
@@ -43,40 +49,23 @@ func (opts *StatusOptions) String() string {
 	return string(b)
 }
 
-// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
-func (opts *StatusOptions) getEnvStr() []string {
-	envStr := []string{}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return envStr
-}
-
-// toCmdLine converts the option to a command line for calling out to the system.
-func (opts *StatusOptions) toCmdLine() string {
-	options := ""
-	for _, types := range opts.Types {
-		options += " --types " + types
-	}
-	options += " " + opts.Mode
-	// EXISTING_CODE
-	// EXISTING_CODE
-	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
-	return options
-}
-
 // statusFinishParseApi finishes the parsing for server invocations. Returns a new StatusOptions.
 func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions {
 	copy := defaultStatusOptions
 	opts := &copy
+	opts.FirstRecord = 1
+	opts.MaxRecords = 10000
 	for key, value := range r.URL.Query() {
 		switch key {
-		case "mode":
-			opts.Mode = value[0]
-		case "types":
+		case "modes":
 			for _, val := range value {
 				s := strings.Split(val, " ") // may contain space separated items
-				opts.Types = append(opts.Types, s...)
+				opts.Modes = append(opts.Modes, s...)
 			}
+		case "firstRecord":
+			opts.FirstRecord = globals.ToUint64(value[0])
+		case "maxRecords":
+			opts.MaxRecords = globals.ToUint64(value[0])
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "status")
@@ -86,6 +75,10 @@ func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
+	if len(opts.Modes) == 0 && opts.Globals.Verbose {
+		opts.Modes = append(opts.Modes, "some")
+	}
+	opts.ModeTypes = cache.GetCacheTypes(opts.Modes)
 	// EXISTING_CODE
 
 	return opts
@@ -97,9 +90,13 @@ func statusFinishParse(args []string) *StatusOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	// EXISTING_CODE
-	defFmt = ""
-	for _, mode := range args {
-		opts.Mode = mode
+	opts.Modes = append(opts.Modes, args...)
+	if len(opts.Modes) == 0 && opts.Globals.Verbose {
+		opts.Modes = append(opts.Modes, "some")
+	}
+	opts.ModeTypes = cache.GetCacheTypes(opts.Modes)
+	if len(opts.Modes) > 0 {
+		defFmt = "json"
 	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {

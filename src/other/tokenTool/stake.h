@@ -145,6 +145,10 @@ extern CArchive& operator>>(CArchive& archive, CStakeArray& array);
 extern CArchive& operator<<(CArchive& archive, const CStakeArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CStake& sta);
+extern CArchive& operator>>(CArchive& archive, CStake& sta);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_STAKE;
 
 //---------------------------------------------------------------------------

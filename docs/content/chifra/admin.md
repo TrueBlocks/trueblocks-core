@@ -39,7 +39,7 @@ Purpose:
   Report on and edit the configuration of the TrueBlocks system.
 
 Usage:
-  chifra config [flags] <mode>
+  chifra config <mode> [flags]
 
 Arguments:
   mode - either show or edit the configuration
@@ -53,11 +53,6 @@ Flags:
 
 Data models produced by this tool:
 
-- [monitor](/data-model/accounts/#monitor)
-- [status](/data-model/admin/#status)
-- [cache](/data-model/admin/#cache)
-- [cacheentry](/data-model/admin/#cacheentry)
-- [indexcacheitem](/data-model/admin/#indexcacheitem)
 - [chain](/data-model/admin/#chain)
 
 Links:
@@ -73,23 +68,29 @@ Purpose:
   Report on the state of the internal binary caches.
 
 Usage:
-  chifra status [flags] <mode>
+  chifra status <mode> [mode...] [flags]
 
 Arguments:
-  mode - the name of the binary cache to report on
-	One of [ index | monitors | names | abis | caches | some | all ]
+  modes - the (optional) name of the binary cache to report on, terse otherwise
+	One or more of [ index | blooms | blocks | txs | traces | monitors | names | abis | recons | slurps | staging | unripe | maps | some | all ]
 
 Flags:
-  -t, --types strings   for caches mode only, which type(s) of cache to report
-                        One or more of [ blocks | txs | traces | slurps | all ]
-  -x, --fmt string      export format, one of [none|json*|txt|csv]
-  -v, --verbose         enable verbose (increase detail with --log_level)
-  -h, --help            display this help screen
+  -c, --first_record uint   the first record to process (default 1)
+  -e, --max_records uint    the maximum number of records to process (default 10000)
+  -x, --fmt string          export format, one of [none|json*|txt|csv]
+  -v, --verbose             enable verbose (increase detail with --log_level)
+  -h, --help                display this help screen
+
+Notes:
+  - The some mode includes index, monitors, names, slurps, and abis.
+  - If no mode is supplied, a terse report is generated.
 ```
 
 Data models produced by this tool:
 
-- none
+- [status](/data-model/admin/#status)
+- [cacheitem](/data-model/admin/#cacheitem)
+- [chain](/data-model/admin/#chain)
 
 Links:
 
@@ -186,7 +187,7 @@ Flags:
 Data models produced by this tool:
 
 - [manifest](/data-model/admin/#manifest)
-- [pinnedchunk](/data-model/admin/#pinnedchunk)
+- [chunkrecord](/data-model/admin/#chunkrecord)
 
 Links:
 
@@ -271,7 +272,7 @@ Usage:
 
 Arguments:
   mode - the type of data to process (required)
-	One of [ status | manifest | index | blooms | addresses | appearances | stats ]
+	One of [ manifest | index | blooms | addresses | appearances | stats ]
   blocks - an optional list of blocks to intersect with chunk ranges
 
 Flags:
@@ -299,9 +300,9 @@ Data models produced by this tool:
 
 - [appearance](/data-model/accounts/#appearance)
 - [manifest](/data-model/admin/#manifest)
-- [pinnedchunk](/data-model/admin/#pinnedchunk)
+- [chunkrecord](/data-model/admin/#chunkrecord)
 - [chunkindex](/data-model/admin/#chunkindex)
-- [chunkblooms](/data-model/admin/#chunkblooms)
+- [chunkbloom](/data-model/admin/#chunkbloom)
 - [chunkaddress](/data-model/admin/#chunkaddress)
 - [chunkstats](/data-model/admin/#chunkstats)
 - [reportcheck](/data-model/admin/#reportcheck)
@@ -356,7 +357,7 @@ Notes:
 Data models produced by this tool:
 
 - [manifest](/data-model/admin/#manifest)
-- [pinnedchunk](/data-model/admin/#pinnedchunk)
+- [chunkrecord](/data-model/admin/#chunkrecord)
 
 Links:
 

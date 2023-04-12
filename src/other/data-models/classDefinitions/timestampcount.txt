@@ -1,0 +1,10 @@
+[settings]
+class = CTimestampCount
+fields = timestampcount.csv
+doc_group = 02-Chain Data
+doc_descr = the number of timestamps in the timestamps database
+doc_route = 214-timestampCount
+doc_producer = when
+
+cpp_output =
+go_output = src/apps/chifra/internal/when

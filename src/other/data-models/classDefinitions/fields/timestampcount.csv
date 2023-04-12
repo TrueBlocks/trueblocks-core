@@ -1,0 +1,2 @@
+name  ,type   ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,noaddfld ,doc ,disp ,example ,description
+count ,uint64 ,           ,       ,      ,        ,          ,        ,         ,  1 ,     ,        ,the number of timestamps in the timestamps database

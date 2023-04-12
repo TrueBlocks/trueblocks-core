@@ -104,6 +104,7 @@ on      ,both ,fast  ,export   ,apps/acctExport ,export_logs_emit_by_fail ,y    
 
 on      ,both ,fast  ,export   ,apps/acctExport ,export_logs_factory      ,y    ,addrs = 0x8b3b3b624c3c0397d3da8fd861512393d51dcbac & factory & traces & last_block = 1603174
 on      ,both ,fast  ,export   ,apps/acctExport ,export_traces            ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & last_block = 1506480 & max_records = 5 & traces & fmt = json
+on      ,both ,fast  ,export   ,apps/acctExport ,export_traces_cache      ,y    ,addrs = 0xd714dd60e22bbb1cbafd0e40de5cfa7bbdd3f3c8 & max_records = 10 & cache_traces & traces
 
 on      ,both ,fast  ,export   ,apps/acctExport ,export_backcompat        ,n    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_record = 0 & max_records = 1 & staging & unripe
 on      ,both ,fast  ,export   ,apps/acctExport ,export_stage             ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & staging
@@ -118,6 +119,8 @@ on      ,both ,fast  ,export   ,apps/acctExport ,accounting_ofx           ,y    
 
 on      ,both ,fast  ,export   ,apps/acctExport ,neighbor1                ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors
 on      ,both ,fast  ,export   ,apps/acctExport ,neighbor2                ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors
+on      ,both ,fast  ,export   ,apps/acctExport ,neighbor3                ,y    ,addrs = 0xffeac0305ede3a915295ec8e61c7f881006f4474 & neighbors & first_block = 0 & last_block = 10
+on      ,both ,fast  ,export   ,apps/acctExport ,neighbor4                ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & neighbors & first_block = 0 & last_block = 10
 on      ,both ,fast  ,export   ,apps/acctExport ,neighbor1_csv            ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors & fmt = csv
 on      ,both ,fast  ,export   ,apps/acctExport ,neighbor2_csv            ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors & fmt = csv
 
@@ -138,6 +141,7 @@ on      ,both ,fast  ,export   ,apps/acctExport ,accounting_tokens_1      ,y    
 on      ,both ,fast  ,monitors ,apps/acctExport ,accounting_cleanup_2     ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete & remove & fmt = json
 on      ,both ,fast  ,list     ,apps/acctExport ,accounting_list_2        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,accounting_tokens_2      ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & accounting & last_block = 9231343 & articulate & ether & fmt = json
+on      ,both ,fast  ,export   ,apps/acctExport ,accounting_to_cache      ,y    ,addrs = 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c & last_block = 100 & accounting & statements
 
 on      ,both ,slow  ,export   ,apps/acctExport ,monitors_seed_1          ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & last_block = 9000000 & fmt = json
 

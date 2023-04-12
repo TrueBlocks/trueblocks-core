@@ -1,4 +1,4 @@
-chifra  blocks --help --log_level 2
+chifra  blocks --help
 Purpose:
   Retrieve one or more blocks from the chain or local cache.
 

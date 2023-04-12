@@ -209,13 +209,27 @@ func BlockHashFromNumber(provider string, blkNum uint64) (string, error) {
 	return block.Hash().Hex(), nil
 }
 
-// TODO: This needs to be implemented in a cross-chain, cross-client manner
+// TODO: BOGUS This needs to be implemented in a cross-chain, cross-client manner
 func IsTracingNode(testMode bool, chain string) bool {
 	// TODO: We can test this with a unit test
 	if testMode && chain == "non-tracing" {
 		return false
 	}
 	return true
+}
+
+func IsArchiveNode(testMode bool, chain string) bool {
+	return true
+	// TODO: BOGUS from C++ code
+	// const CToml* config = getGlobalConfig("blockScrape");
+	// if (!config->getConfigBool("requires", "archive", true))
+	//     return true;
+
+	// // An archive node better have a balance at the end of block zero the same as
+	// // the allocation amount for that account. We use the largest allocation so as
+	// // to ensure we get an actual balance
+	// Allocation largest = largestPrefund();
+	// return getBalanceAt(largest.address, 0) == largest.amount;
 }
 
 /*

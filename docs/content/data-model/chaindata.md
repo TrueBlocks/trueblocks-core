@@ -29,6 +29,7 @@ blocks' transactions.
 The following commands produce and manage Blocks:
 
 - [chifra blocks](/chifra/chaindata/#chifra-blocks)
+- [chifra when](/chifra/chaindata/#chifra-when)
 
 Blocks consist of the following fields:
 
@@ -278,6 +279,45 @@ TraceResults consist of the following fields:
 | gasUsed | the amount of gas used by this trace                                           | gas     |
 | output  | the result of the call of this trace                                           | bytes   |
 
+## TraceCount
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+`chifra trace --count` returns the number of traces the given transaction.
+
+The following commands produce and manage TraceCounts:
+
+- [chifra traces](/chifra/chaindata/#chifra-traces)
+
+TraceCounts consist of the following fields:
+
+| Field            | Description                             | Type      |
+| ---------------- | --------------------------------------- | --------- |
+| blockNumber      | the block number                        | blknum    |
+| transactionIndex | the transaction index                   | blknum    |
+| transactionHash  | the transaction's hash                  | hash      |
+| timestamp        | the timestamp of the block              | timestamp |
+| tracesCnt        | the number of traces in the transaction | uint64    |
+
+## TraceFilter
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+The `traceFilter` is an internal data structure used to query using the `chifra traces --filter` command. Its use may, in the future, be expanded for other use cases. Note that all fields are optional, but not all may be empty at the same time.
+
+The following commands produce and manage TraceFilters:
+
+- [chifra traces](/chifra/chaindata/#chifra-traces)
+
+TraceFilters consist of the following fields:
+
+| Field       | Description                                                    | Type          |
+| ----------- | -------------------------------------------------------------- | ------------- |
+| fromBlock   | The first block to include in the queried list of traces.      | string        |
+| toBlock     | The last block to include in the queried list of traces.       | string        |
+| fromAddress | If included, only traces `from` this address will be included. | Address       |
+| toAddress   | If included, only traces `to` this address will be included.   | Address       |
+| after       | Only traces after this many traces are included.               | uint64        |
+| count       | Only this many traces are included.                            | uint64        |
+
 ## BlockCount
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
@@ -324,44 +364,37 @@ NamedBlocks consist of the following fields:
 | date        | Human readable version of timestamp | datetime  |
 | name        | an optional name for the block      | string    |
 
-## TraceCount
+## Timestamp
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
-`chifra trace --count` returns the number of traces the given transaction.
+Shows the blockNumber, timestamp and difference in seconds between blocks found in the timestamp database.
 
-The following commands produce and manage TraceCounts:
+The following commands produce and manage Timestamps:
 
-- [chifra traces](/chifra/chaindata/#chifra-traces)
+- [chifra when](/chifra/chaindata/#chifra-when)
 
-TraceCounts consist of the following fields:
+Timestamps consist of the following fields:
 
-| Field            | Description                             | Type      |
-| ---------------- | --------------------------------------- | --------- |
-| blockNumber      | the block number                        | blknum    |
-| transactionIndex | the transaction index                   | blknum    |
-| transactionHash  | the transaction's hash                  | hash      |
-| timestamp        | the timestamp of the block              | timestamp |
-| tracesCnt        | the number of traces in the transaction | uint64    |
+| Field       | Description                                | Type      |
+| ----------- | ------------------------------------------ | --------- |
+| blockNumber | the number of the block                    | blknum    |
+| timestamp   | the Unix timestamp of the block            | timestamp |
+| diff        | the number of seconds since the last block | timestamp |
 
-## TraceFilter
+## TimestampCount
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
-The `traceFilter` is an internal data structure used to query using the `chifra traces --filter` command. Its use may, in the future, be expanded for other use cases. Note that all fields are optional, but not all may be empty at the same time.
+Shows the number of timestamps in the timestamps database.
 
-The following commands produce and manage TraceFilters:
+The following commands produce and manage TimestampCounts:
 
-- [chifra traces](/chifra/chaindata/#chifra-traces)
+- [chifra when](/chifra/chaindata/#chifra-when)
 
-TraceFilters consist of the following fields:
+TimestampCounts consist of the following fields:
 
-| Field       | Description                                                    | Type          |
-| ----------- | -------------------------------------------------------------- | ------------- |
-| fromBlock   | The first block to include in the queried list of traces.      | string        |
-| toBlock     | The last block to include in the queried list of traces.       | string        |
-| fromAddress | If included, only traces `from` this address will be included. | Address       |
-| toAddress   | If included, only traces `to` this address will be included.   | Address       |
-| after       | Only traces after this many traces are included.               | uint64        |
-| count       | Only this many traces are included.                            | uint64        |
+| Field | Description                                         | Type   |
+| ----- | --------------------------------------------------- | ------ |
+| count | the number of timestamps in the timestamps database | uint64 |
 
 ## Base types
 

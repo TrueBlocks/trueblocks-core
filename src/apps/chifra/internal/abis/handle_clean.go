@@ -25,11 +25,11 @@ func (opts *AbisOptions) HandleClean() error {
 		// TODO: This code is not actually used
 		// filenameChan := make(chan cache.CacheFileInfo)
 		// var nRoutines int = 1
-		// go cache.WalkCacheFolder(opts.Globals.Chain, cache.Cache_Abis, filenameChan)
+		// go cache.WalkCacheFolder(context.Background(), opts.Globals.Chain, cache.Cache_Abis, nil, filenameChan)
 		// for result := range filenameChan {
 		// 	switch result.Type {
 		// 	case cache.Cache_Abis:
-		// 		skip := !strings.HasSuffix(result.Path, ".json")
+		// 		skip := !cache.IsCacheType(result.Path, cache.Cache_Abis, true /* checkExt */)
 		// 		if !skip {
 		// 			if file.FileSize(result.Path) == 0 {
 		// 				logger.Info("Removing empty abi: "+strings.Replace(result.Path, config.GetPathToCache(opts.Globals.Chain)+"abis/", "", -1), file.FileSize(result.Path))
@@ -38,7 +38,7 @@ func (opts *AbisOptions) HandleClean() error {
 		// 				// }
 		// 			}
 		// 		}
-		// 	case cache.None:
+		// 	case cache.Cache_NotACache:
 		// 		nRoutines--
 		// 		if nRoutines == 0 {
 		// 			close(filenameChan)

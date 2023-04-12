@@ -1,4 +1,4 @@
-chifra  names --help --log_level 2
+chifra  names --help
 Purpose:
   Query addresses or names of well known accounts.
 

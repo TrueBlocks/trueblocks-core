@@ -1,2 +1,0 @@
-name ,type      ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,noaddfld ,doc ,disp ,example ,description
-next ,TreeNode* ,           ,true   ,      ,        ,          ,        ,         ,    ,     ,        ,

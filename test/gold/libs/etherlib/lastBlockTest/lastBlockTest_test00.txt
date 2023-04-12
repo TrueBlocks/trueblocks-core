@@ -1,6 +1,6 @@
 lastBlockTest  
 Non-recursive from ../
-Found 16 (16) files
+Found 15 (15) files
 ../abiTest/
 ../abiTest2/
 ../binaryPathTest/
@@ -14,6 +14,5 @@ Found 16 (16) files
 ../parseLists/
 ../printFloatTest/
 ../reconTest/
-../serializeTest/
 ../sha3Test/
 ../traceTest/

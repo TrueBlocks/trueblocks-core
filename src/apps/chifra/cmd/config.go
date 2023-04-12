@@ -35,7 +35,7 @@ var configCmd = &cobra.Command{
 	}),
 }
 
-const usageConfig = `config [flags] <mode>
+const usageConfig = `config <mode> [flags]
 
 Arguments:
   mode - either show or edit the configuration

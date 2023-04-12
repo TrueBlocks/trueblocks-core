@@ -13,6 +13,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -50,12 +51,16 @@ func (opts *StatusOptions) StatusInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.Globals.IsApiMode() {
-		return nil, false
+	if !opts.IsPorted() {
+		logger.Fatal("Should not happen in NamesInternal")
 	}
 
 	handled = true
-	err = opts.Globals.PassItOn("cacheStatus", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
+	if len(opts.ModeTypes) > 0 {
+		err = opts.HandleShow()
+	} else {
+		err = opts.HandleStatusTerse()
+	}
 	// EXISTING_CODE
 
 	return
@@ -72,7 +77,7 @@ func GetStatusOptions(args []string, g *globals.GlobalOptions) *StatusOptions {
 
 func (opts *StatusOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	ported = false
+	ported = true
 	// EXISTING_CODE
 	return
 }

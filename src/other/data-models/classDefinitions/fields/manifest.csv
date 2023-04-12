@@ -1,0 +1,6 @@
+name        ,type        ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,noaddfld ,doc ,disp ,example ,description
+version     ,string      ,           ,       ,      ,        ,          ,        ,         ,1   ,     ,        ,the version string hashed into the chunk data
+chain       ,string      ,           ,       ,      ,        ,          ,        ,         ,2   ,     ,        ,the chain to which this manifest belongs
+schemas     ,ipfshash    ,           ,       ,      ,        ,          ,        ,         ,3   ,     ,        ,IPFS cid of file describing the schemas for the various databases
+databases   ,ipfshash    ,           ,       ,      ,        ,          ,        ,         ,4   ,     ,        ,IPFS cid of file containing CIDs for the various databases
+chunks      ,ChunkRecord ,           ,true   ,true  ,        ,          ,        ,         ,5   ,     ,        ,a list of the IPFS hashes of all of the chunks in the unchained index

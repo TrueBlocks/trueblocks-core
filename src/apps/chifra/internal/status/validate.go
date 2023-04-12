@@ -15,14 +15,14 @@ func (opts *StatusOptions) validateStatus() error {
 		return opts.BadFlag
 	}
 
-	err := validate.ValidateEnumSlice("--types", opts.Types, "[blocks|txs|traces|slurps|all]")
+	options := `[index|blooms|blocks|txs|traces|monitors|names|abis|recons|slurps|staging|unripe|maps|some|all]`
+	err := validate.ValidateEnumSlice("mode", opts.Modes, options)
 	if err != nil {
 		return err
 	}
 
-	err = validate.ValidateEnum("mode", opts.Mode, "[index|monitors|names|abis|caches|some|all]")
-	if err != nil {
-		return err
+	if opts.MaxRecords == 0 {
+		return validate.Usage("{0} must be greater than zero", "--max_records")
 	}
 
 	return opts.Globals.Validate()

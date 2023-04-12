@@ -23,9 +23,9 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-		showIndex := func(walker *index.IndexWalker, path string, first bool) (bool, error) {
+		showIndex := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
 			if path != cache.ToBloomPath(path) {
-				return false, fmt.Errorf("should not happen in showFinalizedStats")
+				return false, fmt.Errorf("should not happen in showIndex")
 			}
 
 			path = cache.ToIndexPath(path)
@@ -45,19 +45,19 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 			}
 
 			s := simpleChunkIndex{
-				Range:           rng,
-				Magic:           header.Magic,
-				Hash:            base.HexToHash(header.Hash.Hex()),
-				AddressCount:    header.AddressCount,
-				AppearanceCount: header.AppearanceCount,
-				Size:            file.FileSize(path),
+				Range:        rng,
+				Magic:        fmt.Sprintf("0x%x", header.Magic),
+				Hash:         base.HexToHash(header.Hash.Hex()),
+				NAddresses:   uint64(header.AddressCount),
+				NAppearances: uint64(header.AppearanceCount),
+				Size:         uint64(file.FileSize(path)),
 			}
 
 			modelChan <- &s
 			return true, nil
 		}
 
-		walker := index.NewIndexWalker(
+		walker := index.NewCacheWalker(
 			opts.Globals.Chain,
 			opts.Globals.TestMode,
 			100, /* maxTests */
@@ -70,38 +70,4 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
-}
-
-type simpleChunkIndex struct {
-	Range           base.FileRange `json:"range"`
-	Magic           uint32         `json:"magic"`
-	Hash            base.Hash      `json:"hash"`
-	AddressCount    uint32         `json:"nAddresses"`
-	AppearanceCount uint32         `json:"nAppearances"`
-	Size            int64          `json:"fileSize"`
-}
-
-func (s *simpleChunkIndex) Raw() *types.RawModeler {
-	return nil
-}
-
-func (s *simpleChunkIndex) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
-	return types.Model{
-		Data: map[string]any{
-			"range":        s.Range,
-			"magic":        fmt.Sprintf("0x%x", s.Magic),
-			"hash":         s.Hash,
-			"nAddresses":   s.AddressCount,
-			"nAppearances": s.AppearanceCount,
-			"fileSize":     s.Size,
-		},
-		Order: []string{
-			"range",
-			"magic",
-			"hash",
-			"nAddresses",
-			"nAppearances",
-			"fileSize",
-		},
-	}
 }

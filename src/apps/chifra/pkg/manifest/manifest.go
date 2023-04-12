@@ -14,7 +14,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -57,17 +56,6 @@ type ChunkRecord struct {
 	BloomSize int64         `json:"bloomSize"`
 	IndexHash base.IpfsHash `json:"indexHash,omitempty"`
 	IndexSize int64         `json:"indexSize,omitempty"`
-}
-
-func (ch *ChunkRecord) GetFullPath(chain string, cacheType cache.CacheType) string {
-	switch cacheType {
-	case cache.Index_Bloom:
-		return fmt.Sprintf("%s.bloom", filepath.Join(config.GetPathToIndex(chain), "blooms", ch.Range))
-	case cache.Index_Final:
-		return fmt.Sprintf("%s.bin", filepath.Join(config.GetPathToIndex(chain), "finalized", ch.Range))
-	}
-	logger.Fatal("unexpected chunkType in GetFullPath")
-	return ""
 }
 
 type Source uint
