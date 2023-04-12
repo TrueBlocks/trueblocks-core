@@ -12,6 +12,8 @@ package statusPkg
 import (
 	"fmt"
 	"io"
+	"sort"
+	"strconv"
 	"strings"
 	"text/template"
 	"time"
@@ -110,7 +112,28 @@ func (s *simpleStatus) Model(showHidden bool, format string, extraOptions map[st
 	}
 
 	if showHidden && !testMode {
-		model["chains"] = config.GetRootConfig().Chains
+		var chains []types.SimpleChain
+		chainArray := config.GetChainArray()
+		for _, chain := range chainArray {
+			ch := types.SimpleChain{
+				Chain:          chain.Chain,
+				ChainId:        mustParseUint(chain.ChainId),
+				LocalExplorer:  chain.LocalExplorer,
+				RemoteExplorer: chain.RemoteExplorer,
+				RpcProvider:    chain.RpcProvider,
+				ApiProvider:    chain.ApiProvider,
+				IpfsGateway:    chain.IpfsGateway,
+				Symbol:         chain.Symbol,
+			}
+			chains = append(chains, ch)
+		}
+		sort.Slice(chains, func(i, j int) bool {
+			if chains[i].ChainId == chains[j].ChainId {
+				return chains[i].Chain < chains[j].Chain
+			}
+			return chains[i].ChainId < chains[j].ChainId
+		})
+		model["chains"] = chains
 		order = append(order, "chains")
 	}
 	// EXISTING_CODE
@@ -222,5 +245,10 @@ INFO Cache Path:        {{.CachePath}}
 INFO Index Path:        {{.IndexPath}}
 INFO Progress:          {{.Progress}}
 `
+
+func mustParseUint(input any) (result uint64) {
+	result, _ = strconv.ParseUint(fmt.Sprint(input), 0, 64)
+	return
+}
 
 // EXISTING_CODE

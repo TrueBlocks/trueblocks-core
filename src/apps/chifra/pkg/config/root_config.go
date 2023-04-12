@@ -26,6 +26,7 @@ type versionGroup struct {
 }
 
 type chainGroup struct {
+	Chain          string `toml:"chain"`
 	ChainId        string `toml:"chainId"`
 	LocalExplorer  string `toml:"localExplorer"`
 	RemoteExplorer string `toml:"remoteExplorer"`
@@ -53,6 +54,18 @@ type ConfigFile struct {
 	Settings settingsGroup
 	Keys     map[string]keyGroup
 	Chains   map[string]chainGroup
+}
+
+func GetChainArray() []chainGroup {
+	var result []chainGroup
+	for k, v := range GetRootConfig().Chains {
+		v.Chain = k
+		if len(v.IpfsGateway) == 0 {
+			v.IpfsGateway = GetRootConfig().Settings.DefaultGateway
+		}
+		result = append(result, v)
+	}
+	return result
 }
 
 // init sets up default values for the given configuration
