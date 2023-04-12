@@ -1,5 +1,5 @@
 <!-- markdownlint-disable MD024 MD036 -->
-# Changes
+# Changes Made
 
 This file details changes made to TrueBlocks per version. See the [migration notes](./MIGRATIONS.md) for changes from previous versions.
 
