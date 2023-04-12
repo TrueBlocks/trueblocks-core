@@ -63,7 +63,7 @@ bool COptions::handle_sdk_ts_types(CStringArray& typesOut) {
         for (auto field : model.fieldArray) {
             if (endsWith(field.type, "Map") || field.type == "CKeyArray" || field.type == "Value" ||
                 field.type == "topic" || startsWith(field.name, "unused") || contains(field.name, "::") ||
-                containsI(field.type, "storageslot")) {
+                containsI(field.type, "storageslot") || field.type % "any") {
                 continue;
             }
             bool isArray = contains(field.type, "Array");
@@ -77,6 +77,7 @@ bool COptions::handle_sdk_ts_types(CStringArray& typesOut) {
             ft = substitute(ft, "String", "string");
             ft = substitute(ft, "Topic", "topic");
             ft = substitute(ft, "Address", "address");
+            ft = substitute(ft, "Any", "any");
             ft = substitute(ft, "Hash", "hash");
             ft = substitute(ft, "[]string", "string[]");
             replace(ft, "bool", "boolean");
@@ -110,7 +111,7 @@ bool COptions::handle_sdk_ts_types(CStringArray& typesOut) {
         if (imports.size() > 0) {
             ostringstream imps;
             for (auto imp : imports) {
-                if (imp.second == "string" || imp.second == "boolean") {
+                if (imp.second == "string" || imp.second == "boolean" || imp.second == "any") {
                     continue;
                 }
                 if (imps.str() != "") {
@@ -181,10 +182,13 @@ bool COptions::handle_sdk_ts_paths(CStringArray& pathsOut) {
 
             ostringstream tts;
             for (auto imp : imports) {
+                string_q v = imp.second;
+                if (v % "any") {
+                    continue;
+                }
                 if (tts.str() != "") {
                     tts << ", ";
                 }
-                string_q v = imp.second;
                 tts << v;
             }
 

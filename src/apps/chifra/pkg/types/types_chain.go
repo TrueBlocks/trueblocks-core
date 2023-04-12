@@ -53,6 +53,26 @@ func (s *SimpleChain) Model(showHidden bool, format string, extraOptions map[str
 	var order = []string{}
 
 	// EXISTING_CODE
+	model = map[string]interface{}{
+		"apiProvider":    s.ApiProvider,
+		"chain":          s.Chain,
+		"chainId":        s.ChainId,
+		"ipfsGateway":    s.IpfsGateway,
+		"localExplorer":  s.LocalExplorer,
+		"remoteExplorer": s.RemoteExplorer,
+		"rpcProvider":    s.RpcProvider,
+		"symbol":         s.Symbol,
+	}
+	order = []string{
+		"apiProvider",
+		"chain",
+		"chainId",
+		"ipfsGateway",
+		"localExplorer",
+		"remoteExplorer",
+		"rpcProvider",
+		"symbol",
+	}
 	// EXISTING_CODE
 
 	return Model{
