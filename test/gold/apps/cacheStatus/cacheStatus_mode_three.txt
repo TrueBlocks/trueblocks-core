@@ -9,7 +9,6 @@ TEST[DATE|TIME] Format:  json
       "cachePath": "--paths--",
       "caches": [
         {
-          "type": "abisCache",
           "items": [
             {
               "address": "--address--",
@@ -30,10 +29,10 @@ TEST[DATE|TIME] Format:  json
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "abisCache"
         },
         {
-          "type": "monitorsCache",
           "items": [
             {
               "address": "--address--",
@@ -54,10 +53,10 @@ TEST[DATE|TIME] Format:  json
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "monitorsCache"
         },
         {
-          "type": "txsCache",
           "items": [
             {
               "fileDate": "--fileDate--",
@@ -76,7 +75,8 @@ TEST[DATE|TIME] Format:  json
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "txsCache"
         }
       ],
       "chainConfig": "--paths--",

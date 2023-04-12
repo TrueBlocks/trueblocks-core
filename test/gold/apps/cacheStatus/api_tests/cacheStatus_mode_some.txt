@@ -5,7 +5,6 @@ status?modes=some&verbose&maxRecords=2
       "cachePath": "--paths--",
       "caches": [
         {
-          "type": "indexCache",
           "items": [
             {
               "bloomSizeBytes": 131114,
@@ -34,10 +33,10 @@ status?modes=some&verbose&maxRecords=2
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "indexCache"
         },
         {
-          "type": "monitorsCache",
           "items": [
             {
               "address": "--address--",
@@ -58,10 +57,10 @@ status?modes=some&verbose&maxRecords=2
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "monitorsCache"
         },
         {
-          "type": "namesCache",
           "items": [
             {
               "fileDate": "--fileDate--",
@@ -80,10 +79,10 @@ status?modes=some&verbose&maxRecords=2
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "namesCache"
         },
         {
-          "type": "abisCache",
           "items": [
             {
               "address": "--address--",
@@ -104,16 +103,17 @@ status?modes=some&verbose&maxRecords=2
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "abisCache"
         },
         {
-          "type": "slurpsCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "slurpsCache"
         }
       ],
       "chainConfig": "--paths--",

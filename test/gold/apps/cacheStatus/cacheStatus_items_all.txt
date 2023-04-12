@@ -8,103 +8,103 @@ TEST[DATE|TIME] Format:  json
       "cachePath": "--paths--",
       "caches": [
         {
-          "type": "bloomCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "bloomCache"
         },
         {
-          "type": "indexCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "indexCache"
         },
         {
-          "type": "stagingCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "stagingCache"
         },
         {
-          "type": "unripeCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "unripeCache"
         },
         {
-          "type": "monitorsCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "monitorsCache"
         },
         {
-          "type": "namesCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "namesCache"
         },
         {
-          "type": "abisCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "abisCache"
         },
         {
-          "type": "slurpsCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "slurpsCache"
         },
         {
-          "type": "blocksCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "blocksCache"
         },
         {
-          "type": "tracesCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "tracesCache"
         },
         {
-          "type": "txsCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "txsCache"
         }
       ],
       "chainConfig": "--paths--",

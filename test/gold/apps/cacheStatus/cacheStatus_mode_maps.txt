@@ -9,7 +9,6 @@ TEST[DATE|TIME] Format:  json
       "cachePath": "--paths--",
       "caches": [
         {
-          "type": "mapsCache",
           "items": [
             {
               "bloomSizeBytes": 0,
@@ -38,7 +37,8 @@ TEST[DATE|TIME] Format:  json
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "mapsCache"
         }
       ],
       "chainConfig": "--paths--",

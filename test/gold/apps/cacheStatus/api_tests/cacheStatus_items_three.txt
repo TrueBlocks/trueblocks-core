@@ -5,31 +5,31 @@ status?modes=abis&modes=monitors&modes=slurps&maxRecords=100
       "cachePath": "--paths--",
       "caches": [
         {
-          "type": "abisCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "abisCache"
         },
         {
-          "type": "monitorsCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "monitorsCache"
         },
         {
-          "type": "slurpsCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "slurpsCache"
         }
       ],
       "chainConfig": "--paths--",

@@ -5,13 +5,13 @@ status?modes=blocks&maxRecords=100&modes=blocks&modes=blocks
       "cachePath": "--paths--",
       "caches": [
         {
-          "type": "blocksCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "blocksCache"
         }
       ],
       "chainConfig": "--paths--",

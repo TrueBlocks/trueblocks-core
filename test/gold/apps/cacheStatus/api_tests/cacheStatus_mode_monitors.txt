@@ -5,7 +5,6 @@ status?modes=monitors&verbose&maxRecords=2
       "cachePath": "--paths--",
       "caches": [
         {
-          "type": "monitorsCache",
           "items": [
             {
               "address": "--address--",
@@ -26,7 +25,8 @@ status?modes=monitors&verbose&maxRecords=2
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "monitorsCache"
         }
       ],
       "chainConfig": "--paths--",

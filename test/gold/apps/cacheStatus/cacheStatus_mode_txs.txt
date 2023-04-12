@@ -9,7 +9,6 @@ TEST[DATE|TIME] Format:  json
       "cachePath": "--paths--",
       "caches": [
         {
-          "type": "txsCache",
           "items": [
             {
               "fileDate": "--fileDate--",
@@ -28,7 +27,8 @@ TEST[DATE|TIME] Format:  json
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "txsCache"
         }
       ],
       "chainConfig": "--paths--",

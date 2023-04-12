@@ -14,13 +14,13 @@ Results in ./output_test_file
       "cachePath": "--paths--",
       "caches": [
         {
-          "type": "namesCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "namesCache"
         }
       ],
       "chainConfig": "--paths--",
@@ -44,13 +44,13 @@ Results in ./output_test_file
       "cachePath": "--paths--",
       "caches": [
         {
-          "type": "indexCache",
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "indexCache"
         }
       ],
       "chainConfig": "--paths--",

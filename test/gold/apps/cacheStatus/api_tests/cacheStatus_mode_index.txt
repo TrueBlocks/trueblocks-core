@@ -5,7 +5,6 @@ status?modes=index&verbose&maxRecords=2
       "cachePath": "--paths--",
       "caches": [
         {
-          "type": "indexCache",
           "items": [
             {
               "bloomSizeBytes": 131114,
@@ -34,7 +33,8 @@ status?modes=index&verbose&maxRecords=2
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "indexCache"
         }
       ],
       "chainConfig": "--paths--",

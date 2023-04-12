@@ -5,7 +5,6 @@ status?modes=txs&verbose&maxRecords=2
       "cachePath": "--paths--",
       "caches": [
         {
-          "type": "txsCache",
           "items": [
             {
               "fileDate": "--fileDate--",
@@ -24,7 +23,8 @@ status?modes=txs&verbose&maxRecords=2
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "txsCache"
         }
       ],
       "chainConfig": "--paths--",

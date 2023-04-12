@@ -5,7 +5,6 @@ status?modes=blocks&verbose&maxRecords=100&modes=blocks&modes=blocks
       "cachePath": "--paths--",
       "caches": [
         {
-          "type": "blocksCache",
           "items": [
             {
               "fileDate": "--fileDate--",
@@ -114,7 +113,8 @@ status?modes=blocks&verbose&maxRecords=100&modes=blocks&modes=blocks
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "blocksCache"
         }
       ],
       "chainConfig": "--paths--",
