@@ -87,15 +87,11 @@ func (opts *StatusOptions) HandleShow() error {
 			return
 		}
 
-		s := simpleCache{
-			Status: *status,
-		}
-
 		totalRecords := uint64(0)
 		for _, mT := range opts.ModeTypes {
 			mT := mT
 			if counterMap[mT] != nil {
-				s.Caches = append(s.Caches, *counterMap[mT])
+				status.Caches = append(status.Caches, *counterMap[mT])
 				totalRecords += counterMap[mT].NFiles
 			}
 		}
@@ -109,7 +105,7 @@ func (opts *StatusOptions) HandleShow() error {
 			return
 		}
 
-		modelChan <- &s
+		modelChan <- status
 	}
 
 	extra := map[string]interface{}{

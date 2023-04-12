@@ -1099,7 +1099,7 @@ components:
         caches:
           type: array
           items:
-            $ref: "#/components/schemas/cache"
+            $ref: "#/components/schemas/cacheItem"
           description: "a collection of information concerning the binary caches"
     manifest:
       description: "a JSON object containing records for each bloom filter and index chunk in the Unchained Index"
@@ -1299,33 +1299,6 @@ components:
         dups:
           type: int64
           description: "the number of duplicates removed"
-    cache:
-      description: "the base data model for each of the type-specific local binary caches"
-      type: object
-      properties:
-        type:
-          type: string
-          description: "the type of the cache (one of the nine different types)"
-        path:
-          type: string
-          description: "the physical path to the cache on the hard drive"
-        nFiles:
-          type: number
-          format: uint64
-          description: "the number of files in the cache"
-        nFolders:
-          type: number
-          format: uint64
-          description: "the number of subfolders in the cache"
-        sizeInBytes:
-          type: number
-          format: uint64
-          description: "the size of the cache in bytes"
-        items:
-          type: array
-          items:
-            $ref: "#/components/schemas/cacheItem"
-          description: "an array of cache items"
     cacheItem:
       description: "a single entry in the results of a status query when `--verbose` is enabled"
       type: object

@@ -27,23 +27,24 @@ import (
 // EXISTING_CODE
 
 type simpleStatus struct {
-	CachePath     string `json:"cachePath,omitempty"`
-	Chain         string `json:"chain,omitempty"`
-	ChainConfig   string `json:"chainConfig,omitempty"`
-	ChainId       string `json:"chainId,omitempty"`
-	ClientVersion string `json:"clientVersion,omitempty"`
-	HasEsKey      bool   `json:"hasEsKey,omitempty"`
-	HasPinKey     bool   `json:"hasPinKey,omitempty"`
-	IndexPath     string `json:"indexPath,omitempty"`
-	IsApi         bool   `json:"isApi,omitempty"`
-	IsArchive     bool   `json:"isArchive,omitempty"`
-	IsTesting     bool   `json:"isTesting,omitempty"`
-	IsTracing     bool   `json:"isTracing,omitempty"`
-	NetworkId     string `json:"networkId,omitempty"`
-	Progress      string `json:"progress,omitempty"`
-	RootConfig    string `json:"rootConfig,omitempty"`
-	RPCProvider   string `json:"rpcProvider,omitempty"`
-	Version       string `json:"trueblocksVersion,omitempty"`
+	CachePath     string            `json:"cachePath,omitempty"`
+	Caches        []simpleCacheItem `json:"caches,omitempty"`
+	Chain         string            `json:"chain,omitempty"`
+	ChainConfig   string            `json:"chainConfig,omitempty"`
+	ChainId       string            `json:"chainId,omitempty"`
+	ClientVersion string            `json:"clientVersion,omitempty"`
+	HasEsKey      bool              `json:"hasEsKey,omitempty"`
+	HasPinKey     bool              `json:"hasPinKey,omitempty"`
+	IndexPath     string            `json:"indexPath,omitempty"`
+	IsApi         bool              `json:"isApi,omitempty"`
+	IsArchive     bool              `json:"isArchive,omitempty"`
+	IsTesting     bool              `json:"isTesting,omitempty"`
+	IsTracing     bool              `json:"isTracing,omitempty"`
+	NetworkId     string            `json:"networkId,omitempty"`
+	Progress      string            `json:"progress,omitempty"`
+	RootConfig    string            `json:"rootConfig,omitempty"`
+	RPCProvider   string            `json:"rpcProvider,omitempty"`
+	Version       string            `json:"trueblocksVersion,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -91,6 +92,26 @@ func (s *simpleStatus) Model(showHidden bool, format string, extraOptions map[st
 	if extraOptions != nil && extraOptions["showProgress"] == true {
 		model["progress"] = s.Progress
 		order = append(order, "progress")
+	}
+
+	testMode := extraOptions["testMode"] == true
+	if len(s.Caches) > 0 {
+		if testMode {
+			for i := 0; i < len(s.Caches); i++ {
+				s.Caches[i].Path = "--paths--"
+				s.Caches[i].LastCached = "--lastCached--"
+				s.Caches[i].NFiles = 123
+				s.Caches[i].NFolders = 456
+				s.Caches[i].SizeInBytes = 789
+			}
+		}
+		model["caches"] = s.Caches
+		order = append(order, "caches")
+	}
+
+	if showHidden && !testMode {
+		model["chains"] = config.GetRootConfig().Chains
+		order = append(order, "chains")
 	}
 	// EXISTING_CODE
 
@@ -201,4 +222,5 @@ INFO Cache Path:        {{.CachePath}}
 INFO Index Path:        {{.IndexPath}}
 INFO Progress:          {{.Progress}}
 `
+
 // EXISTING_CODE

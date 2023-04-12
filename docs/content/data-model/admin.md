@@ -41,26 +41,26 @@ The following commands produce and manage Statuses:
 
 Statuses consist of the following fields:
 
-| Field             | Description                                              | Type                                |
-| ----------------- | -------------------------------------------------------- | ----------------------------------- |
-| clientVersion     | the version string as reported by the rpcProvider        | string                              |
-| clientIds         | netword_id and chain_id from the rpcProvider             | string                              |
-| trueblocksVersion | the TrueBlocks version string                            | string                              |
-| rpcProvider       | the current rpcProvider                                  | string                              |
-| configPath        | the path to config files                                 | string                              |
-| cachePath         | the path to the local binary caches                      | string                              |
-| indexPath         | the path to the local binary indexes                     | string                              |
-| host              | the host portion of the local API server                 | string                              |
-| isTesting         | `true` if the server is running in test mode             | bool                                |
-| isApi             | `true` if the server is running in API mode              | bool                                |
-| isScraping        | `true` if the index scraper is running                   | bool                                |
-| isArchive         | `true` if the rpcProvider is an archive node             | bool                                |
-| isTracing         | `true` if the rpcProvider provides Parity traces         | bool                                |
-| hasEskey          | `true` if an Etherscan key is present                    | bool                                |
-| hasPinkey         | `true` if a Pinata API key is present                    | bool                                |
-| ts                | the timestamp when this status data was produced         | timestamp                           |
-| chains            | the list of configured chains                            | [Chain[]](/data-model/admin/#chain) |
-| caches            | a collection of information concerning the binary caches | [Cache[]](/data-model/admin/#cache) |
+| Field             | Description                                              | Type                                        |
+| ----------------- | -------------------------------------------------------- | ------------------------------------------- |
+| clientVersion     | the version string as reported by the rpcProvider        | string                                      |
+| clientIds         | netword_id and chain_id from the rpcProvider             | string                                      |
+| trueblocksVersion | the TrueBlocks version string                            | string                                      |
+| rpcProvider       | the current rpcProvider                                  | string                                      |
+| configPath        | the path to config files                                 | string                                      |
+| cachePath         | the path to the local binary caches                      | string                                      |
+| indexPath         | the path to the local binary indexes                     | string                                      |
+| host              | the host portion of the local API server                 | string                                      |
+| isTesting         | `true` if the server is running in test mode             | bool                                        |
+| isApi             | `true` if the server is running in API mode              | bool                                        |
+| isScraping        | `true` if the index scraper is running                   | bool                                        |
+| isArchive         | `true` if the rpcProvider is an archive node             | bool                                        |
+| isTracing         | `true` if the rpcProvider provides Parity traces         | bool                                        |
+| hasEskey          | `true` if an Etherscan key is present                    | bool                                        |
+| hasPinkey         | `true` if a Pinata API key is present                    | bool                                        |
+| ts                | the timestamp when this status data was produced         | timestamp                                   |
+| chains            | the list of configured chains                            | [Chain[]](/data-model/admin/#chain)         |
+| caches            | a collection of information concerning the binary caches | [CacheItem[]](/data-model/admin/#cacheitem) |
 
 ## Manifest
 
@@ -221,28 +221,6 @@ MonitorCleans consist of the following fields:
 | sizeThen | the number of appearances in the monitor prior to cleaning | int64   |
 | sizeNow  | the number of appearances in the monitor after cleaning    | int64   |
 | dups     | the number of duplicates removed                           | int64   |
-
-## Cache
-
-<!-- markdownlint-disable MD033 MD036 MD041 -->
-The [chifra config <type>](/chifra/admin/#chifra-config) reports on the binary caches. Those
-reports come in the form of the Cache data type. Each cache data object may carry unique
-information for the given cache. See the source code for more information.
-
-The following commands produce and manage Caches:
-
-- [chifra status](/chifra/admin/#chifra-status)
-
-Caches consist of the following fields:
-
-| Field       | Description                                             | Type                                        |
-| ----------- | ------------------------------------------------------- | ------------------------------------------- |
-| type        | the type of the cache (one of the nine different types) | string                                      |
-| path        | the physical path to the cache on the hard drive        | string                                      |
-| nFiles      | the number of files in the cache                        | uint64                                      |
-| nFolders    | the number of subfolders in the cache                   | uint64                                      |
-| sizeInBytes | the size of the cache in bytes                          | uint64                                      |
-| items       | an array of cache items                                 | [CacheItem[]](/data-model/admin/#cacheitem) |
 
 ## CacheItem
 

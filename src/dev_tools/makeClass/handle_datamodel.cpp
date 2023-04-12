@@ -206,7 +206,6 @@ bool sortByDoc(const CMember& c1, const CMember& c2) {
 string_q type_2_ModelName(const string_q& type, bool raw) {
     string_q ret = type;
     replace(ret, "Array", "");
-    replace(ret, "CachePtr", "Cache");
     return raw ? nextTokenClear(ret, '[') : ret;
 }
 
@@ -216,7 +215,6 @@ string_q type_2_TypeName(const string_q& type, bool raw) {
     if (startsWith(ret, "C"))
         replace(ret, "C", "");
     replace(ret, "Array", "");
-    replace(ret, "CachePtr", "Cache");
     return raw ? nextTokenClear(ret, '[') : ret;
 }
 
