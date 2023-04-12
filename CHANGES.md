@@ -1,6 +1,11 @@
+<!-- markdownlint-disable MD024 MD036 -->
+# Changes
+
+This file details changes made to TrueBlocks per version. See the [migration notes](./MIGRATIONS.md) for changes from previous versions.
+
 ## v0.62.0 (2023/04/12)
 
-This release focuses on porting the C++ code to GoLang. We're almost done. Many of the tools (`a`, `b`, `c`, etc.) are now fully ported to GoLang or well on the way to being fully ported. The largest remaining work is porting the binary cache code, the `neighborhood` processing, and the GoLang account reconciliations.
+This release focuses mostly on porting the C++ code to GoLang. We're almost done. The largest remaining work is porting the binary cache code, the `neighborhood` processing, GoLang account reconciliations, `chifra state`, `chifra tokens`, and `chifra export`. We hope to complete this work in the next month or two. Then--on to optimization!
 
 ## Specification
 
@@ -8,68 +13,47 @@ There were no changes to the [Specification for the Unchained Index](https://tru
 
 ## Breaking Changes
 
-- Bumped version to v0.65.0.
-- x
-- x
-- Removes support for migrations prior to v0.40.0.
-- There were breaking changes in the `chifra blocks`, `chifra transactions`, `chifra traces`, `chifra logs` , and `chifra state` tools. See notes below.
-
-## Bug Fixes
-
-- x
-- x
+- Bumped version to v0.62.0.
+- Removes support for all migrations and versions prior to v0.40.0.
+- There were breaking changes in the `chifra blocks`, `chifra transactions`, `chifra logs`, `chifra traces`, `chifra state`, `chifra config`, `chifra status`, and `chifra chunks` tools. See notes below.
 
 ## System Wide Changes
 
-Ported to GoLang: `names`, `slurp`, `logs`, `traces`, `daemon`, `config`, `status`
-Removes classDefinition code from c++ library testing code - not used not needed
-Many additional tests for all subcommands
-Removed a fair amount of the C++ library testing code as being not needed and in preparation for porting to C++
-Re-wrote logger package to more closely mimic the new GoLang structured log package which we will be switching to soon - if you depend on our logging messages for anything, please note that they will change.
-Made sure RPC and Raw data agrees
-- x
-- x
+- Ported to GoLang: `names`, `slurp`, `logs`, `traces`, `daemon`, `config`, `status`
+- Removes classDefinition code from c++ library testing code - not used not needed
+- Many additional tests for all subcommands
+- Removed a fair amount of the C++ library testing code as being not needed and in preparation for porting to C++
+- Re-wrote logger package to more closely mimic the new GoLang structured log package which we will be switching to soon - if you depend on our logging messages for anything, please note that they will change.
+- Made sure RPC and Raw data agrees
 
 ## Changes to Data Models
 
-Block
-  added `author`, `receiptsRoot`, `sha3Uncles`, `size`, `stateRoot`, `totalDifficulty`, `extraData`, `logsBloom`, `mixHash`, `nonce`, `transactionsRoot`, `uncles` to `chifra blocks --raw`.
-Function
-  Made `stateMutability` and `signature` be omitempty
-Log
-  Made `topics`, `data`, `articulatedLog`, `compressedLog`, and `timestamp` omitempty
-  Removed `transactionLogIndex` field as unused.
-Receipt
-  Adds `logsBloom` but only for `chifra receipts --raw`
-Trace
-  Makes `articulatedTrace` field omitempty
-Transaction
-  Added `accessList` and `chainId` to `chifra transactions --raw`
-ChunkIndex
-  Renamed `addressCount` to `nAddresses` and `appearanceCount` to `nAppearances`
-ChunkBloom added
-THE ENTIRE DATA MODEL FOR CACHES CHANGED
-Removed none value from getToken --parts
-Previously deprecated option chifra blocks --trace removed. Use chifra blocks --traces
-Removes the --terse option from chifra status
-Removes --save_addrs from chifra chunks addresses (rarely used, unncessarily complicated)
-remove isFinalized from Block -- the user can make this decision themselves based on timestamp or blockNumber
-Remove transactionLogIndex from Log
-Removes zero-valued Nonce, MaxFeePerGas, and MaxPriorityFeePerGas from Transaction and Block data
-
-
-- `Blocks` data model:
+- `Blocks`:
   - Added `uncles` field.
-- `ChunkBloom` data model:
+  - added `author`, `receiptsRoot`, `sha3Uncles`, `size`, `stateRoot`, `totalDifficulty`, `extraData`, `logsBloom`, `mixHash`, `nonce`, `transactionsRoot`, `uncles` to `chifra blocks --raw`.
+  - removed finalized -- the user can make this decision themselves based on `timestamp` or `blockNumber`.
+- `ChunkBloom`:
   - Renames `count` to `nBlooms` to be consistent with other tools.
   - Renames `width` to `byteWidth` to be consistent with other tools.
-- `ChunkIndex` data model:
+- `ChunkIndex`:
   - Renames `addressCount` to `nAddresses` to be consistent with other tools.
   - Renames `appearanceCount` to `nAppearances` to be consistent with other tools.
-- `ChunkRecord` data model (formerly `PinnedChunk`:
+- `ChunkRecord` (formerly `PinnedChunk`:
   - Removes `firstApp` and `lastApp`. Same data is available from the `range` field.
   - Added `bloomSize` and `indexSize` which is useful for cache management.
-- Renames data models
+- `Function`
+  - Made `stateMutability` and `signature` be omitempty
+- `Log`
+  - Made `topics`, `data`, `articulatedLog`, `compressedLog`, and `timestamp` omitempty
+  - Removed `transactionLogIndex` field as unused.
+- `Receipt`
+  - Adds `logsBloom` but only for `chifra receipts --raw`
+- `Trace`
+  - Makes `articulatedTrace` field omitempty
+- `Transaction`
+  - Added `accessList` and `chainId` to `chifra transactions --raw`
+- The data models related to `chifra status` and `chifra chunks` have been modified in various ways.
+- Renamed data models
   - `Cache` to `Status`
   - `CacheEntry` to `CacheItem`
   - `ChunkAddresses` to `ChunkAddress`
@@ -221,28 +205,73 @@ Removes zero-valued Nonce, MaxFeePerGas, and MaxPriorityFeePerGas from Transacti
 
 - No appreciable changes.
 
+## Issues Closed (27)
 
+- [fatal error: concurrent map writes caused by accessing chifra daemon api server via http](https://github.com/TrueBlocks/trueblocks-core/issues/2755)
+- [chifra list if control+c is hit leaves an artifact in the `monitors/staging` folder and then adds dups if re-started.](https://github.com/TrueBlocks/trueblocks-core/issues/2813)
+- [chifra list with a very large address (such as uniswap) would leave the temp monitor file in staging when Control+C](https://github.com/TrueBlocks/trueblocks-core/issues/2817)
+- [Articulation Epic](https://github.com/TrueBlocks/trueblocks-core/issues/2494)
+- [--file Epic](https://github.com/TrueBlocks/trueblocks-core/issues/2439)
+- [chifra cmd Does --output <fn> get closed after each round in the case of --file?](https://github.com/TrueBlocks/trueblocks-core/issues/2441)
+- [chifra cmd some --file tests remain turned off](https://github.com/TrueBlocks/trueblocks-core/issues/2443)
+- [chifra logs - port to GoLang](https://github.com/TrueBlocks/trueblocks-core/issues/2784)
+- [chifra status in Api mode is missing some data for status](https://github.com/TrueBlocks/trueblocks-core/issues/2284)
+- [chifra status --migrate index should be removed since it doesn't do anything](https://github.com/TrueBlocks/trueblocks-core/issues/2305)
+- [chifra config - undeprecate status](https://github.com/TrueBlocks/trueblocks-core/issues/2734)
+- [chifra status --terse improvements](https://github.com/TrueBlocks/trueblocks-core/issues/2416)
+- [chifra status --terse should be the default](https://github.com/TrueBlocks/trueblocks-core/issues/2307)
+- [Remove custom name integration test file](https://github.com/TrueBlocks/trueblocks-core/issues/2831)
+- [chifra modeler speedup thoughts](https://github.com/TrueBlocks/trueblocks-core/issues/2823)
+- [chifra all - speed thoughts](https://github.com/TrueBlocks/trueblocks-core/issues/2822)
+- [chifra all - speed thoughts](https://github.com/TrueBlocks/trueblocks-core/issues/2821)
+- [chifra articulate - make maxFeePerGas and maxPriorityFeePerGas omitempty](https://github.com/TrueBlocks/trueblocks-core/issues/2797)
+- [chifra cmd things we can parallelize](https://github.com/TrueBlocks/trueblocks-core/issues/1790)
+- [chifra logs - finish GoLang port](https://github.com/TrueBlocks/trueblocks-core/issues/2787)
+- [chifra cmd we need to do a much better job logging](https://github.com/TrueBlocks/trueblocks-core/issues/2238)
+- [chifra cmd lots of nice ideas here](https://github.com/TrueBlocks/trueblocks-core/issues/2360)
+- [chifra cmd - When porting to Go is done, store addresses and hashes as binary](https://github.com/TrueBlocks/trueblocks-core/issues/2585)
+- [chifra other Question on Beacon Chain Issuance over time range for @ethburnbot integration](https://github.com/TrueBlocks/trueblocks-core/issues/2663)
+- [chifra cmd --decache option should be available for more thing](https://github.com/TrueBlocks/trueblocks-core/issues/2672)
+- [chifra monitors does --decache option remove abi files as well. It should.](https://github.com/TrueBlocks/trueblocks-core/issues/2650)
+- [chifra cmd Timestamp is confusingly uint64 and int64 and is cast about](https://github.com/TrueBlocks/trueblocks-core/issues/2677)
 
+## Issues Opened (35)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- markdownlint-disable MD024 MD036 -->
-# Changes
-
-This file details changes made to TrueBlocks per version. See the [migration notes](./MIGRATIONS.md) for changes from previous versions.
+- [chifra init - protect against control+c while download timestamp file](https://github.com/TrueBlocks/trueblocks-core/issues/2851)
+- [chifra list --bounds seems unnecessarily slow](https://github.com/TrueBlocks/trueblocks-core/issues/2850)
+- [chifra monitors --watch](https://github.com/TrueBlocks/trueblocks-core/issues/2849)
+- [chifra status -- saving old behaviour pre-port to golang](https://github.com/TrueBlocks/trueblocks-core/issues/2848)
+- [chifra export creates huge number of abi files when scraping UniSwap contracts](https://github.com/TrueBlocks/trueblocks-core/issues/2847)
+- [chifra monitors -- add deleted status to the fields](https://github.com/TrueBlocks/trueblocks-core/issues/2846)
+- [chifra monitors -- add --count option](https://github.com/TrueBlocks/trueblocks-core/issues/2845)
+- [chifra config - add --chains option](https://github.com/TrueBlocks/trueblocks-core/issues/2844)
+- [chifra transactions (and others) should export `nonce` field.](https://github.com/TrueBlocks/trueblocks-core/issues/2843)
+- [How to integrate gRPC types](https://github.com/TrueBlocks/trueblocks-core/issues/2841)
+- [Golang IsArchiveNode always returns true. should not](https://github.com/TrueBlocks/trueblocks-core/issues/2839)
+- [chifra names on rpc branch reports errors when running from command line](https://github.com/TrueBlocks/trueblocks-core/issues/2837)
+- [chifra export --pending](https://github.com/TrueBlocks/trueblocks-core/issues/2836)
+- [chifra config does not report is_scraping when run through API, but it does when run through command line](https://github.com/TrueBlocks/trueblocks-core/issues/2835)
+- [chifra list does not have an --unripe flag](https://github.com/TrueBlocks/trueblocks-core/issues/2834)
+- [chifra list add --latest and --first options to report on latest or first appearances](https://github.com/TrueBlocks/trueblocks-core/issues/2826)
+- [chifra all - speed thoughts](https://github.com/TrueBlocks/trueblocks-core/issues/2820)
+- [chist list ignores --first_block / --last_block](https://github.com/TrueBlocks/trueblocks-core/issues/2819)
+- [chifra chunks index --check --fmt txt cores](https://github.com/TrueBlocks/trueblocks-core/issues/2818)
+- [Uniswap info - multicall](https://github.com/TrueBlocks/trueblocks-core/issues/2815)
+- [chifra list (if interupted) does not clean up](https://github.com/TrueBlocks/trueblocks-core/issues/2814)
+- [chifra state should show date](https://github.com/TrueBlocks/trueblocks-core/issues/2810)
+- [chifra caches could be SQLite databases](https://github.com/TrueBlocks/trueblocks-core/issues/2806)
+- [chifra scrape should make IPFS url and others configurable](https://github.com/TrueBlocks/trueblocks-core/issues/2804)
+- [chifra slurp date format when exporting to csv is wrong](https://github.com/TrueBlocks/trueblocks-core/issues/2800)
+- [chifra slurp cache is turned off](https://github.com/TrueBlocks/trueblocks-core/issues/2799)
+- [chifra list address --verbose date format is inconsistent with other export](https://github.com/TrueBlocks/trueblocks-core/issues/2794)
+- [chifra traces conflicting names have added numeral when articulating](https://github.com/TrueBlocks/trueblocks-core/issues/2793)
+- [chifra trace change breaks reconciliation](https://github.com/TrueBlocks/trueblocks-core/issues/2791)
+- [`names` Go port and long running process](https://github.com/TrueBlocks/trueblocks-core/issues/2790)
+- [chifra traces - implement --articulate in GoLang](https://github.com/TrueBlocks/trueblocks-core/issues/2789)
+- [logs data model does not show blockNumber, transactionIndex, or transactionHash when rendered under a receipt](https://github.com/TrueBlocks/trueblocks-core/issues/2786)
+- [chifra logs - logs with messages in them](https://github.com/TrueBlocks/trueblocks-core/issues/2785)
+- [chifra build - binary releases](https://github.com/TrueBlocks/trueblocks-core/issues/2782)
+- [chifra test - remove slow tests](https://github.com/TrueBlocks/trueblocks-core/issues/2777)
 
 ## v0.60.0 (2023/03/11)
 
