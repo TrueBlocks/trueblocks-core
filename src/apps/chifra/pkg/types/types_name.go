@@ -238,19 +238,19 @@ func (s *SimpleName) Send(stream proto.Names_SearchStreamServer) error {
 
 func NewNameFromGrpc(gRpcName *proto.Name) *SimpleName {
 	return &SimpleName{
-		Address:    base.HexToAddress(gRpcName.Address),
-		Decimals:   *gRpcName.Decimals,
-		Deleted:    *gRpcName.Deleted,
-		IsContract: *gRpcName.IsContract,
-		IsCustom:   *gRpcName.IsCustom,
-		IsErc20:    *gRpcName.IsErc20,
-		IsErc721:   *gRpcName.IsErc721,
-		IsPrefund:  *gRpcName.IsPrefund,
-		Name:       gRpcName.Name,
-		Petname:    *gRpcName.Petname,
-		Source:     *gRpcName.Source,
-		Symbol:     *gRpcName.Symbol,
-		Tags:       *gRpcName.Tags,
+		Address:    base.HexToAddress(gRpcName.GetAddress()),
+		Decimals:   gRpcName.GetDecimals(),
+		Deleted:    gRpcName.GetDeleted(),
+		IsContract: gRpcName.GetIsContract(),
+		IsCustom:   gRpcName.GetIsCustom(),
+		IsErc20:    gRpcName.GetIsErc20(),
+		IsErc721:   gRpcName.GetIsErc721(),
+		IsPrefund:  gRpcName.GetIsPrefund(),
+		Name:       gRpcName.GetName(),
+		Petname:    gRpcName.GetPetname(),
+		Source:     gRpcName.GetSource(),
+		Symbol:     gRpcName.GetSymbol(),
+		Tags:       gRpcName.GetTags(),
 	}
 }
 

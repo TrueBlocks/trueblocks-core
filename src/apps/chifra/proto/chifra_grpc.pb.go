@@ -26,7 +26,11 @@ type NamesClient interface {
 	Search(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*SearchResponse, error)
 	SearchStream(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (Names_SearchStreamClient, error)
 	// CRUD
-	Create(ctx context.Context, in *Name, opts ...grpc.CallOption) (*CreateResponse, error)
+	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CRUDResponse, error)
+	Update(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CRUDResponse, error)
+	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*CRUDResponse, error)
+	Undelete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*CRUDResponse, error)
+	Remove(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*CRUDResponse, error)
 }
 
 type namesClient struct {
@@ -78,9 +82,45 @@ func (x *namesSearchStreamClient) Recv() (*Name, error) {
 	return m, nil
 }
 
-func (c *namesClient) Create(ctx context.Context, in *Name, opts ...grpc.CallOption) (*CreateResponse, error) {
-	out := new(CreateResponse)
+func (c *namesClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CRUDResponse, error) {
+	out := new(CRUDResponse)
 	err := c.cc.Invoke(ctx, "/Names/Create", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *namesClient) Update(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CRUDResponse, error) {
+	out := new(CRUDResponse)
+	err := c.cc.Invoke(ctx, "/Names/Update", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *namesClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*CRUDResponse, error) {
+	out := new(CRUDResponse)
+	err := c.cc.Invoke(ctx, "/Names/Delete", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *namesClient) Undelete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*CRUDResponse, error) {
+	out := new(CRUDResponse)
+	err := c.cc.Invoke(ctx, "/Names/Undelete", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *namesClient) Remove(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*CRUDResponse, error) {
+	out := new(CRUDResponse)
+	err := c.cc.Invoke(ctx, "/Names/Remove", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -95,7 +135,11 @@ type NamesServer interface {
 	Search(context.Context, *SearchRequest) (*SearchResponse, error)
 	SearchStream(*SearchRequest, Names_SearchStreamServer) error
 	// CRUD
-	Create(context.Context, *Name) (*CreateResponse, error)
+	Create(context.Context, *CreateRequest) (*CRUDResponse, error)
+	Update(context.Context, *CreateRequest) (*CRUDResponse, error)
+	Delete(context.Context, *DeleteRequest) (*CRUDResponse, error)
+	Undelete(context.Context, *DeleteRequest) (*CRUDResponse, error)
+	Remove(context.Context, *DeleteRequest) (*CRUDResponse, error)
 	mustEmbedUnimplementedNamesServer()
 }
 
@@ -109,8 +153,20 @@ func (UnimplementedNamesServer) Search(context.Context, *SearchRequest) (*Search
 func (UnimplementedNamesServer) SearchStream(*SearchRequest, Names_SearchStreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method SearchStream not implemented")
 }
-func (UnimplementedNamesServer) Create(context.Context, *Name) (*CreateResponse, error) {
+func (UnimplementedNamesServer) Create(context.Context, *CreateRequest) (*CRUDResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
+}
+func (UnimplementedNamesServer) Update(context.Context, *CreateRequest) (*CRUDResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
+}
+func (UnimplementedNamesServer) Delete(context.Context, *DeleteRequest) (*CRUDResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+}
+func (UnimplementedNamesServer) Undelete(context.Context, *DeleteRequest) (*CRUDResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Undelete not implemented")
+}
+func (UnimplementedNamesServer) Remove(context.Context, *DeleteRequest) (*CRUDResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Remove not implemented")
 }
 func (UnimplementedNamesServer) mustEmbedUnimplementedNamesServer() {}
 
@@ -165,7 +221,7 @@ func (x *namesSearchStreamServer) Send(m *Name) error {
 }
 
 func _Names_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Name)
+	in := new(CreateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -177,7 +233,79 @@ func _Names_Create_Handler(srv interface{}, ctx context.Context, dec func(interf
 		FullMethod: "/Names/Create",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NamesServer).Create(ctx, req.(*Name))
+		return srv.(NamesServer).Create(ctx, req.(*CreateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Names_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NamesServer).Update(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Names/Update",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NamesServer).Update(ctx, req.(*CreateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Names_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NamesServer).Delete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Names/Delete",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NamesServer).Delete(ctx, req.(*DeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Names_Undelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NamesServer).Undelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Names/Undelete",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NamesServer).Undelete(ctx, req.(*DeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Names_Remove_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NamesServer).Remove(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Names/Remove",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NamesServer).Remove(ctx, req.(*DeleteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -196,6 +324,22 @@ var Names_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Create",
 			Handler:    _Names_Create_Handler,
+		},
+		{
+			MethodName: "Update",
+			Handler:    _Names_Update_Handler,
+		},
+		{
+			MethodName: "Delete",
+			Handler:    _Names_Delete_Handler,
+		},
+		{
+			MethodName: "Undelete",
+			Handler:    _Names_Undelete_Handler,
+		},
+		{
+			MethodName: "Remove",
+			Handler:    _Names_Remove_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

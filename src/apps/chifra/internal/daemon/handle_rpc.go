@@ -6,8 +6,11 @@ import (
 	"net"
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/proto"
 	"google.golang.org/grpc"
 )
@@ -49,6 +52,63 @@ func (g *chifraRpcServer) SearchStream(request *proto.SearchRequest, stream prot
 	}
 
 	return nil
+}
+
+// CRUD
+func (g *chifraRpcServer) Create(ctx context.Context, request *proto.CreateRequest) (*proto.CRUDResponse, error) {
+	logger.Info("Handling Create")
+	if request.Chain == "test" {
+		return &proto.CRUDResponse{
+			Success: true,
+			Error:   utils.PointerOf(""),
+		}, nil
+	}
+
+	name := types.NewNameFromGrpc(request.GetName())
+	err := names.CreateCustomName(request.GetChain(), name)
+	var errPointer *string
+	if err != nil {
+		errPointer = utils.PointerOf(err.Error())
+	}
+
+	return &proto.CRUDResponse{
+		Success: err == nil,
+		Error:   errPointer,
+	}, err
+}
+
+func (g *chifraRpcServer) Update(ctx context.Context, request *proto.CreateRequest) (*proto.CRUDResponse, error) {
+	logger.Info("Handling Update")
+	return g.Create(ctx, request)
+}
+
+func (g *chifraRpcServer) Delete(ctx context.Context, request *proto.DeleteRequest) (*proto.CRUDResponse, error) {
+	logger.Info("Handling Delete")
+	return handleNameDeletion(request, true, false)
+}
+
+func (g *chifraRpcServer) Undelete(ctx context.Context, request *proto.DeleteRequest) (*proto.CRUDResponse, error) {
+	logger.Info("Handling Undelete")
+	return handleNameDeletion(request, false, false)
+}
+
+func (g *chifraRpcServer) Remove(ctx context.Context, request *proto.DeleteRequest) (*proto.CRUDResponse, error) {
+	logger.Info("Handling Remove")
+	return handleNameDeletion(request, true, true)
+}
+
+func handleNameDeletion(request *proto.DeleteRequest, deleted bool, remove bool) (*proto.CRUDResponse, error) {
+	addr := base.HexToAddress(request.Address)
+	var err error
+	if !remove {
+		_, err = names.ChangeCustomNameDeletedFlag(request.Chain, addr, deleted)
+	} else {
+		_, err = names.RemoveCustomName(request.Chain, addr)
+	}
+	return &proto.CRUDResponse{
+		Success: err == nil,
+		Error:   utils.PointerOf(err.Error()),
+	}, err
 }
 
 func (opts *DaemonOptions) HandleRpc() error {

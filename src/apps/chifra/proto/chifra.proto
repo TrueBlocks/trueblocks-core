@@ -6,7 +6,11 @@ service Names {
     rpc Search(SearchRequest) returns (SearchResponse) {}
     rpc SearchStream(SearchRequest) returns (stream Name) {}
     // CRUD
-    rpc Create(Name) returns (CreateResponse) {}
+    rpc Create(CreateRequest) returns (CRUDResponse) {}
+    rpc Update(CreateRequest) returns (CRUDResponse) {}
+    rpc Delete(DeleteRequest) returns (CRUDResponse) {}
+    rpc Undelete(DeleteRequest) returns (CRUDResponse) {}
+    rpc Remove(DeleteRequest) returns (CRUDResponse) {}
 }
 
 message SearchRequest {
@@ -35,7 +39,17 @@ message Name {
     optional string tags = 13;
 }
 
-message CreateResponse {
+message CreateRequest {
+    string chain = 1;
+    Name name = 2;
+}
+
+message CRUDResponse {
     bool success = 1;
     optional string error = 2;
+}
+
+message DeleteRequest {
+    string chain = 1;
+    string address = 2;
 }
