@@ -21,7 +21,7 @@ type chifraRpcServer struct {
 
 // Search looks up name by given terms
 func (g *chifraRpcServer) Search(ctx context.Context, request *proto.SearchRequest) (*proto.SearchResponse, error) {
-	logger.Info("Handling SearchNames")
+	log("Handling SearchNames")
 	found, err := names.LoadNamesArray("mainnet", names.Parts(request.GetParts()), names.SortByAddress, request.GetTerms())
 	if err != nil {
 		return nil, err
@@ -39,7 +39,7 @@ func (g *chifraRpcServer) Search(ctx context.Context, request *proto.SearchReque
 
 // SearchStream is like Search, but it streams the response
 func (g *chifraRpcServer) SearchStream(request *proto.SearchRequest, stream proto.Names_SearchStreamServer) error {
-	logger.Info("Handling SearchStream")
+	log("Handling SearchStream")
 	found, err := names.LoadNamesArray("mainnet", names.Parts(request.GetParts()), names.SortByAddress, request.GetTerms())
 	if err != nil {
 		return err
@@ -56,7 +56,7 @@ func (g *chifraRpcServer) SearchStream(request *proto.SearchRequest, stream prot
 
 // CRUD
 func (g *chifraRpcServer) Create(ctx context.Context, request *proto.CreateRequest) (*proto.CRUDResponse, error) {
-	logger.Info("Handling Create")
+	log("Handling Create")
 	if request.Chain == "test" {
 		return &proto.CRUDResponse{
 			Success: true,
@@ -78,22 +78,22 @@ func (g *chifraRpcServer) Create(ctx context.Context, request *proto.CreateReque
 }
 
 func (g *chifraRpcServer) Update(ctx context.Context, request *proto.CreateRequest) (*proto.CRUDResponse, error) {
-	logger.Info("Handling Update")
+	log("Handling Update")
 	return g.Create(ctx, request)
 }
 
 func (g *chifraRpcServer) Delete(ctx context.Context, request *proto.DeleteRequest) (*proto.CRUDResponse, error) {
-	logger.Info("Handling Delete")
+	log("Handling Delete")
 	return handleNameDeletion(request, true, false)
 }
 
 func (g *chifraRpcServer) Undelete(ctx context.Context, request *proto.DeleteRequest) (*proto.CRUDResponse, error) {
-	logger.Info("Handling Undelete")
+	log("Handling Undelete")
 	return handleNameDeletion(request, false, false)
 }
 
 func (g *chifraRpcServer) Remove(ctx context.Context, request *proto.DeleteRequest) (*proto.CRUDResponse, error) {
-	logger.Info("Handling Remove")
+	log("Handling Remove")
 	return handleNameDeletion(request, true, true)
 }
 
@@ -112,6 +112,9 @@ func handleNameDeletion(request *proto.DeleteRequest, deleted bool, remove bool)
 }
 
 func (opts *DaemonOptions) HandleRpc() error {
+	if !opts.Rpc {
+		return nil
+	}
 	if err := os.RemoveAll(proto.SocketAddress()); err != nil {
 		return err
 	}
@@ -128,9 +131,14 @@ func (opts *DaemonOptions) HandleRpc() error {
 		return err
 	}
 
+	log("Server started")
 	if err := rpcServer.Serve(listener); err != nil {
 		return fmt.Errorf("failed to serve: %v", err)
 	}
 
 	return nil
+}
+
+func log(v ...any) {
+	logger.Info("gRPC: " + fmt.Sprint(v...))
 }
