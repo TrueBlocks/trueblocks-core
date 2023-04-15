@@ -2,10 +2,111 @@
 // New tests -- chifra names --autoname <address>
 package namesPkg
 
-import "fmt"
+import (
+	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+)
 
 func (opts *NamesOptions) HandleClean() error {
-	return fmt.Errorf("the chifra names --clean option is currently not available")
+	allNames, err := names.LoadNamesMap(opts.Globals.Chain, names.Regular|names.Custom, []string{})
+	if err != nil {
+		return err
+	}
+	prefundMap, err := preparePrefunds(opts.Globals.Chain)
+	if err != nil {
+		return err
+	}
+
+	var regularNamesUpdated bool
+	for _, name := range allNames {
+		modified := cleanName(&name)
+		if isPrefund := prefundMap[name.Address]; isPrefund != name.IsPrefund {
+			name.IsPrefund = isPrefund
+			modified = true
+		}
+		if modified && !regularNamesUpdated {
+			regularNamesUpdated = !name.IsCustom
+		}
+	}
+
+	return nil
+}
+
+func cleanName(name *types.SimpleName) (modified bool) {
+	if name.Tags >= "8" {
+		return false
+	}
+
+	lowerCaseSource := strings.ToLower(name.Source)
+	if lowerCaseSource == "etherscan" {
+		name.Source = "EtherScan.io"
+		modified = true
+	} else if lowerCaseSource == "trueblocks" {
+		name.Source = "TrueBlocks.io"
+		modified = true
+	}
+
+	if strings.Contains(lowerCaseSource, "  ") {
+		name.Source = strings.ReplaceAll(name.Source, "  ", " ")
+		modified = true
+	}
+
+	if len(name.Petname) == 0 {
+		name.Petname = names.AddrToPetname(name.Address.Hex(), "-")
+		modified = true
+	}
+
+	return
+}
+
+func preparePrefunds(chain string) (results map[base.Address]bool, err error) {
+	prefunds, err := names.LoadPrefunds(
+		chain,
+		names.GetPrefundPath(chain),
+	)
+	if err != nil {
+		return
+	}
+
+	results = make(map[base.Address]bool, len(prefunds))
+	for _, prefund := range prefunds {
+		results[prefund.Address] = true
+	}
+	return
+}
+
+func cleanContract(name *types.SimpleName) (modified bool) {
+	if !name.IsContract {
+		name.IsContract = true
+		modified = true
+	}
+	// name, err := token.GetState(chain, name.Address, token.TokenStateName,
+}
+
+func cleanNonContract(name *types.SimpleName, wasContract bool) (modified bool) {
+	if name.Tags == "30-Contracts:Humanity DAO" {
+		name.Tags = "90-Individuals:Humanity DAO"
+		modified = true
+	}
+
+	tagsEmpty := len(name.Tags) == 0
+	tagContract := strings.Contains(name.Tags, "Contracts")
+	tagToken := strings.Contains(name.Tags, "Tokens")
+
+	if wasContract {
+		name.IsContract = true
+		name.Tags = "37-SelfDestructed"
+		return true
+	}
+
+	if tagsEmpty || tagContract || tagToken {
+		name.Tags = "90-Individuals:Other"
+		modified = true
+	}
+	return
 }
 
 // Finish clean

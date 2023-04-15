@@ -4,12 +4,18 @@ import (
 	"fmt"
 	"math/big"
 	"os"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/gocarina/gocsv"
 )
+
+func GetPrefundPath(chain string) string {
+	return filepath.Join(config.GetPathToChainConfig(chain), "allocs.csv")
+}
 
 // loadPrefundMap loads the prefund names from the cache
 func loadPrefundMap(chain string, thePath string, terms []string, parts Parts, ret *map[base.Address]types.SimpleName) {

@@ -88,7 +88,7 @@ func LoadNamesMap(chain string, parts Parts, terms []string) (map[base.Address]t
 
 	// Load the prefund names first...
 	if parts&Prefund != 0 {
-		prefundPath := filepath.Join(config.GetPathToChainConfig(chain), "allocs.csv")
+		prefundPath := GetPrefundPath(chain)
 		loadPrefundMap(chain, prefundPath, terms, parts, &namesMap)
 	}
 

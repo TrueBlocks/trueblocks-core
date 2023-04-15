@@ -114,6 +114,7 @@ func CreateCustomName(chain string, name *types.SimpleName) (err error) {
 		return
 	}
 	defer db.Close()
+	name.IsCustom = true
 	return setCustomNameAndSave(db, name)
 }
 
