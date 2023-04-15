@@ -31,9 +31,8 @@ bool COptions::handle_sdk_ts(void) {
     types.push_back("Basetypes");
     sort(types.begin(), types.end());
     ostringstream os1;
-    for (auto type : types) {
+    for (auto type : types)
         os1 << "export * from './" << firstLower(type) << "';" << endl;
-    }
     os1 << "export * from './upgrades';" << endl;
     string_q typesPath = sdkPath + "typescript/src/types/index.ts";
     writeIfDifferent(typesPath, os1.str());
