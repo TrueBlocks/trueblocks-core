@@ -11,24 +11,35 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	ethTypes "github.com/ethereum/go-ethereum/core/types"
 )
 
+type ReceiptQuery struct {
+	Bn       uint64
+	Txid     uint64
+	TxHash   *base.Hash
+	GasPrice uint64
+	NeedsTs  bool
+	Ts       base.Timestamp
+}
+
 // GetTransactionReceipt fetches receipt from the RPC. If txGasPrice is provided, it will be used for
 // receipts in blocks before London
-func GetTransactionReceipt(chain string, bn uint64, txid uint64, txHash *base.Hash, txGasPrice uint64) (receipt types.SimpleReceipt, err error) {
-	// First, get raw receipt directly from RPC
-	rawReceipt, tx, err := getRawTransactionReceipt(chain, bn, txid, txHash)
+func GetTransactionReceipt(chain string, query ReceiptQuery) (receipt types.SimpleReceipt, err error) {
+	rawReceipt, tx, err := getRawTransactionReceipt(chain, query.Bn, query.Txid, query.TxHash)
 	if err != nil {
 		return
 	}
 
-	// Prepare logs of type []SimpleLog
+	if query.NeedsTs && query.Ts == 0 {
+		query.Ts = rpc.GetBlockTimestamp(chain, query.Bn)
+	}
+
 	logs := []types.SimpleLog{}
 	for _, rawLog := range rawReceipt.Logs {
 		rawLog := rawLog
-
 		log := types.SimpleLog{
 			Address:          base.HexToAddress(rawLog.Address),
 			LogIndex:         mustParseUint(rawLog.LogIndex),
@@ -36,7 +47,8 @@ func GetTransactionReceipt(chain string, bn uint64, txid uint64, txHash *base.Ha
 			BlockHash:        base.HexToHash(rawLog.BlockHash),
 			TransactionIndex: mustParseUint(rawLog.TransactionIndex),
 			TransactionHash:  base.HexToHash(tx.Hash().Hex()),
-			Timestamp:        0, // TODO: FIXME #2695
+			Timestamp:        query.Ts,
+			Date:             utils.FormattedDate(query.Ts),
 			Data:             string(rawLog.Data),
 		}
 		for _, topic := range rawLog.Topics {
@@ -73,7 +85,7 @@ func GetTransactionReceipt(chain string, bn uint64, txid uint64, txHash *base.Ha
 	// TODO: chain specific
 	if tx != nil && chain == "mainnet" {
 		if receipt.BlockNumber < londonBlock {
-			gasPrice := txGasPrice
+			gasPrice := query.GasPrice
 			if gasPrice == 0 {
 				bn := tx.GasPrice()
 				if bn != nil {

@@ -5,6 +5,7 @@ logs?transactions=2222222.0%202332332.0
       "address": "0x37a9679c41e99db270bda88de8ff50c0cd23f326",
       "blockNumber": 2332332,
       "data": "0x000000000000000000000000000000000000000000000000031d958f80134000",
+      "date": "2016-09-26 21:07:02 UTC",
       "logIndex": 0,
       "timestamp": 1474924022,
       "topics": [

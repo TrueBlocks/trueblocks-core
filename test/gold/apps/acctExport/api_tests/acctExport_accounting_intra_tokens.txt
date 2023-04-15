@@ -39,7 +39,9 @@ export?addrs=0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E&maxRecords=3&firstRecord
                 "_to": "0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4"
               }
             },
-            "compressedLog": "{name:Transfer|inputs:{_amount:73541760990000000000|_from:0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e|_to:0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4}}"
+            "compressedLog": "{name:Transfer|inputs:{_amount:73541760990000000000|_from:0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e|_to:0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4}}",
+            "timestamp": 1654793734,
+            "date": "2022-06-09 16:55:34 UTC"
           }
         ],
         "status": 1
@@ -190,7 +192,9 @@ export?addrs=0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E&maxRecords=3&firstRecord
                 "_to": "0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4"
               }
             },
-            "compressedLog": "{name:Transfer|inputs:{_amount:304442430000000000|_from:0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e|_to:0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4}}"
+            "compressedLog": "{name:Transfer|inputs:{_amount:304442430000000000|_from:0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e|_to:0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4}}",
+            "timestamp": 1654793734,
+            "date": "2022-06-09 16:55:34 UTC"
           }
         ],
         "status": 1
@@ -341,7 +345,9 @@ export?addrs=0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E&maxRecords=3&firstRecord
                 "_to": "0xcc34cc875d2d052f5b1c19652b5e71d6f90c7f7d"
               }
             },
-            "compressedLog": "{name:Transfer|inputs:{_amount:312679827610000000000|_from:0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e|_to:0xcc34cc875d2d052f5b1c19652b5e71d6f90c7f7d}}"
+            "compressedLog": "{name:Transfer|inputs:{_amount:312679827610000000000|_from:0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e|_to:0xcc34cc875d2d052f5b1c19652b5e71d6f90c7f7d}}",
+            "timestamp": 1654793734,
+            "date": "2022-06-09 16:55:34 UTC"
           }
         ],
         "status": 1
