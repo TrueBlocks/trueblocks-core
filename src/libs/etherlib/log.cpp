@@ -441,6 +441,11 @@ string_q nextLogChunk_custom(const string_q& fieldIn, const void* dataPtr) {
                 if (fieldIn % "compressedLog")
                     return log->articulatedLog.compressed("");
                 break;
+            case 'd':
+                if (fieldIn % "date") {
+                    return ts_2_Date(log->timestamp).Format(FMT_JSON);
+                }
+                break;
             case 't':
                 if (fieldIn % "topic0") {
                     return ((log->topics.size() > 0) ? topic_2_Str(log->topics[0]) : "");

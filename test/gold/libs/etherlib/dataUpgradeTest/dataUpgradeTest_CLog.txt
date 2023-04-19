@@ -28,7 +28,7 @@ topic3              	1022	1	20971580	T_HASH TS_STRING TS_OMITEMPTY
   "address": "0x0",
   "logIndex": 0,
   "timestamp": 0,
-  "date": "1700-01-01 00:00:01 UTC"
+  "date": "1970-01-01 00:00:00 UTC"
 }
 
 --------------------------------------------------------------------------------
@@ -96,6 +96,6 @@ topic3              	1022	0	20971580	T_HASH TS_STRING TS_OMITEMPTY
   "transactionHash": "0x0",
   "transactionIndex": 0,
   "timestamp": 0,
-  "date": "1700-01-01 00:00:01 UTC"
+  "date": "1970-01-01 00:00:00 UTC"
 }
 
