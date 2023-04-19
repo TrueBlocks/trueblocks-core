@@ -72,7 +72,12 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 	}
 
 	blockTs := rpc.GetBlockTimestamp(chain, bn)
-	receipt, err := GetTransactionReceipt(chain, bn, txid, nil, 0)
+	receipt, err := GetTransactionReceipt(chain, ReceiptQuery{
+		Bn:      bn,
+		Txid:    txid,
+		NeedsTs: true,
+		Ts:      blockTs,
+	})
 	if err != nil {
 		return
 	}

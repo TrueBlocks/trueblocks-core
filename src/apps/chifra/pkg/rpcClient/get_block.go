@@ -63,7 +63,14 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, isFinal bool) (types.Simpl
 
 		// Get the receipt
 		var receipt types.SimpleReceipt
-		receipt, err = GetTransactionReceipt(chain, bn, txIndex, &txHash, txGasPrice)
+		receipt, err = GetTransactionReceipt(chain, ReceiptQuery{
+			Bn:       uint64(bn),
+			Txid:     uint64(txIndex),
+			TxHash:   &txHash,
+			GasPrice: txGasPrice,
+			NeedsTs:  true,
+			Ts:       ts,
+		})
 		if err != nil {
 			return block, err
 		}
