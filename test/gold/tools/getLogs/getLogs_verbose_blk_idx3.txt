@@ -7,6 +7,7 @@ TEST[DATE|TIME] Format:  json
       "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
       "blockNumber": 3657480,
       "data": "0x000000000000000000000000000000000000000000000000002aa1efb94e0000",
+      "date": "2017-05-06 00:43:39 UTC",
       "logIndex": 21,
       "timestamp": 1494031419,
       "topics": [

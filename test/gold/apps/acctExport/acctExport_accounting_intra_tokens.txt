@@ -178,7 +178,9 @@ TIME ~ CLOCK - : 4-----ethPerTok: 0.00152806 usdPerEth: 1801.81 price: 2.75328
             "_to": "0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4"
           }
         },
-        "compressedLog": "{name:Transfer|inputs:{_amount:73541760990000000000|_from:0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e|_to:0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4}}"
+        "compressedLog": "{name:Transfer|inputs:{_amount:73541760990000000000|_from:0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e|_to:0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4}}",
+        "timestamp": 1654793734,
+        "date": "2022-06-09 16:55:34 UTC"
       }
     ],
     "status": 1
@@ -461,7 +463,9 @@ TIME ~ CLOCK - : 4-----ethPerTok: 4.22694 usdPerEth: 1801.81 price: 7616.14
             "_to": "0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4"
           }
         },
-        "compressedLog": "{name:Transfer|inputs:{_amount:304442430000000000|_from:0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e|_to:0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4}}"
+        "compressedLog": "{name:Transfer|inputs:{_amount:304442430000000000|_from:0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e|_to:0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4}}",
+        "timestamp": 1654793734,
+        "date": "2022-06-09 16:55:34 UTC"
       }
     ],
     "status": 1
@@ -741,7 +745,9 @@ TIME ~ CLOCK - : 4-----ethPerTok: 6.63077e-05 usdPerEth: 1801.81 price: 0.119474
             "_to": "0xcc34cc875d2d052f5b1c19652b5e71d6f90c7f7d"
           }
         },
-        "compressedLog": "{name:Transfer|inputs:{_amount:312679827610000000000|_from:0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e|_to:0xcc34cc875d2d052f5b1c19652b5e71d6f90c7f7d}}"
+        "compressedLog": "{name:Transfer|inputs:{_amount:312679827610000000000|_from:0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e|_to:0xcc34cc875d2d052f5b1c19652b5e71d6f90c7f7d}}",
+        "timestamp": 1654793734,
+        "date": "2022-06-09 16:55:34 UTC"
       }
     ],
     "status": 1

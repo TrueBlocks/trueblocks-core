@@ -39,6 +39,7 @@ class CLog : public CBaseNode {
     uint64_t transactionIndex;
     timestamp_t timestamp;
     string_q type;
+    time_q date;
     bool unused;
 
   public:
@@ -118,6 +119,7 @@ inline void CLog::initialize(void) {
     transactionIndex = 0;
     timestamp = 0;
     type = "";
+    date = earliestDate;
     unused = false;
 
     // EXISTING_CODE
@@ -142,6 +144,7 @@ inline void CLog::duplicate(const CLog& lo) {
     transactionIndex = lo.transactionIndex;
     timestamp = lo.timestamp;
     type = lo.type;
+    date = lo.date;
     unused = lo.unused;
 
     // EXISTING_CODE
