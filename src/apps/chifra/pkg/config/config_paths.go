@@ -110,11 +110,6 @@ func EstablishCachePaths(cachePath string) {
 		"abis", "blocks", "monitors", "monitors/staging", "objs", "prices",
 		"recons", "slurps", "tmp", "traces", "txs", "names",
 	}
-	_, err := os.Stat(filepath.Join(cachePath, folders[len(folders)-1]))
-	if err == nil {
-		// If the last path already exists, assume we've been here before
-		return
-	}
 
 	if err := file.EstablishFolders(cachePath, folders); err != nil {
 		logger.Fatal(err)
