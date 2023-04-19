@@ -24,11 +24,9 @@ func GetTransactionReceipt(chain string, bn uint64, txid uint64, txHash *base.Ha
 		return
 	}
 
-	// Prepare logs of type []SimpleLog
 	logs := []types.SimpleLog{}
 	for _, rawLog := range rawReceipt.Logs {
 		rawLog := rawLog
-
 		log := types.SimpleLog{
 			Address:          base.HexToAddress(rawLog.Address),
 			LogIndex:         mustParseUint(rawLog.LogIndex),
@@ -36,7 +34,7 @@ func GetTransactionReceipt(chain string, bn uint64, txid uint64, txHash *base.Ha
 			BlockHash:        base.HexToHash(rawLog.BlockHash),
 			TransactionIndex: mustParseUint(rawLog.TransactionIndex),
 			TransactionHash:  base.HexToHash(tx.Hash().Hex()),
-			Timestamp:        0, // TODO: FIXME #2695
+			Timestamp:        0,
 			Data:             string(rawLog.Data),
 		}
 		for _, topic := range rawLog.Topics {

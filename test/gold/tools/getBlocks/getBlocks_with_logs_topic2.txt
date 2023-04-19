@@ -17,5 +17,6 @@ TIME ~ CLOCK - <INFO>  : Processing log query 4012000 to 4012000{
   "data": "0x0000000000000000000000000000000000000000000000000000000005f5e100",
   "transactionHash": "0xcb1652b8ed3221da0b2886df37f7f43bb8001e84a9e139819675709bc3a2a56f",
   "transactionIndex": 39,
-  "timestamp": 1499861689
+  "timestamp": 1499861689,
+  "date": "2017-07-12 12:14:49 UTC"
 }] }

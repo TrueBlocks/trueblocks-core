@@ -636,6 +636,10 @@ components:
           type: number
           format: timestamp
           description: "the timestamp of the block this log appears in"
+        date:
+          type: string
+          format: datetime
+          description: "the date of the block this log appears in"
         address:
           type: string
           format: address
