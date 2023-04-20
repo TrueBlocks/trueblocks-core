@@ -72,6 +72,7 @@ One of [ from | to | reward ]`)
 	blocksCmd.Flags().Uint64VarP(&blocksPkg.GetOptions().BigRange, "big_range", "r", 500, "for the --logs option only, allow for block ranges larger than 500 (hidden)")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Count, "count", "U", false, "display the number of the lists of appearances for --addrs or --uniq")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Cache, "cache", "o", false, "force a write of the block to the cache")
+	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Decache, "decache", "D", false, "removes a block and any transactions or traces in the block from the cache")
 	blocksCmd.Flags().Uint64VarP(&blocksPkg.GetOptions().List, "list", "l", 0, "summary list of blocks running backwards from latest block minus num (hidden)")
 	blocksCmd.Flags().Uint64VarP(&blocksPkg.GetOptions().ListCount, "list_count", "C", 0, "the number of blocks to report for --list option (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
