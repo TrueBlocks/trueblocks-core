@@ -636,6 +636,10 @@ components:
           type: number
           format: timestamp
           description: "the timestamp of the block this log appears in"
+        date:
+          type: string
+          format: datetime
+          description: "the date of the block this log appears in"
         address:
           type: string
           format: address
@@ -1309,7 +1313,7 @@ components:
         items:
           type: array
           items:
-            $ref: "#/components/schemas/any"
+            $ref: "#/components/schemas/cacheItem"
           description: "the individual items in the cache (if --verbose)"
         lastCached:
           type: string
@@ -1359,7 +1363,9 @@ components:
           type: string
           description: "the result of the check"
         msgStrings:
-          type: []string
+          type: array
+          items:
+            type: string
           description: "an array of messages explaining failed checks"
     chain:
       description: "a configuration item carrying information about a single chain"
@@ -1459,6 +1465,8 @@ components:
       format: hash
       description: "The 32-byte hash"
       example: "0xf128...1e98"
+    address:
+      type: string
     string:
       type: string
     topic:

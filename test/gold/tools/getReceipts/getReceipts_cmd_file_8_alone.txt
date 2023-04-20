@@ -26,7 +26,9 @@ TEST[DATE|TIME] Format:  json
           "blockHash": "0xccff406c95943cebea30307dd06824423f91240bd6aab7029d8003655ae7f23e",
           "blockNumber": 5644882,
           "data": "0x0000000000000000000000000000000000000000000c1d9f7605641474600000",
+          "date": "2018-05-20 07:08:08 UTC",
           "logIndex": 0,
+          "timestamp": 1526800088,
           "topics": [
             "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
             "0x0000000000000000000000002bd36c4eb60f9a412b9dd1d12c1ea23e6ee09e30",

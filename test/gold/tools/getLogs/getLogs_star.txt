@@ -7,6 +7,7 @@ TEST[DATE|TIME] Format:  json
       "address": "0x2bad3aa54d79b43cea3e859609d2de84e544ee74",
       "blockNumber": 1428993,
       "data": "0x0000000000000000000000006dfaa8ab22d36af0377c6565548a8895c661d18d00000000000000000000000000000000000000000000000000071afd498d0000",
+      "date": "2016-04-30 02:40:18 UTC",
       "logIndex": 0,
       "timestamp": 1461984018,
       "topics": [
@@ -19,6 +20,7 @@ TEST[DATE|TIME] Format:  json
       "address": "0xf80ae7bfe8a3ab43e8b2c7aece33f5fbed4927df",
       "blockNumber": 1428993,
       "data": "0x0000000000000000000000000000000000000000000000001462698eade5e400",
+      "date": "2016-04-30 02:40:18 UTC",
       "logIndex": 1,
       "timestamp": 1461984018,
       "topics": [
