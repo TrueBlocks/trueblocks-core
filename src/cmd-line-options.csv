@@ -109,6 +109,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12976,tools,ChainData,blocks,getBlocks,big_range,r,500,false,false,false,false,header,flag,<uint64>,for the --logs option only&#44; allow for block ranges larger than 500
 12578,tools,ChainData,blocks,getBlocks,count,U,,false,false,true,true,header,switch,<boolean>,display the number of the lists of appearances for --addrs or --uniq
 12580,tools,ChainData,blocks,getBlocks,cache,o,,false,false,true,true,header,switch,<boolean>,force a write of the block to the cache
+12581,tools,ChainData,blocks,getBlocks,decache,D,,false,false,true,false,gocmd,switch,<boolean>,removes a block and any transactions or traces in the block from the cache
 12582,tools,ChainData,blocks,getBlocks,list,l,0,false,false,false,true,gocmd,flag,<blknum>,summary list of blocks running backwards from latest block minus num
 12584,tools,ChainData,blocks,getBlocks,list_count,C,0,false,false,false,true,gocmd,flag,<blknum>,the number of blocks to report for --list option
 12590,tools,ChainData,blocks,getBlocks,,,,false,false,true,true,--,description,,Retrieve one or more blocks from the chain or local cache.
@@ -136,8 +137,9 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13615,tools,ChainData,transactions,getTrans,reconcile,r,,false,false,true,true,local,deprecated,<address>,please use --account_for option instead
 13617,tools,ChainData,transactions,getTrans,account_for,A,,false,false,true,true,local,flag,<address>,reconcile the transaction as per the provided address
 13620,tools,ChainData,transactions,getTrans,cache,o,,false,false,true,true,header,switch,<boolean>,force the results of the query into the tx cache (and the trace cache if applicable)
-13620,tools,ChainData,transactions,getTrans,source,s,,false,false,false,false,gocmd,switch,<boolean>,find the source of the funds sent to the receiver
-13622,tools,ChainData,transactions,getTrans,,,,false,false,true,true,--,description,,Retrieve one or more transactions from the chain or local cache.
+13621,tools,ChainData,transactions,getTrans,decache,D,,false,false,true,false,gocmd,switch,<boolean>,removes a transactions and any traces in the transaction from the cache
+13622,tools,ChainData,transactions,getTrans,source,s,,false,false,false,false,gocmd,switch,<boolean>,find the source of the funds sent to the receiver
+13623,tools,ChainData,transactions,getTrans,,,,false,false,true,true,--,description,,Retrieve one or more transactions from the chain or local cache.
 13624,tools,ChainData,transactions,getTrans,n1,,,false,false,false,false,--,note,,The `transactions` list may be one or more transaction hashes&#44; blockNumber.transactionID pairs&#44; or a blockHash.transactionID pairs.
 13626,tools,ChainData,transactions,getTrans,n2,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
 13628,tools,ChainData,transactions,getTrans,n3,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.

@@ -62,6 +62,7 @@ One of [ from | to ]`)
 	transactionsCmd.Flags().StringVarP(&transactionsPkg.GetOptions().Reconcile, "reconcile", "r", "", "please use --account_for option instead")
 	transactionsCmd.Flags().StringVarP(&transactionsPkg.GetOptions().AccountFor, "account_for", "A", "", "reconcile the transaction as per the provided address")
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Cache, "cache", "o", false, "force the results of the query into the tx cache (and the trace cache if applicable)")
+	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Decache, "decache", "D", false, "removes a transactions and any traces in the transaction from the cache")
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Source, "source", "s", false, "find the source of the funds sent to the receiver (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
 		transactionsCmd.Flags().MarkHidden("source")
