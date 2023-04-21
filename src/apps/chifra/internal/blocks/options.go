@@ -36,6 +36,7 @@ type BlocksOptions struct {
 	BigRange   uint64                   `json:"bigRange,omitempty"`   // For the --logs option only, allow for block ranges larger than 500
 	Count      bool                     `json:"count,omitempty"`      // Display the number of the lists of appearances for --addrs or --uniq
 	Cache      bool                     `json:"cache,omitempty"`      // Force a write of the block to the cache
+	Decache    bool                     `json:"decache,omitempty"`    // Removes a block and any transactions or traces in the block from the cache
 	List       uint64                   `json:"list,omitempty"`       // Summary list of blocks running backwards from latest block minus num
 	ListCount  uint64                   `json:"listCount,omitempty"`  // The number of blocks to report for --list option
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
@@ -64,6 +65,7 @@ func (opts *BlocksOptions) testLog() {
 	logger.TestLog(opts.BigRange != 500, "BigRange: ", opts.BigRange)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
+	logger.TestLog(opts.Decache, "Decache: ", opts.Decache)
 	logger.TestLog(opts.List != 0, "List: ", opts.List)
 	logger.TestLog(opts.ListCount != 0, "ListCount: ", opts.ListCount)
 	opts.Globals.TestLog()
@@ -178,6 +180,8 @@ func blocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions
 			opts.Count = true
 		case "cache":
 			opts.Cache = true
+		case "decache":
+			opts.Decache = true
 		case "list":
 			opts.List = globals.ToUint64(value[0])
 		case "listCount":

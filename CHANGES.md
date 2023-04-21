@@ -3,6 +3,24 @@
 
 This file details changes made to TrueBlocks per version. See the [migration notes](./MIGRATIONS.md) for changes from previous versions.
 
+## v0.64.0 (2023/04/20)
+
+This is not a minor release that closes a few random issues and adds a small feature to better manage the caches.
+
+## Issues closed
+
+- Bumps version to v0.64.0-beta
+- Fixes an undocumented issue with publishing the website documentation.
+- Closes 8 or 9 other minor issues.
+
+## Changes to Data Model
+
+- Adds `date` and exposed `timestamp` fields on `Logs` data model.
+
+## Changes to Tools
+
+- Adds `--decache` option to `chifra blocks` and `chifra transactions` tools.
+
 ## v0.62.0 (2023/04/12)
 
 This release focuses mostly on porting the C++ code to GoLang. We're almost done. The largest remaining work is porting the binary cache code, the `neighborhood` processing, GoLang account reconciliations, `chifra state`, `chifra tokens`, and `chifra export`. We hope to complete this work in the next month or two. Then--on to optimization!

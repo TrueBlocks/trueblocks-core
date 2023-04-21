@@ -259,6 +259,7 @@ bool skipField(const CClassDefinition& model, const CMember& field, bool raw) {
            field.name == "Abi_source" || (!raw && field.name == "LogsBloom") || (raw && field.name == "IsError") ||
            (raw && startsWith(field.name, "Compressed")) || (field.name == "raw" && raw) ||
            (model.base_name == "Trace" && raw && field.name == "Timestamp") ||
+           (model.base_name == "Log" && raw && field.name == "Date") ||
            (model.base_name == "Log" && raw && field.name == "Timestamp") || field.name == "Topic0" ||
            field.name == "Topic1" || field.name == "Topic2" || field.name == "Topic3" || field.name == "LogType" ||
            field.name == "Unused" || (model.base_name == "Block" && field.name == "Finalized");

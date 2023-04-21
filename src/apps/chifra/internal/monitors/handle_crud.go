@@ -7,6 +7,7 @@ package monitorsPkg
 import (
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -36,16 +37,19 @@ func (opts *MonitorsOptions) HandleCrudCommands() error {
 					return nil
 				}
 
+				itemsSeen := int64(0)
 				itemsRemoved := int64(0)
 				bytesRemoved := int64(0)
 				processorFunc := func(fileName string) bool {
+					itemsSeen++
 					if !file.FileExists(fileName) {
+						logger.Progress(!testMode && itemsSeen%203 == 0, "Already removed ", fileName)
 						return true // continue processing
 					}
 
 					itemsRemoved++
 					bytesRemoved += file.FileSize(fileName)
-					logger.Progress(!testMode && itemsRemoved%20 == 0, "Removed", itemsRemoved, "items and", bytesRemoved, "bytes.", fileName)
+					logger.Progress(!testMode && itemsRemoved%20 == 0, "Removed ", itemsRemoved, " items and ", bytesRemoved, " bytes.", fileName)
 
 					os.Remove(fileName)
 					if opts.Globals.Verbose {
@@ -67,7 +71,7 @@ func (opts *MonitorsOptions) HandleCrudCommands() error {
 				if err != nil {
 					return err
 				}
-				logger.Info(itemsRemoved, "items totaling", bytesRemoved, "bytes were removed from the cache.")
+				logger.Info(itemsRemoved, "items totaling", bytesRemoved, "bytes were removed from the cache.", strings.Repeat(" ", 60))
 
 				// We've visited them all, so delete the monitor itself
 				m.Delete()

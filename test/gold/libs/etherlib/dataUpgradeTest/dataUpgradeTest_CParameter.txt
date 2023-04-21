@@ -48,7 +48,7 @@ indexed             	1009	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
 internalType        	1010	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 components          	1011	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
 {
-  "schema": 62000,
+  "schema": 64000,
   "deleted": false,
   "showing": true,
   "cname": "Parameter"

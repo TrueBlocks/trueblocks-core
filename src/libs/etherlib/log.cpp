@@ -97,6 +97,9 @@ string_q CLog::getValueByName(const string_q& fieldName) const {
             if (fieldName % "data") {
                 return data;
             }
+            if (fieldName % "date") {
+                return date.Format(FMT_JSON);
+            }
             break;
         case 'l':
             if (fieldName % "logIndex") {
@@ -217,6 +220,10 @@ bool CLog::setValueByName(const string_q& fieldNameIn, const string_q& fieldValu
                 data = toLower(fieldValue);
                 return true;
             }
+            if (fieldName % "date") {
+                date = str_2_Date(fieldValue);
+                return true;
+            }
             break;
         case 'l':
             if (fieldName % "logIndex") {
@@ -265,6 +272,7 @@ bool CLog::setValueByName(const string_q& fieldNameIn, const string_q& fieldValu
 void CLog::finishParse() {
     // EXISTING_CODE
     timestamp = bn_2_Timestamp(blockNumber);
+    date = ts_2_Date(timestamp);
     // EXISTING_CODE
 }
 
@@ -293,6 +301,7 @@ bool CLog::Serialize(CArchive& archive) {
     // archive >> transactionIndex;
     // archive >> timestamp;
     // archive >> type;
+    // archive >> date;
     // archive >> unused;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -319,6 +328,7 @@ bool CLog::SerializeC(CArchive& archive) const {
     // archive << transactionIndex;
     // archive << timestamp;
     // archive << type;
+    // archive << date;
     // archive << unused;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -388,6 +398,8 @@ void CLog::registerClass(void) {
     HIDE_FIELD(CLog, "timestamp");
     ADD_FIELD(CLog, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CLog, "type");
+    ADD_FIELD(CLog, "date", T_DATE | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CLog, "date");
     ADD_FIELD(CLog, "unused", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CLog, "unused");
 
@@ -408,6 +420,8 @@ void CLog::registerClass(void) {
     HIDE_FIELD(CLog, "topic1");
     HIDE_FIELD(CLog, "topic2");
     HIDE_FIELD(CLog, "topic3");
+    SHOW_FIELD(CLog, "timestamp");
+    SHOW_FIELD(CLog, "date");
     // EXISTING_CODE
 }
 
@@ -426,6 +440,11 @@ string_q nextLogChunk_custom(const string_q& fieldIn, const void* dataPtr) {
             case 'c':
                 if (fieldIn % "compressedLog")
                     return log->articulatedLog.compressed("");
+                break;
+            case 'd':
+                if (fieldIn % "date") {
+                    return ts_2_Date(log->timestamp).Format(FMT_JSON);
+                }
                 break;
             case 't':
                 if (fieldIn % "topic0") {
@@ -534,6 +553,7 @@ const char* STR_DISPLAY_LOG =
     "[{LOGINDEX}]\t"
     "[{TRANSACTIONHASH}]\t"
     "[{TIMESTAMP}]\t"
+    "[{DATE}]\t"
     "[{ADDRESS}]\t"
     "[{TOPIC0}]\t"
     "[{TOPIC1}]\t"

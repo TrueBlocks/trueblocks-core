@@ -426,6 +426,10 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             }
             envLines.clear();
         }
+        // Cleanup files put in the temp folder, if any
+        if (fileExists("/tmp/output_test_with_path.json")) {
+            ::remove("/tmp/output_test_with_path.json");
+        }
     }
 
     total += measure;

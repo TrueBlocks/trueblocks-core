@@ -64,16 +64,22 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 		return
 	}
 
-	receipt, err := GetTransactionReceipt(chain, bn, txid, nil, 0)
-	if err != nil {
-		return
-	}
-
 	isTokenRelated := func(input string) bool {
 		if len(input) < 10 {
 			return false
 		}
 		return IsTokenRelated(input[:10])
+	}
+
+	blockTs := rpc.GetBlockTimestamp(chain, bn)
+	receipt, err := GetTransactionReceipt(chain, ReceiptQuery{
+		Bn:      bn,
+		Txid:    txid,
+		NeedsTs: true,
+		Ts:      blockTs,
+	})
+	if err != nil {
+		return
 	}
 
 	tx = &types.SimpleTransaction{
@@ -82,7 +88,7 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 		BlockNumber:      bn,
 		TransactionIndex: txid,
 		Nonce:            mustParseUint(rawTx.Nonce),
-		Timestamp:        rpc.GetBlockTimestamp(chain, bn),
+		Timestamp:        blockTs,
 		From:             base.HexToAddress(rawTx.From),
 		To:               base.HexToAddress(rawTx.To),
 		Gas:              mustParseUint(rawTx.Gas),
