@@ -48,6 +48,11 @@ inline bool operator<(const CAppearance_mon& v1, const CAppearance_mon& v2) {
 }
 
 //----------------------------------------------------------------
+inline bool sortMonitoredAppearances(const CAppearance_mon& v1, const CAppearance_mon& v2) {
+    return (v1 < v2);
+}
+
+//----------------------------------------------------------------
 inline bool sortMonitoredAppearanceReverse(const CAppearance_mon& v1, const CAppearance_mon& v2) {
     return !(v1 < v2);
 }
