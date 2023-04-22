@@ -13,6 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
+
 // EXISTING_CODE
 
 type simpleTimestamp struct {
@@ -27,7 +28,7 @@ func (s *simpleTimestamp) Raw() *types.RawModeler {
 	return nil
 }
 
-func (s *simpleTimestamp) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
+func (s *simpleTimestamp) Model(verbose bool, format string, extraOptions map[string]any) types.Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

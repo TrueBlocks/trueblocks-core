@@ -30,7 +30,7 @@ func (s *simpleTraceCount) Raw() *types.RawModeler {
 	return nil
 }
 
-func (s *simpleTraceCount) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
+func (s *simpleTraceCount) Model(verbose bool, format string, extraOptions map[string]any) types.Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
