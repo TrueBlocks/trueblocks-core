@@ -19,7 +19,7 @@ func (opts *StatusOptions) HandleStatusTerse() error {
 		}
 
 		// We want to short circuit the output in the non-json case
-		if s.ToTemplate(opts.Globals.Writer, opts.Globals.TestMode, opts.Globals.Format) {
+		if s.toTemplate(opts.Globals.Writer, opts.Globals.TestMode, opts.Globals.Format) {
 			return
 		}
 
