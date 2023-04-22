@@ -259,7 +259,7 @@ func getVersionTemplate() string {
 
 const templateStr = `INFO Client:            {CLIENT_STRING}
 INFO TrueBlocks:        {VERSION_STRING}
-INFO RPC Provider:      XXX{{.RPCProvider}} - {{.Chain}} ({{if eq .NetworkId "0"}}[RED]{{.NetworkId}}[OFF]{{else}}[GREEN]{{.NetworkId}}[OFF]{{end}}/{{if eq .ChainId "0"}}[RED]{{.ChainId}}[OFF]{{else}}[GREEN]{{.ChainId}}[OFF]{{end}})
+INFO RPC Provider:      {{.RPCProvider}} - {{.Chain}} ({{if eq .NetworkId "0"}}[RED]{{.NetworkId}}[OFF]{{else}}[GREEN]{{.NetworkId}}[OFF]{{end}}/{{if eq .ChainId "0"}}[RED]{{.ChainId}}[OFF]{{else}}[GREEN]{{.ChainId}}[OFF]{{end}})
 INFO Root Config Path:  {{.RootConfig}}
 INFO Chain Config Path: {{.ChainConfig}}
 INFO Cache Path:        {{.CachePath}}
