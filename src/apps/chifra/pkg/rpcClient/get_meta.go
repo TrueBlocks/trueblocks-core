@@ -63,13 +63,15 @@ func GetMetaData(chain string, testmode bool) (*MetaData, error) {
 	filenameChan := make(chan cache.CacheFileInfo)
 
 	var nRoutines int = 4
-	go cache.WalkCacheFolder(context.Background(), chain, cache.Index_Final, nil, filenameChan)
+	go cache.WalkCacheFolder(context.Background(), chain, cache.Index_Bloom, nil, filenameChan)
 	go cache.WalkCacheFolder(context.Background(), chain, cache.Index_Staging, nil, filenameChan)
 	go cache.WalkCacheFolder(context.Background(), chain, cache.Index_Ripe, nil, filenameChan)
 	go cache.WalkCacheFolder(context.Background(), chain, cache.Index_Unripe, nil, filenameChan)
 
 	for result := range filenameChan {
 		switch result.Type {
+		case cache.Index_Bloom:
+			fallthrough
 		case cache.Index_Final:
 			meta.Finalized = utils.Max(meta.Finalized, result.Range.Last)
 		case cache.Index_Staging:
