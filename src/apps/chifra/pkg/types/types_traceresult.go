@@ -45,7 +45,7 @@ func (s *SimpleTraceResult) SetRaw(raw *RawTraceResult) {
 	s.raw = raw
 }
 
-func (s *SimpleTraceResult) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleTraceResult) Model(verbose bool, format string, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

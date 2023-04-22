@@ -32,7 +32,7 @@ func (s *simpleChunkBloom) Raw() *types.RawModeler {
 	return nil
 }
 
-func (s *simpleChunkBloom) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
+func (s *simpleChunkBloom) Model(verbose bool, format string, extraOptions map[string]any) types.Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

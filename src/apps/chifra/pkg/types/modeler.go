@@ -3,7 +3,7 @@ package types
 import "io"
 
 type Modeler[RT RawData] interface {
-	Model(showHidden bool, format string, extraOptions map[string]any) Model
+	Model(verbose bool, format string, extraOptions map[string]any) Model
 	Raw() *RT
 }
 

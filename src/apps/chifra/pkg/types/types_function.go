@@ -68,7 +68,7 @@ func (s *SimpleFunction) SetRaw(raw *RawFunction) {
 	s.raw = raw
 }
 
-func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleFunction) Model(verbose bool, format string, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -101,7 +101,7 @@ func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[
 		getParameterModels := func(params []SimpleParameter) []map[string]any {
 			result := make([]map[string]any, len(params))
 			for index, param := range params {
-				result[index] = param.Model(showHidden, format, extraOptions).Data
+				result[index] = param.Model(verbose, format, extraOptions).Data
 				result[index]["name"] = param.DisplayName(index)
 			}
 			return result

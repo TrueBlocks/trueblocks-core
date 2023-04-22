@@ -55,7 +55,7 @@ func (s *simpleStatus) Raw() *types.RawModeler {
 	return nil
 }
 
-func (s *simpleStatus) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
+func (s *simpleStatus) Model(verbose bool, format string, extraOptions map[string]any) types.Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -111,7 +111,7 @@ func (s *simpleStatus) Model(showHidden bool, format string, extraOptions map[st
 		order = append(order, "caches")
 	}
 
-	if showHidden && !testMode {
+	if verbose && !testMode {
 		var chains []types.SimpleChain
 		chainArray := config.GetChainArray()
 		for _, chain := range chainArray {

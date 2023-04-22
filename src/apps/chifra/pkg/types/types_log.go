@@ -57,7 +57,7 @@ func (s *SimpleLog) SetRaw(raw *RawLog) {
 	s.raw = raw
 }
 
-func (s *SimpleLog) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleLog) Model(verbose bool, format string, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

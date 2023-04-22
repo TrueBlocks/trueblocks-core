@@ -91,7 +91,7 @@ func (s *SimpleTransaction) SetRaw(raw *RawTransaction) {
 	s.raw = raw
 }
 
-func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -181,7 +181,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 			model["isError"] = s.IsError
 		}
 
-		if showHidden {
+		if verbose {
 			model["datesh"] = date.Format("2006-01-02")
 			model["time"] = date.Format("15:04:05") + " UTC"
 		}
@@ -233,7 +233,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		if extraOptions["traces"] == true && len(s.Traces) > 0 {
 			traceModels := make([]map[string]any, 0, len(s.Traces))
 			for _, trace := range s.Traces {
-				traceModels = append(traceModels, trace.Model(showHidden, format, extraOptions).Data)
+				traceModels = append(traceModels, trace.Model(verbose, format, extraOptions).Data)
 			}
 			model["traces"] = traceModels
 		}
