@@ -8,6 +8,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
@@ -69,13 +70,17 @@ func (opts *StatusOptions) getCacheItem(cT cache.CacheType, path string) (map[st
 			display = strings.Replace(display, address, "--address--", -1)
 			address = "--address--"
 		}
-		return map[string]interface{}{
+		ret := map[string]interface{}{
 			"address":     address,
 			"fileDate":    date,
 			"filename":    display,
 			"itemType":    cT.CacheItemName(),
 			"sizeInBytes": size,
-		}, nil
+		}
+		if cT == cache.Cache_Monitors {
+			ret["nRecords"] = size / index.AppRecordWidth // TODO: 8 bytes per record so we don't have to read the file
+		}
+		return ret, nil
 	default:
 		if testMode {
 			display = "$cachePath/data-model/file.bin"

@@ -1,8 +1,10 @@
 package types
 
-import "io"
-
 // EXISTING_CODE
+import (
+	"io"
+)
+
 // EXISTING_CODE
 
 type RawMonitor interface {
@@ -38,6 +40,9 @@ func (s *SimpleMonitor) Model(verbose bool, format string, extraOptions map[stri
 		"nRecords":    s.NRecords,
 		"fileSize":    s.FileSize,
 		"lastScanned": s.LastScanned,
+	}
+	if extraOptions["testMode"] == true {
+		model["lastScanned"] = "--lastScanned--"
 	}
 	order = []string{
 		"address",

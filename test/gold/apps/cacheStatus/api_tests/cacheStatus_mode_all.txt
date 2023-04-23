@@ -93,6 +93,7 @@ status?modes=all&verbose&maxRecords=2
               "fileDate": "--fileDate--",
               "filename": "$cachePath/monitors/--address--",
               "itemType": "monitorsCacheItem",
+              "nRecords": 15432098,
               "sizeInBytes": 123456789
             },
             {
@@ -100,6 +101,7 @@ status?modes=all&verbose&maxRecords=2
               "fileDate": "--fileDate--",
               "filename": "$cachePath/monitors/--address--",
               "itemType": "monitorsCacheItem",
+              "nRecords": 15432098,
               "sizeInBytes": 123456789
             }
           ],
