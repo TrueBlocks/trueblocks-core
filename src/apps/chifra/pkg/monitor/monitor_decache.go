@@ -30,6 +30,7 @@ func (mon *Monitor) Decache(chain string, processor cache.DecacheFunc) (err erro
 		return err
 	}
 
+	// TODO: This should use go routines
 	caches := []string{"blocks", "txs", "traces", "recons", "abis"}
 	if cont, err := cache.DecacheItems(chain, mon.Address.Hex(), processor, caches, index.AppsToNumPairs(apps)); err != nil || !cont {
 		return err
