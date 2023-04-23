@@ -1,4 +1,4 @@
-status?modes=blocks&verbose&maxRecords=100&modes=blocks&modes=blocks
+status?modes=blocks&verbose&maxRecords=5&modes=blocks&modes=blocks
 {
   "data": [
     {
@@ -6,78 +6,6 @@ status?modes=blocks&verbose&maxRecords=100&modes=blocks&modes=blocks
       "caches": [
         {
           "items": [
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "blocksCacheItem",
-              "sizeInBytes": 123456789
-            },
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "blocksCacheItem",
-              "sizeInBytes": 123456789
-            },
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "blocksCacheItem",
-              "sizeInBytes": 123456789
-            },
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "blocksCacheItem",
-              "sizeInBytes": 123456789
-            },
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "blocksCacheItem",
-              "sizeInBytes": 123456789
-            },
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "blocksCacheItem",
-              "sizeInBytes": 123456789
-            },
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "blocksCacheItem",
-              "sizeInBytes": 123456789
-            },
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "blocksCacheItem",
-              "sizeInBytes": 123456789
-            },
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "blocksCacheItem",
-              "sizeInBytes": 123456789
-            },
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "blocksCacheItem",
-              "sizeInBytes": 123456789
-            },
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "blocksCacheItem",
-              "sizeInBytes": 123456789
-            },
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "blocksCacheItem",
-              "sizeInBytes": 123456789
-            },
             {
               "fileDate": "--fileDate--",
               "filename": "$cachePath/data-model/file.bin",

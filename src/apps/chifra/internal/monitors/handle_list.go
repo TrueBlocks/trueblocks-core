@@ -17,8 +17,13 @@ import (
 
 // HandleList
 func (opts *MonitorsOptions) HandleList() error {
+	testMode := opts.Globals.TestMode
 	chain := opts.Globals.Chain
 	monitorMap, monArray := monitor.GetMonitorMap(chain)
+	for i := 0; i < len(monArray); i++ {
+		monArray[i].ReadMonitorHeader()
+		monArray[i].Close()
+	}
 
 	errors := make([]error, 0)
 	addrMap := map[base.Address]bool{}
@@ -49,5 +54,8 @@ func (opts *MonitorsOptions) HandleList() error {
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	extra := map[string]interface{}{
+		"testMode": testMode,
+	}
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }

@@ -4,4 +4,4 @@ TEST[DATE|TIME] List:  true
 TEST[DATE|TIME] Format:  csv
 INFO[DATE|TIME] Building address list from current monitors
 address,nRecords,fileSize,lastScanned
-0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533,5,48,0
+0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533,5,48,--lastScanned--
