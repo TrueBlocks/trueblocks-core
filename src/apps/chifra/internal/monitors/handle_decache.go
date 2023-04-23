@@ -19,6 +19,11 @@ import (
 
 // HandleDecache
 func (opts *MonitorsOptions) HandleDecache() error {
+	if opts.Globals.TestMode {
+		logger.Warn("Decache option not tested.")
+		return nil
+	}
+
 	for _, addr := range opts.Addrs {
 		if !validate.IsValidAddress(addr) {
 			continue
@@ -36,10 +41,6 @@ func (opts *MonitorsOptions) HandleDecache() error {
 
 		} else {
 			logger.Info("Decaching", addr)
-			if opts.Globals.TestMode {
-				logger.Warn("Decaching monitor for address", addr, "not tested.")
-				return nil
-			}
 
 			itemsRemoved := int64(0)
 			bytesRemoved := int64(0)

@@ -10,6 +10,10 @@ import (
 )
 
 func QueryUser(prompt, noResponse string) bool {
+	if os.Getenv("NO_USERQUERY") == "true" {
+		return true
+	}
+
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Printf(colors.Yellow+"%s"+colors.Off, prompt)
 	text, _ := reader.ReadString('\n')
