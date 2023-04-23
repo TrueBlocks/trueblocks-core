@@ -5,43 +5,27 @@
 package monitorsPkg
 
 import (
-	"bufio"
 	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/user"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
-
-func QueryUser(prompt, noResponse string) bool {
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Printf(colors.Yellow+"%s"+colors.Off, prompt)
-	text, _ := reader.ReadString('\n')
-	text = strings.Replace(text, "\n", "", -1)
-	if text != "" && text != "y" && text != "Y" {
-		fmt.Printf("%s [%s]\n", noResponse, text)
-		return false
-	}
-	return true
-}
-
-func getWarning(addr string, count uint32) string {
-	var warning = strings.Replace("Are sure you want to decache {0}{1} (Yy)?", "{0}", addr, -1)
-	if count > 5000 {
-		return strings.Replace(strings.Replace(warning, "{1}", ". It may take a long time to process {2} records.", -1), "{2}", fmt.Sprintf("%d", count), -1)
-	}
-	return strings.Replace(warning, "{1}", "", -1)
-}
 
 // HandleDecache
 func (opts *MonitorsOptions) HandleDecache() error {
 	for _, addr := range opts.Addrs {
+		if !validate.IsValidAddress(addr) {
+			continue
+		}
+
 		m := monitor.NewMonitor(opts.Globals.Chain, addr, false)
-		if !QueryUser(getWarning(addr, m.Count()), "Not decaching") {
+		if !user.QueryUser(getWarning(addr, m.Count()), "Not decaching") {
 			continue
 		}
 
@@ -97,4 +81,12 @@ func (opts *MonitorsOptions) HandleDecache() error {
 	}
 
 	return nil
+}
+
+func getWarning(addr string, count uint32) string {
+	var warning = strings.Replace("Are sure you want to decache {0}{1} (Yy)?", "{0}", addr, -1)
+	if count > 5000 {
+		return strings.Replace(strings.Replace(warning, "{1}", ". It may take a long time to process {2} records.", -1), "{2}", fmt.Sprintf("%d", count), -1)
+	}
+	return strings.Replace(warning, "{1}", "", -1)
 }
