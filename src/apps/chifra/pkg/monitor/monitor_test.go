@@ -5,12 +5,14 @@
 package monitor
 
 import (
+	"encoding/json"
 	"fmt"
 	"strings"
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func Test_Monitor_Print(t *testing.T) {
@@ -29,8 +31,8 @@ func Test_Monitor_Print(t *testing.T) {
 	}
 
 	// The monitor should report that it has two appearances
-	got := testClean(fmt.Sprintln(mon.ToJSON()))
-	expected := "{\"address\":\"0x049029dd41661e58f99271a0112dfd34695f7000\",\"nRecords\":6,\"fileSize\":56,\"lastScanned\":2002003}"
+	got := testClean(fmt.Sprintln(mon.toJson()))
+	expected := "{\"address\":\"0x049029dd41661e58f99271a0112dfd34695f7000\",\"nRecords\":6,\"fileSize\":56,\"lastScanned\":2002003,\"deleted\":false}"
 	if got != expected {
 		t.Error("Expected:", expected, "Got:", got)
 	}
@@ -119,8 +121,8 @@ func Test_Monitor_Delete(t *testing.T) {
 	}()
 
 	// The monitor should report that it has two appearances
-	got := testClean(fmt.Sprintln(mon.ToJSON()))
-	expected := "{\"address\":\"0x049029dd41661e58f99271a0112dfd34695f7000\",\"nRecords\":3,\"fileSize\":32,\"lastScanned\":2002003}"
+	got := testClean(fmt.Sprintln(mon.toJson()))
+	expected := "{\"address\":\"0x049029dd41661e58f99271a0112dfd34695f7000\",\"nRecords\":3,\"fileSize\":32,\"lastScanned\":2002003,\"deleted\":false}"
 	if got != expected {
 		t.Error("Expected:", expected, "Got:", got)
 	}
@@ -137,7 +139,7 @@ func Test_Monitor_Delete(t *testing.T) {
 	}
 
 	wasDeleted := mon.Delete()
-	t.Log(mon.ToJSON())
+	t.Log(mon.toJson())
 	if wasDeleted || !mon.Deleted {
 		t.Error("Should not have been previously deleted, but it should be deleted now")
 	}
@@ -146,7 +148,7 @@ func Test_Monitor_Delete(t *testing.T) {
 	}
 
 	wasDeleted = mon.Delete()
-	t.Log(mon.ToJSON())
+	t.Log(mon.toJson())
 	if !wasDeleted || !mon.Deleted {
 		t.Error("Should have been previously deleted, and it should be deleted now")
 	}
@@ -155,7 +157,7 @@ func Test_Monitor_Delete(t *testing.T) {
 	}
 
 	wasDeleted = mon.UnDelete()
-	t.Log(mon.ToJSON())
+	t.Log(mon.toJson())
 	if !wasDeleted || mon.Deleted {
 		t.Error("Should have been previously deleted, but should no longer be")
 	}
@@ -164,7 +166,7 @@ func Test_Monitor_Delete(t *testing.T) {
 	}
 
 	wasDeleted = mon.Delete()
-	t.Log(mon.ToJSON())
+	t.Log(mon.toJson())
 	if wasDeleted || !mon.Deleted {
 		t.Error("Should not have been previously deleted, but it should be deleted now")
 	}
@@ -237,4 +239,18 @@ var testApps = []index.AppearanceRecord{
 
 func testClean(s string) string {
 	return strings.Replace(strings.Replace(s, "\n", "", -1), " ", "", -1)
+}
+
+// TODO: ...and this - making this the String and the above ToTxt?
+// toJson returns a JSON object from a Monitor
+func (mon Monitor) toJson() string {
+	sm := types.SimpleMonitor{
+		Address:     mon.Address.Hex(),
+		NRecords:    int(mon.Count()),
+		FileSize:    file.FileSize(mon.Path()),
+		LastScanned: mon.LastScanned,
+		Deleted:     mon.Deleted,
+	}
+	bytes, _ := json.MarshalIndent(sm, "", "  ")
+	return string(bytes)
 }

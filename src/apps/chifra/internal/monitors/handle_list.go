@@ -20,9 +20,11 @@ func (opts *MonitorsOptions) HandleList() error {
 	testMode := opts.Globals.TestMode
 	chain := opts.Globals.Chain
 	monitorMap, monArray := monitor.GetMonitorMap(chain)
-	for i := 0; i < len(monArray); i++ {
-		monArray[i].ReadMonitorHeader()
-		monArray[i].Close()
+	if opts.Globals.Verbose {
+		for i := 0; i < len(monArray); i++ {
+			monArray[i].ReadMonitorHeader()
+			monArray[i].Close()
+		}
 	}
 
 	errors := make([]error, 0)
@@ -47,7 +49,8 @@ func (opts *MonitorsOptions) HandleList() error {
 					Address:     mon.Address.Hex(),
 					NRecords:    int(mon.Count()),
 					FileSize:    file.FileSize(mon.Path()),
-					LastScanned: mon.Header.LastScanned,
+					LastScanned: mon.LastScanned,
+					Deleted:     mon.Deleted,
 				}
 				modelChan <- &s
 			}

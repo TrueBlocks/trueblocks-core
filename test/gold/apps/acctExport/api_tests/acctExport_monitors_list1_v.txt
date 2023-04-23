@@ -1,9 +1,11 @@
-monitors?addrs=0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533&list&fmt=json
+monitors?addrs=0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533&list&fmt=json&verbose
 {
   "data": [
     {
       "address": "0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533",
+      "deleted": false,
       "fileSize": 48,
+      "lastScanned": "--lastScanned--",
       "nRecords": 5
     }
   ],
