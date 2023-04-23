@@ -141,12 +141,16 @@ func stateFinishParse(args []string) *StateOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	// EXISTING_CODE
+	dupMap := make(map[string]bool)
 	for _, arg := range args {
-		if validate.IsValidAddress(arg) {
-			opts.Addrs = append(opts.Addrs, arg)
-		} else {
-			opts.Blocks = append(opts.Blocks, arg)
+		if !dupMap[arg] {
+			if validate.IsValidAddress(arg) {
+				opts.Addrs = append(opts.Addrs, arg)
+			} else {
+				opts.Blocks = append(opts.Blocks, arg)
+			}
 		}
+		dupMap[arg] = true
 	}
 	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
 	opts.ProxyFor, _ = ens.ConvertOneEns(opts.Globals.Chain, opts.ProxyFor)

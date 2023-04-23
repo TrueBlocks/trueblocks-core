@@ -266,8 +266,6 @@ bool COptions::showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CA
 bool neighbors_Pre(CTraverser* trav, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
 
-    // LOG_INFO("Processing address ", opt->accountedFor.address);
-
     CBlockRangeArray ranges;
     getChunkRanges(ranges);
 
@@ -281,7 +279,9 @@ bool neighbors_Pre(CTraverser* trav, void* data) {
             trav->index = i;
             if (!opt->showAddrsInTx(trav, ranges[curRange], app))
                 return false;
-            curRange--;  // back up one in case the next appearances is in the same range
+            if (curRange > 0) {
+                curRange--;  // back up one in case the next appearances is in the same range
+            }
         }
     }
 
