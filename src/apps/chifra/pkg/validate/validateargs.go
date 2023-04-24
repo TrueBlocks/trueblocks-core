@@ -7,9 +7,11 @@ package validate
 import (
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // Let's define bitmasks to make it easier to validate multiple block identifiers
@@ -33,6 +35,14 @@ const ValidTransId = ValidArgumentTransHash | ValidArgumentTransBlockNumberAndId
 const ValidBlockId = ValidArgumentBlockHash | ValidArgumentBlockNumber | ValidArgumentTimestamp | ValidArgumentSpecialBlock
 const ValidBlockIdWithRange = ValidBlockId | ValidArgumentRange
 const ValidBlockIdWithRangeAndDate = ValidBlockIdWithRange | ValidArgumentDate
+
+// ValidateIdentifiersWithBounds Is a helper function to return bounds in addition to validating identifiers
+func ValidateIdentifiersWithBounds(chain string, ids []string, validTypes ValidArgumentType, maxRanges int, results *[]identifiers.Identifier) (base.BlockRange, error) {
+	if err := ValidateIdentifiers(chain, ids, validTypes, maxRanges, results); err != nil {
+		return base.BlockRange{First: 0, Last: utils.NOPOS}, err
+	}
+	return identifiers.GetBounds(chain, results)
+}
 
 // ValidateIdentifiers validates multiple identifiers against multiple valid types (specified as bitmasks).
 // If any of the identifiers are invalid, it returns error

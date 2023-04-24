@@ -7,6 +7,9 @@ package tokensPkg
 import (
 	"errors"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/node"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -29,6 +32,7 @@ func (opts *TokensOptions) validateTokens() error {
 		1,
 		&opts.BlockIds,
 	)
+
 	if err != nil {
 		if invalidLiteral, ok := err.(*validate.InvalidIdentifierLiteralError); ok {
 			return invalidLiteral
@@ -61,7 +65,7 @@ func (opts *TokensOptions) validateTokens() error {
 				}
 			}
 		} else {
-			// the first is assumed to be a smart contract, the rest can be either token or no
+			// the first is assumed to be a smart contract, the rest can be either non-existant, another smart contract or an EOA
 			addr := opts.Addrs[0]
 			ok, err := validate.IsSmartContract(opts.Globals.Chain, addr)
 			if err != nil {
@@ -76,6 +80,35 @@ func (opts *TokensOptions) validateTokens() error {
 	err = validate.ValidateAddresses(opts.Addrs)
 	if err != nil {
 		return err
+	}
+
+	// Blocks are optional, but if they are present, they must be valid
+	if len(opts.Blocks) > 0 {
+		bounds, err := validate.ValidateIdentifiersWithBounds(
+			opts.Globals.Chain,
+			opts.Blocks,
+			validate.ValidBlockIdWithRangeAndDate,
+			1,
+			&opts.BlockIds,
+		)
+
+		if err != nil {
+			if invalidLiteral, ok := err.(*validate.InvalidIdentifierLiteralError); ok {
+				return invalidLiteral
+			}
+
+			if errors.Is(err, validate.ErrTooManyRanges) {
+				return validate.Usage("Specify only a single block range at a time.")
+			}
+
+			return err
+		}
+
+		latest := rpcClient.BlockNumber(config.GetRpcProvider(opts.Globals.Chain))
+		// TODO: Should be configurable
+		if bounds.First < (latest-250) && !node.IsArchiveNode(opts.Globals.Chain) {
+			return validate.Usage("The {0} requires {1}.", "query for historical state", "an archive node")
+		}
 	}
 
 	return opts.Globals.Validate()
