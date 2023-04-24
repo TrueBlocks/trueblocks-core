@@ -56,6 +56,7 @@ func init() {
 	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Appearances, "appearances", "p", false, "export each monitor's list of appearances (the default) (hidden)")
 	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Silent, "silent", "", false, "freshen the monitor only (no reporting) (hidden)")
 	listCmd.Flags().BoolVarP(&listPkg.GetOptions().NoZero, "no_zero", "n", false, "suppress the display of zero appearance accounts")
+	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Unripe, "unripe", "u", false, "list transactions labeled upripe (i.e. less than 28 blocks old)")
 	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().FirstRecord, "first_record", "c", 1, "the first record to process")
 	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().MaxRecords, "max_records", "e", 250, "the maximum number of records to process")
 	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to export (inclusive, ignored when freshening)")

@@ -30,7 +30,7 @@ func (opts *ExportOptions) validateExport() error {
 	}
 
 	if opts.Globals.TestMode && opts.Unripe {
-		return validate.Usage("--unripe are disabled for testing.")
+		return validate.Usage("--unripe is disabled for testing.")
 	}
 
 	if opts.LastBlock == 0 {
