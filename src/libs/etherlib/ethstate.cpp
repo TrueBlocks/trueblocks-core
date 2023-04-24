@@ -394,20 +394,6 @@ wei_t getBalanceAt(const string_q& addr, blknum_t num) {
 }
 
 //-------------------------------------------------------------------------
-bool isArchiveNode(void) {
-    // short curcuit for some situations
-    const CToml* config = getGlobalConfig("blockScrape");
-    if (!config->getConfigBool("requires", "archive", true))
-        return true;
-
-    // An archive node better have a balance at the end of block zero the same as
-    // the allocation amount for that account. We use the largest allocation so as
-    // to ensure we get an actual balance
-    Allocation largest = largestPrefund();
-    return getBalanceAt(largest.address, 0) == largest.amount;
-}
-
-//-------------------------------------------------------------------------
 string_q getCodeAt(const string_q& addr, blknum_t num) {
     if (num == NOPOS)
         num = getLatestBlock_client();

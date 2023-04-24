@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -80,6 +81,24 @@ func LoadNamesArray(chain string, parts Parts, sortBy SortBy, terms []string) ([
 	}
 
 	return names, nil
+}
+
+// loadPrefundMap loads the prefund names from the cache
+func loadPrefundMap(chain string, thePath string, terms []string, parts Parts, ret *map[base.Address]types.SimpleName) {
+	prefunds, _ := prefunds.LoadPrefunds(chain, thePath, nil)
+	for i, prefund := range prefunds {
+		n := types.SimpleName{
+			Tags:      "80-Prefund",
+			Address:   prefund.Address,
+			Name:      "Prefund_" + fmt.Sprintf("%04d", i),
+			Source:    "Genesis",
+			Petname:   AddrToPetname(prefund.Address.Hex(), "-"),
+			IsPrefund: true,
+		}
+		if doSearch(&n, terms, parts) {
+			(*ret)[n.Address] = n
+		}
+	}
 }
 
 // LoadNamesMap loads the names from the cache and returns a map of names

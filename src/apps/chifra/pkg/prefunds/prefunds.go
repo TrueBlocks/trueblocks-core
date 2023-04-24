@@ -1,33 +1,13 @@
-package names
+package prefunds
 
 import (
-	"fmt"
 	"math/big"
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/gocarina/gocsv"
 )
-
-// loadPrefundMap loads the prefund names from the cache
-func loadPrefundMap(chain string, thePath string, terms []string, parts Parts, ret *map[base.Address]types.SimpleName) {
-	prefunds, _ := LoadPrefunds(chain, thePath)
-	for i, prefund := range prefunds {
-		n := types.SimpleName{
-			Tags:      "80-Prefund",
-			Address:   prefund.Address,
-			Name:      "Prefund_" + fmt.Sprintf("%04d", i),
-			Source:    "Genesis",
-			Petname:   AddrToPetname(prefund.Address.Hex(), "-"),
-			IsPrefund: true,
-		}
-		if doSearch(&n, terms, parts) {
-			(*ret)[n.Address] = n
-		}
-	}
-}
 
 // Allocation is a single allocation in the genesis file
 type Allocation struct {
@@ -38,8 +18,11 @@ type Allocation struct {
 // emptyAllocs is a list of empty allocations. We use this to return at least one allocation
 var emptyAllocs = []Allocation{{Address: base.HexToAddress("0x0"), Balance: *big.NewInt(0)}}
 
-// LoadPrefunds loads the prefunds from the genesis file
-func LoadPrefunds(chain string, thePath string) ([]Allocation, error) {
+type AllocCallback func(*Allocation, *any) (bool, error)
+
+// TODO: In the c++ code, the prefunds were cached in memory. We should do the same here.
+// LoadPrefunds loads the prefunds from the genesis file and processes each with provided callback if present
+func LoadPrefunds(chain string, thePath string, userCallback AllocCallback) ([]Allocation, error) {
 	allocations := make([]Allocation, 0, 4000)
 	callbackFunc := func(record Allocation) error {
 		if validate.IsValidAddress(record.Address.Hex()) {
@@ -49,6 +32,11 @@ func LoadPrefunds(chain string, thePath string) ([]Allocation, error) {
 			}
 			// fmt.Println(alloc)
 			allocations = append(allocations, alloc)
+			if userCallback != nil {
+				if cont, err := userCallback(&alloc, nil); !cont || err != nil {
+					return err
+				}
+			}
 		}
 		return nil
 	}
@@ -68,4 +56,22 @@ func LoadPrefunds(chain string, thePath string) ([]Allocation, error) {
 	}
 
 	return allocations, nil
+}
+
+// -----------------------------------------------------------------------
+func GetLargestPrefund(chain, thePath string) (Allocation, error) {
+	largest := Allocation{}
+	getLargest := func(alloc *Allocation, data *any) (bool, error) {
+		if alloc.Balance.Cmp(&largest.Balance) > 0 {
+			largest = *alloc
+		}
+		return true, nil
+	}
+
+	_, err := LoadPrefunds(chain, thePath, getLargest)
+	if err != nil {
+		return Allocation{}, err
+	}
+
+	return largest, nil
 }
