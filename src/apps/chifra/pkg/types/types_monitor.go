@@ -17,6 +17,7 @@ type SimpleMonitor struct {
 	NRecords    int         `json:"nRecords"`
 	FileSize    int64       `json:"fileSize"`
 	LastScanned uint32      `json:"lastScanned"`
+	Deleted     bool        `json:"deleted"`
 	raw         *RawMonitor `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -36,19 +37,23 @@ func (s *SimpleMonitor) Model(verbose bool, format string, extraOptions map[stri
 
 	// EXISTING_CODE
 	model = map[string]any{
-		"address":     s.Address,
-		"nRecords":    s.NRecords,
-		"fileSize":    s.FileSize,
-		"lastScanned": s.LastScanned,
-	}
-	if extraOptions["testMode"] == true {
-		model["lastScanned"] = "--lastScanned--"
+		"address":  s.Address,
+		"nRecords": s.NRecords,
+		"fileSize": s.FileSize,
 	}
 	order = []string{
 		"address",
 		"nRecords",
 		"fileSize",
-		"lastScanned",
+	}
+	if verbose {
+		model["lastScanned"] = s.LastScanned
+		model["deleted"] = s.Deleted
+		if extraOptions["testMode"] == true {
+			model["lastScanned"] = "--lastScanned--"
+		}
+		order = append(order, "lastScanned")
+		order = append(order, "deleted")
 	}
 	// EXISTING_CODE
 
