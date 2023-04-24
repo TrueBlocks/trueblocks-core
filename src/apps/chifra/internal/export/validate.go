@@ -10,6 +10,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/node"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -103,6 +104,10 @@ func (opts *ExportOptions) validateExport() error {
 			if len(opts.Asset) > 0 {
 				return validate.Usage("The {0} option is only available with the {1} option.", "--asset", "--statements")
 			}
+		}
+
+		if !node.IsArchiveNode(opts.Globals.Chain) {
+			return validate.Usage("The {0} option requires {1}.", "--accounting", "an archive node")
 		}
 
 	} else {

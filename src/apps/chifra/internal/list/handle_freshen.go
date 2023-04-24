@@ -43,6 +43,7 @@ const maxTestingBlock = 15000000
 
 // mutexesPerAddress map stores mutex for each address that is being/has been freshened
 var mutexesPerAddress = make(map[string]*sync.Mutex)
+var mutexesPerAddressMutex sync.Mutex
 
 // lockForAddress locks the mutex for the given address
 func lockForAddress(address string) {
@@ -52,6 +53,8 @@ func lockForAddress(address string) {
 		return
 	}
 
+	mutexesPerAddressMutex.Lock()
+	defer mutexesPerAddressMutex.Unlock()
 	newMutex := &sync.Mutex{}
 	mutexesPerAddress[address] = newMutex
 	newMutex.Lock()
@@ -128,7 +131,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 		}
 		if !info.IsDir() {
 			fileName := bloomPath + "/" + info.Name()
-			if !strings.HasSuffix(fileName, ".bloom") {
+			if !cache.IsCacheType(fileName, cache.Index_Bloom, true /* checkExt */) {
 				continue // sometimes there are .gz files in this folder, for example
 			}
 			fileRange, err := base.RangeFromFilenameE(fileName)

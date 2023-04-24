@@ -48,7 +48,7 @@ func (s *SimpleTraceFilter) SetRaw(raw *RawTraceFilter) {
 	s.raw = raw
 }
 
-func (s *SimpleTraceFilter) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleTraceFilter) Model(verbose bool, format string, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

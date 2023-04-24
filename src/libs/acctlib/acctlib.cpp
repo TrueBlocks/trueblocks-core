@@ -20,12 +20,6 @@ void acctlib_init(QUITHANDLER qh) {
     CMonitorCount::registerClass();
     CMonitor::registerClass();
     CApiSpec::registerClass();
-
-    CTreeRoot::registerClass();
-    CTreeNode::registerClass();
-    CInfix::registerClass();
-    CBranch::registerClass();
-    CLeaf::registerClass();
 }
 
 //-------------------------------------------------------------------------

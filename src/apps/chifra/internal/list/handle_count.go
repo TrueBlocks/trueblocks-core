@@ -45,13 +45,18 @@ func getCountMode(opts *ListOptions) countMode {
 func (opts *ListOptions) HandleListCount(monitorArray []monitor.Monitor) error {
 	testMode := opts.Globals.TestMode
 	exportRange := base.FileRange{First: opts.FirstBlock, Last: opts.LastBlock}
+	if opts.Globals.Verbose {
+		for i := 0; i < len(monitorArray); i++ {
+			monitorArray[i].ReadMonitorHeader()
+			monitorArray[i].Close()
+		}
+	}
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawMonitor], errorChan chan error) {
 		for _, mon := range monitorArray {
 			fmt.Println(">>> c", mon.Count())
 			if !opts.NoZero || mon.Count() > 0 {
-
 				mode := getCountMode(opts)
 				fmt.Println(">>> mode", mode, opts.FirstBlock, opts.LastBlock)
 				records := mon.Count()
@@ -89,7 +94,8 @@ func (opts *ListOptions) HandleListCount(monitorArray []monitor.Monitor) error {
 					Address:     mon.Address.Hex(),
 					NRecords:    int(records),
 					FileSize:    file.FileSize(mon.Path()),
-					LastScanned: mon.Header.LastScanned,
+					LastScanned: mon.LastScanned,
+					Deleted:     mon.Deleted,
 				}
 				if testMode {
 					s.NRecords = 1001001

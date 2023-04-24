@@ -52,7 +52,7 @@ func (s *SimpleEthState) SetRaw(raw *RawEthState) {
 	s.raw = raw
 }
 
-func (s *SimpleEthState) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleEthState) Model(verbose bool, format string, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

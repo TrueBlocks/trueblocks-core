@@ -45,13 +45,13 @@ bool COptions::handle_datamodel(void) {
     yamlStream << "components:" << endl;
     yamlStream << "  schemas:" << endl;
 
-    bool badShit = false;
+    bool badStuff = false;
     for (auto model : dataModels) {
         string_q groupLow = toLower(substitute(model.doc_group, " ", ""));
         string_q groupFn = getDocsPathTemplates("model-groups/" + groupLow + ".md");
         if (!fileExists(groupFn)) {
             LOG_WARN("Missing data model intro file: ", bYellow, getPathToTemplates(groupFn), cOff);
-            badShit = true;
+            badStuff = true;
             continue;
         }
 
@@ -85,7 +85,7 @@ bool COptions::handle_datamodel(void) {
         string_q modelFn = getDocsPathTemplates("model-intros/" + model.doc_route + ".md");
         if (!fileExists(modelFn)) {
             LOG_WARN("Missing data model intro file: ", bYellow, getPathToTemplates(modelFn), cOff);
-            badShit = true;
+            badStuff = true;
             continue;
         } else {
             docStream << STR_MODEL_HEADER << asciiFileToString(modelFn) << get_producer_table(model, endpointArray)
@@ -141,7 +141,7 @@ bool COptions::handle_datamodel(void) {
             generate_go_type(this, model);
         }
     }
-    if (badShit) {
+    if (badStuff) {
         exit(0);
     }
 
@@ -188,11 +188,17 @@ bool COptions::handle_datamodel(void) {
 
 //------------------------------------------------------------------------------------------------------------
 bool sortByDataModelName(const CClassDefinition& c1, const CClassDefinition& c2) {
+    if (c1.doc_order == c2.doc_order) {
+        return c1.class_name < c2.class_name;
+    }
     return c1.doc_order < c2.doc_order;
 }
 
 //------------------------------------------------------------------------------------------------------------
 bool sortByDoc(const CMember& c1, const CMember& c2) {
+    if (c1.doc == c2.doc) {
+        return c1.name < c2.name;
+    }
     return c1.doc < c2.doc;
 }
 
@@ -200,7 +206,6 @@ bool sortByDoc(const CMember& c1, const CMember& c2) {
 string_q type_2_ModelName(const string_q& type, bool raw) {
     string_q ret = type;
     replace(ret, "Array", "");
-    replace(ret, "CachePtr", "Cache");
     return raw ? nextTokenClear(ret, '[') : ret;
 }
 
@@ -210,7 +215,6 @@ string_q type_2_TypeName(const string_q& type, bool raw) {
     if (startsWith(ret, "C"))
         replace(ret, "C", "");
     replace(ret, "Array", "");
-    replace(ret, "CachePtr", "Cache");
     return raw ? nextTokenClear(ret, '[') : ret;
 }
 
@@ -218,7 +222,11 @@ string_q type_2_TypeName(const string_q& type, bool raw) {
 string_q typeFmt(const CMember& fld) {
     if (fld.memberFlags & IS_ARRAY) {
         string_q ret = "          type: array\n          items:\n            $ref: \"#/components/schemas/++X++\"\n";
-        replace(ret, "++X++", firstLower(type_2_TypeName(fld.type, false)));
+        string_q t = firstLower(type_2_TypeName(fld.type, false));
+        if (contains(t, "any")) {
+            t = "cacheItem";
+        }
+        replace(ret, "++X++", t);
         return ret;
     }
 
@@ -226,6 +234,10 @@ string_q typeFmt(const CMember& fld) {
         string_q ret = "          type: object\n          items:\n            $ref: \"#/components/schemas/++X++\"\n";
         replace(ret, "++X++", firstLower(type_2_TypeName(fld.type, false)));
         return ret;
+    }
+
+    if (fld.type == "[]string") {
+        return "          type: array\n          items:\n            type: string\n";
     }
 
     if (fld.type == "blknum" || fld.type == "uint64" || fld.type == "timestamp" || fld.type == "double" ||
@@ -325,8 +337,8 @@ string_q plural(const string_q& in) {
     string_q ret = firstUpper(in);
     if (ret == "Status") {
         ret = "Statuses";
-    } else if (ret == "CacheEntry") {
-        ret = "CacheEntries";
+    } else if (ret == "CacheItem") {
+        ret = "CacheItems";
     } else if (ret == "ChunkIndex") {
         ret = "ChunkIndexes";
     } else if (!endsWith(in, "s")) {
@@ -356,6 +368,8 @@ const char* STR_YAML_TAIL =
     "      format: hash\n"
     "      description: \"The 32-byte hash\"\n"
     "      example: \"0xf128...1e98\"\n"
+    "    address:\n"
+    "      type: string\n"
     "    string:\n"
     "      type: string\n"
     "    topic:\n"

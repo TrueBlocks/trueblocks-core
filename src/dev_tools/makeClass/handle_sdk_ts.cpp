@@ -31,9 +31,9 @@ bool COptions::handle_sdk_ts(void) {
     types.push_back("Basetypes");
     sort(types.begin(), types.end());
     ostringstream os1;
-    for (auto type : types) {
+    for (auto type : types)
         os1 << "export * from './" << firstLower(type) << "';" << endl;
-    }
+    os1 << "export * from './upgrades';" << endl;
     string_q typesPath = sdkPath + "typescript/src/types/index.ts";
     writeIfDifferent(typesPath, os1.str());
 
@@ -62,7 +62,8 @@ bool COptions::handle_sdk_ts_types(CStringArray& typesOut) {
         ostringstream fieldStream;
         for (auto field : model.fieldArray) {
             if (endsWith(field.type, "Map") || field.type == "CKeyArray" || field.type == "Value" ||
-                field.type == "topic" || startsWith(field.name, "unused") || contains(field.name, "::")) {
+                field.type == "topic" || startsWith(field.name, "unused") || contains(field.name, "::") ||
+                containsI(field.type, "storageslot") || field.type % "any") {
                 continue;
             }
             bool isArray = contains(field.type, "Array");
@@ -73,7 +74,12 @@ bool COptions::handle_sdk_ts_types(CStringArray& typesOut) {
             if (isArray) {
                 ft = ft + "[]";
             }
-            ft = substitute(substitute(ft, "String", "string"), "Topic", "topic");
+            ft = substitute(ft, "String", "string");
+            ft = substitute(ft, "Topic", "topic");
+            ft = substitute(ft, "Address", "address");
+            ft = substitute(ft, "Any", "any");
+            ft = substitute(ft, "Hash", "hash");
+            ft = substitute(ft, "[]string", "string[]");
             replace(ft, "bool", "boolean");
 
             bool isOptional = field.memberFlags & IS_OMITEMPTY;
@@ -105,7 +111,7 @@ bool COptions::handle_sdk_ts_types(CStringArray& typesOut) {
         if (imports.size() > 0) {
             ostringstream imps;
             for (auto imp : imports) {
-                if (imp.second == "string" || imp.second == "boolean") {
+                if (imp.second == "string" || imp.second == "boolean" || imp.second == "any") {
                     continue;
                 }
                 if (imps.str() != "") {
@@ -176,10 +182,13 @@ bool COptions::handle_sdk_ts_paths(CStringArray& pathsOut) {
 
             ostringstream tts;
             for (auto imp : imports) {
+                string_q v = imp.second;
+                if (v % "any") {
+                    continue;
+                }
                 if (tts.str() != "") {
                     tts << ", ";
                 }
-                string_q v = imp.second;
                 tts << v;
             }
 

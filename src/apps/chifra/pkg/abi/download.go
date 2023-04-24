@@ -29,7 +29,7 @@ func DownloadAbi(chain string, address base.Address, destination AbiInterfaceMap
 		return errors.New("cannot read Etherscan API key")
 	}
 	url := fmt.Sprintf(
-		"http://api.etherscan.io/api?module=contract&action=getabi&address=%s&apikey=%s",
+		"https://api.etherscan.io/api?module=contract&action=getabi&address=%s&apikey=%s",
 		address.Hex(),
 		key,
 	)

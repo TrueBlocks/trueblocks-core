@@ -1,4 +1,4 @@
-chifra  scrape --help --log_level 2
+chifra  scrape --help
 Purpose:
   Scan the chain and update the TrueBlocks index of appearances.
 

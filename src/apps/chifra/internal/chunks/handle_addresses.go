@@ -8,23 +8,42 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
+	been_here := 0
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-		showAddresses := func(walker *index.IndexWalker, path string, first bool) (bool, error) {
+		showAddresses := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
 			if path != cache.ToBloomPath(path) {
-				return false, fmt.Errorf("should not happen in showFinalizedStats")
+				return false, fmt.Errorf("should not happen in showAddresses")
 			}
 
 			path = cache.ToIndexPath(path)
+			if !file.FileExists(path) {
+				// This is okay, if the user used chifra init without the --all option. Warn them and continue
+				msg := ""
+				path = strings.Replace(path, config.GetPathToIndex(opts.Globals.Chain), "$indexPath", 1)
+				if been_here < 3 {
+					msg = fmt.Sprintf("index file %s does not exist. Run 'chifra init --all' to create it.", path)
+				} else if been_here == 3 {
+					msg = fmt.Sprintf("index file %s does not exist. Warnings turned off...", path)
+				}
+				if msg != "" {
+					errorChan <- fmt.Errorf(msg)
+				}
+				been_here++
+				return true, nil
+			}
+
 			indexChunk, err := index.NewChunkData(path)
 			if err != nil {
 				return false, err
@@ -49,10 +68,10 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 				}
 
 				s := simpleChunkAddress{
-					Address: hexutil.Encode(obj.Address.Bytes()),
-					Range:   indexChunk.Range.String(),
-					Offset:  obj.Offset,
-					Count:   obj.Count,
+					Address: obj.Address,
+					Range:   indexChunk.Range,
+					Offset:  uint64(obj.Offset),
+					Count:   uint64(obj.Count),
 				}
 
 				modelChan <- &s
@@ -61,7 +80,7 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 			return true, nil
 		}
 
-		walker := index.NewIndexWalker(
+		walker := index.NewCacheWalker(
 			opts.Globals.Chain,
 			opts.Globals.TestMode,
 			10, /* maxTests */
@@ -74,32 +93,4 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
-}
-
-type simpleChunkAddress struct {
-	Address string `json:"address"`
-	Range   string `json:"range"`
-	Offset  uint32 `json:"offset"`
-	Count   uint32 `json:"count"`
-}
-
-func (s *simpleChunkAddress) Raw() *types.RawModeler {
-	return nil
-}
-
-func (s *simpleChunkAddress) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
-	return types.Model{
-		Data: map[string]interface{}{
-			"address": s.Address,
-			"range":   s.Range,
-			"offset":  s.Offset,
-			"count":   s.Count,
-		},
-		Order: []string{
-			"address",
-			"range",
-			"offset",
-			"count",
-		},
-	}
 }

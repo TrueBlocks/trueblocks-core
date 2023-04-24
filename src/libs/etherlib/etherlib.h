@@ -22,7 +22,6 @@
 #include "node.h"
 #include "blockoptions.h"
 #include "appearance.h"
-#include "cacheentry.h"
 #include "prices.h"
 #include "reconciliation.h"
 #include "timestamps.h"

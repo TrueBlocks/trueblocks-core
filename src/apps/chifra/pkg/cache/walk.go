@@ -5,28 +5,22 @@
 package cache
 
 import (
+	"context"
 	"io/fs"
 	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
-type IndexFileInfo struct {
-	Type  CacheType
-	Path  string
-	Range base.FileRange
+func WalkCacheFolder(ctx context.Context, chain string, cacheType CacheType, data interface{}, filenameChan chan<- CacheFileInfo) {
+	path := GetRootPathFromCacheType(chain, cacheType)
+	walkFolder(ctx, path, cacheType, data, filenameChan)
 }
 
-func WalkIndexFolder(chain string, cacheType CacheType, filenameChan chan<- IndexFileInfo) {
+func walkFolder(ctx context.Context, path string, cacheType CacheType, data interface{}, filenameChan chan<- CacheFileInfo) {
 	defer func() {
-		filenameChan <- IndexFileInfo{Type: None}
+		filenameChan <- CacheFileInfo{Type: Cache_NotACache}
 	}()
-
-	path := filepath.Join(config.GetPathToIndex(chain), tailFolder(chain, cacheType))
-	if cacheType == Index_Bloom {
-		path = ToBloomPath(path)
-	}
 
 	filepath.Walk(path, func(path string, info fs.FileInfo, err error) error {
 		if err != nil {
@@ -36,51 +30,30 @@ func WalkIndexFolder(chain string, cacheType CacheType, filenameChan chan<- Inde
 			// fmt.Printf("prevent panic by handling failure accessing a path %q: %v\n", path, err)
 			return err
 		}
-		if !info.IsDir() {
+
+		if info.IsDir() {
+			filenameChan <- CacheFileInfo{Type: cacheType, Path: path, IsDir: true, Data: data}
+
+		} else {
+			// TODO: This does not need to be part of walker. It could be in the caller and sent through the data pointer
 			rng := base.RangeFromFilename(path)
-			filenameChan <- IndexFileInfo{Type: cacheType, Path: path, Range: rng}
+			filenameChan <- CacheFileInfo{Type: cacheType, Path: path, Range: rng, Data: data}
 		}
+
+		select {
+		case <-ctx.Done():
+			return ctx.Err()
+		default:
+		}
+
 		return nil
 	})
-}
-
-func tailFolder(chain string, ct CacheType) string {
-	descrs := map[CacheType]string{
-		None:          "unknown",
-		Index_Bloom:   "blooms",
-		Index_Final:   "finalized",
-		Index_Staging: "staging",
-		Index_Ripe:    "ripe",
-		Index_Unripe:  "unripe",
-		Cache_Abis:    "abis",
-	}
-	return descrs[ct]
 }
 
 type CacheFileInfo struct {
-	Type CacheType
-	Path string
-}
-
-func WalkCacheFolder(chain string, cacheType CacheType, filenameChan chan<- CacheFileInfo) {
-	defer func() {
-		filenameChan <- CacheFileInfo{Type: None}
-	}()
-
-	path := filepath.Join(config.GetPathToCache(chain), tailFolder(chain, cacheType))
-	filepath.Walk(path, func(path string, info fs.FileInfo, err error) error {
-		if err != nil {
-			// If the scraper is running, this will sometimes send an error for a file, for example, that existed
-			// when it was first seen, but the scraper deletes before this call. We ignore any file system errors
-			// this routine, but if we experience problems, we can uncomment this line
-			// fmt.Printf("prevent panic by handling failure accessing a path %q: %v\n", path, err)
-			return err
-		}
-
-		if !info.IsDir() {
-			filenameChan <- CacheFileInfo{Type: cacheType, Path: path}
-		}
-
-		return nil
-	})
+	Type  CacheType
+	Path  string
+	Range base.FileRange
+	IsDir bool
+	Data  interface{}
 }

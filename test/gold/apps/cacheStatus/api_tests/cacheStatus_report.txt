@@ -1,6 +1,0 @@
-status?report&fmt=txt
-{
-  "errors": [
-    "Invalid key (report) in status route."
-  ]
-}

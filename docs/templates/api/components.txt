@@ -333,6 +333,28 @@ components:
           type: number
           format: uint64
           description: "the size of the monitor file containing those appearances"
+    bounds:
+      description: "show first block and last block an address appears in along with timestamps and dates"
+      type: object
+      properties:
+        count:
+          type: number
+          format: uint64
+          description: "the number of appearances for this address"
+        firstApp:
+          type: RawAppearance
+          description: "the block number and transaction id of the first appearance of this address"
+        firstTs:
+          type: number
+          format: timestamp
+          description: "the timestamp of the first appearance of this address"
+        latestApp:
+          type: RawAppearance
+          description: "the block number and transaction id of the latest appearance of this address"
+        latestTs:
+          type: number
+          format: timestamp
+          description: "the timestamp of the latest appearance of this address"
     block:
       description: "block data as returned from the RPC (with slight enhancements)"
       type: object
@@ -614,6 +636,10 @@ components:
           type: number
           format: timestamp
           description: "the timestamp of the block this log appears in"
+        date:
+          type: string
+          format: datetime
+          description: "the date of the block this log appears in"
         address:
           type: string
           format: address
@@ -745,6 +771,63 @@ components:
           type: string
           format: bytes
           description: "the result of the call of this trace"
+    traceCount:
+      description: "counts the number of traces in a transaction"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          example: 10
+          description: "the block number"
+        transactionIndex:
+          type: number
+          format: blknum
+          example: 10
+          description: "the transaction index"
+        transactionHash:
+          type: string
+          format: hash
+          example: "10"
+          description: "the transaction's hash"
+        timestamp:
+          type: number
+          format: timestamp
+          example: 10
+          description: "the timestamp of the block"
+        tracesCnt:
+          type: number
+          format: uint64
+          example: 30
+          description: "the number of traces in the transaction"
+    traceFilter:
+      description: "used by chifra traces --filter option to query for traces"
+      type: object
+      properties:
+        fromBlock:
+          type: string
+          description: "The first block to include in the queried list of traces."
+        toBlock:
+          type: string
+          description: "The last block to include in the queried list of traces."
+        fromAddress:
+          type: array
+          items:
+            $ref: "#/components/schemas/address"
+          description: "If included, only traces `from` this address will be included."
+        toAddress:
+          type: array
+          items:
+            $ref: "#/components/schemas/address"
+          description: "If included, only traces `to` this address will be included."
+        after:
+          type: number
+          format: uint64
+          description: "Only traces after this many traces are included."
+        count:
+          type: number
+          format: uint64
+          description: "Only this many traces are included."
     blockCount:
       description: "counts of various parts of the block data such as tx_count, trace_count, etc."
       type: object
@@ -812,63 +895,33 @@ components:
           type: string
           example: "byzantium"
           description: "an optional name for the block"
-    traceCount:
-      description: "counts the number of traces in a transaction"
+    timestamp:
+      description: "the timestamp, date and difference in timestamp of previous block produced by chifra when"
       type: object
       properties:
         blockNumber:
           type: number
           format: blknum
-          example: 10
-          description: "the block number"
-        transactionIndex:
-          type: number
-          format: blknum
-          example: 10
-          description: "the transaction index"
-        transactionHash:
-          type: string
-          format: hash
-          example: "10"
-          description: "the transaction's hash"
+          example: 4370000
+          description: "the number of the block"
         timestamp:
           type: number
           format: timestamp
-          example: 10
-          description: "the timestamp of the block"
-        tracesCnt:
+          example: 1508131331
+          description: "the Unix timestamp of the block"
+        diff:
           type: number
-          format: uint64
-          example: 30
-          description: "the number of traces in the transaction"
-    traceFilter:
-      description: "used by chifra traces --filter option to query for traces"
+          format: timestamp
+          example: 12
+          description: "the number of seconds since the last block"
+    timestampCount:
+      description: "the number of timestamps in the timestamps database"
       type: object
       properties:
-        fromBlock:
-          type: string
-          description: "The first block to include in the queried list of traces."
-        toBlock:
-          type: string
-          description: "The last block to include in the queried list of traces."
-        fromAddress:
-          type: array
-          items:
-            $ref: "#/components/schemas/address"
-          description: "If included, only traces `from` this address will be included."
-        toAddress:
-          type: array
-          items:
-            $ref: "#/components/schemas/address"
-          description: "If included, only traces `to` this address will be included."
-        after:
-          type: number
-          format: uint64
-          description: "Only traces after this many traces are included."
         count:
           type: number
           format: uint64
-          description: "Only this many traces are included."
+          description: "the number of timestamps in the timestamps database"
     ethState:
       description: "the on-chain state of a given address including ETH balance, nonce, and smart contract byte code if present"
       type: object
@@ -1050,7 +1103,7 @@ components:
         caches:
           type: array
           items:
-            $ref: "#/components/schemas/cache"
+            $ref: "#/components/schemas/cacheItem"
           description: "a collection of information concerning the binary caches"
     manifest:
       description: "a JSON object containing records for each bloom filter and index chunk in the Unchained Index"
@@ -1073,9 +1126,9 @@ components:
         chunks:
           type: array
           items:
-            $ref: "#/components/schemas/pinnedChunk"
+            $ref: "#/components/schemas/chunkRecord"
           description: "a list of the IPFS hashes of all of the chunks in the unchained index"
-    pinnedChunk:
+    chunkRecord:
       description: "a single record in the manifest detailing the IPFS hases and file sizes for each bloom filter and index chunk"
       type: object
       properties:
@@ -1093,14 +1146,12 @@ components:
           format: ipfshash
           example: "QmTbYpR...qWLj44"
           description: "the IPFS hash of the index chunk at that range"
-        firstApp:
-          type: number
-          format: blknum
-          description: "the first appearance in the chunk"
-        latestApp:
-          type: number
-          format: blknum
-          description: "the latest appearance in the chunk"
+        bloomSize:
+          type: int64
+          description: "the size of the bloom filter in bytes"
+        indexSize:
+          type: int64
+          description: "the size of the index portion in bytes"
     chunkIndex:
       description: "internal-use only data model detailing a single index chunk file"
       type: object
@@ -1116,11 +1167,11 @@ components:
           type: string
           format: hash
           description: "The hash of the specification under which this chunk was generated"
-        addressCount:
+        nAddresses:
           type: number
           format: uint64
           description: "The number of addresses in this chunk"
-        appearanceCount:
+        nAppearances:
           type: number
           format: uint64
           description: "The number of appearances in this chunk"
@@ -1128,7 +1179,7 @@ components:
           type: number
           format: uint64
           description: "The size of the chunk in bytes"
-    chunkBlooms:
+    chunkBloom:
       description: "internal-use only data model detailing a single bloom filter file"
       type: object
       properties:
@@ -1143,7 +1194,7 @@ components:
           type: string
           format: hash
           description: "The hash of the specification under which this chunk was generated"
-        count:
+        nBlooms:
           type: number
           format: uint64
           description: "The number of individual bloom filters in this bloom file"
@@ -1155,7 +1206,7 @@ components:
           type: number
           format: uint64
           description: "The size on disc in bytes of this bloom file"
-        width:
+        byteWidth:
           type: number
           format: uint64
           description: "The width of the bloom filter"
@@ -1235,33 +1286,6 @@ components:
           type: number
           format: double
           description: "the ratio of appearances to addresses"
-    cache:
-      description: "the base data model for each of the type-specific local binary caches"
-      type: object
-      properties:
-        type:
-          type: string
-          description: "the type of the cache (one of the nine different types)"
-        path:
-          type: string
-          description: "the physical path to the cache on the hard drive"
-        nFiles:
-          type: number
-          format: uint64
-          description: "the number of files in the cache"
-        nFolders:
-          type: number
-          format: uint64
-          description: "the number of subfolders in the cache"
-        sizeInBytes:
-          type: number
-          format: uint64
-          description: "the size of the cache in bytes"
-        items:
-          type: array
-          items:
-            $ref: "#/components/schemas/cacheEntry"
-          description: "an array of cache items"
     monitorClean:
       description: "report on cleaning dups out of monitors"
       type: object
@@ -1279,15 +1303,35 @@ components:
         dups:
           type: int64
           description: "the number of duplicates removed"
-    cacheEntry:
+    cacheItem:
       description: "a single entry in the results of a status query when `--verbose` is enabled"
       type: object
       properties:
-        address:
+        type:
           type: string
-          format: address
-        name:
+          description: "the type of the cache"
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/cacheItem"
+          description: "the individual items in the cache (if --verbose)"
+        lastCached:
           type: string
+          description: "the date of the most recent item added to the cache"
+        nFiles:
+          type: number
+          format: uint64
+          description: "the number of items in the cache"
+        nFolders:
+          type: number
+          format: uint64
+          description: "the number of folders holding that many items"
+        path:
+          type: string
+          description: "the path to the top of the given cache"
+        sizeInBytes:
+          type: int64
+          description: "the size of the cache in bytes"
     reportCheck:
       description: "report on checking contents of chunks"
       type: object
@@ -1319,59 +1363,10 @@ components:
           type: string
           description: "the result of the check"
         msgStrings:
-          type: []string
+          type: array
+          items:
+            type: string
           description: "an array of messages explaining failed checks"
-    indexCacheItem:
-      description: "an item in the Unchained Index cache"
-      type: object
-      properties:
-        nAddrs:
-          type: number
-          format: uint32
-          description: "the number of addresses in this chunk"
-        nApps:
-          type: number
-          format: uint32
-          description: "the number of appearances in this chunk"
-        firstApp:
-          type: number
-          format: blknum
-          description: "the first appearance in this chunk"
-        latestApp:
-          type: number
-          format: blknum
-          description: "the last appeaerance in this chunk"
-        firstTs:
-          type: number
-          format: timestamp
-          description: "the first timestamp in this chunk"
-        latestTs:
-          type: number
-          format: timestamp
-          description: "the last timestamp in this chunk"
-        filename:
-          type: string
-          description: "the filename of this chunk"
-        fileDate:
-          type: string
-          format: datetime
-          description: "the file date of this chunk"
-        indexSizeBytes:
-          type: number
-          format: uint32
-          description: "the size in bytes of the index portion of this chunk"
-        indexHash:
-          type: string
-          format: ipfshash
-          description: "the IPFS hash of the index portion of this chunk"
-        bloomSizeBytes:
-          type: number
-          format: uint32
-          description: "the size in bytes of the bloom filter for this chunk"
-        bloomHash:
-          type: string
-          format: ipfshash
-          description: "the IPFS has of the bloom filter for this chunk"
     chain:
       description: "a configuration item carrying information about a single chain"
       type: object
@@ -1470,6 +1465,8 @@ components:
       format: hash
       description: "The 32-byte hash"
       example: "0xf128...1e98"
+    address:
+      type: string
     string:
       type: string
     topic:

@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CStake, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextStakeChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextStakeChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextStakeChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -150,6 +150,8 @@ bool CStake::Serialize(CArchive& archive) {
     archive >> address;
     archive >> lastPos;
     archive >> stake;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -164,6 +166,8 @@ bool CStake::SerializeC(CArchive& archive) const {
     archive << address;
     archive << lastPos;
     archive << stake;
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 
@@ -172,8 +176,8 @@ bool CStake::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
     ASSERT(archiveIn.isReading());
     ASSERT(archiveOut.isWriting());
     CStake copy;
-    // FUTURE_WORK
-    // FUTURE_WORK
+    // EXISTING_CODE
+    // EXISTING_CODE
     copy.Serialize(archiveIn);
     copy.SerializeC(archiveOut);
     return true;
@@ -250,12 +254,27 @@ string_q nextStakeChunk_custom(const string_q& fieldIn, const void* dataPtr) {
     return "";
 }
 
+// EXISTING_CODE
+// EXISTING_CODE
+
 //---------------------------------------------------------------------------
 bool CStake::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CStake& sta) {
+    sta.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CStake& sta) {
+    sta.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

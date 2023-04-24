@@ -109,6 +109,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12976,tools,ChainData,blocks,getBlocks,big_range,r,500,false,false,false,false,header,flag,<uint64>,for the --logs option only&#44; allow for block ranges larger than 500
 12578,tools,ChainData,blocks,getBlocks,count,U,,false,false,true,true,header,switch,<boolean>,display the number of the lists of appearances for --addrs or --uniq
 12580,tools,ChainData,blocks,getBlocks,cache,o,,false,false,true,true,header,switch,<boolean>,force a write of the block to the cache
+12581,tools,ChainData,blocks,getBlocks,decache,D,,false,false,true,false,gocmd,switch,<boolean>,removes a block and any transactions or traces in the block from the cache
 12582,tools,ChainData,blocks,getBlocks,list,l,0,false,false,false,true,gocmd,flag,<blknum>,summary list of blocks running backwards from latest block minus num
 12584,tools,ChainData,blocks,getBlocks,list_count,C,0,false,false,false,true,gocmd,flag,<blknum>,the number of blocks to report for --list option
 12590,tools,ChainData,blocks,getBlocks,,,,false,false,true,true,--,description,,Retrieve one or more blocks from the chain or local cache.
@@ -136,8 +137,9 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13615,tools,ChainData,transactions,getTrans,reconcile,r,,false,false,true,true,local,deprecated,<address>,please use --account_for option instead
 13617,tools,ChainData,transactions,getTrans,account_for,A,,false,false,true,true,local,flag,<address>,reconcile the transaction as per the provided address
 13620,tools,ChainData,transactions,getTrans,cache,o,,false,false,true,true,header,switch,<boolean>,force the results of the query into the tx cache (and the trace cache if applicable)
-13620,tools,ChainData,transactions,getTrans,source,s,,false,false,false,false,gocmd,switch,<boolean>,find the source of the funds sent to the receiver
-13622,tools,ChainData,transactions,getTrans,,,,false,false,true,true,--,description,,Retrieve one or more transactions from the chain or local cache.
+13621,tools,ChainData,transactions,getTrans,decache,D,,false,false,true,false,gocmd,switch,<boolean>,removes a transactions and any traces in the transaction from the cache
+13622,tools,ChainData,transactions,getTrans,source,s,,false,false,false,false,gocmd,switch,<boolean>,find the source of the funds sent to the receiver
+13623,tools,ChainData,transactions,getTrans,,,,false,false,true,true,--,description,,Retrieve one or more transactions from the chain or local cache.
 13624,tools,ChainData,transactions,getTrans,n1,,,false,false,false,false,--,note,,The `transactions` list may be one or more transaction hashes&#44; blockNumber.transactionID pairs&#44; or a blockHash.transactionID pairs.
 13626,tools,ChainData,transactions,getTrans,n2,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
 13628,tools,ChainData,transactions,getTrans,n3,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
@@ -234,11 +236,14 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10770,apps,Admin,config,config,paths,a,,false,false,false,false,gocmd,switch,<boolean>,show the configuration paths for the system
 10860,apps,Admin,config,config,,,,false,false,true,true,--,description,,Report on and edit the configuration of the TrueBlocks system.
 
-20710,apps,Admin,status,cacheStatus,mode,,,false,false,true,true,local,positional,enum[index|monitors|names|abis|caches|some*|all],the name of the binary cache to report on
-20730,apps,Admin,status,cacheStatus,types,t,,false,false,true,false,local,flag,list<enum[blocks|txs|traces|slurps|all*]>,for caches mode only&#44; which type(s) of cache to report
-20860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the state of the internal binary caches.
+20810,apps,Admin,status,cacheStatus,modes,,,false,false,true,true,gocmd,positional,list<enum[index|blooms|blocks|txs|traces|monitors|names|abis|recons|slurps|staging|unripe|maps|some*|all]>,the (optional) name of the binary cache to report on&#44; terse otherwise
+20815,apps,Admin,status,cacheStatus,first_record,c,1,false,false,true,true,gocmd,flag,<uint64>,the first record to process
+20820,apps,Admin,status,cacheStatus,max_records,e,10000,false,false,true,true,gocmd,flag,<uint64>,the maximum number of records to process
+20825,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the state of the internal binary caches.
+20830,apps,Admin,status,cacheStatus,n1,,,false,false,false,false,--,note,,The `some` mode includes index&#44; monitors&#44; names&#44; slurps&#44; and abis.
+20835,apps,Admin,status,cacheStatus,n2,,,false,false,false,false,--,note,,If no mode is supplied&#44; a terse report is generated.
 
-31900,apps,Admin,chunks,chunkMan,mode,,,true,false,true,true,local,positional,enum[status|manifest|index|blooms|addresses|appearances|stats],the type of data to process
+31900,apps,Admin,chunks,chunkMan,mode,,,true,false,true,true,local,positional,enum[manifest|index|blooms|addresses|appearances|stats],the type of data to process
 31905,apps,Admin,chunks,chunkMan,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of blocks to intersect with chunk ranges
 31920,apps,Admin,chunks,chunkMan,check,c,,false,false,true,true,gocmd,switch,<boolean>,check the manifest&#44; index&#44; or blooms for internal consistency
 31935,apps,Admin,chunks,chunkMan,pin,i,,false,false,true,true,gocmd,switch,<boolean>,pin the manifest or each index chunk and bloom
@@ -296,6 +301,3 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 11930,dev_tools,,,testRunner,skip,s,1,false,false,false,false,header,flag,<uint64>,run only every 'skip' test (faster)
 11960,dev_tools,,,testRunner,report,r,,false,false,true,false,header,switch,<boolean>,display performance report to screen
 11980,dev_tools,,,testRunner,,,,false,false,true,false,--,description,,Run TrueBlocks' test cases with options.
-
-11880,dev_tools,,,migrate,mode,m,,false,false,true,false,local,flag,enum[test|cache|index],either effectuate or test to see if a migration is necessary
-11980,dev_tools,,,migrate,,,,false,false,true,false,--,description,,Run migrations.

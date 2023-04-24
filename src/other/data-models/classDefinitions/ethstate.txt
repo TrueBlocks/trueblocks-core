@@ -1,0 +1,14 @@
+[settings]
+class = CEthState
+fields = ethstate.csv
+includes = utillib.h|abi.h
+cpp_includes = etherlib.h
+sort = v1.blockNumber < v2.blockNumber
+equals = blockNumber == it.blockNumber
+doc_group = 03-Chain State
+doc_descr = the on-chain state of a given address including ETH balance, nonce, and smart contract byte code if present
+doc_route = 301-ethState
+doc_producer = state
+
+cpp_output = src/libs/etherlib/
+go_output = src/apps/chifra/pkg/types

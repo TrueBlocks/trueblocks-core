@@ -95,8 +95,8 @@ string_q CCommandOption::getValueByName(const string_q& fieldName) const {
             if (fieldName % "generate") {
                 return generate;
             }
-            if (fieldName % "go_type") {
-                return go_type;
+            if (fieldName % "go_intype") {
+                return go_intype;
             }
             if (fieldName % "go_flagtype") {
                 return go_flagtype;
@@ -207,8 +207,8 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
                 generate = fieldValue;
                 return true;
             }
-            if (fieldName % "go_type") {
-                go_type = fieldValue;
+            if (fieldName % "go_intype") {
+                go_intype = fieldValue;
                 return true;
             }
             if (fieldName % "go_flagtype") {
@@ -318,7 +318,7 @@ bool CCommandOption::Serialize(CArchive& archive) {
     archive >> option_type;
     archive >> data_type;
     archive >> real_type;
-    archive >> go_type;
+    archive >> go_intype;
     archive >> go_flagtype;
     archive >> summary;
     archive >> description;
@@ -351,7 +351,7 @@ bool CCommandOption::SerializeC(CArchive& archive) const {
     archive << option_type;
     archive << data_type;
     archive << real_type;
-    archive << go_type;
+    archive << go_intype;
     archive << go_flagtype;
     archive << summary;
     archive << description;
@@ -420,7 +420,7 @@ void CCommandOption::registerClass(void) {
     ADD_FIELD(CCommandOption, "option_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "data_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "real_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CCommandOption, "go_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "go_intype", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "go_flagtype", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "summary", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -658,17 +658,17 @@ bool CCommandOption::finishCleanup(void) {
     if (startsWith(data_type, "enum") || startsWith(data_type, "list<enum"))  // in every case of enum
         real_type = "string_q";
 
-    go_type = real_type;
-    replace(go_type, "string_q", "string");
-    replace(go_type, "address_t", "string");
-    replace(go_type, "uint64_t", "uint64");
-    replace(go_type, "uint32_t", "uint32");
-    replace(go_type, "blknum_t", "uint64");
-    replace(go_type, "double", "float64");
+    go_intype = real_type;
+    replace(go_intype, "string_q", "string");
+    replace(go_intype, "address_t", "string");
+    replace(go_intype, "uint64_t", "uint64");
+    replace(go_intype, "uint32_t", "uint32");
+    replace(go_intype, "blknum_t", "uint64");
+    replace(go_intype, "double", "float64");
     if (startsWith(data_type, "list"))
-        go_type = "[]string";
+        go_intype = "[]string";
 
-    go_flagtype = (go_type == "[]string" ? "StringSlice" : toProper(go_type)) + "VarP";
+    go_flagtype = (go_intype == "[]string" ? "StringSlice" : toProper(go_intype)) + "VarP";
 
     return true;
 }
@@ -770,8 +770,8 @@ void CCommandOption::verifyHotkey(CStringArray& warnings, map<string, string>& h
 //---------------------------------------------------------------------------------------------------
 // go-port
 bool isFullyPorted(const string_q& a) {
-    CStringArray tools = {"when",     "list", "monitors", "chunks", "init",  "scrape", "abis",
-                          "receipts", "logs", "traces",   "slurp",  "names", "daemon", "config"};
+    CStringArray tools = {"when", "list",   "monitors", "chunks", "init",   "scrape", "abis",  "receipts",
+                          "logs", "traces", "slurp",    "names",  "daemon", "config", "status"};
     for (auto tool : tools) {
         if (contains(a, tool))
             return true;

@@ -31,6 +31,7 @@ Flags:
                              One of [ from | to ]
   -A, --account_for string   reconcile the transaction as per the provided address
   -o, --cache                force the results of the query into the tx cache (and the trace cache if applicable)
+  -D, --decache              removes a transactions and any traces in the transaction from the cache
   -x, --fmt string           export format, one of [none|json*|txt|csv]
   -v, --verbose              enable verbose (increase detail with --log_level)
   -h, --help                 display this help screen

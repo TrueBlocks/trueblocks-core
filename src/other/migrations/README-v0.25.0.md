@@ -4,6 +4,10 @@
 
 (February 22, 2022)
 
+## IMPORTANT NOTE
+
+This migration has been retired. If your data is prior to this version, you must clear your cache and index folders and start from scratch
+
 ## Why the Change?
 
 With this migration, TrueBlocks enters into the world of multi-chain blockchain scraping / indexing.

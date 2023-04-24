@@ -45,7 +45,7 @@ func (s *SimpleAppearance) SetRaw(raw *RawAppearance) {
 	s.raw = raw
 }
 
-func (s *SimpleAppearance) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleAppearance) Model(verbose bool, format string, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -75,7 +75,7 @@ func (s *SimpleAppearance) Model(showHidden bool, format string, extraOptions ma
 		"transactionIndex",
 	}
 
-	if showHidden {
+	if verbose {
 		// model["reason"] = s.Reason
 		model["timestamp"] = s.Timestamp
 		model["date"] = s.Date

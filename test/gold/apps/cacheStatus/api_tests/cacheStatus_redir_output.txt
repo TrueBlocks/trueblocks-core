@@ -1,4 +1,4 @@
-status?mode=names&output=output_test_file
+status?modes=names&output=output_test_file&maxRecords=2
 {
   "errors": [
     "The --output option is not available in Api Mode."

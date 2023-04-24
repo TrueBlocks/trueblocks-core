@@ -102,6 +102,9 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
             if (fieldName % "contained_by") {
                 return contained_by;
             }
+            if (fieldName % "cpp_output") {
+                return cpp_output;
+            }
             break;
         case 'd':
             if (fieldName % "display_str") {
@@ -124,6 +127,9 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
             }
             if (fieldName % "doc_producer") {
                 return doc_producer;
+            }
+            if (fieldName % "disabled") {
+                return bool_2_Str(disabled);
             }
             break;
         case 'e':
@@ -163,6 +169,9 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
             if (fieldName % "go_model") {
                 return go_model;
             }
+            if (fieldName % "go_output") {
+                return go_output;
+            }
             break;
         case 'h':
             if (fieldName % "head_includes") {
@@ -172,11 +181,6 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
         case 'i':
             if (fieldName % "input_path") {
                 return input_path;
-            }
-            break;
-        case 'o':
-            if (fieldName % "output") {
-                return output;
             }
             break;
         case 's':
@@ -263,6 +267,10 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
                 contained_by = fieldValue;
                 return true;
             }
+            if (fieldName % "cpp_output") {
+                cpp_output = fieldValue;
+                return true;
+            }
             break;
         case 'd':
             if (fieldName % "display_str") {
@@ -291,6 +299,10 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
             }
             if (fieldName % "doc_producer") {
                 doc_producer = fieldValue;
+                return true;
+            }
+            if (fieldName % "disabled") {
+                disabled = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -325,6 +337,10 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
                 go_model = fieldValue;
                 return true;
             }
+            if (fieldName % "go_output") {
+                go_output = fieldValue;
+                return true;
+            }
             break;
         case 'h':
             if (fieldName % "head_includes") {
@@ -335,12 +351,6 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
         case 'i':
             if (fieldName % "input_path") {
                 input_path = fieldValue;
-                return true;
-            }
-            break;
-        case 'o':
-            if (fieldName % "output") {
-                output = fieldValue;
                 return true;
             }
             break;
@@ -397,7 +407,6 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     archive >> go_model;
     archive >> head_includes;
     archive >> src_includes;
-    archive >> output;
     archive >> display_str;
     archive >> sort_str;
     archive >> eq_str;
@@ -410,6 +419,9 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     archive >> doc_route;
     archive >> doc_alias;
     archive >> doc_producer;
+    archive >> cpp_output;
+    archive >> go_output;
+    archive >> disabled;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -437,7 +449,6 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     archive << go_model;
     archive << head_includes;
     archive << src_includes;
-    archive << output;
     archive << display_str;
     archive << sort_str;
     archive << eq_str;
@@ -450,6 +461,9 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     archive << doc_route;
     archive << doc_alias;
     archive << doc_producer;
+    archive << cpp_output;
+    archive << go_output;
+    archive << disabled;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -513,7 +527,6 @@ void CClassDefinition::registerClass(void) {
     ADD_FIELD(CClassDefinition, "go_model", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "head_includes", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "src_includes", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CClassDefinition, "output", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "display_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "sort_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "eq_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -528,6 +541,9 @@ void CClassDefinition::registerClass(void) {
     ADD_FIELD(CClassDefinition, "doc_route", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "doc_alias", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "doc_producer", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CClassDefinition, "cpp_output", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CClassDefinition, "go_output", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CClassDefinition, "disabled", T_BOOL | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CClassDefinition, "schema");
@@ -640,8 +656,8 @@ void checkSorts(const string_q& className, const CStringArray& fields, const CSt
     }
     if (!which) {
         cerr << "Could not find field '" << field << "' in the following fields:\n";
-        for (auto field : fields)
-            cerr << "\t" << field << "\n";
+        for (auto fld : fields)
+            cerr << "\t" << fld << "\n";
         cerr << "\n";
         exit(0);
     }
@@ -676,24 +692,39 @@ void CClassDefinition::ReadSettings(const CToml& toml) {
     contained_by = toml.getConfigStr("settings", "contained_by", "");
     doc_producer = toml.getConfigStr("settings", "doc_producer", "");
     sort_str = toml.getConfigStr("settings", "sort", "");
+    eq_str = toml.getConfigStr("settings", "equals", "");
+
     if (contains(sort_str, ";")) {
         LOG_ERR("makeClass: do not include semicolon in sort string ", sort_str);
         exit(0);
     }
-    eq_str = toml.getConfigStr("settings", "equals", "");
     if (contains(eq_str, ";")) {
         LOG_ERR("makeClass: do not include semicolon in equals string ", eq_str);
         exit(0);
     }
+
     doc_group = toml.getConfigStr("settings", "doc_group", "");
     doc_descr = toml.getConfigStr("settings", "doc_descr", "");
     doc_route = toml.getConfigStr("settings", "doc_route", "");
     doc_alias = toml.getConfigStr("settings", "doc_alias", "");
     doc_order = nextTokenClear(doc_group, '-') + nextTokenClear(doc_route, '-');
-    if (toml.getConfigBool("settings", "go_type", false)) {
+
+    cpp_output = substitute(toml.getConfigStr("settings", "cpp_output", ""), "src/", "./");
+    go_output = substitute(toml.getConfigStr("settings", "go_output", ""), "src/", "./");
+    if (cpp_output.empty()) {
+        disabled = true;
+    } else {
+        if (!endsWith(cpp_output, "/")) {
+            cpp_output += "/";
+        }
+    }
+    if (!go_output.empty()) {
         string_q def = class_name;
         replace(def, "C", "");
         go_model = toml.getConfigStr("settings", "go_model", def);
+        if (!endsWith(go_output, "/")) {
+            go_output += "/";
+        }
     }
 
     //------------------------------------------------------------------------------------------------
@@ -706,12 +737,12 @@ void CClassDefinition::ReadSettings(const CToml& toml) {
     base_upper = toUpper(base_name);
     base_base = toProper(extract(base_class, 1));
 
-    string_q fn = toml.getFilename();
-    replace(fn, "classDefinitions/", "classDefinitions/fields/");
-    replace(fn, ".txt", ".csv");
+    string_q fn =
+        substitute(substitute(toml.getFilename(), "classDefinitions/", "classDefinitions/fields/"), ".txt", ".csv");
     if (fileExists(fn)) {
         string_q contents = asciiFileToString(fn);
         string_q header = nextTokenClear(contents, '\n');
+
         CStringArray fields;
         explode(fields, header, ',');
         for (auto& fld : fields) {
@@ -721,17 +752,21 @@ void CClassDefinition::ReadSettings(const CToml& toml) {
                 fld = "is_" + fld;
             }
         }
+
         CStringArray lines;
         explode(lines, contents, '\n');
         checkSorts(class_name, fields, lines, "doc");
         checkSorts(class_name, fields, lines, "disp");
+
         for (auto line : lines) {
             if (trim(line).empty()) {
                 continue;
             }
+
             bool isGoOnly = contains(line, "goonly");
             bool isRawOnly = contains(line, "rawonly");
             line = substitute(substitute(line, "goonly", "true"), "rawonly", "true");
+
             CMember tmp;
             tmp.parseCSV(fields, line);
             if (tmp.memberFlags & IS_ARRAY) {
@@ -739,12 +774,15 @@ void CClassDefinition::ReadSettings(const CToml& toml) {
             } else if (tmp.memberFlags & IS_OBJECT) {
                 tmp.type = "C" + string_q(1, char(toupper(tmp.type[0]))) + tmp.type.substr(1, 100);
             }
+
             if (isGoOnly) {
                 tmp.memberFlags |= IS_GOONLY;
             }
+
             if (isRawOnly) {
                 tmp.memberFlags |= IS_RAWONLY;
             }
+
             tmp.postProcessType();
             fieldArray.push_back(tmp);
         }

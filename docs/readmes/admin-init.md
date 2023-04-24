@@ -43,7 +43,7 @@ Notes:
 Data models produced by this tool:
 
 - [manifest](/data-model/admin/#manifest)
-- [pinnedchunk](/data-model/admin/#pinnedchunk)
+- [chunkrecord](/data-model/admin/#chunkrecord)
 
 Links:
 

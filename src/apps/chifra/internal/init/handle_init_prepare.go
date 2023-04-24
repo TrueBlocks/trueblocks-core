@@ -30,7 +30,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 	// filters are required. If the user has specified `--all`, we insist that the corresponding index portion is also present and valid. If the
 	// user has not specified `--all`, then we check the index portion, only if it exists, and then only for the correct header and file size. If a
 	// bloom filter is present on disc, but not in the manifest, then we delete both the bloom filte and the corresponding index portion if it exists.
-	cleanIndex := func(walker *index.IndexWalker, path string, first bool) (bool, error) {
+	cleanIndex := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
 		if path != cache.ToBloomPath(path) {
 			logger.Fatal("should not happen ==> we're spinning through the bloom filters")
 		}
@@ -104,7 +104,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 		}
 	}
 
-	walker := index.NewIndexWalker(
+	walker := index.NewCacheWalker(
 		opts.Globals.Chain,
 		opts.Globals.TestMode,
 		10, /* maxTests */

@@ -3,7 +3,7 @@ package types
 import "io"
 
 type Modeler[RT RawData] interface {
-	Model(showHidden bool, format string, extraOptions map[string]any) Model
+	Model(verbose bool, format string, extraOptions map[string]any) Model
 	Raw() *RT
 }
 
@@ -19,7 +19,6 @@ type Model struct {
 
 type RawModeler interface{}
 
-// TODO: BOGUS - The auto code generation should check that all auto generated fields are included here
 type RawData interface {
 	RawBlock | RawTransaction | RawReceipt | RawLog |
 		RawTrace | RawTraceAction | RawTraceResult |

@@ -56,7 +56,12 @@ func (opts *ReceiptsOptions) HandleShowReceipts() error {
 				}
 
 				// TODO: Why does this interface always accept nil and zero at the end?
-				receipt, err := rpcClient.GetTransactionReceipt(opts.Globals.Chain, uint64(tx.BlockNumber), uint64(tx.TransactionIndex), nil, 0)
+				receipt, err := rpcClient.GetTransactionReceipt(opts.Globals.Chain, rpcClient.ReceiptQuery{
+					Bn:      uint64(tx.BlockNumber),
+					Txid:    uint64(tx.TransactionIndex),
+					NeedsTs: true,
+				})
+
 				if err != nil {
 					if errors.Is(err, ethereum.NotFound) {
 						errorChan <- fmt.Errorf("transaction at %s returned an error: %s", opts.Transactions[idIndex], ethereum.NotFound)

@@ -159,7 +159,7 @@ func GetTransaction(chain string, blockNumber base.Blknum, txIndex uint64) (tx *
 	)
 }
 
-var abisFilePath = path.Join(cacheDirectories[Cache_Abis], "known.bin")
+var abisFilePath = path.Join(cacheTypeToFolder[Cache_Abis], "known.bin")
 
 // GetAbis reads all ABIs stored in the cache
 func GetAbis(chain string) (abis []types.SimpleFunction, err error) {
@@ -184,7 +184,7 @@ func SetAbis(chain string, abis []types.SimpleFunction) (err error) {
 func GetAbi(chain string, address base.Address) (simpleAbis []types.SimpleFunction, err error) {
 	fileName := address.Hex() + ".json"
 	filePath := path.Join(
-		cacheDirectories[Cache_Abis],
+		cacheTypeToFolder[Cache_Abis],
 		fileName,
 	)
 	file, err := load(chain, filePath)
@@ -218,7 +218,7 @@ func GetAbi(chain string, address base.Address) (simpleAbis []types.SimpleFuncti
 // TODO: we cache abi.ABI, not types.SimpleFunction
 // func SetAbi(chain string, address base.Address, abi []types.SimpleFunction) (err error) {
 // 	filePath := path.Join(
-// 		cacheDirectories[Cache_Abis],
+// 		cacheTypeToFolder[Cache_Abis],
 // 		address.Hex()+".json",
 // 	)
 
@@ -233,7 +233,7 @@ func GetAbi(chain string, address base.Address) (simpleAbis []types.SimpleFuncti
 // InsertAbi copies file (e.g. opened local file) into cache
 func InsertAbi(chain string, address base.Address, inputReader io.Reader) (err error) {
 	filePath := path.Join(
-		cacheDirectories[Cache_Abis],
+		cacheTypeToFolder[Cache_Abis],
 		address.Hex()+".json",
 	)
 	cacheDir := getCacheAndChainPath(chain)
@@ -251,3 +251,19 @@ func InsertAbi(chain string, address base.Address, inputReader io.Reader) (err e
 
 	return
 }
+
+// TODO: The following data types have cache folders, but they do not have code above to read or write the cache. In some cases
+// the code is in the `cache` package, in other cases it's elsewhere or non-existant. We should move all of the code to this
+// package and remove the code from the other packages.
+// Cache_Monitors
+// Cache_Names
+// Cache_Recons
+// Cache_Slurps
+// Cache_Tmp
+// Cache_Traces
+// Index_Bloom
+// Index_Final
+// Index_Ripe
+// Index_Staging
+// Index_Unripe
+// Index_Maps

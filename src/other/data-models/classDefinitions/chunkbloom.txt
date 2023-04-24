@@ -1,0 +1,10 @@
+[settings]
+class = CChunkBloom
+fields = chunkbloom.csv
+doc_group = 04-Admin
+doc_descr = internal-use only data model detailing a single bloom filter file
+doc_route = 405-chunkBloom
+doc_producer = chunks
+
+cpp_output =
+go_output = src/apps/chifra/internal/chunks/

@@ -440,6 +440,7 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
 void CTransaction::finishParse() {
     // EXISTING_CODE
     receipt.pTransaction = this;
+    receipt.finishParse();
     for (size_t i = 0; i < traces.size(); i++) {
         traces[i].pTransaction = this;
     }

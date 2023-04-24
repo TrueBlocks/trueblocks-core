@@ -1,29 +1,11 @@
-chifra status  caches --types slurps --verbose
-TEST[DATE|TIME] Mode:  caches
-TEST[DATE|TIME] Types:  [slurps]
+chifra status  slurps --verbose --max_records 2
+TEST[DATE|TIME] Modes:  [slurps]
+TEST[DATE|TIME] MaxRecords:  2
 TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Format:  json
 {
-  "clientVersion": "Client version",
-  "clientIds": "chainId: 1 networkId: 1",
-  "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-",
-  "rpcProvider": "--providers--",
-  "configPath": "--paths--",
-  "cachePath": "--paths--",
-  "indexPath": "--paths--",
-  "host": "--hostname-- (--username--)",
-  "isTesting": true,
-  "isArchive": true,
-  "isTracing": true,
-  "hasEskey": true,
-  "caches": [
-    {
-      "type": "CSlurpCache",
-      "path": "slurpsPath",
-      "nFiles": 0,
-      "nFolders": 0,
-      "sizeInBytes": 0,
-      "isValid": true
-    }
-  ],
-  "date": "--date--"
+  "data": [],
+  "errors": [
+    "no files were found in the [slurps] caches"
+  ]
 }

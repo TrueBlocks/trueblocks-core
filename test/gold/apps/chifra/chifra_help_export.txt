@@ -1,4 +1,4 @@
-chifra  export --help --log_level 2
+chifra  export --help
 Purpose:
   Export full detail of transactions for one or more addresses.
 

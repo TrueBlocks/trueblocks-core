@@ -66,7 +66,7 @@ func (s *SimpleTransfer) SetRaw(raw *RawTransfer) {
 	s.raw = raw
 }
 
-func (s *SimpleTransfer) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleTransfer) Model(verbose bool, format string, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

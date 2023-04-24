@@ -1,3 +1,11 @@
+// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
+ */
+
 package types
 
 // EXISTING_CODE
@@ -9,17 +17,22 @@ import (
 
 // EXISTING_CODE
 
-type RawChunkRecord interface {
+type RawChunkRecord struct {
+	BloomHash string `json:"bloomHash"`
+	BloomSize string `json:"bloomSize"`
+	IndexHash string `json:"indexHash"`
+	IndexSize string `json:"indexSize"`
+	Range     string `json:"range"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
 type SimpleChunkRecord struct {
-	Range     string          `json:"range,omitempty"`
-	BloomHash base.IpfsHash   `json:"bloomHash,omitempty"`
-	BloomSize int64           `json:"bloomSize,omitempty"`
-	IndexHash base.IpfsHash   `json:"indexHash,omitempty"`
-	IndexSize int64           `json:"indexSize,omitempty"`
+	BloomHash base.IpfsHash   `json:"bloomHash"`
+	BloomSize int64           `json:"bloomSize"`
+	IndexHash base.IpfsHash   `json:"indexHash"`
+	IndexSize int64           `json:"indexSize"`
+	Range     string          `json:"range"`
 	raw       *RawChunkRecord `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -33,7 +46,7 @@ func (s *SimpleChunkRecord) SetRaw(raw *RawChunkRecord) {
 	s.raw = raw
 }
 
-func (s *SimpleChunkRecord) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleChunkRecord) Model(verbose bool, format string, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

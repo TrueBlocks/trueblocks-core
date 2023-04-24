@@ -1,28 +1,50 @@
-chifra status  abis --verbose
-TEST[DATE|TIME] Mode:  abis
+chifra status  abis --verbose --max_records 2
+TEST[DATE|TIME] Modes:  [abis]
+TEST[DATE|TIME] MaxRecords:  2
 TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Format:  json
 {
-  "clientVersion": "Client version",
-  "clientIds": "chainId: 1 networkId: 1",
-  "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-",
-  "rpcProvider": "--providers--",
-  "configPath": "--paths--",
-  "cachePath": "--paths--",
-  "indexPath": "--paths--",
-  "host": "--hostname-- (--username--)",
-  "isTesting": true,
-  "isArchive": true,
-  "isTracing": true,
-  "hasEskey": true,
-  "caches": [
+  "data": [
     {
-      "type": "CAbiCache",
-      "path": "abisPath",
-      "nFiles": 0,
-      "nFolders": 0,
-      "sizeInBytes": 0,
-      "isValid": true
+      "cachePath": "--paths--",
+      "caches": [
+        {
+          "items": [
+            {
+              "address": "--address--",
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/abis/--address--",
+              "itemType": "abisCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "address": "--address--",
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/abis/--address--",
+              "itemType": "abisCacheItem",
+              "sizeInBytes": 123456789
+            }
+          ],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789,
+          "type": "abisCache"
+        }
+      ],
+      "chainConfig": "--paths--",
+      "clientVersion": "Client version",
+      "hasEsKey": true,
+      "hasPinKey": false,
+      "indexPath": "--paths--",
+      "isApi": false,
+      "isArchive": true,
+      "isTesting": true,
+      "isTracing": true,
+      "rootConfig": "--paths--",
+      "rpcProvider": "--providers--",
+      "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-"
     }
-  ],
-  "date": "--date--"
+  ]
 }

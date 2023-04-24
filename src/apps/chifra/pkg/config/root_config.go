@@ -26,6 +26,7 @@ type versionGroup struct {
 }
 
 type chainGroup struct {
+	Chain          string `toml:"chain"`
 	ChainId        string `toml:"chainId"`
 	LocalExplorer  string `toml:"localExplorer"`
 	RemoteExplorer string `toml:"remoteExplorer"`
@@ -53,6 +54,18 @@ type ConfigFile struct {
 	Settings settingsGroup
 	Keys     map[string]keyGroup
 	Chains   map[string]chainGroup
+}
+
+func GetChainArray() []chainGroup {
+	var result []chainGroup
+	for k, v := range GetRootConfig().Chains {
+		v.Chain = k
+		if len(v.IpfsGateway) == 0 {
+			v.IpfsGateway = GetRootConfig().Settings.DefaultGateway
+		}
+		result = append(result, v)
+	}
+	return result
 }
 
 // init sets up default values for the given configuration
@@ -195,4 +208,14 @@ func GetPinningKeys(chain string) (string, string, string) {
 	b := keys["pinata"].Secret
 	c := keys["estuary"].ApiKey
 	return a, b, c
+}
+
+func HasPinningKeys(chain string) bool {
+	a, b, c := GetPinningKeys(chain)
+	return len(a)+len(b)+len(c) > 0
+}
+
+func HasEsKeys(chain string) bool {
+	keys := GetRootConfig().Keys
+	return len(keys["etherscan"].ApiKey) > 0
 }

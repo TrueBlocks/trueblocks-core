@@ -69,7 +69,7 @@ inputsDict          	1016	0	20971573	Unknown TS_STRING TS_OMITEMPTY
 outputsDict         	1017	0	20971573	Unknown TS_STRING TS_OMITEMPTY
 declaration         	1018	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 {
-  "schema": 60000,
+  "schema": 64000,
   "deleted": false,
   "showing": true,
   "cname": "Function",

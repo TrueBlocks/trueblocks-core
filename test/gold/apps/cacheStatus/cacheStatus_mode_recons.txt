@@ -1,0 +1,47 @@
+chifra status  recons --verbose --max_records 2
+TEST[DATE|TIME] Modes:  [recons]
+TEST[DATE|TIME] MaxRecords:  2
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "cachePath": "--paths--",
+      "caches": [
+        {
+          "type": "reconsCache",
+          "items": [
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "reconsCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "reconsCacheItem",
+              "sizeInBytes": 123456789
+            }
+          ],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789
+        }
+      ],
+      "chainConfig": "--paths--",
+      "clientVersion": "Client version",
+      "hasEsKey": true,
+      "hasPinKey": false,
+      "indexPath": "--paths--",
+      "isArchive": true,
+      "isTesting": true,
+      "isTracing": true,
+      "rootConfig": "--paths--",
+      "rpcProvider": "--providers--",
+      "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-"
+    }
+  ]
+}

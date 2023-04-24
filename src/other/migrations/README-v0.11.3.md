@@ -1,5 +1,9 @@
 # v0.11.3 London Hard Fork Migration
 
+## IMPORTANT NOTE
+
+This migration has been retired. If your data is prior to this version, you must clear your cache and index folders and start from scratch
+
 **Warning:** If you're not confident using the command line, please contact us prior to proceeding. If you make a mistake and delete the wrong files, you may damage your computer.
 
 **DO NOT SAY WE DIDN'T WARN YOU.**

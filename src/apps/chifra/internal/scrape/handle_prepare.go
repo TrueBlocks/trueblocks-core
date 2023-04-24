@@ -12,7 +12,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
@@ -33,7 +33,7 @@ func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData, blaze
 	}
 
 	prefundPath := filepath.Join(config.GetPathToChainConfig(opts.Globals.Chain), "allocs.csv")
-	prefunds, err := names.LoadPrefunds(opts.Globals.Chain, prefundPath)
+	prefunds, err := prefunds.LoadPrefunds(opts.Globals.Chain, prefundPath, nil)
 	if err != nil {
 		return false, err
 	}

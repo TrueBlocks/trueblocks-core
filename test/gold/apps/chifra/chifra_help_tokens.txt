@@ -1,4 +1,4 @@
-chifra  tokens --help --log_level 2
+chifra  tokens --help
 Purpose:
   Retrieve token balance(s) for one or more addresses at given block(s).
 

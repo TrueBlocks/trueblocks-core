@@ -2,6 +2,10 @@
 
 (Mar 30, 2022)
 
+## IMPORTANT NOTE
+
+This migration has been retired. If your data is prior to this version, you must clear your cache and index folders and start from scratch
+
 ## Why the Change?
 
 A few days ago, we discoverd that Erigon's `devel` branch had a bug that we at TrueBlocks did not notice. During that time, our indexing scraper continued running and producing pinned data to our Unchained Index manifest. Subsequently, if you ran a command called `chifra init`, which downloads those files from IPFS, you may have gotten incorrect index files and bloom filters.

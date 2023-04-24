@@ -5,9 +5,6 @@
 package monitorsPkg
 
 import (
-	"os"
-	"path/filepath"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
@@ -22,64 +19,13 @@ import (
 // Deleted     | Error  | Undelete | Remove | Remove and Decache         |
 // ------------|--------|------------------------------------------------|
 func (opts *MonitorsOptions) HandleCrudCommands() error {
-	testMode := opts.Globals.TestMode
 	for _, addr := range opts.Addrs {
 		m := monitor.NewMonitor(opts.Globals.Chain, addr, false)
 		if !file.FileExists(m.Path()) {
 			return validate.Usage("No monitor was found for address " + addr + ".")
 
 		} else {
-			if opts.Decache {
-				logger.Info("Decaching", addr)
-				if opts.Globals.TestMode {
-					logger.Info("Decaching monitor for address", addr, "not tested.")
-					return nil
-				}
-
-				itemsRemoved := int64(0)
-				bytesRemoved := int64(0)
-				processorFunc := func(fileName string) bool {
-					if !file.FileExists(fileName) {
-						return true // continue processing
-					}
-
-					itemsRemoved++
-					bytesRemoved += file.FileSize(fileName)
-					logger.Progress(!testMode && itemsRemoved%20 == 0, "Removed", itemsRemoved, "items and", bytesRemoved, "bytes.", fileName)
-
-					os.Remove(fileName)
-					if opts.Globals.Verbose {
-						logger.Info(fileName, "was removed.")
-					}
-					path, _ := filepath.Split(fileName)
-					if empty, _ := file.IsFolderEmpty(path); empty {
-						os.RemoveAll(path)
-						if opts.Globals.Verbose {
-							logger.Info("Empty folder", path, "was removed.")
-						}
-					}
-
-					return true
-				}
-
-				// Visits every item in the cache related to this monitor and calls into `processorFunc`
-				err := m.Decache(opts.Globals.Chain, processorFunc)
-				if err != nil {
-					return err
-				}
-				logger.Info(itemsRemoved, "items totaling", bytesRemoved, "bytes were removed from the cache.")
-
-				// We've visited them all, so delete the monitor itself
-				m.Delete()
-				logger.Info(("Monitor " + addr + " was deleted but not removed."))
-				wasRemoved, err := m.Remove()
-				if !wasRemoved || err != nil {
-					logger.Info(("Monitor for " + addr + " was not removed (" + err.Error() + ")"))
-				} else {
-					logger.Info(("Monitor for " + addr + " was permanently removed."))
-				}
-
-			} else if opts.Undelete && !m.IsDeleted() {
+			if opts.Undelete && !m.IsDeleted() {
 				return validate.Usage("Monitor for {0} must be deleted before being undeleted.", addr)
 
 			} else {
@@ -96,10 +42,6 @@ func (opts *MonitorsOptions) HandleCrudCommands() error {
 				}
 			}
 		}
-	}
-
-	if opts.Decache {
-		return nil
 	}
 
 	for _, addr := range opts.Addrs {

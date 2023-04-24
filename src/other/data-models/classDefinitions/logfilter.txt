@@ -1,0 +1,7 @@
+[settings]
+class = CLogFilter
+fields = logfilter.csv
+includes = utillib.h|log.h
+
+cpp_output = src/libs/etherlib/
+go_output =

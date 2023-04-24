@@ -1,29 +1,26 @@
-chifra  monitors --help --log_level 2
+chifra  list --help
 Purpose:
-  Add, remove, clean, and list address monitors.
+  List every appearance of an address anywhere on the chain.
 
 Usage:
-  chifra monitors [flags] <address> [address...]
+  chifra list [flags] <address> [address...]
 
 Arguments:
-  addrs - one or more addresses (0x...) to process
+  addrs - one or more addresses (0x...) to list (required)
 
 Flags:
-      --clean              clean (i.e. remove duplicate appearances) from monitors
-      --delete             delete a monitor, but do not remove it
-      --undelete           undelete a previously deleted monitor
-      --remove             remove a previously deleted monitor
-      --decache            removes a monitor and all associated data from the cache
-      --list               list monitors in the cache (--verbose for more detail)
-      --watch              continually scan for new blocks and extract data for monitored addresses
-  -s, --sleep float        seconds to sleep between monitor passes (default 14)
-  -F, --first_block uint   first block to process (inclusive) (hidden)
-  -L, --last_block uint    last block to process (inclusive) (hidden)
-  -x, --fmt string         export format, one of [none|json*|txt|csv]
-  -v, --verbose            enable verbose (increase detail with --log_level)
-  -h, --help               display this help screen
+  -U, --count               display only the count of records for each monitor
+  -p, --appearances         export each monitor's list of appearances (the default) (hidden)
+      --silent              freshen the monitor only (no reporting) (hidden)
+  -n, --no_zero             suppress the display of zero appearance accounts
+  -c, --first_record uint   the first record to process (default 1)
+  -e, --max_records uint    the maximum number of records to process (default 250)
+  -F, --first_block uint    first block to export (inclusive, ignored when freshening)
+  -L, --last_block uint     last block to export (inclusive, ignored when freshening)
+      --bounds              report first and last block this address appears (hidden)
+  -x, --fmt string          export format, one of [none|json*|txt|csv]
+  -v, --verbose             enable verbose (increase detail with --log_level)
+  -h, --help                display this help screen
 
 Notes:
-  - An address must start with '0x' and be forty-two characters long.
-  - If no address is presented to the --clean command, all monitors will be cleaned.
-  - The --decache option will remove all cache items (blocks, txs, traces, recons) for the given address(es).
+  - No other options are permitted when --silent is selected.

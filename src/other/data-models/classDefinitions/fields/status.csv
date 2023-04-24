@@ -1,0 +1,20 @@
+name              ,type      ,strDefault       ,object ,array ,nowrite ,omitempty ,minimal ,noaddfld ,doc ,disp ,example ,description
+clientVersion     ,string    ,                 ,       ,      ,        ,          ,        ,         ,  1 ,     ,        ,the version string as reported by the rpcProvider
+clientIds         ,string    ,                 ,       ,      ,        ,          ,        ,         ,  2 ,     ,        ,netword_id and chain_id from the rpcProvider
+trueblocksVersion ,string    ,                 ,       ,      ,        ,          ,        ,         ,  3 ,     ,        ,the TrueBlocks version string
+rpcProvider       ,string    ,                 ,       ,      ,        ,          ,        ,         ,  4 ,     ,        ,the current rpcProvider
+configPath        ,string    ,                 ,       ,      ,true    ,          ,        ,         ,  5 ,     ,        ,the path to config files
+cachePath         ,string    ,                 ,       ,      ,        ,          ,        ,         ,  6 ,     ,        ,the path to the local binary caches
+indexPath         ,string    ,                 ,       ,      ,        ,          ,        ,         ,  7 ,     ,        ,the path to the local binary indexes
+host              ,string    ,                 ,       ,      ,        ,          ,        ,         ,  8 ,     ,        ,the host portion of the local API server
+isTesting         ,bool      ,                 ,       ,      ,        ,          ,        ,         ,  9 ,     ,        ,`true` if the server is running in test mode
+isApi             ,bool      ,                 ,       ,      ,        ,          ,        ,         , 10 ,     ,        ,`true` if the server is running in API mode
+isScraping        ,bool      ,                 ,       ,      ,        ,          ,        ,         , 11 ,     ,        ,`true` if the index scraper is running
+isArchive         ,bool      ,                 ,       ,      ,        ,          ,        ,         , 12 ,     ,        ,`true` if the rpcProvider is an archive node
+isTracing         ,bool      ,                 ,       ,      ,        ,          ,        ,         , 13 ,     ,        ,`true` if the rpcProvider provides Parity traces
+hasEskey          ,bool      ,                 ,       ,      ,        ,          ,        ,         , 14 ,     ,        ,`true` if an Etherscan key is present
+hasPinkey         ,bool      ,                 ,       ,      ,        ,          ,        ,         , 15 ,     ,        ,`true` if a Pinata API key is present
+ts                ,timestamp ,date_2_Ts(Now()) ,       ,      ,true    ,          ,        ,         , 16 ,     ,        ,the timestamp when this status data was produced
+chains            ,Chain     ,                 ,true   ,true  ,true    ,          ,        ,         , 17 ,     ,        ,the list of configured chains
+caches            ,CacheItem ,                 ,true   ,true  ,true    ,          ,        ,         , 18 ,     ,        ,a collection of information concerning the binary caches
+keys              ,Key       ,                 ,true   ,true  ,true    ,          ,        ,         ,    ,     ,        ,the list of configured api keys

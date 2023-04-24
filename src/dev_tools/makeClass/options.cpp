@@ -303,7 +303,6 @@ bool listClasses(const string_q& path, void* data) {
             CClassDefinition cl;
             cl.short_fn = class_name;
             cl.input_path = path;
-            LOG8("Adding: ", cl.short_fn, " ", cl.input_path, " ", cl.outputPath(".cpp"));
             opts->classDefs.push_back(cl);
         }
     }

@@ -16,7 +16,7 @@ Usage:
 
 Arguments:
   mode - the type of data to process (required)
-	One of [ status | manifest | index | blooms | addresses | appearances | stats ]
+	One of [ manifest | index | blooms | addresses | appearances | stats ]
   blocks - an optional list of blocks to intersect with chunk ranges
 
 Flags:
@@ -44,9 +44,9 @@ Data models produced by this tool:
 
 - [appearance](/data-model/accounts/#appearance)
 - [manifest](/data-model/admin/#manifest)
-- [pinnedchunk](/data-model/admin/#pinnedchunk)
+- [chunkrecord](/data-model/admin/#chunkrecord)
 - [chunkindex](/data-model/admin/#chunkindex)
-- [chunkblooms](/data-model/admin/#chunkblooms)
+- [chunkbloom](/data-model/admin/#chunkbloom)
 - [chunkaddress](/data-model/admin/#chunkaddress)
 - [chunkstats](/data-model/admin/#chunkstats)
 - [reportcheck](/data-model/admin/#reportcheck)

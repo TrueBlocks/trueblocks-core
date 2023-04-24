@@ -5,6 +5,7 @@
 package rpcClient
 
 import (
+	"context"
 	"encoding/json"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
@@ -59,16 +60,18 @@ func GetMetaData(chain string, testmode bool) (*MetaData, error) {
 	meta.NetworkId = networkId
 	meta.Latest = BlockNumber(provider)
 
-	filenameChan := make(chan cache.IndexFileInfo)
+	filenameChan := make(chan cache.CacheFileInfo)
 
 	var nRoutines int = 4
-	go cache.WalkIndexFolder(chain, cache.Index_Final, filenameChan)
-	go cache.WalkIndexFolder(chain, cache.Index_Staging, filenameChan)
-	go cache.WalkIndexFolder(chain, cache.Index_Ripe, filenameChan)
-	go cache.WalkIndexFolder(chain, cache.Index_Unripe, filenameChan)
+	go cache.WalkCacheFolder(context.Background(), chain, cache.Index_Bloom, nil, filenameChan)
+	go cache.WalkCacheFolder(context.Background(), chain, cache.Index_Staging, nil, filenameChan)
+	go cache.WalkCacheFolder(context.Background(), chain, cache.Index_Ripe, nil, filenameChan)
+	go cache.WalkCacheFolder(context.Background(), chain, cache.Index_Unripe, nil, filenameChan)
 
 	for result := range filenameChan {
 		switch result.Type {
+		case cache.Index_Bloom:
+			fallthrough
 		case cache.Index_Final:
 			meta.Finalized = utils.Max(meta.Finalized, result.Range.Last)
 		case cache.Index_Staging:
@@ -77,7 +80,7 @@ func GetMetaData(chain string, testmode bool) (*MetaData, error) {
 			meta.Ripe = utils.Max(meta.Ripe, result.Range.Last)
 		case cache.Index_Unripe:
 			meta.Unripe = utils.Max(meta.Unripe, result.Range.Last)
-		case cache.None:
+		case cache.Cache_NotACache:
 			nRoutines--
 			if nRoutines == 0 {
 				close(filenameChan)

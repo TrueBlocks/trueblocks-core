@@ -1,0 +1,4 @@
+name        ,type      ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,noaddfld ,doc ,disp ,example    ,description
+blockNumber ,blknum    ,           ,       ,      ,        ,          ,        ,         ,  1 ,     ,   4370000 ,the number of the block
+timestamp   ,timestamp ,           ,       ,      ,        ,          ,        ,         ,  2 ,     ,1508131331 ,the Unix timestamp of the block
+diff        ,timestamp ,           ,       ,      ,        ,          ,        ,         ,  3 ,     ,        12 ,the number of seconds since the last block

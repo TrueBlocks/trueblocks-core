@@ -1,0 +1,8 @@
+[settings]
+class = CKey
+fields = key.csv
+includes = utillib.h
+cpp_includes =
+
+cpp_output = src/libs/utillib/
+go_output =
