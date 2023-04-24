@@ -6,7 +6,6 @@ package listPkg
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -17,34 +16,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-type countMode = int
-
-const (
-	modeNone countMode = iota
-	modeRange
-	modeFirstBlock
-	modeLastBlock
-)
-
-func getCountMode(opts *ListOptions) countMode {
-	if opts.FirstBlock != utils.NOPOS && opts.LastBlock != utils.NOPOS {
-		return modeRange
-	}
-
-	if opts.FirstBlock != utils.NOPOS {
-		return modeFirstBlock
-	}
-
-	if opts.LastBlock != utils.NOPOS {
-		return modeLastBlock
-	}
-
-	return modeNone
-}
-
 func (opts *ListOptions) HandleListCount(monitorArray []monitor.Monitor) error {
 	testMode := opts.Globals.TestMode
-	exportRange := base.FileRange{First: opts.FirstBlock, Last: opts.LastBlock}
 	if opts.Globals.Verbose {
 		for i := 0; i < len(monitorArray); i++ {
 			monitorArray[i].ReadMonitorHeader()
@@ -52,53 +25,35 @@ func (opts *ListOptions) HandleListCount(monitorArray []monitor.Monitor) error {
 		}
 	}
 
+	exportRange := opts.minMax()
+
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawMonitor], errorChan chan error) {
 		for _, mon := range monitorArray {
-			fmt.Println(">>> c", mon.Count())
 			if !opts.NoZero || mon.Count() > 0 {
-				mode := getCountMode(opts)
-				fmt.Println(">>> mode", mode, opts.FirstBlock, opts.LastBlock)
-				records := mon.Count()
-				if mode != modeNone {
-					records = 0
-					apps := make([]index.AppearanceRecord, 0, mon.Count())
-					if err := mon.ReadAppearances(&apps); err != nil {
-						errorChan <- err
-						continue
-					}
-					for _, appearance := range apps {
-						switch mode {
-						case modeRange:
-							appRange := base.FileRange{
-								First: uint64(appearance.BlockNumber),
-								Last:  uint64(appearance.BlockNumber),
-							}
-							if appRange.Intersects(exportRange) {
-								records++
-							}
-						case modeFirstBlock:
-							fmt.Println(">>>", "app", appearance.BlockNumber, "first block", uint32(opts.FirstBlock))
-							if appearance.BlockNumber >= uint32(opts.FirstBlock) {
-								records++
-							}
-						case modeLastBlock:
-							if appearance.BlockNumber <= uint32(opts.LastBlock) {
-								records++
-							}
-						}
+				mon.Close()
+				apps := make([]index.AppearanceRecord, mon.Count())
+				if err := mon.ReadAppearances(&apps); err != nil {
+					errorChan <- err
+					continue
+				}
+
+				nRecords := 0
+				for _, appearance := range apps {
+					if exportRange.IntersectsB(uint64(appearance.BlockNumber)) {
+						nRecords++
 					}
 				}
 
 				s := types.SimpleMonitor{
 					Address:     mon.Address.Hex(),
-					NRecords:    int(records),
+					NRecords:    int(nRecords),
 					FileSize:    file.FileSize(mon.Path()),
 					LastScanned: mon.LastScanned,
 					Deleted:     mon.Deleted,
 				}
 				if testMode {
-					s.NRecords = 1001001
+					// s.NRecords = 1001001
 					s.FileSize = 1001001
 					s.LastScanned = maxTestingBlock
 				}
@@ -109,4 +64,10 @@ func (opts *ListOptions) HandleListCount(monitorArray []monitor.Monitor) error {
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+}
+
+func (opts *ListOptions) minMax() (ret base.FileRange) {
+	ret.First = utils.Max(0, opts.FirstBlock)
+	ret.Last = utils.Min(utils.NOPOS, opts.LastBlock)
+	return
 }
