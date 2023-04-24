@@ -147,8 +147,18 @@ on      ,both ,fast  ,export   ,apps/acctExport ,accounting_to_cache      ,y    
 
 on      ,both ,slow  ,export   ,apps/acctExport ,monitors_seed_1          ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & last_block = 9000000 & fmt = json
 
+on      ,both ,fast  ,list     ,apps/acctExport ,export_bounds_list_1a    ,n    ,addrs = trueblocks.eth & fmt = csv & last_block = 9000000
+on      ,both ,fast  ,list     ,apps/acctExport ,export_bounds_list_1b    ,n    ,addrs = trueblocks.eth & count & fmt = csv & last_block = 9000000
+
+on      ,both ,fast  ,list     ,apps/acctExport ,export_bounds_list_2a    ,n    ,addrs = trueblocks.eth & fmt = txt & first_block = 8854723 & last_block = 9000000
+on      ,both ,fast  ,list     ,apps/acctExport ,export_bounds_list_2b    ,n    ,addrs = trueblocks.eth & count & fmt = txt & first_block = 8854723 & last_block = 9000000
+
+on      ,both ,fast  ,list     ,apps/acctExport ,export_bounds_list_3a    ,y    ,addrs = trueblocks.eth & fmt = json & first_block = 8854725 & last_block = 9000000
+on      ,both ,fast  ,list     ,apps/acctExport ,export_bounds_list_3b    ,y    ,addrs = trueblocks.eth & count & fmt = json & first_block = 8854725 & last_block = 9000000
+
 # These work but are very slow
 slow    ,both ,fast  ,list     ,apps/acctExport ,export_relevant_list     ,y    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & count & fmt = json
+
 slow    ,both ,fast  ,export   ,apps/acctExport ,export_relevant_not      ,n    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & logs & last_block = 10272064 & fmt = csv
 slow    ,both ,fast  ,export   ,apps/acctExport ,export_relevant          ,n    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & logs & last_block = 10272064 & fmt = csv & relevant
 slow    ,both ,fast  ,export   ,apps/acctExport ,export_relevant_not_emit ,n    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & logs & last_block = 10272064 & emitter = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 & fmt = csv
