@@ -195,3 +195,5 @@ func isListSequential(chain string, ripeFileList []os.DirEntry, allowMissing boo
 }
 
 var spaces = strings.Repeat(" ", 40)
+
+// TODO: chifra scrape misreports appearances per block when consolidating #2291 (closed, but copied here as a TODO)
