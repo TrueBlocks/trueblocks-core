@@ -51,6 +51,7 @@ Arguments:
 Flags:
   -U, --count               display only the count of records for each monitor
   -n, --no_zero             suppress the display of zero appearance accounts
+  -u, --unripe              list transactions labeled upripe (i.e. less than 28 blocks old)
   -c, --first_record uint   the first record to process (default 1)
   -e, --max_records uint    the maximum number of records to process (default 250)
   -F, --first_block uint    first block to export (inclusive, ignored when freshening)

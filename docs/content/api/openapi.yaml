@@ -130,6 +130,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: unripe
+          description: list transactions labeled upripe (i.e. less than 28 blocks old)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: firstRecord
           description: the first record to process
           required: false
