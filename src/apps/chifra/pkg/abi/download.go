@@ -59,7 +59,7 @@ func DownloadAbi(chain string, address base.Address, destination AbiInterfaceMap
 		logger.Warn("provider responded with:", address.Hex(), data["message"])
 
 		reader := strings.NewReader("[{\"name\": \"AbiNotFound\",\"type\": \"function\"}]")
-		fromJson(reader, address.Hex()+".json", destination)
+		fromJson(reader, destination)
 		if _, err = reader.Seek(0, io.SeekStart); err != nil {
 			return err
 		}
@@ -70,7 +70,7 @@ func DownloadAbi(chain string, address base.Address, destination AbiInterfaceMap
 	}
 
 	reader := strings.NewReader(data["result"])
-	fromJson(reader, address.Hex()+".json", destination)
+	fromJson(reader, destination)
 	if _, err = reader.Seek(0, io.SeekStart); err != nil {
 		return err
 	}

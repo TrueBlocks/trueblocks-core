@@ -75,7 +75,7 @@ transactions        	1015	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OM
 date                	1016	0	33554437	T_DATE TS_DATE
 age                 	1017	0	33554437	T_DATE TS_DATE
 {
-  "schema": 64000,
+  "schema": 64001,
   "deleted": false,
   "showing": true,
   "cname": "Block",

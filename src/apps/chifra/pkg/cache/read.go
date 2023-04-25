@@ -540,7 +540,8 @@ func ReadFunction(reader *bufio.Reader) (function *types.SimpleFunction, err err
 		return
 	}
 
-	err = readString(reader, &function.AbiSource)
+	var unused string
+	err = readString(reader, &unused)
 	if err != nil {
 		return
 	}

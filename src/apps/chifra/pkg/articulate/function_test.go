@@ -24,7 +24,7 @@ func TestArticulateFunction(t *testing.T) {
 	const hexdata = `00000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000015800000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000158000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000001580000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000015800000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000158`
 
 	am := abi.Methods["get"]
-	f := types.FunctionFromAbiMethod(&am, "")
+	f := types.FunctionFromAbiMethod(&am)
 	if err = ArticulateFunction(f, hexdata, ""); err != nil {
 		t.Fatal(err)
 	}
@@ -49,7 +49,7 @@ func TestArticulateArguments(t *testing.T) {
 	input := `0xa9059cbb000000000000000000000000f5aab2d0b50cb3bf2b6a5a9ed18580fd736668be000000000000000000000000000000000000000000000199d413696741200000`
 
 	abiMethod := abi.Methods["transfer"]
-	f := types.FunctionFromAbiMethod(&abiMethod, "")
+	f := types.FunctionFromAbiMethod(&abiMethod)
 	if err = ArticulateArguments(abiMethod.Inputs, input[10:], nil, f.Inputs); err != nil {
 		t.Fatal(err)
 	}
@@ -80,7 +80,7 @@ func TestArticulateArgumentsMixedIndexed(t *testing.T) {
 		base.HexToHash("0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c"),
 	}
 	abiEvent := abi.Events["AuctionStarted"]
-	result := types.FunctionFromAbiEvent(&abiEvent, "")
+	result := types.FunctionFromAbiEvent(&abiEvent)
 
 	if err = ArticulateArguments(abiEvent.Inputs, txData[2:], txTopics, result.Inputs); err != nil {
 		t.Fatal(err)
@@ -115,7 +115,7 @@ func TestArticulateArgumentsSimpleData(t *testing.T) {
 
 	// type: hash
 	abiMethod = parsedAbi.Methods["releaseDeed"]
-	result = types.FunctionFromAbiMethod(&abiMethod, "")
+	result = types.FunctionFromAbiMethod(&abiMethod)
 	expected = "0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573"
 	packed, err = abiMethod.Inputs.Pack(expected)
 	if err != nil {
@@ -130,7 +130,7 @@ func TestArticulateArgumentsSimpleData(t *testing.T) {
 
 	// type: uint256
 	abiMethod = parsedAbi.Methods["getAllowedTime"]
-	result = types.FunctionFromAbiMethod(&abiMethod, "")
+	result = types.FunctionFromAbiMethod(&abiMethod)
 	expected = big.NewInt(123).String()
 	packed, err = abiMethod.Inputs.Pack(big.NewInt(123))
 	if err != nil {
@@ -145,7 +145,7 @@ func TestArticulateArgumentsSimpleData(t *testing.T) {
 
 	// type: string
 	abiMethod = parsedAbi.Methods["invalidateName"]
-	result = types.FunctionFromAbiMethod(&abiMethod, "")
+	result = types.FunctionFromAbiMethod(&abiMethod)
 	expected = "some test string"
 	packed, err = abiMethod.Inputs.Pack(expected)
 	if err != nil {
@@ -160,7 +160,7 @@ func TestArticulateArgumentsSimpleData(t *testing.T) {
 
 	// type: address
 	abiMethod = parsedAbi.Methods["cancelBid"]
-	result = types.FunctionFromAbiMethod(&abiMethod, "")
+	result = types.FunctionFromAbiMethod(&abiMethod)
 	expected = "0x95222290dd7278aa3ddd389cc1e1d165cc4bafe5"
 	packed, err = abiMethod.Inputs.Pack(expected)
 	if err != nil {
@@ -175,7 +175,7 @@ func TestArticulateArgumentsSimpleData(t *testing.T) {
 
 	// type: uint8
 	abiMethod = parsedAbi.Methods["state"]
-	result = types.FunctionFromAbiMethod(&abiMethod, "")
+	result = types.FunctionFromAbiMethod(&abiMethod)
 	expected = 2
 	packed, err = abiMethod.Inputs.Pack(expected)
 	if err != nil {
@@ -190,7 +190,7 @@ func TestArticulateArgumentsSimpleData(t *testing.T) {
 
 	// type: bool
 	abiMethod = parsedAbi.Methods["isAllowed"]
-	result = types.FunctionFromAbiMethod(&abiMethod, "")
+	result = types.FunctionFromAbiMethod(&abiMethod)
 	expected = true
 	packed, err = abiMethod.Inputs.Pack(expected)
 	if err != nil {
@@ -217,7 +217,7 @@ func TestArticulateArgumentsSlice(t *testing.T) {
 	})
 	expected := string(expectedBytes)
 	abiMethod := abi.Methods["startAuctionsAndBid"]
-	result := types.FunctionFromAbiMethod(&abiMethod, "")
+	result := types.FunctionFromAbiMethod(&abiMethod)
 
 	if err = ArticulateArguments(abiMethod.Inputs, txData[2:], nil, result.Inputs); err != nil {
 		t.Fatal(err)
@@ -254,7 +254,7 @@ func TestArticulateArgumentsComplex(t *testing.T) {
 		t.Fatal(err)
 	}
 	abiMethod := abi.Methods["operate"]
-	result := types.FunctionFromAbiMethod(&abiMethod, "")
+	result := types.FunctionFromAbiMethod(&abiMethod)
 
 	if err = ArticulateArguments(abiMethod.Inputs, txData[2:], nil, result.Inputs); err != nil {
 		t.Fatal(err)
@@ -291,7 +291,7 @@ func TestArticulateArgumentsTupleWrongType(t *testing.T) {
 		t.Fatal(err)
 	}
 	abiMethod := abi.Methods["operate"]
-	result := types.FunctionFromAbiMethod(&abiMethod, "")
+	result := types.FunctionFromAbiMethod(&abiMethod)
 
 	if err = ArticulateArguments(abiMethod.Inputs, txData[2:], nil, result.Inputs); err != nil {
 		t.Fatal(err)
@@ -379,7 +379,7 @@ func TestArticulateArgumentsTupleTuple(t *testing.T) {
 		t.Fatal(err)
 	}
 	abiMethod := parsedAbi.Methods["f"]
-	result := types.FunctionFromAbiMethod(&abiMethod, "")
+	result := types.FunctionFromAbiMethod(&abiMethod)
 
 	first := struct {
 		A *big.Int   `json:"a"`
