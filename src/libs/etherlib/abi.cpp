@@ -485,12 +485,6 @@ bool CAbi::loadAbiFromFile(const string_q& fileName) {
     LOG_TEST_ABI("loadAbiFromFile", dispName(fileName));
 
     if (loadAbiFromJson(asciiFileToString(fileName))) {
-        for (auto& item : interfaceMap)
-            if (item.second.abiSource.empty()) {
-                string_q str = substitute(substitute(fileName, cacheFolder_abis, ""), rootConfigs_abis, "");
-                nextTokenClear(str, '/');
-                item.second.abiSource = str;
-            }
         abiSourcesMap[fileName] = true;
         return true;
     }

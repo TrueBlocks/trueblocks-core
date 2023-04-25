@@ -418,7 +418,8 @@ func WriteFunction(writer *bufio.Writer, function *types.SimpleFunction) (err er
 		return
 	}
 
-	err = writeString(writer, &function.AbiSource)
+	var unused string
+	err = writeString(writer, &unused)
 	if err != nil {
 		return
 	}

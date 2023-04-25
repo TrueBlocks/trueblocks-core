@@ -53,7 +53,6 @@ func (opts *ListOptions) HandleListCount(monitorArray []monitor.Monitor) error {
 					Deleted:     mon.Deleted,
 				}
 				if testMode {
-					// s.NRecords = 1001001
 					s.FileSize = 1001001
 					s.LastScanned = maxTestingBlock
 				}
