@@ -84,6 +84,7 @@ func cleanContract(name *types.SimpleName) (modified bool) {
 		modified = true
 	}
 	// name, err := token.GetState(chain, name.Address, token.TokenStateName,
+	return
 }
 
 func cleanNonContract(name *types.SimpleName, wasContract bool) (modified bool) {
