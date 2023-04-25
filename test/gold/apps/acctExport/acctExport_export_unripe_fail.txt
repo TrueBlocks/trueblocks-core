@@ -4,7 +4,7 @@ TEST[DATE|TIME] Unripe:  true
 TEST[DATE|TIME] FirstBlock:  100000
 TEST[DATE|TIME] LastBlock:  2000000
 TEST[DATE|TIME] Format:  txt
-Error: --unripe are disabled for testing.
+Error: --unripe is disabled for testing.
 Usage:
   chifra export [flags] <address> [address...] [topics...] [fourbytes...]
 
