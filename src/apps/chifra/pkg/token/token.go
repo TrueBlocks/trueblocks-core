@@ -147,11 +147,3 @@ func (t *Token) IsErc20() bool {
 func (t *Token) IsErc721() bool {
 	return t.Type == TokenErc721
 }
-
-func (t *Token) IsErc20() bool {
-	return t.Type == TokenErc20
-}
-
-func (t *Token) IsErc721() bool {
-	return t.Type == TokenErc721
-}
