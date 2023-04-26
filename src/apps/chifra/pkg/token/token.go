@@ -2,205 +2,146 @@ package token
 
 import (
 	"fmt"
-	"strconv"
+	"math/big"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum/common"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/erc20"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/erc721"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/ethereum/go-ethereum/accounts/abi/bind"
+	"github.com/ethereum/go-ethereum/ethclient"
 )
 
-type TokenStateSelector = string
+var Erc721InterfaceId = [4]byte{
+	0x80,
+	0xac,
+	0x58,
+	0xcd,
+}
 
-const TokenStateTotalSupply TokenStateSelector = "0x18160ddd"
-const TokenStateDecimals TokenStateSelector = "0x313ce567"
-const TokenStateSymbol TokenStateSelector = "0x95d89b41"
-const TokenStateName TokenStateSelector = "0x06fdde03"
-const TokenStateSupportsInterface TokenStateSelector = "0x01ffc9a7"
+type TokenType int
 
-// TODO: this function could:
-// 1a. Take bitflags instead of selector
-// 1b. Not take any selector and just multicall all getters (should be cheap)
-// 2a. Return a map with values set (no zero value problem)
-// 2b. Return a struct, if we fetch everything (no zero value problem) -- add isErc20 (false for non-tokens) and isErc721
-// func GetState(chain string, token base.Address, selector TokenStateSelector, abis abi.AbiInterfaceMap, blockNum string) (string, error) {
-// 	result, err := rpc.Query[string](
-// 		"mainnet",
-// 		"eth_call",
-// 		rpc.Params{
-// 			map[string]any{
-// 				"to":   token.Address,
-// 				"data": selector,
-// 			},
-// 			blockNum,
-// 		},
-// 	)
-// 	if err != nil {
-// 		return "", nil
-// 	}
+const (
+	TokenErc20 TokenType = iota
+	TokenErc721
+)
 
-// 	abi, ok := abis[selector]
-// 	if !ok {
-// 		return "", fmt.Errorf("abi not found for method %s", selector)
-// 	}
-
-// 	method, err := abi.GetAbiMethod()
-// 	if err != nil {
-// 		return "", err
-// 	}
-// 	results := make([]types.SimpleParameter, len(method.Outputs))
-// 	err = articulate.ArticulateArguments(method.Outputs, strings.Replace(*result, "0x", "", 1), []base.Hash{}, results)
-// 	if err != nil {
-// 		return "", err
-// 	}
-// 	if len(results) == 0 {
-// 		return "", nil
-// 	}
-// 	return fmt.Sprint(results[0].Value), nil
-
-// }
-
-const Erc721InterfaceId = "0x80ac58cd"
-
+// Token type wraps information about ERC-20 token or ERC-721 NFT. Call
+// Token.IsErcXXX to check the token type.
 type Token struct {
 	Name        string
 	Symbol      string
-	Decimals    uint64 // uint8 in Solidity
+	Decimals    uint8
 	TotalSupply string // uint256 in Solidity
-	Erc20       bool
-	Erc721      bool
+	Type        TokenType
 }
 
-func GetState(chain string, tokenAddr base.Address, abis abi.AbiInterfaceMap, blockNum string) (token *Token, err error) {
-	results, err := rpc.BatchQuery[string](
-		"mainnet",
-		[]rpc.BatchPayload{
-			{
-				Key: "name",
-				Payload: &rpc.Payload{
-					Method: "eth_call",
-					Params: rpc.Params{
-						map[string]any{
-							"to":   tokenAddr,
-							"data": TokenStateName,
-						},
-						blockNum,
-					},
-				},
-			},
-			{
-				Key: "symbol",
-				Payload: &rpc.Payload{
-					Method: "eth_call",
-					Params: rpc.Params{
-						map[string]any{
-							"to":   tokenAddr,
-							"data": TokenStateSymbol,
-						},
-						blockNum,
-					},
-				},
-			},
-			{
-				Key: "decimals",
-				Payload: &rpc.Payload{
-					Method: "eth_call",
-					Params: rpc.Params{
-						map[string]any{
-							"to":   tokenAddr,
-							"data": TokenStateDecimals,
-						},
-						blockNum,
-					},
-				},
-			},
-			{
-				Key: "totalSupply",
-				Payload: &rpc.Payload{
-					Method: "eth_call",
-					Params: rpc.Params{
-						map[string]any{
-							"to":   tokenAddr,
-							"data": TokenStateTotalSupply,
-						},
-						blockNum,
-					},
-				},
-			},
-			// Supports interface: ERC 721
-			{
-				Key: "erc721",
-				Payload: &rpc.Payload{
-					Method: "eth_call",
-					Params: rpc.Params{
-						map[string]any{
-							"to":   tokenAddr,
-							"data": fmt.Sprintf("%s%s", TokenStateSupportsInterface, common.HexToHash(Erc721InterfaceId)),
-						},
-						blockNum,
-					},
-				},
-			},
-		},
-	)
+// GetState returns token state for given block. `blockNumber` can be "latest" or "" for the latest block or
+// decimal number or hex number with 0x prefix.
+func GetState(chain string, tokenAddress base.Address, blockNumber string) (token *Token, err error) {
+	client := rpcClient.GetClient(config.GetRpcProvider(chain))
+	defer client.Close()
+
+	callOpts := &bind.CallOpts{}
+	if blockNumber != "" && blockNumber != "latest" {
+		// Convert block number to *big.Int
+		blknum := big.NewInt(0)
+		_, set := blknum.SetString(blockNumber, 0)
+		if !set {
+			err = fmt.Errorf("could not set block number to: %s", blockNumber)
+			return
+		}
+		callOpts.BlockNumber = blknum
+	}
+
+	// First, check if token is ERC-721 (NFT)
+	contractErc721, err := erc721.NewErc721Caller(tokenAddress.Address, client)
 	if err != nil {
 		return
 	}
 
-	name, err := articulateTokenStateGetter(abis, TokenStateName, *results["name"])
+	// We have to ignore the error at this point, because it can mean that the contract is not ERC-721.
+	// Unfortunatelly, we have no way to make sure. Erigon returns code -32000, but this code is non-standard
+	erc721Supported, _ := contractErc721.SupportsInterface(callOpts, Erc721InterfaceId)
+	if erc721Supported {
+		return getStateErc721(tokenAddress, client, callOpts)
+	}
+
+	// If it is not, assume it's ERC-20
+	return getStateErc20(tokenAddress, client, callOpts)
+}
+
+func getStateErc20(address base.Address, client *ethclient.Client, callOpts *bind.CallOpts) (token *Token, err error) {
+	contractErc20, err := erc20.NewErc20Caller(address.Address, client)
 	if err != nil {
 		return
 	}
-	symbol, err := articulateTokenStateGetter(abis, TokenStateSymbol, *results["symbol"])
+
+	name, err := contractErc20.Name(callOpts)
 	if err != nil {
 		return
 	}
-	decimalsRaw, err := articulateTokenStateGetter(abis, TokenStateDecimals, *results["decimals"])
+
+	symbol, err := contractErc20.Symbol(callOpts)
 	if err != nil {
 		return
 	}
-	decimals, err := strconv.ParseUint(fmt.Sprint(decimalsRaw), 16, 8)
+
+	decimals, err := contractErc20.Decimals(callOpts)
 	if err != nil {
-		// err = errors.New("cannot cast decimals to uint8")
 		return
 	}
-	totalSupply, err := articulateTokenStateGetter(abis, TokenStateTotalSupply, *results["totalSupply"])
+
+	totalSupply, err := contractErc20.TotalSupply(callOpts)
 	if err != nil {
 		return
 	}
 
 	token = &Token{
-		Name:        fmt.Sprint(name),
-		Symbol:      fmt.Sprint(symbol),
+		Type:        TokenErc20,
+		Name:        name,
+		Symbol:      symbol,
 		Decimals:    decimals,
-		TotalSupply: fmt.Sprint(totalSupply),
-		Erc721:      *results["erc721"] == "T" || *results["erc721"] == "true",
+		TotalSupply: totalSupply.String(),
 	}
-
-	token.Erc20 = len(token.Name) > 0 || len(token.Symbol) > 0 || token.Decimals > 0
 	return
 }
 
-func articulateTokenStateGetter(abis abi.AbiInterfaceMap, selector string, value string) (any, error) {
-	abi, ok := abis[selector]
-	if !ok {
-		return "", fmt.Errorf("abi not found for method %s", selector)
+func getStateErc721(address base.Address, client *ethclient.Client, callOpts *bind.CallOpts) (token *Token, err error) {
+	contractErc721, err := erc721.NewErc721Caller(address.Address, client)
+	if err != nil {
+		return
 	}
 
-	method, err := abi.GetAbiMethod()
+	name, err := contractErc721.Name(callOpts)
 	if err != nil {
-		return "", err
-	}
-	results := make([]types.SimpleParameter, len(method.Outputs))
-	err = articulate.ArticulateArguments(method.Outputs, value[2:], []base.Hash{}, results)
-	if err != nil {
-		return "", err
-	}
-	if len(results) == 0 {
-		return "", nil
+		return
 	}
 
-	return results[0].Value, nil
+	symbol, err := contractErc721.Symbol(callOpts)
+	if err != nil {
+		return
+	}
+
+	totalSupply, err := contractErc721.TotalSupply(callOpts)
+	if err != nil {
+		return
+	}
+
+	token = &Token{
+		Type:        TokenErc721,
+		Name:        name,
+		Symbol:      symbol,
+		TotalSupply: totalSupply.String(),
+	}
+	return
+}
+
+func (t *Token) IsErc20() bool {
+	return t.Type == TokenErc20
+}
+
+func (t *Token) IsErc721() bool {
+	return t.Type == TokenErc721
 }
