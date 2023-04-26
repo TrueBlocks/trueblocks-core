@@ -505,9 +505,6 @@ bool COptions::setDisplayFormatting(void) {
         HIDE_FIELD(CParameter, "strDefault");
         HIDE_FIELD(CParameter, "components");
         HIDE_FIELD(CParameter, "internalType");
-        HIDE_FIELD(CTransaction, "datesh");
-        HIDE_FIELD(CTransaction, "time");
-        HIDE_FIELD(CTransaction, "age");
         SHOW_FIELD(CTransaction, "traces");
 
         expContext().fmtMap["header"] = "";
