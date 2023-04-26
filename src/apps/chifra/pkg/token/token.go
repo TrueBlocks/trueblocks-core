@@ -20,47 +20,12 @@ const TokenStateSymbol TokenStateSelector = "0x95d89b41"
 const TokenStateName TokenStateSelector = "0x06fdde03"
 const TokenStateSupportsInterface TokenStateSelector = "0x01ffc9a7"
 
-// TODO: this function could:
-// 1a. Take bitflags instead of selector
-// 1b. Not take any selector and just multicall all getters (should be cheap)
-// 2a. Return a map with values set (no zero value problem)
-// 2b. Return a struct, if we fetch everything (no zero value problem) -- add isErc20 (false for non-tokens) and isErc721
-// func GetState(chain string, token base.Address, selector TokenStateSelector, abis abi.AbiInterfaceMap, blockNum string) (string, error) {
-// 	result, err := rpc.Query[string](
-// 		"mainnet",
-// 		"eth_call",
-// 		rpc.Params{
-// 			map[string]any{
-// 				"to":   token.Address,
-// 				"data": selector,
-// 			},
-// 			blockNum,
-// 		},
-// 	)
-// 	if err != nil {
-// 		return "", nil
-// 	}
+type TokenType int
 
-// 	abi, ok := abis[selector]
-// 	if !ok {
-// 		return "", fmt.Errorf("abi not found for method %s", selector)
-// 	}
-
-// 	method, err := abi.GetAbiMethod()
-// 	if err != nil {
-// 		return "", err
-// 	}
-// 	results := make([]types.SimpleParameter, len(method.Outputs))
-// 	err = articulate.ArticulateArguments(method.Outputs, strings.Replace(*result, "0x", "", 1), []base.Hash{}, results)
-// 	if err != nil {
-// 		return "", err
-// 	}
-// 	if len(results) == 0 {
-// 		return "", nil
-// 	}
-// 	return fmt.Sprint(results[0].Value), nil
-
-// }
+const (
+	TokenErc20 TokenType = iota
+	TokenErc721
+)
 
 const Erc721InterfaceId = "0x80ac58cd"
 
@@ -69,8 +34,7 @@ type Token struct {
 	Symbol      string
 	Decimals    uint64 // uint8 in Solidity
 	TotalSupply string // uint256 in Solidity
-	Erc20       bool
-	Erc721      bool
+	Type        TokenType
 }
 
 func GetState(chain string, tokenAddr base.Address, abis abi.AbiInterfaceMap, blockNum string) (token *Token, err error) {
@@ -149,6 +113,7 @@ func GetState(chain string, tokenAddr base.Address, abis abi.AbiInterfaceMap, bl
 		return
 	}
 
+	erc721 := *results["erc721"] == "T" || *results["erc721"] == "true"
 	name, err := articulateTokenStateGetter(abis, TokenStateName, *results["name"])
 	if err != nil {
 		return
@@ -161,10 +126,12 @@ func GetState(chain string, tokenAddr base.Address, abis abi.AbiInterfaceMap, bl
 	if err != nil {
 		return
 	}
-	decimals, err := strconv.ParseUint(fmt.Sprint(decimalsRaw), 16, 8)
-	if err != nil {
-		// err = errors.New("cannot cast decimals to uint8")
-		return
+	var decimals uint64
+	if !erc721 {
+		decimals, err = strconv.ParseUint(fmt.Sprint(decimalsRaw), 0, 8)
+		if err != nil {
+			return
+		}
 	}
 	totalSupply, err := articulateTokenStateGetter(abis, TokenStateTotalSupply, *results["totalSupply"])
 	if err != nil {
@@ -176,10 +143,18 @@ func GetState(chain string, tokenAddr base.Address, abis abi.AbiInterfaceMap, bl
 		Symbol:      fmt.Sprint(symbol),
 		Decimals:    decimals,
 		TotalSupply: fmt.Sprint(totalSupply),
-		Erc721:      *results["erc721"] == "T" || *results["erc721"] == "true",
 	}
 
-	token.Erc20 = len(token.Name) > 0 || len(token.Symbol) > 0 || token.Decimals > 0
+	if erc721 {
+		token.Type = TokenErc721
+		return
+	}
+
+	if len(token.Name) > 0 && len(token.Symbol) > 0 && token.Decimals > 0 {
+		token.Type = TokenErc20
+		return
+	}
+
 	return
 }
 
@@ -203,4 +178,12 @@ func articulateTokenStateGetter(abis abi.AbiInterfaceMap, selector string, value
 	}
 
 	return results[0].Value, nil
+}
+
+func (t *Token) IsErc20() bool {
+	return t.Type == TokenErc20
+}
+
+func (t *Token) IsErc721() bool {
+	return t.Type == TokenErc721
 }

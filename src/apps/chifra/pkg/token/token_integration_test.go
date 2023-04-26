@@ -141,7 +141,7 @@ func TestGetState(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if !token.Erc20 {
+	if !token.IsErc20() {
 		t.Fatal("token reported as non-ERC20")
 	}
 
