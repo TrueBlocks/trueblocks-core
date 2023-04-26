@@ -74,6 +74,7 @@ func GetState(chain string, tokenAddress base.Address, blockNumber string) (toke
 
 func getStateErc20(address base.Address, client *ethclient.Client, callOpts *bind.CallOpts) (token *Token, err error) {
 	contractErc20, err := erc20.NewErc20Caller(address.Address, client)
+
 	if err != nil {
 		return
 	}
@@ -105,6 +106,7 @@ func getStateErc20(address base.Address, client *ethclient.Client, callOpts *bin
 		Decimals:    decimals,
 		TotalSupply: totalSupply.String(),
 	}
+
 	return
 }
 
@@ -136,6 +138,14 @@ func getStateErc721(address base.Address, client *ethclient.Client, callOpts *bi
 		TotalSupply: totalSupply.String(),
 	}
 	return
+}
+
+func (t *Token) IsErc20() bool {
+	return t.Type == TokenErc20
+}
+
+func (t *Token) IsErc721() bool {
+	return t.Type == TokenErc721
 }
 
 func (t *Token) IsErc20() bool {
