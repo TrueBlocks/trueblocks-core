@@ -627,17 +627,8 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "events", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTransaction, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CTransaction, "date", T_DATE | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CTransaction, "datesh", T_DATE | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CTransaction, "time", T_DATE | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CTransaction, "age", T_DATE | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTransaction, "ether", T_ETHER, ++fieldNum);
     ADD_FIELD(CTransaction, "encoding", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CTransaction, "year", T_NUMBER | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CTransaction, "month", T_NUMBER | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CTransaction, "day", T_NUMBER | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CTransaction, "hour", T_NUMBER | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CTransaction, "minute", T_NUMBER | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CTransaction, "second", T_NUMBER | TS_OMITEMPTY, ++fieldNum);
 
     // Hide fields we don't want to show by default
     HIDE_FIELD(CTransaction, "function");
@@ -648,21 +639,12 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "isError");
     HIDE_FIELD(CTransaction, "hasTokens");
     HIDE_FIELD(CTransaction, "date");
-    HIDE_FIELD(CTransaction, "datesh");
-    HIDE_FIELD(CTransaction, "time");
-    HIDE_FIELD(CTransaction, "age");
     HIDE_FIELD(CTransaction, "ether");
     HIDE_FIELD(CTransaction, "statements");
     HIDE_FIELD(CTransaction, "traces");
     HIDE_FIELD(CTransaction, "articulatedTx");
     HIDE_FIELD(CTransaction, "extraValue1");
     HIDE_FIELD(CTransaction, "extraValue2");
-    HIDE_FIELD(CTransaction, "year");
-    HIDE_FIELD(CTransaction, "month");
-    HIDE_FIELD(CTransaction, "day");
-    HIDE_FIELD(CTransaction, "hour");
-    HIDE_FIELD(CTransaction, "minute");
-    HIDE_FIELD(CTransaction, "second");
     HIDE_FIELD(CTransaction, "cachebits");
     HIDE_FIELD(CTransaction, "reserved2");
     if (isTestMode()) {
@@ -671,10 +653,7 @@ void CTransaction::registerClass(void) {
     }
 
     if (isTestMode() && isApiMode()) {
-        UNHIDE_FIELD(CTransaction, "datesh");
-        UNHIDE_FIELD(CTransaction, "time");
         UNHIDE_FIELD(CTransaction, "date");
-        UNHIDE_FIELD(CTransaction, "age");
         UNHIDE_FIELD(CTransaction, "ether");
     }
     // EXISTING_CODE
@@ -686,21 +665,6 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
-            case 'a':
-                if (fieldIn % "age") {
-                    if (isTestMode())
-                        return "100";
-                    static CBlock latest;
-                    if (latest.timestamp == 0)
-                        getBlockHeader(latest, "latest");
-                    timestamp_t myTs = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
-                    timestamp_t blkTs = ((timestamp_t)latest.timestamp);
-                    if (blkTs > myTs) {
-                        return int_2_Str(blkTs - myTs);
-                    }
-                    return "0";
-                }
-                break;
             case 'c':
                 if (fieldIn % "contractAddress")
                     return addr_2_Str(tra->receipt.contractAddress);
@@ -710,28 +674,9 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
                     return "";
                 break;
             case 'd':
-                if (fieldIn % "date" || fieldIn % "datesh") {
+                if (fieldIn % "date") {
                     timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
-                    string_q ret = ts_2_Date(ts).Format(FMT_JSON);
-                    if (fieldIn % "datesh")  // short date
-                        return extract(ret, 0, 10);
-                    return ret;
-                }
-                if (fieldIn % "day") {
-                    timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
-                    string_q ret = ts_2_Date(ts).Format(FMT_PARTS);
-                    CStringArray parts;
-                    explode(parts, ret, '|');
-                    return parts[2];
-                }
-                break;
-            case 'h':
-                if (fieldIn % "hour") {
-                    timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
-                    string_q ret = ts_2_Date(ts).Format(FMT_PARTS);
-                    CStringArray parts;
-                    explode(parts, ret, '|');
-                    return parts[3];
+                    return ts_2_Date(ts).Format(FMT_JSON);
                 }
                 break;
             case 'e':
@@ -795,53 +740,15 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
                     return bnu_2_Str(used * price);
                 }
                 break;
-            case 'm':
-                if (fieldIn % "month") {
-                    timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
-                    string_q ret = ts_2_Date(ts).Format(FMT_PARTS);
-                    CStringArray parts;
-                    explode(parts, ret, '|');
-                    return parts[1];
-                }
-                if (fieldIn % "minute") {
-                    timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
-                    string_q ret = ts_2_Date(ts).Format(FMT_PARTS);
-                    CStringArray parts;
-                    explode(parts, ret, '|');
-                    return parts[4];
-                }
-                break;
             case 'r':
                 if (fieldIn % "reserved2")
                     return "";
-                break;
-            case 's':
-                if (fieldIn % "second") {
-                    timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
-                    string_q ret = ts_2_Date(ts).Format(FMT_PARTS);
-                    CStringArray parts;
-                    explode(parts, ret, '|');
-                    return parts[5];
-                }
                 break;
             case 't':
                 if (fieldIn % "transactionHash")
                     return tra->getValueByName("hash");
                 if (fieldIn % "timestamp" && tra->pBlock)
                     return int_2_Str(tra->pBlock->timestamp);
-                if (fieldIn % "time") {
-                    timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
-                    return extract(ts_2_Date(ts).Format(FMT_JSON), 12);
-                }
-                break;
-            case 'y':
-                if (fieldIn % "year") {
-                    timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
-                    string_q ret = ts_2_Date(ts).Format(FMT_PARTS);
-                    CStringArray parts;
-                    explode(parts, ret, '|');
-                    return parts[0];
-                }
                 break;
             // EXISTING_CODE
             case 'p':

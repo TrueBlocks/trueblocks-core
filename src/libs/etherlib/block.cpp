@@ -378,8 +378,6 @@ void CBlock::registerClass(void) {
     // EXISTING_CODE
     ADD_FIELD(CBlock, "date", T_DATE, ++fieldNum);
     HIDE_FIELD(CBlock, "date");
-    ADD_FIELD(CBlock, "age", T_DATE, ++fieldNum);
-    HIDE_FIELD(CBlock, "age");
     HIDE_FIELD(CBlock, "price");
     // EXISTING_CODE
 }
@@ -390,21 +388,6 @@ string_q nextBlockChunk_custom(const string_q& fieldIn, const void* dataPtr) {
     if (blo) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
-            case 'a':
-                if (fieldIn % "age") {
-                    if (isTestMode())
-                        return "100";
-                    static CBlock latest;
-                    if (latest.timestamp == 0)
-                        getBlockHeader(latest, "latest");
-                    timestamp_t myTs = (blo->timestamp);
-                    timestamp_t blkTs = ((timestamp_t)latest.timestamp);
-                    if (blkTs > myTs) {
-                        return int_2_Str(blkTs - myTs);
-                    }
-                    return "0";
-                }
-                break;
             case 'd':
                 if (fieldIn % "date") {
                     timestamp_t ts = (timestamp_t)blo->timestamp;

@@ -15,7 +15,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/bykof/gostradamus"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -130,7 +129,6 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 		"compressedTx",
 	}
 
-	date := gostradamus.FromUnixTimestamp(s.Timestamp)
 	model["date"] = utils.FormattedDate(s.Timestamp)
 	model["gasCost"] = s.SetGasCost(s.Receipt)
 
@@ -179,11 +177,6 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 		}
 		if s.IsError {
 			model["isError"] = s.IsError
-		}
-
-		if verbose {
-			model["datesh"] = date.Format("2006-01-02")
-			model["time"] = date.Format("15:04:05") + " UTC"
 		}
 
 		// model["receipt"] = nil

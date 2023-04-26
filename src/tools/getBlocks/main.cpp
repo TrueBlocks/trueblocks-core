@@ -59,10 +59,7 @@ string_q doOneLightBlock(blknum_t num, const COptions& opt) {
     getBlockLight(gold, num);
     if (gold.blockNumber == 0 && gold.timestamp == 0)
         gold.timestamp = blockZeroTs();
-    HIDE_FIELD(CTransaction, "datesh");
-    HIDE_FIELD(CTransaction, "time");
     HIDE_FIELD(CTransaction, "date");
-    HIDE_FIELD(CTransaction, "age");
     HIDE_FIELD(CTransaction, "ether");
     return gold.Format(expContext().fmtMap["format"]);
 }
