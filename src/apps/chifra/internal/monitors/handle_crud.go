@@ -47,12 +47,16 @@ func (opts *MonitorsOptions) HandleCrudCommands() error {
 	for _, addr := range opts.Addrs {
 		m := monitor.NewMonitor(opts.Globals.Chain, addr, false)
 		if opts.Undelete {
+			m.ReadMonitorHeader()
 			m.UnDelete()
+			m.Close()
 			logger.Info(("Monitor " + addr + " was undeleted."))
 
 		} else {
 			if opts.Delete {
+				m.ReadMonitorHeader()
 				m.Delete()
+				m.Close()
 				logger.Info(("Monitor " + addr + " was deleted but not removed."))
 			}
 
