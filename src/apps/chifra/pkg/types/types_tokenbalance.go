@@ -67,7 +67,7 @@ func (s *SimpleTokenBalance) SetRaw(raw *RawTokenBalance) {
 	s.raw = raw
 }
 
-func (s *SimpleTokenBalance) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleTokenBalance) Model(verbose bool, format string, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

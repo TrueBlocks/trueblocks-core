@@ -540,7 +540,8 @@ func ReadFunction(reader *bufio.Reader) (function *types.SimpleFunction, err err
 		return
 	}
 
-	err = readString(reader, &function.AbiSource)
+	var unused string
+	err = readString(reader, &unused)
 	if err != nil {
 		return
 	}
@@ -677,7 +678,7 @@ func ReadTrace(reader *bufio.Reader) (trace *types.SimpleTrace, err error) {
 		return
 	}
 
-	// TODO - re-enable this - it won't be easy
+	// TODO - re-enable this - it won't be easy -- see #2687
 	var junk []string
 	err = readFromArray(reader, &junk, makeArrayItemRead(reader, readString))
 	if err != nil {

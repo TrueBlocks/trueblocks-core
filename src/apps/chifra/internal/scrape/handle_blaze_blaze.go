@@ -332,7 +332,11 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 				if traces.Result[i].Result.Address == "" {
 					if traces.Result[i].Error != "" {
 						// TODO: Why does this interface always accept nil and zero at the end?
-						receipt, err := rpcClient.GetTransactionReceipt(opts.Chain, uint64(bn), uint64(txid), nil, 0)
+						receipt, err := rpcClient.GetTransactionReceipt(opts.Chain, rpcClient.ReceiptQuery{
+							Bn:      uint64(bn),
+							Txid:    uint64(txid),
+							NeedsTs: false,
+						})
 						if err != nil {
 							msg := fmt.Sprintf("rpcCall failed at block %d, tx %d hash %s err %s", bn, txid, traces.Result[i].TransactionHash, err)
 							logger.Warn(colors.Red, msg, colors.Off)

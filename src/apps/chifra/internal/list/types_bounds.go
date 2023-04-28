@@ -33,7 +33,7 @@ func (s *simpleBounds) Raw() *types.RawModeler {
 	return nil
 }
 
-func (s *simpleBounds) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
+func (s *simpleBounds) Model(verbose bool, format string, extraOptions map[string]any) types.Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

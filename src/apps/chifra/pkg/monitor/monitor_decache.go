@@ -5,18 +5,17 @@ package monitor
 // be found in the LICENSE file.
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 // Decache removes a monitor and all cached data from the cache
-func (mon *Monitor) Decache(chain string, processor func(string) bool) (err error) {
+func (mon *Monitor) Decache(chain string, processor cache.DecacheFunc) (err error) {
 	if mon.IsOpen() {
 		defer mon.Close()
 	}
@@ -31,65 +30,17 @@ func (mon *Monitor) Decache(chain string, processor func(string) bool) (err erro
 		return err
 	}
 
-	caches := []string{"blocks", "txs", "traces", "recons"}
-	for index, cache := range caches {
-		for _, app := range apps {
-			path := getCachePath(chain, cache, mon.Address.Hex(), app.BlockNumber, app.TransactionId)
-			if file.FileExists(path) {
-				if !processor(path) {
-					return nil
-				}
-			} else {
-				logger.Progress(index%20 == 0, "Already removed:", path)
-			}
-		}
+	// TODO: This should use go routines
+	caches := []string{"blocks", "txs", "traces", "recons", "abis"}
+	if cont, err := cache.DecacheItems(chain, mon.Address.Hex(), processor, caches, index.AppsToNumPairs(apps)); err != nil || !cont {
+		return err
 	}
 
-	// Remove the abi file if it exists
-	path := config.GetPathToCache(chain) + "abis/"
-	pathToAbi := filepath.Join(path, mon.Address.Hex()+".json")
-	processor(pathToAbi)
-
 	// Clean up the stage if there's anything there
-	path = filepath.Join(config.GetApiProvider(chain), "monitors/staging/", mon.Address.Hex()+".mon.bin")
+	path := filepath.Join(config.GetApiProvider(chain), "monitors/staging/", mon.Address.Hex()+".mon.bin")
 	if file.FileExists(path) {
 		err = os.Remove(path)
 	}
 
 	return err
-}
-
-// TODO: Use Dawid's path code from cache package
-// getCachePath removes an item from the cache if its present, silently fails otherwise
-func getCachePath(chain, typ, addr string, blockNum, txid uint32) string {
-	path := ""
-	blkStr := fmt.Sprintf("%09d", blockNum)
-	txStr := fmt.Sprintf("%05d", txid)
-	part1 := blkStr[0:2]
-	part2 := blkStr[2:4]
-	part3 := blkStr[4:6]
-	part4 := blkStr
-	part5 := ""
-
-	switch typ {
-	case "blocks":
-		path = fmt.Sprintf("%s%s/%s/%s/%s/%s%s.bin", config.GetPathToCache(chain), typ, part1, part2, part3, part4, part5)
-	case "txs":
-		fallthrough
-	case "traces":
-		part5 = "-" + txStr
-		path = fmt.Sprintf("%s%s/%s/%s/%s/%s%s.bin", config.GetPathToCache(chain), typ, part1, part2, part3, part4, part5)
-	case "recons":
-		addr = addr[2:]
-		part1 := addr[0:4]
-		part2 := addr[4:8]
-		part3 := addr[8:]
-		part4 := blkStr
-		part5 := txStr
-		path = fmt.Sprintf("%s%s/%s/%s/%s/%s.%s.bin", config.GetPathToCache(chain), typ, part1, part2, part3, part4, part5)
-	default:
-		fmt.Println("Unknown type in deleteIfPresent: ", typ)
-		os.Exit(1)
-	}
-	return path
 }

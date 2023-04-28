@@ -34,7 +34,7 @@ on      ,both ,fast  ,status ,apps/cacheStatus ,mode_none           ,y    ,
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_fail           ,y    ,modes = junk & verbose
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_abis           ,y    ,modes = abis & verbose & max_records = 2
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_blocks         ,y    ,modes = blocks & verbose & max_records = 2
-on      ,both ,fast  ,status ,apps/cacheStatus ,mode_blocks_dup     ,y    ,modes = blocks & verbose & max_records = 100 & modes = blocks & modes = blocks
+on      ,both ,fast  ,status ,apps/cacheStatus ,mode_blocks_dup     ,y    ,modes = blocks & verbose & max_records = 5 & modes = blocks & modes = blocks
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_monitors       ,y    ,modes = monitors & verbose & max_records = 2
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_names          ,y    ,modes = names & verbose & max_records = 2
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_slurps         ,y    ,modes = slurps & verbose & max_records = 2

@@ -201,13 +201,13 @@ func GetAbi(chain string, address base.Address) (simpleAbis []types.SimpleFuncti
 	functions := make([]types.SimpleFunction, 0, len(ethAbi.Methods))
 	for _, method := range ethAbi.Methods {
 		method := method
-		functions = append(functions, *types.FunctionFromAbiMethod(&method, fileName))
+		functions = append(functions, *types.FunctionFromAbiMethod(&method))
 	}
 
 	events := make([]types.SimpleFunction, 0, len(ethAbi.Events))
 	for _, event := range ethAbi.Events {
 		event := event
-		events = append(events, *types.FunctionFromAbiEvent(&event, fileName))
+		events = append(events, *types.FunctionFromAbiEvent(&event))
 	}
 
 	simpleAbis = append(functions, events...)

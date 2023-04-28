@@ -119,7 +119,7 @@ func (s *SimpleReconciliation) SetRaw(raw *RawReconciliation) {
 	s.raw = raw
 }
 
-func (s *SimpleReconciliation) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleReconciliation) Model(verbose bool, format string, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

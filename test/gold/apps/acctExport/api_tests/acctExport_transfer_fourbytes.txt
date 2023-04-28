@@ -32,7 +32,9 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&maxRecords=10&fourbytes=
               "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000de0b6b3a7640000",
-            "compressedLog": ""
+            "compressedLog": "",
+            "timestamp": 1572663370,
+            "date": "2019-11-02 02:56:10 UTC"
           }
         ],
         "status": 1
@@ -77,7 +79,9 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&maxRecords=10&fourbytes=
               "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
             ],
             "data": "0x00000000000000000000000000000000000000000000010eff0fae29b1bc0000",
-            "compressedLog": ""
+            "compressedLog": "",
+            "timestamp": 1572663859,
+            "date": "2019-11-02 03:04:19 UTC"
           }
         ],
         "status": 1
@@ -122,7 +126,9 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&maxRecords=10&fourbytes=
               "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
             ],
             "data": "0x0000000000000000000000000000000000000000000000878678326eac900000",
-            "compressedLog": ""
+            "compressedLog": "",
+            "timestamp": 1572719011,
+            "date": "2019-11-02 18:23:31 UTC"
           }
         ],
         "status": 1

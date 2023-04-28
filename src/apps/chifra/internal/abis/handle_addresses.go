@@ -60,8 +60,5 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 		}
 	}
 
-	extra := map[string]interface{}{
-		"verbose": opts.Globals.Verbose,
-	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }

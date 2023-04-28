@@ -121,6 +121,8 @@ on      ,both ,fast  ,export   ,apps/acctExport ,neighbor1                ,y    
 on      ,both ,fast  ,export   ,apps/acctExport ,neighbor2                ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors
 on      ,both ,fast  ,export   ,apps/acctExport ,neighbor3                ,y    ,addrs = 0xffeac0305ede3a915295ec8e61c7f881006f4474 & neighbors & first_block = 0 & last_block = 10
 on      ,both ,fast  ,export   ,apps/acctExport ,neighbor4                ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & neighbors & first_block = 0 & last_block = 10
+on      ,both ,fast  ,export   ,apps/acctExport ,neighbor_mulitple        ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f 0x004bfbe1546bc6c65b5c7eaa55304b38bbfec6d3 & neighbors & first_block = 0 & last_block = 10
+on      ,both ,fast  ,export   ,apps/acctExport ,neighbor_mulitple2       ,y    ,addrs = 0x33990122638b9132ca29c723bdf037f1a891a70c 0x72202bb5d0645d495e4bbc1feffbdc3c9cb8d6e1 0x5de92686587b10cd47e03b71f2e2350606fcaf14 & neighbors & max_records = 30 & no_header
 on      ,both ,fast  ,export   ,apps/acctExport ,neighbor1_csv            ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors & fmt = csv
 on      ,both ,fast  ,export   ,apps/acctExport ,neighbor2_csv            ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors & fmt = csv
 
@@ -145,8 +147,18 @@ on      ,both ,fast  ,export   ,apps/acctExport ,accounting_to_cache      ,y    
 
 on      ,both ,slow  ,export   ,apps/acctExport ,monitors_seed_1          ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & last_block = 9000000 & fmt = json
 
+on      ,both ,fast  ,list     ,apps/acctExport ,export_bounds_list_1a    ,n    ,addrs = trueblocks.eth & fmt = csv & last_block = 9000000
+on      ,both ,fast  ,list     ,apps/acctExport ,export_bounds_list_1b    ,n    ,addrs = trueblocks.eth & count & fmt = csv & last_block = 9000000
+
+on      ,both ,fast  ,list     ,apps/acctExport ,export_bounds_list_2a    ,n    ,addrs = trueblocks.eth & fmt = txt & first_block = 8854723 & last_block = 9000000
+on      ,both ,fast  ,list     ,apps/acctExport ,export_bounds_list_2b    ,n    ,addrs = trueblocks.eth & count & fmt = txt & first_block = 8854723 & last_block = 9000000
+
+on      ,both ,fast  ,list     ,apps/acctExport ,export_bounds_list_3a    ,y    ,addrs = trueblocks.eth & fmt = json & first_block = 8854725 & last_block = 9000000
+on      ,both ,fast  ,list     ,apps/acctExport ,export_bounds_list_3b    ,y    ,addrs = trueblocks.eth & count & fmt = json & first_block = 8854725 & last_block = 9000000
+
 # These work but are very slow
 slow    ,both ,fast  ,list     ,apps/acctExport ,export_relevant_list     ,y    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & count & fmt = json
+
 slow    ,both ,fast  ,export   ,apps/acctExport ,export_relevant_not      ,n    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & logs & last_block = 10272064 & fmt = csv
 slow    ,both ,fast  ,export   ,apps/acctExport ,export_relevant          ,n    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & logs & last_block = 10272064 & fmt = csv & relevant
 slow    ,both ,fast  ,export   ,apps/acctExport ,export_relevant_not_emit ,n    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & logs & last_block = 10272064 & emitter = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 & fmt = csv
@@ -166,9 +178,11 @@ on      ,both ,fast  ,export   ,apps/acctExport ,statement_filtered       ,y    
 
 on      ,both ,fast  ,list     ,apps/acctExport ,list_prepare             ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & fmt = json
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_list1           ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & list & fmt = json
+on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_list1_v         ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & list & fmt = json & verbose
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_decache         ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & decache
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_decache_again   ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & decache
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_list2           ,n    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & list & fmt = csv
+on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_list2_v         ,n    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & list & fmt = csv & verbose
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_list_not_in     ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7512 & list
 
 # correctly reports an error, but should report a n ot found error instead, it reports a not an integer error. first_block/last_block should accept hashes

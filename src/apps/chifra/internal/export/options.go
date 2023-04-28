@@ -293,14 +293,18 @@ func exportFinishParse(args []string) *ExportOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	// EXISTING_CODE
+	dupMap := make(map[string]bool)
 	for _, arg := range args {
-		if validate.IsValidTopic(arg) {
-			opts.Topics = append(opts.Topics, arg)
-		} else if validate.IsValidFourByte(arg) {
-			opts.Fourbytes = append(opts.Fourbytes, arg)
-		} else {
-			opts.Addrs = append(opts.Addrs, arg)
+		if !dupMap[arg] {
+			if validate.IsValidTopic(arg) {
+				opts.Topics = append(opts.Topics, arg)
+			} else if validate.IsValidFourByte(arg) {
+				opts.Fourbytes = append(opts.Fourbytes, arg)
+			} else {
+				opts.Addrs = append(opts.Addrs, arg)
+			}
 		}
+		dupMap[arg] = true
 	}
 	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
 	opts.Emitter, _ = ens.ConvertEns(opts.Globals.Chain, opts.Emitter)

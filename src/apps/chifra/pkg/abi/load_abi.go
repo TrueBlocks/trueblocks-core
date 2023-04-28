@@ -32,10 +32,10 @@ func LoadAbiFromJsonFile(filePath string, destination AbiInterfaceMap) (err erro
 		return
 	}
 
-	return fromJson(file, path.Base(file.Name()), destination)
+	return fromJson(file, destination)
 }
 
-func fromJson(reader io.Reader, abiSource string, destination AbiInterfaceMap) (err error) {
+func fromJson(reader io.Reader, destination AbiInterfaceMap) (err error) {
 	// Compute encodings, signatures and parse file
 	loadedAbi, err := abi.JSON(reader)
 	if err != nil {
@@ -44,13 +44,13 @@ func fromJson(reader io.Reader, abiSource string, destination AbiInterfaceMap) (
 
 	for _, method := range loadedAbi.Methods {
 		method := method
-		function := types.FunctionFromAbiMethod(&method, abiSource)
+		function := types.FunctionFromAbiMethod(&method)
 		destination[function.Encoding] = function
 	}
 
 	for _, ethEvent := range loadedAbi.Events {
 		ethEvent := ethEvent
-		event := types.FunctionFromAbiEvent(&ethEvent, abiSource)
+		event := types.FunctionFromAbiEvent(&ethEvent)
 		destination[event.Encoding] = event
 	}
 
@@ -66,11 +66,7 @@ func LoadAbiFromKnownFile(filePath string, destination AbiInterfaceMap) (err err
 	}
 
 	// We still need abi.Method and abi.Event, so will just use fromJson
-	return fromJson(file, getAbiSourceByPath(filePath), destination)
-}
-
-func getAbiSourceByPath(filePath string) string {
-	return path.Base(filePath)
+	return fromJson(file, destination)
 }
 
 // LoadKnownAbiByName finds known ABI by name
@@ -198,7 +194,7 @@ func LoadAbiFromAddress(chain string, address base.Address, destination AbiInter
 	defer localFile.Close()
 
 	// Local file found
-	if err = fromJson(localFile, getAbiSourceByPath(localFile.Name()), destination); err != nil {
+	if err = fromJson(localFile, destination); err != nil {
 		return
 	}
 	// File is correct

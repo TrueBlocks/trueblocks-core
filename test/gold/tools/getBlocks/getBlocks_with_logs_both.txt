@@ -18,7 +18,8 @@ TIME ~ CLOCK - <INFO>  : Processing log query 4012000 to 4012000{
   "data": "0x00000000000000000000000000000000000000000000000da8193a8b128e2000",
   "transactionHash": "0xc2ed44113c8e316ac6bb135256bc25ab1369db846b6ad736487f609601c7f6a3",
   "transactionIndex": 12,
-  "timestamp": 1499861689
+  "timestamp": 1499861689,
+  "date": "2017-07-12 12:14:49 UTC"
 },
 {
   "address": "0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0",
@@ -33,5 +34,6 @@ TIME ~ CLOCK - <INFO>  : Processing log query 4012000 to 4012000{
   "data": "0x0000000000000000000000000000000000000000000000029e4c12187b5e0000",
   "transactionHash": "0x98e9e199e1ae61cbd2272902d798b0e49aaebfc1d7e835a5a97a00d3c7e4ac82",
   "transactionIndex": 35,
-  "timestamp": 1499861689
+  "timestamp": 1499861689,
+  "date": "2017-07-12 12:14:49 UTC"
 }] }

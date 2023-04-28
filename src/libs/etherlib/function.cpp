@@ -70,9 +70,6 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if (fieldName % "abiSource") {
-                return abiSource;
-            }
             if (fieldName % "anonymous") {
                 return bool_2_Str_t(anonymous);
             }
@@ -214,10 +211,6 @@ bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fiel
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if (fieldName % "abiSource") {
-                abiSource = fieldValue;
-                return true;
-            }
             if (fieldName % "anonymous") {
                 anonymous = str_2_Bool(fieldValue);
                 return true;
@@ -340,7 +333,6 @@ bool CFunction::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> name;
     archive >> type;
-    archive >> abiSource;
     archive >> anonymous;
     archive >> constant;
     archive >> stateMutability;
@@ -366,7 +358,6 @@ bool CFunction::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << name;
     archive << type;
-    archive << abiSource;
     archive << anonymous;
     archive << constant;
     archive << stateMutability;
@@ -428,7 +419,6 @@ void CFunction::registerClass(void) {
     ADD_FIELD(CFunction, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CFunction, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CFunction, "abiSource", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "anonymous", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "constant", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "stateMutability", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -511,7 +501,21 @@ string_q nextFunctionChunk_custom(const string_q& fieldIn, const void* dataPtr) 
 bool CFunction::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
-    if (m_schema < getVersionNum(0, 9, 4)) {
+    if (m_schema < getVersionNum(0, 64, 1)) {
+        string_q unused;
+        archive >> name;
+        archive >> type;
+        archive >> unused;  // used to be abiSource
+        archive >> anonymous;
+        archive >> constant;
+        archive >> stateMutability;
+        archive >> signature;
+        archive >> encoding;
+        archive >> inputs;
+        archive >> outputs;
+        finishParse();
+        done = true;
+    } else if (m_schema < getVersionNum(0, 9, 4)) {
         archive >> name;
         archive >> type;
         // source did not exist so it's empty

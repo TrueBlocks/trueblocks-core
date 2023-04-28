@@ -222,7 +222,11 @@ string_q type_2_TypeName(const string_q& type, bool raw) {
 string_q typeFmt(const CMember& fld) {
     if (fld.memberFlags & IS_ARRAY) {
         string_q ret = "          type: array\n          items:\n            $ref: \"#/components/schemas/++X++\"\n";
-        replace(ret, "++X++", firstLower(type_2_TypeName(fld.type, false)));
+        string_q t = firstLower(type_2_TypeName(fld.type, false));
+        if (contains(t, "any")) {
+            t = "cacheItem";
+        }
+        replace(ret, "++X++", t);
         return ret;
     }
 
@@ -230,6 +234,10 @@ string_q typeFmt(const CMember& fld) {
         string_q ret = "          type: object\n          items:\n            $ref: \"#/components/schemas/++X++\"\n";
         replace(ret, "++X++", firstLower(type_2_TypeName(fld.type, false)));
         return ret;
+    }
+
+    if (fld.type == "[]string") {
+        return "          type: array\n          items:\n            type: string\n";
     }
 
     if (fld.type == "blknum" || fld.type == "uint64" || fld.type == "timestamp" || fld.type == "double" ||
@@ -360,6 +368,8 @@ const char* STR_YAML_TAIL =
     "      format: hash\n"
     "      description: \"The 32-byte hash\"\n"
     "      example: \"0xf128...1e98\"\n"
+    "    address:\n"
+    "      type: string\n"
     "    string:\n"
     "      type: string\n"
     "    topic:\n"

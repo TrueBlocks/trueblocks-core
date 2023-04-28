@@ -62,7 +62,7 @@ func (s *SimpleEtherscan) SetRaw(r *RawEtherscan) {
 	s.raw = r
 }
 
-func (s *SimpleEtherscan) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleEtherscan) Model(verbose bool, format string, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

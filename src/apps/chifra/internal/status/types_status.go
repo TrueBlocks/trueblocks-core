@@ -20,6 +20,8 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/node"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -55,7 +57,7 @@ func (s *simpleStatus) Raw() *types.RawModeler {
 	return nil
 }
 
-func (s *simpleStatus) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
+func (s *simpleStatus) Model(verbose bool, format string, extraOptions map[string]any) types.Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -111,7 +113,7 @@ func (s *simpleStatus) Model(showHidden bool, format string, extraOptions map[st
 		order = append(order, "caches")
 	}
 
-	if showHidden && !testMode {
+	if verbose && !testMode {
 		var chains []types.SimpleChain
 		chainArray := config.GetChainArray()
 		for _, chain := range chainArray {
@@ -176,8 +178,8 @@ func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 		Progress:      ToProgress(chain, meta),
 		IsTesting:     testMode,
 		IsApi:         opts.Globals.IsApiMode(),
-		IsArchive:     rpcClient.IsArchiveNode(testMode, chain),
-		IsTracing:     rpcClient.IsTracingNode(testMode, chain),
+		IsArchive:     node.IsArchiveNode(chain),
+		IsTracing:     node.IsTracingNode(testMode, chain),
 		HasEsKey:      config.HasEsKeys(chain),
 		HasPinKey:     config.HasPinningKeys(chain),
 		Chain:         chain,
@@ -200,7 +202,7 @@ func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 	return s, nil
 }
 
-func (s *simpleStatus) ToTemplate(w io.Writer, testMode bool, format string) bool {
+func (s *simpleStatus) toTemplate(w io.Writer, testMode bool, format string) bool {
 	if format == "json" {
 		return false
 	}
@@ -218,9 +220,13 @@ func (s *simpleStatus) ToTemplate(w io.Writer, testMode bool, format string) boo
 	table = strings.Replace(table, "{CLIENT_STRING}", getClientTemplate(), -1)
 	table = strings.Replace(table, "{VERSION_STRING}", getVersionTemplate(), -1)
 	table = strings.Replace(table, "INFO", timeDatePart, -1)
+	table = strings.Replace(table, "[RED]", colors.Red, -1)
+	table = strings.Replace(table, "[GREEN]", colors.Green, -1)
+	table = strings.Replace(table, "[OFF]", colors.Off, -1)
 
 	t, err := template.New("status").Parse(table)
 	if err != nil {
+		logger.Fatal("Should not happen. Bad template.", err)
 		return false
 	}
 
@@ -228,17 +234,33 @@ func (s *simpleStatus) ToTemplate(w io.Writer, testMode bool, format string) boo
 	return true
 }
 
-func getVersionTemplate() string {
-	return `{{.Version}} ({{if .HasEsKey}}eskey, {{else}}no eskey, {{end}}{{if .HasPinKey}}pinKey{{else}}no pinKey{{end}})`
+func getBoolTemplate(name string) (ret string) {
+	if strings.HasPrefix(name, "Has") {
+		ret = "{{if .[NAME]}}[GREEN][NAMEL][OFF]{{else}}[RED]no [NAMEL][OFF]{{end}}"
+		ret = strings.Replace(strings.Replace(ret, "[NAMEL]", strings.ToLower(name), -1), "has", "", -1)
+	} else {
+		ret = "{{if .[NAME]}}[GREEN][NAMEL][OFF]{{else}}[RED]not [NAMEL][OFF]{{end}}"
+		ret = strings.Replace(strings.Replace(ret, "[NAMEL]", strings.ToLower(name), -1), "is", "", -1)
+	}
+	ret = strings.Replace(ret, "[NAME]", name, -1)
+	return
 }
 
 func getClientTemplate() string {
-	return `{{.ClientVersion}} ({{if .IsArchive}}archive, {{else}}not archive, {{end}}{{if .IsTesting}}testing, {{end}}{{if .IsTracing}}tracing{{else}}not tracing{{end}})`
+	archive := getBoolTemplate("IsArchive")
+	tracing := getBoolTemplate("IsTracing")
+	return "{{.ClientVersion}} (" + archive + ", {{if .IsTesting}}[GREEN]testing[OFF], {{end}}" + tracing + ")"
+}
+
+func getVersionTemplate() string {
+	esKey := getBoolTemplate("HasEsKey")
+	pinKey := getBoolTemplate("HasPinKey")
+	return "{{.Version}} (" + esKey + ", " + pinKey + ")"
 }
 
 const templateStr = `INFO Client:            {CLIENT_STRING}
 INFO TrueBlocks:        {VERSION_STRING}
-INFO RPC Provider:      {{.RPCProvider}} - {{.Chain}} ({{.NetworkId}}/{{.ChainId}})
+INFO RPC Provider:      {{.RPCProvider}} - {{.Chain}} ({{if eq .NetworkId "0"}}[RED]{{.NetworkId}}[OFF]{{else}}[GREEN]{{.NetworkId}}[OFF]{{end}}/{{if eq .ChainId "0"}}[RED]{{.ChainId}}[OFF]{{else}}[GREEN]{{.ChainId}}[OFF]{{end}})
 INFO Root Config Path:  {{.RootConfig}}
 INFO Chain Config Path: {{.ChainConfig}}
 INFO Cache Path:        {{.CachePath}}

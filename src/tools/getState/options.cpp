@@ -159,9 +159,6 @@ bool COptions::parseArguments(string_q& command) {
         configureDisplay("getState", "CEthState", format.empty() ? STR_DISPLAY_ETHSTATE : format);
     }
 
-    if (needsHistory() && !isArchiveNode())
-        return usage("This request requires historical balances which your RPC server does not provide.");
-
     return true;
 }
 

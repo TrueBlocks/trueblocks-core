@@ -34,7 +34,7 @@ func (s *simpleCacheItem) Raw() *types.RawModeler {
 	return nil
 }
 
-func (s *simpleCacheItem) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
+func (s *simpleCacheItem) Model(verbose bool, format string, extraOptions map[string]any) types.Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

@@ -212,6 +212,14 @@ void CReceipt::finishParse() {
     // EXISTING_CODE
     for (size_t i = 0; i < logs.size(); i++) {
         logs.at(i).pReceipt = this;  // taking a non-const reference of an element that already exists
+        if (pTransaction) {
+            logs.at(i).timestamp = pTransaction->timestamp;
+            logs.at(i).blockNumber = pTransaction->blockNumber;
+            logs.at(i).transactionIndex = pTransaction->transactionIndex;
+            logs.at(i).transactionHash = pTransaction->hash;
+            logs.at(i).blockHash = pTransaction->blockHash;
+        }
+        logs.at(i).finishParse();
     }
     // EXISTING_CODE
 }

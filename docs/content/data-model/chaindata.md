@@ -177,6 +177,7 @@ Logs consist of the following fields:
 | logIndex         | the zero-indexed position of this log relative to the block                                       | uint64                                  |
 | transactionHash  | the hash of the transction                                                                        | hash                                    |
 | timestamp        | the timestamp of the block this log appears in                                                    | timestamp                               |
+| date             | the date of the block this log appears in                                                         | datetime                                |
 | address          | the smart contract that emitted this log                                                          | address                                 |
 | topics           | The first topic hashes event signature of the log, up to 3 additional index parameters may appear | topic[]                                 |
 | data             | any remaining un-indexed parameters to the event                                                  | bytes                                   |

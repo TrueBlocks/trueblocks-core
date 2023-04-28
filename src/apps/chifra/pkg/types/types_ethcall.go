@@ -51,7 +51,7 @@ func (s *SimpleEthCall) SetRaw(raw *RawEthCall) {
 	s.raw = raw
 }
 
-func (s *SimpleEthCall) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleEthCall) Model(verbose bool, format string, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

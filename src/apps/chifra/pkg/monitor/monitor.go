@@ -5,7 +5,6 @@ package monitor
 // be found in the LICENSE file.
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 	"io/fs"
@@ -20,7 +19,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -95,19 +93,6 @@ func (mon Monitor) String() string {
 		return fmt.Sprintf("%s\t%d\t%d\t%d\t%t", mon.Address.Hex(), mon.Count(), file.FileSize(mon.Path()), mon.LastScanned, mon.Deleted)
 	}
 	return fmt.Sprintf("%s\t%d\t%d\t%d", mon.Address.Hex(), mon.Count(), file.FileSize(mon.Path()), mon.LastScanned)
-}
-
-// TODO: ...and this - making this the String and the above ToTxt?
-// ToJSON returns a JSON object from a Monitor
-func (mon Monitor) ToJSON() string {
-	sm := types.SimpleMonitor{
-		Address:     mon.Address.Hex(),
-		NRecords:    int(mon.Count()),
-		FileSize:    file.FileSize(mon.Path()),
-		LastScanned: mon.Header.LastScanned,
-	}
-	bytes, _ := json.MarshalIndent(sm, "", "  ")
-	return string(bytes)
 }
 
 // Path returns the path to the Monitor file

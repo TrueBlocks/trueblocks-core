@@ -230,10 +230,6 @@ bool COptions::parseArguments(string_q& command) {
     if (!isApiMode() && (max_records == 250 || max_records == 0))
         max_records = (((size_t)-100000000));  // this is a very large number that won't wrap
 
-    if (!isArchiveNode() && accounting) {
-        return usage("The --accounting option requires historical balances which your RPC server does not provide.");
-    }
-
     for (auto e : emitter) {
         logFilter.emitters.push_back(e);
     }
@@ -509,9 +505,6 @@ bool COptions::setDisplayFormatting(void) {
         HIDE_FIELD(CParameter, "strDefault");
         HIDE_FIELD(CParameter, "components");
         HIDE_FIELD(CParameter, "internalType");
-        HIDE_FIELD(CTransaction, "datesh");
-        HIDE_FIELD(CTransaction, "time");
-        HIDE_FIELD(CTransaction, "age");
         SHOW_FIELD(CTransaction, "traces");
 
         expContext().fmtMap["header"] = "";

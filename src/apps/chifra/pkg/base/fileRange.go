@@ -21,6 +21,7 @@ type FileRange struct {
 	First uint64
 	Last  uint64
 }
+type BlockRange FileRange // sugar
 
 var NotARange = FileRange{First: utils.NOPOS, Last: utils.NOPOS}
 

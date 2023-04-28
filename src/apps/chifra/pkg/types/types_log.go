@@ -13,6 +13,7 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
@@ -37,6 +38,7 @@ type SimpleLog struct {
 	BlockNumber      base.Blknum     `json:"blockNumber"`
 	CompressedLog    string          `json:"compressedLog,omitempty"`
 	Data             string          `json:"data,omitempty"`
+	Date             string          `json:"date,omitempty"`
 	LogIndex         uint64          `json:"logIndex"`
 	Timestamp        base.Timestamp  `json:"timestamp,omitempty"`
 	Topics           []base.Hash     `json:"topics,omitempty"`
@@ -55,7 +57,7 @@ func (s *SimpleLog) SetRaw(raw *RawLog) {
 	s.raw = raw
 }
 
-func (s *SimpleLog) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleLog) Model(verbose bool, format string, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -65,6 +67,7 @@ func (s *SimpleLog) Model(showHidden bool, format string, extraOptions map[strin
 		"blockNumber":      s.BlockNumber,
 		"logIndex":         s.LogIndex,
 		"timestamp":        s.Timestamp,
+		"date":             utils.FormattedDate(s.Timestamp),
 		"transactionIndex": s.TransactionIndex,
 		"transactionHash":  s.TransactionHash,
 	}
@@ -75,6 +78,7 @@ func (s *SimpleLog) Model(showHidden bool, format string, extraOptions map[strin
 		"logIndex",
 		"transactionHash",
 		"timestamp",
+		"date",
 		"address",
 		"topic0",
 		"topic1",

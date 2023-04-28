@@ -9,6 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/token"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -60,9 +61,10 @@ func (opts *NamesOptions) HandleClean() error {
 }
 
 func preparePrefunds(chain string) (results map[base.Address]bool, err error) {
-	prefunds, err := names.LoadPrefunds(
+	prefunds, err := prefunds.LoadPrefunds(
 		chain,
-		names.GetPrefundPath(chain),
+		prefunds.GetPrefundPath(chain),
+		nil,
 	)
 	if err != nil {
 		return

@@ -18,7 +18,6 @@ TEST[DATE|TIME] Format:  json
       "blockHash": "0xf41643281a0a58e45254b6a7e3a53db51deeef05a80ebcbb1c1314a754aefbf9",
       "blockNumber": 3691662,
       "date": "2017-05-12 01:17:33 UTC",
-      "datesh": "2017-05-12",
       "ether": "0.000000000000000000",
       "from": "0x00a3819199113fc6a6e6ba1298afde7377e2009b",
       "gas": 40252,
@@ -54,7 +53,6 @@ TEST[DATE|TIME] Format:  json
         ],
         "status": null
       },
-      "time": "01:17:33 UTC",
       "timestamp": 1494551853,
       "to": "0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373",
       "traces": [
