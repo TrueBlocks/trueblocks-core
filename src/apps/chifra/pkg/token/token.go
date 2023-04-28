@@ -1,6 +1,7 @@
 package token
 
 import (
+	"context"
 	"fmt"
 	"math/big"
 
@@ -37,11 +38,33 @@ type Token struct {
 	Type        TokenType
 }
 
+// var NodeConnectionError = errors.New("connection error")
+type ErrNodeConnection struct {
+	err error
+}
+
+func NewErrNodeConnection(err error) (e ErrNodeConnection) {
+	e.err = err
+	return
+}
+
+func (e ErrNodeConnection) Error() string {
+	return e.err.Error()
+}
+
 // GetState returns token state for given block. `blockNumber` can be "latest" or "" for the latest block or
 // decimal number or hex number with 0x prefix.
 func GetState(chain string, tokenAddress base.Address, blockNumber string) (token *Token, err error) {
 	client := rpcClient.GetClient(config.GetRpcProvider(chain))
 	defer client.Close()
+
+	// Check if we can dial the node. This way we can make sure we report back the correct state
+	// (err meaning that an address is not a token).
+	_, err = client.BlockNumber(context.Background())
+	if err != nil {
+		err = NewErrNodeConnection(err)
+		return
+	}
 
 	callOpts := &bind.CallOpts{}
 	if blockNumber != "" && blockNumber != "latest" {

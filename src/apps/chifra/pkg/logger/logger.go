@@ -20,18 +20,20 @@ const (
 	progress severity = iota
 	infoC             // colored table
 	info
+	infoReplace
 	test
 	warning
 	err
 )
 
 var severityToLabel = map[severity]string{
-	progress: "PROG",
-	infoC:    "INFO",
-	info:     "INFO",
-	test:     "TEST",
-	warning:  "WARN",
-	err:      "EROR",
+	progress:    "PROG",
+	infoC:       "INFO",
+	info:        "INFO",
+	infoReplace: "INFO",
+	test:        "TEST",
+	warning:     "WARN",
+	err:         "EROR",
 }
 
 var (
@@ -75,7 +77,7 @@ func toLog(sev severity, a ...interface{}) {
 	}
 
 	fmt.Fprintf(os.Stderr, "%s[%s] ", severityToLabel[sev], timeDatePart)
-	if sev == progress {
+	if sev == progress || sev == infoReplace {
 		for index, aa := range a {
 			if index > 0 {
 				fmt.Fprint(os.Stderr, ' ')
@@ -102,6 +104,11 @@ func InfoTable(v ...any) {
 
 func Info(v ...any) {
 	toLog(info, v...)
+}
+
+// InfoReplace prints its arguments and \r
+func InfoReplace(v ...any) {
+	toLog(infoReplace, v...)
 }
 
 func Warn(v ...any) {

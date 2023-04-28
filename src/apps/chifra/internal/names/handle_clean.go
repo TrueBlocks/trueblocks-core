@@ -3,10 +3,13 @@
 package namesPkg
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/token"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -20,23 +23,78 @@ func (opts *NamesOptions) HandleClean() error {
 		return err
 	}
 
-	var regularNamesUpdated bool
+	count := 0
+	total := len(allNames)
+	// Jump to the next line after reporting progress (otherwise garbage gets into the prompt)
+	defer fmt.Println()
+
 	for _, name := range allNames {
-		modified := cleanName(&name)
+		count++
+		logger.InfoReplace(fmt.Sprintf("Cleaning %d of %d: %s", count, total, name.Address))
+
+		// TODO: C++ code allowed cleaning of regular names
+		if !name.IsCustom {
+			continue
+		}
+
+		modified, err := cleanName(opts.Globals.Chain, &name)
+		if err != nil {
+			return err
+		}
 		if isPrefund := prefundMap[name.Address]; isPrefund != name.IsPrefund {
 			name.IsPrefund = isPrefund
 			modified = true
 		}
-		if modified && !regularNamesUpdated {
-			regularNamesUpdated = !name.IsCustom
+
+		// if modified && !name.IsCustom {
+		// }
+		if modified && name.IsCustom {
+			_, err := names.UpdateCustomName(opts.Globals.Chain, &name)
+			if err != nil {
+				return err
+			}
 		}
 	}
 
 	return nil
 }
 
-func cleanName(name *types.SimpleName) (modified bool) {
-	if name.Tags >= "8" {
+func preparePrefunds(chain string) (results map[base.Address]bool, err error) {
+	prefunds, err := names.LoadPrefunds(
+		chain,
+		names.GetPrefundPath(chain),
+	)
+	if err != nil {
+		return
+	}
+
+	results = make(map[base.Address]bool, len(prefunds))
+	for _, prefund := range prefunds {
+		results[prefund.Address] = true
+	}
+	return
+}
+
+func cleanName(chain string, name *types.SimpleName) (modified bool, err error) {
+	modified = cleanCommon(name)
+	tokenState, err := token.GetState(chain, name.Address, "latest")
+	if _, ok := err.(token.ErrNodeConnection); ok {
+		return
+	}
+	if err != nil {
+		// Not a token
+		err = nil
+		name.IsErc20 = false
+		name.IsErc721 = false
+		return
+	} else {
+		modified = modified || cleanToken(name, tokenState)
+		return
+	}
+}
+
+func cleanCommon(name *types.SimpleName) (modified bool) {
+	if name.Tags > "79999" {
 		return false
 	}
 
@@ -58,32 +116,93 @@ func cleanName(name *types.SimpleName) (modified bool) {
 		name.Petname = names.AddrToPetname(name.Address.Hex(), "-")
 		modified = true
 	}
-
 	return
 }
 
-func preparePrefunds(chain string) (results map[base.Address]bool, err error) {
-	prefunds, err := names.LoadPrefunds(
-		chain,
-		names.GetPrefundPath(chain),
-	)
-	if err != nil {
-		return
-	}
-
-	results = make(map[base.Address]bool, len(prefunds))
-	for _, prefund := range prefunds {
-		results[prefund.Address] = true
-	}
-	return
-}
-
-func cleanContract(name *types.SimpleName) (modified bool) {
+func cleanContract(token *token.Token, address base.Address, name *types.SimpleName) (modified bool, err error) {
 	if !name.IsContract {
 		name.IsContract = true
 		modified = true
 	}
-	// name, err := token.GetState(chain, name.Address, token.TokenStateName,
+
+	if token != nil {
+		tokenModified := cleanToken(name, token)
+		if !modified && tokenModified {
+			modified = true
+		}
+	}
+
+	if name.Tags == "" {
+		name.Tags = "30-Contracts"
+		modified = true
+	}
+
+	trimmedName := strings.Trim(name.Name, " ")
+	if name.Name != trimmedName {
+		name.Name = trimmedName
+		modified = true
+	}
+
+	trimmedSymbol := strings.Trim(name.Symbol, " ")
+	if name.Symbol != trimmedSymbol {
+		name.Symbol = trimmedSymbol
+		modified = true
+	}
+
+	return
+}
+
+func cleanToken(name *types.SimpleName, token *token.Token) (modified bool) {
+	if !name.IsErc20 && token.IsErc20() {
+		name.IsErc20 = true
+		modified = true
+	}
+
+	airdrop := strings.Contains(name.Name, "airdrop")
+	if name.Tags == "60-Airdrops" {
+		name.Tags = ""
+		modified = true
+	}
+
+	if token.IsErc20() && (name.Tags == "" ||
+		strings.Contains(name.Tags, "token") ||
+		strings.Contains(name.Tags, "30-contracts") ||
+		strings.Contains(name.Tags, "55-defi") ||
+		airdrop) {
+		name.Tags = "50-Tokens:ERC20"
+		modified = true
+	}
+
+	if name.Source != "On chain" &&
+		(name.Source == "" || name.Source == "TrueBlocks.io" || name.Source == "EtherScan.io") {
+		name.Source = "On chain"
+		modified = true
+	}
+
+	if token.Name != "" && name.Name != token.Name {
+		name.Name = token.Name
+		modified = true
+	}
+
+	if token.Symbol != "" && name.Symbol != token.Symbol {
+		name.Symbol = token.Symbol
+		modified = true
+	}
+
+	if token.Decimals > 0 && name.Decimals != uint64(token.Decimals) {
+		name.Decimals = uint64(token.Decimals)
+		modified = true
+	}
+
+	if token.IsErc721() && name.IsErc721 != token.IsErc721() {
+		name.IsErc721 = token.IsErc721()
+		modified = true
+	}
+
+	if name.IsErc721 && name.Tags != "50-Tokens:ERC721" {
+		name.Tags = "50-Tokens:ERC721"
+		modified = true
+	}
 	return
 }
 
