@@ -3,6 +3,8 @@ package types
 // EXISTING_CODE
 import (
 	"io"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
 // EXISTING_CODE
@@ -54,6 +56,13 @@ func (s *SimpleMonitor) Model(verbose bool, format string, extraOptions map[stri
 		}
 		order = append(order, "lastScanned")
 		order = append(order, "deleted")
+		if extraOptions["namesMap"] != nil {
+			name := extraOptions["namesMap"].(map[base.Address]SimpleName)[base.HexToAddress(s.Address)]
+			if name.Address.Hex() != "0x0" {
+				model["name"] = name
+				order = append(order, "name")
+			}
+		}
 	}
 	// EXISTING_CODE
 
