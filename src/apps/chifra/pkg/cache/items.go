@@ -191,3 +191,15 @@ func GetCacheTypes(strs []string) []CacheType {
 	*/
 	return types
 }
+
+func IsIndexType(cT CacheType) bool {
+	m := map[CacheType]bool{
+		Index_Bloom:   true,
+		Index_Final:   true,
+		Index_Ripe:    true,
+		Index_Staging: true,
+		Index_Unripe:  true,
+		Index_Maps:    true,
+	}
+	return m[cT]
+}
