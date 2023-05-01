@@ -3,10 +3,6 @@
 
 This file details changes made to TrueBlocks per version. See the [migration notes](./MIGRATIONS.md) for changes from previous versions.
 
-## v0.65.0 (coming soon)
-
-Nothing to report yet.
-
 ## v0.64.0 (2023/04/20)
 
 This is not a minor release that closes a few random issues and adds a small feature to better manage the caches.
