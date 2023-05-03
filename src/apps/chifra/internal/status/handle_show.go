@@ -47,6 +47,11 @@ func (opts *StatusOptions) HandleShow() error {
 					logger.Progress(true, "                                           ")
 				}
 			default:
+				isIndexType := cache.IsIndexType(cT)
+				if testMode && isIndexType && (cT != cache.Index_Bloom && cT != cache.Index_Final) {
+					continue
+				}
+
 				if cache.IsCacheType(result.Path, cT, !result.IsDir /* checkExt */) {
 					if result.IsDir {
 						counterMap[cT].NFolders++
