@@ -15,7 +15,7 @@ import (
 )
 
 func (opts *NamesOptions) HandleClean() error {
-	allNames, err := names.LoadNamesMap(opts.Globals.Chain, names.Regular|names.Custom, []string{})
+	allNames, err := names.LoadNamesMap(opts.Globals.Chain, names.Custom, []string{})
 	if err != nil {
 		return err
 	}
@@ -33,11 +33,6 @@ func (opts *NamesOptions) HandleClean() error {
 		count++
 		logger.InfoReplace(fmt.Sprintf("Cleaning %d of %d: %s", count, total, name.Address))
 
-		// TODO: C++ code allowed cleaning of regular names
-		if !name.IsCustom {
-			continue
-		}
-
 		modified, err := cleanName(opts.Globals.Chain, &name)
 		if err != nil {
 			return err
@@ -46,9 +41,11 @@ func (opts *NamesOptions) HandleClean() error {
 			name.IsPrefund = isPrefund
 			modified = true
 		}
+		if !name.IsCustom {
+			name.IsCustom = true
+			modified = true
+		}
 
-		// if modified && !name.IsCustom {
-		// }
 		if modified && name.IsCustom {
 			_, err := names.UpdateCustomName(opts.Globals.Chain, &name)
 			if err != nil {
