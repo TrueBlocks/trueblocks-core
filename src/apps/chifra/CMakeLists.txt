@@ -5,6 +5,7 @@ cmake_minimum_required (VERSION 3.0)
 project (chifra)
 
 function(COMPILE_PROTOBUFFERS NAME MAIN_SRC)
+  message("Compiling protobuf files")
   get_filename_component(MAIN_SRC_ABS ${MAIN_SRC} ABSOLUTE)
 
   add_custom_target(${NAME})
@@ -17,6 +18,7 @@ function(COMPILE_PROTOBUFFERS NAME MAIN_SRC)
                     ${MAIN_SRC}
                     WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/proto
                     DEPENDS ${MAIN_SRC_ABS} ${MAIN_SRC})
+
   add_custom_target(${NAME}_all ALL DEPENDS ${NAME})
 endfunction(COMPILE_PROTOBUFFERS)
 
@@ -33,7 +35,10 @@ function(ADD_GO_INSTALLABLE_PROGRAM NAME MAIN_SRC)
   add_custom_target(${NAME}_all ALL DEPENDS ${NAME})
 endfunction(ADD_GO_INSTALLABLE_PROGRAM)
 
-COMPILE_PROTOBUFFERS(chifra_proto chifra.proto)
+if(PROTOBUF_FOUND)
+  COMPILE_PROTOBUFFERS(chifra_proto chifra.proto)
+endif(PROTOBUF_FOUND)
+
 ADD_GO_INSTALLABLE_PROGRAM(chifra *.go)
 
 # Output
