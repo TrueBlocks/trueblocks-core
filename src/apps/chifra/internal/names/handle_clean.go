@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/contract"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
@@ -75,21 +76,34 @@ func preparePrefunds(chain string) (results map[base.Address]bool, err error) {
 }
 
 func cleanName(chain string, name *types.SimpleName) (modified bool, err error) {
+	isContract, err := contract.IsContractAt(chain, name.Address, nil)
+	if err != nil {
+		return
+	}
+	wasContract := name.IsContract && !isContract
 	modified = cleanCommon(name)
+
+	if !isContract {
+		if mod := cleanNonContract(name, wasContract); mod {
+			modified = true
+		}
+		return
+	}
+
 	tokenState, err := token.GetState(chain, name.Address, "latest")
 	if _, ok := err.(token.ErrNodeConnection); ok {
 		return
 	}
 	if err != nil {
-		// Not a token
 		err = nil
-		name.IsErc20 = false
-		name.IsErc721 = false
-		return
-	} else {
-		modified = modified || cleanToken(name, tokenState)
+	}
+
+	contractModified, err := cleanContract(tokenState, name.Address, name)
+	if err != nil {
 		return
 	}
+	modified = modified || contractModified
+	return
 }
 
 func cleanCommon(name *types.SimpleName) (modified bool) {
@@ -129,6 +143,10 @@ func cleanContract(token *token.Token, address base.Address, name *types.SimpleN
 		if !modified && tokenModified {
 			modified = true
 		}
+	} else {
+		// Not a token
+		name.IsErc20 = false
+		name.IsErc721 = false
 	}
 
 	if name.Tags == "" {
