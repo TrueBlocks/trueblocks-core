@@ -22,7 +22,7 @@ type DaemonOptions struct {
 	Api     string                `json:"api,omitempty"`     // Instruct the node to start the API server
 	Scrape  string                `json:"scrape,omitempty"`  // Start the scraper, initialize it with either just blooms or entire index, generate for new blocks
 	Monitor bool                  `json:"monitor,omitempty"` // Instruct the node to start the monitors tool
-	Rpc     bool                  `json:"rpc,omitempty"`
+	Rpc     bool                  `json:"rpc,omitempty"`     // Run gRPC server
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 	// EXISTING_CODE
@@ -40,6 +40,7 @@ func (opts *DaemonOptions) testLog() {
 	logger.TestLog(len(opts.Api) > 0, "Api: ", opts.Api)
 	logger.TestLog(len(opts.Scrape) > 0, "Scrape: ", opts.Scrape)
 	logger.TestLog(opts.Monitor, "Monitor: ", opts.Monitor)
+	logger.TestLog(opts.Rpc, "Rpc: ", opts.Rpc)
 	opts.Globals.TestLog()
 }
 
@@ -63,6 +64,8 @@ func daemonFinishParseApi(w http.ResponseWriter, r *http.Request) *DaemonOptions
 			opts.Scrape = value[0]
 		case "monitor":
 			opts.Monitor = true
+		case "rpc":
+			opts.Rpc = true
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "daemon")
