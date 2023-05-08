@@ -67,13 +67,15 @@ bool CLedgerManager::getStatements(CTransaction& trans) {
             bigint_t begBal, endBal;
             bool isBogus = false;
             if (!statement.reconcileBalances(isPrevDiff, isNextDiff, begBal, endBal)) {
-                // This fixes a lot of unreconciled transactions. We need to do this because sometimes
-                // hackers send events but do not change balances. We need to be able to detect this
-                // and skip these events. We do this by looking for a large number of events and
-                // no balance change. If we find this, we call it a 'bogus' transfer and skip it.
-                // A better method would have been to query the number of state changes in the
-                // transaction, but that's not available in the logs. So, we have to do this.
-                bool lotsOfLogs = trans.receipt.logs.size() > 49;
+                // This fixes a lot of unreconciled transactions.
+                //
+                // We need to do this because sometimes hackers generate Transfer events but do not change
+                // token balances. We need to be able to detect this and skip these events. We do this by
+                // looking for a large number of events and no balance change. If we find this, we call it
+                // a 'bogus' transfer and skip it. A better method would have been to query the number of
+                // state changes in the transaction, but that's not available in the logs. So, we have to
+                // do this.
+                bool lotsOfLogs = trans.receipt.logs.size() > 10;
                 bool mayBeAirdrop = isZeroAddr(transfer.sender) || transfer.sender == trans.to;
                 bool noBalanceChange = (begBal == endBal);
                 if ((lotsOfLogs || mayBeAirdrop) && noBalanceChange) {
@@ -98,9 +100,9 @@ bool CLedgerManager::getStatements(CTransaction& trans) {
     }
 
     if (hasBogus) {
-        // We've determined that this transaction has bogus transfers. Cache this tx
-        // since it's probably all bogus.
-        trans.cacheConditional(accountedFor, false);
+        // We've determined that this transaction has bogus transfers, but we cache it anyway since
+        // it's probably all bogus.
+        trans.cacheConditional(accountedFor);
     }
 
     return !shouldQuit();
