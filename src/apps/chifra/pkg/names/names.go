@@ -185,7 +185,7 @@ func NewNameReader(source io.Reader, mode NameReaderMode) (NameReader, error) {
 	}
 	header := map[string]int{}
 	for index, columnName := range headerRow {
-		header[columnName] = index
+		header[strings.ToLower(columnName)] = index
 	}
 
 	for _, required := range requiredColumns {
