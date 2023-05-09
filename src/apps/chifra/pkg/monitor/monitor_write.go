@@ -32,6 +32,22 @@ func (mon *Monitor) WriteMonHeader(deleted bool, lastScanned uint32) (err error)
 	return
 }
 
+// WriteMonHeaderEx writes the monitor's header
+func (mon *Monitor) WriteMonHeaderEx(deleted bool, lastScanned uint32) (err error) {
+	f, err := os.OpenFile(mon.Path(), os.O_WRONLY|os.O_CREATE, 0644)
+	if err != nil {
+		return
+	}
+	defer f.Close()
+
+	mon.Deleted = deleted
+	mon.LastScanned = lastScanned
+
+	f.Seek(0, io.SeekStart)
+	err = binary.Write(f, binary.LittleEndian, mon.Header)
+	return
+}
+
 // WriteAppearancesAppend appends appearances to the end of the file, updates the header with
 // lastScanned (if later) and returns the number of records written. Note that we should
 // be writing to a temporary file.

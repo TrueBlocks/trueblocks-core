@@ -1,8 +1,11 @@
 package chunksPkg
 
 import (
+	"context"
 	"fmt"
+	"io/fs"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -10,11 +13,16 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/user"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
+	chain := opts.Globals.Chain
+
 	if opts.Globals.TestMode {
 		logger.Warn("Truncate option not tested.")
 		return nil
@@ -27,41 +35,79 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 	indexPath := config.GetPathToIndex(opts.Globals.Chain)
 	index.CleanTemporaryFolders(indexPath, true)
 
-	truncateIndex := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
-		if path != cache.ToBloomPath(path) {
-			logger.Fatal("should not happen ==> we're spinning through the bloom filters")
-		}
+	ctx, cancel := context.WithCancel(context.Background())
+	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 
-		if strings.HasSuffix(path, ".gz") {
-			os.Remove(path)
+		// It's relatively safe to truncate monitors first even though the removal of the index
+		// may fail because it's so quick to update monitors.
+		nMonitorsTruncated := 0
+		truncateMonitor := func(path string, info fs.FileInfo, err error) error {
+			if err != nil {
+				return err
+			}
+			if !info.IsDir() {
+				addr, _ := monitor.PathToAddress(path)
+				if len(addr) > 0 {
+					mon := monitor.NewMonitor(chain, addr, false /* create */)
+					if err = mon.TruncateTo(uint32(opts.Truncate)); err != nil {
+						return err
+					}
+					nMonitorsTruncated++
+				}
+			}
+			return nil
+		}
+		filepath.Walk(config.GetPathToCache(chain)+"monitors", truncateMonitor)
+
+		nChunksRemoved := 0
+		truncateIndex := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
+			if path != cache.ToBloomPath(path) {
+				logger.Fatal("should not happen ==> we're spinning through the bloom filters")
+			}
+
+			if strings.HasSuffix(path, ".gz") {
+				os.Remove(path)
+				return true, nil
+			}
+
+			rng, err := base.RangeFromFilenameE(path)
+			if err != nil {
+				return false, err
+			}
+
+			testRange := base.FileRange{First: opts.Truncate, Last: utils.NOPOS}
+			if rng.Intersects(testRange) {
+				// TODO: We should make backups of these files and only if the manifest and both files
+				// are removed and the monitors are cleared should we proceed. Otherwise, replace these
+				// backups and the manifest backup.
+				if err = manifest.RemoveChunk(chain, path); err != nil {
+					return false, err
+				}
+				nChunksRemoved++
+			}
+
 			return true, nil
 		}
 
-		rng, err := base.RangeFromFilenameE(path)
-		if err != nil {
-			return false, err
+		walker := index.NewCacheWalker(
+			opts.Globals.Chain,
+			opts.Globals.TestMode,
+			100, /* maxTests */
+			truncateIndex,
+		)
+		if err := walker.WalkBloomFilters(blockNums); err != nil {
+			errorChan <- err
+			cancel()
+		} else {
+			msg := fmt.Sprintf("Truncated index to block %d. %d chunks removed, manifest updated, %d monitors truncated.", opts.Truncate, nChunksRemoved, nMonitorsTruncated)
+			s := types.SimpleMessage{
+				Msg: msg,
+			}
+			modelChan <- &s
 		}
-		testRange := base.FileRange{First: opts.Truncate, Last: utils.NOPOS}
-		if rng.Intersects(testRange) {
-			os.Remove(cache.ToIndexPath(path))
-			os.Remove(cache.ToBloomPath(path))
-		}
-
-		return true, nil
 	}
 
-	walker := index.NewCacheWalker(
-		opts.Globals.Chain,
-		opts.Globals.TestMode,
-		100, /* maxTests */
-		truncateIndex,
-	)
-	if err := walker.WalkBloomFilters(blockNums); err != nil {
-		return err
-	}
-
-	logger.Info("Trucated index to", opts.Truncate, "...")
-	return nil
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
 var warning = `Are sure you want to remove index chunks after and including block {0} (Yy)? `
