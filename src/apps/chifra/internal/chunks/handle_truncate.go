@@ -28,9 +28,9 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 		return nil
 	}
 
-	if !user.QueryUser(strings.Replace(warning, "{0}", fmt.Sprintf("%d", opts.Truncate), -1), "Not truncating") {
-		return nil
-	}
+	// if !user.QueryUser(strings.Replace(warning, "{0}", fmt.Sprintf("%d", opts.Truncate), -1), "Not truncating") {
+	// 	return nil
+	// }
 
 	indexPath := config.GetPathToIndex(opts.Globals.Chain)
 	index.CleanTemporaryFolders(indexPath, true)
@@ -38,27 +38,11 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 
-		// It's relatively safe to truncate monitors first even though the removal of the index
-		// may fail because it's so quick to update monitors.
-		nMonitorsTruncated := 0
-		truncateMonitor := func(path string, info fs.FileInfo, err error) error {
-			if err != nil {
-				return err
-			}
-			if !info.IsDir() {
-				addr, _ := monitor.PathToAddress(path)
-				if len(addr) > 0 {
-					mon := monitor.NewMonitor(chain, addr, false /* create */)
-					if err = mon.TruncateTo(uint32(opts.Truncate)); err != nil {
-						return err
-					}
-					nMonitorsTruncated++
-				}
-			}
-			return nil
-		}
-		filepath.Walk(config.GetPathToCache(chain)+"monitors", truncateMonitor)
-
+		// First, we will remove the chunks and update the manifest. We do this separately for
+		// each chunk, so that if we get interrupted, we have a relatively sane state (although,
+		// we will have to manually repair the index with chifra init --all if this fails. Keep track
+		// of the last chunks remaining.
+		latestChunk := uint64(0)
 		nChunksRemoved := 0
 		truncateIndex := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
 			if path != cache.ToBloomPath(path) {
@@ -84,6 +68,8 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 					return false, err
 				}
 				nChunksRemoved++
+			} else {
+				latestChunk = utils.Max(latestChunk, rng.Last)
 			}
 
 			return true, nil
@@ -99,7 +85,28 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 			errorChan <- err
 			cancel()
 		} else {
-			msg := fmt.Sprintf("Truncated index to block %d. %d chunks removed, manifest updated, %d monitors truncated.", opts.Truncate, nChunksRemoved, nMonitorsTruncated)
+			// Now that we know the max block in the index, we must adjust the monitors so they
+			// don't think they have already seen chunks we just removed.
+			nMonitorsTruncated := 0
+			truncateMonitor := func(path string, info fs.FileInfo, err error) error {
+				if err != nil {
+					return err
+				}
+				if !info.IsDir() {
+					addr, _ := monitor.PathToAddress(path)
+					if len(addr) > 0 {
+						mon := monitor.NewMonitor(chain, addr, false /* create */)
+						if err = mon.TruncateTo(uint32(latestChunk)); err != nil {
+							return err
+						}
+						nMonitorsTruncated++
+					}
+				}
+				return nil
+			}
+			filepath.Walk(config.GetPathToCache(chain)+"monitors", truncateMonitor)
+
+			msg := fmt.Sprintf("Truncated index to block %d (the latest full chunk). %d chunks removed, manifest updated, %d monitors truncated.", latestChunk, nChunksRemoved, nMonitorsTruncated)
 			s := types.SimpleMessage{
 				Msg: msg,
 			}
