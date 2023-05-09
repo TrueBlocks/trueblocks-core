@@ -111,8 +111,8 @@ func handleNameDeletion(request *proto.DeleteRequest, deleted bool, remove bool)
 	}, err
 }
 
-func (opts *DaemonOptions) HandleRpc() error {
-	if !opts.Rpc {
+func (opts *DaemonOptions) HandleGrpc() error {
+	if !opts.Grpc {
 		return nil
 	}
 	if err := os.RemoveAll(proto.SocketAddress()); err != nil {

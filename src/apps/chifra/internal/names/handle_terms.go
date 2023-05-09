@@ -36,11 +36,10 @@ func (opts *NamesOptions) HandleTerms() error {
 			return err
 		}
 		if len(namesArray) == 0 {
-			logger.Warn("No results for", os.Args)
+			logNoResults()
 			return nil
 		}
 
-		// Note: Make sure to add an entry to enabledForCmd in src/apps/chifra/pkg/output/helpers.go
 		fetchData = func(modelChan chan types.Modeler[types.RawName], errorChan chan error) {
 			for _, name := range namesArray {
 				name := name
@@ -81,6 +80,7 @@ func (opts *NamesOptions) fetchFromGrpc(client proto.NamesClient, modelChan chan
 	if err != nil {
 		errorChan <- err
 	}
+	hasResults := false
 	for {
 		result, err := stream.Recv()
 		if err == io.EOF {
@@ -89,6 +89,14 @@ func (opts *NamesOptions) fetchFromGrpc(client proto.NamesClient, modelChan chan
 		if err != nil {
 			errorChan <- err
 		}
+		hasResults = true
 		modelChan <- types.NewNameFromGrpc(result)
 	}
+	if !hasResults {
+		logNoResults()
+	}
+}
+
+func logNoResults() {
+	logger.Warn("No results for", os.Args)
 }

@@ -128,7 +128,7 @@ Flags:
   -s, --scrape string   start the scraper, initialize it with either just blooms or entire index, generate for new blocks
                         One of [ off | blooms | index ]
   -m, --monitor         instruct the node to start the monitors tool
-  -r, --rpc             run gRPC server
+  -g, --grpc            run gRPC server to serve names
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)
   -h, --help            display this help screen
