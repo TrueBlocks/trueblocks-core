@@ -73,11 +73,11 @@ int main(int argc, const char* argv[]) {
             bool testTestOnly = getEnvStr("TEST_TEST_ONLY") == "true";
             for (auto line : lines) {
                 if (testTestOnly) {
-                    if (startsWith(line, "test,")) {
-                        replace(line, "test,", "on,");
-                        replace(line, "both,", "cmd,");
-                    } else {
-                        replace(line, "on,", "local,");
+                    runLocal = false;
+                    if (startsWith(line, "test")) {
+                        replace(line, "test", "on");
+                    } else if (startsWith(line, "on")) {
+                        replace(line, "on", "local");
                     }
                 }
                 if (startsWith(line, "erigon"))

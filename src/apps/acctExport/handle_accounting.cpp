@@ -27,7 +27,9 @@ bool acct_Display(CTraverser* trav, void* data) {
         }
         if (!opt->relevant && !opt->ledgerManager.isFilterOn()) {
             // only cache the reconciliation if it's a full set
-            trav->trans.cacheConditional(opt->ledgerManager.accountedFor, true);
+            if (trav->trans.isReconciled(opt->ledgerManager.accountedFor)) {
+                trav->trans.cacheConditional(opt->ledgerManager.accountedFor);
+            }
         }
     }
 
