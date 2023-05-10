@@ -65,7 +65,7 @@ func (mon *Monitor) ReadAppearanceAt(idx uint32, app *index.AppearanceRecord) (e
 // will read as many records as are available in the array. The file remains opened.
 func (mon *Monitor) ReadAppearances(apps *[]index.AppearanceRecord) (err error) {
 	if uint32(len(*apps)) > mon.Count() {
-		err = fmt.Errorf("Array is larger than the size of the file in ReadAppearances (%d,%d)", len(*apps), mon.Count())
+		err = fmt.Errorf("array is larger than the size of the file in ReadAppearances (%d,%d)", len(*apps), mon.Count())
 		return
 	}
 
