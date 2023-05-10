@@ -16,7 +16,12 @@ import (
 )
 
 func (opts *NamesOptions) HandleClean() error {
-	allNames, err := names.LoadNamesMap(opts.Globals.Chain, names.Custom, []string{})
+	parts := names.Custom
+	if opts.Regular {
+		parts = parts | names.Regular
+	}
+
+	allNames, err := names.LoadNamesMap(opts.Globals.Chain, parts, []string{})
 	if err != nil {
 		return err
 	}
@@ -30,6 +35,8 @@ func (opts *NamesOptions) HandleClean() error {
 	// Jump to the next line after reporting progress (otherwise garbage gets into the prompt)
 	defer fmt.Println()
 
+	// regularNamesUpdated := make([]types.SimpleName, 0)
+
 	for _, name := range allNames {
 		count++
 		logger.InfoReplace(fmt.Sprintf("Cleaning %d of %d: %s", count, total, name.Address))
@@ -42,20 +49,29 @@ func (opts *NamesOptions) HandleClean() error {
 			name.IsPrefund = isPrefund
 			modified = true
 		}
-		if !name.IsCustom {
-			name.IsCustom = true
-			modified = true
+
+		if !modified {
+			continue
 		}
 
-		if modified && name.IsCustom {
-			_, err := names.UpdateCustomName(opts.Globals.Chain, &name)
-			if err != nil {
-				return err
-			}
-		}
+		// Save modified
+		logger.Info("Updating", name.Address, name.Name, "custom=", name.IsCustom)
+
+		// if name.IsCustom {
+		// 	_, err := names.UpdateCustomName(opts.Globals.Chain, &name)
+		// 	if err != nil {
+		// 		return err
+		// 	}
+		// } else {
+		// 	regularNamesUpdated = append(regularNamesUpdated, name)
+		// }
 	}
 
-	return nil
+	// if len(regularNamesUpdated) > 0 {
+	// 	err = names.UpdateRegularNames(opts.Globals.Chain, regularNamesUpdated)
+	// }
+
+	return err
 }
 
 func preparePrefunds(chain string) (results map[base.Address]bool, err error) {

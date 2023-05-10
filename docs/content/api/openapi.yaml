@@ -668,6 +668,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: regular
+          description: only available with --clean, also cleans regular names database
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: named
           description: please use the --all option instead
           required: false

@@ -195,6 +195,8 @@ func setCustomNameAndSave(output *os.File, name *types.SimpleName) (err error) {
 	loadedCustomNamesMutex.Lock()
 	defer loadedCustomNamesMutex.Unlock()
 
+	// Make sure we always set correct value of the flag
+	name.IsCustom = true
 	loadedCustomNames[name.Address] = *name
 	return writeCustomNames(output)
 }
