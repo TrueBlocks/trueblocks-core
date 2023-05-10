@@ -15,7 +15,7 @@ import (
 
 // TODO: Protect against overwriting files on disc
 // WriteMonHeader writes the monitor's header
-func (mon *Monitor) WriteMonHeader(deleted bool, lastScanned uint32) (err error) {
+func (mon *Monitor) WriteMonHeader(deleted bool, lastScanned uint32, force bool) (err error) {
 	f, err := os.OpenFile(mon.Path(), os.O_WRONLY|os.O_CREATE, 0644)
 	if err != nil {
 		return
@@ -23,7 +23,7 @@ func (mon *Monitor) WriteMonHeader(deleted bool, lastScanned uint32) (err error)
 	defer f.Close()
 
 	mon.Deleted = deleted
-	if lastScanned > mon.LastScanned {
+	if force || lastScanned > mon.LastScanned {
 		mon.LastScanned = lastScanned
 	}
 
@@ -43,7 +43,7 @@ func (mon *Monitor) WriteAppearancesAppend(lastScanned uint32, apps *[]index.App
 		logger.Fatal("Trying to write from a nil monitor. Should not happen.")
 	}
 
-	err := mon.WriteMonHeader(mon.Deleted, lastScanned)
+	err := mon.WriteMonHeader(mon.Deleted, lastScanned, false /* force */)
 	if err != nil {
 		return err
 	}
