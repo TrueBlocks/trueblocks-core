@@ -85,6 +85,7 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 
 	go opts.HandleScraper()
 	go opts.HandleMonitor()
+	go opts.HandleGrpc()
 
 	// Start listening to the web sockets
 	RunWebsocketPool()
