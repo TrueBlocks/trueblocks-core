@@ -3,6 +3,7 @@
 package namesPkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"strings"
 
@@ -41,6 +42,9 @@ func (opts *NamesOptions) HandleClean() error {
 		count++
 		logger.InfoReplace(fmt.Sprintf("Cleaning %d of %d: %s", count, total, name.Address))
 
+		// TODO: remove
+		before, _ := json.Marshal(name)
+
 		modified, err := cleanName(opts.Globals.Chain, &name)
 		if err != nil {
 			return err
@@ -55,7 +59,10 @@ func (opts *NamesOptions) HandleClean() error {
 		}
 
 		// Save modified
-		logger.Info("Updating", name.Address, name.Name, "custom=", name.IsCustom)
+		// logger.Info("=== Updating", name.Address, name.Name, "custom=", name.IsCustom, "===")
+		is, _ := json.Marshal(name)
+		fmt.Printf("\n\nWas: %s\n", string(before))
+		fmt.Printf("NOW: %s\n\n", string(is))
 
 		// if name.IsCustom {
 		// 	_, err := names.UpdateCustomName(opts.Globals.Chain, &name)
@@ -110,6 +117,7 @@ func cleanName(chain string, name *types.SimpleName) (modified bool, err error) 
 	if _, ok := err.(token.ErrNodeConnection); ok {
 		return
 	}
+	// It's not a token
 	if err != nil {
 		err = nil
 	}
@@ -160,9 +168,13 @@ func cleanContract(token *token.Token, address base.Address, name *types.SimpleN
 			modified = true
 		}
 	} else {
-		// Not a token
-		name.IsErc20 = false
-		name.IsErc721 = false
+		if name.IsErc20 || name.IsErc721 {
+			// Not a token
+			name.IsErc20 = false
+			name.IsErc721 = false
+			name.Tags = ""
+			modified = true
+		}
 	}
 
 	if name.Tags == "" {
@@ -249,13 +261,13 @@ func cleanNonContract(name *types.SimpleName, wasContract bool) (modified bool) 
 	tagContract := strings.Contains(name.Tags, "Contracts")
 	tagToken := strings.Contains(name.Tags, "Tokens")
 
-	if wasContract {
+	if wasContract && name.Tags != "37-SelfDestructed" {
 		name.IsContract = true
 		name.Tags = "37-SelfDestructed"
 		return true
 	}
 
-	if tagsEmpty || tagContract || tagToken {
+	if (tagsEmpty || tagContract || tagToken) && name.Tags != "90-Individuals:Other" {
 		name.Tags = "90-Individuals:Other"
 		modified = true
 	}

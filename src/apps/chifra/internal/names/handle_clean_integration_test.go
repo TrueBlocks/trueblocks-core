@@ -12,6 +12,7 @@ import (
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -60,6 +61,22 @@ func Test_cleanName(t *testing.T) {
 				Tags:    "90-Individuals:Other",
 			},
 		},
+		{
+			name: "not modified",
+			args: args{
+				chain: "mainnet",
+				name: &types.SimpleName{
+					Address:    base.HexToAddress("0xe77d387b4be1076891868060c32e81bc3b89c730"),
+					Decimals:   18,
+					IsContract: false,
+					Name:       "0xe77d387b4be1076891868060c32e81bc3b89c730",
+					Petname:    "overly-legal-lynx",
+					Source:     "TrueBlocks.io",
+					Tags:       "37-SelfDestructed",
+				},
+			},
+			wantModified: false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -71,9 +88,31 @@ func Test_cleanName(t *testing.T) {
 			if gotModified != tt.wantModified {
 				t.Errorf("cleanName() = %v, want %v", gotModified, tt.wantModified)
 			}
-			if !reflect.DeepEqual(tt.args.name, tt.expectedName) {
+			if tt.wantModified && !reflect.DeepEqual(tt.args.name, tt.expectedName) {
 				t.Errorf("cleanToken() = %+v, want %+v", tt.args.name, tt.expectedName)
 			}
 		})
+	}
+}
+
+func TestTemp(t *testing.T) {
+	m, err := names.LoadNamesMap("mainnet", names.Regular, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// 0xf53ad2c6851052a81b42133467480961b2321c09
+	// 0x4c8692cc08b14fa8b74b6f313394b8997aad721d
+	name, ok := m[base.HexToAddress("0xf53ad2c6851052a81b42133467480961b2321c09")]
+	if !ok {
+		t.Fatal("no name")
+	}
+	mod, err := cleanName("mainnet", &name)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if mod {
+		t.Fatal("modified")
 	}
 }
