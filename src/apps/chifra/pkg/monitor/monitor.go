@@ -185,7 +185,7 @@ var SentinalAddr = base.HexToAddress("0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead
 
 // ListMonitors puts a list of Monitors into the monitorChannel. The list of monitors is built from
 // a file called addresses.tsv in the current folder or, if not present, from existing monitors
-func ListMonitors(chain, folder string, monitorChan chan<- Monitor) {
+func ListMonitors(chain string, monitorChan chan<- Monitor) {
 	defer func() {
 		monitorChan <- Monitor{Address: SentinalAddr}
 	}()
@@ -215,9 +215,7 @@ func ListMonitors(chain, folder string, monitorChan chan<- Monitor) {
 		return
 	}
 
-	logger.Info("Building address list from current monitors")
-	path = config.GetPathToCache(chain) + folder
-	filepath.Walk(path, func(path string, info fs.FileInfo, err error) error {
+	walkFunc := func(path string, info fs.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
@@ -228,7 +226,11 @@ func ListMonitors(chain, folder string, monitorChan chan<- Monitor) {
 			}
 		}
 		return nil
-	})
+	}
+
+	logger.Info("Building address list from current monitors")
+	path = config.GetPathToCache(chain) + "monitors"
+	filepath.Walk(path, walkFunc)
 }
 
 var monitorMutex sync.Mutex
@@ -261,7 +263,7 @@ func (mon *Monitor) MoveToProduction() error {
 func GetMonitorMap(chain string) (map[base.Address]*Monitor, []*Monitor) {
 	monitorChan := make(chan Monitor)
 
-	go ListMonitors(chain, "monitors", monitorChan)
+	go ListMonitors(chain, monitorChan)
 
 	monMap := make(map[base.Address]*Monitor)
 	monArray := []*Monitor{}
