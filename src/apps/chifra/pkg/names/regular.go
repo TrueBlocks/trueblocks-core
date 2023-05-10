@@ -10,6 +10,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
+// TODO: Test if there's a performance differnce between using an array here (which would work just as well) and a map
 var loadedRegularNames map[base.Address]types.SimpleName = map[base.Address]types.SimpleName{}
 var loadedRegularNamesMutex sync.Mutex
 

@@ -48,7 +48,7 @@ endif(CURL_FOUND)
 # Protoc is needed to compile protobuf files
 #
 message(STATUS "======== LOOKING FOR PROTOC ========================")
-find_package(Protobuf)
+find_package(Protobuf 3.21)
 
 # ----------------------------------------------------------------------------------------
 # Globally available C++ settings

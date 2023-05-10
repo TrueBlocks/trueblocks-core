@@ -43,6 +43,7 @@ type keyGroup struct {
 	Jwt    string `toml:"jwt"`
 }
 
+// TODO: This needs to be documented
 type grpcGroup struct {
 	UdsTimeout time.Duration `toml:"udsTimeout"`
 }
