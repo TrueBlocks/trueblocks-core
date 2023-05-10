@@ -16,11 +16,10 @@ import (
 
 type chifraRpcServer struct {
 	proto.UnimplementedNamesServer
-	n int
 }
 
 func (g *chifraRpcServer) SearchStream(request *proto.SearchRequest, stream proto.Names_SearchStreamServer) error {
-	for i := 0; i < g.n; i++ {
+	for i := 0; i < 13662; i++ {
 		name := &types.SimpleName{
 			Name: fmt.Sprint(i),
 		}
@@ -32,11 +31,10 @@ func (g *chifraRpcServer) SearchStream(request *proto.SearchRequest, stream prot
 	return nil
 }
 
-func startServer(n int) (*grpc.Server, *net.Listener) {
+func startServer() (*grpc.Server, *net.Listener) {
 	rpcServer := grpc.NewServer()
 
 	stub := &chifraRpcServer{}
-	stub.n = n
 	proto.RegisterNamesServer(rpcServer, stub)
 
 	if err := os.RemoveAll(proto.SocketAddress()); err != nil {
@@ -55,13 +53,19 @@ func startServer(n int) (*grpc.Server, *net.Listener) {
 	return rpcServer, &listener
 }
 
+var s *grpc.Server
+
+func init() {
+	s, _ = startServer()
+}
+
 func BenchmarkNamesOptions_HandleTerms_Grpc(b *testing.B) {
 	b.Cleanup(func() {
 		// Remove the socket
 		os.RemoveAll(proto.SocketAddress())
 	})
 
-	s, _ := startServer(b.N)
+	// s, _ := startServer(b.N)
 	defer s.Stop()
 
 	buf := bytes.NewBuffer([]byte{})
