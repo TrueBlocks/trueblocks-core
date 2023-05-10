@@ -5,15 +5,15 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (m *Monitor) TruncateTo(num uint32) error {
+func (m *Monitor) TruncateTo(num uint32) (bool, error) {
 	err := m.ReadMonitorHeader()
 	if err != nil {
-		return err
+		return false, err
 	}
 
 	apps := make([]index.AppearanceRecord, m.Count())
 	if err = m.ReadAppearances(&apps); err != nil {
-		return err
+		return false, err
 	}
 
 	var keep []index.AppearanceRecord
@@ -22,15 +22,17 @@ func (m *Monitor) TruncateTo(num uint32) error {
 			keep = append(keep, app)
 		}
 	}
-	m.Close() // force the close here so the write is clean
-
 	lastScanned := utils.Min(num, m.Header.LastScanned)
-	m.WriteMonHeaderEx(m.Deleted, lastScanned)
+
+	m.Close() // so when we open it, it gets replaced
+	// Very important to note - if you use false for append, the header gets overwritten
+	// so ordering matters here and we need to write the header afterwards
 	if _, err := m.WriteAppearances(keep, false /* append */); err != nil {
 		m.Close()
-		return err
+		return false, err
 	}
+	m.WriteMonHeaderEx(m.Deleted, lastScanned)
 	m.Close()
 
-	return nil
+	return len(apps)-len(keep) > 0, nil
 }

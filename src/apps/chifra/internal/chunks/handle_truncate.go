@@ -97,18 +97,25 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 					addr, _ := monitor.PathToAddress(path)
 					if len(addr) > 0 {
 						mon := monitor.NewMonitor(chain, addr, false /* create */)
-						if err = mon.TruncateTo(uint32(latestChunk)); err != nil {
+						var removed bool
+						if removed, err = mon.TruncateTo(uint32(latestChunk)); err != nil {
 							return err
 						}
-						nMonitorsTruncated++
+						if removed {
+							nMonitorsTruncated++
+						}
 					}
 				}
 				return nil
 			}
 			filepath.Walk(config.GetPathToCache(chain)+"monitors", truncateMonitor)
 
+			fin := "."
+			if nChunksRemoved > 0 {
+				fin = ", the manifest was updated."
+			}
 			msg1 := fmt.Sprintf("Truncated index to block %d (the latest full chunk).", latestChunk)
-			msg2 := fmt.Sprintf("%d chunks removed, %d monitors truncated, the manifest was updated.", nChunksRemoved, nMonitorsTruncated)
+			msg2 := fmt.Sprintf("%d chunks removed, %d monitors truncated%s", nChunksRemoved, nMonitorsTruncated, fin)
 			if opts.Globals.Format == "json" {
 				s := types.SimpleMessage{
 					Msg: msg1 + " " + msg2,
