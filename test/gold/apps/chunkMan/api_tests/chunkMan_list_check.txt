@@ -1,1 +1,6 @@
-chunks?mode=pins&check
+chunks?mode=monitors&check
+{
+  "errors": [
+    "The mode option (monitors) must be one of [ manifest | index | blooms | addresses | appearances | stats ]"
+  ]
+}
