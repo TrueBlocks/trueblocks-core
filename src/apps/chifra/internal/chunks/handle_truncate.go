@@ -17,6 +17,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/user"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -28,9 +29,9 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 		return nil
 	}
 
-	// if !user.QueryUser(strings.Replace(warning, "{0}", fmt.Sprintf("%d", opts.Truncate), -1), "Not truncating") {
-	// 	return nil
-	// }
+	if !user.QueryUser(strings.Replace(warning, "{0}", fmt.Sprintf("%d", opts.Truncate), -1), "Not truncating") {
+		return nil
+	}
 
 	indexPath := config.GetPathToIndex(opts.Globals.Chain)
 	index.CleanTemporaryFolders(indexPath, true)
@@ -106,14 +107,21 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 			}
 			filepath.Walk(config.GetPathToCache(chain)+"monitors", truncateMonitor)
 
-			msg := fmt.Sprintf("Truncated index to block %d (the latest full chunk). %d chunks removed, manifest updated, %d monitors truncated.", latestChunk, nChunksRemoved, nMonitorsTruncated)
-			s := types.SimpleMessage{
-				Msg: msg,
+			msg1 := fmt.Sprintf("Truncated index to block %d (the latest full chunk).", latestChunk)
+			msg2 := fmt.Sprintf("%d chunks removed, %d monitors truncated, the manifest was updated.", nChunksRemoved, nMonitorsTruncated)
+			if opts.Globals.Format == "json" {
+				s := types.SimpleMessage{
+					Msg: msg1 + " " + msg2,
+				}
+				modelChan <- &s
+			} else {
+				logger.Info(msg1)
+				logger.Info(msg2)
 			}
-			modelChan <- &s
 		}
 	}
 
+	opts.Globals.NoHeader = true
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
