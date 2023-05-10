@@ -105,6 +105,17 @@ func LoadNamesMap(chain string, parts Parts, terms []string) (map[base.Address]t
 	return namesMap, nil
 }
 
+// EmptyInMemoryCache removes names that are cached in-memory
+func EmptyInMemoryCache() {
+	loadedRegularNamesMutex.Lock()
+	loadedRegularNames = make(map[base.Address]types.SimpleName)
+	loadedRegularNamesMutex.Unlock()
+
+	loadedCustomNamesMutex.Lock()
+	loadedCustomNames = make(map[base.Address]types.SimpleName)
+	loadedCustomNamesMutex.Unlock()
+}
+
 var requiredColumns = []string{
 	"tags",
 	"address",
