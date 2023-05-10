@@ -171,7 +171,7 @@ func (mon *Monitor) Remove() (bool, error) {
 	return !file.FileExists(mon.Path()), nil
 }
 
-func addressFromPath(path string) (string, error) {
+func PathToAddress(path string) (string, error) {
 	_, fileName := filepath.Split(path)
 	if len(fileName) == 0 || !strings.HasPrefix(fileName, "0x") || !strings.HasSuffix(fileName, ".mon.bin") {
 		return "", errors.New("path does is not a valid monitor filename")
@@ -220,7 +220,7 @@ func ListMonitors(chain string, monitorChan chan<- Monitor) {
 			return err
 		}
 		if !info.IsDir() {
-			addr, _ := addressFromPath(path)
+			addr, _ := PathToAddress(path)
 			if len(addr) > 0 {
 				monitorChan <- NewMonitor(chain, addr, true /* create */)
 			}
