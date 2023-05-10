@@ -320,7 +320,7 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 		mon.Close()
 		// Note that result.AppRecords may be nil here (because, for example, this
 		// monitor had a false positive), but we do still want to update the header.
-		mon.WriteMonHeader(mon.Deleted, lastScanned)
+		mon.WriteMonHeader(mon.Deleted, lastScanned, false /* force */)
 		if result.AppRecords != nil {
 			nWritten := len(*result.AppRecords)
 			if nWritten > 0 {

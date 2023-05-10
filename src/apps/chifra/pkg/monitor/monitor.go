@@ -78,7 +78,7 @@ func NewStagedMonitor(chain, addr string) (Monitor, error) {
 			return mon, err
 		}
 	} else {
-		err := mon.WriteMonHeader(false, 0)
+		err := mon.WriteMonHeader(false, 0, false /* force */)
 		if err != nil {
 			return mon, err
 		}
@@ -109,7 +109,7 @@ func (mon *Monitor) Path() (path string) {
 func (mon *Monitor) Reload(create bool) (uint32, error) {
 	if create && !file.FileExists(mon.Path()) {
 		// Make sure the file exists since we've been told to monitor it
-		err := mon.WriteMonHeader(false, 0)
+		err := mon.WriteMonHeader(false, 0, false /* force */)
 		if err != nil {
 			return 0, err
 		}
@@ -149,7 +149,7 @@ func (mon *Monitor) IsDeleted() bool {
 // Delete marks the file's delete flag, but does not physically remove the file
 func (mon *Monitor) Delete() (prev bool) {
 	prev = mon.Deleted
-	mon.WriteMonHeader(true, mon.LastScanned)
+	mon.WriteMonHeader(true, mon.LastScanned, false /* force */)
 	mon.Deleted = true
 	return
 }
@@ -157,7 +157,7 @@ func (mon *Monitor) Delete() (prev bool) {
 // UnDelete unmarks the file's delete flag
 func (mon *Monitor) UnDelete() (prev bool) {
 	prev = mon.Deleted
-	mon.WriteMonHeader(false, mon.LastScanned)
+	mon.WriteMonHeader(false, mon.LastScanned, false /* force */)
 	mon.Deleted = false
 	return
 }
