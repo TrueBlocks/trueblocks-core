@@ -1,8 +1,11 @@
 package chunksPkg
 
 import (
+	"context"
 	"fmt"
+	"io/fs"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -10,11 +13,17 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/user"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
+	chain := opts.Globals.Chain
+
 	if opts.Globals.TestMode {
 		logger.Warn("Truncate option not tested.")
 		return nil
@@ -27,41 +36,104 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 	indexPath := config.GetPathToIndex(opts.Globals.Chain)
 	index.CleanTemporaryFolders(indexPath, true)
 
-	truncateIndex := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
-		if path != cache.ToBloomPath(path) {
-			logger.Fatal("should not happen ==> we're spinning through the bloom filters")
-		}
+	ctx, cancel := context.WithCancel(context.Background())
+	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 
-		if strings.HasSuffix(path, ".gz") {
-			os.Remove(path)
+		// First, we will remove the chunks and update the manifest. We do this separately for
+		// each chunk, so that if we get interrupted, we have a relatively sane state (although,
+		// we will have to manually repair the index with chifra init --all if this fails. Keep track
+		// of the last chunks remaining.
+		latestChunk := uint64(0)
+		nChunksRemoved := 0
+		truncateIndex := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
+			if path != cache.ToBloomPath(path) {
+				logger.Fatal("should not happen ==> we're spinning through the bloom filters")
+			}
+
+			if strings.HasSuffix(path, ".gz") {
+				os.Remove(path)
+				return true, nil
+			}
+
+			rng, err := base.RangeFromFilenameE(path)
+			if err != nil {
+				return false, err
+			}
+
+			testRange := base.FileRange{First: opts.Truncate, Last: utils.NOPOS}
+			if rng.Intersects(testRange) {
+				// TODO: We should make backups of these files and only if the manifest and both files
+				// are removed and the monitors are cleared should we proceed. Otherwise, replace these
+				// backups and the manifest backup.
+				if err = manifest.RemoveChunk(chain, path); err != nil {
+					return false, err
+				}
+				nChunksRemoved++
+			} else {
+				// We did not remove the chunk, so we need to keep track of where the index ends
+				latestChunk = utils.Max(latestChunk, rng.Last)
+			}
+
 			return true, nil
 		}
 
-		rng, err := base.RangeFromFilenameE(path)
-		if err != nil {
-			return false, err
-		}
-		testRange := base.FileRange{First: opts.Truncate, Last: utils.NOPOS}
-		if rng.Intersects(testRange) {
-			os.Remove(cache.ToIndexPath(path))
-			os.Remove(cache.ToBloomPath(path))
-		}
+		walker := index.NewCacheWalker(
+			opts.Globals.Chain,
+			opts.Globals.TestMode,
+			100, /* maxTests */
+			truncateIndex,
+		)
+		if err := walker.WalkBloomFilters(blockNums); err != nil {
+			errorChan <- err
+			cancel()
 
-		return true, nil
+		} else {
+			// We've made it this far (removed chunks and updated manifest) now we need to remove appearances
+			// from any monitors that may exist which happen after the truncated block. Also, update the monitors'
+			// header to reflect this new lastScanned block.
+			nMonitorsTruncated := 0
+			truncateMonitor := func(path string, info fs.FileInfo, err error) error {
+				if err != nil {
+					return err
+				}
+				if !info.IsDir() {
+					addr, _ := monitor.PathToAddress(path)
+					if len(addr) > 0 {
+						mon := monitor.NewMonitor(chain, addr, false /* create */)
+						var removed bool
+						if removed, err = mon.TruncateTo(uint32(latestChunk)); err != nil {
+							return err
+						}
+						if removed {
+							nMonitorsTruncated++
+						}
+					}
+				}
+				return nil
+			}
+			filepath.Walk(config.GetPathToCache(chain)+"monitors", truncateMonitor)
+
+			// All that's left to do is report on what happened.
+			fin := "."
+			if nChunksRemoved > 0 {
+				fin = ", the manifest was updated."
+			}
+			msg1 := fmt.Sprintf("Truncated index to block %d (the latest full chunk).", latestChunk)
+			msg2 := fmt.Sprintf("%d chunks removed, %d monitors truncated%s", nChunksRemoved, nMonitorsTruncated, fin)
+			if opts.Globals.Format == "json" {
+				s := types.SimpleMessage{
+					Msg: msg1 + " " + msg2,
+				}
+				modelChan <- &s
+			} else {
+				logger.Info(msg1)
+				logger.Info(msg2)
+			}
+		}
 	}
 
-	walker := index.NewCacheWalker(
-		opts.Globals.Chain,
-		opts.Globals.TestMode,
-		100, /* maxTests */
-		truncateIndex,
-	)
-	if err := walker.WalkBloomFilters(blockNums); err != nil {
-		return err
-	}
-
-	logger.Info("Trucated index to", opts.Truncate, "...")
-	return nil
+	opts.Globals.NoHeader = true
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
 var warning = `Are sure you want to remove index chunks after and including block {0} (Yy)? `
