@@ -143,8 +143,8 @@ string_q type_2_GoType(const CMember& field) {
         return "base.Hash";
     if (type == "ipfshash")
         return "base.IpfsHash";
-    if (type == "blockRange")
-        return "base.FileRange";
+    if (type == "blkrange")
+        return "string";
     if (type == "datetime" || type == "bytes")
         return "string";
     if (type == "address")

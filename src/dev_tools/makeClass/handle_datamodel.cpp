@@ -246,7 +246,7 @@ string_q typeFmt(const CMember& fld) {
 
     if (fld.type == "address" || fld.type == "ipfshash" || fld.type == "hash" || fld.type == "bytes" ||
         fld.type == "gas" || fld.type == "wei" || fld.type == "int256" || fld.type == "uint256" || fld.type == "date" ||
-        fld.type == "blockRange" || fld.type == "datetime")
+        fld.type == "blkrange" || fld.type == "datetime")
         return "[          type: string\n          format: {TYPE}\n]";
 
     if (fld.type == "bool" || fld.type == "uint8")

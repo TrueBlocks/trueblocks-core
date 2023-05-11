@@ -69,7 +69,7 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 
 				s := simpleChunkAddress{
 					Address: obj.Address,
-					Range:   indexChunk.Range,
+					Range:   indexChunk.Range.String(),
 					Offset:  uint64(obj.Offset),
 					Count:   uint64(obj.Count),
 				}

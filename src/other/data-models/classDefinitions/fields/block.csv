@@ -10,7 +10,7 @@ sha3Uncles       ,hash        ,           ,       ,      ,        ,          ,ra
 size             ,uint64      ,           ,       ,      ,        ,          ,rawonly ,         ,    ,     ,              ,
 stateRoot        ,hash        ,           ,       ,      ,        ,          ,rawonly ,         ,    ,     ,              ,
 totalDifficulty  ,wei         ,           ,       ,      ,        ,          ,rawonly ,         ,    ,     ,              ,
-miner            ,address     ,           ,       ,      ,        ,          ,        ,         ,  5 ,   7 ,0xf927...2b13 ,Address of block's winning miner
+miner            ,address     ,           ,       ,      ,        ,          ,        ,         ,  5 ,   7 ,0xf927...2b13 ,address of block's winning miner
 difficulty       ,uint64      ,           ,       ,      ,        ,          ,        ,         ,  6 ,   3 ,598133194256  ,the computational difficulty at this block
 finalized        ,bool        ,           ,       ,      ,        ,          ,        ,         , 10 ,  10 ,true          ,flag indicating the system considers this data final
 extraData        ,string      ,           ,       ,      ,        ,          ,rawonly ,         ,    ,     ,              ,

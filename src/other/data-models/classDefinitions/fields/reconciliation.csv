@@ -8,9 +8,9 @@ date                ,datetime  ,           ,       ,      ,true    ,          ,t
 
 assetAddr           ,address   ,           ,       ,      ,        ,          ,        ,         ,  7 ,   7 ,0x6b17...1d0f ,0xeeee...eeee for ETH reconciliations&#44; the token address otherwise
 assetSymbol         ,string    ,           ,       ,      ,        ,          ,        ,         ,  8 ,   8 ,              ,either ETH&#44; WEI&#44; or the symbol of the asset being reconciled as extracted from the chain
-decimals            ,uint64    ,      18   ,       ,      ,        ,          ,        ,         ,  9 ,   9 ,              ,The value of `decimals` from an ERC20 contract or&#44; if ETH or WEI&#44; then 18
-spotPrice           ,double    ,       1.0 ,       ,      ,        ,          ,        ,         , 10 ,  10 ,              ,The on-chain price in USD (or if a token in ETH&#44; or zero) at the time of the transaction
-priceSource         ,string    ,           ,       ,      ,        ,          ,        ,         , 11 ,  11 ,              ,The on-chain source from which the spot price was taken
+decimals            ,uint64    ,      18   ,       ,      ,        ,          ,        ,         ,  9 ,   9 ,              ,the value of `decimals` from an ERC20 contract or&#44; if ETH or WEI&#44; then 18
+spotPrice           ,double    ,       1.0 ,       ,      ,        ,          ,        ,         , 10 ,  10 ,              ,the on-chain price in USD (or if a token in ETH&#44; or zero) at the time of the transaction
+priceSource         ,string    ,           ,       ,      ,        ,          ,        ,         , 11 ,  11 ,              ,the on-chain source from which the spot price was taken
 
 accountedFor        ,address   ,           ,       ,      ,        ,          ,        ,         , 12 ,  12 ,0x1bd0...9ce9 ,the address being accounted for in this reconciliation
 sender              ,address   ,           ,       ,      ,        ,          ,        ,         , 13 ,  13 ,0xf503...179b ,the initiator of the transfer (the sender)
@@ -18,9 +18,9 @@ recipient           ,address   ,           ,       ,      ,        ,          , 
 begBal              ,int256    ,           ,       ,      ,        ,          ,        ,         , 15 ,  15 ,              ,the beginning balance of the asset prior to the transaction
 amountNet           ,int256    ,           ,       ,      ,true    ,          ,true    ,         , 16 ,  16 ,              ,a calculated field -- totalIn - totalOut
 endBal              ,int256    ,           ,       ,      ,        ,          ,        ,         , 17 ,  17 ,              ,the on-chain balance of the asset (see notes about intra-block reconciliations)
-encoding            ,string    ,           ,       ,      ,        ,          ,        ,         , 18 ,  18 ,0xa9059cbb    ,The topic of the event (if this is an ERC20 reconcilation)&#44; the four-byte signature of the transaction otherwise
-signature           ,string    ,           ,       ,      ,        ,          ,        ,         , 19 ,  19 ,Transfer(...) ,If possible&#44; the articulated name of the function or event signature
-reconciliationType  ,string    ,           ,       ,      ,        ,          ,        ,         , 20 ,  20 ,              ,One of `regular`&#44; `prevDiff-same`&#44; `same-nextDiff`&#44; or `same-same`. Appended with `eth` or `token`
+encoding            ,string    ,           ,       ,      ,        ,          ,        ,         , 18 ,  18 ,0xa9059cbb    ,the topic of the event (if this is an ERC20 reconcilation)&#44; the four-byte signature of the transaction otherwise
+signature           ,string    ,           ,       ,      ,        ,          ,        ,         , 19 ,  19 ,Transfer(...) ,if possible&#44; the articulated name of the function or event signature
+reconciliationType  ,string    ,           ,       ,      ,        ,          ,        ,         , 20 ,  20 ,              ,one of `regular`&#44; `prevDiff-same`&#44; `same-nextDiff`&#44; or `same-same`. Appended with `eth` or `token`
 reconciled          ,bool      ,           ,       ,      ,true    ,          ,true    ,         , 21 ,  21 ,[true|false]  ,a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise.
 
 totalIn             ,int256    ,           ,       ,      ,true    ,          ,true    ,         , 22 ,  22 ,              ,a calculated field -- the sum of the following `In` fields

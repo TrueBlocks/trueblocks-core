@@ -39,7 +39,7 @@ Blocks consist of the following fields:
 | hash          | the hash of the current block                                 | hash                                                |
 | blockNumber   | the number of the block                                       | blknum                                              |
 | parentHash    | hash of previous block                                        | hash                                                |
-| miner         | Address of block's winning miner                              | address                                             |
+| miner         | address of block's winning miner                              | address                                             |
 | difficulty    | the computational difficulty at this block                    | uint64                                              |
 | timestamp     | the Unix timestamp of the object                              | timestamp                                           |
 | transactions  | a possibly empty array of transactions or transaction hashes  | [Transaction[]](/data-model/chaindata/#transaction) |
@@ -67,8 +67,8 @@ Transactions consist of the following fields:
 
 | Field            | Description                                                                                           | Type                                                     |
 | ---------------- | ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
-| hash             | The hash of the transaction                                                                           | hash                                                     |
-| blockHash        | The hash of the block containing this transaction                                                     | hash                                                     |
+| hash             | the hash of the transaction                                                                           | hash                                                     |
+| blockHash        | the hash of the block containing this transaction                                                     | hash                                                     |
 | blockNumber      | the number of the block                                                                               | blknum                                                   |
 | transactionIndex | the zero-indexed position of the transaction in the block                                             | blknum                                                   |
 | nonce            | sequence number of the transactions sent by the sender                                                | uint64                                                   |
@@ -121,9 +121,9 @@ Transfers consist of the following fields:
 | assetSymbol      | either ETH, WEI or the symbol of the asset being reconciled as queried from the chain          | string    |
 | decimals         | Equivalent to the queried value of `decimals` from an ERC20 contract or, if ETH or WEI then 18 | uint64    |
 | amount           | the amount of the transfer in the units of the asset                                           | wei       |
-| spotPrice        | The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction       | double    |
-| priceSource      | The on-chain source from which the spot price was taken                                        | string    |
-| encoding         | The four-byte encoding of the transaction's function call                                      | string    |
+| spotPrice        | the on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction       | double    |
+| priceSource      | the on-chain source from which the spot price was taken                                        | string    |
+| encoding         | the four-byte encoding of the transaction's function call                                      | string    |
 
 ## Receipt
 
@@ -179,7 +179,7 @@ Logs consist of the following fields:
 | timestamp        | the timestamp of the block this log appears in                                                    | timestamp                               |
 | date             | the date of the block this log appears in                                                         | datetime                                |
 | address          | the smart contract that emitted this log                                                          | address                                 |
-| topics           | The first topic hashes event signature of the log, up to 3 additional index parameters may appear | topic[]                                 |
+| topics           | the first topic hashes event signature of the log, up to 3 additional index parameters may appear | topic[]                                 |
 | data             | any remaining un-indexed parameters to the event                                                  | bytes                                   |
 | articulatedLog   | a human-readable version of the topic and data fields                                             | [Function](/data-model/other/#function) |
 | compressedLog    | a truncated, more readable version of the articulation                                            | string                                  |
@@ -206,7 +206,7 @@ Traces consist of the following fields:
 
 | Field            | Description                                               | Type                                              |
 | ---------------- | --------------------------------------------------------- | ------------------------------------------------- |
-| blockHash        | The hash of the block containing this trace               | hash                                              |
+| blockHash        | the hash of the block containing this trace               | hash                                              |
 | blockNumber      | the number of the block                                   | blknum                                            |
 | timestamp        | the timestamp of the block                                | timestamp                                         |
 | transactionHash  | the transaction's hash containing this trace              | hash                                              |
@@ -362,7 +362,7 @@ NamedBlocks consist of the following fields:
 | ----------- | ----------------------------------- | --------- |
 | blockNumber | the number of the block             | blknum    |
 | timestamp   | the Unix timestamp of the block     | timestamp |
-| date        | Human readable version of timestamp | datetime  |
+| date        | human readable version of timestamp | datetime  |
 | name        | an optional name for the block      | string    |
 
 ## Timestamp

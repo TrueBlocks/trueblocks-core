@@ -2,8 +2,8 @@ name                 ,type           ,strDefault ,object ,array ,nowrite ,omitem
 accessList           ,StorageSlot    ,           ,true   ,true  ,        ,          ,rawonly ,         ,    ,     ,              ,
 chainId              ,string         ,           ,       ,      ,        ,          ,rawonly ,         ,    ,     ,              ,
 type                 ,string         ,           ,       ,      ,        ,          ,rawonly ,         ,    ,     ,              ,
-hash                 ,hash           ,           ,       ,      ,        ,          ,        ,         ,  1 ,  10 ,0xf128...1e98 ,The hash of the transaction
-blockHash            ,hash           ,           ,       ,      ,        ,          ,        ,         ,  2 ,     ,0xc421...fb04 ,The hash of the block containing this transaction
+hash                 ,hash           ,           ,       ,      ,        ,          ,        ,         ,  1 ,  10 ,0xf128...1e98 ,the hash of the transaction
+blockHash            ,hash           ,           ,       ,      ,        ,          ,        ,         ,  2 ,     ,0xc421...fb04 ,the hash of the block containing this transaction
 blockNumber          ,blknum         ,           ,       ,      ,        ,          ,        ,         ,  3 ,   1 ,10021         ,the number of the block
 transactionIndex     ,blknum         ,           ,       ,      ,        ,          ,        ,         ,  4 ,   2 ,305           ,the zero-indexed position of the transaction in the block
 nonce                ,uint64         ,           ,       ,      ,        ,          ,        ,         ,  5 ,     ,232           ,sequence number of the transactions sent by the sender

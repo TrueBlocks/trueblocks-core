@@ -45,7 +45,7 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 				Magic:     fmt.Sprintf("0x%x", bl.Header.Magic),
 				Hash:      bl.Header.Hash,
 				Size:      stats.BloomSz,
-				Range:     base.RangeFromFilename(path),
+				Range:     base.RangeFromFilename(path).String(),
 				NBlooms:   stats.NBlooms,
 				ByteWidth: bloom.BLOOM_WIDTH_IN_BYTES,
 				NInserted: uint64(nInserted),
