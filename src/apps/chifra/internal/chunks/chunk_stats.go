@@ -20,7 +20,7 @@ func GetChunkStats(chain, path string) (s simpleChunkStats, err error) {
 
 	ts, _ := tslib.FromBnToTs(chain, chunk.Range.Last)
 	s = simpleChunkStats{
-		Range:   chunk.Range,
+		Range:   chunk.Range.String(),
 		Date:    utils.FormattedDate(ts),
 		NBlocks: chunk.Range.Last - chunk.Range.First + 1,
 		NAddrs:  uint64(chunk.Data.Header.AddressCount),

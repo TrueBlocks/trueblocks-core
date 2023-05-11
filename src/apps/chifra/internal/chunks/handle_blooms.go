@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
@@ -44,7 +45,7 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 				Magic:     fmt.Sprintf("0x%x", bl.Header.Magic),
 				Hash:      bl.Header.Hash,
 				Size:      stats.BloomSz,
-				Range:     stats.Range,
+				Range:     base.RangeFromFilename(path),
 				NBlooms:   stats.NBlooms,
 				ByteWidth: bloom.BLOOM_WIDTH_IN_BYTES,
 				NInserted: uint64(nInserted),

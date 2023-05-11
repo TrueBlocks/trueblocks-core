@@ -188,21 +188,21 @@ The following commands produce and manage ChunkStats:
 
 ChunkStats consist of the following fields:
 
-| Field         | Description                                      | Type   |
-| ------------- | ------------------------------------------------ | ------ |
-| start         | the first block in the chunk's range             | uint64 |
-| end           | the last block in the chunk's range              | uint64 |
-| nAddrs        | the number of addresses in the chunk             | uint64 |
-| nApps         | the number of appearances in the chunk           | uint64 |
-| nBlocks       | the number of blocks in the chunk                | uint64 |
-| nBlooms       | the number of bloom filters in the chunk's bloom | uint64 |
-| recWid        | the record width of a single bloom filter        | uint64 |
-| bloomSz       | the size of the bloom filters on disc in bytes   | uint64 |
-| chunkSz       | the size of the chunks on disc in bytes          | uint64 |
-| addrsPerBlock | the average number of addresses per block        | double |
-| appsPerBlock  | the average number of appearances per block      | double |
-| appsPerAddr   | the average number of appearances per address    | double |
-| ratio         | the ratio of appearances to addresses            | double |
+| Field         | Description                                       | Type   |
+| ------------- | ------------------------------------------------- | ------ |
+| range         | the block range (inclusive) covered by this chunk | string |
+| date          | the date of the last block in this range          | string |
+| nAddrs        | the number of addresses in the chunk              | uint64 |
+| nApps         | the number of appearances in the chunk            | uint64 |
+| nBlocks       | the number of blocks in the chunk                 | uint64 |
+| nBlooms       | the number of bloom filters in the chunk's bloom  | uint64 |
+| recWid        | the record width of a single bloom filter         | uint64 |
+| bloomSz       | the size of the bloom filters on disc in bytes    | uint64 |
+| chunkSz       | the size of the chunks on disc in bytes           | uint64 |
+| addrsPerBlock | the average number of addresses per block         | double |
+| appsPerBlock  | the average number of appearances per block       | double |
+| appsPerAddr   | the average number of appearances per address     | double |
+| ratio         | the ratio of appearances to addresses             | double |
 
 ## MonitorClean
 

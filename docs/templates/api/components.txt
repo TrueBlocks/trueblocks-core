@@ -1234,14 +1234,12 @@ components:
       description: "summary statistics about an Unchained Index bloom filter and index chunk"
       type: object
       properties:
-        start:
-          type: number
-          format: uint64
-          description: "the first block in the chunk's range"
-        end:
-          type: number
-          format: uint64
-          description: "the last block in the chunk's range"
+        range:
+          type: string
+          description: "the block range (inclusive) covered by this chunk"
+        date:
+          type: string
+          description: "the date of the last block in this range"
         nAddrs:
           type: number
           format: uint64

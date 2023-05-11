@@ -10,7 +10,6 @@ package chunksPkg
 
 // EXISTING_CODE
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -22,14 +21,14 @@ type simpleChunkStats struct {
 	AppsPerBlock  float64 `json:"appsPerBlock"`
 	BloomSz       uint64  `json:"bloomSz"`
 	ChunkSz       uint64  `json:"chunkSz"`
-	End           uint64  `json:"end"`
+	Date          string  `json:"date"`
 	NAddrs        uint64  `json:"nAddrs"`
 	NApps         uint64  `json:"nApps"`
 	NBlocks       uint64  `json:"nBlocks"`
 	NBlooms       uint64  `json:"nBlooms"`
+	Range         string  `json:"range"`
 	Ratio         float64 `json:"ratio"`
 	RecWid        uint64  `json:"recWid"`
-	Start         uint64  `json:"start"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
