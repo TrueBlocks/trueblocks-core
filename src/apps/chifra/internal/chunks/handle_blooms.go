@@ -9,7 +9,6 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
@@ -36,7 +35,7 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 				displayBloom(&bl, int(opts.Globals.LogLevel))
 			}
 
-			stats, err := GetChunkStats(path)
+			stats, err := GetChunkStats(opts.Globals.Chain, path)
 			if err != nil {
 				return false, err
 			}
@@ -45,7 +44,7 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 				Magic:     fmt.Sprintf("0x%x", bl.Header.Magic),
 				Hash:      bl.Header.Hash,
 				Size:      stats.BloomSz,
-				Range:     base.FileRange{First: stats.Start, Last: stats.End},
+				Range:     stats.Range,
 				NBlooms:   stats.NBlooms,
 				ByteWidth: bloom.BLOOM_WIDTH_IN_BYTES,
 				NInserted: uint64(nInserted),

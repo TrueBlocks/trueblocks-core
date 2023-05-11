@@ -135,13 +135,6 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	}
 	reports = append(reports, sizes)
 
-	// compare remote manifest to cached manifest
-	r2c := simpleReportCheck{Reason: "Remote Manifest to Cached Manifest"}
-	if err := opts.CheckManifest(remoteArray, cacheArray, &r2c); err != nil {
-		return err
-	}
-	reports = append(reports, r2c)
-
 	// compare with çached manifest with files on disc
 	d2c := simpleReportCheck{Reason: "Disc Files to Cached Manifest"}
 	if err := opts.CheckManifest(fnArray, cacheArray, &d2c); err != nil {
@@ -155,6 +148,13 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 		return err
 	}
 	reports = append(reports, d2r)
+
+	// compare remote manifest to cached manifest
+	r2c := simpleReportCheck{Reason: "Remote Manifest to Cached Manifest"}
+	if err := opts.CheckManifest(remoteArray, cacheArray, &r2c); err != nil {
+		return err
+	}
+	reports = append(reports, r2c)
 
 	// stage := simpleReportCheck{Reason: "Check staging folder"}
 	// if err := opts.CheckStaging(0, allowMissing, &stage); err != nil {

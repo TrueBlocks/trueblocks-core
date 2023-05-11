@@ -9,7 +9,10 @@
 package chunksPkg
 
 // EXISTING_CODE
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+)
 
 // EXISTING_CODE
 
@@ -46,18 +49,18 @@ func (s *simpleChunkStats) Model(verbose bool, format string, extraOptions map[s
 		"appsPerBlock":  s.AppsPerBlock,
 		"bloomSz":       s.BloomSz,
 		"chunkSz":       s.ChunkSz,
-		"end":           s.End,
+		"range":         s.Range,
 		"nAddrs":        s.NAddrs,
 		"nApps":         s.NApps,
 		"nBlocks":       s.NBlocks,
 		"nBlooms":       s.NBlooms,
 		"ratio":         s.Ratio,
 		"recWid":        s.RecWid,
-		"start":         s.Start,
+		"date":          s.Date,
 	}
 	order = []string{
-		"start",
-		"end",
+		"range",
+		"date",
 		"nAddrs",
 		"nApps",
 		"nBlocks",

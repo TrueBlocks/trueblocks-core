@@ -171,15 +171,6 @@ func (mon *Monitor) Remove() (bool, error) {
 	return !file.FileExists(mon.Path()), nil
 }
 
-func PathToAddress(path string) (string, error) {
-	_, fileName := filepath.Split(path)
-	if len(fileName) == 0 || !strings.HasPrefix(fileName, "0x") || !strings.HasSuffix(fileName, ".mon.bin") {
-		return "", errors.New("path does is not a valid monitor filename")
-	}
-	parts := strings.Split(fileName, ".")
-	return strings.ToLower(parts[0]), nil
-}
-
 // SentinalAddr is a marker to signify the end of the monitor list produced by ListMonitors
 var SentinalAddr = base.HexToAddress("0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead")
 
@@ -220,7 +211,7 @@ func ListMonitors(chain string, monitorChan chan<- Monitor) {
 			return err
 		}
 		if !info.IsDir() {
-			addr, _ := PathToAddress(path)
+			addr, _ := base.AddrFromPath(path, ".mon.bin")
 			if len(addr) > 0 {
 				monitorChan <- NewMonitor(chain, addr, true /* create */)
 			}
