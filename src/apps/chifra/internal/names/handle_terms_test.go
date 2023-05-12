@@ -55,18 +55,18 @@ func startServer() (*grpc.Server, *net.Listener) {
 
 var s *grpc.Server
 
-func init() {
+func setup() {
 	s, _ = startServer()
 }
 
 func BenchmarkNamesOptions_HandleTerms_Grpc(b *testing.B) {
-	b.Cleanup(func() {
-		// Remove the socket
+	b.StopTimer()
+	setup()
+	defer func() {
+		b.StopTimer()
+		s.Stop()
 		os.RemoveAll(proto.SocketAddress())
-	})
-
-	// s, _ := startServer(b.N)
-	defer s.Stop()
+	}()
 
 	buf := bytes.NewBuffer([]byte{})
 	w := bufio.NewWriter(buf)
@@ -75,6 +75,7 @@ func BenchmarkNamesOptions_HandleTerms_Grpc(b *testing.B) {
 	opts.Globals.Format = "txt"
 	opts.Globals.Writer = w
 
+	b.StartTimer()
 	err := opts.HandleTerms()
 	if err != nil {
 		b.Fatal(err)
@@ -82,6 +83,7 @@ func BenchmarkNamesOptions_HandleTerms_Grpc(b *testing.B) {
 }
 
 func BenchmarkNamesOptions_HandleTerms_CommandLine(b *testing.B) {
+	b.StopTimer()
 	buf := bytes.NewBuffer([]byte{})
 	w := bufio.NewWriter(buf)
 
@@ -89,6 +91,7 @@ func BenchmarkNamesOptions_HandleTerms_CommandLine(b *testing.B) {
 	opts.Globals.Format = "txt"
 	opts.Globals.Writer = w
 
+	b.StartTimer()
 	// Emptying in-memory cache simulates calling this code multiple times
 	// on the command line
 	names.EmptyInMemoryCache()
@@ -99,6 +102,7 @@ func BenchmarkNamesOptions_HandleTerms_CommandLine(b *testing.B) {
 }
 
 func BenchmarkNamesOptions_HandleTerms_Api(b *testing.B) {
+	b.StopTimer()
 	buf := bytes.NewBuffer([]byte{})
 	w := bufio.NewWriter(buf)
 
@@ -106,6 +110,7 @@ func BenchmarkNamesOptions_HandleTerms_Api(b *testing.B) {
 	opts.Globals.Format = "txt"
 	opts.Globals.Writer = w
 
+	b.StartTimer()
 	// Note: we are not calling names.EmptyInMemoryCache() here
 	err := opts.HandleTerms()
 	if err != nil {
