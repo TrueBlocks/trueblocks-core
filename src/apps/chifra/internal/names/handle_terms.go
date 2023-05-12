@@ -11,23 +11,34 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/proto"
+	"google.golang.org/grpc"
 )
 
 func (opts *NamesOptions) HandleTerms() error {
 	var fetchData func(modelChan chan types.Modeler[types.RawName], errorChan chan error)
 
-	// Try RPC
-	grpcCtx, grpcCancel := proto.GetContext()
-	defer grpcCancel()
-	conn, client, grpcErr := proto.Connect(grpcCtx)
-	if grpcErr == nil {
+	apiMode := opts.Globals.IsApiMode()
+
+	var conn *grpc.ClientConn
+	var client proto.NamesClient
+	var grpcErr error
+
+	if !apiMode {
+		// Try RPC
+		grpcCtx, grpcCancel := proto.GetContext()
+		defer grpcCancel()
+		conn, client, grpcErr = proto.Connect(grpcCtx)
+	}
+	if !apiMode && grpcErr == nil {
 		defer conn.Close()
 		// RPC server is running and available
 		fetchData = func(modelChan chan types.Modeler[types.RawName], errorChan chan error) {
 			opts.fetchFromGrpc(client, modelChan, errorChan)
 		}
 	} else {
-		if !errors.Is(grpcErr, context.DeadlineExceeded) {
+		// Report the error only if we know that the server is running or the user wants us
+		// to be verbose
+		if grpcErr != nil && (!errors.Is(grpcErr, proto.ErrServerNotRunning) || opts.Globals.Verbose) {
 			logger.Error("gRPC connection error:", grpcErr)
 		}
 
