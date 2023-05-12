@@ -172,7 +172,11 @@ func cleanContract(token *token.Token, address base.Address, name *types.SimpleN
 			// Not a token
 			name.IsErc20 = false
 			name.IsErc721 = false
-			name.Tags = ""
+			name.Decimals = 0
+			name.Symbol = ""
+			if name.Tags == "50-Tokens:ERC20" || name.Tags == "50-Tokens:ERC721" {
+				name.Tags = ""
+			}
 			modified = true
 		}
 	}
@@ -224,14 +228,20 @@ func cleanToken(name *types.SimpleName, token *token.Token) (modified bool) {
 		modified = true
 	}
 
-	if token.Name != "" && name.Name != token.Name {
-		name.Name = token.Name
-		modified = true
+	if token.Name != "" {
+		trimmedName := strings.Trim(token.Name, " ")
+		if name.Name != trimmedName {
+			name.Name = trimmedName
+			modified = true
+		}
 	}
 
-	if token.Symbol != "" && name.Symbol != token.Symbol {
-		name.Symbol = token.Symbol
-		modified = true
+	if token.Symbol != "" {
+		trimmedSymbol := strings.Trim(name.Symbol, " ")
+		if name.Symbol != trimmedSymbol {
+			name.Symbol = trimmedSymbol
+			modified = true
+		}
 	}
 
 	if token.Decimals > 0 && name.Decimals != uint64(token.Decimals) {
@@ -239,8 +249,8 @@ func cleanToken(name *types.SimpleName, token *token.Token) (modified bool) {
 		modified = true
 	}
 
-	if token.IsErc721() && name.IsErc721 != token.IsErc721() {
-		name.IsErc721 = token.IsErc721()
+	if token.IsErc721() && !name.IsErc721 {
+		name.IsErc721 = true
 		modified = true
 	}
 

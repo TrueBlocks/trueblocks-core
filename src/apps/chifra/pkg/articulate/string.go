@@ -7,6 +7,9 @@ import (
 // ArticulateString tries to convert hex into a string of printable characters
 // (ASCII only). If it was successful, then `success` is true.
 func ArticulateString(hex string) (strResult string, success bool) {
+	if len(hex) < 2 {
+		return "", false
+	}
 	byteValue := common.Hex2Bytes(hex[2:])
 	hasPrintableCharacters := false
 	result := make([]byte, 0, len(hex))
@@ -69,4 +72,23 @@ func SanitizeString(str string) (sanitized string) {
 		sanitized += string(sanitizedByte)
 	}
 	return
+}
+
+func HexToName(hex string, sanitize bool) string {
+	if len(hex) < 2 {
+		return ""
+	}
+	input := common.Hex2Bytes(hex[2:])
+	padStart := len(input)
+	for i := (len(input) - 1); i >= 0; i-- {
+		if input[i] != 0 {
+			break
+		}
+		padStart = i
+	}
+	result := string(input[0:padStart])
+	if sanitize {
+		return SanitizeString(result)
+	}
+	return result
 }
