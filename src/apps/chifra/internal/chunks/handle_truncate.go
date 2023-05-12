@@ -10,6 +10,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -62,16 +63,19 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 
 			testRange := base.FileRange{First: opts.Truncate, Last: utils.NOPOS}
 			if rng.Intersects(testRange) {
-				// TODO: We should make backups of these files and only if the manifest and both files
-				// are removed and the monitors are cleared should we proceed. Otherwise, replace these
-				// backups and the manifest backup.
 				if err = manifest.RemoveChunk(chain, path); err != nil {
 					return false, err
 				}
 				nChunksRemoved++
+				if opts.Globals.Verbose {
+					logger.Info(colors.Red, "Removing chunk at "+rng.String(), "max:", latestChunk, colors.Off)
+				}
 			} else {
-				// We did not remove the chunk, so we need to keep track of where the index ends
+				// We did not remove the chunk, so we need to keep track of where the truncated index ends
 				latestChunk = utils.Max(latestChunk, rng.Last)
+				if opts.Globals.Verbose {
+					logger.Info(colors.Green, "Not removing chunk at "+rng.String(), "max:", latestChunk, colors.Off)
+				}
 			}
 
 			return true, nil
@@ -97,7 +101,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 					return err
 				}
 				if !info.IsDir() {
-					addr, _ := monitor.PathToAddress(path)
+					addr, _ := base.AddrFromPath(path, ".mon.bin")
 					if len(addr) > 0 {
 						mon := monitor.NewMonitor(chain, addr, false /* create */)
 						var removed bool

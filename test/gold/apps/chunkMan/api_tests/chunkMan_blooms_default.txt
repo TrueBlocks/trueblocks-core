@@ -7,10 +7,7 @@ chunks?mode=blooms
       "magic": "0xdead",
       "nBlooms": 1,
       "nInserted": 8893,
-      "range": {
-        "First": 0,
-        "Last": 0
-      },
+      "range": "000000000-000000000",
       "size": 131114
     },
     {
@@ -19,10 +16,7 @@ chunks?mode=blooms
       "magic": "0xdead",
       "nBlooms": 1,
       "nInserted": 29322,
-      "range": {
-        "First": 1,
-        "Last": 590502
-      },
+      "range": "000000001-000590502",
       "size": 131114
     },
     {
@@ -31,10 +25,7 @@ chunks?mode=blooms
       "magic": "0xdead",
       "nBlooms": 4,
       "nInserted": 164448,
-      "range": {
-        "First": 590503,
-        "Last": 864335
-      },
+      "range": "000590503-000864335",
       "size": 524342
     },
     {
@@ -43,10 +34,7 @@ chunks?mode=blooms
       "magic": "0xdead",
       "nBlooms": 2,
       "nInserted": 81007,
-      "range": {
-        "First": 864336,
-        "Last": 1076298
-      },
+      "range": "000864336-001076298",
       "size": 262190
     },
     {
@@ -55,10 +43,7 @@ chunks?mode=blooms
       "magic": "0xdead",
       "nBlooms": 2,
       "nInserted": 84862,
-      "range": {
-        "First": 1076299,
-        "Last": 1229769
-      },
+      "range": "001076299-001229769",
       "size": 262190
     },
     {
@@ -67,10 +52,7 @@ chunks?mode=blooms
       "magic": "0xdead",
       "nBlooms": 2,
       "nInserted": 62049,
-      "range": {
-        "First": 1229770,
-        "Last": 1371352
-      },
+      "range": "001229770-001371352",
       "size": 262190
     },
     {
@@ -79,10 +61,7 @@ chunks?mode=blooms
       "magic": "0xdead",
       "nBlooms": 2,
       "nInserted": 78077,
-      "range": {
-        "First": 1371353,
-        "Last": 1504328
-      },
+      "range": "001371353-001504328",
       "size": 262190
     },
     {
@@ -91,10 +70,7 @@ chunks?mode=blooms
       "magic": "0xdead",
       "nBlooms": 3,
       "nInserted": 116909,
-      "range": {
-        "First": 1504329,
-        "Last": 1613033
-      },
+      "range": "001504329-001613033",
       "size": 393266
     },
     {
@@ -103,10 +79,7 @@ chunks?mode=blooms
       "magic": "0xdead",
       "nBlooms": 3,
       "nInserted": 133329,
-      "range": {
-        "First": 1613034,
-        "Last": 1729008
-      },
+      "range": "001613034-001729008",
       "size": 393266
     },
     {
@@ -115,10 +88,7 @@ chunks?mode=blooms
       "magic": "0xdead",
       "nBlooms": 3,
       "nInserted": 123164,
-      "range": {
-        "First": 1729009,
-        "Last": 1848054
-      },
+      "range": "001729009-001848054",
       "size": 393266
     },
     {
@@ -127,10 +97,7 @@ chunks?mode=blooms
       "magic": "0xdead",
       "nBlooms": 3,
       "nInserted": 138572,
-      "range": {
-        "First": 1848055,
-        "Last": 1963090
-      },
+      "range": "001848055-001963090",
       "size": 393266
     }
   ],

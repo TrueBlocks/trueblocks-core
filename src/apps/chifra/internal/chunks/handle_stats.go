@@ -22,7 +22,7 @@ func (opts *ChunksOptions) HandleStats(blockNums []uint64) error {
 				return false, fmt.Errorf("should not happen in showFinalizedStats")
 			}
 
-			if s, err := GetChunkStats(path); err != nil {
+			if s, err := GetChunkStats(opts.Globals.Chain, path); err != nil {
 				return false, err
 
 			} else {

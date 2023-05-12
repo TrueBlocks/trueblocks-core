@@ -2,7 +2,11 @@ package base
 
 import (
 	"encoding/hex"
+	"errors"
 	"fmt"
+	"log"
+	"path/filepath"
+	"strings"
 
 	"github.com/ethereum/go-ethereum/common"
 )
@@ -58,4 +62,27 @@ func BytesToAddress(b []byte) (addr Address) {
 
 func bytesToAddressString(addressBytes []byte) string {
 	return "0x" + hex.EncodeToString(addressBytes)
+}
+
+// AddrFromPath returns an address from a path -- is assumes the filename is
+// a valid address starting with 0x and ends with the fileType. if the path does
+// not contain an address, an error is returned. If the path does not end with the
+// given fileType, it panics.
+func AddrFromPath(path, fileType string) (string, error) {
+	_, fileName := filepath.Split(path)
+
+	if !strings.HasSuffix(fileName, fileType) {
+		log.Panic("should not happen - path should contain fileType in AddrFromPath")
+	}
+
+	if !strings.HasPrefix(fileType, ".") {
+		log.Panic("should not happen - fileType should have a leading dot in AddrFromPath")
+	}
+
+	if len(fileName) < (42+len(fileType)) || !strings.HasPrefix(fileName, "0x") || !strings.Contains(fileName, ".") {
+		return "", errors.New("path does not appear to contain an address")
+	}
+
+	parts := strings.Split(fileName, ".")
+	return strings.ToLower(parts[0]), nil
 }

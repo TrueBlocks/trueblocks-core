@@ -17,10 +17,10 @@ import (
 // EXISTING_CODE
 
 type simpleChunkAddress struct {
-	Address base.Address   `json:"address"`
-	Count   uint64         `json:"count"`
-	Offset  uint64         `json:"offset"`
-	Range   base.FileRange `json:"range"`
+	Address base.Address `json:"address"`
+	Count   uint64       `json:"count"`
+	Offset  uint64       `json:"offset"`
+	Range   string       `json:"range"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -36,7 +36,7 @@ func (s *simpleChunkAddress) Model(verbose bool, format string, extraOptions map
 	// EXISTING_CODE
 	model = map[string]interface{}{
 		"address": s.Address,
-		"range":   s.Range.String(),
+		"range":   s.Range,
 		"offset":  s.Offset,
 		"count":   s.Count,
 	}

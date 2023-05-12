@@ -246,7 +246,7 @@ bool wrangleTxId(string_q& argOut, string_q& errorMsg) {
         return true;
 
     // valid args are 'latest', 'bn.txid', 'bn.txid.next', or 'bn.txid.prev'
-    replaceReverse(argOut, ":", ".");
+    replaceReverse(argOut, ":",  ".");
 
     CStringArray parts;
     explode(parts, argOut, '.');

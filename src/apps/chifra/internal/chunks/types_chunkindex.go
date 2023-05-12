@@ -17,12 +17,12 @@ import (
 // EXISTING_CODE
 
 type simpleChunkIndex struct {
-	Hash         base.Hash      `json:"hash"`
-	Magic        string         `json:"magic"`
-	NAddresses   uint64         `json:"nAddresses"`
-	NAppearances uint64         `json:"nAppearances"`
-	Range        base.FileRange `json:"range"`
-	Size         uint64         `json:"size"`
+	Hash         base.Hash `json:"hash"`
+	Magic        string    `json:"magic"`
+	NAddresses   uint64    `json:"nAddresses"`
+	NAppearances uint64    `json:"nAppearances"`
+	Range        string    `json:"range"`
+	Size         uint64    `json:"size"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -37,7 +37,7 @@ func (s *simpleChunkIndex) Model(verbose bool, format string, extraOptions map[s
 
 	// EXISTING_CODE
 	model = map[string]interface{}{
-		"range":        s.Range.String(),
+		"range":        s.Range,
 		"magic":        s.Magic,
 		"hash":         s.Hash,
 		"nAddresses":   s.NAddresses,

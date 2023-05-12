@@ -129,6 +129,7 @@ func (opts *ChunksOptions) IsPorted() (ported bool) {
 // EXISTING_CODE
 func (opts *ChunksOptions) defaultFormat(def string) string {
 	if (opts.Mode == "index" && opts.Check) ||
+		(opts.Mode == "manifest" && opts.Check) ||
 		opts.Truncate != utils.NOPOS || len(opts.Belongs) > 0 {
 		return "json"
 	}

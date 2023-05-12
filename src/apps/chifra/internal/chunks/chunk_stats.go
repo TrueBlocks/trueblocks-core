@@ -7,18 +7,21 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func GetChunkStats(path string) (s simpleChunkStats, err error) {
+func GetChunkStats(chain, path string) (s simpleChunkStats, err error) {
 	chunk, err := index.NewChunk(path)
 	if err != nil && !os.IsNotExist(err) {
 		return s, err
 	}
 	defer chunk.Close()
 
+	ts, _ := tslib.FromBnToTs(chain, chunk.Range.Last)
 	s = simpleChunkStats{
-		Start:   chunk.Range.First,
-		End:     chunk.Range.Last,
+		Range:   chunk.Range.String(),
+		Date:    utils.FormattedDate(ts),
 		NBlocks: chunk.Range.Last - chunk.Range.First + 1,
 		NAddrs:  uint64(chunk.Data.Header.AddressCount),
 		NApps:   uint64(chunk.Data.Header.AppearanceCount),

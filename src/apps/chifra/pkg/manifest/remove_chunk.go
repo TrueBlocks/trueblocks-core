@@ -10,6 +10,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
+// RemoveChunk must remove the underlying chunk (both Bloom filter and the chunk itself) and
+// update the manifest by removing all chunks at or after the given path. Note that if this
+// function aborts due to error and the backup files still exist, the function will attempt
+// to restore the backup files before returning.
 func RemoveChunk(chain, path string) (err error) {
 	manifestFn := filepath.Join(config.GetPathToChainConfig(chain), "manifest.json")
 	indexFn := cache.ToIndexPath(path)
@@ -24,16 +28,16 @@ func RemoveChunk(chain, path string) (err error) {
 			// If the backup files still exist when the function ends, something went wrong, reset everything
 			if file.FileExists(manifestBackup) {
 				file.Copy(manifestFn, manifestBackup)
+				os.Remove(manifestBackup)
 			}
 			if file.FileExists(indexBackup) {
 				file.Copy(indexFn, indexBackup)
+				os.Remove(indexBackup)
 			}
 			if file.FileExists(bloomBackup) {
 				file.Copy(bloomFn, bloomBackup)
+				os.Remove(bloomBackup)
 			}
-			os.Remove(manifestBackup)
-			os.Remove(indexBackup)
-			os.Remove(bloomBackup)
 		}
 	}()
 
@@ -60,7 +64,7 @@ func RemoveChunk(chain, path string) (err error) {
 	var man *Manifest
 	man, err = ReadManifest(chain, FromCache)
 
-	rng, err1 := base.RangeFromFilenameE(path)
+	removedRange, err1 := base.RangeFromFilenameE(path)
 	if err1 != nil {
 		err = err1
 		return err
@@ -69,10 +73,11 @@ func RemoveChunk(chain, path string) (err error) {
 	newChunks := []ChunkRecord{}
 	for _, chunk := range man.Chunks {
 		chunkRange := base.RangeFromRangeString(chunk.Range)
-		if !chunkRange.Preceeds(rng, true) {
-			// fmt.Println(chunkRange, rng, chunkRange.Intersects(rng))
-			// } else {
+		if chunkRange.EarlierThan(removedRange) {
 			newChunks = append(newChunks, chunk)
+			// 	fmt.Println(colors.Green, "Keeping", chunk.Range, colors.Off)
+			// } else {
+			// 	fmt.Println(colors.Red, "Removing", chunk.Range, colors.Off)
 		}
 	}
 	man.Chunks = newChunks

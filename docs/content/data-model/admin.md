@@ -103,13 +103,13 @@ The following commands produce and manage ChunkRecords:
 
 ChunkRecords consist of the following fields:
 
-| Field     | Description                                                 | Type     |
-| --------- | ----------------------------------------------------------- | -------- |
-| range     | for each chunk, the range of blocks contained in that chunk | string   |
-| bloomHash | the IPFS hash of the bloom filter at that range             | ipfshash |
-| indexHash | the IPFS hash of the index chunk at that range              | ipfshash |
-| bloomSize | the size of the bloom filter in bytes                       | int64    |
-| indexSize | the size of the index portion in bytes                      | int64    |
+| Field     | Description                                       | Type     |
+| --------- | ------------------------------------------------- | -------- |
+| range     | the block range (inclusive) covered by this chunk | blkrange |
+| bloomHash | the IPFS hash of the bloom filter at that range   | ipfshash |
+| indexHash | the IPFS hash of the index chunk at that range    | ipfshash |
+| bloomSize | the size of the bloom filter in bytes             | int64    |
+| indexSize | the size of the index portion in bytes            | int64    |
 
 ## ChunkIndex
 
@@ -123,14 +123,14 @@ The following commands produce and manage ChunkIndexes:
 
 ChunkIndexes consist of the following fields:
 
-| Field        | Description                                                        | Type       |
-| ------------ | ------------------------------------------------------------------ | ---------- |
-| range        | The block range (inclusive) covered by this chunk                  | blockRange |
-| magic        | An internal use only magic number to indicate file format          | string     |
-| hash         | The hash of the specification under which this chunk was generated | hash       |
-| nAddresses   | The number of addresses in this chunk                              | uint64     |
-| nAppearances | The number of appearances in this chunk                            | uint64     |
-| size         | The size of the chunk in bytes                                     | uint64     |
+| Field        | Description                                                        | Type     |
+| ------------ | ------------------------------------------------------------------ | -------- |
+| range        | the block range (inclusive) covered by this chunk                  | blkrange |
+| magic        | an internal use only magic number to indicate file format          | string   |
+| hash         | the hash of the specification under which this chunk was generated | hash     |
+| nAddresses   | the number of addresses in this chunk                              | uint64   |
+| nAppearances | the number of appearances in this chunk                            | uint64   |
+| size         | the size of the chunk in bytes                                     | uint64   |
 
 ## ChunkBloom
 
@@ -146,15 +146,15 @@ The following commands produce and manage ChunkBlooms:
 
 ChunkBlooms consist of the following fields:
 
-| Field     | Description                                                        | Type       |
-| --------- | ------------------------------------------------------------------ | ---------- |
-| range     | The block range (inclusive) covered by this chunk                  | blockRange |
-| magic     | An internal use only magic number to indicate file format          | string     |
-| hash      | The hash of the specification under which this chunk was generated | hash       |
-| nBlooms   | The number of individual bloom filters in this bloom file          | uint64     |
-| nInserted | The number of addresses inserted into the bloom file               | uint64     |
-| size      | The size on disc in bytes of this bloom file                       | uint64     |
-| byteWidth | The width of the bloom filter                                      | uint64     |
+| Field     | Description                                                        | Type     |
+| --------- | ------------------------------------------------------------------ | -------- |
+| range     | the block range (inclusive) covered by this chunk                  | blkrange |
+| magic     | an internal use only magic number to indicate file format          | string   |
+| hash      | the hash of the specification under which this chunk was generated | hash     |
+| nBlooms   | the number of individual bloom filters in this bloom file          | uint64   |
+| nInserted | the number of addresses inserted into the bloom file               | uint64   |
+| size      | the size on disc in bytes of this bloom file                       | uint64   |
+| byteWidth | the width of the bloom filter                                      | uint64   |
 
 ## ChunkAddress
 
@@ -169,12 +169,12 @@ The following commands produce and manage ChunkAddress:
 
 ChunkAddress consist of the following fields:
 
-| Field   | Description                                                               | Type       |
-| ------- | ------------------------------------------------------------------------- | ---------- |
-| address | The address in this record                                                | address    |
-| range   | The block range of the chunk from which this address record was taken     | blockRange |
-| offset  | The offset into the appearance table of the first record for this address | uint64     |
-| count   | The number of records in teh appearance table for this address            | uint64     |
+| Field   | Description                                                               | Type     |
+| ------- | ------------------------------------------------------------------------- | -------- |
+| address | the address in this record                                                | address  |
+| range   | the block range of the chunk from which this address record was taken     | blkrange |
+| offset  | the offset into the appearance table of the first record for this address | uint64   |
+| count   | the number of records in teh appearance table for this address            | uint64   |
 
 ## ChunkStats
 
@@ -188,21 +188,21 @@ The following commands produce and manage ChunkStats:
 
 ChunkStats consist of the following fields:
 
-| Field         | Description                                      | Type   |
-| ------------- | ------------------------------------------------ | ------ |
-| start         | the first block in the chunk's range             | uint64 |
-| end           | the last block in the chunk's range              | uint64 |
-| nAddrs        | the number of addresses in the chunk             | uint64 |
-| nApps         | the number of appearances in the chunk           | uint64 |
-| nBlocks       | the number of blocks in the chunk                | uint64 |
-| nBlooms       | the number of bloom filters in the chunk's bloom | uint64 |
-| recWid        | the record width of a single bloom filter        | uint64 |
-| bloomSz       | the size of the bloom filters on disc in bytes   | uint64 |
-| chunkSz       | the size of the chunks on disc in bytes          | uint64 |
-| addrsPerBlock | the average number of addresses per block        | double |
-| appsPerBlock  | the average number of appearances per block      | double |
-| appsPerAddr   | the average number of appearances per address    | double |
-| ratio         | the ratio of appearances to addresses            | double |
+| Field         | Description                                       | Type     |
+| ------------- | ------------------------------------------------- | -------- |
+| range         | the block range (inclusive) covered by this chunk | blkrange |
+| date          | the date of the last block in this range          | string   |
+| nAddrs        | the number of addresses in the chunk              | uint64   |
+| nApps         | the number of appearances in the chunk            | uint64   |
+| nBlocks       | the number of blocks in the chunk                 | uint64   |
+| nBlooms       | the number of bloom filters in the chunk's bloom  | uint64   |
+| recWid        | the record width of a single bloom filter         | uint64   |
+| bloomSz       | the size of the bloom filters on disc in bytes    | uint64   |
+| chunkSz       | the size of the chunks on disc in bytes           | uint64   |
+| addrsPerBlock | the average number of addresses per block         | double   |
+| appsPerBlock  | the average number of appearances per block       | double   |
+| appsPerAddr   | the average number of appearances per address     | double   |
+| ratio         | the ratio of appearances to addresses             | double   |
 
 ## MonitorClean
 
@@ -298,6 +298,7 @@ This documentation mentions the following basic data types.
 | --------- | ----------------------------------- | -------------- |
 | []string  | an array of strings                 |                |
 | address   | an '0x'-prefixed 20-byte hex string | lowercase      |
+| blkrange  | a pair of nine-digit block numbers  | zero padded    |
 | bool      | either `true`, `false`, `1`, or `0` |                |
 | double    | a double precision float            | 64 bits        |
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
