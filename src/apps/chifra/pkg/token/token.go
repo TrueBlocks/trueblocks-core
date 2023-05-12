@@ -317,8 +317,8 @@ func getStateNonStandard(address base.Address, client *ethclient.Client, blockNu
 		return
 	}
 
-	name := articulate.HexToName(*results["name"], false)
-	symbol := articulate.HexToName(*results["symbol"], false)
+	name, _ := articulate.ArticulateEncodedStringOrBytes32(*results["name"])
+	symbol, _ := articulate.ArticulateEncodedStringOrBytes32(*results["symbol"])
 
 	rawDecimals, _ := strconv.ParseUint(*results["decimals"], 0, 8)
 	decimals := uint8(rawDecimals)

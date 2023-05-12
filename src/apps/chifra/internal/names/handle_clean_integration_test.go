@@ -101,10 +101,11 @@ func TestTemp(t *testing.T) {
 		t.Fatal(err)
 	}
 
+	// 0x3d2ec62305e64e57ad46f06a639e17e2b6d73876 -- Kick event
 	// 0xf53ad2c6851052a81b42133467480961b2321c09 -- DS Token
 	// 0x461733c17b0755ca5649b6db08b3e213fcf22546 -- DS Token
 	// 0x4c8692cc08b14fa8b74b6f313394b8997aad721d
-	name, ok := m[base.HexToAddress("0xce5c603c78d047ef43032e96b5b785324f753a4f")]
+	name, ok := m[base.HexToAddress("0x3d2ec62305e64e57ad46f06a639e17e2b6d73876")]
 	if !ok {
 		t.Fatal("no name")
 	}

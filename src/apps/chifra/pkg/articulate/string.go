@@ -1,8 +1,26 @@
 package articulate
 
 import (
+	"fmt"
+
+	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 )
+
+var AbiStringType abi.Type
+var abiStringArguments abi.Arguments
+
+func init() {
+	var err error
+
+	AbiStringType, err = abi.NewType("string", "", nil)
+	if err != nil {
+		panic(err)
+	}
+	abiStringArguments = abi.Arguments{
+		{Type: AbiStringType},
+	}
+}
 
 // ArticulateString tries to convert hex into a string of printable characters
 // (ASCII only). If it was successful, then `success` is true.
@@ -74,9 +92,23 @@ func SanitizeString(str string) (sanitized string) {
 	return
 }
 
-func HexToName(hex string, sanitize bool) string {
+func ArticulateEncodedString(hex string) (result string, err error) {
 	if len(hex) < 2 {
-		return ""
+		result = ""
+		return
+	}
+	byteValue := common.Hex2Bytes(hex[2:])
+	unpacked, err := abiStringArguments.Unpack(byteValue)
+	if err != nil {
+		return
+	}
+	result = fmt.Sprint(unpacked[0])
+	return
+}
+
+func ArticulateBytes32String(hex string) (result string) {
+	if len(hex) < 2 {
+		return
 	}
 	input := common.Hex2Bytes(hex[2:])
 	padStart := len(input)
@@ -86,9 +118,17 @@ func HexToName(hex string, sanitize bool) string {
 		}
 		padStart = i
 	}
-	result := string(input[0:padStart])
-	if sanitize {
-		return SanitizeString(result)
+	result = string(input[0:padStart])
+	return
+}
+
+func ArticulateEncodedStringOrBytes32(hex string) (string, error) {
+	if len(hex) < 2 {
+		return "", nil
 	}
-	return result
+	if len(hex[2:]) > 64 {
+		return ArticulateEncodedString(hex)
+	}
+
+	return ArticulateBytes32String(hex), nil
 }
