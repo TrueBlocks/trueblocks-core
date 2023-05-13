@@ -6,6 +6,7 @@ package chunksPkg
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -59,6 +60,10 @@ func (opts *ChunksOptions) validateChunks() error {
 		if opts.Publish {
 			return validate.Usage("The {0} option is available only in {1} mode.", "--publish", "index or manifest")
 		}
+	}
+
+	if opts.LastBlock == 0 {
+		opts.LastBlock = utils.NOPOS
 	}
 
 	if opts.Mode != "index" {
@@ -116,6 +121,19 @@ func (opts *ChunksOptions) validateChunks() error {
 			return validate.Usage("Specify only a single block range at a time.")
 		}
 		return err
+	}
+
+	if opts.FirstBlock != 0 || opts.LastBlock != utils.NOPOS {
+		if opts.FirstBlock >= opts.LastBlock {
+			msg := fmt.Sprintf("first_block (%d) must be strictly earlier than last_block (%d).", opts.FirstBlock, opts.LastBlock)
+			return validate.Usage(msg)
+		}
+		if len(opts.Belongs) == 0 && opts.Mode != "addresses" && opts.Mode != "appearances" {
+			return validate.Usage("the {0} options are only available with {1}.", "*_block", "the addresses, the appearances, or the index --belongs modes")
+		}
+		// TODO: We should check that the first and last blocks are inside the ranges implied by the block ids
+		// if len(opts.BlockIds) > 0 {
+		// }
 	}
 
 	// Note that this does not return if the index is not initialized

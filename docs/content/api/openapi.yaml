@@ -1795,6 +1795,24 @@ paths:
             items:
               type: string
               format: address
+        - name: firstBlock
+          description: first block to process (inclusive)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: blknum
+        - name: lastBlock
+          description: last block to process (inclusive)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: blknum
         - name: sleep
           description: for --remote pinning only, seconds to sleep between API calls
           required: false
