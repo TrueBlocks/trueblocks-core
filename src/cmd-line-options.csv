@@ -259,10 +259,10 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 31965,apps,Admin,chunks,chunkMan,n2,,,false,false,false,false,--,note,,Certain options are only available in certain modes.
 31970,apps,Admin,chunks,chunkMan,n3,,,false,false,false,false,--,note,,If blocks are provided&#44; only chunks intersecting with those blocks are displayed.
 31980,apps,Admin,chunks,chunkMan,n5,,,false,false,false,false,--,note,,The --truncate option updates the manifest and removes local data&#44; but does not alter remote pins.
-31985,apps,Admin,chunks,chunkMan,n6,,,false,false,false,false,--,note,,You may combine the --pin and --publish options.
-31990,apps,Admin,chunks,chunkMan,n7,,,false,false,false,false,--,note,,The --belongs option is only available in the index mode.
-31995,apps,Admin,chunks,chunkMan,n8,,,false,false,false,false,--,note,,The --pin option requires a locally running IPFS node or a pinning service API key.
-31997,apps,Admin,chunks,chunkMan,n9,,,false,false,false,false,--,note,,The --publish option requires a private key.
+31985,apps,Admin,chunks,chunkMan,n6,,,false,false,false,false,--,note,,The --belongs option is only available in the index mode.
+31990,apps,Admin,chunks,chunkMan,n7,,,false,false,false,false,--,note,,The --pin option requires a locally running IPFS node or a pinning service API key.
+31995,apps,Admin,chunks,chunkMan,n8,,,false,false,false,false,--,note,,The --publish option requires a private key.
+31997,apps,Admin,chunks,chunkMan,n9,,,false,false,false,false,--,note,,You may combine the --pin and --publish options.
 
 11905,apps,Admin,init,init,all,a,,false,false,true,true,gocmd,switch,<boolean>,in addition to Bloom filters&#44; download full index chunks (recommended)
 11910,apps,Admin,init,init,dry_run,d,,false,false,true,true,gocmd,switch,<boolean>,display the results of the download without actually downloading

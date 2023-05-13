@@ -36,10 +36,10 @@ Notes:
   - Certain options are only available in certain modes.
   - If blocks are provided, only chunks intersecting with those blocks are displayed.
   - The --truncate option updates the manifest and removes local data, but does not alter remote pins.
-  - You may combine the --pin and --publish options.
   - The --belongs option is only available in the index mode.
   - The --pin option requires a locally running IPFS node or a pinning service API key.
   - The --publish option requires a private key.
+  - You may combine the --pin and --publish options.
 ```
 
 Data models produced by this tool:
