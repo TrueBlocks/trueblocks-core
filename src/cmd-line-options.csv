@@ -258,15 +258,19 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 31960,apps,Admin,chunks,chunkMan,n1,,,false,false,false,false,--,note,,Mode determines which type of data to display or process.
 31965,apps,Admin,chunks,chunkMan,n2,,,false,false,false,false,--,note,,Certain options are only available in certain modes.
 31970,apps,Admin,chunks,chunkMan,n3,,,false,false,false,false,--,note,,If blocks are provided&#44; only chunks intersecting with those blocks are displayed.
-31980,apps,Admin,chunks,chunkMan,n5,,,false,false,false,false,--,note,,The --truncate option updates data&#44; but does not --pin or --publish.
+31980,apps,Admin,chunks,chunkMan,n5,,,false,false,false,false,--,note,,The --truncate option updates the manifest and removes local data&#44; but does not alter remote pins.
 31985,apps,Admin,chunks,chunkMan,n6,,,false,false,false,false,--,note,,You may combine the --pin and --publish options.
 31990,apps,Admin,chunks,chunkMan,n7,,,false,false,false,false,--,note,,The --belongs option is only available in the index mode.
+31995,apps,Admin,chunks,chunkMan,n8,,,false,false,false,false,--,note,,The --pin option requires a locally running IPFS node or a pinning service API key.
+31997,apps,Admin,chunks,chunkMan,n9,,,false,false,false,false,--,note,,The --publish option requires a private key.
 
-11905,apps,Admin,init,init,all,a,,false,false,true,true,gocmd,switch,<boolean>,in addition to Bloom filters&#44; download full index chunks
-11905,apps,Admin,init,init,first_block,F,0,false,false,false,false,gocmd,flag,<blknum>,do not download any chunks earlier than this block
-11908,apps,Admin,init,init,sleep,s,0.0,false,false,true,true,gocmd,flag,<double>,seconds to sleep between downloads
-11910,apps,Admin,init,init,,,,false,false,true,true,--,description,,Initialize the TrueBlocks system by downloading from IPFS.
-10974,apps,Admin,init,init,n1,,,false,false,false,false,--,note,,Re-run `chifra init` as often as you wish. It will repair or freshen the index.
+11905,apps,Admin,init,init,all,a,,false,false,true,true,gocmd,switch,<boolean>,in addition to Bloom filters&#44; download full index chunks (recommended)
+11910,apps,Admin,init,init,dry_run,d,,false,false,true,true,gocmd,switch,<boolean>,display the results of the download without actually downloading
+11915,apps,Admin,init,init,first_block,F,0,false,false,false,false,gocmd,flag,<blknum>,do not download any chunks earlier than this block
+11920,apps,Admin,init,init,sleep,s,0.0,false,false,true,true,gocmd,flag,<double>,seconds to sleep between downloads
+11925,apps,Admin,init,init,,,,false,false,true,true,--,description,,Initialize the TrueBlocks system by downloading the Unchained Index from IPFS.
+11930,apps,Admin,init,init,n1,,,false,false,false,false,--,note,,If run with no options&#44; this tool will download or freshen only the Bloom filters.
+11935,apps,Admin,init,init,n2,,,false,false,false,false,--,note,,You may re-run the tool as often as you wish. It will repair or freshen the index.
 
 12001,apps,Other,explore,fireStorm,terms,,,false,false,true,true,header,positional,list<string>,one or more address&#44; name&#44; block&#44; or transaction identifier
 12002,apps,Other,explore,fireStorm,local,l,,false,false,true,true,header,switch,<boolean>,open the local TrueBlocks explorer

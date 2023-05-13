@@ -1849,11 +1849,19 @@ paths:
       tags:
         - Admin
       summary: Initialize index
-      description: Initialize the TrueBlocks system by downloading from IPFS. Corresponds to the <a href="/chifra/admin/#chifra-init">chifra init</a> command line.
+      description: Initialize the TrueBlocks system by downloading the Unchained Index from IPFS. Corresponds to the <a href="/chifra/admin/#chifra-init">chifra init</a> command line.
       operationId: admin-init
       parameters:
         - name: all
-          description: in addition to Bloom filters, download full index chunks
+          description: in addition to Bloom filters, download full index chunks (recommended)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: dryRun
+          description: display the results of the download without actually downloading
           required: false
           style: form
           in: query

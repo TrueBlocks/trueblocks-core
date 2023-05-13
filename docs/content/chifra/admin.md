@@ -292,9 +292,11 @@ Notes:
   - Mode determines which type of data to display or process.
   - Certain options are only available in certain modes.
   - If blocks are provided, only chunks intersecting with those blocks are displayed.
-  - The --truncate option updates data, but does not --pin or --publish.
+  - The --truncate option updates the manifest and removes local data, but does not alter remote pins.
   - You may combine the --pin and --publish options.
   - The --belongs option is only available in the index mode.
+  - The --pin option requires a locally running IPFS node or a pinning service API key.
+  - The --publish option requires a private key.
 ```
 
 Data models produced by this tool:
@@ -339,20 +341,22 @@ chunks that are not being used. You may periodically run `chifra init` if you pr
 
 ```[plaintext]
 Purpose:
-  Initialize the TrueBlocks system by downloading from IPFS.
+  Initialize the TrueBlocks system by downloading the Unchained Index from IPFS.
 
 Usage:
   chifra init [flags]
 
 Flags:
-  -a, --all           in addition to Bloom filters, download full index chunks
+  -a, --all           in addition to Bloom filters, download full index chunks (recommended)
+  -d, --dry_run       display the results of the download without actually downloading
   -s, --sleep float   seconds to sleep between downloads
   -x, --fmt string    export format, one of [none|json*|txt|csv]
   -v, --verbose       enable verbose (increase detail with --log_level)
   -h, --help          display this help screen
 
 Notes:
-  - Re-run chifra init as often as you wish. It will repair or freshen the index.
+  - If run with no options, this tool will download or freshen only the Bloom filters.
+  - You may re-run the tool as often as you wish. It will repair or freshen the index.
 ```
 
 Data models produced by this tool:
