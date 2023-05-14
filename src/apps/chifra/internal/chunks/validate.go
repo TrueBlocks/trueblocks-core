@@ -62,10 +62,6 @@ func (opts *ChunksOptions) validateChunks() error {
 		}
 	}
 
-	if opts.LastBlock == 0 {
-		opts.LastBlock = utils.NOPOS
-	}
-
 	if opts.Mode != "index" {
 		if opts.Truncate != utils.NOPOS {
 			return validate.Usage("The {0} option is only available {1}.", "--truncate", "in index mode")
@@ -100,11 +96,11 @@ func (opts *ChunksOptions) validateChunks() error {
 		return err
 	}
 
-	if opts.Globals.Verbose || opts.Globals.LogLevel > 0 {
-		if opts.Mode == "addresses" && opts.Globals.Format == "json" {
-			return validate.Usage("Do not use {0} with {1}", "--format json", "--verbose in the addresses mode")
-		}
-	}
+	// if opts.Globals.Verbose || opts.Globals.LogLevel > 0 {
+	// 	if opts.Mode == "addresses" && opts.Globals.Format == "json" {
+	// 		return validate.Usage("Do not use {0} with {1}", "--format json", "--verbose in the addresses mode")
+	// 	}
+	// }
 
 	err = validate.ValidateIdentifiers(
 		opts.Globals.Chain,
@@ -123,13 +119,13 @@ func (opts *ChunksOptions) validateChunks() error {
 		return err
 	}
 
-	if opts.FirstBlock != 0 || opts.LastBlock != utils.NOPOS {
+	if opts.FirstBlock != 0 || opts.LastBlock != utils.NOPOS || opts.MaxAddrs > 0 {
 		if opts.FirstBlock >= opts.LastBlock {
 			msg := fmt.Sprintf("first_block (%d) must be strictly earlier than last_block (%d).", opts.FirstBlock, opts.LastBlock)
 			return validate.Usage(msg)
 		}
 		if len(opts.Belongs) == 0 && opts.Mode != "addresses" && opts.Mode != "appearances" {
-			return validate.Usage("the {0} options are only available with {1}.", "*_block", "the addresses, the appearances, or the index --belongs modes")
+			return validate.Usage("some options are only available with {1}.", "the addresses, the appearances, or the index --belongs modes")
 		}
 		// TODO: We should check that the first and last blocks are inside the ranges implied by the block ids
 		// if len(opts.BlockIds) > 0 {

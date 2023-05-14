@@ -1813,6 +1813,15 @@ paths:
           schema:
             type: number
             format: blknum
+        - name: maxAddrs
+          description: the max number of addresses to process in a given chunk
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: blknum
         - name: sleep
           description: for --remote pinning only, seconds to sleep between API calls
           required: false

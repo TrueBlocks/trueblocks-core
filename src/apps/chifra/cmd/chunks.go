@@ -70,6 +70,7 @@ func init() {
 	chunksCmd.Flags().StringSliceVarP(&chunksPkg.GetOptions().Belongs, "belongs", "b", nil, "in index mode only, checks the address(es) for inclusion in the given index chunk")
 	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to process (inclusive)")
 	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to process (inclusive)")
+	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().MaxAddrs, "max_addrs", "d", 0, "the max number of addresses to process in a given chunk")
 	chunksCmd.Flags().Float64VarP(&chunksPkg.GetOptions().Sleep, "sleep", "s", 0.0, "for --remote pinning only, seconds to sleep between API calls")
 	globals.InitGlobals(chunksCmd, &chunksPkg.GetOptions().Globals)
 

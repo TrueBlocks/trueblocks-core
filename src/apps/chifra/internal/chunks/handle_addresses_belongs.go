@@ -79,6 +79,10 @@ func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler[ty
 		}
 
 		if opts.shouldShow(s.AddressRecord) {
+			if uint64(cnt) >= opts.MaxAddrs {
+				break
+			}
+
 			if s.Appearances, err = indexChunk.ReadAppearanceRecordsAndResetOffset(&s.AddressRecord); err != nil {
 				return false, err
 			}

@@ -28,6 +28,7 @@ Flags:
   -b, --belongs strings    in index mode only, checks the address(es) for inclusion in the given index chunk
   -F, --first_block uint   first block to process (inclusive)
   -L, --last_block uint    last block to process (inclusive)
+  -d, --max_addrs uint     the max number of addresses to process in a given chunk
   -s, --sleep float        for --remote pinning only, seconds to sleep between API calls
   -x, --fmt string         export format, one of [none|json*|txt|csv]
   -v, --verbose            enable verbose (increase detail with --log_level)
