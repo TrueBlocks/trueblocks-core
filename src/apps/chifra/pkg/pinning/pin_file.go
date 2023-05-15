@@ -3,6 +3,7 @@ package pinning
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -22,27 +23,36 @@ type PinResult struct {
 // TODO: BOGUS - WE HAVE TO HAVE A SOLUTION FOR THE TIMESTAMP FILE --PIN --REMOTE ON THE CHIFRA WHEN ROUTINES?
 func PinTimestamps(chain string, isRemote bool) error {
 	path := config.GetPathToIndex(chain) + "ts.bin"
-	var hash base.IpfsHash
+	var localHash base.IpfsHash
+	var remoteHash base.IpfsHash
 	var err error
 	if LocalDaemonRunning() {
+		logger.Info("Pinning timestamps to local daemon")
 		localService, _ := NewPinningService(chain, Local)
-		if hash, err = localService.PinFile(path, true); err != nil {
+		if localHash, err = localService.PinFile(path, true); err != nil {
 			logger.Fatal("Error in PinTimestamps", err)
 			return err
 		}
 	}
 
 	if isRemote {
+		logger.Info("Pinning timestamps to remote daemon")
 		remoteService, _ := NewPinningService(chain, Pinata)
-		if hash, err = remoteService.PinFile(path, true); err != nil {
+		if remoteHash, err = remoteService.PinFile(path, true); err != nil {
 			logger.Fatal("Error in PinTimestamps", err)
 			return err
 		}
 	}
 
 	fn := config.GetPathToCache(chain) + "/tmp/ts.ipfs_hash.fil"
-	logger.Info("Pinning timestamp file", fn, "to", hash)
-	file.StringToAsciiFile(fn, hash.String())
+	logger.Info("Pinning timestamp file", fn, "to", localHash)
+	file.StringToAsciiFile(fn, localHash.String())
+	if LocalDaemonRunning() && isRemote {
+		if localHash != remoteHash {
+			logger.Info("Local and remote hashes differ in PinTimestamps", localHash, remoteHash)
+		}
+	}
+
 	return nil
 }
 
@@ -62,6 +72,7 @@ func PinChunk(chain, path string, isRemote bool) (PinResult, error) {
 
 	isLocal := LocalDaemonRunning()
 	if isLocal {
+		logger.Info(colors.Magenta+"Pinning locally...", colors.Off)
 		if result.Local.BloomHash, result.err = localService.PinFile(bloomFile, true); result.err != nil {
 			return PinResult{}, result.err
 		}
@@ -70,9 +81,11 @@ func PinChunk(chain, path string, isRemote bool) (PinResult, error) {
 			return PinResult{}, result.err
 		}
 		result.Local.IndexSize = file.FileSize(indexFile)
+		logger.Info(colors.Magenta+"Pinned local to ", result.Local.BloomHash, result.Local.IndexHash, colors.Off)
 	}
 
 	if isRemote {
+		logger.Info(colors.Magenta+"Pinning remotely...", colors.Off)
 		if result.Remote.BloomHash, result.err = remoteService.PinFile(bloomFile, false); result.err != nil {
 			return PinResult{}, result.err
 		}
@@ -81,6 +94,7 @@ func PinChunk(chain, path string, isRemote bool) (PinResult, error) {
 			return PinResult{}, result.err
 		}
 		result.Remote.IndexSize = file.FileSize(indexFile)
+		logger.Info(colors.Magenta+"Pinned remote to", result.Remote.BloomHash, result.Remote.IndexHash, colors.Off)
 	}
 
 	// TODO: We used to use this to report an error between local and remote pinning, but it got turned off. Turn it back on
