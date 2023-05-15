@@ -6,6 +6,7 @@ This file details changes made to TrueBlocks per version. See the [migration not
 ## v0.65.0 (2023/05/10)
 
 Added optional gRPC server for `chifra names` route.
+Correction to the Unchained Index after block 15,300,000 - requires a re-run of `chifra init -all` or a re-scrape of the entire index.
 
 ## v0.64.0 (2023/04/20)
 
