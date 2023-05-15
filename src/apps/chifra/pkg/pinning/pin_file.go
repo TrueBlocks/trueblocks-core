@@ -81,7 +81,7 @@ func PinChunk(chain, path string, isRemote bool) (PinResult, error) {
 			return PinResult{}, result.err
 		}
 		result.Local.IndexSize = file.FileSize(indexFile)
-		logger.Info(colors.Magenta+"Pinned local to ", result.Local.BloomHash, result.Local.IndexHash, colors.Off)
+		logger.Info(colors.Magenta+"Pinned", rng, "local to ", result.Local.BloomHash, result.Local.IndexHash, colors.Off)
 	}
 
 	if isRemote {
@@ -94,7 +94,7 @@ func PinChunk(chain, path string, isRemote bool) (PinResult, error) {
 			return PinResult{}, result.err
 		}
 		result.Remote.IndexSize = file.FileSize(indexFile)
-		logger.Info(colors.Magenta+"Pinned remote to", result.Remote.BloomHash, result.Remote.IndexHash, colors.Off)
+		logger.Info(colors.Magenta+"Pinned", rng, "remote to", result.Remote.BloomHash, result.Remote.IndexHash, colors.Off)
 	}
 
 	// TODO: We used to use this to report an error between local and remote pinning, but it got turned off. Turn it back on
