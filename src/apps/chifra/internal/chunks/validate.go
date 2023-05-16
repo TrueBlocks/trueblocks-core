@@ -119,7 +119,7 @@ func (opts *ChunksOptions) validateChunks() error {
 		return err
 	}
 
-	if opts.FirstBlock != 0 || opts.LastBlock != utils.NOPOS || opts.MaxAddrs > 0 {
+	if opts.FirstBlock != 0 || opts.LastBlock != utils.NOPOS || opts.MaxAddrs != utils.NOPOS {
 		if opts.FirstBlock >= opts.LastBlock {
 			msg := fmt.Sprintf("first_block (%d) must be strictly earlier than last_block (%d).", opts.FirstBlock, opts.LastBlock)
 			return validate.Usage(msg)

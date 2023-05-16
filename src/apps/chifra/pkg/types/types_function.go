@@ -104,7 +104,7 @@ func (s *SimpleFunction) Model(verbose bool, format string, extraOptions map[str
 			}
 			return result
 		}
-		if extraOptions["verbose"] == true {
+		if verbose {
 			inputs := getParameterModels(s.Inputs)
 			if inputs != nil {
 				model["inputs"] = inputs

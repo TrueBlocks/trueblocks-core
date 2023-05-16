@@ -94,6 +94,10 @@ func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler[ty
 					}
 				}
 				s.Appearances = good
+				s.AddressRecord.Count = uint32(len(good))
+			}
+			if len(s.Appearances) == 0 {
+				continue
 			}
 			modelChan <- &s
 			cnt++

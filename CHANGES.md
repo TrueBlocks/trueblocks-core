@@ -3,13 +3,32 @@
 
 This file details changes made to TrueBlocks per version. See the [migration notes](./MIGRATIONS.md) for changes from previous versions.
 
-## v0.65.0 (2023/05/10)
+## v0.65.0 (2023/05/17)
 
 Added optional gRPC server for `chifra names` route.
+Correction to the Unchained Index after block 15,300,000 - requires a re-run of `chifra init -all` or a re-scrape of the entire index.
+Adds --dry_run (unimplemented) to `chifra init`
+Cleaned up a few data model markdown files
+Bumped version to 0.64.1.
+Removed abiSource from Function data model
+Removed C++ testing for acctlib which is no longer needed
+Adds `--unripe` option to `chifra list`
+Improves auto-gen code with a small cleanup
+Cleans up reporting on "bogus" token transfers (i.e., token transfer events without a corresponding change in balance)
+Removes a number of "fields" from transaction export including datesh, time, day, week, etc.
+Removes dups from command line for chifra export
+Enabled better reporting in verbose mode for chifra list
+Allow for using dates in command line for chifra state
+Fix to scraper getting stuck when there are no new blocks
+Full support for `--pin` option in `chifra chunks index`. Tested and ready to go.
+A whole bunch of cleanup across multiple packages. Lots of smoke, no real fire.
+Creates an optional gRPC server for names. This was put in place for future enhancements.
+Updates the Manifest to correct a previous error -- requires a migration
+A lot of improvements including `--first_block / --last_block` and `--max_addrs` options to aid debugging.
 
 ## v0.64.0 (2023/04/20)
 
-This is not a minor release that closes a few random issues and adds a small feature to better manage the caches.
+This is a minor release that closes a few random issues and adds a small feature to better manage the caches.
 
 ## Issues closed
 
