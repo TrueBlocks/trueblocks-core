@@ -38,12 +38,15 @@ func (opts *NamesOptions) HandleClean() error {
 
 	// regularNamesUpdated := make([]types.SimpleName, 0)
 
+	var before []byte
+
 	for _, name := range allNames {
 		count++
 		logger.InfoReplace(fmt.Sprintf("Cleaning %d of %d: %s", count, total, name.Address))
 
-		// TODO: remove
-		before, _ := json.Marshal(name)
+		if opts.Dryrun {
+			before, _ = json.Marshal(name)
+		}
 
 		modified, err := cleanName(opts.Globals.Chain, &name)
 		if err != nil {
@@ -58,11 +61,14 @@ func (opts *NamesOptions) HandleClean() error {
 			continue
 		}
 
+		if opts.Dryrun {
+			now, _ := json.Marshal(name)
+			fmt.Printf("\nBefore : %s\n", string(before))
+			fmt.Printf("Cleaned: %s\n\n", string(now))
+			continue
+		}
+
 		// Save modified
-		// logger.Info("=== Updating", name.Address, name.Name, "custom=", name.IsCustom, "===")
-		is, _ := json.Marshal(name)
-		fmt.Printf("\n\nWas: %s\n", string(before))
-		fmt.Printf("NOW: %s\n\n", string(is))
 
 		// if name.IsCustom {
 		// 	_, err := names.UpdateCustomName(opts.Globals.Chain, &name)
