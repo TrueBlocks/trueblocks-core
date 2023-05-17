@@ -13,4 +13,3 @@ include_directories(${BASE_INCLUDE})
 # Compile the libraries in this order
 add_subdirectory(utillib)
 add_subdirectory(etherlib)
-add_subdirectory(acctlib)

@@ -94,18 +94,18 @@ Reconciliations consist of the following fields:
 | date                | a calculated field -- the date of this transaction                                                                                             | datetime  |
 | assetAddr           | 0xeeee...eeee for ETH reconciliations, the token address otherwise                                                                             | address   |
 | assetSymbol         | either ETH, WEI, or the symbol of the asset being reconciled as extracted from the chain                                                       | string    |
-| decimals            | The value of `decimals` from an ERC20 contract or, if ETH or WEI, then 18                                                                      | uint64    |
-| spotPrice           | The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction                                                       | double    |
-| priceSource         | The on-chain source from which the spot price was taken                                                                                        | string    |
+| decimals            | the value of `decimals` from an ERC20 contract or, if ETH or WEI, then 18                                                                      | uint64    |
+| spotPrice           | the on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction                                                       | double    |
+| priceSource         | the on-chain source from which the spot price was taken                                                                                        | string    |
 | accountedFor        | the address being accounted for in this reconciliation                                                                                         | address   |
 | sender              | the initiator of the transfer (the sender)                                                                                                     | address   |
 | recipient           | the receiver of the transfer (the recipient)                                                                                                   | address   |
 | begBal              | the beginning balance of the asset prior to the transaction                                                                                    | int256    |
 | amountNet           | a calculated field -- totalIn - totalOut                                                                                                       | int256    |
 | endBal              | the on-chain balance of the asset (see notes about intra-block reconciliations)                                                                | int256    |
-| encoding            | The topic of the event (if this is an ERC20 reconcilation), the four-byte signature of the transaction otherwise                               | string    |
-| signature           | If possible, the articulated name of the function or event signature                                                                           | string    |
-| reconciliationType  | One of `regular`, `prevDiff-same`, `same-nextDiff`, or `same-same`. Appended with `eth` or `token`                                             | string    |
+| encoding            | the topic of the event (if this is an ERC20 reconcilation), the four-byte signature of the transaction otherwise                               | string    |
+| signature           | if possible, the articulated name of the function or event signature                                                                           | string    |
+| reconciliationType  | one of `regular`, `prevDiff-same`, `same-nextDiff`, or `same-same`. Appended with `eth` or `token`                                             | string    |
 | reconciled          | a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise.                                             | bool      |
 | totalIn             | a calculated field -- the sum of the following `In` fields                                                                                     | int256    |
 | amountIn            | the top-level value of the incoming transfer for the accountedFor address                                                                      | int256    |

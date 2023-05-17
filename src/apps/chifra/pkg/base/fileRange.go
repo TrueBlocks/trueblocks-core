@@ -124,3 +124,8 @@ func (r *FileRange) EarlierThanB(blk uint64) bool {
 func (r *FileRange) LaterThanB(blk uint64) bool {
 	return r.LaterThan(FileRange{First: blk, Last: blk})
 }
+
+// Equals returns true if the two ranges are equal
+func (r *FileRange) Equals(test FileRange) bool {
+	return r.First == test.First && r.Last == test.Last
+}

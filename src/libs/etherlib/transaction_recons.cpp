@@ -66,8 +66,8 @@ bool CTransaction::readReconsFromCache(const address_t& accountedFor) {
 }
 
 //-----------------------------------------------------------------------
-void CTransaction::cacheConditional(const address_t& accountedFor, bool cacheIfReconciled) const {
-    if (isTestMode() || (cacheIfReconciled && !isReconciled(accountedFor))) {
+void CTransaction::cacheConditional(const address_t& accountedFor) const {
+    if (isTestMode()) {
         return;
     }
 
@@ -96,6 +96,9 @@ bool CTransaction::isReconciled(const address_t& accountedFor) const {
                << (blockNumber - 1) << " --last_block " << (blockNumber + 1) << " --asset " << statement.assetAddr;
             LOG_WARN(os.str());
             balanced = false;
+            if (verbose) {
+                LOG_INFO("  ", statement);
+            }
         }
     }
     return balanced;

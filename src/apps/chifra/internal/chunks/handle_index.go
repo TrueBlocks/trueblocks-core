@@ -45,7 +45,7 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 			}
 
 			s := simpleChunkIndex{
-				Range:        rng,
+				Range:        rng.String(),
 				Magic:        fmt.Sprintf("0x%x", header.Magic),
 				Hash:         base.HexToHash(header.Hash.Hex()),
 				NAddresses:   uint64(header.AddressCount),

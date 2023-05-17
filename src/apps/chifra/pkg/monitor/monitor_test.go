@@ -204,7 +204,8 @@ func GetTestMonitor(t *testing.T) Monitor {
 	}
 
 	if len(testApps) != nTests {
-		t.Error("Incorrect length for test data:", len(testApps), "should be ", nTests, ".")
+		msg := fmt.Sprintf("Incorrect length for test data: %d should be %d.", len(testApps), nTests)
+		t.Error(msg)
 	}
 
 	// Append the appearances to the monitor

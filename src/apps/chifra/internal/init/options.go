@@ -18,7 +18,8 @@ import (
 
 // InitOptions provides all command options for the chifra init command.
 type InitOptions struct {
-	All        bool                  `json:"all,omitempty"`        // In addition to Bloom filters, download full index chunks
+	All        bool                  `json:"all,omitempty"`        // In addition to Bloom filters, download full index chunks (recommended)
+	DryRun     bool                  `json:"dryRun,omitempty"`     // Display the results of the download without actually downloading
 	FirstBlock uint64                `json:"firstBlock,omitempty"` // Do not download any chunks earlier than this block
 	Sleep      float64               `json:"sleep,omitempty"`      // Seconds to sleep between downloads
 	Globals    globals.GlobalOptions `json:"globals,omitempty"`    // The global options
@@ -32,6 +33,7 @@ var defaultInitOptions = InitOptions{}
 // testLog is used only during testing to export the options for this test case.
 func (opts *InitOptions) testLog() {
 	logger.TestLog(opts.All, "All: ", opts.All)
+	logger.TestLog(opts.DryRun, "DryRun: ", opts.DryRun)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.Sleep != float64(0.0), "Sleep: ", opts.Sleep)
 	opts.Globals.TestLog()
@@ -53,6 +55,8 @@ func initFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
 		switch key {
 		case "all":
 			opts.All = true
+		case "dryRun":
+			opts.DryRun = true
 		case "firstBlock":
 			opts.FirstBlock = globals.ToUint64(value[0])
 		case "sleep":

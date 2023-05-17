@@ -42,7 +42,7 @@ func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup) {
 		} else {
 			monitorChan := make(chan monitor.Monitor)
 			var monitors []monitor.Monitor
-			go monitor.ListMonitors(chain, "monitors", monitorChan)
+			go monitor.ListMonitors(chain, monitorChan)
 			count := 0
 			for result := range monitorChan {
 				switch result.Address {
@@ -107,7 +107,7 @@ func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) (bool, error) {
 			mon := batches[i][j]
 			countAfter := mon.Count()
 
-			if countAfter > 100000 {
+			if countAfter > 1000000 {
 				fmt.Println(colors.Red, "Too many transactions for address", mon.Address, colors.Off)
 				continue
 			}

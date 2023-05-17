@@ -3,10 +3,13 @@ package chunksPkg
 import (
 	"context"
 	"fmt"
+	"os"
 	"strings"
 	"time"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -17,6 +20,8 @@ import (
 )
 
 func (opts *ChunksOptions) HandlePinManifest(blockNums []uint64) error {
+	firstBlock := mustParseUint(os.Getenv("TB_CHUNK_PIN_FIRST_BLOCK"))
+
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		man := simpleManifest{
@@ -32,6 +37,15 @@ func (opts *ChunksOptions) HandlePinManifest(blockNums []uint64) error {
 		}
 
 		pinChunk := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
+			rng, err := base.RangeFromFilenameE(path)
+			if err != nil {
+				return false, err
+			}
+			if rng.First < firstBlock {
+				logger.Info("Skipping", path)
+				return true, nil
+			}
+
 			if path != cache.ToBloomPath(path) {
 				return false, fmt.Errorf("should not happen in pinChunk")
 			}
@@ -43,14 +57,21 @@ func (opts *ChunksOptions) HandlePinManifest(blockNums []uint64) error {
 
 			if pinning.LocalDaemonRunning() {
 				man.Chunks = append(man.Chunks, result.Local)
-				logger.Progress(true, "Pinning:", result.Local, spaces)
-			} else {
-				man.Chunks = append(man.Chunks, result.Remote)
-				logger.Progress(true, "Pinning:", result.Remote, spaces)
+				// logger.Progress(true, colors.Green+"Pinned local: ", result.Local, spaces, colors.Off)
 			}
 
-			if opts.Globals.Verbose {
-				logger.Progress(true, "Pinning:", path)
+			if opts.Remote {
+				man.Chunks = append(man.Chunks, result.Remote)
+				// logger.Progress(true, colors.BrightBlue+"Pinned remote:", result.Remote, spaces, colors.Off)
+			}
+
+			if !result.Matches {
+				logger.Warn("Local and remote pins do not match")
+				logger.Warn(colors.Yellow+result.Local.BloomHash.String(), "-", result.Local.IndexHash, colors.Off)
+				logger.Warn(colors.Yellow+result.Remote.BloomHash.String(), "-", result.Remote.IndexHash, colors.Off)
+				logger.Fatal("Failed")
+			} else if opts.Remote && pinning.LocalDaemonRunning() {
+				logger.Info(colors.BrightGreen+"Matches: "+result.Remote.BloomHash.String(), "-", result.Remote.IndexHash, colors.Off)
 			}
 
 			sleep := opts.Sleep
