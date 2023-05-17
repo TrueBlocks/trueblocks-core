@@ -137,6 +137,10 @@ func (opts *ChunksOptions) defaultFormat(def string) string {
 }
 
 func (opts *ChunksOptions) shouldShow(obj index.AddressRecord) bool {
+	if opts.Mode == "addresses" || opts.Mode == "appearances" {
+		return opts.Globals.Verbose
+	}
+
 	for _, addr := range opts.Belongs {
 		if hexutil.Encode(obj.Address.Bytes()) == addr {
 			return true

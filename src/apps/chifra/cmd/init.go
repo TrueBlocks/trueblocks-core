@@ -37,19 +37,21 @@ var initCmd = &cobra.Command{
 
 const usageInit = `init [flags]`
 
-const shortInit = "initialize the TrueBlocks system by downloading from IPFS"
+const shortInit = "initialize the TrueBlocks system by downloading the Unchained Index from IPFS"
 
 const longInit = `Purpose:
-  Initialize the TrueBlocks system by downloading from IPFS.`
+  Initialize the TrueBlocks system by downloading the Unchained Index from IPFS.`
 
 const notesInit = `
 Notes:
-  - Re-run chifra init as often as you wish. It will repair or freshen the index.`
+  - If run with no options, this tool will download or freshen only the Bloom filters.
+  - You may re-run the tool as often as you wish. It will repair or freshen the index.`
 
 func init() {
 	initCmd.Flags().SortFlags = false
 
-	initCmd.Flags().BoolVarP(&initPkg.GetOptions().All, "all", "a", false, "in addition to Bloom filters, download full index chunks")
+	initCmd.Flags().BoolVarP(&initPkg.GetOptions().All, "all", "a", false, "in addition to Bloom filters, download full index chunks (recommended)")
+	initCmd.Flags().BoolVarP(&initPkg.GetOptions().DryRun, "dry_run", "d", false, "display the results of the download without actually downloading")
 	initCmd.Flags().Uint64VarP(&initPkg.GetOptions().FirstBlock, "first_block", "F", 0, "do not download any chunks earlier than this block (hidden)")
 	initCmd.Flags().Float64VarP(&initPkg.GetOptions().Sleep, "sleep", "s", 0.0, "seconds to sleep between downloads")
 	if os.Getenv("TEST_MODE") != "true" {

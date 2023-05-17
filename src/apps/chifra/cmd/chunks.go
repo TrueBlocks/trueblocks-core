@@ -52,9 +52,12 @@ Notes:
   - Mode determines which type of data to display or process.
   - Certain options are only available in certain modes.
   - If blocks are provided, only chunks intersecting with those blocks are displayed.
-  - The --truncate option updates data, but does not --pin or --publish.
-  - You may combine the --pin and --publish options.
-  - The --belongs option is only available in the index mode.`
+  - The --truncate option updates the manifest and removes local data, but does not alter remote pins.
+  - The --belongs option is only available in the index mode.
+  - The --first_block and --last_block options apply only to addresses, appearances, and index --belongs mode.
+  - The --pin option requires a locally running IPFS node or a pinning service API key.
+  - The --publish option requires a private key.
+  - You may combine the --pin and --publish options.`
 
 func init() {
 	chunksCmd.Flags().SortFlags = false
@@ -65,6 +68,9 @@ func init() {
 	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().Truncate, "truncate", "n", 0, "truncate the entire index at this block (requires a block identifier)")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Remote, "remote", "m", false, "prior to processing, retreive the manifest from the Unchained Index smart contract")
 	chunksCmd.Flags().StringSliceVarP(&chunksPkg.GetOptions().Belongs, "belongs", "b", nil, "in index mode only, checks the address(es) for inclusion in the given index chunk")
+	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to process (inclusive)")
+	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to process (inclusive)")
+	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().MaxAddrs, "max_addrs", "d", 0, "the max number of addresses to process in a given chunk")
 	chunksCmd.Flags().Float64VarP(&chunksPkg.GetOptions().Sleep, "sleep", "s", 0.0, "for --remote pinning only, seconds to sleep between API calls")
 	globals.InitGlobals(chunksCmd, &chunksPkg.GetOptions().Globals)
 
