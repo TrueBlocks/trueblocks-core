@@ -29,8 +29,12 @@ func ArticulateString(hex string) (strResult string, success bool) {
 		return "", false
 	}
 	byteValue := common.Hex2Bytes(hex[2:])
+	return articulateBytes(byteValue)
+}
+
+func articulateBytes(byteValue []byte) (strResult string, success bool) {
 	hasPrintableCharacters := false
-	result := make([]byte, 0, len(hex))
+	result := make([]byte, 0, len(byteValue))
 	for _, character := range byteValue {
 		sanitized, replaced := sanitizeByte(character)
 		// if any character has been replaced, it was a special character
@@ -92,6 +96,7 @@ func SanitizeString(str string) (sanitized string) {
 	return
 }
 
+// ArticulateEncodedString translates EVM string into Go string
 func ArticulateEncodedString(hex string) (result string, err error) {
 	if len(hex) < 2 {
 		result = ""
@@ -106,11 +111,19 @@ func ArticulateEncodedString(hex string) (result string, err error) {
 	return
 }
 
+// ArticulateBytes32String turns bytes32 encoded string into Go string
 func ArticulateBytes32String(hex string) (result string) {
 	if len(hex) < 2 {
 		return
 	}
 	input := common.Hex2Bytes(hex[2:])
+	if len(input) == 0 {
+		return ""
+	}
+	// Filter out invalid names, four-byte collisions (0x8406d0897da43a33912995c6ffd792f1f2125cd4)
+	if input[0] == 0 {
+		return ""
+	}
 	padStart := len(input)
 	for i := (len(input) - 1); i >= 0; i-- {
 		if input[i] != 0 {
@@ -118,10 +131,15 @@ func ArticulateBytes32String(hex string) (result string) {
 		}
 		padStart = i
 	}
-	result = string(input[0:padStart])
+
+	byteValue := input[0:padStart]
+	result, _ = articulateBytes(byteValue)
+
 	return
 }
 
+// ArticulateEncodedStringOrBytes32 tries to read string from either EVM string
+// value or bytes32 hex
 func ArticulateEncodedStringOrBytes32(hex string) (string, error) {
 	if len(hex) < 2 {
 		return "", nil

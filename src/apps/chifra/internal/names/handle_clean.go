@@ -228,7 +228,10 @@ func cleanToken(name *types.SimpleName, token *token.Token) (modified bool) {
 		modified = true
 	}
 
-	if token.Name != "" {
+	// If token name contains 3x `-`, it's Kickback Event, so we need to ignore
+	// token.Name, e.g.: 0x2ac0ac19f8680d5e9fdebad515f596265134f018. Comment from C++ code:
+	// some sort of hacky renaming for Kickback
+	if token.Name != "" && strings.Count(token.Name, "-") < 4 {
 		trimmedName := strings.Trim(token.Name, " ")
 		if name.Name != trimmedName {
 			name.Name = trimmedName
@@ -254,10 +257,16 @@ func cleanToken(name *types.SimpleName, token *token.Token) (modified bool) {
 		modified = true
 	}
 
-	if name.IsErc721 && name.Tags != "50-Tokens:ERC721" {
+	if !token.IsErc721() && name.IsErc721 {
+		name.IsErc721 = false
+		modified = true
+	}
+
+	if token.IsErc721() && name.IsErc721 && name.Tags == "" {
 		name.Tags = "50-Tokens:ERC721"
 		modified = true
 	}
+
 	return
 }
 

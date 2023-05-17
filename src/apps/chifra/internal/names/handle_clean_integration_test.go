@@ -12,7 +12,6 @@ import (
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -95,26 +94,83 @@ func Test_cleanName(t *testing.T) {
 	}
 }
 
-func TestTemp(t *testing.T) {
-	m, err := names.LoadNamesMap("mainnet", names.Regular, nil)
-	if err != nil {
-		t.Fatal(err)
+func Test_cleanName_edgeCases(t *testing.T) {
+	type args struct {
+		chain string
+		name  *types.SimpleName
 	}
-
-	// 0x3d2ec62305e64e57ad46f06a639e17e2b6d73876 -- Kick event
-	// 0xf53ad2c6851052a81b42133467480961b2321c09 -- DS Token
-	// 0x461733c17b0755ca5649b6db08b3e213fcf22546 -- DS Token
-	// 0x4c8692cc08b14fa8b74b6f313394b8997aad721d
-	name, ok := m[base.HexToAddress("0x3d2ec62305e64e57ad46f06a639e17e2b6d73876")]
-	if !ok {
-		t.Fatal("no name")
+	tests := []struct {
+		name         string
+		args         args
+		wantModified bool
+		wantErr      bool
+		expectedName *types.SimpleName
+	}{
+		{
+			name: "was contract",
+			args: args{
+				chain: "mainnet",
+				name: &types.SimpleName{
+					IsContract: true,
+					IsErc20:    true,
+					IsErc721:   true,
+					Decimals:   1,
+					Name:       "DAO Drain 089",
+					Petname:    "ideally-funky-turkey",
+					Source:     "GethSource Ether Camp",
+					Tags:       "80-Malicious:DaoDrain",
+					Address:    base.HexToAddress("0xbc07118b9ac290e4622f5e77a0853539789effbe"),
+				},
+			},
+			wantModified: false,
+		},
+		// 0x971a6ff4f5792f3e0288f093340fb36a826aae96
+		{
+			name: "was contract",
+			args: args{
+				chain: "mainnet",
+				name: &types.SimpleName{
+					IsContract: true,
+					IsErc20:    true,
+					IsErc721:   true,
+					Decimals:   18,
+					Symbol:     "ALTNOUNS",
+					Name:       "AltNouns",
+					Petname:    "promptly-integral-rat",
+					Source:     "On chain",
+					Tags:       "50-Tokens:ERC721",
+					Address:    base.HexToAddress("0x971a6ff4f5792f3e0288f093340fb36a826aae96"),
+				},
+			},
+			wantModified: false,
+		},
+		{
+			name: "name fourbyte collision",
+			args: args{
+				chain: "mainnet",
+				name: &types.SimpleName{
+					IsContract: true,
+					Petname:    "solely-caring-basilisk",
+					Tags:       "90-Individuals:Twitter",
+					Address:    base.HexToAddress("0xac4df82fe37ea2187bc8c011a23d743b4f39019a"),
+				},
+			},
+			wantModified: false,
+		},
 	}
-	mod, err := cleanName("mainnet", &name)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	if mod {
-		t.Fatal("modified")
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gotModified, err := cleanName(tt.args.chain, tt.args.name)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("cleanName() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if gotModified != tt.wantModified {
+				t.Errorf("cleanName() = %v, want %v", gotModified, tt.wantModified)
+			}
+			if tt.wantModified && !reflect.DeepEqual(tt.args.name, tt.expectedName) {
+				t.Errorf("cleanToken() = %+v, want %+v", tt.args.name, tt.expectedName)
+			}
+		})
 	}
 }

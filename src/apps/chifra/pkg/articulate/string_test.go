@@ -144,6 +144,13 @@ func TestArticulateEncodedStringOrBytes32(t *testing.T) {
 			},
 			want: "Dai Stablecoin",
 		},
+		{
+			name: "4 byte collision 0x8406d0897da43a33912995c6ffd792f1f2125cd4",
+			args: args{
+				hex: "0x0000000000000000000000000000000000000000000000000000000000000001",
+			},
+			want: "",
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
