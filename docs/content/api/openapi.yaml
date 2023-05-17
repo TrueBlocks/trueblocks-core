@@ -676,6 +676,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: dryrun
+          description: only available with --clean, prints changes instead of updating databases
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: named
           description: please use the --all option instead
           required: false
