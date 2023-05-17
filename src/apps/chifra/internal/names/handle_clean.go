@@ -36,7 +36,7 @@ func (opts *NamesOptions) HandleClean() error {
 	// Jump to the next line after reporting progress (otherwise garbage gets into the prompt)
 	defer fmt.Println()
 
-	// regularNamesUpdated := make([]types.SimpleName, 0)
+	regularNamesUpdated := make([]types.SimpleName, 0)
 
 	var before []byte
 
@@ -70,19 +70,19 @@ func (opts *NamesOptions) HandleClean() error {
 
 		// Save modified
 
-		// if name.IsCustom {
-		// 	_, err := names.UpdateCustomName(opts.Globals.Chain, &name)
-		// 	if err != nil {
-		// 		return err
-		// 	}
-		// } else {
-		// 	regularNamesUpdated = append(regularNamesUpdated, name)
-		// }
+		if name.IsCustom {
+			_, err := names.UpdateCustomName(opts.Globals.Chain, &name)
+			if err != nil {
+				return err
+			}
+		} else {
+			regularNamesUpdated = append(regularNamesUpdated, name)
+		}
 	}
 
-	// if len(regularNamesUpdated) > 0 {
-	// 	err = names.UpdateRegularNames(opts.Globals.Chain, regularNamesUpdated)
-	// }
+	if len(regularNamesUpdated) > 0 {
+		err = names.UpdateRegularNames(opts.Globals.Chain, regularNamesUpdated)
+	}
 
 	return err
 }
