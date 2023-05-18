@@ -2,6 +2,7 @@ package names
 
 import (
 	"encoding/csv"
+	"errors"
 	"fmt"
 	"io"
 	"io/fs"
@@ -14,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -204,9 +206,14 @@ const (
 	DatabaseRegular DatabaseFile = "names.tab"
 	DatabaseCustom  DatabaseFile = "names_custom.tab"
 	DatabasePrefund DatabaseFile = "allocs.csv"
+	DatabaseDryRun  DatabaseFile = "<dryrun>"
 )
 
 func OpenDatabaseFile(chain string, kind DatabaseFile, openFlag int) (*os.File, error) {
+	if kind == DatabaseDryRun {
+		return os.Stdout, nil
+	}
+
 	filePath := filepath.Join(config.GetPathToChainConfig(chain), string(kind))
 	var permissions fs.FileMode = 0666
 
@@ -227,6 +234,52 @@ func OpenDatabaseFile(chain string, kind DatabaseFile, openFlag int) (*os.File, 
 		openFlag,
 		permissions,
 	)
+}
+
+func WriteDatabase(chain string, kind Parts, database DatabaseFile, names map[base.Address]types.SimpleName) (err error) {
+	switch kind {
+	case Regular:
+		loadedRegularNamesMutex.Lock()
+		defer loadedRegularNamesMutex.Unlock()
+	case Custom:
+		loadedCustomNamesMutex.Lock()
+		defer loadedCustomNamesMutex.Unlock()
+	default:
+		return errors.New("kind should be Regular or Custom")
+	}
+
+	db, err := OpenDatabaseFile(chain, database, os.O_RDWR|os.O_TRUNC)
+	if err != nil {
+		return
+	}
+	defer db.Close()
+
+	sorted := make([]types.SimpleName, 0, len(names))
+	for _, name := range names {
+		sorted = append(sorted, name)
+	}
+	sort.SliceStable(sorted, func(i, j int) bool {
+		return sorted[i].Address.Hex() < sorted[j].Address.Hex()
+	})
+
+	// Save
+	// Can't lock Stdout (= DatabaseDryRun)
+	if database != DatabaseDryRun {
+		if err = file.Lock(db); err != nil {
+			return err
+		}
+		defer file.Unlock(db)
+	}
+
+	writer := NewNameWriter(db)
+	for _, name := range sorted {
+		if err = writer.Write(&name); err != nil {
+			return err
+		}
+	}
+	writer.Flush()
+
+	return writer.Error()
 }
 
 /*

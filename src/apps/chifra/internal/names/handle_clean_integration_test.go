@@ -157,6 +157,25 @@ func Test_cleanName_edgeCases(t *testing.T) {
 			},
 			wantModified: false,
 		},
+		// This contract has double space in name()
+		{
+			name: "double space",
+			args: args{
+				chain: "mainnet",
+				name: &types.SimpleName{
+					Address:    base.HexToAddress("0x3591ac25cd3dc66ed67eed87c8507c965f167258"),
+					Decimals:   18,
+					IsContract: true,
+					IsErc20:    true,
+					Name:       "LEE Chain V1.0",
+					Petname:    "vastly-pet-quetzal",
+					Source:     "On chain",
+					Symbol:     "LEE",
+					Tags:       "50-Tokens:ERC20",
+				},
+			},
+			wantModified: false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

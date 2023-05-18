@@ -1,12 +1,12 @@
 package names
 
 import (
+	"fmt"
 	"io"
 	"os"
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -57,54 +57,30 @@ func loadRegularMap(chain string, thePath string, terms []string, parts Parts, r
 	return nil
 }
 
-// TODO: this can be removed when PR #2856 is merged
-func UpdateRegularNames(chain string, names []types.SimpleName) (err error) {
-	db, err := OpenDatabaseFile(chain, DatabaseRegular, os.O_RDWR|os.O_TRUNC)
-	if err != nil {
+func WriteRegularNames(chain string, overrideDest *DatabaseFile) (err error) {
+	database := DatabaseRegular
+	if overrideDest != nil {
+		database = *overrideDest
+	}
+	return WriteDatabase(
+		chain,
+		Regular,
+		database,
+		loadedRegularNames,
+	)
+}
+
+func UpdateRegularName(name *types.SimpleName) (err error) {
+	loadedRegularNamesMutex.Lock()
+	defer loadedRegularNamesMutex.Unlock()
+
+	name.IsCustom = false
+
+	if _, ok := loadedRegularNames[name.Address]; !ok {
+		err = fmt.Errorf("no name for address: %s", name.Address)
 		return
 	}
-	defer db.Close()
 
-	writeMap := make(map[base.Address]types.SimpleName)
-
-	reader, err := NewNameReader(db, NameReaderTab)
-	if err != nil {
-		return err
-	}
-
-	// Load names
-	for {
-		name, err := reader.Read()
-		if err == io.EOF {
-			break
-		}
-		if err != nil {
-			return err
-		}
-
-		writeMap[name.Address] = name
-	}
-
-	// Update
-	for _, name := range names {
-		writeMap[name.Address] = name
-	}
-
-	// Save
-	if err = file.Lock(db); err != nil {
-		return
-	}
-	defer file.Unlock(db)
-
-	writer := NewNameWriter(db)
-	for _, name := range writeMap {
-		err = writer.Write(&name)
-		if err != nil {
-			return err
-		}
-	}
-	writer.Flush()
-
-	return writer.Error()
-
+	loadedRegularNames[name.Address] = *name
+	return
 }

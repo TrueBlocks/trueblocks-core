@@ -669,15 +669,16 @@ paths:
           schema:
             type: boolean
         - name: regular
-          description: only available with --clean, also cleans regular names database
+          description: only available with --clean, cleans regular names database
           required: false
           style: form
           in: query
           explode: true
           schema:
             type: boolean
-        - name: dryrun
-          description: only available with --clean, prints changes instead of updating databases
+        - name: dryRun
+          description: >
+            only available with --clean, outputs changes to stdout instead of updating databases
           required: false
           style: form
           in: query

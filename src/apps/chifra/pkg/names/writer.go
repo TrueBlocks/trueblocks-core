@@ -57,13 +57,18 @@ func (w *NameWriter) Write(name *types.SimpleName) (err error) {
 			return
 		}
 	}
+	var decimals string
+	if name.Decimals > 0 {
+		decimals = fmt.Sprint(name.Decimals)
+	}
+
 	err = w.csvWriter.Write([]string{
 		name.Tags,
 		name.Address.Hex(),
 		name.Name,
 		name.Symbol,
 		name.Source,
-		fmt.Sprint(name.Decimals),
+		decimals,
 		name.Petname,
 		fmt.Sprint(name.Deleted),
 		fmt.Sprint(name.IsCustom),

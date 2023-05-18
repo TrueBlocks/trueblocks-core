@@ -3,7 +3,6 @@
 package namesPkg
 
 import (
-	"encoding/json"
 	"fmt"
 	"strings"
 
@@ -19,7 +18,7 @@ import (
 func (opts *NamesOptions) HandleClean() error {
 	parts := names.Custom
 	if opts.Regular {
-		parts = parts | names.Regular
+		parts = names.Regular
 	}
 
 	allNames, err := names.LoadNamesMap(opts.Globals.Chain, parts, []string{})
@@ -36,16 +35,19 @@ func (opts *NamesOptions) HandleClean() error {
 	// Jump to the next line after reporting progress (otherwise garbage gets into the prompt)
 	defer fmt.Println()
 
-	regularNamesUpdated := make([]types.SimpleName, 0)
-
-	var before []byte
+	var anyNameModified bool
+	var overrideDatabase names.DatabaseFile
+	if opts.DryRun {
+		overrideDatabase = names.DatabaseDryRun
+	}
 
 	for _, name := range allNames {
 		count++
 		logger.InfoReplace(fmt.Sprintf("Cleaning %d of %d: %s", count, total, name.Address))
 
-		if opts.Dryrun {
-			before, _ = json.Marshal(name)
+		// TODO: remove
+		if count == 100 {
+			break
 		}
 
 		modified, err := cleanName(opts.Globals.Chain, &name)
@@ -61,30 +63,30 @@ func (opts *NamesOptions) HandleClean() error {
 			continue
 		}
 
-		if opts.Dryrun {
-			now, _ := json.Marshal(name)
-			fmt.Printf("\nBefore : %s\n", string(before))
-			fmt.Printf("Cleaned: %s\n\n", string(now))
-			continue
-		}
+		anyNameModified = true
 
-		// Save modified
-
-		if name.IsCustom {
-			_, err := names.UpdateCustomName(opts.Globals.Chain, &name)
-			if err != nil {
+		// Update modified (no disk writes yet)
+		if opts.Regular {
+			if err = names.UpdateRegularName(&name); err != nil {
 				return err
 			}
 		} else {
-			regularNamesUpdated = append(regularNamesUpdated, name)
+			if err = names.UpdateCustomName(&name); err != nil {
+				return err
+			}
 		}
 	}
 
-	if len(regularNamesUpdated) > 0 {
-		err = names.UpdateRegularNames(opts.Globals.Chain, regularNamesUpdated)
+	if !anyNameModified {
+		return nil
 	}
 
-	return err
+	// Write to disk
+	if opts.Regular {
+		return names.WriteRegularNames(opts.Globals.Chain, &overrideDatabase)
+	}
+
+	return names.WriteCustomNames(opts.Globals.Chain, &overrideDatabase)
 }
 
 func preparePrefunds(chain string) (results map[base.Address]bool, err error) {
@@ -150,8 +152,9 @@ func cleanCommon(name *types.SimpleName) (modified bool) {
 		modified = true
 	}
 
-	if strings.Contains(lowerCaseSource, "  ") {
-		name.Source = strings.ReplaceAll(name.Source, "  ", " ")
+	sourceDedup, strModified := removeDoubleSpaces(name.Source)
+	if strModified && name.Source != sourceDedup {
+		name.Source = sourceDedup
 		modified = true
 	}
 
@@ -160,6 +163,15 @@ func cleanCommon(name *types.SimpleName) (modified bool) {
 		modified = true
 	}
 	return
+}
+
+func removeDoubleSpaces(str string) (string, bool) {
+	if !strings.Contains(str, "  ") {
+		return str, false
+	}
+
+	result := strings.ReplaceAll(str, "  ", " ")
+	return result, true
 }
 
 func cleanContract(token *token.Token, address base.Address, name *types.SimpleName) (modified bool, err error) {
@@ -234,21 +246,38 @@ func cleanToken(name *types.SimpleName, token *token.Token) (modified bool) {
 		modified = true
 	}
 
+	tokenName := token.Name
+	var strModified bool
+	if tokenName != "" {
+		tokenName, strModified = removeDoubleSpaces(tokenName)
+		if strModified && name.Name != tokenName {
+			name.Name = tokenName
+			modified = true
+		}
+	}
+
 	// If token name contains 3x `-`, it's Kickback Event, so we need to ignore
 	// token.Name, e.g.: 0x2ac0ac19f8680d5e9fdebad515f596265134f018. Comment from C++ code:
 	// some sort of hacky renaming for Kickback
-	if token.Name != "" && strings.Count(token.Name, "-") < 4 {
-		trimmedName := strings.Trim(token.Name, " ")
-		if name.Name != trimmedName {
-			name.Name = trimmedName
+	if tokenName != "" && strings.Count(tokenName, "-") < 4 {
+		tokenName = strings.Trim(tokenName, " ")
+		if name.Name != tokenName {
+			name.Name = tokenName
 			modified = true
 		}
 	}
 
 	if token.Symbol != "" {
-		trimmedSymbol := strings.Trim(name.Symbol, " ")
-		if name.Symbol != trimmedSymbol {
-			name.Symbol = trimmedSymbol
+		tokenSymbol := strings.Trim(token.Symbol, " ")
+
+		if name.Symbol != tokenSymbol {
+			name.Symbol = tokenSymbol
+			modified = true
+		}
+
+		tokenSymbol, strModified = removeDoubleSpaces(token.Symbol)
+		if strModified && name.Symbol != tokenSymbol {
+			name.Symbol = tokenSymbol
 			modified = true
 		}
 	}
