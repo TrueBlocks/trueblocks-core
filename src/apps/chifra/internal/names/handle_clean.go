@@ -29,9 +29,7 @@ func (opts *NamesOptions) HandleClean() error {
 	}
 	logger.Info("Processing", label, "names file", "("+names.GetDatabasePath(opts.Globals.Chain, db)+")")
 
-	// err := opts.handleCleanSync()
-	err := opts.handleCleanConcurrent()
-
+	err := opts.cleanNames()
 	if err != nil {
 		logger.Warn("The", label, "names database was not cleaned")
 	} else {
@@ -40,75 +38,7 @@ func (opts *NamesOptions) HandleClean() error {
 	return err
 }
 
-func (opts *NamesOptions) handleCleanSync() error {
-	parts := names.Custom
-	if opts.Regular {
-		parts = names.Regular
-	}
-
-	allNames, err := names.LoadNamesMap(opts.Globals.Chain, parts, []string{})
-	if err != nil {
-		return err
-	}
-	prefundMap, err := preparePrefunds(opts.Globals.Chain)
-	if err != nil {
-		return err
-	}
-
-	count := 0
-	total := len(allNames)
-	// Jump to the next line after reporting progress (otherwise garbage gets into the prompt)
-	defer fmt.Println()
-
-	var anyNameModified bool
-	var overrideDatabase names.DatabaseFile
-	if opts.DryRun {
-		overrideDatabase = names.DatabaseDryRun
-	}
-
-	for _, name := range allNames {
-		count++
-		logger.InfoReplace(fmt.Sprintf("Cleaning %d of %d: %s", count, total, name.Address))
-
-		modified, err := cleanName(opts.Globals.Chain, &name)
-		if err != nil {
-			return err
-		}
-		if isPrefund := prefundMap[name.Address]; isPrefund != name.IsPrefund {
-			name.IsPrefund = isPrefund
-			modified = true
-		}
-
-		if !modified {
-			continue
-		}
-
-		anyNameModified = true
-
-		if opts.Regular {
-			if err = names.UpdateRegularName(&name); err != nil {
-				return err
-			}
-		} else {
-			if err = names.UpdateCustomName(&name); err != nil {
-				return err
-			}
-		}
-	}
-
-	if !anyNameModified {
-		return nil
-	}
-
-	// Write to disk
-	if opts.Regular {
-		return names.WriteRegularNames(opts.Globals.Chain, &overrideDatabase)
-	}
-
-	return names.WriteCustomNames(opts.Globals.Chain, &overrideDatabase)
-}
-
-func (opts *NamesOptions) handleCleanConcurrent() error {
+func (opts *NamesOptions) cleanNames() error {
 	parts := names.Custom
 	if opts.Regular {
 		parts = names.Regular
