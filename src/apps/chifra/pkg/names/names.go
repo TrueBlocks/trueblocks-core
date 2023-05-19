@@ -200,16 +200,16 @@ func NewNameReader(source io.Reader, mode NameReaderMode) (NameReader, error) {
 	return r, nil
 }
 
-type DatabaseFile string
+type Database string
 
 const (
-	DatabaseRegular DatabaseFile = "names.tab"
-	DatabaseCustom  DatabaseFile = "names_custom.tab"
-	DatabasePrefund DatabaseFile = "allocs.csv"
-	DatabaseDryRun  DatabaseFile = "<dryrun>"
+	DatabaseRegular Database = "names.tab"
+	DatabaseCustom  Database = "names_custom.tab"
+	DatabasePrefund Database = "allocs.csv"
+	DatabaseDryRun  Database = "<dryrun>"
 )
 
-func OpenDatabaseFile(chain string, kind DatabaseFile, openFlag int) (*os.File, error) {
+func OpenDatabaseFile(chain string, kind Database, openFlag int) (*os.File, error) {
 	if kind == DatabaseDryRun {
 		return os.Stdout, nil
 	}
@@ -236,13 +236,13 @@ func OpenDatabaseFile(chain string, kind DatabaseFile, openFlag int) (*os.File, 
 	)
 }
 
-func GetDatabasePath(chain string, db DatabaseFile) string {
+func GetDatabasePath(chain string, db Database) string {
 	return filepath.Join(
 		config.GetPathToChainConfig(chain), string(db),
 	)
 }
 
-func WriteDatabase(chain string, kind Parts, database DatabaseFile, names map[base.Address]types.SimpleName) (err error) {
+func WriteDatabase(chain string, kind Parts, database Database, names map[base.Address]types.SimpleName) (err error) {
 	switch kind {
 	case Regular:
 		loadedRegularNamesMutex.Lock()

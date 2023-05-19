@@ -238,7 +238,7 @@ func writeCustomNames(output *os.File) (err error) {
 	return writer.Error()
 }
 
-func WriteCustomNames(chain string, overrideDest *DatabaseFile) (err error) {
+func WriteCustomNames(chain string, overrideDest *Database) (err error) {
 	database := DatabaseCustom
 	if overrideDest != nil {
 		database = *overrideDest

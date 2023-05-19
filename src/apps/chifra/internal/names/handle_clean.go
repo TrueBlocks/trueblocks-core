@@ -73,7 +73,7 @@ func (opts *NamesOptions) cleanNames() error {
 	var onceMod sync.Once
 
 	// For --dry_run, we don't want to write to the real database
-	var overrideDatabase names.DatabaseFile
+	var overrideDatabase names.Database
 	if opts.DryRun {
 		overrideDatabase = names.DatabaseDryRun
 	}
