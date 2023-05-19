@@ -214,7 +214,7 @@ func OpenDatabaseFile(chain string, kind DatabaseFile, openFlag int) (*os.File, 
 		return os.Stdout, nil
 	}
 
-	filePath := filepath.Join(config.GetPathToChainConfig(chain), string(kind))
+	filePath := GetDatabasePath(chain, kind)
 	var permissions fs.FileMode = 0666
 
 	if kind == DatabaseCustom && os.Getenv("TEST_MODE") == "true" {
@@ -233,6 +233,12 @@ func OpenDatabaseFile(chain string, kind DatabaseFile, openFlag int) (*os.File, 
 		filePath,
 		openFlag,
 		permissions,
+	)
+}
+
+func GetDatabasePath(chain string, db DatabaseFile) string {
+	return filepath.Join(
+		config.GetPathToChainConfig(chain), string(db),
 	)
 }
 

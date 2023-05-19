@@ -3,8 +3,12 @@
 package namesPkg
 
 import (
+	"context"
 	"fmt"
+	"math"
 	"strings"
+	"sync"
+	"sync/atomic"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/contract"
@@ -13,9 +17,30 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/token"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *NamesOptions) HandleClean() error {
+	label := "custom"
+	db := names.DatabaseCustom
+	if opts.Regular {
+		label = "regular"
+		db = names.DatabaseRegular
+	}
+	logger.Info("Processing", label, "names file", "("+names.GetDatabasePath(opts.Globals.Chain, db)+")")
+
+	// err := opts.handleCleanSync()
+	err := opts.handleCleanConcurrent()
+
+	if err != nil {
+		logger.Warn("The", label, "names database was not cleaned")
+	} else {
+		logger.Info("The", label, "names database was cleaned")
+	}
+	return err
+}
+
+func (opts *NamesOptions) handleCleanSync() error {
 	parts := names.Custom
 	if opts.Regular {
 		parts = names.Regular
@@ -45,11 +70,6 @@ func (opts *NamesOptions) HandleClean() error {
 		count++
 		logger.InfoReplace(fmt.Sprintf("Cleaning %d of %d: %s", count, total, name.Address))
 
-		// TODO: remove
-		if count == 100 {
-			break
-		}
-
 		modified, err := cleanName(opts.Globals.Chain, &name)
 		if err != nil {
 			return err
@@ -65,7 +85,6 @@ func (opts *NamesOptions) HandleClean() error {
 
 		anyNameModified = true
 
-		// Update modified (no disk writes yet)
 		if opts.Regular {
 			if err = names.UpdateRegularName(&name); err != nil {
 				return err
@@ -87,6 +106,116 @@ func (opts *NamesOptions) HandleClean() error {
 	}
 
 	return names.WriteCustomNames(opts.Globals.Chain, &overrideDatabase)
+}
+
+func (opts *NamesOptions) handleCleanConcurrent() error {
+	parts := names.Custom
+	if opts.Regular {
+		parts = names.Regular
+	}
+
+	// Load databases
+	allNames, err := names.LoadNamesMap(opts.Globals.Chain, parts, []string{})
+	if err != nil {
+		return err
+	}
+	prefundMap, err := preparePrefunds(opts.Globals.Chain)
+	if err != nil {
+		return err
+	}
+
+	// Prepare progress reporting. We will report percentage.
+	total := len(allNames)
+	var done atomic.Int32
+	progressChan := make(chan int)
+	defer close(progressChan)
+	// Listen on a channel and whenever it updates, call `reportProgress`
+	go func() {
+		for progress := range progressChan {
+			doneNow := done.Add(int32(progress))
+			reportProgress(doneNow, total)
+		}
+	}()
+
+	// If nothing gets modified we won't bother with saving the files
+	var anyNameModified bool
+	// We'll use once to set `anyNameModified` from goroutines
+	var onceMod sync.Once
+
+	// For --dry_run, we don't want to write to the real database
+	var overrideDatabase names.DatabaseFile
+	if opts.DryRun {
+		overrideDatabase = names.DatabaseDryRun
+	}
+
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	errorChannel := make(chan error)
+	go utils.IterateOverMap(ctx, errorChannel, allNames, func(address base.Address, name types.SimpleName) error {
+		modified, err := cleanName(opts.Globals.Chain, &name)
+		if err != nil {
+			return wrapErrorWithAddr(&address, err)
+		}
+		if isPrefund := prefundMap[name.Address]; isPrefund != name.IsPrefund {
+			name.IsPrefund = isPrefund
+			modified = true
+		}
+
+		progressChan <- 1
+
+		if !modified {
+			return nil
+		}
+
+		// The name has been modified, so set the flag and...
+		onceMod.Do(func() { anyNameModified = true })
+
+		// ...update names in-memory cache
+		if opts.Regular {
+			if err = names.UpdateRegularName(&name); err != nil {
+				return wrapErrorWithAddr(&address, err)
+			}
+		} else {
+			if err = names.UpdateCustomName(&name); err != nil {
+				return wrapErrorWithAddr(&address, err)
+			}
+		}
+		return nil
+	})
+
+	// Block until we get an error from any of the iterations or `IterateOverMap` finishes
+	if stepErr := <-errorChannel; stepErr != nil {
+		cancel()
+		return stepErr
+	}
+
+	// If nothing has been changed, we can exit here
+	if !anyNameModified {
+		return nil
+	}
+
+	// Write to disk
+	if opts.Regular {
+		return names.WriteRegularNames(opts.Globals.Chain, &overrideDatabase)
+	}
+
+	return names.WriteCustomNames(opts.Globals.Chain, &overrideDatabase)
+}
+
+func reportProgress(done int32, total int) {
+	if done%10 != 0 {
+		return
+	}
+
+	percentage := math.Round(float64(done) / float64(total) * 100)
+	logger.InfoReplace(
+		fmt.Sprintf("Cleaning: %.f%% (%d items, %d total)", percentage, done, total),
+	)
+}
+
+// wrapErrorWithAddr prepends `err` with `address`, so that we can learn which name caused troubles
+func wrapErrorWithAddr(address *base.Address, err error) error {
+	return fmt.Errorf("%s: %w", address, err)
 }
 
 func preparePrefunds(chain string) (results map[base.Address]bool, err error) {

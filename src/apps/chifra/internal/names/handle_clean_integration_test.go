@@ -8,11 +8,14 @@
 package namesPkg
 
 import (
+	"context"
 	"reflect"
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func Test_cleanName(t *testing.T) {
@@ -191,5 +194,106 @@ func Test_cleanName_edgeCases(t *testing.T) {
 				t.Errorf("cleanToken() = %+v, want %+v", tt.args.name, tt.expectedName)
 			}
 		})
+	}
+}
+
+var benchmarkLimit = 50
+
+func BenchmarkCleanSync(b *testing.B) {
+	parts := names.Regular
+
+	for i := 0; i < b.N; i++ {
+		b.StopTimer()
+		allNames, err := names.LoadNamesMap("mainnet", parts, []string{})
+		if err != nil {
+			b.Fatal(err)
+		}
+		prefundMap, err := preparePrefunds("mainnet")
+		if err != nil {
+			b.Fatal(err)
+		}
+
+		count := 0
+
+		b.StartTimer()
+		for _, name := range allNames {
+			count++
+
+			// Benchmark break
+			if count == benchmarkLimit {
+				break
+			}
+
+			modified, err := cleanName("mainnet", &name)
+			if err != nil {
+				b.Fatal(err)
+			}
+			if isPrefund := prefundMap[name.Address]; isPrefund != name.IsPrefund {
+				name.IsPrefund = isPrefund
+				modified = true
+			}
+
+			if !modified {
+				continue
+			}
+
+			// Update modified (no disk writes yet)
+			if err = names.UpdateRegularName(&name); err != nil {
+				b.Fatal(err)
+			}
+		}
+	}
+}
+
+func BenchmarkCleanConcurrent(b *testing.B) {
+	parts := names.Regular
+
+	for i := 0; i < b.N; i++ {
+		b.StopTimer()
+		allNames, err := names.LoadNamesMap("mainnet", parts, []string{})
+		if err != nil {
+			b.Fatal(err)
+		}
+		prefundMap, err := preparePrefunds("mainnet")
+		if err != nil {
+			b.Fatal(err)
+		}
+
+		dataset := make(map[base.Address]types.SimpleName, benchmarkLimit)
+		count := 0
+		for addr, name := range allNames {
+			if count == benchmarkLimit {
+				break
+			}
+			count++
+			dataset[addr] = name
+		}
+		ctx := context.Background()
+		errs := make(chan error)
+
+		b.StartTimer()
+		utils.IterateOverMap(ctx, errs, dataset, func(key base.Address, name types.SimpleName) error {
+			modified, err := cleanName("mainnet", &name)
+			if err != nil {
+				panic(err)
+			}
+			if isPrefund := prefundMap[name.Address]; isPrefund != name.IsPrefund {
+				name.IsPrefund = isPrefund
+				modified = true
+			}
+
+			if !modified {
+				return nil
+			}
+
+			// Update modified (no disk writes yet)
+			if err = names.UpdateRegularName(&name); err != nil {
+				panic(err)
+			}
+			return nil
+		})
+		if err := <-errs; err != nil {
+			b.Fatal(err)
+		}
 	}
 }
