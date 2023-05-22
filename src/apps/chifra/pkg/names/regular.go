@@ -57,10 +57,10 @@ func loadRegularMap(chain string, thePath string, terms []string, parts Parts, r
 	return nil
 }
 
-func WriteRegularNames(chain string, overrideDest *Database) (err error) {
+func WriteRegularNames(chain string, overrideDest Database) (err error) {
 	database := DatabaseRegular
-	if overrideDest != nil {
-		database = *overrideDest
+	if overrideDest != "" {
+		database = overrideDest
 	}
 	return WriteDatabase(
 		chain,

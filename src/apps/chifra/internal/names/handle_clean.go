@@ -126,10 +126,10 @@ func (opts *NamesOptions) cleanNames() error {
 
 	// Write to disk
 	if opts.Regular {
-		return names.WriteRegularNames(opts.Globals.Chain, &overrideDatabase)
+		return names.WriteRegularNames(opts.Globals.Chain, overrideDatabase)
 	}
 
-	return names.WriteCustomNames(opts.Globals.Chain, &overrideDatabase)
+	return names.WriteCustomNames(opts.Globals.Chain, overrideDatabase)
 }
 
 func reportProgress(done int32, total int) {
