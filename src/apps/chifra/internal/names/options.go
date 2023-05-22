@@ -30,7 +30,7 @@ type NamesOptions struct {
 	Tags      bool                  `json:"tags,omitempty"`      // Export the list of tags and subtags only
 	Clean     bool                  `json:"clean,omitempty"`     // Clean the data (addrs to lower case, sort by addr)
 	Regular   bool                  `json:"regular,omitempty"`   // Only available with --clean, cleans regular names database
-	DryRun    bool                  `json:"dryRun,omitempty"`    // Only available with --clean, outputs changes to stdout instead of updating databases
+	DryRun    bool                  `json:"dryRun,omitempty"`    // Only available with --clean or --autoname, outputs changes to stdout instead of updating databases
 	Autoname  string                `json:"autoname,omitempty"`  // An address assumed to be a token, added automatically to names database if true
 	Create    bool                  `json:"create,omitempty"`    // Create a new name record
 	Update    bool                  `json:"update,omitempty"`    // Edit an existing name

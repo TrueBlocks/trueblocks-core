@@ -75,7 +75,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12295,tools,Accounts,names,ethNames,tags,g,,false,false,true,true,gocmd,switch,<boolean>,export the list of tags and subtags only
 12300,tools,Accounts,names,ethNames,clean,C,,false,false,false,false,gocmd,switch,<boolean>,clean the data (addrs to lower case&#44; sort by addr)
 12301,tools,Accounts,names,ethNames,regular,,,false,false,false,true,gocmd,switch,<boolean>,only available with --clean&#44; cleans regular names database
-12302,tools,Accounts,names,ethNames,dry_run,,,false,false,false,true,gocmd,switch,<boolean>,only available with --clean&#44; outputs changes to stdout instead of updating databases
+12302,tools,Accounts,names,ethNames,dry_run,,,false,false,false,true,gocmd,switch,<boolean>,only available with --clean or --autoname&#44; outputs changes to stdout instead of updating databases
 12305,tools,Accounts,names,ethNames,autoname,A,,false,false,false,false,gocmd,flag,<string>,an address assumed to be a token&#44; added automatically to names database if true
 12310,tools,Accounts,names,ethNames,create,,,false,false,false,true,gocmd,switch,<boolean>,create a new name record
 12315,tools,Accounts,names,ethNames,update,,,false,false,false,true,gocmd,switch,<boolean>,edit an existing name

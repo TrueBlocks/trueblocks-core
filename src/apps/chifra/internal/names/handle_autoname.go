@@ -1,22 +1,61 @@
 package namesPkg
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+)
 
 func (opts *NamesOptions) HandleAutoname() error {
-	return fmt.Errorf("the chifra names --autoname option is currently not available")
+	// For --dry_run, we don't want to write to the real database
+	var overrideDatabase names.Database
+	if opts.DryRun {
+		overrideDatabase = names.DatabaseDryRun
+	}
+
+	if err := opts.readContractAndClean(); err != nil {
+		return err
+	}
+
+	return names.WriteRegularNames(opts.Globals.Chain, overrideDatabase)
 }
 
-// } else if (!autoname.empty()) {
-//     abi_spec.loadAbisFromKnown(true);
-//     crudCommands.push_back("create");
-//     terms.push_back(autoname);
-//     // ::setenv("TB_NAME_ADDRESS", autoname.c_str(), true);
-//     ::setenv("TB_NAME_NAME", addr_2_Petname(autoname, '-').c_str(), true);
-//     ::setenv("TB_NAME_TAG", "50-Tokens:ERC20", true);
-//     ::setenv("TB_NAME_SOURCE", "TrueBlocks.io", true);
-//     ::setenv("TB_NAME_SYMBOL", "", true);
-//     ::setenv("TB_NAME_DECIMALS", "18", true);
-//     ::setenv("TB_NAME_CUSTOM", "false", true);
-//     if (!handle_editcmds(true))  // returns true on success
-//         return false;
-// }
+// readContractAndClean will read contract data and call `cleanName` for the given address
+func (opts *NamesOptions) readContractAndClean() error {
+	converted, ok := ens.ConvertEns(opts.Globals.Chain, []string{opts.Autoname})
+	term := opts.Autoname
+	if ok {
+		term = converted[0]
+	}
+
+	address := base.HexToAddress(term)
+	name := &types.SimpleName{
+		Address:  address,
+		Name:     names.AddrToPetname(address.Hex(), "-"),
+		Source:   "TrueBlocks.io",
+		IsCustom: false,
+	}
+	_, err := cleanName(opts.Globals.Chain, name)
+	if err != nil {
+		return fmt.Errorf("autoname %s: %w", &address, err)
+	}
+
+	if !name.IsErc20 && !name.IsErc721 {
+		logger.Warn("address", name.Address, "is not a token, ignoring")
+		return nil
+	}
+
+	if _, err = names.LoadNamesMap(opts.Globals.Chain, names.Regular, []string{}); err != nil {
+		return err
+	}
+
+	if err = names.CreateRegularName(name); err != nil {
+		return fmt.Errorf("updating %s: %w", &address, err)
+	}
+
+	return nil
+}

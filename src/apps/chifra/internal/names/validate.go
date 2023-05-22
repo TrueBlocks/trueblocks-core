@@ -5,6 +5,8 @@
 package namesPkg
 
 import (
+	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -47,7 +49,11 @@ func (opts *NamesOptions) validateNames() error {
 	}
 
 	addr := base.HexToAddress(opts.Autoname)
-	if len(opts.Autoname) > 0 && (!validate.IsValidAddress(opts.Autoname) || addr.IsZero()) {
+	zero := addr.IsZero()
+	if strings.Contains(opts.Autoname, ".eth") {
+		zero = false
+	}
+	if len(opts.Autoname) > 0 && (!validate.IsValidAddress(opts.Autoname) || zero) {
 		return validate.Usage("You must provide an address to the {0} option.", "--autoname")
 	}
 
