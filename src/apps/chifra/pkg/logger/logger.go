@@ -20,6 +20,7 @@ const (
 	progress severity = iota
 	infoC             // colored table
 	info
+	// TODO: Why can't we use the progress mode here? What's the difference?
 	infoReplace
 	test
 	warning

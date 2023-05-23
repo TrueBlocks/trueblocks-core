@@ -289,6 +289,7 @@ func WriteDatabase(chain string, kind Parts, database Database, names map[base.A
 }
 
 /*
+TODO: Can we remove this?
 // NameOnDiscHeader is the header of the names database when stored in the binary backing file
 type NameOnDiscHeader struct {
 	Magic   uint64    // 8 bytes

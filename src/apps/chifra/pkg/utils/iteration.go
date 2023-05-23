@@ -15,6 +15,7 @@ type stepFunc[Key, Value any] func(key Key, value Value) error
 // IterateOverMap distributes batches of `target` items to a pool of goroutines which execute
 // `step` for every `target` item. Use benchmarks to make sure that concurrent iteration
 // is faster than synchronous one.
+// TODO: I think we do something quite similar to this in chifra abis --find. We should abstract and collapse.
 func IterateOverMap[Key comparable, Value any](ctx context.Context, errChannel chan error, target map[Key]Value, step stepFunc[Key, Value]) {
 	var wg sync.WaitGroup
 	defer close(errChannel)

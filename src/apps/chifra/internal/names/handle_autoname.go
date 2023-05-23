@@ -53,9 +53,10 @@ func (opts *NamesOptions) readContractAndClean() error {
 		return err
 	}
 
-	if err = names.CreateRegularName(name); err != nil {
-		return fmt.Errorf("updating %s: %w", &address, err)
+	if err = names.CreateRegularName(name); err == nil {
+		logger.Info("updating %s: %w", &address, name)
+		return nil
 	}
 
-	return nil
+	return err
 }
