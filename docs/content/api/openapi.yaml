@@ -1822,6 +1822,14 @@ paths:
           schema:
             type: number
             format: blknum
+        - name: deep
+          description: if true, dig more deeply during checking (manifest only)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: sleep
           description: for --remote pinning only, seconds to sleep between API calls
           required: false
