@@ -48,7 +48,7 @@ TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
-TIME ~ CLOCK - <INFO>  :    assetSymbol:         SAI
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         DAI
 TIME ~ CLOCK - <INFO>  :    hash:                0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a
 TIME ~ CLOCK - <INFO>  :    blockNumber:         8860513
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    85
@@ -67,7 +67,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
 TIME ~ CLOCK - <INFO>  :    blks:                [8860513] 1 1
 TIME ~ CLOCK - <INFO>  :    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
-TIME ~ CLOCK - <INFO>  :    assetSymbol:         SAI
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         DAI
 TIME ~ CLOCK - <INFO>  :    hash:                0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a
 TIME ~ CLOCK - <INFO>  :    blockNumber:         8860513
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    85
@@ -136,7 +136,7 @@ TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at b
   "timestamp": 1572720150,
   "date": "2019-11-02 18:42:30 UTC",
   "assetAddr": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
-  "assetSymbol": "SAI",
+  "assetSymbol": "DAI",
   "decimals": 18,
   "spotPrice": 1.00000,
   "priceSource": "stable-coin",
@@ -294,7 +294,7 @@ TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
-TIME ~ CLOCK - <INFO>  :    assetSymbol:         SAI
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         DAI
 TIME ~ CLOCK - <INFO>  :    hash:                0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124
 TIME ~ CLOCK - <INFO>  :    blockNumber:         8860531
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    152
@@ -312,7 +312,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
 TIME ~ CLOCK - <INFO>  :    blks:                [8860531] 1 1
 TIME ~ CLOCK - <INFO>  :    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
-TIME ~ CLOCK - <INFO>  :    assetSymbol:         SAI
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         DAI
 TIME ~ CLOCK - <INFO>  :    hash:                0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124
 TIME ~ CLOCK - <INFO>  :    blockNumber:         8860531
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    152
@@ -378,7 +378,7 @@ TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at b
   "timestamp": 1572720361,
   "date": "2019-11-02 18:46:01 UTC",
   "assetAddr": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
-  "assetSymbol": "SAI",
+  "assetSymbol": "DAI",
   "decimals": 18,
   "spotPrice": 1.00000,
   "priceSource": "stable-coin",

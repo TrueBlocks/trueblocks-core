@@ -2042,9 +2042,10 @@ names?terms=50-Tokens&expand
       "decimals": 18,
       "isContract": true,
       "isErc20": true,
-      "name": "Pasta V1 Token",
+      "name": "Spaghetti",
       "petname": "marginally-vast-manatee",
       "source": "On chain",
+      "symbol": "PASTA",
       "tags": "50-Tokens:ERC20"
     },
     {
