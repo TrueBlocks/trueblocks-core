@@ -66,8 +66,10 @@ func (opts *ChunksOptions) validateChunks() error {
 		return validate.Usage("The {0} and {1} options are mutually exclusive.", "--pin", "--publish")
 	}
 
-	if opts.Deep && !pinning.LocalDaemonRunning() {
-		return validate.Usage("The {0} option requires {1}.", "--deep", "a locally running IPFS daemon")
+	if opts.Deep {
+		if opts.Mode != "addresses" && !pinning.LocalDaemonRunning() {
+			return validate.Usage("The {0} option requires {1}.", "--deep", "a locally running IPFS daemon")
+		}
 	}
 
 	if opts.Mode != "index" {
