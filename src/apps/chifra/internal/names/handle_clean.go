@@ -138,7 +138,8 @@ func reportProgress(done int32, total int) {
 	}
 
 	percentage := math.Round(float64(done) / float64(total) * 100)
-	logger.InfoReplace(
+	logger.Progress(
+		true,
 		fmt.Sprintf("Cleaning: %.f%% (%d items, %d total)", percentage, done, total),
 	)
 }
