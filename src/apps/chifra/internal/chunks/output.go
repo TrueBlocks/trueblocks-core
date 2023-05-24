@@ -83,23 +83,23 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 
 	} else {
 		switch opts.Mode {
+		case "manifest":
+			err = opts.HandleManifest(blockNums)
+
 		case "index":
 			err = opts.HandleIndex(blockNums)
 
 		case "blooms":
 			err = opts.HandleBlooms(blockNums)
 
-		case "manifest":
-			err = opts.HandleManifest(blockNums)
-
-		case "stats":
-			err = opts.HandleStats(blockNums)
-
 		case "addresses":
 			err = opts.HandleAddresses(blockNums)
 
 		case "appearances":
 			err = opts.HandleAppearances(blockNums)
+
+		case "stats":
+			err = opts.HandleStats(blockNums)
 
 		default:
 			logger.Fatal("Should not happen in NamesInternal")

@@ -25,6 +25,10 @@ A whole bunch of cleanup across multiple packages. Lots of smoke, no real fire.
 Creates an optional gRPC server for names. This was put in place for future enhancements.
 Updates the Manifest to correct a previous error -- requires a migration
 A lot of improvements including `--first_block / --last_block` and `--max_addrs` options to aid debugging.
+Hot key for `chifra chunks --remote` option changed from `m` to `r`
+Hot key for `chifra chunks --max_addrs` changed from `d` to `m`
+Added option `--deep` to `chifra chunks`.
+Removed ability to use both `--pin` and `--publish` in the same command to `chifra chunks`.
 
 ## v0.64.0 (2023/04/20)
 

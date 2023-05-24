@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"strings"
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -104,5 +103,3 @@ func (opts *ChunksOptions) HandlePinManifest(blockNums []uint64) error {
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
-
-var spaces = strings.Repeat(" ", 20)

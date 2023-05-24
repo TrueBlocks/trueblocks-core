@@ -78,7 +78,7 @@ func toLog(sev severity, a ...interface{}) {
 	if sev == progress {
 		for index, aa := range a {
 			if index > 0 {
-				fmt.Fprint(os.Stderr, ' ')
+				fmt.Fprint(os.Stderr, " ")
 			}
 			fmt.Fprint(os.Stderr, aa)
 		}
