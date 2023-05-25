@@ -86,7 +86,7 @@ on       ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_4           ,y
 on       ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_5           ,y    ,transactions = 0x9ad65c86eb8e78fdfc46bdb75c309d41fe48ecb11b6abd70505e30558bd2d8da & articulate
 on       ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_6           ,y    ,transactions = 0xc12685b2f235e540892f709b09aa5b5e552a328097550b13964aa26609e20ad3 & articulate
 on       ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_7           ,n    ,transactions = 0xf626a4fe94e1c4fb207fad62b1cd8164ba7ac83bad73585a60e8e3bd2a4576bb & articulate & fmt = csv
-on       ,both ,fast  ,transactions ,tools/getTrans ,unparsable               ,y    ,transactions = 12596470.26 & articulate & fmt = json
+local    ,both ,fast  ,transactions ,tools/getTrans ,unparsable               ,y    ,transactions = 12596470.26 & articulate & fmt = json
 
 on       ,both ,slow  ,transactions ,tools/getTrans ,issue_1583               ,y    ,transactions = 0x2f83088fa87f6054779a5511ec4f6b64f1e773e9bd7ec97956d6e04910d59303 & articulate & fmt = json
 on       ,both ,slow  ,transactions ,tools/getTrans ,issue_1366               ,y    ,transactions = 0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532ddc717ffd0abe & fmt = json & traces & articulate
