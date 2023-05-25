@@ -258,9 +258,6 @@ TEST_F(CThisTest, TestExtract) {
     ASSERT_EQ("0-10", "a fairly l", extract(xfoo, 0, 10));
     ASSERT_EQ("5-10", "rly long s", extract(xfoo, 5, 10));
     SHOULD_NOT_THROW("doesn't throw", extract(xfoo, 100));
-
-    // This causes a build error when compiling on Fedora 38/Clang 16.0.3
-    // SHOULD_THROW("throws", xfoo.substr(100));
     return true;
 }
 }

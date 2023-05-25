@@ -153,6 +153,7 @@ tags	address	name	symbol	source	decimals	petname	deleted	iscustom	isprefund	isco
 50-Tokens:ERC20	0x06e0feb0d74106c7ada8497754074d222ec6bcdf	BitBall	BTB	On chain	18	jointly-dominant-calf	false	false	false	true	true	false
 50-Tokens:ERC20	0x06f65b8cfcb13a9fe37d836fe9708da38ecb29b2	SAINT FAME: Genesis Shirt	FAME	On chain	18	regularly-sacred-humpback	false	false	false	true	true	false
 50-Tokens:ERC20	0x0707681f344deb24184037fc0228856f2137b02e	FNKOSToken	FNKOS	On chain	18	physically-guided-crane	false	false	false	true	true	false
+50-Tokens:ERC20	0x070c0147884d7cf984afbc2eb6f3428a39b5e229	asdai.xyz	https://asdai.xyz	On chain	18	wildly-grand-monkey	false	false	false	true	true	false
 50-Tokens:ERC20	0x07147220fa6c06295464d695e4ec012f6aebc275	Super Module Network One	SMN1	On chain	18	safely-dominant-hagfish	false	false	false	true	true	false
 50-Tokens:ERC20	0x072c46f392e729c1f0d92a307c2c6dba06b5d078	Snoop Doge	SNOGE	On chain	9	frequently-decent-man	false	false	false	true	true	false
 50-Tokens:ERC20	0x073825fb6bbf0d084c6e930c188a3eb92e7945ca	Dogefather	DOGEF	On chain	18	privately-ultimate-condor	false	false	false	true	true	false
@@ -202,4 +203,3 @@ tags	address	name	symbol	source	decimals	petname	deleted	iscustom	isprefund	isco
 50-Tokens:ERC20	0x0955a73d014f0693ac7b53cfe77706dab02b3ef9	Lady Luck	LUCK	On chain	18	trivially-improved-tadpole	false	false	false	true	true	false
 50-Tokens:ERC20	0x09617f6fd6cf8a71278ec86e23bbab29c04353a7	Unblocked Ledger Token	ULT	On chain	18	intensely-endless-platypus	false	false	false	true	true	false
 50-Tokens:ERC20	0x099fabb0a5ad43732d8f636f856da15006431581	best ICO 2018-2019 https://jullar.io	JULLAR.io	On chain	18	formerly-massive-tuna	false	false	false	true	true	false
-50-Tokens:ERC20	0x09a3ecafa817268f77be1283176b946c4ff2e608	Wrapped MIR Token	MIR	Giveth website	18	secondly-key-elf	false	false	false	true	true	false

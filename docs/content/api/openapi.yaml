@@ -678,7 +678,7 @@ paths:
             type: boolean
         - name: dryRun
           description: >
-            only available with --clean, outputs changes to stdout instead of updating databases
+            only available with --clean or --autoname, outputs changes to stdout instead of updating databases
           required: false
           style: form
           in: query
