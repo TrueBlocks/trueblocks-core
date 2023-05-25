@@ -189,7 +189,7 @@ tags	address	name	symbol	source	decimals	petname	deleted	iscustom	isprefund	isco
 50-Tokens:ERC20	0x089a6d83282fb8988a656189f1e7a73fa6c1cac2	Prospectors Gold	PGL	On chain	18	yearly-ultimate-molly	false	false	false	true	true	false
 50-Tokens:ERC20	0x089b7a04eed1749a541a9cca42924de4e62900c7	Kawaii Shiba	KIBA	On chain	9	ghastly-grateful-perch	false	false	false	true	true	false
 50-Tokens:ERC20	0x089eac7e3180b7995fe218c18440a0d262ae8985	1UP	UP	On chain	18	annually-glorious-doberman	false	false	false	true	true	false
-50-Tokens:ERC20	0x08a2e41fb99a7599725190b9c970ad3893fa33cf	Pasta V1 Token		On chain	18	marginally-vast-manatee	false	false	false	true	true	false
+50-Tokens:ERC20	0x08a2e41fb99a7599725190b9c970ad3893fa33cf	Spaghetti	PASTA	On chain	18	marginally-vast-manatee	false	false	false	true	true	false
 50-Tokens:ERC20	0x08bd64bfc832f1c2b3e07e634934453ba7fa2db2	Interest Bearing USD Coin v2	ibUSDCv2	On chain	8	blindly-mutual-egret	false	false	false	true	true	false
 50-Tokens:ERC721	0x08bebeb5f042ccbaeb128582da560cb25a5db7e9	TheWonderQuest	TWQ	On chain	18	commonly-choice-orca	false	false	false	true	true	true
 50-Tokens:ERC20	0x08d32b0da63e2c3bcf8019c9c5d849d7a9d791e6	Dentacoin	٨	On chain	18	briefly-absolute-seahorse	false	false	false	true	true	false

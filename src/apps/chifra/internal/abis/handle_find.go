@@ -31,6 +31,8 @@ func (opts *AbisOptions) HandleAbiFind() error {
 	/* wanted */ /* freq */ /* max */
 	scanBar := progress.NewScanBar(uint64(len(opts.Find)), 13919, 50000000, .5)
 
+	// TODO: we might want to use utils.IterateOverMap here
+
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawFunction], errorChan chan error) {
 		var results []types.SimpleFunction

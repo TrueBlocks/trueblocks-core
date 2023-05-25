@@ -18,6 +18,11 @@ func (opts *NamesOptions) validateNames() error {
 		return opts.BadFlag
 	}
 
+	isDryRunnable := opts.Clean || len(opts.Autoname) > 0
+	if opts.DryRun && !isDryRunnable {
+		return validate.Usage("The {0} option is is only available with {1}.", "--dry_run", "--clean or --autoname")
+	}
+
 	if opts.Tags && (opts.Addr || opts.anyBase()) {
 		return validate.Usage("The {0} option is not available{1}.", "--tags", " with any other option")
 	}
