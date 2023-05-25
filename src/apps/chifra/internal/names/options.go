@@ -29,6 +29,8 @@ type NamesOptions struct {
 	Addr      bool                  `json:"addr,omitempty"`      // Display only addresses in the results (useful for scripting, assumes --no_header)
 	Tags      bool                  `json:"tags,omitempty"`      // Export the list of tags and subtags only
 	Clean     bool                  `json:"clean,omitempty"`     // Clean the data (addrs to lower case, sort by addr)
+	Regular   bool                  `json:"regular,omitempty"`   // Only available with --clean, cleans regular names database
+	DryRun    bool                  `json:"dryRun,omitempty"`    // Only available with --clean, outputs changes to stdout instead of updating databases
 	Autoname  string                `json:"autoname,omitempty"`  // An address assumed to be a token, added automatically to names database if true
 	Create    bool                  `json:"create,omitempty"`    // Create a new name record
 	Update    bool                  `json:"update,omitempty"`    // Edit an existing name
@@ -57,6 +59,8 @@ func (opts *NamesOptions) testLog() {
 	logger.TestLog(opts.Addr, "Addr: ", opts.Addr)
 	logger.TestLog(opts.Tags, "Tags: ", opts.Tags)
 	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
+	logger.TestLog(opts.Regular, "Regular: ", opts.Regular)
+	logger.TestLog(opts.DryRun, "DryRun: ", opts.DryRun)
 	logger.TestLog(len(opts.Autoname) > 0, "Autoname: ", opts.Autoname)
 	logger.TestLog(opts.Create, "Create: ", opts.Create)
 	logger.TestLog(opts.Update, "Update: ", opts.Update)
@@ -101,6 +105,10 @@ func namesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
 			opts.Tags = true
 		case "clean":
 			opts.Clean = true
+		case "regular":
+			opts.Regular = true
+		case "dryRun":
+			opts.DryRun = true
 		case "autoname":
 			opts.Autoname = value[0]
 		case "create":

@@ -668,6 +668,23 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: regular
+          description: only available with --clean, cleans regular names database
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: dryRun
+          description: >
+            only available with --clean, outputs changes to stdout instead of updating databases
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: named
           description: please use the --all option instead
           required: false

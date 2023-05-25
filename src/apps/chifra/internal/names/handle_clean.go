@@ -2,10 +2,390 @@
 // New tests -- chifra names --autoname <address>
 package namesPkg
 
-import "fmt"
+import (
+	"context"
+	"fmt"
+	"math"
+	"strings"
+	"sync"
+	"sync/atomic"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/contract"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/token"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+)
 
 func (opts *NamesOptions) HandleClean() error {
-	return fmt.Errorf("the chifra names --clean option is currently not available")
+	label := "custom"
+	db := names.DatabaseCustom
+	if opts.Regular {
+		label = "regular"
+		db = names.DatabaseRegular
+	}
+	logger.Info("Processing", label, "names file", "("+names.GetDatabasePath(opts.Globals.Chain, db)+")")
+
+	err := opts.cleanNames()
+	if err != nil {
+		logger.Warn("The", label, "names database was not cleaned")
+	} else {
+		logger.Info("The", label, "names database was cleaned")
+	}
+	return err
+}
+
+func (opts *NamesOptions) cleanNames() error {
+	parts := names.Custom
+	if opts.Regular {
+		parts = names.Regular
+	}
+
+	// Load databases
+	allNames, err := names.LoadNamesMap(opts.Globals.Chain, parts, []string{})
+	if err != nil {
+		return err
+	}
+	prefundMap, err := preparePrefunds(opts.Globals.Chain)
+	if err != nil {
+		return err
+	}
+
+	// Prepare progress reporting. We will report percentage.
+	total := len(allNames)
+	var done atomic.Int32
+	progressChan := make(chan int)
+	defer close(progressChan)
+	// Listen on a channel and whenever it updates, call `reportProgress`
+	go func() {
+		for progress := range progressChan {
+			doneNow := done.Add(int32(progress))
+			reportProgress(doneNow, total)
+		}
+	}()
+
+	// If nothing gets modified we won't bother with saving the files
+	var anyNameModified bool
+	// We'll use once to set `anyNameModified` from goroutines
+	var onceMod sync.Once
+
+	// For --dry_run, we don't want to write to the real database
+	var overrideDatabase names.Database
+	if opts.DryRun {
+		overrideDatabase = names.DatabaseDryRun
+	}
+
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	errorChannel := make(chan error)
+	go utils.IterateOverMap(ctx, errorChannel, allNames, func(address base.Address, name types.SimpleName) error {
+		modified, err := cleanName(opts.Globals.Chain, &name)
+		if err != nil {
+			return wrapErrorWithAddr(&address, err)
+		}
+		if isPrefund := prefundMap[name.Address]; isPrefund != name.IsPrefund {
+			name.IsPrefund = isPrefund
+			modified = true
+		}
+
+		progressChan <- 1
+
+		if !modified {
+			return nil
+		}
+
+		// The name has been modified, so set the flag and...
+		onceMod.Do(func() { anyNameModified = true })
+
+		// ...update names in-memory cache
+		if opts.Regular {
+			if err = names.UpdateRegularName(&name); err != nil {
+				return wrapErrorWithAddr(&address, err)
+			}
+		} else {
+			if err = names.UpdateCustomName(&name); err != nil {
+				return wrapErrorWithAddr(&address, err)
+			}
+		}
+		return nil
+	})
+
+	// Block until we get an error from any of the iterations or `IterateOverMap` finishes
+	if stepErr := <-errorChannel; stepErr != nil {
+		cancel()
+		return stepErr
+	}
+
+	// If nothing has been changed, we can exit here
+	if !anyNameModified {
+		return nil
+	}
+
+	// Write to disk
+	if opts.Regular {
+		return names.WriteRegularNames(opts.Globals.Chain, overrideDatabase)
+	}
+
+	return names.WriteCustomNames(opts.Globals.Chain, overrideDatabase)
+}
+
+func reportProgress(done int32, total int) {
+	if done%10 != 0 {
+		return
+	}
+
+	percentage := math.Round(float64(done) / float64(total) * 100)
+	logger.Progress(
+		true,
+		fmt.Sprintf("Cleaning: %.f%% (%d items, %d total)", percentage, done, total),
+	)
+}
+
+// wrapErrorWithAddr prepends `err` with `address`, so that we can learn which name caused troubles
+func wrapErrorWithAddr(address *base.Address, err error) error {
+	return fmt.Errorf("%s: %w", address, err)
+}
+
+func preparePrefunds(chain string) (results map[base.Address]bool, err error) {
+	prefunds, err := prefunds.LoadPrefunds(
+		chain,
+		prefunds.GetPrefundPath(chain),
+		nil,
+	)
+	if err != nil {
+		return
+	}
+
+	results = make(map[base.Address]bool, len(prefunds))
+	for _, prefund := range prefunds {
+		results[prefund.Address] = true
+	}
+	return
+}
+
+func cleanName(chain string, name *types.SimpleName) (modified bool, err error) {
+	isContract, err := contract.IsContractAt(chain, name.Address, nil)
+	if err != nil {
+		return
+	}
+	wasContract := name.IsContract && !isContract
+	modified = cleanCommon(name)
+
+	if !isContract {
+		if mod := cleanNonContract(name, wasContract); mod {
+			modified = true
+		}
+		return
+	}
+
+	tokenState, err := token.GetState(chain, name.Address, "latest")
+	if _, ok := err.(token.ErrNodeConnection); ok {
+		return
+	}
+	// It's not a token
+	if err != nil {
+		err = nil
+	}
+
+	contractModified, err := cleanContract(tokenState, name.Address, name)
+	if err != nil {
+		return
+	}
+	modified = modified || contractModified
+	return
+}
+
+func cleanCommon(name *types.SimpleName) (modified bool) {
+	if name.Tags > "79999" {
+		return false
+	}
+
+	lowerCaseSource := strings.ToLower(name.Source)
+	if lowerCaseSource == "etherscan" {
+		name.Source = "EtherScan.io"
+		modified = true
+	} else if lowerCaseSource == "trueblocks" {
+		name.Source = "TrueBlocks.io"
+		modified = true
+	}
+
+	sourceDedup, strModified := removeDoubleSpaces(name.Source)
+	if strModified && name.Source != sourceDedup {
+		name.Source = sourceDedup
+		modified = true
+	}
+
+	if len(name.Petname) == 0 {
+		name.Petname = names.AddrToPetname(name.Address.Hex(), "-")
+		modified = true
+	}
+	return
+}
+
+func removeDoubleSpaces(str string) (string, bool) {
+	if !strings.Contains(str, "  ") {
+		return str, false
+	}
+
+	result := strings.ReplaceAll(str, "  ", " ")
+	return result, true
+}
+
+func cleanContract(token *token.Token, address base.Address, name *types.SimpleName) (modified bool, err error) {
+	if !name.IsContract {
+		name.IsContract = true
+		modified = true
+	}
+
+	if token != nil {
+		tokenModified := cleanToken(name, token)
+		if !modified && tokenModified {
+			modified = true
+		}
+	} else {
+		if name.IsErc20 || name.IsErc721 {
+			// Not a token
+			name.IsErc20 = false
+			name.IsErc721 = false
+			name.Decimals = 0
+			name.Symbol = ""
+			if name.Tags == "50-Tokens:ERC20" || name.Tags == "50-Tokens:ERC721" {
+				name.Tags = ""
+			}
+			modified = true
+		}
+	}
+
+	if name.Tags == "" {
+		name.Tags = "30-Contracts"
+		modified = true
+	}
+
+	trimmedName := strings.Trim(name.Name, " ")
+	if name.Name != trimmedName {
+		name.Name = trimmedName
+		modified = true
+	}
+
+	trimmedSymbol := strings.Trim(name.Symbol, " ")
+	if name.Symbol != trimmedSymbol {
+		name.Symbol = trimmedSymbol
+		modified = true
+	}
+
+	return
+}
+
+func cleanToken(name *types.SimpleName, token *token.Token) (modified bool) {
+	if !name.IsErc20 && token.IsErc20() {
+		name.IsErc20 = true
+		modified = true
+	}
+
+	airdrop := strings.Contains(name.Name, "airdrop")
+	if name.Tags == "60-Airdrops" {
+		name.Tags = ""
+		modified = true
+	}
+
+	if token.IsErc20() && (name.Tags == "" ||
+		strings.Contains(name.Tags, "token") ||
+		strings.Contains(name.Tags, "30-contracts") ||
+		strings.Contains(name.Tags, "55-defi") ||
+		airdrop) {
+		name.Tags = "50-Tokens:ERC20"
+		modified = true
+	}
+
+	if name.Source != "On chain" &&
+		(name.Source == "" || name.Source == "TrueBlocks.io" || name.Source == "EtherScan.io") {
+		name.Source = "On chain"
+		modified = true
+	}
+
+	tokenName := token.Name
+	var strModified bool
+	if tokenName != "" {
+		tokenName, strModified = removeDoubleSpaces(tokenName)
+		if strModified && name.Name != tokenName {
+			name.Name = tokenName
+			modified = true
+		}
+	}
+
+	// If token name contains 3x `-`, it's Kickback Event, so we need to ignore
+	// token.Name, e.g.: 0x2ac0ac19f8680d5e9fdebad515f596265134f018. Comment from C++ code:
+	// some sort of hacky renaming for Kickback
+	if tokenName != "" && strings.Count(tokenName, "-") < 4 {
+		tokenName = strings.Trim(tokenName, " ")
+		if name.Name != tokenName {
+			name.Name = tokenName
+			modified = true
+		}
+	}
+
+	if token.Symbol != "" {
+		tokenSymbol := strings.Trim(token.Symbol, " ")
+
+		if name.Symbol != tokenSymbol {
+			name.Symbol = tokenSymbol
+			modified = true
+		}
+
+		tokenSymbol, strModified = removeDoubleSpaces(token.Symbol)
+		if strModified && name.Symbol != tokenSymbol {
+			name.Symbol = tokenSymbol
+			modified = true
+		}
+	}
+
+	if token.Decimals > 0 && name.Decimals != uint64(token.Decimals) {
+		name.Decimals = uint64(token.Decimals)
+		modified = true
+	}
+
+	if token.IsErc721() && !name.IsErc721 {
+		name.IsErc721 = true
+		modified = true
+	}
+
+	if !token.IsErc721() && name.IsErc721 {
+		name.IsErc721 = false
+		modified = true
+	}
+
+	if token.IsErc721() && name.IsErc721 && name.Tags == "" {
+		name.Tags = "50-Tokens:ERC721"
+		modified = true
+	}
+
+	return
+}
+
+func cleanNonContract(name *types.SimpleName, wasContract bool) (modified bool) {
+	if name.Tags == "30-Contracts:Humanity DAO" {
+		name.Tags = "90-Individuals:Humanity DAO"
+		modified = true
+	}
+
+	tagsEmpty := len(name.Tags) == 0
+	tagContract := strings.Contains(name.Tags, "Contracts")
+	tagToken := strings.Contains(name.Tags, "Tokens")
+
+	if wasContract && name.Tags != "37-SelfDestructed" {
+		name.IsContract = true
+		name.Tags = "37-SelfDestructed"
+		return true
+	}
+
+	if (tagsEmpty || tagContract || tagToken) && name.Tags != "90-Individuals:Other" {
+		name.Tags = "90-Individuals:Other"
+		modified = true
+	}
+	return
 }
 
 // Finish clean
