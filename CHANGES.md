@@ -25,6 +25,7 @@ A whole bunch of cleanup across multiple packages. Lots of smoke, no real fire.
 Creates an optional gRPC server for names. This was put in place for future enhancements.
 Updates the Manifest to correct a previous error -- requires a migration
 A lot of improvements including `--first_block / --last_block` and `--max_addrs` options to aid debugging.
+Re-implements chifra names --clean and chifra names --autoname
 
 ## v0.64.0 (2023/04/20)
 
