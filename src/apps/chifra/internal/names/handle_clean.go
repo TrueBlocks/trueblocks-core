@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/contract"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/token"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -29,11 +30,22 @@ func (opts *NamesOptions) HandleClean() error {
 	}
 	logger.Info("Processing", label, "names file", "("+names.GetDatabasePath(opts.Globals.Chain, db)+")")
 
+	var message string
 	err := opts.cleanNames()
 	if err != nil {
-		logger.Warn("The", label, "names database was not cleaned")
+		message = fmt.Sprintf("The %s names database was not cleaned", label)
+		logger.Warn(message)
 	} else {
-		logger.Info("The", label, "names database was cleaned")
+		message = fmt.Sprintf("The %s names database was cleaned", label)
+		logger.Info(message)
+	}
+
+	if opts.Globals.IsApiMode() {
+		output.StreamMany(context.Background(), func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+			modelChan <- &types.SimpleMessage{
+				Msg: message,
+			}
+		}, opts.Globals.OutputOpts())
 	}
 	return err
 }

@@ -1,11 +1,13 @@
 package namesPkg
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -17,15 +19,42 @@ func (opts *NamesOptions) HandleAutoname() error {
 		overrideDatabase = names.DatabaseDryRun
 	}
 
-	if err := opts.readContractAndClean(); err != nil {
+	name, err := opts.readContractAndClean()
+	if err != nil {
 		return err
 	}
 
-	return names.WriteRegularNames(opts.Globals.Chain, overrideDatabase)
+	err = names.WriteRegularNames(opts.Globals.Chain, overrideDatabase)
+	if err != nil {
+		return err
+	}
+
+	message := "No name has been updated. Is the contract a token?"
+	if name != nil {
+		message = fmt.Sprintf(
+			"Updated name for %s, %s. ERC-20 token: %t, ERC-721 NFT: %t, Symbol: %s, Decimals: %d",
+			name.Address,
+			name.Name,
+			name.IsErc20,
+			name.IsErc721,
+			name.Symbol,
+			name.Decimals,
+		)
+	}
+	logger.Info(message)
+
+	if opts.Globals.IsApiMode() {
+		output.StreamMany(context.Background(), func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+			modelChan <- &types.SimpleMessage{
+				Msg: message,
+			}
+		}, opts.Globals.OutputOpts())
+	}
+	return nil
 }
 
 // readContractAndClean will read contract data and call `cleanName` for the given address
-func (opts *NamesOptions) readContractAndClean() error {
+func (opts *NamesOptions) readContractAndClean() (name *types.SimpleName, err error) {
 	converted, ok := ens.ConvertEns(opts.Globals.Chain, []string{opts.Autoname})
 	term := opts.Autoname
 	if ok {
@@ -33,29 +62,31 @@ func (opts *NamesOptions) readContractAndClean() error {
 	}
 
 	address := base.HexToAddress(term)
-	name := &types.SimpleName{
+	name = &types.SimpleName{
 		Address:  address,
 		Name:     names.AddrToPetname(address.Hex(), "-"),
 		Source:   "TrueBlocks.io",
 		IsCustom: false,
 	}
-	_, err := cleanName(opts.Globals.Chain, name)
-	if err != nil {
-		return fmt.Errorf("autoname %s: %w", &address, err)
+	if _, err = cleanName(opts.Globals.Chain, name); err != nil {
+		err = fmt.Errorf("autoname %s: %w", &address, err)
+		return
 	}
 
 	if !name.IsErc20 && !name.IsErc721 {
 		logger.Warn("address", name.Address, "is not a token, ignoring")
-		return nil
+		name = nil
+		return
 	}
 
 	if _, err = names.LoadNamesMap(opts.Globals.Chain, names.Regular, []string{}); err != nil {
-		return err
+		return
 	}
 
 	if err = names.CreateRegularName(name); err != nil {
-		return fmt.Errorf("updating %s: %w", &address, err)
+		err = fmt.Errorf("while updating %s: %w", &address, err)
+		return
 	}
 
-	return nil
+	return
 }

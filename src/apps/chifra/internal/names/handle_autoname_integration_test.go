@@ -72,7 +72,7 @@ func TestNamesOptions_autoname(t *testing.T) {
 					},
 				},
 			}
-			if err := opts.readContractAndClean(); (err != nil) != tt.wantErr {
+			if _, err := opts.readContractAndClean(); (err != nil) != tt.wantErr {
 				t.Errorf("NamesOptions.readContractAndClean() error = %v, wantErr %v", err, tt.wantErr)
 			}
 			if tt.expected != nil {
