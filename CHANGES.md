@@ -1,36 +1,168 @@
 <!-- markdownlint-disable MD024 MD036 -->
 # History of Changes
 
-This file details changes made to TrueBlocks per version. See the [migration notes](./MIGRATIONS.md) for changes from previous versions.
+This file details changes made to TrueBlocks over time. See the [migration notes](./MIGRATIONS.md) for any required actions you must take to stay up to date.
 
-## v0.65.0 (2023/05/17)
+## v0.70.0 (2023/05/26)
 
-Added optional gRPC server for `chifra names` route.
-Correction to the Unchained Index after block 15,300,000 - requires a re-run of `chifra init -all` or a re-scrape of the entire index.
-Adds --dry_run (unimplemented) to `chifra init`
-Cleaned up a few data model markdown files
-Bumped version to 0.64.1.
-Removed abiSource from Function data model
-Removed C++ testing for acctlib which is no longer needed
-Adds `--unripe` option to `chifra list`
-Improves auto-gen code with a small cleanup
-Cleans up reporting on "bogus" token transfers (i.e., token transfer events without a corresponding change in balance)
-Removes a number of "fields" from transaction export including datesh, time, day, week, etc.
-Removes dups from command line for chifra export
-Enabled better reporting in verbose mode for chifra list
-Allow for using dates in command line for chifra state
-Fix to scraper getting stuck when there are no new blocks
-Full support for `--pin` option in `chifra chunks index`. Tested and ready to go.
-A whole bunch of cleanup across multiple packages. Lots of smoke, no real fire.
-Creates an optional gRPC server for names. This was put in place for future enhancements.
-Updates the Manifest to correct a previous error -- requires a migration
-A lot of improvements including `--first_block / --last_block` and `--max_addrs` options to aid debugging.
-Hot key for `chifra chunks --remote` option changed from `m` to `r`
-Hot key for `chifra chunks --max_addrs` changed from `d` to `m`
-Added option `--deep` to `chifra chunks`.
-Removed ability to use both `--pin` and `--publish` in the same command to `chifra chunks`.
+This release includes a major re-write of the `chifra names` module as well as other less obvious fixes and improvements. It also includes an important correction to the Unchained Index data stored on the smart contract which requires a migration. Make sure to follow the [migration](./MIGRATIONS.md) (don't worry -- it's simple).
 
-## v0.64.0 (2023/04/20)
+In addition to improvements to `chifra names`, the primary area of improvement was in `chifra chunks`. These changes included much better support for debugging the Unchained Index as well as an ability to `--pin` the Unchained Index with `chifra chunks manifest --pin`. This command will now pin the index either locally on your own IPFS node (if it's running) or remotely (if you have properly configured the API key).
+
+Additionally, the required GoLang version was bumped to 1.20.X. This is a breaking change to the build.
+
+Below is an explicit list of all changes.
+
+## Specification
+
+There were no changes to the [Specification for the Unchained Index](https://trueblocks.io/papers/2023/specification-for-the-unchained-index-v0.51.0-beta.pdf) since the last release.
+
+## Breaking Changes
+
+- Bumped TrueBlocks version to v0.70.0.
+- Bumped required GoLang version to 1.20.X.
+- Corrections were made to the previous version of the Unchained Index -- this correction requires a migration.
+- The `abiSource` field was removed from the `Function` data model.
+
+## System Wide Changes
+
+- GoLang version 1.20 is now required to build TrueBlocks.
+- There was a correction made to the Unchained Index at and after block 15,300,000 - this requires you to re-run `chifra init -all` or a re-scrape of the entire index. See migration notes.
+- Many cleanups across multiple packages. Lots of smoke, no real fire.
+- Command line now removes duplicate `modes`, `addresses`, `block ids`, or `transaction ids` for some commands.
+- The documentation was updated and improved.
+- Certain C++ testing code that was no longer needed was removed. (The port is almost finished.)
+
+## Changes to Data Models
+
+- `Function`:
+  - Removed `abiSource` field. If this causes problems with your cache (it shouldn't), you may simple remove the `txs` and `blocks` caches from your installation. They will be re-built.
+- Various `chifra chunks` related data models were expanded or improved. Mostly internal.
+
+## Tool Specific Changes
+
+**chifra list**
+
+- Added the `--unripe` option which now reports up transaction lists up to the latest block.
+- Enabled better output in verbose mode including providing additional data fields such as `date`.
+
+**chifra export**
+
+- Removes duplicate addresses from command line if present.
+- Cleans up reconciliation of "bogus" token transfers (i.e., token transfer events without a corresponding change in balance). Fixes previously mis-reported failed reconciliations.
+
+**chifra monitors**
+
+- Adds the `--decache` option which removes all associated data for a monitored address from any cache. (Useful for debugging.)
+- Minor improvements to `chifra monitors <address> --watch` to better follow the head of the chain.
+
+**chifra names**
+
+- Near complete re-write of the `chifra names` module including addition of `--grpc` option when starting `chifra daemon`. This allows for the names database to be kept in memory even when used from the command line. Should improve speed of this command.
+- Implemented previously-disabled `chifra names --clean`.
+- Added `chifra names --clean --dry_run` which reports potential changes to the screen without changing the database.
+- Added `chifra names --clean --regular` which operates on the `regular` names as opposed to the default `custom` names.
+- Implemented previously-disabled `chifra names --autoname`.
+- Updated the names database with newly cleaned data.
+
+**chifra abis**
+
+- No changes.
+
+**chifra blocks**
+
+- Removes little-used optional fields from display (they were never part of the actual cached data): `datesh`, `time`, `day`, `week`, etc. These fields are easily calculated using regular Linux command line tools such as `cut`.
+
+**chifra transactions**
+
+- Removes little-used optional fields from display (they were never part of the actual cached data): `datesh`, `time`, `day`, `week`, etc. These fields are easily calculated using regular Linux command line tools such as `cut`.
+
+**chifra receipts**
+
+- No changes.
+
+**chifra logs**
+
+- No changes.
+
+**chifra traces**
+
+- No changes.
+
+**chifra when**
+
+- No changes.
+
+**chifra state**
+
+- Allow for using dates in command line in order to be consistent with other tools.
+
+**chifra tokens**
+
+- No changes.
+
+**chifra config**
+
+- No changes.
+
+**chifra status**
+
+- No changes.
+
+**chifra daemon**
+
+- Added the `--grpc` option. See notes under `chira names` above.
+
+**chifra scrape**
+
+- Fixed an issue with the scraper that was causing it to get stuck when near the head of the chain.
+
+**chifra chunks**
+
+- Full support for `--pin` option in `chifra chunks index`. Tested and ready to go.
+- Added `--first_block`, `--last_block` and `--max_addrs` to aide in debugging.
+- Many internal updates to make debugging / editing the index easier. (Editing the index is rare, but now it's easier.)
+
+**chifra init**
+
+- Adds `chifra init --dry_run` (not implemented).
+
+**chifra explore**
+
+- No changes.
+
+**chifra slurp**
+
+- No changes.
+
+**makeClass**
+
+- No changes.
+
+**testRunner**
+
+- No changes.
+
+## Issues Closed (3)
+
+- #2915 - chifra chunks overview issue
+- #2922 - Build fails on Fedora using Clang 16.0.3
+- #2916 - chifra chunks future enhancements
+
+## Issues Opened (10)
+
+- #2934 - chifra export phony transfers
+- #2933 - chifra names when started with --grpc, make test-all fails on pre-existing already customized custom names file
+- #2932 - chifra export does not cache when running in Explorer
+- #2931 - chifra names --autoname when used by Explorer (or command line) writes to names.tab
+- #2930 - auto code generation allows for hidden options that are documented in the API
+- #2928 - chifra chunks overview version 2
+- #2927 - chifra chunks --publish summary of issues
+- #2926 - Build proto buffers only if instructed with `make protos`
+- #2925 - Reopen TA-Delayed issues
+- #2920 - Add http proxy setting for etherscan request.
+
+## v0.64.0 (2023/05/07)
 
 This is a minor release that closes a few random issues and adds a small feature to better manage the caches.
 

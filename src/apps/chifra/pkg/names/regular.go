@@ -1,6 +1,7 @@
 package names
 
 import (
+	"fmt"
 	"io"
 	"os"
 	"sync"
@@ -33,10 +34,10 @@ func loadRegularMap(chain string, thePath string, terms []string, parts Parts, r
 		return err
 	}
 	defer db.Close()
-	// TODO: This should use gocsv instead of the custom code below
+
 	reader, err := NewNameReader(db, NameReaderTab)
 	if err != nil {
-		logger.Fatal(err)
+		return err
 	}
 
 	for {
@@ -54,4 +55,43 @@ func loadRegularMap(chain string, thePath string, terms []string, parts Parts, r
 	}
 
 	return nil
+}
+
+func WriteRegularNames(chain string, overrideDest Database) (err error) {
+	database := DatabaseRegular
+	if overrideDest != "" {
+		database = overrideDest
+	}
+	return WriteDatabase(
+		chain,
+		Regular,
+		database,
+		loadedRegularNames,
+	)
+}
+
+func CreateRegularName(name *types.SimpleName) (err error) {
+	loadedRegularNamesMutex.Lock()
+	defer loadedRegularNamesMutex.Unlock()
+
+	name.IsCustom = false
+	loadedRegularNames[name.Address] = *name
+	return
+}
+
+func ReadRegularName(address base.Address) (name *types.SimpleName) {
+	found, ok := loadedRegularNames[address]
+	if ok {
+		return &found
+	}
+	return nil
+}
+
+func UpdateRegularName(name *types.SimpleName) (err error) {
+	if _, ok := loadedRegularNames[name.Address]; !ok {
+		err = fmt.Errorf("no name for address: %s", name.Address)
+		return
+	}
+
+	return CreateRegularName(name)
 }

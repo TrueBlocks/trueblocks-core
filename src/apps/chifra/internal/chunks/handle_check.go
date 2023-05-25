@@ -109,70 +109,70 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 
 	reports := []simpleReportCheck{}
 
-	// allowMissing := scrapeCfg.AllowMissing(opts.Globals.Chain)
-	// seq := simpleReportCheck{Reason: "Filenames sequential"}
-	// if err := opts.CheckSequential(fileNames, cacheArray, remoteArray, allowMissing, &seq); err != nil {
-	// 	return err
-	// }
-	// reports = append(reports, seq)
-
-	// intern := simpleReportCheck{Reason: "Internally consistent"}
-	// if err := opts.CheckInternal(fileNames, blockNums, &intern); err != nil {
-	// 	return err
-	// }
-	// reports = append(reports, intern)
-
-	// con := simpleReportCheck{Reason: "Consistent hashes"}
-	// if err := opts.CheckHashes(cacheManifest, remoteManifest, &con); err != nil {
-	// 	return err
-	// }
-	// reports = append(reports, con)
-
-	// sizes := simpleReportCheck{Reason: "Check file sizes"}
-	// if err := opts.CheckSizes(fileNames, blockNums, cacheManifest, remoteManifest, &sizes); err != nil {
-	// 	return err
-	// }
-	// reports = append(reports, sizes)
-
-	// // compare with çached manifest with files on disc
-	// d2c := simpleReportCheck{Reason: "Disc Files to Cached Manifest"}
-	// if err := opts.CheckManifest(fnArray, cacheArray, &d2c); err != nil {
-	// 	return err
-	// }
-	// reports = append(reports, d2c)
-
-	// // compare with remote manifest with files on disc
-	// d2r := simpleReportCheck{Reason: "Disc Files to Remote Manifest"}
-	// if err := opts.CheckManifest(fnArray, remoteArray, &d2r); err != nil {
-	// 	return err
-	// }
-	// reports = append(reports, d2r)
-
-	// // compare remote manifest to cached manifest
-	// r2c := simpleReportCheck{Reason: "Remote Manifest to Cached Manifest"}
-	// if err := opts.CheckManifest(remoteArray, cacheArray, &r2c); err != nil {
-	// 	return err
-	// }
-	// reports = append(reports, r2c)
-
-	// // we only check the stage if it exists
-	// stagePath := cache.ToStagingPath(config.GetPathToIndex(opts.Globals.Chain) + "staging")
-	// stageFn, _ := file.LatestFileInFolder(stagePath)
-	// if file.FileExists(stageFn) {
-	// 	stage := simpleReportCheck{Reason: "Check staging folder"}
-	// 	if err := opts.CheckStaging(0, allowMissing, &stage); err != nil {
-	// 		return err
-	// 	}
-	// 	reports = append(reports, stage)
-	// }
-
-	// if opts.Deep && opts.Mode == "addresses" {
-	incl := simpleReportCheck{Reason: "Check address inclusion in Bloom"}
-	if err := opts.CheckInclusion(cacheManifest, &incl); err != nil {
+	allowMissing := scrapeCfg.AllowMissing(opts.Globals.Chain)
+	seq := simpleReportCheck{Reason: "Filenames sequential"}
+	if err := opts.CheckSequential(fileNames, cacheArray, remoteArray, allowMissing, &seq); err != nil {
 		return err
 	}
-	reports = append(reports, incl)
-	// }
+	reports = append(reports, seq)
+
+	intern := simpleReportCheck{Reason: "Internally consistent"}
+	if err := opts.CheckInternal(fileNames, blockNums, &intern); err != nil {
+		return err
+	}
+	reports = append(reports, intern)
+
+	con := simpleReportCheck{Reason: "Consistent hashes"}
+	if err := opts.CheckHashes(cacheManifest, remoteManifest, &con); err != nil {
+		return err
+	}
+	reports = append(reports, con)
+
+	sizes := simpleReportCheck{Reason: "Check file sizes"}
+	if err := opts.CheckSizes(fileNames, blockNums, cacheManifest, remoteManifest, &sizes); err != nil {
+		return err
+	}
+	reports = append(reports, sizes)
+
+	// compare with çached manifest with files on disc
+	d2c := simpleReportCheck{Reason: "Disc Files to Cached Manifest"}
+	if err := opts.CheckManifest(fnArray, cacheArray, &d2c); err != nil {
+		return err
+	}
+	reports = append(reports, d2c)
+
+	// compare with remote manifest with files on disc
+	d2r := simpleReportCheck{Reason: "Disc Files to Remote Manifest"}
+	if err := opts.CheckManifest(fnArray, remoteArray, &d2r); err != nil {
+		return err
+	}
+	reports = append(reports, d2r)
+
+	// compare remote manifest to cached manifest
+	r2c := simpleReportCheck{Reason: "Remote Manifest to Cached Manifest"}
+	if err := opts.CheckManifest(remoteArray, cacheArray, &r2c); err != nil {
+		return err
+	}
+	reports = append(reports, r2c)
+
+	// we only check the stage if it exists
+	stagePath := cache.ToStagingPath(config.GetPathToIndex(opts.Globals.Chain) + "staging")
+	stageFn, _ := file.LatestFileInFolder(stagePath)
+	if file.FileExists(stageFn) {
+		stage := simpleReportCheck{Reason: "Check staging folder"}
+		if err := opts.CheckStaging(0, allowMissing, &stage); err != nil {
+			return err
+		}
+		reports = append(reports, stage)
+	}
+
+	if opts.Deep && opts.Mode == "addresses" {
+		incl := simpleReportCheck{Reason: "Check address inclusion in Bloom"}
+		if err := opts.CheckInclusion(cacheManifest, &incl); err != nil {
+			return err
+		}
+		reports = append(reports, incl)
+	}
 
 	for i := 0; i < len(reports); i++ {
 		reports[i].FailedCnt = reports[i].CheckedCnt - reports[i].PassedCnt

@@ -9,7 +9,7 @@ transactions?transactions=0xf9a11aed09a4be208539a261d8c79567ba9918b4c4e577400ac3
       "timestamp": 1665039815,
       "date": "2022-10-06 07:03:35 UTC",
       "assetAddr": "0xf55f8aa8f3d777f1ab3a4ae9e269c8d7b73078de",
-      "assetSymbol": "0xf5",
+      "assetSymbol": "This token holders can claim r",
       "decimals": 18,
       "spotPrice": 0,
       "priceSource": "not-priced",

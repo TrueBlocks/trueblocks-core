@@ -3,11 +3,17 @@ package prefunds
 import (
 	"math/big"
 	"os"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/gocarina/gocsv"
 )
+
+func GetPrefundPath(chain string) string {
+	return filepath.Join(config.GetPathToChainConfig(chain), "allocs.csv")
+}
 
 // Allocation is a single allocation in the genesis file
 type Allocation struct {

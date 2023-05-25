@@ -114,6 +114,7 @@ func CreateCustomName(chain string, name *types.SimpleName) (err error) {
 		return
 	}
 	defer db.Close()
+	name.IsCustom = true
 	return setCustomNameAndSave(db, name)
 }
 
@@ -125,7 +126,21 @@ func ReadCustomName(address base.Address) (name *types.SimpleName) {
 	return nil
 }
 
-func UpdateCustomName(chain string, name *types.SimpleName) (result *types.SimpleName, err error) {
+func UpdateCustomName(name *types.SimpleName) (err error) {
+	loadedCustomNamesMutex.Lock()
+	defer loadedCustomNamesMutex.Unlock()
+
+	name.IsCustom = true
+	if _, ok := loadedCustomNames[name.Address]; !ok {
+		err = fmt.Errorf("no custom name for address %s", name.Address.Hex())
+		return
+	}
+
+	loadedCustomNames[name.Address] = *name
+	return
+}
+
+func UpdateAndSaveCustomName(chain string, name *types.SimpleName) (result *types.SimpleName, err error) {
 	db, err := OpenDatabaseFile(chain, DatabaseCustom, os.O_WRONLY|os.O_TRUNC)
 	if err != nil {
 		return
@@ -194,6 +209,8 @@ func setCustomNameAndSave(output *os.File, name *types.SimpleName) (err error) {
 	loadedCustomNamesMutex.Lock()
 	defer loadedCustomNamesMutex.Unlock()
 
+	// Make sure we always set correct value of the flag
+	name.IsCustom = true
 	loadedCustomNames[name.Address] = *name
 	return writeCustomNames(output)
 }
@@ -219,4 +236,17 @@ func writeCustomNames(output *os.File) (err error) {
 	writer.Flush()
 
 	return writer.Error()
+}
+
+func WriteCustomNames(chain string, overrideDest Database) (err error) {
+	database := DatabaseCustom
+	if overrideDest != "" {
+		database = overrideDest
+	}
+	return WriteDatabase(
+		chain,
+		Custom,
+		database,
+		loadedCustomNames,
+	)
 }

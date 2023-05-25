@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.64.1-beta
+  version: 0.70.0-beta
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra daemon`, you can
@@ -662,6 +662,23 @@ paths:
             type: boolean
         - name: tags
           description: export the list of tags and subtags only
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: regular
+          description: only available with --clean, cleans regular names database
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: dryRun
+          description: >
+            only available with --clean or --autoname, outputs changes to stdout instead of updating databases
           required: false
           style: form
           in: query

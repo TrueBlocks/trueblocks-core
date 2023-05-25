@@ -56,6 +56,7 @@ names?update&fmt=json
     {
       "address": "0x0000000000000000000000000000000010101010",
       "decimals": 13,
+      "isCustom": true,
       "name": "NAME_CHANGED",
       "petname": "abnormally-able-quetzal",
       "source": "SOURCE_CHANGED",
