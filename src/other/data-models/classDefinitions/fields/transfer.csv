@@ -13,7 +13,7 @@ assetSymbol      ,string    ,           ,       ,      ,        ,          ,    
 decimals         ,uint64    ,      18   ,       ,      ,        ,          ,        ,         , 11 ,  11 ,              ,Equivalent to the queried value of `decimals` from an ERC20 contract or&#44; if ETH or WEI then 18
 amount           ,wei       ,           ,       ,      ,        ,          ,        ,         , 12 ,  12 ,              ,the amount of the transfer in the units of the asset
 
-spotPrice        ,double    ,       1.0 ,       ,      ,        ,          ,        ,         , 13 ,  13 ,              ,The on-chain price in USD (or if a token in ETH&#44; or zero) at the time of the transaction
-priceSource      ,string    ,           ,       ,      ,        ,          ,        ,         , 14 ,  14 ,              ,The on-chain source from which the spot price was taken
+spotPrice        ,double    ,       1.0 ,       ,      ,        ,          ,        ,         , 13 ,  13 ,              ,the on-chain price in USD (or if a token in ETH&#44; or zero) at the time of the transaction
+priceSource      ,string    ,           ,       ,      ,        ,          ,        ,         , 14 ,  14 ,              ,the on-chain source from which the spot price was taken
 
-encoding         ,string    ,           ,       ,      ,        ,          ,        ,         , 15 ,  15 ,              ,The four-byte encoding of the transaction's function call
+encoding         ,string    ,           ,       ,      ,        ,          ,        ,         , 15 ,  15 ,              ,the four-byte encoding of the transaction's function call

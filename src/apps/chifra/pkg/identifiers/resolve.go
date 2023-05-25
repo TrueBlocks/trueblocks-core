@@ -18,12 +18,15 @@ import (
 	"github.com/bykof/gostradamus"
 )
 
+// ResolveBlocks resolves a list of identifiers to a list of blocks (excluding the last block)
 func (id *Identifier) ResolveBlocks(chain string) ([]uint64, error) {
-	current, end, err := id.getBounds(chain)
+	bound, err := id.getBounds(chain)
 	if err != nil {
 		return []uint64{}, err
 	}
+
 	blocks := []uint64{}
+	current, end := bound.First, bound.Last
 	for current < end {
 		blocks = append(blocks, current)
 		current, err = id.nextBlock(chain, current)
@@ -34,20 +37,40 @@ func (id *Identifier) ResolveBlocks(chain string) ([]uint64, error) {
 	return blocks, nil
 }
 
-func (id *Identifier) getBounds(chain string) (uint64, uint64, error) {
-	start := id.Start.resolvePoint(chain)
+// getBounds returns the earliest and latest blocks for an array of identifiers
+func GetBounds(chain string, ids *[]Identifier) (ret base.BlockRange, err error) {
+	ret = base.BlockRange{
+		First: utils.NOPOS,
+		Last:  0,
+	}
+
+	for _, id := range *ids {
+		idRange, err := id.getBounds(chain)
+		if err != nil {
+			return ret, err
+		}
+		ret.First = utils.Min(ret.First, idRange.First)
+		ret.Last = utils.Max(ret.Last, idRange.Last)
+	}
+
+	return ret, nil
+}
+
+// getBounds returns the earliest and latest blocks for the identifier
+func (id *Identifier) getBounds(chain string) (ret base.BlockRange, err error) {
+	ret.First = id.Start.resolvePoint(chain)
 	switch id.ModifierType {
 	case Period:
-		start, _ = snapBnToPeriod(start, chain, id.Modifier.Period)
+		ret.First, _ = snapBnToPeriod(ret.First, chain, id.Modifier.Period)
 	default:
 		// do nothing
 	}
-	end := id.End.resolvePoint(chain)
-	if end == utils.NOPOS || end == 0 {
-		end = start + 1
+	ret.Last = id.End.resolvePoint(chain)
+	if ret.Last == utils.NOPOS || ret.Last == 0 {
+		ret.Last = ret.First + 1
 	}
 
-	return start, end, nil
+	return ret, nil
 }
 
 func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
@@ -223,7 +246,7 @@ bool wrangleTxId(string_q& argOut, string_q& errorMsg) {
         return true;
 
     // valid args are 'latest', 'bn.txid', 'bn.txid.next', or 'bn.txid.prev'
-    replaceReverse(argOut, ":", ".");
+    replaceReverse(argOut, ":",  ".");
 
     CStringArray parts;
     explode(parts, argOut, '.');

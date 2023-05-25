@@ -74,8 +74,6 @@ func (opts *NamesOptions) NamesInternal() (err error, handled bool) {
 		err = opts.HandleClean()
 	} else if opts.Tags {
 		err = opts.HandleTags()
-	} else if opts.Addr {
-		err = opts.HandleAddr()
 	} else {
 		err = opts.HandleTerms()
 	}

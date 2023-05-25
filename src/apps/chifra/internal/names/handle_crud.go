@@ -11,6 +11,7 @@ import (
 
 func (opts *NamesOptions) HandleCrud() (err error) {
 	parts := opts.getType()
+	// TODO: Why do we do this if we don't use the result?
 	if _, err = names.LoadNamesMap(opts.Globals.Chain, parts, nil); err != nil {
 		return err
 	}

@@ -7,20 +7,20 @@ tags,address,name,symbol,source,decimals,petname,deleted,iscustom,isprefund,isco
 31-Giveth:Project,0x1100d5647582a89614204dc790e3ee000770220f,Chef Ann Foundation,,Tokenomics,,multiply-good-eft,false,false,false,false,false,false
 31-Gitcoin:Grants,0x133d705a9696882228f6bb7fe008745aef7cdc93,Grant 0160 @antiprosynth | Antiprosynthesis.eth ⟠ Twitter Account Activity,,https://gitcoin.co/grants/160/antiprosynth-antiprosynthesiseth-twitter-account-,,frequently-mature-mite,false,false,false,false,false,false
 50-Tokens:ERC20,0x1494ca1f11d487c2bbe4543e90080aeba4ba3c2b,DefiPulse Index,DPI,On chain,18,multiply-charmed-heron,false,false,false,true,true,false
-91-Early:Addresses,0x198ef1ec325a96cc354c7266a038be8b5c558f67,Dao Whale 100 (Prefund_0876),,Genesis SlackNation Ethereum Tip Jar WhaleWatch.io,,mostly-factual-insect,false,false,false,false,false,false
+91-Early:Addresses,0x198ef1ec325a96cc354c7266a038be8b5c558f67,Dao Whale 100 (Prefund_0876),,Genesis SlackNation Ethereum Tip Jar WhaleWatch.io,,mostly-factual-insect,false,false,true,false,false,false
 31-Giveth:Core,0x1a88c052fc7a8401e00b2f76f96ac62a19427731,EtherIDTipJar,,Giveth Website,,notably-intent-elk,false,false,false,false,false,false
 31-Giveth:Project,0x1e1dee1a47b6d4dd5122c6cd7483ddbb1f42bdce,Sammy Tippit Ministries,,Tokenomics,,namely-decent-mammoth,false,false,false,false,false,false
 50-Tokens:ERC721,0x1e9385ee28c5c7d33f3472f732fb08ce3cebce1f,MoonCatLootprint,📜,On chain,18,multiply-golden-turtle,false,false,false,true,true,true
 50-Tokens:ERC20,0x25b6325f5bb1c1e03cfbc3e53f470e1f1ca022e3,LML,LML,On chain,18,multiply-sunny-grouper,false,false,false,true,true,false
 50-Tokens:ERC20,0x30b90d985104b803a038465c95b6ac226a355b13,KB24,KB24,On chain,18,multiply-able-thrush,false,false,false,true,true,false
-50-Tokens:ERC20,0x319dd3826bcd41d6dd741fdcef3d5301b20965e9,Goola token Airdrop,GOOLA,On chain,18,multiply-arriving-collie,false,false,false,true,true,false
+50-Tokens:ERC20,0x319dd3826bcd41d6dd741fdcef3d5301b20965e9,Goola token,GOOLA,On chain,18,multiply-arriving-collie,false,false,false,true,true,false
 37-SelfDestructed,0x32dbd3214ac75223e27e575c53944307914f7a90,Chainlink LINK-USD Aggregator,,EtherScan.io,,multiply-pumped-akita,false,false,false,true,false,false
 50-Tokens:ERC20,0x378903a03fb2c3ac76bb52773e3ce11340377a32,Clipper Coin Capital,CCCX,On chain,18,multiply-gorgeous-gazelle,false,false,false,true,true,false
 31-Giveth:Project,0x4091d8790a37a21c71e3d00b7ede2a801396816d,TipBot,,Tokenomics,,possibly-moral-vulture,false,false,false,false,false,false
 91-Early:Miners,0x4947190fcc30d3fb3a16233b259bfe6b3492339a,Miner_0037_193,,OnChain,,multiply-select-silkworm,false,false,false,false,false,false
 50-Tokens:ERC20,0x49ffa76a918ee132a02c7611e63bcda37a3917c0,Agent Coin,AGNT,On chain,6,multiply-topical-lynx,false,false,false,true,true,false
 31-Giveth:Project,0x51fae8b814a53fe22614e0373f324efa36abf736,DAO51,,Tokenomics,,multiply-useful-halibut,false,false,false,false,false,false
-50-Tokens:ERC20,0x5807ca447851c98569c567963b25b1c83d41bebc,RealToken 10024-10028 Appoline Street Detroit MI,REALTOKEN-10024-10028-APPOLINE,On chain,18,multiply-secure-malamute,false,false,false,true,true,false
+50-Tokens:ERC20,0x5807ca447851c98569c567963b25b1c83d41bebc,RealToken 10024-10028 Appoline Street Detroit MI,REALTOKEN-10024-10028-APPOLINE-ST-DETROIT-MI,On chain,18,multiply-secure-malamute,false,false,false,true,true,false
 91-Early:Miners,0x5b3e850e39e6f2c7dd38707b649e2b3536f14c0b,Miner_0018_348,,OnChain,,multiply-active-crappie,false,false,false,false,false,false
 80-Malicious,0x5e4f7ce2607c39f4ec08355e2ea48e50f6f77bff,HammerBot18,,https://blog.blocknative.com/blog/mempool-forensics,,multiply-central-ghost,false,false,false,false,false,false
 31-Gitcoin:Grants,0x62e4851e88bec4f5c5ee3dd347f2c601a18af1af,Grant 1499 - taoDAO,,https://gitcoin.co/grants/1499/taodao,,multiply-peaceful-loon,false,false,false,false,false,false

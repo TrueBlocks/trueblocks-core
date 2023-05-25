@@ -39,6 +39,7 @@ TEST[DATE|TIME] Format:  json
               "fileDate": "--fileDate--",
               "filename": "$cachePath/monitors/--address--",
               "itemType": "monitorsCacheItem",
+              "nRecords": 15432098,
               "sizeInBytes": 123456789
             },
             {
@@ -46,6 +47,7 @@ TEST[DATE|TIME] Format:  json
               "fileDate": "--fileDate--",
               "filename": "$cachePath/monitors/--address--",
               "itemType": "monitorsCacheItem",
+              "nRecords": 15432098,
               "sizeInBytes": 123456789
             }
           ],

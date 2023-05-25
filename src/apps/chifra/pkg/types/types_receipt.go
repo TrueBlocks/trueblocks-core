@@ -62,7 +62,7 @@ func (s *SimpleReceipt) SetRaw(raw *RawReceipt) {
 	s.raw = raw
 }
 
-func (s *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleReceipt) Model(verbose bool, format string, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -120,7 +120,7 @@ func (s *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[s
 			// order = append(order, "logs")
 		}
 
-		if showHidden {
+		if verbose {
 			model["blockHash"] = s.BlockHash
 			order = append(order, "blockHash")
 
@@ -142,7 +142,7 @@ func (s *SimpleReceipt) Model(showHidden bool, format string, extraOptions map[s
 		model["isError"] = s.IsError
 		order = append(order, "isError")
 
-		if showHidden {
+		if verbose {
 			model["contractAddress"] = s.ContractAddress.Hex()
 			order = append(order, "contractAddress")
 		}

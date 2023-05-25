@@ -1,5 +1,5 @@
 name             ,type        ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,noaddfld ,doc ,disp ,example       ,description
-blockHash        ,hash        ,           ,       ,      ,        ,          ,        ,         ,  1 ,     ,0xf128...1e98 ,The hash of the block containing this trace
+blockHash        ,hash        ,           ,       ,      ,        ,          ,        ,         ,  1 ,     ,0xf128...1e98 ,the hash of the block containing this trace
 blockNumber      ,blknum      ,           ,       ,      ,        ,          ,        ,         ,  2 ,   1 ,10021         ,the number of the block
 subtraces        ,uint64      ,           ,       ,      ,        ,          ,        ,         ,  7 ,     ,              ,the number of children traces that the trace hash
 traceAddress     ,string      ,           ,       ,true  ,        ,          ,        ,         ,  6 ,   3 ,              ,a particular trace's address in the trace tree

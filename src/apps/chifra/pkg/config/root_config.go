@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -42,6 +43,11 @@ type keyGroup struct {
 	Jwt    string `toml:"jwt"`
 }
 
+// TODO: This needs to be documented
+type grpcGroup struct {
+	UdsTimeout time.Duration `toml:"udsTimeout"`
+}
+
 type settingsGroup struct {
 	CachePath      string `toml:"cachePath"`
 	IndexPath      string `toml:"indexPath"`
@@ -52,6 +58,7 @@ type settingsGroup struct {
 type ConfigFile struct {
 	Version  versionGroup
 	Settings settingsGroup
+	Grpc     grpcGroup
 	Keys     map[string]keyGroup
 	Chains   map[string]chainGroup
 }

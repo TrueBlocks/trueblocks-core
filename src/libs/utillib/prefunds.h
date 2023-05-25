@@ -27,6 +27,5 @@ extern bool loadPrefundBalances(void);
 extern void clearPrefundBals(void);
 extern bool forEveryPrefund(ALLOCFUNC func, void* data);
 extern wei_t prefundAt(const address_t& addr);
-extern Allocation largestPrefund(void);
 
 }  // namespace qblocks

@@ -17,13 +17,13 @@ import (
 // EXISTING_CODE
 
 type simpleChunkBloom struct {
-	ByteWidth uint64         `json:"byteWidth"`
-	Hash      base.Hash      `json:"hash"`
-	Magic     string         `json:"magic"`
-	NBlooms   uint64         `json:"nBlooms"`
-	NInserted uint64         `json:"nInserted"`
-	Range     base.FileRange `json:"range"`
-	Size      uint64         `json:"size"`
+	ByteWidth uint64    `json:"byteWidth"`
+	Hash      base.Hash `json:"hash"`
+	Magic     string    `json:"magic"`
+	NBlooms   uint64    `json:"nBlooms"`
+	NInserted uint64    `json:"nInserted"`
+	Range     string    `json:"range"`
+	Size      uint64    `json:"size"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -32,7 +32,7 @@ func (s *simpleChunkBloom) Raw() *types.RawModeler {
 	return nil
 }
 
-func (s *simpleChunkBloom) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
+func (s *simpleChunkBloom) Model(verbose bool, format string, extraOptions map[string]any) types.Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

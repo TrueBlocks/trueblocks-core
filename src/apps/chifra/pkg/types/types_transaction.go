@@ -15,7 +15,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/bykof/gostradamus"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -91,7 +90,7 @@ func (s *SimpleTransaction) SetRaw(raw *RawTransaction) {
 	s.raw = raw
 }
 
-func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -130,7 +129,6 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		"compressedTx",
 	}
 
-	date := gostradamus.FromUnixTimestamp(s.Timestamp)
 	model["date"] = utils.FormattedDate(s.Timestamp)
 	model["gasCost"] = s.SetGasCost(s.Receipt)
 
@@ -181,11 +179,6 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 			model["isError"] = s.IsError
 		}
 
-		if showHidden {
-			model["datesh"] = date.Format("2006-01-02")
-			model["time"] = date.Format("15:04:05") + " UTC"
-		}
-
 		// model["receipt"] = nil
 		if s.Receipt != nil {
 			contractAddress := s.Receipt.ContractAddress.Hex()
@@ -233,7 +226,7 @@ func (s *SimpleTransaction) Model(showHidden bool, format string, extraOptions m
 		if extraOptions["traces"] == true && len(s.Traces) > 0 {
 			traceModels := make([]map[string]any, 0, len(s.Traces))
 			for _, trace := range s.Traces {
-				traceModels = append(traceModels, trace.Model(showHidden, format, extraOptions).Data)
+				traceModels = append(traceModels, trace.Model(verbose, format, extraOptions).Data)
 			}
 			model["traces"] = traceModels
 		}

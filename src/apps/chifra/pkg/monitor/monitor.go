@@ -5,7 +5,6 @@ package monitor
 // be found in the LICENSE file.
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 	"io/fs"
@@ -20,7 +19,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -80,7 +78,7 @@ func NewStagedMonitor(chain, addr string) (Monitor, error) {
 			return mon, err
 		}
 	} else {
-		err := mon.WriteMonHeader(false, 0)
+		err := mon.WriteMonHeader(false, 0, false /* force */)
 		if err != nil {
 			return mon, err
 		}
@@ -97,19 +95,6 @@ func (mon Monitor) String() string {
 	return fmt.Sprintf("%s\t%d\t%d\t%d", mon.Address.Hex(), mon.Count(), file.FileSize(mon.Path()), mon.LastScanned)
 }
 
-// TODO: ...and this - making this the String and the above ToTxt?
-// ToJSON returns a JSON object from a Monitor
-func (mon Monitor) ToJSON() string {
-	sm := types.SimpleMonitor{
-		Address:     mon.Address.Hex(),
-		NRecords:    int(mon.Count()),
-		FileSize:    file.FileSize(mon.Path()),
-		LastScanned: mon.Header.LastScanned,
-	}
-	bytes, _ := json.MarshalIndent(sm, "", "  ")
-	return string(bytes)
-}
-
 // Path returns the path to the Monitor file
 func (mon *Monitor) Path() (path string) {
 	if mon.Staged {
@@ -124,7 +109,7 @@ func (mon *Monitor) Path() (path string) {
 func (mon *Monitor) Reload(create bool) (uint32, error) {
 	if create && !file.FileExists(mon.Path()) {
 		// Make sure the file exists since we've been told to monitor it
-		err := mon.WriteMonHeader(false, 0)
+		err := mon.WriteMonHeader(false, 0, false /* force */)
 		if err != nil {
 			return 0, err
 		}
@@ -164,7 +149,7 @@ func (mon *Monitor) IsDeleted() bool {
 // Delete marks the file's delete flag, but does not physically remove the file
 func (mon *Monitor) Delete() (prev bool) {
 	prev = mon.Deleted
-	mon.WriteMonHeader(true, mon.LastScanned)
+	mon.WriteMonHeader(true, mon.LastScanned, false /* force */)
 	mon.Deleted = true
 	return
 }
@@ -172,7 +157,7 @@ func (mon *Monitor) Delete() (prev bool) {
 // UnDelete unmarks the file's delete flag
 func (mon *Monitor) UnDelete() (prev bool) {
 	prev = mon.Deleted
-	mon.WriteMonHeader(false, mon.LastScanned)
+	mon.WriteMonHeader(false, mon.LastScanned, false /* force */)
 	mon.Deleted = false
 	return
 }
@@ -186,21 +171,12 @@ func (mon *Monitor) Remove() (bool, error) {
 	return !file.FileExists(mon.Path()), nil
 }
 
-func addressFromPath(path string) (string, error) {
-	_, fileName := filepath.Split(path)
-	if len(fileName) == 0 || !strings.HasPrefix(fileName, "0x") || !strings.HasSuffix(fileName, ".mon.bin") {
-		return "", errors.New("path does is not a valid monitor filename")
-	}
-	parts := strings.Split(fileName, ".")
-	return strings.ToLower(parts[0]), nil
-}
-
 // SentinalAddr is a marker to signify the end of the monitor list produced by ListMonitors
 var SentinalAddr = base.HexToAddress("0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead")
 
 // ListMonitors puts a list of Monitors into the monitorChannel. The list of monitors is built from
 // a file called addresses.tsv in the current folder or, if not present, from existing monitors
-func ListMonitors(chain, folder string, monitorChan chan<- Monitor) {
+func ListMonitors(chain string, monitorChan chan<- Monitor) {
 	defer func() {
 		monitorChan <- Monitor{Address: SentinalAddr}
 	}()
@@ -230,20 +206,22 @@ func ListMonitors(chain, folder string, monitorChan chan<- Monitor) {
 		return
 	}
 
-	logger.Info("Building address list from current monitors")
-	path = config.GetPathToCache(chain) + folder
-	filepath.Walk(path, func(path string, info fs.FileInfo, err error) error {
+	walkFunc := func(path string, info fs.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
 		if !info.IsDir() {
-			addr, _ := addressFromPath(path)
+			addr, _ := base.AddrFromPath(path, ".mon.bin")
 			if len(addr) > 0 {
 				monitorChan <- NewMonitor(chain, addr, true /* create */)
 			}
 		}
 		return nil
-	})
+	}
+
+	logger.Info("Building address list from current monitors")
+	path = config.GetPathToCache(chain) + "monitors"
+	filepath.Walk(path, walkFunc)
 }
 
 var monitorMutex sync.Mutex
@@ -276,7 +254,7 @@ func (mon *Monitor) MoveToProduction() error {
 func GetMonitorMap(chain string) (map[base.Address]*Monitor, []*Monitor) {
 	monitorChan := make(chan Monitor)
 
-	go ListMonitors(chain, "monitors", monitorChan)
+	go ListMonitors(chain, monitorChan)
 
 	monMap := make(map[base.Address]*Monitor)
 	monArray := []*Monitor{}

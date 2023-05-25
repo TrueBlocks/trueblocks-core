@@ -35,6 +35,7 @@ status?modes=abis&modes=monitors&modes=txs&verbose&maxRecords=2
               "fileDate": "--fileDate--",
               "filename": "$cachePath/monitors/--address--",
               "itemType": "monitorsCacheItem",
+              "nRecords": 15432098,
               "sizeInBytes": 123456789
             },
             {
@@ -42,6 +43,7 @@ status?modes=abis&modes=monitors&modes=txs&verbose&maxRecords=2
               "fileDate": "--fileDate--",
               "filename": "$cachePath/monitors/--address--",
               "itemType": "monitorsCacheItem",
+              "nRecords": 15432098,
               "sizeInBytes": 123456789
             }
           ],

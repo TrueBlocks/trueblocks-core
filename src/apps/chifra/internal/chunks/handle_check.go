@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -135,13 +136,6 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	}
 	reports = append(reports, sizes)
 
-	// compare remote manifest to cached manifest
-	r2c := simpleReportCheck{Reason: "Remote Manifest to Cached Manifest"}
-	if err := opts.CheckManifest(remoteArray, cacheArray, &r2c); err != nil {
-		return err
-	}
-	reports = append(reports, r2c)
-
 	// compare with çached manifest with files on disc
 	d2c := simpleReportCheck{Reason: "Disc Files to Cached Manifest"}
 	if err := opts.CheckManifest(fnArray, cacheArray, &d2c); err != nil {
@@ -156,11 +150,23 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	}
 	reports = append(reports, d2r)
 
-	// stage := simpleReportCheck{Reason: "Check staging folder"}
-	// if err := opts.CheckStaging(0, allowMissing, &stage); err != nil {
-	// 	return err
-	// }
-	// reports = append(reports, stage)
+	// compare remote manifest to cached manifest
+	r2c := simpleReportCheck{Reason: "Remote Manifest to Cached Manifest"}
+	if err := opts.CheckManifest(remoteArray, cacheArray, &r2c); err != nil {
+		return err
+	}
+	reports = append(reports, r2c)
+
+	// we only check the stage if it exists
+	stagePath := cache.ToStagingPath(config.GetPathToIndex(opts.Globals.Chain) + "staging")
+	stageFn, _ := file.LatestFileInFolder(stagePath)
+	if file.FileExists(stageFn) {
+		stage := simpleReportCheck{Reason: "Check staging folder"}
+		if err := opts.CheckStaging(0, allowMissing, &stage); err != nil {
+			return err
+		}
+		reports = append(reports, stage)
+	}
 
 	for i := 0; i < len(reports); i++ {
 		reports[i].FailedCnt = reports[i].CheckedCnt - reports[i].PassedCnt

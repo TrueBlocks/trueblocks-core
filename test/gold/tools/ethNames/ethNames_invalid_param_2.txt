@@ -17,6 +17,8 @@ Flags:
   -a, --addr              display only addresses in the results (useful for scripting, assumes --no_header)
   -g, --tags              export the list of tags and subtags only
   -C, --clean             clean the data (addrs to lower case, sort by addr) (hidden)
+      --regular           only available with --clean, cleans regular names database (hidden)
+      --dry_run           only available with --clean or --autoname, outputs changes to stdout instead of updating databases (hidden)
   -A, --autoname string   an address assumed to be a token, added automatically to names database if true (hidden)
       --create            create a new name record (hidden)
       --update            edit an existing name (hidden)

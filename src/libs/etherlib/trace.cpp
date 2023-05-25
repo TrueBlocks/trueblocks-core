@@ -402,7 +402,7 @@ string_q nextTraceChunk_custom(const string_q& fieldIn, const void* dataPtr) {
             case 'd':
                 if (tra->pTransaction) {
                     extern string_q nextTransactionChunk(const string_q& fieldIn, const void* data);
-                    if (fieldIn % "date" || fieldIn % "datesh")
+                    if (fieldIn % "date")
                         return nextTransactionChunk(fieldIn, tra->pTransaction);
                 }
                 break;

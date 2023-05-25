@@ -26,6 +26,7 @@ type ListOptions struct {
 	Appearances bool                  `json:"appearances,omitempty"` // Export each monitor's list of appearances (the default)
 	Silent      bool                  `json:"silent,omitempty"`      // Freshen the monitor only (no reporting)
 	NoZero      bool                  `json:"noZero,omitempty"`      // Suppress the display of zero appearance accounts
+	Unripe      bool                  `json:"unripe,omitempty"`      // List transactions labeled upripe (i.e. less than 28 blocks old)
 	FirstRecord uint64                `json:"firstRecord,omitempty"` // The first record to process
 	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process
 	FirstBlock  uint64                `json:"firstBlock,omitempty"`  // First block to export (inclusive, ignored when freshening)
@@ -50,6 +51,7 @@ func (opts *ListOptions) testLog() {
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
 	logger.TestLog(opts.Silent, "Silent: ", opts.Silent)
 	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
+	logger.TestLog(opts.Unripe, "Unripe: ", opts.Unripe)
 	logger.TestLog(opts.FirstRecord != 1, "FirstRecord: ", opts.FirstRecord)
 	logger.TestLog(opts.MaxRecords != 250, "MaxRecords: ", opts.MaxRecords)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
@@ -87,6 +89,8 @@ func listFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
 			opts.Silent = true
 		case "noZero":
 			opts.NoZero = true
+		case "unripe":
+			opts.Unripe = true
 		case "firstRecord":
 			opts.FirstRecord = globals.ToUint64(value[0])
 		case "maxRecords":

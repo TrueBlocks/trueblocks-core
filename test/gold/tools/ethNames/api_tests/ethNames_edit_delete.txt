@@ -6,6 +6,7 @@ names?delete&terms=0x0000000000000000000000000000000010101010&fmt=json
       "address": "0x0000000000000000000000000000000010101010",
       "decimals": 13,
       "deleted": true,
+      "isCustom": true,
       "name": "NAME_CHANGED",
       "petname": "abnormally-able-quetzal",
       "source": "SOURCE_CHANGED",

@@ -24,10 +24,10 @@ func TestTypes(t *testing.T) {
 
 	data = s.Model(true, "json", nil).Data
 	if data["blockHash"] == nil {
-		t.Fatal("hidden field missing when showHidden = true")
+		t.Fatal("hidden field missing when verbose = true")
 	}
 
 	if data["blockNumber"] == nil {
-		t.Fatal("visible field missing when showHidden = true")
+		t.Fatal("visible field missing when verbose = true")
 	}
 }

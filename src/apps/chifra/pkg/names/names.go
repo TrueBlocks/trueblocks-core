@@ -2,6 +2,7 @@ package names
 
 import (
 	"encoding/csv"
+	"errors"
 	"fmt"
 	"io"
 	"io/fs"
@@ -14,6 +15,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -88,7 +91,7 @@ func LoadNamesMap(chain string, parts Parts, terms []string) (map[base.Address]t
 
 	// Load the prefund names first...
 	if parts&Prefund != 0 {
-		prefundPath := filepath.Join(config.GetPathToChainConfig(chain), "allocs.csv")
+		prefundPath := prefunds.GetPrefundPath(chain)
 		loadPrefundMap(chain, prefundPath, terms, parts, &namesMap)
 	}
 
@@ -103,6 +106,17 @@ func LoadNamesMap(chain string, parts Parts, terms []string) (map[base.Address]t
 	}
 
 	return namesMap, nil
+}
+
+// EmptyInMemoryCache removes names that are cached in-memory
+func EmptyInMemoryCache() {
+	loadedRegularNamesMutex.Lock()
+	loadedRegularNames = make(map[base.Address]types.SimpleName)
+	loadedRegularNamesMutex.Unlock()
+
+	loadedCustomNamesMutex.Lock()
+	loadedCustomNames = make(map[base.Address]types.SimpleName)
+	loadedCustomNamesMutex.Unlock()
 }
 
 var requiredColumns = []string{
@@ -166,7 +180,7 @@ func NewNameReader(source io.Reader, mode NameReaderMode) (NameReader, error) {
 	}
 	header := map[string]int{}
 	for index, columnName := range headerRow {
-		header[columnName] = index
+		header[strings.ToLower(columnName)] = index
 	}
 
 	for _, required := range requiredColumns {
@@ -186,16 +200,21 @@ func NewNameReader(source io.Reader, mode NameReaderMode) (NameReader, error) {
 	return r, nil
 }
 
-type DatabaseFile string
+type Database string
 
 const (
-	DatabaseRegular DatabaseFile = "names.tab"
-	DatabaseCustom  DatabaseFile = "names_custom.tab"
-	DatabasePrefund DatabaseFile = "allocs.csv"
+	DatabaseRegular Database = "names.tab"
+	DatabaseCustom  Database = "names_custom.tab"
+	DatabasePrefund Database = "allocs.csv"
+	DatabaseDryRun  Database = "<dryrun>"
 )
 
-func OpenDatabaseFile(chain string, kind DatabaseFile, openFlag int) (*os.File, error) {
-	filePath := filepath.Join(config.GetPathToChainConfig(chain), string(kind))
+func OpenDatabaseFile(chain string, kind Database, openFlag int) (*os.File, error) {
+	if kind == DatabaseDryRun {
+		return os.Stdout, nil
+	}
+
+	filePath := GetDatabasePath(chain, kind)
 	var permissions fs.FileMode = 0666
 
 	if kind == DatabaseCustom && os.Getenv("TEST_MODE") == "true" {
@@ -215,6 +234,58 @@ func OpenDatabaseFile(chain string, kind DatabaseFile, openFlag int) (*os.File, 
 		openFlag,
 		permissions,
 	)
+}
+
+func GetDatabasePath(chain string, db Database) string {
+	return filepath.Join(
+		config.GetPathToChainConfig(chain), string(db),
+	)
+}
+
+func WriteDatabase(chain string, kind Parts, database Database, names map[base.Address]types.SimpleName) (err error) {
+	switch kind {
+	case Regular:
+		loadedRegularNamesMutex.Lock()
+		defer loadedRegularNamesMutex.Unlock()
+	case Custom:
+		loadedCustomNamesMutex.Lock()
+		defer loadedCustomNamesMutex.Unlock()
+	default:
+		return errors.New("kind should be Regular or Custom")
+	}
+
+	db, err := OpenDatabaseFile(chain, database, os.O_RDWR|os.O_TRUNC)
+	if err != nil {
+		return
+	}
+	defer db.Close()
+
+	sorted := make([]types.SimpleName, 0, len(names))
+	for _, name := range names {
+		sorted = append(sorted, name)
+	}
+	sort.SliceStable(sorted, func(i, j int) bool {
+		return sorted[i].Address.Hex() < sorted[j].Address.Hex()
+	})
+
+	// Save
+	// Can't lock Stdout (= DatabaseDryRun)
+	if database != DatabaseDryRun {
+		if err = file.Lock(db); err != nil {
+			return err
+		}
+		defer file.Unlock(db)
+	}
+
+	writer := NewNameWriter(db)
+	for _, name := range sorted {
+		if err = writer.Write(&name); err != nil {
+			return err
+		}
+	}
+	writer.Flush()
+
+	return writer.Error()
 }
 
 /*

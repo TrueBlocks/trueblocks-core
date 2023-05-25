@@ -61,6 +61,8 @@ func init() {
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Addr, "addr", "a", false, "display only addresses in the results (useful for scripting, assumes --no_header)")
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Tags, "tags", "g", false, "export the list of tags and subtags only")
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Clean, "clean", "C", false, "clean the data (addrs to lower case, sort by addr) (hidden)")
+	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Regular, "regular", "", false, "only available with --clean, cleans regular names database (hidden)")
+	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().DryRun, "dry_run", "", false, "only available with --clean or --autoname, outputs changes to stdout instead of updating databases (hidden)")
 	namesCmd.Flags().StringVarP(&namesPkg.GetOptions().Autoname, "autoname", "A", "", "an address assumed to be a token, added automatically to names database if true (hidden)")
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Create, "create", "", false, "create a new name record (hidden)")
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Update, "update", "", false, "edit an existing name (hidden)")
@@ -71,6 +73,8 @@ func init() {
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Named, "named", "n", false, "please use the --all option instead")
 	if os.Getenv("TEST_MODE") != "true" {
 		namesCmd.Flags().MarkHidden("clean")
+		namesCmd.Flags().MarkHidden("regular")
+		namesCmd.Flags().MarkHidden("dry_run")
 		namesCmd.Flags().MarkHidden("autoname")
 		namesCmd.Flags().MarkHidden("create")
 		namesCmd.Flags().MarkHidden("update")

@@ -11,14 +11,22 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // HandleList
 func (opts *MonitorsOptions) HandleList() error {
+	testMode := opts.Globals.TestMode
 	chain := opts.Globals.Chain
 	monitorMap, monArray := monitor.GetMonitorMap(chain)
+	if opts.Globals.Verbose {
+		for i := 0; i < len(monArray); i++ {
+			monArray[i].ReadMonitorHeader()
+			monArray[i].Close()
+		}
+	}
 
 	errors := make([]error, 0)
 	addrMap := map[base.Address]bool{}
@@ -42,12 +50,26 @@ func (opts *MonitorsOptions) HandleList() error {
 					Address:     mon.Address.Hex(),
 					NRecords:    int(mon.Count()),
 					FileSize:    file.FileSize(mon.Path()),
-					LastScanned: mon.Header.LastScanned,
+					LastScanned: mon.LastScanned,
+					Deleted:     mon.Deleted,
 				}
 				modelChan <- &s
 			}
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	extra := map[string]interface{}{
+		"testMode": testMode,
+	}
+
+	if opts.Globals.Verbose && opts.Globals.Format == "json" {
+		parts := names.Custom | names.Prefund | names.Regular
+		namesMap, err := names.LoadNamesMap(chain, parts, nil)
+		if err != nil {
+			return err
+		}
+		extra["namesMap"] = namesMap
+	}
+
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }

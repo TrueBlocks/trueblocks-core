@@ -17,7 +17,6 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
       "blockHash": "0x836c4866ea68fbe3b9786cdb3c2c8a36fa0c689e77b0f9fc441d37fb85489fad",
       "blockNumber": 3648669,
       "date": "2017-05-04 11:27:22 UTC",
-      "datesh": "2017-05-04",
       "ether": "0.010000000000000000",
       "from": "0xd1220a0cf47c7b9be7a2e6ba89f429762e7b9adb",
       "gas": 900000,
@@ -101,7 +100,6 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
         ],
         "status": null
       },
-      "time": "11:27:22 UTC",
       "timestamp": 1493897242,
       "to": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
       "traces": [

@@ -85,7 +85,7 @@ topic1              	1020	0	20971580	T_HASH TS_STRING TS_OMITEMPTY
 topic2              	1021	0	20971580	T_HASH TS_STRING TS_OMITEMPTY
 topic3              	1022	0	20971580	T_HASH TS_STRING TS_OMITEMPTY
 {
-  "schema": 64000,
+  "schema": 70000,
   "deleted": false,
   "showing": true,
   "cname": "Log",

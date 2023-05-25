@@ -33,7 +33,7 @@ func (s *simpleBlockCount) Raw() *types.RawModeler {
 	return nil
 }
 
-func (s *simpleBlockCount) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
+func (s *simpleBlockCount) Model(verbose bool, format string, extraOptions map[string]any) types.Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

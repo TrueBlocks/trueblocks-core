@@ -25,7 +25,6 @@ import (
 // EXISTING_CODE
 
 type RawFunction struct {
-	AbiSource       string `json:"abiSource"`
 	Anonymous       string `json:"anonymous"`
 	Constant        string `json:"constant"`
 	Encoding        string `json:"encoding"`
@@ -41,7 +40,6 @@ type RawFunction struct {
 }
 
 type SimpleFunction struct {
-	AbiSource       string            `json:"abiSource,omitempty"`
 	Anonymous       bool              `json:"anonymous,omitempty"`
 	Constant        bool              `json:"constant,omitempty"`
 	Encoding        string            `json:"encoding"`
@@ -68,7 +66,7 @@ func (s *SimpleFunction) SetRaw(raw *RawFunction) {
 	s.raw = raw
 }
 
-func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleFunction) Model(verbose bool, format string, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -101,12 +99,12 @@ func (s *SimpleFunction) Model(showHidden bool, format string, extraOptions map[
 		getParameterModels := func(params []SimpleParameter) []map[string]any {
 			result := make([]map[string]any, len(params))
 			for index, param := range params {
-				result[index] = param.Model(showHidden, format, extraOptions).Data
+				result[index] = param.Model(verbose, format, extraOptions).Data
 				result[index]["name"] = param.DisplayName(index)
 			}
 			return result
 		}
-		if extraOptions["verbose"] == true {
+		if verbose {
 			inputs := getParameterModels(s.Inputs)
 			if inputs != nil {
 				model["inputs"] = inputs
@@ -142,7 +140,7 @@ func (s *SimpleFunction) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
-func FunctionFromAbiEvent(ethEvent *abi.Event, abiSource string) *SimpleFunction {
+func FunctionFromAbiEvent(ethEvent *abi.Event) *SimpleFunction {
 	// ID is encoded signature
 	encSig := strings.ToLower(ethEvent.ID.Hex())
 	inputs := argumentsToSimpleParameters(ethEvent.Inputs)
@@ -150,7 +148,6 @@ func FunctionFromAbiEvent(ethEvent *abi.Event, abiSource string) *SimpleFunction
 		Encoding:     encSig,
 		Signature:    ethEvent.Sig,
 		Name:         ethEvent.RawName,
-		AbiSource:    abiSource,
 		FunctionType: "event",
 		Anonymous:    ethEvent.Anonymous,
 		Inputs:       inputs,
@@ -160,7 +157,7 @@ func FunctionFromAbiEvent(ethEvent *abi.Event, abiSource string) *SimpleFunction
 }
 
 // FunctionFromAbiMethod converts go-ethereum's abi.Method to our SimpleFunction
-func FunctionFromAbiMethod(ethMethod *abi.Method, abiSource string) *SimpleFunction {
+func FunctionFromAbiMethod(ethMethod *abi.Method) *SimpleFunction {
 	// method.ID is our "four-byte"
 	fourByte := "0x" + strings.ToLower(string(common.Bytes2Hex(ethMethod.ID)))
 
@@ -188,7 +185,6 @@ func FunctionFromAbiMethod(ethMethod *abi.Method, abiSource string) *SimpleFunct
 		Encoding:        fourByte,
 		Signature:       ethMethod.Sig,
 		Name:            ethMethod.RawName,
-		AbiSource:       abiSource,
 		FunctionType:    functionType,
 		Constant:        ethMethod.Constant,
 		StateMutability: stateMutability,

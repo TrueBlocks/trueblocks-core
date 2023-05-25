@@ -55,6 +55,7 @@ TEST[DATE|TIME] Format:  json
     {
       "address": "0x0000000000000000000000000000000010101010",
       "decimals": 11,
+      "isCustom": true,
       "name": "NAME",
       "petname": "abnormally-able-quetzal",
       "source": "SOURCE",

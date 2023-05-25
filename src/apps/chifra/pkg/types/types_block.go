@@ -76,7 +76,7 @@ func (s *SimpleBlock[Tx]) SetRaw(raw *RawBlock) {
 	s.raw = raw
 }
 
-func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -159,7 +159,7 @@ func (s *SimpleBlock[Tx]) Model(showHidden bool, format string, extraOptions map
 			if ok {
 				items := make([]map[string]interface{}, 0, len(txs))
 				for _, txObject := range txs {
-					items = append(items, txObject.Model(showHidden, format, extraOptions).Data)
+					items = append(items, txObject.Model(verbose, format, extraOptions).Data)
 				}
 				model["transactions"] = items
 			} else {

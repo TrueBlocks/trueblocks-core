@@ -40,10 +40,12 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		// we need to move the file to the end of the scraped range so we show progress
 		stageFn, _ := file.LatestFileInFolder(stageFolder) // it may not exist...
 		stageRange := base.RangeFromFilename(stageFn)
-		newRange := base.FileRange{First: stageRange.First, Last: blazeOpts.StartBlock + opts.BlockCnt - 1}
-		newFilename := filepath.Join(stageFolder, newRange.String()+".txt")
-		os.Rename(stageFn, newFilename)
-		os.Remove(stageFn) // seems redundant, but may not be on some operating systems
+		if stageRange.Last < (blazeOpts.StartBlock + opts.BlockCnt - 1) {
+			newRange := base.FileRange{First: stageRange.First, Last: blazeOpts.StartBlock + opts.BlockCnt - 1}
+			newFilename := filepath.Join(stageFolder, newRange.String()+".txt")
+			os.Rename(stageFn, newFilename)
+			os.Remove(stageFn) // seems redundant, but may not be on some operating systems
+		}
 		return true, nil
 	}
 
@@ -195,3 +197,5 @@ func isListSequential(chain string, ripeFileList []os.DirEntry, allowMissing boo
 }
 
 var spaces = strings.Repeat(" ", 40)
+
+// TODO: chifra scrape misreports appearances per block when consolidating #2291 (closed, but copied here as a TODO)

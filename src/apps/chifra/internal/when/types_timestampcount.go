@@ -10,6 +10,7 @@ package whenPkg
 
 // EXISTING_CODE
 import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+
 // EXISTING_CODE
 
 type simpleTimestampCount struct {
@@ -22,7 +23,7 @@ func (s *simpleTimestampCount) Raw() *types.RawModeler {
 	return nil
 }
 
-func (s *simpleTimestampCount) Model(showHidden bool, format string, extraOptions map[string]any) types.Model {
+func (s *simpleTimestampCount) Model(verbose bool, format string, extraOptions map[string]any) types.Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

@@ -45,11 +45,13 @@ func (mon *Monitor) RemoveDups() (uint32, uint32, error) {
 
 	if len(apps) != len(deDupped) {
 		mon.Close() // so when we open it, it gets replaced
+		// Very important to note - if you use false for append, the header gets overwritten
+		// so ordering matters here and we need to write the header afterwards
 		cntAfter, err = mon.WriteAppearances(deDupped, false /* append */)
 		if err != nil {
 			return cntBefore, cntAfter, err
 		}
-		mon.WriteMonHeader(mon.Deleted, mon.LastScanned)
+		mon.WriteMonHeader(mon.Deleted, mon.LastScanned, false /* force */)
 	}
 
 	return cntBefore, cntAfter, err

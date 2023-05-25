@@ -2,6 +2,7 @@ chifra names  etwork --verbose
 TEST[DATE|TIME] Terms:  [etwork]
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Format:  txt
+WARN[DATE|TIME] gRPC server not running falling back to file-based search
 tags	address	name	symbol	decimals	petname
 31-Gitcoin:Grants	0x011c2c1433b36a524b548444ae2f20c015427d04	Grant 0491 - Tokamak Network: Decentralized, Scalable, Turing Complete Layer 2 Plasma			brightly-ultimate-bengal
 31-Giveth:Project	0x035495b687850f79cb1652f416ea7ec19907557c	Bees network			plainly-climbing-coral
@@ -61,7 +62,7 @@ tags	address	name	symbol	decimals	petname
 50-Tokens:ERC20	0x67b6d479c7bb412c54e03dca8e1bc6740ce6b99c	Kylin Network	KYL	18	separately-upward-giraffe
 50-Tokens:ERC20	0x69af81e73a73b40adf4f3d4223cd9b1ece623074	Mask Network	MASK	18	surely-ruling-moray
 50-Tokens:ERC20	0x6fb3e0a217407efff7ca062d46c26e5d60a14d69	IoTeX Network	IOTX	18	oddly-composed-griffon
-50-Tokens:ERC20	0x6fff3806bbac52a20e0d79bc538d527f6a22c96b	Network		18	blindly-moral-kangaroo
+50-Tokens:ERC20	0x6fff3806bbac52a20e0d79bc538d527f6a22c96b	Network	CDX	18	blindly-moral-kangaroo
 50-Tokens:ERC20	0x70861e862e1ac0c96f853c8231826e469ead37b1	DOS Network Token	DOS	18	endlessly-simple-pigeon
 31-Giveth:Project	0x70a68a29bac0b3c85bed4b47bb3a639f0f245e70	Allergy &amp; Asthma Network			infinitely-hardy-hyena
 50-Tokens:ERC20	0x744d70fdbe2ba4cf95131626614a1763df805b9e	Status Network Token	SNT	18	ultimately-sensible-satyr
@@ -82,7 +83,7 @@ tags	address	name	symbol	decimals	petname
 50-Tokens:ERC20	0x8ea197328f3d72e148af942d9ea93f9cfb40626b	Not Aragon Network DAO launch council	NOTANLC	18	wrongly-honest-terrier
 31-Gitcoin:Grants	0x904065ba663879deb7e5f902220e7db97cbf04af	Grant 0681 Flowstake - Activity Staking Blockchain Network			exactly-glowing-shrimp
 31-Gitcoin:Grants	0x934b510d4c9103e6a87aef13b816fb080286d649	Grant 0159 - Mask Network - The Portal to the New, Open Internet.			manually-sweet-whippet
-50-Tokens:ERC20	0x9469d013805bffb7d3debe5e7839237e535ec483	Darwinia Network Token	RING	18	definitely-ace-squirrel
+50-Tokens:ERC20	0x9469d013805bffb7d3debe5e7839237e535ec483	Darwinia Network Native Token	RING	18	definitely-ace-squirrel
 31-Giveth:Project	0x95bc825c196f42c13b0fd5d636251005f3756809	Blockchain Education Network			willingly-driving-tuna
 50-Tokens:ERC20	0x95cda24d2515491095d21d94f1b94f319e016d35	Vegetanetwork	Vegeta	18	usually-sure-gator
 50-Tokens:ERC20	0x960b236a07cf122663c4303350609a66a7b288c0	Aragon Network Token	ANT	18	poorly-ample-sunfish

@@ -37,6 +37,8 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+    ::setenv("NO_USERQUERY", "true", 1);
+
     // BEG_CODE_LOCAL_INIT
     string_q mode = "";
     // END_CODE_LOCAL_INIT

@@ -63,8 +63,11 @@ bool COptions::loadMonitors(void) {
     }
 
     // Sort the file as it may or may not be sorted already
-    if (reversed)  // TODO(tjayrush): remove this comment once account works backwardly
+    if (reversed) {  // TODO(tjayrush): remove this comment once account works backwardly
         sort(monTmp.begin(), monTmp.end(), sortMonitoredAppearanceReverse);
+    } else if (neighbors) {
+        sort(monTmp.begin(), monTmp.end(), sortMonitoredAppearances);
+    }
 
     for (size_t i = 0; i < monTmp.size(); i++) {
         CAppearance_mon* app = &monTmp[i];

@@ -8,6 +8,9 @@ import (
 	"errors"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/node"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -98,12 +101,12 @@ func (opts *StateOptions) validateState() error {
 		}
 	}
 
-	// Blocks are available for both commands
+	// Blocks are optional, but if they are present, they must be valid
 	if len(opts.Blocks) > 0 {
-		err := validate.ValidateIdentifiers(
+		bounds, err := validate.ValidateIdentifiersWithBounds(
 			opts.Globals.Chain,
 			opts.Blocks,
-			validate.ValidBlockIdWithRange,
+			validate.ValidBlockIdWithRangeAndDate,
 			1,
 			&opts.BlockIds,
 		)
@@ -118,6 +121,12 @@ func (opts *StateOptions) validateState() error {
 			}
 
 			return err
+		}
+
+		latest := rpcClient.BlockNumber(config.GetRpcProvider(opts.Globals.Chain))
+		// TODO: Should be configurable
+		if bounds.First < (latest-250) && !node.IsArchiveNode(opts.Globals.Chain) {
+			return validate.Usage("The {0} requires {1}.", "query for historical state", "an archive node")
 		}
 	}
 

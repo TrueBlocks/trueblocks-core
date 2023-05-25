@@ -21,6 +21,7 @@ type FileRange struct {
 	First uint64
 	Last  uint64
 }
+type BlockRange FileRange // sugar
 
 var NotARange = FileRange{First: utils.NOPOS, Last: utils.NOPOS}
 
@@ -122,4 +123,9 @@ func (r *FileRange) EarlierThanB(blk uint64) bool {
 // LaterThanB returns true if the range is strictly after the given block
 func (r *FileRange) LaterThanB(blk uint64) bool {
 	return r.LaterThan(FileRange{First: blk, Last: blk})
+}
+
+// Equals returns true if the two ranges are equal
+func (r *FileRange) Equals(test FileRange) bool {
+	return r.First == test.First && r.Last == test.Last
 }
