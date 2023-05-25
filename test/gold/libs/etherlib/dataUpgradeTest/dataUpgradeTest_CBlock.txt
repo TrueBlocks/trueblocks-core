@@ -72,7 +72,7 @@ baseFeePerGas       	1014	0	545259555	T_WEI TS_NUMERAL TS_BIGNUM
 transactions        	1015	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
 date                	1016	0	33554437	T_DATE TS_DATE
 {
-  "schema": 64001,
+  "schema": 70000,
   "deleted": false,
   "showing": true,
   "cname": "Block",

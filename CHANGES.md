@@ -26,6 +26,39 @@ Creates an optional gRPC server for names. This was put in place for future enha
 Updates the Manifest to correct a previous error -- requires a migration
 A lot of improvements including `--first_block / --last_block` and `--max_addrs` options to aid debugging.
 Re-implements chifra names --clean and chifra names --autoname
+Added unripe to chifra list
+Implemented chifra names --clean
+Implemented chifra names --autoname
+Added chifra names --dry_run
+Added chifra names --regular
+Added chifra daemon -grpc
+Added chifra chunks --first_block and --last_block and --max_addrs to aide in debugging
+Added chifra init --dry_run but not implemented
+
+
+Remove dups from command line for some commands
+
+Cleans up some edge cases for token reconciliations
+
+Removed various little used fields (age, datesh) from blocks and transactions
+
+Remove abiSource field from Function data model
+
+Requires GoLang version 1.20
+
+Updates (and corrects) the manifest. You must run `chifra init -all` until it succeeds.
+
+Minor improvements to chifra monitors --watch including --decache option
+
+Bug fix to chifra scrape when caught up to the head
+
+Added chifra chunks index --pin to either remotely or locally pin the manifest
+
+Major re-write of names module including a GPRC server for names and support for --clean and --autoname
+
+A lot of updates to chifra chunks used mostly for internal debugging
+
+
 
 ## v0.64.0 (2023/04/20)
 
