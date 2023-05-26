@@ -41,11 +41,7 @@ func (opts *ChunksOptions) CheckManifest(arrayA, arrayB []string, report *simple
 	comp.msg = "%s: The chunk is in the %s array but not the %s array%s"
 	comp.fail = 4
 
-	if err := comp.checkArrays(report); err != nil {
-		return err
-	}
-
-	return nil
+	return comp.checkArrays(report)
 }
 
 // TODO: Can this be made concurrent?
