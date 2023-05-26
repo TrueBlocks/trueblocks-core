@@ -3,6 +3,13 @@
 
 This file details changes made to TrueBlocks over time. See the [migration notes](./MIGRATIONS.md) for any required actions you must take to stay up to date.
 
+## v0.71.0 (xxx)
+Adds --deep to chifra chunks used `d` for hot key which used to be for `--max_addrs`
+Changes hotkey for chifra chunks --max_addrs from `d` to `m` which used to be for `--remote`
+Changes hotkey for chifra chunks --remote from `m` to `r`
+User can no longer use both `--pin` and `--publish` with the same command for chifra chunks
+Fixes a bug with downloading the timestamps file and allowing Control+C
+
 ## v0.70.0 (2023/05/26)
 
 This release includes a major re-write of the `chifra names` module as well as other less obvious fixes and improvements. It also includes an important correction to the Unchained Index data stored on the smart contract which requires a migration. Make sure to follow the [migration](./MIGRATIONS.md) (don't worry -- it's simple).
