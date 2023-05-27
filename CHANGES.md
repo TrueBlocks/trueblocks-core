@@ -9,6 +9,7 @@ Changes hotkey for chifra chunks --max_addrs from `d` to `m` which used to be fo
 Changes hotkey for chifra chunks --remote from `m` to `r`
 User can no longer use both `--pin` and `--publish` with the same command for chifra chunks
 Fixes a bug with downloading the timestamps file and allowing Control+C
+Changes `chifra chunks manifest --pin` to only pin the actual chunks if `--deep` is included, otherwise it pins only the timestamps file (both locally and remotely) and the manifest (both locally and remotely).
 
 ## v0.70.0 (2023/05/26)
 

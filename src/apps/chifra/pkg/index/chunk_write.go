@@ -157,7 +157,8 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 				return &report, err
 			}
 
-			if err = pinning.PinTimestamps(chain, remote); err != nil {
+			path := config.GetPathToIndex(chain) + "ts.bin"
+			if _, err = pinning.PinItem(chain, "timestamps", path, remote); err != nil {
 				return &report, err
 			}
 

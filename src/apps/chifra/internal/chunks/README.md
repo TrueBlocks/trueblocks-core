@@ -56,6 +56,7 @@ Data models produced by this tool:
 - [chunkaddress](/data-model/admin/#chunkaddress)
 - [chunkstats](/data-model/admin/#chunkstats)
 - [reportcheck](/data-model/admin/#reportcheck)
+- [chunkpinreport](/data-model/admin/#chunkpinreport)
 
 <!-- markdownlint-disable MD041 -->
 ### Other Options

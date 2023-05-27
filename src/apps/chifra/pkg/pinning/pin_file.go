@@ -1,10 +1,11 @@
 package pinning
 
 import (
+	"fmt"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -20,40 +21,48 @@ type PinResult struct {
 
 // var errNoPinningService = errors.New("no pinning service available")
 
-// TODO: BOGUS - WE HAVE TO HAVE A SOLUTION FOR THE TIMESTAMP FILE --PIN --REMOTE ON THE CHIFRA WHEN ROUTINES?
-func PinTimestamps(chain string, isRemote bool) error {
-	path := config.GetPathToIndex(chain) + "ts.bin"
-	var localHash base.IpfsHash
-	var remoteHash base.IpfsHash
-	var err error
-	if LocalDaemonRunning() {
-		logger.Info("Pinning timestamps to local daemon")
+// PinItem pins the named database given a path to the local and/or remote pinning
+// services if they are available. If the local service is not available, the remote
+// service is used.
+func PinItem(chain string, dbName, path string, isRemote bool) (hash base.IpfsHash, err error) {
+	isLocal := LocalDaemonRunning()
+	if !isLocal && !isRemote {
+		err = fmt.Errorf("no pinning service available")
+		return
+	}
+
+	if !file.FileExists(path) {
+		err = fmt.Errorf(dbName+" file (%s) does not exist", path)
+		return
+	}
+
+	if isLocal {
+		logger.Info("Pinning", dbName, "to local service")
 		localService, _ := NewPinningService(chain, Local)
-		if localHash, err = localService.PinFile(path, true); err != nil {
-			logger.Fatal("Error in PinTimestamps", err)
-			return err
+		if hash, err = localService.PinFile(path, true); err != nil {
+			err = fmt.Errorf("error pinning locally: %s", err)
+			return
 		}
 	}
 
 	if isRemote {
-		logger.Info("Pinning timestamps to remote daemon")
+		logger.Info("Pinning", dbName, "to remote service")
 		remoteService, _ := NewPinningService(chain, Pinata)
+		var remoteHash base.IpfsHash
 		if remoteHash, err = remoteService.PinFile(path, true); err != nil {
-			logger.Fatal("Error in PinTimestamps", err)
-			return err
+			err = fmt.Errorf("error pinning remotely: %s", err)
+			return
+		}
+		if hash == "" {
+			hash = remoteHash
+		} else if hash != remoteHash {
+			err = fmt.Errorf("local (%s) and remote (%s) hashes differ", hash, remoteHash)
+			return
 		}
 	}
 
-	fn := config.GetPathToCache(chain) + "/tmp/ts.ipfs_hash.fil"
-	logger.Info("Pinning timestamp file", fn, "to", localHash)
-	file.StringToAsciiFile(fn, localHash.String())
-	if LocalDaemonRunning() && isRemote {
-		if localHash != remoteHash {
-			logger.Info("Local and remote hashes differ in PinTimestamps", localHash, remoteHash)
-		}
-	}
-
-	return nil
+	logger.Info("Pinned", dbName, "file", path, "to", hash)
+	return
 }
 
 func PinChunk(chain, path string, isRemote bool) (PinResult, error) {

@@ -1373,6 +1373,32 @@ components:
           items:
             type: string
           description: "an array of messages explaining failed checks"
+    pinReport:
+      description: "a JSON object containing the results of pinning the Unchained Index"
+      type: object
+      properties:
+        version:
+          type: string
+          description: "the version string hashed into the chunk data"
+        chain:
+          type: string
+          description: "the chain to which this manifest belongs"
+        schemas:
+          type: string
+          format: ipfshash
+          description: "IPFS cid of file describing the schemas for the various databases"
+        tsHash:
+          type: string
+          format: ipfshash
+          description: "IPFS cid of file containing timestamps"
+        manifestHash:
+          type: string
+          format: ipfshash
+          description: "IPFS cid of file containing CIDs for the various chunks"
+        nPinned:
+          type: number
+          format: uint64
+          description: "the number of chunks pinned for this operation"
     chain:
       description: "a configuration item carrying information about a single chain"
       type: object

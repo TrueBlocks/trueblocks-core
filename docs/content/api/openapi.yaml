@@ -1864,7 +1864,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/admin/#manifest">Manifest</a>, <a href="/data-model/admin/#chunkrecord">Chunkrecord</a>, <a href="/data-model/admin/#chunkindex">Chunkindex</a>, <a href="/data-model/admin/#chunkbloom">Chunkbloom</a>, <a href="/data-model/admin/#chunkaddress">Chunkaddress</a>, <a href="/data-model/admin/#chunkstats">Chunkstats</a>, and/or <a href="/data-model/admin/#reportcheck">Reportcheck</a> data. Corresponds to the <a href="/chifra/admin/#chifra-chunks">chifra chunks</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/admin/#manifest">Manifest</a>, <a href="/data-model/admin/#chunkrecord">Chunkrecord</a>, <a href="/data-model/admin/#chunkindex">Chunkindex</a>, <a href="/data-model/admin/#chunkbloom">Chunkbloom</a>, <a href="/data-model/admin/#chunkaddress">Chunkaddress</a>, <a href="/data-model/admin/#chunkstats">Chunkstats</a>, <a href="/data-model/admin/#reportcheck">Reportcheck</a>, and/or <a href="/data-model/admin/#chunkpinreport">Chunkpinreport</a> data. Corresponds to the <a href="/chifra/admin/#chifra-chunks">chifra chunks</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -1876,6 +1876,7 @@ paths:
                         - $ref: "#/components/schemas/chunkAddress"
                         - $ref: "#/components/schemas/chunkStats"
                         - $ref: "#/components/schemas/reportCheck"
+                        - $ref: "#/components/schemas/pinReport"
                 example:
                   {
                     "data": [
@@ -3432,6 +3433,32 @@ components:
           items:
             type: string
           description: "an array of messages explaining failed checks"
+    pinReport:
+      description: "a JSON object containing the results of pinning the Unchained Index"
+      type: object
+      properties:
+        version:
+          type: string
+          description: "the version string hashed into the chunk data"
+        chain:
+          type: string
+          description: "the chain to which this manifest belongs"
+        schemas:
+          type: string
+          format: ipfshash
+          description: "IPFS cid of file describing the schemas for the various databases"
+        tsHash:
+          type: string
+          format: ipfshash
+          description: "IPFS cid of file containing timestamps"
+        manifestHash:
+          type: string
+          format: ipfshash
+          description: "IPFS cid of file containing CIDs for the various chunks"
+        nPinned:
+          type: number
+          format: uint64
+          description: "the number of chunks pinned for this operation"
     chain:
       description: "a configuration item carrying information about a single chain"
       type: object

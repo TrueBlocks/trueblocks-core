@@ -52,8 +52,8 @@ func downloadCidToBinary(chain, cid, fileName string) error {
 	logger.InfoTable("Gateway:", gatewayUrl)
 	logger.InfoTable("CID:", cid)
 	logger.InfoTable("URL:", url.String())
-	msg := colors.Yellow + "Downloading timestamp file. This may take a moment, please wait..." + colors.Off
-	logger.Progress(true, msg)
+	msg := colors.Yellow + "Downloading timestamp file. This may take a moment..." + colors.Off
+	logger.Info(msg)
 
 	header, err := http.Head(url.String())
 	if err != nil {
@@ -69,22 +69,6 @@ func downloadCidToBinary(chain, cid, fileName string) error {
 		return nil
 	}
 
-	userHitsCtrlC := false
-	go func() {
-		for {
-			if file.FileSize(fileName) >= header.ContentLength {
-				break
-			}
-			pct := int(float64(file.FileSize(fileName)) / float64(header.ContentLength) * 100)
-			msg := colors.Yellow + fmt.Sprintf("Downloading timestamps. This may take a moment, please wait... %d%%", pct) + colors.Off
-			if userHitsCtrlC {
-				msg = colors.Yellow + fmt.Sprintf("Finishing work. please wait... %d%%                                 ", pct) + colors.Off
-			}
-			logger.Progress(true, msg)
-			time.Sleep(500 * time.Microsecond)
-		}
-	}()
-
 	//Get the response bytes from the url
 	response, err := http.Get(url.String())
 	if err != nil {
@@ -95,12 +79,29 @@ func downloadCidToBinary(chain, cid, fileName string) error {
 		return errors.New("received non-200 response code")
 	}
 
+	logger.Info(colors.Yellow + "Download complete. Saving timestamps..." + colors.Off)
+
+	userHitsCtrlC := false
+	go func() {
+		for {
+			if file.FileSize(fileName) >= header.ContentLength {
+				break
+			}
+			pct := int(float64(file.FileSize(fileName)) / float64(header.ContentLength) * 100)
+			msg := colors.Yellow + fmt.Sprintf("Downloading timestamps. Please wait... %d%%", pct) + colors.Off
+			if userHitsCtrlC {
+				msg = colors.Yellow + fmt.Sprintf("Finishing work. please wait... %d%%                                 ", pct) + colors.Off
+			}
+			logger.Progress(true, msg)
+			time.Sleep(500 * time.Microsecond)
+		}
+	}()
+
 	trapChannel := sigintTrap.Enable(context.Background(), func() {}, func() {
 		userHitsCtrlC = true
 	})
 	defer sigintTrap.Disable(trapChannel)
 
-	// TODO: We should make a backup here
 	ff, err := os.Create(fileName)
 	if err != nil {
 		return err

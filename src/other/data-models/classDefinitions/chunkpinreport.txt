@@ -1,0 +1,11 @@
+[settings]
+class = CChunkPinReport
+fields = chunkpinreport.csv
+includes = etherlib.h
+doc_group = 04-Admin
+doc_descr = a JSON object containing the results of pinning the Unchained Index
+doc_route = 412-pinReport
+doc_producer = chunks
+
+cpp_output =
+go_output = src/apps/chifra/internal/chunks
