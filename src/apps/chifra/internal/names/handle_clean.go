@@ -5,7 +5,6 @@ package namesPkg
 import (
 	"context"
 	"fmt"
-	"math"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -75,7 +74,7 @@ func (opts *NamesOptions) cleanNames() error {
 	go func() {
 		for progress := range progressChan {
 			doneNow := done.Add(int32(progress))
-			reportProgress(doneNow, total)
+			logger.PctProgress(doneNow, total)
 		}
 	}()
 
@@ -125,7 +124,7 @@ func (opts *NamesOptions) cleanNames() error {
 		return nil
 	})
 
-	// Block until we get an error from any of the iterations or `IterateOverMap` finishes
+	// Block until we get an error from any of the iterations or the iteration finishes
 	if stepErr := <-errorChannel; stepErr != nil {
 		cancel()
 		return stepErr
@@ -142,18 +141,6 @@ func (opts *NamesOptions) cleanNames() error {
 	}
 
 	return names.WriteCustomNames(opts.Globals.Chain, overrideDatabase)
-}
-
-func reportProgress(done int32, total int) {
-	if done%10 != 0 {
-		return
-	}
-
-	percentage := math.Round(float64(done) / float64(total) * 100)
-	logger.Progress(
-		true,
-		fmt.Sprintf("Cleaning: %.f%% (%d items, %d total)", percentage, done, total),
-	)
 }
 
 // wrapErrorWithAddr prepends `err` with `address`, so that we can learn which name caused troubles
