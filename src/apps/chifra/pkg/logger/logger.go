@@ -128,6 +128,11 @@ func Progress(tick bool, v ...any) {
 	toLog(progress, v...)
 }
 
+func CleanLine() {
+	// \033[K is escape sequence meaning "erase to end of line"
+	fmt.Print("\r\033[K")
+}
+
 func PctProgress(done int32, total int, tick int32) {
 	if done%tick != 0 {
 		return
