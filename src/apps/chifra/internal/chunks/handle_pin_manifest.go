@@ -122,5 +122,3 @@ func (opts *ChunksOptions) HandlePinManifest(blockNums []uint64) error {
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
-
-var spaces = strings.Repeat(" ", 20)

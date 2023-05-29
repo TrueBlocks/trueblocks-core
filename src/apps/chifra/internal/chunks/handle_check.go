@@ -168,6 +168,14 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 		reports = append(reports, stage)
 	}
 
+	if opts.Deep {
+		deep := simpleReportCheck{Reason: "Deep checks for " + opts.Mode}
+		if err := opts.CheckDeep(cacheManifest, &deep); err != nil {
+			return err
+		}
+		reports = append(reports, deep)
+	}
+
 	for i := 0; i < len(reports); i++ {
 		reports[i].FailedCnt = reports[i].CheckedCnt - reports[i].PassedCnt
 		if reports[i].FailedCnt == 0 {
