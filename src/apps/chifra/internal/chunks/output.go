@@ -69,17 +69,14 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 		blockNums = blockNums[:200]
 	}
 
-	if opts.Pin {
-		err = opts.HandlePinManifest(blockNums)
-
-	} else if opts.Publish {
-		err = opts.HandlePublish(blockNums)
+	if opts.Pin || opts.Publish {
+		err = opts.HandlePinAndOrPublish(blockNums)
 
 	} else if opts.Truncate != utils.NOPOS {
 		err = opts.HandleTruncate(blockNums)
 
 	} else if opts.Check {
-		err = opts.HandleChunksCheck(blockNums)
+		err = opts.HandleCheck(blockNums)
 
 	} else {
 		switch opts.Mode {
@@ -127,15 +124,6 @@ func (opts *ChunksOptions) IsPorted() (ported bool) {
 }
 
 // EXISTING_CODE
-func (opts *ChunksOptions) defaultFormat(def string) string {
-	if (opts.Mode == "index" && opts.Check) ||
-		(opts.Mode == "manifest" && opts.Check) ||
-		opts.Truncate != utils.NOPOS || len(opts.Belongs) > 0 {
-		return "json"
-	}
-	return def
-}
-
 func (opts *ChunksOptions) shouldShow(obj index.AddressRecord) bool {
 	if opts.Mode == "addresses" || opts.Mode == "appearances" {
 		return opts.Globals.Verbose
