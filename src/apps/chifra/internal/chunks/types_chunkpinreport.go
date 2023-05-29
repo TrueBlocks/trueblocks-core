@@ -36,6 +36,20 @@ func (s *simpleChunkPinReport) Model(verbose bool, format string, extraOptions m
 	var order = []string{}
 
 	// EXISTING_CODE
+	model["chain"] = s.Chain
+	model["manifestHash"] = s.ManifestHash
+	model["nPinned"] = s.NPinned
+	model["schemas"] = s.Schemas
+	model["tsHash"] = s.TsHash
+	model["version"] = s.Version
+	order = []string{
+		"chain",
+		"manifestHash",
+		"nPinned",
+		"schemas",
+		"tsHash",
+		"version",
+	)
 	// EXISTING_CODE
 
 	return types.Model{
