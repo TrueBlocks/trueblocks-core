@@ -62,6 +62,22 @@ func (opts *ChunksOptions) validateChunks() error {
 		}
 	}
 
+	if opts.Pin && opts.Publish {
+		return validate.Usage("The {0} and {1} options are mutually exclusive.", "--pin", "--publish")
+	}
+
+	if opts.Deep {
+		if opts.Mode == "index" {
+			// do nothing
+		} else if opts.Mode == "manifest" {
+			if !pinning.LocalDaemonRunning() {
+				return validate.Usage("The {0} option requires {1}.", "manifest --deep", "a locally running IPFS daemon")
+			}
+		} else {
+			return validate.Usage("The {0} option requires mode {1}.", "--deep", "index or manifest")
+		}
+	}
+
 	if opts.Mode != "index" {
 		if opts.Truncate != utils.NOPOS {
 			return validate.Usage("The {0} option is only available {1}.", "--truncate", "in index mode")

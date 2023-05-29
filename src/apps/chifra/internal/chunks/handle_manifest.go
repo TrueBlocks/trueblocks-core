@@ -18,12 +18,12 @@ var sourceMap = map[bool]manifest.Source{
 }
 
 func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
+	testMode := opts.Globals.TestMode
 	man, err := manifest.ReadManifest(opts.Globals.Chain, sourceMap[opts.Remote])
 	if err != nil {
 		return err
 	}
 
-	testMode := opts.Globals.TestMode
 	ctx := context.Background()
 	if opts.Globals.Format == "txt" || opts.Globals.Format == "csv" {
 		fetchData := func(modelChan chan types.Modeler[types.RawChunkRecord], errorChan chan error) {

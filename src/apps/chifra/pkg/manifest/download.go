@@ -144,6 +144,6 @@ func downloadManifest(chain, gatewayUrl, cid string) (*Manifest, error) {
 		err := json.NewDecoder(response.Body).Decode(m)
 		return m, err
 	default:
-		return nil, errors.New("unrecognized content type")
+		return nil, errors.New("unrecognized content type: " + response.Header.Get("content-type"))
 	}
 }
