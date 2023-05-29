@@ -34,6 +34,7 @@ type ChunksOptions struct {
 	FirstBlock uint64                   `json:"firstBlock,omitempty"` // First block to process (inclusive)
 	LastBlock  uint64                   `json:"lastBlock,omitempty"`  // Last block to process (inclusive)
 	MaxAddrs   uint64                   `json:"maxAddrs,omitempty"`   // The max number of addresses to process in a given chunk
+	Deep       bool                     `json:"deep,omitempty"`       // If true, dig more deeply during checking (manifest only)
 	Sleep      float64                  `json:"sleep,omitempty"`      // For --remote pinning only, seconds to sleep between API calls
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
@@ -60,6 +61,7 @@ func (opts *ChunksOptions) testLog() {
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 	logger.TestLog(opts.MaxAddrs != utils.NOPOS, "MaxAddrs: ", opts.MaxAddrs)
+	logger.TestLog(opts.Deep, "Deep: ", opts.Deep)
 	logger.TestLog(opts.Sleep != float64(0.0), "Sleep: ", opts.Sleep)
 	opts.Globals.TestLog()
 }
@@ -109,6 +111,8 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 			opts.LastBlock = globals.ToUint64(value[0])
 		case "maxAddrs":
 			opts.MaxAddrs = globals.ToUint64(value[0])
+		case "deep":
+			opts.Deep = true
 		case "sleep":
 			opts.Sleep = globals.ToFloat64(value[0])
 		default:
