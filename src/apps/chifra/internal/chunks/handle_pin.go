@@ -19,7 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
-func (opts *ChunksOptions) HandlePinManifest(blockNums []uint64) error {
+func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 	firstBlock := mustParseUint(os.Getenv("TB_CHUNK_PIN_FIRST_BLOCK"))
 
 	ctx, cancel := context.WithCancel(context.Background())

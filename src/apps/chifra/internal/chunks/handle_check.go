@@ -21,13 +21,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// HandleChunksCheck looks at three different arrays: index files on disc, manifest on disc,
+// HandleCheck looks at three different arrays: index files on disc, manifest on disc,
 // and manifest in the smart contract. It tries to check these three sources for
 // cosnsistency. Smart contract rules, so it is checked more thoroughly.
-func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
-	// Checking only reports in JSON Mode
-	opts.Globals.Format = "json"
-
+func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 	maxTestItems := 10
 	filenameChan := make(chan cache.CacheFileInfo)
 
@@ -179,10 +176,9 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	for i := 0; i < len(reports); i++ {
 		reports[i].FailedCnt = reports[i].CheckedCnt - reports[i].PassedCnt
 		if reports[i].FailedCnt == 0 {
-			reports[i].PassedCnt = 0
-			reports[i].VisitedCnt = 0
 			reports[i].Result = "passed"
 		} else {
+			reports[i].Result = "failed"
 			reports[i].SkippedCnt = reports[i].VisitedCnt - reports[i].CheckedCnt
 		}
 	}

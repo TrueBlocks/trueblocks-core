@@ -159,7 +159,16 @@ func chunksFinishParse(args []string) *ChunksOptions {
 	if opts.MaxAddrs == 0 {
 		opts.MaxAddrs = utils.NOPOS
 	}
-	defFmt = opts.defaultFormat(defFmt)
+	getDef := func(def string) string {
+		if (opts.Mode == "index" && opts.Check) ||
+			(opts.Mode == "manifest" && opts.Check) ||
+			opts.Truncate != utils.NOPOS || len(opts.Belongs) > 0 {
+			return "json"
+		}
+		return def
+	}
+
+	defFmt = getDef(defFmt)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
