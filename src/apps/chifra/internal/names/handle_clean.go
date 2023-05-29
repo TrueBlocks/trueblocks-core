@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"math"
 	"strings"
-	"sync"
 	"sync/atomic"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -28,15 +27,21 @@ func (opts *NamesOptions) HandleClean() error {
 		label = "regular"
 		db = names.DatabaseRegular
 	}
-	logger.Info("Processing", label, "names file", "("+names.GetDatabasePath(opts.Globals.Chain, db)+")")
+	sourcePath := names.GetDatabasePath(opts.Globals.Chain, db)
+	logger.Info("Processing", label, "names file", "("+sourcePath+")")
+	destinationLabel := sourcePath
+	if opts.DryRun {
+		destinationLabel = "standard output"
+	}
+	logger.Info("Writing results to", destinationLabel)
 
 	var message string
-	err := opts.cleanNames()
+	modifiedCount, err := opts.cleanNames()
 	if err != nil {
 		message = fmt.Sprintf("The %s names database was not cleaned", label)
 		logger.Warn(message)
 	} else {
-		message = fmt.Sprintf("The %s names database was cleaned", label)
+		message = fmt.Sprintf("The %s names database was cleaned. %d name(s) has been modified", label, modifiedCount)
 		logger.Info(message)
 	}
 
@@ -50,7 +55,7 @@ func (opts *NamesOptions) HandleClean() error {
 	return err
 }
 
-func (opts *NamesOptions) cleanNames() error {
+func (opts *NamesOptions) cleanNames() (int, error) {
 	parts := names.Custom
 	if opts.Regular {
 		parts = names.Regular
@@ -59,30 +64,40 @@ func (opts *NamesOptions) cleanNames() error {
 	// Load databases
 	allNames, err := names.LoadNamesMap(opts.Globals.Chain, parts, []string{})
 	if err != nil {
-		return err
+		return 0, err
 	}
 	prefundMap, err := preparePrefunds(opts.Globals.Chain)
 	if err != nil {
-		return err
+		return 0, err
 	}
 
 	// Prepare progress reporting. We will report percentage.
 	total := len(allNames)
 	var done atomic.Int32
-	progressChan := make(chan int)
+	modifiedCount := 0
+	type Progress struct {
+		ProgressDelta int32
+		Modified      bool
+	}
+	progressChan := make(chan Progress)
 	defer close(progressChan)
 	// Listen on a channel and whenever it updates, call `reportProgress`
 	go func() {
 		for progress := range progressChan {
-			doneNow := done.Add(int32(progress))
+			doneNow := done.Add(progress.ProgressDelta)
+			if progress.Modified {
+				modifiedCount += int(progress.ProgressDelta)
+			}
 			reportProgress(doneNow, total)
 		}
 	}()
 
-	// If nothing gets modified we won't bother with saving the files
-	var anyNameModified bool
-	// We'll use once to set `anyNameModified` from goroutines
-	var onceMod sync.Once
+	defer func() {
+		// Clean line after progress report.
+		if done.Load() > 0 {
+			logger.CleanLine()
+		}
+	}()
 
 	// For --dry_run, we don't want to write to the real database
 	var overrideDatabase names.Database
@@ -103,16 +118,16 @@ func (opts *NamesOptions) cleanNames() error {
 			modified = true
 		}
 
-		progressChan <- 1
+		progressChan <- Progress{
+			ProgressDelta: 1,
+			Modified:      modified,
+		}
 
 		if !modified {
 			return nil
 		}
 
-		// The name has been modified, so set the flag and...
-		onceMod.Do(func() { anyNameModified = true })
-
-		// ...update names in-memory cache
+		// update names in-memory cache
 		if opts.Regular {
 			if err = names.UpdateRegularName(&name); err != nil {
 				return wrapErrorWithAddr(&address, err)
@@ -128,20 +143,20 @@ func (opts *NamesOptions) cleanNames() error {
 	// Block until we get an error from any of the iterations or `IterateOverMap` finishes
 	if stepErr := <-errorChannel; stepErr != nil {
 		cancel()
-		return stepErr
+		return 0, stepErr
 	}
 
 	// If nothing has been changed, we can exit here
-	if !anyNameModified {
-		return nil
+	if modifiedCount == 0 {
+		return 0, nil
 	}
 
 	// Write to disk
 	if opts.Regular {
-		return names.WriteRegularNames(opts.Globals.Chain, overrideDatabase)
+		return modifiedCount, names.WriteRegularNames(opts.Globals.Chain, overrideDatabase)
 	}
 
-	return names.WriteCustomNames(opts.Globals.Chain, overrideDatabase)
+	return modifiedCount, names.WriteCustomNames(opts.Globals.Chain, overrideDatabase)
 }
 
 func reportProgress(done int32, total int) {

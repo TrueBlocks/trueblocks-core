@@ -126,3 +126,8 @@ func Progress(tick bool, v ...any) {
 	}
 	toLog(progress, v...)
 }
+
+func CleanLine() {
+	// \033[K is escape sequence meaning "erase to end of line"
+	fmt.Print("\r\033[K")
+}
