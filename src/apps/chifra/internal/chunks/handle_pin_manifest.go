@@ -67,19 +67,13 @@ func (opts *ChunksOptions) HandlePinManifest(blockNums []uint64) error {
 				}
 
 				if pinning.LocalDaemonRunning() {
-					// TODO: BOGUS We've already pinned the item, which means we could simply add to
-					// the array and use the count. Better reporting and we could remove this counter...
-					man.NPinned++
-					// man.Chunks = append(man.Chunks, result.Local)
-					// logger.Progress(true, colors.Green+"Pinned local: ", result.Local, spaces, colors.Off)
+					man.Pinned = append(man.Pinned, result.Local.BloomHash)
+					man.Pinned = append(man.Pinned, result.Local.IndexHash)
 				}
 
 				if opts.Remote {
-					// TODO: BOGUS We've already pinned the item, which means we could simply add to
-					// the array and use the count. Better reporting and we could remove this counter...
-					man.NPinned++
-					// man.Chunks = append(man.Chunks, result.Remote)
-					// logger.Progress(true, colors.BrightBlue+"Pinned remote:", result.Remote, spaces, colors.Off)
+					man.Pinned = append(man.Pinned, result.Remote.BloomHash)
+					man.Pinned = append(man.Pinned, result.Remote.IndexHash)
 				}
 
 				if !result.Matches {

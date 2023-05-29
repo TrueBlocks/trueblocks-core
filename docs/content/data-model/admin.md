@@ -284,7 +284,6 @@ PinReports consist of the following fields:
 | schemas      | IPFS cid of file describing the schemas for the various databases | ipfshash |
 | tsHash       | IPFS cid of file containing timestamps                            | ipfshash |
 | manifestHash | IPFS cid of file containing CIDs for the various chunks           | ipfshash |
-| nPinned      | the number of chunks pinned for this operation                    | uint64   |
 
 ## Chain
 

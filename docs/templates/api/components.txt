@@ -1395,10 +1395,6 @@ components:
           type: string
           format: ipfshash
           description: "IPFS cid of file containing CIDs for the various chunks"
-        nPinned:
-          type: number
-          format: uint64
-          description: "the number of chunks pinned for this operation"
     chain:
       description: "a configuration item carrying information about a single chain"
       type: object
