@@ -115,6 +115,7 @@ func (opts *ChunksOptions) HandlePinManifest(blockNums []uint64) error {
 				cancel()
 				return
 			}
+		}
 
 		modelChan <- &man
 	}

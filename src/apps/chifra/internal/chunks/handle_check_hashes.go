@@ -16,9 +16,11 @@ func (opts *ChunksOptions) CheckHashes(cacheMan *manifest.Manifest, contractMan 
 	if err := opts.checkHashes("cache", cacheMan, report); err != nil {
 		return err
 	}
+
 	if err := opts.checkHashes("contract", contractMan, report); err != nil {
 		return err
 	}
+
 	return nil
 }
 
@@ -35,6 +37,7 @@ func (opts *ChunksOptions) checkHashes(which string, man *manifest.Manifest, rep
 		} else {
 			report.PassedCnt++
 		}
+
 		report.VisitedCnt++
 		report.CheckedCnt++
 		if len(chunk.IndexHash) != 46 {
@@ -47,5 +50,6 @@ func (opts *ChunksOptions) checkHashes(which string, man *manifest.Manifest, rep
 			report.PassedCnt++
 		}
 	}
+
 	return nil
 }

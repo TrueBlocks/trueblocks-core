@@ -7,6 +7,7 @@ package logger
 import (
 	"fmt"
 	"log"
+	"math"
 	"os"
 	"time"
 
@@ -78,7 +79,7 @@ func toLog(sev severity, a ...interface{}) {
 	if sev == progress {
 		for index, aa := range a {
 			if index > 0 {
-				fmt.Fprint(os.Stderr, ' ')
+				fmt.Fprint(os.Stderr, " ")
 			}
 			fmt.Fprint(os.Stderr, aa)
 		}
@@ -125,4 +126,16 @@ func Progress(tick bool, v ...any) {
 		return
 	}
 	toLog(progress, v...)
+}
+
+func PctProgress(done int32, total int, tick int32) {
+	if done%tick != 0 {
+		return
+	}
+
+	percentage := math.Round(float64(done) / float64(total) * 100)
+	Progress(
+		true,
+		fmt.Sprintf("Processing: %.f%% (%d items, %d total)", percentage, done, total),
+	)
 }
