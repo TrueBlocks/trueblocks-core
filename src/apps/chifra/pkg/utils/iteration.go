@@ -77,5 +77,15 @@ func IterateOverMap[Key comparable, Value any](ctx context.Context, errChannel c
 		}
 	}
 
+	// don't forget about the remainder...
+	if len(payload) > 0 {
+		wg.Add(1)
+		err = pool.Invoke(payload)
+		if err != nil {
+			errChannel <- err
+			return
+		}
+	}
+
 	wg.Wait()
 }
