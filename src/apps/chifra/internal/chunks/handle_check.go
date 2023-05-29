@@ -168,12 +168,12 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 		reports = append(reports, stage)
 	}
 
-	if opts.Deep && opts.Mode == "addresses" {
-		incl := simpleReportCheck{Reason: "Check address inclusion in Bloom"}
-		if err := opts.CheckInclusion(cacheManifest, &incl); err != nil {
+	if opts.Deep {
+		deep := simpleReportCheck{Reason: "Deep checks for " + opts.Mode}
+		if err := opts.CheckDeep(cacheManifest, &deep); err != nil {
 			return err
 		}
-		reports = append(reports, incl)
+		reports = append(reports, deep)
 	}
 
 	for i := 0; i < len(reports); i++ {

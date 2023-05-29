@@ -67,8 +67,14 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 
 	if opts.Deep {
-		if opts.Mode != "addresses" && !pinning.LocalDaemonRunning() {
-			return validate.Usage("The {0} option requires {1}.", "--deep", "a locally running IPFS daemon")
+		if opts.Mode == "index" {
+			// do nothing
+		} else if opts.Mode == "manifest" {
+			if !pinning.LocalDaemonRunning() {
+				return validate.Usage("The {0} option requires {1}.", "manifest --deep", "a locally running IPFS daemon")
+			}
+		} else {
+			return validate.Usage("The {0} option requires mode {1}.", "--deep", "index or manifest")
 		}
 	}
 

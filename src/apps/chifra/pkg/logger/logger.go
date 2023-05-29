@@ -128,14 +128,14 @@ func Progress(tick bool, v ...any) {
 	toLog(progress, v...)
 }
 
-func PctProgress(done int32, total int) {
-	if done%10 != 0 {
+func PctProgress(done int32, total int, tick int32) {
+	if done%tick != 0 {
 		return
 	}
 
 	percentage := math.Round(float64(done) / float64(total) * 100)
 	Progress(
 		true,
-		fmt.Sprintf("Cleaning: %.f%% (%d items, %d total)", percentage, done, total),
+		fmt.Sprintf("Processing: %.f%% (%d items, %d total)", percentage, done, total),
 	)
 }

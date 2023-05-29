@@ -74,7 +74,7 @@ func (opts *NamesOptions) cleanNames() error {
 	go func() {
 		for progress := range progressChan {
 			doneNow := done.Add(int32(progress))
-			logger.PctProgress(doneNow, total)
+			logger.PctProgress(doneNow, total, 10)
 		}
 	}()
 
