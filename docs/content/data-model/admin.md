@@ -266,6 +266,25 @@ ReportChecks consist of the following fields:
 | result     | the result of the check                       | string   |
 | msgStrings | an array of messages explaining failed checks | []string |
 
+## PinReport
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+Reports on the result of the command `chifra chunks manifest --pin [--deep]`.
+
+The following commands produce and manage PinReports:
+
+- [chifra chunks](/chifra/admin/#chifra-chunks)
+
+PinReports consist of the following fields:
+
+| Field        | Description                                                       | Type     |
+| ------------ | ----------------------------------------------------------------- | -------- |
+| version      | the version string hashed into the chunk data                     | string   |
+| chain        | the chain to which this manifest belongs                          | string   |
+| schemas      | IPFS cid of file describing the schemas for the various databases | ipfshash |
+| tsHash       | IPFS cid of file containing timestamps                            | ipfshash |
+| manifestHash | IPFS cid of file containing CIDs for the various chunks           | ipfshash |
+
 ## Chain
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->

@@ -56,8 +56,7 @@ Notes:
   - The --belongs option is only available in the index mode.
   - The --first_block and --last_block options apply only to addresses, appearances, and index --belongs mode.
   - The --pin option requires a locally running IPFS node or a pinning service API key.
-  - The --publish option requires a private key.
-  - You may combine the --pin and --publish options.`
+  - The --publish option requires a private key.`
 
 func init() {
 	chunksCmd.Flags().SortFlags = false
@@ -66,11 +65,12 @@ func init() {
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Pin, "pin", "i", false, "pin the manifest or each index chunk and bloom")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Publish, "publish", "p", false, "publish the manifest to the Unchained Index smart contract")
 	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().Truncate, "truncate", "n", 0, "truncate the entire index at this block (requires a block identifier)")
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Remote, "remote", "m", false, "prior to processing, retreive the manifest from the Unchained Index smart contract")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Remote, "remote", "r", false, "prior to processing, retreive the manifest from the Unchained Index smart contract")
 	chunksCmd.Flags().StringSliceVarP(&chunksPkg.GetOptions().Belongs, "belongs", "b", nil, "in index mode only, checks the address(es) for inclusion in the given index chunk")
 	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to process (inclusive)")
 	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to process (inclusive)")
-	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().MaxAddrs, "max_addrs", "d", 0, "the max number of addresses to process in a given chunk")
+	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().MaxAddrs, "max_addrs", "m", 0, "the max number of addresses to process in a given chunk")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Deep, "deep", "d", false, "if true, dig more deeply during checking (manifest only)")
 	chunksCmd.Flags().Float64VarP(&chunksPkg.GetOptions().Sleep, "sleep", "s", 0.0, "for --remote pinning only, seconds to sleep between API calls")
 	globals.InitGlobals(chunksCmd, &chunksPkg.GetOptions().Globals)
 
