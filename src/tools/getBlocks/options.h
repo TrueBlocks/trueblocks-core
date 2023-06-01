@@ -18,6 +18,8 @@
 #include "etherlib.h"
 
 // BEG_ERROR_DEFINES
+// END_ERROR_DEFINES
+
 #define ERR_NOCACHEUNCLE 1
 #define ERR_NOCACHEADDRESS 2
 #define ERR_TRACINGREQUIRED 3
@@ -26,7 +28,6 @@
 #define ERR_ATLEASTONEBLOCK 6
 #define ERR_EMTOPONLYWITHLOG 7
 #define ERR_ARTWITHOUTLOGS 8
-// END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {

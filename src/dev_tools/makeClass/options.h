@@ -20,10 +20,11 @@
 #include "classdefinition.h"
 
 // BEG_ERROR_DEFINES
+// END_ERROR_DEFINES
+
 #define ERR_CLASSDEFNOTEXIST 1
 #define ERR_CONFIGMISSING 2
 #define ERR_NEEDONECLASS 3
-// END_ERROR_DEFINES
 
 //-------------------------------------------------------------------
 class CCounter {

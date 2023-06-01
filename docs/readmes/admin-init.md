@@ -30,12 +30,13 @@ Usage:
   chifra init [flags]
 
 Flags:
-  -a, --all           in addition to Bloom filters, download full index chunks (recommended)
-  -d, --dry_run       display the results of the download without actually downloading
-  -s, --sleep float   seconds to sleep between downloads
-  -x, --fmt string    export format, one of [none|json*|txt|csv]
-  -v, --verbose       enable verbose (increase detail with --log_level)
-  -h, --help          display this help screen
+  -a, --all                in addition to Bloom filters, download full index chunks (recommended)
+  -d, --dry_run            display the results of the download without actually downloading
+  -F, --first_block uint   do not download any chunks earlier than this block
+  -s, --sleep float        seconds to sleep between downloads
+  -x, --fmt string         export format, one of [none|json*|txt|csv]
+  -v, --verbose            enable verbose (increase detail with --log_level)
+  -h, --help               display this help screen
 
 Notes:
   - If run with no options, this tool will download or freshen only the Bloom filters.

@@ -48,7 +48,7 @@ const longTokens = `Purpose:
 
 const notesTokens = `
 Notes:
-  - An address must start with '0x' and be forty-two characters long.
+  - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - Blocks is a space-separated list of values, a start-end range, a special, or any combination.
   - If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.
   - If the queried node does not store historical state, the results are undefined.

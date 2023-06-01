@@ -43,15 +43,13 @@ func (opts *NamesOptions) validateNames() error {
 		return validate.Usage("You may not use the {0} option when editing names.", "--prefund")
 	}
 
-	if opts.anyCrud() {
-		// TODO: BOGUS
-		// err := validate.ValidateAtLeastOneAddr(opts.Terms)
-		// if err != nil {
-		// 	return err
-		// }
-	} else if opts.ToCustom {
-		return validate.Usage("Use the {0} option only when editing names.", "--to_custom")
-	}
+	// TODO: BOGUS
+	// if opts.anyCrud() {
+	// err := validate.ValidateAtLeastOneAddr(opts.Terms)
+	// if err != nil {
+	// 	return err
+	// }
+	// }
 
 	addr := base.HexToAddress(opts.Autoname)
 	zero := addr.IsZero()

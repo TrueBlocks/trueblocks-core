@@ -27,11 +27,11 @@ static const COption params[] = {
     COption("apps", "s", "", OPT_SWITCH, "display a list of uniq address appearances in the block"),
     COption("uniq", "u", "", OPT_SWITCH, "display a list of uniq address appearances per transaction"),
     COption("flow", "f", "enum[from|to|reward]", OPT_FLAG, "for the uniq and apps options only, export only from or to (including trace from or to)"),  // NOLINT
-    COption("logs", "g", "", OPT_HIDDEN | OPT_SWITCH, "display only the logs found in the block(s)"),
-    COption("emitter", "m", "list<addr>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, filter logs to show only those logs emitted by the given address(es)"),  // NOLINT
-    COption("topic", "p", "list<topic>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, filter logs to show only those with this topic(s)"),  // NOLINT
-    COption("articulate", "a", "", OPT_HIDDEN | OPT_SWITCH, "for the --logs option only, articulate the retrieved data if ABIs can be found"),  // NOLINT
-    COption("big_range", "r", "<uint64>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, allow for block ranges larger than 500"),  // NOLINT
+    COption("logs", "l", "", OPT_SWITCH, "display only the logs found in the block(s)"),
+    COption("emitter", "m", "list<addr>", OPT_FLAG, "for the --logs option only, filter logs to show only those logs emitted by the given address(es)"),  // NOLINT
+    COption("topic", "B", "list<topic>", OPT_FLAG, "for the --logs option only, filter logs to show only those with this topic(s)"),  // NOLINT
+    COption("articulate", "a", "", OPT_SWITCH, "for the --logs option only, articulate the retrieved data if ABIs can be found"),  // NOLINT
+    COption("big_range", "r", "<uint64>", OPT_FLAG, "for the --logs option only, allow for block ranges larger than 500"),  // NOLINT
     COption("count", "U", "", OPT_SWITCH, "display the number of the lists of appearances for --addrs or --uniq"),
     COption("cache", "o", "", OPT_SWITCH, "force a write of the block to the cache"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve one or more blocks from the chain or local cache."),
@@ -91,7 +91,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-f" || arg == "--flow") {
             return flag_required("flow");
 
-        } else if (arg == "-g" || arg == "--logs") {
+        } else if (arg == "-l" || arg == "--logs") {
             logs = true;
 
         } else if (startsWith(arg, "-m:") || startsWith(arg, "--emitter:")) {
@@ -101,11 +101,11 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-m" || arg == "--emitter") {
             return flag_required("emitter");
 
-        } else if (startsWith(arg, "-p:") || startsWith(arg, "--topic:")) {
-            arg = substitute(substitute(arg, "-p:", ""), "--topic:", "");
+        } else if (startsWith(arg, "-B:") || startsWith(arg, "--topic:")) {
+            arg = substitute(substitute(arg, "-B:", ""), "--topic:", "");
             if (!parseTopicList2(this, topic, arg))
                 return false;
-        } else if (arg == "-p" || arg == "--topic") {
+        } else if (arg == "-B" || arg == "--topic") {
             return flag_required("topic");
 
         } else if (arg == "-a" || arg == "--articulate") {
@@ -269,11 +269,13 @@ COptions::COptions(void) {
     notes.push_back("With the --logs option, optionally specify one or more --emitter, one or more --topics, either or both.");  // NOLINT
     notes.push_back("The --logs option is significantly faster if you provide an --emitter and/or a --topic.");
     notes.push_back("Multiple topics match on topic0, topic1, and so on, not on different topic0's.");
-    notes.push_back("Large block ranges may crash the node, use --big_range to specify a larger range.");
+    notes.push_back("For the --logs option, large block ranges may crash the node, use --big_range to specify a larger range.");  // NOLINT
     // clang-format on
     // END_CODE_NOTES
 
     // BEG_ERROR_STRINGS
+    // END_ERROR_STRINGS
+
     usageErrs[ERR_NOCACHEUNCLE] = "The --cache option is not available for uncle blocks.";
     usageErrs[ERR_NOCACHEADDRESS] = "The --cache option is not available when using one of the address options.";
     usageErrs[ERR_TRACINGREQUIRED] = "A tracing node is required for the --traces options to work properly.";
@@ -282,7 +284,6 @@ COptions::COptions(void) {
     usageErrs[ERR_ATLEASTONEBLOCK] = "You must specify at least one block.";
     usageErrs[ERR_EMTOPONLYWITHLOG] = "The --emitter and --topic options are only available with the --log option.";
     usageErrs[ERR_ARTWITHOUTLOGS] = "The --artcilate option is only available with the --logs option.";
-    // END_ERROR_STRINGS
 }
 
 //--------------------------------------------------------------------------------

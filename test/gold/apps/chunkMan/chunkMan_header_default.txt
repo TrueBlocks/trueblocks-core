@@ -14,7 +14,7 @@ Flags:
   -c, --check              check the manifest, index, or blooms for internal consistency
   -i, --pin                pin the manifest or each index chunk and bloom
   -p, --publish            publish the manifest to the Unchained Index smart contract
-  -n, --truncate uint      truncate the entire index at this block (requires a block identifier)
+  -n, --truncate uint      truncate the entire index at this block (requires a block identifier) (hidden)
   -r, --remote             prior to processing, retreive the manifest from the Unchained Index smart contract
   -b, --belongs strings    in index mode only, checks the address(es) for inclusion in the given index chunk
   -F, --first_block uint   first block to process (inclusive)

@@ -48,7 +48,7 @@ const longState = `Purpose:
 
 const notesState = `
 Notes:
-  - An address must start with '0x' and be forty-two characters long.
+  - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - Blocks is a space-separated list of values, a start-end range, a special, or any combination.
   - If the queried node does not store historical state, the results are undefined.
   - Special blocks are detailed under chifra when --list.
@@ -62,12 +62,8 @@ func init() {
 One or more of [ none | some | all | balance | nonce | code | proxy | deployed | accttype ]`)
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Changes, "changes", "c", false, "only report a balance when it changes from one block to the next")
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().NoZero, "no_zero", "n", false, "suppress the display of zero balance accounts")
-	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Call, "call", "a", "", "a bang-separated string consisting of address!4-byte!bytes (hidden)")
-	stateCmd.Flags().StringVarP(&statePkg.GetOptions().ProxyFor, "proxy_for", "r", "", "for the --call option only, redirects calls to this implementation (hidden)")
-	if os.Getenv("TEST_MODE") != "true" {
-		stateCmd.Flags().MarkHidden("call")
-		stateCmd.Flags().MarkHidden("proxy_for")
-	}
+	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Call, "call", "a", "", "a bang-separated string consisting of address!4-byte!bytes")
+	stateCmd.Flags().StringVarP(&statePkg.GetOptions().ProxyFor, "proxy_for", "r", "", "for the --call option only, redirects calls to this implementation")
 	globals.InitGlobals(stateCmd, &statePkg.GetOptions().Globals)
 
 	stateCmd.SetUsageTemplate(UsageWithNotes(notesState))

@@ -51,10 +51,7 @@ const notesConfig = ``
 func init() {
 	configCmd.Flags().SortFlags = false
 
-	configCmd.Flags().BoolVarP(&configPkg.GetOptions().Paths, "paths", "a", false, "show the configuration paths for the system (hidden)")
-	if os.Getenv("TEST_MODE") != "true" {
-		configCmd.Flags().MarkHidden("paths")
-	}
+	configCmd.Flags().BoolVarP(&configPkg.GetOptions().Paths, "paths", "a", false, "show the configuration paths for the system")
 	globals.InitGlobals(configCmd, &configPkg.GetOptions().Globals)
 
 	configCmd.SetUsageTemplate(UsageWithNotes(notesConfig))

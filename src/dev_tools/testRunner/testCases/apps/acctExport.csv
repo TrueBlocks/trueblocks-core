@@ -71,8 +71,8 @@ on      ,cmd  ,fast  ,monitors ,apps/acctExport ,monitors_help            ,n    
 on      ,cmd  ,fast  ,monitors ,apps/acctExport ,monitors_long_help       ,n    ,help
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_no_params       ,y    ,
 
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_not_both1       ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & last_block = 9000000 & fmt = json & remove & undelete
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_not_both2       ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & last_block = 9000000 & fmt = json & delete & undelete
+on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_not_both1       ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & remove & undelete
+on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_not_both2       ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & delete & undelete
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_delete_1        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_delete_1_fail   ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_undelete        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & undelete
@@ -202,7 +202,7 @@ local   ,both ,fast  ,export   ,apps/acctExport ,statement_forward        ,y    
 local   ,both ,fast  ,export   ,apps/acctExport ,statement_reverse        ,y    ,addrs = 0x868b8fd259abfcfdf9634c343593b34ef359641d & last_block = 8769141 & accounting & statements & ether & reversed & fmt = json
 
 # not sure why this fails
-local   ,both ,slow  ,monitors ,apps/acctExport ,monitors_speed_test      ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & last_block = 7000000 & fmt = txt
+on      ,both ,slow  ,monitors ,apps/acctExport ,monitors_speed_test      ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt
 
 # reversed non-accounting does not work
 local   ,both ,fast  ,export   ,apps/acctExport ,reversed_not_reversed    ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & last_block = 8856511 & ether & max_records = 100 & fmt = json

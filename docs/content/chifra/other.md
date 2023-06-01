@@ -92,6 +92,7 @@ Flags:
   -h, --help            display this help screen
 
 Notes:
+  - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - Portions of this software are Powered by Etherscan.io APIs.
 ```
 

@@ -37,15 +37,15 @@ Flags:
   -C, --accounting          attach accounting records to the exported data (applies to transactions export only)
   -A, --statements          for the accounting options only, export only statements
   -a, --articulate          articulate transactions, traces, logs, and outputs
-  -i, --cache               write transactions to the cache (see notes)
+  -o, --cache               write transactions to the cache (see notes)
   -R, --cache_traces        write traces to the cache (see notes)
   -U, --count               only available for --appearances mode, if present, return only the number of records
   -c, --first_record uint   the first record to process (default 1)
   -e, --max_records uint    the maximum number of records to process (default 250)
-      --relevant            for log and accounting export only, export only logs relevant to one of the given export addresses
-      --emitter strings     for log export only, export only logs if emitted by one of these address(es)
-      --topic strings       for log export only, export only logs with this topic(s)
-      --asset strings       for the accounting options only, export statements only for this asset
+  -N, --relevant            for log and accounting export only, export only logs relevant to one of the given export addresses
+  -m, --emitter strings     for log export only, export only logs if emitted by one of these address(es)
+  -B, --topic strings       for log export only, export only logs with this topic(s)
+  -P, --asset strings       for the accounting options only, export statements only for this asset
   -f, --flow string         for the accounting options only, export statements with incoming, outgoing, or zero value
                             One of [ in | out | zero ]
   -y, --factory             for --traces only, report addresses created by (or self-destructed by) the given address(es)
@@ -57,7 +57,7 @@ Flags:
   -h, --help                display this help screen
 
 Notes:
-  - An address must start with '0x' and be forty-two characters long.
+  - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - Articulating the export means turn the EVM's byte data into human-readable text (if possible).
   - For the --logs option, you may optionally specify one or more --emitter, one or more --topics, or both.
   - The --logs option is significantly faster if you provide an --emitter or a --topic.

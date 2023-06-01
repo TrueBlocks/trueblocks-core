@@ -46,6 +46,7 @@ Arguments:
 	One of [ show | edit ]
 
 Flags:
+  -a, --paths        show the configuration paths for the system
   -x, --fmt string   export format, one of [none|json*|txt|csv]
   -v, --verbose      enable verbose (increase detail with --log_level)
   -h, --help         display this help screen
@@ -176,13 +177,14 @@ Usage:
   chifra scrape [flags]
 
 Flags:
-  -n, --block_cnt uint   maximum number of blocks to process per pass (default 2000)
-  -i, --pin              pin new chunks (requires locally-running IPFS daemon or --remote)
-  -m, --remote           pin new chunks to the gateway (requires pinning service keys)
-  -s, --sleep float      seconds to sleep between scraper passes (default 14)
-  -x, --fmt string       export format, one of [none|json*|txt|csv]
-  -v, --verbose          enable verbose (increase detail with --log_level)
-  -h, --help             display this help screen
+  -n, --block_cnt uint     maximum number of blocks to process per pass (default 2000)
+  -i, --pin                pin new chunks (requires locally-running IPFS daemon or --remote)
+  -r, --remote             pin new chunks to the gateway (requires pinning service keys)
+  -s, --sleep float        seconds to sleep between scraper passes (default 14)
+  -l, --start_block uint   first block to visit when scraping (snapped back to most recent snap_to_grid mark)
+  -x, --fmt string         export format, one of [none|json*|txt|csv]
+  -v, --verbose            enable verbose (increase detail with --log_level)
+  -h, --help               display this help screen
 ```
 
 Data models produced by this tool:
@@ -280,7 +282,6 @@ Flags:
   -c, --check              check the manifest, index, or blooms for internal consistency
   -i, --pin                pin the manifest or each index chunk and bloom
   -p, --publish            publish the manifest to the Unchained Index smart contract
-  -n, --truncate uint      truncate the entire index at this block (requires a block identifier)
   -r, --remote             prior to processing, retreive the manifest from the Unchained Index smart contract
   -b, --belongs strings    in index mode only, checks the address(es) for inclusion in the given index chunk
   -F, --first_block uint   first block to process (inclusive)
@@ -352,12 +353,13 @@ Usage:
   chifra init [flags]
 
 Flags:
-  -a, --all           in addition to Bloom filters, download full index chunks (recommended)
-  -d, --dry_run       display the results of the download without actually downloading
-  -s, --sleep float   seconds to sleep between downloads
-  -x, --fmt string    export format, one of [none|json*|txt|csv]
-  -v, --verbose       enable verbose (increase detail with --log_level)
-  -h, --help          display this help screen
+  -a, --all                in addition to Bloom filters, download full index chunks (recommended)
+  -d, --dry_run            display the results of the download without actually downloading
+  -F, --first_block uint   do not download any chunks earlier than this block
+  -s, --sleep float        seconds to sleep between downloads
+  -x, --fmt string         export format, one of [none|json*|txt|csv]
+  -v, --verbose            enable verbose (increase detail with --log_level)
+  -h, --help               display this help screen
 
 Notes:
   - If run with no options, this tool will download or freshen only the Bloom filters.
