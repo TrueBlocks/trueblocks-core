@@ -17,11 +17,6 @@ import (
 func (opts *InitOptions) HandleDryRun() error {
 	chain := opts.Globals.Chain
 
-	// TODO: BOGUS - IF THE SCRAPER IS RUNNING, THIS WILL CAUSE PROBLEMS
-	// Make sure that the temporary scraper folders are empty, so that, when the
-	// scraper starts, it starts on the correct block.
-	index.CleanTemporaryFolders(config.GetPathToIndex(chain), true)
-
 	remoteManifest, err := manifest.ReadManifest(chain, manifest.FromContract)
 	if err != nil {
 		return err
