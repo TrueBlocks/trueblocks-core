@@ -13,12 +13,16 @@ func (opts *InitOptions) validateInit() error {
 		return opts.BadFlag
 	}
 
-	if opts.Globals.TestMode {
-		return validate.Usage("integration testing was skipped for chifra init")
+	if opts.FirstBlock != 0 {
+		return validate.Usage("{0} is not yet implemented.", "--first_block")
 	}
 
 	// Note - we don't check the index for back level since chifra init is how we upgrade the index
 	// index.CheckBackLevelIndex(opts.Globals.Chain)
+
+	if opts.Globals.TestMode {
+		return validate.Usage("integration testing was skipped for chifra init")
+	}
 
 	return opts.Globals.Validate()
 }

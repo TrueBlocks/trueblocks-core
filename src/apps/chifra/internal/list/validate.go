@@ -52,10 +52,6 @@ func (opts *ListOptions) validateList() error {
 		return validate.Usage("The {0} option is not available with the {1}-{2} option.", "--count", "--max_records", fmt.Sprintf("%d", opts.MaxRecords))
 	}
 
-	if opts.Count && opts.Appearances {
-		return validate.Usage("Please choose only one of {0} and {1}.", "--count", "--appearances")
-	}
-
 	if len(opts.Globals.File) == 0 {
 		err := validate.ValidateAtLeastOneAddr(opts.Addrs)
 		if err != nil {

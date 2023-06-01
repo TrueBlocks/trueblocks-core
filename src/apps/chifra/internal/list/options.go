@@ -23,7 +23,6 @@ import (
 type ListOptions struct {
 	Addrs       []string              `json:"addrs,omitempty"`       // One or more addresses (0x...) to list
 	Count       bool                  `json:"count,omitempty"`       // Display only the count of records for each monitor
-	Appearances bool                  `json:"appearances,omitempty"` // Export each monitor's list of appearances (the default)
 	Silent      bool                  `json:"silent,omitempty"`      // Freshen the monitor only (no reporting)
 	NoZero      bool                  `json:"noZero,omitempty"`      // Suppress the display of zero appearance accounts
 	Unripe      bool                  `json:"unripe,omitempty"`      // List transactions labeled upripe (i.e. less than 28 blocks old)
@@ -48,7 +47,6 @@ var defaultListOptions = ListOptions{
 func (opts *ListOptions) testLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
-	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
 	logger.TestLog(opts.Silent, "Silent: ", opts.Silent)
 	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
 	logger.TestLog(opts.Unripe, "Unripe: ", opts.Unripe)
@@ -83,8 +81,6 @@ func listFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
 			}
 		case "count":
 			opts.Count = true
-		case "appearances":
-			opts.Appearances = true
 		case "silent":
 			opts.Silent = true
 		case "noZero":

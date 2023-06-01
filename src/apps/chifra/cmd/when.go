@@ -60,11 +60,10 @@ func init() {
 	whenCmd.Flags().Uint64VarP(&whenPkg.GetOptions().Truncate, "truncate", "n", 0, "with --timestamps only, truncates the timestamp file at this block (hidden)")
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Repair, "repair", "r", false, "with --timestamps only, repairs block(s) in the block range by re-querying from the chain")
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Check, "check", "c", false, "with --timestamps only, checks the validity of the timestamp data")
-	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Update, "update", "", false, "with --timestamps only, bring the timestamp database forward to the latest block")
-	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Deep, "deep", "e", false, "with --timestamps --check only, verifies timestamps from on chain (slow) (hidden)")
+	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Update, "update", "u", false, "with --timestamps only, bring the timestamp database forward to the latest block")
+	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Deep, "deep", "d", false, "with --timestamps --check only, verifies timestamps from on chain (slow)")
 	if os.Getenv("TEST_MODE") != "true" {
 		whenCmd.Flags().MarkHidden("truncate")
-		whenCmd.Flags().MarkHidden("deep")
 	}
 	globals.InitGlobals(whenCmd, &whenPkg.GetOptions().Globals)
 

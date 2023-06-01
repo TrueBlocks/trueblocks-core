@@ -50,17 +50,20 @@ Arguments:
 
 Flags:
   -U, --count               display only the count of records for each monitor
+  -s, --silent              freshen the monitor only (no reporting)
   -n, --no_zero             suppress the display of zero appearance accounts
   -u, --unripe              list transactions labeled upripe (i.e. less than 28 blocks old)
   -c, --first_record uint   the first record to process (default 1)
   -e, --max_records uint    the maximum number of records to process (default 250)
   -F, --first_block uint    first block to export (inclusive, ignored when freshening)
   -L, --last_block uint     last block to export (inclusive, ignored when freshening)
+  -b, --bounds              report first and last block this address appears
   -x, --fmt string          export format, one of [none|json*|txt|csv]
   -v, --verbose             enable verbose (increase detail with --log_level)
   -h, --help                display this help screen
 
 Notes:
+  - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - No other options are permitted when --silent is selected.
 ```
 
@@ -115,15 +118,15 @@ Flags:
   -C, --accounting          attach accounting records to the exported data (applies to transactions export only)
   -A, --statements          for the accounting options only, export only statements
   -a, --articulate          articulate transactions, traces, logs, and outputs
-  -i, --cache               write transactions to the cache (see notes)
+  -o, --cache               write transactions to the cache (see notes)
   -R, --cache_traces        write traces to the cache (see notes)
   -U, --count               only available for --appearances mode, if present, return only the number of records
   -c, --first_record uint   the first record to process (default 1)
   -e, --max_records uint    the maximum number of records to process (default 250)
-      --relevant            for log and accounting export only, export only logs relevant to one of the given export addresses
-      --emitter strings     for log export only, export only logs if emitted by one of these address(es)
-      --topic strings       for log export only, export only logs with this topic(s)
-      --asset strings       for the accounting options only, export statements only for this asset
+  -N, --relevant            for log and accounting export only, export only logs relevant to one of the given export addresses
+  -m, --emitter strings     for log export only, export only logs if emitted by one of these address(es)
+  -B, --topic strings       for log export only, export only logs with this topic(s)
+  -P, --asset strings       for the accounting options only, export statements only for this asset
   -f, --flow string         for the accounting options only, export statements with incoming, outgoing, or zero value
                             One of [ in | out | zero ]
   -y, --factory             for --traces only, report addresses created by (or self-destructed by) the given address(es)
@@ -135,7 +138,7 @@ Flags:
   -h, --help                display this help screen
 
 Notes:
-  - An address must start with '0x' and be forty-two characters long.
+  - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - Articulating the export means turn the EVM's byte data into human-readable text (if possible).
   - For the --logs option, you may optionally specify one or more --emitter, one or more --topics, or both.
   - The --logs option is significantly faster if you provide an --emitter or a --topic.
@@ -196,20 +199,20 @@ Arguments:
   addrs - one or more addresses (0x...) to process
 
 Flags:
-      --clean         clean (i.e. remove duplicate appearances) from monitors
       --delete        delete a monitor, but do not remove it
       --undelete      undelete a previously deleted monitor
       --remove        remove a previously deleted monitor
-      --decache       removes a monitor and all associated data from the cache
-      --list          list monitors in the cache (--verbose for more detail)
-      --watch         continually scan for new blocks and extract data for monitored addresses
+  -C, --clean         clean (i.e. remove duplicate appearances) from monitors
+  -D, --decache       removes a monitor and all associated data from the cache
+  -l, --list          list monitors in the cache (--verbose for more detail)
+  -w, --watch         continually scan for new blocks and extract data for monitored addresses
   -s, --sleep float   seconds to sleep between monitor passes (default 14)
   -x, --fmt string    export format, one of [none|json*|txt|csv]
   -v, --verbose       enable verbose (increase detail with --log_level)
   -h, --help          display this help screen
 
 Notes:
-  - An address must start with '0x' and be forty-two characters long.
+  - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - If no address is presented to the --clean command, all monitors will be cleaned.
   - The --decache option will remove all cache items (blocks, txs, traces, recons) for the given address(es).
 ```
@@ -252,16 +255,20 @@ Arguments:
   terms - a space separated list of one or more search terms (required)
 
 Flags:
-  -e, --expand       expand search to include all fields (search name, address, and symbol otherwise)
-  -m, --match_case   do case-sensitive search
-  -l, --all          include all (including custom) names in the search
-  -c, --custom       include only custom named accounts in the search
-  -p, --prefund      include prefund accounts in the search
-  -a, --addr         display only addresses in the results (useful for scripting, assumes --no_header)
-  -g, --tags         export the list of tags and subtags only
-  -x, --fmt string   export format, one of [none|json*|txt|csv]
-  -v, --verbose      enable verbose (increase detail with --log_level)
-  -h, --help         display this help screen
+  -e, --expand            expand search to include all fields (search name, address, and symbol otherwise)
+  -m, --match_case        do case-sensitive search
+  -a, --all               include all (including custom) names in the search
+  -c, --custom            include only custom named accounts in the search
+  -p, --prefund           include prefund accounts in the search
+  -s, --addr              display only addresses in the results (useful for scripting, assumes --no_header)
+  -g, --tags              export the list of tags and subtags only
+  -C, --clean             clean the data (addrs to lower case, sort by addr)
+  -r, --regular           only available with --clean, cleans regular names database
+  -d, --dry_run           only available with --clean or --autoname, outputs changes to stdout instead of updating databases
+  -A, --autoname string   an address assumed to be a token, added automatically to names database if true
+  -x, --fmt string        export format, one of [none|json*|txt|csv]
+  -v, --verbose           enable verbose (increase detail with --log_level)
+  -h, --help              display this help screen
 
 Notes:
   - The tool will accept up to three terms, each of which must match against any field in the database.
@@ -311,7 +318,7 @@ Flags:
   -f, --find strings    search for function or event declarations given a four- or 32-byte code(s)
   -n, --hint strings    for the --find option only, provide hints to speed up the search
   -e, --encode string   generate the 32-byte encoding for a given cannonical function or event signature
-  -c, --clean           remove an abi file for an address or all zero-length files if no address is given
+  -C, --clean           remove an abi file for an address or all zero-length files if no address is given
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)
   -h, --help            display this help screen

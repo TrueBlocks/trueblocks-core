@@ -106,14 +106,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: appearances
-          description: export each monitor's list of appearances (the default)
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: silent
           description: freshen the monitor only (no reporting)
           required: false
@@ -174,6 +166,14 @@ paths:
           schema:
             type: number
             format: blknum
+        - name: bounds
+          description: report first and last block this address appears
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data
@@ -413,6 +413,15 @@ paths:
               - in
               - out
               - zero
+        - name: factory
+          description: >
+            for --traces only, report addresses created by (or self-destructed by) the given address(es)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: unripe
           description: export transactions labeled upripe (i.e. less than 28 blocks old)
           required: false
@@ -520,6 +529,14 @@ paths:
               format: address
         - name: clean
           description: clean (i.e. remove duplicate appearances) from monitors
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: decache
+          description: removes a monitor and all associated data from the cache
           required: false
           style: form
           in: query
@@ -668,6 +685,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: clean
+          description: clean the data (addrs to lower case, sort by addr)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: regular
           description: only available with --clean, cleans regular names database
           required: false
@@ -685,6 +710,15 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: autoname
+          description: >
+            an address assumed to be a token, added automatically to names database if true
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
         - name: named
           description: please use the --all option instead
           required: false
@@ -968,6 +1002,24 @@ paths:
             items:
               type: string
               format: topic
+        - name: articulate
+          description: >
+            for the --logs option only, articulate the retrieved data if ABIs can be found
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: bigRange
+          description: for the --logs option only, allow for block ranges larger than 500
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: uint64
         - name: count
           description: display the number of the lists of appearances for --addrs or --uniq
           required: false
@@ -984,24 +1036,14 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: list
-          description: summary list of blocks running backwards from latest block minus num
+        - name: decache
+          description: removes a block and any transactions or traces in the block from the cache
           required: false
           style: form
           in: query
           explode: true
           schema:
-            type: number
-            format: blknum
-        - name: listCount
-          description: the number of blocks to report for --list option
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: number
-            format: blknum
+            type: boolean
       responses:
         "200":
           description: returns the requested data
@@ -1096,6 +1138,14 @@ paths:
         - name: cache
           description: >
             force the results of the query into the tx cache (and the trace cache if applicable)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: decache
+          description: removes a transactions and any traces in the transaction from the cache
           required: false
           style: form
           in: query
@@ -1317,6 +1367,14 @@ paths:
             type: boolean
         - name: check
           description: with --timestamps only, checks the validity of the timestamp data
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: deep
+          description: with --timestamps --check only, verifies timestamps from on chain (slow)
           required: false
           style: form
           in: query
@@ -1572,6 +1630,14 @@ paths:
             enum:
               - show
               - edit
+        - name: paths
+          description: show the configuration paths for the system
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data
@@ -1717,6 +1783,16 @@ paths:
           schema:
             type: number
             format: double
+        - name: startBlock
+          description: >
+            first block to visit when scraping (snapped back to most recent snap_to_grid mark)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: uint64
       responses:
         "200":
           description: returns the requested data
@@ -1921,6 +1997,15 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: firstBlock
+          description: do not download any chunks earlier than this block
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: blknum
         - name: sleep
           description: seconds to sleep between downloads
           required: false

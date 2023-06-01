@@ -1,0 +1,6 @@
+init?firstBlock=12
+{
+  "errors": [
+    "--first_block is not yet implemented."
+  ]
+}

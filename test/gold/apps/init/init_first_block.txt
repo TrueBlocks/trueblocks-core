@@ -1,7 +1,7 @@
-chifra init  --junk
-Error: 
-  unknown flag: --junk
-
+chifra init  --first_block 12
+TEST[DATE|TIME] FirstBlock:  12
+TEST[DATE|TIME] Format:  txt
+Error: --first_block is not yet implemented.
 Usage:
   chifra init [flags]
 

@@ -41,19 +41,19 @@ static const COption params[] = {
     COption("accounting", "C", "", OPT_SWITCH, "attach accounting records to the exported data (applies to transactions export only)"),  // NOLINT
     COption("statements", "A", "", OPT_SWITCH, "for the accounting options only, export only statements"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
-    COption("cache", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
+    COption("cache", "o", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
     COption("cache_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
     COption("count", "U", "", OPT_SWITCH, "only available for --appearances mode, if present, return only the number of records"),  // NOLINT
     COption("first_record", "c", "<uint64>", OPT_FLAG, "the first record to process"),
     COption("max_records", "e", "<uint64>", OPT_FLAG, "the maximum number of records to process"),
-    COption("relevant", "", "", OPT_SWITCH, "for log and accounting export only, export only logs relevant to one of the given export addresses"),  // NOLINT
-    COption("emitter", "", "list<addr>", OPT_FLAG, "for log export only, export only logs if emitted by one of these address(es)"),  // NOLINT
-    COption("topic", "", "list<topic>", OPT_FLAG, "for log export only, export only logs with this topic(s)"),
-    COption("asset", "", "list<addr>", OPT_FLAG, "for the accounting options only, export statements only for this asset"),  // NOLINT
+    COption("relevant", "N", "", OPT_SWITCH, "for log and accounting export only, export only logs relevant to one of the given export addresses"),  // NOLINT
+    COption("emitter", "m", "list<addr>", OPT_FLAG, "for log export only, export only logs if emitted by one of these address(es)"),  // NOLINT
+    COption("topic", "B", "list<topic>", OPT_FLAG, "for log export only, export only logs with this topic(s)"),
+    COption("asset", "P", "list<addr>", OPT_FLAG, "for the accounting options only, export statements only for this asset"),  // NOLINT
     COption("flow", "f", "enum[in|out|zero]", OPT_FLAG, "for the accounting options only, export statements with incoming, outgoing, or zero value"),  // NOLINT
     COption("factory", "y", "", OPT_SWITCH, "for --traces only, report addresses created by (or self-destructed by) the given address(es)"),  // NOLINT
-    COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
-    COption("reversed", "", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
+    COption("load", "O", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
+    COption("reversed", "E", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
     COption("first_block", "F", "<blknum>", OPT_FLAG, "first block to process (inclusive)"),
     COption("last_block", "L", "<blknum>", OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more addresses."),
@@ -127,7 +127,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
 
-        } else if (arg == "-i" || arg == "--cache") {
+        } else if (arg == "-o" || arg == "--cache") {
             cache = true;
 
         } else if (arg == "-R" || arg == "--cache_traces") {
@@ -148,28 +148,28 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-e" || arg == "--max_records") {
             return flag_required("max_records");
 
-        } else if (arg == "--relevant") {
+        } else if (arg == "-N" || arg == "--relevant") {
             relevant = true;
 
-        } else if (startsWith(arg, "--emitter:")) {
-            arg = substitute(substitute(arg, "-:", ""), "--emitter:", "");
+        } else if (startsWith(arg, "-m:") || startsWith(arg, "--emitter:")) {
+            arg = substitute(substitute(arg, "-m:", ""), "--emitter:", "");
             if (!parseAddressList(this, emitter, arg))
                 return false;
-        } else if (arg == "--emitter") {
+        } else if (arg == "-m" || arg == "--emitter") {
             return flag_required("emitter");
 
-        } else if (startsWith(arg, "--topic:")) {
-            arg = substitute(substitute(arg, "-:", ""), "--topic:", "");
+        } else if (startsWith(arg, "-B:") || startsWith(arg, "--topic:")) {
+            arg = substitute(substitute(arg, "-B:", ""), "--topic:", "");
             if (!parseTopicList2(this, topic, arg))
                 return false;
-        } else if (arg == "--topic") {
+        } else if (arg == "-B" || arg == "--topic") {
             return flag_required("topic");
 
-        } else if (startsWith(arg, "--asset:")) {
-            arg = substitute(substitute(arg, "-:", ""), "--asset:", "");
+        } else if (startsWith(arg, "-P:") || startsWith(arg, "--asset:")) {
+            arg = substitute(substitute(arg, "-P:", ""), "--asset:", "");
             if (!parseAddressList(this, asset, arg))
                 return false;
-        } else if (arg == "--asset") {
+        } else if (arg == "-P" || arg == "--asset") {
             return flag_required("asset");
 
         } else if (startsWith(arg, "-f:") || startsWith(arg, "--flow:")) {
@@ -181,12 +181,12 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-y" || arg == "--factory") {
             factory = true;
 
-        } else if (startsWith(arg, "--load:")) {
-            load = substitute(substitute(arg, "-:", ""), "--load:", "");
-        } else if (arg == "--load") {
+        } else if (startsWith(arg, "-O:") || startsWith(arg, "--load:")) {
+            load = substitute(substitute(arg, "-O:", ""), "--load:", "");
+        } else if (arg == "-O" || arg == "--load") {
             return flag_required("load");
 
-        } else if (arg == "--reversed") {
+        } else if (arg == "-E" || arg == "--reversed") {
             reversed = true;
 
         } else if (startsWith(arg, "-F:") || startsWith(arg, "--first_block:")) {
@@ -409,7 +409,7 @@ COptions::COptions(void) {
 
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("An `address` must start with '0x' and be forty-two characters long.");
+    notes.push_back("An `address` must be either an ENS name or start with '0x' and be forty-two characters long.");
     notes.push_back("Articulating the export means turn the EVM's byte data into human-readable text (if possible).");
     notes.push_back("For the --logs option, you may optionally specify one or more --emitter, one or more --topics, or both.");  // NOLINT
     notes.push_back("The --logs option is significantly faster if you provide an --emitter or a --topic.");

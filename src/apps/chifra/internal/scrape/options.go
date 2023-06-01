@@ -23,7 +23,7 @@ type ScrapeOptions struct {
 	Pin        bool                     `json:"pin,omitempty"`        // Pin new chunks (requires locally-running IPFS daemon or --remote)
 	Remote     bool                     `json:"remote,omitempty"`     // Pin new chunks to the gateway (requires pinning service keys)
 	Sleep      float64                  `json:"sleep,omitempty"`      // Seconds to sleep between scraper passes
-	StartBlock uint64                   `json:"startBlock,omitempty"` // First block to visit (available only for blaze scraper)
+	StartBlock uint64                   `json:"startBlock,omitempty"` // First block to visit when scraping (snapped back to most recent snap_to_grid mark)
 	Settings   scrapeCfg.ScrapeSettings `json:"settings,omitempty"`   // Configuration items for the scrape
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed

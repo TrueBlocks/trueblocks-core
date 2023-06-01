@@ -57,12 +57,6 @@ func (opts *ExploreOptions) getEnvStr() []string {
 // toCmdLine converts the option to a command line for calling out to the system.
 func (opts *ExploreOptions) toCmdLine() string {
 	options := ""
-	if opts.Local {
-		options += " --local"
-	}
-	if opts.Google {
-		options += " --google"
-	}
 	options += " " + strings.Join(opts.Terms, " ")
 	// EXISTING_CODE
 	// EXISTING_CODE

@@ -29,7 +29,7 @@ static const COption params[] = {
     COption("format", "f", "", OPT_SWITCH, "format source code files (.cpp and .h) found in local folder and below"),
     COption("lint", "l", "", OPT_SWITCH, "lint source code files (.cpp and .h) found in local folder and below"),
     COption("sdk", "s", "", OPT_SWITCH, "create typescript sdk"),
-    COption("openapi", "A", "", OPT_HIDDEN | OPT_SWITCH, "export openapi.yaml file for API documentation"),
+    COption("openapi", "A", "", OPT_SWITCH, "export openapi.yaml file for API documentation"),
     COption("", "", "", OPT_DESCRIPTION, "Automatically writes C++ for various purposes."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -264,10 +264,11 @@ COptions::COptions(void) : classFile("") {
     // END_CODE_NOTES
 
     usageErrs[ERR_NOERROR] = "No error";
-    // ERROR_STRINGS
     usageErrs[ERR_CLASSDEFNOTEXIST] = "./classDefinitions folder does not exist.";
     usageErrs[ERR_CONFIGMISSING] = "File {0} does not exist.";
     usageErrs[ERR_NEEDONECLASS] = "Please specify at least one className.";
+
+    // ERROR_STRINGS
     // ERROR_STRINGS
 
     CCommandOption::registerClass();

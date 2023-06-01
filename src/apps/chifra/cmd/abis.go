@@ -56,7 +56,7 @@ func init() {
 	abisCmd.Flags().StringSliceVarP(&abisPkg.GetOptions().Find, "find", "f", nil, "search for function or event declarations given a four- or 32-byte code(s)")
 	abisCmd.Flags().StringSliceVarP(&abisPkg.GetOptions().Hint, "hint", "n", nil, "for the --find option only, provide hints to speed up the search")
 	abisCmd.Flags().StringVarP(&abisPkg.GetOptions().Encode, "encode", "e", "", "generate the 32-byte encoding for a given cannonical function or event signature")
-	abisCmd.Flags().BoolVarP(&abisPkg.GetOptions().Clean, "clean", "c", false, "remove an abi file for an address or all zero-length files if no address is given")
+	abisCmd.Flags().BoolVarP(&abisPkg.GetOptions().Clean, "clean", "C", false, "remove an abi file for an address or all zero-length files if no address is given")
 	abisCmd.Flags().BoolVarP(&abisPkg.GetOptions().Sol, "sol", "s", false, "please use the `solc --abi` tool instead")
 	globals.InitGlobals(abisCmd, &abisPkg.GetOptions().Globals)
 
