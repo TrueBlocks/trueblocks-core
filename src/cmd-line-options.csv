@@ -265,7 +265,8 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 11920,apps,Admin,init,init,sleep,s,0.0,false,false,true,true,gocmd,flag,<double>,seconds to sleep between downloads
 11925,apps,Admin,init,init,,,,false,false,true,true,--,description,,Initialize the TrueBlocks system by downloading the Unchained Index from IPFS.
 11930,apps,Admin,init,init,n1,,,false,false,false,false,--,note,,If run with no options&#44; this tool will download or freshen only the Bloom filters.
-11935,apps,Admin,init,init,n2,,,false,false,false,false,--,note,,You may re-run the tool as often as you wish. It will repair or freshen the index.
+11935,apps,Admin,init,init,n2,,,false,false,false,false,--,note,,The --first_block option will fall back to the start of the containing chunk.
+11940,apps,Admin,init,init,n3,,,false,false,false,false,--,note,,You may re-run the tool as often as you wish. It will repair or freshen the index.
 
 12001,apps,Other,explore,fireStorm,terms,,,false,false,true,true,gocmd,positional,list<string>,one or more address&#44; name&#44; block&#44; or transaction identifier
 12002,apps,Other,explore,fireStorm,local,l,,false,false,true,true,gocmd,switch,<boolean>,open the local TrueBlocks explorer

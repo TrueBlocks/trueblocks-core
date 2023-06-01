@@ -8,7 +8,6 @@ List of types that support the Modeler interface
 | ./internal/chunks   | types_chunkbloom.go      | simpleChunkBloom      | chunkBloom        |         | x      |
 | ./internal/chunks   | types_chunkindex.go      | simpleChunkIndex      | chunkIndex        |         | x      |
 | ./internal/chunks   | types_chunkstats.go      | simpleChunkStats      | chunkStats        |         | x      |
-| ./internal/chunks   | types_manifest.go        | simpleManifest        | manifest          |         | x      |
 | ./internal/chunks   | types_reportcheck.go     | simpleReportCheck     | reportCheck       |         | x      |
 | ./internal/list     | types_bounds.go          | simpleBounds          | bounds            |         | x      |
 | ./internal/monitors | types_monitorclean.go    | simpleMonitorClean    | monitorClean      |         | x      |
@@ -28,6 +27,7 @@ List of types that support the Modeler interface
 | ./pkg/types         | types_ethstate.go        | SimpleEthState        | ethState          | x       | x      |
 | ./pkg/types         | types_function.go        | SimpleFunction        | function          | x       | x      |
 | ./pkg/types         | types_log.go             | SimpleLog             | log               | x       | x      |
+| ./pkg/types         | types_manifest.go        | SimpleManifest        | manifest          |         | x      |
 | ./pkg/types         | types_monitor.go         | SimpleMonitor         | monitor           | x       |        | not turned on |
 | ./pkg/types         | types_name.go            | SimpleName            | name              | x       | x      |
 | ./pkg/types         | types_namedblock.go      | SimpleNamedBlock      | namedBlock        |         | x      |

@@ -127,6 +127,9 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 	for _, chunk := range man.ChunkMap {
 		if chunk != nil {
 			rng := base.RangeFromRangeString(chunk.Range)
+			if rng.Last < opts.FirstBlock {
+				continue
+			}
 			_, indexPath := rng.RangeToFilename(opts.Globals.Chain)
 			if !opts.All && !file.FileExists(indexPath) {
 				chunk.IndexHash = ""

@@ -45,6 +45,7 @@ const longInit = `Purpose:
 const notesInit = `
 Notes:
   - If run with no options, this tool will download or freshen only the Bloom filters.
+  - The --first_block option will fall back to the start of the containing chunk.
   - You may re-run the tool as often as you wish. It will repair or freshen the index.`
 
 func init() {

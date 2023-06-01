@@ -193,7 +193,7 @@ string_q specialCase(const CClassDefinition& model, const CMember& field, const 
         ret = isRaw ? "[]any" : "[]Tx";
 
     } else if (modelName % "Manifest" && name % "Chunks") {
-        ret = isRaw ? "string" : "[]types.SimpleChunkRecord";
+        ret = isRaw ? "string" : "[]SimpleChunkRecord";
 
     } else if (modelName % "Bounds" && (name % "FirstApp" || name % "LatestApp")) {
         ret = isRaw ? "string" : "types.RawAppearance";

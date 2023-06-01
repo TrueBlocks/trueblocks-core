@@ -52,7 +52,11 @@ func (opts *InitOptions) InitInternal() (err error, handled bool) {
 	// EXISTING_CODE
 	handled = true
 
-	err = opts.HandleInit()
+	if opts.DryRun {
+		err = opts.HandleDryRun()
+	} else {
+		err = opts.HandleInit()
+	}
 	// EXISTING_CODE
 
 	return

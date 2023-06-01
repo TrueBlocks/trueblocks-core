@@ -23,14 +23,17 @@ func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
 	if err != nil {
 		return err
 	}
+	if testMode {
+		if len(man.Chunks) > 10 {
+			man.Chunks = man.Chunks[:10]
+		}
+		man.Schemas = "--testing-hash--"
+	}
 
 	ctx := context.Background()
 	if opts.Globals.Format == "txt" || opts.Globals.Format == "csv" {
 		fetchData := func(modelChan chan types.Modeler[types.RawChunkRecord], errorChan chan error) {
-			for index, chunk := range man.Chunks {
-				if testMode && index > 10 {
-					continue
-				}
+			for _, chunk := range man.Chunks {
 				s := types.SimpleChunkRecord{
 					Range:     chunk.Range,
 					BloomHash: chunk.BloomHash,
@@ -45,15 +48,8 @@ func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
 		return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 
 	} else {
-		fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-			if opts.Globals.TestMode {
-				if len(man.Chunks) > 10 {
-					man.Chunks = man.Chunks[:10]
-				}
-				man.Schemas = "--testing-hash--"
-			}
-
-			s := simpleManifest{
+		fetchData := func(modelChan chan types.Modeler[types.RawManifest], errorChan chan error) {
+			s := types.SimpleManifest{
 				Version: man.Version,
 				Chain:   man.Chain,
 				Schemas: man.Schemas,
