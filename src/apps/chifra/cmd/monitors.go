@@ -47,7 +47,7 @@ const longMonitors = `Purpose:
 
 const notesMonitors = `
 Notes:
-  - An address must start with '0x' and be forty-two characters long.
+  - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - If no address is presented to the --clean command, all monitors will be cleaned.
   - The --decache option will remove all cache items (blocks, txs, traces, recons) for the given address(es).`
 

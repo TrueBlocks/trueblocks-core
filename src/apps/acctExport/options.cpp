@@ -409,7 +409,7 @@ COptions::COptions(void) {
 
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("An `address` must start with '0x' and be forty-two characters long.");
+    notes.push_back("An `address` must be either an ENS name or start with '0x' and be forty-two characters long.");
     notes.push_back("Articulating the export means turn the EVM's byte data into human-readable text (if possible).");
     notes.push_back("For the --logs option, you may optionally specify one or more --emitter, one or more --topics, or both.");  // NOLINT
     notes.push_back("The --logs option is significantly faster if you provide an --emitter or a --topic.");

@@ -29,7 +29,7 @@ Flags:
   -h, --help            display this help screen
 
 Notes:
-  - An address must start with '0x' and be forty-two characters long.
+  - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - Blocks is a space-separated list of values, a start-end range, a special, or any combination.
   - If the queried node does not store historical state, the results are undefined.
   - Special blocks are detailed under chifra when --list.

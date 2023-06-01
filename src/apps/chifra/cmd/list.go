@@ -47,6 +47,7 @@ const longList = `Purpose:
 
 const notesList = `
 Notes:
+  - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - No other options are permitted when --silent is selected.`
 
 func init() {

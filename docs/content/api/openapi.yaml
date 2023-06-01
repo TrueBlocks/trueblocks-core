@@ -1725,6 +1725,16 @@ paths:
           schema:
             type: number
             format: double
+        - name: startBlock
+          description: >
+            first block to visit when scraping (snapped back to most recent snap_to_grid mark)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: uint64
       responses:
         "200":
           description: returns the requested data

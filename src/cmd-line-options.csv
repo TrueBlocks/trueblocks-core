@@ -28,7 +28,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10440,apps,Accounts,export,acctExport,first_block,F,0,false,false,true,true,local,flag,<blknum>,first block to process (inclusive)
 10450,apps,Accounts,export,acctExport,last_block,L,NOPOS,false,false,true,true,local,flag,<blknum>,last block to process (inclusive)
 10460,apps,Accounts,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more addresses.
-10470,apps,Accounts,export,acctExport,n1,,,false,false,false,false,--,note,,An `address` must start with '0x' and be forty-two characters long.
+10470,apps,Accounts,export,acctExport,n1,,,false,false,false,false,--,note,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 10470,apps,Accounts,export,acctExport,n2,,,false,false,false,false,--,note,,Articulating the export means turn the EVM's byte data into human-readable text (if possible).
 10472,apps,Accounts,export,acctExport,n3,,,false,false,false,false,--,note,,For the --logs option&#44; you may optionally specify one or more --emitter&#44; one or more --topics&#44; or both.
 10474,apps,Accounts,export,acctExport,n4,,,false,false,false,false,--,note,,The --logs option is significantly faster if you provide an --emitter or a --topic.
@@ -47,7 +47,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 11440,apps,Accounts,monitors,acctExport,first_block,F,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
 11450,apps,Accounts,monitors,acctExport,last_block,L,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
 11095,apps,Accounts,monitors,acctExport,,,,false,false,true,true,--,description,,Add&#44; remove&#44; clean&#44; and list address monitors.
-11097,apps,Accounts,monitors,acctExport,n1,,,false,false,false,false,--,note,,An `address` must start with '0x' and be forty-two characters long.
+11097,apps,Accounts,monitors,acctExport,n1,,,false,false,false,false,--,note,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 11099,apps,Accounts,monitors,acctExport,n2,,,false,false,false,false,--,note,,If no address is presented to the --clean command&#44; all monitors will be cleaned.
 11100,apps,Accounts,monitors,acctExport,n3,,,false,false,false,false,--,note,,The --decache option will remove all cache items (blocks&#44; txs&#44; traces&#44; recons) for the given address(es).
 
@@ -63,7 +63,8 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 11450,apps,Accounts,list,acctExport,last_block,L,NOPOS,false,false,true,true,gocmd,flag,<blknum>,last block to export (inclusive&#44; ignored when freshening)
 11500,apps,Accounts,list,acctExport,bounds,,,false,false,false,false,gocmd,switch,<boolean>,report first and last block this address appears
 12025,apps,Accounts,list,acctExport,,,,false,false,true,true,--,description,,List every appearance of an address anywhere on the chain.
-11097,apps,Accounts,list,acctExport,n1,,,false,false,false,false,--,note,,No other options are permitted when --silent is selected.
+12030,apps,Accounts,list,acctExport,n1,,,false,false,false,false,--,note,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
+12035,apps,Accounts,list,acctExport,n2,,,false,false,false,false,--,note,,No other options are permitted when --silent is selected.
 
 12260,tools,Accounts,names,ethNames,terms,,,true,false,true,true,header,positional,list<string>,a space separated list of one or more search terms
 12265,tools,Accounts,names,ethNames,expand,e,,false,false,true,true,gocmd,switch,<boolean>,expand search to include all fields (search name&#44; address&#44; and symbol otherwise)
@@ -194,7 +195,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13190,tools,ChainState,state,getState,call,a,,false,false,false,true,header,flag,<string>,a bang-separated string consisting of address!4-byte!bytes
 13190,tools,ChainState,state,getState,proxy_for,r,,false,false,false,true,header,flag,<address>,for the --call option only&#44; redirects calls to this implementation
 13220,tools,ChainState,state,getState,,,,false,false,true,true,--,description,,Retrieve account balance(s) for one or more addresses at given block(s).
-13222,tools,ChainState,state,getState,n1,,,false,false,false,false,--,note,,An `address` must start with '0x' and be forty-two characters long.
+13222,tools,ChainState,state,getState,n1,,,false,false,false,false,--,note,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 13224,tools,ChainState,state,getState,n2,,,false,false,false,false,--,note,,`Blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
 13228,tools,ChainState,state,getState,n3,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
 13230,tools,ChainState,state,getState,n4,,,false,false,false,false,--,note,,`Special` blocks are detailed under `chifra when --list`.
@@ -207,7 +208,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13320,tools,ChainState,tokens,getTokens,by_acct,b,,false,false,true,true,header,switch,<boolean>,consider each address an ERC20 token except the last&#44; whose balance is reported for each token
 13340,tools,ChainState,tokens,getTokens,no_zero,n,,false,false,true,true,header,switch,<boolean>,suppress the display of zero balance accounts
 13360,tools,ChainState,tokens,getTokens,,,,false,false,true,true,--,description,,Retrieve token balance(s) for one or more addresses at given block(s).
-13362,tools,ChainState,tokens,getTokens,n1,,,false,false,false,false,--,note,,An `address` must start with '0x' and be forty-two characters long.
+13362,tools,ChainState,tokens,getTokens,n1,,,false,false,false,false,--,note,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 13364,tools,ChainState,tokens,getTokens,n2,,,false,false,false,false,--,note,,`Blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
 13368,tools,ChainState,tokens,getTokens,n3,,,false,false,false,false,--,note,,If the token contract(s) from which you request balances are not ERC20 compliant&#44; the results are undefined.
 13370,tools,ChainState,tokens,getTokens,n4,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
@@ -215,9 +216,9 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 12125,apps,Admin,scrape,blockScrape,block_cnt,n,2000,false,false,true,true,gocmd,flag,<uint64>,maximum number of blocks to process per pass
 12130,apps,Admin,scrape,blockScrape,pin,i,,false,false,true,true,gocmd,switch,<boolean>,pin new chunks (requires locally-running IPFS daemon or --remote)
-12132,apps,Admin,scrape,blockScrape,remote,m,,false,false,true,true,gocmd,switch,<boolean>,pin new chunks to the gateway (requires pinning service keys)
+12132,apps,Admin,scrape,blockScrape,remote,r,,false,false,true,true,gocmd,switch,<boolean>,pin new chunks to the gateway (requires pinning service keys)
 12115,apps,Admin,scrape,blockScrape,sleep,s,14,false,false,true,true,gocmd,flag,<double>,seconds to sleep between scraper passes
-12185,apps,Admin,scrape,blockScrape,start_block,l,0,false,false,false,false,gocmd,flag,<uint64>,first block to visit (available only for blaze scraper)
+12185,apps,Admin,scrape,blockScrape,start_block,l,0,false,false,true,true,gocmd,flag,<uint64>,first block to visit when scraping (snapped back to most recent snap_to_grid mark)
 12160,apps,Admin,scrape,blockScrape,apps_per_chunk,,200000,false,false,false,false,config,flag,<uint64>,the number of appearances to build into a chunk before consolidating it
 12170,apps,Admin,scrape,blockScrape,snap_to_grid,,100000,false,false,false,false,config,flag,<uint64>,an override to apps_per_chunk to snap-to-grid at every modulo of this value&#44; this allows easier corrections to the index
 12175,apps,Admin,scrape,blockScrape,first_snap,,0,false,false,false,false,config,flag,<uint64>,the first block at which snap_to_grid is enabled

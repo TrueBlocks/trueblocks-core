@@ -61,6 +61,7 @@ Flags:
   -h, --help                display this help screen
 
 Notes:
+  - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - No other options are permitted when --silent is selected.
 ```
 
@@ -135,7 +136,7 @@ Flags:
   -h, --help                display this help screen
 
 Notes:
-  - An address must start with '0x' and be forty-two characters long.
+  - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - Articulating the export means turn the EVM's byte data into human-readable text (if possible).
   - For the --logs option, you may optionally specify one or more --emitter, one or more --topics, or both.
   - The --logs option is significantly faster if you provide an --emitter or a --topic.
@@ -209,7 +210,7 @@ Flags:
   -h, --help          display this help screen
 
 Notes:
-  - An address must start with '0x' and be forty-two characters long.
+  - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - If no address is presented to the --clean command, all monitors will be cleaned.
   - The --decache option will remove all cache items (blocks, txs, traces, recons) for the given address(es).
 ```
