@@ -51,17 +51,16 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 11099,apps,Accounts,monitors,acctExport,n2,,,false,false,false,false,--,note,,If no address is presented to the --clean command&#44; all monitors will be cleaned.
 11100,apps,Accounts,monitors,acctExport,n3,,,false,false,false,false,--,note,,The --decache option will remove all cache items (blocks&#44; txs&#44; traces&#44; recons) for the given address(es).
 
-12005,apps,Accounts,list,acctExport,addrs,,,true,false,true,true,local,positional,list<addr>,one or more addresses (0x...) to list
+12005,apps,Accounts,list,acctExport,addrs,,,true,false,true,true,gocmd,positional,list<addr>,one or more addresses (0x...) to list
 12015,apps,Accounts,list,acctExport,count,U,,false,false,true,true,gocmd,switch,<boolean>,display only the count of records for each monitor
-11210,apps,Accounts,list,acctExport,appearances,p,,false,false,false,true,gocmd,switch,<boolean>,export each monitor's list of appearances (the default)
-11210,apps,Accounts,list,acctExport,silent,,,false,false,false,true,gocmd,switch,<boolean>,freshen the monitor only (no reporting)
+11210,apps,Accounts,list,acctExport,silent,s,,false,false,true,true,gocmd,switch,<boolean>,freshen the monitor only (no reporting)
 11215,apps,Accounts,list,acctExport,no_zero,n,,false,false,true,true,gocmd,switch,<boolean>,suppress the display of zero appearance accounts
 11220,apps,Accounts,list,acctExport,unripe,u,,false,false,true,true,gocmd,switch,<boolean>,list transactions labeled upripe (i.e. less than 28 blocks old)
 11430,apps,Accounts,list,acctExport,first_record,c,1,false,false,true,true,gocmd,flag,<uint64>,the first record to process
 11435,apps,Accounts,list,acctExport,max_records,e,250,false,false,true,true,gocmd,flag,<uint64>,the maximum number of records to process
 11440,apps,Accounts,list,acctExport,first_block,F,0,false,false,true,true,gocmd,flag,<blknum>,first block to export (inclusive&#44; ignored when freshening)
 11450,apps,Accounts,list,acctExport,last_block,L,NOPOS,false,false,true,true,gocmd,flag,<blknum>,last block to export (inclusive&#44; ignored when freshening)
-11500,apps,Accounts,list,acctExport,bounds,,,false,false,false,false,gocmd,switch,<boolean>,report first and last block this address appears
+11500,apps,Accounts,list,acctExport,bounds,b,,false,false,true,true,gocmd,switch,<boolean>,report first and last block this address appears
 12025,apps,Accounts,list,acctExport,,,,false,false,true,true,--,description,,List every appearance of an address anywhere on the chain.
 12030,apps,Accounts,list,acctExport,n1,,,false,false,false,false,--,note,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 12035,apps,Accounts,list,acctExport,n2,,,false,false,false,false,--,note,,No other options are permitted when --silent is selected.
