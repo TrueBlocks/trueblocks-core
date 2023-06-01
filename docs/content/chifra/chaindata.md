@@ -305,7 +305,8 @@ Flags:
   -U, --count        with --timestamps only, returns the number of timestamps in the cache
   -r, --repair       with --timestamps only, repairs block(s) in the block range by re-querying from the chain
   -c, --check        with --timestamps only, checks the validity of the timestamp data
-      --update       with --timestamps only, bring the timestamp database forward to the latest block
+  -u, --update       with --timestamps only, bring the timestamp database forward to the latest block
+  -d, --deep         with --timestamps --check only, verifies timestamps from on chain (slow)
   -x, --fmt string   export format, one of [none|json*|txt|csv]
   -v, --verbose      enable verbose (increase detail with --log_level)
   -h, --help         display this help screen

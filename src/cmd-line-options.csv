@@ -141,21 +141,21 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13615,tools,ChainData,transactions,getTrans,reconcile,r,,false,false,true,true,local,deprecated,<address>,please use --account_for option instead
 13617,tools,ChainData,transactions,getTrans,account_for,A,,false,false,true,true,local,flag,<address>,reconcile the transaction as per the provided address
 13620,tools,ChainData,transactions,getTrans,cache,o,,false,false,true,true,header,switch,<boolean>,force the results of the query into the tx cache (and the trace cache if applicable)
-13621,tools,ChainData,transactions,getTrans,decache,D,,false,false,true,false,gocmd,switch,<boolean>,removes a transactions and any traces in the transaction from the cache
+13621,tools,ChainData,transactions,getTrans,decache,D,,false,false,true,true,gocmd,switch,<boolean>,removes a transactions and any traces in the transaction from the cache
 13622,tools,ChainData,transactions,getTrans,source,s,,false,false,false,false,gocmd,switch,<boolean>,find the source of the funds sent to the receiver
 13623,tools,ChainData,transactions,getTrans,,,,false,false,true,true,--,description,,Retrieve one or more transactions from the chain or local cache.
 13624,tools,ChainData,transactions,getTrans,n1,,,false,false,false,false,--,note,,The `transactions` list may be one or more transaction hashes&#44; blockNumber.transactionID pairs&#44; or a blockHash.transactionID pairs.
 13626,tools,ChainData,transactions,getTrans,n2,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
 13628,tools,ChainData,transactions,getTrans,n3,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
 
-13000,tools,ChainData,receipts,getReceipts,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
+13000,tools,ChainData,receipts,getReceipts,transactions,,,true,false,true,true,gocmd,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
 13020,tools,ChainData,receipts,getReceipts,articulate,a,,false,false,true,true,gocmd,switch,<boolean>,articulate the retrieved data if ABIs can be found
 13060,tools,ChainData,receipts,getReceipts,,,,false,false,true,true,--,description,,Retrieve receipts for the given transaction(s).
 13062,tools,ChainData,receipts,getReceipts,n1,,,false,false,false,false,--,note,,The `transactions` list may be one or more transaction hashes&#44; blockNumber.transactionID pairs&#44; or a blockHash.transactionID pairs.
 13066,tools,ChainData,receipts,getReceipts,n2,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
 13070,tools,ChainData,receipts,getReceipts,n3,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
 
-12920,tools,ChainData,logs,getLogs,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
+12920,tools,ChainData,logs,getLogs,transactions,,,true,false,true,true,gocmd,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
 12940,tools,ChainData,logs,getLogs,articulate,a,,false,false,true,true,gocmd,switch,<boolean>,articulate the retrieved data if ABIs can be found
 12960,tools,ChainData,logs,getLogs,,,,false,false,true,true,--,description,,Retrieve logs for the given transaction(s).
 12962,tools,ChainData,logs,getLogs,n1,,,false,false,false,false,--,note,,The `transactions` list may be one or more transaction hashes&#44; blockNumber.transactionID pairs&#44; or a blockHash.transactionID pairs.
@@ -163,7 +163,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12966,tools,ChainData,logs,getLogs,n3,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
 12968,tools,ChainData,logs,getLogs,n4,,,false,false,false,false,--,note,,If you specify a 32-byte hash&#44; it will be assumed to be a transaction hash&#44; if it is not&#44; the hash will be used as a topic.
 
-13400,tools,ChainData,traces,getTraces,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
+13400,tools,ChainData,traces,getTraces,transactions,,,true,false,true,true,gocmd,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
 13420,tools,ChainData,traces,getTraces,articulate,a,,false,false,true,true,gocmd,switch,<boolean>,articulate the retrieved data if ABIs can be found
 13490,tools,ChainData,traces,getTraces,filter,f,,false,false,true,true,gocmd,flag,<string>,call the node's trace_filter routine with bang-separated filter
 13440,tools,ChainData,traces,getTraces,count,U,,false,false,true,true,gocmd,switch,<boolean>,show the number of traces for the transaction only (fast)
@@ -180,9 +180,9 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13970,tools,ChainData,when,whenBlock,truncate,n,,false,false,false,false,gocmd,flag,<blknum>,with --timestamps only&#44; truncates the timestamp file at this block
 13972,tools,ChainData,when,whenBlock,repair,r,,false,false,true,true,gocmd,switch,<boolean>,with --timestamps only&#44; repairs block(s) in the block range by re-querying from the chain
 13974,tools,ChainData,when,whenBlock,check,c,,false,false,true,true,gocmd,switch,<boolean>,with --timestamps only&#44; checks the validity of the timestamp data
-13976,tools,ChainData,when,whenBlock,update,,,false,false,true,true,gocmd,switch,<boolean>,with --timestamps only&#44; bring the timestamp database forward to the latest block
-13978,tools,ChainData,when,whenBlock,deep,e,,false,false,false,false,gocmd,switch,<boolean>,with --timestamps --check only&#44; verifies timestamps from on chain (slow)
-13980,tools,ChainData,when,whenBlock,,,,false,false,true,false,--,description,,Find block(s) based on date&#44; blockNum&#44; timestamp&#44; or 'special'.
+13976,tools,ChainData,when,whenBlock,update,u,,false,false,true,true,gocmd,switch,<boolean>,with --timestamps only&#44; bring the timestamp database forward to the latest block
+13978,tools,ChainData,when,whenBlock,deep,d,,false,false,true,true,gocmd,switch,<boolean>,with --timestamps --check only&#44; verifies timestamps from on chain (slow)
+13980,tools,ChainData,when,whenBlock,,,,false,false,true,true,--,description,,Find block(s) based on date&#44; blockNum&#44; timestamp&#44; or 'special'.
 13982,tools,ChainData,when,whenBlock,n1,,,false,false,false,false,--,note,,The block list may contain any combination of `number`&#44; `hash`&#44; `date`&#44; special `named` blocks.
 13984,tools,ChainData,when,whenBlock,n2,,,false,false,false,false,--,note,,Block numbers&#44; timestamps&#44; or dates in the future are estimated with 13 second blocks.
 13986,tools,ChainData,when,whenBlock,n3,,,false,false,false,false,--,note,,Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
@@ -192,8 +192,8 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13140,tools,ChainState,state,getState,parts,p,,false,false,true,true,local,flag,list<enum[none|some*|all|balance|nonce|code|proxy|deployed|accttype]>,control which state to export
 13160,tools,ChainState,state,getState,changes,c,,false,false,true,true,header,switch,<boolean>,only report a balance when it changes from one block to the next
 13180,tools,ChainState,state,getState,no_zero,n,,false,false,true,true,header,switch,<boolean>,suppress the display of zero balance accounts
-13190,tools,ChainState,state,getState,call,a,,false,false,false,true,header,flag,<string>,a bang-separated string consisting of address!4-byte!bytes
-13190,tools,ChainState,state,getState,proxy_for,r,,false,false,false,true,header,flag,<address>,for the --call option only&#44; redirects calls to this implementation
+13190,tools,ChainState,state,getState,call,a,,false,false,true,true,header,flag,<string>,a bang-separated string consisting of address!4-byte!bytes
+13190,tools,ChainState,state,getState,proxy_for,r,,false,false,true,true,header,flag,<address>,for the --call option only&#44; redirects calls to this implementation
 13220,tools,ChainState,state,getState,,,,false,false,true,true,--,description,,Retrieve account balance(s) for one or more addresses at given block(s).
 13222,tools,ChainState,state,getState,n1,,,false,false,false,false,--,note,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 13224,tools,ChainState,state,getState,n2,,,false,false,false,false,--,note,,`Blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.

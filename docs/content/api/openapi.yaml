@@ -1323,6 +1323,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: deep
+          description: with --timestamps --check only, verifies timestamps from on chain (slow)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data

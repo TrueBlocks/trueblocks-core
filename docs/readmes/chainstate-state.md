@@ -20,13 +20,15 @@ Arguments:
   blocks - an optional list of one or more blocks at which to report balances, defaults to 'latest'
 
 Flags:
-  -p, --parts strings   control which state to export
-                        One or more of [ none | some | all | balance | nonce | code | proxy | deployed | accttype ]
-  -c, --changes         only report a balance when it changes from one block to the next
-  -n, --no_zero         suppress the display of zero balance accounts
-  -x, --fmt string      export format, one of [none|json*|txt|csv]
-  -v, --verbose         enable verbose (increase detail with --log_level)
-  -h, --help            display this help screen
+  -p, --parts strings      control which state to export
+                           One or more of [ none | some | all | balance | nonce | code | proxy | deployed | accttype ]
+  -c, --changes            only report a balance when it changes from one block to the next
+  -n, --no_zero            suppress the display of zero balance accounts
+  -a, --call string        a bang-separated string consisting of address!4-byte!bytes
+  -r, --proxy_for string   for the --call option only, redirects calls to this implementation
+  -x, --fmt string         export format, one of [none|json*|txt|csv]
+  -v, --verbose            enable verbose (increase detail with --log_level)
+  -h, --help               display this help screen
 
 Notes:
   - An address must be either an ENS name or start with '0x' and be forty-two characters long.

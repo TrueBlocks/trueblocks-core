@@ -62,12 +62,8 @@ func init() {
 One or more of [ none | some | all | balance | nonce | code | proxy | deployed | accttype ]`)
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Changes, "changes", "c", false, "only report a balance when it changes from one block to the next")
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().NoZero, "no_zero", "n", false, "suppress the display of zero balance accounts")
-	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Call, "call", "a", "", "a bang-separated string consisting of address!4-byte!bytes (hidden)")
-	stateCmd.Flags().StringVarP(&statePkg.GetOptions().ProxyFor, "proxy_for", "r", "", "for the --call option only, redirects calls to this implementation (hidden)")
-	if os.Getenv("TEST_MODE") != "true" {
-		stateCmd.Flags().MarkHidden("call")
-		stateCmd.Flags().MarkHidden("proxy_for")
-	}
+	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Call, "call", "a", "", "a bang-separated string consisting of address!4-byte!bytes")
+	stateCmd.Flags().StringVarP(&statePkg.GetOptions().ProxyFor, "proxy_for", "r", "", "for the --call option only, redirects calls to this implementation")
 	globals.InitGlobals(stateCmd, &statePkg.GetOptions().Globals)
 
 	stateCmd.SetUsageTemplate(UsageWithNotes(notesState))
