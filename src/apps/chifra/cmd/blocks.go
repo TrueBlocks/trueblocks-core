@@ -53,7 +53,7 @@ Notes:
   - With the --logs option, optionally specify one or more --emitter, one or more --topics, either or both.
   - The --logs option is significantly faster if you provide an --emitter and/or a --topic.
   - Multiple topics match on topic0, topic1, and so on, not on different topic0's.
-  - Large block ranges may crash the node, use --big_range to specify a larger range.`
+  - For the --logs option, large block ranges may crash the node, use --big_range to specify a larger range.`
 
 func init() {
 	blocksCmd.Flags().SortFlags = false
@@ -73,7 +73,7 @@ One of [ from | to | reward ]`)
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Count, "count", "U", false, "display the number of the lists of appearances for --addrs or --uniq")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Cache, "cache", "o", false, "force a write of the block to the cache")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Decache, "decache", "D", false, "removes a block and any transactions or traces in the block from the cache")
-	blocksCmd.Flags().Uint64VarP(&blocksPkg.GetOptions().List, "list", "l", 0, "summary list of blocks running backwards from latest block minus num (hidden)")
+	blocksCmd.Flags().Uint64VarP(&blocksPkg.GetOptions().List, "list", "L", 0, "summary list of blocks running backwards from latest block minus num (hidden)")
 	blocksCmd.Flags().Uint64VarP(&blocksPkg.GetOptions().ListCount, "list_count", "C", 0, "the number of blocks to report for --list option (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
 		blocksCmd.Flags().MarkHidden("logs")

@@ -984,24 +984,14 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: list
-          description: summary list of blocks running backwards from latest block minus num
+        - name: decache
+          description: removes a block and any transactions or traces in the block from the cache
           required: false
           style: form
           in: query
           explode: true
           schema:
-            type: number
-            format: blknum
-        - name: listCount
-          description: the number of blocks to report for --list option
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: number
-            format: blknum
+            type: boolean
       responses:
         "200":
           description: returns the requested data

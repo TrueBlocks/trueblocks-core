@@ -24,7 +24,7 @@ Flags:
   -U, --count             display the number of the lists of appearances for --addrs or --uniq
   -o, --cache             force a write of the block to the cache
   -D, --decache           removes a block and any transactions or traces in the block from the cache
-  -l, --list uint         summary list of blocks running backwards from latest block minus num (hidden)
+  -L, --list uint         summary list of blocks running backwards from latest block minus num (hidden)
   -C, --list_count uint   the number of blocks to report for --list option (hidden)
   -x, --fmt string        export format, one of [none|json*|txt|csv]
   -v, --verbose           enable verbose (increase detail with --log_level)
@@ -37,4 +37,4 @@ Notes:
   - With the --logs option, optionally specify one or more --emitter, one or more --topics, either or both.
   - The --logs option is significantly faster if you provide an --emitter and/or a --topic.
   - Multiple topics match on topic0, topic1, and so on, not on different topic0's.
-  - Large block ranges may crash the node, use --big_range to specify a larger range.
+  - For the --logs option, large block ranges may crash the node, use --big_range to specify a larger range.

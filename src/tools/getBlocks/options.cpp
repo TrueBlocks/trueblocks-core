@@ -269,11 +269,13 @@ COptions::COptions(void) {
     notes.push_back("With the --logs option, optionally specify one or more --emitter, one or more --topics, either or both.");  // NOLINT
     notes.push_back("The --logs option is significantly faster if you provide an --emitter and/or a --topic.");
     notes.push_back("Multiple topics match on topic0, topic1, and so on, not on different topic0's.");
-    notes.push_back("Large block ranges may crash the node, use --big_range to specify a larger range.");
+    notes.push_back("For the --logs option, large block ranges may crash the node, use --big_range to specify a larger range.");  // NOLINT
     // clang-format on
     // END_CODE_NOTES
 
     // BEG_ERROR_STRINGS
+    // END_ERROR_STRINGS
+
     usageErrs[ERR_NOCACHEUNCLE] = "The --cache option is not available for uncle blocks.";
     usageErrs[ERR_NOCACHEADDRESS] = "The --cache option is not available when using one of the address options.";
     usageErrs[ERR_TRACINGREQUIRED] = "A tracing node is required for the --traces options to work properly.";
@@ -282,7 +284,6 @@ COptions::COptions(void) {
     usageErrs[ERR_ATLEASTONEBLOCK] = "You must specify at least one block.";
     usageErrs[ERR_EMTOPONLYWITHLOG] = "The --emitter and --topic options are only available with the --log option.";
     usageErrs[ERR_ARTWITHOUTLOGS] = "The --artcilate option is only available with the --logs option.";
-    // END_ERROR_STRINGS
 }
 
 //--------------------------------------------------------------------------------

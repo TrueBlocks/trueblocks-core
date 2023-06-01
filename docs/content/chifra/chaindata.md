@@ -67,7 +67,7 @@ Notes:
   - With the --logs option, optionally specify one or more --emitter, one or more --topics, either or both.
   - The --logs option is significantly faster if you provide an --emitter and/or a --topic.
   - Multiple topics match on topic0, topic1, and so on, not on different topic0's.
-  - Large block ranges may crash the node, use --big_range to specify a larger range.
+  - For the --logs option, large block ranges may crash the node, use --big_range to specify a larger range.
 ```
 
 Data models produced by this tool:
