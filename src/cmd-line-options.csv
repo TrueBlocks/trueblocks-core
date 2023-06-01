@@ -247,12 +247,12 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 20830,apps,Admin,status,cacheStatus,n1,,,false,false,false,false,--,note,,The `some` mode includes index&#44; monitors&#44; names&#44; slurps&#44; and abis.
 20835,apps,Admin,status,cacheStatus,n2,,,false,false,false,false,--,note,,If no mode is supplied&#44; a terse report is generated.
 
-31900,apps,Admin,chunks,chunkMan,mode,,,true,false,true,true,local,positional,enum[manifest|index|blooms|addresses|appearances|stats],the type of data to process
-31905,apps,Admin,chunks,chunkMan,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of blocks to intersect with chunk ranges
+31900,apps,Admin,chunks,chunkMan,mode,,,true,false,true,true,gocmd,positional,enum[manifest|index|blooms|addresses|appearances|stats],the type of data to process
+31905,apps,Admin,chunks,chunkMan,blocks,,,false,false,true,true,gocmd,positional,list<blknum>,an optional list of blocks to intersect with chunk ranges
 31920,apps,Admin,chunks,chunkMan,check,c,,false,false,true,true,gocmd,switch,<boolean>,check the manifest&#44; index&#44; or blooms for internal consistency
 31935,apps,Admin,chunks,chunkMan,pin,i,,false,false,true,true,gocmd,switch,<boolean>,pin the manifest or each index chunk and bloom
 31940,apps,Admin,chunks,chunkMan,publish,p,,false,false,true,true,gocmd,switch,<boolean>,publish the manifest to the Unchained Index smart contract
-31925,apps,Admin,chunks,chunkMan,truncate,n,,false,false,true,false,gocmd,flag,<blknum>,truncate the entire index at this block (requires a block identifier)
+31925,apps,Admin,chunks,chunkMan,truncate,n,,false,false,false,false,gocmd,flag,<blknum>,truncate the entire index at this block (requires a block identifier)
 31945,apps,Admin,chunks,chunkMan,remote,r,,false,false,true,true,gocmd,switch,<boolean>,prior to processing&#44; retreive the manifest from the Unchained Index smart contract
 31950,apps,Admin,chunks,chunkMan,belongs,b,,false,false,true,true,gocmd,flag,list<addr>,in index mode only&#44; checks the address(es) for inclusion in the given index chunk
 31951,apps,Admin,chunks,chunkMan,first_block,F,0,false,false,true,true,gocmd,flag,<blknum>,first block to process (inclusive)

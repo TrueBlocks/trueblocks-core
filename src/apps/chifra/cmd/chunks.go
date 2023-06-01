@@ -64,7 +64,7 @@ func init() {
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Check, "check", "c", false, "check the manifest, index, or blooms for internal consistency")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Pin, "pin", "i", false, "pin the manifest or each index chunk and bloom")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Publish, "publish", "p", false, "publish the manifest to the Unchained Index smart contract")
-	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().Truncate, "truncate", "n", 0, "truncate the entire index at this block (requires a block identifier)")
+	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().Truncate, "truncate", "n", 0, "truncate the entire index at this block (requires a block identifier) (hidden)")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Remote, "remote", "r", false, "prior to processing, retreive the manifest from the Unchained Index smart contract")
 	chunksCmd.Flags().StringSliceVarP(&chunksPkg.GetOptions().Belongs, "belongs", "b", nil, "in index mode only, checks the address(es) for inclusion in the given index chunk")
 	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to process (inclusive)")
@@ -72,6 +72,9 @@ func init() {
 	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().MaxAddrs, "max_addrs", "m", 0, "the max number of addresses to process in a given chunk")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Deep, "deep", "d", false, "if true, dig more deeply during checking (manifest only)")
 	chunksCmd.Flags().Float64VarP(&chunksPkg.GetOptions().Sleep, "sleep", "s", 0.0, "for --remote pinning only, seconds to sleep between API calls")
+	if os.Getenv("TEST_MODE") != "true" {
+		chunksCmd.Flags().MarkHidden("truncate")
+	}
 	globals.InitGlobals(chunksCmd, &chunksPkg.GetOptions().Globals)
 
 	chunksCmd.SetUsageTemplate(UsageWithNotes(notesChunks))
