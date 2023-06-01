@@ -292,24 +292,21 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12220,tools,Other,slurp,ethslurp,,,,false,false,true,true,--,description,,Fetch data from Etherscan for any address.
 12222,tools,Other,slurp,ethslurp,n1,,,false,false,false,false,--,note,,Portions of this software are Powered by Etherscan.io APIs.
 
-11660,dev_tools,,,makeClass,files,,,true,false,true,false,local,positional,list<path>,one or more class definition files
-11740,dev_tools,,,makeClass,all,a,,false,false,true,false,header,switch,<boolean>,list&#44; or run all class definitions found in the local folder
-11780,dev_tools,,,makeClass,options,o,,false,false,true,false,local,switch,<boolean>,export options code (check validity in the process)
-11780,dev_tools,,,makeClass,gocmds,g,,false,false,true,false,local,switch,<boolean>,export go command code
-11780,dev_tools,,,makeClass,readmes,m,,false,false,true,false,local,switch,<boolean>,create readme files for each tool and app
-11782,dev_tools,,,makeClass,format,f,,false,false,true,false,local,switch,<boolean>,format source code files (.cpp and .h) found in local folder and below
-11784,dev_tools,,,makeClass,lint,l,,false,false,true,false,local,switch,<boolean>,lint source code files (.cpp and .h) found in local folder and below
-11787,dev_tools,,,makeClass,sdk,s,,false,false,true,false,header,switch,<boolean>,create typescript sdk
-11781,dev_tools,,,makeClass,openapi,A,,false,false,false,false,header,switch,<boolean>,export openapi.yaml file for API documentation
-11824,dev_tools,,,makeClass,,,,false,false,true,false,--,description,,Automatically writes C++ for various purposes.
+11660,dev_tools,,,makeClass,files,,,true,false,true,true,local,positional,list<path>,one or more class definition files
+11740,dev_tools,,,makeClass,all,a,,false,false,true,true,header,switch,<boolean>,list&#44; or run all class definitions found in the local folder
+11780,dev_tools,,,makeClass,options,o,,false,false,true,true,local,switch,<boolean>,export options code (check validity in the process)
+11780,dev_tools,,,makeClass,gocmds,g,,false,false,true,true,local,switch,<boolean>,export go command code
+11780,dev_tools,,,makeClass,readmes,m,,false,false,true,true,local,switch,<boolean>,create readme files for each tool and app
+11782,dev_tools,,,makeClass,format,f,,false,false,true,true,local,switch,<boolean>,format source code files (.cpp and .h) found in local folder and below
+11784,dev_tools,,,makeClass,lint,l,,false,false,true,true,local,switch,<boolean>,lint source code files (.cpp and .h) found in local folder and below
+11787,dev_tools,,,makeClass,sdk,s,,false,false,true,true,header,switch,<boolean>,create typescript sdk
+11781,dev_tools,,,makeClass,openapi,A,,false,false,true,true,header,switch,<boolean>,export openapi.yaml file for API documentation
+11824,dev_tools,,,makeClass,,,,false,false,true,true,--,description,,Automatically writes C++ for various purposes.
 11826,dev_tools,,,makeClass,n1,,,false,false,false,false,--,note,,The `--options` flag generates `COption` code for each of the various tools.
 11830,dev_tools,,,makeClass,n2,,,false,false,false,false,--,note,,More information on class definition files is found in the documentation.
-11832,dev_tools,,,makeClass,ERR_CLASSDEFNOTEXIST,,,false,false,false,false,--,error,,./classDefinitions folder does not exist.
-11834,dev_tools,,,makeClass,ERR_CONFIGMISSING,,,false,false,false,false,--,error,,File {0} does not exist.
-11842,dev_tools,,,makeClass,ERR_NEEDONECLASS,,,false,false,false,false,--,error,,Please specify at least one className.
 
-11880,dev_tools,,,testRunner,mode,m,,false,false,true,false,local,flag,enum[cmd*|api|both],determine which set of tests to run
-11900,dev_tools,,,testRunner,filter,f,,false,false,true,false,header,flag,enum[fast*|medi|slow|all],determine how long it takes to run tests
-11930,dev_tools,,,testRunner,skip,s,1,false,false,false,false,header,flag,<uint64>,run only every 'skip' test (faster)
-11960,dev_tools,,,testRunner,report,r,,false,false,true,false,header,switch,<boolean>,display performance report to screen
-11980,dev_tools,,,testRunner,,,,false,false,true,false,--,description,,Run TrueBlocks' test cases with options.
+11880,dev_tools,,,testRunner,mode,m,,false,false,true,true,local,flag,enum[cmd*|api|both],determine which set of tests to run
+11900,dev_tools,,,testRunner,filter,f,,false,false,true,true,header,flag,enum[fast*|medi|slow|all],determine how long it takes to run tests
+11930,dev_tools,,,testRunner,skip,s,1,false,false,true,true,header,flag,<uint64>,run only every 'skip' test (faster)
+11960,dev_tools,,,testRunner,report,r,,false,false,true,true,header,switch,<boolean>,display performance report to screen
+11980,dev_tools,,,testRunner,,,,false,false,true,true,--,description,,Run TrueBlocks' test cases with options.
