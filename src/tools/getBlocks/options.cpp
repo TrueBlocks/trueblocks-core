@@ -27,11 +27,11 @@ static const COption params[] = {
     COption("apps", "s", "", OPT_SWITCH, "display a list of uniq address appearances in the block"),
     COption("uniq", "u", "", OPT_SWITCH, "display a list of uniq address appearances per transaction"),
     COption("flow", "f", "enum[from|to|reward]", OPT_FLAG, "for the uniq and apps options only, export only from or to (including trace from or to)"),  // NOLINT
-    COption("logs", "g", "", OPT_HIDDEN | OPT_SWITCH, "display only the logs found in the block(s)"),
-    COption("emitter", "m", "list<addr>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, filter logs to show only those logs emitted by the given address(es)"),  // NOLINT
-    COption("topic", "p", "list<topic>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, filter logs to show only those with this topic(s)"),  // NOLINT
-    COption("articulate", "a", "", OPT_HIDDEN | OPT_SWITCH, "for the --logs option only, articulate the retrieved data if ABIs can be found"),  // NOLINT
-    COption("big_range", "r", "<uint64>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, allow for block ranges larger than 500"),  // NOLINT
+    COption("logs", "l", "", OPT_SWITCH, "display only the logs found in the block(s)"),
+    COption("emitter", "m", "list<addr>", OPT_FLAG, "for the --logs option only, filter logs to show only those logs emitted by the given address(es)"),  // NOLINT
+    COption("topic", "B", "list<topic>", OPT_FLAG, "for the --logs option only, filter logs to show only those with this topic(s)"),  // NOLINT
+    COption("articulate", "a", "", OPT_SWITCH, "for the --logs option only, articulate the retrieved data if ABIs can be found"),  // NOLINT
+    COption("big_range", "r", "<uint64>", OPT_FLAG, "for the --logs option only, allow for block ranges larger than 500"),  // NOLINT
     COption("count", "U", "", OPT_SWITCH, "display the number of the lists of appearances for --addrs or --uniq"),
     COption("cache", "o", "", OPT_SWITCH, "force a write of the block to the cache"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve one or more blocks from the chain or local cache."),
@@ -91,7 +91,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-f" || arg == "--flow") {
             return flag_required("flow");
 
-        } else if (arg == "-g" || arg == "--logs") {
+        } else if (arg == "-l" || arg == "--logs") {
             logs = true;
 
         } else if (startsWith(arg, "-m:") || startsWith(arg, "--emitter:")) {
@@ -101,11 +101,11 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-m" || arg == "--emitter") {
             return flag_required("emitter");
 
-        } else if (startsWith(arg, "-p:") || startsWith(arg, "--topic:")) {
-            arg = substitute(substitute(arg, "-p:", ""), "--topic:", "");
+        } else if (startsWith(arg, "-B:") || startsWith(arg, "--topic:")) {
+            arg = substitute(substitute(arg, "-B:", ""), "--topic:", "");
             if (!parseTopicList2(this, topic, arg))
                 return false;
-        } else if (arg == "-p" || arg == "--topic") {
+        } else if (arg == "-B" || arg == "--topic") {
             return flag_required("topic");
 
         } else if (arg == "-a" || arg == "--articulate") {

@@ -89,13 +89,13 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12350,tools,Accounts,names,ethNames,n1,,,false,false,false,false,--,note,,The tool will accept up to three terms&#44; each of which must match against any field in the database.
 12355,tools,Accounts,names,ethNames,n2,,,false,false,false,false,--,note,,The `--match_case` option enables case sensitive matching.
 
-13660,tools,Accounts,abis,grabABI,addrs,,,true,false,true,true,header,positional,list<addr>,a list of one or more smart contracts whose ABIs to display
-13850,tools,Accounts,abis,grabABI,known,k,,false,false,true,true,local,switch,<boolean>,load common 'known' ABIs from cache
+13660,tools,Accounts,abis,grabABI,addrs,,,true,false,true,true,gocmd,positional,list<addr>,a list of one or more smart contracts whose ABIs to display
+13850,tools,Accounts,abis,grabABI,known,k,,false,false,true,true,gocmd,switch,<boolean>,load common 'known' ABIs from cache
 13865,tools,Accounts,abis,grabABI,find,f,,false,false,true,true,gocmd,flag,list<string>,search for function or event declarations given a four- or 32-byte code(s)
 13865,tools,Accounts,abis,grabABI,hint,n,,false,false,true,true,gocmd,flag,list<string>,for the --find option only&#44; provide hints to speed up the search
 13865,tools,Accounts,abis,grabABI,encode,e,,false,false,true,true,gocmd,flag,<string>,generate the 32-byte encoding for a given cannonical function or event signature
-13865,tools,Accounts,abis,grabABI,clean,c,,false,false,true,true,gocmd,flag,<boolean>,remove an abi file for an address or all zero-length files if no address is given
-13860,tools,Accounts,abis,grabABI,sol,s,,false,false,true,true,local,deprecated,<boolean>,please use the `solc --abi` tool instead
+13865,tools,Accounts,abis,grabABI,clean,C,,false,false,true,true,gocmd,flag,<boolean>,remove an abi file for an address or all zero-length files if no address is given
+13860,tools,Accounts,abis,grabABI,sol,s,,false,false,true,true,gocmd,deprecated,<boolean>,please use the `solc --abi` tool instead
 13880,tools,Accounts,abis,grabABI,,,,false,false,true,true,--,description,,Fetches the ABI for a smart contract.
 13885,tools,Accounts,abis,grabABI,n1,,,false,false,false,false,--,note,,Search for either four byte signatures or event signatures with the --find option.
 
@@ -106,11 +106,11 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12540,tools,ChainData,blocks,getBlocks,apps,s,,false,false,true,true,local,switch,<boolean>,display a list of uniq address appearances in the block
 12560,tools,ChainData,blocks,getBlocks,uniq,u,,false,false,true,true,local,switch,<boolean>,display a list of uniq address appearances per transaction
 12565,tools,ChainData,blocks,getBlocks,flow,f,,false,false,true,true,header,flag,enum[from|to|reward],for the uniq and apps options only&#44; export only from or to (including trace from or to)
-12570,tools,ChainData,blocks,getBlocks,logs,g,,false,false,false,true,header,switch,<boolean>,display only the logs found in the block(s)
-12972,tools,ChainData,blocks,getBlocks,emitter,m,,false,false,false,true,local,flag,list<addr>,for the --logs option only&#44; filter logs to show only those logs emitted by the given address(es)
-12974,tools,ChainData,blocks,getBlocks,topic,p,,false,false,false,true,local,flag,list<topic>,for the --logs option only&#44; filter logs to show only those with this topic(s)
-12975,tools,ChainData,blocks,getBlocks,articulate,a,,false,false,false,false,header,switch,<boolean>,for the --logs option only&#44; articulate the retrieved data if ABIs can be found
-12976,tools,ChainData,blocks,getBlocks,big_range,r,500,false,false,false,false,header,flag,<uint64>,for the --logs option only&#44; allow for block ranges larger than 500
+12570,tools,ChainData,blocks,getBlocks,logs,l,,false,false,true,true,header,switch,<boolean>,display only the logs found in the block(s)
+12972,tools,ChainData,blocks,getBlocks,emitter,m,,false,false,true,true,local,flag,list<addr>,for the --logs option only&#44; filter logs to show only those logs emitted by the given address(es)
+12974,tools,ChainData,blocks,getBlocks,topic,B,,false,false,true,true,local,flag,list<topic>,for the --logs option only&#44; filter logs to show only those with this topic(s)
+12975,tools,ChainData,blocks,getBlocks,articulate,a,,false,false,true,true,header,switch,<boolean>,for the --logs option only&#44; articulate the retrieved data if ABIs can be found
+12976,tools,ChainData,blocks,getBlocks,big_range,r,500,false,false,true,true,header,flag,<uint64>,for the --logs option only&#44; allow for block ranges larger than 500
 12578,tools,ChainData,blocks,getBlocks,count,U,,false,false,true,true,header,switch,<boolean>,display the number of the lists of appearances for --addrs or --uniq
 12580,tools,ChainData,blocks,getBlocks,cache,o,,false,false,true,true,header,switch,<boolean>,force a write of the block to the cache
 12581,tools,ChainData,blocks,getBlocks,decache,D,,false,false,true,true,gocmd,switch,<boolean>,removes a block and any transactions or traces in the block from the cache
