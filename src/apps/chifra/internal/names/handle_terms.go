@@ -18,7 +18,6 @@ func (opts *NamesOptions) HandleTerms() error {
 	var fetchData func(modelChan chan types.Modeler[types.RawName], errorChan chan error)
 
 	apiMode := opts.Globals.IsApiMode()
-	testMode := opts.Globals.TestMode
 
 	var conn *grpc.ClientConn
 	var client proto.NamesClient
@@ -39,7 +38,7 @@ func (opts *NamesOptions) HandleTerms() error {
 	} else {
 		// Report the error only if we know that the server is running or the user wants us
 		// to be verbose
-		if grpcErr != nil && (!errors.Is(grpcErr, proto.ErrServerNotRunning) || opts.Globals.Verbose) && !testMode {
+		if grpcErr != nil && (!errors.Is(grpcErr, proto.ErrServerNotRunning) || opts.Globals.Verbose) {
 			logger.Error("gRPC connection error:", grpcErr)
 			logger.Warn("falling back to file-based search")
 		}
