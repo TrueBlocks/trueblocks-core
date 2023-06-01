@@ -12,6 +12,8 @@ Fixes a bug with downloading the timestamps file and allowing Control+C
 Changes `chifra chunks manifest --pin` to only pin the actual chunks if `--deep` is included, otherwise it pins only the timestamps file (both locally and remotely) and the manifest (both locally and remotely).
 Implments `chifra chunks manifest --check --deep` which verifies that all chunks in the manifest are locally pinned
 Implments `chifra chunks index --check --deep` which opens each chunk and checks all addresses in that chunk report "not-no" when tested against the node software.
+Fixed some issues with chifra init
+
 ## v0.70.0 (2023/05/26)
 
 This release includes a major re-write of the `chifra names` module as well as other less obvious fixes and improvements. It also includes an important correction to the Unchained Index data stored on the smart contract which requires a migration. Make sure to follow the [migration](./MIGRATIONS.md) (don't worry -- it's simple).
