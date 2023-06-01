@@ -106,14 +106,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: appearances
-          description: export each monitor's list of appearances (the default)
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: silent
           description: freshen the monitor only (no reporting)
           required: false
@@ -174,6 +166,14 @@ paths:
           schema:
             type: number
             format: blknum
+        - name: bounds
+          description: report first and last block this address appears
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data
@@ -413,6 +413,15 @@ paths:
               - in
               - out
               - zero
+        - name: factory
+          description: >
+            for --traces only, report addresses created by (or self-destructed by) the given address(es)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: unripe
           description: export transactions labeled upripe (i.e. less than 28 blocks old)
           required: false
@@ -520,6 +529,14 @@ paths:
               format: address
         - name: clean
           description: clean (i.e. remove duplicate appearances) from monitors
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: decache
+          description: removes a monitor and all associated data from the cache
           required: false
           style: form
           in: query
