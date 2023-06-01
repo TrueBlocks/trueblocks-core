@@ -1572,6 +1572,14 @@ paths:
             enum:
               - show
               - edit
+        - name: paths
+          description: show the configuration paths for the system
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data
