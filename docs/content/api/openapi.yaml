@@ -1921,6 +1921,15 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: firstBlock
+          description: do not download any chunks earlier than this block
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: blknum
         - name: sleep
           description: seconds to sleep between downloads
           required: false

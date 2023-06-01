@@ -272,15 +272,15 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 11905,apps,Admin,init,init,all,a,,false,false,true,true,gocmd,switch,<boolean>,in addition to Bloom filters&#44; download full index chunks (recommended)
 11910,apps,Admin,init,init,dry_run,d,,false,false,true,true,gocmd,switch,<boolean>,display the results of the download without actually downloading
-11915,apps,Admin,init,init,first_block,F,0,false,false,false,false,gocmd,flag,<blknum>,do not download any chunks earlier than this block
+11915,apps,Admin,init,init,first_block,F,0,false,false,true,true,gocmd,flag,<blknum>,do not download any chunks earlier than this block
 11920,apps,Admin,init,init,sleep,s,0.0,false,false,true,true,gocmd,flag,<double>,seconds to sleep between downloads
 11925,apps,Admin,init,init,,,,false,false,true,true,--,description,,Initialize the TrueBlocks system by downloading the Unchained Index from IPFS.
 11930,apps,Admin,init,init,n1,,,false,false,false,false,--,note,,If run with no options&#44; this tool will download or freshen only the Bloom filters.
 11935,apps,Admin,init,init,n2,,,false,false,false,false,--,note,,You may re-run the tool as often as you wish. It will repair or freshen the index.
 
-12001,apps,Other,explore,fireStorm,terms,,,false,false,true,true,header,positional,list<string>,one or more address&#44; name&#44; block&#44; or transaction identifier
-12002,apps,Other,explore,fireStorm,local,l,,false,false,true,true,header,switch,<boolean>,open the local TrueBlocks explorer
-12003,apps,Other,explore,fireStorm,google,g,,false,false,true,true,header,switch,<boolean>,search google excluding popular blockchain explorers
+12001,apps,Other,explore,fireStorm,terms,,,false,false,true,true,gocmd,positional,list<string>,one or more address&#44; name&#44; block&#44; or transaction identifier
+12002,apps,Other,explore,fireStorm,local,l,,false,false,true,true,gocmd,switch,<boolean>,open the local TrueBlocks explorer
+12003,apps,Other,explore,fireStorm,google,g,,false,false,true,true,gocmd,switch,<boolean>,search google excluding popular blockchain explorers
 12002,apps,Other,explore,fireStorm,,,,false,false,true,true,--,description,,Open a local or remote explorer for one or more addresses&#44; blocks&#44; or transactions.
 
 12120,tools,Other,slurp,ethslurp,addrs,,,true,false,true,true,gocmd,positional,list<addr>,one or more addresses to slurp from Etherscan
@@ -290,7 +290,8 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12200,tools,Other,slurp,ethslurp,per_page,P,5000,false,false,true,true,gocmd,flag,<uint64>,the number of records to request on each page
 12210,tools,Other,slurp,ethslurp,sleep,s,.25,false,false,true,true,gocmd,flag,<double>,seconds to sleep between requests
 12220,tools,Other,slurp,ethslurp,,,,false,false,true,true,--,description,,Fetch data from Etherscan for any address.
-12222,tools,Other,slurp,ethslurp,n1,,,false,false,false,false,--,note,,Portions of this software are Powered by Etherscan.io APIs.
+12222,tools,Other,slurp,ethslurp,n1,,,false,false,false,false,--,note,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
+12224,tools,Other,slurp,ethslurp,n2,,,false,false,false,false,--,note,,Portions of this software are Powered by Etherscan.io APIs.
 
 11660,dev_tools,,,makeClass,files,,,true,false,true,true,local,positional,list<path>,one or more class definition files
 11740,dev_tools,,,makeClass,all,a,,false,false,true,true,header,switch,<boolean>,list&#44; or run all class definitions found in the local folder
