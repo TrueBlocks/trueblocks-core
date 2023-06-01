@@ -668,6 +668,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: clean
+          description: clean the data (addrs to lower case, sort by addr)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: regular
           description: only available with --clean, cleans regular names database
           required: false
@@ -685,6 +693,15 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: autoname
+          description: >
+            an address assumed to be a token, added automatically to names database if true
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
         - name: named
           description: please use the --all option instead
           required: false

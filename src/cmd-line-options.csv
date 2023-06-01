@@ -66,25 +66,24 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12030,apps,Accounts,list,acctExport,n1,,,false,false,false,false,--,note,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 12035,apps,Accounts,list,acctExport,n2,,,false,false,false,false,--,note,,No other options are permitted when --silent is selected.
 
-12260,tools,Accounts,names,ethNames,terms,,,true,false,true,true,header,positional,list<string>,a space separated list of one or more search terms
+12260,tools,Accounts,names,ethNames,terms,,,true,false,true,true,gocmd,positional,list<string>,a space separated list of one or more search terms
 12265,tools,Accounts,names,ethNames,expand,e,,false,false,true,true,gocmd,switch,<boolean>,expand search to include all fields (search name&#44; address&#44; and symbol otherwise)
 12270,tools,Accounts,names,ethNames,match_case,m,,false,false,true,true,gocmd,switch,<boolean>,do case-sensitive search
-12275,tools,Accounts,names,ethNames,all,l,,false,false,true,true,gocmd,switch,<boolean>,include all (including custom) names in the search
+12275,tools,Accounts,names,ethNames,all,a,,false,false,true,true,gocmd,switch,<boolean>,include all (including custom) names in the search
 12280,tools,Accounts,names,ethNames,custom,c,,false,false,true,true,gocmd,switch,<boolean>,include only custom named accounts in the search
 12285,tools,Accounts,names,ethNames,prefund,p,,false,false,true,true,gocmd,switch,<boolean>,include prefund accounts in the search
-12290,tools,Accounts,names,ethNames,addr,a,,false,false,true,true,gocmd,switch,<boolean>,display only addresses in the results (useful for scripting&#44; assumes --no_header)
+12290,tools,Accounts,names,ethNames,addr,s,,false,false,true,true,gocmd,switch,<boolean>,display only addresses in the results (useful for scripting&#44; assumes --no_header)
 12295,tools,Accounts,names,ethNames,tags,g,,false,false,true,true,gocmd,switch,<boolean>,export the list of tags and subtags only
-12300,tools,Accounts,names,ethNames,clean,C,,false,false,false,false,gocmd,switch,<boolean>,clean the data (addrs to lower case&#44; sort by addr)
-12301,tools,Accounts,names,ethNames,regular,,,false,false,false,true,gocmd,switch,<boolean>,only available with --clean&#44; cleans regular names database
-12302,tools,Accounts,names,ethNames,dry_run,,,false,false,false,true,gocmd,switch,<boolean>,only available with --clean or --autoname&#44; outputs changes to stdout instead of updating databases
-12305,tools,Accounts,names,ethNames,autoname,A,,false,false,false,false,gocmd,flag,<string>,an address assumed to be a token&#44; added automatically to names database if true
+12300,tools,Accounts,names,ethNames,clean,C,,false,false,true,true,gocmd,switch,<boolean>,clean the data (addrs to lower case&#44; sort by addr)
+12301,tools,Accounts,names,ethNames,regular,r,,false,false,true,true,gocmd,switch,<boolean>,only available with --clean&#44; cleans regular names database
+12302,tools,Accounts,names,ethNames,dry_run,d,,false,false,true,true,gocmd,switch,<boolean>,only available with --clean or --autoname&#44; outputs changes to stdout instead of updating databases
+12305,tools,Accounts,names,ethNames,autoname,A,,false,false,true,true,gocmd,flag,<string>,an address assumed to be a token&#44; added automatically to names database if true
 12310,tools,Accounts,names,ethNames,create,,,false,false,false,true,gocmd,switch,<boolean>,create a new name record
 12315,tools,Accounts,names,ethNames,update,,,false,false,false,true,gocmd,switch,<boolean>,edit an existing name
 12320,tools,Accounts,names,ethNames,deleteMe,,,false,false,false,true,gocmd,switch,<boolean>,delete a name&#44; but do not remove it
 12325,tools,Accounts,names,ethNames,undelete,,,false,false,false,true,gocmd,switch,<boolean>,undelete a previously deleted name
 12330,tools,Accounts,names,ethNames,remove,,,false,false,false,true,gocmd,switch,<boolean>,remove a previously deleted name
-12335,tools,Accounts,names,ethNames,to_custom,u,,false,false,false,false,deprecated,switch,<boolean>,this option has been deprecated
-12340,tools,Accounts,names,ethNames,named,n,,false,false,true,true,deprecated,switch,<boolean>,please use the --all option instead
+12340,tools,Accounts,names,ethNames,named,n,,false,false,true,true,gocmd,switch,<boolean>,please use the --all option instead
 12345,tools,Accounts,names,ethNames,,,,false,false,true,true,--,description,,Query addresses or names of well known accounts.
 12350,tools,Accounts,names,ethNames,n1,,,false,false,false,false,--,note,,The tool will accept up to three terms&#44; each of which must match against any field in the database.
 12355,tools,Accounts,names,ethNames,n2,,,false,false,false,false,--,note,,The `--match_case` option enables case sensitive matching.

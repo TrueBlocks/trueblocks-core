@@ -37,7 +37,6 @@ type NamesOptions struct {
 	Delete    bool                  `json:"delete,omitempty"`    // Delete a name, but do not remove it
 	Undelete  bool                  `json:"undelete,omitempty"`  // Undelete a previously deleted name
 	Remove    bool                  `json:"remove,omitempty"`    // Remove a previously deleted name
-	ToCustom  bool                  `json:"toCustom,omitempty"`  // This option has been deprecated
 	Named     bool                  `json:"named,omitempty"`     // Please use the --all option instead
 	Globals   globals.GlobalOptions `json:"globals,omitempty"`   // The global options
 	BadFlag   error                 `json:"badFlag,omitempty"`   // An error flag if needed
@@ -67,7 +66,6 @@ func (opts *NamesOptions) testLog() {
 	logger.TestLog(opts.Delete, "Delete: ", opts.Delete)
 	logger.TestLog(opts.Undelete, "Undelete: ", opts.Undelete)
 	logger.TestLog(opts.Remove, "Remove: ", opts.Remove)
-	logger.TestLog(opts.ToCustom, "ToCustom: ", opts.ToCustom)
 	logger.TestLog(opts.Named, "Named: ", opts.Named)
 	opts.Globals.TestLog()
 }
@@ -121,8 +119,6 @@ func namesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
 			opts.Undelete = true
 		case "remove":
 			opts.Remove = true
-		case "toCustom":
-			opts.ToCustom = true
 		case "named":
 			opts.Named = true
 		default:
