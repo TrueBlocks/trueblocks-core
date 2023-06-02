@@ -1,6 +1,7 @@
 package abi
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"io/fs"
@@ -11,8 +12,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/contract"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 )
@@ -223,18 +224,12 @@ func LoadAbi(chain string, address base.Address, destination AbiInterfaceMap) (e
 	}
 
 	// We didn't find the file. Check if the address is a contract
-	contract, err := contract.IsContractAt(
-		chain,
-		address,
-		nil, // use latest block number
-	)
-	if err != nil {
-		return
+	if err := rpcClient.IsContractAt(chain, address, nil); err != nil && !errors.Is(err, rpcClient.ErrNotAContract) {
+		return err
+	} else if errors.Is(err, rpcClient.ErrNotAContract) {
+		return nil
 	}
-	if !contract {
-		// logger.Info("Address", address, "is not a smart contract. Skipping...")
-		return
-	}
+
 	// Fetch ABI from a provider
 	return DownloadAbi(chain, address, destination)
 }

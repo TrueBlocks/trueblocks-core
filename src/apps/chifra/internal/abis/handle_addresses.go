@@ -2,14 +2,15 @@ package abisPkg
 
 import (
 	"context"
+	"errors"
 	"os"
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/contract"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -33,11 +34,12 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 					cancel()
 				}
 				// Let's try to download the file from somewhere
-				if contract, err := contract.IsContractAt(opts.Globals.Chain, address, nil); err != nil {
+				if err := rpcClient.IsContractAt(opts.Globals.Chain, address, nil); err != nil && !errors.Is(err, rpcClient.ErrNotAContract) {
 					errorChan <- err
 					cancel()
-				} else if !contract {
+				} else if errors.Is(err, rpcClient.ErrNotAContract) {
 					logger.Info("Address", address, "is not a smart contract. Skipping...")
+					err = nil // not an error to not be a contract
 					continue
 				} else {
 					// It's okay to not find the ABI. We report an error, but do not stop processing

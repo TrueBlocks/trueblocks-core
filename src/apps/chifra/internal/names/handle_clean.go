@@ -4,16 +4,17 @@ package namesPkg
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strings"
 	"sync/atomic"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/contract"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/token"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -181,14 +182,16 @@ func preparePrefunds(chain string) (results map[base.Address]bool, err error) {
 }
 
 func cleanName(chain string, name *types.SimpleName) (modified bool, err error) {
-	isContract, err := contract.IsContractAt(chain, name.Address, nil)
-	if err != nil {
+	if err = rpcClient.IsContractAt(chain, name.Address, nil); err != nil && !errors.Is(err, rpcClient.ErrNotAContract) {
 		return
 	}
+
+	isContract := !errors.Is(err, rpcClient.ErrNotAContract)
 	wasContract := name.IsContract && !isContract
 	modified = cleanCommon(name)
 
 	if !isContract {
+		err = nil // not an error to not be a contract
 		if mod := cleanNonContract(name, wasContract); mod {
 			modified = true
 		}
