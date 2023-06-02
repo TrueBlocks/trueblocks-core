@@ -64,13 +64,6 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 		return
 	}
 
-	isTokenRelated := func(input string) bool {
-		if len(input) < 10 {
-			return false
-		}
-		return IsTokenRelated(input[:10])
-	}
-
 	blockTs := rpc.GetBlockTimestamp(chain, bn)
 	receipt, err := GetTransactionReceipt(chain, ReceiptQuery{
 		Bn:      bn,
@@ -96,7 +89,7 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 		GasUsed:          receipt.GasUsed,
 		Input:            rawTx.Input,
 		IsError:          receipt.IsError,
-		HasToken:         isTokenRelated(rawTx.Input),
+		HasToken:         IsTokenRelated(rawTx.Input),
 		Receipt:          &receipt,
 	}
 	tx.Value.SetString(rawTx.Value, 0)
