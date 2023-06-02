@@ -521,6 +521,7 @@ TEST[DATE|TIME] Format:  json
           "gasCost": 1563870000000000,
           "gasPrice": 30000000000,
           "gasUsed": 52129,
+          "hasToken": true,
           "hash": "0x5662a612bbc416842a01b103d895f4e4ea026860ef83dc7ca153bcde74d6c872",
           "input": "0xa9059cbb000000000000000000000000aca33c43bd8deac8e1d144baa51fe9c7dd7b010f000000000000000000000000000000000000000000000181e5085292122a0000",
           "nonce": 41,

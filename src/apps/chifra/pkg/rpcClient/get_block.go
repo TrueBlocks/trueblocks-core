@@ -11,7 +11,6 @@ import (
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
@@ -169,29 +168,19 @@ func loadBlock[Tx types.BlockTransaction](chain string, bn uint64, isFinal bool,
 }
 
 func getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error) {
-	var response struct {
-		Result types.RawBlock `json:"result"`
-	}
+	method := "eth_getBlockByNumber"
+	params := rpc.Params{fmt.Sprintf("0x%x", bn), withTxs}
 
-	payload := rpc.Payload{
-		Method: "eth_getBlockByNumber",
-		Params: rpc.Params{fmt.Sprintf("0x%x", bn), withTxs},
-	}
-
-	err := rpc.FromRpc(config.GetRpcProvider(chain), &payload, &response)
-	if err != nil {
+	if result, err := rpc.Query[types.RawBlock](chain, method, params); err != nil {
 		return &types.RawBlock{}, err
-	}
+	} else {
+		if bn == 0 {
+			// The RPC does not return a timestamp for the zero block, so we make one
+			result.Timestamp = fmt.Sprintf("0x%x", rpc.GetBlockTimestamp(chain, 0))
+		} else if mustParseUint(result.Timestamp) == 0 {
+			return &types.RawBlock{}, fmt.Errorf("block at %s returned an error: %w", fmt.Sprintf("%d", bn), ethereum.NotFound)
+		}
 
-	if bn == 0 {
-		// The RPC does not return a timestamp for the zero block, so we make one
-		response.Result.Timestamp = fmt.Sprintf("0x%x", rpc.GetBlockTimestamp(chain, 0))
+		return result, nil
 	}
-
-	rawBlock := &response.Result
-	if len(response.Result.Timestamp) == 0 {
-		return rawBlock, fmt.Errorf("block at %s returned an error: %w", fmt.Sprintf("%d", bn), ethereum.NotFound)
-	}
-
-	return rawBlock, err
 }
