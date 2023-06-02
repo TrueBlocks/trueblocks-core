@@ -45,18 +45,17 @@ func (opts *LogsOptions) HandleShowLogs() (err error) {
 					log.Timestamp = tx.Timestamp
 					if opts.Articulate {
 						var err error
-						if !loadedMap[log.Address] {
-							if err = abi.LoadAbi(chain, log.Address, abiMap); err != nil {
-								// continue processing even with an error
-								errorChan <- err
+						address := log.Address
+						if !loadedMap[address] {
+							if err = abi.LoadAbi(chain, address, abiMap); err != nil {
+								errorChan <- err // continue even with an error
 								err = nil
 							}
 						}
 						if err == nil {
 							log.ArticulatedLog, err = articulate.ArticulateLog(&log, abiMap)
 							if err != nil {
-								// continue processing even with an error
-								errorChan <- err
+								errorChan <- err // continue even with an error
 							}
 						}
 					}

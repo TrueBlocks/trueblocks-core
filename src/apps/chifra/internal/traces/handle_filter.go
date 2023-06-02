@@ -35,18 +35,17 @@ func (opts *TracesOptions) HandleFilter() error {
 			trace.Timestamp = rpc.GetBlockTimestamp(opts.Globals.Chain, uint64(trace.BlockNumber))
 			if opts.Articulate {
 				var err error
-				if !loadedMap[trace.Action.To] {
-					if err = abi.LoadAbi(chain, trace.Action.To, abiMap); err != nil {
-						// continue processing even with an error
-						errorChan <- err
+				address := trace.Action.To
+				if !loadedMap[address] {
+					if err = abi.LoadAbi(chain, address, abiMap); err != nil {
+						errorChan <- err // continue even with an error
 						err = nil
 					}
 				}
 				if err == nil {
 					trace.ArticulatedTrace, err = articulate.ArticulateTrace(&trace, abiMap)
 					if err != nil {
-						// continue processing even with an error
-						errorChan <- err
+						errorChan <- err // continue even with an error
 					}
 				}
 			}

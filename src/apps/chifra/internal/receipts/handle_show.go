@@ -75,18 +75,17 @@ func (opts *ReceiptsOptions) HandleShowReceipts() error {
 				if opts.Articulate {
 					for index, log := range receipt.Logs {
 						var err error
-						if !loadedMap[log.Address] {
-							if err = abi.LoadAbi(chain, log.Address, abiMap); err != nil {
-								// continue processing even with an error
-								errorChan <- err
+						address := log.Address
+						if !loadedMap[address] {
+							if err = abi.LoadAbi(chain, address, abiMap); err != nil {
+								errorChan <- err // continue even with an error
 								err = nil
 							}
 						}
 						if err == nil {
 							receipt.Logs[index].ArticulatedLog, err = articulate.ArticulateLog(&log, abiMap)
 							if err != nil {
-								// continue processing even with an error
-								errorChan <- err
+								errorChan <- err // continue even with an error
 							}
 						}
 					}

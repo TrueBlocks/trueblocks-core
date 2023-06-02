@@ -41,46 +41,45 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 				}
 
 				if opts.Articulate {
-					if !loadedMap[tx.To] {
-						if err = abi.LoadAbi(chain, tx.To, abiMap); err != nil {
-							// continue processing even with an error
-							errorChan <- err
+					var err error
+					address := tx.To
+					if !loadedMap[address] {
+						if err = abi.LoadAbi(chain, address, abiMap); err != nil {
+							errorChan <- err // continue even with an error
 							err = nil
 						}
 					}
 
 					for index, log := range tx.Receipt.Logs {
 						var err error
-						if !loadedMap[log.Address] {
-							if err = abi.LoadAbi(chain, log.Address, abiMap); err != nil {
-								// continue processing even with an error
-								errorChan <- err
+						address := log.Address
+						if !loadedMap[address] {
+							if err = abi.LoadAbi(chain, address, abiMap); err != nil {
+								errorChan <- err // continue even with an error
 								err = nil
 							}
 						}
 						if err == nil {
 							tx.Receipt.Logs[index].ArticulatedLog, err = articulate.ArticulateLog(&log, abiMap)
 							if err != nil {
-								// continue processing even with an error
-								errorChan <- err
+								errorChan <- err // continue even with an error
 							}
 						}
 					}
 
 					for index, trace := range tx.Traces {
 						var err error
-						if !loadedMap[trace.Action.To] {
-							if err = abi.LoadAbi(chain, trace.Action.To, abiMap); err != nil {
-								// continue processing even with an error
-								errorChan <- err
+						address := trace.Action.To
+						if !loadedMap[address] {
+							if err = abi.LoadAbi(chain, address, abiMap); err != nil {
+								errorChan <- err // continue even with an error
 								err = nil
 							}
 						}
 						if err == nil {
 							tx.Traces[index].ArticulatedTrace, err = articulate.ArticulateTrace(&trace, abiMap)
 							if err != nil {
-								// continue processing even with an error
-								errorChan <- err
+								errorChan <- err // continue even with an error
 							}
 						}
 					}
@@ -98,8 +97,7 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 								outputData = tx.Traces[0].Result.Output[2:]
 							}
 							if err = articulate.ArticulateFunction(tx.ArticulatedTx, inputData, outputData); err != nil {
-								// continue processing even with an error
-								errorChan <- err
+								errorChan <- err // continue even with an error
 							}
 						}
 					}
