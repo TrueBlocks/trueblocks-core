@@ -8,7 +8,6 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -28,7 +27,7 @@ type ReceiptQuery struct {
 // GetTransactionReceipt fetches receipt from the RPC. If txGasPrice is provided, it will be used for
 // receipts in blocks before London
 func GetTransactionReceipt(chain string, query ReceiptQuery) (receipt types.SimpleReceipt, err error) {
-	rawReceipt, tx, err := getRawTransactionReceipt(chain, query.Bn, query.Txid, query.TxHash)
+	rawReceipt, tx, err := getRawTransactionReceipt(chain, query.Bn, query.Txid)
 	if err != nil {
 		return
 	}
@@ -54,7 +53,6 @@ func GetTransactionReceipt(chain string, query ReceiptQuery) (receipt types.Simp
 		for _, topic := range rawLog.Topics {
 			log.Topics = append(log.Topics, base.HexToHash(topic))
 		}
-
 		log.SetRaw(&rawLog)
 		logs = append(logs, log)
 	}
@@ -99,32 +97,18 @@ func GetTransactionReceipt(chain string, query ReceiptQuery) (receipt types.Simp
 	return
 }
 
-// getRawTransactionReceipt fetches raw transaction. If txHash is provided, the function
-// will not fetch the transaction (we may have already loaded it)
-func getRawTransactionReceipt(chain string, bn uint64, txid uint64, txHash *base.Hash) (receipt *types.RawReceipt, tx *ethTypes.Transaction, err error) {
-	fetchedTx, ferr := TxFromNumberAndId(chain, bn, txid)
-	tx = &fetchedTx
-	if ferr != nil {
-		return nil, nil, ferr
-	}
-	txHashString := tx.Hash().Hex()
+// getRawTransactionReceipt fetches raw transaction given blockNumber and transactionIndex
+func getRawTransactionReceipt(chain string, bn uint64, txid uint64) (receipt *types.RawReceipt, tx *ethTypes.Transaction, err error) {
+	if fetched, err := TxFromNumberAndId(chain, bn, txid); err != nil {
+		return nil, nil, err
 
-	var response struct {
-		Result types.RawReceipt `json:"result"`
+	} else {
+		method := "eth_getTransactionReceipt"
+		params := rpc.Params{fetched.Hash().Hex()}
+		if result, err := rpc.Query[types.RawReceipt](chain, method, params); err != nil {
+			return nil, nil, err
+		} else {
+			return result, &fetched, nil
+		}
 	}
-	// TODO: Could use the Query stuff here
-	err = rpc.FromRpc(
-		config.GetRpcProvider(chain),
-		&rpc.Payload{
-			Method: "eth_getTransactionReceipt",
-			Params: rpc.Params{txHashString},
-		},
-		&response,
-	)
-	if err != nil {
-		return
-	}
-	receipt = &response.Result
-
-	return
 }
