@@ -61,8 +61,8 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 								skipMap[address] = true
 								errorChan <- err // continue even with an error
 								// UNCOMMENT_ME
-							} else {
-								loadedMap[address] = true
+								// } else {
+								// 	loadedMap[address] = true
 								// UNCOMMENT_ME
 							}
 						}
