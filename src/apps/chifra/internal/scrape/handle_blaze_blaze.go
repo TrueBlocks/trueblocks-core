@@ -10,6 +10,7 @@ import (
 	"sync"
 	"sync/atomic"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -213,10 +214,16 @@ func (opts *BlazeOptions) BlazeProcessTimestamps(tsChannel chan tslib.TimestampR
 var mapSync sync.Mutex
 
 func (opts *BlazeOptions) AddToMaps(address string, bn, txid int, addressMap map[string]bool) {
+	isPrecompile := !base.NotPrecompile(address)
+	if isPrecompile {
+		return
+	}
+
 	// Make sure we have a 20 byte '0x' prefixed string (implicit strings come in as 32-byte, non-0x-prefixed strings)
 	if !strings.HasPrefix(address, "0x") {
 		address = hexutil.Encode(common.HexToAddress(address).Bytes())
 	}
+
 	mapSync.Lock()
 	key := fmt.Sprintf("%s\t%09d\t%05d", address, bn, txid)
 	if !addressMap[key] {
@@ -229,6 +236,7 @@ func (opts *BlazeOptions) AddToMaps(address string, bn, txid int, addressMap map
 	mapSync.Unlock()
 }
 
+// BlazeExtractFromTraces extracts addresses from traces
 func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Traces, addressMap map[string]bool) (err error) {
 	if traces.Result == nil || len(traces.Result) == 0 {
 		return
@@ -240,11 +248,11 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 		if traces.Result[i].Type == "call" {
 			// If it's a call, get the to and from
 			from := traces.Result[i].Action.From
-			if isAddress(from) {
+			if base.NotPrecompile(from) {
 				opts.AddToMaps(from, bn, txid, addressMap)
 			}
 			to := traces.Result[i].Action.To
-			if isAddress(to) {
+			if base.NotPrecompile(to) {
 				opts.AddToMaps(to, bn, txid, addressMap)
 			}
 
@@ -256,10 +264,12 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 					// 0x0 (reward got burned). We enter a false record with a false tx_id
 					// to account for this.
 					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-					opts.AddToMaps(author, bn, 99997, addressMap)
+					if base.NotPrecompile(author) {
+						opts.AddToMaps(author, bn, 99997, addressMap)
+					}
 
 				} else {
-					if isAddress(author) {
+					if base.NotPrecompile(author) {
 						opts.AddToMaps(author, bn, 99999, addressMap)
 					}
 				}
@@ -271,10 +281,12 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 					// 0x0 (reward got burned). We enter a false record with a false tx_id
 					// to account for this.
 					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-					opts.AddToMaps(author, bn, 99998, addressMap)
+					if base.NotPrecompile(author) {
+						opts.AddToMaps(author, bn, 99998, addressMap)
+					}
 
 				} else {
-					if isAddress(author) {
+					if base.NotPrecompile(author) {
 						opts.AddToMaps(author, bn, 99998, addressMap)
 					}
 				}
@@ -282,7 +294,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 			} else if traces.Result[i].Action.RewardType == "external" {
 				// This only happens in xDai as far as we know...
 				author := traces.Result[i].Action.Author
-				if isAddress(author) {
+				if base.NotPrecompile(author) {
 					opts.AddToMaps(author, bn, 99996, addressMap)
 				}
 
@@ -294,22 +306,22 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 		} else if traces.Result[i].Type == "suicide" {
 			// add the contract that died, and where it sent it's money
 			address := traces.Result[i].Action.Address
-			if isAddress(address) {
+			if base.NotPrecompile(address) {
 				opts.AddToMaps(address, bn, txid, addressMap)
 			}
 			refundAddress := traces.Result[i].Action.RefundAddress
-			if isAddress(refundAddress) {
+			if base.NotPrecompile(refundAddress) {
 				opts.AddToMaps(refundAddress, bn, txid, addressMap)
 			}
 
 		} else if traces.Result[i].Type == "create" {
 			// add the creator, and the new address name
 			from := traces.Result[i].Action.From
-			if isAddress(from) {
+			if base.NotPrecompile(from) {
 				opts.AddToMaps(from, bn, txid, addressMap)
 			}
 			address := traces.Result[i].Result.Address
-			if isAddress(address) {
+			if base.NotPrecompile(address) {
 				opts.AddToMaps(address, bn, txid, addressMap)
 			}
 
@@ -320,7 +332,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 					initData := traces.Result[i].Action.Init[10:]
 					for i := 0; i < len(initData)/64; i++ {
 						addr := string(initData[i*64 : (i+1)*64])
-						if isImplicitAddress(addr) {
+						if index.IsImplicitAddress(addr) {
 							opts.AddToMaps(addr, bn, txid, addressMap)
 						}
 					}
@@ -372,12 +384,14 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 								// both are true - the error is `empty hex string` and we have a fix
 								msg = fmt.Sprintf("Corrected %d, tx %d adds %s", bn, txid, fixMap[key])
 								logger.Warn(colors.Red, msg, colors.Off)
-								opts.AddToMaps(fixMap[key], bn, txid, addressMap)
+								if base.NotPrecompile(fixMap[key]) {
+									opts.AddToMaps(fixMap[key], bn, txid, addressMap)
+								}
 							}
 
 						} else {
 							addr := hexutil.Encode(receipt.ContractAddress.Bytes())
-							if isAddress(addr) {
+							if base.NotPrecompile(addr) {
 								opts.AddToMaps(addr, bn, txid, addressMap)
 							}
 						}
@@ -396,7 +410,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 			//fmt.Println("Input data:", inputData, len(inputData))
 			for i := 0; i < len(inputData)/64; i++ {
 				addr := string(inputData[i*64 : (i+1)*64])
-				if isImplicitAddress(addr) {
+				if index.IsImplicitAddress(addr) {
 					opts.AddToMaps(addr, bn, txid, addressMap)
 				}
 			}
@@ -407,7 +421,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 			outputData := traces.Result[i].Result.Output[2:]
 			for i := 0; i < len(outputData)/64; i++ {
 				addr := string(outputData[i*64 : (i+1)*64])
-				if isImplicitAddress(addr) {
+				if index.IsImplicitAddress(addr) {
 					opts.AddToMaps(addr, bn, txid, addressMap)
 				}
 			}
@@ -417,7 +431,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 	return
 }
 
-// extractFromLogs Extracts addresses from any part of the log data.
+// BlazeExtractFromLogs extracts addresses from the logs
 func (opts *BlazeOptions) BlazeExtractFromLogs(bn int, logs *rpcClient.Logs, addressMap map[string]bool) (err error) {
 	if logs.Result == nil || len(logs.Result) == 0 {
 		return
@@ -427,7 +441,7 @@ func (opts *BlazeOptions) BlazeExtractFromLogs(bn int, logs *rpcClient.Logs, add
 		txid, _ := strconv.ParseInt(logs.Result[i].TransactionIndex, 0, 32)
 		for j := 0; j < len(logs.Result[i].Topics); j++ {
 			addr := string(logs.Result[i].Topics[j][2:])
-			if isImplicitAddress(addr) {
+			if index.IsImplicitAddress(addr) {
 				opts.AddToMaps(addr, bn, int(txid), addressMap)
 			}
 		}
@@ -436,7 +450,7 @@ func (opts *BlazeOptions) BlazeExtractFromLogs(bn int, logs *rpcClient.Logs, add
 			inputData := logs.Result[i].Data[2:]
 			for i := 0; i < len(inputData)/64; i++ {
 				addr := string(inputData[i*64 : (i+1)*64])
-				if isImplicitAddress(addr) {
+				if index.IsImplicitAddress(addr) {
 					opts.AddToMaps(addr, bn, int(txid), addressMap)
 				}
 			}
@@ -477,43 +491,6 @@ func (opts *BlazeOptions) WriteAppearancesBlaze(meta *rpcClient.MetaData, bn int
 	opts.NProcessed++
 
 	return
-}
-
-// isAddress Returns true if the address is not a precompile and not the zero address
-func isAddress(addr string) bool {
-	// As per EIP 1352, all addresses less or equal to the following value are reserved for pre-compiles.
-	// We don't index precompiles. https://eips.ethereum.org/EIPS/eip-1352
-	return addr > "0x000000000000000000000000000000000000ffff"
-}
-
-// isImplicitAddress processes a transaction's 'input' data and 'output' data or an event's data field.
-// Anything with 12 bytes of leading zeros but not more than 19 leading zeros (24 and 38 characters
-// respectively).
-func isImplicitAddress(addr string) bool {
-	// Any 32-byte value smaller than this number is assumed to be a 'value'. We call them baddresses.
-	// While this may seem like a lot of addresses being labeled as baddresses, it's not very many:
-	// ---> 2 out of every 10000000000000000000000000000000000000000000000 are baddresses.
-	small := "00000000000000000000000000000000000000ffffffffffffffffffffffffff"
-	//        -------+-------+-------+-------+-------+-------+-------+-------+
-	if addr <= small {
-		return false
-	}
-
-	// Any 32-byte value with less than this many leading zeros is not an address (address are 20-bytes and
-	// zero padded to the left)
-	largePrefix := "000000000000000000000000"
-	//              -------+-------+-------+
-	if !strings.HasPrefix(addr, largePrefix) {
-		return false
-	}
-
-	// Of the valid addresses, we assume any ending with this many trailing zeros is also a baddress.
-	if strings.HasSuffix(addr, "00000000") {
-		return false
-	}
-
-	// extract the potential address
-	return isAddress("0x" + string(addr[24:]))
 }
 
 var (
