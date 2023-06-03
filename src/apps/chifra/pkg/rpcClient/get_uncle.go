@@ -16,9 +16,9 @@ func GetUncleCountByNumber(chain string, bn uint64) (uint64, error) {
 	method := "eth_getUncleCountByBlockNumber"
 	params := rpc.Params{fmt.Sprintf("0x%x", bn)}
 
-	if result, err := rpc.Query[string](chain, method, params); err != nil {
+	if count, err := rpc.Query[string](chain, method, params); err != nil {
 		return 0, err
 	} else {
-		return strconv.ParseUint(fmt.Sprint(*result), 0, 64)
+		return strconv.ParseUint(fmt.Sprint(*count), 0, 64)
 	}
 }

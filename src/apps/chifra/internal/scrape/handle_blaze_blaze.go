@@ -21,8 +21,8 @@ import (
 // ScrapedData combines the block data, trace data, and log data into a single structure
 type ScrapedData struct {
 	blockNumber int
-	traces      rpcClient.Traces
-	logs        rpcClient.Logs
+	traces      index.Traces
+	logs        index.Logs
 }
 
 type BlazeOptions struct {
@@ -111,54 +111,40 @@ func (opts *BlazeOptions) HandleBlaze1(meta *rpcClient.MetaData, blocks []int) (
 	return true, nil
 }
 
-// var beenHere = false
-
 // BlazeProcessBlocks Processes the block channel and for each block query the node for both traces and logs. Send results down appearanceChannel.
 func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChannel chan int, appearanceChannel chan ScrapedData, tsChannel chan tslib.TimestampRecord) (err error) {
 	defer opts.BlockWg.Done()
+	for bn := range blockChannel {
 
-	for blockNum := range blockChannel {
+		sd := ScrapedData{
+			blockNumber: bn,
+		}
 
-		//if ForceFail && !beenHere && blockNum == 802 {
-		//	beenHere = true
-		//	fmt.Println("Forcing failure for block", blockNum)
-		//	return errors.New("Forcing failure")
-		//}
-		// rpc.Payload is used during to make calls to the RPC.
 		// TODO: Use rpc.Query
-		var traces rpcClient.Traces
 		tracePayload := rpc.Payload{
 			Method: "trace_block",
-			Params: rpc.Params{fmt.Sprintf("0x%x", blockNum)},
+			Params: rpc.Params{fmt.Sprintf("0x%x", bn)},
 		}
-		err = rpc.FromRpc(opts.RpcProvider, &tracePayload, &traces)
-		if err != nil {
-			// fmt.Println("rpcCall failed at block", blockNum, err)
+		if err = rpc.FromRpc(opts.RpcProvider, &tracePayload, &sd.traces); err != nil {
 			return err
 		}
 
-		var logs rpcClient.Logs
 		// TODO: Use rpc.Query
 		logsPayload := rpc.Payload{
 			Method: "eth_getLogs",
-			Params: rpc.Params{rpcClient.LogFilter{Fromblock: fmt.Sprintf("0x%x", blockNum), Toblock: fmt.Sprintf("0x%x", blockNum)}},
+			Params: rpc.Params{rpcClient.LogFilter{Fromblock: fmt.Sprintf("0x%x", bn), Toblock: fmt.Sprintf("0x%x", bn)}},
 		}
-		err = rpc.FromRpc(opts.RpcProvider, &logsPayload, &logs)
-		if err != nil {
-			// fmt.Println("rpcCall failed at block", blockNum, err)
+		if err = rpc.FromRpc(opts.RpcProvider, &logsPayload, &sd.logs); err != nil {
 			return err
 		}
 
-		appearanceChannel <- ScrapedData{
-			blockNumber: blockNum,
-			traces:      traces,
-			logs:        logs,
-		}
+		appearanceChannel <- sd
 
 		ts := tslib.TimestampRecord{
-			Bn: uint32(blockNum),
-			Ts: uint32(rpc.GetBlockTimestamp(opts.Chain, uint64(blockNum))),
+			Bn: uint32(bn),
+			Ts: uint32(rpc.GetBlockTimestamp(opts.Chain, uint64(bn))),
 		}
+
 		tsChannel <- ts
 	}
 

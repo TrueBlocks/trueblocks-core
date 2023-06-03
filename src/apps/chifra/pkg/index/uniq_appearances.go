@@ -15,46 +15,33 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
-var mapSync sync.Mutex
-
-// AddToMaps adds an address to two maps. The first is a map of addresses to appearance records.
-// The second is a map of addresses to booleans. The boolean map is used to build the address table in the chunk.
-func AddToMaps(address string, bn, txid int, appsMap AddressAppearanceMap, addressMap AddressBooleanMap) {
-	isPrecompile := !base.NotPrecompile(address)
-	if isPrecompile {
+// ExtractUniqFromLogs extracts addresses from the logs
+func ExtractUniqFromLogs(chain string, bn int, logs *Logs, appsMap AddressAppearanceMap, addressMap AddressBooleanMap) (err error) {
+	if logs.Result == nil || len(logs.Result) == 0 {
 		return
 	}
 
-	// Make sure we have a 20 byte '0x' prefixed string (implicit strings come in as 32-byte, non-0x-prefixed strings)
-	if !strings.HasPrefix(address, "0x") {
-		address = hexutil.Encode(common.HexToAddress(address).Bytes())
+	for i := 0; i < len(logs.Result); i++ {
+		txid, _ := strconv.ParseInt(logs.Result[i].TransactionIndex, 0, 32)
+		for j := 0; j < len(logs.Result[i].Topics); j++ {
+			addr := string(logs.Result[i].Topics[j][2:])
+			AddImplicitToMaps(addr, bn, int(txid), appsMap, addressMap)
+		}
+
+		if len(logs.Result[i].Data) > 2 {
+			inputData := logs.Result[i].Data[2:]
+			for i := 0; i < len(inputData)/64; i++ {
+				addr := string(inputData[i*64 : (i+1)*64])
+				AddImplicitToMaps(addr, bn, int(txid), appsMap, addressMap)
+			}
+		}
 	}
 
-	mapSync.Lock()
-	defer mapSync.Unlock()
-
-	key := fmt.Sprintf("%s\t%09d\t%05d", address, bn, txid)
-	if !addressMap[key] {
-		appsMap[address] = append(appsMap[address], AppearanceRecord{
-			BlockNumber:   uint32(bn),
-			TransactionId: uint32(txid),
-		})
-	}
-	addressMap[key] = true
-}
-
-// AddImplicitToMaps determines if an address is implicit and, if so, adds it to the maps.
-func AddImplicitToMaps(address string, bn, txid int, appsMap AddressAppearanceMap, addressMap AddressBooleanMap) {
-	isImplicit := IsImplicitAddress(address)
-	if !isImplicit {
-		return
-	}
-
-	AddToMaps(address, bn, txid, appsMap, addressMap)
+	return
 }
 
 // ExtractUniqFromTraces extracts addresses from traces
-func ExtractUniqFromTraces(chain string, bn int, traces *rpcClient.Traces, appsMap AddressAppearanceMap, addressMap AddressBooleanMap) (err error) {
+func ExtractUniqFromTraces(chain string, bn int, traces *Traces, appsMap AddressAppearanceMap, addressMap AddressBooleanMap) (err error) {
 	if traces.Result == nil || len(traces.Result) == 0 {
 		return
 	}
@@ -221,27 +208,40 @@ func ExtractUniqFromTraces(chain string, bn int, traces *rpcClient.Traces, appsM
 	return
 }
 
-// ExtractUniqFromLogs extracts addresses from the logs
-func ExtractUniqFromLogs(chain string, bn int, logs *rpcClient.Logs, appsMap AddressAppearanceMap, addressMap AddressBooleanMap) (err error) {
-	if logs.Result == nil || len(logs.Result) == 0 {
+var mapSync sync.Mutex
+
+// AddToMaps adds an address to two maps. The first is a map of addresses to appearance records.
+// The second is a map of addresses to booleans. The boolean map is used to build the address table in the chunk.
+func AddToMaps(address string, bn, txid int, appsMap AddressAppearanceMap, addressMap AddressBooleanMap) {
+	isPrecompile := !base.NotPrecompile(address)
+	if isPrecompile {
 		return
 	}
 
-	for i := 0; i < len(logs.Result); i++ {
-		txid, _ := strconv.ParseInt(logs.Result[i].TransactionIndex, 0, 32)
-		for j := 0; j < len(logs.Result[i].Topics); j++ {
-			addr := string(logs.Result[i].Topics[j][2:])
-			AddImplicitToMaps(addr, bn, int(txid), appsMap, addressMap)
-		}
-
-		if len(logs.Result[i].Data) > 2 {
-			inputData := logs.Result[i].Data[2:]
-			for i := 0; i < len(inputData)/64; i++ {
-				addr := string(inputData[i*64 : (i+1)*64])
-				AddImplicitToMaps(addr, bn, int(txid), appsMap, addressMap)
-			}
-		}
+	// Make sure we have a 20 byte '0x' prefixed string (implicit strings come in as 32-byte, non-0x-prefixed strings)
+	if !strings.HasPrefix(address, "0x") {
+		address = hexutil.Encode(common.HexToAddress(address).Bytes())
 	}
 
-	return
+	mapSync.Lock()
+	defer mapSync.Unlock()
+
+	key := fmt.Sprintf("%s\t%09d\t%05d", address, bn, txid)
+	if !addressMap[key] {
+		appsMap[address] = append(appsMap[address], AppearanceRecord{
+			BlockNumber:   uint32(bn),
+			TransactionId: uint32(txid),
+		})
+	}
+	addressMap[key] = true
+}
+
+// AddImplicitToMaps determines if an address is implicit and, if so, adds it to the maps.
+func AddImplicitToMaps(address string, bn, txid int, appsMap AddressAppearanceMap, addressMap AddressBooleanMap) {
+	isImplicit := IsImplicitAddress(address)
+	if !isImplicit {
+		return
+	}
+
+	AddToMaps(address, bn, txid, appsMap, addressMap)
 }

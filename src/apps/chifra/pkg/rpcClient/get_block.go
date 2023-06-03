@@ -171,16 +171,16 @@ func getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error)
 	method := "eth_getBlockByNumber"
 	params := rpc.Params{fmt.Sprintf("0x%x", bn), withTxs}
 
-	if result, err := rpc.Query[types.RawBlock](chain, method, params); err != nil {
+	if block, err := rpc.Query[types.RawBlock](chain, method, params); err != nil {
 		return &types.RawBlock{}, err
 	} else {
 		if bn == 0 {
 			// The RPC does not return a timestamp for the zero block, so we make one
-			result.Timestamp = fmt.Sprintf("0x%x", rpc.GetBlockTimestamp(chain, 0))
-		} else if mustParseUint(result.Timestamp) == 0 {
+			block.Timestamp = fmt.Sprintf("0x%x", rpc.GetBlockTimestamp(chain, 0))
+		} else if mustParseUint(block.Timestamp) == 0 {
 			return &types.RawBlock{}, fmt.Errorf("block at %s returned an error: %w", fmt.Sprintf("%d", bn), ethereum.NotFound)
 		}
 
-		return result, nil
+		return block, nil
 	}
 }
