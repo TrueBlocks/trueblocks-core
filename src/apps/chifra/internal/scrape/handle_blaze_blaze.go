@@ -10,7 +10,6 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -20,7 +19,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -178,7 +176,7 @@ func (opts *BlazeOptions) BlazeProcessAppearances(meta *rpcClient.MetaData, appe
 	defer opts.AppearanceWg.Done()
 
 	for sData := range appearanceChannel {
-		addressMap := make(map[string]bool)
+		addressMap := make(index.AddressBooleanMap)
 		err = opts.BlazeExtractFromTraces(sData.blockNumber, &sData.traces, addressMap)
 		if err != nil {
 			// fmt.Println("BlazeExtractFromTraces returned error", sData.blockNumber, err)
@@ -211,33 +209,8 @@ func (opts *BlazeOptions) BlazeProcessTimestamps(tsChannel chan tslib.TimestampR
 	return
 }
 
-var mapSync sync.Mutex
-
-func (opts *BlazeOptions) AddToMaps(address string, bn, txid int, addressMap map[string]bool) {
-	isPrecompile := !base.NotPrecompile(address)
-	if isPrecompile {
-		return
-	}
-
-	// Make sure we have a 20 byte '0x' prefixed string (implicit strings come in as 32-byte, non-0x-prefixed strings)
-	if !strings.HasPrefix(address, "0x") {
-		address = hexutil.Encode(common.HexToAddress(address).Bytes())
-	}
-
-	mapSync.Lock()
-	key := fmt.Sprintf("%s\t%09d\t%05d", address, bn, txid)
-	if !addressMap[key] {
-		opts.AppearanceMap[address] = append(opts.AppearanceMap[address], index.AppearanceRecord{
-			BlockNumber:   uint32(bn),
-			TransactionId: uint32(txid),
-		})
-	}
-	addressMap[key] = true
-	mapSync.Unlock()
-}
-
 // BlazeExtractFromTraces extracts addresses from traces
-func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Traces, addressMap map[string]bool) (err error) {
+func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Traces, addressMap index.AddressBooleanMap) (err error) {
 	if traces.Result == nil || len(traces.Result) == 0 {
 		return
 	}
@@ -248,13 +221,10 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 		if traces.Result[i].Type == "call" {
 			// If it's a call, get the to and from
 			from := traces.Result[i].Action.From
-			if base.NotPrecompile(from) {
-				opts.AddToMaps(from, bn, txid, addressMap)
-			}
+			index.AddToMaps(from, bn, txid, opts.AppearanceMap, addressMap)
+
 			to := traces.Result[i].Action.To
-			if base.NotPrecompile(to) {
-				opts.AddToMaps(to, bn, txid, addressMap)
-			}
+			index.AddToMaps(to, bn, txid, opts.AppearanceMap, addressMap)
 
 		} else if traces.Result[i].Type == "reward" {
 			if traces.Result[i].Action.RewardType == "block" {
@@ -264,14 +234,11 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 					// 0x0 (reward got burned). We enter a false record with a false tx_id
 					// to account for this.
 					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-					if base.NotPrecompile(author) {
-						opts.AddToMaps(author, bn, 99997, addressMap)
-					}
+					index.AddToMaps(author, bn, 99997, opts.AppearanceMap, addressMap)
 
 				} else {
-					if base.NotPrecompile(author) {
-						opts.AddToMaps(author, bn, 99999, addressMap)
-					}
+					index.AddToMaps(author, bn, 99999, opts.AppearanceMap, addressMap)
+
 				}
 
 			} else if traces.Result[i].Action.RewardType == "uncle" {
@@ -281,22 +248,17 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 					// 0x0 (reward got burned). We enter a false record with a false tx_id
 					// to account for this.
 					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-					if base.NotPrecompile(author) {
-						opts.AddToMaps(author, bn, 99998, addressMap)
-					}
+					index.AddToMaps(author, bn, 99998, opts.AppearanceMap, addressMap)
 
 				} else {
-					if base.NotPrecompile(author) {
-						opts.AddToMaps(author, bn, 99998, addressMap)
-					}
+					index.AddToMaps(author, bn, 99998, opts.AppearanceMap, addressMap)
+
 				}
 
 			} else if traces.Result[i].Action.RewardType == "external" {
 				// This only happens in xDai as far as we know...
 				author := traces.Result[i].Action.Author
-				if base.NotPrecompile(author) {
-					opts.AddToMaps(author, bn, 99996, addressMap)
-				}
+				index.AddToMaps(author, bn, 99996, opts.AppearanceMap, addressMap)
 
 			} else {
 				fmt.Println("Unknown reward type", traces.Result[i].Action.RewardType)
@@ -306,24 +268,18 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 		} else if traces.Result[i].Type == "suicide" {
 			// add the contract that died, and where it sent it's money
 			address := traces.Result[i].Action.Address
-			if base.NotPrecompile(address) {
-				opts.AddToMaps(address, bn, txid, addressMap)
-			}
+			index.AddToMaps(address, bn, txid, opts.AppearanceMap, addressMap)
+
 			refundAddress := traces.Result[i].Action.RefundAddress
-			if base.NotPrecompile(refundAddress) {
-				opts.AddToMaps(refundAddress, bn, txid, addressMap)
-			}
+			index.AddToMaps(refundAddress, bn, txid, opts.AppearanceMap, addressMap)
 
 		} else if traces.Result[i].Type == "create" {
 			// add the creator, and the new address name
 			from := traces.Result[i].Action.From
-			if base.NotPrecompile(from) {
-				opts.AddToMaps(from, bn, txid, addressMap)
-			}
+			index.AddToMaps(from, bn, txid, opts.AppearanceMap, addressMap)
+
 			address := traces.Result[i].Result.Address
-			if base.NotPrecompile(address) {
-				opts.AddToMaps(address, bn, txid, addressMap)
-			}
+			index.AddToMaps(address, bn, txid, opts.AppearanceMap, addressMap)
 
 			// If it's a top level trace, then the call data is the init,
 			// so to match with TrueBlocks, we just parse init
@@ -332,9 +288,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 					initData := traces.Result[i].Action.Init[10:]
 					for i := 0; i < len(initData)/64; i++ {
 						addr := string(initData[i*64 : (i+1)*64])
-						if index.IsImplicitAddress(addr) {
-							opts.AddToMaps(addr, bn, txid, addressMap)
-						}
+						index.AddImplicitToMaps(addr, bn, txid, opts.AppearanceMap, addressMap)
 					}
 				}
 			}
@@ -384,16 +338,12 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 								// both are true - the error is `empty hex string` and we have a fix
 								msg = fmt.Sprintf("Corrected %d, tx %d adds %s", bn, txid, fixMap[key])
 								logger.Warn(colors.Red, msg, colors.Off)
-								if base.NotPrecompile(fixMap[key]) {
-									opts.AddToMaps(fixMap[key], bn, txid, addressMap)
-								}
+								index.AddToMaps(fixMap[key], bn, txid, opts.AppearanceMap, addressMap)
 							}
 
 						} else {
 							addr := hexutil.Encode(receipt.ContractAddress.Bytes())
-							if base.NotPrecompile(addr) {
-								opts.AddToMaps(addr, bn, txid, addressMap)
-							}
+							index.AddToMaps(addr, bn, txid, opts.AppearanceMap, addressMap)
 						}
 					}
 				}
@@ -410,9 +360,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 			//fmt.Println("Input data:", inputData, len(inputData))
 			for i := 0; i < len(inputData)/64; i++ {
 				addr := string(inputData[i*64 : (i+1)*64])
-				if index.IsImplicitAddress(addr) {
-					opts.AddToMaps(addr, bn, txid, addressMap)
-				}
+				index.AddImplicitToMaps(addr, bn, txid, opts.AppearanceMap, addressMap)
 			}
 		}
 
@@ -421,9 +369,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 			outputData := traces.Result[i].Result.Output[2:]
 			for i := 0; i < len(outputData)/64; i++ {
 				addr := string(outputData[i*64 : (i+1)*64])
-				if index.IsImplicitAddress(addr) {
-					opts.AddToMaps(addr, bn, txid, addressMap)
-				}
+				index.AddImplicitToMaps(addr, bn, txid, opts.AppearanceMap, addressMap)
 			}
 		}
 	}
@@ -432,7 +378,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 }
 
 // BlazeExtractFromLogs extracts addresses from the logs
-func (opts *BlazeOptions) BlazeExtractFromLogs(bn int, logs *rpcClient.Logs, addressMap map[string]bool) (err error) {
+func (opts *BlazeOptions) BlazeExtractFromLogs(bn int, logs *rpcClient.Logs, addressMap index.AddressBooleanMap) (err error) {
 	if logs.Result == nil || len(logs.Result) == 0 {
 		return
 	}
@@ -441,18 +387,14 @@ func (opts *BlazeOptions) BlazeExtractFromLogs(bn int, logs *rpcClient.Logs, add
 		txid, _ := strconv.ParseInt(logs.Result[i].TransactionIndex, 0, 32)
 		for j := 0; j < len(logs.Result[i].Topics); j++ {
 			addr := string(logs.Result[i].Topics[j][2:])
-			if index.IsImplicitAddress(addr) {
-				opts.AddToMaps(addr, bn, int(txid), addressMap)
-			}
+			index.AddImplicitToMaps(addr, bn, int(txid), opts.AppearanceMap, addressMap)
 		}
 
 		if len(logs.Result[i].Data) > 2 {
 			inputData := logs.Result[i].Data[2:]
 			for i := 0; i < len(inputData)/64; i++ {
 				addr := string(inputData[i*64 : (i+1)*64])
-				if index.IsImplicitAddress(addr) {
-					opts.AddToMaps(addr, bn, int(txid), addressMap)
-				}
+				index.AddImplicitToMaps(addr, bn, int(txid), opts.AppearanceMap, addressMap)
 			}
 		}
 	}
@@ -462,7 +404,7 @@ func (opts *BlazeOptions) BlazeExtractFromLogs(bn int, logs *rpcClient.Logs, add
 
 var writeMutex sync.Mutex
 
-func (opts *BlazeOptions) WriteAppearancesBlaze(meta *rpcClient.MetaData, bn int, addressMap map[string]bool) (err error) {
+func (opts *BlazeOptions) WriteAppearancesBlaze(meta *rpcClient.MetaData, bn int, addressMap index.AddressBooleanMap) (err error) {
 	if len(addressMap) > 0 {
 		appearanceArray := make([]string, 0, len(addressMap))
 		for record := range addressMap {

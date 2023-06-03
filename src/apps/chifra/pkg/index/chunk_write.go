@@ -24,6 +24,7 @@ import (
 )
 
 type AddressAppearanceMap map[string][]AppearanceRecord
+type AddressBooleanMap map[string]bool
 
 type WriteChunkReport struct {
 	Range        base.FileRange
