@@ -86,3 +86,10 @@ func AddrFromPath(path, fileType string) (string, error) {
 	parts := strings.Split(fileName, ".")
 	return strings.ToLower(parts[0]), nil
 }
+
+// NotPrecompile Returns true if the address is not a precompile and not the zero address
+func NotPrecompile(addr string) bool {
+	// As per EIP 1352, all addresses less or equal to the following value are reserved for pre-compiles.
+	// We don't index precompiles. https://eips.ethereum.org/EIPS/eip-1352
+	return addr > "0x000000000000000000000000000000000000ffff"
+}
