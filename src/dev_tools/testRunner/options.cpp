@@ -267,6 +267,7 @@ void establishTestData(void) {
     doCommand("chifra abis --clean 0x7d655c57f71464b6f83811c55d84009cd9f5221c 2>/dev/null");
     doCommand("chifra abis --clean 0x0000000000004946c0e9f43f4dee607b0ef1fa1c 2>/dev/null");
     doCommand("chifra abis --clean 0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7 2>/dev/null");
+    doCommand("chifra abis --clean 0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031 2>/dev/null");
 
     // Forces the retreival of a few ABI files without which some tests will fail
     doCommand("chifra abis 0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51");
@@ -280,4 +281,5 @@ void establishTestData(void) {
     doCommand("chifra abis 0x7d655c57f71464b6f83811c55d84009cd9f5221c");
     doCommand("chifra abis 0x0000000000004946c0e9f43f4dee607b0ef1fa1c");
     doCommand("chifra abis 0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7");
+    doCommand("chifra abis 0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031");
 }

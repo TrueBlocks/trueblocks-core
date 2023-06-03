@@ -21,6 +21,7 @@ import (
 func (opts *TracesOptions) HandleShowTraces() error {
 	abiMap := make(abi.AbiInterfaceMap)
 	loadedMap := make(map[base.Address]bool)
+	skipMap := make(map[base.Address]bool)
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -50,22 +51,24 @@ func (opts *TracesOptions) HandleShowTraces() error {
 					cancel()
 					return
 				}
+
 				for _, trace := range traces {
 					// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
 					trace := trace
 					trace.Timestamp = ts
 					if opts.Articulate {
-						var err error
 						address := trace.Action.To
-						if !loadedMap[address] {
-							if err = abi.LoadAbi(chain, address, abiMap); err != nil {
+						if !loadedMap[address] && !skipMap[address] {
+							if err := abi.LoadAbi(chain, address, abiMap); err != nil {
+								skipMap[address] = true
 								errorChan <- err // continue even with an error
-								err = nil
+							} else {
+								loadedMap[address] = true
 							}
 						}
-						if err == nil {
-							trace.ArticulatedTrace, err = articulate.ArticulateTrace(&trace, abiMap)
-							if err != nil {
+
+						if !skipMap[address] {
+							if trace.ArticulatedTrace, err = articulate.ArticulateTrace(&trace, abiMap); err != nil {
 								errorChan <- err // continue even with an error
 							}
 						}

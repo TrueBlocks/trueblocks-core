@@ -18,6 +18,7 @@ import (
 func (opts *LogsOptions) HandleShowLogs() (err error) {
 	abiMap := make(abi.AbiInterfaceMap)
 	loadedMap := make(map[base.Address]bool)
+	skipMap := make(map[base.Address]bool)
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -44,17 +45,18 @@ func (opts *LogsOptions) HandleShowLogs() (err error) {
 					log := log
 					log.Timestamp = tx.Timestamp
 					if opts.Articulate {
-						var err error
 						address := log.Address
-						if !loadedMap[address] {
-							if err = abi.LoadAbi(chain, address, abiMap); err != nil {
+						if !loadedMap[address] && !skipMap[address] {
+							if err := abi.LoadAbi(chain, address, abiMap); err != nil {
+								skipMap[address] = true
 								errorChan <- err // continue even with an error
-								err = nil
+							} else {
+								loadedMap[address] = true
 							}
 						}
-						if err == nil {
-							log.ArticulatedLog, err = articulate.ArticulateLog(&log, abiMap)
-							if err != nil {
+
+						if !skipMap[address] {
+							if log.ArticulatedLog, err = articulate.ArticulateLog(&log, abiMap); err != nil {
 								errorChan <- err // continue even with an error
 							}
 						}
