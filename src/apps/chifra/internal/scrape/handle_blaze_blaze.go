@@ -9,20 +9,22 @@ import (
 	"sync"
 	"sync/atomic"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // ScrapedData combines the block data, trace data, and log data into a single structure
 type ScrapedData struct {
-	blockNumber int
+	blockNumber base.Blknum
 	traces      index.Traces
-	logs        index.Logs
+	logs        []types.SimpleLog
 }
 
 type BlazeOptions struct {
@@ -36,7 +38,7 @@ type BlazeOptions struct {
 	RpcProvider   string                     `json:"rpcProvider"`
 	AppearanceMap index.AddressAppearanceMap `json:"-"`
 	TsArray       []tslib.TimestampRecord    `json:"-"`
-	ProcessedMap  map[int]bool               `json:"-"`
+	ProcessedMap  map[base.Blknum]bool       `json:"-"`
 	BlockWg       sync.WaitGroup             `json:"-"`
 	AppearanceWg  sync.WaitGroup             `json:"-"`
 	TsWg          sync.WaitGroup             `json:"-"`
@@ -117,7 +119,7 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 	for bn := range blockChannel {
 
 		sd := ScrapedData{
-			blockNumber: bn,
+			blockNumber: base.Blknum(bn),
 		}
 
 		// TODO: Use rpc.Query
@@ -129,12 +131,7 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 			return err
 		}
 
-		// TODO: Use rpc.Query
-		logsPayload := rpc.Payload{
-			Method: "eth_getLogs",
-			Params: rpc.Params{rpcClient.LogFilter{Fromblock: fmt.Sprintf("0x%x", bn), Toblock: fmt.Sprintf("0x%x", bn)}},
-		}
-		if err = rpc.FromRpc(opts.RpcProvider, &logsPayload, &sd.logs); err != nil {
+		if sd.logs, err = rpcClient.GetLogsByBlockNumber(opts.Chain, uint64(bn)); err != nil {
 			return err
 		}
 
@@ -164,7 +161,7 @@ func (opts *BlazeOptions) BlazeProcessAppearances(meta *rpcClient.MetaData, appe
 			return err
 		}
 
-		err = index.ExtractUniqFromLogs(opts.Chain, sData.blockNumber, &sData.logs, opts.AppearanceMap, addressMap)
+		err = index.ExtractUniqFromLogs(opts.Chain, sData.blockNumber, sData.logs, opts.AppearanceMap, addressMap)
 		if err != nil {
 			return err
 		}
@@ -192,7 +189,7 @@ func (opts *BlazeOptions) BlazeProcessTimestamps(tsChannel chan tslib.TimestampR
 
 var writeMutex sync.Mutex
 
-func (opts *BlazeOptions) WriteAppearancesBlaze(meta *rpcClient.MetaData, bn int, addressMap index.AddressBooleanMap) (err error) {
+func (opts *BlazeOptions) WriteAppearancesBlaze(meta *rpcClient.MetaData, bn base.Blknum, addressMap index.AddressBooleanMap) (err error) {
 	if len(addressMap) > 0 {
 		appearanceArray := make([]string, 0, len(addressMap))
 		for record := range addressMap {
@@ -200,9 +197,9 @@ func (opts *BlazeOptions) WriteAppearancesBlaze(meta *rpcClient.MetaData, bn int
 		}
 		sort.Strings(appearanceArray)
 
-		blockNumStr := utils.PadNum(bn, 9)
+		blockNumStr := utils.PadNum(int(bn), 9)
 		fileName := config.GetPathToIndex(opts.Chain) + "ripe/" + blockNumStr + ".txt"
-		if bn > int(opts.RipeBlock) {
+		if bn > base.Blknum(opts.RipeBlock) {
 			fileName = config.GetPathToIndex(opts.Chain) + "unripe/" + blockNumStr + ".txt"
 		}
 
@@ -227,7 +224,7 @@ var (
 	locker uint32
 )
 
-func (opts *BlazeOptions) syncedReporting(bn int, force bool) {
+func (opts *BlazeOptions) syncedReporting(bn base.Blknum, force bool) {
 	if !atomic.CompareAndSwapUint32(&locker, 0, 1) {
 		// Simply skip the update if someone else is already reporting
 		return

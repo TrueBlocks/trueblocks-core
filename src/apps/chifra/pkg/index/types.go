@@ -34,19 +34,3 @@ type Traces struct {
 	} `json:"result"`
 	ID int `json:"id"`
 }
-
-// Logs carries values returned by the eth_getLogs RPC command
-type Logs struct {
-	Jsonrpc string `json:"jsonrpc"`
-	Result  []struct {
-		Address          string   `json:"address"`
-		BlockHash        string   `json:"blockHash"`
-		BlockNumber      string   `json:"blockNumber"`
-		Data             string   `json:"data"`
-		LogIndex         string   `json:"logIndex"`
-		Topics           []string `json:"topics"`
-		TransactionHash  string   `json:"transactionHash"`
-		TransactionIndex string   `json:"transactionIndex"`
-	} `json:"result"`
-	ID int `json:"id"`
-}

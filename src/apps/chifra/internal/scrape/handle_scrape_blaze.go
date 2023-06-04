@@ -30,7 +30,7 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpcClient.MetaData, blaze
 		return err
 	}
 
-	for bn := int(opts.StartBlock); bn < int(opts.StartBlock+opts.BlockCnt); bn++ {
+	for bn := opts.StartBlock; bn < opts.StartBlock+opts.BlockCnt; bn++ {
 		if !blazeOpts.ProcessedMap[bn] {
 			// At least one block was not processed. This would only happen in the event of an
 			// error, so clean up, report the error and return. The loop will repeat.

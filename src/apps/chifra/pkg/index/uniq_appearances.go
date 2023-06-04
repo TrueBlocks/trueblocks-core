@@ -2,7 +2,6 @@ package index
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
 	"sync"
 
@@ -10,29 +9,25 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // ExtractUniqFromLogs extracts addresses from the logs
-func ExtractUniqFromLogs(chain string, bn int, logs *Logs, appsMap AddressAppearanceMap, addressMap AddressBooleanMap) (err error) {
-	if logs.Result == nil || len(logs.Result) == 0 {
-		return
-	}
-
-	for i := 0; i < len(logs.Result); i++ {
-		txid, _ := strconv.ParseInt(logs.Result[i].TransactionIndex, 0, 32)
-		for j := 0; j < len(logs.Result[i].Topics); j++ {
-			addr := string(logs.Result[i].Topics[j][2:])
-			AddImplicitToMaps(addr, bn, int(txid), appsMap, addressMap)
+func ExtractUniqFromLogs(chain string, bn base.Blknum, logs []types.SimpleLog, appsMap AddressAppearanceMap, addressMap AddressBooleanMap) (err error) {
+	for _, log := range logs {
+		for _, topic := range log.Topics {
+			value := string(topic.Hex()[2:])
+			addImplicitToMaps(value, bn, log.TransactionIndex, appsMap, addressMap)
 		}
 
-		if len(logs.Result[i].Data) > 2 {
-			inputData := logs.Result[i].Data[2:]
+		if len(log.Data) > 2 {
+			inputData := log.Data[2:]
 			for i := 0; i < len(inputData)/64; i++ {
 				addr := string(inputData[i*64 : (i+1)*64])
-				AddImplicitToMaps(addr, bn, int(txid), appsMap, addressMap)
+				addImplicitToMaps(addr, bn, log.TransactionIndex, appsMap, addressMap)
 			}
 		}
 	}
@@ -41,13 +36,13 @@ func ExtractUniqFromLogs(chain string, bn int, logs *Logs, appsMap AddressAppear
 }
 
 // ExtractUniqFromTraces extracts addresses from traces
-func ExtractUniqFromTraces(chain string, bn int, traces *Traces, appsMap AddressAppearanceMap, addressMap AddressBooleanMap) (err error) {
+func ExtractUniqFromTraces(chain string, bn base.Blknum, traces *Traces, appsMap AddressAppearanceMap, addressMap AddressBooleanMap) (err error) {
 	if traces.Result == nil || len(traces.Result) == 0 {
 		return
 	}
 
 	for i := 0; i < len(traces.Result); i++ {
-		txid := traces.Result[i].TransactionPosition
+		txid := uint64(traces.Result[i].TransactionPosition)
 
 		if traces.Result[i].Type == "call" {
 			// If it's a call, get the to and from
@@ -119,7 +114,7 @@ func ExtractUniqFromTraces(chain string, bn int, traces *Traces, appsMap Address
 					initData := traces.Result[i].Action.Init[10:]
 					for i := 0; i < len(initData)/64; i++ {
 						addr := string(initData[i*64 : (i+1)*64])
-						AddImplicitToMaps(addr, bn, txid, appsMap, addressMap)
+						addImplicitToMaps(addr, bn, txid, appsMap, addressMap)
 					}
 				}
 			}
@@ -191,7 +186,7 @@ func ExtractUniqFromTraces(chain string, bn int, traces *Traces, appsMap Address
 			//fmt.Println("Input data:", inputData, len(inputData))
 			for i := 0; i < len(inputData)/64; i++ {
 				addr := string(inputData[i*64 : (i+1)*64])
-				AddImplicitToMaps(addr, bn, txid, appsMap, addressMap)
+				addImplicitToMaps(addr, bn, txid, appsMap, addressMap)
 			}
 		}
 
@@ -200,7 +195,7 @@ func ExtractUniqFromTraces(chain string, bn int, traces *Traces, appsMap Address
 			outputData := traces.Result[i].Result.Output[2:]
 			for i := 0; i < len(outputData)/64; i++ {
 				addr := string(outputData[i*64 : (i+1)*64])
-				AddImplicitToMaps(addr, bn, txid, appsMap, addressMap)
+				addImplicitToMaps(addr, bn, txid, appsMap, addressMap)
 			}
 		}
 	}
@@ -212,7 +207,7 @@ var mapSync sync.Mutex
 
 // AddToMaps adds an address to two maps. The first is a map of addresses to appearance records.
 // The second is a map of addresses to booleans. The boolean map is used to build the address table in the chunk.
-func AddToMaps(address string, bn, txid int, appsMap AddressAppearanceMap, addressMap AddressBooleanMap) {
+func AddToMaps(address string, bn, txid uint64, appsMap AddressAppearanceMap, addressMap AddressBooleanMap) {
 	isPrecompile := !base.NotPrecompile(address)
 	if isPrecompile {
 		return
@@ -236,8 +231,8 @@ func AddToMaps(address string, bn, txid int, appsMap AddressAppearanceMap, addre
 	addressMap[key] = true
 }
 
-// AddImplicitToMaps determines if an address is implicit and, if so, adds it to the maps.
-func AddImplicitToMaps(address string, bn, txid int, appsMap AddressAppearanceMap, addressMap AddressBooleanMap) {
+// addImplicitToMaps determines if an address is implicit and, if so, adds it to the maps.
+func addImplicitToMaps(address string, bn, txid uint64, appsMap AddressAppearanceMap, addressMap AddressBooleanMap) {
 	isImplicit := IsImplicitAddress(address)
 	if !isImplicit {
 		return

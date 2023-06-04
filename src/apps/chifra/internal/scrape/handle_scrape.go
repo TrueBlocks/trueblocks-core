@@ -9,6 +9,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -38,7 +39,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		RpcProvider:   config.GetRpcProvider(opts.Globals.Chain),
 		AppearanceMap: make(index.AddressAppearanceMap, opts.Settings.Apps_per_chunk),
 		TsArray:       make([]tslib.TimestampRecord, 0, opts.BlockCnt),
-		ProcessedMap:  make(map[int]bool, opts.BlockCnt),
+		ProcessedMap:  make(map[base.Blknum]bool, opts.BlockCnt),
 	}
 
 	if ok, err := opts.HandlePrepare(progress, &blazeOpts); !ok || err != nil {
@@ -83,7 +84,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			RpcProvider:   config.GetRpcProvider(opts.Globals.Chain),
 			AppearanceMap: make(index.AddressAppearanceMap, opts.Settings.Apps_per_chunk),
 			TsArray:       make([]tslib.TimestampRecord, 0, opts.BlockCnt),
-			ProcessedMap:  make(map[int]bool, opts.BlockCnt),
+			ProcessedMap:  make(map[base.Blknum]bool, opts.BlockCnt),
 		}
 
 		// Remove whatever's in the unripePath before running each round. We do this
@@ -112,7 +113,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			logger.Error(colors.BrightRed, err, colors.Off)
 			goto PAUSE
 		}
-		blazeOpts.syncedReporting(int(blazeOpts.StartBlock+blazeOpts.BlockCount), true /* force */)
+		blazeOpts.syncedReporting(base.Blknum(blazeOpts.StartBlock+blazeOpts.BlockCount), true /* force */)
 
 		if ok, err := opts.HandleScrapeConsolidate(progress, &blazeOpts); !ok || err != nil {
 			logger.Error(err)
