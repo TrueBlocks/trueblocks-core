@@ -76,7 +76,7 @@ address             	1016	0	20971575	T_ADDRESS TS_STRING TS_OMITEMPTY
 author              	1017	0	20971575	T_ADDRESS TS_STRING TS_OMITEMPTY
 ether               	1018	0	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
 {
-  "schema": 70000,
+  "schema": 71000,
   "deleted": false,
   "showing": true,
   "cname": "TraceAction",
