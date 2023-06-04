@@ -23,7 +23,7 @@ import (
 // ScrapedData combines the block data, trace data, and log data into a single structure
 type ScrapedData struct {
 	blockNumber base.Blknum
-	traces      index.Traces
+	traces      []types.SimpleTrace
 	logs        []types.SimpleLog
 }
 
@@ -122,16 +122,15 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 			blockNumber: base.Blknum(bn),
 		}
 
-		// TODO: Use rpc.Query
-		tracePayload := rpc.Payload{
-			Method: "trace_block",
-			Params: rpc.Params{fmt.Sprintf("0x%x", bn)},
-		}
-		if err = rpc.FromRpc(opts.RpcProvider, &tracePayload, &sd.traces); err != nil {
+		// TODO: BOGUS - This could use rawTraces so as to avoid unnecessary decoding
+		if sd.traces, err = rpcClient.GetTracesByBlockNumber(opts.Chain, uint64(bn)); err != nil {
+			// TODO: BOGUS - we should send in an errorChannel and send the error down that channel and continue here
 			return err
 		}
 
+		// TODO: BOGUS - This could use rawTraces so as to avoid unnecessary decoding
 		if sd.logs, err = rpcClient.GetLogsByBlockNumber(opts.Chain, uint64(bn)); err != nil {
+			// TODO: BOGUS - we should send in an errorChannel and send the error down that channel and continue here
 			return err
 		}
 
@@ -156,7 +155,8 @@ func (opts *BlazeOptions) BlazeProcessAppearances(meta *rpcClient.MetaData, appe
 
 	for sData := range appearanceChannel {
 		addressMap := make(index.AddressBooleanMap)
-		err = index.ExtractUniqFromTraces(opts.Chain, sData.blockNumber, &sData.traces, opts.AppearanceMap, addressMap)
+
+		err = index.ExtractUniqFromTraces(opts.Chain, sData.blockNumber, sData.traces, opts.AppearanceMap, addressMap)
 		if err != nil {
 			return err
 		}

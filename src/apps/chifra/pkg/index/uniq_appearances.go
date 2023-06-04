@@ -36,25 +36,21 @@ func ExtractUniqFromLogs(chain string, bn base.Blknum, logs []types.SimpleLog, a
 }
 
 // ExtractUniqFromTraces extracts addresses from traces
-func ExtractUniqFromTraces(chain string, bn base.Blknum, traces *Traces, appsMap AddressAppearanceMap, addressMap AddressBooleanMap) (err error) {
-	if traces.Result == nil || len(traces.Result) == 0 {
-		return
-	}
+func ExtractUniqFromTraces(chain string, bn base.Blknum, traces []types.SimpleTrace, appsMap AddressAppearanceMap, addressMap AddressBooleanMap) (err error) {
+	for _, trace := range traces {
+		txid := uint64(trace.TransactionIndex)
 
-	for i := 0; i < len(traces.Result); i++ {
-		txid := uint64(traces.Result[i].TransactionPosition)
-
-		if traces.Result[i].Type == "call" {
+		if trace.TraceType == "call" {
 			// If it's a call, get the to and from
-			from := traces.Result[i].Action.From
+			from := trace.Action.From.Hex()
 			AddToMaps(from, bn, txid, appsMap, addressMap)
 
-			to := traces.Result[i].Action.To
+			to := trace.Action.To.Hex()
 			AddToMaps(to, bn, txid, appsMap, addressMap)
 
-		} else if traces.Result[i].Type == "reward" {
-			if traces.Result[i].Action.RewardType == "block" {
-				author := traces.Result[i].Action.Author
+		} else if trace.TraceType == "reward" {
+			if trace.Action.RewardType == "block" {
+				author := trace.Action.Author.Hex()
 				if validate.IsZeroAddress(author) {
 					// Early clients allowed misconfigured miner settings with address
 					// 0x0 (reward got burned). We enter a false record with a false tx_id
@@ -67,8 +63,8 @@ func ExtractUniqFromTraces(chain string, bn base.Blknum, traces *Traces, appsMap
 
 				}
 
-			} else if traces.Result[i].Action.RewardType == "uncle" {
-				author := traces.Result[i].Action.Author
+			} else if trace.Action.RewardType == "uncle" {
+				author := trace.Action.Author.Hex()
 				if validate.IsZeroAddress(author) {
 					// Early clients allowed misconfigured miner settings with address
 					// 0x0 (reward got burned). We enter a false record with a false tx_id
@@ -81,37 +77,37 @@ func ExtractUniqFromTraces(chain string, bn base.Blknum, traces *Traces, appsMap
 
 				}
 
-			} else if traces.Result[i].Action.RewardType == "external" {
+			} else if trace.Action.RewardType == "external" {
 				// This only happens in xDai as far as we know...
-				author := traces.Result[i].Action.Author
+				author := trace.Action.Author.Hex()
 				AddToMaps(author, bn, 99996, appsMap, addressMap)
 
 			} else {
-				fmt.Println("Unknown reward type", traces.Result[i].Action.RewardType)
+				fmt.Println("Unknown reward type", trace.Action.RewardType)
 				return err
 			}
 
-		} else if traces.Result[i].Type == "suicide" {
+		} else if trace.TraceType == "suicide" {
 			// add the contract that died, and where it sent it's money
-			address := traces.Result[i].Action.Address
+			address := trace.Action.Address.Hex()
 			AddToMaps(address, bn, txid, appsMap, addressMap)
 
-			refundAddress := traces.Result[i].Action.RefundAddress
+			refundAddress := trace.Action.RefundAddress.Hex()
 			AddToMaps(refundAddress, bn, txid, appsMap, addressMap)
 
-		} else if traces.Result[i].Type == "create" {
+		} else if trace.TraceType == "create" {
 			// add the creator, and the new address name
-			from := traces.Result[i].Action.From
+			from := trace.Action.From.Hex()
 			AddToMaps(from, bn, txid, appsMap, addressMap)
 
-			address := traces.Result[i].Result.Address
+			address := trace.Result.Address.Hex()
 			AddToMaps(address, bn, txid, appsMap, addressMap)
 
 			// If it's a top level trace, then the call data is the init,
 			// so to match with TrueBlocks, we just parse init
-			if len(traces.Result[i].TraceAddress) == 0 {
-				if len(traces.Result[i].Action.Init) > 10 {
-					initData := traces.Result[i].Action.Init[10:]
+			if len(trace.TraceAddress) == 0 {
+				if len(trace.Action.Init) > 10 {
+					initData := trace.Action.Init[10:]
 					for i := 0; i < len(initData)/64; i++ {
 						addr := string(initData[i*64 : (i+1)*64])
 						addImplicitToMaps(addr, bn, txid, appsMap, addressMap)
@@ -120,9 +116,9 @@ func ExtractUniqFromTraces(chain string, bn base.Blknum, traces *Traces, appsMap
 			}
 
 			// Handle contract creations that may have errored out
-			if traces.Result[i].Action.To == "" {
-				if traces.Result[i].Result.Address == "" {
-					if traces.Result[i].Error != "" {
+			if trace.Action.To.IsZero() {
+				if trace.Result.Address.IsZero() {
+					if trace.Error != "" {
 						// TODO: Why does this interface always accept nil and zero at the end?
 						receipt, err := rpcClient.GetTransactionReceipt(chain, rpcClient.ReceiptQuery{
 							Bn:      uint64(bn),
@@ -130,7 +126,7 @@ func ExtractUniqFromTraces(chain string, bn base.Blknum, traces *Traces, appsMap
 							NeedsTs: false,
 						})
 						if err != nil {
-							msg := fmt.Sprintf("rpcCall failed at block %d, tx %d hash %s err %s", bn, txid, traces.Result[i].TransactionHash, err)
+							msg := fmt.Sprintf("rpcCall failed at block %d, tx %d hash %s err %s", bn, txid, trace.TransactionHash, err)
 							logger.Warn(colors.Red, msg, colors.Off)
 							// TODO: This is possibly an error in Erigon - remove it when they fix this issue:
 							// TODO: https://github.com/ledgerwatch/erigon/issues/6956. It may require a
@@ -176,13 +172,13 @@ func ExtractUniqFromTraces(chain string, bn base.Blknum, traces *Traces, appsMap
 			}
 
 		} else {
-			fmt.Println("Unknown trace type", traces.Result[i].Type)
+			fmt.Println("Unknown trace type", trace.TraceType)
 			return err
 		}
 
 		// Try to get addresses from the input data
-		if len(traces.Result[i].Action.Input) > 10 {
-			inputData := traces.Result[i].Action.Input[10:]
+		if len(trace.Action.Input) > 10 {
+			inputData := trace.Action.Input[10:]
 			//fmt.Println("Input data:", inputData, len(inputData))
 			for i := 0; i < len(inputData)/64; i++ {
 				addr := string(inputData[i*64 : (i+1)*64])
@@ -191,8 +187,8 @@ func ExtractUniqFromTraces(chain string, bn base.Blknum, traces *Traces, appsMap
 		}
 
 		// Parse output of trace
-		if len(traces.Result[i].Result.Output) > 2 {
-			outputData := traces.Result[i].Result.Output[2:]
+		if len(trace.Result.Output) > 2 {
+			outputData := trace.Result.Output[2:]
 			for i := 0; i < len(outputData)/64; i++ {
 				addr := string(outputData[i*64 : (i+1)*64])
 				addImplicitToMaps(addr, bn, txid, appsMap, addressMap)
