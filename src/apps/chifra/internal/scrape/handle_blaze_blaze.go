@@ -28,20 +28,20 @@ type ScrapedData struct {
 }
 
 type BlazeOptions struct {
-	Chain         string                     `json:"chain"`
-	NChannels     uint64                     `json:"nChannels"`
-	NProcessed    uint64                     `json:"nProcessed"`
-	StartBlock    uint64                     `json:"startBlock"`
-	BlockCount    uint64                     `json:"blockCnt"`
-	RipeBlock     uint64                     `json:"ripeBlock"`
-	UnripeDist    uint64                     `json:"unripe"`
-	RpcProvider   string                     `json:"rpcProvider"`
-	AppearanceMap index.AddressAppearanceMap `json:"-"`
-	TsArray       []tslib.TimestampRecord    `json:"-"`
-	ProcessedMap  map[base.Blknum]bool       `json:"-"`
-	BlockWg       sync.WaitGroup             `json:"-"`
-	AppearanceWg  sync.WaitGroup             `json:"-"`
-	TsWg          sync.WaitGroup             `json:"-"`
+	Chain        string                  `json:"chain"`
+	NChannels    uint64                  `json:"nChannels"`
+	NProcessed   uint64                  `json:"nProcessed"`
+	StartBlock   uint64                  `json:"startBlock"`
+	BlockCount   uint64                  `json:"blockCnt"`
+	RipeBlock    uint64                  `json:"ripeBlock"`
+	UnripeDist   uint64                  `json:"unripe"`
+	RpcProvider  string                  `json:"rpcProvider"`
+	TsArray      []tslib.TimestampRecord `json:"-"`
+	ProcessedMap map[base.Blknum]bool    `json:"-"`
+	BlockWg      sync.WaitGroup          `json:"-"`
+	AppearanceWg sync.WaitGroup          `json:"-"`
+	TsWg         sync.WaitGroup          `json:"-"`
+	AppsPerChunk uint64                  `json:"-"`
 }
 
 func (opts *BlazeOptions) String() string {
@@ -156,12 +156,12 @@ func (opts *BlazeOptions) BlazeProcessAppearances(meta *rpcClient.MetaData, appe
 	for sData := range appearanceChannel {
 		addressMap := make(index.AddressBooleanMap)
 
-		err = index.ExtractUniqFromTraces(opts.Chain, sData.blockNumber, sData.traces, opts.AppearanceMap, addressMap)
+		err = index.UniqFromTraces(opts.Chain, sData.traces, addressMap)
 		if err != nil {
 			return err
 		}
 
-		err = index.ExtractUniqFromLogs(opts.Chain, sData.blockNumber, sData.logs, opts.AppearanceMap, addressMap)
+		err = index.UniqFromLogs(opts.Chain, sData.logs, addressMap)
 		if err != nil {
 			return err
 		}

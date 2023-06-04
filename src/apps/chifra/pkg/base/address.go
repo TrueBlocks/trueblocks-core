@@ -91,8 +91,8 @@ func AddrFromPath(path, fileType string) (string, error) {
 // We don't index precompiles. https://eips.ethereum.org/EIPS/eip-1352
 var maxPrecompile = "0x000000000000000000000000000000000000ffff"
 
-// NotPrecompile Returns true if the address is not a precompile and not the zero address
-func NotPrecompile(addr string) bool {
+// IsPrecompile Returns true if the address is not a precompile and not the zero address
+func IsPrecompile(addr string) bool {
 	test := HexToAddress(addr) // normalizes the input as an address
-	return test.Hex() > maxPrecompile
+	return test.Hex() <= maxPrecompile
 }

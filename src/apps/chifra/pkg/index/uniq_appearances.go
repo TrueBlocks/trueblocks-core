@@ -15,19 +15,23 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
-// ExtractUniqFromLogs extracts addresses from the logs
-func ExtractUniqFromLogs(chain string, bn base.Blknum, logs []types.SimpleLog, appsMap AddressAppearanceMap, addressMap AddressBooleanMap) (err error) {
+// UniqFromLogs extracts addresses from the logs
+func UniqFromLogs(chain string, logs []types.SimpleLog, addrMap AddressBooleanMap) (err error) {
 	for _, log := range logs {
 		for _, topic := range log.Topics {
-			value := string(topic.Hex()[2:])
-			addImplicitToMaps(value, bn, log.TransactionIndex, appsMap, addressMap)
+			str := string(topic.Hex()[2:])
+			if IsImplicitAddress(str) {
+				addAddressToMaps(str, log.BlockNumber, log.TransactionIndex, addrMap)
+			}
 		}
 
 		if len(log.Data) > 2 {
 			inputData := log.Data[2:]
 			for i := 0; i < len(inputData)/64; i++ {
-				addr := string(inputData[i*64 : (i+1)*64])
-				addImplicitToMaps(addr, bn, log.TransactionIndex, appsMap, addressMap)
+				str := string(inputData[i*64 : (i+1)*64])
+				if IsImplicitAddress(str) {
+					addAddressToMaps(str, log.BlockNumber, log.TransactionIndex, addrMap)
+				}
 			}
 		}
 	}
@@ -35,18 +39,19 @@ func ExtractUniqFromLogs(chain string, bn base.Blknum, logs []types.SimpleLog, a
 	return
 }
 
-// ExtractUniqFromTraces extracts addresses from traces
-func ExtractUniqFromTraces(chain string, bn base.Blknum, traces []types.SimpleTrace, appsMap AddressAppearanceMap, addressMap AddressBooleanMap) (err error) {
+// UniqFromTraces extracts addresses from traces
+func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBooleanMap) (err error) {
 	for _, trace := range traces {
+		bn := base.Blknum(trace.BlockNumber)
 		txid := uint64(trace.TransactionIndex)
 
 		if trace.TraceType == "call" {
 			// If it's a call, get the to and from
 			from := trace.Action.From.Hex()
-			AddToMaps(from, bn, txid, appsMap, addressMap)
+			addAddressToMaps(from, bn, txid, addrMap)
 
 			to := trace.Action.To.Hex()
-			AddToMaps(to, bn, txid, appsMap, addressMap)
+			addAddressToMaps(to, bn, txid, addrMap)
 
 		} else if trace.TraceType == "reward" {
 			if trace.Action.RewardType == "block" {
@@ -56,10 +61,10 @@ func ExtractUniqFromTraces(chain string, bn base.Blknum, traces []types.SimpleTr
 					// 0x0 (reward got burned). We enter a false record with a false tx_id
 					// to account for this.
 					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-					AddToMaps(author, bn, 99997, appsMap, addressMap)
+					addAddressToMaps(author, bn, 99997, addrMap)
 
 				} else {
-					AddToMaps(author, bn, 99999, appsMap, addressMap)
+					addAddressToMaps(author, bn, 99999, addrMap)
 
 				}
 
@@ -70,17 +75,17 @@ func ExtractUniqFromTraces(chain string, bn base.Blknum, traces []types.SimpleTr
 					// 0x0 (reward got burned). We enter a false record with a false tx_id
 					// to account for this.
 					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-					AddToMaps(author, bn, 99998, appsMap, addressMap)
+					addAddressToMaps(author, bn, 99998, addrMap)
 
 				} else {
-					AddToMaps(author, bn, 99998, appsMap, addressMap)
+					addAddressToMaps(author, bn, 99998, addrMap)
 
 				}
 
 			} else if trace.Action.RewardType == "external" {
 				// This only happens in xDai as far as we know...
 				author := trace.Action.Author.Hex()
-				AddToMaps(author, bn, 99996, appsMap, addressMap)
+				addAddressToMaps(author, bn, 99996, addrMap)
 
 			} else {
 				fmt.Println("Unknown reward type", trace.Action.RewardType)
@@ -90,18 +95,18 @@ func ExtractUniqFromTraces(chain string, bn base.Blknum, traces []types.SimpleTr
 		} else if trace.TraceType == "suicide" {
 			// add the contract that died, and where it sent it's money
 			address := trace.Action.Address.Hex()
-			AddToMaps(address, bn, txid, appsMap, addressMap)
+			addAddressToMaps(address, bn, txid, addrMap)
 
 			refundAddress := trace.Action.RefundAddress.Hex()
-			AddToMaps(refundAddress, bn, txid, appsMap, addressMap)
+			addAddressToMaps(refundAddress, bn, txid, addrMap)
 
 		} else if trace.TraceType == "create" {
 			// add the creator, and the new address name
 			from := trace.Action.From.Hex()
-			AddToMaps(from, bn, txid, appsMap, addressMap)
+			addAddressToMaps(from, bn, txid, addrMap)
 
 			address := trace.Result.Address.Hex()
-			AddToMaps(address, bn, txid, appsMap, addressMap)
+			addAddressToMaps(address, bn, txid, addrMap)
 
 			// If it's a top level trace, then the call data is the init,
 			// so to match with TrueBlocks, we just parse init
@@ -109,8 +114,10 @@ func ExtractUniqFromTraces(chain string, bn base.Blknum, traces []types.SimpleTr
 				if len(trace.Action.Init) > 10 {
 					initData := trace.Action.Init[10:]
 					for i := 0; i < len(initData)/64; i++ {
-						addr := string(initData[i*64 : (i+1)*64])
-						addImplicitToMaps(addr, bn, txid, appsMap, addressMap)
+						str := string(initData[i*64 : (i+1)*64])
+						if IsImplicitAddress(str) {
+							addAddressToMaps(str, bn, txid, addrMap)
+						}
 					}
 				}
 			}
@@ -160,12 +167,12 @@ func ExtractUniqFromTraces(chain string, bn base.Blknum, traces []types.SimpleTr
 								// both are true - the error is `empty hex string` and we have a fix
 								msg = fmt.Sprintf("Corrected %d, tx %d adds %s", bn, txid, fixMap[key])
 								logger.Warn(colors.Red, msg, colors.Off)
-								AddToMaps(fixMap[key], bn, txid, appsMap, addressMap)
+								addAddressToMaps(fixMap[key], bn, txid, addrMap)
 							}
 
 						} else {
 							addr := hexutil.Encode(receipt.ContractAddress.Bytes())
-							AddToMaps(addr, bn, txid, appsMap, addressMap)
+							addAddressToMaps(addr, bn, txid, addrMap)
 						}
 					}
 				}
@@ -181,8 +188,10 @@ func ExtractUniqFromTraces(chain string, bn base.Blknum, traces []types.SimpleTr
 			inputData := trace.Action.Input[10:]
 			//fmt.Println("Input data:", inputData, len(inputData))
 			for i := 0; i < len(inputData)/64; i++ {
-				addr := string(inputData[i*64 : (i+1)*64])
-				addImplicitToMaps(addr, bn, txid, appsMap, addressMap)
+				str := string(inputData[i*64 : (i+1)*64])
+				if IsImplicitAddress(str) {
+					addAddressToMaps(str, bn, txid, addrMap)
+				}
 			}
 		}
 
@@ -190,8 +199,10 @@ func ExtractUniqFromTraces(chain string, bn base.Blknum, traces []types.SimpleTr
 		if len(trace.Result.Output) > 2 {
 			outputData := trace.Result.Output[2:]
 			for i := 0; i < len(outputData)/64; i++ {
-				addr := string(outputData[i*64 : (i+1)*64])
-				addImplicitToMaps(addr, bn, txid, appsMap, addressMap)
+				str := string(outputData[i*64 : (i+1)*64])
+				if IsImplicitAddress(str) {
+					addAddressToMaps(str, bn, txid, addrMap)
+				}
 			}
 		}
 	}
@@ -201,38 +212,21 @@ func ExtractUniqFromTraces(chain string, bn base.Blknum, traces []types.SimpleTr
 
 var mapSync sync.Mutex
 
-// AddToMaps adds an address to two maps. The first is a map of addresses to appearance records.
-// The second is a map of addresses to booleans. The boolean map is used to build the address table in the chunk.
-func AddToMaps(address string, bn, txid uint64, appsMap AddressAppearanceMap, addressMap AddressBooleanMap) {
-	isPrecompile := !base.NotPrecompile(address)
-	if isPrecompile {
+// addAddressToMaps help keep track of appearances for an address. An appearance is inserted into `appsMap`
+// if we've never seen this appearance before. `appsMap` is used to build the appearance table when writing the
+// chunk. `addrMap` helps eliminate duplicates and is used to build the address table when writing the chunk.
+// Precompiles are ignored. If the given address string does not start with a lead `0x`, it is normalized.
+func addAddressToMaps(address string, bn, txid uint64, addrMap AddressBooleanMap) {
+	if base.IsPrecompile(address) {
 		return
 	}
 
-	// Make sure we have a 20 byte '0x' prefixed string (implicit strings come in as 32-byte, non-0x-prefixed strings)
+	// Normalize implicit strings. (Implicit strings come in 32-bytes long with no leading `0x`.)
 	if !strings.HasPrefix(address, "0x") {
 		address = hexutil.Encode(common.HexToAddress(address).Bytes())
 	}
 
 	mapSync.Lock()
 	defer mapSync.Unlock()
-
-	key := fmt.Sprintf("%s\t%09d\t%05d", address, bn, txid)
-	if !addressMap[key] {
-		appsMap[address] = append(appsMap[address], AppearanceRecord{
-			BlockNumber:   uint32(bn),
-			TransactionId: uint32(txid),
-		})
-	}
-	addressMap[key] = true
-}
-
-// addImplicitToMaps determines if an address is implicit and, if so, adds it to the maps.
-func addImplicitToMaps(address string, bn, txid uint64, appsMap AddressAppearanceMap, addressMap AddressBooleanMap) {
-	isImplicit := IsImplicitAddress(address)
-	if !isImplicit {
-		return
-	}
-
-	AddToMaps(address, bn, txid, appsMap, addressMap)
+	addrMap[fmt.Sprintf("%s\t%09d\t%05d", address, bn, txid)] = true
 }

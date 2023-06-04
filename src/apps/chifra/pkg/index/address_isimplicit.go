@@ -33,5 +33,5 @@ func IsImplicitAddress(addr string) bool {
 	}
 
 	// extract the potential address
-	return base.NotPrecompile("0x" + string(addr[24:]))
+	return !base.IsPrecompile("0x" + string(addr[24:]))
 }
