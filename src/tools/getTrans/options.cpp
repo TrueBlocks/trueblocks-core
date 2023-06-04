@@ -130,7 +130,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // Display formatting
     if (uniq) {
-        configureDisplay("getTrans", "CAppearance", STR_DISPLAY_APPEARANCE);
+        configureDisplay("getTrans", "CAppearance", substitute(STR_DISPLAY_APPEARANCE, "[{NAME}]\t", ""));
     } else if (!ledgerManager.accountedFor.empty()) {
         string_q fmt = STR_DISPLAY_RECONCILIATION;
         if (!articulate) {

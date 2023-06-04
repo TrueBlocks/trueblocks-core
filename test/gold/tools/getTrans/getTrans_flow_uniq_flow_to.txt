@@ -3,5 +3,5 @@ TEST[DATE|TIME] Transactions:  [4102000.0]
 TEST[DATE|TIME] Uniq:  true
 TEST[DATE|TIME] Flow:  to
 TEST[DATE|TIME] Format:  txt
-address	blockNumber	transactionIndex	traceIndex	reason	name	timestamp	date
-0x8d12a197cb00d4747a1fe03395095ce2a5cc6819	4102000	0		to		1501551838	2017-08-01 01:43:58 UTC
+address	blockNumber	transactionIndex	traceIndex	reason	timestamp	date
+0x8d12a197cb00d4747a1fe03395095ce2a5cc6819	4102000	0		to	1501551838	2017-08-01 01:43:58 UTC
