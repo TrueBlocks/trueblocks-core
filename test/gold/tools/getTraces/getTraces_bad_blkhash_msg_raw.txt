@@ -7,6 +7,7 @@ TEST[DATE|TIME] Format:  txt
     {
       "action": {
         "address": "",
+        "author": "",
         "balance": "",
         "callType": "call",
         "from": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
@@ -14,6 +15,7 @@ TEST[DATE|TIME] Format:  txt
         "init": "",
         "input": "0x",
         "refundAddress": "",
+        "rewardType": "",
         "selfDestructed": "",
         "to": "0xd77ba7ef37f87d5246f35de898133e09c92ecaca",
         "value": "0x1dd0b460c6bf1c00"
@@ -36,6 +38,7 @@ TEST[DATE|TIME] Format:  txt
     {
       "action": {
         "address": "",
+        "author": "",
         "balance": "",
         "callType": "call",
         "from": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
@@ -43,6 +46,7 @@ TEST[DATE|TIME] Format:  txt
         "init": "",
         "input": "0x",
         "refundAddress": "",
+        "rewardType": "",
         "selfDestructed": "",
         "to": "0xd77ba7ef37f87d5246f35de898133e09c92ecaca",
         "value": "0x1dd0b460c6bf1c00"
