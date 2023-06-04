@@ -71,6 +71,11 @@ string_q CTraceAction::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
+        case 'a':
+            if (fieldName % "author") {
+                return addr_2_Str(author);
+            }
+            break;
         case 'b':
             if (fieldName % "balance") {
                 return wei_2_Str(balance);
@@ -102,6 +107,9 @@ string_q CTraceAction::getValueByName(const string_q& fieldName) const {
         case 'r':
             if (fieldName % "refundAddress") {
                 return addr_2_Str(refundAddress);
+            }
+            if (fieldName % "rewardType") {
+                return rewardType;
             }
             break;
         case 's':
@@ -141,6 +149,12 @@ bool CTraceAction::setValueByName(const string_q& fieldNameIn, const string_q& f
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
+        case 'a':
+            if (fieldName % "author") {
+                author = str_2_Addr(fieldValue);
+                return true;
+            }
+            break;
         case 'b':
             if (fieldName % "balance") {
                 balance = str_2_Wei(fieldValue);
@@ -178,6 +192,10 @@ bool CTraceAction::setValueByName(const string_q& fieldNameIn, const string_q& f
         case 'r':
             if (fieldName % "refundAddress") {
                 refundAddress = str_2_Addr(fieldValue);
+                return true;
+            }
+            if (fieldName % "rewardType") {
+                rewardType = fieldValue;
                 return true;
             }
             break;
@@ -232,8 +250,10 @@ bool CTraceAction::Serialize(CArchive& archive) {
     archive >> init;
     archive >> input;
     archive >> refundAddress;
+    // archive >> rewardType;
     archive >> to;
     archive >> value;
+    // archive >> author;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -255,8 +275,10 @@ bool CTraceAction::SerializeC(CArchive& archive) const {
     archive << init;
     archive << input;
     archive << refundAddress;
+    // archive << rewardType;
     archive << to;
     archive << value;
+    // archive << author;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -314,10 +336,14 @@ void CTraceAction::registerClass(void) {
     ADD_FIELD(CTraceAction, "init", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTraceAction, "input", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTraceAction, "refundAddress", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CTraceAction, "rewardType", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CTraceAction, "rewardType");
     ADD_FIELD(CTraceAction, "to", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTraceAction, "value", T_WEI, ++fieldNum);
     ADD_FIELD(CTraceAction, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CTraceAction, "address");
+    ADD_FIELD(CTraceAction, "author", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CTraceAction, "author");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTraceAction, "schema");
