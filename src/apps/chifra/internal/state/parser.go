@@ -3,6 +3,8 @@ package statePkg
 import (
 	"errors"
 	"fmt"
+	"math/big"
+	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -29,8 +31,7 @@ var callLexer = lexer.MustSimple([]lexer.SimpleRule{
 	{Name: `SolidityIdent`, Pattern: `[a-zA-Z$_][a-zA-Z0-9$_]*`},
 	// Values:
 	{Name: `String`, Pattern: `"(?:\\.|[^"])*"`},
-	{Name: `Int`, Pattern: `\d+`},
-	{Name: `Uint`, Pattern: `-\d+`},
+	{Name: `Decimal`, Pattern: `[-+]?\d+`},
 
 	{Name: `whitespace`, Pattern: `\s+`},
 	{Name: `Punctation`, Pattern: `[(),]`},
@@ -60,10 +61,29 @@ type FunctionCall struct {
 // `true` in `setSomething(true)`
 type Argument struct {
 	String  *string   `parser:"@String"`
-	Int     *int      `parser:"| @Int"`
-	Uint    *uint     `parser:"| @Uint"`
+	Number  *Number   `parser:"| @Decimal"`
 	Boolean *Boolean  `parser:"| @('true'|'false')"`
 	Hex     *HexValue `parser:"| @Hex"`
+}
+
+// Interface returns the value as interface{} (any)
+func (a *Argument) Interface() any {
+	if a.String != nil {
+		return *a.String
+	}
+	if a.Number != nil {
+		return a.Number.Interface()
+	}
+	if a.Boolean != nil {
+		return *a.Boolean
+	}
+	if a.Hex != nil {
+		if a.Hex.Address != nil {
+			return *a.Hex.Address
+		}
+		return *a.Hex.String
+	}
+	return nil
 }
 
 // Type alias to capture bool values correctly
@@ -94,6 +114,51 @@ func (h *HexValue) Capture(values []string) error {
 	return nil
 }
 
+type Number struct {
+	Int  *int64
+	Uint *uint64
+	Big  *big.Int
+}
+
+func (n *Number) Capture(values []string) error {
+	literal := values[0]
+
+	// Atoi parses into `int` type, which is used by go-ethereum
+	// to construct solidity int types.
+	asInt, err := strconv.ParseInt(literal, 10, 64)
+	if err == nil {
+		n.Int = &asInt
+		return nil
+	}
+
+	asUint, err := strconv.ParseUint(literal, 10, 64)
+	if err == nil {
+		n.Uint = &asUint
+		return nil
+	}
+
+	// If we are here, the number is bigger than int64
+	asBig := big.NewInt(0)
+	_, ok := asBig.SetString(literal, 10)
+	if ok {
+		n.Big = asBig
+		return nil
+	}
+
+	return fmt.Errorf("cannot parse %s as number", literal)
+}
+
+// Interface returns Number value as any
+func (n *Number) Interface() any {
+	if n.Int != nil {
+		return *n.Int
+	}
+	if n.Uint != nil {
+		return *n.Uint
+	}
+	return n.Big
+}
+
 // Selector captures four byte function selector (e.g. 0xcdba2fd4)
 // It's capture method makes sure that the hex value is a valid selector.
 type Selector struct {
@@ -121,9 +186,6 @@ var parser = participle.MustBuild[Call](
 // a nice structures, from which we can easily extract the data to
 // make the call.
 func Parse(source string) (*Call, error) {
-	fmt.Println(parser.String())
-
-	// callSpec := &Call{}
 	callSpec, err := parser.ParseString("", source)
 
 	return callSpec, err

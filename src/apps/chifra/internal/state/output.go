@@ -55,7 +55,12 @@ func (opts *StateOptions) StateInternal() (err error, handled bool) {
 	}
 
 	handled = true
-	err = opts.Globals.PassItOn("getState", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
+
+	if opts.Call != "" {
+		err = opts.HandleCall()
+	} else {
+		err = opts.Globals.PassItOn("getState", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
+	}
 	// EXISTING_CODE
 
 	return

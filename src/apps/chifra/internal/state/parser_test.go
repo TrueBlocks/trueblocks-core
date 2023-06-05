@@ -41,7 +41,7 @@ func TestParse_Selector(t *testing.T) {
 		if value := parsed.SelectorCall.Selector.Value; value != `0xcdba2fd4` {
 			t.Fatal("wrong selector", value)
 		}
-		if argValue := *parsed.SelectorCall.Arguments[0].Int; argValue != 1 {
+		if argValue := *parsed.SelectorCall.Arguments[0].Number.Int; argValue != 1 {
 			t.Fatal("wrong #1 input value", argValue)
 		}
 		if argValue := *parsed.SelectorCall.Arguments[1].Boolean; argValue != true {
@@ -109,7 +109,7 @@ func TestParse_Function(t *testing.T) {
 		if value := parsed.FunctionNameCall.Name; value != `something` {
 			t.Fatal("wrong selector", value)
 		}
-		if argValue := *parsed.FunctionNameCall.Arguments[0].Int; argValue != 1 {
+		if argValue := *parsed.FunctionNameCall.Arguments[0].Number.Int; argValue != 1 {
 			t.Fatal("wrong #1 input value", argValue)
 		}
 		if argValue := *parsed.FunctionNameCall.Arguments[1].Boolean; argValue != true {
@@ -139,6 +139,26 @@ func TestParse_Function(t *testing.T) {
 		}
 		if parsed.FunctionNameCall.Arguments[1].Hex.Address.Hex() != "0x6982508145454ce325ddbe47a25d4ec3d23119a1" {
 			t.Fatal("should parse into Hex.Address")
+		}
+	}
+}
+
+func TestParse_Numbers(t *testing.T) {
+	if parsed, err := Parse(`doSomething(1, -2, 115792089237316195423570985008687907853269984665640564039457584007913129639935)`); err != nil {
+		t.Fatal(err)
+	} else {
+		if argsLen := len(parsed.FunctionNameCall.Arguments); argsLen != 3 {
+			t.Fatal("wrong inputs length:", argsLen)
+		}
+
+		if value := *parsed.FunctionNameCall.Arguments[0].Number.Int; value != 1 {
+			t.Fatal("wrong uint value:", value)
+		}
+		if value := *parsed.FunctionNameCall.Arguments[1].Number.Int; value != -2 {
+			t.Fatal("wrong int value:", value)
+		}
+		if value := parsed.FunctionNameCall.Arguments[2].Number.Big.String(); value != "115792089237316195423570985008687907853269984665640564039457584007913129639935" {
+			t.Fatal("wrong big value:", value)
 		}
 	}
 }
