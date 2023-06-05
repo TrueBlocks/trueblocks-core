@@ -154,19 +154,19 @@ func (opts *BlazeOptions) BlazeProcessAppearances(meta *rpcClient.MetaData, appe
 	defer opts.AppearanceWg.Done()
 
 	for sData := range appearanceChannel {
-		addressMap := make(index.AddressBooleanMap)
+		addrMap := make(index.AddressBooleanMap)
 
-		err = index.UniqFromTraces(opts.Chain, sData.traces, addressMap)
+		err = index.UniqFromTraces(opts.Chain, sData.traces, addrMap)
 		if err != nil {
 			return err
 		}
 
-		err = index.UniqFromLogs(opts.Chain, sData.logs, addressMap)
+		err = index.UniqFromLogs(opts.Chain, sData.logs, addrMap)
 		if err != nil {
 			return err
 		}
 
-		err = opts.WriteAppearancesBlaze(meta, sData.blockNumber, addressMap)
+		err = opts.WriteAppearancesBlaze(meta, sData.blockNumber, addrMap)
 		if err != nil {
 			return err
 		}
@@ -189,10 +189,10 @@ func (opts *BlazeOptions) BlazeProcessTimestamps(tsChannel chan tslib.TimestampR
 
 var writeMutex sync.Mutex
 
-func (opts *BlazeOptions) WriteAppearancesBlaze(meta *rpcClient.MetaData, bn base.Blknum, addressMap index.AddressBooleanMap) (err error) {
-	if len(addressMap) > 0 {
-		appearanceArray := make([]string, 0, len(addressMap))
-		for record := range addressMap {
+func (opts *BlazeOptions) WriteAppearancesBlaze(meta *rpcClient.MetaData, bn base.Blknum, addrMap index.AddressBooleanMap) (err error) {
+	if len(addrMap) > 0 {
+		appearanceArray := make([]string, 0, len(addrMap))
+		for record := range addrMap {
 			appearanceArray = append(appearanceArray, record)
 		}
 		sort.Strings(appearanceArray)
