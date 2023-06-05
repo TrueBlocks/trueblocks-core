@@ -14,12 +14,13 @@ func ArticulateLog(log *types.SimpleLog, abiMap abi.AbiInterfaceMap) (articulate
 	// If we couldn't, then try to find the event in `abiMap`
 	if articulated == nil {
 		selector := "0x" + hex.EncodeToString(log.Topics[0].Bytes())
-		articulated = abiMap[selector]
-	}
 
-	// If articulated is still nil, we don't have ABI for this event
-	if articulated == nil {
-		return
+		if found := abiMap[selector]; found != nil {
+			articulated = found.Clone()
+		} else {
+			// If articulated is still nil, we don't have ABI for this event
+			return
+		}
 	}
 
 	abiEvent, err := articulated.GetAbiEvent()

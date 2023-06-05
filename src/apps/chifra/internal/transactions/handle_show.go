@@ -60,10 +60,8 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 							if err := abi.LoadAbi(chain, address, abiMap); err != nil {
 								skipMap[address] = true
 								errorChan <- err // continue even with an error
-								// UNCOMMENT_ME
-								// } else {
-								// 	loadedMap[address] = true
-								// UNCOMMENT_ME
+							} else {
+								loadedMap[address] = true
 							}
 						}
 						arr := []*types.SimpleFunction{}
