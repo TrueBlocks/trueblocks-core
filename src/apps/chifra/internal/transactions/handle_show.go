@@ -48,8 +48,8 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 						if err := abi.LoadAbi(chain, address, abiMap); err != nil {
 							skipMap[address] = true
 							errorChan <- err // continue even with an error
-							// } else {
-							// 	loadedMap[address] = true
+						} else {
+							loadedMap[address] = true
 						}
 					}
 
@@ -91,8 +91,8 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 							if err := abi.LoadAbi(chain, address, abiMap); err != nil {
 								skipMap[address] = true
 								errorChan <- err // continue even with an error
-								// } else {
-								// 	loadedMap[address] = true
+							} else {
+								loadedMap[address] = true
 							}
 						}
 						if !skipMap[address] {
