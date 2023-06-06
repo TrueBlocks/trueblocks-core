@@ -47,8 +47,8 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 						if err := abi.LoadAbi(chain, address, abiMap); err != nil {
 							skipMap[address] = true
 							errorChan <- err // continue even with an error
-							// } else {
-							// 	loadedMap[address] = true
+						} else {
+							loadedMap[address] = true
 						}
 					}
 
@@ -59,10 +59,8 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 							if err := abi.LoadAbi(chain, address, abiMap); err != nil {
 								skipMap[address] = true
 								errorChan <- err // continue even with an error
-								// UNCOMMENT_ME
-								// } else {
-								// 	loadedMap[address] = true
-								// UNCOMMENT_ME
+							} else {
+								loadedMap[address] = true
 							}
 						}
 						// arr := []*types.SimpleFunction{}
@@ -92,8 +90,8 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 							if err := abi.LoadAbi(chain, address, abiMap); err != nil {
 								skipMap[address] = true
 								errorChan <- err // continue even with an error
-								// } else {
-								// 	loadedMap[address] = true
+							} else {
+								loadedMap[address] = true
 							}
 						}
 						if !skipMap[address] {
@@ -111,7 +109,7 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 							inputData := tx.Input[10:]
 							found = abiMap[selector]
 							if found != nil {
-								tx.ArticulatedTx = found
+								tx.ArticulatedTx = found.Clone()
 								var outputData string
 								if len(tx.Traces) > 0 && tx.Traces[0].Result != nil && len(tx.Traces[0].Result.Output) > 2 {
 									outputData = tx.Traces[0].Result.Output[2:]
