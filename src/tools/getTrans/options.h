@@ -26,8 +26,6 @@ class COptions : public CStatementOptions {
     // BEG_CODE_DECLARE
     bool articulate;
     bool traces;
-    bool uniq;
-    string_q flow;
     bool cache;
     // END_CODE_DECLARE
 

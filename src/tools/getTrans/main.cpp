@@ -38,24 +38,6 @@ int main(int argc, const char* argv[]) {
 }
 
 //----------------------------------------------------------------
-bool shouldShow(const COptions* opt, const string_q& val) {
-    if (opt->flow.empty()) {
-        return true;
-    }
-
-    switch (opt->flow[0]) {
-        case 't':  // to
-            return contains(substitute(substitute(val, "_topic", ""), "generator", ""), "to");
-        case 'f':  // from
-            return contains(val, "from");
-        case 'r':  // reward
-            return contains(val, "miner") || contains(val, "uncle");
-    }
-
-    return true;
-}
-
-//----------------------------------------------------------------
 bool visitAddrs(const CAppearance& item, void* data) {
     // We do not account for zero addresses or the addresses found in the zeroth trace since
     // it's identical to the transaction itself
@@ -65,21 +47,17 @@ bool visitAddrs(const CAppearance& item, void* data) {
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
     if (isText) {
         string_q val = trim(item.Format(expContext().fmtMap["format"]), '\t');
-        if (shouldShow(opt, val)) {
-            cout << val << endl;
-        }
+        cout << val << endl;
     } else {
         ostringstream os;
         indent();
         item.toJson(os);
         unindent();
-        if (shouldShow(opt, os.str())) {
-            if (!opt->firstOut)
-                cout << ",";
-            cout << "  ";
-            cout << os.str();
-            opt->firstOut = false;
-        }
+        if (!opt->firstOut)
+            cout << ",";
+        cout << "  ";
+        cout << os.str();
+        opt->firstOut = false;
     }
     return !shouldQuit();
 }
@@ -125,11 +103,6 @@ bool visitTransaction(CTransaction& trans, void* data) {
 
     if (!opt->ledgerManager.accountedFor.empty()) {
         return visitReconciliation(trans, opt);
-    }
-
-    if (opt->uniq) {
-        trans.forEveryUniqueAppearanceInTxPerTx(visitAddrs, transFilter, opt);
-        return true;
     }
 
     if (opt->isRaw) {

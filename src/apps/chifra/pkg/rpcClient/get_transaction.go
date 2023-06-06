@@ -59,11 +59,6 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 	bn := uint64(appearance.BlockNumber)
 	txid := uint64(appearance.TransactionIndex)
 
-	rawTx, err := GetRawTransactionByBlockAndId(chain, bn, txid)
-	if err != nil {
-		return
-	}
-
 	blockTs := rpc.GetBlockTimestamp(chain, bn)
 	receipt, err := GetTransactionReceipt(chain, ReceiptQuery{
 		Bn:      bn,
@@ -71,6 +66,11 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 		NeedsTs: true,
 		Ts:      blockTs,
 	})
+	if err != nil {
+		return
+	}
+
+	rawTx, err := GetRawTransactionByBlockAndId(chain, bn, txid)
 	if err != nil {
 		return
 	}

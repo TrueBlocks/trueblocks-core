@@ -10,28 +10,36 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
-// UniqFromLogs extracts addresses from the logs
-func UniqFromLogs(chain string, logs []types.SimpleLog, addrMap AddressBooleanMap) (err error) {
-	for _, log := range logs {
+// UniqFromLogsDetails extracts addresses from the logs
+func UniqFromLogsDetails(chain string, logs []types.SimpleLog, ts int64, modelChan chan types.Modeler[types.RawAppearance], addrMap AddressBooleanMap) (err error) {
+	traceid := utils.NOPOS
+	for l, log := range logs {
 		log := log
-		for _, topic := range log.Topics {
+		generator := log.Address.Hex()
+		reason := fmt.Sprintf("log_%d_generator", l)
+		StreamAppearance(modelChan, generator, log.BlockNumber, log.TransactionIndex, traceid, reason, ts, addrMap)
+
+		for t, topic := range log.Topics {
 			str := string(topic.Hex()[2:])
 			if IsImplicitAddress(str) {
-				addAddressToMaps(str, log.BlockNumber, log.TransactionIndex, addrMap)
+				reason := fmt.Sprintf("log_%d_topic_%d", l, t)
+				StreamAppearance(modelChan, str, log.BlockNumber, log.TransactionIndex, traceid, reason, ts, addrMap)
 			}
 		}
 
 		if len(log.Data) > 2 {
+			reason := fmt.Sprintf("log_%d_data", l)
 			inputData := log.Data[2:]
 			for i := 0; i < len(inputData)/64; i++ {
 				str := string(inputData[i*64 : (i+1)*64])
 				if IsImplicitAddress(str) {
-					addAddressToMaps(str, log.BlockNumber, log.TransactionIndex, addrMap)
+					StreamAppearance(modelChan, str, log.BlockNumber, log.TransactionIndex, traceid, reason, ts, addrMap)
 				}
 			}
 		}
@@ -40,18 +48,55 @@ func UniqFromLogs(chain string, logs []types.SimpleLog, addrMap AddressBooleanMa
 	return
 }
 
-// UniqFromTraces extracts addresses from traces
-func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBooleanMap) (err error) {
-	for _, trace := range traces {
+func traceReason(i int, trace *types.SimpleTrace, r string) string {
+	switch r {
+	case "from":
+		fallthrough
+	case "to":
+		fallthrough
+	case "input":
+		fallthrough
+	case "output":
+		fallthrough
+	case "self-destruct":
+		fallthrough
+	case "refund":
+		fallthrough
+	case "creation":
+		fallthrough
+	case "code":
+		if i == 0 {
+			return r
+		} else {
+			a := ""
+			for i, x := range trace.TraceAddress {
+				if i > 0 {
+					a += fmt.Sprintf("%d_", x)
+				}
+			}
+			if len(a) > 0 {
+				a = "[" + strings.Trim(a, "_") + "]_"
+			}
+			return fmt.Sprintf("trace_%d_%s%s", i, a, r)
+		}
+	default:
+		return "unknown"
+	}
+}
+
+// UniqFromTracesDetails extracts addresses from traces
+func UniqFromTracesDetails(chain string, traces []types.SimpleTrace, ts int64, modelChan chan types.Modeler[types.RawAppearance], addrMap AddressBooleanMap) (err error) {
+	for index, trace := range traces {
 		trace := trace
+		traceid := uint64(index)
 		bn := base.Blknum(trace.BlockNumber)
 		txid := uint64(trace.TransactionIndex)
 
 		from := trace.Action.From.Hex()
-		addAddressToMaps(from, bn, txid, addrMap)
+		StreamAppearance(modelChan, from, bn, txid, traceid, traceReason(index, &trace, "from"), ts, addrMap)
 
 		to := trace.Action.To.Hex()
-		addAddressToMaps(to, bn, txid, addrMap)
+		StreamAppearance(modelChan, to, bn, txid, traceid, traceReason(index, &trace, "to"), ts, addrMap)
 
 		if trace.TraceType == "call" {
 			// If it's a call, get the to and from, we're done
@@ -64,10 +109,10 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 					// 0x0 (reward got burned). We enter a false record with a false tx_id
 					// to account for this.
 					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-					addAddressToMaps(author, bn, 99997, addrMap)
+					StreamAppearance(modelChan, author, bn, traceid, 99997, "miner", ts, addrMap)
 
 				} else {
-					addAddressToMaps(author, bn, 99999, addrMap)
+					StreamAppearance(modelChan, author, bn, 99999, traceid, "miner", ts, addrMap)
 
 				}
 
@@ -78,17 +123,17 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 					// 0x0 (reward got burned). We enter a false record with a false tx_id
 					// to account for this.
 					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-					addAddressToMaps(author, bn, 99998, addrMap)
+					StreamAppearance(modelChan, author, bn, 99998, traceid, "uncle", ts, addrMap)
 
 				} else {
-					addAddressToMaps(author, bn, 99998, addrMap)
+					StreamAppearance(modelChan, author, bn, 99998, traceid, "uncle", ts, addrMap)
 
 				}
 
 			} else if trace.Action.RewardType == "external" {
 				// This only happens in xDai as far as we know...
 				author := trace.Action.Author.Hex()
-				addAddressToMaps(author, bn, 99996, addrMap)
+				StreamAppearance(modelChan, author, bn, 99996, traceid, "external", ts, addrMap)
 
 			} else {
 				fmt.Println("Unknown reward type", trace.Action.RewardType)
@@ -98,16 +143,16 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 		} else if trace.TraceType == "suicide" {
 			// add the contract that died, and where it sent it's money
 			refundAddress := trace.Action.RefundAddress.Hex()
-			addAddressToMaps(refundAddress, bn, txid, addrMap)
+			StreamAppearance(modelChan, refundAddress, bn, txid, traceid, traceReason(index, &trace, "refund"), ts, addrMap)
 
 			address := trace.Action.Address.Hex()
-			addAddressToMaps(address, bn, txid, addrMap)
+			StreamAppearance(modelChan, address, bn, txid, traceid, traceReason(index, &trace, "self-destruct"), ts, addrMap)
 
 		} else if trace.TraceType == "create" {
 			if trace.Result != nil {
 				// may be both...record the self-destruct instead of the creation since we can only report on one
 				address := trace.Result.Address.Hex()
-				addAddressToMaps(address, bn, txid, addrMap)
+				StreamAppearance(modelChan, address, bn, txid, traceid, traceReason(index, &trace, "self-destruct"), ts, addrMap)
 			}
 
 			// If it's a top level trace, then the call data is the init,
@@ -118,7 +163,7 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 					for i := 0; i < len(initData)/64; i++ {
 						str := string(initData[i*64 : (i+1)*64])
 						if IsImplicitAddress(str) {
-							addAddressToMaps(str, bn, txid, addrMap)
+							StreamAppearance(modelChan, str, bn, txid, traceid, traceReason(index, &trace, "code"), ts, addrMap)
 						}
 					}
 				}
@@ -169,12 +214,12 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 								// both are true - the error is `empty hex string` and we have a fix
 								msg = fmt.Sprintf("Corrected %d, tx %d adds %s", bn, txid, fixMap[key])
 								logger.Warn(colors.Red, msg, colors.Off)
-								addAddressToMaps(fixMap[key], bn, txid, addrMap)
+								StreamAppearance(modelChan, fixMap[key], bn, txid, traceid, "creation", ts, addrMap)
 							}
 
 						} else {
 							addr := hexutil.Encode(receipt.ContractAddress.Bytes())
-							addAddressToMaps(addr, bn, txid, addrMap)
+							StreamAppearance(modelChan, addr, bn, txid, traceid, "creation", ts, addrMap)
 						}
 					}
 				}
@@ -191,7 +236,7 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 			for i := 0; i < len(inputData)/64; i++ {
 				str := string(inputData[i*64 : (i+1)*64])
 				if IsImplicitAddress(str) {
-					addAddressToMaps(str, bn, txid, addrMap)
+					StreamAppearance(modelChan, str, bn, txid, traceid, traceReason(index, &trace, "input"), ts, addrMap)
 				}
 			}
 		}
@@ -202,7 +247,7 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 			for i := 0; i < len(outputData)/64; i++ {
 				str := string(outputData[i*64 : (i+1)*64])
 				if IsImplicitAddress(str) {
-					addAddressToMaps(str, bn, txid, addrMap)
+					StreamAppearance(modelChan, str, bn, txid, traceid, traceReason(index, &trace, "output"), ts, addrMap)
 				}
 			}
 		}
@@ -211,13 +256,11 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 	return
 }
 
-var mapSync sync.Mutex
+var mapSync2 sync.Mutex
 
-// addAddressToMaps help keep track of appearances for an address. An appearance is inserted into `appsMap`
-// if we've never seen this appearance before. `appsMap` is used to build the appearance table when writing the
-// chunk. `addrMap` helps eliminate duplicates and is used to build the address table when writing the chunk.
-// Precompiles are ignored. If the given address string does not start with a lead `0x`, it is normalized.
-func addAddressToMaps(address string, bn, txid uint64, addrMap AddressBooleanMap) {
+// StreamAppearance streams an appearance to the model channel if we've not seen this appearance before. We
+// keep track of appearances we've seen with `appsMap`.
+func StreamAppearance(modelChan chan types.Modeler[types.RawAppearance], address string, bn, txid, traceid uint64, reason string, ts int64, addrMap AddressBooleanMap) {
 	if base.IsPrecompile(address) {
 		return
 	}
@@ -227,7 +270,24 @@ func addAddressToMaps(address string, bn, txid uint64, addrMap AddressBooleanMap
 		address = hexutil.Encode(common.HexToAddress(address).Bytes())
 	}
 
-	mapSync.Lock()
-	defer mapSync.Unlock()
-	addrMap[fmt.Sprintf("%s\t%09d\t%05d", address, bn, txid)] = true
+	mapSync2.Lock()
+	defer mapSync2.Unlock()
+
+	if !addrMap[address] {
+		addrMap[address] = true
+		s := &types.SimpleAppearance{
+			Address:          base.HexToAddress(address),
+			BlockNumber:      uint32(bn),
+			TransactionIndex: uint32(txid),
+			Reason:           reason,
+			Timestamp:        ts,
+			Date:             utils.FormattedDate(ts),
+		}
+
+		if traceid != utils.NOPOS {
+			s.TraceIndex = uint32(traceid)
+		}
+
+		modelChan <- s
+	}
 }

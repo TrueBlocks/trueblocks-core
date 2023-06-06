@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -28,10 +29,11 @@ type RawAppearance struct {
 type SimpleAppearance struct {
 	Address          base.Address   `json:"address"`
 	BlockNumber      uint32         `json:"blockNumber"`
-	TransactionIndex uint32         `json:"transactionIndex"`
+	Date             string         `json:"date"`
 	Reason           string         `json:"reason,omitempty"`
 	Timestamp        base.Timestamp `json:"timestamp"`
-	Date             string         `json:"date"`
+	TraceIndex       uint32         `json:"traceIndex,omitempty"`
+	TransactionIndex uint32         `json:"transactionIndex"`
 	raw              *RawAppearance `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -76,12 +78,19 @@ func (s *SimpleAppearance) Model(verbose bool, format string, extraOptions map[s
 	}
 
 	if verbose {
-		// model["reason"] = s.Reason
+		if s.TraceIndex > 0 {
+			model["traceIndex"] = s.TraceIndex
+			order = append(order, "traceIndex")
+		} else if format != "json" {
+			model["traceIndex"] = ""
+			order = append(order, "traceIndex")
+		}
+		model["reason"] = s.Reason
 		model["timestamp"] = s.Timestamp
 		model["date"] = s.Date
 
 		order = append(order, []string{
-			// "reason",
+			"reason",
 			"timestamp",
 			"date",
 		}...)
@@ -108,4 +117,8 @@ func (s *SimpleAppearance) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
+func (s *SimpleAppearance) GetKey() string {
+	return fmt.Sprintf("%s\t%09d\t%05d", s.Address, s.BlockNumber, s.TransactionIndex)
+}
+
 // EXISTING_CODE

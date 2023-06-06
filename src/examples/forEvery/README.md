@@ -39,7 +39,6 @@ See the instructions in the file [./src/examples/README.md](../README.md) for mo
   - bool `forEveryTrace`(TRACEVISITFUNC func, void* data)
   - bool `forEveryAppearanceInTx`(APPEARANCEFUNC func, TRANSFUNC filter, void* data);
   - bool `forEveryUniqueAppearanceInTx`(APPEARANCEFUNC func, TRANSFUNC filter, void* data);
-  - bool `forEveryUniqueAppearanceInTxPerTx`(APPEARANCEFUNC func, TRANSFUNC filter, void* data);
 
 #### Misecelaneous
 
