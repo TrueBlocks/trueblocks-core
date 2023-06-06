@@ -36,21 +36,17 @@ func (opts *TransactionsOptions) HandleUniq() (err error, disp bool) {
 				if trans, err := rpcClient.GetTransactionByAppearance(chain, &app, true); err != nil {
 					errorChan <- err
 				} else {
-					// if (!foundOne(funcy, data, blockNumber, tr, 0, from, "from"))
 					from := trans.From.Hex()
-					index.StreamAppearance(modelChan, from, bn, txid, traceid, "from", ts, addrMap)
+					index.StreamAppearance(modelChan, opts.Flow, "from", from, bn, txid, traceid, ts, addrMap)
 
-					// if (!foundOne(funcy, data, blockNumber, tr, 0, to, "to"))
 					to := trans.To.Hex()
-					index.StreamAppearance(modelChan, to, bn, txid, traceid, "to", ts, addrMap)
+					index.StreamAppearance(modelChan, opts.Flow, "to", to, bn, txid, traceid, ts, addrMap)
 
-					// if (!foundOne(funcy, data, blockNumber, tr, 0, recPtr->contractAddress, "creation"))
 					if !trans.Receipt.ContractAddress.IsZero() {
 						contract := trans.Receipt.ContractAddress.Hex()
-						index.StreamAppearance(modelChan, contract, bn, txid, traceid, "creation", ts, addrMap)
+						index.StreamAppearance(modelChan, opts.Flow, "creation", contract, bn, txid, traceid, ts, addrMap)
 					}
 
-					// if (!foundPot(funcy, data, blockNumber, tr, 0, extract(input, 10), "input"))
 					if len(trans.Input) > 10 {
 						reason := "input"
 						inputData := trans.Input[10:]
@@ -58,16 +54,16 @@ func (opts *TransactionsOptions) HandleUniq() (err error, disp bool) {
 							str := string(inputData[i*64 : (i+1)*64])
 							// fmt.Println("checking:", str)
 							if index.IsImplicitAddress(str) {
-								index.StreamAppearance(modelChan, str, bn, txid, traceid, reason, ts, addrMap)
+								index.StreamAppearance(modelChan, opts.Flow, str, reason, bn, txid, traceid, ts, addrMap)
 							}
 						}
 					}
 
-					if err = index.UniqFromLogsDetails(chain, modelChan, trans.Receipt.Logs, ts, addrMap); err != nil {
+					if err = index.UniqFromLogsDetails(chain, modelChan, opts.Flow, trans.Receipt.Logs, ts, addrMap); err != nil {
 						errorChan <- err
 					}
 
-					if err = index.UniqFromTracesDetails(chain, trans.Traces, ts, modelChan, addrMap); err != nil {
+					if err = index.UniqFromTracesDetails(chain, modelChan, opts.Flow, trans.Traces, ts, addrMap); err != nil {
 						errorChan <- err
 					}
 				}
@@ -77,16 +73,3 @@ func (opts *TransactionsOptions) HandleUniq() (err error, disp bool) {
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts()), true
 }
-
-//----------------------------------------------------------------
-// bool shouldShow(const COptions* opt, const string_q& val) {
-//     switch (opt->flow[0]) {
-//         case 't':  // to
-//             return contains(substitute(substitute(val, "_topic", ""), "generator", ""), "to");
-//         case 'f':  // from
-//             return contains(val, "from");
-//         case 'r':  // reward
-//             return contains(val, "miner") || contains(val, "uncle");
-//     }
-//     return true;
-// }

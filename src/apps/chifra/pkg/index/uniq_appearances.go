@@ -229,5 +229,7 @@ func addAddressToMaps(address string, bn, txid uint64, addrMap AddressBooleanMap
 
 	mapSync.Lock()
 	defer mapSync.Unlock()
-	addrMap[fmt.Sprintf("%s\t%09d\t%05d", address, bn, txid)] = true
+
+	key := fmt.Sprintf("%s\t%09d\t%05d", address, bn, txid)
+	addrMap[key] = true
 }
