@@ -1,0 +1,6 @@
+blocks?blocks=6001002&count&traces&uniq&fmt=json
+{
+  "errors": [
+    "The --traces option is not available with the --uniq option."
+  ]
+}
