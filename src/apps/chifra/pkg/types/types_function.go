@@ -58,15 +58,6 @@ type SimpleFunction struct {
 	// EXISTING_CODE
 }
 
-func (s *SimpleFunction) Clone() *SimpleFunction {
-	shallowCopy := *s
-	shallowCopy.Inputs = make([]SimpleParameter, len(s.Inputs))
-	shallowCopy.Outputs = make([]SimpleParameter, len(s.Outputs))
-	copy(shallowCopy.Inputs, s.Inputs)
-	copy(shallowCopy.Outputs, s.Outputs)
-	return &shallowCopy
-}
-
 func (s *SimpleFunction) Raw() *RawFunction {
 	return s.raw
 }
@@ -149,6 +140,15 @@ func (s *SimpleFunction) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
+func (s *SimpleFunction) Clone() *SimpleFunction {
+	shallowCopy := *s
+	shallowCopy.Inputs = make([]SimpleParameter, len(s.Inputs))
+	shallowCopy.Outputs = make([]SimpleParameter, len(s.Outputs))
+	copy(shallowCopy.Inputs, s.Inputs)
+	copy(shallowCopy.Outputs, s.Outputs)
+	return &shallowCopy
+}
+
 func FunctionFromAbiEvent(ethEvent *abi.Event) *SimpleFunction {
 	// ID is encoded signature
 	encSig := strings.ToLower(ethEvent.ID.Hex())

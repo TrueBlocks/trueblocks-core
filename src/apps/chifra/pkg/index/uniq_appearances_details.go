@@ -17,7 +17,7 @@ import (
 )
 
 // UniqFromLogsDetails extracts addresses from the logs
-func UniqFromLogsDetails(chain string, logs []types.SimpleLog, ts int64, modelChan chan types.Modeler[types.RawAppearance], addrMap AddressBooleanMap) (err error) {
+func UniqFromLogsDetails(chain string, modelChan chan types.Modeler[types.RawAppearance], logs []types.SimpleLog, ts int64, addrMap AddressBooleanMap) (err error) {
 	traceid := utils.NOPOS
 	for l, log := range logs {
 		log := log
@@ -85,7 +85,7 @@ func traceReason(i int, trace *types.SimpleTrace, r string) string {
 }
 
 // UniqFromTracesDetails extracts addresses from traces
-func UniqFromTracesDetails(chain string, traces []types.SimpleTrace, ts int64, modelChan chan types.Modeler[types.RawAppearance], addrMap AddressBooleanMap) (err error) {
+func UniqFromTracesDetails(chain string, modelChan chan types.Modeler[types.RawAppearance], traces []types.SimpleTrace, ts int64, addrMap AddressBooleanMap) (err error) {
 	for index, trace := range traces {
 		trace := trace
 		traceid := uint64(index)

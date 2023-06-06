@@ -63,7 +63,7 @@ func (opts *TransactionsOptions) HandleUniq() (err error, disp bool) {
 						}
 					}
 
-					if err = index.UniqFromLogsDetails(chain, trans.Receipt.Logs, ts, modelChan, addrMap); err != nil {
+					if err = index.UniqFromLogsDetails(chain, modelChan, trans.Receipt.Logs, ts, addrMap); err != nil {
 						errorChan <- err
 					}
 
