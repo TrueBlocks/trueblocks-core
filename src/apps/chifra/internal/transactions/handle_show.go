@@ -110,7 +110,7 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 							inputData := tx.Input[10:]
 							found = abiMap[selector]
 							if found != nil {
-								tx.ArticulatedTx = found
+								tx.ArticulatedTx = found.Clone()
 								var outputData string
 								if len(tx.Traces) > 0 && tx.Traces[0].Result != nil && len(tx.Traces[0].Result.Output) > 2 {
 									outputData = tx.Traces[0].Result.Output[2:]
