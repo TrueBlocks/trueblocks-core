@@ -3,7 +3,6 @@ blocks?blocks=3982128&count
   "data": [
     {
       "blockNumber": 3982128,
-      "timestamp": 1499330007,
       "transactionsCnt": 91
     }
   ],

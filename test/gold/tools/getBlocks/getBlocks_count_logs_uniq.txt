@@ -4,14 +4,12 @@ TEST[DATE|TIME] Uniq:  true
 TEST[DATE|TIME] Logs:  true
 TEST[DATE|TIME] Count:  true
 TEST[DATE|TIME] Format:  json
-TIME ~ CLOCK - <INFO>  : Processing log query 6001002
 {
   "data": [
     {
       "addressCnt": 389,
       "blockNumber": 6001002,
       "logsCnt": 89,
-      "timestamp": 1532134152,
       "transactionsCnt": 87
     }
   ]

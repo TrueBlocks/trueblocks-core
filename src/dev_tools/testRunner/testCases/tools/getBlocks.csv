@@ -33,7 +33,7 @@ on       ,both ,fast  ,blocks ,tools/getBlocks ,addrMisconfig         ,y    ,blo
 on       ,both ,fast  ,blocks ,tools/getBlocks ,addrBlockZero         ,y    ,blocks = 0 & uniq
 
 on       ,both ,medi  ,blocks ,tools/getBlocks ,addrsCnt1             ,n    ,blocks = 3982128 & apps & count & fmt = csv
-local    ,both ,medi  ,blocks ,tools/getBlocks ,uniqTxCnt1            ,y    ,blocks = 3982128 & uniq & count & fmt = json
+on       ,both ,medi  ,blocks ,tools/getBlocks ,uniqTxCnt1            ,y    ,blocks = 3982128 & uniq & count & fmt = json & verbose
 on       ,both ,fast  ,blocks ,tools/getBlocks ,addrCntFail           ,y    ,blocks = 3982128 & count
 on       ,both ,fast  ,blocks ,tools/getBlocks ,uncles_count          ,y    ,blocks = 3 469 & uncles & count
 on       ,both ,medi  ,blocks ,tools/getBlocks ,count1                ,y    ,blocks = 3 & fmt = json & count
@@ -43,12 +43,12 @@ on       ,both ,medi  ,blocks ,tools/getBlocks ,count4                ,y    ,blo
 on       ,both ,medi  ,blocks ,tools/getBlocks ,count5                ,y    ,blocks = 3 & fmt = json & count & traces & fmt = txt
 on       ,both ,medi  ,blocks ,tools/getBlocks ,count6                ,y    ,blocks = 3 & fmt = json & count & traces & uncles & fmt = txt
 on       ,both ,medi  ,blocks ,tools/getBlocks ,count7                ,y    ,blocks = 3 & fmt = json & count & traces & uncles & apps & fmt = txt
-local    ,both ,medi  ,blocks ,tools/getBlocks ,count_uncles_uniq     ,y    ,blocks = 3 469 & count & uncles & uniq & fmt = json
+on       ,both ,medi  ,blocks ,tools/getBlocks ,count_uncles_uniq     ,y    ,blocks = 3 469 & count & uncles & uniq & fmt = json
 on       ,both ,medi  ,blocks ,tools/getBlocks ,count_logs            ,y    ,blocks = 6001002 & count & traces & uncles & logs & fmt = json
-local    ,both ,medi  ,blocks ,tools/getBlocks ,count_logs_uniq       ,n    ,blocks = 6001002 & count & logs & uniq & fmt = json
-local    ,both ,medi  ,blocks ,tools/getBlocks ,count_traces_uniq     ,y    ,blocks = 6001002 & count & traces & uniq & fmt = json
-local    ,both ,medi  ,blocks ,tools/getBlocks ,count_all_uniq        ,y    ,blocks = 3 6001002 & count & uncles & logs & traces & uniq & fmt = json
-local    ,both ,medi  ,blocks ,tools/getBlocks ,uniqTxCnt2            ,y    ,blocks = 1301011-1312011:313 & uniq & count & fmt = json
+on       ,both ,medi  ,blocks ,tools/getBlocks ,count_logs_uniq       ,y    ,blocks = 6001002 & count & logs & uniq & fmt = json
+on       ,both ,medi  ,blocks ,tools/getBlocks ,count_traces_uniq     ,y    ,blocks = 6001002 & count & traces & uniq & fmt = json
+on       ,both ,medi  ,blocks ,tools/getBlocks ,count_all_uniq        ,y    ,blocks = 3 6001002 & count & uncles & logs & traces & uniq & fmt = json
+on       ,both ,medi  ,blocks ,tools/getBlocks ,uniqTxCnt2            ,y    ,blocks = 1301011-1312011:313 & uniq & count & fmt = json
 on       ,both ,fast  ,blocks ,tools/getBlocks ,list_fail             ,y    ,list = 0 & list_count = 12
 on       ,both ,fast  ,blocks ,tools/getBlocks ,list_list_count       ,y    ,list = 1000 & list_count = 10
 on       ,both ,fast  ,blocks ,tools/getBlocks ,list_count_block_fail ,y    ,list_count = 10 & blocks = 1000

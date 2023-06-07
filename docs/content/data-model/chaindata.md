@@ -341,7 +341,7 @@ BlockCounts consist of the following fields:
 | logsCnt         | the number of logs in the block                                | uint64    |
 | tracesCnt       | the number of traces in the block                              | uint64    |
 | appsCnt         | the number of address appearances in the block                 | uint64    |
-| uniqsCnt        | the number of address appearances in the block per transaction | uint64    |
+| addressCnt      | the number of address appearances in the block per transaction | uint64    |
 
 ## NamedBlock
 

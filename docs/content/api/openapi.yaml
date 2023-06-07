@@ -3007,7 +3007,7 @@ components:
           format: uint64
           example: 40
           description: "the number of address appearances in the block"
-        uniqsCnt:
+        addressCnt:
           type: number
           format: uint64
           example: 40

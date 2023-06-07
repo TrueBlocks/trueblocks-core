@@ -6,7 +6,6 @@ TEST[DATE|TIME] Format:  json
   "data": [
     {
       "blockNumber": 3982128,
-      "timestamp": 1499330007,
       "transactionsCnt": 91
     }
   ]
