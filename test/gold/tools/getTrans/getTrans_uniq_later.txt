@@ -7,75 +7,57 @@ TEST[DATE|TIME] Format:  json
     {
       "address": "0x5c9a55199a4baeebe16a3c194f5c3abccc145860",
       "blockNumber": 14987654,
-      "date": "2022-06-18 23:23:38 UTC",
       "reason": "from",
-      "timestamp": 1655594618,
       "transactionIndex": 0
     },
     {
       "address": "0x596183ad5b82a845f43ce6826cb80bdfaa38187e",
       "blockNumber": 14987654,
-      "date": "2022-06-18 23:23:38 UTC",
       "reason": "to",
-      "timestamp": 1655594618,
       "transactionIndex": 0
     },
     {
       "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
       "blockNumber": 14987654,
-      "date": "2022-06-18 23:23:38 UTC",
       "reason": "log_0_generator",
-      "timestamp": 1655594618,
       "transactionIndex": 0
     },
     {
       "address": "0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640",
       "blockNumber": 14987654,
-      "date": "2022-06-18 23:23:38 UTC",
       "reason": "log_0_topic_1",
-      "timestamp": 1655594618,
       "transactionIndex": 0
     },
     {
       "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
       "blockNumber": 14987654,
-      "date": "2022-06-18 23:23:38 UTC",
       "reason": "log_1_generator",
-      "timestamp": 1655594618,
       "transactionIndex": 0
     },
     {
       "address": "0x0000000000007c6c8a9fbc09062f6b51ffa271e5",
       "blockNumber": 14987654,
-      "date": "2022-06-18 23:23:38 UTC",
       "reason": "log_2_data",
-      "timestamp": 1655594618,
       "transactionIndex": 0
     },
     {
       "address": "0x0000000000007c6c8a9fbc09062f6b5a2d48661d",
       "blockNumber": 14987654,
-      "date": "2022-06-18 23:23:38 UTC",
       "reason": "trace_1_input",
-      "timestamp": 1655594618,
       "traceIndex": 1,
       "transactionIndex": 0
     },
     {
       "address": "0xa2327a938febf5fec13bacfb16ae10ecbc4cbdcf",
       "blockNumber": 14987654,
-      "date": "2022-06-18 23:23:38 UTC",
       "reason": "trace_3_[0_0]_to",
-      "timestamp": 1655594618,
       "traceIndex": 3,
       "transactionIndex": 0
     },
     {
       "address": "0x3ecef08d0e2dad803847e052249bb4f8bff2d5bb",
       "blockNumber": 14987654,
-      "date": "2022-06-18 23:23:38 UTC",
       "reason": "trace_11_to",
-      "timestamp": 1655594618,
       "traceIndex": 11,
       "transactionIndex": 0
     }

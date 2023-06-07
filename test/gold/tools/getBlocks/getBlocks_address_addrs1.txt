@@ -1,4 +1,7 @@
-blocks?blocks=3982128&apps&fmt=csv
+chifra blocks  3982128 --apps --fmt csv
+TEST[DATE|TIME] Blocks:  [3982128]
+TEST[DATE|TIME] Apps:  true
+TEST[DATE|TIME] Format:  csv
 address,blockNumber,transactionIndex,traceIndex,reason
 0x1e9939daaad6924ad004c2560e90804164900341,3982128,99999,,miner
 0x8c34adf55edf3d3eabb2414dd3f7152536246c86,3982128,0,,from
