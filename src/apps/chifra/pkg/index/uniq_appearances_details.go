@@ -17,19 +17,21 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
-func UniqFromTransDetails(chain string, modelChan chan types.Modeler[types.RawAppearance], flow string, trans *types.SimpleTransaction, ts int64, addrMap AddressBooleanMap) error {
+type UniqProcFunc func(s *types.SimpleAppearance) error
+
+func UniqFromTransDetails(chain string, procFunc UniqProcFunc, flow string, trans *types.SimpleTransaction, ts int64, addrMap AddressBooleanMap) error {
 	bn := trans.BlockNumber
 	txid := trans.TransactionIndex
 	traceid := utils.NOPOS
 	from := trans.From.Hex()
-	StreamAppearance(modelChan, flow, "from", from, bn, txid, traceid, ts, addrMap)
+	StreamAppearance(procFunc, flow, "from", from, bn, txid, traceid, ts, addrMap)
 
 	to := trans.To.Hex()
-	StreamAppearance(modelChan, flow, "to", to, bn, txid, traceid, ts, addrMap)
+	StreamAppearance(procFunc, flow, "to", to, bn, txid, traceid, ts, addrMap)
 
 	if !trans.Receipt.ContractAddress.IsZero() {
 		contract := trans.Receipt.ContractAddress.Hex()
-		StreamAppearance(modelChan, flow, "creation", contract, bn, txid, traceid, ts, addrMap)
+		StreamAppearance(procFunc, flow, "creation", contract, bn, txid, traceid, ts, addrMap)
 	}
 
 	if len(trans.Input) > 10 {
@@ -38,65 +40,36 @@ func UniqFromTransDetails(chain string, modelChan chan types.Modeler[types.RawAp
 		for i := 0; i < len(inputData)/64; i++ {
 			str := string(inputData[i*64 : (i+1)*64])
 			if IsImplicitAddress(str) {
-				StreamAppearance(modelChan, flow, str, reason, bn, txid, traceid, ts, addrMap)
+				StreamAppearance(procFunc, flow, str, reason, bn, txid, traceid, ts, addrMap)
 			}
 		}
 	}
 
-	if err := UniqFromLogsDetails(chain, modelChan, flow, trans.Receipt.Logs, ts, addrMap); err != nil {
+	if err := UniqFromLogsDetails(chain, procFunc, flow, trans.Receipt.Logs, ts, addrMap); err != nil {
 		return err
 	}
 
-	if err := UniqFromTracesDetails(chain, modelChan, flow, trans.Traces, ts, addrMap); err != nil {
+	if err := UniqFromTracesDetails(chain, procFunc, flow, trans.Traces, ts, addrMap); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-func UniqFromTransDetails2(chain string, modelChan chan types.Modeler[types.RawAppearance], flow string, trans *types.SimpleTransaction, ts int64, addrMap AddressBooleanMap) error {
-	bn := trans.BlockNumber
-	txid := trans.TransactionIndex
-	traceid := utils.NOPOS
-	from := trans.From.Hex()
-	StreamAppearance(modelChan, flow, "from", from, bn, txid, traceid, ts, addrMap)
-
-	to := trans.To.Hex()
-	StreamAppearance(modelChan, flow, "to", to, bn, txid, traceid, ts, addrMap)
-
-	if !trans.Receipt.ContractAddress.IsZero() {
-		contract := trans.Receipt.ContractAddress.Hex()
-		StreamAppearance(modelChan, flow, "creation", contract, bn, txid, traceid, ts, addrMap)
-	}
-
-	if len(trans.Input) > 10 {
-		reason := "input"
-		inputData := trans.Input[10:]
-		for i := 0; i < len(inputData)/64; i++ {
-			str := string(inputData[i*64 : (i+1)*64])
-			if IsImplicitAddress(str) {
-				StreamAppearance(modelChan, flow, str, reason, bn, txid, traceid, ts, addrMap)
-			}
-		}
 	}
 
 	return nil
 }
 
 // UniqFromLogsDetails extracts addresses from the logs
-func UniqFromLogsDetails(chain string, modelChan chan types.Modeler[types.RawAppearance], flow string, logs []types.SimpleLog, ts int64, addrMap AddressBooleanMap) (err error) {
+func UniqFromLogsDetails(chain string, procFunc UniqProcFunc, flow string, logs []types.SimpleLog, ts int64, addrMap AddressBooleanMap) (err error) {
 	traceid := utils.NOPOS
 	for l, log := range logs {
 		log := log
 		generator := log.Address.Hex()
 		reason := fmt.Sprintf("log_%d_generator", l)
-		StreamAppearance(modelChan, flow, reason, generator, log.BlockNumber, log.TransactionIndex, traceid, ts, addrMap)
+		StreamAppearance(procFunc, flow, reason, generator, log.BlockNumber, log.TransactionIndex, traceid, ts, addrMap)
 
 		for t, topic := range log.Topics {
 			str := string(topic.Hex()[2:])
 			if IsImplicitAddress(str) {
 				reason := fmt.Sprintf("log_%d_topic_%d", l, t)
-				StreamAppearance(modelChan, flow, reason, str, log.BlockNumber, log.TransactionIndex, traceid, ts, addrMap)
+				StreamAppearance(procFunc, flow, reason, str, log.BlockNumber, log.TransactionIndex, traceid, ts, addrMap)
 			}
 		}
 
@@ -106,7 +79,7 @@ func UniqFromLogsDetails(chain string, modelChan chan types.Modeler[types.RawApp
 			for i := 0; i < len(inputData)/64; i++ {
 				str := string(inputData[i*64 : (i+1)*64])
 				if IsImplicitAddress(str) {
-					StreamAppearance(modelChan, flow, reason, str, log.BlockNumber, log.TransactionIndex, traceid, ts, addrMap)
+					StreamAppearance(procFunc, flow, reason, str, log.BlockNumber, log.TransactionIndex, traceid, ts, addrMap)
 				}
 			}
 		}
@@ -152,7 +125,7 @@ func traceReason(i uint64, trace *types.SimpleTrace, r string) string {
 }
 
 // UniqFromTracesDetails extracts addresses from traces
-func UniqFromTracesDetails(chain string, modelChan chan types.Modeler[types.RawAppearance], flow string, traces []types.SimpleTrace, ts int64, addrMap AddressBooleanMap) (err error) {
+func UniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, traces []types.SimpleTrace, ts int64, addrMap AddressBooleanMap) (err error) {
 	for _, trace := range traces {
 		trace := trace
 		traceid := trace.TraceIndex
@@ -160,10 +133,10 @@ func UniqFromTracesDetails(chain string, modelChan chan types.Modeler[types.RawA
 		txid := uint64(trace.TransactionIndex)
 
 		from := trace.Action.From.Hex()
-		StreamAppearance(modelChan, flow, traceReason(traceid, &trace, "from"), from, bn, txid, traceid, ts, addrMap)
+		StreamAppearance(procFunc, flow, traceReason(traceid, &trace, "from"), from, bn, txid, traceid, ts, addrMap)
 
 		to := trace.Action.To.Hex()
-		StreamAppearance(modelChan, flow, traceReason(traceid, &trace, "to"), to, bn, txid, traceid, ts, addrMap)
+		StreamAppearance(procFunc, flow, traceReason(traceid, &trace, "to"), to, bn, txid, traceid, ts, addrMap)
 
 		if trace.TraceType == "call" {
 			// If it's a call, get the to and from, we're done
@@ -178,7 +151,7 @@ func UniqFromTracesDetails(chain string, modelChan chan types.Modeler[types.RawA
 					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
 					falseTxid = uint64(99997)
 				}
-				StreamAppearance(modelChan, flow, "miner", author, bn, falseTxid, traceid, ts, addrMap)
+				StreamAppearance(procFunc, flow, "miner", author, bn, falseTxid, traceid, ts, addrMap)
 
 			} else if trace.Action.RewardType == "uncle" {
 				author := trace.Action.Author.Hex()
@@ -189,13 +162,13 @@ func UniqFromTracesDetails(chain string, modelChan chan types.Modeler[types.RawA
 					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
 					falseTxid = uint64(99998)
 				}
-				StreamAppearance(modelChan, flow, "uncle", author, bn, falseTxid, traceid, ts, addrMap)
+				StreamAppearance(procFunc, flow, "uncle", author, bn, falseTxid, traceid, ts, addrMap)
 
 			} else if trace.Action.RewardType == "external" {
 				// This only happens in xDai as far as we know...
 				author := trace.Action.Author.Hex()
 				falseTxid := uint64(99996)
-				StreamAppearance(modelChan, flow, "external", author, bn, falseTxid, traceid, ts, addrMap)
+				StreamAppearance(procFunc, flow, "external", author, bn, falseTxid, traceid, ts, addrMap)
 
 			} else {
 				return errors.New("Unknown reward type" + trace.Action.RewardType)
@@ -204,16 +177,16 @@ func UniqFromTracesDetails(chain string, modelChan chan types.Modeler[types.RawA
 		} else if trace.TraceType == "suicide" {
 			// add the contract that died, and where it sent it's money
 			refundAddress := trace.Action.RefundAddress.Hex()
-			StreamAppearance(modelChan, flow, traceReason(traceid, &trace, "refund"), refundAddress, bn, txid, traceid, ts, addrMap)
+			StreamAppearance(procFunc, flow, traceReason(traceid, &trace, "refund"), refundAddress, bn, txid, traceid, ts, addrMap)
 
 			address := trace.Action.Address.Hex()
-			StreamAppearance(modelChan, flow, traceReason(traceid, &trace, "self-destruct"), address, bn, txid, traceid, ts, addrMap)
+			StreamAppearance(procFunc, flow, traceReason(traceid, &trace, "self-destruct"), address, bn, txid, traceid, ts, addrMap)
 
 		} else if trace.TraceType == "create" {
 			if trace.Result != nil {
 				// may be both...record the self-destruct instead of the creation since we can only report on one
 				address := trace.Result.Address.Hex()
-				StreamAppearance(modelChan, flow, traceReason(traceid, &trace, "self-destruct"), address, bn, txid, traceid, ts, addrMap)
+				StreamAppearance(procFunc, flow, traceReason(traceid, &trace, "self-destruct"), address, bn, txid, traceid, ts, addrMap)
 			}
 
 			// If it's a top level trace, then the call data is the init,
@@ -224,7 +197,7 @@ func UniqFromTracesDetails(chain string, modelChan chan types.Modeler[types.RawA
 					for i := 0; i < len(initData)/64; i++ {
 						str := string(initData[i*64 : (i+1)*64])
 						if IsImplicitAddress(str) {
-							StreamAppearance(modelChan, flow, traceReason(traceid, &trace, "code"), str, bn, txid, traceid, ts, addrMap)
+							StreamAppearance(procFunc, flow, traceReason(traceid, &trace, "code"), str, bn, txid, traceid, ts, addrMap)
 						}
 					}
 				}
@@ -275,12 +248,12 @@ func UniqFromTracesDetails(chain string, modelChan chan types.Modeler[types.RawA
 								// both are true - the error is `empty hex string` and we have a fix
 								msg = fmt.Sprintf("Corrected %d, tx %d adds %s", bn, txid, fixMap[key])
 								logger.Warn(colors.Red, msg, colors.Off)
-								StreamAppearance(modelChan, flow, "creation", fixMap[key], bn, txid, traceid, ts, addrMap)
+								StreamAppearance(procFunc, flow, "creation", fixMap[key], bn, txid, traceid, ts, addrMap)
 							}
 
 						} else {
 							addr := hexutil.Encode(receipt.ContractAddress.Bytes())
-							StreamAppearance(modelChan, flow, "creation", addr, bn, txid, traceid, ts, addrMap)
+							StreamAppearance(procFunc, flow, "creation", addr, bn, txid, traceid, ts, addrMap)
 						}
 					}
 				}
@@ -297,7 +270,7 @@ func UniqFromTracesDetails(chain string, modelChan chan types.Modeler[types.RawA
 			for i := 0; i < len(inputData)/64; i++ {
 				str := string(inputData[i*64 : (i+1)*64])
 				if IsImplicitAddress(str) {
-					StreamAppearance(modelChan, flow, traceReason(traceid, &trace, "input"), str, bn, txid, traceid, ts, addrMap)
+					StreamAppearance(procFunc, flow, traceReason(traceid, &trace, "input"), str, bn, txid, traceid, ts, addrMap)
 				}
 			}
 		}
@@ -308,7 +281,7 @@ func UniqFromTracesDetails(chain string, modelChan chan types.Modeler[types.RawA
 			for i := 0; i < len(outputData)/64; i++ {
 				str := string(outputData[i*64 : (i+1)*64])
 				if IsImplicitAddress(str) {
-					StreamAppearance(modelChan, flow, traceReason(traceid, &trace, "output"), str, bn, txid, traceid, ts, addrMap)
+					StreamAppearance(procFunc, flow, traceReason(traceid, &trace, "output"), str, bn, txid, traceid, ts, addrMap)
 				}
 			}
 		}
@@ -321,7 +294,7 @@ var mapSync2 sync.Mutex
 
 // StreamAppearance streams an appearance to the model channel if we've not seen this appearance before. We
 // keep track of appearances we've seen with `appsMap`.
-func StreamAppearance(modelChan chan types.Modeler[types.RawAppearance], flow string, reason string, address string, bn, txid, traceid uint64, ts int64, addrMap AddressBooleanMap) {
+func StreamAppearance(procFunc UniqProcFunc, flow string, reason string, address string, bn, txid, traceid uint64, ts int64, addrMap AddressBooleanMap) {
 	if base.IsPrecompile(address) {
 		return
 	}
@@ -371,6 +344,8 @@ func StreamAppearance(modelChan chan types.Modeler[types.RawAppearance], flow st
 			s.TraceIndex = uint32(traceid)
 		}
 
-		modelChan <- s
+		if procFunc != nil {
+			procFunc(s)
+		}
 	}
 }

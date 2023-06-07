@@ -20,18 +20,6 @@ blocks?blocks=3982128&uniq
       "transactionIndex": 0
     },
     {
-      "address": "0x556b5712c2a7cc5506fbfa785b52536fb8243765",
-      "blockNumber": 3982128,
-      "reason": "from",
-      "transactionIndex": 1
-    },
-    {
-      "address": "0x3d373b2b56745565833da4ba2a7eb312fd588703",
-      "blockNumber": 3982128,
-      "reason": "to",
-      "transactionIndex": 1
-    },
-    {
       "address": "0x00000000000060003504166306fdde0381146100",
       "blockNumber": 3982128,
       "reason": "code",
@@ -42,6 +30,18 @@ blocks?blocks=3982128&uniq
       "blockNumber": 3982128,
       "reason": "code",
       "transactionIndex": 0
+    },
+    {
+      "address": "0x556b5712c2a7cc5506fbfa785b52536fb8243765",
+      "blockNumber": 3982128,
+      "reason": "from",
+      "transactionIndex": 1
+    },
+    {
+      "address": "0x3d373b2b56745565833da4ba2a7eb312fd588703",
+      "blockNumber": 3982128,
+      "reason": "to",
+      "transactionIndex": 1
     },
     {
       "address": "0xf6230e7e98d2bbebf96d14888020e9c3e8c27d69",
@@ -86,6 +86,13 @@ blocks?blocks=3982128&uniq
       "transactionIndex": 4
     },
     {
+      "address": "0x1d3b2638a7cc9f2cb3d298a3da7a90b67e5506ed",
+      "blockNumber": 3982128,
+      "reason": "trace_1_to",
+      "traceIndex": 1,
+      "transactionIndex": 4
+    },
+    {
       "address": "0xeb68aa2764b4a9a943658b2e61db4c902b2ebf85",
       "blockNumber": 3982128,
       "reason": "from",
@@ -100,7 +107,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0xe309af672ff517f1889514947d4ffb881ea964e5",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_topic_2",
       "transactionIndex": 5
     },
     {
@@ -118,7 +125,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0x1151314c646ce4e0efd76d1af4760ae66a9fe30f",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_topic_2",
       "transactionIndex": 6
     },
     {
@@ -136,7 +143,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0x1151314c646ce4e0efd76d1af4760ae66a9fe30f",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_topic_2",
       "transactionIndex": 7
     },
     {
@@ -154,7 +161,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0x1151314c646ce4e0efd76d1af4760ae66a9fe30f",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_topic_2",
       "transactionIndex": 8
     },
     {
@@ -172,7 +179,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_data",
       "transactionIndex": 9
     },
     {
@@ -203,7 +210,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_data",
       "transactionIndex": 10
     },
     {
@@ -234,7 +241,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_data",
       "transactionIndex": 11
     },
     {
@@ -265,7 +272,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_data",
       "transactionIndex": 12
     },
     {
@@ -296,7 +303,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_data",
       "transactionIndex": 13
     },
     {
@@ -327,7 +334,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_data",
       "transactionIndex": 14
     },
     {
@@ -358,7 +365,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_data",
       "transactionIndex": 15
     },
     {
@@ -401,7 +408,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_data",
       "transactionIndex": 17
     },
     {
@@ -432,7 +439,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_data",
       "transactionIndex": 18
     },
     {
@@ -565,7 +572,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0x7fe2b88f2e4858de375832fbf54ac7cf1a78ca51",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_topic_2",
       "transactionIndex": 27
     },
     {
@@ -583,7 +590,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0x4d0d8c260b89f49c9992927eabc57d5bddbfaf53",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_topic_2",
       "transactionIndex": 28
     },
     {
@@ -631,7 +638,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0xf611463b93f94e844e95bfa901f86b20ffffb047",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_topic_2",
       "transactionIndex": 31
     },
     {
@@ -649,7 +656,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0x020000000000000000000000009080435b1b0b52",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "code",
       "transactionIndex": 32
     },
     {
@@ -691,7 +698,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0xbf098325740f54de71b48e90b8adc31c10ecd125",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_topic_2",
       "transactionIndex": 35
     },
     {
@@ -739,7 +746,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0x56e763094cc3b20e1bef5273d0eda8d5cacc564e",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_topic_2",
       "transactionIndex": 38
     },
     {
@@ -787,7 +794,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0x69ea6b31ef305d6b99bb2d4c9d99456fa108b02a",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_topic_2",
       "transactionIndex": 41
     },
     {
@@ -883,7 +890,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0x69ea6b31ef305d6b99bb2d4c9d99456fa108b02a",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_topic_2",
       "transactionIndex": 48
     },
     {
@@ -901,7 +908,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0x69ea6b31ef305d6b99bb2d4c9d99456fa108b02a",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_topic_2",
       "transactionIndex": 49
     },
     {
@@ -917,16 +924,16 @@ blocks?blocks=3982128&uniq
       "transactionIndex": 50
     },
     {
+      "address": "0x6f28b146804dba2d6f944c03528a8fdbc673df2c",
+      "blockNumber": 3982128,
+      "reason": "log_0_generator",
+      "transactionIndex": 50
+    },
+    {
       "address": "0x1d3b2638a7cc9f2cb3d298a3da7a90b67e5506ed",
       "blockNumber": 3982128,
       "reason": "trace_1_to",
       "traceIndex": 1,
-      "transactionIndex": 50
-    },
-    {
-      "address": "0x6f28b146804dba2d6f944c03528a8fdbc673df2c",
-      "blockNumber": 3982128,
-      "reason": "log_0_generator",
       "transactionIndex": 50
     },
     {
@@ -1010,7 +1017,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0xec7dce1a9453563e575c144dd8e11f6cc43032d3",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_topic_2",
       "transactionIndex": 56
     },
     {
@@ -1040,7 +1047,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0xae070a703d69c50bca98d9aa62f3ef05a2fbbcd8",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_topic_2",
       "transactionIndex": 58
     },
     {
@@ -1112,7 +1119,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0x2820c21c5432965ba6b607b976db1fc456909b6e",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_topic_2",
       "transactionIndex": 63
     },
     {
@@ -1194,16 +1201,16 @@ blocks?blocks=3982128&uniq
       "transactionIndex": 69
     },
     {
+      "address": "0x314159265dd8dbb310642f98f50c066173c1259b",
+      "blockNumber": 3982128,
+      "reason": "log_0_generator",
+      "transactionIndex": 69
+    },
+    {
       "address": "0xf9643287513e7b45cdb8b010354b0d87da45528e",
       "blockNumber": 3982128,
       "reason": "trace_1_to",
       "traceIndex": 1,
-      "transactionIndex": 69
-    },
-    {
-      "address": "0x314159265dd8dbb310642f98f50c066173c1259b",
-      "blockNumber": 3982128,
-      "reason": "log_0_generator",
       "transactionIndex": 69
     },
     {
@@ -1221,7 +1228,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0x3f7e925c586027f24f968f50fd7dc1ea0125f75a",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_topic_2",
       "transactionIndex": 70
     },
     {
@@ -1239,7 +1246,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0x6e767e7164e99ab3cdbc0cc5b0de36a7d4793c9c",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_topic_2",
       "transactionIndex": 71
     },
     {
@@ -1264,7 +1271,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0xbebd3225046d50faa29105b060cecac4247751ed",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_topic_2",
       "transactionIndex": 72
     },
     {
@@ -1313,13 +1320,13 @@ blocks?blocks=3982128&uniq
     {
       "address": "0x8f3470a7388c05ee4e7af3d01d8c722b0ff52374",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_data",
       "transactionIndex": 75
     },
     {
       "address": "0xf3153f952260b1a8ab9e6e537203b2b691575b2e",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_data",
       "transactionIndex": 75
     },
     {
@@ -1373,7 +1380,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0xb9b4f545defb6428e428b0525c81ffa570f54293",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_topic_2",
       "transactionIndex": 78
     },
     {
@@ -1439,7 +1446,7 @@ blocks?blocks=3982128&uniq
     {
       "address": "0x795c1427235f620cccd13d5cbb51efd7a8c6f3e0",
       "blockNumber": 3982128,
-      "reason": "input",
+      "reason": "log_0_topic_2",
       "transactionIndex": 83
     },
     {

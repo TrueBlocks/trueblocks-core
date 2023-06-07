@@ -17,6 +17,11 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
+		procFunc := func(s *types.SimpleAppearance) error {
+			modelChan <- s
+			return nil
+		}
+
 		for _, rng := range opts.TransactionIds {
 			txIds, err := rng.ResolveTxs(opts.Globals.Chain)
 			if err != nil && !errors.Is(err, ethereum.NotFound) {
@@ -32,7 +37,7 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 				if trans, err := rpcClient.GetTransactionByAppearance(chain, &app, true); err != nil {
 					errorChan <- err
 				} else {
-					if err = index.UniqFromTransDetails(chain, modelChan, opts.Flow, trans, ts, addrMap); err != nil {
+					if err = index.UniqFromTransDetails(chain, procFunc, opts.Flow, trans, ts, addrMap); err != nil {
 						errorChan <- err
 					}
 				}
