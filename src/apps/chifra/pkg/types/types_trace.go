@@ -52,6 +52,7 @@ type SimpleTrace struct {
 	TraceType        string             `json:"type,omitempty"`
 	raw              *RawTrace          `json:"-"`
 	// EXISTING_CODE
+	TraceIndex uint64 `json:"-"`
 	// EXISTING_CODE
 }
 

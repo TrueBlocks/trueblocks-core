@@ -3,5 +3,5 @@ TEST[DATE|TIME] Blocks:  [4102000]
 TEST[DATE|TIME] Uniq:  true
 TEST[DATE|TIME] Flow:  reward
 TEST[DATE|TIME] Format:  txt
-blockNumber	transactionIndex	traceIndex	address	reason
-4102000	99999		0x1e9939daaad6924ad004c2560e90804164900341	miner
+address	blockNumber	transactionIndex	traceIndex	reason
+0x1e9939daaad6924ad004c2560e90804164900341	4102000	99999		miner

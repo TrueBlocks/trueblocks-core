@@ -1,6 +1,6 @@
 blocks?blocks=4012000-4012001&traces&apps
 {
   "errors": [
-    "The --traces option is not available with the --apps option."
+    "Invalid key (apps) in blocks route."
   ]
 }

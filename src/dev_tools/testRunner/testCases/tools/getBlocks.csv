@@ -22,8 +22,8 @@ on       ,both ,fast  ,blocks ,tools/getBlocks ,combo_one_range       ,y    ,blo
 on       ,both ,fast  ,blocks ,tools/getBlocks ,combo_two_range       ,y    ,blocks = 1590000 4000001-4000002 1001001-1001100 1234567
 on       ,both ,fast  ,blocks ,tools/getBlocks ,force_fail            ,y    ,blocks = 2769609 2799895 2872831 3076260 & apps & cache
 on       ,both ,medi  ,blocks ,tools/getBlocks ,hashes_1              ,y    ,blocks = 4001001 & hashes
-local    ,both ,medi  ,blocks ,tools/getBlocks ,address_addrs1        ,n    ,blocks = 3982128 & apps & fmt = csv
-local    ,both ,medi  ,blocks ,tools/getBlocks ,address_addrsv        ,n    ,blocks = 3982128 & apps & fmt = txt
+on       ,both ,medi  ,blocks ,tools/getBlocks ,address_addrs1        ,n    ,blocks = 3982128 & apps & fmt = csv
+on       ,both ,medi  ,blocks ,tools/getBlocks ,address_addrsv        ,n    ,blocks = 3982128 & apps & verbose = 1 & fmt = txt
 local    ,both ,medi  ,blocks ,tools/getBlocks ,address_uniqTx1       ,n    ,blocks = 3982128 & uniq
 slow     ,both ,medi  ,blocks ,tools/getBlocks ,mulitBlock_uniq_2630  ,y    ,blocks = 3982128-3982133 & uniq & fmt = json
 slow     ,both ,slow  ,blocks ,tools/getBlocks ,byzantium_1           ,y    ,blocks = 4369999 4370000 4380101
@@ -87,7 +87,7 @@ on       ,both ,fast  ,blocks ,tools/getBlocks ,access_list           ,y    ,blo
 
 on       ,both ,fast  ,blocks ,tools/getBlocks ,flow_error_1          ,n    ,blocks = 4102000 & fmt = txt & flow = to
 on       ,both ,fast  ,blocks ,tools/getBlocks ,flow_error_2          ,n    ,blocks = 4102000 & fmt = txt & apps & flow = not-a-choice
-local    ,both ,fast  ,blocks ,tools/getBlocks ,flow_apps_to          ,n    ,blocks = 4102000 & fmt = txt & apps & flow = to
+on       ,both ,fast  ,blocks ,tools/getBlocks ,flow_apps_to          ,n    ,blocks = 4102000 & fmt = txt & apps & flow = to
 local    ,both ,fast  ,blocks ,tools/getBlocks ,flow_uniq_from        ,n    ,blocks = 4102000 & fmt = txt & uniq & flow = from
 local    ,both ,fast  ,blocks ,tools/getBlocks ,flow_uniq_reward      ,n    ,blocks = 4102000 & fmt = txt & uniq & flow = reward
 

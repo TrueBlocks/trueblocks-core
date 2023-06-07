@@ -941,14 +941,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: apps
-          description: display a list of uniq address appearances in the block
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: uniq
           description: display a list of uniq address appearances per transaction
           required: false
@@ -959,7 +951,7 @@ paths:
             type: boolean
         - name: flow
           description: >
-            for the uniq and apps options only, export only from or to (including trace from or to)
+            for the uniq option only, export only from or to (including trace from or to)
           required: false
           style: form
           in: query

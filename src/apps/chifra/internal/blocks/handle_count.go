@@ -98,7 +98,6 @@ func (opts *BlocksOptions) HandleCounts() error {
 		"uncles": opts.Uncles,
 		"logs":   opts.Logs,
 		"traces": opts.Traces,
-		"apps":   opts.Apps,
 		"uniqs":  opts.Uniq,
 	}
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))

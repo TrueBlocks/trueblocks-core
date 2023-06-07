@@ -1,6 +1,6 @@
 blocks?blocks=4012000-4012001&cache&apps
 {
   "errors": [
-    "The --cache option is not available with the --apps option."
+    "Invalid key (apps) in blocks route."
   ]
 }

@@ -1,6 +1,6 @@
 lastBlockTest  recurse
 Recursive from ../
-Found 107 (107) files
+Found 97 (97) files
 ../abiTest/abiTest_01.txt
 ../abiTest/abiTest_02.txt
 ../abiTest/abiTest_03.txt
@@ -31,12 +31,6 @@ Found 107 (107) files
 ../abiTest2/donate.tx
 ../abiTest2/functions.txt
 ../binaryPathTest/binaryPathTest_00.txt
-../blockTest/blockTest_00.txt
-../blockTest/blockTest_01.txt
-../blockTest/blockTest_02.txt
-../blockTest/blockTest_03.txt
-../blockTest/blockTest_04.txt
-../blockTest/blockTest_README.txt
 ../dataUpgradeTest/dataUpgradeTest_00.txt
 ../dataUpgradeTest/dataUpgradeTest_01.txt
 ../dataUpgradeTest/dataUpgradeTest_02.txt
@@ -73,10 +67,6 @@ Found 107 (107) files
 ../displayStrsTest/displayStrsTest_CName.txt
 ../displayStrsTest/displayStrsTest_CRPCResult.txt
 ../displayStrsTest/displayStrsTest_README.txt
-../forEveryTest/forEveryTest_00.txt
-../forEveryTest/forEveryTest_01.txt
-../forEveryTest/forEveryTest_02.txt
-../forEveryTest/forEveryTest_README.txt
 ../generalTest/generalTest_00.txt
 ../generalTest/generalTest_01.txt
 ../lastBlockTest/blocks/00/50/005000223.txt

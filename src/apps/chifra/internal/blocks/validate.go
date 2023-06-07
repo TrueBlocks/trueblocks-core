@@ -65,8 +65,8 @@ func (opts *BlocksOptions) validateBlocks() error {
 	}
 
 	if len(opts.Flow) > 0 {
-		if !opts.Apps && !opts.Uniq {
-			return validate.Usage("The {0} option is only available with the {1} option", "--flow", "--apps or --uniq")
+		if !opts.Uniq {
+			return validate.Usage("The {0} option is only available with the {1} option", "--flow", "--uniq")
 		}
 		err := validate.ValidateEnum("flow", opts.Flow, "[from|to|reward]")
 		if err != nil {
@@ -105,14 +105,6 @@ func (opts *BlocksOptions) validateBlocks() error {
 				}
 				if opts.Uncles {
 					return validate.Usage("The {0} option is not available{1}.", "--uncles", " with the --uniq option")
-				}
-			}
-			if opts.Apps {
-				if opts.Traces {
-					return validate.Usage("The {0} option is not available{1}.", "--traces", " with the --apps option")
-				}
-				if opts.Cache {
-					return validate.Usage("The {0} option is not available{1}.", "--cache", " with the --apps option")
 				}
 			}
 			if opts.BigRange != 500 && !opts.Logs {

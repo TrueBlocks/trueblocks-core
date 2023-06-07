@@ -32,13 +32,9 @@ See the instructions in the file [./src/examples/README.md](../README.md) for mo
   - bool `forEveryTransaction`(TRANSVISITFUNC func, void* data)
   - bool `forEveryLog`(LOGVISITFUNC func, void* data)
   - bool `forEveryTrace`(TRACEVISITFUNC func, void* data)
-  - bool `forEveryAppearanceInBlock`(APPEARANCEFUNC func, TRANSFUNC filter, void* data);
-  - bool `forEveryUniqueAppearanceInTxs`(APPEARANCEFUNC func, TRANSFUNC filter, void* data);
 - CTransaction
   - bool `forEveryLog`(LOGVISITFUNC func, void* data)
   - bool `forEveryTrace`(TRACEVISITFUNC func, void* data)
-  - bool `forEveryAppearanceInTx`(APPEARANCEFUNC func, TRANSFUNC filter, void* data);
-  - bool `forEveryUniqueAppearanceInTx`(APPEARANCEFUNC func, TRANSFUNC filter, void* data);
 
 #### Misecelaneous
 

@@ -21,7 +21,6 @@
 namespace qblocks {
 
 // EXISTING_CODE
-typedef bool (*TRANSFUNC)(const CTransaction* trans, void* data);
 typedef bool (*TRANSVISITFUNC)(CTransaction& trans, void* data);
 // EXISTING_CODE
 
@@ -54,8 +53,6 @@ class CBlock : public CBaseNode {
     bool forEveryTransaction(TRANSVISITFUNC func, void* data) const;
     bool forEveryLog(LOGVISITFUNC func, void* data) const;
     bool forEveryTrace(TRACEVISITFUNC func, void* data) const;
-    bool forEveryAppearanceInBlock(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
-    bool forEveryUniqueAppearanceInTxs(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
     // EXISTING_CODE
     bool operator==(const CBlock& it) const;
     bool operator!=(const CBlock& it) const {

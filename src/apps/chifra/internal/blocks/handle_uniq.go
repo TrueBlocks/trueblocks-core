@@ -5,6 +5,7 @@ import (
 	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
@@ -47,11 +48,8 @@ func (opts *BlocksOptions) HandleUniq() (err error) {
 						}
 					}
 
-					if len(block.Transactions) > 1 {
-						block.Transactions = block.Transactions[:2]
-					}
 					for _, trans := range block.Transactions {
-						if err = index.UniqFromTransDetails(chain, modelChan, opts.Flow, &trans, ts, addrMap); err != nil {
+						if err = index.UniqFromTransDetails2(chain, modelChan, opts.Flow, &trans, ts, addrMap); err != nil {
 							errorChan <- err
 						}
 					}
@@ -59,7 +57,16 @@ func (opts *BlocksOptions) HandleUniq() (err error) {
 					if traces, err := rpcClient.GetTracesByBlockNumber(chain, bn); err != nil {
 						errorChan <- err
 					} else {
+						for _, trace := range traces {
+							logger.Info(trace.BlockNumber, trace.TransactionIndex, trace.TraceIndex)
+						}
 						if err = index.UniqFromTracesDetails(chain, modelChan, opts.Flow, traces, ts, addrMap); err != nil {
+							errorChan <- err
+						}
+					}
+
+					for _, trans := range block.Transactions {
+						if err := index.UniqFromLogsDetails(chain, modelChan, opts.Flow, trans.Receipt.Logs, ts, addrMap); err != nil {
 							errorChan <- err
 						}
 					}
@@ -73,3 +80,19 @@ func (opts *BlocksOptions) HandleUniq() (err error) {
 	}
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }
+
+/*
+
+//-----------------------------------------------------------------------
+bool visit Prefund(const Allocation& prefund, void* data) {
+    CAppearance item;
+    item.blockNumber = 0;
+    item.transactionIndex = ((COptions*)data)->nPrefunds++;
+    item.address = prefund.address;
+    item.reason = "genesis";
+    oneAppearance(item, data);
+    return true;
+}
+
+
+*/
