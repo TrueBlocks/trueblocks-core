@@ -258,6 +258,7 @@ TraceActions consist of the following fields:
 | input         | an encoded version of the function call                                    | bytes   |
 | callType      | the type of call                                                           | string  |
 | refundAddress | if the call type is self-destruct, the address to which the refund is sent | address |
+| rewardType    | the type of reward                                                         | string  |
 
 ## TraceResult
 

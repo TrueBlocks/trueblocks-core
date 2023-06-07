@@ -33,10 +33,6 @@ func (opts *TransactionsOptions) validateTransactions() error {
 			return validate.Usage("Please supply one or more transaction identifiers.")
 		}
 
-		if len(opts.Reconcile) > 0 {
-			return validate.Usage("The --reconcile option has been deprecated. Use --account_for instead.")
-		}
-
 		if len(opts.AccountFor) > 0 {
 			if opts.Cache {
 				return validate.Usage("The {0} option is not available with the {1} option", "--cache", "--account_for")

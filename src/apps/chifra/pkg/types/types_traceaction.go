@@ -19,6 +19,7 @@ import (
 
 type RawTraceAction struct {
 	Address        string `json:"address"`
+	Author         string `json:"author"`
 	Balance        string `json:"balance"`
 	CallType       string `json:"callType"`
 	From           string `json:"from"`
@@ -26,6 +27,7 @@ type RawTraceAction struct {
 	Init           string `json:"init"`
 	Input          string `json:"input"`
 	RefundAddress  string `json:"refundAddress"`
+	RewardType     string `json:"rewardType"`
 	SelfDestructed string `json:"selfDestructed"`
 	To             string `json:"to"`
 	Value          string `json:"value"`
@@ -35,6 +37,7 @@ type RawTraceAction struct {
 
 type SimpleTraceAction struct {
 	Address        base.Address    `json:"address,omitempty"`
+	Author         base.Address    `json:"author,omitempty"`
 	Balance        base.Wei        `json:"balance,omitempty"`
 	CallType       string          `json:"callType"`
 	From           base.Address    `json:"from"`
@@ -42,6 +45,7 @@ type SimpleTraceAction struct {
 	Init           string          `json:"init,omitempty"`
 	Input          string          `json:"input,omitempty"`
 	RefundAddress  base.Address    `json:"refundAddress,omitempty"`
+	RewardType     string          `json:"rewardType,omitempty"`
 	SelfDestructed base.Address    `json:"selfDestructed,omitempty"`
 	To             base.Address    `json:"to"`
 	Value          base.Wei        `json:"value"`

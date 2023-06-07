@@ -63,11 +63,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-f" || arg == "--flow") {
             return flag_required("flow");
 
-        } else if (arg == "-r" || arg == "--reconcile") {
-            // clang-format off
-            return usage("the --reconcile option is deprecated, please use --account_for option instead");  // NOLINT
-            // clang-format on
-
         } else if (startsWith(arg, "-A:") || startsWith(arg, "--account_for:")) {
             account_for = substitute(substitute(arg, "-A:", ""), "--account_for:", "");
             if (!isAddress(account_for))

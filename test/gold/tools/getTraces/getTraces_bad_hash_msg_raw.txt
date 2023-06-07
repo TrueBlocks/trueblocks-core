@@ -7,6 +7,7 @@ TEST[DATE|TIME] Format:  txt
     {
       "action": {
         "address": "",
+        "author": "",
         "balance": "",
         "callType": "call",
         "from": "0x30d285941dfb8bbbe4ec72b02c8d166be01322d2",
@@ -14,6 +15,7 @@ TEST[DATE|TIME] Format:  txt
         "init": "",
         "input": "0x",
         "refundAddress": "",
+        "rewardType": "",
         "selfDestructed": "",
         "to": "0x9b0a028eafdecde3afc0fd00b7937098388b7c8a",
         "value": "0xdbbaa3d0ed1ad7"
@@ -29,6 +31,7 @@ TEST[DATE|TIME] Format:  txt
       },
       "subtraces": 0,
       "traceAddress": [],
+      "traceIndex": "",
       "transactionHash": "0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521",
       "transactionPosition": 3,
       "type": "call"
@@ -36,6 +39,7 @@ TEST[DATE|TIME] Format:  txt
     {
       "action": {
         "address": "",
+        "author": "",
         "balance": "",
         "callType": "call",
         "from": "0x30d285941dfb8bbbe4ec72b02c8d166be01322d2",
@@ -43,6 +47,7 @@ TEST[DATE|TIME] Format:  txt
         "init": "",
         "input": "0x",
         "refundAddress": "",
+        "rewardType": "",
         "selfDestructed": "",
         "to": "0x9b0a028eafdecde3afc0fd00b7937098388b7c8a",
         "value": "0xdbbaa3d0ed1ad7"
@@ -58,6 +63,7 @@ TEST[DATE|TIME] Format:  txt
       },
       "subtraces": 0,
       "traceAddress": [],
+      "traceIndex": "",
       "transactionHash": "0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521",
       "transactionPosition": 3,
       "type": "call"

@@ -750,6 +750,9 @@ components:
           format: address
           example: "0xf503...179b"
           description: "if the call type is self-destruct, the address to which the refund is sent"
+        rewardType:
+          type: string
+          description: "the type of reward"
     traceResult:
       description: "trace result data as returned from the RPC (with slight enhancements)"
       type: object

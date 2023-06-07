@@ -8,6 +8,9 @@ Removes use of FromRpc in favor of Query methods for interacting with the RPC
 Removes a bunch of old tests in ./src/libs cpp code
 Fixes bug related to loadedMap in articulation code
 Remove --apps option from chifra blocks
+Removes previously deprecated --reconcile option from chifra transactions
+Adds rewardType and Author to TraceAction
+Adds traceIndex to Trace
 
 Removed all --uniq related CPP code to GoLang
 Adds --deep to chifra chunks used `d` for hot key which used to be for `--max_addrs`

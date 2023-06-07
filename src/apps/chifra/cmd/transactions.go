@@ -59,7 +59,6 @@ func init() {
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Uniq, "uniq", "u", false, "display a list of uniq addresses found in the transaction")
 	transactionsCmd.Flags().StringVarP(&transactionsPkg.GetOptions().Flow, "flow", "f", "", `for the uniq option only, export only from or to (including trace from or to)
 One of [ from | to ]`)
-	transactionsCmd.Flags().StringVarP(&transactionsPkg.GetOptions().Reconcile, "reconcile", "r", "", "please use --account_for option instead")
 	transactionsCmd.Flags().StringVarP(&transactionsPkg.GetOptions().AccountFor, "account_for", "A", "", "reconcile the transaction as per the provided address")
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Cache, "cache", "o", false, "force the results of the query into the tx cache (and the trace cache if applicable)")
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Decache, "decache", "D", false, "removes a transactions and any traces in the transaction from the cache")
@@ -74,7 +73,6 @@ One of [ from | to ]`)
 
 	// EXISTING_CODE
 	transactionsCmd.Flags().MarkDeprecated("trace", "please use --traces instead")
-	transactionsCmd.Flags().MarkDeprecated("reconcile", "please use --account_for instead")
 	// EXISTING_CODE
 
 	chifraCmd.AddCommand(transactionsCmd)

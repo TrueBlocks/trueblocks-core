@@ -42,6 +42,7 @@ class CTrace : public CBaseNode {
     blknum_t blockNumber;
     uint64_t subtraces;
     CStringArray traceAddress;
+    uint64_t traceIndex;
     hash_t transactionHash;
     blknum_t transactionIndex;
     string_q type;
@@ -126,6 +127,7 @@ inline void CTrace::initialize(void) {
     blockNumber = 0;
     subtraces = 0;
     traceAddress.clear();
+    traceIndex = 0;
     transactionHash = "";
     transactionIndex = 0;
     type = "";
@@ -149,6 +151,7 @@ inline void CTrace::duplicate(const CTrace& tr) {
     blockNumber = tr.blockNumber;
     subtraces = tr.subtraces;
     traceAddress = tr.traceAddress;
+    traceIndex = tr.traceIndex;
     transactionHash = tr.transactionHash;
     transactionIndex = tr.transactionIndex;
     type = tr.type;
