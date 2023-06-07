@@ -158,7 +158,7 @@ func UniqFromTracesDetails(chain string, modelChan chan types.Modeler[types.RawA
 				// burned). We enter a false record with a false tx_id to account for this.
 				if validate.IsZeroAddress(author) {
 					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-					falseTxid = uint64(99997)
+					falseTxid = uint64(99998)
 				}
 				StreamAppearance(modelChan, flow, "uncle", author, bn, falseTxid, traceid, ts, addrMap)
 
