@@ -36,19 +36,15 @@ class COptions : public CBlockOptions {
     bool hashes;
     bool uncles;
     bool traces;
-    string_q flow;
     bool logs;
     bool articulate;
     uint64_t big_range;
-    bool count;
     bool cache;
     // END_CODE_DECLARE
 
     uint64_t nProcessed{0};
     uint64_t nPrefunds{0};
     CBlock latestBlock;
-    uint64_t addrCounter;
-    string_q filterType;
     timestamp_t secsFinal;
     CLogFilter logFilter;
 
@@ -58,7 +54,6 @@ class COptions : public CBlockOptions {
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
-    bool handle_appearances(blknum_t num);
     bool handle_logs(void);
     bool processFastPath(void);
 };

@@ -105,10 +105,10 @@ func getRawTransactionReceipt(chain string, bn uint64, txid uint64) (receipt *ty
 	} else {
 		method := "eth_getTransactionReceipt"
 		params := rpc.Params{fetched.Hash().Hex()}
-		if result, err := rpc.Query[types.RawReceipt](chain, method, params); err != nil {
+		if receipt, err := rpc.Query[types.RawReceipt](chain, method, params); err != nil {
 			return nil, nil, err
 		} else {
-			return result, &fetched, nil
+			return receipt, &fetched, nil
 		}
 	}
 }

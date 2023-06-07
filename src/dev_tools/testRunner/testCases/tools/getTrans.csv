@@ -38,11 +38,12 @@ on       ,cmd  ,fast  ,transactions ,tools/getTrans ,fmt_junk                 ,y
 on       ,both ,fast  ,transactions ,tools/getTrans ,old_hang_bug             ,y    ,transactions = 6409270.108 & articulate & fmt = json
 
 on       ,both ,fast  ,transactions ,tools/getTrans ,uniqAddrs_fail           ,y    ,transactions = 1301011.0 1301672.0 1301324.0 & broken & fmt = json
-on       ,both ,fast  ,transactions ,tools/getTrans ,uniqAddrs                ,y    ,transactions = 1301011.0 1301672.0 1301324.0 & uniq & fmt = json
+on       ,both ,fast  ,transactions ,tools/getTrans ,uniqAddrs                ,y    ,transactions = 1301011.0 1301672.0 1301324.0 & uniq & fmt = json & verbose
 on       ,both ,fast  ,transactions ,tools/getTrans ,flow_error_1             ,n    ,transactions = 4102000.0 & fmt = txt & flow = to
 on       ,both ,fast  ,transactions ,tools/getTrans ,flow_error_2             ,n    ,transactions = 4102000.0 & fmt = txt & uniq & flow = not-a-choice
 on       ,both ,fast  ,transactions ,tools/getTrans ,flow_uniq_flow_to        ,n    ,transactions = 4102000.0 & fmt = txt & uniq & flow = to
-on       ,both ,fast  ,transactions ,tools/getTrans ,flow_uniq_flow_from      ,n    ,transactions = 4102000.0 & fmt = txt & uniq & flow = from
+on       ,both ,fast  ,transactions ,tools/getTrans ,flow_uniq_flow_from      ,n    ,transactions = 4102000.0 & fmt = txt & uniq & flow = from & verbose
+on       ,both ,fast  ,transactions ,tools/getTrans ,uniq_later               ,y    ,transactions = 14987654.0 & fmt = json & uniq
 
 on       ,both ,fast  ,transactions ,tools/getTrans ,no_tracing               ,y    ,transactions = 0x0f0171122023385b433a766e70c65928ea9f9e29e6a6c82a7330cb46b63334e7e9ba7a35c3 & traces & chain = non-tracing
 on       ,both ,medi  ,transactions ,tools/getTrans ,by_bhash_and_txid        ,n    ,transactions = 0xe821b0f2752e49d421127f74b14d9a65dd8d5f48ad240b4b592043803f644372.5 & traces & fmt = txt
@@ -91,7 +92,7 @@ local    ,both ,fast  ,transactions ,tools/getTrans ,unparsable               ,y
 on       ,both ,slow  ,transactions ,tools/getTrans ,issue_1583               ,y    ,transactions = 0x2f83088fa87f6054779a5511ec4f6b64f1e773e9bd7ec97956d6e04910d59303 & articulate & fmt = json
 on       ,both ,slow  ,transactions ,tools/getTrans ,issue_1366               ,y    ,transactions = 0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532ddc717ffd0abe & fmt = json & traces & articulate
 
-on       ,both ,fast  ,transactions ,tools/getTrans ,multi_articulate         ,y    ,transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json
+local    ,both ,fast  ,transactions ,tools/getTrans ,multi_articulate         ,y    ,transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json
 on       ,both ,fast  ,transactions ,tools/getTrans ,pricing_premaker         ,y    ,transactions = 1433233.8 & account_for = 0xea674fdde714fd979de3edf0f56aa9716b898ec8 & fmt = json & log_level = 10
 on       ,both ,fast  ,transactions ,tools/getTrans ,pricing_maker            ,y    ,transactions = 5218355.232 & account_for = 0x7fd5c846121bed2e2e46a55f992e35d85da7ffad & fmt = json & log_level = 10
 on       ,both ,fast  ,transactions ,tools/getTrans ,pricing_uniswap1         ,y    ,transactions = 10681057.170 10607241.278 & account_for = 0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3 & fmt = json & log_level = 10

@@ -31,7 +31,6 @@ TEST[DATE|TIME] Format:  txt
       },
       "subtraces": 0,
       "traceAddress": [],
-      "traceIndex": "",
       "transactionHash": "0x0cc945824def6a5c81d86ca56848f92163838bbd480a3bd2ff85f6d5b13d72ab",
       "transactionPosition": 0,
       "type": "call"

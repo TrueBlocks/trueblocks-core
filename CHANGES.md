@@ -11,8 +11,8 @@ Remove --apps option from chifra blocks
 Removes previously deprecated --reconcile option from chifra transactions
 Adds rewardType and Author to TraceAction
 Adds traceIndex to Trace
-
 Removed all --uniq related CPP code to GoLang
+
 Adds --deep to chifra chunks used `d` for hot key which used to be for `--max_addrs`
 Changes hotkey for chifra chunks --max_addrs from `d` to `m` which used to be for `--remote`
 Changes hotkey for chifra chunks --remote from `m` to `r`

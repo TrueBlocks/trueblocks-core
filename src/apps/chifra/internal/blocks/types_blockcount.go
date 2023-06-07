@@ -12,12 +12,14 @@ package blocksPkg
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
 
 type simpleBlockCount struct {
 	AddressCnt      uint64         `json:"addressCnt,omitempty"`
+	AppsCnt         uint64         `json:"appsCnt,omitempty"`
 	BlockNumber     base.Blknum    `json:"blockNumber"`
 	LogsCnt         uint64         `json:"logsCnt,omitempty"`
 	Timestamp       base.Timestamp `json:"timestamp"`
@@ -39,19 +41,25 @@ func (s *simpleBlockCount) Model(verbose bool, format string, extraOptions map[s
 	// EXISTING_CODE
 	model = map[string]interface{}{
 		"blockNumber":     s.BlockNumber,
-		"timestamp":       s.Timestamp,
 		"transactionsCnt": s.TransactionsCnt,
 	}
 
 	order = []string{
 		"blockNumber",
-		"timestamp",
 		"transactionsCnt",
+	}
+
+	if verbose {
+		model["timestamp"] = s.Timestamp
+		order = append(order, "timestamp")
+		model["date"] = utils.FormattedDate(s.Timestamp)
+		order = append(order, "date")
 	}
 
 	wantsUncles := extraOptions["uncles"] == true
 	wantsLogs := extraOptions["logs"] == true
 	wantsTraces := extraOptions["traces"] == true
+	wantsApps := extraOptions["apps"] == true
 	wantsUniqs := extraOptions["uniqs"] == true
 
 	if format == "json" {
@@ -63,6 +71,9 @@ func (s *simpleBlockCount) Model(verbose bool, format string, extraOptions map[s
 		}
 		if wantsTraces && s.TracesCnt > 0 {
 			model["tracesCnt"] = s.TracesCnt
+		}
+		if wantsApps && s.AppsCnt > 0 {
+			model["appsCnt"] = s.AppsCnt
 		}
 		if wantsUniqs && s.AddressCnt > 0 {
 			model["addressCnt"] = s.AddressCnt
@@ -80,6 +91,10 @@ func (s *simpleBlockCount) Model(verbose bool, format string, extraOptions map[s
 		if wantsTraces {
 			model["tracesCnt"] = s.TracesCnt
 			order = append(order, "tracesCnt")
+		}
+		if wantsApps {
+			model["appsCnt"] = s.AppsCnt
+			order = append(order, "appsCnt")
 		}
 		if wantsUniqs {
 			model["addressCnt"] = s.AddressCnt

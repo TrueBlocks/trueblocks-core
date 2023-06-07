@@ -15,8 +15,10 @@ import (
 )
 
 func (opts *BlocksOptions) HandleTrace() error {
+	chain := opts.Globals.Chain
+
 	// Don't do this in the loop
-	meta, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+	meta, err := rpcClient.GetMetaData(chain, opts.Globals.TestMode)
 	if err != nil {
 		return err
 	}
@@ -27,7 +29,7 @@ func (opts *BlocksOptions) HandleTrace() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
 		for _, br := range opts.BlockIds {
-			blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
+			blockNums, err := br.ResolveBlocks(chain)
 			if err != nil {
 				errorChan <- err
 				if errors.Is(err, ethereum.NotFound) {
@@ -39,7 +41,7 @@ func (opts *BlocksOptions) HandleTrace() error {
 
 			for _, bn := range blockNums {
 				var traces []types.SimpleTrace
-				traces, err = rpcClient.GetTracesByBlockNumber(opts.Globals.Chain, bn)
+				traces, err = rpcClient.GetTracesByBlockNumber(chain, bn)
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {

@@ -189,51 +189,8 @@ extern const char* STR_DISPLAY_APPEARANCE;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 typedef bool (*ADDRESSFUNC)(const address_t& addr, void* data);
-typedef bool (*APPEARANCEFUNC)(const CAppearance& item, void* data);
-extern bool isPotentialAddr(biguint_t test, address_t& addrOut);
-extern bool potentialAddr(APPEARANCEFUNC func, void* data, const CAppearance& item, const string_q& potList);
 
 //---------------------------------------------------------------------------
-struct addrOnlyComparator {
-    bool operator()(const CAppearance& v1, const CAppearance& v2) const {
-        return v1.address < v2.address;
-    }
-};
-
-//---------------------------------------------------------------------------
-struct addrTxComparator {
-    bool operator()(const CAppearance& v1, const CAppearance& v2) const {
-        if (v1.address < v2.address)
-            return true;
-        if (v1.address > v2.address)
-            return false;
-        if (v2.transactionIndex == NOPOS)
-            return false;
-        return v1.transactionIndex < v2.transactionIndex;
-    }
-};
-
-//---------------------------------------------------------------------------
-typedef map<CAppearance, bool, addrOnlyComparator> CAddressOnlyAppearanceMap;  // NOLINT
-typedef map<CAppearance, bool, addrTxComparator> CAddressTxAppearanceMap;      // NOLINT
-//---------------------------------------------------------------------------
-class CUniqueState {
-  public:
-    APPEARANCEFUNC func;
-    void* data;
-    CAddressOnlyAppearanceMap* addrOnlyMap;
-    CAddressTxAppearanceMap* addrTxMap;
-
-  public:
-    CUniqueState(APPEARANCEFUNC f, void* d, bool perTx) {
-        func = f;
-        data = d;
-        addrOnlyMap = (perTx ? NULL : new CAddressOnlyAppearanceMap);
-        addrTxMap = (perTx ? new CAddressTxAppearanceMap : NULL);
-    }
-    bool insertUnique(const CAppearance& _value);
-};
-
 extern int findAddresses(const void* v1, const void* v2);
 // EXISTING_CODE
 }  // namespace qblocks

@@ -48,3 +48,17 @@ func GetLogCountByBlockNumber(chain string, bn uint64) (uint64, error) {
 		return uint64(len(logs)), nil
 	}
 }
+
+func GetLogsByTransactionId(chain string, bn, txid uint64) ([]types.SimpleLog, error) {
+	blockTs := rpc.GetBlockTimestamp(chain, bn)
+	receipt, err := GetTransactionReceipt(chain, ReceiptQuery{
+		Bn:      bn,
+		Txid:    txid,
+		NeedsTs: true,
+		Ts:      blockTs,
+	})
+	if err != nil {
+		return []types.SimpleLog{}, err
+	}
+	return receipt.Logs, nil
+}

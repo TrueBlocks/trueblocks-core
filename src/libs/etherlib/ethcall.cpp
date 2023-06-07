@@ -507,6 +507,30 @@ bool getProxyContract(const address_t& contract, blknum_t blockNum, address_t& p
     return !proxy.empty();
 }
 
+//---------------------------------------------------------------------------
+bool isPotentialAddr(biguint_t test, address_t& addrOut) {
+    addrOut = "";
+
+    // smallest address we find
+    static const biguint_t small = str_2_Wei("0x00000000000000ffffffffffffffffffffffffff");
+    // largest address we find
+    static const biguint_t large = str_2_Wei("0x010000000000000000000000000000000000000000");
+    if (test <= small || test >= large)
+        return false;
+
+    addrOut = bnu_2_Hex(test).c_str();
+    // Totally a heuristic that can't really be supported, but a good probability that this isn't an address
+    if (endsWith(addrOut, "00000000"))
+        return false;
+
+    if (addrOut.length() < 40)
+        addrOut = padLeft(addrOut, 40, '0');
+    addrOut = extract(addrOut, addrOut.length() - 40, 40);
+    addrOut = toLower("0x" + addrOut);
+
+    return true;
+}
+
 //-----------------------------------------------------------------------
 string_q getPC_internal(const address_t& contract, blknum_t blockNum) {
     // We try the following two not-so-useful methods of calling the implementation function directly
@@ -561,5 +585,6 @@ string_q getPC_internal(const address_t& contract, blknum_t blockNum) {
 
     return "";
 }
+
 // EXISTING_CODE
 }  // namespace qblocks

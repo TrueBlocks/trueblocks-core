@@ -24,14 +24,11 @@ static const COption params[] = {
     COption("hashes", "e", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),  // NOLINT
     COption("uncles", "c", "", OPT_SWITCH, "display uncle blocks (if any) instead of the requested block"),
     COption("traces", "t", "", OPT_SWITCH, "export the traces from the block as opposed to the block data"),
-    COption("uniq", "u", "", OPT_SWITCH, "display a list of uniq address appearances per transaction"),
-    COption("flow", "f", "enum[from|to|reward]", OPT_FLAG, "for the uniq option only, export only from or to (including trace from or to)"),  // NOLINT
     COption("logs", "l", "", OPT_SWITCH, "display only the logs found in the block(s)"),
     COption("emitter", "m", "list<addr>", OPT_FLAG, "for the --logs option only, filter logs to show only those logs emitted by the given address(es)"),  // NOLINT
     COption("topic", "B", "list<topic>", OPT_FLAG, "for the --logs option only, filter logs to show only those with this topic(s)"),  // NOLINT
     COption("articulate", "a", "", OPT_SWITCH, "for the --logs option only, articulate the retrieved data if ABIs can be found"),  // NOLINT
     COption("big_range", "r", "<uint64>", OPT_FLAG, "for the --logs option only, allow for block ranges larger than 500"),  // NOLINT
-    COption("count", "U", "", OPT_SWITCH, "display the number of the lists of appearances for --addrs or --uniq"),
     COption("cache", "o", "", OPT_SWITCH, "force a write of the block to the cache"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve one or more blocks from the chain or local cache."),
     // clang-format on
@@ -39,11 +36,6 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern const char* STR_FORMAT_COUNT_JSON;
-extern const char* STR_FORMAT_COUNT_TXT;
-extern const char* STR_FORMAT_COUNT_TXT_VERBOSE;
-extern const char* STR_FORMAT_FILTER_JSON;
-extern const char* STR_FORMAT_FILTER_TXT;
 extern const char* STR_FORMAT_LIST_JSON;
 extern const char* STR_FORMAT_LIST;
 extern const char* STR_FMT_BLOCKLOGS;
@@ -53,7 +45,6 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
-    bool uniq = false;
     CAddressArray emitter;
     CStringArray topic;
     // END_CODE_LOCAL_INIT
@@ -76,15 +67,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-t" || arg == "--traces") {
             traces = true;
-
-        } else if (arg == "-u" || arg == "--uniq") {
-            uniq = true;
-
-        } else if (startsWith(arg, "-f:") || startsWith(arg, "--flow:")) {
-            if (!confirmEnum("flow", flow, arg))
-                return false;
-        } else if (arg == "-f" || arg == "--flow") {
-            return flag_required("flow");
 
         } else if (arg == "-l" || arg == "--logs") {
             logs = true;
@@ -112,9 +94,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-r" || arg == "--big_range") {
             return flag_required("big_range");
 
-        } else if (arg == "-U" || arg == "--count") {
-            count = true;
-
         } else if (arg == "-o" || arg == "--cache") {
             cache = true;
 
@@ -132,7 +111,7 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (!cache && !articulate && !uncles && !traces && !logs && !uniq) {
+    if (!cache && !articulate && !uncles && !traces && !logs) {
         return usage("Nope");
     }
 
@@ -147,8 +126,6 @@ bool COptions::parseArguments(string_q& command) {
     for (auto e : emitter)
         logFilter.emitters.push_back(e);
 
-    filterType = (uniq ? "uniq" : "");
-
     big_range = max(big_range, uint64_t(50));
 
     if (traces && !isTracingNode())
@@ -161,29 +138,10 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (expContext().exportFmt == NONE1)
-        expContext().exportFmt = (isApiMode() ? JSON1 : (filterType.empty() ? JSON1 : TXT1));
+        expContext().exportFmt = JSON1;
 
     // Display formatting
-    if (count) {
-        string_q ff = verbose ? STR_FORMAT_COUNT_TXT_VERBOSE : STR_FORMAT_COUNT_TXT;
-        if (verbose <= 2) {
-            ff = substitute(ff, "\t[{TRACE_COUNT}]", "");
-        }
-        if (filterType.empty()) {
-            replace(ff, "\"[{FILTER_TYPE}]\": [{ADDR_COUNT}]", "");
-            replace(ff, "\t[{ADDR_COUNT}]", "");
-        }
-        if (!uncles) {
-            replace(ff, "\t[{UNCLESCNT}]", "");
-        }
-        configureDisplay("", "CBlock", ff);
-
-    } else if (!filterType.empty()) {
-        configureDisplay("", "CBlock", STR_FORMAT_FILTER_TXT);
-        if (blocks.hasZeroBlock)
-            loadPrefundBalances();
-
-    } else if (traces) {
+    if (traces) {
         configureDisplay("getBlocks", "CTrace", STR_DISPLAY_TRACE);
 
     } else if (logs) {
@@ -202,23 +160,6 @@ bool COptions::parseArguments(string_q& command) {
         configureDisplay("getBlocks", "CBlock", STR_DISPLAY_BLOCK);
     }
 
-    if (expContext().exportFmt == JSON1) {
-        if (count) {
-            string_q ff = STR_FORMAT_COUNT_JSON;
-            if (filterType.empty()) {
-                replace(ff, ",\n \"[{FILTER_TYPE}]\": [{ADDR_COUNT}]", "");
-                replace(ff, "\t[{ADDR_COUNT}]", "");
-            }
-            if (!uncles) {
-                replace(ff, "\n \"unclesCnt\": [{UNCLESCNT}]", "");
-            }
-            replaceAll(ff, ",,", ",");
-            expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(ff);
-
-        } else if (!filterType.empty()) {
-            expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(STR_FORMAT_FILTER_JSON);
-        }
-    }
     if (noHeader)
         expContext().fmtMap["header"] = "";
 
@@ -235,17 +176,13 @@ void COptions::Init(void) {
     hashes = false;
     uncles = false;
     traces = false;
-    flow = "";
     logs = false;
     articulate = false;
     big_range = 500;
-    count = false;
     cache = false;
     // END_CODE_INIT
 
-    filterType = "";
     secsFinal = (60 * 5);  // Used to be configurable, but no longer
-    addrCounter = 0;
     blocks.Init();
     logFilter = CLogFilter();
     CBlockOptions::Init();
@@ -290,33 +227,6 @@ void interumReport(ostream& os, blknum_t i) {
     os << (!(i % 150) ? "." : (!(i % 1000)) ? "+" : "");  // dots '.' at every 150, '+' at every 1000
     os.flush();
 }
-
-//--------------------------------------------------------------------------------
-const char* STR_FORMAT_COUNT_JSON =
-    "{\n"
-    " \"blockNumber\": [{BLOCKNUMBER}],\n"
-    " \"transactionsCnt\": [{TRANSACTIONSCNT}],\n"
-    " \"unclesCnt\": [{UNCLESCNT}],\n"
-    " \"[{FILTER_TYPE}]\": [{ADDR_COUNT}]"
-    "}\n";
-
-//--------------------------------------------------------------------------------
-const char* STR_FORMAT_COUNT_TXT = "[{BLOCKNUMBER}]\t[{TRANSACTIONSCNT}]\t[{UNCLESCNT}]\t[{ADDR_COUNT}]";
-const char* STR_FORMAT_COUNT_TXT_VERBOSE =
-    "[{BLOCKNUMBER}]\t[{TRANSACTIONSCNT}]\t[{UNCLESCNT}]\t[{TRACE_COUNT}]\t[{ADDR_COUNT}]";
-
-//--------------------------------------------------------------------------------
-const char* STR_FORMAT_FILTER_JSON =
-    "{\n"
-    " \"bn\": \"[{BLOCKNUMBER}]\",\n"
-    " \"tx\": \"[{TRANSACTIONINDEX}]\",\n"
-    " \"tc\": \"[{TRACEINDEX}]\",\n"
-    " \"addr\": \"[{ADDRESS}]\",\n"
-    " \"reason\": \"[{REASON}]\"\n"
-    "}\n";
-
-//--------------------------------------------------------------------------------
-const char* STR_FORMAT_FILTER_TXT = "[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{TRACEINDEX}]\t[{ADDRESS}]\t[{REASON}]";
 
 //--------------------------------------------------------------------------------
 const char* STR_FMT_BLOCKLOGS =

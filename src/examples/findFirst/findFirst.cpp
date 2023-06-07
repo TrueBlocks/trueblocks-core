@@ -47,26 +47,27 @@ bool visitAddress(const CAppearance& item, void* data) {
 
 //-----------------------------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
-    loadEnvironmentPaths();
+    // loadEnvironmentPaths();
 
-    // Initialize the library, provide a control+c handler
-    etherlib_init(quickQuitHandler);
+    // // Initialize the library, provide a control+c handler
+    // etherlib_init(quickQuitHandler);
 
-    // Best guess of where to start the scan
-    blknum_t startBlock = 1428700;
+    // // Best guess of where to start the scan
+    // blknum_t startBlock = 1428700;
 
-    // The address we're searching for
-    address_t theDaoAddr("0xbb9bc244d798123fde783fcc1c72d3bb8c189413");
+    // // The address we're searching for
+    // address_t theDaoAddr("0xbb9bc244d798123fde783fcc1c72d3bb8c189413");
 
-    // Scan each block from the start until we find the address we're looking for
-    for (blknum_t bl = startBlock; bl < getLatestBlock_client(); bl++) {
-        CBlock block;
-        getBlock(block, bl);
-        if (!block.forEveryUniqueAppearanceInTxs(visitAddress /* func */, NULL /* filterFun */, &theDaoAddr /* data */))
-            return 0;
-    }
+    // // Scan each block from the start until we find the address we're looking for
+    // for (blknum_t bl = startBlock; bl < getLatestBlock_client(); bl++) {
+    //     CBlock block;
+    //     getBlock(block, bl);
+    //     if (!block.fo rEveryUniqueAppearanceInTxs(visitAddress /* func */, NULL /* filterFun */, &theDaoAddr /* data
+    //     */))
+    //         return 0;
+    // }
 
-    etherlib_cleanup();
+    // etherlib_cleanup();
 
     return 0;
 }

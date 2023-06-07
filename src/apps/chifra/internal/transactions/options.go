@@ -77,12 +77,6 @@ func (opts *TransactionsOptions) toCmdLine() string {
 	if opts.Traces {
 		options += " --traces"
 	}
-	if opts.Uniq {
-		options += " --uniq"
-	}
-	if len(opts.Flow) > 0 {
-		options += " --flow " + opts.Flow
-	}
 	if len(opts.AccountFor) > 0 {
 		options += " --account_for " + opts.AccountFor
 	}

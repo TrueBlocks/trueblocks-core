@@ -26,7 +26,6 @@ TEST[DATE|TIME] Format:  json
       "result": null,
       "subtraces": 0,
       "traceAddress": [],
-      "traceIndex": "",
       "transactionHash": "0x3d762e5f4c2a5c4ed3f4678d81f9078ff68e9d236d87dbcf3eee024dbb11f497",
       "transactionPosition": 4,
       "type": "call"

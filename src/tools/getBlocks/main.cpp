@@ -109,29 +109,25 @@ string_q doOneBlock(blknum_t num, COptions& opt) {
         }
         opt.firstOut = false;
 
-    } else if (opt.uncles && !opt.count) {
+    } else if (opt.uncles) {
         uint64_t nUncles = getUncleCount(num);
-        if (opt.count) {
-            result = uint_2_Str(nUncles);
+        if (nUncles == 0) {
+            // If we don't do this, we get extra commas
+            opt.firstOut = true;
         } else {
-            if (nUncles == 0) {
-                // If we don't do this, we get extra commas
-                opt.firstOut = true;
-            } else {
-                for (size_t i = 0; i < nUncles; i++) {
-                    result += doOneUncle(num, i, opt);
-                    if (i != (nUncles - 1)) {
-                        if (!isText)
-                            result += ",";
-                        result += "\n";
-                    }
-                    opt.firstOut = false;
+            for (size_t i = 0; i < nUncles; i++) {
+                result += doOneUncle(num, i, opt);
+                if (i != (nUncles - 1)) {
+                    if (!isText)
+                        result += ",";
+                    result += "\n";
                 }
                 opt.firstOut = false;
             }
+            opt.firstOut = false;
         }
     } else {
-        if (opt.hashes || opt.count) {
+        if (opt.hashes) {
             result = doOneLightBlock(num, opt);
         } else {
             result = doOneHeavyBlock(gold, num, opt);
@@ -152,18 +148,11 @@ bool visitBlock(uint64_t num, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
     if (!opt->firstOut) {
-        if ((!isText && opt->filterType.empty()) || opt->count)
+        if ((!isText))
             cout << ",";
         cout << endl;
     }
-
-    if (!opt->filterType.empty()) {
-        opt->handle_appearances(num);
-
-    } else {
-        cout << doOneBlock(num, *opt);
-    }
-
+    cout << doOneBlock(num, *opt);
     return !shouldQuit();
 }
 

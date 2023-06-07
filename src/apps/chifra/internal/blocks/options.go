@@ -95,12 +95,6 @@ func (opts *BlocksOptions) toCmdLine() string {
 	if opts.Traces {
 		options += " --traces"
 	}
-	if opts.Uniq {
-		options += " --uniq"
-	}
-	if len(opts.Flow) > 0 {
-		options += " --flow " + opts.Flow
-	}
 	if opts.Logs {
 		options += " --logs"
 	}
@@ -115,9 +109,6 @@ func (opts *BlocksOptions) toCmdLine() string {
 	}
 	if opts.BigRange != 500 {
 		options += (" --big_range " + fmt.Sprintf("%d", opts.BigRange))
-	}
-	if opts.Count {
-		options += " --count"
 	}
 	if opts.Cache {
 		options += " --cache"

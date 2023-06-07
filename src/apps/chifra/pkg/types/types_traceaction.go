@@ -109,6 +109,12 @@ func (s *SimpleTraceAction) Model(verbose bool, format string, extraOptions map[
 		if !s.Address.IsZero() {
 			model["address"] = s.Address
 		}
+		if !s.Author.IsZero() {
+			model["author"] = s.Author
+		}
+		if len(s.RewardType) > 0 {
+			model["rewardType"] = s.RewardType
+		}
 	}
 	// EXISTING_CODE
 

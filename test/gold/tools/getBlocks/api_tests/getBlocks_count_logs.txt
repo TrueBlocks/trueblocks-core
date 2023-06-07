@@ -4,7 +4,6 @@ blocks?blocks=6001002&count&traces&uncles&logs&fmt=json
     {
       "blockNumber": 6001002,
       "logsCnt": 89,
-      "timestamp": 1532134152,
       "tracesCnt": 516,
       "transactionsCnt": 87
     }

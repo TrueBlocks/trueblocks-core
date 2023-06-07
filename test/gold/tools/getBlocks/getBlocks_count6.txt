@@ -4,5 +4,5 @@ TEST[DATE|TIME] Uncles:  true
 TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] Count:  true
 TEST[DATE|TIME] Format:  txt
-blockNumber	timestamp	transactionsCnt	unclesCnt	tracesCnt
-3	1438270048	0	1	2
+blockNumber	transactionsCnt	unclesCnt	tracesCnt
+3	0	1	2

@@ -3,13 +3,11 @@ blocks?blocks=3%20469&uncles&count
   "data": [
     {
       "blockNumber": 3,
-      "timestamp": 1438270048,
       "transactionsCnt": 0,
       "unclesCnt": 1
     },
     {
       "blockNumber": 469,
-      "timestamp": 1438271156,
       "transactionsCnt": 0,
       "unclesCnt": 2
     }

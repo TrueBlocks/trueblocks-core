@@ -31,7 +31,6 @@ TEST[DATE|TIME] Format:  txt
       },
       "subtraces": 1,
       "traceAddress": [],
-      "traceIndex": "",
       "transactionHash": "0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b",
       "transactionPosition": 11,
       "type": "call"
@@ -60,7 +59,6 @@ TEST[DATE|TIME] Format:  txt
       "traceAddress": [
         0
       ],
-      "traceIndex": "",
       "transactionHash": "0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b",
       "transactionPosition": 11,
       "type": "suicide"
