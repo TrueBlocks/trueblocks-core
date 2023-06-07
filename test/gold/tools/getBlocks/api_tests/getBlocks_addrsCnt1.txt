@@ -1,3 +1,0 @@
-blocks?blocks=3982128&apps&count&fmt=csv
-"blockNumber","transactionsCnt","addrCount"
-"3982128","91","509"

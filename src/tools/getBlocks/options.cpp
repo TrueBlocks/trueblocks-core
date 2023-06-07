@@ -24,9 +24,8 @@ static const COption params[] = {
     COption("hashes", "e", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),  // NOLINT
     COption("uncles", "c", "", OPT_SWITCH, "display uncle blocks (if any) instead of the requested block"),
     COption("traces", "t", "", OPT_SWITCH, "export the traces from the block as opposed to the block data"),
-    COption("apps", "s", "", OPT_SWITCH, "display a list of uniq address appearances in the block"),
     COption("uniq", "u", "", OPT_SWITCH, "display a list of uniq address appearances per transaction"),
-    COption("flow", "f", "enum[from|to|reward]", OPT_FLAG, "for the uniq and apps options only, export only from or to (including trace from or to)"),  // NOLINT
+    COption("flow", "f", "enum[from|to|reward]", OPT_FLAG, "for the uniq option only, export only from or to (including trace from or to)"),  // NOLINT
     COption("logs", "l", "", OPT_SWITCH, "display only the logs found in the block(s)"),
     COption("emitter", "m", "list<addr>", OPT_FLAG, "for the --logs option only, filter logs to show only those logs emitted by the given address(es)"),  // NOLINT
     COption("topic", "B", "list<topic>", OPT_FLAG, "for the --logs option only, filter logs to show only those with this topic(s)"),  // NOLINT
@@ -54,7 +53,6 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
-    bool apps = false;
     bool uniq = false;
     CAddressArray emitter;
     CStringArray topic;
@@ -78,9 +76,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-t" || arg == "--traces") {
             traces = true;
-
-        } else if (arg == "-s" || arg == "--apps") {
-            apps = true;
 
         } else if (arg == "-u" || arg == "--uniq") {
             uniq = true;
@@ -137,7 +132,7 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (!cache && !articulate && !uncles && !traces && !logs && !apps && !uniq) {
+    if (!cache && !articulate && !uncles && !traces && !logs && !uniq) {
         return usage("Nope");
     }
 
@@ -152,7 +147,7 @@ bool COptions::parseArguments(string_q& command) {
     for (auto e : emitter)
         logFilter.emitters.push_back(e);
 
-    filterType = (uniq ? "uniq" : (apps ? "apps" : ""));
+    filterType = (uniq ? "uniq" : "");
 
     big_range = max(big_range, uint64_t(50));
 

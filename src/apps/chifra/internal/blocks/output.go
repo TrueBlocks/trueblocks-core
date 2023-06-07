@@ -104,9 +104,9 @@ func (opts *BlocksOptions) IsPorted() (ported bool) {
 		ported = false
 	} else {
 		if opts.Count {
-			ported = (!opts.Apps && !opts.Uniq)
+			ported = !opts.Uniq
 		} else {
-			ported = !opts.Uncles && !opts.Logs && !opts.Apps && !opts.Uniq && !opts.Traces
+			ported = !opts.Uncles && !opts.Logs && !opts.Uniq && !opts.Traces
 		}
 	}
 	// EXISTING_CODE

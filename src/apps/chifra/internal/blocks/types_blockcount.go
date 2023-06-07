@@ -17,14 +17,13 @@ import (
 // EXISTING_CODE
 
 type simpleBlockCount struct {
-	AppsCnt         uint64         `json:"appsCnt,omitempty"`
+	AddressCnt      uint64         `json:"addressCnt,omitempty"`
 	BlockNumber     base.Blknum    `json:"blockNumber"`
 	LogsCnt         uint64         `json:"logsCnt,omitempty"`
 	Timestamp       base.Timestamp `json:"timestamp"`
 	TracesCnt       uint64         `json:"tracesCnt,omitempty"`
 	TransactionsCnt uint64         `json:"transactionsCnt"`
 	UnclesCnt       uint64         `json:"unclesCnt,omitempty"`
-	UniqsCnt        uint64         `json:"uniqsCnt,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -53,7 +52,6 @@ func (s *simpleBlockCount) Model(verbose bool, format string, extraOptions map[s
 	wantsUncles := extraOptions["uncles"] == true
 	wantsLogs := extraOptions["logs"] == true
 	wantsTraces := extraOptions["traces"] == true
-	wantsApps := extraOptions["apps"] == true
 	wantsUniqs := extraOptions["uniqs"] == true
 
 	if format == "json" {
@@ -66,11 +64,8 @@ func (s *simpleBlockCount) Model(verbose bool, format string, extraOptions map[s
 		if wantsTraces && s.TracesCnt > 0 {
 			model["tracesCnt"] = s.TracesCnt
 		}
-		if wantsApps && s.AppsCnt > 0 {
-			model["appsCnt"] = s.AppsCnt
-		}
-		if wantsUniqs && s.UniqsCnt > 0 {
-			model["uniqsCnt"] = s.UniqsCnt
+		if wantsUniqs && s.AddressCnt > 0 {
+			model["addressCnt"] = s.AddressCnt
 		}
 
 	} else {
@@ -86,13 +81,9 @@ func (s *simpleBlockCount) Model(verbose bool, format string, extraOptions map[s
 			model["tracesCnt"] = s.TracesCnt
 			order = append(order, "tracesCnt")
 		}
-		if wantsApps {
-			model["appsCnt"] = s.AppsCnt
-			order = append(order, "appsCnt")
-		}
 		if wantsUniqs {
-			model["uniqsCnt"] = s.UniqsCnt
-			order = append(order, "uniqsCnt")
+			model["addressCnt"] = s.AddressCnt
+			order = append(order, "addressCnt")
 		}
 	}
 	// EXISTING_CODE
