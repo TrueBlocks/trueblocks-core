@@ -838,7 +838,7 @@ components:
         blockNumber:
           type: number
           format: blknum
-          example: 10
+          example: 1001001
           description: "the block's block number"
         timestamp:
           type: number
@@ -848,32 +848,27 @@ components:
         transactionsCnt:
           type: number
           format: uint64
-          example: 10
+          example: 239
           description: "the number transactions in the block"
         unclesCnt:
           type: number
           format: uint64
-          example: 20
+          example: 2
           description: "the number of uncles in the block"
         logsCnt:
           type: number
           format: uint64
-          example: 30
+          example: 581
           description: "the number of logs in the block"
         tracesCnt:
           type: number
           format: uint64
-          example: 30
+          example: 1295
           description: "the number of traces in the block"
-        appsCnt:
-          type: number
-          format: uint64
-          example: 40
-          description: "the number of address appearances in the block"
         addressCnt:
           type: number
           format: uint64
-          example: 40
+          example: 318
           description: "the number of address appearances in the block per transaction"
     namedBlock:
       description: "a block that has been given a particular name such as `first` or `latest`"

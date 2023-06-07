@@ -27,7 +27,6 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		return err
 	}
 
-	opts.StartBlock = 3500000
 	blazeOpts := BlazeOptions{
 		Chain:        opts.Globals.Chain,
 		NChannels:    opts.Settings.Channel_count,
@@ -50,9 +49,6 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		progress, err = rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 		if err != nil {
 			return err
-		}
-		if progress.Finalized > 3569250 {
-			return nil
 		}
 
 		// We start the current round one block past the end of the previous round

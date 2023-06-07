@@ -1,6 +1,0 @@
-blocks?blocks=3982128&apps&verbose=1&fmt=txt
-{
-  "errors": [
-    "Invalid key (apps) in blocks route."
-  ]
-}

@@ -1,6 +1,0 @@
-blocks?blocks=3&fmt=json&count&uncles&apps
-{
-  "errors": [
-    "Invalid key (apps) in blocks route."
-  ]
-}

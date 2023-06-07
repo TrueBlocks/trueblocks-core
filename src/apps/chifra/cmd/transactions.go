@@ -73,7 +73,6 @@ One of [ from | to ]`)
 
 	// EXISTING_CODE
 	transactionsCmd.Flags().MarkDeprecated("trace", "please use --traces instead")
-	transactionsCmd.Flags().MarkDeprecated("reconcile", "please use --account_for instead")
 	// EXISTING_CODE
 
 	chifraCmd.AddCommand(transactionsCmd)

@@ -90,7 +90,6 @@ Here's a table showing which endpoints changed. Previously the API endpoints wer
 |              |              | --hashes                  |             |
 |              |              | --uncles                  |             |
 |              |              | --traces                  |             |
-|              |              | --apps                    |             |
 |              |              | --uniq                    |             |
 |              |              | --logs                    |             |
 |              |              | --emitter                 |             |
@@ -206,7 +205,6 @@ Changed options for `export` route:
 
 	# hotkeys changed
 	the `-a` hotkey is now assigned to the `--articulate` option
-	the `-s` hotkey is now assigned to the `--apps` option
 
 ```[shell]
 

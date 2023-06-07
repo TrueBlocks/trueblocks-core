@@ -1,6 +1,0 @@
-blocks?blocks=3&fmt=json&count&traces&uncles&apps&fmt=txt
-{
-  "errors": [
-    "Invalid key (apps) in blocks route."
-  ]
-}
