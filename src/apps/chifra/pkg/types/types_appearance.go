@@ -77,7 +77,7 @@ func (s *SimpleAppearance) Model(verbose bool, format string, extraOptions map[s
 		"transactionIndex",
 	}
 
-	if verbose {
+	if extraOptions["uniq"] == true {
 		if s.TraceIndex > 0 {
 			model["traceIndex"] = s.TraceIndex
 			order = append(order, "traceIndex")
@@ -86,14 +86,36 @@ func (s *SimpleAppearance) Model(verbose bool, format string, extraOptions map[s
 			order = append(order, "traceIndex")
 		}
 		model["reason"] = s.Reason
-		model["timestamp"] = s.Timestamp
-		model["date"] = s.Date
-
 		order = append(order, []string{
 			"reason",
-			"timestamp",
-			"date",
 		}...)
+		if verbose {
+			model["timestamp"] = s.Timestamp
+			model["date"] = s.Date
+			order = append(order, []string{
+				"timestamp",
+				"date",
+			}...)
+		}
+	} else {
+		if verbose {
+			if s.TraceIndex > 0 {
+				model["traceIndex"] = s.TraceIndex
+				order = append(order, "traceIndex")
+			} else if format != "json" {
+				model["traceIndex"] = ""
+				order = append(order, "traceIndex")
+			}
+			model["reason"] = s.Reason
+			model["timestamp"] = s.Timestamp
+			model["date"] = s.Date
+
+			order = append(order, []string{
+				"reason",
+				"timestamp",
+				"date",
+			}...)
+		}
 	}
 
 	// EXISTING_CODE

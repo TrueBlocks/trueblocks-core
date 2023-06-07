@@ -63,19 +63,6 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 								loadedMap[address] = true
 							}
 						}
-						// arr := []*types.SimpleFunction{}
-						// for _, value := range abiMap {
-						// 	arr = append(arr, value)
-						// }
-						// sort.Slice(arr, func(i, j int) bool {
-						// 	return arr[i].Encoding < arr[j].Encoding
-						// })
-						// for _, value := range arr {
-						// 	fmt.Println(value.Name)
-						// 	for i := 0; i < len(value.Inputs); i++ {
-						// 		fmt.Println("\t", i, value.Inputs[i].Name, value.Inputs[i].ParameterType, value.Inputs[i].Value)
-						// 	}
-						// }
 						if !skipMap[address] {
 							if tx.Receipt.Logs[index].ArticulatedLog, err = articulate.ArticulateLog(&log, abiMap); err != nil {
 								errorChan <- err // continue even with an error

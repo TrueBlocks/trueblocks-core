@@ -1,6 +1,7 @@
 package index
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 	"sync"
@@ -15,6 +16,43 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
+
+func UniqFromTransDetails(chain string, modelChan chan types.Modeler[types.RawAppearance], flow string, trans *types.SimpleTransaction, ts int64, addrMap AddressBooleanMap) error {
+	bn := trans.BlockNumber
+	txid := trans.TransactionIndex
+	traceid := utils.NOPOS
+	from := trans.From.Hex()
+	StreamAppearance(modelChan, flow, "from", from, bn, txid, traceid, ts, addrMap)
+
+	to := trans.To.Hex()
+	StreamAppearance(modelChan, flow, "to", to, bn, txid, traceid, ts, addrMap)
+
+	if !trans.Receipt.ContractAddress.IsZero() {
+		contract := trans.Receipt.ContractAddress.Hex()
+		StreamAppearance(modelChan, flow, "creation", contract, bn, txid, traceid, ts, addrMap)
+	}
+
+	if len(trans.Input) > 10 {
+		reason := "input"
+		inputData := trans.Input[10:]
+		for i := 0; i < len(inputData)/64; i++ {
+			str := string(inputData[i*64 : (i+1)*64])
+			if IsImplicitAddress(str) {
+				StreamAppearance(modelChan, flow, str, reason, bn, txid, traceid, ts, addrMap)
+			}
+		}
+	}
+
+	if err := UniqFromLogsDetails(chain, modelChan, flow, trans.Receipt.Logs, ts, addrMap); err != nil {
+		return err
+	}
+
+	if err := UniqFromTracesDetails(chain, modelChan, flow, trans.Traces, ts, addrMap); err != nil {
+		return err
+	}
+
+	return nil
+}
 
 // UniqFromLogsDetails extracts addresses from the logs
 func UniqFromLogsDetails(chain string, modelChan chan types.Modeler[types.RawAppearance], flow string, logs []types.SimpleLog, ts int64, addrMap AddressBooleanMap) (err error) {
@@ -104,40 +142,34 @@ func UniqFromTracesDetails(chain string, modelChan chan types.Modeler[types.RawA
 		} else if trace.TraceType == "reward" {
 			if trace.Action.RewardType == "block" {
 				author := trace.Action.Author.Hex()
+				falseTxid := uint64(99999)
+				// Early clients allowed misconfigured miner settings with address 0x0 (reward got
+				// burned). We enter a false record with a false tx_id to account for this.
 				if validate.IsZeroAddress(author) {
-					// Early clients allowed misconfigured miner settings with address
-					// 0x0 (reward got burned). We enter a false record with a false tx_id
-					// to account for this.
 					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-					StreamAppearance(modelChan, flow, "miner", author, bn, traceid, 99997, ts, addrMap)
-
-				} else {
-					StreamAppearance(modelChan, flow, "miner", author, bn, 99999, traceid, ts, addrMap)
-
+					falseTxid = uint64(99997)
 				}
+				StreamAppearance(modelChan, flow, "miner", author, bn, falseTxid, traceid, ts, addrMap)
 
 			} else if trace.Action.RewardType == "uncle" {
 				author := trace.Action.Author.Hex()
+				falseTxid := uint64(99998)
+				// Early clients allowed misconfigured miner settings with address 0x0 (reward got
+				// burned). We enter a false record with a false tx_id to account for this.
 				if validate.IsZeroAddress(author) {
-					// Early clients allowed misconfigured miner settings with address
-					// 0x0 (reward got burned). We enter a false record with a false tx_id
-					// to account for this.
 					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-					StreamAppearance(modelChan, flow, "uncle", author, bn, 99998, traceid, ts, addrMap)
-
-				} else {
-					StreamAppearance(modelChan, flow, "uncle", author, bn, 99998, traceid, ts, addrMap)
-
+					falseTxid = uint64(99997)
 				}
+				StreamAppearance(modelChan, flow, "uncle", author, bn, falseTxid, traceid, ts, addrMap)
 
 			} else if trace.Action.RewardType == "external" {
 				// This only happens in xDai as far as we know...
 				author := trace.Action.Author.Hex()
-				StreamAppearance(modelChan, flow, "external", author, bn, 99996, traceid, ts, addrMap)
+				falseTxid := uint64(99996)
+				StreamAppearance(modelChan, flow, "external", author, bn, falseTxid, traceid, ts, addrMap)
 
 			} else {
-				fmt.Println("Unknown reward type", trace.Action.RewardType)
-				return err
+				return errors.New("Unknown reward type" + trace.Action.RewardType)
 			}
 
 		} else if trace.TraceType == "suicide" {

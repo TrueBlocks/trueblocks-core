@@ -1,3 +1,4 @@
+blocks?blocks=4012000-4012001&logs&articulate
 {
   "data": [
     {
@@ -24,10 +25,11 @@
           "_to": "0x4315706f57b388b3a0f6489f6f678bc181bfe9f3"
         }
       },
-      "compressedLog": "Transfer(0x0 /*_from*/, 0x4315706f57b388b3a0f6489f6f678bc181bfe9f3 /*_to*/, 3065000000000 /*_amount*/); ",
+      "compressedLog": "{name:Transfer|type:event|constant:false|stateMutability:|signature:|encoding:0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef|inputs:{_amount:3065000000000|_from:0x0|_to:0x4315706f57b388b3a0f6489f6f678bc181bfe9f3}}",
       "transactionHash": "0x31b220e225f2d23d33582eea571481b5ea19187988bae0f7b9772d60f79fd138",
       "transactionIndex": 8,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0x4038e930ad78c53dc885a6b3a7d9db0d317c8662",
@@ -51,10 +53,11 @@
           "value": "25000000000000000000"
         }
       },
-      "compressedLog": "Deposit(0x98ee18d7a1f7510b78b36f5a16471c7cd0c1c531 /*sender*/, 25000000000000000000 /*value*/); ",
+      "compressedLog": "{name:Deposit|type:event|constant:false|signature:Deposit(address|uint256)|encoding:0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c|inputs:{sender:0x98ee18d7a1f7510b78b36f5a16471c7cd0c1c531|value:25000000000000000000}}",
       "transactionHash": "0x31b220e225f2d23d33582eea571481b5ea19187988bae0f7b9772d60f79fd138",
       "transactionIndex": 8,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0x98ee18d7a1f7510b78b36f5a16471c7cd0c1c531",
@@ -79,10 +82,11 @@
           "weiAmount": "25000000000000000000"
         }
       },
-      "compressedLog": "Invested(0x4315706f57b388b3a0f6489f6f678bc181bfe9f3 /*investor*/, 25000000000000000000 /*weiAmount*/, 3065000000000 /*tokenAmount*/, 69858978481374658679168607279642294975 /*customerId*/); ",
+      "compressedLog": "{name:Invested|type:event|constant:false|signature:Invested(address|uint256|uint256|uint128)|encoding:0x0396f60aaad038749091d273dc13aaabc63db6e2271c7bad442d5cf25cc43350|inputs:{customerId:69858978481374658679168607279642294975|investor:0x4315706f57b388b3a0f6489f6f678bc181bfe9f3|tokenAmount:3065000000000|weiAmount:25000000000000000000}}",
       "transactionHash": "0x31b220e225f2d23d33582eea571481b5ea19187988bae0f7b9772d60f79fd138",
       "transactionIndex": 8,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0",
@@ -99,7 +103,8 @@
       "compressedLog": "",
       "transactionHash": "0xc2ed44113c8e316ac6bb135256bc25ab1369db846b6ad736487f609601c7f6a3",
       "transactionIndex": 12,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0",
@@ -125,10 +130,11 @@
           "_to": "0xabfadddc8e8c557e9adc473e83f5c8701a013e01"
         }
       },
-      "compressedLog": "Transfer(0x69ea6b31ef305d6b99bb2d4c9d99456fa108b02a /*_from*/, 0xabfadddc8e8c557e9adc473e83f5c8701a013e01 /*_to*/, 251920450000000000000 /*_amount*/); ",
+      "compressedLog": "{name:Transfer|type:event|constant:false|stateMutability:|signature:|encoding:0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef|inputs:{_amount:251920450000000000000|_from:0x69ea6b31ef305d6b99bb2d4c9d99456fa108b02a|_to:0xabfadddc8e8c557e9adc473e83f5c8701a013e01}}",
       "transactionHash": "0xc2ed44113c8e316ac6bb135256bc25ab1369db846b6ad736487f609601c7f6a3",
       "transactionIndex": 12,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0x7c5a0ce9267ed19b22f8cae653f198e3e8daf098",
@@ -154,10 +160,11 @@
           "_to": "0x5e575279bf9f4acf0a130c186861454247394c06"
         }
       },
-      "compressedLog": "Transfer(0x59452cff9d54acf1820c10ae994ce4253c9eccfd /*_from*/, 0x5e575279bf9f4acf0a130c186861454247394c06 /*_to*/, 500000000000000000000 /*_amount*/); ",
+      "compressedLog": "{name:Transfer|type:event|constant:false|stateMutability:|signature:|encoding:0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef|inputs:{_amount:500000000000000000000|_from:0x59452cff9d54acf1820c10ae994ce4253c9eccfd|_to:0x5e575279bf9f4acf0a130c186861454247394c06}}",
       "transactionHash": "0xfcc4c9ea238a31e91ad8f166799f221ad71832b3bfde66a622762adc30f5864e",
       "transactionIndex": 15,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a",
@@ -183,10 +190,11 @@
           "_to": "0xcd463946a100039e1a17cdbc42d9c1a593db4092"
         }
       },
-      "compressedLog": "Transfer(0x2cf26e61790c11e1f104eb03511cb28fe1fa1b16 /*_from*/, 0xcd463946a100039e1a17cdbc42d9c1a593db4092 /*_to*/, 60000000000 /*_amount*/); ",
+      "compressedLog": "{name:Transfer|type:event|constant:false|stateMutability:|signature:|encoding:0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef|inputs:{_amount:60000000000|_from:0x2cf26e61790c11e1f104eb03511cb28fe1fa1b16|_to:0xcd463946a100039e1a17cdbc42d9c1a593db4092}}",
       "transactionHash": "0x3128e19803354bdedb51ac9dcdb57cbbf45bd52e4e439e1d6db9537d461ea7f7",
       "transactionIndex": 17,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
@@ -212,10 +220,11 @@
           "_to": "0x66b68ebda88280ce5c821a9ccc38df078c3fd989"
         }
       },
-      "compressedLog": "Transfer(0x02b1a1898e2f986b88c9a75e41786f4949567ced /*_from*/, 0x66b68ebda88280ce5c821a9ccc38df078c3fd989 /*_to*/, 100000000000000000000000 /*_amount*/); ",
+      "compressedLog": "{name:Transfer|type:event|constant:false|stateMutability:|signature:|encoding:0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef|inputs:{_amount:100000000000000000000000|_from:0x02b1a1898e2f986b88c9a75e41786f4949567ced|_to:0x66b68ebda88280ce5c821a9ccc38df078c3fd989}}",
       "transactionHash": "0x81a880554a332b38c41be5052323ec1d97a75d3b2d0dee673eaa6120247d54d1",
       "transactionIndex": 21,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
@@ -246,10 +255,11 @@
           "v": "28"
         }
       },
-      "compressedLog": "Cancel(0x0000000000000000000000000000000000000000 /*tokenGet*/, 8820000000000000000 /*amountGet*/, 0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a /*tokenGive*/, 42000000000 /*amountGive*/, 4021939 /*expires*/, 2930345355 /*nonce*/, 0x8379fc96ef046ec38ce6b71fe9e0936681e44a72 /*user*/, 28 /*v*/, 0x0e4d37c4d245115ea647572d1d34d981fdc985bdc49d06f827732c4e390e4311 /*r*/, 0x3e871de31ababe1b656e9f7bdb1f82fa109e4c72fcf0d0660c031c808b2d341a /*s*/); ",
+      "compressedLog": "{name:Cancel|type:event|constant:false|signature:Cancel(address|uint256|address|uint256|uint256|uint256|address|uint8|bytes32|bytes32)|encoding:0x1e0b760c386003e9cb9bcf4fcf3997886042859d9b6ed6320e804597fcdb28b0|inputs:{amountGet:8820000000000000000|amountGive:42000000000|expires:4021939|nonce:2930345355|r:0x0e4d37c4d245115ea647572d1d34d981fdc985bdc49d06f827732c4e390e4311|s:0x3e871de31ababe1b656e9f7bdb1f82fa109e4c72fcf0d0660c031c808b2d341a|tokenGet:0x0000000000000000000000000000000000000000|tokenGive:0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a|user:0x8379fc96ef046ec38ce6b71fe9e0936681e44a72|v:28}}",
       "transactionHash": "0x289054720de7cff214940b84df5e1772cfbd7797180132dd395c14f87bdc4eeb",
       "transactionIndex": 22,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0xfca47962d45adfdfd1ab2d972315db4ce7ccf094",
@@ -275,10 +285,11 @@
           "_to": "0x0ae2f15a44ffac4e7b15212ac00807f76b05a445"
         }
       },
-      "compressedLog": "Transfer(0x0 /*_from*/, 0x0ae2f15a44ffac4e7b15212ac00807f76b05a445 /*_to*/, 1185542000000 /*_amount*/); ",
+      "compressedLog": "{name:Transfer|type:event|constant:false|stateMutability:|signature:|encoding:0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef|inputs:{_amount:1185542000000|_from:0x0|_to:0x0ae2f15a44ffac4e7b15212ac00807f76b05a445}}",
       "transactionHash": "0x2c452cc171214decaa0ffd9c8627dfa3c2cfb626f281334213f6a4e476524607",
       "transactionIndex": 23,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0x4038e930ad78c53dc885a6b3a7d9db0d317c8662",
@@ -302,10 +313,11 @@
           "value": "9670000000000000000"
         }
       },
-      "compressedLog": "Deposit(0x98ee18d7a1f7510b78b36f5a16471c7cd0c1c531 /*sender*/, 9670000000000000000 /*value*/); ",
+      "compressedLog": "{name:Deposit|type:event|constant:false|signature:Deposit(address|uint256)|encoding:0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c|inputs:{sender:0x98ee18d7a1f7510b78b36f5a16471c7cd0c1c531|value:9670000000000000000}}",
       "transactionHash": "0x2c452cc171214decaa0ffd9c8627dfa3c2cfb626f281334213f6a4e476524607",
       "transactionIndex": 23,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0x98ee18d7a1f7510b78b36f5a16471c7cd0c1c531",
@@ -330,10 +342,11 @@
           "weiAmount": "9670000000000000000"
         }
       },
-      "compressedLog": "Invested(0x0ae2f15a44ffac4e7b15212ac00807f76b05a445 /*investor*/, 9670000000000000000 /*weiAmount*/, 1185542000000 /*tokenAmount*/, 200170301708189184937198184841749063741 /*customerId*/); ",
+      "compressedLog": "{name:Invested|type:event|constant:false|signature:Invested(address|uint256|uint256|uint128)|encoding:0x0396f60aaad038749091d273dc13aaabc63db6e2271c7bad442d5cf25cc43350|inputs:{customerId:200170301708189184937198184841749063741|investor:0x0ae2f15a44ffac4e7b15212ac00807f76b05a445|tokenAmount:1185542000000|weiAmount:9670000000000000000}}",
       "transactionHash": "0x2c452cc171214decaa0ffd9c8627dfa3c2cfb626f281334213f6a4e476524607",
       "transactionIndex": 23,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
@@ -360,10 +373,11 @@
           "tokenGive": "0x4470bb87d77b963a013db939be332f927f2b992e"
         }
       },
-      "compressedLog": "Trade(0x0000000000000000000000000000000000000000 /*tokenGet*/, 687012172331830503 /*amountGet*/, 0x4470bb87d77b963a013db939be332f927f2b992e /*tokenGive*/, 6939516 /*amountGive*/, 0xb3f9ab81045e9693dbe8f7735c862193f9977eea /*get*/, 0xe929710c5ece52427ed70451cf21458fecedd7b4 /*give*/); ",
+      "compressedLog": "{name:Trade|type:event|constant:false|signature:Trade(address|uint256|address|uint256|address|address)|encoding:0x6effdda786735d5033bfad5f53e5131abcced9e52be6c507b62d639685fbed6d|inputs:{amountGet:687012172331830503|amountGive:6939516|get:0xb3f9ab81045e9693dbe8f7735c862193f9977eea|give:0xe929710c5ece52427ed70451cf21458fecedd7b4|tokenGet:0x0000000000000000000000000000000000000000|tokenGive:0x4470bb87d77b963a013db939be332f927f2b992e}}",
       "transactionHash": "0x5c907700987753586d126ff8af65a312a3ac05f1006e2de8005ff51393c7a9fb",
       "transactionIndex": 24,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
@@ -390,10 +404,11 @@
           "tokenGive": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a"
         }
       },
-      "compressedLog": "Trade(0x0000000000000000000000000000000000000000 /*tokenGet*/, 59992740000000000 /*amountGet*/, 0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a /*tokenGive*/, 303300000 /*amountGive*/, 0x56795205d90ed2141c490a027d1874f2bff4aa86 /*get*/, 0x2990bf9615b3db074f1d4fe288b8beb13cf3b34f /*give*/); ",
+      "compressedLog": "{name:Trade|type:event|constant:false|signature:Trade(address|uint256|address|uint256|address|address)|encoding:0x6effdda786735d5033bfad5f53e5131abcced9e52be6c507b62d639685fbed6d|inputs:{amountGet:59992740000000000|amountGive:303300000|get:0x56795205d90ed2141c490a027d1874f2bff4aa86|give:0x2990bf9615b3db074f1d4fe288b8beb13cf3b34f|tokenGet:0x0000000000000000000000000000000000000000|tokenGive:0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a}}",
       "transactionHash": "0x6c86fd5465bb13a0e3e647575ea45667e972550d1b1807bd1df5a228d9745b73",
       "transactionIndex": 25,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
@@ -420,10 +435,11 @@
           "tokenGive": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a"
         }
       },
-      "compressedLog": "Trade(0x0000000000000000000000000000000000000000 /*tokenGet*/, 21170936090000000000 /*amountGet*/, 0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a /*tokenGive*/, 106552599979 /*amountGive*/, 0x8c16c8fe98a50b515cf8268090bcb8886b241908 /*get*/, 0x2a1105fba173688fb698a05ae4e5c5f72b5c92c5 /*give*/); ",
+      "compressedLog": "{name:Trade|type:event|constant:false|signature:Trade(address|uint256|address|uint256|address|address)|encoding:0x6effdda786735d5033bfad5f53e5131abcced9e52be6c507b62d639685fbed6d|inputs:{amountGet:21170936090000000000|amountGive:106552599979|get:0x8c16c8fe98a50b515cf8268090bcb8886b241908|give:0x2a1105fba173688fb698a05ae4e5c5f72b5c92c5|tokenGet:0x0000000000000000000000000000000000000000|tokenGive:0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a}}",
       "transactionHash": "0x767c71601f0ad49b2da9352f1ef2ddafef4a3bd41a229fcebc3dc0f9a4d34a75",
       "transactionIndex": 26,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a",
@@ -449,10 +465,11 @@
           "_to": "0x4df6c50c4ff072bda0a7618e544b3c17aa6e0b35"
         }
       },
-      "compressedLog": "Transfer(0x8d12a197cb00d4747a1fe03395095ce2a5cc6819 /*_from*/, 0x4df6c50c4ff072bda0a7618e544b3c17aa6e0b35 /*_to*/, 2728258324 /*_amount*/); ",
+      "compressedLog": "{name:Transfer|type:event|constant:false|stateMutability:|signature:|encoding:0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef|inputs:{_amount:2728258324|_from:0x8d12a197cb00d4747a1fe03395095ce2a5cc6819|_to:0x4df6c50c4ff072bda0a7618e544b3c17aa6e0b35}}",
       "transactionHash": "0x79e2328c19ef160aaa362c135f694b35d885fa96811aae1ca30800cc8650f65c",
       "transactionIndex": 27,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
@@ -477,10 +494,11 @@
           "user": "0x4df6c50c4ff072bda0a7618e544b3c17aa6e0b35"
         }
       },
-      "compressedLog": "Withdraw(0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a /*token*/, 0x4df6c50c4ff072bda0a7618e544b3c17aa6e0b35 /*user*/, 2728258324 /*amount*/, 0 /*balance*/); ",
+      "compressedLog": "{name:Withdraw|type:event|constant:false|signature:Withdraw(address|address|uint256|uint256)|encoding:0xf341246adaac6f497bc2a656f546ab9e182111d630394f0c57c710a59a2cb567|inputs:{amount:2728258324|balance:0|token:0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a|user:0x4df6c50c4ff072bda0a7618e544b3c17aa6e0b35}}",
       "transactionHash": "0x79e2328c19ef160aaa362c135f694b35d885fa96811aae1ca30800cc8650f65c",
       "transactionIndex": 27,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a",
@@ -497,19 +515,20 @@
         "name": "Approval",
         "type": "event",
         "constant": false,
-        "stateMutability": "",
-        "signature": "",
+        "stateMutability": "nonpayable",
+        "signature": "Approval(address,address,uint256)",
         "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
         "inputs": {
-          "_amount": "100000000",
-          "_owner": "0x8d71cd37bc1c715f6d4e9b5d68aa17a8b42cac87",
-          "_spender": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819"
+          "owner": "0x8d71cd37bc1c715f6d4e9b5d68aa17a8b42cac87",
+          "spender": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
+          "value": "100000000"
         }
       },
-      "compressedLog": "Approval(0x8d71cd37bc1c715f6d4e9b5d68aa17a8b42cac87 /*_owner*/, 0x8d12a197cb00d4747a1fe03395095ce2a5cc6819 /*_spender*/, 100000000 /*_amount*/); ",
+      "compressedLog": "{name:Approval|type:event|constant:false|signature:Approval(address|address|uint256)|encoding:0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925|inputs:{owner:0x8d71cd37bc1c715f6d4e9b5d68aa17a8b42cac87|spender:0x8d12a197cb00d4747a1fe03395095ce2a5cc6819|value:100000000}}",
       "transactionHash": "0xa75bed6b3e4a832270ab5a164fc84c1d02eda8a6ecf35ee4023eecbbb75e6fe8",
       "transactionIndex": 30,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a",
@@ -535,10 +554,11 @@
           "_to": "0x9095b24ee684b232207153137da257beac85aaf1"
         }
       },
-      "compressedLog": "Transfer(0x8d12a197cb00d4747a1fe03395095ce2a5cc6819 /*_from*/, 0x9095b24ee684b232207153137da257beac85aaf1 /*_to*/, 810700000 /*_amount*/); ",
+      "compressedLog": "{name:Transfer|type:event|constant:false|stateMutability:|signature:|encoding:0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef|inputs:{_amount:810700000|_from:0x8d12a197cb00d4747a1fe03395095ce2a5cc6819|_to:0x9095b24ee684b232207153137da257beac85aaf1}}",
       "transactionHash": "0xacdd6f6ff9da1631d0e10947085b3b4318384f7cd132595532684004a76af7ea",
       "transactionIndex": 31,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
@@ -563,10 +583,11 @@
           "user": "0x9095b24ee684b232207153137da257beac85aaf1"
         }
       },
-      "compressedLog": "Withdraw(0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a /*token*/, 0x9095b24ee684b232207153137da257beac85aaf1 /*user*/, 810700000 /*amount*/, 47216 /*balance*/); ",
+      "compressedLog": "{name:Withdraw|type:event|constant:false|signature:Withdraw(address|address|uint256|uint256)|encoding:0xf341246adaac6f497bc2a656f546ab9e182111d630394f0c57c710a59a2cb567|inputs:{amount:810700000|balance:47216|token:0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a|user:0x9095b24ee684b232207153137da257beac85aaf1}}",
       "transactionHash": "0xacdd6f6ff9da1631d0e10947085b3b4318384f7cd132595532684004a76af7ea",
       "transactionIndex": 31,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
@@ -591,10 +612,11 @@
           "user": "0xfddc06e314380c09da9455287b6fb7dcca4bf2bb"
         }
       },
-      "compressedLog": "Withdraw(0x0000000000000000000000000000000000000000 /*token*/, 0xfddc06e314380c09da9455287b6fb7dcca4bf2bb /*user*/, 5940000000000000000 /*amount*/, 0 /*balance*/); ",
+      "compressedLog": "{name:Withdraw|type:event|constant:false|signature:Withdraw(address|address|uint256|uint256)|encoding:0xf341246adaac6f497bc2a656f546ab9e182111d630394f0c57c710a59a2cb567|inputs:{amount:5940000000000000000|balance:0|token:0x0000000000000000000000000000000000000000|user:0xfddc06e314380c09da9455287b6fb7dcca4bf2bb}}",
       "transactionHash": "0xc810222a2cf4606245f2a6e2ce95c7e2fcfb0aadc9db95160eb92d3396afe465",
       "transactionIndex": 32,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
@@ -621,10 +643,11 @@
           "tokenGive": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a"
         }
       },
-      "compressedLog": "Trade(0x0000000000000000000000000000000000000000 /*tokenGet*/, 39995160000000000 /*amountGet*/, 0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a /*tokenGive*/, 202200000 /*amountGive*/, 0x56795205d90ed2141c490a027d1874f2bff4aa86 /*get*/, 0x7289877a9c924e776bd0f82ffe396e38ab03d546 /*give*/); ",
+      "compressedLog": "{name:Trade|type:event|constant:false|signature:Trade(address|uint256|address|uint256|address|address)|encoding:0x6effdda786735d5033bfad5f53e5131abcced9e52be6c507b62d639685fbed6d|inputs:{amountGet:39995160000000000|amountGive:202200000|get:0x56795205d90ed2141c490a027d1874f2bff4aa86|give:0x7289877a9c924e776bd0f82ffe396e38ab03d546|tokenGet:0x0000000000000000000000000000000000000000|tokenGive:0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a}}",
       "transactionHash": "0xe4c4491286fae2c50b023f3893984e16fd1c1acd6aeb1a26f853810c101ad9bb",
       "transactionIndex": 33,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0",
@@ -641,7 +664,8 @@
       "compressedLog": "",
       "transactionHash": "0x98e9e199e1ae61cbd2272902d798b0e49aaebfc1d7e835a5a97a00d3c7e4ac82",
       "transactionIndex": 35,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0",
@@ -667,10 +691,11 @@
           "_to": "0x7473f5a7f14d1ebcf87de4545cb1c24b1110d4cb"
         }
       },
-      "compressedLog": "Transfer(0x69ea6b31ef305d6b99bb2d4c9d99456fa108b02a /*_from*/, 0x7473f5a7f14d1ebcf87de4545cb1c24b1110d4cb /*_to*/, 48300000000000000000 /*_amount*/); ",
+      "compressedLog": "{name:Transfer|type:event|constant:false|stateMutability:|signature:|encoding:0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef|inputs:{_amount:48300000000000000000|_from:0x69ea6b31ef305d6b99bb2d4c9d99456fa108b02a|_to:0x7473f5a7f14d1ebcf87de4545cb1c24b1110d4cb}}",
       "transactionHash": "0x98e9e199e1ae61cbd2272902d798b0e49aaebfc1d7e835a5a97a00d3c7e4ac82",
       "transactionIndex": 35,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a",
@@ -696,10 +721,11 @@
           "_to": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819"
         }
       },
-      "compressedLog": "Transfer(0x8d71cd37bc1c715f6d4e9b5d68aa17a8b42cac87 /*_from*/, 0x8d12a197cb00d4747a1fe03395095ce2a5cc6819 /*_to*/, 100000000 /*_amount*/); ",
+      "compressedLog": "{name:Transfer|type:event|constant:false|stateMutability:|signature:|encoding:0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef|inputs:{_amount:100000000|_from:0x8d71cd37bc1c715f6d4e9b5d68aa17a8b42cac87|_to:0x8d12a197cb00d4747a1fe03395095ce2a5cc6819}}",
       "transactionHash": "0xcb1652b8ed3221da0b2886df37f7f43bb8001e84a9e139819675709bc3a2a56f",
       "transactionIndex": 39,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
@@ -724,10 +750,11 @@
           "user": "0x8d71cd37bc1c715f6d4e9b5d68aa17a8b42cac87"
         }
       },
-      "compressedLog": "Deposit(0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a /*token*/, 0x8d71cd37bc1c715f6d4e9b5d68aa17a8b42cac87 /*user*/, 100000000 /*amount*/, 100009970 /*balance*/); ",
+      "compressedLog": "{name:Deposit|type:event|constant:false|signature:Deposit(address|address|uint256|uint256)|encoding:0xdcbc1c05240f31ff3ad067ef1ee35ce4997762752e3a095284754544f4c709d7|inputs:{amount:100000000|balance:100009970|token:0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a|user:0x8d71cd37bc1c715f6d4e9b5d68aa17a8b42cac87}}",
       "transactionHash": "0xcb1652b8ed3221da0b2886df37f7f43bb8001e84a9e139819675709bc3a2a56f",
       "transactionIndex": 39,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
@@ -741,7 +768,8 @@
       "compressedLog": "",
       "transactionHash": "0x0c2bb0b7059fd335f3dd4ecf037e04697217c481c14fb2155cb07d7ccd7f29d1",
       "transactionIndex": 46,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0xb1ea67eb59ec5dca0eb61d34dda7c68c37a07ba9",
@@ -755,7 +783,8 @@
       "compressedLog": "",
       "transactionHash": "0x0c2bb0b7059fd335f3dd4ecf037e04697217c481c14fb2155cb07d7ccd7f29d1",
       "transactionIndex": 46,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
@@ -769,7 +798,8 @@
       "compressedLog": "",
       "transactionHash": "0x4732917176d804a16c8683426d9dedfaff711d5156766d3535e1921a3655619c",
       "transactionIndex": 50,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0x8eb78278bbb58d781c158ed6821391bea6b40914",
@@ -783,7 +813,8 @@
       "compressedLog": "",
       "transactionHash": "0x4732917176d804a16c8683426d9dedfaff711d5156766d3535e1921a3655619c",
       "transactionIndex": 50,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
@@ -797,7 +828,8 @@
       "compressedLog": "",
       "transactionHash": "0xdbb3c2f63dd12fb0887ece311263807a7be7e001089ae3f992c0946c8e593c62",
       "transactionIndex": 52,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0xd49d5907876881676b4a02a6edebfb7614388b88",
@@ -811,7 +843,8 @@
       "compressedLog": "",
       "transactionHash": "0xdbb3c2f63dd12fb0887ece311263807a7be7e001089ae3f992c0946c8e593c62",
       "transactionIndex": 52,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
@@ -825,7 +858,8 @@
       "compressedLog": "",
       "transactionHash": "0xcc0bc2b2135f6b405432af5223c797ddecc3e0e75d6e1716e2d6ac61ff8883e3",
       "transactionIndex": 53,
-      "timestamp": 1499861689
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     },
     {
       "address": "0x681306f0aaa44216d2c5a2b88b153a0f20b18669",
@@ -839,58 +873,8 @@
       "compressedLog": "",
       "transactionHash": "0xcc0bc2b2135f6b405432af5223c797ddecc3e0e75d6e1716e2d6ac61ff8883e3",
       "transactionIndex": 53,
-      "timestamp": 1499861689
-    }
-  ],
-  "types": [
-    {
-      "type": "CLog",
-      "fields": [
-        {
-          "name": "address",
-          "type": "address"
-        },
-        {
-          "name": "blockHash",
-          "type": "hash"
-        },
-        {
-          "name": "blockNumber",
-          "type": "blocknum"
-        },
-        {
-          "name": "logIndex",
-          "type": "blocknum"
-        },
-        {
-          "name": "topics",
-          "type": "object|ts_array"
-        },
-        {
-          "name": "data",
-          "type": "text"
-        },
-        {
-          "name": "articulatedLog",
-          "type": "object"
-        },
-        {
-          "name": "compressedLog",
-          "type": "text"
-        },
-        {
-          "name": "transactionHash",
-          "type": "hash"
-        },
-        {
-          "name": "transactionIndex",
-          "type": "blocknum"
-        },
-        {
-          "name": "timestamp",
-          "type": "timestamp"
-        }
-      ]
+      "timestamp": 1499861689,
+      "date": "2017-07-12 12:14:49 UTC"
     }
   ],
   "meta": {

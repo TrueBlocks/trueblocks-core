@@ -23,7 +23,7 @@ func GetBlockHeaderByNumber(chain string, bn uint64) (types.SimpleBlock[string],
 
 // GetBlockByNumberWithTxs fetches the block with transactions from the RPC.
 func GetBlockByNumberWithTxs(chain string, bn uint64, isFinal bool) (types.SimpleBlock[types.SimpleTransaction], error) {
-	// load from cache if possible
+	// TODO: load from cache if possible
 	// FIXME: without updating the block in cache (writing) some value are not
 	// FIXME: filled in and the tests fail
 	// cached, _ := cache.GetBlock(chain, bn)
@@ -97,6 +97,11 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, isFinal bool) (types.Simpl
 	}
 
 	return block, nil
+}
+
+// GetBlockByNumberWithTxsAndTraces fetches the block with transactions from the RPC.
+func GetBlockByNumberWithTxsAndTraces(chain string, bn uint64, isFinal bool) (types.SimpleBlock[types.SimpleTransaction], error) {
+	return GetBlockByNumberWithTxs(chain, bn, isFinal)
 }
 
 // GetBlockByNumber fetches the block with only transactions' hashes from the RPC
