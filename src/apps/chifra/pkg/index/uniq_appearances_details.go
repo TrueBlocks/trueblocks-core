@@ -160,7 +160,7 @@ func UniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 				// burned). We enter a false record with a false tx_id to account for this.
 				if validate.IsZeroAddress(author) {
 					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-					falseTxid = uint64(99998)
+					falseTxid = uint64(99998) // do not change! it will break the index
 				}
 				StreamAppearance(procFunc, flow, "uncle", author, bn, falseTxid, traceid, ts, addrMap)
 

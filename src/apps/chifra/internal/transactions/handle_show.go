@@ -88,32 +88,30 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 						}
 					}
 
-					if true { // !skipMap[address] {
-						var found *types.SimpleFunction
-						var selector string
-						if len(tx.Input) >= 10 {
-							selector = tx.Input[:10]
-							inputData := tx.Input[10:]
-							found = abiMap[selector]
-							if found != nil {
-								tx.ArticulatedTx = found.Clone()
-								var outputData string
-								if len(tx.Traces) > 0 && tx.Traces[0].Result != nil && len(tx.Traces[0].Result.Output) > 2 {
-									outputData = tx.Traces[0].Result.Output[2:]
-								}
-								if err = articulate.ArticulateFunction(tx.ArticulatedTx, inputData, outputData); err != nil {
-									errorChan <- err // continue even with an error
-								}
+					var found *types.SimpleFunction
+					var selector string
+					if len(tx.Input) >= 10 {
+						selector = tx.Input[:10]
+						inputData := tx.Input[10:]
+						found = abiMap[selector]
+						if found != nil {
+							tx.ArticulatedTx = found.Clone()
+							var outputData string
+							if len(tx.Traces) > 0 && tx.Traces[0].Result != nil && len(tx.Traces[0].Result.Output) > 2 {
+								outputData = tx.Traces[0].Result.Output[2:]
+							}
+							if err = articulate.ArticulateFunction(tx.ArticulatedTx, inputData, outputData); err != nil {
+								errorChan <- err // continue even with an error
 							}
 						}
+					}
 
-						if found == nil && len(tx.Input) > 0 {
-							if message, ok := articulate.ArticulateString(tx.Input); ok {
-								tx.Message = message
-								// } else if len(selector) > 0 {
-								// 	// don't report this error
-								// 	errorChan <- fmt.Errorf("method/event not found: %s", selector)
-							}
+					if found == nil && len(tx.Input) > 0 {
+						if message, ok := articulate.ArticulateString(tx.Input); ok {
+							tx.Message = message
+							// } else if len(selector) > 0 {
+							// 	// don't report this error
+							// 	errorChan <- fmt.Errorf("method/event not found: %s", selector)
 						}
 					}
 				}

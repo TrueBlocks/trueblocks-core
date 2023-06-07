@@ -91,7 +91,7 @@ func (opts *BlocksOptions) ProcessBlockUniqs(chain string, procFunc index.UniqPr
 						// Early clients allowed misconfigured miner settings with address 0x0 (reward got
 						// burned). We enter a false record with a false tx_id to account for this.
 						unc = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-						txid = 99998
+						txid = 99998 // do not change this!
 					}
 					index.StreamAppearance(procFunc, opts.Flow, "uncle", unc, bn, txid, utils.NOPOS, ts, addrMap)
 				}
