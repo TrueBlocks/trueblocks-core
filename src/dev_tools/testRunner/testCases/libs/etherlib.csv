@@ -48,9 +48,6 @@ on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CRPCResult       ,n    ,v
 on      ,cmd  ,fast  ,null  ,etherlib/generalTest     ,00               ,n
 on      ,cmd  ,fast  ,null  ,etherlib/generalTest     ,01               ,n    ,@t
 
-on      ,cmd  ,fast  ,null  ,etherlib/lastBlockTest   ,test00           ,n
-on      ,cmd  ,fast  ,null  ,etherlib/lastBlockTest   ,test01           ,n    ,val = recurse
-
 on      ,cmd  ,fast  ,null  ,etherlib/printFloatTest  ,00               ,n    ,
 on      ,cmd  ,fast  ,null  ,etherlib/printFloatTest  ,01               ,n    ,@t = 1
 on      ,cmd  ,fast  ,null  ,etherlib/printFloatTest  ,02               ,n    ,@t = 2
