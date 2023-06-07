@@ -50,9 +50,6 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		if err != nil {
 			return err
 		}
-		if progress.Finalized > 3569250 {
-			return nil
-		}
 
 		// We start the current round one block past the end of the previous round
 		opts.StartBlock = utils.Max(progress.Ripe, utils.Max(progress.Staging, progress.Finalized)) + 1

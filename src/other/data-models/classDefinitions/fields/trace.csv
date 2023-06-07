@@ -3,7 +3,6 @@ blockHash        ,hash        ,           ,       ,      ,        ,          ,  
 blockNumber      ,blknum      ,           ,       ,      ,        ,          ,        ,         ,  2 ,   1 ,10021         ,the number of the block
 subtraces        ,uint64      ,           ,       ,      ,        ,          ,        ,         ,  7 ,     ,              ,the number of children traces that the trace hash
 traceAddress     ,string      ,           ,       ,true  ,        ,          ,        ,         ,  6 ,   3 ,              ,a particular trace's address in the trace tree
-traceIndex       ,uint64      ,           ,       ,      ,true    ,true      ,        ,         ,    ,     ,              ,the index of the trace (temporary usage)
 transactionHash  ,hash        ,           ,       ,      ,        ,          ,        ,         ,  4 ,     ,              ,the transaction's hash containing this trace
 transactionIndex ,blknum      ,           ,       ,      ,        ,          ,        ,         ,  5 ,   2 ,305           ,the zero-indexed position of the transaction in the block
 type             ,string      ,           ,       ,      ,        ,true      ,        ,         ,  8 ,     ,              ,the type of the trace
