@@ -127,9 +127,6 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
                 }
                 return retS;
             }
-            if (fieldName % "traceIndex") {
-                return traceIndex == 0 ? "" : uint_2_Str(traceIndex);
-            }
             if (fieldName % "transactionHash") {
                 return hash_2_Str(transactionHash);
             }
@@ -229,10 +226,6 @@ bool CTrace::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
                 }
                 return true;
             }
-            if (fieldName % "traceIndex") {
-                traceIndex = str_2_Uint(fieldValue);
-                return true;
-            }
             if (fieldName % "transactionHash") {
                 transactionHash = str_2_Hash(fieldValue);
                 return true;
@@ -275,7 +268,6 @@ bool CTrace::Serialize(CArchive& archive) {
     archive >> blockNumber;
     archive >> subtraces;
     archive >> traceAddress;
-    // archive >> traceIndex;
     archive >> transactionHash;
     archive >> transactionIndex;
     archive >> type;
@@ -301,7 +293,6 @@ bool CTrace::SerializeC(CArchive& archive) const {
     archive << blockNumber;
     archive << subtraces;
     archive << traceAddress;
-    // archive << traceIndex;
     archive << transactionHash;
     archive << transactionIndex;
     archive << type;
@@ -363,8 +354,6 @@ void CTrace::registerClass(void) {
     ADD_FIELD(CTrace, "blockNumber", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CTrace, "subtraces", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "traceAddress", T_TEXT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CTrace, "traceIndex", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CTrace, "traceIndex");
     ADD_FIELD(CTrace, "transactionHash", T_HASH | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTrace, "transactionIndex", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CTrace, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
