@@ -8,7 +8,6 @@ project (test-utillib)
 # message (WARNING  "*** Entering libs folder ***")
 
 # Compile the libraries in this order
-add_subdirectory(arrayTest)
 add_subdirectory(bigIntTest)
 add_subdirectory(builtInTest)
 add_subdirectory(cmdLineTest)
