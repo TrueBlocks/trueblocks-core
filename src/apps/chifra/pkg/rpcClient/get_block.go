@@ -99,11 +99,6 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, isFinal bool) (types.Simpl
 	return block, nil
 }
 
-// GetBlockByNumberWithTxsAndTraces fetches the block with transactions from the RPC.
-func GetBlockByNumberWithTxsAndTraces(chain string, bn uint64, isFinal bool) (types.SimpleBlock[types.SimpleTransaction], error) {
-	return GetBlockByNumberWithTxs(chain, bn, isFinal)
-}
-
 // GetBlockByNumber fetches the block with only transactions' hashes from the RPC
 func GetBlockByNumber(chain string, bn uint64, isFinal bool) (types.SimpleBlock[string], error) {
 	block, rawBlock, err := loadBlock[string](chain, bn, isFinal, false)
