@@ -79,7 +79,7 @@ func (opts *BlocksOptions) validateBlocks() error {
 	} else {
 		if opts.List == 0 {
 			if len(opts.Blocks) == 0 && opts.ListCount == 0 {
-				return validate.Usage("Please supply one or more block identifiers or the --list_count option.")
+				return validate.Usage("Please supply either a block identifier or the --list_count option.")
 			}
 			if !opts.Logs && (len(opts.Emitter) > 0 || len(opts.Topic) > 0) {
 				return validate.Usage("The {0} option are only available with the {1} option.", "--emitter and --topic", "--log")
