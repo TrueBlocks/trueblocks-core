@@ -2,6 +2,7 @@ chifra blocks  0 --uniq
 TEST[DATE|TIME] Blocks:  [0]
 TEST[DATE|TIME] Uniq:  true
 TEST[DATE|TIME] Format:  txt
+INFO[DATE|TIME] Processing block 0
 address	blockNumber	transactionIndex	traceIndex	reason
 0x000d836201318ec6899a67540690382780743280	0	0		genesis
 0x001762430ea9c3a26e5749afdb70da5f78ddbb8c	0	1		genesis

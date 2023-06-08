@@ -96,15 +96,18 @@ func (opts *BlocksOptions) validateBlocks() error {
 			if opts.Articulate && !opts.Logs {
 				return validate.Usage("The {0} option is available only with {1}.", "--articulate", "the --logs option")
 			}
-			if opts.Uniq {
+			if opts.Uniq && !opts.Count {
 				if opts.Traces {
 					return validate.Usage("The {0} option is not available{1}.", "--traces", " with the --uniq option")
 				}
-				if opts.Cache {
-					return validate.Usage("The {0} option is not available{1}.", "--cache", " with the --uniq option")
-				}
 				if opts.Uncles {
 					return validate.Usage("The {0} option is not available{1}.", "--uncles", " with the --uniq option")
+				}
+				if opts.Logs {
+					return validate.Usage("The {0} option is not available{1}.", "--logs", " with the --uniq option")
+				}
+				if opts.Cache {
+					return validate.Usage("The {0} option is not available{1}.", "--cache", " with the --uniq option")
 				}
 			}
 			if opts.BigRange != 500 && !opts.Logs {
