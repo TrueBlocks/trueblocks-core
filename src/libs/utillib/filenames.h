@@ -58,7 +58,6 @@ extern string_q getHomeFolder(void);
 extern bool forEveryFileInFolder(const string_q& mask, CONSTAPPLYFUNC func, void* data);
 extern size_t listFilesInFolder(CStringArray& files, const string_q& mask, bool recurse);
 extern size_t nFilesInFolder(const string& path, bool recurse = false);
-extern string_q getFirstFileInFolder(const string_q& folder, bool recurse);
 extern string_q getLastFileInFolder(const string_q& folder, bool recurse);
 
 //-------------------------------------------------------------------------

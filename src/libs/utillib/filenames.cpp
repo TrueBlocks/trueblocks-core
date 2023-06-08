@@ -97,14 +97,6 @@ size_t nFilesInFolder(const string& path, bool recurse) {
 }
 
 //--------------------------------------------------------------
-string_q getFirstFileInFolder(const string_q& folder, bool recurse) {
-    CStringArray files;
-    listFilesInFolder(files, folder, recurse);
-    sort(files.begin(), files.end());
-    return (files.size() ? files[0] : "");
-}
-
-//--------------------------------------------------------------
 string_q getLastFileInFolder(const string_q& folder, bool recurse) {
     CStringArray files;
     listFilesInFolder(files, folder, recurse);

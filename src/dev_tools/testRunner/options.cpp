@@ -93,7 +93,6 @@ bool COptions::parseArguments(string_q& command) {
                 been_here = true;
                 tests.push_back("libs/utillib");
                 tests.push_back("libs/etherlib");
-                tests.push_back("libs/acctlib");
 
             } else if (arg == "dev_tools" || arg == "dev_tools/") {
                 break;
@@ -154,7 +153,6 @@ bool COptions::parseArguments(string_q& command) {
         full_test = true;
         tests.push_back("libs/utillib");
         tests.push_back("libs/etherlib");
-        tests.push_back("libs/acctlib");
         if (runSlurps) {
             tests.push_back("tools/ethslurp");
         }

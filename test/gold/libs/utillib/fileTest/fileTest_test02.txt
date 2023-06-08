@@ -1,2 +1,0 @@
-fileTest  first
-First file in folder: ../arrayTest/
