@@ -1,5 +1,4 @@
 enabled ,mode ,speed ,route ,path/tool           ,filename     ,post ,options
-on      ,cmd  ,fast  ,null  ,utillib/arrayTest   ,Insertion    ,n    ,val = 0
 on      ,cmd  ,fast  ,null  ,utillib/bigIntTest  ,00           ,n    ,
 
 on      ,cmd  ,fast  ,null  ,utillib/cmdLineTest ,bool1_01     ,n    ,val = 1 --bool:0
