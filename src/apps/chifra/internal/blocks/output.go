@@ -106,7 +106,7 @@ func (opts *BlocksOptions) IsPorted() (ported bool) {
 	} else if opts.Cache {
 		ported = false
 	} else {
-		ported = !opts.Uncles && !opts.Logs && !opts.Traces
+		ported = !opts.Uncles && !opts.Logs
 	}
 	// EXISTING_CODE
 	return

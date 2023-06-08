@@ -33,6 +33,7 @@ func GetTracesByBlockNumber(chain string, bn uint64) ([]types.SimpleTrace, error
 		return []types.SimpleTrace{}, err
 	} else {
 		curApp := types.SimpleAppearance{BlockNumber: uint32(^uint32(0))}
+		curTs := rpc.GetBlockTimestamp(chain, bn)
 		var idx uint64
 
 		// TODO: This could be loadTrace in the same way loadBlocks works
@@ -69,6 +70,7 @@ func GetTracesByBlockNumber(chain string, bn uint64) ([]types.SimpleTrace, error
 				TraceAddress:     rawTrace.TraceAddress,
 				Subtraces:        rawTrace.Subtraces,
 				TraceType:        rawTrace.TraceType,
+				Timestamp:        curTs,
 				Action:           &traceAction,
 				Result:           &traceResult,
 			}
@@ -77,6 +79,7 @@ func GetTracesByBlockNumber(chain string, bn uint64) ([]types.SimpleTrace, error
 					BlockNumber:      uint32(trace.BlockNumber),
 					TransactionIndex: uint32(trace.TransactionIndex),
 				}
+				curTs = rpc.GetBlockTimestamp(chain, trace.BlockNumber)
 				idx = 0
 			}
 			trace.TraceIndex = idx
@@ -129,6 +132,7 @@ func GetTracesByFilter(chain string, filter string) ([]types.SimpleTrace, error)
 		return ret, fmt.Errorf("trace filter %s returned an error: %w", filter, ethereum.NotFound)
 	} else {
 		curApp := types.SimpleAppearance{BlockNumber: uint32(^uint32(0))}
+		curTs := rpc.GetBlockTimestamp(chain, mustParseUint(f.FromBlock))
 		var idx uint64
 
 		// TODO: This could be loadTrace in the same way loadBlocks works
@@ -178,6 +182,7 @@ func GetTracesByFilter(chain string, filter string) ([]types.SimpleTrace, error)
 				TraceAddress:     rawTrace.TraceAddress,
 				Subtraces:        rawTrace.Subtraces,
 				TraceType:        rawTrace.TraceType,
+				Timestamp:        curTs,
 				Action:           &action,
 				Result:           result,
 			}
@@ -186,6 +191,7 @@ func GetTracesByFilter(chain string, filter string) ([]types.SimpleTrace, error)
 					BlockNumber:      uint32(trace.BlockNumber),
 					TransactionIndex: uint32(trace.TransactionIndex),
 				}
+				curTs = rpc.GetBlockTimestamp(chain, trace.BlockNumber)
 				idx = 0
 			}
 			trace.TraceIndex = idx

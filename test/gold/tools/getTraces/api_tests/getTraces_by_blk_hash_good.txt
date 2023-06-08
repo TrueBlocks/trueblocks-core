@@ -13,8 +13,7 @@ traces?transactions=0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9
       "blockHash": "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f",
       "blockNumber": 4001001,
       "result": {
-        "gasUsed": 23221,
-        "output": "0x"
+        "gasUsed": 23221
       },
       "subtraces": 0,
       "timestamp": 1499651592,

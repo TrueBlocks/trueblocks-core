@@ -30,8 +30,8 @@ type RawTraceResult struct {
 type SimpleTraceResult struct {
 	Address base.Address    `json:"address,omitempty"`
 	Code    string          `json:"code,omitempty"`
-	GasUsed base.Gas        `json:"gasUsed"`
-	Output  string          `json:"output"`
+	GasUsed base.Gas        `json:"gasUsed,omitempty"`
+	Output  string          `json:"output,omitempty"`
 	raw     *RawTraceResult `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -50,30 +50,33 @@ func (s *SimpleTraceResult) Model(verbose bool, format string, extraOptions map[
 	var order = []string{}
 
 	// EXISTING_CODE
-	model = map[string]interface{}{
-		"gasUsed": s.GasUsed,
-		"output":  s.Output,
-	}
-
-	order = []string{
-		"gasUsed",
-		"output",
-	}
-
 	if format == "json" {
+		if s.GasUsed > 0 {
+			model["gasUsed"] = s.GasUsed
+			order = append(order, "gasUsed")
+		}
+		if len(s.Output) > 2 {  // "0x" is empty
+			model["output"] = s.Output
+			order = append(order, "output")
+		}
 		if !s.Address.IsZero() {
 			model["address"] = s.Address
 			order = append(order, "address")
 		}
-		if extraOptions["traces"] != true && len(s.Code) > 0 {
+		if extraOptions["traces"] != true && len(s.Code) > 2 {  // "0x" is empty
 			model["code"] = s.Code
 			order = append(order, "code")
 		}
-		// if len(s.Output) > 0 && s.Output != "0x" {
-		// 	model["output"] = s.Output
-		// 	order = append(order, "output")
-		// }
 	} else {
+		model = map[string]interface{}{
+			"gasUsed": s.GasUsed,
+			"output":  s.Output,
+		}
+
+		order = []string{
+			"gasUsed",
+			"output",
+		}
 		if !s.Address.IsZero() {
 			model["address"] = hexutil.Encode(s.Address.Bytes())
 			order = append(order, "address")

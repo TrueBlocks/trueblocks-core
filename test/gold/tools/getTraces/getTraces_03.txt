@@ -15,8 +15,7 @@ TEST[DATE|TIME] Format:  json
       "blockHash": "0x7eb25504e4c202cf3d62fd585d3e238f592c780cca82dacb2ed3cb5b38883add",
       "blockNumber": 3068185,
       "result": {
-        "gasUsed": 10626,
-        "output": "0x"
+        "gasUsed": 10626
       },
       "subtraces": 2,
       "timestamp": 1485449190,
@@ -60,10 +59,7 @@ TEST[DATE|TIME] Format:  json
       },
       "blockHash": "0x7eb25504e4c202cf3d62fd585d3e238f592c780cca82dacb2ed3cb5b38883add",
       "blockNumber": 3068185,
-      "result": {
-        "gasUsed": 0,
-        "output": "0x"
-      },
+      "result": {},
       "subtraces": 0,
       "timestamp": 1485449190,
       "traceAddress": [

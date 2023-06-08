@@ -35,8 +35,7 @@ TEST[DATE|TIME] Format:  json
       "blockHash": "0x6881c5043f6f6beed5ca31023e3a3518bede50a13be5c521fa6e21577314fa04",
       "blockNumber": 2332332,
       "result": {
-        "gasUsed": 13042,
-        "output": "0x"
+        "gasUsed": 13042
       },
       "subtraces": 0,
       "timestamp": 1474924022,
