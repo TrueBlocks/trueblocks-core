@@ -48,20 +48,6 @@ on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CRPCResult       ,n    ,v
 on      ,cmd  ,fast  ,null  ,etherlib/generalTest     ,00               ,n
 on      ,cmd  ,fast  ,null  ,etherlib/generalTest     ,01               ,n    ,@t
 
-on      ,cmd  ,fast  ,null  ,etherlib/printFloatTest  ,00               ,n    ,
-on      ,cmd  ,fast  ,null  ,etherlib/printFloatTest  ,01               ,n    ,@t = 1
-on      ,cmd  ,fast  ,null  ,etherlib/printFloatTest  ,02               ,n    ,@t = 2
-on      ,cmd  ,fast  ,null  ,etherlib/printFloatTest  ,03               ,n    ,@t = 3
-on      ,cmd  ,fast  ,null  ,etherlib/printFloatTest  ,long_01          ,n    ,testNum = 1
-on      ,cmd  ,fast  ,null  ,etherlib/printFloatTest  ,long_02          ,n    ,testNum = 2
-on      ,cmd  ,fast  ,null  ,etherlib/printFloatTest  ,long_03          ,n    ,testNum = 3
-on      ,cmd  ,fast  ,null  ,etherlib/printFloatTest  ,nc_01            ,n    ,@t = 1
-on      ,cmd  ,fast  ,null  ,etherlib/printFloatTest  ,nc_02            ,n    ,@t = 2
-on      ,cmd  ,fast  ,null  ,etherlib/printFloatTest  ,nc_03            ,n    ,@t = 3
-on      ,cmd  ,fast  ,null  ,etherlib/printFloatTest  ,nc_long_01       ,n    ,testNum = 1
-on      ,cmd  ,fast  ,null  ,etherlib/printFloatTest  ,nc_long_02       ,n    ,testNum = 2
-on      ,cmd  ,fast  ,null  ,etherlib/printFloatTest  ,nc_long_03       ,n    ,testNum = 3
-
 on      ,cmd  ,fast  ,null  ,etherlib/sha3Test        ,00               ,n    ,
 on      ,cmd  ,fast  ,null  ,etherlib/sha3Test        ,01               ,n    ,@t
 

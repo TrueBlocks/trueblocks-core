@@ -1,7 +1,0 @@
-fileTest  newest
-old file: oldText - 1
-new file: oldText - 1
-./new.txt
-old file: oldText - 1
-new file: oldText - 1
-./old.txt

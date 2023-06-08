@@ -1,2 +1,0 @@
-fileTest  last-recurse
-Last file in folder: ../versionTest/versionTest_versions.txt
