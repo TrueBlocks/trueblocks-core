@@ -11,7 +11,6 @@ package transactionsPkg
 // EXISTING_CODE
 import (
 	"net/http"
-	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -57,8 +56,9 @@ func (opts *TransactionsOptions) TransactionsInternal() (err error, handled bool
 		} else if opts.Source {
 			return opts.HandleSource(), true
 		} else if opts.Uniq {
-			return opts.HandleUniq()
+			return opts.HandleUniq(), true
 		} else if len(opts.AccountFor) > 0 {
+			// TODO: Imcomplete?
 			return opts.HandleAccountFor()
 		} else {
 			return opts.HandleShowTxs(), true
@@ -87,12 +87,8 @@ func GetTransactionsOptions(args []string, g *globals.GlobalOptions) *Transactio
 
 func (opts *TransactionsOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	if opts.Decache {
+	if opts.Decache || opts.Uniq {
 		return true
-	}
-
-	if opts.Uniq {
-		return os.Getenv("Uniq") == "true"
 	}
 
 	ported = !opts.Cache && len(opts.AccountFor) == 0

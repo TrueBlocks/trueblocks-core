@@ -4,6 +4,7 @@ traces?transactions=4279119.46&raw
     {
       "action": {
         "address": "",
+        "author": "",
         "balance": "",
         "callType": "call",
         "from": "0x9fe00a70fd9a3a521835bd683297a94f39a6bf8b",
@@ -11,6 +12,7 @@ traces?transactions=4279119.46&raw
         "init": "",
         "input": "0x9e281a98000000000000000000000000e3818504c1b32bf1557b16c238b2e01fd3149c17000000000000000000000000000000000000000000000051889acfe625dbffad",
         "refundAddress": "",
+        "rewardType": "",
         "selfDestructed": "",
         "to": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
         "value": "0x0"
@@ -33,6 +35,7 @@ traces?transactions=4279119.46&raw
     {
       "action": {
         "address": "",
+        "author": "",
         "balance": "",
         "callType": "call",
         "from": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
@@ -40,6 +43,7 @@ traces?transactions=4279119.46&raw
         "init": "",
         "input": "0xa9059cbb0000000000000000000000009fe00a70fd9a3a521835bd683297a94f39a6bf8b000000000000000000000000000000000000000000000051889acfe625dbffad",
         "refundAddress": "",
+        "rewardType": "",
         "selfDestructed": "",
         "to": "0xe3818504c1b32bf1557b16c238b2e01fd3149c17",
         "value": "0x0"

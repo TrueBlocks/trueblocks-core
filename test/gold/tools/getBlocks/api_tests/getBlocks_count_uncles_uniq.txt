@@ -1,0 +1,6 @@
+blocks?blocks=3%20469&count&uncles&uniq&fmt=json
+{
+  "errors": [
+    "The --uncles option is not available with the --uniq option."
+  ]
+}

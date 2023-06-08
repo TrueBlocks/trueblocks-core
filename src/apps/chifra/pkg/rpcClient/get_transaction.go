@@ -25,13 +25,13 @@ func getRawTransaction(chain string, blkHash base.Hash, txHash base.Hash, bn bas
 		params = rpc.Params{blkHash.Hex(), fmt.Sprintf("0x%x", txid)}
 	}
 
-	if result, err := rpc.Query[types.RawTransaction](chain, method, params); err != nil {
+	if trans, err := rpc.Query[types.RawTransaction](chain, method, params); err != nil {
 		return &types.RawTransaction{}, err
 	} else {
-		if result.AccessList == nil {
-			result.AccessList = make([]types.StorageSlot, 0)
+		if trans.AccessList == nil {
+			trans.AccessList = make([]types.StorageSlot, 0)
 		}
-		return result, nil
+		return trans, nil
 	}
 }
 
@@ -59,18 +59,6 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 	bn := uint64(appearance.BlockNumber)
 	txid := uint64(appearance.TransactionIndex)
 
-	rawTx, err := GetRawTransactionByBlockAndId(chain, bn, txid)
-	if err != nil {
-		return
-	}
-
-	isTokenRelated := func(input string) bool {
-		if len(input) < 10 {
-			return false
-		}
-		return IsTokenRelated(input[:10])
-	}
-
 	blockTs := rpc.GetBlockTimestamp(chain, bn)
 	receipt, err := GetTransactionReceipt(chain, ReceiptQuery{
 		Bn:      bn,
@@ -78,6 +66,11 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 		NeedsTs: true,
 		Ts:      blockTs,
 	})
+	if err != nil {
+		return
+	}
+
+	rawTx, err := GetRawTransactionByBlockAndId(chain, bn, txid)
 	if err != nil {
 		return
 	}
@@ -96,7 +89,7 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 		GasUsed:          receipt.GasUsed,
 		Input:            rawTx.Input,
 		IsError:          receipt.IsError,
-		HasToken:         isTokenRelated(rawTx.Input),
+		HasToken:         IsTokenRelated(rawTx.Input),
 		Receipt:          &receipt,
 	}
 	tx.Value.SetString(rawTx.Value, 0)

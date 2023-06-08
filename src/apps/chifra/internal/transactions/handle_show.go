@@ -18,6 +18,7 @@ import (
 func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 	abiMap := make(abi.AbiInterfaceMap)
 	loadedMap := make(map[base.Address]bool)
+	skipMap := make(map[base.Address]bool)
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -41,46 +42,48 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 				}
 
 				if opts.Articulate {
-					if !loadedMap[tx.To] {
-						if err = abi.LoadAbi(chain, tx.To, abiMap); err != nil {
-							// continue processing even with an error
-							errorChan <- err
-							err = nil
+					address := tx.To
+					if !loadedMap[address] && !skipMap[address] {
+						if err := abi.LoadAbi(chain, address, abiMap); err != nil {
+							skipMap[address] = true
+							errorChan <- err // continue even with an error
+						} else {
+							loadedMap[address] = true
 						}
 					}
 
 					for index, log := range tx.Receipt.Logs {
-						var err error
-						if !loadedMap[log.Address] {
-							if err = abi.LoadAbi(chain, log.Address, abiMap); err != nil {
-								// continue processing even with an error
-								errorChan <- err
-								err = nil
+						log := log
+						address := log.Address
+						if !loadedMap[address] && !skipMap[address] {
+							if err := abi.LoadAbi(chain, address, abiMap); err != nil {
+								skipMap[address] = true
+								errorChan <- err // continue even with an error
+							} else {
+								loadedMap[address] = true
 							}
 						}
-						if err == nil {
-							tx.Receipt.Logs[index].ArticulatedLog, err = articulate.ArticulateLog(&log, abiMap)
-							if err != nil {
-								// continue processing even with an error
-								errorChan <- err
+						if !skipMap[address] {
+							if tx.Receipt.Logs[index].ArticulatedLog, err = articulate.ArticulateLog(&log, abiMap); err != nil {
+								errorChan <- err // continue even with an error
 							}
 						}
 					}
 
 					for index, trace := range tx.Traces {
-						var err error
-						if !loadedMap[trace.Action.To] {
-							if err = abi.LoadAbi(chain, trace.Action.To, abiMap); err != nil {
-								// continue processing even with an error
-								errorChan <- err
-								err = nil
+						trace := trace
+						address := trace.Action.To
+						if !loadedMap[address] && !skipMap[address] {
+							if err := abi.LoadAbi(chain, address, abiMap); err != nil {
+								skipMap[address] = true
+								errorChan <- err // continue even with an error
+							} else {
+								loadedMap[address] = true
 							}
 						}
-						if err == nil {
-							tx.Traces[index].ArticulatedTrace, err = articulate.ArticulateTrace(&trace, abiMap)
-							if err != nil {
-								// continue processing even with an error
-								errorChan <- err
+						if !skipMap[address] {
+							if tx.Traces[index].ArticulatedTrace, err = articulate.ArticulateTrace(&trace, abiMap); err != nil {
+								errorChan <- err // continue even with an error
 							}
 						}
 					}
@@ -92,14 +95,13 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 						inputData := tx.Input[10:]
 						found = abiMap[selector]
 						if found != nil {
-							tx.ArticulatedTx = found
+							tx.ArticulatedTx = found.Clone()
 							var outputData string
 							if len(tx.Traces) > 0 && tx.Traces[0].Result != nil && len(tx.Traces[0].Result.Output) > 2 {
 								outputData = tx.Traces[0].Result.Output[2:]
 							}
 							if err = articulate.ArticulateFunction(tx.ArticulatedTx, inputData, outputData); err != nil {
-								// continue processing even with an error
-								errorChan <- err
+								errorChan <- err // continue even with an error
 							}
 						}
 					}
@@ -113,6 +115,7 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 						}
 					}
 				}
+
 				modelChan <- tx
 			}
 		}

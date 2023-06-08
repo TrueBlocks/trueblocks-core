@@ -3,7 +3,6 @@ blocks?blocks=3&fmt=json&count&traces&fmt=txt
   "data": [
     {
       "blockNumber": 3,
-      "timestamp": 1438270048,
       "tracesCnt": 2,
       "transactionsCnt": 0
     }

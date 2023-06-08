@@ -104,10 +104,10 @@ func GetVersion(chain string) (version string, err error) {
 	method := "web3_clientVersion"
 	params := rpc.Params{}
 
-	if result, err := rpc.Query[string](chain, method, params); err != nil {
+	if version, err := rpc.Query[string](chain, method, params); err != nil {
 		return "", err
 	} else {
-		return *result, nil
+		return *version, nil
 	}
 }
 

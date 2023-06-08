@@ -258,6 +258,7 @@ TraceActions consist of the following fields:
 | input         | an encoded version of the function call                                    | bytes   |
 | callType      | the type of call                                                           | string  |
 | refundAddress | if the call type is self-destruct, the address to which the refund is sent | address |
+| rewardType    | the type of reward                                                         | string  |
 
 ## TraceResult
 
@@ -339,8 +340,7 @@ BlockCounts consist of the following fields:
 | unclesCnt       | the number of uncles in the block                              | uint64    |
 | logsCnt         | the number of logs in the block                                | uint64    |
 | tracesCnt       | the number of traces in the block                              | uint64    |
-| appsCnt         | the number of address appearances in the block                 | uint64    |
-| uniqsCnt        | the number of address appearances in the block per transaction | uint64    |
+| addressCnt      | the number of address appearances in the block per transaction | uint64    |
 
 ## NamedBlock
 

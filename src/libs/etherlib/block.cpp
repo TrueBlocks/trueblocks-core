@@ -557,13 +557,6 @@ const char* STR_DISPLAY_BLOCK =
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-extern bool accumulateAddresses(const CAppearance& item, void* data);
-extern bool foundOne(APPEARANCEFUNC func, void* data, blknum_t bn, blknum_t tx, blknum_t tc, const address_t& addr,
-                     const string_q& reason);  // NOLINT
-extern bool foundPot(APPEARANCEFUNC func, void* data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList,
-                     const string_q& reason);  // NOLINT
-
-//---------------------------------------------------------------------------
 string_q toStringList(const CStringArray& array) {
     bool first = true;
     string_q ret;
@@ -575,120 +568,6 @@ string_q toStringList(const CStringArray& array) {
     ret = "[" + trim(ret, '_') + "]";
     ret = substitute(ret, "[]", "");
     return ret.empty() ? "" : ret + "_";
-}
-
-//---------------------------------------------------------------------------
-bool CBlock::forEveryAppearanceInBlock(APPEARANCEFUNC func, TRANSFUNC traceFilter, void* data) {
-    if (!func)
-        return false;
-
-    foundOne(func, data, blockNumber, 99999, 0, miner, "miner");
-    uint64_t nUncles = getUncleCount(blockNumber);
-    for (size_t index = 0; index < nUncles; index++) {
-        CBlock uncle;
-        getUncle(uncle, blockNumber, index);
-        foundOne(func, data, blockNumber, 99998, 0, uncle.miner, "uncle");
-    }
-    for (size_t tr = 0; tr < transactions.size(); tr++) {
-        CTransaction* trans = &transactions[tr];
-        if (!trans->forEveryAppearanceInTx(func, traceFilter, data))
-            return false;
-    }
-    return true;
-}
-
-//---------------------------------------------------------------------------
-bool getTracesAndVisit(const hash_t& hash, CAppearance& item, APPEARANCEFUNC funcy, void* data) {
-    string_q str;
-    queryRawTrace(str, hash);
-
-    CRPCResult generic;
-    generic.parseJson3(str);  // pull out the result
-
-    blknum_t traceID = 0;
-    CTrace trace;
-    while (trace.parseJson3(generic.result)) {
-        string_q trID = "trace_" + uint_2_Str(traceID) + "_" + toStringList(trace.traceAddress);
-        if (!foundOne(funcy, data, item.blockNumber, item.transactionIndex, traceID + 10, trace.action.from,
-                      trID + "from"))
-            return false;
-        if (!foundOne(funcy, data, item.blockNumber, item.transactionIndex, traceID + 10, trace.action.to, trID + "to"))
-            return false;
-        if (!foundOne(funcy, data, item.blockNumber, item.transactionIndex, traceID + 10, trace.action.refundAddress,
-                      trID + "refundAddr"))
-            return false;
-        if (!foundOne(funcy, data, item.blockNumber, item.transactionIndex, traceID + 10, trace.action.selfDestructed,
-                      trID + "self-destruct"))
-            return false;
-        if (!foundOne(funcy, data, item.blockNumber, item.transactionIndex, traceID + 10, trace.result.address,
-                      trID + "self-destruct"))
-            return false;
-        string_q inpt = extract(trace.action.input, 10);
-        if (!inpt.empty())
-            if (!foundPot(funcy, data, item.blockNumber, item.transactionIndex, traceID + 10, inpt, trID + "input"))
-                return false;
-        string_q outpt = extract(trace.result.output, 2);
-        if (!outpt.empty())
-            if (!foundPot(funcy, data, item.blockNumber, item.transactionIndex, traceID + 10, outpt, trID + "output"))
-                return false;
-        traceID++;
-        trace = CTrace();  // reset
-    }
-    return true;
-}
-
-//---------------------------------------------------------------------------
-bool CTransaction::forEveryAppearanceInTx(APPEARANCEFUNC funcy, TRANSFUNC filt, void* data) {
-    blknum_t tr = transactionIndex;
-    const CReceipt* recPtr = &receipt;
-    if (!foundOne(funcy, data, blockNumber, tr, 0, from, "from"))
-        return false;
-    if (!foundOne(funcy, data, blockNumber, tr, 0, to, "to"))
-        return false;
-    if (!foundOne(funcy, data, blockNumber, tr, 0, recPtr->contractAddress, "creation"))
-        return false;
-    if (!foundPot(funcy, data, blockNumber, tr, 0, extract(input, 10), "input"))
-        return false;
-    for (size_t l = 0; l < recPtr->logs.size(); l++) {
-        const CLog* log = &recPtr->logs[l];
-        string_q logId = "log_" + uint_2_Str(l) + "_";
-        if (!foundOne(funcy, data, blockNumber, tr, 0, log->address, logId + "generator"))
-            return false;
-        for (size_t t = 0; t < log->topics.size(); t++) {
-            address_t addr;
-            string_q topId = uint_2_Str(t);
-            if (isPotentialAddr(topic_2_BigUint(log->topics[t]), addr)) {
-                if (!foundOne(funcy, data, blockNumber, tr, 0, addr, logId + "topic_" + topId))
-                    return false;
-            }
-        }
-        if (!foundPot(funcy, data, blockNumber, tr, 0, extract(log->data, 2), logId + "data"))
-            return false;
-    }
-
-    // If we're not filtering, or the filter passes, proceed. Note the filter depends on the
-    // transaction only, not on any address.
-    if (!filt || !filt(this, data)) {  // may look at DDos range and nTraces for example
-        CAppearance item(blockNumber, tr, NOPOS, "", "");
-        getTracesAndVisit(hash, item, funcy, data);
-    }
-    return true;
-}
-
-//---------------------------------------------------------------------------
-bool CTransaction::forEveryUniqueAppearanceInTx(APPEARANCEFUNC func, TRANSFUNC traceFilter, void* data) {
-    if (!func)
-        return false;
-    CUniqueState state(func, data, false);
-    return forEveryAppearanceInTx(accumulateAddresses, traceFilter, &state);
-}
-
-//---------------------------------------------------------------------------
-bool CTransaction::forEveryUniqueAppearanceInTxPerTx(APPEARANCEFUNC func, TRANSFUNC traceFilter, void* data) {
-    if (!func)
-        return false;
-    CUniqueState state(func, data, true);
-    return forEveryAppearanceInTx(accumulateAddresses, traceFilter, &state);
 }
 
 //---------------------------------------------------------------------------

@@ -34,8 +34,10 @@ class CTraceAction : public CBaseNode {
     string_q init;
     string_q input;
     address_t refundAddress;
+    string_q rewardType;
     address_t to;
     wei_t value;
+    address_t author;
 
   public:
     CTraceAction(void);
@@ -109,8 +111,10 @@ inline void CTraceAction::initialize(void) {
     init = "";
     input = "";
     refundAddress = "";
+    rewardType = "";
     to = "";
     value = 0;
+    author = "";
 
     // EXISTING_CODE
     extraValue1 = 0;
@@ -131,8 +135,10 @@ inline void CTraceAction::duplicate(const CTraceAction& tr) {
     init = tr.init;
     input = tr.input;
     refundAddress = tr.refundAddress;
+    rewardType = tr.rewardType;
     to = tr.to;
     value = tr.value;
+    author = tr.author;
 
     // EXISTING_CODE
     extraValue1 = tr.extraValue1;

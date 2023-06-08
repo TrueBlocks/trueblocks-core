@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.70.0-beta
+  version: 0.71.0-beta
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra daemon`, you can
@@ -941,14 +941,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: apps
-          description: display a list of uniq address appearances in the block
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: uniq
           description: display a list of uniq address appearances per transaction
           required: false
@@ -959,7 +951,7 @@ paths:
             type: boolean
         - name: flow
           description: >
-            for the uniq and apps options only, export only from or to (including trace from or to)
+            for the uniq option only, export only from or to (including trace from or to)
           required: false
           style: form
           in: query
@@ -2895,6 +2887,9 @@ components:
           format: address
           example: "0xf503...179b"
           description: "if the call type is self-destruct, the address to which the refund is sent"
+        rewardType:
+          type: string
+          description: "the type of reward"
     traceResult:
       description: "trace result data as returned from the RPC (with slight enhancements)"
       type: object
@@ -2980,7 +2975,7 @@ components:
         blockNumber:
           type: number
           format: blknum
-          example: 10
+          example: 1001001
           description: "the block's block number"
         timestamp:
           type: number
@@ -2990,32 +2985,27 @@ components:
         transactionsCnt:
           type: number
           format: uint64
-          example: 10
+          example: 239
           description: "the number transactions in the block"
         unclesCnt:
           type: number
           format: uint64
-          example: 20
+          example: 2
           description: "the number of uncles in the block"
         logsCnt:
           type: number
           format: uint64
-          example: 30
+          example: 581
           description: "the number of logs in the block"
         tracesCnt:
           type: number
           format: uint64
-          example: 30
+          example: 1295
           description: "the number of traces in the block"
-        appsCnt:
+        addressCnt:
           type: number
           format: uint64
-          example: 40
-          description: "the number of address appearances in the block"
-        uniqsCnt:
-          type: number
-          format: uint64
-          example: 40
+          example: 318
           description: "the number of address appearances in the block per transaction"
     namedBlock:
       description: "a block that has been given a particular name such as `first` or `latest`"

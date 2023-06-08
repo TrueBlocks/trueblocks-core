@@ -19,6 +19,7 @@ func (opts *ReceiptsOptions) HandleShowReceipts() error {
 
 	abiMap := make(abi.AbiInterfaceMap)
 	loadedMap := make(map[base.Address]bool)
+	skipMap := make(map[base.Address]bool)
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -74,19 +75,19 @@ func (opts *ReceiptsOptions) HandleShowReceipts() error {
 
 				if opts.Articulate {
 					for index, log := range receipt.Logs {
-						var err error
-						if !loadedMap[log.Address] {
-							if err = abi.LoadAbi(chain, log.Address, abiMap); err != nil {
-								// continue processing even with an error
-								errorChan <- err
-								err = nil
+						address := log.Address
+						if !loadedMap[address] && !skipMap[address] {
+							if err := abi.LoadAbi(chain, address, abiMap); err != nil {
+								skipMap[address] = true
+								errorChan <- err // continue even with an error
+							} else {
+								loadedMap[address] = true
 							}
 						}
-						if err == nil {
-							receipt.Logs[index].ArticulatedLog, err = articulate.ArticulateLog(&log, abiMap)
-							if err != nil {
-								// continue processing even with an error
-								errorChan <- err
+
+						if !skipMap[address] {
+							if receipt.Logs[index].ArticulatedLog, err = articulate.ArticulateLog(&log, abiMap); err != nil {
+								errorChan <- err // continue even with an error
 							}
 						}
 					}

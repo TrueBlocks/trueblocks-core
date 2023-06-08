@@ -13,7 +13,7 @@ import (
 // Params are used during calls to the RPC.
 type Params []interface{}
 
-// Payload is used during to make calls to the RPC.
+// Payload is used to make calls to the RPC.
 type Payload struct {
 	Method string `json:"method"`
 	Params `json:"params"`

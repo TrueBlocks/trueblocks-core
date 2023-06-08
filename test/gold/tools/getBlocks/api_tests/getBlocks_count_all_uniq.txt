@@ -1,0 +1,6 @@
+blocks?blocks=3%206001002&count&uncles&logs&traces&uniq&fmt=json
+{
+  "errors": [
+    "The --traces option is not available with the --uniq option."
+  ]
+}

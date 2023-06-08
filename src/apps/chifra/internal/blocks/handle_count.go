@@ -8,15 +8,19 @@ import (
 	"context"
 	"errors"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
 )
 
 func (opts *BlocksOptions) HandleCounts() error {
+	chain := opts.Globals.Chain
+
 	// Don't do this in the loop
-	meta, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+	meta, err := rpcClient.GetMetaData(chain, opts.Globals.TestMode)
 	if err != nil {
 		return err
 	}
@@ -27,7 +31,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		for _, br := range opts.BlockIds {
-			blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
+			blockNums, err := br.ResolveBlocks(chain)
 			if err != nil {
 				errorChan <- err
 				if errors.Is(err, ethereum.NotFound) {
@@ -40,7 +44,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 			for _, bn := range blockNums {
 				finalized := meta.Age(bn) > 28
 				var block types.SimpleBlock[string]
-				if block, err = rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, finalized); err != nil {
+				if block, err = rpcClient.GetBlockByNumber(chain, bn, finalized); err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
 						continue
@@ -56,7 +60,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 				}
 
 				if opts.Uncles {
-					if blockCount.UnclesCnt, err = rpcClient.GetUncleCountByNumber(opts.Globals.Chain, bn); err != nil {
+					if blockCount.UnclesCnt, err = rpcClient.GetUncleCountByNumber(chain, bn); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {
 							continue
@@ -67,7 +71,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 				}
 
 				if opts.Traces {
-					if blockCount.TracesCnt, err = rpcClient.GetTraceCountByBlockNumber(opts.Globals.Chain, bn); err != nil {
+					if blockCount.TracesCnt, err = rpcClient.GetTraceCountByBlockNumber(chain, bn); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {
 							continue
@@ -78,7 +82,25 @@ func (opts *BlocksOptions) HandleCounts() error {
 				}
 
 				if opts.Logs {
-					if blockCount.LogsCnt, err = rpcClient.GetLogCountByBlockNumber(opts.Globals.Chain, bn); err != nil {
+					if blockCount.LogsCnt, err = rpcClient.GetLogCountByBlockNumber(chain, bn); err != nil {
+						errorChan <- err
+						if errors.Is(err, ethereum.NotFound) {
+							continue
+						}
+						cancel()
+						return
+					}
+				}
+
+				if opts.Uniq {
+					countFunc := func(s *types.SimpleAppearance) error {
+						blockCount.AddressCnt++
+						return nil
+					}
+
+					addrMap := make(index.AddressBooleanMap)
+					ts := rpc.GetBlockTimestamp(chain, bn)
+					if err := opts.ProcessBlockUniqs(chain, countFunc, bn, addrMap, ts); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {
 							continue
@@ -98,7 +120,6 @@ func (opts *BlocksOptions) HandleCounts() error {
 		"uncles": opts.Uncles,
 		"logs":   opts.Logs,
 		"traces": opts.Traces,
-		"apps":   opts.Apps,
 		"uniqs":  opts.Uniq,
 	}
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))

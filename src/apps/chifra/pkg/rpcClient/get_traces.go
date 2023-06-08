@@ -32,9 +32,34 @@ func GetTracesByBlockNumber(chain string, bn uint64) ([]types.SimpleTrace, error
 	if rawTraces, err := rpc.QuerySlice[types.RawTrace](chain, method, params); err != nil {
 		return []types.SimpleTrace{}, err
 	} else {
+		curApp := types.SimpleAppearance{BlockNumber: uint32(^uint32(0))}
+		var idx uint64
+
 		// TODO: This could be loadTrace in the same way loadBlocks works
 		var ret []types.SimpleTrace
 		for _, rawTrace := range rawTraces {
+			traceAction := types.SimpleTraceAction{
+				Address:        base.HexToAddress(rawTrace.Action.Address),
+				Author:         base.HexToAddress(rawTrace.Action.Author),
+				Balance:        *big.NewInt(0).SetUint64(mustParseUint(rawTrace.Action.Balance)),
+				CallType:       rawTrace.Action.CallType,
+				From:           base.HexToAddress(rawTrace.Action.From),
+				Gas:            mustParseUint(rawTrace.Action.Gas),
+				Init:           rawTrace.Action.Init,
+				Input:          rawTrace.Action.Input,
+				RefundAddress:  base.HexToAddress(rawTrace.Action.RefundAddress),
+				RewardType:     rawTrace.Action.RewardType,
+				SelfDestructed: base.HexToAddress(rawTrace.Action.SelfDestructed),
+				To:             base.HexToAddress(rawTrace.Action.To),
+				Value:          *big.NewInt(0).SetUint64(mustParseUint(rawTrace.Action.Value)),
+			}
+			traceResult := types.SimpleTraceResult{}
+			if rawTrace.Result != nil {
+				traceResult.Address = base.HexToAddress(rawTrace.Result.Address)
+				traceResult.Code = rawTrace.Result.Code
+				traceResult.GasUsed = mustParseUint(rawTrace.Result.GasUsed)
+				traceResult.Output = rawTrace.Result.Output
+			}
 			trace := types.SimpleTrace{
 				Error:            rawTrace.Error,
 				BlockHash:        base.HexToHash(rawTrace.BlockHash),
@@ -44,10 +69,18 @@ func GetTracesByBlockNumber(chain string, bn uint64) ([]types.SimpleTrace, error
 				TraceAddress:     rawTrace.TraceAddress,
 				Subtraces:        rawTrace.Subtraces,
 				TraceType:        rawTrace.TraceType,
-				// raw:              &rawTrace,
-				// Action:           rawTrace.Action,
-				// Result:           rawTrace.Result,
+				Action:           &traceAction,
+				Result:           &traceResult,
 			}
+			if trace.BlockNumber != uint64(curApp.BlockNumber) || trace.TransactionIndex != uint64(curApp.TransactionIndex) {
+				curApp = types.SimpleAppearance{
+					BlockNumber:      uint32(trace.BlockNumber),
+					TransactionIndex: uint32(trace.TransactionIndex),
+				}
+				idx = 0
+			}
+			trace.TraceIndex = idx
+			idx++
 			trace.SetRaw(&rawTrace)
 			ret = append(ret, trace)
 		}
@@ -95,6 +128,9 @@ func GetTracesByFilter(chain string, filter string) ([]types.SimpleTrace, error)
 	if rawTraces, err := rpc.QuerySlice[types.RawTrace](chain, method, params); err != nil {
 		return ret, fmt.Errorf("trace filter %s returned an error: %w", filter, ethereum.NotFound)
 	} else {
+		curApp := types.SimpleAppearance{BlockNumber: uint32(^uint32(0))}
+		var idx uint64
+
 		// TODO: This could be loadTrace in the same way loadBlocks works
 		for _, rawTrace := range rawTraces {
 			// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
@@ -145,9 +181,16 @@ func GetTracesByFilter(chain string, filter string) ([]types.SimpleTrace, error)
 				Action:           &action,
 				Result:           result,
 			}
-			// if transaction != nil {
-			// 	trace.Timestamp = transaction.Timestamp
-			// }
+			if trace.BlockNumber != uint64(curApp.BlockNumber) || trace.TransactionIndex != uint64(curApp.TransactionIndex) {
+				curApp = types.SimpleAppearance{
+					BlockNumber:      uint32(trace.BlockNumber),
+					TransactionIndex: uint32(trace.TransactionIndex),
+				}
+				idx = 0
+			}
+			trace.TraceIndex = idx
+			idx++
+
 			trace.SetRaw(&rawTrace)
 			ret = append(ret, trace)
 		}
@@ -165,6 +208,9 @@ func GetTracesByTransactionHash(chain string, txHash string, transaction *types.
 		return ret, fmt.Errorf("transaction at %s returned an error: %w", txHash, ethereum.NotFound)
 
 	} else {
+		curApp := types.SimpleAppearance{BlockNumber: uint32(^uint32(0))}
+		var idx uint64
+
 		for _, rawTrace := range rawTraces {
 			// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
 			rawTrace := rawTrace
@@ -218,6 +264,16 @@ func GetTracesByTransactionHash(chain string, txHash string, transaction *types.
 			if transaction != nil {
 				trace.Timestamp = transaction.Timestamp
 			}
+			if trace.BlockNumber != uint64(curApp.BlockNumber) || trace.TransactionIndex != uint64(curApp.TransactionIndex) {
+				curApp = types.SimpleAppearance{
+					BlockNumber:      uint32(trace.BlockNumber),
+					TransactionIndex: uint32(trace.TransactionIndex),
+				}
+				idx = 0
+			}
+			trace.TraceIndex = idx
+			idx++
+
 			trace.SetRaw(&rawTrace)
 			ret = append(ret, trace)
 		}
