@@ -1,0 +1,34 @@
+chifra transactions  9004225.10 --logs --fmt json --topic 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ez
+TEST[DATE|TIME] Transactions:  [9004225.10]
+TEST[DATE|TIME] Logs:  true
+TEST[DATE|TIME] Topic:  [0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ez]
+TEST[DATE|TIME] Format:  json
+Error: The topic option (0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ez) must be hex.
+Usage:
+  chifra transactions [flags] <tx_id> [tx_id...]
+
+Arguments:
+  transactions - a space-separated list of one or more transaction identifiers (required)
+
+Flags:
+  -a, --articulate           articulate the retrieved data if ABIs can be found
+  -t, --traces               include the transaction's traces in the results
+  -u, --uniq                 display a list of uniq addresses found in the transaction
+  -f, --flow string          for the uniq option only, export only from or to (including trace from or to)
+                             One of [ from | to ]
+  -l, --logs                 display only the logs found in the transaction(s)
+  -m, --emitter strings      for the --logs option only, filter logs to show only those logs emitted by the given address(es)
+  -B, --topic strings        for the --logs option only, filter logs to show only those with this topic(s)
+  -A, --account_for string   reconcile the transaction as per the provided address
+  -o, --cache                force the results of the query into the tx cache (and the trace cache if applicable)
+  -D, --decache              removes a transactions and any traces in the transaction from the cache
+  -s, --source               find the source of the funds sent to the receiver (hidden)
+  -x, --fmt string           export format, one of [none|json*|txt|csv]
+  -v, --verbose              enable verbose (increase detail with --log_level)
+  -h, --help                 display this help screen
+
+Notes:
+  - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.
+  - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
+  - If the queried node does not store historical state, the results for most older transactions are undefined.
+
