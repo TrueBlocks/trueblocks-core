@@ -58,6 +58,10 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
+	if !opts.IsPorted() {
+		logger.Fatal("Should not happen in DaemonInternal")
+	}
+
 	handled = true
 	apiUrl := opts.Port
 	if !strings.HasPrefix(apiUrl, "http") {
@@ -108,6 +112,7 @@ func GetDaemonOptions(args []string, g *globals.GlobalOptions) *DaemonOptions {
 
 func (opts *DaemonOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
+	ported = true
 	// EXISTING_CODE
 	return
 }

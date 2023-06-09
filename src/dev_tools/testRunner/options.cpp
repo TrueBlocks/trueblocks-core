@@ -137,6 +137,13 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    string_q localFile = getCWD() + "addresses.tsv";
+    replace(localFile, "test/gold/dev_tools/testRunner", "build");
+    if (fileExists(localFile)) {
+        LOG_ERR(localFile, " found in local folder. Chifra monitor tests will fail.");
+        exit(0);
+    }
+
     if (getGlobalConfig("")->getConfigBool("dev", "debug_curl", false))
         return usage("[dev]debug_curl is set in config file. All tests will fail.");
 
