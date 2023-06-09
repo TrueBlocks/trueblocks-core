@@ -168,6 +168,9 @@ string_q specialCase(const CClassDefinition& model, const CMember& field, const 
     if (name % "CumulativeGasUsed" && !isRaw) {
         ret = "string";
 
+    } else if (name % "Emitters") {
+        ret = isRaw ? "[]string" : "[]base.Address";
+
     } else if (name % "Logs") {
         ret = isRaw ? "[]RawLog" : "[]SimpleLog";
 
@@ -187,7 +190,7 @@ string_q specialCase(const CClassDefinition& model, const CMember& field, const 
         ret = isRaw ? "[]string" : "[]base.Hash";
 
     } else if ((name % "FromAddress" || name % "ToAddress") && type % "CAddressArray") {
-        ret = isRaw ? "string" : "[]string";
+        ret = isRaw ? "string" : "[]base.Address";
 
     } else if (name % "Transactions") {
         ret = isRaw ? "[]any" : "[]Tx";
@@ -212,6 +215,9 @@ string_q specialCase(const CClassDefinition& model, const CMember& field, const 
 
     } else if (name % "Topics") {
         ret = isRaw ? "[]string" : "[]base.Hash";
+
+    } else if (name % "Emitter") {
+        ret = isRaw ? "[]string" : "[]base.Address";
 
     } else if (modelName == "Parameter" && name % "Value") {
         ret = isRaw ? "string" : "any";

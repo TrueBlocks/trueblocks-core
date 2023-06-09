@@ -18,11 +18,11 @@ import (
 )
 
 func GetBlockHeaderByNumber(chain string, bn uint64) (types.SimpleBlock[string], error) {
-	return GetBlockByNumber(chain, bn, false)
+	return GetBlockByNumber(chain, bn)
 }
 
 // GetBlockByNumberWithTxs fetches the block with transactions from the RPC.
-func GetBlockByNumberWithTxs(chain string, bn uint64, isFinal bool) (types.SimpleBlock[types.SimpleTransaction], error) {
+func GetBlockByNumberWithTxs(chain string, bn uint64) (types.SimpleBlock[types.SimpleTransaction], error) {
 	// TODO: load from cache if possible
 	// FIXME: without updating the block in cache (writing) some value are not
 	// FIXME: filled in and the tests fail
@@ -32,7 +32,7 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, isFinal bool) (types.Simpl
 	// 	return
 	// }
 
-	block, rawBlock, err := loadBlock[types.SimpleTransaction](chain, bn, isFinal, true)
+	block, rawBlock, err := loadBlock[types.SimpleTransaction](chain, bn, true)
 	block.SetRaw(rawBlock) // may have failed, but it's ok
 	if err != nil {
 		return block, err
@@ -100,8 +100,8 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, isFinal bool) (types.Simpl
 }
 
 // GetBlockByNumber fetches the block with only transactions' hashes from the RPC
-func GetBlockByNumber(chain string, bn uint64, isFinal bool) (types.SimpleBlock[string], error) {
-	block, rawBlock, err := loadBlock[string](chain, bn, isFinal, false)
+func GetBlockByNumber(chain string, bn uint64) (types.SimpleBlock[string], error) {
+	block, rawBlock, err := loadBlock[string](chain, bn, false)
 	block.SetRaw(rawBlock) // may have failed, but it's ok
 	if err != nil {
 		return block, err
@@ -117,7 +117,7 @@ func GetBlockByNumber(chain string, bn uint64, isFinal bool) (types.SimpleBlock[
 
 // loadBlock fetches block from RPC, but it does not try to fill Transactions field. This is delegated to
 // more specialized functions and makes loadBlock generic.
-func loadBlock[Tx types.BlockTransaction](chain string, bn uint64, isFinal bool, withTxs bool) (block types.SimpleBlock[Tx], rawBlock *types.RawBlock, err error) {
+func loadBlock[Tx types.BlockTransaction](chain string, bn uint64, withTxs bool) (block types.SimpleBlock[Tx], rawBlock *types.RawBlock, err error) {
 	rawBlock, err = getRawBlock(chain, bn, withTxs)
 	if err != nil {
 		return
