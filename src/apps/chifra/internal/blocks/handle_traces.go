@@ -17,15 +17,6 @@ import (
 func (opts *BlocksOptions) HandleTrace() error {
 	chain := opts.Globals.Chain
 
-	// Don't do this in the loop
-	meta, err := rpcClient.GetMetaData(chain, opts.Globals.TestMode)
-	if err != nil {
-		return err
-	}
-	if opts.Globals.TestMode {
-		meta.Latest = 2000100
-	}
-
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
 		for _, br := range opts.BlockIds {
