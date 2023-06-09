@@ -23,12 +23,7 @@ static const COption params[] = {
     COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more block identifiers"),  // NOLINT
     COption("hashes", "e", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),  // NOLINT
     COption("uncles", "c", "", OPT_SWITCH, "display uncle blocks (if any) instead of the requested block"),
-    COption("traces", "t", "", OPT_SWITCH, "export the traces from the block as opposed to the block data"),
-    COption("logs", "l", "", OPT_SWITCH, "display only the logs found in the block(s)"),
-    COption("emitter", "m", "list<addr>", OPT_FLAG, "for the --logs option only, filter logs to show only those logs emitted by the given address(es)"),  // NOLINT
-    COption("topic", "B", "list<topic>", OPT_FLAG, "for the --logs option only, filter logs to show only those with this topic(s)"),  // NOLINT
     COption("articulate", "a", "", OPT_SWITCH, "for the --logs option only, articulate the retrieved data if ABIs can be found"),  // NOLINT
-    COption("big_range", "r", "<uint64>", OPT_FLAG, "for the --logs option only, allow for block ranges larger than 500"),  // NOLINT
     COption("cache", "o", "", OPT_SWITCH, "force a write of the block to the cache"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve one or more blocks from the chain or local cache."),
     // clang-format on
@@ -38,15 +33,12 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 
 extern const char* STR_FORMAT_LIST_JSON;
 extern const char* STR_FORMAT_LIST;
-extern const char* STR_FMT_BLOCKLOGS;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
     // BEG_CODE_LOCAL_INIT
-    CAddressArray emitter;
-    CStringArray topic;
     // END_CODE_LOCAL_INIT
 
     Init();
@@ -65,34 +57,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-c" || arg == "--uncles") {
             uncles = true;
 
-        } else if (arg == "-t" || arg == "--traces") {
-            traces = true;
-
-        } else if (arg == "-l" || arg == "--logs") {
-            logs = true;
-
-        } else if (startsWith(arg, "-m:") || startsWith(arg, "--emitter:")) {
-            arg = substitute(substitute(arg, "-m:", ""), "--emitter:", "");
-            if (!parseAddressList(this, emitter, arg))
-                return false;
-        } else if (arg == "-m" || arg == "--emitter") {
-            return flag_required("emitter");
-
-        } else if (startsWith(arg, "-B:") || startsWith(arg, "--topic:")) {
-            arg = substitute(substitute(arg, "-B:", ""), "--topic:", "");
-            if (!parseTopicList2(this, topic, arg))
-                return false;
-        } else if (arg == "-B" || arg == "--topic") {
-            return flag_required("topic");
-
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
-
-        } else if (startsWith(arg, "-r:") || startsWith(arg, "--big_range:")) {
-            if (!confirmUint("big_range", big_range, arg))
-                return false;
-        } else if (arg == "-r" || arg == "--big_range") {
-            return flag_required("big_range");
 
         } else if (arg == "-o" || arg == "--cache") {
             cache = true;
@@ -111,25 +77,12 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (!cache && !articulate && !uncles && !traces && !logs) {
+    if (!cache && !articulate && !uncles) {
         return usage("Nope");
     }
 
     if (cache)
         etherlib_init(defaultQuitHandler);
-
-    // syntactic sugar so we deal with topics, but the option is called topic
-    for (auto t : topic)
-        logFilter.topics.push_back(t);
-
-    // syntactic sugar so we deal with emitters, but the option is called emitter
-    for (auto e : emitter)
-        logFilter.emitters.push_back(e);
-
-    big_range = max(big_range, uint64_t(50));
-
-    if (traces && !isTracingNode())
-        return usage(usageErrs[ERR_TRACINGREQUIRED]);
 
     if (hashes) {
         manageFields("CTransaction:all", FLD_HIDE);
@@ -139,26 +92,7 @@ bool COptions::parseArguments(string_q& command) {
 
     if (expContext().exportFmt == NONE1)
         expContext().exportFmt = JSON1;
-
-    // Display formatting
-    if (traces) {
-        configureDisplay("getBlocks", "CTrace", STR_DISPLAY_TRACE);
-
-    } else if (logs) {
-        configureDisplay("getBlocks", "CLog", STR_DISPLAY_LOG);
-        manageFields("CLog:topic0,topic1,topic2,topic3", FLD_HIDE);
-        manageFields(
-            "CLog:blocknumber,blockhash,transactionindex,transactionhash,timestamp,"
-            "logindex,address,data,compressedlog",
-            FLD_SHOW);
-        bool isText = expContext().exportFmt == TXT1 || expContext().exportFmt == CSV1;
-        if (isText) {
-            expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(STR_FMT_BLOCKLOGS);
-        }
-
-    } else {
-        configureDisplay("getBlocks", "CBlock", STR_DISPLAY_BLOCK);
-    }
+    configureDisplay("getBlocks", "CBlock", STR_DISPLAY_BLOCK);
 
     if (noHeader)
         expContext().fmtMap["header"] = "";
@@ -175,16 +109,12 @@ void COptions::Init(void) {
     // BEG_CODE_INIT
     hashes = false;
     uncles = false;
-    traces = false;
-    logs = false;
     articulate = false;
-    big_range = 500;
     cache = false;
     // END_CODE_INIT
 
     secsFinal = (60 * 5);  // Used to be configurable, but no longer
     blocks.Init();
-    logFilter = CLogFilter();
     CBlockOptions::Init();
 }
 
@@ -227,9 +157,3 @@ void interumReport(ostream& os, blknum_t i) {
     os << (!(i % 150) ? "." : (!(i % 1000)) ? "+" : "");  // dots '.' at every 150, '+' at every 1000
     os.flush();
 }
-
-//--------------------------------------------------------------------------------
-const char* STR_FMT_BLOCKLOGS =
-    "[{BLOCKNUMBER}]\t[{BLOCKHASH}]\t[{TRANSACTIONINDEX}]\t[{TRANSACTIONHASH}]\t"
-    "[{TIMESTAMP}]\t[{LOGINDEX}]\t[{ADDRESS}]\t[{TOPIC0}]\t[{TOPIC1}]\t[{TOPIC2}]\t"
-    "[{TOPIC3}]\t[{DATA}]\t[{COMPRESSEDLOG}]";
