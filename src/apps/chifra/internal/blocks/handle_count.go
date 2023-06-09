@@ -19,15 +19,6 @@ import (
 func (opts *BlocksOptions) HandleCounts() error {
 	chain := opts.Globals.Chain
 
-	// Don't do this in the loop
-	meta, err := rpcClient.GetMetaData(chain, opts.Globals.TestMode)
-	if err != nil {
-		return err
-	}
-	if opts.Globals.TestMode {
-		meta.Latest = 2000100
-	}
-
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		for _, br := range opts.BlockIds {
@@ -42,9 +33,8 @@ func (opts *BlocksOptions) HandleCounts() error {
 			}
 
 			for _, bn := range blockNums {
-				finalized := meta.Age(bn) > 28
 				var block types.SimpleBlock[string]
-				if block, err = rpcClient.GetBlockByNumber(chain, bn, finalized); err != nil {
+				if block, err = rpcClient.GetBlockByNumber(chain, bn); err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
 						continue

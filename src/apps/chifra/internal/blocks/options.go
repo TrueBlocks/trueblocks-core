@@ -92,23 +92,8 @@ func (opts *BlocksOptions) toCmdLine() string {
 	if opts.Uncles {
 		options += " --uncles"
 	}
-	if opts.Traces {
-		options += " --traces"
-	}
-	if opts.Logs {
-		options += " --logs"
-	}
-	for _, emitter := range opts.Emitter {
-		options += " --emitter " + emitter
-	}
-	for _, topic := range opts.Topic {
-		options += " --topic " + topic
-	}
 	if opts.Articulate {
 		options += " --articulate"
-	}
-	if opts.BigRange != 500 {
-		options += (" --big_range " + fmt.Sprintf("%d", opts.BigRange))
 	}
 	if opts.Cache {
 		options += " --cache"

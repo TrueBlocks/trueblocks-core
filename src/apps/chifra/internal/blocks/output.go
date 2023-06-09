@@ -58,6 +58,9 @@ func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
 		} else if opts.Count {
 			err = opts.HandleCounts()
 
+		} else if opts.Logs {
+			err = opts.HandleLogs()
+
 		} else if opts.Traces {
 			err = opts.HandleTrace()
 
@@ -106,7 +109,7 @@ func (opts *BlocksOptions) IsPorted() (ported bool) {
 	} else if opts.Cache {
 		ported = false
 	} else {
-		ported = !opts.Uncles && !opts.Logs && !opts.Traces
+		ported = !opts.Uncles
 	}
 	// EXISTING_CODE
 	return

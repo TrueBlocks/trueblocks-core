@@ -79,6 +79,7 @@ Data models produced by this tool:
 - [appearance](/data-model/accounts/#appearance)
 - [block](/data-model/chaindata/#block)
 - [log](/data-model/chaindata/#log)
+- [logfilter](/data-model/chaindata/#logfilter)
 - [trace](/data-model/chaindata/#trace)
 - [traceaction](/data-model/chaindata/#traceaction)
 - [traceresult](/data-model/chaindata/#traceresult)
@@ -120,6 +121,9 @@ Flags:
   -u, --uniq                 display a list of uniq addresses found in the transaction
   -f, --flow string          for the uniq option only, export only from or to (including trace from or to)
                              One of [ from | to ]
+  -l, --logs                 display only the logs found in the transaction(s)
+  -m, --emitter strings      for the --logs option only, filter logs to show only those logs emitted by the given address(es)
+  -B, --topic strings        for the --logs option only, filter logs to show only those with this topic(s)
   -A, --account_for string   reconcile the transaction as per the provided address
   -o, --cache                force the results of the query into the tx cache (and the trace cache if applicable)
   -D, --decache              removes a transactions and any traces in the transaction from the cache
@@ -222,6 +226,7 @@ Notes:
 Data models produced by this tool:
 
 - [log](/data-model/chaindata/#log)
+- [logfilter](/data-model/chaindata/#logfilter)
 
 Links:
 

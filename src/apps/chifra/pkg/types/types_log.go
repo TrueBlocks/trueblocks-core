@@ -64,6 +64,7 @@ func (s *SimpleLog) Model(verbose bool, format string, extraOptions map[string]a
 	// EXISTING_CODE
 	model = map[string]interface{}{
 		"address":          s.Address,
+		"blockHash":        s.BlockHash,
 		"blockNumber":      s.BlockNumber,
 		"logIndex":         s.LogIndex,
 		"timestamp":        s.Timestamp,
@@ -74,11 +75,12 @@ func (s *SimpleLog) Model(verbose bool, format string, extraOptions map[string]a
 
 	order = []string{
 		"blockNumber",
+		"blockHash",
 		"transactionIndex",
-		"logIndex",
 		"transactionHash",
 		"timestamp",
 		"date",
+		"logIndex",
 		"address",
 		"topic0",
 		"topic1",
@@ -98,7 +100,7 @@ func (s *SimpleLog) Model(verbose bool, format string, extraOptions map[string]a
 	}
 
 	if format == "json" {
-		if len(s.Data) > 0 && s.Data != "0x" {
+		if len(s.Data) > 2 {
 			model["data"] = s.Data
 		} else {
 			model["data"] = ""
@@ -110,7 +112,7 @@ func (s *SimpleLog) Model(verbose bool, format string, extraOptions map[string]a
 		model["topics"] = s.Topics
 
 	} else {
-		if len(s.Data) > 0 && s.Data != "0x" {
+		if len(s.Data) > 2 {
 			model["data"] = s.Data
 		}
 

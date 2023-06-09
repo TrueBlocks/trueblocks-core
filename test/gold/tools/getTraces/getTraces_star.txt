@@ -14,10 +14,7 @@ TEST[DATE|TIME] Format:  json
       },
       "blockHash": "0xe4c2b8cb9ddd1acb41043afb3bd0149c281eca23f1bc563af5899bac748ec372",
       "blockNumber": 2222221,
-      "result": {
-        "gasUsed": 0,
-        "output": "0x"
-      },
+      "result": {},
       "subtraces": 0,
       "timestamp": 1473348164,
       "traceAddress": [],
@@ -36,10 +33,7 @@ TEST[DATE|TIME] Format:  json
       },
       "blockHash": "0xe4c2b8cb9ddd1acb41043afb3bd0149c281eca23f1bc563af5899bac748ec372",
       "blockNumber": 2222221,
-      "result": {
-        "gasUsed": 0,
-        "output": "0x"
-      },
+      "result": {},
       "subtraces": 0,
       "timestamp": 1473348164,
       "traceAddress": [],
@@ -58,10 +52,7 @@ TEST[DATE|TIME] Format:  json
       },
       "blockHash": "0xe4c2b8cb9ddd1acb41043afb3bd0149c281eca23f1bc563af5899bac748ec372",
       "blockNumber": 2222221,
-      "result": {
-        "gasUsed": 0,
-        "output": "0x"
-      },
+      "result": {},
       "subtraces": 0,
       "timestamp": 1473348164,
       "traceAddress": [],
@@ -80,10 +71,7 @@ TEST[DATE|TIME] Format:  json
       },
       "blockHash": "0xe4c2b8cb9ddd1acb41043afb3bd0149c281eca23f1bc563af5899bac748ec372",
       "blockNumber": 2222221,
-      "result": {
-        "gasUsed": 0,
-        "output": "0x"
-      },
+      "result": {},
       "subtraces": 0,
       "timestamp": 1473348164,
       "traceAddress": [],

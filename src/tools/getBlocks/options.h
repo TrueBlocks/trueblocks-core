@@ -35,10 +35,7 @@ class COptions : public CBlockOptions {
     // BEG_CODE_DECLARE
     bool hashes;
     bool uncles;
-    bool traces;
-    bool logs;
     bool articulate;
-    uint64_t big_range;
     bool cache;
     // END_CODE_DECLARE
 
@@ -46,21 +43,16 @@ class COptions : public CBlockOptions {
     uint64_t nPrefunds{0};
     CBlock latestBlock;
     timestamp_t secsFinal;
-    CLogFilter logFilter;
 
     COptions(void);
     ~COptions(void);
 
     bool parseArguments(string_q& command) override;
     void Init(void) override;
-
-    bool handle_logs(void);
-    bool processFastPath(void);
 };
 
 //-----------------------------------------------------------------------------
 extern bool visitBlock(uint64_t num, void* data);
-extern bool traceBlock(uint64_t num, void* data);
 extern void interumReport(ostream& os, blknum_t i);
 
 //----------------------------------------------------------------

@@ -26,7 +26,6 @@ TEST[DATE|TIME] Format:  json
   },
   "result": {
     "address": "0x0",
-    "gasUsed": 0,
     "output": "0x"
   },
   "timestamp": 1441703356
@@ -52,7 +51,6 @@ TEST[DATE|TIME] Format:  json
   },
   "result": {
     "address": "0x0",
-    "gasUsed": 0,
     "output": "0x"
   },
   "timestamp": 1463025233

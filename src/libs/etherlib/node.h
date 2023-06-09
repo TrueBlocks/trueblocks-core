@@ -59,16 +59,11 @@ extern size_t queryUncleCount(const string_q& num);
 //-------------------------------------------------------------------------
 // lower level access to the node's responses
 extern bool queryRawBlock(string_q& results, const string_q& blockNum, bool needTrace, bool hashesOnly);
-extern bool queryRawBlockTrace(string_q& results, const string_q& hexNum);
-inline bool queryRawBlockTrace(string_q& results, blknum_t blockNum) {
-    return queryRawBlockTrace(results, uint_2_Hex(blockNum));
-}
 extern bool queryRawUncle(string_q& results, const string_q& blockNum, uint64_t index);
 extern bool queryRawTransaction(string_q& results, const hash_t& txHash);
 extern bool queryRawReceipt(string_q& results, const hash_t& txHash);
 extern bool queryRawTrace(string_q& results, const hash_t& hashIn);
 extern bool queryRawStateDiff(string_q& results, const hash_t& hashIn);
-extern bool queryRawLogs(string_q& results, const CLogFilter& query);
 
 //-----------------------------------------------------------------------
 extern bigint_t getTokenBalanceAt(const address_t& token, const address_t& holder, blknum_t blockNum);

@@ -13,9 +13,7 @@ traces?transactions=0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd
       "blockNumber": 2608034,
       "result": {
         "address": "0x9bd20e68b22f63c651a30f2cdbf6d539e465f83c",
-        "code": "0x",
-        "gasUsed": 5021,
-        "output": ""
+        "gasUsed": 5021
       },
       "subtraces": 1,
       "timestamp": 1478880237,

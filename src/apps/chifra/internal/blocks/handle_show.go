@@ -15,12 +15,6 @@ import (
 )
 
 func (opts *BlocksOptions) HandleShowBlocks() error {
-	// Don't do this in the loop
-	meta, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
-	if err != nil {
-		return err
-	}
-
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
 		for _, br := range opts.BlockIds {
@@ -35,18 +29,16 @@ func (opts *BlocksOptions) HandleShowBlocks() error {
 			}
 
 			for _, bn := range blockNums {
-				finalized := meta.Age(bn) > 28
-
 				// Decide on the concrete type of block.Transactions and set values
 				var block types.Modeler[types.RawBlock]
 				var err error
 				if !opts.Hashes {
 					var b types.SimpleBlock[types.SimpleTransaction]
-					b, err = rpcClient.GetBlockByNumberWithTxs(opts.Globals.Chain, bn, finalized)
+					b, err = rpcClient.GetBlockByNumberWithTxs(opts.Globals.Chain, bn)
 					block = &b
 				} else {
 					var b types.SimpleBlock[string]
-					b, err = rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, finalized)
+					b, err = rpcClient.GetBlockByNumber(opts.Globals.Chain, bn)
 					block = &b
 				}
 

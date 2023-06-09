@@ -29,6 +29,12 @@ func (opts *TransactionsOptions) validateTransactions() error {
 	if len(opts.Globals.File) > 0 {
 		// Do nothing
 	} else {
+		if !opts.Logs && (len(opts.Emitter) > 0 || len(opts.Topic) > 0) {
+			return validate.Usage("The {0} option are only available with the {1} option.", "--emitter and --topic", "--log")
+		} else if opts.Logs {
+			return validate.Usage("The {0} option is currently not available.", "--logs")
+		}
+
 		if len(opts.Transactions) == 0 {
 			return validate.Usage("Please supply one or more transaction identifiers.")
 		}

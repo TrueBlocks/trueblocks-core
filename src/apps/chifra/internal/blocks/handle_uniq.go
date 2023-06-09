@@ -3,8 +3,10 @@ package blocksPkg
 import (
 	"context"
 	"errors"
+	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
@@ -36,6 +38,9 @@ func (opts *BlocksOptions) HandleUniq() (err error) {
 			}
 
 			for _, bn := range blockNums {
+				if !opts.Globals.TestMode {
+					logger.Info("Processing block", fmt.Sprintf("%d", bn))
+				}
 				addrMap := make(index.AddressBooleanMap)
 				ts := rpc.GetBlockTimestamp(chain, bn)
 				if err := opts.ProcessBlockUniqs(chain, procFunc, bn, addrMap, ts); err != nil {
@@ -68,7 +73,7 @@ func (opts *BlocksOptions) ProcessBlockUniqs(chain string, procFunc index.UniqPr
 		}
 
 	} else {
-		if block, err := rpcClient.GetBlockByNumberWithTxs(chain, bn, true /* isFinal doesn't matter */); err != nil {
+		if block, err := rpcClient.GetBlockByNumberWithTxs(chain, bn); err != nil {
 			return err
 		} else {
 			miner := block.Miner.Hex()

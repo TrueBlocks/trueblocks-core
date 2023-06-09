@@ -98,14 +98,14 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12500,tools,ChainData,blocks,getBlocks,blocks,,,true,false,true,true,local,positional,list<blknum>,a space-separated list of one or more block identifiers
 12510,tools,ChainData,blocks,getBlocks,hashes,e,,false,false,true,true,header,switch,<boolean>,display only transaction hashes&#44; default is to display full transaction detail
 12520,tools,ChainData,blocks,getBlocks,uncles,c,,false,false,true,true,header,switch,<boolean>,display uncle blocks (if any) instead of the requested block
-12530,tools,ChainData,blocks,getBlocks,traces,t,,false,false,true,true,header,switch,<boolean>,export the traces from the block as opposed to the block data
+12530,tools,ChainData,blocks,getBlocks,traces,t,,false,false,true,true,gocmd,switch,<boolean>,export the traces from the block as opposed to the block data
 12560,tools,ChainData,blocks,getBlocks,uniq,u,,false,false,true,true,gocmd,switch,<boolean>,display a list of uniq address appearances per transaction
 12565,tools,ChainData,blocks,getBlocks,flow,f,,false,false,true,true,gocmd,flag,enum[from|to|reward],for the uniq option only&#44; export only from or to (including trace from or to)
-12570,tools,ChainData,blocks,getBlocks,logs,l,,false,false,true,true,header,switch,<boolean>,display only the logs found in the block(s)
-12972,tools,ChainData,blocks,getBlocks,emitter,m,,false,false,true,true,local,flag,list<addr>,for the --logs option only&#44; filter logs to show only those logs emitted by the given address(es)
-12974,tools,ChainData,blocks,getBlocks,topic,B,,false,false,true,true,local,flag,list<topic>,for the --logs option only&#44; filter logs to show only those with this topic(s)
+12570,tools,ChainData,blocks,getBlocks,logs,l,,false,false,true,true,gocmd,switch,<boolean>,display only the logs found in the block(s)
+12972,tools,ChainData,blocks,getBlocks,emitter,m,,false,false,true,true,gocmd,flag,list<addr>,for the --logs option only&#44; filter logs to show only those logs emitted by the given address(es)
+12974,tools,ChainData,blocks,getBlocks,topic,B,,false,false,true,true,gocmd,flag,list<topic>,for the --logs option only&#44; filter logs to show only those with this topic(s)
 12975,tools,ChainData,blocks,getBlocks,articulate,a,,false,false,true,true,header,switch,<boolean>,for the --logs option only&#44; articulate the retrieved data if ABIs can be found
-12976,tools,ChainData,blocks,getBlocks,big_range,r,500,false,false,true,true,header,flag,<uint64>,for the --logs option only&#44; allow for block ranges larger than 500
+12976,tools,ChainData,blocks,getBlocks,big_range,r,500,false,false,true,true,gocmd,flag,<uint64>,for the --logs option only&#44; allow for block ranges larger than 500
 12578,tools,ChainData,blocks,getBlocks,count,U,,false,false,true,true,gocmd,switch,<boolean>,display the number of the lists of appearances for --addrs or --uniq
 12580,tools,ChainData,blocks,getBlocks,cache,o,,false,false,true,true,header,switch,<boolean>,force a write of the block to the cache
 12581,tools,ChainData,blocks,getBlocks,decache,D,,false,false,true,true,gocmd,switch,<boolean>,removes a block and any transactions or traces in the block from the cache
@@ -125,6 +125,9 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13580,tools,ChainData,transactions,getTrans,traces,t,,false,false,true,true,header,switch,<boolean>,include the transaction's traces in the results
 13605,tools,ChainData,transactions,getTrans,uniq,u,,false,false,true,true,gocmd,switch,<boolean>,display a list of uniq addresses found in the transaction
 13610,tools,ChainData,transactions,getTrans,flow,f,,false,false,true,true,gocmd,flag,enum[from|to],for the uniq option only&#44; export only from or to (including trace from or to)
+13611,tools,ChainData,transactions,getTrans,logs,l,,false,false,true,true,gocmd,switch,<boolean>,display only the logs found in the transaction(s)
+13613,tools,ChainData,transactions,getTrans,emitter,m,,false,false,true,true,gocmd,flag,list<addr>,for the --logs option only&#44; filter logs to show only those logs emitted by the given address(es)
+13615,tools,ChainData,transactions,getTrans,topic,B,,false,false,true,true,gocmd,flag,list<topic>,for the --logs option only&#44; filter logs to show only those with this topic(s)
 13617,tools,ChainData,transactions,getTrans,account_for,A,,false,false,true,true,local,flag,<address>,reconcile the transaction as per the provided address
 13620,tools,ChainData,transactions,getTrans,cache,o,,false,false,true,true,header,switch,<boolean>,force the results of the query into the tx cache (and the trace cache if applicable)
 13621,tools,ChainData,transactions,getTrans,decache,D,,false,false,true,true,gocmd,switch,<boolean>,removes a transactions and any traces in the transaction from the cache

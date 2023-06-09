@@ -414,14 +414,6 @@ bool queryRawUncle(string_q& results, const string_q& blockNum, uint64_t index) 
 }
 
 //-------------------------------------------------------------------------
-bool queryRawBlockTrace(string_q& blockStr, const string_q& hexNum) {
-    string_q data = "[\"[BLOCKNUM]\"]";
-    replace(data, "[BLOCKNUM]", hexNum);
-    blockStr = callRPC("trace_block", data, true);
-    return true;
-}
-
-//-------------------------------------------------------------------------
 string_q getRawBlock(blknum_t bn) {
     string_q numStr = uint_2_Str(bn);
 
@@ -486,12 +478,6 @@ bool queryRawTrace(string_q& trace, const string_q& hashIn) {
 //-------------------------------------------------------------------------
 bool queryRawStateDiff(string_q& diffs, const string_q& hashIn) {
     diffs = "[" + callRPC("trace_replayTransaction", "[\"" + str_2_Hash(hashIn) + "\",[\"stateDiff\"]]", true) + "]";
-    return true;
-}
-
-//-------------------------------------------------------------------------
-bool queryRawLogs(string_q& results, const CLogFilter& query) {
-    results = callRPC("eth_getLogs", query.toRPC(), true);
     return true;
 }
 

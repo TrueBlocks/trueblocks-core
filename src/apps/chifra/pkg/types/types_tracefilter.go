@@ -13,6 +13,8 @@ import (
 	"fmt"
 	"io"
 	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
 // EXISTING_CODE
@@ -31,9 +33,9 @@ type RawTraceFilter struct {
 type SimpleTraceFilter struct {
 	After       uint64          `json:"after,omitempty"`
 	Count       uint64          `json:"count,omitempty"`
-	FromAddress []string        `json:"fromAddress,omitempty"`
+	FromAddress []base.Address  `json:"fromAddress,omitempty"`
 	FromBlock   string          `json:"fromBlock,omitempty"`
-	ToAddress   []string        `json:"toAddress,omitempty"`
+	ToAddress   []base.Address  `json:"toAddress,omitempty"`
 	ToBlock     string          `json:"toBlock,omitempty"`
 	raw         *RawTraceFilter `json:"-"`
 	// EXISTING_CODE
@@ -99,11 +101,11 @@ func (s *SimpleTraceFilter) ParseBangString(filter string) (ret map[string]any) 
 		ret["toBlock"] = s.ToBlock
 	}
 	if len(parts) > 2 && len(parts[2]) > 0 {
-		s.FromAddress = append(s.FromAddress, parts[2])
+		s.FromAddress = append(s.FromAddress, base.HexToAddress(parts[2]))
 		ret["fromAddress"] = s.FromAddress
 	}
 	if len(parts) > 3 && len(parts[3]) > 0 {
-		s.ToAddress = append(s.ToAddress, parts[3])
+		s.ToAddress = append(s.ToAddress, base.HexToAddress(parts[3]))
 		ret["toAddress"] = s.ToAddress
 	}
 	if len(parts) > 4 && mustParseUint(parts[4]) > 0 {

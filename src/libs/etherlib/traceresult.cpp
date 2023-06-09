@@ -82,7 +82,7 @@ string_q CTraceResult::getValueByName(const string_q& fieldName) const {
             break;
         case 'g':
             if (fieldName % "gasUsed") {
-                return gas_2_Str(gasUsed);
+                return gasUsed == 0 ? "" : gas_2_Str(gasUsed);
             }
             break;
         case 'o':
@@ -231,7 +231,7 @@ void CTraceResult::registerClass(void) {
     ADD_FIELD(CTraceResult, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CTraceResult, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTraceResult, "code", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CTraceResult, "gasUsed", T_GAS, ++fieldNum);
+    ADD_FIELD(CTraceResult, "gasUsed", T_GAS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTraceResult, "output", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -252,6 +252,21 @@ string_q nextTraceresultChunk_custom(const string_q& fieldIn, const void* dataPt
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'a':
+                if ((fieldIn % "address") && isZeroAddr(tra->address)) {
+                    return "";
+                }
+                break;
+            case 'c':
+                if ((fieldIn % "code") && isZeroHash(tra->code)) {
+                    return "";
+                }
+                break;
+            case 'o':
+                if ((fieldIn % "output") && isZeroHash(tra->output)) {
+                    return "";
+                }
+                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type

@@ -132,8 +132,7 @@ TEST[DATE|TIME] Format:  json
           "blockHash": "0x836c4866ea68fbe3b9786cdb3c2c8a36fa0c689e77b0f9fc441d37fb85489fad",
           "blockNumber": 3648669,
           "result": {
-            "gasUsed": 503153,
-            "output": "0x"
+            "gasUsed": 503153
           },
           "subtraces": 4,
           "timestamp": 1493897242,
@@ -253,8 +252,7 @@ TEST[DATE|TIME] Format:  json
           "blockNumber": 3648669,
           "result": {
             "address": "0x9b810944879c013244192f0f94df08d324f7c994",
-            "gasUsed": 339168,
-            "output": ""
+            "gasUsed": 339168
           },
           "subtraces": 0,
           "timestamp": 1493897242,
