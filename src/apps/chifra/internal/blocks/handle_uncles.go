@@ -14,7 +14,7 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-func (opts *BlocksOptions) HandleShowUncles() error {
+func (opts *BlocksOptions) HandleUncles() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
 		for _, br := range opts.BlockIds {
@@ -51,7 +51,8 @@ func (opts *BlocksOptions) HandleShowUncles() error {
 					return
 				}
 
-				modelChan <- block
+				b := block
+				modelChan <- b
 			}
 		}
 	}
