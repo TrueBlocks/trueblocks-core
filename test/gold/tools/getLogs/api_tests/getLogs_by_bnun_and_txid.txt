@@ -3,6 +3,7 @@ logs?transactions=4000000.5&fmt=json
   "data": [
     {
       "address": "0x1a95b271b0535d15fa49932daba31ba612b52946",
+      "blockHash": "0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853",
       "blockNumber": 4000000,
       "data": "0x000000000000000000000000000000000000000000000000000000000a21fe80",
       "date": "2017-07-09 20:52:47 UTC",
