@@ -1,8 +1,8 @@
 package transactionsPkg
 
-func (opts *TransactionsOptions) HandleAccountFor() (err error, disp bool) {
+func (opts *TransactionsOptions) HandleAccountFor() (err error) {
 	if opts.Globals.IsApiMode() {
-		return nil, false
+		return nil
 	}
-	return opts.Globals.PassItOn("getTrans", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr()), true
+	return opts.Globals.PassItOn("getTrans", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
 }

@@ -32,7 +32,19 @@ func (opts *TransactionsOptions) validateTransactions() error {
 		if !opts.Logs && (len(opts.Emitter) > 0 || len(opts.Topic) > 0) {
 			return validate.Usage("The {0} option are only available with the {1} option.", "--emitter and --topic", "--log")
 		} else if opts.Logs {
-			return validate.Usage("The {0} option is currently not available.", "--logs")
+			for _, emitter := range opts.Emitter {
+				valid, err := validate.IsValidAddressE(emitter)
+				if !valid {
+					return err
+				}
+			}
+
+			for _, topic := range opts.Topic {
+				valid, err := validate.IsValidTopicE(topic)
+				if !valid {
+					return err
+				}
+			}
 		}
 
 		if len(opts.Transactions) == 0 {

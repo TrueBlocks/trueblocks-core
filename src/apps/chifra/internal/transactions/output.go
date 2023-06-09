@@ -53,13 +53,20 @@ func (opts *TransactionsOptions) TransactionsInternal() (err error, handled bool
 	if opts.IsPorted() {
 		if opts.Decache {
 			return opts.HandleDecache(), true
+
+		} else if opts.Logs {
+			return opts.HandleLogs(), true
+
 		} else if opts.Source {
 			return opts.HandleSource(), true
+
 		} else if opts.Uniq {
 			return opts.HandleUniq(), true
+
 		} else if len(opts.AccountFor) > 0 {
 			// TODO: Imcomplete?
-			return opts.HandleAccountFor()
+			return opts.HandleAccountFor(), true
+
 		} else {
 			return opts.HandleShowTxs(), true
 		}
@@ -87,10 +94,6 @@ func GetTransactionsOptions(args []string, g *globals.GlobalOptions) *Transactio
 
 func (opts *TransactionsOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	if opts.Decache || opts.Uniq {
-		return true
-	}
-
 	ported = !opts.Cache && len(opts.AccountFor) == 0
 	// EXISTING_CODE
 	return
