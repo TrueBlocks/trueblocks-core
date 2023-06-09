@@ -1044,13 +1044,14 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/chaindata/#block">Block</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">Traceaction</a>, <a href="/data-model/chaindata/#traceresult">Traceresult</a>, and/or <a href="/data-model/chaindata/#blockcount">Blockcount</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-blocks">chifra blocks</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/chaindata/#block">Block</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/chaindata/#logfilter">Logfilter</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">Traceaction</a>, <a href="/data-model/chaindata/#traceresult">Traceresult</a>, and/or <a href="/data-model/chaindata/#blockcount">Blockcount</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-blocks">chifra blocks</a> command line.
                     type: array
                     items:
                       oneOf:
                         - $ref: "#/components/schemas/appearance"
                         - $ref: "#/components/schemas/block"
                         - $ref: "#/components/schemas/log"
+                        - $ref: "#/components/schemas/logFilter"
                         - $ref: "#/components/schemas/trace"
                         - $ref: "#/components/schemas/traceAction"
                         - $ref: "#/components/schemas/traceResult"
@@ -1119,6 +1120,38 @@ paths:
             enum:
               - from
               - to
+        - name: logs
+          description: display only the logs found in the transaction(s)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: emitter
+          description: >
+            for the --logs option only, filter logs to show only those logs emitted by the given address(es)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address
+        - name: topic
+          description: >
+            for the --logs option only, filter logs to show only those with this topic(s)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: topic
         - name: accountFor
           description: reconcile the transaction as per the provided address
           required: false
@@ -1236,10 +1269,12 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Log data as returned from the RPC (with slight enhancements). Produces <a href="/data-model/chaindata/#log">Log</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-logs">chifra logs</a> command line.
+                    description: Produces <a href="/data-model/chaindata/#log">Log</a>, and/or <a href="/data-model/chaindata/#logfilter">Logfilter</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-logs">chifra logs</a> command line.
                     type: array
                     items:
-                      $ref: "#/components/schemas/log"
+                      oneOf:
+                        - $ref: "#/components/schemas/log"
+                        - $ref: "#/components/schemas/logFilter"
         "400":
           description: bad input parameter
   /traces:
@@ -2801,6 +2836,32 @@ components:
           type: string
           example: "Transfer(0xcfa...9f54..."
           description: "a truncated, more readable version of the articulation"
+    logFilter:
+      description: "used by the fast path log queries for various commands"
+      type: object
+      properties:
+        fromBlock:
+          type: number
+          format: blknum
+          description: "the first block in the block range to query with eth_getLogs"
+        toBlock:
+          type: number
+          format: blknum
+          description: "the last block in the range to query with eth_getLogs"
+        blockHash:
+          type: string
+          format: hash
+          description: "an alternative to blocks specification, the hash of the block to query"
+        emitters:
+          type: array
+          items:
+            $ref: "#/components/schemas/address"
+          description: "one or more emitting addresses from which logs were emitted"
+        topics:
+          type: array
+          items:
+            $ref: "#/components/schemas/topic"
+          description: "one or more topics which logs represent"
     trace:
       description: "trace data as returned from the RPC (with slight enhancements)"
       type: object

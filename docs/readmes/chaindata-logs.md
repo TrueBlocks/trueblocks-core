@@ -33,6 +33,7 @@ Notes:
 Data models produced by this tool:
 
 - [log](/data-model/chaindata/#log)
+- [logfilter](/data-model/chaindata/#logfilter)
 
 Links:
 
