@@ -28,6 +28,9 @@ type TransactionsOptions struct {
 	Traces         bool                     `json:"traces,omitempty"`         // Include the transaction's traces in the results
 	Uniq           bool                     `json:"uniq,omitempty"`           // Display a list of uniq addresses found in the transaction
 	Flow           string                   `json:"flow,omitempty"`           // For the uniq option only, export only from or to (including trace from or to)
+	Logs           bool                     `json:"logs,omitempty"`           // Display only the logs found in the transaction(s)
+	Emitter        []string                 `json:"emitter,omitempty"`        // For the --logs option only, filter logs to show only those logs emitted by the given address(es)
+	Topic          []string                 `json:"topic,omitempty"`          // For the --logs option only, filter logs to show only those with this topic(s)
 	AccountFor     string                   `json:"accountFor,omitempty"`     // Reconcile the transaction as per the provided address
 	Cache          bool                     `json:"cache,omitempty"`          // Force the results of the query into the tx cache (and the trace cache if applicable)
 	Decache        bool                     `json:"decache,omitempty"`        // Removes a transactions and any traces in the transaction from the cache
@@ -47,6 +50,9 @@ func (opts *TransactionsOptions) testLog() {
 	logger.TestLog(opts.Traces, "Traces: ", opts.Traces)
 	logger.TestLog(opts.Uniq, "Uniq: ", opts.Uniq)
 	logger.TestLog(len(opts.Flow) > 0, "Flow: ", opts.Flow)
+	logger.TestLog(opts.Logs, "Logs: ", opts.Logs)
+	logger.TestLog(len(opts.Emitter) > 0, "Emitter: ", opts.Emitter)
+	logger.TestLog(len(opts.Topic) > 0, "Topic: ", opts.Topic)
 	logger.TestLog(len(opts.AccountFor) > 0, "AccountFor: ", opts.AccountFor)
 	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
 	logger.TestLog(opts.Decache, "Decache: ", opts.Decache)
@@ -109,6 +115,18 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 			opts.Uniq = true
 		case "flow":
 			opts.Flow = value[0]
+		case "logs":
+			opts.Logs = true
+		case "emitter":
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Emitter = append(opts.Emitter, s...)
+			}
+		case "topic":
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Topic = append(opts.Topic, s...)
+			}
 		case "accountFor":
 			opts.AccountFor = value[0]
 		case "cache":
