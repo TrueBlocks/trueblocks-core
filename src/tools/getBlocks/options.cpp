@@ -21,9 +21,6 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more block identifiers"),  // NOLINT
-    COption("hashes", "e", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),  // NOLINT
-    COption("uncles", "c", "", OPT_SWITCH, "display uncle blocks (if any) instead of the requested block"),
-    COption("articulate", "a", "", OPT_SWITCH, "for the --logs option only, articulate the retrieved data if ABIs can be found"),  // NOLINT
     COption("cache", "o", "", OPT_SWITCH, "force a write of the block to the cache"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve one or more blocks from the chain or local cache."),
     // clang-format on
@@ -51,15 +48,6 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (arg == "-e" || arg == "--hashes") {
-            hashes = true;
-
-        } else if (arg == "-c" || arg == "--uncles") {
-            uncles = true;
-
-        } else if (arg == "-a" || arg == "--articulate") {
-            articulate = true;
-
         } else if (arg == "-o" || arg == "--cache") {
             cache = true;
 
@@ -77,18 +65,12 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (!cache && !articulate && !uncles) {
+    if (!cache) {
         return usage("Nope");
     }
 
     if (cache)
         etherlib_init(defaultQuitHandler);
-
-    if (hashes) {
-        manageFields("CTransaction:all", FLD_HIDE);
-        manageFields("CBlock:all", FLD_HIDE);
-        manageFields("CBlock:hash,blockNumber,parentHash,timestamp,tx_hashes", FLD_SHOW);
-    }
 
     if (expContext().exportFmt == NONE1)
         expContext().exportFmt = JSON1;
@@ -107,9 +89,6 @@ void COptions::Init(void) {
     // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT
-    hashes = false;
-    uncles = false;
-    articulate = false;
     cache = false;
     // END_CODE_INIT
 

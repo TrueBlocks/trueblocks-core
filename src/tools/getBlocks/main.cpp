@@ -43,17 +43,6 @@ int main(int argc, const char* argv[]) {
 }
 
 //------------------------------------------------------------
-string_q doOneLightBlock(blknum_t num, const COptions& opt) {
-    CBlock gold;
-    getBlockLight(gold, num);
-    if (gold.blockNumber == 0 && gold.timestamp == 0)
-        gold.timestamp = blockZeroTs();
-    HIDE_FIELD(CTransaction, "date");
-    HIDE_FIELD(CTransaction, "ether");
-    return gold.Format(expContext().fmtMap["format"]);
-}
-
-//------------------------------------------------------------
 string_q doOneHeavyBlock(CBlock& gold, blknum_t num, const COptions& opt) {
     queryBlock(gold, uint_2_Str(num), true);
     if (gold.blockNumber == 0 && gold.timestamp == 0)
@@ -63,22 +52,13 @@ string_q doOneHeavyBlock(CBlock& gold, blknum_t num, const COptions& opt) {
 }
 
 //------------------------------------------------------------
-string_q doOneUncle(blknum_t num, blknum_t index, const COptions& opt) {
-    CBlock gold;
-    getUncle(gold, num, index);
-    gold.finalized = isBlockFinal(gold.timestamp, opt.latestBlock.timestamp, opt.secsFinal);
-    return gold.Format(expContext().fmtMap["format"]);
-}
-
-//------------------------------------------------------------
 string_q doOneBlock(blknum_t num, COptions& opt) {
-    bool isText = (expContext().exportFmt & (TXT1 | CSV1));
     string_q fileName = getBinaryCacheFilename(CT_BLOCKS, num);
     CBlock gold;
     gold.blockNumber = num;
     string_q result;
     if (opt.isRaw) {
-        if (!queryRawBlock(result, uint_2_Str(num), true, opt.hashes)) {
+        if (!queryRawBlock(result, uint_2_Str(num), true, false)) {
             result = "Could not query raw block " + uint_2_Str(num) + ". Is an Ethereum node running?";
 
         } else {
@@ -98,33 +78,12 @@ string_q doOneBlock(blknum_t num, COptions& opt) {
         }
         opt.firstOut = false;
 
-    } else if (opt.uncles) {
-        uint64_t nUncles = getUncleCount(num);
-        if (nUncles == 0) {
-            // If we don't do this, we get extra commas
-            opt.firstOut = true;
-        } else {
-            for (size_t i = 0; i < nUncles; i++) {
-                result += doOneUncle(num, i, opt);
-                if (i != (nUncles - 1)) {
-                    if (!isText)
-                        result += ",";
-                    result += "\n";
-                }
-                opt.firstOut = false;
-            }
-            opt.firstOut = false;
-        }
     } else {
-        if (opt.hashes) {
-            result = doOneLightBlock(num, opt);
-        } else {
-            result = doOneHeavyBlock(gold, num, opt);
-            if (opt.cache) {  // turn this on to force a write of the block to the disc
-                LOG2("writeBlockToBinary(" + uint_2_Str(gold.blockNumber) + ", " + fileName + ": " +
-                     bool_2_Str(fileExists(fileName)));
-                writeBlockToBinary(gold, fileName);
-            }
+        result = doOneHeavyBlock(gold, num, opt);
+        if (opt.cache) {  // turn this on to force a write of the block to the disc
+            LOG2("writeBlockToBinary(" + uint_2_Str(gold.blockNumber) + ", " + fileName + ": " +
+                 bool_2_Str(fileExists(fileName)));
+            writeBlockToBinary(gold, fileName);
         }
         opt.firstOut = false;
     }
