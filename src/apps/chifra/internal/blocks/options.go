@@ -86,15 +86,6 @@ func (opts *BlocksOptions) getEnvStr() []string {
 // toCmdLine converts the option to a command line for calling out to the system.
 func (opts *BlocksOptions) toCmdLine() string {
 	options := ""
-	if opts.Hashes {
-		options += " --hashes"
-	}
-	if opts.Uncles {
-		options += " --uncles"
-	}
-	if opts.Articulate {
-		options += " --articulate"
-	}
 	if opts.Cache {
 		options += " --cache"
 	}

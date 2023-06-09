@@ -33,9 +33,6 @@
 class COptions : public CBlockOptions {
   public:
     // BEG_CODE_DECLARE
-    bool hashes;
-    bool uncles;
-    bool articulate;
     bool cache;
     // END_CODE_DECLARE
 
