@@ -78,7 +78,7 @@ string_q CTransfer::getValueByName(const string_q& fieldName) const {
                 return assetSymbol;
             }
             if (fieldName % "amount") {
-                return wei_2_Str(amount);
+                return bni_2_Str(amount);
             }
             break;
         case 'b':
@@ -163,7 +163,7 @@ bool CTransfer::setValueByName(const string_q& fieldNameIn, const string_q& fiel
                 return true;
             }
             if (fieldName % "amount") {
-                amount = str_2_Wei(fieldValue);
+                amount = str_2_BigInt(fieldValue);
                 return true;
             }
             break;
@@ -359,7 +359,7 @@ void CTransfer::registerClass(void) {
     ADD_FIELD(CTransfer, "assetAddr", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTransfer, "assetSymbol", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTransfer, "decimals", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CTransfer, "amount", T_WEI, ++fieldNum);
+    ADD_FIELD(CTransfer, "amount", T_INT256, ++fieldNum);
     ADD_FIELD(CTransfer, "spotPrice", T_DOUBLE, ++fieldNum);
     ADD_FIELD(CTransfer, "priceSource", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTransfer, "encoding", T_TEXT | TS_OMITEMPTY, ++fieldNum);

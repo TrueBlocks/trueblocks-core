@@ -154,7 +154,7 @@ string_q type_2_GoType(const CMember& field) {
     if (type == "wei")
         return "base.Wei";
     if (type == "int256")
-        return "big.Int";
+        return "base.BigInt";
     if (type == "double")
         return "float64";
     return type;

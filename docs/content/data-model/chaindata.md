@@ -120,7 +120,7 @@ Transfers consist of the following fields:
 | assetAddr        | 0xeeee...eeee for ETH reconcilations, the token address otherwise                              | address   |
 | assetSymbol      | either ETH, WEI or the symbol of the asset being reconciled as queried from the chain          | string    |
 | decimals         | Equivalent to the queried value of `decimals` from an ERC20 contract or, if ETH or WEI then 18 | uint64    |
-| amount           | the amount of the transfer in the units of the asset                                           | wei       |
+| amount           | the amount of the transfer in the units of the asset                                           | int256    |
 | spotPrice        | the on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction       | double    |
 | priceSource      | the on-chain source from which the spot price was taken                                        | string    |
 | encoding         | the four-byte encoding of the transaction's function call                                      | string    |
@@ -431,6 +431,7 @@ This documentation mentions the following basic data types.
 | double    | a double precision float            | 64 bits        |
 | gas       | an unsigned big number              | as a string    |
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
+| int256    | a signed big number                 | as a string    |
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
 | uint32    | a 32-bit unsigned integer           |                |

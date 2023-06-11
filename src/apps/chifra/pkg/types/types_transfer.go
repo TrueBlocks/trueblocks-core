@@ -38,7 +38,7 @@ type RawTransfer struct {
 }
 
 type SimpleTransfer struct {
-	Amount           base.Wei       `json:"amount"`
+	Amount           base.BigInt    `json:"amount"`
 	AssetAddr        base.Address   `json:"assetAddr"`
 	AssetSymbol      string         `json:"assetSymbol"`
 	BlockNumber      base.Blknum    `json:"blockNumber"`
@@ -55,6 +55,7 @@ type SimpleTransfer struct {
 	TransactionIndex base.Blknum    `json:"transactionIndex"`
 	raw              *RawTransfer   `json:"-"`
 	// EXISTING_CODE
+	Log *SimpleLog `json:"-"`
 	// EXISTING_CODE
 }
 

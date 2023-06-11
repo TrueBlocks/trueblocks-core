@@ -11,7 +11,6 @@ package types
 // EXISTING_CODE
 import (
 	"io"
-	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
@@ -44,7 +43,7 @@ type SimpleTokenBalance struct {
 	BlockNumber      base.Blknum      `json:"blockNumber"`
 	Date             string           `json:"date"`
 	Decimals         uint64           `json:"decimals"`
-	Diff             big.Int          `json:"diff"`
+	Diff             base.BigInt      `json:"diff"`
 	Holder           base.Address     `json:"holder"`
 	IsContract       bool             `json:"isContract"`
 	IsErc20          bool             `json:"isErc20"`

@@ -3,7 +3,6 @@ TEST[DATE|TIME] Transactions:  [0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4
 TEST[DATE|TIME] AccountFor:  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] Format:  json
-{ "data": [
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
@@ -79,44 +78,48 @@ TIME ~ CLOCK - <INFO>  :
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling a contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 7005737 prior to its deployment 10000835
 TIME ~ CLOCK - <INFO>  : doEthCall in CUniPrice::findPair returned false
-  {
-    "blockNumber": 7005737,
-    "transactionIndex": 30,
-    "logIndex": 20,
-    "transactionHash": "0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4ea6199334cf3399cdf",
-    "timestamp": 1546555962,
-    "date": "2019-01-03 22:52:42 UTC",
-    "assetAddr": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
-    "assetSymbol": "0x5c",
-    "decimals": 18,
-    "spotPrice": 0.00000,
-    "priceSource": "not-priced",
-    "accountedFor": "0xec3ef464bf821c3b10a18adf9ac7177a628e87cc",
-    "sender": "0x28adfa7a3ab67fb19410beabb1c1bf880fef0541",
-    "recipient": "0xec3ef464bf821c3b10a18adf9ac7177a628e87cc",
-    "begBal": "71040.040864000000000000",
-    "amountNet": "3016.109787000000000000",
-    "endBal": "75843.546632000000000000",
-    "reconciliationType": "regular-token",
-    "reconciled": false,
-    "totalIn": "3016.109787000000000000",
-    "amountIn": "3016.109787000000000000",
-    "internalIn": "",
-    "selfDestructIn": "",
-    "minerBaseRewardIn": "",
-    "minerNephewRewardIn": "",
-    "minerTxFeeIn": "",
-    "minerUncleRewardIn": "",
-    "prefundIn": "",
-    "totalOut": "",
-    "amountOut": "",
-    "internalOut": "",
-    "selfDestructOut": "",
-    "gasOut": "",
-    "totalOutLessGas": "",
-    "prevAppBlk": 7005736,
-    "prevBal": "71040.040864000000000000",
-    "begBalDiff": "",
-    "endBalDiff": "-1787.395981000000000000",
-    "endBalCalc": "74056.150651000000000000"
-  }] }
+{
+  "data": [
+    {
+      "accountedFor": "0xec3ef464bf821c3b10a18adf9ac7177a628e87cc",
+      "amountIn": "3016.109787000000000000",
+      "amountNet": "3016.109787000000000000",
+      "amountOut": "",
+      "assetAddr": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
+      "assetSymbol": "0x5c",
+      "begBal": "71040.040864000000000000",
+      "begBalDiff": "",
+      "blockNumber": 7005737,
+      "date": "2019-01-03 22:52:42 UTC",
+      "decimals": 18,
+      "endBal": "75843.546632000000000000",
+      "endBalCalc": "74056.150651000000000000",
+      "endBalDiff": "-1787.395981000000000000",
+      "gasOut": "",
+      "internalIn": "",
+      "internalOut": "",
+      "logIndex": 20,
+      "minerBaseRewardIn": "",
+      "minerNephewRewardIn": "",
+      "minerTxFeeIn": "",
+      "minerUncleRewardIn": "",
+      "prefundIn": "",
+      "prevAppBlk": 7005736,
+      "prevBal": "71040.040864000000000000",
+      "priceSource": "not-priced",
+      "recipient": "0xec3ef464bf821c3b10a18adf9ac7177a628e87cc",
+      "reconciled": false,
+      "reconciliationType": "regular-token",
+      "selfDestructIn": "",
+      "selfDestructOut": "",
+      "sender": "0x28adfa7a3ab67fb19410beabb1c1bf880fef0541",
+      "spotPrice": 0,
+      "timestamp": 1546555962,
+      "totalIn": "3016.109787000000000000",
+      "totalOut": "",
+      "totalOutLessGas": "",
+      "transactionHash": "0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4ea6199334cf3399cdf",
+      "transactionIndex": 30
+    }
+  ]
+}

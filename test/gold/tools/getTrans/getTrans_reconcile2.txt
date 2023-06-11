@@ -3,7 +3,6 @@ TEST[DATE|TIME] Transactions:  [0x3f095a4b4e1b85e148b8b97aa91841f28280692b6045de
 TEST[DATE|TIME] AccountFor:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  json
-{ "data": [
 TIME ~ CLOCK - : 4-----transHash0x3f095a4b4e1b85e148b8b97aa91841f28280692b6045de8e690db38c59ecc603
 TIME ~ CLOCK - : 4-----not from cache
 TIME ~ CLOCK - : 4-----Loaded timestamp file
@@ -50,44 +49,48 @@ TIME ~ CLOCK - <INFO>  : Calling 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11 at b
 TIME ~ CLOCK - <INFO>  : call to 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11 at block 15000000 at four-byte 0x0902f1ac returned 0x0000000000000000000000000000000000000000000559810c412d7963889f2600000000000000000000000000000000000000000000013953bc193865743ba70000000000000000000000000000000000000000000000000000000062b12ca7
 TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 TIME ~ CLOCK - : 4-----reserve1: 6.4673e+06 reserve2: 5779.86 priceOut: 1118.94 reversed: 0
-  {
-    "blockNumber": 15157311,
-    "transactionIndex": 138,
-    "logIndex": 0,
-    "transactionHash": "0x3f095a4b4e1b85e148b8b97aa91841f28280692b6045de8e690db38c59ecc603",
-    "timestamp": 1658022619,
-    "date": "2022-07-17 01:50:19 UTC",
-    "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "assetSymbol": "WEI",
-    "decimals": 18,
-    "spotPrice": 1118.93628,
-    "priceSource": "uniswap",
-    "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-    "sender": "0xb5d85cbf7cb3ee0d56b3bb207d5fc4b82f43f511",
-    "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-    "begBal": "20757259456276694166",
-    "amountNet": "14935571680000000000",
-    "endBal": "35692831136276694166",
-    "reconciliationType": "regular-eth",
-    "reconciled": true,
-    "totalIn": "14935571680000000000",
-    "amountIn": "14935571680000000000",
-    "internalIn": "",
-    "selfDestructIn": "",
-    "minerBaseRewardIn": "",
-    "minerNephewRewardIn": "",
-    "minerTxFeeIn": "",
-    "minerUncleRewardIn": "",
-    "prefundIn": "",
-    "totalOut": "",
-    "amountOut": "",
-    "internalOut": "",
-    "selfDestructOut": "",
-    "gasOut": "",
-    "totalOutLessGas": "",
-    "prevAppBlk": 15157310,
-    "prevBal": "20757259456276694166",
-    "begBalDiff": "",
-    "endBalDiff": "",
-    "endBalCalc": "35692831136276694166"
-  }] }
+{
+  "data": [
+    {
+      "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "amountIn": "14935571680000000000",
+      "amountNet": "14935571680000000000",
+      "amountOut": "",
+      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetSymbol": "WEI",
+      "begBal": "20757259456276694166",
+      "begBalDiff": "",
+      "blockNumber": 15157311,
+      "date": "2022-07-17 01:50:19 UTC",
+      "decimals": 18,
+      "endBal": "35692831136276694166",
+      "endBalCalc": "35692831136276694166",
+      "endBalDiff": "",
+      "gasOut": "",
+      "internalIn": "",
+      "internalOut": "",
+      "logIndex": 0,
+      "minerBaseRewardIn": "",
+      "minerNephewRewardIn": "",
+      "minerTxFeeIn": "",
+      "minerUncleRewardIn": "",
+      "prefundIn": "",
+      "prevAppBlk": 15157310,
+      "prevBal": "20757259456276694166",
+      "priceSource": "uniswap",
+      "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "reconciled": true,
+      "reconciliationType": "regular-eth",
+      "selfDestructIn": "",
+      "selfDestructOut": "",
+      "sender": "0xb5d85cbf7cb3ee0d56b3bb207d5fc4b82f43f511",
+      "spotPrice": 1118.93628,
+      "timestamp": 1658022619,
+      "totalIn": "14935571680000000000",
+      "totalOut": "",
+      "totalOutLessGas": "",
+      "transactionHash": "0x3f095a4b4e1b85e148b8b97aa91841f28280692b6045de8e690db38c59ecc603",
+      "transactionIndex": 138
+    }
+  ]
+}

@@ -11,7 +11,6 @@ package types
 // EXISTING_CODE
 import (
 	"io"
-	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
@@ -66,44 +65,44 @@ type RawReconciliation struct {
 
 type SimpleReconciliation struct {
 	AccountedFor        base.Address       `json:"accountedFor"`
-	AmountIn            big.Int            `json:"amountIn,omitempty"`
-	AmountNet           big.Int            `json:"amountNet"`
-	AmountOut           big.Int            `json:"amountOut,omitempty"`
+	AmountIn            base.BigInt        `json:"amountIn,omitempty"`
+	AmountNet           base.BigInt        `json:"amountNet"`
+	AmountOut           base.BigInt        `json:"amountOut,omitempty"`
 	AssetAddr           base.Address       `json:"assetAddr"`
 	AssetSymbol         string             `json:"assetSymbol"`
-	BegBal              big.Int            `json:"begBal"`
-	BegBalDiff          big.Int            `json:"begBalDiff,omitempty"`
+	BegBal              base.BigInt        `json:"begBal"`
+	BegBalDiff          base.BigInt        `json:"begBalDiff,omitempty"`
 	BlockNumber         base.Blknum        `json:"blockNumber"`
 	Date                string             `json:"date"`
 	Decimals            uint64             `json:"decimals"`
 	Encoding            string             `json:"encoding"`
-	EndBal              big.Int            `json:"endBal"`
-	EndBalCalc          big.Int            `json:"endBalCalc,omitempty"`
-	EndBalDiff          big.Int            `json:"endBalDiff,omitempty"`
-	GasOut              big.Int            `json:"gasOut,omitempty"`
-	InternalIn          big.Int            `json:"internalIn,omitempty"`
-	InternalOut         big.Int            `json:"internalOut,omitempty"`
+	EndBal              base.BigInt        `json:"endBal"`
+	EndBalCalc          base.BigInt        `json:"endBalCalc,omitempty"`
+	EndBalDiff          base.BigInt        `json:"endBalDiff,omitempty"`
+	GasOut              base.BigInt        `json:"gasOut,omitempty"`
+	InternalIn          base.BigInt        `json:"internalIn,omitempty"`
+	InternalOut         base.BigInt        `json:"internalOut,omitempty"`
 	LogIndex            base.Blknum        `json:"logIndex"`
-	MinerBaseRewardIn   big.Int            `json:"minerBaseRewardIn,omitempty"`
-	MinerNephewRewardIn big.Int            `json:"minerNephewRewardIn,omitempty"`
-	MinerTxFeeIn        big.Int            `json:"minerTxFeeIn,omitempty"`
-	MinerUncleRewardIn  big.Int            `json:"minerUncleRewardIn,omitempty"`
-	PrefundIn           big.Int            `json:"prefundIn,omitempty"`
+	MinerBaseRewardIn   base.BigInt        `json:"minerBaseRewardIn,omitempty"`
+	MinerNephewRewardIn base.BigInt        `json:"minerNephewRewardIn,omitempty"`
+	MinerTxFeeIn        base.BigInt        `json:"minerTxFeeIn,omitempty"`
+	MinerUncleRewardIn  base.BigInt        `json:"minerUncleRewardIn,omitempty"`
+	PrefundIn           base.BigInt        `json:"prefundIn,omitempty"`
 	PrevAppBlk          base.Blknum        `json:"prevAppBlk,omitempty"`
-	PrevBal             big.Int            `json:"prevBal,omitempty"`
+	PrevBal             base.BigInt        `json:"prevBal,omitempty"`
 	PriceSource         string             `json:"priceSource"`
 	Recipient           base.Address       `json:"recipient"`
 	Reconciled          bool               `json:"reconciled"`
 	ReconciliationType  string             `json:"reconciliationType"`
-	SelfDestructIn      big.Int            `json:"selfDestructIn,omitempty"`
-	SelfDestructOut     big.Int            `json:"selfDestructOut,omitempty"`
+	SelfDestructIn      base.BigInt        `json:"selfDestructIn,omitempty"`
+	SelfDestructOut     base.BigInt        `json:"selfDestructOut,omitempty"`
 	Sender              base.Address       `json:"sender"`
 	Signature           string             `json:"signature"`
 	SpotPrice           float64            `json:"spotPrice"`
 	Timestamp           base.Timestamp     `json:"timestamp"`
-	TotalIn             big.Int            `json:"totalIn"`
-	TotalOut            big.Int            `json:"totalOut"`
-	TotalOutLessGas     big.Int            `json:"totalOutLessGas"`
+	TotalIn             base.BigInt        `json:"totalIn"`
+	TotalOut            base.BigInt        `json:"totalOut"`
+	TotalOutLessGas     base.BigInt        `json:"totalOutLessGas"`
 	TransactionHash     base.Hash          `json:"transactionHash"`
 	TransactionIndex    base.Blknum        `json:"transactionIndex"`
 	raw                 *RawReconciliation `json:"-"`
@@ -124,6 +123,59 @@ func (s *SimpleReconciliation) Model(verbose bool, format string, extraOptions m
 	var order = []string{}
 
 	// EXISTING_CODE
+	model = map[string]any{
+		"blockNumber":         s.BlockNumber,
+		"transactionIndex":    s.TransactionIndex,
+		"logIndex":            s.LogIndex,
+		"transactionHash":     s.TransactionHash,
+		"timestamp":           s.Timestamp,
+		"date":                s.Date,
+		"assetAddr":           s.AssetAddr,
+		"assetSymbol":         s.AssetSymbol,
+		"decimals":            s.Decimals,
+		"spotPrice":           s.SpotPrice,
+		"priceSource":         s.PriceSource,
+		"accountedFor":        s.AccountedFor,
+		"sender":              s.Sender,
+		"recipient":           s.Recipient,
+		"begBal":              s.BegBal.String(),
+		"amountNet":           s.AmountNet.String(),
+		"endBal":              s.EndBal.String(),
+		"reconciliationType":  s.ReconciliationType,
+		"reconciled":          s.Reconciled,
+		"totalIn":             s.TotalIn.String(),
+		"amountIn":            s.AmountIn.String(),
+		"internalIn":          s.InternalIn.String(),
+		"selfDestructIn":      s.SelfDestructIn.String(),
+		"minerBaseRewardIn":   s.MinerBaseRewardIn.String(),
+		"minerNephewRewardIn": s.MinerNephewRewardIn.String(),
+		"minerTxFeeIn":        s.MinerTxFeeIn.String(),
+		"minerUncleRewardIn":  s.MinerUncleRewardIn.String(),
+		"prefundIn":           s.PrefundIn.String(),
+		"totalOut":            s.TotalOut.String(),
+		"amountOut":           s.AmountOut.String(),
+		"internalOut":         s.InternalOut.String(),
+		"selfDestructOut":     s.SelfDestructOut.String(),
+		"gasOut":              s.GasOut.String(),
+		"totalOutLessGas":     s.TotalOutLessGas.String(),
+		"prevAppBlk":          s.PrevAppBlk,
+		"prevBal":             s.PrevBal,
+		"begBalDiff":          s.BegBalDiff.String(),
+		"endBalDiff":          s.EndBalDiff.String(),
+		"endBalCalc":          s.EndBalCalc.String(),
+		// ENCODING
+		// Encoding            string             `json:"encoding"`
+		// SIGNATURE
+		// Signature           string             `json:"signature"`
+	}
+	order = []string{
+		"blockNumber", "transactionIndex", "logindex", "transactionHash", "timestamp", "date",
+		"assetAddress", "assetSymbol", "decimals", "spotPrice", "priceSource", "accountedFor",
+		"sender", "recipient", "begBal", "amountNet", "endBal", "reconciliationType", "reconciled",
+		"totalIn", "amountIn", "internalIn", "selfDestructIn", "minerBaseRewardIn", "minerNephewRewardIn",
+		"minerTxFeeIn", "minerUncleRewardIn", "prefundIn", "totalOut", "amountOut", "internalOut",
+		"selfDestructOut", "gasOut", "totalOutLessGas", "prevAppBlk", "prevBal", "begBalDiff", "endBalDiff", "endBalCalc",
+	}
 	// EXISTING_CODE
 
 	return Model{
