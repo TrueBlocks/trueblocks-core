@@ -24,7 +24,7 @@ var errInvalidSelector = errors.New("expected valid four byte selector")
 
 // Define "tokens" for our lexer
 var callLexer = lexer.MustSimple([]lexer.SimpleRule{
-	{Name: `Encoded`, Pattern: `0x[[:xdigit:]]{72}`},
+	// {Name: `Encoded`, Pattern: `0x[[:xdigit:]]`},
 	{Name: `Hex`, Pattern: `0x[[:xdigit:]]+`},
 
 	// https://docs.soliditylang.org/en/v0.8.17/grammar.html#a4.SolidityLexer.Identifier
@@ -39,11 +39,16 @@ var callLexer = lexer.MustSimple([]lexer.SimpleRule{
 
 // The call is any of the 3 supported forms (see Input syntax above)
 type Call struct {
-	// Everything encoded
-	Encoded string `parser:"@Encoded"`
-	// Four byte selector
-	SelectorCall *SelectorCall `parser:" | @@"`
-	// Function name
+	// Four byte selector, e.g.
+	// 0xcdba2fd4(105)
+	SelectorCall *SelectorCall `parser:"@@"`
+
+	// Everything encoded, e.g.
+	// 0xcdba2fd40000000000000000000000000000000000000000000000000000000000007a69
+	Encoded string `parser:" | @Hex"`
+
+	// Function name, e.g.
+	// someName(105)
 	FunctionNameCall *FunctionCall `parser:" | @@"`
 }
 
