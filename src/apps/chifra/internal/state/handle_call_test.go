@@ -121,7 +121,7 @@ func Test_findAbiFunction(t *testing.T) {
 		},
 	}
 
-	result, hints, err := findAbiFunction(call, abis)
+	result, hints, err := findAbiFunction(findByName, call.Name, call.Arguments, abis)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -141,7 +141,7 @@ func Test_findAbiFunction(t *testing.T) {
 		Arguments: []*Argument{},
 	}
 
-	result, hints, err = findAbiFunction(call, abis)
+	result, hints, err = findAbiFunction(findByName, call.Name, call.Arguments, abis)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -165,7 +165,81 @@ func Test_findAbiFunction(t *testing.T) {
 		Arguments: []*Argument{},
 	}
 
-	result, hints, err = findAbiFunction(call, abis)
+	result, hints, err = findAbiFunction(findByName, call.Name, call.Arguments, abis)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if result != nil {
+		t.Fatal("expected no result")
+	}
+
+	if len(hints) != 0 {
+		t.Fatal("expected no hints")
+	}
+}
+
+func Test_findAbiFunctionBySelector(t *testing.T) {
+	call := &SelectorCall{
+		Selector: Selector{
+			Value: "0xa175b638",
+		},
+		Arguments: []*Argument{
+			{
+				Boolean: utils.PointerOf(Boolean(true)),
+			},
+		},
+	}
+
+	result, hints, err := findAbiFunction(findBySelector, call.Selector.Value, call.Arguments, abis)
+	if err != nil {
+		t.Fatal(err)
+	}
+	wanted := testAbi.Methods["setShouldReject"]
+
+	if result.Sig != wanted.Sig {
+		t.Fatal("wanted", wanted.Sig, "got", result.Sig)
+	}
+
+	if len(hints) > 0 {
+		t.Fatal("expected no hints")
+	}
+
+	// Expect hints
+	call = &SelectorCall{
+		Selector: Selector{
+			Value: "0xa175b638",
+		},
+		Arguments: []*Argument{},
+	}
+
+	result, hints, err = findAbiFunction(findBySelector, call.Selector.Value, call.Arguments, abis)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if result != nil {
+		t.Fatal("expected no result")
+	}
+
+	if len(hints) != 1 {
+		t.Fatal("expected single hint", hints)
+	}
+
+	hint := hints[0]
+	if hint.Name != "setShouldReject" {
+		t.Fatal("wrong hint:", hint.Name)
+	}
+
+	// Expect no match
+	call = &SelectorCall{
+		Selector: Selector{
+			Value: "0xf175b639",
+		},
+		Arguments: []*Argument{},
+	}
+
+	result, hints, err = findAbiFunction(findBySelector, call.Selector.Value, call.Arguments, abis)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -354,7 +428,7 @@ func Test_packFunction(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			gotPacked, err := packFunction(tt.args.call, tt.args.function)
+			gotPacked, err := packFunction(tt.args.call.Arguments, tt.args.function)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("packFunction() error = %v, wantErr %v", err, tt.wantErr)
 				return

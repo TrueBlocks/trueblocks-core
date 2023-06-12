@@ -3,6 +3,7 @@ package statePkg
 import (
 	"errors"
 	"fmt"
+	"strings"
 
 	abiPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -28,44 +29,63 @@ func (opts *StateOptions) HandleCall() error {
 	}
 
 	var packed []byte
+	var function *abi.Method
+	var callArguments []*Argument
+	var suggestions []types.SimpleFunction
 
 	if parsed.Encoded != "" {
-		packed = common.Hex2Bytes(parsed.Encoded)
-	}
-
-	var function *abi.Method
-
-	if parsed.FunctionNameCall != nil {
-		var suggestions []types.SimpleFunction
-		function, suggestions, err = findAbiFunction(parsed.FunctionNameCall, abiMap)
+		packed = common.Hex2Bytes(parsed.Encoded[2:])
+		selector := parsed.Encoded[:10]
+		function, _, err = findAbiFunction(findBySelector, selector, nil, abiMap)
 		if err != nil {
 			return err
 		}
-		if function == nil {
-			logger.Error("No ABI found for function", opts.Call)
-			if len(suggestions) > 0 {
-				logger.Info("Did you mean:")
-				for index, suggestion := range suggestions {
-					logger.Info(index+1, "-", suggestion.Signature)
-				}
+
+	} else {
+		// Selector or function name call
+		var findAbiMode findMode
+		var identifier string
+
+		switch {
+		case parsed.FunctionNameCall != nil:
+			findAbiMode = findByName
+			identifier = parsed.FunctionNameCall.Name
+			callArguments = parsed.FunctionNameCall.Arguments
+		case parsed.SelectorCall != nil:
+			findAbiMode = findBySelector
+			identifier = parsed.SelectorCall.Selector.Value
+			callArguments = parsed.SelectorCall.Arguments
+		}
+
+		function, suggestions, err = findAbiFunction(findAbiMode, identifier, callArguments, abiMap)
+		if err != nil {
+			return err
+		}
+	}
+
+	if function == nil {
+		logger.Error("No ABI found for function", opts.Call)
+		if len(suggestions) > 0 {
+			logger.Info("Did you mean:")
+			for index, suggestion := range suggestions {
+				logger.Info(index+1, "-", suggestion.Signature)
 			}
-			return nil
 		}
+		return nil
+	}
 
-		packed, err = packFunction(parsed.FunctionNameCall, function)
+	if parsed.Encoded == "" {
+		packed, err = packFunction(callArguments, function)
 		if err != nil {
 			return err
 		}
 	}
-
-	// TODO: check if we have packed
 
 	raw, err := rpc.Query[string](opts.Globals.Chain, "eth_call", rpc.Params{
 		map[string]any{
 			"to":   address.Hex(),
 			"data": "0x" + common.Bytes2Hex(packed),
 		},
-		// TODO: allow block number change
 		"latest",
 	})
 	if err != nil {
@@ -89,16 +109,26 @@ func (opts *StateOptions) HandleCall() error {
 	return nil
 }
 
+type findMode int
+
+const (
+	findByName findMode = iota
+	findBySelector
+)
+
 // findAbiFunction returns either the function to call or a list of suggestions (functions
 // with the same name, but different argument count)
-func findAbiFunction(call *FunctionCall, abis abiPkg.AbiInterfaceMap) (fn *abi.Method, suggestions []types.SimpleFunction, err error) {
+func findAbiFunction(mode findMode, identifier string, arguments []*Argument, abis abiPkg.AbiInterfaceMap) (fn *abi.Method, suggestions []types.SimpleFunction, err error) {
 	for _, function := range abis {
 		function := function
 		// TODO: is this too naive?
-		if function.Name != call.Name {
+		if mode == findByName && function.Name != identifier {
 			continue
 		}
-		if len(function.Inputs) != len(call.Arguments) {
+		if mode == findBySelector && function.Encoding != strings.ToLower(identifier) {
+			continue
+		}
+		if arguments != nil && len(function.Inputs) != len(arguments) {
 			suggestions = append(suggestions, *function)
 			continue
 		}
@@ -114,9 +144,9 @@ func findAbiFunction(call *FunctionCall, abis abiPkg.AbiInterfaceMap) (fn *abi.M
 }
 
 // packFunction encodes function call
-func packFunction(call *FunctionCall, function *abi.Method) (packed []byte, err error) {
-	args := make([]interface{}, 0, len(call.Arguments))
-	for index, arg := range call.Arguments {
+func packFunction(callArguments []*Argument, function *abi.Method) (packed []byte, err error) {
+	args := make([]interface{}, 0, len(callArguments))
+	for index, arg := range callArguments {
 		input := function.Inputs[index]
 
 		if input.Type.T == abi.FixedBytesTy {
