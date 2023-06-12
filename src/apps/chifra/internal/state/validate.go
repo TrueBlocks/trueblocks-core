@@ -47,17 +47,10 @@ func (opts *StateOptions) validateState() error {
 				return validate.Usage("The {0} option is not available{1}.", "--no_zero", " with the --call option")
 			}
 
-			// for _, addr := range opts.Addrs {
-			// 	if validate.IsValidAddress(addr) {
-			// 		return validate.Usage("The {0} option is not available{1}.", "--call", " when an address is present")
-			// 	}
-			// }
-
-			if len(opts.Addrs) > 1 {
-				return validate.Usage("only one address allowed")
+			if len(opts.Addrs) != 1 {
+				return validate.Usage("single valid address required")
 			}
 
-			// parts := strings.Split(opts.Call, "!")
 			contract := opts.Addrs[0]
 			if len(opts.ProxyFor) > 0 {
 				contract = opts.ProxyFor
