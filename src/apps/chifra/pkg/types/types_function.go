@@ -361,4 +361,20 @@ func (s *SimpleFunction) Normalize() {
 	s.StateMutability = "nonpayable"
 }
 
+// Pack encodes function call
+func (s *SimpleFunction) Pack(callArguments []any) (packed []byte, err error) {
+	abiMethod, err := s.GetAbiMethod()
+	if err != nil {
+		return
+	}
+	packedArgs, err := abiMethod.Inputs.Pack(callArguments...)
+	if err != nil {
+		return
+	}
+	packed = abiMethod.ID
+	packed = append(packed, packedArgs...)
+
+	return
+}
+
 // EXISTING_CODE

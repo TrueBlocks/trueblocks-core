@@ -1,4 +1,4 @@
-package statePkg
+package parser
 
 import (
 	"errors"
@@ -10,6 +10,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/alecthomas/participle/v2"
 	"github.com/alecthomas/participle/v2/lexer"
+	"github.com/ethereum/go-ethereum/accounts/abi"
+	"github.com/ethereum/go-ethereum/common"
 )
 
 var errInvalidSelector = errors.New("expected valid four byte selector")
@@ -18,13 +20,12 @@ var errInvalidSelector = errors.New("expected valid four byte selector")
 // 1. Everything encoded (4-byte + parameters):
 // chifra state --call 0xcdba2fd40000000000000000000000000000000000000000000000000000000000007a69
 // 2. encoded 4-byte only
-// chifra state --call 0xdeadbeef("yolo", 110)
+// chifra state --call 0xdeadbeef("hello", 110)
 // 3. signature + params
-// chifra state --call readMessage("yolo", 110)
+// chifra state --call readMessage("hello", 110)
 
 // Define "tokens" for our lexer
-var callLexer = lexer.MustSimple([]lexer.SimpleRule{
-	// {Name: `Encoded`, Pattern: `0x[[:xdigit:]]`},
+var contractCallLexer = lexer.MustSimple([]lexer.SimpleRule{
 	{Name: `Hex`, Pattern: `0x[[:xdigit:]]+`},
 
 	// https://docs.soliditylang.org/en/v0.8.17/grammar.html#a4.SolidityLexer.Identifier
@@ -38,10 +39,10 @@ var callLexer = lexer.MustSimple([]lexer.SimpleRule{
 })
 
 // The call is any of the 3 supported forms (see Input syntax above)
-type Call struct {
+type ContractCall struct {
 	// Four byte selector, e.g.
 	// 0xcdba2fd4(105)
-	SelectorCall *SelectorCall `parser:"@@"`
+	SelectorCall *SelectorContractCall `parser:"@@"`
 
 	// Everything encoded, e.g.
 	// 0xcdba2fd40000000000000000000000000000000000000000000000000000000000007a69
@@ -49,30 +50,30 @@ type Call struct {
 
 	// Function name, e.g.
 	// someName(105)
-	FunctionNameCall *FunctionCall `parser:" | @@"`
+	FunctionNameCall *FunctionContractCall `parser:" | @@"`
 }
 
-type SelectorCall struct {
-	Selector  Selector    `parser:"@Hex '('"`
-	Arguments []*Argument `parser:" (@@ (',' @@)*)? ')'"`
+type SelectorContractCall struct {
+	Selector  Selector                `parser:"@Hex '('"`
+	Arguments []*ContractCallArgument `parser:" (@@ (',' @@)*)? ')'"`
 }
 
-type FunctionCall struct {
-	Name      string      `parser:"@SolidityIdent '('"`
-	Arguments []*Argument `parser:" (@@ (',' @@)*)? ')'"`
+type FunctionContractCall struct {
+	Name      string                  `parser:"@SolidityIdent '('"`
+	Arguments []*ContractCallArgument `parser:" (@@ (',' @@)*)? ')'"`
 }
 
-// Argument represents input to the smart contract method call, e.g.
+// ContractCallArgument represents input to the smart contract method call, e.g.
 // `true` in `setSomething(true)`
-type Argument struct {
-	String  *string   `parser:"@String"`
-	Number  *Number   `parser:"| @Decimal"`
-	Boolean *Boolean  `parser:"| @('true'|'false')"`
-	Hex     *HexValue `parser:"| @Hex"`
+type ContractCallArgument struct {
+	String  *string             `parser:"@String"`
+	Number  *ContractCallNumber `parser:"| @Decimal"`
+	Boolean *Boolean            `parser:"| @('true'|'false')"`
+	Hex     *ContractCallHex    `parser:"| @Hex"`
 }
 
 // Interface returns the value as interface{} (any)
-func (a *Argument) Interface() any {
+func (a *ContractCallArgument) Interface() any {
 	if a.String != nil {
 		return *a.String
 	}
@@ -91,6 +92,49 @@ func (a *Argument) Interface() any {
 	return nil
 }
 
+func (a *ContractCallArgument) AbiType(abiType *abi.Type) (any, error) {
+	if abiType.T == abi.FixedBytesTy {
+		// We only support fixed bytes as hex strings
+		hex := *a.Hex.String
+		if len(hex) == 0 {
+			return nil, errors.New("no value for fixed-size bytes argument")
+		}
+
+		arrayInterface, err := abi.ReadFixedBytes(*abiType, common.Hex2Bytes(hex[2:]))
+		if err != nil {
+			return nil, err
+		}
+		return arrayInterface, nil
+	}
+
+	if abiType.T == abi.IntTy {
+		// We have to convert int64 to a correct int type, otherwise go-ethereum will
+		// return an error. It's not needed for uints, because they handle them differently.
+		if a.Number.Big != nil {
+			return a.Number.Interface(), nil
+		}
+
+		converted, err := a.Number.Convert(abiType)
+		if err != nil {
+			return nil, err
+		}
+		return converted, nil
+	}
+
+	if abiType.T == abi.AddressTy {
+		// We need go-ethereum's Address type, not ours
+		address := a.Hex.Address
+		if address == nil {
+			return nil, errors.New("expected address")
+		}
+
+		addressHex := common.HexToAddress(address.Hex())
+		return addressHex, nil
+	}
+
+	return a.Interface(), nil
+}
+
 // Type alias to capture bool values correctly
 type Boolean bool
 
@@ -99,14 +143,14 @@ func (b *Boolean) Capture(values []string) error {
 	return nil
 }
 
-// HexValue represents anything that starts with 0x. If the value is a valid
+// ContractCallHex represents anything that starts with 0x. If the value is a valid
 // address, then it's capture into `base.Address` type, `string` otherwise.
-type HexValue struct {
+type ContractCallHex struct {
 	Address *base.Address
 	String  *string
 }
 
-func (h *HexValue) Capture(values []string) error {
+func (h *ContractCallHex) Capture(values []string) error {
 	hexLiteral := values[0]
 
 	if valid, _ := validate.IsValidHex("", hexLiteral, 20); !valid {
@@ -119,13 +163,13 @@ func (h *HexValue) Capture(values []string) error {
 	return nil
 }
 
-type Number struct {
+type ContractCallNumber struct {
 	Int  *int64
 	Uint *uint64
 	Big  *big.Int
 }
 
-func (n *Number) Capture(values []string) error {
+func (n *ContractCallNumber) Capture(values []string) error {
 	literal := values[0]
 
 	// Atoi parses into `int` type, which is used by go-ethereum
@@ -154,7 +198,7 @@ func (n *Number) Capture(values []string) error {
 }
 
 // Interface returns Number value as any
-func (n *Number) Interface() any {
+func (n *ContractCallNumber) Interface() any {
 	if n.Int != nil {
 		return *n.Int
 	}
@@ -162,6 +206,38 @@ func (n *Number) Interface() any {
 		return *n.Uint
 	}
 	return n.Big
+}
+
+func (n *ContractCallNumber) Convert(abiType *abi.Type) (any, error) {
+	if abiType.Size > 64 {
+		return n.Big, nil
+	}
+
+	if abiType.T == abi.UintTy {
+		switch abiType.Size {
+		case 8:
+			return uint8(*n.Uint), nil
+		case 16:
+			return uint16(*n.Uint), nil
+		case 32:
+			return uint32(*n.Uint), nil
+		case 64:
+			return uint64(*n.Uint), nil
+		}
+	} else if abiType.T == abi.IntTy {
+		switch abiType.Size {
+		case 8:
+			return int8(*n.Int), nil
+		case 16:
+			return int16(*n.Int), nil
+		case 32:
+			return int32(*n.Int), nil
+		case 64:
+			return int64(*n.Int), nil
+		}
+	}
+
+	return nil, fmt.Errorf("cannot convert %v to number", n.Interface())
 }
 
 // Selector captures four byte function selector (e.g. 0xcdba2fd4)
@@ -181,16 +257,16 @@ func (s *Selector) Capture(values []string) error {
 }
 
 // Build parser
-var parser = participle.MustBuild[Call](
-	participle.Lexer(callLexer),
+var parser = participle.MustBuild[ContractCall](
+	participle.Lexer(contractCallLexer),
 	participle.UseLookahead(2),
 	participle.Unquote("String"),
 )
 
-// Parse turns smart contract method call string and parses it into
+// ParseContractCall turns smart contract method call string and parses it into
 // a nice structures, from which we can easily extract the data to
 // make the call.
-func Parse(source string) (*Call, error) {
+func ParseContractCall(source string) (*ContractCall, error) {
 	callSpec, err := parser.ParseString("", source)
 
 	return callSpec, err

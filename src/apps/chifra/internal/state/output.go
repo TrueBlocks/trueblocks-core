@@ -77,6 +77,7 @@ func GetStateOptions(args []string, g *globals.GlobalOptions) *StateOptions {
 
 func (opts *StateOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
+	ported = opts.Call != ""
 	// EXISTING_CODE
 	return
 }
