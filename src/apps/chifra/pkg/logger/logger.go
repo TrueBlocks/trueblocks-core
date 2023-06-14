@@ -40,7 +40,7 @@ var (
 	testMode    = false
 )
 
-// TestLog is used to print command line options to the screen during testing only
+// TestLog is used to print log lines during testing only
 func TestLog(notDefault bool, a ...interface{}) {
 	if !testModeSet {
 		testModeSet = true

@@ -3,77 +3,107 @@ TEST[DATE|TIME] Transactions:  [0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4
 TEST[DATE|TIME] AccountFor:  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] Format:  json
-TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
-TIME ~ CLOCK - <INFO>  : Trial balance: 
-TIME ~ CLOCK - <INFO>  :    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TIME ~ CLOCK - <INFO>  :    assetSymbol:         ETH
-TIME ~ CLOCK - <INFO>  :    hash:                0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4ea6199334cf3399cdf
-TIME ~ CLOCK - <INFO>  :    blockNumber:         7005737
-TIME ~ CLOCK - <INFO>  :    transactionIndex:    30
-TIME ~ CLOCK - <INFO>  :    logIndex:            0
-TIME ~ CLOCK - <INFO>  :    begBal:              29270157687500000
-TIME ~ CLOCK - <INFO>  :    endBal:              29270157687500000
-TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
-TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 0
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 7005736 prevBlock: 7005736 transfer.blockNumber: 7005737 nextBlock: 18446744073709551615
-TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
-TIME ~ CLOCK - <INFO>  : Trial balance: prevDiff-same-eth
-TIME ~ CLOCK - <INFO>  :    blks:                [7005737] 1 0
-TIME ~ CLOCK - <INFO>  :    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TIME ~ CLOCK - <INFO>  :    assetSymbol:         ETH
-TIME ~ CLOCK - <INFO>  :    hash:                0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4ea6199334cf3399cdf
-TIME ~ CLOCK - <INFO>  :    blockNumber:         7005737
-TIME ~ CLOCK - <INFO>  :    transactionIndex:    30
-TIME ~ CLOCK - <INFO>  :    logIndex:            0
-TIME ~ CLOCK - <INFO>  :    begBal:              29270157687500000
-TIME ~ CLOCK - <INFO>  :    endBal:              29270157687500000
-TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
-TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ledger.blockNumber:     7005736
+TEST[DATE|TIME] prevBlock:              7005736
+TEST[DATE|TIME] transfer.blockNumber:   7005737
+TEST[DATE|TIME] nextBlock:              18446744073709551615
+TEST[DATE|TIME] isPrevDiff:             1
+TEST[DATE|TIME] isNextDiff:             0
+TEST[DATE|TIME] -------------flows-top-----------------------------
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME] 
+TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
+TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    assetSymbol:         ETH
+TEST[DATE|TIME]    hash:                0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4ea6199334cf3399cdf
+TEST[DATE|TIME]    blockNumber:         7005737
+TEST[DATE|TIME]    transactionIndex:    30
+TEST[DATE|TIME]    logIndex:            0
+TEST[DATE|TIME]    begBal:              29270157687500000
+TEST[DATE|TIME]    endBal:              29270157687500000
+TEST[DATE|TIME]    trialBalance:        balanced
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ledger.blockNumber:     7005736
+TEST[DATE|TIME] prevBlock:              7005736
+TEST[DATE|TIME] transfer.blockNumber:   7005737
+TEST[DATE|TIME] nextBlock:              18446744073709551615
+TEST[DATE|TIME] isPrevDiff:             1
+TEST[DATE|TIME] isNextDiff:             0
+TEST[DATE|TIME] -------------balances-top-----------------------------
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME] prevDiff-same-eth
+TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
+TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    assetSymbol:         ETH
+TEST[DATE|TIME]    hash:                0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4ea6199334cf3399cdf
+TEST[DATE|TIME]    blockNumber:         7005737
+TEST[DATE|TIME]    transactionIndex:    30
+TEST[DATE|TIME]    logIndex:            0
+TEST[DATE|TIME]    begBal:              29270157687500000
+TEST[DATE|TIME]    endBal:              29270157687500000
+TEST[DATE|TIME]    trialBalance:        balanced
+TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
-TIME ~ CLOCK - <INFO>  : Trial balance: 
-TIME ~ CLOCK - <INFO>  :    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-TIME ~ CLOCK - <INFO>  :    assetAddr:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
-TIME ~ CLOCK - <INFO>  :    assetSymbol:         0x5c
-TIME ~ CLOCK - <INFO>  :    hash:                0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4ea6199334cf3399cdf
-TIME ~ CLOCK - <INFO>  :    blockNumber:         7005737
-TIME ~ CLOCK - <INFO>  :    transactionIndex:    30
-TIME ~ CLOCK - <INFO>  :    logIndex:            20
-TIME ~ CLOCK - <INFO>  :    begBal:              71040040864000000000000
-TIME ~ CLOCK - <INFO>  :    amountIn:            3016109787000000000000
-TIME ~ CLOCK - <INFO>  :    totalIn:             3016109787000000000000
-TIME ~ CLOCK - <INFO>  :    amountNet:           3016109787000000000000
-TIME ~ CLOCK - <INFO>  :    endBal:              75843546632000000000000
-TIME ~ CLOCK - <INFO>  :    begBalDiff:          71040040864000000000000
-TIME ~ CLOCK - <INFO>  :    endBalDiff:          -1787395981000000000000
-TIME ~ CLOCK - <INFO>  :    endBalCalc:          74056150651000000000000
-TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
-TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 7005736 prevBlock: 7005736 transfer.blockNumber: 7005737 nextBlock: 18446744073709551615
-TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
-TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
-TIME ~ CLOCK - <INFO>  :    blks:                [7005737] 1 1
-TIME ~ CLOCK - <INFO>  :    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-TIME ~ CLOCK - <INFO>  :    assetAddr:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
-TIME ~ CLOCK - <INFO>  :    assetSymbol:         0x5c
-TIME ~ CLOCK - <INFO>  :    hash:                0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4ea6199334cf3399cdf
-TIME ~ CLOCK - <INFO>  :    blockNumber:         7005737
-TIME ~ CLOCK - <INFO>  :    transactionIndex:    30
-TIME ~ CLOCK - <INFO>  :    logIndex:            20
-TIME ~ CLOCK - <INFO>  :    begBal:              71040040864000000000000
-TIME ~ CLOCK - <INFO>  :    amountIn:            3016109787000000000000
-TIME ~ CLOCK - <INFO>  :    totalIn:             3016109787000000000000
-TIME ~ CLOCK - <INFO>  :    amountNet:           3016109787000000000000
-TIME ~ CLOCK - <INFO>  :    endBal:              75843546632000000000000
-TIME ~ CLOCK - <INFO>  :    endBalDiff:          -1787395981000000000000
-TIME ~ CLOCK - <INFO>  :    endBalCalc:          74056150651000000000000
-TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
-TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ledger.blockNumber:     7005736
+TEST[DATE|TIME] prevBlock:              7005736
+TEST[DATE|TIME] transfer.blockNumber:   7005737
+TEST[DATE|TIME] nextBlock:              18446744073709551615
+TEST[DATE|TIME] isPrevDiff:             1
+TEST[DATE|TIME] isNextDiff:             1
+TEST[DATE|TIME] -------------flows-token-----------------------------
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME] 
+TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
+TEST[DATE|TIME]    assetAddr:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
+TEST[DATE|TIME]    assetSymbol:         0x5c
+TEST[DATE|TIME]    hash:                0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4ea6199334cf3399cdf
+TEST[DATE|TIME]    blockNumber:         7005737
+TEST[DATE|TIME]    transactionIndex:    30
+TEST[DATE|TIME]    logIndex:            20
+TEST[DATE|TIME]    begBal:              71040040864000000000000
+TEST[DATE|TIME]    amountIn:            3016109787000000000000
+TEST[DATE|TIME]    totalIn:             3016109787000000000000
+TEST[DATE|TIME]    amountNet:           3016109787000000000000
+TEST[DATE|TIME]    endBal:              75843546632000000000000
+TEST[DATE|TIME]    begBalDiff:          71040040864000000000000
+TEST[DATE|TIME]    endBalDiff:          -1787395981000000000000
+TEST[DATE|TIME]    endBalCalc:          74056150651000000000000
+TEST[DATE|TIME]    trialBalance:        not balanced
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ledger.blockNumber:     7005736
+TEST[DATE|TIME] prevBlock:              7005736
+TEST[DATE|TIME] transfer.blockNumber:   7005737
+TEST[DATE|TIME] nextBlock:              18446744073709551615
+TEST[DATE|TIME] isPrevDiff:             1
+TEST[DATE|TIME] isNextDiff:             1
+TEST[DATE|TIME] -------------balances-token-----------------------------
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME] regular-token
+TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
+TEST[DATE|TIME]    assetAddr:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
+TEST[DATE|TIME]    assetSymbol:         0x5c
+TEST[DATE|TIME]    hash:                0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4ea6199334cf3399cdf
+TEST[DATE|TIME]    blockNumber:         7005737
+TEST[DATE|TIME]    transactionIndex:    30
+TEST[DATE|TIME]    logIndex:            20
+TEST[DATE|TIME]    begBal:              71040040864000000000000
+TEST[DATE|TIME]    amountIn:            3016109787000000000000
+TEST[DATE|TIME]    totalIn:             3016109787000000000000
+TEST[DATE|TIME]    amountNet:           3016109787000000000000
+TEST[DATE|TIME]    endBal:              75843546632000000000000
+TEST[DATE|TIME]    endBalDiff:          -1787395981000000000000
+TEST[DATE|TIME]    endBalCalc:          74056150651000000000000
+TEST[DATE|TIME]    trialBalance:        not balanced
+TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling a contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 7005737 prior to its deployment 10000835

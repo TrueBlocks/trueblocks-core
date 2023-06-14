@@ -132,6 +132,12 @@ bool CUniPair::findPair(void) {
     return true;
 }
 
+#define LOG_ONE(a, b)                                                                                                  \
+    {                                                                                                                  \
+        string_q ttt = ":";                                                                                            \
+        cerr << padRight("TEST[DATE|TIME]", 16) << padRight(((a) + ttt), 20) << " " << (b) << endl;                    \
+    }
+
 //---------------------------------------------------------------------------
 bool CUniPair::getPrice(blknum_t bn, string_q& priceSource, double& priceOut) {
     priceOut = 1.;
@@ -164,8 +170,16 @@ bool CUniPair::getPrice(blknum_t bn, string_q& priceSource, double& priceOut) {
             priceSource = "uniswap";
         }
     }
-    LOG4("r1: ", r1, " r2: ", r2);
-    LOG4("reserve1: ", reserve1, " reserve2: ", reserve2, " priceOut: ", priceOut, " reversed: ", reversed);
+
+    if (isTestMode()) {
+        LOG_ONE("r1", r1);
+        LOG_ONE("r2", r2);
+        LOG_ONE("reserve1", reserve1);
+        LOG_ONE("reserve2", reserve2);
+        LOG_ONE("priceOut", priceOut);
+        LOG_ONE("reversed", reversed);
+    }
+
     return true;
 }
 
@@ -203,7 +217,11 @@ double getPrice_UsdPerTok(const address_t& assetAddr, string_q& priceSource, blk
     if (ethPerTok == 0.)
         return 0.;
     double usdPerEth = getPrice_UsdPerEth(priceSource, bn);
-    LOG4("ethPerTok: ", ethPerTok, " usdPerEth: ", usdPerEth, " price: ", (usdPerEth * ethPerTok));
+    if (isTestMode()) {
+        LOG_ONE("ethPerTok", ethPerTok);
+        LOG_ONE("usdPerEth", usdPerEth);
+        LOG_ONE("price", (usdPerEth * ethPerTok));
+    }
     return usdPerEth * ethPerTok;
 }
 

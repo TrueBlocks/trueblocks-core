@@ -23,3 +23,7 @@ func NewBigInt(i int64) BigInt {
 func NewFromBig(i *big.Int) BigInt {
 	return BigInt{*i}
 }
+
+func ZeroWei() big.Int {
+	return *big.NewInt(0)
+}

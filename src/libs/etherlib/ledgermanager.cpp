@@ -45,21 +45,46 @@ bool CLedgerManager::getStatements(CTransaction& trans) {
                 ledgers[tokenKey] = prevStatement;
             }
 
+            bool isPrevDiff = transfer.blockNumber == 0 || (ledgers[tokenKey].blockNumber != transfer.blockNumber);
+            bool isNextDiff = nextBlock != transfer.blockNumber && i == transfers.size() - 1;
+
             CReconciliation statement(accountedFor, transfer.assetAddr, &trans);
             statement.logIndex = transfer.logIndex;
             statement.assetSymbol = transfer.assetSymbol;
             statement.decimals = transfer.decimals;
+            if (isTestMode()) {
+                cerr << "TEST[DATE|TIME] " << endl;
+                cerr << "TEST[DATE|TIME] ===================================================" << endl;
+                cerr << "TEST[DATE|TIME] ledger.blockNumber:     " << ledgers[tokenKey].blockNumber << endl;
+                cerr << "TEST[DATE|TIME] prevBlock:              " << ledgers[tokenKey].blockNumber << endl;
+                cerr << "TEST[DATE|TIME] transfer.blockNumber:   " << transfer.blockNumber << endl;
+                cerr << "TEST[DATE|TIME] nextBlock:              " << nextBlock << endl;
+                cerr << "TEST[DATE|TIME] isPrevDiff:             " << isPrevDiff << endl;
+                cerr << "TEST[DATE|TIME] isNextDiff:             " << isNextDiff << endl;
+            }
             if (!statement.reconcileFlows(transfer)) {
+                if (isTestMode()) {
+                    cerr << "TEST[DATE|TIME] " << endl;
+                    cerr << "TEST[DATE|TIME] ===================================================" << endl;
+                    cerr << "TEST[DATE|TIME] ledger.blockNumber:     " << ledgers[tokenKey].blockNumber << endl;
+                    cerr << "TEST[DATE|TIME] prevBlock:              " << ledgers[tokenKey].blockNumber << endl;
+                    cerr << "TEST[DATE|TIME] transfer.blockNumber:   " << transfer.blockNumber << endl;
+                    cerr << "TEST[DATE|TIME] nextBlock:              " << nextBlock << endl;
+                    cerr << "TEST[DATE|TIME] isPrevDiff:             " << isPrevDiff << endl;
+                    cerr << "TEST[DATE|TIME] isNextDiff:             " << isNextDiff << endl;
+                }
                 statement.reconcileFlows_traces();
             }
 
-            bool isPrevDiff = transfer.blockNumber == 0 || (ledgers[tokenKey].blockNumber != transfer.blockNumber);
-            bool isNextDiff = nextBlock != transfer.blockNumber && i == transfers.size() - 1;
             if (isTestMode()) {
-                LOG_INFO("isPrevDiff: ", isPrevDiff, " isNextDiff: ", isNextDiff);
-                LOG_INFO("ledger.blockNumber: ", ledgers[tokenKey].blockNumber,
-                         " prevBlock: ", ledgers[tokenKey].blockNumber, " transfer.blockNumber: ", transfer.blockNumber,
-                         " nextBlock: ", nextBlock);
+                cerr << "TEST[DATE|TIME] " << endl;
+                cerr << "TEST[DATE|TIME] ===================================================" << endl;
+                cerr << "TEST[DATE|TIME] ledger.blockNumber:     " << ledgers[tokenKey].blockNumber << endl;
+                cerr << "TEST[DATE|TIME] prevBlock:              " << ledgers[tokenKey].blockNumber << endl;
+                cerr << "TEST[DATE|TIME] transfer.blockNumber:   " << transfer.blockNumber << endl;
+                cerr << "TEST[DATE|TIME] nextBlock:              " << nextBlock << endl;
+                cerr << "TEST[DATE|TIME] isPrevDiff:             " << isPrevDiff << endl;
+                cerr << "TEST[DATE|TIME] isNextDiff:             " << isNextDiff << endl;
             }
 
             statement.prevAppBlk = ledgers[tokenKey].blockNumber;

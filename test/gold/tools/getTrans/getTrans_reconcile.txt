@@ -4,38 +4,50 @@ TEST[DATE|TIME] Articulate:  true
 TEST[DATE|TIME] AccountFor:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  json
-TIME ~ CLOCK - : transHash0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63
-TIME ~ CLOCK - : not from cache
-TIME ~ CLOCK - : Loaded timestamp file
-TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
-TIME ~ CLOCK - <INFO>  : Trial balance: 
-TIME ~ CLOCK - <INFO>  :    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
-TIME ~ CLOCK - <INFO>  :    hash:                0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63
-TIME ~ CLOCK - <INFO>  :    blockNumber:         12697303
-TIME ~ CLOCK - <INFO>  :    transactionIndex:    99
-TIME ~ CLOCK - <INFO>  :    logIndex:            0
-TIME ~ CLOCK - <INFO>  :    begBal:              31419034761192445316
-TIME ~ CLOCK - <INFO>  :    endBal:              31419034761192445316
-TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
-TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 12697302 prevBlock: 12697302 transfer.blockNumber: 12697303 nextBlock: 18446744073709551615
-TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
-TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
-TIME ~ CLOCK - <INFO>  :    blks:                [12697303] 1 1
-TIME ~ CLOCK - <INFO>  :    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
-TIME ~ CLOCK - <INFO>  :    hash:                0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63
-TIME ~ CLOCK - <INFO>  :    blockNumber:         12697303
-TIME ~ CLOCK - <INFO>  :    transactionIndex:    99
-TIME ~ CLOCK - <INFO>  :    logIndex:            0
-TIME ~ CLOCK - <INFO>  :    begBal:              31419034761192445316
-TIME ~ CLOCK - <INFO>  :    endBal:              31419034761192445316
-TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
-TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ledger.blockNumber:     12697302
+TEST[DATE|TIME] prevBlock:              12697302
+TEST[DATE|TIME] transfer.blockNumber:   12697303
+TEST[DATE|TIME] nextBlock:              18446744073709551615
+TEST[DATE|TIME] isPrevDiff:             1
+TEST[DATE|TIME] isNextDiff:             1
+TEST[DATE|TIME] -------------flows-top-----------------------------
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME] 
+TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    assetSymbol:         WEI
+TEST[DATE|TIME]    hash:                0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63
+TEST[DATE|TIME]    blockNumber:         12697303
+TEST[DATE|TIME]    transactionIndex:    99
+TEST[DATE|TIME]    logIndex:            0
+TEST[DATE|TIME]    begBal:              31419034761192445316
+TEST[DATE|TIME]    endBal:              31419034761192445316
+TEST[DATE|TIME]    trialBalance:        balanced
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ledger.blockNumber:     12697302
+TEST[DATE|TIME] prevBlock:              12697302
+TEST[DATE|TIME] transfer.blockNumber:   12697303
+TEST[DATE|TIME] nextBlock:              18446744073709551615
+TEST[DATE|TIME] isPrevDiff:             1
+TEST[DATE|TIME] isNextDiff:             1
+TEST[DATE|TIME] -------------balances-top-----------------------------
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME] regular-eth
+TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    assetSymbol:         WEI
+TEST[DATE|TIME]    hash:                0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63
+TEST[DATE|TIME]    blockNumber:         12697303
+TEST[DATE|TIME]    transactionIndex:    99
+TEST[DATE|TIME]    logIndex:            0
+TEST[DATE|TIME]    begBal:              31419034761192445316
+TEST[DATE|TIME]    endBal:              31419034761192445316
+TEST[DATE|TIME]    trialBalance:        balanced
+TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
 {
