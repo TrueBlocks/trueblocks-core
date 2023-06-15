@@ -6,10 +6,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common"
 )
@@ -77,7 +74,7 @@ func (c *ContractCall) ForceEncoding(encoding string) {
 }
 
 func CallContract(chain string, call *ContractCall) (results *ContractMethodResult, err error) {
-	blockNumberHex := "0x" + strconv.FormatInt(int64(call.BlockNumber), 16)
+	blockNumberHex := "0x" + strconv.FormatUint(call.BlockNumber, 16)
 	if err != nil {
 		return
 	}
@@ -99,6 +96,7 @@ func CallContract(chain string, call *ContractCall) (results *ContractMethodResu
 		},
 		blockNumberHex,
 	})
+
 	if err != nil {
 		return nil, err
 	}
@@ -126,46 +124,4 @@ func CallContract(chain string, call *ContractCall) (results *ContractMethodResu
 	}
 
 	return results, nil
-}
-
-func resolveBlockNumber(chain string, namedBlock *types.SimpleNamedBlock) (blockNumber base.Blknum, hex string, err error) {
-	toHex := func() string {
-		return "0x" + strconv.FormatInt(int64(blockNumber), 16)
-	}
-
-	if namedBlock == nil || namedBlock != nil && namedBlock.Name == "latest" {
-		provider := config.GetRpcProvider(chain)
-		latest := rpcClient.BlockNumber(provider)
-		blockNumber = latest
-		hex = toHex()
-		return
-	}
-
-	if namedBlock.BlockNumber != 0 {
-		blockNumber = namedBlock.BlockNumber
-	}
-
-	if date := namedBlock.Date; date != "" {
-		blockNumber, err = tslib.FromDateToBn(chain, date)
-		if err != nil {
-			return
-		}
-	}
-
-	if name := namedBlock.Name; name != "" {
-		blockNumber, err = tslib.FromNameToBn(chain, name)
-		if err != nil {
-			return
-		}
-	}
-
-	if timestamp := namedBlock.Timestamp; timestamp != 0 {
-		blockNumber, err = tslib.FromTsToBn(chain, timestamp)
-		if err != nil {
-			return
-		}
-	}
-
-	hex = toHex()
-	return
 }
