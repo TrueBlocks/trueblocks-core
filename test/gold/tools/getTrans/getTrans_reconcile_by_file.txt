@@ -4,18 +4,17 @@ TEST[DATE|TIME] AccountFor:  0x37da92c11a2d5c05077ce41ac2243aa38032d4af
 TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] File:  cmd_file_3
 TEST[DATE|TIME] Format:  txt
-blockNumber	transactionIndex	logindex	transactionHash	timestamp	date	assetAddress	assetSymbol	decimals	spotPrice	priceSource	accountedFor	sender	recipient	begBal	amountNet	endBal	reconciliationType	reconciled	totalIn	amountIn	internalIn	selfDestructIn	minerBaseRewardIn	minerNephewRewardIn	minerTxFeeIn	minerUncleRewardIn	prefundIn	totalOut	amountOut	internalOut	selfDestructOut	gasOut	totalOutLessGas	prevAppBlk	prevBal	begBalDiff	endBalDiff	endBalCalc
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     12655578
 TEST[DATE|TIME] prevBlock:              12655578
 TEST[DATE|TIME] transfer.blockNumber:   12655579
-TEST[DATE|TIME] nextBlock:              18446744073709551615
-TEST[DATE|TIME] isPrevDiff:             1
-TEST[DATE|TIME] isNextDiff:             0
+TEST[DATE|TIME] nextBlock:              12655580
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] -------------flows-top-----------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME] 
+TEST[DATE|TIME] regular-eth
 TEST[DATE|TIME]    accountedFor:        0x37da92c11a2d5c05077ce41ac2243aa38032d4af
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
@@ -28,19 +27,19 @@ TEST[DATE|TIME]    gasOut:              28323430000000000
 TEST[DATE|TIME]    totalOut:            28323430000000000
 TEST[DATE|TIME]    amountNet:           -28323430000000000
 TEST[DATE|TIME]    endBal:              177630254000000000
-TEST[DATE|TIME]    trialBalance:        balanced
+TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     12655578
 TEST[DATE|TIME] prevBlock:              12655578
 TEST[DATE|TIME] transfer.blockNumber:   12655579
-TEST[DATE|TIME] nextBlock:              18446744073709551615
-TEST[DATE|TIME] isPrevDiff:             1
-TEST[DATE|TIME] isNextDiff:             0
+TEST[DATE|TIME] nextBlock:              12655580
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] -------------balances-top-----------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME] prevDiff-same-eth
+TEST[DATE|TIME] regular-eth
 TEST[DATE|TIME]    accountedFor:        0x37da92c11a2d5c05077ce41ac2243aa38032d4af
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
@@ -53,21 +52,19 @@ TEST[DATE|TIME]    gasOut:              28323430000000000
 TEST[DATE|TIME]    totalOut:            28323430000000000
 TEST[DATE|TIME]    amountNet:           -28323430000000000
 TEST[DATE|TIME]    endBal:              177630254000000000
-TEST[DATE|TIME]    trialBalance:        balanced
+TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
-TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     12655578
 TEST[DATE|TIME] prevBlock:              12655578
 TEST[DATE|TIME] transfer.blockNumber:   12655579
-TEST[DATE|TIME] nextBlock:              18446744073709551615
-TEST[DATE|TIME] isPrevDiff:             1
-TEST[DATE|TIME] isNextDiff:             1
+TEST[DATE|TIME] nextBlock:              12655580
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] -------------flows-token-----------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME] 
+TEST[DATE|TIME] regular-token
 TEST[DATE|TIME]    accountedFor:        0x37da92c11a2d5c05077ce41ac2243aa38032d4af
 TEST[DATE|TIME]    assetAddr:           0xea0be20914783d6b538539795069ca333f820bc5
 TEST[DATE|TIME]    assetSymbol:         0xea
@@ -79,16 +76,16 @@ TEST[DATE|TIME]    amountIn:            148323969741913257974
 TEST[DATE|TIME]    totalIn:             148323969741913257974
 TEST[DATE|TIME]    amountNet:           148323969741913257974
 TEST[DATE|TIME]    endBal:              148323969741913257974
-TEST[DATE|TIME]    trialBalance:        balanced
+TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     12655578
 TEST[DATE|TIME] prevBlock:              12655578
 TEST[DATE|TIME] transfer.blockNumber:   12655579
-TEST[DATE|TIME] nextBlock:              18446744073709551615
-TEST[DATE|TIME] isPrevDiff:             1
-TEST[DATE|TIME] isNextDiff:             1
+TEST[DATE|TIME] nextBlock:              12655580
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] -------------balances-token-----------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME] regular-token
@@ -103,7 +100,7 @@ TEST[DATE|TIME]    amountIn:            148323969741913257974
 TEST[DATE|TIME]    totalIn:             148323969741913257974
 TEST[DATE|TIME]    amountNet:           148323969741913257974
 TEST[DATE|TIME]    endBal:              148323969741913257974
-TEST[DATE|TIME]    trialBalance:        balanced
+TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
@@ -119,8 +116,6 @@ TEST[DATE|TIME] priceOut:            2331.5
 TEST[DATE|TIME] reversed:            0
 TIME ~ CLOCK - <INFO>  : Calling 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 12655579...: 
 TIME ~ CLOCK - <INFO>  : call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 12655579 at four-byte 0xe6a43905 returned 0x0000000000000000000000000000000000000000000000000000000000000000
-12655579	76	0	0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33	1623981210	2021-06-18 01:53:30 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	ETH	18	2331.50051	uniswap	0x37da92c11a2d5c05077ce41ac2243aa38032d4af	0x37da92c11a2d5c05077ce41ac2243aa38032d4af	0xfa247066958637af6b4cc04bccecad2b6b107200	"0.205953684000000000"	"-0.028323430000000000"	"0.177630254000000000"	prevDiff-same-eth	true	""	""	""	""	""	""	""	""	""	"0.028323430000000000"	""	""	""	"0.028323430000000000"	""	12655578	"0.205953684000000000"	""	""	"0.177630254000000000"
-12655579	76	122	0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33	1623981210	2021-06-18 01:53:30 UTC	0xea0be20914783d6b538539795069ca333f820bc5	0xea	18	0.00000	not-priced	0x37da92c11a2d5c05077ce41ac2243aa38032d4af	0x0000000000000000000000000000000000000000	0x37da92c11a2d5c05077ce41ac2243aa38032d4af	""	"148.323969741913257974"	"148.323969741913257974"	regular-token	true	"148.323969741913257974"	"148.323969741913257974"	""	""	""	""	""	""	""	""	""	""	""	""	""	12655578	""	""	""	"148.323969741913257974"
 TEST[DATE|TIME] Transactions:  [0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33]
 TEST[DATE|TIME] AccountFor:  0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
 TEST[DATE|TIME] NoHeader:  true
@@ -132,12 +127,12 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     12655578
 TEST[DATE|TIME] prevBlock:              12655578
 TEST[DATE|TIME] transfer.blockNumber:   12655579
-TEST[DATE|TIME] nextBlock:              18446744073709551615
-TEST[DATE|TIME] isPrevDiff:             1
-TEST[DATE|TIME] isNextDiff:             1
+TEST[DATE|TIME] nextBlock:              12655580
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] -------------flows-top-----------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME] 
+TEST[DATE|TIME] regular-eth
 TEST[DATE|TIME]    accountedFor:        0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
@@ -145,16 +140,21 @@ TEST[DATE|TIME]    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926
 TEST[DATE|TIME]    blockNumber:         12655579
 TEST[DATE|TIME]    transactionIndex:    76
 TEST[DATE|TIME]    logIndex:            0
-TEST[DATE|TIME]    trialBalance:        balanced
+TEST[DATE|TIME]    begBal:              0
+TEST[DATE|TIME]    amountIn:            0
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    amountNet:           0
+TEST[DATE|TIME]    endBal:              0
+TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     12655578
 TEST[DATE|TIME] prevBlock:              12655578
 TEST[DATE|TIME] transfer.blockNumber:   12655579
-TEST[DATE|TIME] nextBlock:              18446744073709551615
-TEST[DATE|TIME] isPrevDiff:             1
-TEST[DATE|TIME] isNextDiff:             1
+TEST[DATE|TIME] nextBlock:              12655580
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] -------------balances-top-----------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME] regular-eth
@@ -165,10 +165,13 @@ TEST[DATE|TIME]    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926
 TEST[DATE|TIME]    blockNumber:         12655579
 TEST[DATE|TIME]    transactionIndex:    76
 TEST[DATE|TIME]    logIndex:            0
-TEST[DATE|TIME]    trialBalance:        balanced
+TEST[DATE|TIME]    begBal:              0
+TEST[DATE|TIME]    amountIn:            0
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    amountNet:           0
+TEST[DATE|TIME]    endBal:              0
+TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
-TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : 
 TEST[DATE|TIME] Transactions:  [0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33]
 TEST[DATE|TIME] AccountFor:  0x7a250d5630b4cf539739df2c5dacb4c659f2488d
 TEST[DATE|TIME] NoHeader:  true
@@ -180,12 +183,12 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     12655578
 TEST[DATE|TIME] prevBlock:              12655578
 TEST[DATE|TIME] transfer.blockNumber:   12655579
-TEST[DATE|TIME] nextBlock:              18446744073709551615
-TEST[DATE|TIME] isPrevDiff:             1
-TEST[DATE|TIME] isNextDiff:             0
+TEST[DATE|TIME] nextBlock:              12655580
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] -------------flows-top-----------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME] 
+TEST[DATE|TIME] regular-eth
 TEST[DATE|TIME]    accountedFor:        0x7a250d5630b4cf539739df2c5dacb4c659f2488d
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
@@ -193,19 +196,24 @@ TEST[DATE|TIME]    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926
 TEST[DATE|TIME]    blockNumber:         12655579
 TEST[DATE|TIME]    transactionIndex:    76
 TEST[DATE|TIME]    logIndex:            0
-TEST[DATE|TIME]    trialBalance:        balanced
+TEST[DATE|TIME]    begBal:              0
+TEST[DATE|TIME]    amountIn:            0
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    amountNet:           0
+TEST[DATE|TIME]    endBal:              0
+TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     12655578
 TEST[DATE|TIME] prevBlock:              12655578
 TEST[DATE|TIME] transfer.blockNumber:   12655579
-TEST[DATE|TIME] nextBlock:              18446744073709551615
-TEST[DATE|TIME] isPrevDiff:             1
-TEST[DATE|TIME] isNextDiff:             0
+TEST[DATE|TIME] nextBlock:              12655580
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] -------------balances-top-----------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME] prevDiff-same-eth
+TEST[DATE|TIME] regular-eth
 TEST[DATE|TIME]    accountedFor:        0x7a250d5630b4cf539739df2c5dacb4c659f2488d
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
@@ -213,21 +221,24 @@ TEST[DATE|TIME]    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926
 TEST[DATE|TIME]    blockNumber:         12655579
 TEST[DATE|TIME]    transactionIndex:    76
 TEST[DATE|TIME]    logIndex:            0
-TEST[DATE|TIME]    trialBalance:        balanced
+TEST[DATE|TIME]    begBal:              0
+TEST[DATE|TIME]    amountIn:            0
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    amountNet:           0
+TEST[DATE|TIME]    endBal:              0
+TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
-TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     12655578
 TEST[DATE|TIME] prevBlock:              12655578
 TEST[DATE|TIME] transfer.blockNumber:   12655579
-TEST[DATE|TIME] nextBlock:              18446744073709551615
-TEST[DATE|TIME] isPrevDiff:             1
-TEST[DATE|TIME] isNextDiff:             1
+TEST[DATE|TIME] nextBlock:              12655580
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] -------------flows-token-----------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME] 
+TEST[DATE|TIME] regular-token
 TEST[DATE|TIME]    accountedFor:        0x7a250d5630b4cf539739df2c5dacb4c659f2488d
 TEST[DATE|TIME]    assetAddr:           0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 TEST[DATE|TIME]    assetSymbol:         WETH
@@ -240,7 +251,7 @@ TEST[DATE|TIME]    totalOut:            2750000000000000000
 TEST[DATE|TIME]    amountNet:           -2750000000000000000
 TEST[DATE|TIME]    endBalDiff:          -2750000000000000000
 TEST[DATE|TIME]    endBalCalc:          -2750000000000000000
-TEST[DATE|TIME]    trialBalance:        not balanced
+TEST[DATE|TIME]    trialBalance:        false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ===================================================
@@ -265,7 +276,7 @@ TEST[DATE|TIME]    totalOut:            2750000000000000000
 TEST[DATE|TIME]    amountNet:           -2750000000000000000
 TEST[DATE|TIME]    endBalDiff:          -2750000000000000000
 TEST[DATE|TIME]    endBalCalc:          -2750000000000000000
-TEST[DATE|TIME]    trialBalance:        not balanced
+TEST[DATE|TIME]    trialBalance:        false
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
@@ -279,7 +290,6 @@ TEST[DATE|TIME] reserve1:            4.05881e+07
 TEST[DATE|TIME] reserve2:            17408.6
 TEST[DATE|TIME] priceOut:            2331.5
 TEST[DATE|TIME] reversed:            0
-12655579	76	120	0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33	1623981210	2021-06-18 01:53:30 UTC	0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2	WETH	18	2331.50051	uniswap	0x7a250d5630b4cf539739df2c5dacb4c659f2488d	0x7a250d5630b4cf539739df2c5dacb4c659f2488d	0xea0be20914783d6b538539795069ca333f820bc5	""	""	""	skipped	true	""	""	""	""	""	""	""	""	""	""	"2.750000000000000000"	"-2.750000000000000000"	""	""	""	12655578	""	""	""	""
 TEST[DATE|TIME] Transactions:  [0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33]
 TEST[DATE|TIME] AccountFor:  0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 TEST[DATE|TIME] NoHeader:  true
@@ -291,12 +301,12 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     12655578
 TEST[DATE|TIME] prevBlock:              12655578
 TEST[DATE|TIME] transfer.blockNumber:   12655579
-TEST[DATE|TIME] nextBlock:              18446744073709551615
-TEST[DATE|TIME] isPrevDiff:             1
-TEST[DATE|TIME] isNextDiff:             1
+TEST[DATE|TIME] nextBlock:              12655580
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] -------------flows-top-----------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME] 
+TEST[DATE|TIME] regular-eth
 TEST[DATE|TIME]    accountedFor:        0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
@@ -305,11 +315,14 @@ TEST[DATE|TIME]    blockNumber:         12655579
 TEST[DATE|TIME]    transactionIndex:    76
 TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    begBal:              6209554242344378131786565
+TEST[DATE|TIME]    amountIn:            0
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    amountNet:           0
 TEST[DATE|TIME]    endBal:              6209498521745182918310272
 TEST[DATE|TIME]    begBalDiff:          6209554242344378131786565
 TEST[DATE|TIME]    endBalDiff:          55720599195213476293
 TEST[DATE|TIME]    endBalCalc:          6209554242344378131786565
-TEST[DATE|TIME]    trialBalance:        not balanced
+TEST[DATE|TIME]    trialBalance:        false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] -------------traces-----------------------------
 TEST[DATE|TIME] Trial balance:
@@ -329,16 +342,16 @@ TEST[DATE|TIME]    endBal:              6209498521745182918310272
 TEST[DATE|TIME]    begBalDiff:          6209554242344378131786565
 TEST[DATE|TIME]    endBalDiff:          58470599195213476293
 TEST[DATE|TIME]    endBalCalc:          6209556992344378131786565
-TEST[DATE|TIME]    trialBalance:        not balanced
+TEST[DATE|TIME]    trialBalance:        false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     12655578
 TEST[DATE|TIME] prevBlock:              12655578
 TEST[DATE|TIME] transfer.blockNumber:   12655579
-TEST[DATE|TIME] nextBlock:              18446744073709551615
-TEST[DATE|TIME] isPrevDiff:             1
-TEST[DATE|TIME] isNextDiff:             1
+TEST[DATE|TIME] nextBlock:              12655580
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] -------------traces-----------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME] trace-
@@ -384,7 +397,7 @@ TEST[DATE|TIME]    amountNet:           2750000000000000000
 TEST[DATE|TIME]    endBal:              6209498521745182918310272
 TEST[DATE|TIME]    endBalDiff:          58470599195213476293
 TEST[DATE|TIME]    endBalCalc:          6209556992344378131786565
-TEST[DATE|TIME]    trialBalance:        not balanced
+TEST[DATE|TIME]    trialBalance:        false
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
@@ -398,7 +411,6 @@ TEST[DATE|TIME] reserve1:            4.05881e+07
 TEST[DATE|TIME] reserve2:            17408.6
 TEST[DATE|TIME] priceOut:            2331.5
 TEST[DATE|TIME] reversed:            0
-12655579	76	0	0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33	1623981210	2021-06-18 01:53:30 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	ETH	18	2331.50051	uniswap	0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2	0xea0be20914783d6b538539795069ca333f820bc5	0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2	"6209554.242344378131786565"	"2.750000000000000000"	"6209498.521745182918310272"	trace-regular-eth	false	"2.750000000000000000"	""	"2.750000000000000000"	""	""	""	""	""	""	""	""	""	""	""	""	12655578	"6209554.242344378131786565"	""	"58.470599195213476293"	"6209556.992344378131786565"
 TEST[DATE|TIME] Transactions:  [0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33]
 TEST[DATE|TIME] AccountFor:  0xea0be20914783d6b538539795069ca333f820bc5
 TEST[DATE|TIME] NoHeader:  true
@@ -410,12 +422,12 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     12655578
 TEST[DATE|TIME] prevBlock:              12655578
 TEST[DATE|TIME] transfer.blockNumber:   12655579
-TEST[DATE|TIME] nextBlock:              18446744073709551615
-TEST[DATE|TIME] isPrevDiff:             1
-TEST[DATE|TIME] isNextDiff:             0
+TEST[DATE|TIME] nextBlock:              12655580
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] -------------flows-top-----------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME] 
+TEST[DATE|TIME] regular-eth
 TEST[DATE|TIME]    accountedFor:        0xea0be20914783d6b538539795069ca333f820bc5
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
@@ -423,19 +435,24 @@ TEST[DATE|TIME]    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926
 TEST[DATE|TIME]    blockNumber:         12655579
 TEST[DATE|TIME]    transactionIndex:    76
 TEST[DATE|TIME]    logIndex:            0
-TEST[DATE|TIME]    trialBalance:        balanced
+TEST[DATE|TIME]    begBal:              0
+TEST[DATE|TIME]    amountIn:            0
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    amountNet:           0
+TEST[DATE|TIME]    endBal:              0
+TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     12655578
 TEST[DATE|TIME] prevBlock:              12655578
 TEST[DATE|TIME] transfer.blockNumber:   12655579
-TEST[DATE|TIME] nextBlock:              18446744073709551615
-TEST[DATE|TIME] isPrevDiff:             1
-TEST[DATE|TIME] isNextDiff:             0
+TEST[DATE|TIME] nextBlock:              12655580
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] -------------balances-top-----------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME] prevDiff-same-eth
+TEST[DATE|TIME] regular-eth
 TEST[DATE|TIME]    accountedFor:        0xea0be20914783d6b538539795069ca333f820bc5
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
@@ -443,21 +460,24 @@ TEST[DATE|TIME]    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926
 TEST[DATE|TIME]    blockNumber:         12655579
 TEST[DATE|TIME]    transactionIndex:    76
 TEST[DATE|TIME]    logIndex:            0
-TEST[DATE|TIME]    trialBalance:        balanced
+TEST[DATE|TIME]    begBal:              0
+TEST[DATE|TIME]    amountIn:            0
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    amountNet:           0
+TEST[DATE|TIME]    endBal:              0
+TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
-TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     12655578
 TEST[DATE|TIME] prevBlock:              12655578
 TEST[DATE|TIME] transfer.blockNumber:   12655579
-TEST[DATE|TIME] nextBlock:              18446744073709551615
-TEST[DATE|TIME] isPrevDiff:             1
-TEST[DATE|TIME] isNextDiff:             0
+TEST[DATE|TIME] nextBlock:              12655580
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] -------------flows-token-----------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME] 
+TEST[DATE|TIME] regular-token
 TEST[DATE|TIME]    accountedFor:        0xea0be20914783d6b538539795069ca333f820bc5
 TEST[DATE|TIME]    assetAddr:           0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 TEST[DATE|TIME]    assetSymbol:         WETH
@@ -469,7 +489,7 @@ TEST[DATE|TIME]    amountIn:            2750000000000000000
 TEST[DATE|TIME]    totalIn:             2750000000000000000
 TEST[DATE|TIME]    amountNet:           2750000000000000000
 TEST[DATE|TIME]    endBal:              2750000000000000000
-TEST[DATE|TIME]    trialBalance:        balanced
+TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ===================================================
@@ -580,8 +600,6 @@ TEST[DATE|TIME] reversed:            0
 TEST[DATE|TIME] ethPerTok:           0.00034375
 TEST[DATE|TIME] usdPerEth:           2331.5
 TEST[DATE|TIME] price:               0.801453
-12655579	76	120	0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33	1623981210	2021-06-18 01:53:30 UTC	0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2	WETH	18	2331.50051	uniswap	0xea0be20914783d6b538539795069ca333f820bc5	0x7a250d5630b4cf539739df2c5dacb4c659f2488d	0xea0be20914783d6b538539795069ca333f820bc5	""	"2.750000000000000000"	"2.750000000000000000"	prevDiff-same-token	true	"2.750000000000000000"	"2.750000000000000000"	""	""	""	""	""	""	""	""	""	""	""	""	""	12655578	""	""	""	"2.750000000000000000"
-12655579	76	117	0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33	1623981210	2021-06-18 01:53:30 UTC	0xfa247066958637af6b4cc04bccecad2b6b107200	eBBC🧑🏿🍆	9	0.80145	uniswap	0xea0be20914783d6b538539795069ca333f820bc5	0xfa247066958637af6b4cc04bccecad2b6b107200	0xea0be20914783d6b538539795069ca333f820bc5	""	"8000000000000.0000000"	"8000000000000.0000000"	regular-token	true	"8000000000000.0000000"	"8000000000000.0000000"	""	""	""	""	""	""	""	""	""	""	""	""	""	12655578	""	""	""	"8000000000000.0000000"
 TEST[DATE|TIME] Transactions:  [0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33]
 TEST[DATE|TIME] AccountFor:  0xfa247066958637af6b4cc04bccecad2b6b107200
 TEST[DATE|TIME] NoHeader:  true
@@ -737,5 +755,12 @@ TEST[DATE|TIME] reversed:            0
 TEST[DATE|TIME] ethPerTok:           0.00034375
 TEST[DATE|TIME] usdPerEth:           2331.5
 TEST[DATE|TIME] price:               0.801453
+blockNumber	transactionIndex	logindex	transactionHash	timestamp	date	assetAddress	assetSymbol	decimals	spotPrice	priceSource	accountedFor	sender	recipient	begBal	amountNet	endBal	reconciliationType	reconciled	totalIn	amountIn	internalIn	selfDestructIn	minerBaseRewardIn	minerNephewRewardIn	minerTxFeeIn	minerUncleRewardIn	prefundIn	totalOut	amountOut	internalOut	selfDestructOut	gasOut	totalOutLessGas	prevAppBlk	prevBal	begBalDiff	endBalDiff	endBalCalc
+12655579	76	0	0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33	1623981210	2021-06-18 01:53:30 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	ETH	18	2331.50051	uniswap	0x37da92c11a2d5c05077ce41ac2243aa38032d4af	0x37da92c11a2d5c05077ce41ac2243aa38032d4af	0xfa247066958637af6b4cc04bccecad2b6b107200	"0.205953684000000000"	"-0.028323430000000000"	"0.177630254000000000"	prevDiff-same-eth	true	""	""	""	""	""	""	""	""	""	"0.028323430000000000"	""	""	""	"0.028323430000000000"	""	12655578	"0.205953684000000000"	""	""	"0.177630254000000000"
+12655579	76	122	0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33	1623981210	2021-06-18 01:53:30 UTC	0xea0be20914783d6b538539795069ca333f820bc5	0xea	18	0.00000	not-priced	0x37da92c11a2d5c05077ce41ac2243aa38032d4af	0x0000000000000000000000000000000000000000	0x37da92c11a2d5c05077ce41ac2243aa38032d4af	""	"148.323969741913257974"	"148.323969741913257974"	regular-token	true	"148.323969741913257974"	"148.323969741913257974"	""	""	""	""	""	""	""	""	""	""	""	""	""	12655578	""	""	""	"148.323969741913257974"
+12655579	76	120	0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33	1623981210	2021-06-18 01:53:30 UTC	0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2	WETH	18	2331.50051	uniswap	0x7a250d5630b4cf539739df2c5dacb4c659f2488d	0x7a250d5630b4cf539739df2c5dacb4c659f2488d	0xea0be20914783d6b538539795069ca333f820bc5	""	""	""	skipped	true	""	""	""	""	""	""	""	""	""	""	"2.750000000000000000"	"-2.750000000000000000"	""	""	""	12655578	""	""	""	""
+12655579	76	0	0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33	1623981210	2021-06-18 01:53:30 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	ETH	18	2331.50051	uniswap	0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2	0xea0be20914783d6b538539795069ca333f820bc5	0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2	"6209554.242344378131786565"	"2.750000000000000000"	"6209498.521745182918310272"	trace-regular-eth	false	"2.750000000000000000"	""	"2.750000000000000000"	""	""	""	""	""	""	""	""	""	""	""	""	12655578	"6209554.242344378131786565"	""	"58.470599195213476293"	"6209556.992344378131786565"
+12655579	76	120	0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33	1623981210	2021-06-18 01:53:30 UTC	0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2	WETH	18	2331.50051	uniswap	0xea0be20914783d6b538539795069ca333f820bc5	0x7a250d5630b4cf539739df2c5dacb4c659f2488d	0xea0be20914783d6b538539795069ca333f820bc5	""	"2.750000000000000000"	"2.750000000000000000"	prevDiff-same-token	true	"2.750000000000000000"	"2.750000000000000000"	""	""	""	""	""	""	""	""	""	""	""	""	""	12655578	""	""	""	"2.750000000000000000"
+12655579	76	117	0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33	1623981210	2021-06-18 01:53:30 UTC	0xfa247066958637af6b4cc04bccecad2b6b107200	eBBC🧑🏿🍆	9	0.80145	uniswap	0xea0be20914783d6b538539795069ca333f820bc5	0xfa247066958637af6b4cc04bccecad2b6b107200	0xea0be20914783d6b538539795069ca333f820bc5	""	"8000000000000.0000000"	"8000000000000.0000000"	regular-token	true	"8000000000000.0000000"	"8000000000000.0000000"	""	""	""	""	""	""	""	""	""	""	""	""	""	12655578	""	""	""	"8000000000000.0000000"
 12655579	76	0	0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33	1623981210	2021-06-18 01:53:30 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	ETH	18	2331.50051	uniswap	0xfa247066958637af6b4cc04bccecad2b6b107200	0xfa247066958637af6b4cc04bccecad2b6b107200	0xea0be20914783d6b538539795069ca333f820bc5	"2.750000000000000000"	"-2.750000000000000000"	""	trace-prevDiff-same-eth	true	""	""	""	""	""	""	""	""	""	"2.750000000000000000"	""	"2.750000000000000000"	""	""	"2.750000000000000000"	12655578	"2.750000000000000000"	""	""	""
 12655579	76	117	0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33	1623981210	2021-06-18 01:53:30 UTC	0xfa247066958637af6b4cc04bccecad2b6b107200	eBBC🧑🏿🍆	9	0.80145	uniswap	0xfa247066958637af6b4cc04bccecad2b6b107200	0xfa247066958637af6b4cc04bccecad2b6b107200	0xea0be20914783d6b538539795069ca333f820bc5	"8000000000000.0000000"	"-8000000000000.0000000"	""	regular-token	true	""	""	""	""	""	""	""	""	""	"8000000000000.0000000"	"8000000000000.0000000"	""	""	""	"8000000000000.0000000"	12655578	"8000000000000.0000000"	""	""	""

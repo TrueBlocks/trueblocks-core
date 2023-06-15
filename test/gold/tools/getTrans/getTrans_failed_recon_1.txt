@@ -7,12 +7,12 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     4634214
 TEST[DATE|TIME] prevBlock:              4634214
 TEST[DATE|TIME] transfer.blockNumber:   4634215
-TEST[DATE|TIME] nextBlock:              18446744073709551615
-TEST[DATE|TIME] isPrevDiff:             1
-TEST[DATE|TIME] isNextDiff:             0
+TEST[DATE|TIME] nextBlock:              4634216
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] -------------flows-top-----------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME] 
+TEST[DATE|TIME] regular-eth
 TEST[DATE|TIME]    accountedFor:        0x127ac03acfad15f7a49dd037e52d5507260e1425
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -21,20 +21,23 @@ TEST[DATE|TIME]    blockNumber:         4634215
 TEST[DATE|TIME]    transactionIndex:    43
 TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    begBal:              1064628817657754078
+TEST[DATE|TIME]    amountIn:            0
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    amountNet:           0
 TEST[DATE|TIME]    endBal:              1064628817657754078
-TEST[DATE|TIME]    trialBalance:        balanced
+TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     4634214
 TEST[DATE|TIME] prevBlock:              4634214
 TEST[DATE|TIME] transfer.blockNumber:   4634215
-TEST[DATE|TIME] nextBlock:              18446744073709551615
-TEST[DATE|TIME] isPrevDiff:             1
-TEST[DATE|TIME] isNextDiff:             0
+TEST[DATE|TIME] nextBlock:              4634216
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] -------------balances-top-----------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME] prevDiff-same-eth
+TEST[DATE|TIME] regular-eth
 TEST[DATE|TIME]    accountedFor:        0x127ac03acfad15f7a49dd037e52d5507260e1425
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -43,8 +46,11 @@ TEST[DATE|TIME]    blockNumber:         4634215
 TEST[DATE|TIME]    transactionIndex:    43
 TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    begBal:              1064628817657754078
+TEST[DATE|TIME]    amountIn:            0
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    amountNet:           0
 TEST[DATE|TIME]    endBal:              1064628817657754078
-TEST[DATE|TIME]    trialBalance:        balanced
+TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 

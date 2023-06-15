@@ -8,12 +8,12 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     7005736
 TEST[DATE|TIME] prevBlock:              7005736
 TEST[DATE|TIME] transfer.blockNumber:   7005737
-TEST[DATE|TIME] nextBlock:              18446744073709551615
-TEST[DATE|TIME] isPrevDiff:             1
-TEST[DATE|TIME] isNextDiff:             0
+TEST[DATE|TIME] nextBlock:              7005738
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] -------------flows-top-----------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME] 
+TEST[DATE|TIME] regular-eth
 TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
@@ -22,20 +22,23 @@ TEST[DATE|TIME]    blockNumber:         7005737
 TEST[DATE|TIME]    transactionIndex:    30
 TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    begBal:              29270157687500000
+TEST[DATE|TIME]    amountIn:            0
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    amountNet:           0
 TEST[DATE|TIME]    endBal:              29270157687500000
-TEST[DATE|TIME]    trialBalance:        balanced
+TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     7005736
 TEST[DATE|TIME] prevBlock:              7005736
 TEST[DATE|TIME] transfer.blockNumber:   7005737
-TEST[DATE|TIME] nextBlock:              18446744073709551615
-TEST[DATE|TIME] isPrevDiff:             1
-TEST[DATE|TIME] isNextDiff:             0
+TEST[DATE|TIME] nextBlock:              7005738
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] -------------balances-top-----------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME] prevDiff-same-eth
+TEST[DATE|TIME] regular-eth
 TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
@@ -44,22 +47,23 @@ TEST[DATE|TIME]    blockNumber:         7005737
 TEST[DATE|TIME]    transactionIndex:    30
 TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    begBal:              29270157687500000
+TEST[DATE|TIME]    amountIn:            0
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    amountNet:           0
 TEST[DATE|TIME]    endBal:              29270157687500000
-TEST[DATE|TIME]    trialBalance:        balanced
+TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
-TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     7005736
 TEST[DATE|TIME] prevBlock:              7005736
 TEST[DATE|TIME] transfer.blockNumber:   7005737
-TEST[DATE|TIME] nextBlock:              18446744073709551615
-TEST[DATE|TIME] isPrevDiff:             1
-TEST[DATE|TIME] isNextDiff:             1
+TEST[DATE|TIME] nextBlock:              7005738
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] -------------flows-token-----------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME] 
+TEST[DATE|TIME] regular-token
 TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME]    assetAddr:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
 TEST[DATE|TIME]    assetSymbol:         0x5c
@@ -82,9 +86,9 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     7005736
 TEST[DATE|TIME] prevBlock:              7005736
 TEST[DATE|TIME] transfer.blockNumber:   7005737
-TEST[DATE|TIME] nextBlock:              18446744073709551615
-TEST[DATE|TIME] isPrevDiff:             1
-TEST[DATE|TIME] isNextDiff:             1
+TEST[DATE|TIME] nextBlock:              7005738
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] -------------balances-token-----------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME] regular-token

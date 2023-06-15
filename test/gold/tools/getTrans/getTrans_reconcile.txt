@@ -4,52 +4,9 @@ TEST[DATE|TIME] Articulate:  true
 TEST[DATE|TIME] AccountFor:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  json
-TEST[DATE|TIME] 
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ledger.blockNumber:     12697302
-TEST[DATE|TIME] prevBlock:              12697302
-TEST[DATE|TIME] transfer.blockNumber:   12697303
-TEST[DATE|TIME] nextBlock:              18446744073709551615
-TEST[DATE|TIME] isPrevDiff:             1
-TEST[DATE|TIME] isNextDiff:             1
-TEST[DATE|TIME] -------------flows-top-----------------------------
-TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME] 
-TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME]    assetSymbol:         WEI
-TEST[DATE|TIME]    hash:                0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63
-TEST[DATE|TIME]    blockNumber:         12697303
-TEST[DATE|TIME]    transactionIndex:    99
-TEST[DATE|TIME]    logIndex:            0
-TEST[DATE|TIME]    begBal:              31419034761192445316
-TEST[DATE|TIME]    endBal:              31419034761192445316
-TEST[DATE|TIME]    trialBalance:        balanced
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] 
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ledger.blockNumber:     12697302
-TEST[DATE|TIME] prevBlock:              12697302
-TEST[DATE|TIME] transfer.blockNumber:   12697303
-TEST[DATE|TIME] nextBlock:              18446744073709551615
-TEST[DATE|TIME] isPrevDiff:             1
-TEST[DATE|TIME] isNextDiff:             1
-TEST[DATE|TIME] -------------balances-top-----------------------------
-TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME] regular-eth
-TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME]    assetSymbol:         WEI
-TEST[DATE|TIME]    hash:                0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63
-TEST[DATE|TIME]    blockNumber:         12697303
-TEST[DATE|TIME]    transactionIndex:    99
-TEST[DATE|TIME]    logIndex:            0
-TEST[DATE|TIME]    begBal:              31419034761192445316
-TEST[DATE|TIME]    endBal:              31419034761192445316
-TEST[DATE|TIME]    trialBalance:        balanced
-TEST[DATE|TIME] ---------------------------------------------------
-TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] Transaction 12697303.99 does not transfer value
+TEST[DATE|TIME] Log 278 at 12697303.99 (a token transfer) is not relevant
+TEST[DATE|TIME] Log 280 at 12697303.99 (a token transfer) is not relevant
 {
   "data": []
 }

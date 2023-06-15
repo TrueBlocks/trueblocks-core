@@ -11,6 +11,7 @@ package types
 // EXISTING_CODE
 import (
 	"io"
+	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
@@ -38,7 +39,7 @@ type RawTransfer struct {
 }
 
 type SimpleTransfer struct {
-	Amount           base.BigInt    `json:"amount"`
+	Amount           big.Int        `json:"amount"`
 	AssetAddr        base.Address   `json:"assetAddr"`
 	AssetSymbol      string         `json:"assetSymbol"`
 	BlockNumber      base.Blknum    `json:"blockNumber"`

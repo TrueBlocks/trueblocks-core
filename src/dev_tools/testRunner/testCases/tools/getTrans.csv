@@ -62,22 +62,14 @@ on       ,both ,fast  ,transactions ,tools/getTrans ,logs_both                ,y
 on       ,both ,fast  ,transactions ,tools/getTrans ,logs_fail1               ,y    ,transactions = 9004225.10 & logs & fmt = json & emitter = 0xbbbbca6a901c926f240b89eacb641d8aec7aeaf
 on       ,both ,fast  ,transactions ,tools/getTrans ,logs_fail2               ,y    ,transactions = 9004225.10 & logs & fmt = json & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ez
 
-on       ,both ,fast  ,transactions ,tools/getTrans ,fail_reconcile1          ,y    ,transactions = 0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63 & account_for = 0x12 & fmt = json
-on       ,both ,fast  ,transactions ,tools/getTrans ,fail_reconcile2          ,y    ,transactions = 0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63 & account_for = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & cache
-recons   ,both ,fast  ,transactions ,tools/getTrans ,reconcile                ,y    ,transactions = 0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63 & account_for = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & log_level = 10 & articulate
-recons   ,both ,fast  ,transactions ,tools/getTrans ,reconcile2               ,y    ,transactions = 0x3f095a4b4e1b85e148b8b97aa91841f28280692b6045de8e690db38c59ecc603 & account_for = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & log_level = 10
-recons   ,both ,fast  ,transactions ,tools/getTrans ,reconcile2_ether         ,y    ,transactions = 0x3f095a4b4e1b85e148b8b97aa91841f28280692b6045de8e690db38c59ecc603 & account_for = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & log_level = 10 & ether
 slow     ,both ,fast  ,transactions ,tools/getTrans ,old_bug_2159             ,y    ,account_for = 0x7cfb89d6df1b89a678dcaf42b9c262593e881e22 & transactions = 0x20e4a5279519859c3b8af108fa9b3238f23d5522ceb0f7245080ec79ad8f97fd & fmt = json
 
-recons   ,cmd  ,fast  ,transactions ,tools/getTrans ,reconcile_by_file        ,y    ,transactions = 0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33 & ether & file = cmd_file_3
 on       ,cmd  ,fast  ,transactions ,tools/getTrans ,by_file                  ,n    ,file = cmd_file_2 & bad
 on       ,cmd  ,fast  ,transactions ,tools/getTrans ,by_file_1                ,n    ,file = cmd_file & fmt = csv
 
 on       ,both ,fast  ,transactions ,tools/getTrans ,redir_output             ,y    ,transactions = 3657480.12 & verbose & fmt = csv & output = output_test_file
 on       ,both ,fast  ,transactions ,tools/getTrans ,redir_output_append      ,n    ,transactions = 3657480.9 & fmt = csv & output = output_test_file & no_header & append
 
-recons   ,both ,fast  ,transactions ,tools/getTrans ,failed_recon_1           ,y    ,transactions = 0x70c443f1b6e376226a087c2e4512324f135c6ecb2daf6e82e9ea70b597c053fa & fmt = json & account_for = 0x127ac03acfad15f7a49dd037e52d5507260e1425
-recons   ,both ,fast  ,transactions ,tools/getTrans ,failed_recon_2           ,y    ,transactions = 0xf9a11aed09a4be208539a261d8c79567ba9918b4c4e577400ac39b64350b45fd & fmt = json & account_for = 0xf503017d7baf7fbc0fff7492b751025c6a78179b
 on       ,both ,fast  ,transactions ,tools/getTrans ,bad_hash                 ,y    ,transactions = 0x0012
 
 on       ,cmd  ,medi  ,transactions ,tools/getTrans ,articulate_arrays        ,y    ,transactions = 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f & traces & articulate & fmt = json
@@ -100,20 +92,13 @@ on       ,both ,slow  ,transactions ,tools/getTrans ,issue_1583               ,y
 on       ,both ,slow  ,transactions ,tools/getTrans ,issue_1366               ,y    ,transactions = 0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532ddc717ffd0abe & fmt = json & traces & articulate
 
 local    ,both ,fast  ,transactions ,tools/getTrans ,multi_articulate         ,y    ,transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json
-recons   ,both ,fast  ,transactions ,tools/getTrans ,pricing_premaker         ,y    ,transactions = 1433233.8 & account_for = 0xea674fdde714fd979de3edf0f56aa9716b898ec8 & fmt = json & log_level = 10
-recons   ,both ,fast  ,transactions ,tools/getTrans ,pricing_maker            ,y    ,transactions = 5218355.232 & account_for = 0x7fd5c846121bed2e2e46a55f992e35d85da7ffad & fmt = json & log_level = 10
-recons   ,both ,fast  ,transactions ,tools/getTrans ,pricing_uniswap1         ,y    ,transactions = 10681057.170 10607241.278 & account_for = 0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3 & fmt = json & log_level = 10
 
 # These work, but they are slow
 slow     ,both ,fast  ,transactions ,tools/getTrans ,multi_articulate_tra     ,y    ,transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json & traces
-slow     ,both ,fast  ,transactions ,tools/getTrans ,reconcile_tokens         ,y    ,transactions = 0x332df8459d5357d05d59c4e186eeb7b0b9380343962ac978d2e539c8f23d0508 & account_for = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json
 slow     ,both ,fast  ,transactions ,tools/getTrans ,oldbug_2162_spans_ibt    ,y    ,transactions = 14933655.142 14933657.291 14933657.293 14933657.302 14933657.303 14933657.304 14933657.305 14933882.87 & account_for = 0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E & ether & fmt = json
 slow     ,both ,fast  ,transactions ,tools/getTrans ,oldbug_2162_startsin_ibt ,y    ,transactions = 14933657.293 14933657.302 14933657.303 14933657.304 14933657.305 14933882.87 & account_for = 0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E & ether & fmt = json
 slow     ,both ,fast  ,transactions ,tools/getTrans ,oldbug_2162_endin_ibt    ,y    ,transactions = 14933655.142 14933657.291 14933657.293 14933657.302 14933657.303 14933657.304 & account_for = 0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E & ether & fmt = json
 slow     ,both ,fast  ,transactions ,tools/getTrans ,oldbug_2162_in_ibt       ,y    ,transactions = 14933657.293 14933657.302 14933657.303 14933657.304 & account_for = 0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E & ether & fmt = json
-
-# Does not properly handle inter-block transfers (does not reconcile)
-recons   ,both ,fast  ,transactions ,tools/getTrans ,reconcile_token_ibt      ,y    ,transactions = 0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4ea6199334cf3399cdf & account_for = 0xec3ef464bf821c3b10a18adf9ac7177a628e87cc & ether & fmt = json
 
 # These behave differently on local vs. remote testing - failed articulation - probably cache
 broken   ,both ,slow  ,transactions ,tools/getTrans ,broken_unparseable       ,y    ,transactions = 0xd886ab84df63e4eeb3ea07ccf12fa1f752afdc4d7b82ab4d71c95adae1d86b1f & fmt = json & articulate
@@ -133,3 +118,18 @@ local    ,both ,fast  ,transactions ,tools/getTrans ,nav_next2                ,n
 # Does file_cmd work?
 file_cmd ,cmd  ,fast  ,transactions ,tools/getTrans ,mulit_line_mulit_txs     ,n    ,file = cmd_file_1 & fmt = json
 file_cmd ,cmd  ,fast  ,transactions ,tools/getTrans ,by_file_v                ,n    ,file = cmd_file_2 & fmt = json
+
+slow-recons  ,both ,fast  ,transactions ,tools/getTrans ,failed_recon_1           ,y    ,transactions = 0x70c443f1b6e376226a087c2e4512324f135c6ecb2daf6e82e9ea70b597c053fa & fmt = json & account_for = 0x127ac03acfad15f7a49dd037e52d5507260e1425
+slow-recons  ,both ,fast  ,transactions ,tools/getTrans ,failed_recon_2           ,y    ,transactions = 0xf9a11aed09a4be208539a261d8c79567ba9918b4c4e577400ac39b64350b45fd & fmt = json & account_for = 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+on  ,both ,fast  ,transactions ,tools/getTrans ,fail_reconcile1          ,y    ,transactions = 0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63 & account_for = 0x12 & fmt = json
+on  ,both ,fast  ,transactions ,tools/getTrans ,fail_reconcile2          ,y    ,transactions = 0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63 & account_for = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & cache
+on  ,both ,fast  ,transactions ,tools/getTrans ,reconcile                ,y    ,transactions = 0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63 & account_for = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & log_level = 10 & articulate
+recons  ,both ,fast  ,transactions ,tools/getTrans ,reconcile2               ,y    ,transactions = 0x3f095a4b4e1b85e148b8b97aa91841f28280692b6045de8e690db38c59ecc603 & account_for = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & log_level = 10
+zrecons  ,both ,fast  ,transactions ,tools/getTrans ,reconcile2_ether         ,y    ,transactions = 0x3f095a4b4e1b85e148b8b97aa91841f28280692b6045de8e690db38c59ecc603 & account_for = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & log_level = 10 & ether
+zrecons  ,both ,fast  ,transactions ,tools/getTrans ,pricing_maker            ,y    ,transactions = 5218355.232 & account_for = 0x7fd5c846121bed2e2e46a55f992e35d85da7ffad & fmt = json & log_level = 10
+zrecons  ,both ,fast  ,transactions ,tools/getTrans ,pricing_premaker         ,y    ,transactions = 1433233.8 & account_for = 0xea674fdde714fd979de3edf0f56aa9716b898ec8 & fmt = json & log_level = 10
+zrecons  ,both ,fast  ,transactions ,tools/getTrans ,pricing_uniswap1         ,y    ,transactions = 10681057.170 10607241.278 & account_for = 0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3 & fmt = json & log_level = 10
+zrecons  ,both ,fast  ,transactions ,tools/getTrans ,reconcile_tokens         ,y    ,transactions = 0x332df8459d5357d05d59c4e186eeb7b0b9380343962ac978d2e539c8f23d0508 & account_for = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json
+zrecons  ,cmd  ,fast  ,transactions ,tools/getTrans ,reconcile_by_file        ,y    ,transactions = 0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33 & ether & file = cmd_file_3
+# Does not properly handle inter-block transfers (does not reconcile)
+zrecons  ,both ,fast  ,transactions ,tools/getTrans ,reconcile_token_ibt      ,y    ,transactions = 0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4ea6199334cf3399cdf & account_for = 0xec3ef464bf821c3b10a18adf9ac7177a628e87cc & ether & fmt = json
