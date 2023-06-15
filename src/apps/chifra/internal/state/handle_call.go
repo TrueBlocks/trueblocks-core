@@ -8,6 +8,7 @@ import (
 	abiPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/call"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/parser"
@@ -31,18 +32,12 @@ func (opts *StateOptions) HandleCall() error {
 	var callArguments []*parser.ContractCallArgument
 	var suggestions []types.SimpleFunction
 
-	contractCall := &call.ContractCall{
-		Address:     address,
-		BlockNumber: nil,
-	}
-
 	if parsed.Encoded != "" {
 		selector := parsed.Encoded[:10]
 		function, _, err = findAbiFunction(findBySelector, selector, nil, abiMap)
 		if err != nil {
 			return err
 		}
-		contractCall.ForceEncoding(parsed.Encoded)
 	} else {
 		// Selector or function name call
 		var findAbiMode findMode
@@ -84,21 +79,47 @@ func (opts *StateOptions) HandleCall() error {
 		}
 	}
 
-	results, err := call.CallContract(
-		opts.Globals.Chain,
-		&call.ContractCall{
-			Address:     address,
-			Method:      function,
-			Arguments:   args,
-			BlockNumber: nil,
-		},
-	)
-	if err != nil {
-		return err
+	blocks := opts.Blocks
+	if len(blocks) == 0 {
+		blocks = []string{"latest"}
 	}
-
 	fetchData := func(modelChan chan types.Modeler[any], errorChan chan error) {
-		modelChan <- results
+		for _, blockExpression := range blocks {
+			blockRange, err := identifiers.NewBlockRange(blockExpression)
+			if err != nil {
+				errorChan <- err
+				return
+			}
+
+			resolvedBlock, err := blockRange.ResolveBlocks(opts.Globals.Chain)
+			if err != nil {
+				errorChan <- err
+				return
+			}
+
+			for _, resolvedBlock := range resolvedBlock {
+				contractCall := &call.ContractCall{
+					Address:     address,
+					Method:      function,
+					Arguments:   args,
+					BlockNumber: resolvedBlock,
+				}
+				if parsed.Encoded != "" {
+					contractCall.ForceEncoding(parsed.Encoded)
+				}
+
+				results, err := call.CallContract(
+					opts.Globals.Chain,
+					contractCall,
+				)
+				if err != nil {
+					errorChan <- err
+					return
+				}
+
+				modelChan <- results
+			}
+		}
 	}
 
 	return output.StreamMany(context.Background(), fetchData, opts.Globals.OutputOptsWithExtra(nil))

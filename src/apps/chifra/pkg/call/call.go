@@ -20,7 +20,7 @@ type ContractCall struct {
 	Address     base.Address
 	Method      *types.SimpleFunction
 	Arguments   []any
-	BlockNumber *types.SimpleNamedBlock
+	BlockNumber uint64
 }
 
 type ContractMethodResult struct {
@@ -77,7 +77,7 @@ func (c *ContractCall) ForceEncoding(encoding string) {
 }
 
 func CallContract(chain string, call *ContractCall) (results *ContractMethodResult, err error) {
-	blockNumber, blockNumberHex, err := resolveBlockNumber(chain, call.BlockNumber)
+	blockNumberHex := "0x" + strconv.FormatInt(int64(call.BlockNumber), 16)
 	if err != nil {
 		return
 	}
@@ -105,13 +105,15 @@ func CallContract(chain string, call *ContractCall) (results *ContractMethodResu
 
 	rr := *rawReturn
 	function := call.Method.Clone()
-	err = articulate.ArticulateFunction(function, "", rr[2:])
-	if err != nil {
-		return nil, err
+	if len(rr) > 2 {
+		err = articulate.ArticulateFunction(function, "", rr[2:])
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	results = &ContractMethodResult{
-		BlockNumber: blockNumber,
+		BlockNumber: call.BlockNumber,
 		Address:     call.Address,
 		Name:        call.Method.Name,
 		Encoding:    call.Method.Encoding,
