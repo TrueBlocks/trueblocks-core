@@ -251,7 +251,7 @@ func removeDoubleSpaces(str string) (string, bool) {
 	return result, true
 }
 
-func cleanContract(token *token.Token, address base.Address, name *types.SimpleName) (modified bool, err error) {
+func cleanContract(token *token.Token1, address base.Address, name *types.SimpleName) (modified bool, err error) {
 	if !name.IsContract {
 		name.IsContract = true
 		modified = true
@@ -296,7 +296,7 @@ func cleanContract(token *token.Token, address base.Address, name *types.SimpleN
 	return
 }
 
-func cleanToken(name *types.SimpleName, token *token.Token) (modified bool) {
+func cleanToken(name *types.SimpleName, token *token.Token1) (modified bool) {
 	if !name.IsErc20 && token.IsErc20() {
 		name.IsErc20 = true
 		modified = true

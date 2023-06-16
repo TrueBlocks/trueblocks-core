@@ -25,6 +25,10 @@ func (a *Address) Hex() string {
 	return bytesToAddressString(a.Address.Bytes())
 }
 
+func (a *Address) Encoded32() string {
+	return "000000000000000000000000" + a.Hex()[2:]
+}
+
 func (a *Address) String() string {
 	return a.Hex()
 }

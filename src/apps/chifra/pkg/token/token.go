@@ -5,13 +5,13 @@ import (
 	"errors"
 	"math/big"
 	"strconv"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
-	"github.com/ethereum/go-ethereum/ethclient"
 )
 
 // 0x01ffc9a7 is supportsInterface -- https://eips.ethereum.org/EIPS/eip-165
@@ -20,10 +20,12 @@ const Erc721SupportsInterfaceData = "0x01ffc9a780ac58cd0000000000000000000000000
 
 type TokenStateSelector = string
 
+// TODO: If we used encoding we could use the function signature instead of the selector.
 const TokenStateTotalSupply TokenStateSelector = "0x18160ddd"
 const TokenStateDecimals TokenStateSelector = "0x313ce567"
 const TokenStateSymbol TokenStateSelector = "0x95d89b41"
 const TokenStateName TokenStateSelector = "0x06fdde03"
+const TokenStateBalanceOf TokenStateSelector = "0x70a08231"
 
 type TokenType int
 
@@ -34,7 +36,8 @@ const (
 
 // Token type wraps information about ERC-20 token or ERC-721 NFT. Call
 // Token.IsErcXXX to check the token type.
-type Token struct {
+type Token1 struct {
+	Address     base.Address
 	Name        string
 	Symbol      string
 	Decimals    uint8
@@ -57,7 +60,7 @@ func (e ErrNodeConnection) Error() string {
 
 // GetState returns token state for given block. `blockNumber` can be "latest" or "" for the latest block or
 // decimal number or hex number with 0x prefix.
-func GetState(chain string, tokenAddress base.Address, blockNumber string) (token *Token, err error) {
+func GetState(chain string, tokenAddress base.Address, blockNumber string) (token *Token1, err error) {
 	client := rpcClient.GetClient(config.GetRpcProvider(chain))
 	defer client.Close()
 
@@ -69,12 +72,39 @@ func GetState(chain string, tokenAddress base.Address, blockNumber string) (toke
 		return
 	}
 
-	return queryToken(tokenAddress, client, blockNumber)
+	return queryToken(tokenAddress, blockNumber)
 }
 
-func queryToken(address base.Address, client *ethclient.Client, blockNumber string) (token *Token, err error) {
+func GetBalanceAt(chain string, token, holder base.Address, blockNumber string) (balance *big.Int, err error) {
+	output, err := rpc.BatchQuery[string](
+		"mainnet", // TODO: Shouldn't this be `chain`?
+		[]rpc.BatchPayload{{
+			Key: "balance",
+			Payload: &rpc.Payload{
+				Method: "eth_call",
+				Params: rpc.Params{
+					map[string]any{
+						"to":   token.Hex(),
+						"data": TokenStateBalanceOf + holder.Encoded32(),
+					},
+					blockNumber,
+				},
+			},
+		}},
+	)
+
+	if err != nil {
+		return nil, err
+	}
+
+	balance = new(big.Int)
+	balance.SetString(strings.Replace(*output["balance"], "0x", "", -1), 16)
+	return balance, nil
+}
+
+func queryToken(address base.Address, blockNumber string) (token *Token1, err error) {
 	results, err := rpc.BatchQuery[string](
-		"mainnet",
+		"mainnet", // TODO: Shouldn't this be `chain`?
 		[]rpc.BatchPayload{
 			{
 				Key: "name",
@@ -177,7 +207,8 @@ func queryToken(address base.Address, client *ethclient.Client, blockNumber stri
 		tokenType = TokenErc721
 	}
 
-	token = &Token{
+	token = &Token1{
+		Address:     address,
 		Type:        tokenType,
 		Name:        name,
 		Symbol:      symbol,
@@ -188,10 +219,10 @@ func queryToken(address base.Address, client *ethclient.Client, blockNumber stri
 	return
 }
 
-func (t *Token) IsErc20() bool {
+func (t *Token1) IsErc20() bool {
 	return t.Type == TokenErc20
 }
 
-func (t *Token) IsErc721() bool {
+func (t *Token1) IsErc721() bool {
 	return t.Type == TokenErc721
 }

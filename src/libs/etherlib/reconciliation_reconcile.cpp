@@ -15,12 +15,6 @@
 
 namespace qblocks {
 
-// #define LOG_ONE(a, b, c)                                                                                               \
-//     if ((b) != (c)) {                                                                                                  \
-//         string_q t = ":";                                                                                              \
-//         cerr << padRight("TEST[DATE|TIME]", 19) << padRight(((a) + t), 20) << " " << (b) << endl;                      \
-//     }
-
 #define LOG_ONE(a, b, c)                                                                                               \
     {                                                                                                                  \
         string_q t = ":";                                                                                              \
@@ -30,7 +24,9 @@ namespace qblocks {
 //---------------------------------------------------------------------------
 #define LOG_TRIAL_BALANCE(msg)                                                                                         \
     if (isTestMode()) {                                                                                                \
-        cerr << "TEST[DATE|TIME] -------------" << (msg) << "-----------------------------" << endl;                   \
+        rCtx.DEBUG(msg);                                                                                               \
+        ((CReconciliation*)this)->priceSource = (priceSource.empty() ? "uniswap" : priceSource);                       \
+        cerr << "TEST[DATE|TIME] ---------------------------------------------------" << endl;                         \
         cerr << "TEST[DATE|TIME] Trial balance:" << endl;                                                              \
         LOG_ONE("reconciliationType", reconciliationType, "");                                                         \
         LOG_ONE("accountedFor", accountedFor, "");                                                                     \
@@ -51,12 +47,12 @@ namespace qblocks {
         LOG_ONE("begBal", begBal, 0);                                                                                  \
         LOG_ONE("amountIn", amountIn, 0);                                                                              \
         LOG_ONE("internalIn", internalIn, 0);                                                                          \
-        LOG_ONE("selfDestructIn", selfDestructIn, 0);                                                                  \
         LOG_ONE("minerBaseRewardIn", minerBaseRewardIn, 0);                                                            \
         LOG_ONE("minerNephewRewardIn", minerNephewRewardIn, 0);                                                        \
         LOG_ONE("minerTxFeeIn", minerTxFeeIn, 0);                                                                      \
         LOG_ONE("minerUncleRewardIn", minerUncleRewardIn, 0);                                                          \
         LOG_ONE("prefundIn", prefundIn, 0);                                                                            \
+        LOG_ONE("selfDestructIn", selfDestructIn, 0);                                                                  \
         LOG_ONE("totalIn", totalIn(), 0);                                                                              \
         LOG_ONE("amountOut", amountOut, 0);                                                                            \
         LOG_ONE("internalOut", internalOut, 0);                                                                        \
@@ -73,11 +69,12 @@ namespace qblocks {
     }
 
 //-----------------------------------------------------------------------
-bool CReconciliation::reconcileFlows(const CTransfer& transfer) {
+bool CReconciliation::reconcileFlows(const CTransfer& transfer, const CReconContext& rCtx) {
     sender = transfer.sender;
     recipient = transfer.recipient;
 
     bool isEth = isEtherAddr(assetAddr);
+    reconciliationType = rCtx.reconType(isEth, pTransaction->blockNumber == 0, "");
     if (isEth) {
         if (pTransaction->from == accountedFor) {
             gasOut = str_2_BigInt(pTransaction->getValueByName("gasCost"));
@@ -128,20 +125,21 @@ bool CReconciliation::reconcileFlows(const CTransfer& transfer) {
     endBal = getTokenBalanceAt(assetAddr, accountedFor, blockNumber);
 
     ostringstream os;
-    LOG_TRIAL_BALANCE((isEth ? "flows-top" : "flows-token"));
+    LOG_TRIAL_BALANCE((isEth ? "FLOW ETH" : "FLOW TOKEN"));
     if (trialBalance()) {
         return true;
     }
 
-    return reconcileFlows_traces();
+    return reconcileFlows_traces(rCtx);
 }
 
 //-----------------------------------------------------------------------
-bool CReconciliation::reconcileFlows_traces(void) {
+bool CReconciliation::reconcileFlows_traces(const CReconContext& rCtx) {
     bool isEth = isEtherAddr(assetAddr);
     if (!isEth) {
         return true;
     }
+    reconciliationType = rCtx.reconType(isEth, pTransaction->blockNumber == 0, "traces-");
 
     amountIn = 0;
     internalIn = selfDestructIn = prefundIn = 0;
@@ -156,7 +154,6 @@ bool CReconciliation::reconcileFlows_traces(void) {
         prefundIn = pTransaction->value;
 
     } else {
-        reconciliationType = "trace-";
         bool tracesAllocated = false;
         if (pTransaction->traces.size() == 0) {
             blknum_t bn = pTransaction->blockNumber;
@@ -237,8 +234,31 @@ bool CReconciliation::reconcileFlows_traces(void) {
 }
 
 //-----------------------------------------------------------------------
-bool CReconciliation::reconcileBalances(bool prevDifferent, bool nextDifferent, bigint_t& begBalOut,
-                                        bigint_t& endBalOut) {
+string_q CReconContext::reconType(bool isEth, bool isGenesis, const string_q& in) const {
+    string_q ret;
+    if (isGenesis) {
+        ret = "genesis";
+
+    } else {
+        if (isPrevDiff && isNextDiff) {
+            ret = "regular";
+
+        } else if (isPrevDiff) {
+            ret = "prevDiff-same";
+
+        } else if (isNextDiff) {
+            ret = "same-nextDiff";
+
+        } else {
+            ret = "same-same";
+        }
+    }
+
+    return in + ret + (isEth ? "-eth" : "-token");
+}
+
+//-----------------------------------------------------------------------
+bool CReconciliation::reconcileBalances(bigint_t& begBalOut, bigint_t& endBalOut, const CReconContext& rCtx) {
     bigint_t balEOLB = blockNumber == 0 ? 0 : getTokenBalanceAt(assetAddr, accountedFor, blockNumber - 1);
     bigint_t balEOB = getTokenBalanceAt(assetAddr, accountedFor, blockNumber);
     begBalOut = balEOLB;
@@ -247,17 +267,17 @@ bool CReconciliation::reconcileBalances(bool prevDifferent, bool nextDifferent, 
     if (blockNumber == 0) {
         // balances are zero
 
-    } else if (prevDifferent && nextDifferent) {
+    } else if (rCtx.isPrevDiff && rCtx.isNextDiff) {
         // The trace reconcile may have changed values
         begBal = balEOLB;
         endBal = balEOB;
 
-    } else if (prevDifferent) {
+    } else if (rCtx.isPrevDiff) {
         // This tx has a tx after it in the same block but none before it
         begBal = balEOLB;
         endBal = endBalCalc();
 
-    } else if (nextDifferent) {
+    } else if (rCtx.isNextDiff) {
         // This tx has a tx before it in the block but none after it
         begBal = prevBal;
         endBal = balEOB;
@@ -268,28 +288,9 @@ bool CReconciliation::reconcileBalances(bool prevDifferent, bool nextDifferent, 
         endBal = endBalCalc();
     }
 
-    if (pTransaction->blockNumber == 0) {
-        reconciliationType = "genesis";
-
-    } else {
-        if (prevDifferent && nextDifferent) {
-            reconciliationType += "regular";
-
-        } else if (prevDifferent) {
-            reconciliationType += "prevDiff-same";
-
-        } else if (nextDifferent) {
-            reconciliationType += "same-nextDiff";
-
-        } else {
-            reconciliationType += "same-same";
-        }
-    }
-    reconciliationType += isEtherAddr(assetAddr) ? "-eth" : "-token";
-
     ostringstream os;
-    os << "[" << blockNumber << "] " << prevDifferent << " " << nextDifferent;
-    LOG_TRIAL_BALANCE((isEtherAddr(assetAddr) ? "balances-top" : "balances-token"));
+    os << "[" << blockNumber << "] " << rCtx.isPrevDiff << " " << rCtx.isNextDiff;
+    LOG_TRIAL_BALANCE((isEtherAddr(assetAddr) ? "BALANCE ETH" : "BALANCE TOKEN"));
     if (isTestMode()) {
         LOG_INFO("");
         LOG_INFO("");

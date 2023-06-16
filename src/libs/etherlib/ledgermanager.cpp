@@ -52,47 +52,22 @@ bool CLedgerManager::getStatements(CTransaction& trans) {
             statement.logIndex = transfer.logIndex;
             statement.assetSymbol = transfer.assetSymbol;
             statement.decimals = transfer.decimals;
-            if (isTestMode()) {
-                cerr << "TEST[DATE|TIME] " << endl;
-                cerr << "TEST[DATE|TIME] ===================================================" << endl;
-                cerr << "TEST[DATE|TIME] ledger.blockNumber:     " << ledgers[tokenKey].blockNumber << endl;
-                cerr << "TEST[DATE|TIME] prevBlock:              " << ledgers[tokenKey].blockNumber << endl;
-                cerr << "TEST[DATE|TIME] transfer.blockNumber:   " << transfer.blockNumber << endl;
-                cerr << "TEST[DATE|TIME] nextBlock:              " << nextBlock << endl;
-                cerr << "TEST[DATE|TIME] isPrevDiff:             " << (isPrevDiff ? "true" : "false") << endl;
-                cerr << "TEST[DATE|TIME] isNextDiff:             " << (isNextDiff ? "true" : "false") << endl;
-            }
 
-            if (!statement.reconcileFlows(transfer)) {
-                if (isTestMode()) {
-                    cerr << "TEST[DATE|TIME] " << endl;
-                    cerr << "TEST[DATE|TIME] ===================================================" << endl;
-                    cerr << "TEST[DATE|TIME] ledger.blockNumber:     " << ledgers[tokenKey].blockNumber << endl;
-                    cerr << "TEST[DATE|TIME] prevBlock:              " << ledgers[tokenKey].blockNumber << endl;
-                    cerr << "TEST[DATE|TIME] transfer.blockNumber:   " << transfer.blockNumber << endl;
-                    cerr << "TEST[DATE|TIME] nextBlock:              " << nextBlock << endl;
-                    cerr << "TEST[DATE|TIME] isPrevDiff:             " << (isPrevDiff ? "true" : "false") << endl;
-                    cerr << "TEST[DATE|TIME] isNextDiff:             " << (isNextDiff ? "true" : "false") << endl;
-                }
-                statement.reconcileFlows_traces();
-            }
-
-            if (isTestMode()) {
-                cerr << "TEST[DATE|TIME] " << endl;
-                cerr << "TEST[DATE|TIME] ===================================================" << endl;
-                cerr << "TEST[DATE|TIME] ledger.blockNumber:     " << ledgers[tokenKey].blockNumber << endl;
-                cerr << "TEST[DATE|TIME] prevBlock:              " << ledgers[tokenKey].blockNumber << endl;
-                cerr << "TEST[DATE|TIME] transfer.blockNumber:   " << transfer.blockNumber << endl;
-                cerr << "TEST[DATE|TIME] nextBlock:              " << nextBlock << endl;
-                cerr << "TEST[DATE|TIME] isPrevDiff:             " << (isPrevDiff ? "true" : "false") << endl;
-                cerr << "TEST[DATE|TIME] isNextDiff:             " << (isNextDiff ? "true" : "false") << endl;
+            CReconContext rCtx;
+            rCtx.lBn = ledgers[tokenKey].blockNumber;
+            rCtx.tBn = transfer.blockNumber;
+            rCtx.nBn = nextBlock;
+            rCtx.isPrevDiff = isPrevDiff;
+            rCtx.isNextDiff = isNextDiff;
+            if (!statement.reconcileFlows(transfer, rCtx)) {
+                statement.reconcileFlows_traces(rCtx);
             }
 
             statement.prevAppBlk = ledgers[tokenKey].blockNumber;
             statement.prevBal = ledgers[tokenKey].balance;
             bigint_t begBal, endBal;
             bool isBogus = false;
-            if (!statement.reconcileBalances(isPrevDiff, isNextDiff, begBal, endBal)) {
+            if (!statement.reconcileBalances(begBal, endBal, rCtx)) {
                 // This fixes a lot of unreconciled transactions.
                 //
                 // We need to do this because sometimes hackers generate Transfer events but do not change

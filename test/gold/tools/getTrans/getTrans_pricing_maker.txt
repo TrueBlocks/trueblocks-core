@@ -5,13 +5,15 @@ TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  json
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ====> FLOW ETH
+TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     5218354
 TEST[DATE|TIME] prevBlock:              5218354
 TEST[DATE|TIME] transfer.blockNumber:   5218355
 TEST[DATE|TIME] nextBlock:              5218356
 TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
-TEST[DATE|TIME] -------------flows-top-----------------------------
+TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x7fd5c846121bed2e2e46a55f992e35d85da7ffad
@@ -32,12 +34,12 @@ TEST[DATE|TIME]    prevBal:             1259925280741022040
 TEST[DATE|TIME]    begBal:              1259925280741022040
 TEST[DATE|TIME]    amountIn:            0
 TEST[DATE|TIME]    internalIn:          0
-TEST[DATE|TIME]    selfDestructIn:      0
 TEST[DATE|TIME]    minerBaseRewardIn:   0
 TEST[DATE|TIME]    minerNephewRewardIn: 0
 TEST[DATE|TIME]    minerTxFeeIn:        0
 TEST[DATE|TIME]    minerUncleRewardIn:  0
 TEST[DATE|TIME]    prefundIn:           0
+TEST[DATE|TIME]    selfDestructIn:      0
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    amountOut:           0
 TEST[DATE|TIME]    internalOut:         0
@@ -48,10 +50,12 @@ TEST[DATE|TIME]    amountNet:           -214832000000000
 TEST[DATE|TIME]    endBal:              1259710448741022040
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
-TEST[DATE|TIME]    endBalCalc:          0
+TEST[DATE|TIME]    endBalCalc:          1259710448741022040
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] 
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ====> BALANCE ETH
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     5218354
 TEST[DATE|TIME] prevBlock:              5218354
@@ -59,7 +63,7 @@ TEST[DATE|TIME] transfer.blockNumber:   5218355
 TEST[DATE|TIME] nextBlock:              5218356
 TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
-TEST[DATE|TIME] -------------balances-top-----------------------------
+TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x7fd5c846121bed2e2e46a55f992e35d85da7ffad
@@ -80,12 +84,12 @@ TEST[DATE|TIME]    prevBal:             1259925280741022040
 TEST[DATE|TIME]    begBal:              1259925280741022040
 TEST[DATE|TIME]    amountIn:            0
 TEST[DATE|TIME]    internalIn:          0
-TEST[DATE|TIME]    selfDestructIn:      0
 TEST[DATE|TIME]    minerBaseRewardIn:   0
 TEST[DATE|TIME]    minerNephewRewardIn: 0
 TEST[DATE|TIME]    minerTxFeeIn:        0
 TEST[DATE|TIME]    minerUncleRewardIn:  0
 TEST[DATE|TIME]    prefundIn:           0
+TEST[DATE|TIME]    selfDestructIn:      0
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    amountOut:           0
 TEST[DATE|TIME]    internalOut:         0
@@ -96,10 +100,12 @@ TEST[DATE|TIME]    amountNet:           -214832000000000
 TEST[DATE|TIME]    endBal:              1259710448741022040
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
-TEST[DATE|TIME]    endBalCalc:          0
+TEST[DATE|TIME]    endBalCalc:          1259710448741022040
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] 
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ====> FLOW TOKEN
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     5218354
 TEST[DATE|TIME] prevBlock:              5218354
@@ -107,7 +113,7 @@ TEST[DATE|TIME] transfer.blockNumber:   5218355
 TEST[DATE|TIME] nextBlock:              5218356
 TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
-TEST[DATE|TIME] -------------flows-token-----------------------------
+TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-token
 TEST[DATE|TIME]    accountedFor:        0x7fd5c846121bed2e2e46a55f992e35d85da7ffad
@@ -128,12 +134,12 @@ TEST[DATE|TIME]    prevBal:             117708109
 TEST[DATE|TIME]    begBal:              117708109
 TEST[DATE|TIME]    amountIn:            0
 TEST[DATE|TIME]    internalIn:          0
-TEST[DATE|TIME]    selfDestructIn:      0
 TEST[DATE|TIME]    minerBaseRewardIn:   0
 TEST[DATE|TIME]    minerNephewRewardIn: 0
 TEST[DATE|TIME]    minerTxFeeIn:        0
 TEST[DATE|TIME]    minerUncleRewardIn:  0
 TEST[DATE|TIME]    prefundIn:           0
+TEST[DATE|TIME]    selfDestructIn:      0
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    amountOut:           215173
 TEST[DATE|TIME]    internalOut:         0
@@ -144,10 +150,12 @@ TEST[DATE|TIME]    amountNet:           -215173
 TEST[DATE|TIME]    endBal:              117492936
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
-TEST[DATE|TIME]    endBalCalc:          0
+TEST[DATE|TIME]    endBalCalc:          117492936
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] 
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ====> BALANCE TOKEN
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     5218354
 TEST[DATE|TIME] prevBlock:              5218354
@@ -155,7 +163,7 @@ TEST[DATE|TIME] transfer.blockNumber:   5218355
 TEST[DATE|TIME] nextBlock:              5218356
 TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
-TEST[DATE|TIME] -------------balances-token-----------------------------
+TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-token
 TEST[DATE|TIME]    accountedFor:        0x7fd5c846121bed2e2e46a55f992e35d85da7ffad
@@ -176,12 +184,12 @@ TEST[DATE|TIME]    prevBal:             117708109
 TEST[DATE|TIME]    begBal:              117708109
 TEST[DATE|TIME]    amountIn:            0
 TEST[DATE|TIME]    internalIn:          0
-TEST[DATE|TIME]    selfDestructIn:      0
 TEST[DATE|TIME]    minerBaseRewardIn:   0
 TEST[DATE|TIME]    minerNephewRewardIn: 0
 TEST[DATE|TIME]    minerTxFeeIn:        0
 TEST[DATE|TIME]    minerUncleRewardIn:  0
 TEST[DATE|TIME]    prefundIn:           0
+TEST[DATE|TIME]    selfDestructIn:      0
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    amountOut:           215173
 TEST[DATE|TIME]    internalOut:         0
@@ -192,7 +200,7 @@ TEST[DATE|TIME]    amountNet:           -215173
 TEST[DATE|TIME]    endBal:              117492936
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
-TEST[DATE|TIME]    endBalCalc:          0
+TEST[DATE|TIME]    endBalCalc:          117492936
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : Calling a contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 5218355 prior to its deployment 10000835
