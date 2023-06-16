@@ -63,24 +63,6 @@ func (opts *StateOptions) validateState() error {
 			if !ok {
 				return validate.Usage("address for the --call option must be a smart contract.")
 			}
-
-			// if len(parts) < 2 {
-			// 	// TODO: Remove this and present ABI in non-test mode
-			// 	// non-test mode on the terminal does something we want to preserve in the C++ code -- it
-			// 	// presents the abi for this contract. We can do that in Go, so we only fail during testing
-			// 	if opts.Globals.TestMode || opts.Globals.IsApiMode() {
-			// 		return validate.Usage("You must provide either a four-byte code or a function signature for the smart contract.")
-			// 	}
-			// } else {
-			// 	// command is either a fourbyte or a function signature
-			// 	command := parts[1]
-			// 	if !validate.IsValidFourByte(command) {
-			// 		if !strings.Contains(command, "(") || !strings.Contains(command, ")") {
-			// 			return validate.Usage("The provided value ({0}) must be either a four-byte nor a function signature.", command)
-			// 		}
-			// 	}
-			// }
-
 		} else {
 			if len(opts.ProxyFor) > 0 {
 				return validate.Usage("The {0} option is only available with the {1} option.", "--proxy_for", "--call")
