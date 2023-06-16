@@ -2,6 +2,7 @@ package statePkg
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strings"
 
@@ -17,10 +18,14 @@ import (
 
 func (opts *StateOptions) HandleCall() error {
 	address := base.HexToAddress(opts.Addrs[0])
+	callAddress := address
+	if opts.ProxyFor != "" {
+		callAddress = base.HexToAddress(opts.ProxyFor)
+	}
 
 	parsed, err := parser.ParseContractCall(opts.Call)
 	if err != nil {
-		return err
+		return fmt.Errorf("%w. The provided value (%s) must be a four-byte or function name followed by arguments, i.e. getBalance(), or full encoded data hash", err, opts.Call)
 	}
 
 	abiMap := make(abiPkg.AbiInterfaceMap)
@@ -61,7 +66,11 @@ func (opts *StateOptions) HandleCall() error {
 	}
 
 	if function == nil {
-		logger.Error("No ABI found for function", opts.Call)
+		message := fmt.Sprintf("No ABI found for function %s", opts.Call)
+		if opts.Globals.IsApiMode() {
+			return errors.New(message)
+		}
+		logger.Error(message)
 		if len(suggestions) > 0 {
 			logger.Info("Did you mean:")
 			for index, suggestion := range suggestions {
@@ -99,7 +108,7 @@ func (opts *StateOptions) HandleCall() error {
 
 			for _, resolvedBlock := range resolvedBlock {
 				contractCall := &call.ContractCall{
-					Address:     address,
+					Address:     callAddress,
 					Method:      function,
 					Arguments:   args,
 					BlockNumber: resolvedBlock,

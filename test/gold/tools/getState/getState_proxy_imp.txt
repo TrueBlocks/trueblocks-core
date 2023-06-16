@@ -1,8 +1,7 @@
-chifra state  --call 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B!0xbb82aa5e 10092000 --fmt csv
+chifra state  --call '0xbb82aa5e()' 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B 10092000 --fmt csv
+TEST[DATE|TIME] Addrs:  [0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b]
 TEST[DATE|TIME] Blocks:  [10092000]
-TEST[DATE|TIME] Call:  0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b!0xbb82aa5e
+TEST[DATE|TIME] Call:  0xbb82aa5e()
 TEST[DATE|TIME] Format:  csv
-"blockNumber","address","signature","encoding","bytes","compressedResult"
-TIME ~ CLOCK - <INFO>  : Calling 0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b at block 10092000...: 
-TIME ~ CLOCK - <INFO>  : call to 0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b at block 10092000 at four-byte 0xbb82aa5e returned 0x00000000000000000000000097bd4cc841fc999194174cd1803c543247a014fe
-"10092000","0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b","comptrollerImplementation()","0xbb82aa5e","","0x97bd4cc841fc999194174cd1803c543247a014fe"
+blockNumber,address,signature,encoding,bytes,compressedResult
+10092000,0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b,comptrollerImplementation(),0xbb82aa5e,,{val_0:0x97bd4cc841fc999194174cd1803c543247a014fe}

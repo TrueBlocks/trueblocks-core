@@ -21,12 +21,13 @@ type ContractCall struct {
 }
 
 type ContractMethodResult struct {
-	BlockNumber base.Blknum
-	Address     base.Address
-	Name        string
-	Encoding    string
-	Signature   string
-	Outputs     map[string]string
+	BlockNumber      base.Blknum
+	Address          base.Address
+	Name             string
+	Encoding         string
+	Signature        string
+	EncodedArguments string
+	Outputs          map[string]string
 }
 
 func (c *ContractMethodResult) Raw() *any {
@@ -44,6 +45,7 @@ func (s *ContractMethodResult) Model(verbose bool, format string, extraOptions m
 		"blockNumber": s.BlockNumber,
 		"address":     s.Address.Hex(),
 		"encoding":    s.Encoding,
+		"bytes":       s.EncodedArguments,
 		"callResult":  callResult,
 	}
 
@@ -60,6 +62,7 @@ func (s *ContractMethodResult) Model(verbose bool, format string, extraOptions m
 		"address",
 		"signature",
 		"encoding",
+		"bytes",
 		"compressedResult",
 	}
 
@@ -89,10 +92,16 @@ func CallContract(chain string, call *ContractCall) (results *ContractMethodResu
 		}
 	}
 
+	packedHex := "0x" + common.Bytes2Hex(packed)
+	encodedArguments := ""
+	if len(packedHex) > 10 {
+		encodedArguments = packedHex[10:]
+	}
+
 	rawReturn, err := rpc.Query[string](chain, "eth_call", rpc.Params{
 		map[string]any{
 			"to":   call.Address.Hex(),
-			"data": "0x" + common.Bytes2Hex(packed),
+			"data": packedHex,
 		},
 		blockNumberHex,
 	})
@@ -111,11 +120,12 @@ func CallContract(chain string, call *ContractCall) (results *ContractMethodResu
 	}
 
 	results = &ContractMethodResult{
-		BlockNumber: call.BlockNumber,
-		Address:     call.Address,
-		Name:        call.Method.Name,
-		Encoding:    call.Method.Encoding,
-		Signature:   call.Method.Signature,
+		BlockNumber:      call.BlockNumber,
+		Address:          call.Address,
+		Name:             call.Method.Name,
+		Encoding:         call.Method.Encoding,
+		Signature:        call.Method.Signature,
+		EncodedArguments: encodedArguments,
 	}
 	results.Outputs = make(map[string]string)
 

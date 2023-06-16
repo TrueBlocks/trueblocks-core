@@ -1,8 +1,9 @@
-chifra state  --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!12065fe0 6523977-6540000:2000
+chifra state  --call '12065fe0()' 0xa4f29fc548856180f6b1e319ee4d86715875cce4 6523977-6540000:2000
+TEST[DATE|TIME] Addrs:  [0xa4f29fc548856180f6b1e319ee4d86715875cce4]
 TEST[DATE|TIME] Blocks:  [6523977-6540000:2000]
-TEST[DATE|TIME] Call:  0xa4f29fc548856180f6b1e319ee4d86715875cce4!12065fe0
+TEST[DATE|TIME] Call:  12065fe0()
 TEST[DATE|TIME] Format:  txt
-Error: The provided value (12065fe0) must be either a four-byte nor a function signature.
+Error: 1:1: unexpected token "12065". The provided value (12065fe0()) must be a four-byte or function name followed by arguments, i.e. getBalance(), or full encoded data hash
 Usage:
   chifra state [flags] <address> [address...] [block...]
 

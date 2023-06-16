@@ -1,29 +1,31 @@
-state?call=0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0902f1ac&blocks=10092000
+state?call='0x0902f1ac()'&addrs=0xbb2b8038a1640196fbe3e38816f3e67cba72d940&blocks=10092000
 {
   "data": [
     {
-      "blockNumber": 10092000,
       "address": "0xbb2b8038a1640196fbe3e38816f3e67cba72d940",
-      "encoding": "0x0902f1ac",
+      "blockNumber": 10092000,
       "bytes": "",
       "callResult": {
-        "name": "getReserves",
-        "signature": "getReserves()",
         "encoding": "0x0902f1ac",
+        "name": "getReserves",
         "outputs": {
           "_blockTimestampLast": "1589829395",
           "_reserve0": "11186797",
           "_reserve1": "5095051840848895862"
-        }
+        },
+        "signature": "getReserves()"
       },
-      "compressedResult": "11186797|5095051840848895862|1589829395"
+      "encoding": "0x0902f1ac"
     }
   ],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
+    "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
   }
 }

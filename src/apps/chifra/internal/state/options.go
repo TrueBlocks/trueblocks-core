@@ -116,7 +116,9 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 		case "noZero":
 			opts.NoZero = true
 		case "call":
-			opts.Call = value[0]
+			// The tests need single quotes
+			unquoted := strings.Trim(value[0], "'")
+			opts.Call = unquoted
 		case "proxyFor":
 			opts.ProxyFor = value[0]
 		default:
