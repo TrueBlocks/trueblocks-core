@@ -62,7 +62,7 @@ func init() {
 One or more of [ none | some | all | balance | nonce | code | proxy | deployed | accttype ]`)
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Changes, "changes", "c", false, "only report a balance when it changes from one block to the next")
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().NoZero, "no_zero", "n", false, "suppress the display of zero balance accounts")
-	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Call, "call", "a", "", "a bang-separated string consisting of address!4-byte!bytes")
+	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Call, "call", "a", "", "Solidity-like function call: balanceOf(0x0C316b7042b419d07d343F2f4F5Bd54FF731183d) or four-byte with arguments: 0x70a08231(0x0C316b7042b419d07d343F2f4F5Bd54FF731183d) or full encoded data parameter to eth_call")
 	stateCmd.Flags().StringVarP(&statePkg.GetOptions().ProxyFor, "proxy_for", "r", "", "for the --call option only, redirects calls to this implementation")
 	globals.InitGlobals(stateCmd, &statePkg.GetOptions().Globals)
 

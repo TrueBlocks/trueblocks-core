@@ -25,7 +25,7 @@ static const COption params[] = {
     COption("parts", "p", "list<enum[none|some*|all|balance|nonce|code|proxy|deployed|accttype]>", OPT_FLAG, "control which state to export"),  // NOLINT
     COption("changes", "c", "", OPT_SWITCH, "only report a balance when it changes from one block to the next"),
     COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
-    COption("call", "a", "<string>", OPT_FLAG, "a bang-separated string consisting of address!4-byte!bytes"),
+    COption("call", "a", "<string>", OPT_FLAG, "Solidity-like function call: balanceOf(0x0C316b7042b419d07d343F2f4F5Bd54FF731183d) or four-byte with arguments: 0x70a08231(0x0C316b7042b419d07d343F2f4F5Bd54FF731183d) or full encoded data parameter to eth_call"),  // NOLINT
     COption("proxy_for", "r", "<address>", OPT_FLAG, "for the --call option only, redirects calls to this implementation"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Retrieve account balance(s) for one or more addresses at given block(s)."),
     // clang-format on
