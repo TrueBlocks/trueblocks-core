@@ -83,7 +83,7 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 		logger.Fatal("")
 	} else {
 		nTs, _ := tslib.NTimestamps(opts.Globals.Chain)
-		msg := fmt.Sprintf("%d, %d, %d,  %d, ts: %d", meta.Latest, meta.Finalized, meta.Staging, meta.Unripe, nTs)
+		msg := fmt.Sprintf("%d, %d, %d, %d, ts: %d", meta.Latest, meta.Finalized, meta.Staging, meta.Unripe, nTs)
 		logger.InfoTable("Progress:          ", msg)
 	}
 

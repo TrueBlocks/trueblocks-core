@@ -12,22 +12,47 @@ TEST[DATE|TIME] ledger.blockNumber:     0
 TEST[DATE|TIME] prevBlock:              0
 TEST[DATE|TIME] transfer.blockNumber:   0
 TEST[DATE|TIME] nextBlock:              202249
-TEST[DATE|TIME] isPrevDiff:             1
-TEST[DATE|TIME] isNextDiff:             1
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] -------------flows-top-----------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME] 
+TEST[DATE|TIME]    reconciliationType:  
 TEST[DATE|TIME]    accountedFor:        0x001d14804b399c6ef80e64576f657660804fec0b
+TEST[DATE|TIME]    sender:              0xPrefund
+TEST[DATE|TIME]    recipient:           0x001d14804b399c6ef80e64576f657660804fec0b
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
+TEST[DATE|TIME]    decimals:            18
+TEST[DATE|TIME]    prevAppBlk:          0
+TEST[DATE|TIME]    hash:                
+TEST[DATE|TIME]    timestamp:           1438269975
 TEST[DATE|TIME]    blockNumber:         0
 TEST[DATE|TIME]    transactionIndex:    2
 TEST[DATE|TIME]    logIndex:            0
+TEST[DATE|TIME]    priceSource:         
+TEST[DATE|TIME]    spotPrice:           1
+TEST[DATE|TIME]    prevBal:             0
+TEST[DATE|TIME]    begBal:              0
+TEST[DATE|TIME]    amountIn:            0
+TEST[DATE|TIME]    internalIn:          0
+TEST[DATE|TIME]    selfDestructIn:      0
+TEST[DATE|TIME]    minerBaseRewardIn:   0
+TEST[DATE|TIME]    minerNephewRewardIn: 0
+TEST[DATE|TIME]    minerTxFeeIn:        0
+TEST[DATE|TIME]    minerUncleRewardIn:  0
 TEST[DATE|TIME]    prefundIn:           4200000000000000000000
 TEST[DATE|TIME]    totalIn:             4200000000000000000000
+TEST[DATE|TIME]    amountOut:           0
+TEST[DATE|TIME]    internalOut:         0
+TEST[DATE|TIME]    selfDestructOut:     0
+TEST[DATE|TIME]    gasOut:              0
+TEST[DATE|TIME]    totalOut:            0
 TEST[DATE|TIME]    amountNet:           4200000000000000000000
 TEST[DATE|TIME]    endBal:              4200000000000000000000
-TEST[DATE|TIME]    trialBalance:        balanced
+TEST[DATE|TIME]    begBalDiff:          0
+TEST[DATE|TIME]    endBalDiff:          0
+TEST[DATE|TIME]    endBalCalc:          0
+TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ===================================================
@@ -35,22 +60,47 @@ TEST[DATE|TIME] ledger.blockNumber:     0
 TEST[DATE|TIME] prevBlock:              0
 TEST[DATE|TIME] transfer.blockNumber:   0
 TEST[DATE|TIME] nextBlock:              202249
-TEST[DATE|TIME] isPrevDiff:             1
-TEST[DATE|TIME] isNextDiff:             1
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] -------------balances-top-----------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME] genesis-eth
+TEST[DATE|TIME]    reconciliationType:  genesis-eth
 TEST[DATE|TIME]    accountedFor:        0x001d14804b399c6ef80e64576f657660804fec0b
+TEST[DATE|TIME]    sender:              0xPrefund
+TEST[DATE|TIME]    recipient:           0x001d14804b399c6ef80e64576f657660804fec0b
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
+TEST[DATE|TIME]    decimals:            18
+TEST[DATE|TIME]    prevAppBlk:          0
+TEST[DATE|TIME]    hash:                
+TEST[DATE|TIME]    timestamp:           1438269975
 TEST[DATE|TIME]    blockNumber:         0
 TEST[DATE|TIME]    transactionIndex:    2
 TEST[DATE|TIME]    logIndex:            0
+TEST[DATE|TIME]    priceSource:         
+TEST[DATE|TIME]    spotPrice:           1
+TEST[DATE|TIME]    prevBal:             0
+TEST[DATE|TIME]    begBal:              0
+TEST[DATE|TIME]    amountIn:            0
+TEST[DATE|TIME]    internalIn:          0
+TEST[DATE|TIME]    selfDestructIn:      0
+TEST[DATE|TIME]    minerBaseRewardIn:   0
+TEST[DATE|TIME]    minerNephewRewardIn: 0
+TEST[DATE|TIME]    minerTxFeeIn:        0
+TEST[DATE|TIME]    minerUncleRewardIn:  0
 TEST[DATE|TIME]    prefundIn:           4200000000000000000000
 TEST[DATE|TIME]    totalIn:             4200000000000000000000
+TEST[DATE|TIME]    amountOut:           0
+TEST[DATE|TIME]    internalOut:         0
+TEST[DATE|TIME]    selfDestructOut:     0
+TEST[DATE|TIME]    gasOut:              0
+TEST[DATE|TIME]    totalOut:            0
 TEST[DATE|TIME]    amountNet:           4200000000000000000000
 TEST[DATE|TIME]    endBal:              4200000000000000000000
-TEST[DATE|TIME]    trialBalance:        balanced
+TEST[DATE|TIME]    begBalDiff:          0
+TEST[DATE|TIME]    endBalDiff:          0
+TEST[DATE|TIME]    endBalCalc:          0
+TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
@@ -133,25 +183,47 @@ TEST[DATE|TIME] ledger.blockNumber:     0
 TEST[DATE|TIME] prevBlock:              0
 TEST[DATE|TIME] transfer.blockNumber:   202249
 TEST[DATE|TIME] nextBlock:              1501459
-TEST[DATE|TIME] isPrevDiff:             1
-TEST[DATE|TIME] isNextDiff:             1
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] -------------flows-top-----------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME] 
+TEST[DATE|TIME]    reconciliationType:  
 TEST[DATE|TIME]    accountedFor:        0x001d14804b399c6ef80e64576f657660804fec0b
+TEST[DATE|TIME]    sender:              0x001d14804b399c6ef80e64576f657660804fec0b
+TEST[DATE|TIME]    recipient:           0x2910543af39aba0cd09dbb2d50200b3e800a63d2
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
+TEST[DATE|TIME]    decimals:            18
+TEST[DATE|TIME]    prevAppBlk:          0
 TEST[DATE|TIME]    hash:                0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8
+TEST[DATE|TIME]    timestamp:           1441703356
 TEST[DATE|TIME]    blockNumber:         202249
 TEST[DATE|TIME]    transactionIndex:    0
 TEST[DATE|TIME]    logIndex:            0
+TEST[DATE|TIME]    priceSource:         
+TEST[DATE|TIME]    spotPrice:           1
+TEST[DATE|TIME]    prevBal:             0
 TEST[DATE|TIME]    begBal:              4200000000000000000000
+TEST[DATE|TIME]    amountIn:            0
+TEST[DATE|TIME]    internalIn:          0
+TEST[DATE|TIME]    selfDestructIn:      0
+TEST[DATE|TIME]    minerBaseRewardIn:   0
+TEST[DATE|TIME]    minerNephewRewardIn: 0
+TEST[DATE|TIME]    minerTxFeeIn:        0
+TEST[DATE|TIME]    minerUncleRewardIn:  0
+TEST[DATE|TIME]    prefundIn:           0
+TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    amountOut:           4199900000000000000000
+TEST[DATE|TIME]    internalOut:         0
+TEST[DATE|TIME]    selfDestructOut:     0
 TEST[DATE|TIME]    gasOut:              25320679510922664
 TEST[DATE|TIME]    totalOut:            4199925320679510922664
 TEST[DATE|TIME]    amountNet:           -4199925320679510922664
 TEST[DATE|TIME]    endBal:              74679320489077336
-TEST[DATE|TIME]    trialBalance:        balanced
+TEST[DATE|TIME]    begBalDiff:          0
+TEST[DATE|TIME]    endBalDiff:          0
+TEST[DATE|TIME]    endBalCalc:          0
+TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ===================================================
@@ -159,25 +231,47 @@ TEST[DATE|TIME] ledger.blockNumber:     0
 TEST[DATE|TIME] prevBlock:              0
 TEST[DATE|TIME] transfer.blockNumber:   202249
 TEST[DATE|TIME] nextBlock:              1501459
-TEST[DATE|TIME] isPrevDiff:             1
-TEST[DATE|TIME] isNextDiff:             1
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] -------------balances-top-----------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME] regular-eth
+TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x001d14804b399c6ef80e64576f657660804fec0b
+TEST[DATE|TIME]    sender:              0x001d14804b399c6ef80e64576f657660804fec0b
+TEST[DATE|TIME]    recipient:           0x2910543af39aba0cd09dbb2d50200b3e800a63d2
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
+TEST[DATE|TIME]    decimals:            18
+TEST[DATE|TIME]    prevAppBlk:          0
 TEST[DATE|TIME]    hash:                0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8
+TEST[DATE|TIME]    timestamp:           1441703356
 TEST[DATE|TIME]    blockNumber:         202249
 TEST[DATE|TIME]    transactionIndex:    0
 TEST[DATE|TIME]    logIndex:            0
+TEST[DATE|TIME]    priceSource:         
+TEST[DATE|TIME]    spotPrice:           1
+TEST[DATE|TIME]    prevBal:             4200000000000000000000
 TEST[DATE|TIME]    begBal:              4200000000000000000000
+TEST[DATE|TIME]    amountIn:            0
+TEST[DATE|TIME]    internalIn:          0
+TEST[DATE|TIME]    selfDestructIn:      0
+TEST[DATE|TIME]    minerBaseRewardIn:   0
+TEST[DATE|TIME]    minerNephewRewardIn: 0
+TEST[DATE|TIME]    minerTxFeeIn:        0
+TEST[DATE|TIME]    minerUncleRewardIn:  0
+TEST[DATE|TIME]    prefundIn:           0
+TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    amountOut:           4199900000000000000000
+TEST[DATE|TIME]    internalOut:         0
+TEST[DATE|TIME]    selfDestructOut:     0
 TEST[DATE|TIME]    gasOut:              25320679510922664
 TEST[DATE|TIME]    totalOut:            4199925320679510922664
 TEST[DATE|TIME]    amountNet:           -4199925320679510922664
 TEST[DATE|TIME]    endBal:              74679320489077336
-TEST[DATE|TIME]    trialBalance:        balanced
+TEST[DATE|TIME]    begBalDiff:          0
+TEST[DATE|TIME]    endBalDiff:          0
+TEST[DATE|TIME]    endBalCalc:          0
+TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
@@ -261,24 +355,47 @@ TEST[DATE|TIME] ledger.blockNumber:     202249
 TEST[DATE|TIME] prevBlock:              202249
 TEST[DATE|TIME] transfer.blockNumber:   1501459
 TEST[DATE|TIME] nextBlock:              18446744073709551615
-TEST[DATE|TIME] isPrevDiff:             1
-TEST[DATE|TIME] isNextDiff:             1
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] -------------flows-top-----------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME] 
+TEST[DATE|TIME]    reconciliationType:  
 TEST[DATE|TIME]    accountedFor:        0x001d14804b399c6ef80e64576f657660804fec0b
+TEST[DATE|TIME]    sender:              0x001d14804b399c6ef80e64576f657660804fec0b
+TEST[DATE|TIME]    recipient:           0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
+TEST[DATE|TIME]    decimals:            18
+TEST[DATE|TIME]    prevAppBlk:          0
 TEST[DATE|TIME]    hash:                0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5
+TEST[DATE|TIME]    timestamp:           1463025233
 TEST[DATE|TIME]    blockNumber:         1501459
 TEST[DATE|TIME]    transactionIndex:    2
 TEST[DATE|TIME]    logIndex:            0
+TEST[DATE|TIME]    priceSource:         
+TEST[DATE|TIME]    spotPrice:           1
+TEST[DATE|TIME]    prevBal:             0
 TEST[DATE|TIME]    begBal:              74679320489077336
+TEST[DATE|TIME]    amountIn:            0
+TEST[DATE|TIME]    internalIn:          0
+TEST[DATE|TIME]    selfDestructIn:      0
+TEST[DATE|TIME]    minerBaseRewardIn:   0
+TEST[DATE|TIME]    minerNephewRewardIn: 0
+TEST[DATE|TIME]    minerTxFeeIn:        0
+TEST[DATE|TIME]    minerUncleRewardIn:  0
+TEST[DATE|TIME]    prefundIn:           0
+TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    amountOut:           74259320489077336
+TEST[DATE|TIME]    internalOut:         0
+TEST[DATE|TIME]    selfDestructOut:     0
 TEST[DATE|TIME]    gasOut:              420000000000000
 TEST[DATE|TIME]    totalOut:            74679320489077336
 TEST[DATE|TIME]    amountNet:           -74679320489077336
-TEST[DATE|TIME]    trialBalance:        balanced
+TEST[DATE|TIME]    endBal:              0
+TEST[DATE|TIME]    begBalDiff:          0
+TEST[DATE|TIME]    endBalDiff:          0
+TEST[DATE|TIME]    endBalCalc:          0
+TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ===================================================
@@ -286,24 +403,47 @@ TEST[DATE|TIME] ledger.blockNumber:     202249
 TEST[DATE|TIME] prevBlock:              202249
 TEST[DATE|TIME] transfer.blockNumber:   1501459
 TEST[DATE|TIME] nextBlock:              18446744073709551615
-TEST[DATE|TIME] isPrevDiff:             1
-TEST[DATE|TIME] isNextDiff:             1
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] -------------balances-top-----------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME] regular-eth
+TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x001d14804b399c6ef80e64576f657660804fec0b
+TEST[DATE|TIME]    sender:              0x001d14804b399c6ef80e64576f657660804fec0b
+TEST[DATE|TIME]    recipient:           0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
+TEST[DATE|TIME]    decimals:            18
+TEST[DATE|TIME]    prevAppBlk:          202249
 TEST[DATE|TIME]    hash:                0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5
+TEST[DATE|TIME]    timestamp:           1463025233
 TEST[DATE|TIME]    blockNumber:         1501459
 TEST[DATE|TIME]    transactionIndex:    2
 TEST[DATE|TIME]    logIndex:            0
+TEST[DATE|TIME]    priceSource:         
+TEST[DATE|TIME]    spotPrice:           1
+TEST[DATE|TIME]    prevBal:             74679320489077336
 TEST[DATE|TIME]    begBal:              74679320489077336
+TEST[DATE|TIME]    amountIn:            0
+TEST[DATE|TIME]    internalIn:          0
+TEST[DATE|TIME]    selfDestructIn:      0
+TEST[DATE|TIME]    minerBaseRewardIn:   0
+TEST[DATE|TIME]    minerNephewRewardIn: 0
+TEST[DATE|TIME]    minerTxFeeIn:        0
+TEST[DATE|TIME]    minerUncleRewardIn:  0
+TEST[DATE|TIME]    prefundIn:           0
+TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    amountOut:           74259320489077336
+TEST[DATE|TIME]    internalOut:         0
+TEST[DATE|TIME]    selfDestructOut:     0
 TEST[DATE|TIME]    gasOut:              420000000000000
 TEST[DATE|TIME]    totalOut:            74679320489077336
 TEST[DATE|TIME]    amountNet:           -74679320489077336
-TEST[DATE|TIME]    trialBalance:        balanced
+TEST[DATE|TIME]    endBal:              0
+TEST[DATE|TIME]    begBalDiff:          0
+TEST[DATE|TIME]    endBalDiff:          0
+TEST[DATE|TIME]    endBalCalc:          0
+TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 

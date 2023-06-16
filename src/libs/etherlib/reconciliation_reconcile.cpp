@@ -15,8 +15,14 @@
 
 namespace qblocks {
 
+// #define LOG_ONE(a, b, c)                                                                                               \
+//     if ((b) != (c)) {                                                                                                  \
+//         string_q t = ":";                                                                                              \
+//         cerr << padRight("TEST[DATE|TIME]", 19) << padRight(((a) + t), 20) << " " << (b) << endl;                      \
+//     }
+
 #define LOG_ONE(a, b, c)                                                                                               \
-    if ((b) != (c)) {                                                                                                  \
+    {                                                                                                                  \
         string_q t = ":";                                                                                              \
         cerr << padRight("TEST[DATE|TIME]", 19) << padRight(((a) + t), 20) << " " << (b) << endl;                      \
     }
@@ -26,14 +32,22 @@ namespace qblocks {
     if (isTestMode()) {                                                                                                \
         cerr << "TEST[DATE|TIME] -------------" << (msg) << "-----------------------------" << endl;                   \
         cerr << "TEST[DATE|TIME] Trial balance:" << endl;                                                              \
-        cerr << "TEST[DATE|TIME] " << reconciliationType << endl;                                                      \
+        LOG_ONE("reconciliationType", reconciliationType, "");                                                         \
         LOG_ONE("accountedFor", accountedFor, "");                                                                     \
+        LOG_ONE("sender", sender, "");                                                                                 \
+        LOG_ONE("recipient", recipient, "");                                                                           \
         LOG_ONE("assetAddr", assetAddr, "");                                                                           \
         LOG_ONE("assetSymbol", assetSymbol, "");                                                                       \
+        LOG_ONE("decimals", decimals, "");                                                                             \
+        LOG_ONE("prevAppBlk", prevAppBlk, "");                                                                         \
         LOG_ONE("hash", transactionHash, "");                                                                          \
+        LOG_ONE("timestamp", timestamp, "");                                                                           \
         LOG_ONE("blockNumber", blockNumber, NOPOS);                                                                    \
         LOG_ONE("transactionIndex", transactionIndex, NOPOS);                                                          \
         LOG_ONE("logIndex", logIndex, NOPOS);                                                                          \
+        LOG_ONE("priceSource", priceSource, 0);                                                                        \
+        LOG_ONE("spotPrice", spotPrice, 0);                                                                            \
+        LOG_ONE("prevBal", prevBal, 0);                                                                                \
         LOG_ONE("begBal", begBal, 0);                                                                                  \
         LOG_ONE("amountIn", amountIn, 0);                                                                              \
         LOG_ONE("internalIn", internalIn, 0);                                                                          \
@@ -54,7 +68,7 @@ namespace qblocks {
         LOG_ONE("begBalDiff", (trialBalance() ? 0 : begBalDiff()), 0);                                                 \
         LOG_ONE("endBalDiff", (trialBalance() ? 0 : endBalDiff()), 0);                                                 \
         LOG_ONE("endBalCalc", (trialBalance() ? 0 : endBalCalc()), 0);                                                 \
-        LOG_ONE("trialBalance", (trialBalance() ? "balanced" : "not balanced"), string_q(""));                         \
+        LOG_ONE("trialBalance", (trialBalance() ? "true" : "false"), string_q(""));                                    \
         cerr << "TEST[DATE|TIME] ---------------------------------------------------" << endl;                         \
     }
 

@@ -59,9 +59,10 @@ bool CLedgerManager::getStatements(CTransaction& trans) {
                 cerr << "TEST[DATE|TIME] prevBlock:              " << ledgers[tokenKey].blockNumber << endl;
                 cerr << "TEST[DATE|TIME] transfer.blockNumber:   " << transfer.blockNumber << endl;
                 cerr << "TEST[DATE|TIME] nextBlock:              " << nextBlock << endl;
-                cerr << "TEST[DATE|TIME] isPrevDiff:             " << isPrevDiff << endl;
-                cerr << "TEST[DATE|TIME] isNextDiff:             " << isNextDiff << endl;
+                cerr << "TEST[DATE|TIME] isPrevDiff:             " << (isPrevDiff ? "true" : "false") << endl;
+                cerr << "TEST[DATE|TIME] isNextDiff:             " << (isNextDiff ? "true" : "false") << endl;
             }
+
             if (!statement.reconcileFlows(transfer)) {
                 if (isTestMode()) {
                     cerr << "TEST[DATE|TIME] " << endl;
@@ -70,8 +71,8 @@ bool CLedgerManager::getStatements(CTransaction& trans) {
                     cerr << "TEST[DATE|TIME] prevBlock:              " << ledgers[tokenKey].blockNumber << endl;
                     cerr << "TEST[DATE|TIME] transfer.blockNumber:   " << transfer.blockNumber << endl;
                     cerr << "TEST[DATE|TIME] nextBlock:              " << nextBlock << endl;
-                    cerr << "TEST[DATE|TIME] isPrevDiff:             " << isPrevDiff << endl;
-                    cerr << "TEST[DATE|TIME] isNextDiff:             " << isNextDiff << endl;
+                    cerr << "TEST[DATE|TIME] isPrevDiff:             " << (isPrevDiff ? "true" : "false") << endl;
+                    cerr << "TEST[DATE|TIME] isNextDiff:             " << (isNextDiff ? "true" : "false") << endl;
                 }
                 statement.reconcileFlows_traces();
             }
@@ -83,8 +84,8 @@ bool CLedgerManager::getStatements(CTransaction& trans) {
                 cerr << "TEST[DATE|TIME] prevBlock:              " << ledgers[tokenKey].blockNumber << endl;
                 cerr << "TEST[DATE|TIME] transfer.blockNumber:   " << transfer.blockNumber << endl;
                 cerr << "TEST[DATE|TIME] nextBlock:              " << nextBlock << endl;
-                cerr << "TEST[DATE|TIME] isPrevDiff:             " << isPrevDiff << endl;
-                cerr << "TEST[DATE|TIME] isNextDiff:             " << isNextDiff << endl;
+                cerr << "TEST[DATE|TIME] isPrevDiff:             " << (isPrevDiff ? "true" : "false") << endl;
+                cerr << "TEST[DATE|TIME] isNextDiff:             " << (isNextDiff ? "true" : "false") << endl;
             }
 
             statement.prevAppBlk = ledgers[tokenKey].blockNumber;
