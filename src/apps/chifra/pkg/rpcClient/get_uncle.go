@@ -33,7 +33,10 @@ func GetUnclesByNumber(chain string, bn uint64) ([]types.SimpleBlock[types.Simpl
 		ret := make([]types.SimpleBlock[types.SimpleTransaction], count)
 		for i := uint64(0); i < count; i++ {
 			method := "eth_getUncleByBlockNumberAndIndex"
-			params := rpc.Params{fmt.Sprintf("0x%x, 0x%x", bn, i)}
+			params := rpc.Params{
+				fmt.Sprintf("0x%x", bn),
+				fmt.Sprintf("0x%x", i),
+			}
 
 			if rawUncle, err := rpc.Query[types.RawBlock](chain, method, params); err != nil {
 				return ret, err
