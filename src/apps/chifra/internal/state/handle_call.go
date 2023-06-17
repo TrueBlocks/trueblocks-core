@@ -17,6 +17,9 @@ import (
 )
 
 func (opts *StateOptions) HandleCall() error {
+	chain := opts.Globals.Chain
+	testMode := opts.Globals.TestMode
+
 	address := base.HexToAddress(opts.Addrs[0])
 	callAddress := address
 	if opts.ProxyFor != "" {
@@ -25,11 +28,12 @@ func (opts *StateOptions) HandleCall() error {
 
 	parsed, err := parser.ParseContractCall(opts.Call)
 	if err != nil {
+		// TODO: This is an end user error. It's meaningless to them. Only report what's required of the user.
 		return fmt.Errorf("%w. The provided value (%s) must be a four-byte or function name followed by arguments, i.e. getBalance(), or full encoded data hash", err, opts.Call)
 	}
 
 	abiMap := make(abiPkg.AbiInterfaceMap)
-	if err = abiPkg.LoadAbi(opts.Globals.Chain, address, abiMap); err != nil {
+	if err = abiPkg.LoadAbi(chain, address, abiMap); err != nil {
 		return err
 	}
 
@@ -92,7 +96,8 @@ func (opts *StateOptions) HandleCall() error {
 	if len(blocks) == 0 {
 		blocks = []string{"latest"}
 	}
-	fetchData := func(modelChan chan types.Modeler[any], errorChan chan error) {
+
+	fetchData := func(modelChan chan types.Modeler[types.RawCallResult], errorChan chan error) {
 		for _, blockExpression := range blocks {
 			blockRange, err := identifiers.NewBlockRange(blockExpression)
 			if err != nil {
@@ -100,7 +105,7 @@ func (opts *StateOptions) HandleCall() error {
 				return
 			}
 
-			resolvedBlock, err := blockRange.ResolveBlocks(opts.Globals.Chain)
+			resolvedBlock, err := blockRange.ResolveBlocks(chain)
 			if err != nil {
 				errorChan <- err
 				return
@@ -112,13 +117,14 @@ func (opts *StateOptions) HandleCall() error {
 					Method:      function,
 					Arguments:   args,
 					BlockNumber: resolvedBlock,
+					ShowLogs:    opts.Globals.Verbose || testMode,
 				}
 				if parsed.Encoded != "" {
 					contractCall.ForceEncoding(parsed.Encoded)
 				}
 
 				results, err := call.CallContract(
-					opts.Globals.Chain,
+					chain,
 					contractCall,
 				)
 				if err != nil {

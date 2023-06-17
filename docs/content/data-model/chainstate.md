@@ -46,28 +46,27 @@ EthStates consist of the following fields:
 | deployed    | the block number at which this smart contract was deployed (if a smart contract) | blknum  |
 | accttype    | the type of the address at the given block                                       | string  |
 
-## EthCall
+## CallResult
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
 For the `chifra state --call` tool, the `result` is the result returned by the call to the smart
 contract. This is the decoded `output` value of the smart contract call.
 
-The following commands produce and manage EthCalls:
+The following commands produce and manage CallResults:
 
 - [chifra state](/chifra/chainstate/#chifra-state)
 
-EthCalls consist of the following fields:
+CallResults consist of the following fields:
 
-| Field            | Description                                                                      | Type                                    |
-| ---------------- | -------------------------------------------------------------------------------- | --------------------------------------- |
-| blockNumber      | the block number at which this call was made                                     | blknum                                  |
-| address          | the address of contract being called                                             | address                                 |
-| signature        | the canonical signature of the interface                                         | string                                  |
-| encoding         | the encoding for the function call                                               | string                                  |
-| bytes            | the bytes data following the encoding of the call                                | string                                  |
-| callResult       | the result of the call to the contract                                           | [Function](/data-model/other/#function) |
-| compressedResult | the compressed version of the result of the call to the contract                 | string                                  |
-| deployed         | the block number at which this smart contract was deployed (if a smart contract) | blknum                                  |
+| Field            | Description                                       | Type    |
+| ---------------- | ------------------------------------------------- | ------- |
+| blockNumber      | the block number at which this call was made      | blknum  |
+| address          | the address of contract being called              | address |
+| name             | the name of the function call                     | string  |
+| encoding         | the encoding for the function call                | string  |
+| signature        | the canonical signature of the interface          | string  |
+| encodedArguments | the bytes data following the encoding of the call | string  |
+| outputs          | the result of the call to the contract            | Outputs |
 
 ## TokenBalance
 
@@ -91,6 +90,29 @@ TokenBalances consist of the following fields:
 | isContract | `true` if the address is a smart contract, `false` otherwise | bool    |
 | isErc20    | `true` if the address is an ERC20, `false` otherwise         | bool    |
 | isErc721   | `true` if the address is an ERC720, `false` otherwise        | bool    |
+
+## EthCall
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+For the `chifra state --call` tool, the `result` is the result returned by the call to the smart
+contract. This is the decoded `output` value of the smart contract call.
+
+The following commands produce and manage EthCalls:
+
+- [chifra state](/chifra/chainstate/#chifra-state)
+
+EthCalls consist of the following fields:
+
+| Field            | Description                                                                      | Type                                    |
+| ---------------- | -------------------------------------------------------------------------------- | --------------------------------------- |
+| blockNumber      | the block number at which this call was made                                     | blknum                                  |
+| address          | the address of contract being called                                             | address                                 |
+| signature        | the canonical signature of the interface                                         | string                                  |
+| encoding         | the encoding for the function call                                               | string                                  |
+| bytes            | the bytes data following the encoding of the call                                | string                                  |
+| callResult       | the result of the call to the contract                                           | [Function](/data-model/other/#function) |
+| compressedResult | the compressed version of the result of the call to the contract                 | string                                  |
+| deployed         | the block number at which this smart contract was deployed (if a smart contract) | blknum                                  |
 
 ## Base types
 

@@ -27,8 +27,6 @@ class COptions : public CHistoryOptions {
     CAddressArray addrs;
     bool changes;
     bool no_zero;
-    string_q call;
-    address_t proxy_for;
     // END_CODE_DECLARE
 
     address_t current;
@@ -42,10 +40,7 @@ class COptions : public CHistoryOptions {
 
     bool parseArguments(string_q& command) override;
     void Init(void) override;
-
-    bool handle_call(void);
 };
 
 //-----------------------------------------------------------------------------
-extern bool visitForCall(uint64_t blockNum, void* data);
 extern bool visitForState(uint64_t blockNum, void* data);
