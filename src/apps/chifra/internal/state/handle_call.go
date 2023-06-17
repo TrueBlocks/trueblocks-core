@@ -18,6 +18,7 @@ import (
 
 func (opts *StateOptions) HandleCall() error {
 	chain := opts.Globals.Chain
+	testMode := opts.Globals.TestMode
 
 	address := base.HexToAddress(opts.Addrs[0])
 	callAddress := address
@@ -115,6 +116,7 @@ func (opts *StateOptions) HandleCall() error {
 					Method:      function,
 					Arguments:   args,
 					BlockNumber: resolvedBlock,
+					ShowLogs:    opts.Globals.Verbose || testMode,
 				}
 				if parsed.Encoded != "" {
 					contractCall.ForceEncoding(parsed.Encoded)

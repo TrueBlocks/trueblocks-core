@@ -6,6 +6,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common"
@@ -18,6 +19,7 @@ type ContractCall struct {
 	Method      *types.SimpleFunction
 	Arguments   []any
 	BlockNumber uint64
+	ShowLogs    bool
 }
 
 func (c *ContractCall) ForceEncoding(encoding string) {
@@ -79,6 +81,12 @@ func CallContract(chain string, call *ContractCall) (results *types.SimpleCallRe
 
 	for index, output := range function.Outputs {
 		results.Outputs[output.DisplayName(index)] = fmt.Sprint(output.Value)
+	}
+
+	if call.ShowLogs {
+		msg := fmt.Sprintf("call to %s at block %d at four-byte %s returned %v",
+			call.Address.Hex(), call.BlockNumber, call.Method.Encoding, results.Outputs)
+		logger.TestLog(true, msg)
 	}
 
 	return results, nil
