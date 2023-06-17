@@ -25,7 +25,7 @@ static const COption params[] = {
     COption("parts", "p", "list<enum[none|some*|all|balance|nonce|code|proxy|deployed|accttype]>", OPT_FLAG, "control which state to export"),  // NOLINT
     COption("changes", "c", "", OPT_SWITCH, "only report a balance when it changes from one block to the next"),
     COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
-    COption("call", "a", "<string>", OPT_FLAG, "Solidity-like function call: balanceOf(0x0C316b7042b419d07d343F2f4F5Bd54FF731183d) or four-byte with arguments: 0x70a08231(0x0C316b7042b419d07d343F2f4F5Bd54FF731183d) or full encoded data parameter to eth_call"),  // NOLINT
+    COption("call", "a", "<string>", OPT_FLAG, "call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data"),  // NOLINT
     COption("proxy_for", "r", "<address>", OPT_FLAG, "for the --call option only, redirects calls to this implementation"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Retrieve account balance(s) for one or more addresses at given block(s)."),
     // clang-format on
@@ -196,6 +196,7 @@ COptions::COptions(void) : CHistoryOptions() {
     notes.push_back("If the queried node does not store historical state, the results are undefined.");
     notes.push_back("`Special` blocks are detailed under `chifra when --list`.");
     notes.push_back("`Balance` is the default mode. To select a single mode use `none` first, followed by that mode.");
+    notes.push_back("valid parameters for --call include Solidity-like syntax: balanceOf(0x316b...183d), a four-byte followed by parameters: 0x70a08231(0x316b...183d), or encoded input data.");  // NOLINT
     notes.push_back("You may specify multiple `modes` on a single line.");
     // clang-format on
     // END_CODE_NOTES

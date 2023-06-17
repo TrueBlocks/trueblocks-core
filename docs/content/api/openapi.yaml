@@ -1495,7 +1495,7 @@ paths:
             type: boolean
         - name: call
           description: >
-            Solidity-like function call: balanceOf(0x0C316b7042b419d07d343F2f4F5Bd54FF731183d) or four-byte with arguments: 0x70a08231(0x0C316b7042b419d07d343F2f4F5Bd54FF731183d) or full encoded data parameter to eth_call
+            call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data
           required: false
           style: form
           in: query

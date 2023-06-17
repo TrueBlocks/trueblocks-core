@@ -17,6 +17,8 @@ import (
 )
 
 func (opts *StateOptions) HandleCall() error {
+	chain := opts.Globals.Chain
+
 	address := base.HexToAddress(opts.Addrs[0])
 	callAddress := address
 	if opts.ProxyFor != "" {
@@ -29,7 +31,7 @@ func (opts *StateOptions) HandleCall() error {
 	}
 
 	abiMap := make(abiPkg.AbiInterfaceMap)
-	if err = abiPkg.LoadAbi(opts.Globals.Chain, address, abiMap); err != nil {
+	if err = abiPkg.LoadAbi(chain, address, abiMap); err != nil {
 		return err
 	}
 
@@ -92,6 +94,7 @@ func (opts *StateOptions) HandleCall() error {
 	if len(blocks) == 0 {
 		blocks = []string{"latest"}
 	}
+
 	fetchData := func(modelChan chan types.Modeler[types.RawCallResult], errorChan chan error) {
 		for _, blockExpression := range blocks {
 			blockRange, err := identifiers.NewBlockRange(blockExpression)
@@ -100,7 +103,7 @@ func (opts *StateOptions) HandleCall() error {
 				return
 			}
 
-			resolvedBlock, err := blockRange.ResolveBlocks(opts.Globals.Chain)
+			resolvedBlock, err := blockRange.ResolveBlocks(chain)
 			if err != nil {
 				errorChan <- err
 				return
@@ -118,7 +121,7 @@ func (opts *StateOptions) HandleCall() error {
 				}
 
 				results, err := call.CallContract(
-					opts.Globals.Chain,
+					chain,
 					contractCall,
 				)
 				if err != nil {
