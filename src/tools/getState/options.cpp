@@ -25,8 +25,6 @@ static const COption params[] = {
     COption("parts", "p", "list<enum[none|some*|all|balance|nonce|code|proxy|deployed|accttype]>", OPT_FLAG, "control which state to export"),  // NOLINT
     COption("changes", "c", "", OPT_SWITCH, "only report a balance when it changes from one block to the next"),
     COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
-    COption("call", "a", "<string>", OPT_FLAG, "call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data"),  // NOLINT
-    COption("proxy_for", "r", "<address>", OPT_FLAG, "for the --call option only, redirects calls to this implementation"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Retrieve account balance(s) for one or more addresses at given block(s)."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -64,18 +62,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-n" || arg == "--no_zero") {
             no_zero = true;
 
-        } else if (startsWith(arg, "-a:") || startsWith(arg, "--call:")) {
-            call = substitute(substitute(arg, "-a:", ""), "--call:", "");
-        } else if (arg == "-a" || arg == "--call") {
-            return flag_required("call");
-
-        } else if (startsWith(arg, "-r:") || startsWith(arg, "--proxy_for:")) {
-            proxy_for = substitute(substitute(arg, "-r:", ""), "--proxy_for:", "");
-            if (!isAddress(proxy_for))
-                return usage("The provided value (" + proxy_for + ") is not a properly formatted address.");
-        } else if (arg == "-r" || arg == "--proxy_for") {
-            return flag_required("proxy_for");
-
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -97,67 +83,63 @@ bool COptions::parseArguments(string_q& command) {
     if (blocks.empty())
         blocks.numList.push_back(isTestMode() ? byzantiumBlock() : newestBlock);  // use 'latest'
 
-    if (!call.empty()) {
-        handle_call();
-    } else {
-        for (auto part : parts) {
-            if (part == "none")
-                modeBits = ST_NONE;
-            if (part == "balance")
-                modeBits = ethstate_t(modeBits | ST_BALANCE);
-            if (part == "nonce")
-                modeBits = ethstate_t(modeBits | ST_NONCE);
-            if (part == "code")
-                modeBits = ethstate_t(modeBits | ST_CODE);
-            if (part == "proxy")
-                modeBits = ethstate_t(modeBits | ST_PROXY);
-            if (part == "deployed")
-                modeBits = ethstate_t(modeBits | ST_DEPLOYED);
-            if (part == "accttype")
-                modeBits = ethstate_t(modeBits | ST_ACCTTYPE);
-            if (part == "some")
-                modeBits = ethstate_t(modeBits | ST_SOME);
-            if (part == "all")
-                modeBits = ethstate_t(modeBits | ST_ALL);
-        }
-
-        UNHIDE_FIELD(CEthState, "address");
-        string_q format = STR_DISPLAY_ETHSTATE;
-        if (!(modeBits & ST_BALANCE)) {
-            replace(format, "\t[{BALANCE}]", "");
-        } else {
-            UNHIDE_FIELD(CEthState, "balance");
-            UNHIDE_FIELD(CEthState, "ether");
-        }
-        if (!(modeBits & ST_NONCE)) {
-            replace(format, "\t[{NONCE}]", "");
-        } else {
-            UNHIDE_FIELD(CEthState, "nonce");
-        }
-        if (!(modeBits & ST_CODE)) {
-            replace(format, "\t[{CODE}]", "");
-        } else {
-            UNHIDE_FIELD(CEthState, "code");
-        }
-        if (!(modeBits & ST_PROXY)) {
-            replace(format, "\t[{PROXY}]", "");
-        } else {
-            UNHIDE_FIELD(CEthState, "proxy");
-        }
-        if (!(modeBits & ST_DEPLOYED)) {
-            replace(format, "\t[{DEPLOYED}]", "");
-        } else {
-            UNHIDE_FIELD(CEthState, "deployed");
-        }
-        if (!(modeBits & ST_ACCTTYPE)) {
-            replace(format, "\t[{ACCTTYPE}]", "");
-        } else {
-            UNHIDE_FIELD(CEthState, "accttype");
-        }
-
-        // Display formatting
-        configureDisplay("getState", "CEthState", format.empty() ? STR_DISPLAY_ETHSTATE : format);
+    for (auto part : parts) {
+        if (part == "none")
+            modeBits = ST_NONE;
+        if (part == "balance")
+            modeBits = ethstate_t(modeBits | ST_BALANCE);
+        if (part == "nonce")
+            modeBits = ethstate_t(modeBits | ST_NONCE);
+        if (part == "code")
+            modeBits = ethstate_t(modeBits | ST_CODE);
+        if (part == "proxy")
+            modeBits = ethstate_t(modeBits | ST_PROXY);
+        if (part == "deployed")
+            modeBits = ethstate_t(modeBits | ST_DEPLOYED);
+        if (part == "accttype")
+            modeBits = ethstate_t(modeBits | ST_ACCTTYPE);
+        if (part == "some")
+            modeBits = ethstate_t(modeBits | ST_SOME);
+        if (part == "all")
+            modeBits = ethstate_t(modeBits | ST_ALL);
     }
+
+    UNHIDE_FIELD(CEthState, "address");
+    string_q format = STR_DISPLAY_ETHSTATE;
+    if (!(modeBits & ST_BALANCE)) {
+        replace(format, "\t[{BALANCE}]", "");
+    } else {
+        UNHIDE_FIELD(CEthState, "balance");
+        UNHIDE_FIELD(CEthState, "ether");
+    }
+    if (!(modeBits & ST_NONCE)) {
+        replace(format, "\t[{NONCE}]", "");
+    } else {
+        UNHIDE_FIELD(CEthState, "nonce");
+    }
+    if (!(modeBits & ST_CODE)) {
+        replace(format, "\t[{CODE}]", "");
+    } else {
+        UNHIDE_FIELD(CEthState, "code");
+    }
+    if (!(modeBits & ST_PROXY)) {
+        replace(format, "\t[{PROXY}]", "");
+    } else {
+        UNHIDE_FIELD(CEthState, "proxy");
+    }
+    if (!(modeBits & ST_DEPLOYED)) {
+        replace(format, "\t[{DEPLOYED}]", "");
+    } else {
+        UNHIDE_FIELD(CEthState, "deployed");
+    }
+    if (!(modeBits & ST_ACCTTYPE)) {
+        replace(format, "\t[{ACCTTYPE}]", "");
+    } else {
+        UNHIDE_FIELD(CEthState, "accttype");
+    }
+
+    // Display formatting
+    configureDisplay("getState", "CEthState", format.empty() ? STR_DISPLAY_ETHSTATE : format);
 
     return true;
 }
@@ -171,8 +153,6 @@ void COptions::Init(void) {
     // BEG_CODE_INIT
     changes = false;
     no_zero = false;
-    call = "";
-    proxy_for = "";
     // END_CODE_INIT
 
     prevBal = 0;

@@ -76,12 +76,6 @@ func (opts *StateOptions) toCmdLine() string {
 	if opts.NoZero {
 		options += " --no_zero"
 	}
-	if len(opts.Call) > 0 {
-		options += " --call " + opts.Call
-	}
-	if len(opts.ProxyFor) > 0 {
-		options += " --proxy_for " + opts.ProxyFor
-	}
 	options += " " + strings.Join(opts.Addrs, " ")
 	options += " " + strings.Join(opts.Blocks, " ")
 	// EXISTING_CODE
