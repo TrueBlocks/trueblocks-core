@@ -28,6 +28,7 @@ func (opts *StateOptions) HandleCall() error {
 
 	parsed, err := parser.ParseContractCall(opts.Call)
 	if err != nil {
+		// TODO: This is an end user error. It's meaningless to them. Only report what's required of the user.
 		return fmt.Errorf("%w. The provided value (%s) must be a four-byte or function name followed by arguments, i.e. getBalance(), or full encoded data hash", err, opts.Call)
 	}
 

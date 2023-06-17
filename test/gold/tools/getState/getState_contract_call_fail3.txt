@@ -2,7 +2,7 @@ chifra state  --call  0xa4f29fc548856180f6b1e319ee4d86715875cce4 6523977-6540000
 TEST[DATE|TIME] Blocks:  [6523977-6540000:2000]
 TEST[DATE|TIME] Call:  0xa4f29fc548856180f6b1e319ee4d86715875cce4
 TEST[DATE|TIME] Format:  txt
-Error: single valid address required
+Error: Exactly one address is required for the --call option.
 Usage:
   chifra state [flags] <address> [address...] [block...]
 

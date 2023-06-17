@@ -1,8 +1,8 @@
-chifra state  --call 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2!0x06fdde03 10092000
+chifra state  --call '0x06fdde03()' 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 10092000
+TEST[DATE|TIME] Addrs:  [0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2]
 TEST[DATE|TIME] Blocks:  [10092000]
-TEST[DATE|TIME] Call:  0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2!0x06fdde03
+TEST[DATE|TIME] Call:  0x06fdde03()
 TEST[DATE|TIME] Format:  txt
+TEST[DATE|TIME] call to 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 at block 10092000 at four-byte 0x06fdde03 returned map[val_0:Wrapped Ether]
 blockNumber	address	signature	encoding	bytes	compressedResult
-TIME ~ CLOCK - <INFO>  : Calling 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 at block 10092000...: 
-TIME ~ CLOCK - <INFO>  : call to 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 at block 10092000 at four-byte 0x06fdde03 returned 0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000d5772617070656420457468657200000000000000000000000000000000000000
-10092000	0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2	name()	0x06fdde03		Wrapped Ether
+10092000	0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2	name()	0x06fdde03		{val_0:Wrapped Ether}
