@@ -50,12 +50,17 @@ func (opts *StateOptions) StateInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.Globals.IsApiMode() {
+	if opts.Globals.IsApiMode() && !opts.IsPorted() {
 		return nil, false
 	}
 
 	handled = true
-	err = opts.Globals.PassItOn("getState", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
+
+	if opts.IsPorted() {
+		err = opts.HandleCall()
+	} else {
+		err = opts.Globals.PassItOn("getState", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
+	}
 	// EXISTING_CODE
 
 	return
@@ -72,6 +77,7 @@ func GetStateOptions(args []string, g *globals.GlobalOptions) *StateOptions {
 
 func (opts *StateOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
+	ported = opts.Call != ""
 	// EXISTING_CODE
 	return
 }

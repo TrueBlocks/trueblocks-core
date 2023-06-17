@@ -1,8 +1,9 @@
-chifra state  --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!12065fe0 6523977-6540000:2000
+chifra state  --call '12065fe0()' 0xa4f29fc548856180f6b1e319ee4d86715875cce4 6523977-6540000:2000
+TEST[DATE|TIME] Addrs:  [0xa4f29fc548856180f6b1e319ee4d86715875cce4]
 TEST[DATE|TIME] Blocks:  [6523977-6540000:2000]
-TEST[DATE|TIME] Call:  0xa4f29fc548856180f6b1e319ee4d86715875cce4!12065fe0
+TEST[DATE|TIME] Call:  12065fe0()
 TEST[DATE|TIME] Format:  txt
-Error: The provided value (12065fe0) must be either a four-byte nor a function signature.
+Error: 1:1: unexpected token "12065". The provided value (12065fe0()) must be a four-byte or function name followed by arguments, i.e. getBalance(), or full encoded data hash
 Usage:
   chifra state [flags] <address> [address...] [block...]
 
@@ -15,7 +16,7 @@ Flags:
                            One or more of [ none | some | all | balance | nonce | code | proxy | deployed | accttype ]
   -c, --changes            only report a balance when it changes from one block to the next
   -n, --no_zero            suppress the display of zero balance accounts
-  -a, --call string        a bang-separated string consisting of address!4-byte!bytes
+  -a, --call string        Solidity-like function call: balanceOf(0x0C316b7042b419d07d343F2f4F5Bd54FF731183d) or four-byte with arguments: 0x70a08231(0x0C316b7042b419d07d343F2f4F5Bd54FF731183d) or full encoded data parameter to eth_call
   -r, --proxy_for string   for the --call option only, redirects calls to this implementation
   -x, --fmt string         export format, one of [none|json*|txt|csv]
   -v, --verbose            enable verbose (increase detail with --log_level)

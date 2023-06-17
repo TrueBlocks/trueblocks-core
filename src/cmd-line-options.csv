@@ -181,7 +181,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13140,tools,ChainState,state,getState,parts,p,,false,false,true,true,local,flag,list<enum[none|some*|all|balance|nonce|code|proxy|deployed|accttype]>,control which state to export
 13160,tools,ChainState,state,getState,changes,c,,false,false,true,true,header,switch,<boolean>,only report a balance when it changes from one block to the next
 13180,tools,ChainState,state,getState,no_zero,n,,false,false,true,true,header,switch,<boolean>,suppress the display of zero balance accounts
-13190,tools,ChainState,state,getState,call,a,,false,false,true,true,header,flag,<string>,a bang-separated string consisting of address!4-byte!bytes
+13190,tools,ChainState,state,getState,call,a,,false,false,true,true,header,flag,<string>,Solidity-like function call: "balanceOf(0x0C316b7042b419d07d343F2f4F5Bd54FF731183d)" or four-byte with arguments: "0x70a08231(0x0C316b7042b419d07d343F2f4F5Bd54FF731183d)" or full encoded data parameter to eth_call
 13190,tools,ChainState,state,getState,proxy_for,r,,false,false,true,true,header,flag,<address>,for the --call option only&#44; redirects calls to this implementation
 13220,tools,ChainState,state,getState,,,,false,false,true,true,--,description,,Retrieve account balance(s) for one or more addresses at given block(s).
 13222,tools,ChainState,state,getState,n1,,,false,false,false,false,--,note,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.

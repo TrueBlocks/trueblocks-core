@@ -1494,7 +1494,8 @@ paths:
           schema:
             type: boolean
         - name: call
-          description: a bang-separated string consisting of address!4-byte!bytes
+          description: >
+            Solidity-like function call: balanceOf(0x0C316b7042b419d07d343F2f4F5Bd54FF731183d) or four-byte with arguments: 0x70a08231(0x0C316b7042b419d07d343F2f4F5Bd54FF731183d) or full encoded data parameter to eth_call
           required: false
           style: form
           in: query

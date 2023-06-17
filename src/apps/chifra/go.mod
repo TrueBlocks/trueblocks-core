@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/BurntSushi/toml v0.3.1
-	github.com/alecthomas/participle/v2 v2.0.0-alpha7
+	github.com/alecthomas/participle/v2 v2.0.0
 	github.com/bykof/gostradamus v1.0.4
 	github.com/ethereum/go-ethereum v1.11.5
 	github.com/gocarina/gocsv v0.0.0-20230123225133-763e25b40669

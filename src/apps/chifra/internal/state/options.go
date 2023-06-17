@@ -28,7 +28,7 @@ type StateOptions struct {
 	Parts    []string                 `json:"parts,omitempty"`    // Control which state to export
 	Changes  bool                     `json:"changes,omitempty"`  // Only report a balance when it changes from one block to the next
 	NoZero   bool                     `json:"noZero,omitempty"`   // Suppress the display of zero balance accounts
-	Call     string                   `json:"call,omitempty"`     // A bang-separated string consisting of address!4-byte!bytes
+	Call     string                   `json:"call,omitempty"`     // Solidity-like function call: balanceOf(0x0C316b7042b419d07d343F2f4F5Bd54FF731183d) or four-byte with arguments: 0x70a08231(0x0C316b7042b419d07d343F2f4F5Bd54FF731183d) or full encoded data parameter to eth_call
 	ProxyFor string                   `json:"proxyFor,omitempty"` // For the --call option only, redirects calls to this implementation
 	Globals  globals.GlobalOptions    `json:"globals,omitempty"`  // The global options
 	BadFlag  error                    `json:"badFlag,omitempty"`  // An error flag if needed
@@ -128,6 +128,11 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
+	if opts.Call != "" {
+		// The tests need single quotes
+		unquoted := strings.Trim(opts.Call, "'")
+		opts.Call = unquoted
+	}
 	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
 	opts.ProxyFor, _ = ens.ConvertOneEns(opts.Globals.Chain, opts.ProxyFor)
 	// EXISTING_CODE

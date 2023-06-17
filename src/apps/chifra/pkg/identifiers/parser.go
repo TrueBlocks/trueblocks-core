@@ -58,14 +58,14 @@ import (
 )
 
 // Define "tokens" for our lexer
-var rangeLexer = lexer.MustSimple([]lexer.Rule{
-	{Name: `Date`, Pattern: `\d{4}-\d{2}-\d{2}(T[\d]{2}(:[\d]{2})?(:[\d]{2})?(UTC)?)?`, Action: nil},
-	{Name: `Special`, Pattern: `[a-z_]+[0-9]*`, Action: nil},
-	{Name: `Hash`, Pattern: `0x[a-f0-9]{64}`, Action: nil},
-	{Name: `Hex`, Pattern: `0x[a-f0-9]+`, Action: nil},
-	{Name: `Unsigned`, Pattern: `^[0-9]+`, Action: nil},
-	{Name: `PointSeparator`, Pattern: `-`, Action: nil},
-	{Name: `ModifierSeparator`, Pattern: `:`, Action: nil},
+var rangeLexer = lexer.MustSimple([]lexer.SimpleRule{
+	{Name: `Date`, Pattern: `\d{4}-\d{2}-\d{2}(T[\d]{2}(:[\d]{2})?(:[\d]{2})?(UTC)?)?`},
+	{Name: `Special`, Pattern: `[a-z_]+[0-9]*`},
+	{Name: `Hash`, Pattern: `0x[a-f0-9]{64}`},
+	{Name: `Hex`, Pattern: `0x[a-f0-9]+`},
+	{Name: `Unsigned`, Pattern: `^[0-9]+`},
+	{Name: `PointSeparator`, Pattern: `-`},
+	{Name: `ModifierSeparator`, Pattern: `:`},
 })
 
 // A Point carries information about when a range starts or ends. It can be
@@ -103,7 +103,7 @@ type Range struct {
 }
 
 // Build parser
-var parser = participle.MustBuild(&Range{},
+var parser = participle.MustBuild[Range](
 	participle.Lexer(rangeLexer),
 )
 
@@ -111,8 +111,7 @@ var parser = participle.MustBuild(&Range{},
 // at least one Point (but no more than two: start and end) and may have
 // Modifier.
 func Parse(source string) (*Range, error) {
-	blockRange := &Range{}
-	err := parser.ParseString("", source, blockRange)
+	blockRange, err := parser.ParseString("", source)
 
 	return blockRange, err
 }

@@ -15,7 +15,7 @@ Flags:
                            One or more of [ none | some | all | balance | nonce | code | proxy | deployed | accttype ]
   -c, --changes            only report a balance when it changes from one block to the next
   -n, --no_zero            suppress the display of zero balance accounts
-  -a, --call string        a bang-separated string consisting of address!4-byte!bytes
+  -a, --call string        Solidity-like function call: balanceOf(0x0C316b7042b419d07d343F2f4F5Bd54FF731183d) or four-byte with arguments: 0x70a08231(0x0C316b7042b419d07d343F2f4F5Bd54FF731183d) or full encoded data parameter to eth_call
   -r, --proxy_for string   for the --call option only, redirects calls to this implementation
   -x, --fmt string         export format, one of [none|json*|txt|csv]
   -v, --verbose            enable verbose (increase detail with --log_level)
