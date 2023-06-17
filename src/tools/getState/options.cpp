@@ -196,7 +196,7 @@ COptions::COptions(void) : CHistoryOptions() {
     notes.push_back("If the queried node does not store historical state, the results are undefined.");
     notes.push_back("`Special` blocks are detailed under `chifra when --list`.");
     notes.push_back("`Balance` is the default mode. To select a single mode use `none` first, followed by that mode.");
-    notes.push_back("valid parameters for --call include Solidity-like syntax: balanceOf(0x316b...183d), a four-byte followed by parameters: 0x70a08231(0x316b...183d), or encoded input data.");  // NOLINT
+    notes.push_back("Valid parameters for --call include Solidity-like syntax: balanceOf(0x316b...183d), a four-byte followed by parameters: 0x70a08231(0x316b...183d), or encoded input data.");  // NOLINT
     notes.push_back("You may specify multiple `modes` on a single line.");
     // clang-format on
     // END_CODE_NOTES

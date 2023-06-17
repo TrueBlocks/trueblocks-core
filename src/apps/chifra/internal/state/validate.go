@@ -48,7 +48,7 @@ func (opts *StateOptions) validateState() error {
 			}
 
 			if len(opts.Addrs) != 1 {
-				return validate.Usage("single valid address required")
+				return validate.Usage("Exactly one address is required for the {0} option.", "--call")
 			}
 
 			contract := opts.Addrs[0]
@@ -61,7 +61,7 @@ func (opts *StateOptions) validateState() error {
 				return err
 			}
 			if !ok {
-				return validate.Usage("address for the --call option must be a smart contract.")
+				return validate.Usage("The address for the --call option must be a smart contract.")
 			}
 		} else {
 			if len(opts.ProxyFor) > 0 {
