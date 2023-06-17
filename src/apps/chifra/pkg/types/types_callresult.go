@@ -1,34 +1,59 @@
+// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
+ */
+
 package types
 
 // EXISTING_CODE
 import (
+	"io"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
 // EXISTING_CODE
 
 type RawCallResult struct {
+	Address          string   `json:"address"`
+	BlockNumber      string   `json:"blockNumber"`
+	EncodedArguments string   `json:"encodedArguments"`
+	Encoding         string   `json:"encoding"`
+	Name             string   `json:"name"`
+	Outputs          []string `json:"outputs"`
+	Signature        string   `json:"signature"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
 type SimpleCallResult struct {
-	Address          base.Address
-	BlockNumber      base.Blknum
-	EncodedArguments string
-	Encoding         string
-	Name             string
-	Outputs          map[string]string
-	Signature        string
+	Address          base.Address      `json:"address"`
+	BlockNumber      base.Blknum       `json:"blockNumber"`
+	EncodedArguments string            `json:"encodedArguments"`
+	Encoding         string            `json:"encoding"`
+	Name             string            `json:"name"`
+	Outputs          map[string]string `json:"outputs"`
+	Signature        string            `json:"signature"`
+	raw              *RawCallResult    `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
 func (s *SimpleCallResult) Raw() *RawCallResult {
-	return nil
+	return s.raw
+}
+
+func (s *SimpleCallResult) SetRaw(raw *RawCallResult) {
+	s.raw = raw
 }
 
 func (s *SimpleCallResult) Model(verbose bool, format string, extraOptions map[string]any) Model {
+	var model = map[string]interface{}{}
+	var order = []string{}
+
 	// EXISTING_CODE
 	callResult := map[string]any{
 		"name":      s.Name,
@@ -36,7 +61,7 @@ func (s *SimpleCallResult) Model(verbose bool, format string, extraOptions map[s
 		"encoding":  s.Encoding,
 		"outputs":   s.Outputs,
 	}
-	var model = map[string]any{
+	model = map[string]any{
 		"blockNumber": s.BlockNumber,
 		"address":     s.Address.Hex(),
 		"encoding":    s.Encoding,
@@ -52,7 +77,7 @@ func (s *SimpleCallResult) Model(verbose bool, format string, extraOptions map[s
 
 	model["signature"] = s.Signature
 	model["compressedResult"] = MakeCompressed(s.Outputs)
-	order := []string{
+	order = []string{
 		"blockNumber",
 		"address",
 		"signature",
@@ -66,6 +91,18 @@ func (s *SimpleCallResult) Model(verbose bool, format string, extraOptions map[s
 		Data:  model,
 		Order: order,
 	}
+}
+
+func (s *SimpleCallResult) WriteTo(w io.Writer) (n int64, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
+}
+
+func (s *SimpleCallResult) ReadFrom(r io.Reader) (n int64, err error) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return 0, nil
 }
 
 // EXISTING_CODE

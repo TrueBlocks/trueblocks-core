@@ -1518,11 +1518,12 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/chainstate/#ethstate">Ethstate</a>, and/or <a href="/data-model/chainstate/#ethcall">Ethcall</a> data. Corresponds to the <a href="/chifra/chainstate/#chifra-state">chifra state</a> command line.
+                    description: Produces <a href="/data-model/chainstate/#ethstate">Ethstate</a>, <a href="/data-model/chainstate/#callresult">Callresult</a>, and/or <a href="/data-model/chainstate/#ethcall">Ethcall</a> data. Corresponds to the <a href="/chifra/chainstate/#chifra-state">chifra state</a> command line.
                     type: array
                     items:
                       oneOf:
                         - $ref: "#/components/schemas/ethState"
+                        - $ref: "#/components/schemas/callResult"
                         - $ref: "#/components/schemas/ethCall"
                 example:
                   {
@@ -3162,7 +3163,7 @@ components:
           type: string
           example: "one of 'EOA' or 'Contract'"
           description: "the type of the address at the given block"
-    ethCall:
+    callResult:
       description: "the result (articulated if possible, as bytes otherwise) of a call to a smart contract"
       type: object
       properties:
@@ -3176,28 +3177,21 @@ components:
           format: address
           example: "0xa1e4...63b4"
           description: "the address of contract being called"
-        signature:
+        name:
           type: string
-          description: "the canonical signature of the interface"
+          description: "the name of the function call"
         encoding:
           type: string
           description: "the encoding for the function call"
-        bytes:
+        signature:
+          type: string
+          description: "the canonical signature of the interface"
+        encodedArguments:
           type: string
           description: "the bytes data following the encoding of the call"
-        callResult:
-          type: object
-          items:
-            $ref: "#/components/schemas/function"
+        outputs:
+          type: Outputs
           description: "the result of the call to the contract"
-        compressedResult:
-          type: string
-          description: "the compressed version of the result of the call to the contract"
-        deployed:
-          type: number
-          format: blknum
-          example: 8901011
-          description: "the block number at which this smart contract was deployed (if a smart contract)"
     tokenBalance:
       description: "on-chain token-related data such as totalSupply, symbol, decimals, and individual balances for a given address at a given block"
       type: object
@@ -3239,6 +3233,42 @@ components:
         isErc721:
           type: boolean
           description: "`true` if the address is an ERC720, `false` otherwise"
+    ethCall:
+      description: "the result (articulated if possible, as bytes otherwise) of a call to a smart contract (deprecated)"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          example: 10021
+          description: "the block number at which this call was made"
+        address:
+          type: string
+          format: address
+          example: "0xa1e4...63b4"
+          description: "the address of contract being called"
+        signature:
+          type: string
+          description: "the canonical signature of the interface"
+        encoding:
+          type: string
+          description: "the encoding for the function call"
+        bytes:
+          type: string
+          description: "the bytes data following the encoding of the call"
+        callResult:
+          type: object
+          items:
+            $ref: "#/components/schemas/function"
+          description: "the result of the call to the contract"
+        compressedResult:
+          type: string
+          description: "the compressed version of the result of the call to the contract"
+        deployed:
+          type: number
+          format: blknum
+          example: 8901011
+          description: "the block number at which this smart contract was deployed (if a smart contract)"
     config:
       description: "status-related data about the TrueBlocks system including the server and local binary caches"
       type: object
