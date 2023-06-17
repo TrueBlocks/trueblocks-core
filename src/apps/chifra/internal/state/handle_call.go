@@ -92,7 +92,7 @@ func (opts *StateOptions) HandleCall() error {
 	if len(blocks) == 0 {
 		blocks = []string{"latest"}
 	}
-	fetchData := func(modelChan chan types.Modeler[any], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawCallResult], errorChan chan error) {
 		for _, blockExpression := range blocks {
 			blockRange, err := identifiers.NewBlockRange(blockExpression)
 			if err != nil {

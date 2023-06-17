@@ -20,63 +20,11 @@ type ContractCall struct {
 	BlockNumber uint64
 }
 
-type ContractMethodResult struct {
-	BlockNumber      base.Blknum
-	Address          base.Address
-	Name             string
-	Encoding         string
-	Signature        string
-	EncodedArguments string
-	Outputs          map[string]string
-}
-
-func (c *ContractMethodResult) Raw() *any {
-	return nil
-}
-
-func (s *ContractMethodResult) Model(verbose bool, format string, extraOptions map[string]any) types.Model {
-	callResult := map[string]any{
-		"name":      s.Name,
-		"signature": s.Signature,
-		"encoding":  s.Encoding,
-		"outputs":   s.Outputs,
-	}
-	var model = map[string]any{
-		"blockNumber": s.BlockNumber,
-		"address":     s.Address.Hex(),
-		"encoding":    s.Encoding,
-		"bytes":       s.EncodedArguments,
-		"callResult":  callResult,
-	}
-
-	if format == "json" {
-		return types.Model{
-			Data: model,
-		}
-	}
-
-	model["signature"] = s.Signature
-	model["compressedResult"] = types.MakeCompressed(s.Outputs)
-	order := []string{
-		"blockNumber",
-		"address",
-		"signature",
-		"encoding",
-		"bytes",
-		"compressedResult",
-	}
-
-	return types.Model{
-		Data:  model,
-		Order: order,
-	}
-}
-
 func (c *ContractCall) ForceEncoding(encoding string) {
 	c.encoded = encoding
 }
 
-func CallContract(chain string, call *ContractCall) (results *ContractMethodResult, err error) {
+func CallContract(chain string, call *ContractCall) (results *types.SimpleCallResult, err error) {
 	blockNumberHex := "0x" + strconv.FormatUint(call.BlockNumber, 16)
 	if err != nil {
 		return
@@ -119,7 +67,7 @@ func CallContract(chain string, call *ContractCall) (results *ContractMethodResu
 		}
 	}
 
-	results = &ContractMethodResult{
+	results = &types.SimpleCallResult{
 		BlockNumber:      call.BlockNumber,
 		Address:          call.Address,
 		Name:             call.Method.Name,
