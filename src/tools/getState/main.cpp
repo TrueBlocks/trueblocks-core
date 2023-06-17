@@ -25,69 +25,19 @@ int main(int argc, const char* argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        if (!options.call.empty()) {
+        for (auto addr : options.addrs) {
             if (once)
-                cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CEthCall));
-            options.blocks.forEveryBlockNumber(visitForCall, &options);
+                cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CEthState));
+            options.current = addr;
+            options.blocks.forEveryBlockNumber(visitForState, &options);
             once = false;
-
-        } else {
-            for (auto addr : options.addrs) {
-                if (once)
-                    cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CEthState));
-                options.current = addr;
-                options.blocks.forEveryBlockNumber(visitForState, &options);
-                once = false;
-            }
         }
+
         cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
     }
 
     acctlib_cleanup();
     return 0;
-}
-
-//--------------------------------------------------------------
-bool visitForCall(uint64_t blockNum, void* data) {
-    COptions* opt = reinterpret_cast<COptions*>(data);
-    bool isText = expContext().exportFmt & (TXT1 | CSV1);
-
-    if (!isTestMode() && opt->blocks.nItems() > 10) {
-        cerr << blockNum << "\r";
-        cerr.flush();
-    }
-
-    if (blockNum < opt->oldestBlock)
-        opt->oldestBlock = blockNum;
-
-    // TODO: Is opt->theCall.address a smart contract at this block?
-    opt->theCall.blockNumber = blockNum;
-    if (doEthCall(opt->theCall, true /* proxy */)) {
-        CTransaction art;
-        art.input = opt->theCall.encoding + opt->theCall.bytes;
-        opt->abi_spec.articulateTransaction(&art);
-        opt->theCall.callResult.inputs = art.articulatedTx.inputs;
-        if (isText) {
-            cout << opt->theCall.Format(expContext().fmtMap["format"]) << endl;
-
-        } else {
-            if (!opt->firstOut)
-                cout << "," << endl;
-            cout << "  ";
-            indent();
-            opt->theCall.toJson(cout);
-            unindent();
-            opt->firstOut = false;
-        }
-
-    } else {
-        ostringstream os;
-        os << "No result from call to " << opt->theCall.address << " with fourbyte " << opt->theCall.encoding
-           << " at block " << blockNum;
-        opt->errors.push_back(os.str());
-    }
-
-    return !shouldQuit();
 }
 
 //--------------------------------------------------------------

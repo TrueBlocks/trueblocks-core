@@ -28,7 +28,7 @@ type StateOptions struct {
 	Parts    []string                 `json:"parts,omitempty"`    // Control which state to export
 	Changes  bool                     `json:"changes,omitempty"`  // Only report a balance when it changes from one block to the next
 	NoZero   bool                     `json:"noZero,omitempty"`   // Suppress the display of zero balance accounts
-	Call     string                   `json:"call,omitempty"`     // A bang-separated string consisting of address!4-byte!bytes
+	Call     string                   `json:"call,omitempty"`     // Call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data
 	ProxyFor string                   `json:"proxyFor,omitempty"` // For the --call option only, redirects calls to this implementation
 	Globals  globals.GlobalOptions    `json:"globals,omitempty"`  // The global options
 	BadFlag  error                    `json:"badFlag,omitempty"`  // An error flag if needed
@@ -76,12 +76,6 @@ func (opts *StateOptions) toCmdLine() string {
 	if opts.NoZero {
 		options += " --no_zero"
 	}
-	if len(opts.Call) > 0 {
-		options += " --call " + opts.Call
-	}
-	if len(opts.ProxyFor) > 0 {
-		options += " --proxy_for " + opts.ProxyFor
-	}
 	options += " " + strings.Join(opts.Addrs, " ")
 	options += " " + strings.Join(opts.Blocks, " ")
 	// EXISTING_CODE
@@ -128,6 +122,11 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
+	if opts.Call != "" {
+		// The tests need single quotes
+		unquoted := strings.Trim(opts.Call, "'")
+		opts.Call = unquoted
+	}
 	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
 	opts.ProxyFor, _ = ens.ConvertOneEns(opts.Globals.Chain, opts.ProxyFor)
 	// EXISTING_CODE

@@ -7,13 +7,13 @@ TEST[DATE|TIME] Format:  json
 {
   "data": [
     {
-      "addressCnt": 2,
+      "addressCnt": 3,
       "blockNumber": 3,
       "transactionsCnt": 0,
       "unclesCnt": 1
     },
     {
-      "addressCnt": 2,
+      "addressCnt": 3,
       "blockNumber": 469,
       "transactionsCnt": 0,
       "unclesCnt": 2

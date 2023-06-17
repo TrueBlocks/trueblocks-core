@@ -36,7 +36,7 @@ const (
 
 // Token type wraps information about ERC-20 token or ERC-721 NFT. Call
 // Token.IsErcXXX to check the token type.
-type Token1 struct {
+type Token struct {
 	Address     base.Address
 	Name        string
 	Symbol      string
@@ -60,7 +60,7 @@ func (e ErrNodeConnection) Error() string {
 
 // GetState returns token state for given block. `blockNumber` can be "latest" or "" for the latest block or
 // decimal number or hex number with 0x prefix.
-func GetState(chain string, tokenAddress base.Address, blockNumber string) (token *Token1, err error) {
+func GetState(chain string, tokenAddress base.Address, blockNumber string) (token *Token, err error) {
 	client := rpcClient.GetClient(config.GetRpcProvider(chain))
 	defer client.Close()
 
@@ -102,7 +102,7 @@ func GetBalanceAt(chain string, token, holder base.Address, blockNumber string) 
 	return balance, nil
 }
 
-func queryToken(address base.Address, blockNumber string) (token *Token1, err error) {
+func queryToken(address base.Address, blockNumber string) (token *Token, err error) {
 	results, err := rpc.BatchQuery[string](
 		"mainnet", // TODO: Shouldn't this be `chain`?
 		[]rpc.BatchPayload{
@@ -207,7 +207,7 @@ func queryToken(address base.Address, blockNumber string) (token *Token1, err er
 		tokenType = TokenErc721
 	}
 
-	token = &Token1{
+	token = &Token{
 		Address:     address,
 		Type:        tokenType,
 		Name:        name,
@@ -219,10 +219,10 @@ func queryToken(address base.Address, blockNumber string) (token *Token1, err er
 	return
 }
 
-func (t *Token1) IsErc20() bool {
+func (t *Token) IsErc20() bool {
 	return t.Type == TokenErc20
 }
 
-func (t *Token1) IsErc721() bool {
+func (t *Token) IsErc721() bool {
 	return t.Type == TokenErc721
 }

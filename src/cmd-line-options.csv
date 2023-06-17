@@ -181,15 +181,16 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13140,tools,ChainState,state,getState,parts,p,,false,false,true,true,local,flag,list<enum[none|some*|all|balance|nonce|code|proxy|deployed|accttype]>,control which state to export
 13160,tools,ChainState,state,getState,changes,c,,false,false,true,true,header,switch,<boolean>,only report a balance when it changes from one block to the next
 13180,tools,ChainState,state,getState,no_zero,n,,false,false,true,true,header,switch,<boolean>,suppress the display of zero balance accounts
-13190,tools,ChainState,state,getState,call,a,,false,false,true,true,header,flag,<string>,a bang-separated string consisting of address!4-byte!bytes
-13190,tools,ChainState,state,getState,proxy_for,r,,false,false,true,true,header,flag,<address>,for the --call option only&#44; redirects calls to this implementation
+13190,tools,ChainState,state,getState,call,a,,false,false,true,true,gocmd,flag,<string>,call a smart contract with a solidity syntax&#44; a four-byte and parameters&#44; or encoded call data
+13190,tools,ChainState,state,getState,proxy_for,r,,false,false,true,true,gocmd,flag,<address>,for the --call option only&#44; redirects calls to this implementation
 13220,tools,ChainState,state,getState,,,,false,false,true,true,--,description,,Retrieve account balance(s) for one or more addresses at given block(s).
 13222,tools,ChainState,state,getState,n1,,,false,false,false,false,--,note,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 13224,tools,ChainState,state,getState,n2,,,false,false,false,false,--,note,,`Blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
 13228,tools,ChainState,state,getState,n3,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
 13230,tools,ChainState,state,getState,n4,,,false,false,false,false,--,note,,`Special` blocks are detailed under `chifra when --list`.
 13232,tools,ChainState,state,getState,n5,,,false,false,false,false,--,note,,`Balance` is the default mode. To select a single mode use `none` first&#44; followed by that mode.
-13234,tools,ChainState,state,getState,n6,,,false,false,false,false,--,note,,You may specify multiple `modes` on a single line.
+13232,tools,ChainState,state,getState,n6,,,false,false,false,false,--,note,,Valid parameters for --call include Solidity-like syntax: balanceOf(0x316b...183d)&#44; a four-byte followed by parameters: 0x70a08231(0x316b...183d)&#44; or encoded input data.
+13234,tools,ChainState,state,getState,n7,,,false,false,false,false,--,note,,You may specify multiple `modes` on a single line.
 
 13260,tools,ChainState,tokens,getTokens,addrs,,,true,false,true,true,header,positional,list<addr>,two or more addresses (0x...)&#44; the first is an ERC20 token&#44; balances for the rest are reported
 13280,tools,ChainState,tokens,getTokens,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest'

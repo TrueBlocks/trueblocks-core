@@ -93,8 +93,6 @@ func (opts *TransactionsOptions) HandleAccounting() (err error) {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }
 
-// var zero = &big.Int{}
-
 func (ledgers *Ledger) GetStatementsFromAppearance(chain string, acctFor base.Address, app *types.RawAppearance) (statements []types.SimpleStatement, err error) {
 	if app == nil {
 		return nil, nil

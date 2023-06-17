@@ -1,6 +1,6 @@
-state?call=0xa4f29fc548856180f6b1e319ee4d86715875cce4!12065fe0&blocks=6523977-6540000:2000
+state?call='12065fe0()'&addrs=0xa4f29fc548856180f6b1e319ee4d86715875cce4&blocks=6523977-6540000:2000
 {
   "errors": [
-    "The provided value (12065fe0) must be either a four-byte nor a function signature."
+    "The provided value (12065fe0) must be either a four-byte or a function signature."
   ]
 }
