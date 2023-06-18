@@ -4,9 +4,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"strings"
 
-	abiPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/call"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -31,8 +30,8 @@ func (opts *StateOptions) HandleCall() error {
 		return fmt.Errorf("%w. The provided value (%s) must be a four-byte or function name followed by arguments, i.e. getBalance(), or full encoded data hash", err, opts.Call)
 	}
 
-	abiMap := make(abiPkg.AbiInterfaceMap)
-	if err = abiPkg.LoadAbi(chain, callAddress, abiMap); err != nil {
+	abiMap := make(abi.AbiInterfaceMap)
+	if err = abi.LoadAbi(chain, callAddress, abiMap); err != nil {
 		return err
 	}
 
@@ -42,27 +41,27 @@ func (opts *StateOptions) HandleCall() error {
 
 	if parsed.Encoded != "" {
 		selector := parsed.Encoded[:10]
-		function, _, err = findAbiFunction(findBySelector, selector, nil, abiMap)
+		function, _, err = abi.FindAbiFunction(abi.FindBySelector, selector, nil, abiMap)
 		if err != nil {
 			return err
 		}
 	} else {
 		// Selector or function name call
-		var findAbiMode findMode
+		var findAbiMode abi.FindMode
 		var identifier string
 
 		switch {
 		case parsed.FunctionNameCall != nil:
-			findAbiMode = findByName
+			findAbiMode = abi.FindByName
 			identifier = parsed.FunctionNameCall.Name
 			callArguments = parsed.FunctionNameCall.Arguments
 		case parsed.SelectorCall != nil:
-			findAbiMode = findBySelector
+			findAbiMode = abi.FindBySelector
 			identifier = parsed.SelectorCall.Selector.Value
 			callArguments = parsed.SelectorCall.Arguments
 		}
 
-		function, suggestions, err = findAbiFunction(findAbiMode, identifier, callArguments, abiMap)
+		function, suggestions, err = abi.FindAbiFunction(findAbiMode, identifier, callArguments, abiMap)
 		if err != nil {
 			return err
 		}
@@ -152,34 +151,4 @@ func convertArguments(callArguments []*parser.ContractCallArgument, function *ty
 	}
 
 	return
-}
-
-type findMode int
-
-const (
-	findByName findMode = iota
-	findBySelector
-)
-
-// findAbiFunction returns either the function to call or a list of suggestions (functions
-// with the same name, but different argument count)
-func findAbiFunction(mode findMode, identifier string, arguments []*parser.ContractCallArgument, abis abiPkg.AbiInterfaceMap) (fn *types.SimpleFunction, suggestions []types.SimpleFunction, err error) {
-	for _, function := range abis {
-		function := function
-		// TODO: is this too naive?
-		if mode == findByName && function.Name != identifier {
-			continue
-		}
-		if mode == findBySelector && function.Encoding != strings.ToLower(identifier) {
-			continue
-		}
-		if arguments != nil && len(function.Inputs) != len(arguments) {
-			suggestions = append(suggestions, *function)
-			continue
-		}
-
-		return function, nil, nil
-	}
-
-	return nil, suggestions, nil
 }
