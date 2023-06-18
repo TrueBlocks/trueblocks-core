@@ -2,7 +2,7 @@ chifra state  --call '0x12065fe0()' 0xa4f29fc548856180f6b1e319ee4d86715875 65239
 TEST[DATE|TIME] Blocks:  [0xa4f29fc548856180f6b1e319ee4d86715875 6523977-6540000:2000]
 TEST[DATE|TIME] Call:  0x12065fe0()
 TEST[DATE|TIME] Format:  txt
-Error: The first argument for the --call option must be a smart contract.
+Error: Exactly one address is required for the --call option.
 Usage:
   chifra state [flags] <address> [address...] [block...]
 
