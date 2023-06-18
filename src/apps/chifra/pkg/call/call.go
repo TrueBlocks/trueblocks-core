@@ -1,12 +1,15 @@
 package call
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/parser"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common"
@@ -22,7 +25,107 @@ type ContractCall struct {
 	ShowLogs    bool
 }
 
-func (c *ContractCall) ForceEncoding(encoding string) {
+func NewContractCall(chain string, callAddress base.Address, theCall string, showSuggestions bool) (*ContractCall, error) {
+	parsed, err := parser.ParseContractCall(theCall)
+	if err != nil {
+		// TODO: This is an end user error. It's meaningless to them. Only report what's required of the user.
+		return nil, fmt.Errorf("%w. The provided value (%s) must be a four-byte or function name followed by arguments, i.e. getBalance(), or full encoded data hash", err, theCall)
+	}
+
+	abiMap := make(abi.AbiInterfaceMap)
+	if err = abi.LoadAbi(chain, callAddress, abiMap); err != nil {
+		return nil, err
+	}
+
+	var function *types.SimpleFunction
+	var callArguments []*parser.ContractCallArgument
+	var suggestions []types.SimpleFunction
+
+	if parsed.Encoded != "" {
+		selector := parsed.Encoded[:10]
+		function, _, err = abi.FindAbiFunction(abi.FindBySelector, selector, nil, abiMap)
+		if err != nil {
+			return nil, err
+		}
+
+	} else {
+		// Selector or function name call
+		var findAbiMode abi.FindMode
+		var identifier string
+
+		switch {
+		case parsed.FunctionNameCall != nil:
+			findAbiMode = abi.FindByName
+			identifier = parsed.FunctionNameCall.Name
+			callArguments = parsed.FunctionNameCall.Arguments
+		case parsed.SelectorCall != nil:
+			findAbiMode = abi.FindBySelector
+			identifier = parsed.SelectorCall.Selector.Value
+			callArguments = parsed.SelectorCall.Arguments
+		}
+
+		function, suggestions, err = abi.FindAbiFunction(findAbiMode, identifier, callArguments, abiMap)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	if function == nil {
+		message := fmt.Sprintf("No ABI found for function %s", theCall)
+		if showSuggestions {
+			logger.Error(message)
+			if len(suggestions) > 0 {
+				logger.Info("Did you mean:")
+				for index, suggestion := range suggestions {
+					logger.Info(index+1, "-", suggestion.Signature)
+				}
+			}
+		}
+		return nil, errors.New(message)
+	}
+
+	var args []any
+	if parsed.Encoded == "" {
+		args, err = convertArguments(callArguments, function)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	contactCall := &ContractCall{
+		Address:   callAddress,
+		Method:    function,
+		Arguments: args,
+	}
+	if parsed.Encoded != "" {
+		contactCall.forceEncoding(parsed.Encoded)
+	}
+
+	return contactCall, nil
+}
+
+func convertArguments(callArguments []*parser.ContractCallArgument, function *types.SimpleFunction) (args []any, err error) {
+	abiMethod, err := function.GetAbiMethod()
+	if err != nil {
+		return
+	}
+	if len(abiMethod.Inputs) != len(callArguments) {
+		return nil, fmt.Errorf("got %d argument(s), but wanted %d", len(abiMethod.Inputs), len(callArguments))
+	}
+
+	args = make([]any, 0, len(callArguments))
+	for index, arg := range callArguments {
+		converted, err := arg.AbiType(&abiMethod.Inputs[index].Type)
+		if err != nil {
+			return nil, err
+		}
+		args = append(args, converted)
+	}
+
+	return
+}
+
+func (c *ContractCall) forceEncoding(encoding string) {
 	c.encoded = encoding
 }
 
