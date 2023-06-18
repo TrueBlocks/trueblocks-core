@@ -12,6 +12,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/parser"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -28,8 +29,8 @@ type ContractCall struct {
 func NewContractCall(chain string, callAddress base.Address, theCall string, showSuggestions bool) (*ContractCall, error) {
 	parsed, err := parser.ParseContractCall(theCall)
 	if err != nil {
-		// TODO: This is an end user error. It's meaningless to them. Only report what's required of the user.
-		return nil, fmt.Errorf("%w. The provided value (%s) must be a four-byte or function name followed by arguments, i.e. getBalance(), or full encoded data hash", err, theCall)
+		err = validate.Usage("The value provided --call ({0}) is invalid. See below.", theCall)
+		return nil, err
 	}
 
 	abiMap := make(abi.AbiInterfaceMap)

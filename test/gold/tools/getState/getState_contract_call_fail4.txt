@@ -3,7 +3,7 @@ TEST[DATE|TIME] Addrs:  [0xa4f29fc548856180f6b1e319ee4d86715875cce4]
 TEST[DATE|TIME] Blocks:  [6523977-6540000:2000]
 TEST[DATE|TIME] Call:  0x12065fe01()
 TEST[DATE|TIME] Format:  txt
-Error: SelectorContractCall.Selector: expected valid four byte selector. The provided value (0x12065fe01()) must be a four-byte or function name followed by arguments, i.e. getBalance(), or full encoded data hash
+Error: The value provided --call (0x12065fe01()) is invalid. See below.
 Usage:
   chifra state [flags] <address> [address...] [block...]
 
