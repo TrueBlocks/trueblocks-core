@@ -9,11 +9,11 @@ import (
 	abiPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/call"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/parser"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/ethereum/go-ethereum"
 )
 
 func (opts *StateOptions) HandleCall() error {
@@ -92,31 +92,25 @@ func (opts *StateOptions) HandleCall() error {
 		}
 	}
 
-	blocks := opts.Blocks
-	if len(blocks) == 0 {
-		blocks = []string{"latest"}
-	}
-
+	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawCallResult], errorChan chan error) {
-		for _, blockExpression := range blocks {
-			blockRange, err := identifiers.NewBlockRange(blockExpression)
+		for _, br := range opts.BlockIds {
+			blockNums, err := br.ResolveBlocks(chain)
 			if err != nil {
 				errorChan <- err
+				if errors.Is(err, ethereum.NotFound) {
+					continue
+				}
+				cancel()
 				return
 			}
 
-			resolvedBlock, err := blockRange.ResolveBlocks(chain)
-			if err != nil {
-				errorChan <- err
-				return
-			}
-
-			for _, resolvedBlock := range resolvedBlock {
+			for _, bn := range blockNums {
 				contractCall := &call.ContractCall{
 					Address:     callAddress,
 					Method:      function,
 					Arguments:   args,
-					BlockNumber: resolvedBlock,
+					BlockNumber: bn,
 					ShowLogs:    opts.Globals.Verbose || testMode,
 				}
 				if parsed.Encoded != "" {
@@ -137,7 +131,7 @@ func (opts *StateOptions) HandleCall() error {
 		}
 	}
 
-	return output.StreamMany(context.Background(), fetchData, opts.Globals.OutputOptsWithExtra(nil))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(nil))
 }
 
 func convertArguments(callArguments []*parser.ContractCallArgument, function *types.SimpleFunction) (args []any, err error) {

@@ -161,6 +161,13 @@ func stateFinishParse(args []string) *StateOptions {
 		val, _ := ens.ConvertOneEns(opts.Globals.Chain, parts[0])
 		opts.Call = strings.Replace(opts.Call, parts[0], val, -1)
 	}
+	if len(opts.Blocks) == 0 {
+		if opts.Globals.TestMode {
+			opts.Blocks = []string{"17000000"}
+		} else {
+			opts.Blocks = []string{"latest"}
+		}
+	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
