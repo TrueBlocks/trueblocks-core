@@ -1,10 +1,9 @@
-package statePkg
+package abi
 
 import (
 	"strings"
 	"testing"
 
-	abiPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/parser"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -96,7 +95,7 @@ func init() {
 		panic(err)
 	}
 
-	abis = make(abiPkg.AbiInterfaceMap, len(testAbi.Methods))
+	abis = make(AbiInterfaceMap, len(testAbi.Methods))
 	for _, method := range testAbi.Methods {
 		method := method
 		encoding := "0x" + strings.ToLower(common.Bytes2Hex(method.ID))
@@ -119,7 +118,7 @@ func Test_findAbiFunction(t *testing.T) {
 		},
 	}
 
-	result, hints, err := abiPkg.FindAbiFunction(abiPkg.FindByName, call.Name, call.Arguments, abis)
+	result, hints, err := FindAbiFunction(FindByName, call.Name, call.Arguments, abis)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -139,7 +138,7 @@ func Test_findAbiFunction(t *testing.T) {
 		Arguments: []*parser.ContractCallArgument{},
 	}
 
-	result, hints, err = abiPkg.FindAbiFunction(abiPkg.FindByName, call.Name, call.Arguments, abis)
+	result, hints, err = FindAbiFunction(FindByName, call.Name, call.Arguments, abis)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -163,7 +162,7 @@ func Test_findAbiFunction(t *testing.T) {
 		Arguments: []*parser.ContractCallArgument{},
 	}
 
-	result, hints, err = abiPkg.FindAbiFunction(abiPkg.FindByName, call.Name, call.Arguments, abis)
+	result, hints, err = FindAbiFunction(FindByName, call.Name, call.Arguments, abis)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -189,7 +188,7 @@ func Test_findAbiFunctionBySelector(t *testing.T) {
 		},
 	}
 
-	result, hints, err := abiPkg.FindAbiFunction(abiPkg.FindBySelector, call.Selector.Value, call.Arguments, abis)
+	result, hints, err := FindAbiFunction(FindBySelector, call.Selector.Value, call.Arguments, abis)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -211,7 +210,7 @@ func Test_findAbiFunctionBySelector(t *testing.T) {
 		Arguments: []*parser.ContractCallArgument{},
 	}
 
-	result, hints, err = abiPkg.FindAbiFunction(abiPkg.FindBySelector, call.Selector.Value, call.Arguments, abis)
+	result, hints, err = FindAbiFunction(FindBySelector, call.Selector.Value, call.Arguments, abis)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -237,7 +236,7 @@ func Test_findAbiFunctionBySelector(t *testing.T) {
 		Arguments: []*parser.ContractCallArgument{},
 	}
 
-	result, hints, err = abiPkg.FindAbiFunction(abiPkg.FindBySelector, call.Selector.Value, call.Arguments, abis)
+	result, hints, err = FindAbiFunction(FindBySelector, call.Selector.Value, call.Arguments, abis)
 	if err != nil {
 		t.Fatal(err)
 	}

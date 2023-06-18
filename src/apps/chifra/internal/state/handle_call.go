@@ -30,7 +30,7 @@ func (opts *StateOptions) HandleCall() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawCallResult], errorChan chan error) {
 		for _, br := range opts.BlockIds {
-			blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
+			blockNums, err := br.ResolveBlocks(chain)
 			if err != nil {
 				errorChan <- err
 				if errors.Is(err, ethereum.NotFound) {
