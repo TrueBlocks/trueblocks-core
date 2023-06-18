@@ -3,7 +3,6 @@ TEST[DATE|TIME] Transactions:  [1433233.8]
 TEST[DATE|TIME] AccountFor:  0xea674fdde714fd979de3edf0f56aa9716b898ec8
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  json
-TEST[DATE|TIME] 
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> FLOW ETH
 TEST[DATE|TIME] ===================================================
@@ -53,7 +52,6 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          358693424617370130430
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] 
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> BALANCE ETH
 TEST[DATE|TIME] ===================================================
@@ -103,10 +101,10 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          358693424617370130430
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
-TIME ~ CLOCK - <INFO>  : Calling a contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 1433233 prior to its deployment 10000835
-TIME ~ CLOCK - <INFO>  : doEthCall in CUniPrice::findPair returned false
-TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1433233...: 
-TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1433233 at four-byte 0x59e02dd7 returned 0x
+TEST[DATE|TIME] Calling a contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 1433233 prior to its deployment 10000835
+TEST[DATE|TIME] doEthCall in CUniPrice::findPair returned false
+TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1433233...: 
+TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1433233 at four-byte 0x59e02dd7 returned 0x
 {
   "data": [
     {

@@ -119,7 +119,7 @@ func Test_findAbiFunction(t *testing.T) {
 		},
 	}
 
-	result, hints, err := findAbiFunction(findByName, call.Name, call.Arguments, abis)
+	result, hints, err := abiPkg.FindAbiFunction(abiPkg.FindByName, call.Name, call.Arguments, abis)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -139,7 +139,7 @@ func Test_findAbiFunction(t *testing.T) {
 		Arguments: []*parser.ContractCallArgument{},
 	}
 
-	result, hints, err = findAbiFunction(findByName, call.Name, call.Arguments, abis)
+	result, hints, err = abiPkg.FindAbiFunction(abiPkg.FindByName, call.Name, call.Arguments, abis)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -163,7 +163,7 @@ func Test_findAbiFunction(t *testing.T) {
 		Arguments: []*parser.ContractCallArgument{},
 	}
 
-	result, hints, err = findAbiFunction(findByName, call.Name, call.Arguments, abis)
+	result, hints, err = abiPkg.FindAbiFunction(abiPkg.FindByName, call.Name, call.Arguments, abis)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -189,7 +189,7 @@ func Test_findAbiFunctionBySelector(t *testing.T) {
 		},
 	}
 
-	result, hints, err := findAbiFunction(findBySelector, call.Selector.Value, call.Arguments, abis)
+	result, hints, err := abiPkg.FindAbiFunction(abiPkg.FindBySelector, call.Selector.Value, call.Arguments, abis)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -211,7 +211,7 @@ func Test_findAbiFunctionBySelector(t *testing.T) {
 		Arguments: []*parser.ContractCallArgument{},
 	}
 
-	result, hints, err = findAbiFunction(findBySelector, call.Selector.Value, call.Arguments, abis)
+	result, hints, err = abiPkg.FindAbiFunction(abiPkg.FindBySelector, call.Selector.Value, call.Arguments, abis)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -237,7 +237,7 @@ func Test_findAbiFunctionBySelector(t *testing.T) {
 		Arguments: []*parser.ContractCallArgument{},
 	}
 
-	result, hints, err = findAbiFunction(findBySelector, call.Selector.Value, call.Arguments, abis)
+	result, hints, err = abiPkg.FindAbiFunction(abiPkg.FindBySelector, call.Selector.Value, call.Arguments, abis)
 	if err != nil {
 		t.Fatal(err)
 	}
