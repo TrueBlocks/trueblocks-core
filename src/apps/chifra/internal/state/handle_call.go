@@ -20,8 +20,7 @@ func (opts *StateOptions) HandleCall() error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 
-	address := base.HexToAddress(opts.Addrs[0])
-	callAddress := address
+	callAddress := base.HexToAddress(opts.Addrs[0])
 	if opts.ProxyFor != "" {
 		callAddress = base.HexToAddress(opts.ProxyFor)
 	}
@@ -33,7 +32,7 @@ func (opts *StateOptions) HandleCall() error {
 	}
 
 	abiMap := make(abiPkg.AbiInterfaceMap)
-	if err = abiPkg.LoadAbi(chain, address, abiMap); err != nil {
+	if err = abiPkg.LoadAbi(chain, callAddress, abiMap); err != nil {
 		return err
 	}
 
