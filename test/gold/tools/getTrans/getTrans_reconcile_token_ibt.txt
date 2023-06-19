@@ -102,6 +102,10 @@ TEST[DATE|TIME]    endBalDiff:          -1787395981000000000000
 TEST[DATE|TIME]    endBalCalc:          74056150651000000000000
 TEST[DATE|TIME]    trialBalance:        false
 TEST[DATE|TIME] ---------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : Calling a contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 7005737 prior to its deployment 10000835
+TIME ~ CLOCK - <INFO>  : doEthCall in CUniPrice::findPair returned false
 {
   "data": [
     {
@@ -137,7 +141,7 @@ TEST[DATE|TIME] ---------------------------------------------------
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x28adfa7a3ab67fb19410beabb1c1bf880fef0541",
-      "spotPrice": 1,
+      "spotPrice": 0,
       "timestamp": 1546555962,
       "totalIn": "3016.109787",
       "totalOut": "0",

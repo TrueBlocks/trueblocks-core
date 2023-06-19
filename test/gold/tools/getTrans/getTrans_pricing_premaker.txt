@@ -101,6 +101,8 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          358693424617370130430
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] doEthCall in CUniPrice::findPair returned false
+TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1433233 at four-byte 0x59e02dd7 returned 0x
 {
   "data": [
     {
@@ -136,7 +138,7 @@ TEST[DATE|TIME] ---------------------------------------------------
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xea674fdde714fd979de3edf0f56aa9716b898ec8",
-      "spotPrice": 1,
+      "spotPrice": 0,
       "timestamp": 1462044111,
       "totalIn": "0",
       "totalOut": "1006430412136166100",

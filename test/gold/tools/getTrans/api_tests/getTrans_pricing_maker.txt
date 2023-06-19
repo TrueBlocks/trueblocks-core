@@ -75,7 +75,7 @@ transactions?transactions=5218355.232&accountFor=0x7fd5c846121bed2e2e46a55f992e3
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x7fd5c846121bed2e2e46a55f992e35d85da7ffad",
-      "spotPrice": 1,
+      "spotPrice": 0,
       "timestamp": 1520510761,
       "totalIn": "0",
       "totalOut": "215173",

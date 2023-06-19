@@ -172,11 +172,23 @@ bool CUniPair::getPrice(blknum_t bn, string_q& priceSource, double& priceOut) {
     }
 
     if (isTestMode()) {
+        ostringstream os;
+        os << "getPair(" << r1 << ", " << r2 << ")" << endl;
+        cerr << "TEST[DATE|TIME] =========================================================" << endl;
+        cerr << "TEST[DATE|TIME] ===> PRICING" << endl;
+        cerr << "TEST[DATE|TIME] =========================================================" << endl;
+        LOG_ONE("blockNumber", bn);
+        LOG_ONE("first", r1);
+        LOG_ONE("second", r2);
+        LOG_ONE("uniswapFactoryV2", uniswapFactory);
+        LOG_ONE("theCall", os.str());
+        LOG_ONE("pairAddress", address);
+        LOG_ONE("theCall", "getReserves()");
         LOG_ONE("r1", r1);
         LOG_ONE("r2", r2);
-        LOG_ONE("reserve1", reserve1);
-        LOG_ONE("reserve2", reserve2);
-        LOG_ONE("priceOut", priceOut);
+        LOG_ONE("reserve0", double_2_Str(reserve1));
+        LOG_ONE("reserve1", double_2_Str(reserve2));
+        LOG_ONE("price", double_2_Str(priceOut));
         LOG_ONE("reversed", reversed);
     }
 
