@@ -34,7 +34,7 @@ transactions?transactions=0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4ea6199
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x28adfa7a3ab67fb19410beabb1c1bf880fef0541",
-      "spotPrice": 0,
+      "spotPrice": 1,
       "timestamp": 1546555962,
       "totalIn": "3016.109787",
       "totalOut": "0",

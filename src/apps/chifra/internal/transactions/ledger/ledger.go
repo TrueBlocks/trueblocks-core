@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/call"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
@@ -92,23 +93,74 @@ func (ledgers *Ledger) GetStatementsFromAppearance(chain string, acctFor base.Ad
 }
 
 // PriceUsd returns the price of the asset in USD
-func (ledgers *Ledger) PriceUsd(chain string, statement *types.SimpleStatement) (err error) {
-	// contract, err := token.GetContract(chain, statement.AssetAddr)
-	uniswapV2 := "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11"
-	uniswapFactoryV2 := "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f"
-	getPair := "0xe6a43905"
-	val1 := "0x000000000000000000000000a478c2975ab1ea89e8196811f51a7b7ade33eb11"
-	getReservesSelector := "0x0902f1ac"
-	val2 := "0x00000000000000000000000000000000000000000005c87e96b075ac37ad823e00000000000000000000000000000000000000000000011c1b48e046b82f1e740000000000000000000000000000000000000000000000000000000062d36ab4"
-	logger.TestLog(true, "call to", uniswapFactoryV2, "at block", statement.BlockNumber, "at four-byte", getPair, "returned", val1)
-	logger.TestLog(true, "call to", uniswapV2, "at block", statement.BlockNumber, "at four-byte", getReservesSelector, "returned", val2)
-	// TEST[DATE|TIME] r1:                  0x6b175474e89094c44da98b954eedeac495271d0f
-	// TEST[DATE|TIME] r2:                  0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
-	// TEST[DATE|TIME] reserve1:            6.4673e+06
-	// TEST[DATE|TIME] reserve2:            5779.86
-	// TEST[DATE|TIME] priceOut:            1334.0296
-	// TEST[DATE|TIME] reversed:            0
-	return nil
+func (ledgers *Ledger) PriceUsd(chain string, statement *types.SimpleStatement) (price float64, source string, err error) {
+	dai := base.HexToAddress("0x6b175474e89094c44da98b954eedeac495271d0f")
+	weth := base.HexToAddress("0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2")
+	first := dai
+	second := weth
+	reversed := false
+	if first.Hex() > second.Hex() {
+		first = weth
+		second = dai
+		reversed = true
+	}
+
+	theCall1 := fmt.Sprintf("getPair(%s, %s)", dai.Hex(), weth.Hex())
+	uniswapFactoryV2 := base.HexToAddress("0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f")
+	contractCall, err := call.NewContractCall(chain, uniswapFactoryV2, theCall1, false)
+	if err != nil {
+		return 1.0, "not-priced", err
+	}
+	contractCall.BlockNumber = statement.BlockNumber
+	result, _ := call.CallContract(chain, contractCall)
+	pairAddress := base.HexToAddress(result.Outputs["val_0"])
+	theCall2 := "getReserves()"
+	contractCall, err = call.NewContractCall(chain, pairAddress, theCall2, false)
+	if err != nil {
+		return 1.0, "not-priced", err
+	}
+	contractCall.BlockNumber = statement.BlockNumber
+	result, err = call.CallContract(chain, contractCall)
+	if err != nil {
+		return 1.0, "not-priced", err
+	}
+	reserve0 := new(big.Float)
+	if result.Outputs != nil && result.Outputs["_reserve0"] == "" {
+		reserve0.SetString("1")
+	} else {
+		reserve0.SetString(result.Outputs["_reserve0"])
+	}
+	reserve1 := new(big.Float)
+	if result.Outputs != nil && result.Outputs["_reserve1"] == "" {
+		reserve0.SetString("1")
+	} else {
+		reserve1.SetString(result.Outputs["_reserve1"])
+	}
+	bigPrice := new(big.Float)
+	bigPrice.Quo(reserve0, reserve1)
+
+	if ledgers.TestMode {
+		logger.TestLog(true, "=========================================================")
+		logger.TestLog(true, "===> PRICING")
+		logger.TestLog(true, "=========================================================")
+		logger.TestLog(true, "blockNumber:		  ", statement.BlockNumber)
+		logger.TestLog(true, "first:              ", first.Hex())
+		logger.TestLog(true, "second:             ", second.Hex())
+		logger.TestLog(true, "uniswapFactoryV2:   ", uniswapFactoryV2.Hex())
+		logger.TestLog(true, "theCall:            ", theCall1)
+		logger.TestLog(true, "pairAddress:        ", pairAddress.Hex())
+		logger.TestLog(true, "theCall:            ", theCall2)
+		logger.TestLog(true, "r1:                 ", dai.Hex())
+		logger.TestLog(true, "r2:                 ", weth.Hex())
+		logger.TestLog(true, "reserve0:           ", reserve0)
+		logger.TestLog(true, "reserve1:           ", reserve1)
+		logger.TestLog(true, "price:              ", bigPrice)
+		logger.TestLog(true, "reversed:           ", reversed)
+	}
+
+	price, _ = bigPrice.Float64()
+	source = "uniswap"
+	return price, source, nil
 }
 
 // GetStatementFromTransaction returns a statement from a given transaction
@@ -137,7 +189,7 @@ func (ledgers *Ledger) GetStatementFromTransaction(trans *types.SimpleTransactio
 		AssetSymbol:      "WEI",
 		Decimals:         18,
 		SpotPrice:        1.0,
-		PriceSource:      "uniswap",
+		PriceSource:      "not-priced",
 		PrevAppBlk:       ctx.PrevBlock,
 		PrevBal:          *pBal,
 		BegBal:           *bBal,
@@ -165,6 +217,7 @@ func (ledgers *Ledger) GetStatementFromTransaction(trans *types.SimpleTransactio
 	}
 
 	if ofInterst {
+		ret.SpotPrice, ret.PriceSource, _ = ledgers.PriceUsd(ledgers.Chain, &ret)
 		ledgers.TrialBalance("FLOW ETH", &ret)
 		ledgers.TrialBalance("BALANCE ETH", &ret)
 	} else {
@@ -215,7 +268,7 @@ func (ledgers *Ledger) GetStatementFromLog(log *types.SimpleLog) (r *types.Simpl
 		AssetSymbol:      sym,
 		Decimals:         18,
 		SpotPrice:        1.0,
-		PriceSource:      "uniswap",
+		PriceSource:      "not-priced",
 		PrevAppBlk:       ctx.PrevBlock,
 		PrevBal:          *pBal,
 		BegBal:           *bBal,

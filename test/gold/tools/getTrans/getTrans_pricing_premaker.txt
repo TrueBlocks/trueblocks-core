@@ -27,7 +27,7 @@ TEST[DATE|TIME]    timestamp:           1462044111
 TEST[DATE|TIME]    blockNumber:         1433233
 TEST[DATE|TIME]    transactionIndex:    8
 TEST[DATE|TIME]    logIndex:            0
-TEST[DATE|TIME]    priceSource:         uniswap
+TEST[DATE|TIME]    priceSource:         not-priced
 TEST[DATE|TIME]    spotPrice:           1
 TEST[DATE|TIME]    prevBal:             359699855029506296530
 TEST[DATE|TIME]    begBal:              359699855029506296530
@@ -76,7 +76,7 @@ TEST[DATE|TIME]    timestamp:           1462044111
 TEST[DATE|TIME]    blockNumber:         1433233
 TEST[DATE|TIME]    transactionIndex:    8
 TEST[DATE|TIME]    logIndex:            0
-TEST[DATE|TIME]    priceSource:         uniswap
+TEST[DATE|TIME]    priceSource:         not-priced
 TEST[DATE|TIME]    spotPrice:           1
 TEST[DATE|TIME]    prevBal:             359699855029506296530
 TEST[DATE|TIME]    begBal:              359699855029506296530
@@ -101,8 +101,6 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          358693424617370130430
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] doEthCall in CUniPrice::findPair returned false
-TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1433233 at four-byte 0x59e02dd7 returned 0x
 {
   "data": [
     {

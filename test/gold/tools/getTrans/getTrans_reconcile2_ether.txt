@@ -4,6 +4,22 @@ TEST[DATE|TIME] AccountFor:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] Format:  json
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:		   15157311
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] uniswapFactoryV2:    0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] theCall:             getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] pairAddress:         0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] theCall:             getReserves()
+TEST[DATE|TIME] r1:                  0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] r2:                  0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reserve0:            6.991437542708446439e+24
+TEST[DATE|TIME] reserve1:            5.2408413847652023086e+21
+TEST[DATE|TIME] price:               1334.0296012453491777
+TEST[DATE|TIME] reversed:            false
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> FLOW ETH
 TEST[DATE|TIME] ===================================================
@@ -29,7 +45,7 @@ TEST[DATE|TIME]    blockNumber:         15157311
 TEST[DATE|TIME]    transactionIndex:    138
 TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    priceSource:         uniswap
-TEST[DATE|TIME]    spotPrice:           1
+TEST[DATE|TIME]    spotPrice:           1334.029601245349
 TEST[DATE|TIME]    prevBal:             20757259456276694166
 TEST[DATE|TIME]    begBal:              20757259456276694166
 TEST[DATE|TIME]    amountIn:            14935571680000000000
@@ -78,7 +94,7 @@ TEST[DATE|TIME]    blockNumber:         15157311
 TEST[DATE|TIME]    transactionIndex:    138
 TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    priceSource:         uniswap
-TEST[DATE|TIME]    spotPrice:           1
+TEST[DATE|TIME]    spotPrice:           1334.029601245349
 TEST[DATE|TIME]    prevBal:             20757259456276694166
 TEST[DATE|TIME]    begBal:              20757259456276694166
 TEST[DATE|TIME]    amountIn:            14935571680000000000
@@ -102,14 +118,22 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          35692831136276694166
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 15157311 at four-byte 0xe6a43905 returned 0x000000000000000000000000a478c2975ab1ea89e8196811f51a7b7ade33eb11
-TEST[DATE|TIME] call to 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11 at block 15157311 at four-byte 0x0902f1ac returned 0x0000000000000000000000000000000000000000000559810c412d7963889f2600000000000000000000000000000000000000000000013953bc193865743ba70000000000000000000000000000000000000000000000000000000062b12ca7
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:		   15157311
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] uniswapFactoryV2:    0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] theCall:             getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] pairAddress:         0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] theCall:             getReserves()
 TEST[DATE|TIME] r1:                  0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] r2:                  0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
-TEST[DATE|TIME] reserve1:            6.4673e+06
-TEST[DATE|TIME] reserve2:            5779.86
-TEST[DATE|TIME] priceOut:            1118.94
-TEST[DATE|TIME] reversed:            0
+TEST[DATE|TIME] reserve0:            6.991437542708446439e+24
+TEST[DATE|TIME] reserve1:            5.2408413847652023086e+21
+TEST[DATE|TIME] price:               1334.0296012453491777
+TEST[DATE|TIME] reversed:            false
 {
   "data": [
     {
@@ -145,7 +169,7 @@ TEST[DATE|TIME] reversed:            0
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xb5d85cbf7cb3ee0d56b3bb207d5fc4b82f43f511",
-      "spotPrice": wrong-1118.93628,
+      "spotPrice": 1334.029601245349,
       "timestamp": 1658022619,
       "totalIn": "14.93557168",
       "totalOut": "0",
