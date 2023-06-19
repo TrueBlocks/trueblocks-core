@@ -11,8 +11,10 @@ package types
 // EXISTING_CODE
 import (
 	"io"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
@@ -57,6 +59,43 @@ func (s *SimpleEthState) Model(verbose bool, format string, extraOptions map[str
 	var order = []string{}
 
 	// EXISTING_CODE
+	model["blockNumber"] = s.BlockNumber
+	model["address"] = s.Address
+
+	order = []string{"blockNumber", "address"}
+
+	// TODO: fixme
+	if extraOptions != nil {
+		if fields, ok := extraOptions["fields"]; ok {
+			if fields, ok := fields.([]string); ok {
+				for _, field := range fields {
+					switch field {
+					case "balance":
+						model["balance"] = s.Balance.String()
+					case "nonce":
+						model["nonce"] = s.Nonce
+					case "code":
+						if !verbose {
+							model["code"] = s.CodeShort()
+						} else {
+							model["code"] = s.Code
+						}
+					case "proxy":
+						model["proxy"] = s.Proxy
+					case "deployed":
+						if s.Deployed == utils.NOPOS {
+							model["deployed"] = ""
+						} else {
+							model["deployed"] = s.Deployed
+						}
+					case "type":
+						model["type"] = s.Accttype
+					}
+				}
+				order = append(order, fields...)
+			}
+		}
+	}
 	// EXISTING_CODE
 
 	return Model{
@@ -78,4 +117,19 @@ func (s *SimpleEthState) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
+func (s *SimpleEthState) CodeShort() string {
+	codeLen := len(s.Code)
+	if codeLen <= 250 {
+		return s.Code
+	}
+
+	return strings.Join(
+		[]string{
+			s.Code[:20],
+			s.Code[codeLen-20:],
+		},
+		"...",
+	)
+}
+
 // EXISTING_CODE
