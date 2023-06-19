@@ -218,8 +218,7 @@ func (ledgers *Ledger) GetStatementFromTransaction(trans *types.SimpleTransactio
 
 	if ofInterst {
 		ret.SpotPrice, ret.PriceSource, _ = ledgers.PriceUsd(ledgers.Chain, &ret)
-		ledgers.TrialBalance("FLOW ETH", &ret)
-		ledgers.TrialBalance("BALANCE ETH", &ret)
+		ledgers.TrialBalance("ETH", &ret)
 	} else {
 		logger.TestLog(ledgers.TestMode, "Transaction", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), "does not transfer value")
 	}
@@ -288,8 +287,7 @@ func (ledgers *Ledger) GetStatementFromLog(log *types.SimpleLog) (r *types.Simpl
 	}
 
 	if ofInterst {
-		ledgers.TrialBalance("FLOW TOKEN", &ret)
-		ledgers.TrialBalance("BALANCE TOKEN", &ret)
+		ledgers.TrialBalance("TOKENS", &ret)
 	} else {
 		logger.TestLog(ledgers.TestMode, "Log", log.LogIndex, "at", fmt.Sprintf("%d.%d", log.BlockNumber, log.TransactionIndex), "(a token transfer) is not relevant")
 	}

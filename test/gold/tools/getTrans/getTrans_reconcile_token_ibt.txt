@@ -5,56 +5,7 @@ TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] Format:  json
 TEST[DATE|TIME] Transaction 7005737.30 does not transfer value
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> FLOW TOKEN
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ledger.blockNumber:     7005736
-TEST[DATE|TIME] prevBlock:              7005736
-TEST[DATE|TIME] transfer.blockNumber:   7005737
-TEST[DATE|TIME] nextBlock:              7005738
-TEST[DATE|TIME] isPrevDiff:             true
-TEST[DATE|TIME] isNextDiff:             true
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-token
-TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-TEST[DATE|TIME]    sender:              0x28adfa7a3ab67fb19410beabb1c1bf880fef0541
-TEST[DATE|TIME]    recipient:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-TEST[DATE|TIME]    assetAddr:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
-TEST[DATE|TIME]    assetSymbol:         0x5c2c
-TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    prevAppBlk:          7005736
-TEST[DATE|TIME]    hash:                0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4ea6199334cf3399cdf
-TEST[DATE|TIME]    timestamp:           1546555962
-TEST[DATE|TIME]    blockNumber:         7005737
-TEST[DATE|TIME]    transactionIndex:    30
-TEST[DATE|TIME]    logIndex:            20
-TEST[DATE|TIME]    priceSource:         not-priced
-TEST[DATE|TIME]    spotPrice:           0
-TEST[DATE|TIME]    prevBal:             71040040864000000000000
-TEST[DATE|TIME]    begBal:              71040040864000000000000
-TEST[DATE|TIME]    amountIn:            3016109787000000000000
-TEST[DATE|TIME]    internalIn:          0
-TEST[DATE|TIME]    minerBaseRewardIn:   0
-TEST[DATE|TIME]    minerNephewRewardIn: 0
-TEST[DATE|TIME]    minerTxFeeIn:        0
-TEST[DATE|TIME]    minerUncleRewardIn:  0
-TEST[DATE|TIME]    prefundIn:           0
-TEST[DATE|TIME]    selfDestructIn:      0
-TEST[DATE|TIME]    totalIn:             3016109787000000000000
-TEST[DATE|TIME]    amountOut:           0
-TEST[DATE|TIME]    internalOut:         0
-TEST[DATE|TIME]    selfDestructOut:     0
-TEST[DATE|TIME]    gasOut:              0
-TEST[DATE|TIME]    totalOut:            0
-TEST[DATE|TIME]    amountNet:           3016109787000000000000
-TEST[DATE|TIME]    endBal:              75843546632000000000000
-TEST[DATE|TIME]    begBalDiff:          0
-TEST[DATE|TIME]    endBalDiff:          -1787395981000000000000
-TEST[DATE|TIME]    endBalCalc:          74056150651000000000000
-TEST[DATE|TIME]    trialBalance:        false
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> BALANCE TOKEN
+TEST[DATE|TIME] ====> TOKENS
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     7005736
 TEST[DATE|TIME] prevBlock:              7005736

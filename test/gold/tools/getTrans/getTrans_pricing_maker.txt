@@ -4,7 +4,7 @@ TEST[DATE|TIME] AccountFor:  0x7fd5c846121bed2e2e46a55f992e35d85da7ffad
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  json
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> FLOW ETH
+TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     5218354
 TEST[DATE|TIME] prevBlock:              5218354
@@ -53,56 +53,7 @@ TEST[DATE|TIME]    endBalCalc:          1259710448741022040
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> BALANCE ETH
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ledger.blockNumber:     5218354
-TEST[DATE|TIME] prevBlock:              5218354
-TEST[DATE|TIME] transfer.blockNumber:   5218355
-TEST[DATE|TIME] nextBlock:              5218356
-TEST[DATE|TIME] isPrevDiff:             true
-TEST[DATE|TIME] isNextDiff:             true
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-eth
-TEST[DATE|TIME]    accountedFor:        0x7fd5c846121bed2e2e46a55f992e35d85da7ffad
-TEST[DATE|TIME]    sender:              0x7fd5c846121bed2e2e46a55f992e35d85da7ffad
-TEST[DATE|TIME]    recipient:           0xec7954f452a6473c21c4078501f0bcf8b266bc99
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME]    assetSymbol:         WEI
-TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    prevAppBlk:          5218354
-TEST[DATE|TIME]    hash:                0x4973ab1d7be0aa2823946359bbea1831f10ceaa096a4fce9c20b5658cc237f33
-TEST[DATE|TIME]    timestamp:           1520510761
-TEST[DATE|TIME]    blockNumber:         5218355
-TEST[DATE|TIME]    transactionIndex:    232
-TEST[DATE|TIME]    logIndex:            0
-TEST[DATE|TIME]    priceSource:         maker
-TEST[DATE|TIME]    spotPrice:           1
-TEST[DATE|TIME]    prevBal:             1259925280741022040
-TEST[DATE|TIME]    begBal:              1259925280741022040
-TEST[DATE|TIME]    amountIn:            0
-TEST[DATE|TIME]    internalIn:          0
-TEST[DATE|TIME]    minerBaseRewardIn:   0
-TEST[DATE|TIME]    minerNephewRewardIn: 0
-TEST[DATE|TIME]    minerTxFeeIn:        0
-TEST[DATE|TIME]    minerUncleRewardIn:  0
-TEST[DATE|TIME]    prefundIn:           0
-TEST[DATE|TIME]    selfDestructIn:      0
-TEST[DATE|TIME]    totalIn:             0
-TEST[DATE|TIME]    amountOut:           0
-TEST[DATE|TIME]    internalOut:         0
-TEST[DATE|TIME]    selfDestructOut:     0
-TEST[DATE|TIME]    gasOut:              214832000000000
-TEST[DATE|TIME]    totalOut:            214832000000000
-TEST[DATE|TIME]    amountNet:           -214832000000000
-TEST[DATE|TIME]    endBal:              1259710448741022040
-TEST[DATE|TIME]    begBalDiff:          0
-TEST[DATE|TIME]    endBalDiff:          0
-TEST[DATE|TIME]    endBalCalc:          1259710448741022040
-TEST[DATE|TIME]    trialBalance:        true
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> FLOW TOKEN
+TEST[DATE|TIME] ====> TOKENS
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     5218354
 TEST[DATE|TIME] prevBlock:              5218354
@@ -126,56 +77,7 @@ TEST[DATE|TIME]    blockNumber:         5218355
 TEST[DATE|TIME]    transactionIndex:    232
 TEST[DATE|TIME]    logIndex:            69
 TEST[DATE|TIME]    priceSource:         not-priced
-TEST[DATE|TIME]    spotPrice:           1
-TEST[DATE|TIME]    prevBal:             117708109
-TEST[DATE|TIME]    begBal:              117708109
-TEST[DATE|TIME]    amountIn:            0
-TEST[DATE|TIME]    internalIn:          0
-TEST[DATE|TIME]    minerBaseRewardIn:   0
-TEST[DATE|TIME]    minerNephewRewardIn: 0
-TEST[DATE|TIME]    minerTxFeeIn:        0
-TEST[DATE|TIME]    minerUncleRewardIn:  0
-TEST[DATE|TIME]    prefundIn:           0
-TEST[DATE|TIME]    selfDestructIn:      0
-TEST[DATE|TIME]    totalIn:             0
-TEST[DATE|TIME]    amountOut:           215173
-TEST[DATE|TIME]    internalOut:         0
-TEST[DATE|TIME]    selfDestructOut:     0
-TEST[DATE|TIME]    gasOut:              0
-TEST[DATE|TIME]    totalOut:            215173
-TEST[DATE|TIME]    amountNet:           -215173
-TEST[DATE|TIME]    endBal:              117492936
-TEST[DATE|TIME]    begBalDiff:          0
-TEST[DATE|TIME]    endBalDiff:          0
-TEST[DATE|TIME]    endBalCalc:          117492936
-TEST[DATE|TIME]    trialBalance:        true
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> BALANCE TOKEN
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ledger.blockNumber:     5218354
-TEST[DATE|TIME] prevBlock:              5218354
-TEST[DATE|TIME] transfer.blockNumber:   5218355
-TEST[DATE|TIME] nextBlock:              5218356
-TEST[DATE|TIME] isPrevDiff:             true
-TEST[DATE|TIME] isNextDiff:             true
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-token
-TEST[DATE|TIME]    accountedFor:        0x7fd5c846121bed2e2e46a55f992e35d85da7ffad
-TEST[DATE|TIME]    sender:              0x7fd5c846121bed2e2e46a55f992e35d85da7ffad
-TEST[DATE|TIME]    recipient:           0x6b374d334d25cc9c9e15add727fdc6d647c2dc4c
-TEST[DATE|TIME]    assetAddr:           0xec7954f452a6473c21c4078501f0bcf8b266bc99
-TEST[DATE|TIME]    assetSymbol:         0xec79
-TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    prevAppBlk:          5218354
-TEST[DATE|TIME]    hash:                0x4973ab1d7be0aa2823946359bbea1831f10ceaa096a4fce9c20b5658cc237f33
-TEST[DATE|TIME]    timestamp:           1520510761
-TEST[DATE|TIME]    blockNumber:         5218355
-TEST[DATE|TIME]    transactionIndex:    232
-TEST[DATE|TIME]    logIndex:            69
-TEST[DATE|TIME]    priceSource:         not-priced
-TEST[DATE|TIME]    spotPrice:           1
+TEST[DATE|TIME]    spotPrice:           0
 TEST[DATE|TIME]    prevBal:             117708109
 TEST[DATE|TIME]    begBal:              117708109
 TEST[DATE|TIME]    amountIn:            0

@@ -75,7 +75,7 @@ transactions?transactions=10681057.170%2010607241.278&accountFor=0x65eab68cdb0da
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3",
-      "spotPrice": 396.2084,
+      "spotPrice": 396.20840254610437,
       "timestamp": 1596729942,
       "totalIn": "0",
       "totalOut": "2070329590800000000",
