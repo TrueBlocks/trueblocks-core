@@ -437,11 +437,14 @@ export?addrs=0x33990122638b9132ca29c723bdf037f1a891a70c%200x72202bb5d0645d495e4b
     }
   ],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "finalized": "0xdeadbeef",
     "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet",
     "first_block": "0xdeadbeef",
     "last_block": "0xdeadbeef"
   }
