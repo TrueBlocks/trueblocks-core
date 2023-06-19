@@ -3,6 +3,22 @@ TEST[DATE|TIME] Transactions:  [0x3f095a4b4e1b85e148b8b97aa91841f28280692b6045de
 TEST[DATE|TIME] AccountFor:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  json
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:		   15157311
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] uniswapFactoryV2:    0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] theCall:             getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] pairAddress:         0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] theCall:             getReserves()
+TEST[DATE|TIME] r1:                  0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] r2:                  0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reserve0:            6.991437542708446439e+24
+TEST[DATE|TIME] reserve1:            5.2408413847652023086e+21
+TEST[DATE|TIME] price:               1334.0296012453491777
+TEST[DATE|TIME] reversed:            false
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> FLOW ETH
 TEST[DATE|TIME] ===================================================
@@ -104,7 +120,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING
 TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         15157311
+TEST[DATE|TIME] blockNumber:		   15157311
 TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 TEST[DATE|TIME] uniswapFactoryV2:    0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f

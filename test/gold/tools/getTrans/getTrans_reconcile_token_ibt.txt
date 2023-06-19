@@ -29,7 +29,7 @@ TEST[DATE|TIME]    blockNumber:         7005737
 TEST[DATE|TIME]    transactionIndex:    30
 TEST[DATE|TIME]    logIndex:            20
 TEST[DATE|TIME]    priceSource:         not-priced
-TEST[DATE|TIME]    spotPrice:           1
+TEST[DATE|TIME]    spotPrice:           0
 TEST[DATE|TIME]    prevBal:             71040040864000000000000
 TEST[DATE|TIME]    begBal:              71040040864000000000000
 TEST[DATE|TIME]    amountIn:            3016109787000000000000
@@ -78,7 +78,7 @@ TEST[DATE|TIME]    blockNumber:         7005737
 TEST[DATE|TIME]    transactionIndex:    30
 TEST[DATE|TIME]    logIndex:            20
 TEST[DATE|TIME]    priceSource:         not-priced
-TEST[DATE|TIME]    spotPrice:           1
+TEST[DATE|TIME]    spotPrice:           0
 TEST[DATE|TIME]    prevBal:             71040040864000000000000
 TEST[DATE|TIME]    begBal:              71040040864000000000000
 TEST[DATE|TIME]    amountIn:            3016109787000000000000
@@ -102,10 +102,6 @@ TEST[DATE|TIME]    endBalDiff:          -1787395981000000000000
 TEST[DATE|TIME]    endBalCalc:          74056150651000000000000
 TEST[DATE|TIME]    trialBalance:        false
 TEST[DATE|TIME] ---------------------------------------------------
-TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : Calling a contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 7005737 prior to its deployment 10000835
-TIME ~ CLOCK - <INFO>  : doEthCall in CUniPrice::findPair returned false
 {
   "data": [
     {
