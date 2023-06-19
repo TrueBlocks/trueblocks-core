@@ -972,19 +972,19 @@ string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
     CMetaData meta = getMetaData();
     if (isTestMode()) {
         meta.unripe = meta.ripe = meta.staging = meta.finalized = meta.client = 0xdeadbeef;
-        meta.chainId = meta.networkId = 0xdeaddead;
     }
     os << ", \"meta\": {";
-    os << "\"unripe\": " << dispNumOrHex(meta.unripe) << ",";
-    os << "\"ripe\": " << dispNumOrHex(meta.ripe) << ",";
+    os << "\"client\": " << dispNumOrHex(meta.client) << ",";
+    os << "\"finalized\": " << dispNumOrHex(meta.finalized) << ",";
     os << "\"staging\": " << dispNumOrHex(meta.staging) << ",";
-    os << "\"finalized\": " << dispNumOrHex(meta.finalized);
-    os << ",\"client\": " << dispNumOrHex(meta.client);
-    if ((isApiMode() && !isTestMode()) || meta.chain != getDefaultChain()) {
-        os << ",\"chain\": "
+    os << "\"ripe\": " << dispNumOrHex(meta.ripe) << ",";
+    os << "\"unripe\": " << dispNumOrHex(meta.unripe);
+    if (isApiMode()) {
+        os << ",";
+        os << "\"chainId\": " << meta.chainId << ",";
+        os << "\"networkId\": " << meta.networkId << ",";
+        os << "\"chain\": "
            << "\"" << meta.chain << "\"";
-        os << ",\"clientId\": " << dispNumOrHex(meta.chainId);
-        os << ",\"networkId\": " << dispNumOrHex(meta.networkId);
     }
     if (!extra.empty())
         os << extra;
