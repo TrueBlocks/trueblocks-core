@@ -92,21 +92,38 @@ func (ledgers *Ledger) GetStatementsFromAppearance(chain string, acctFor base.Ad
 	}
 }
 
+var uniswapFactoryV2 = base.HexToAddress("0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f")
+var deployed = base.Blknum(10000835)
+
 // PriceUsd returns the price of the asset in USD
 func (ledgers *Ledger) PriceUsd(chain string, statement *types.SimpleStatement) (price float64, source string, err error) {
-	dai := base.HexToAddress("0x6b175474e89094c44da98b954eedeac495271d0f")
-	weth := base.HexToAddress("0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2")
-	first := dai
-	second := weth
+	if statement.BlockNumber <= deployed {
+		msg := fmt.Sprintf("Call to smart contract %s at block %d prior to its deployment %d", uniswapFactoryV2.Hex(), statement.BlockNumber, deployed)
+		logger.TestLog(true, msg)
+	}
+	multiplier := float64(1.0)
+	var first base.Address
+	var second base.Address
+	if statement.AssetAddr == FAKE_ETH_ADDRESS {
+		first = base.HexToAddress("0x6b175474e89094c44da98b954eedeac495271d0f")  // DAI
+		second = base.HexToAddress("0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2") // WETH
+	} else {
+		temp := *statement
+		temp.AssetAddr = FAKE_ETH_ADDRESS
+		multiplier, _, err = ledgers.PriceUsd(chain, &temp)
+		if err != nil {
+			return 1.0, "not-priced", err
+		}
+	}
 	reversed := false
 	if first.Hex() > second.Hex() {
-		first = weth
-		second = dai
+		save := second
+		second = first
+		first = save
 		reversed = true
 	}
 
-	theCall1 := fmt.Sprintf("getPair(%s, %s)", dai.Hex(), weth.Hex())
-	uniswapFactoryV2 := base.HexToAddress("0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f")
+	theCall1 := fmt.Sprintf("getPair(%s, %s)", first.Hex(), second.Hex())
 	contractCall, err := call.NewContractCall(chain, uniswapFactoryV2, theCall1, false)
 	if err != nil {
 		return 1.0, "not-priced", err
@@ -144,21 +161,20 @@ func (ledgers *Ledger) PriceUsd(chain string, statement *types.SimpleStatement) 
 		logger.TestLog(true, "===> PRICING")
 		logger.TestLog(true, "=========================================================")
 		logger.TestLog(true, "blockNumber:		  ", statement.BlockNumber)
-		logger.TestLog(true, "first:              ", first.Hex())
-		logger.TestLog(true, "second:             ", second.Hex())
 		logger.TestLog(true, "uniswapFactoryV2:   ", uniswapFactoryV2.Hex())
 		logger.TestLog(true, "theCall:            ", theCall1)
 		logger.TestLog(true, "pairAddress:        ", pairAddress.Hex())
 		logger.TestLog(true, "theCall:            ", theCall2)
-		logger.TestLog(true, "r1:                 ", dai.Hex())
-		logger.TestLog(true, "r2:                 ", weth.Hex())
+		logger.TestLog(true, "first:              ", first.Hex())
+		logger.TestLog(true, "second:             ", second.Hex())
+		logger.TestLog(true, "reversed:           ", reversed)
 		logger.TestLog(true, "reserve0:           ", reserve0)
 		logger.TestLog(true, "reserve1:           ", reserve1)
 		logger.TestLog(true, "price:              ", bigPrice)
-		logger.TestLog(true, "reversed:           ", reversed)
 	}
 
 	price, _ = bigPrice.Float64()
+	price *= multiplier
 	source = "uniswap"
 	return price, source, nil
 }

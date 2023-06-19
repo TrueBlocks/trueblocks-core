@@ -51,8 +51,9 @@ TEST[DATE|TIME]    endBal:              75843546632000000000000
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          -1787395981000000000000
 TEST[DATE|TIME]    endBalCalc:          74056150651000000000000
-TEST[DATE|TIME]    trialBalance:        false
+TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Call to smart contract 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 7005737 prior to its deployment 10000835
 {
   "data": [
     {

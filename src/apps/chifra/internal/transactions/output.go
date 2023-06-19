@@ -11,6 +11,7 @@ package transactionsPkg
 // EXISTING_CODE
 import (
 	"net/http"
+	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -95,7 +96,8 @@ func GetTransactionsOptions(args []string, g *globals.GlobalOptions) *Transactio
 
 func (opts *TransactionsOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	ported = !opts.Cache // && len(opts.AccountFor) == 0
+	isOld := os.Getenv("OLD") == "true"
+	ported = !opts.Cache && (!isOld || len(opts.AccountFor) == 0)
 	// EXISTING_CODE
 	return
 }
