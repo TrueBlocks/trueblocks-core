@@ -44,10 +44,13 @@ transactions?transactions=0x3f095a4b4e1b85e148b8b97aa91841f28280692b6045de8e690d
     }
   ],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
+    "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
   }
 }

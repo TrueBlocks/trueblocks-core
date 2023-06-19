@@ -4,8 +4,6 @@ TEST[DATE|TIME] AccountFor:  0x7fd5c846121bed2e2e46a55f992e35d85da7ffad
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  json
 { "data": [
-TIME ~ CLOCK - : 4-----blockNum.txid 5218355 232
-TIME ~ CLOCK - : 4-----not from cache
 TIME ~ CLOCK - : 4-----Loaded timestamp file
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
