@@ -15,7 +15,6 @@ func (opts *TransactionsOptions) HandleAccounting() (err error) {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	ether := opts.Globals.Ether
-	acctFor := base.HexToAddress(opts.AccountFor)
 	noZero := false // opts.Globals.NoZero
 
 	ledgers := ledger.NewLedger(
@@ -38,7 +37,7 @@ func (opts *TransactionsOptions) HandleAccounting() (err error) {
 			}
 
 			for _, app := range txIds {
-				if statements, err := ledgers.GetStatementsFromAppearance(chain, acctFor, &app); err != nil {
+				if statements, err := ledgers.GetStatementsFromAppearance(chain, &app); err != nil {
 					errorChan <- err
 				} else {
 					for _, statement := range statements {

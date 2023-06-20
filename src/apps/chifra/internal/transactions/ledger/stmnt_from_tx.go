@@ -67,10 +67,6 @@ func (ledgers *Ledger) GetStatementsFromTransaction(trans *types.SimpleTransacti
 		ret.AssetSymbol = "ETH"
 	}
 
-	if len(trans.Input) > 10 {
-		ret.Encoding = trans.Input[:10]
-	}
-
 	if !ledgers.UseTraces && ledgers.TrialBalance("ETH", &ret) {
 		if len(ret.AmountNet().Bits()) == 0 {
 			logger.TestLog(true, "Tx reconciled with a zero value net amount. It's okay.")
@@ -92,7 +88,6 @@ func (ledgers *Ledger) GetStatementsFromTransaction(trans *types.SimpleTransacti
 				add := !ledgers.NoZero || len(s.AmountNet().Bits()) != 0
 				if add {
 					statements = append(statements, s)
-					ledgers.Previous[s.AssetAddr] = s
 				}
 			}
 		} else if err != nil {

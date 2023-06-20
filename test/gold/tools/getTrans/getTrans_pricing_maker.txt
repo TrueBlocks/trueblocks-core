@@ -3,6 +3,7 @@ TEST[DATE|TIME] Transactions:  [5218355.232]
 TEST[DATE|TIME] AccountFor:  0x7fd5c846121bed2e2e46a55f992e35d85da7ffad
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  json
+TEST[DATE|TIME] Block 5218355 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
@@ -28,7 +29,7 @@ TEST[DATE|TIME]    blockNumber:         5218355
 TEST[DATE|TIME]    transactionIndex:    232
 TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    priceSource:         maker
-TEST[DATE|TIME]    spotPrice:           1
+TEST[DATE|TIME]    spotPrice:           766.95
 TEST[DATE|TIME]    prevBal:             1259925280741022040
 TEST[DATE|TIME]    begBal:              1259925280741022040
 TEST[DATE|TIME]    amountIn:            0
@@ -52,6 +53,7 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          1259710448741022040
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Block 5218355 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> TOKENS
 TEST[DATE|TIME] ===================================================
@@ -101,9 +103,6 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          117492936
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] doEthCall in CUniPrice::findPair returned false
-TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 5218355 at four-byte 0x59e02dd7 returned 0x00000000000000000000000000000000000000000000002993a384ff8db780000000000000000000000000000000000000000000000000000000000000000001
-TEST[DATE|TIME] doEthCall in CUniPrice::findPair returned false
 {
   "data": [
     {

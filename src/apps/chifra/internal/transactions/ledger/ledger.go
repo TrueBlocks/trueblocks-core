@@ -13,7 +13,6 @@ type Ledger struct {
 	Chain      string
 	AccountFor base.Address
 	TestMode   bool
-	Previous   map[base.Address]*types.SimpleStatement
 	Contexts   map[string]LedgerContext
 	AsEther    bool
 	NoZero     bool
@@ -25,7 +24,6 @@ func NewLedger(chain string, acctFor base.Address, asEther, testMode, noZero, us
 	return &Ledger{
 		Chain:      chain,
 		AccountFor: acctFor,
-		Previous:   make(map[base.Address]*types.SimpleStatement),
 		Contexts:   make(map[string]LedgerContext),
 		AsEther:    asEther,
 		TestMode:   testMode,

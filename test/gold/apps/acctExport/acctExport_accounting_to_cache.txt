@@ -107,9 +107,19 @@ TIME ~ CLOCK - <INFO>  :
 TIME ~ CLOCK - <INFO>  : 
 TEST[DATE|TIME] Call to a smart contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 13 prior to its deployment 10000835
 TEST[DATE|TIME] doEthCall in CUniPrice::findPair returned false
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 13
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 13 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 13 at four-byte 0x59e02dd7 returned 0x
-13	99999	0	0x0	1438270158	2015-07-30 15:29:18 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	1.00000	not-priced	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0xBlockReward	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	"0"	"5000000000000000000"	"5000000000000000000"			regular-eth	true	"5000000000000000000"	"0"	"0"	"0"	"5000000000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	12	"0"	"0"	"0"	"5000000000000000000"
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
+13	99999	0	0x0	1438270158	2015-07-30 15:29:18 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0.00000	not-priced	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0xBlockReward	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	"0"	"5000000000000000000"	"5000000000000000000"			regular-eth	true	"5000000000000000000"	"0"	"0"	"0"	"5000000000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	12	"0"	"0"	"0"	"5000000000000000000"
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> FLOW ETH
 TEST[DATE|TIME] ===================================================
@@ -210,9 +220,19 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 22
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 22 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 22 at four-byte 0x59e02dd7 returned 0x
-22	99999	0	0x0	1438270204	2015-07-30 15:30:04 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	1.00000	not-priced	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0xBlockReward	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	"5000000000000000000"	"5000000000000000000"	"10000000000000000000"			regular-eth	true	"5000000000000000000"	"0"	"0"	"0"	"5000000000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	13	"5000000000000000000"	"0"	"0"	"10000000000000000000"
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
+22	99999	0	0x0	1438270204	2015-07-30 15:30:04 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0.00000	not-priced	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0xBlockReward	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	"5000000000000000000"	"5000000000000000000"	"10000000000000000000"			regular-eth	true	"5000000000000000000"	"0"	"0"	"0"	"5000000000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	13	"5000000000000000000"	"0"	"0"	"10000000000000000000"
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> FLOW ETH
 TEST[DATE|TIME] ===================================================
@@ -313,9 +333,19 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 37
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 37 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 37 at four-byte 0x59e02dd7 returned 0x
-37	99998	0	0x0	1438270267	2015-07-30 15:31:07 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	1.00000	not-priced	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0xUncleReward	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	"10000000000000000000"	"3750000000000000000"	"13750000000000000000"			regular-eth	true	"3750000000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"3750000000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	22	"10000000000000000000"	"0"	"0"	"13750000000000000000"
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
+37	99998	0	0x0	1438270267	2015-07-30 15:31:07 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0.00000	not-priced	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0xUncleReward	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	"10000000000000000000"	"3750000000000000000"	"13750000000000000000"			regular-eth	true	"3750000000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"3750000000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	22	"10000000000000000000"	"0"	"0"	"13750000000000000000"
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> FLOW ETH
 TEST[DATE|TIME] ===================================================
@@ -416,9 +446,19 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 39
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 39 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 39 at four-byte 0x59e02dd7 returned 0x
-39	99999	0	0x0	1438270272	2015-07-30 15:31:12 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	1.00000	not-priced	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0xBlockReward	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	"13750000000000000000"	"5000000000000000000"	"18750000000000000000"			regular-eth	true	"5000000000000000000"	"0"	"0"	"0"	"5000000000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	37	"13750000000000000000"	"0"	"0"	"18750000000000000000"
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
+39	99999	0	0x0	1438270272	2015-07-30 15:31:12 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0.00000	not-priced	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0xBlockReward	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	"13750000000000000000"	"5000000000000000000"	"18750000000000000000"			regular-eth	true	"5000000000000000000"	"0"	"0"	"0"	"5000000000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	37	"13750000000000000000"	"0"	"0"	"18750000000000000000"
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> FLOW ETH
 TEST[DATE|TIME] ===================================================
@@ -519,9 +559,19 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 43
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 43 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 43 at four-byte 0x59e02dd7 returned 0x
-43	99999	0	0x0	1438270279	2015-07-30 15:31:19 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	1.00000	not-priced	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0xBlockReward	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	"18750000000000000000"	"5000000000000000000"	"23750000000000000000"			regular-eth	true	"5000000000000000000"	"0"	"0"	"0"	"5000000000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	39	"18750000000000000000"	"0"	"0"	"23750000000000000000"
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
+43	99999	0	0x0	1438270279	2015-07-30 15:31:19 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0.00000	not-priced	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0xBlockReward	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	"18750000000000000000"	"5000000000000000000"	"23750000000000000000"			regular-eth	true	"5000000000000000000"	"0"	"0"	"0"	"5000000000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	39	"18750000000000000000"	"0"	"0"	"23750000000000000000"
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> FLOW ETH
 TEST[DATE|TIME] ===================================================
@@ -622,9 +672,19 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 53
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 53 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 53 at four-byte 0x59e02dd7 returned 0x
-53	99999	0	0x0	1438270312	2015-07-30 15:31:52 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	1.00000	not-priced	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0xBlockReward	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	"23750000000000000000"	"5000000000000000000"	"28750000000000000000"			regular-eth	true	"5000000000000000000"	"0"	"0"	"0"	"5000000000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	43	"23750000000000000000"	"0"	"0"	"28750000000000000000"
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
+53	99999	0	0x0	1438270312	2015-07-30 15:31:52 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0.00000	not-priced	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0xBlockReward	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	"23750000000000000000"	"5000000000000000000"	"28750000000000000000"			regular-eth	true	"5000000000000000000"	"0"	"0"	"0"	"5000000000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	43	"23750000000000000000"	"0"	"0"	"28750000000000000000"
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> FLOW ETH
 TEST[DATE|TIME] ===================================================
@@ -725,9 +785,19 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 55
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 55 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 55 at four-byte 0x59e02dd7 returned 0x
-55	99998	0	0x0	1438270320	2015-07-30 15:32:00 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	1.00000	not-priced	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0xUncleReward	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	"28750000000000000000"	"3750000000000000000"	"32500000000000000000"			regular-eth	true	"3750000000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"3750000000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	53	"28750000000000000000"	"0"	"0"	"32500000000000000000"
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
+55	99998	0	0x0	1438270320	2015-07-30 15:32:00 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0.00000	not-priced	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0xUncleReward	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	"28750000000000000000"	"3750000000000000000"	"32500000000000000000"			regular-eth	true	"3750000000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"3750000000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	53	"28750000000000000000"	"0"	"0"	"32500000000000000000"
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> FLOW ETH
 TEST[DATE|TIME] ===================================================
@@ -828,9 +898,19 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 64
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 64 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 64 at four-byte 0x59e02dd7 returned 0x
-64	99999	0	0x0	1438270345	2015-07-30 15:32:25 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	1.00000	not-priced	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0xBlockReward	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	"32500000000000000000"	"5000000000000000000"	"37500000000000000000"			regular-eth	true	"5000000000000000000"	"0"	"0"	"0"	"5000000000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	55	"32500000000000000000"	"0"	"0"	"37500000000000000000"
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
+64	99999	0	0x0	1438270345	2015-07-30 15:32:25 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0.00000	not-priced	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0xBlockReward	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	"32500000000000000000"	"5000000000000000000"	"37500000000000000000"			regular-eth	true	"5000000000000000000"	"0"	"0"	"0"	"5000000000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	55	"32500000000000000000"	"0"	"0"	"37500000000000000000"
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> FLOW ETH
 TEST[DATE|TIME] ===================================================
@@ -931,9 +1011,19 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 67
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 67 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 67 at four-byte 0x59e02dd7 returned 0x
-67	99999	0	0x0	1438270366	2015-07-30 15:32:46 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	1.00000	not-priced	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0xBlockReward	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	"37500000000000000000"	"5000000000000000000"	"42500000000000000000"			regular-eth	true	"5000000000000000000"	"0"	"0"	"0"	"5000000000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	64	"37500000000000000000"	"0"	"0"	"42500000000000000000"
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
+67	99999	0	0x0	1438270366	2015-07-30 15:32:46 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0.00000	not-priced	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0xBlockReward	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	"37500000000000000000"	"5000000000000000000"	"42500000000000000000"			regular-eth	true	"5000000000000000000"	"0"	"0"	"0"	"5000000000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	64	"37500000000000000000"	"0"	"0"	"42500000000000000000"
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> FLOW ETH
 TEST[DATE|TIME] ===================================================
@@ -1034,9 +1124,19 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 78
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 78 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 78 at four-byte 0x59e02dd7 returned 0x
-78	99999	0	0x0	1438270389	2015-07-30 15:33:09 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	1.00000	not-priced	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0xBlockReward	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	"42500000000000000000"	"5156250000000000000"	"47656250000000000000"			regular-eth	true	"5156250000000000000"	"0"	"0"	"0"	"5000000000000000000"	"156250000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	67	"42500000000000000000"	"0"	"0"	"47656250000000000000"
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
+78	99999	0	0x0	1438270389	2015-07-30 15:33:09 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0.00000	not-priced	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0xBlockReward	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	"42500000000000000000"	"5156250000000000000"	"47656250000000000000"			regular-eth	true	"5156250000000000000"	"0"	"0"	"0"	"5000000000000000000"	"156250000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	67	"42500000000000000000"	"0"	"0"	"47656250000000000000"
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> FLOW ETH
 TEST[DATE|TIME] ===================================================
@@ -1137,9 +1237,19 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 84
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 84 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 84 at four-byte 0x59e02dd7 returned 0x
-84	99999	0	0x0	1438270408	2015-07-30 15:33:28 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	1.00000	not-priced	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0xBlockReward	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	"47656250000000000000"	"5000000000000000000"	"52656250000000000000"			regular-eth	true	"5000000000000000000"	"0"	"0"	"0"	"5000000000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	78	"47656250000000000000"	"0"	"0"	"52656250000000000000"
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
+84	99999	0	0x0	1438270408	2015-07-30 15:33:28 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0.00000	not-priced	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0xBlockReward	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	"47656250000000000000"	"5000000000000000000"	"52656250000000000000"			regular-eth	true	"5000000000000000000"	"0"	"0"	"0"	"5000000000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	78	"47656250000000000000"	"0"	"0"	"52656250000000000000"
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> FLOW ETH
 TEST[DATE|TIME] ===================================================
@@ -1240,9 +1350,19 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 90
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 90 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 90 at four-byte 0x59e02dd7 returned 0x
-90	99999	0	0x0	1438270422	2015-07-30 15:33:42 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	1.00000	not-priced	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0xBlockReward	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	"52656250000000000000"	"5000000000000000000"	"57656250000000000000"			regular-eth	true	"5000000000000000000"	"0"	"0"	"0"	"5000000000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	84	"52656250000000000000"	"0"	"0"	"57656250000000000000"
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
+90	99999	0	0x0	1438270422	2015-07-30 15:33:42 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0.00000	not-priced	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0xBlockReward	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	"52656250000000000000"	"5000000000000000000"	"57656250000000000000"			regular-eth	true	"5000000000000000000"	"0"	"0"	"0"	"5000000000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	84	"52656250000000000000"	"0"	"0"	"57656250000000000000"
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> FLOW ETH
 TEST[DATE|TIME] ===================================================
@@ -1343,6 +1463,16 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 94
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 94 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 94 at four-byte 0x59e02dd7 returned 0x
-94	99999	0	0x0	1438270431	2015-07-30 15:33:51 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	1.00000	not-priced	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0xBlockReward	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	"57656250000000000000"	"5156250000000000000"	"62812500000000000000"			regular-eth	true	"5156250000000000000"	"0"	"0"	"0"	"5000000000000000000"	"156250000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	90	"57656250000000000000"	"0"	"0"	"62812500000000000000"
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
+94	99999	0	0x0	1438270431	2015-07-30 15:33:51 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0.00000	not-priced	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0xBlockReward	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	"57656250000000000000"	"5156250000000000000"	"62812500000000000000"			regular-eth	true	"5156250000000000000"	"0"	"0"	"0"	"5000000000000000000"	"156250000000000000"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	90	"57656250000000000000"	"0"	"0"	"62812500000000000000"

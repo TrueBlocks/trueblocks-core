@@ -108,8 +108,18 @@ TIME ~ CLOCK - <INFO>  :
 TIME ~ CLOCK - <INFO>  : 
 TEST[DATE|TIME] Call to a smart contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 0 prior to its deployment 10000835
 TEST[DATE|TIME] doEthCall in CUniPrice::findPair returned false
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 0
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 0 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 0 at four-byte 0x59e02dd7 returned 0x
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
 {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -142,7 +152,7 @@ TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 0 at
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "ETH",
       "decimals": 18,
-      "spotPrice": 1.00000,
+      "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "accountedFor": "0x001d14804b399c6ef80e64576f657660804fec0b",
       "sender": "0xPrefund",
@@ -279,8 +289,18 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 202249
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 202249 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 202249 at four-byte 0x59e02dd7 returned 0x
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
 , {
   "hash": "0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8",
   "blockHash": "0x1816ff22f84af23df70df8e6ae5c40a8780c16a0860ca1a25a4c911eba76c65a",
@@ -314,7 +334,7 @@ TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 2022
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "ETH",
       "decimals": 18,
-      "spotPrice": 1.00000,
+      "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "accountedFor": "0x001d14804b399c6ef80e64576f657660804fec0b",
       "sender": "0x001d14804b399c6ef80e64576f657660804fec0b",
@@ -453,8 +473,18 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 1501459
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1501459 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1501459 at four-byte 0x59e02dd7 returned 0x
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
 , {
   "hash": "0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5",
   "blockHash": "0x66b5597c4a991decb68f56b94245a93485e4a30a3d77f95e6c32a3d4f91e2051",
@@ -488,7 +518,7 @@ TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1501
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "ETH",
       "decimals": 18,
-      "spotPrice": 1.00000,
+      "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "accountedFor": "0x001d14804b399c6ef80e64576f657660804fec0b",
       "sender": "0x001d14804b399c6ef80e64576f657660804fec0b",

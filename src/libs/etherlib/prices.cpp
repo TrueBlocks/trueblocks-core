@@ -263,15 +263,42 @@ double getPriceMaker_UsdPerEth(string_q& priceSource, blknum_t bn) {
     theCall.address = makerMedianizer;
     theCall.encoding = peek;
     theCall.abi_spec = spec;
+    if (isTestMode()) {
+        cerr << "TEST[DATE|TIME] ===================== maker pricing ========================" << endl;
+        cerr << "TEST[DATE|TIME] CEthCall:" << endl;
+        cerr << "TEST[DATE|TIME] blockNumber: " << theCall.blockNumber << endl;
+        cerr << "TEST[DATE|TIME] address:     " << theCall.address << endl;
+        cerr << "TEST[DATE|TIME] signature:   " << theCall.signature << endl;
+        cerr << "TEST[DATE|TIME] encoding:    " << theCall.encoding << endl;
+        cerr << "TEST[DATE|TIME] bytes:       " << theCall.bytes << endl;
+    }
     if (doEthCall(theCall, true /* proxy */)) {
         CStringArray results;
         theCall.getCallResult(results);
+        if (isTestMode()) {
+            cerr << "TEST[DATE|TIME] result:" << endl;
+            cerr << "TEST[DATE|TIME] " << results.size() << " results" << endl;
+        }
         if (results.size() > 1 && results[1] == "true") {
             string_q hex = results[0];
-            wei_t wei = str_2_Wei(hex) * 100;
+            wei_t wei1 = str_2_Wei(hex);
+            wei_t wei = wei1 * 100;
             wei_t ether = wei / weiPerEther();
             priceSource = "maker";
-            return str_2_Uint(wei_2_Str(ether)) / 100.;
+            double price = str_2_Uint(wei_2_Str(ether)) / 100.;
+            if (isTestMode()) {
+                cerr << "TEST[DATE|TIME] results[0]: " << results[0] << endl;
+                cerr << "TEST[DATE|TIME] results[1]: " << results[1] << endl;
+                cerr << "TEST[DATE|TIME] hex: " << hex << endl;
+                cerr << "TEST[DATE|TIME] wei1: " << wei1 << endl;
+                cerr << "TEST[DATE|TIME] wei: " << wei << endl;
+                cerr << "TEST[DATE|TIME] weiPerEther: " << weiPerEther() << endl;
+                cerr << "TEST[DATE|TIME] ether: " << ether << endl;
+                cerr << "TEST[DATE|TIME] price: " << price << endl;
+            }
+            return price;
+        } else if (isTestMode()) {
+            LOG_INFO("doEthCall into makerMedianizer returned false");
         }
     } else {
         if (isTestMode()) {
@@ -280,7 +307,7 @@ double getPriceMaker_UsdPerEth(string_q& priceSource, blknum_t bn) {
     }
 
     priceSource = "not-priced";
-    return 1.;
+    return 0.;
 }
 
 //---------------------------------------------------------------------------

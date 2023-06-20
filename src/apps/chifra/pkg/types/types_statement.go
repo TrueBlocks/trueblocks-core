@@ -29,7 +29,6 @@ type RawStatement struct {
 	BegBal              string `json:"begBal"`
 	BlockNumber         string `json:"blockNumber"`
 	Decimals            string `json:"decimals"`
-	Encoding            string `json:"encoding"`
 	EndBal              string `json:"endBal"`
 	GasOut              string `json:"gasOut"`
 	InternalIn          string `json:"internalIn"`
@@ -48,7 +47,6 @@ type RawStatement struct {
 	SelfDestructIn      string `json:"selfDestructIn"`
 	SelfDestructOut     string `json:"selfDestructOut"`
 	Sender              string `json:"sender"`
-	Signature           string `json:"signature"`
 	SpotPrice           string `json:"spotPrice"`
 	Timestamp           string `json:"timestamp"`
 	TransactionHash     string `json:"transactionHash"`
@@ -66,7 +64,6 @@ type SimpleStatement struct {
 	BegBal              big.Int        `json:"begBal"`
 	BlockNumber         base.Blknum    `json:"blockNumber"`
 	Decimals            uint64         `json:"decimals"`
-	Encoding            string         `json:"encoding"`
 	EndBal              big.Int        `json:"endBal"`
 	GasOut              big.Int        `json:"gasOut,omitempty"`
 	InternalIn          big.Int        `json:"internalIn,omitempty"`
@@ -85,7 +82,6 @@ type SimpleStatement struct {
 	SelfDestructIn      big.Int        `json:"selfDestructIn,omitempty"`
 	SelfDestructOut     big.Int        `json:"selfDestructOut,omitempty"`
 	Sender              base.Address   `json:"sender"`
-	Signature           string         `json:"signature"`
 	SpotPrice           float64        `json:"spotPrice"`
 	Timestamp           base.Timestamp `json:"timestamp"`
 	TransactionHash     base.Hash      `json:"transactionHash"`
@@ -155,10 +151,6 @@ func (s *SimpleStatement) Model(verbose bool, format string, extraOptions map[st
 		"begBalDiff":          fmt(*s.BegBalDiff()),
 		"endBalDiff":          fmt(*s.EndBalDiff()),
 		"endBalCalc":          fmt(*s.EndBalCalc()),
-		// ENCODING
-		// Encoding            string             `json:"encoding"`
-		// SIGNATURE
-		// Signature           string             `json:"signature"`
 	}
 	order = []string{
 		"blockNumber", "transactionIndex", "logindex", "transactionHash", "timestamp", "date",

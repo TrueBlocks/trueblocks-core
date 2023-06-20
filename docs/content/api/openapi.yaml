@@ -2609,14 +2609,6 @@ components:
           type: string
           format: int256
           description: "the on-chain balance of the asset (see notes about intra-block reconciliations)"
-        encoding:
-          type: string
-          example: "0xa9059cbb"
-          description: "the topic of the event (if this is an ERC20 reconcilation), the four-byte signature of the transaction otherwise"
-        signature:
-          type: string
-          example: "Transfer(...)"
-          description: "if possible, the articulated name of the function or event signature"
         reconciliationType:
           type: string
           description: "one of `regular`, `prevDiff-same`, `same-nextDiff`, or `same-same`. Appended with `eth` or `token`"

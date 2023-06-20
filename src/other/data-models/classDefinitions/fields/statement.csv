@@ -18,32 +18,30 @@ recipient           ,address   ,           ,       ,      ,        ,          , 
 begBal              ,int256    ,           ,       ,      ,        ,          ,        ,         , 15 ,  15 ,              ,the beginning balance of the asset prior to the transaction
 amountNet           ,int256    ,           ,       ,      ,true    ,          ,true    ,true     , 16 ,  16 ,              ,a calculated field -- totalIn - totalOut
 endBal              ,int256    ,           ,       ,      ,        ,          ,        ,         , 17 ,  17 ,              ,the on-chain balance of the asset (see notes about intra-block reconciliations)
-encoding            ,string    ,           ,       ,      ,        ,          ,        ,         , 18 ,  18 ,0xa9059cbb    ,the topic of the event (if this is an ERC20 reconcilation)&#44; the four-byte signature of the transaction otherwise
-signature           ,string    ,           ,       ,      ,        ,          ,        ,         , 19 ,  19 ,Transfer(...) ,if possible&#44; the articulated name of the function or event signature
-reconciliationType  ,string    ,           ,       ,      ,        ,          ,        ,         , 20 ,  20 ,              ,one of `regular`&#44; `prevDiff-same`&#44; `same-nextDiff`&#44; or `same-same`. Appended with `eth` or `token`
-reconciled          ,bool      ,           ,       ,      ,true    ,          ,true    ,true     , 21 ,  21 ,[true|false]  ,a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise.
+reconciliationType  ,string    ,           ,       ,      ,        ,          ,        ,         , 18 ,  18 ,              ,one of `regular`&#44; `prevDiff-same`&#44; `same-nextDiff`&#44; or `same-same`. Appended with `eth` or `token`
+reconciled          ,bool      ,           ,       ,      ,true    ,          ,true    ,true     , 19 ,  19 ,[true|false]  ,a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise.
 
-totalIn             ,int256    ,           ,       ,      ,true    ,          ,true    ,true     , 22 ,  22 ,              ,a calculated field -- the sum of the following `In` fields
-amountIn            ,int256    ,           ,       ,      ,        ,true      ,        ,         , 23 ,  23 ,              ,the top-level value of the incoming transfer for the accountedFor address
-internalIn          ,int256    ,           ,       ,      ,        ,true      ,        ,         , 24 ,  24 ,              ,the internal value of the incoming transfer for the accountedFor address
-selfDestructIn      ,int256    ,           ,       ,      ,        ,true      ,        ,         , 25 ,  25 ,              ,the incoming value of a self-destruct if recipient is the accountedFor address
-minerBaseRewardIn   ,int256    ,           ,       ,      ,        ,true      ,        ,         , 26 ,  26 ,              ,the base fee reward if the miner is the accountedFor address
-minerNephewRewardIn ,int256    ,           ,       ,      ,        ,true      ,        ,         , 27 ,  27 ,              ,the nephew reward if the miner is the accountedFor address
-minerTxFeeIn        ,int256    ,           ,       ,      ,        ,true      ,        ,         , 28 ,  28 ,              ,the transaction fee reward if the miner is the accountedFor address
-minerUncleRewardIn  ,int256    ,           ,       ,      ,        ,true      ,        ,         , 29 ,  29 ,              ,the uncle reward if the miner who won the uncle block is the accountedFor address
-prefundIn           ,int256    ,           ,       ,      ,        ,true      ,        ,         , 30 ,  30 ,              ,at block zero (0) only&#44; the amount of genesis income for the accountedFor address
+totalIn             ,int256    ,           ,       ,      ,true    ,          ,true    ,true     , 20 ,  20 ,              ,a calculated field -- the sum of the following `In` fields
+amountIn            ,int256    ,           ,       ,      ,        ,true      ,        ,         , 21 ,  21 ,              ,the top-level value of the incoming transfer for the accountedFor address
+internalIn          ,int256    ,           ,       ,      ,        ,true      ,        ,         , 22 ,  22 ,              ,the internal value of the incoming transfer for the accountedFor address
+selfDestructIn      ,int256    ,           ,       ,      ,        ,true      ,        ,         , 23 ,  23 ,              ,the incoming value of a self-destruct if recipient is the accountedFor address
+minerBaseRewardIn   ,int256    ,           ,       ,      ,        ,true      ,        ,         , 24 ,  24 ,              ,the base fee reward if the miner is the accountedFor address
+minerNephewRewardIn ,int256    ,           ,       ,      ,        ,true      ,        ,         , 25 ,  25 ,              ,the nephew reward if the miner is the accountedFor address
+minerTxFeeIn        ,int256    ,           ,       ,      ,        ,true      ,        ,         , 26 ,  26 ,              ,the transaction fee reward if the miner is the accountedFor address
+minerUncleRewardIn  ,int256    ,           ,       ,      ,        ,true      ,        ,         , 27 ,  27 ,              ,the uncle reward if the miner who won the uncle block is the accountedFor address
+prefundIn           ,int256    ,           ,       ,      ,        ,true      ,        ,         , 28 ,  28 ,              ,at block zero (0) only&#44; the amount of genesis income for the accountedFor address
 
-totalOut            ,int256    ,           ,       ,      ,true    ,          ,true    ,true     , 31 ,  31 ,              ,a calculated field -- the sum of the following `Out` fields
-amountOut           ,int256    ,           ,       ,      ,        ,true      ,        ,         , 32 ,  32 ,              ,the amount (in units of the asset) of regular outflow during this transaction
-internalOut         ,int256    ,           ,       ,      ,        ,true      ,        ,         , 33 ,  33 ,              ,the value of any internal value transfers out of the accountedFor account
-selfDestructOut     ,int256    ,           ,       ,      ,        ,true      ,        ,         , 34 ,  34 ,              ,the value of the self-destructed value out if the accountedFor address was self-destructed
-gasOut              ,int256    ,           ,       ,      ,        ,true      ,        ,         , 35 ,  35 ,              ,if the transaction's original sender is the accountedFor address&#44; the amount of gas expended
+totalOut            ,int256    ,           ,       ,      ,true    ,          ,true    ,true     , 29 ,  29 ,              ,a calculated field -- the sum of the following `Out` fields
+amountOut           ,int256    ,           ,       ,      ,        ,true      ,        ,         , 30 ,  30 ,              ,the amount (in units of the asset) of regular outflow during this transaction
+internalOut         ,int256    ,           ,       ,      ,        ,true      ,        ,         , 31 ,  31 ,              ,the value of any internal value transfers out of the accountedFor account
+selfDestructOut     ,int256    ,           ,       ,      ,        ,true      ,        ,         , 32 ,  32 ,              ,the value of the self-destructed value out if the accountedFor address was self-destructed
+gasOut              ,int256    ,           ,       ,      ,        ,true      ,        ,         , 33 ,  33 ,              ,if the transaction's original sender is the accountedFor address&#44; the amount of gas expended
 
-totalOutLessGas     ,int256    ,           ,       ,      ,true    ,          ,true    ,true     , 36 ,  36 ,              ,a calculated field -- totalOut - gasOut
+totalOutLessGas     ,int256    ,           ,       ,      ,true    ,          ,true    ,true     , 34 ,  34 ,              ,a calculated field -- totalOut - gasOut
 
-prevAppBlk          ,blknum    ,           ,       ,      ,        ,true      ,        ,         , 37 ,  37 ,10021         ,the block number of the previous appearance&#44; or 0 if this is the first appearance
-prevBal             ,int256    ,           ,       ,      ,        ,true      ,        ,         , 38 ,  38 ,              ,the account balance for the given asset for the previous reconciliation
+prevAppBlk          ,blknum    ,           ,       ,      ,        ,true      ,        ,         , 35 ,  35 ,10021         ,the block number of the previous appearance&#44; or 0 if this is the first appearance
+prevBal             ,int256    ,           ,       ,      ,        ,true      ,        ,         , 36 ,  36 ,              ,the account balance for the given asset for the previous reconciliation
 
-begBalDiff          ,int256    ,           ,       ,      ,true    ,true      ,true    ,true     , 39 ,  39 ,              ,a calculated field -- difference between expected beginning balance and balance at last reconciliation&#44; if non-zero&#44; the reconciliation failed
-endBalDiff          ,int256    ,           ,       ,      ,true    ,true      ,true    ,true     , 40 ,  40 ,              ,a calculated field -- endBal - endBalCalc&#44; if non-zero&#44; the reconciliation failed
-endBalCalc          ,int256    ,           ,       ,      ,true    ,true      ,true    ,true     , 41 ,  41 ,              ,a calculated field -- begBal + amountNet
+begBalDiff          ,int256    ,           ,       ,      ,true    ,true      ,true    ,true     , 37 ,  37 ,              ,a calculated field -- difference between expected beginning balance and balance at last reconciliation&#44; if non-zero&#44; the reconciliation failed
+endBalDiff          ,int256    ,           ,       ,      ,true    ,true      ,true    ,true     , 38 ,  38 ,              ,a calculated field -- endBal - endBalCalc&#44; if non-zero&#44; the reconciliation failed
+endBalCalc          ,int256    ,           ,       ,      ,true    ,true      ,true    ,true     , 39 ,  39 ,              ,a calculated field -- begBal + amountNet

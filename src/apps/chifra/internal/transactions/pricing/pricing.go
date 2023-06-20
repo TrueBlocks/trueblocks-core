@@ -10,14 +10,17 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-var uniswapFactoryV2 = base.HexToAddress("0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f")
-var deployed = base.Blknum(10000835)
+var (
+	uniswapFactoryV2          = base.HexToAddress("0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f")
+	uniswapFactoryV2_deployed = base.Blknum(10000835) // why query for this immutable value each time we need it?
+)
 
 // PriceUsd returns the price of the asset in USD
 func PriceUsd(chain string, testMode bool, statement *types.SimpleStatement) (price float64, source string, err error) {
-	if statement.BlockNumber <= deployed {
-		msg := fmt.Sprintf("Call to smart contract %s at block %d prior to its deployment %d", uniswapFactoryV2.Hex(), statement.BlockNumber, deployed)
+	if statement.BlockNumber <= uniswapFactoryV2_deployed {
+		msg := fmt.Sprintf("Block %d is prior to deployment (%d) of Uniswap V2. Falling back to Maker", statement.BlockNumber, uniswapFactoryV2_deployed)
 		logger.TestLog(true, msg)
+		return 0.0, "maker", nil
 	}
 	multiplier := float64(1.0)
 	var first base.Address

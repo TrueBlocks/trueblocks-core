@@ -321,8 +321,6 @@ Statements consist of the following fields:
 | begBal              | the beginning balance of the asset prior to the transaction                                                                                    | int256    |
 | amountNet           | a calculated field -- totalIn - totalOut                                                                                                       | int256    |
 | endBal              | the on-chain balance of the asset (see notes about intra-block reconciliations)                                                                | int256    |
-| encoding            | the topic of the event (if this is an ERC20 reconcilation), the four-byte signature of the transaction otherwise                               | string    |
-| signature           | if possible, the articulated name of the function or event signature                                                                           | string    |
 | reconciliationType  | one of `regular`, `prevDiff-same`, `same-nextDiff`, or `same-same`. Appended with `eth` or `token`                                             | string    |
 | reconciled          | a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise.                                             | bool      |
 | totalIn             | a calculated field -- the sum of the following `In` fields                                                                                     | int256    |

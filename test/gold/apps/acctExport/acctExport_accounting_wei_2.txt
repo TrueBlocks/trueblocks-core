@@ -108,8 +108,18 @@ TIME ~ CLOCK - <INFO>  :
 TIME ~ CLOCK - <INFO>  : 
 TEST[DATE|TIME] Call to a smart contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 1 prior to its deployment 10000835
 TEST[DATE|TIME] doEthCall in CUniPrice::findPair returned false
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 1
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1 at four-byte 0x59e02dd7 returned 0x
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
 {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -142,7 +152,7 @@ TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1 at
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "spotPrice": 1.00000,
+      "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "sender": "0xBlockReward",
@@ -279,8 +289,18 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 5
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 5 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 5 at four-byte 0x59e02dd7 returned 0x
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -313,7 +333,7 @@ TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 5 at
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "spotPrice": 1.00000,
+      "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "sender": "0xBlockReward",
@@ -450,8 +470,18 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 56
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 56 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 56 at four-byte 0x59e02dd7 returned 0x
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -484,7 +514,7 @@ TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 56 a
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "spotPrice": 1.00000,
+      "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "sender": "0xUncleReward",
@@ -621,8 +651,18 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 235
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 235 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 235 at four-byte 0x59e02dd7 returned 0x
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -655,7 +695,7 @@ TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 235 
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "spotPrice": 1.00000,
+      "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "sender": "0xBlockReward",
@@ -792,8 +832,18 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 247
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 247 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 247 at four-byte 0x59e02dd7 returned 0x
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -826,7 +876,7 @@ TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 247 
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "spotPrice": 1.00000,
+      "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "sender": "0xUncleReward",
@@ -963,8 +1013,18 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 348
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 348 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 348 at four-byte 0x59e02dd7 returned 0x
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -997,7 +1057,7 @@ TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 348 
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "spotPrice": 1.00000,
+      "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "sender": "0xBlockReward",
@@ -1134,8 +1194,18 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 500
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 500 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 500 at four-byte 0x59e02dd7 returned 0x
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -1168,7 +1238,7 @@ TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 500 
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "spotPrice": 1.00000,
+      "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "sender": "0xUncleReward",
@@ -1305,8 +1375,18 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 563
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 563 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 563 at four-byte 0x59e02dd7 returned 0x
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -1339,7 +1419,7 @@ TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 563 
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "spotPrice": 1.00000,
+      "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "sender": "0xUncleReward",
@@ -1476,8 +1556,18 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 987
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 987 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 987 at four-byte 0x59e02dd7 returned 0x
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -1510,7 +1600,7 @@ TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 987 
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "spotPrice": 1.00000,
+      "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "sender": "0xUncleReward",
@@ -1647,8 +1737,18 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 1450
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1450 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1450 at four-byte 0x59e02dd7 returned 0x
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -1681,7 +1781,7 @@ TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1450
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "spotPrice": 1.00000,
+      "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "sender": "0xBlockReward",
@@ -1818,8 +1918,18 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 1580
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1580 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1580 at four-byte 0x59e02dd7 returned 0x
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -1852,7 +1962,7 @@ TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1580
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "spotPrice": 1.00000,
+      "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "sender": "0xUncleReward",
@@ -1989,8 +2099,18 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 1586
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1586 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1586 at four-byte 0x59e02dd7 returned 0x
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -2023,7 +2143,7 @@ TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1586
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "spotPrice": 1.00000,
+      "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "sender": "0xUncleReward",
@@ -2160,8 +2280,18 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 1861
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1861 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1861 at four-byte 0x59e02dd7 returned 0x
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -2194,7 +2324,7 @@ TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1861
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "spotPrice": 1.00000,
+      "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "sender": "0xBlockReward",
@@ -2331,8 +2461,18 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 1912
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1912 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1912 at four-byte 0x59e02dd7 returned 0x
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -2365,7 +2505,7 @@ TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1912
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "spotPrice": 1.00000,
+      "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "sender": "0xUncleReward",
@@ -2502,8 +2642,18 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 2057
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 2057 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 2057 at four-byte 0x59e02dd7 returned 0x
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -2536,7 +2686,7 @@ TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 2057
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "spotPrice": 1.00000,
+      "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "sender": "0xBlockReward",
