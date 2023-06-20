@@ -111,7 +111,8 @@ bool CUniPair::findPair(void) {
     uniFactory.bytes = hex_2_Pad64(r1) + hex_2_Pad64(r2);
     if (!doEthCall(uniFactory, true /* proxy */)) {
         if (isTestMode()) {
-            LOG_INFO("doEthCall in CUniPrice::findPair returned false");
+            cerr << "TEST[DATE|TIME] "
+                 << "doEthCall in CUniPrice::findPair returned false" << endl;
         }
         notPairs[key] = true;
         return false;

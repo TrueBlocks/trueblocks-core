@@ -105,8 +105,8 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : Calling a contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 0 prior to its deployment 10000835
-TIME ~ CLOCK - <INFO>  : doEthCall in CUniPrice::findPair returned false
+TEST[DATE|TIME] Call to a smart contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 0 prior to its deployment 10000835
+TEST[DATE|TIME] doEthCall in CUniPrice::findPair returned false
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 0 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 0 at four-byte 0x59e02dd7 returned 0x
 {

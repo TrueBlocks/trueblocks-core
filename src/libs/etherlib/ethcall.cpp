@@ -445,8 +445,9 @@ bool CEthCall::getCallResult(CStringArray& out) const {
 bool doEthCall(CEthCall& theCall, bool checkProxy) {
     if (theCall.deployed != NOPOS && theCall.deployed > theCall.blockNumber) {
         if (isTestMode()) {
-            cerr << theCall.Format(
-                        "TEST[DATE|TIME] Call to a smart contract ([{ADDRESS}]) at block [{BLOCKNUMBER}] prior to its "
+            cerr << "TEST[DATE|TIME] "
+                 << theCall.Format(
+                        "Call to a smart contract ([{ADDRESS}]) at block [{BLOCKNUMBER}] prior to its "
                         "deployment [{DEPLOYED}]")
                  << endl;
         }

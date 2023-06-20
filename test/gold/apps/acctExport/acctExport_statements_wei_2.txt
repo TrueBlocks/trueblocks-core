@@ -105,8 +105,8 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : Calling a contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 1 prior to its deployment 10000835
-TIME ~ CLOCK - <INFO>  : doEthCall in CUniPrice::findPair returned false
+TEST[DATE|TIME] Call to a smart contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 1 prior to its deployment 10000835
+TEST[DATE|TIME] doEthCall in CUniPrice::findPair returned false
 TEST[DATE|TIME] Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1 ...:
 TEST[DATE|TIME] call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1 at four-byte 0x59e02dd7 returned 0x
 "1","99999","0","0x0","1438269988","2015-07-30 15:26:28 UTC","0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee","WEI","18","1.00000","not-priced","0x05a56e2d52c817161883f50c441c3228cfe54d9f","0xBlockReward","0x05a56e2d52c817161883f50c441c3228cfe54d9f","0","5000000000000000000","5000000000000000000","","","regular-eth","true","5000000000000000000","0","0","0","5000000000000000000","0","0","0","0","0","0","0","0","0","0","0","0","0","0","5000000000000000000"
