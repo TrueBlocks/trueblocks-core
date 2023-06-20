@@ -1,31 +1,12 @@
 package ledger
 
 import (
-	"errors"
 	"fmt"
-	"math/big"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/call"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/token"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum"
-	"github.com/ethereum/go-ethereum/common"
 )
-
-// Context is a struct to hold the context of a reconciliation (i.e., its previous and next blocks and whether they are different)
-type Context struct {
-	PrevBlock  base.Blknum
-	CurBlock   base.Blknum
-	NextBlock  base.Blknum
-	IsPrevDiff bool
-	IsNextDiff bool
-	ReconType  string
-}
 
 // Ledger is a struct that holds the context for each appearance and, for each asset encountered, the previous reconcilation record for balance accounting
 type Ledger struct {
@@ -33,342 +14,27 @@ type Ledger struct {
 	AccountFor base.Address
 	TestMode   bool
 	Previous   map[base.Address]*types.SimpleStatement
-	Contexts   map[string]Context
+	Contexts   map[string]LedgerContext
 	AsEther    bool
 	NoZero     bool
+	UseTraces  bool
 }
 
 // NewLedger returns a new empty Ledger struct
-func NewLedger(chain string, acctFor base.Address, asEther, testMode, noZero bool) *Ledger {
+func NewLedger(chain string, acctFor base.Address, asEther, testMode, noZero, useTraces bool) *Ledger {
 	return &Ledger{
 		Chain:      chain,
 		AccountFor: acctFor,
-		TestMode:   testMode,
 		Previous:   make(map[base.Address]*types.SimpleStatement),
-		Contexts:   make(map[string]Context),
+		Contexts:   make(map[string]LedgerContext),
 		AsEther:    asEther,
+		TestMode:   testMode,
 		NoZero:     noZero,
+		UseTraces:  useTraces,
 	}
 }
 
-// GetStatementsFromAppearance returns a list of statements from a given appearance
-func (ledgers *Ledger) GetStatementsFromAppearance(chain string, acctFor base.Address, app *types.RawAppearance) (statements []types.SimpleStatement, err error) {
-	var tx *types.SimpleTransaction
-	if tx, err = rpcClient.GetTransactionByAppearance(chain, app, false); err != nil {
-		return []types.SimpleStatement{}, err
-
-	} else {
-		if s := ledgers.GetStatementFromTransaction(tx); s != nil {
-			if s.Sender == acctFor || s.Recipient == acctFor {
-				add := !ledgers.NoZero || len(s.AmountNet().Bits()) != 0
-				if add {
-					statements = append(statements, *s)
-					ledgers.Previous[s.AssetAddr] = s
-				}
-			}
-		} else if err != nil {
-			return []types.SimpleStatement{}, err
-		}
-
-		for _, log := range tx.Receipt.Logs {
-			if s, err := ledgers.GetStatementFromLog(&log); s != nil {
-				if s.Sender == acctFor || s.Recipient == acctFor {
-					add := !ledgers.NoZero || len(s.AmountNet().Bits()) != 0
-					if add {
-						statements = append(statements, *s)
-						ledgers.Previous[s.AssetAddr] = s
-					}
-				}
-			} else if err != nil {
-				return []types.SimpleStatement{}, err
-			}
-		}
-
-		for _, statement := range statements {
-			ledgers.PriceUsd(chain, &statement)
-		}
-
-		return
-	}
-}
-
-var uniswapFactoryV2 = base.HexToAddress("0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f")
-var deployed = base.Blknum(10000835)
-
-// PriceUsd returns the price of the asset in USD
-func (ledgers *Ledger) PriceUsd(chain string, statement *types.SimpleStatement) (price float64, source string, err error) {
-	if statement.BlockNumber <= deployed {
-		msg := fmt.Sprintf("Call to smart contract %s at block %d prior to its deployment %d", uniswapFactoryV2.Hex(), statement.BlockNumber, deployed)
-		logger.TestLog(true, msg)
-	}
-	multiplier := float64(1.0)
-	var first base.Address
-	var second base.Address
-	if statement.AssetAddr == FAKE_ETH_ADDRESS {
-		first = base.HexToAddress("0x6b175474e89094c44da98b954eedeac495271d0f")  // DAI
-		second = base.HexToAddress("0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2") // WETH
-	} else {
-		temp := *statement
-		temp.AssetAddr = FAKE_ETH_ADDRESS
-		multiplier, _, err = ledgers.PriceUsd(chain, &temp)
-		if err != nil {
-			return 1.0, "not-priced", err
-		}
-	}
-	reversed := false
-	if first.Hex() > second.Hex() {
-		save := second
-		second = first
-		first = save
-		reversed = true
-	}
-
-	theCall1 := fmt.Sprintf("getPair(%s, %s)", first.Hex(), second.Hex())
-	contractCall, err := call.NewContractCall(chain, uniswapFactoryV2, theCall1, false)
-	if err != nil {
-		return 1.0, "not-priced", err
-	}
-	contractCall.BlockNumber = statement.BlockNumber
-	result, _ := call.CallContract(chain, contractCall)
-	pairAddress := base.HexToAddress(result.Outputs["val_0"])
-	theCall2 := "getReserves()"
-	contractCall, err = call.NewContractCall(chain, pairAddress, theCall2, false)
-	if err != nil {
-		return 1.0, "not-priced", err
-	}
-	contractCall.BlockNumber = statement.BlockNumber
-	result, err = call.CallContract(chain, contractCall)
-	if err != nil {
-		return 1.0, "not-priced", err
-	}
-	reserve0 := new(big.Float)
-	if result.Outputs != nil && result.Outputs["_reserve0"] == "" {
-		reserve0.SetString("1")
-	} else {
-		reserve0.SetString(result.Outputs["_reserve0"])
-	}
-	reserve1 := new(big.Float)
-	if result.Outputs != nil && result.Outputs["_reserve1"] == "" {
-		reserve0.SetString("1")
-	} else {
-		reserve1.SetString(result.Outputs["_reserve1"])
-	}
-	bigPrice := new(big.Float)
-	bigPrice.Quo(reserve0, reserve1)
-
-	if ledgers.TestMode {
-		logger.TestLog(true, "=========================================================")
-		logger.TestLog(true, "===> PRICING")
-		logger.TestLog(true, "=========================================================")
-		logger.TestLog(true, "blockNumber:		  ", statement.BlockNumber)
-		logger.TestLog(true, "uniswapFactoryV2:   ", uniswapFactoryV2.Hex())
-		logger.TestLog(true, "theCall:            ", theCall1)
-		logger.TestLog(true, "pairAddress:        ", pairAddress.Hex())
-		logger.TestLog(true, "theCall:            ", theCall2)
-		logger.TestLog(true, "first:              ", first.Hex())
-		logger.TestLog(true, "second:             ", second.Hex())
-		logger.TestLog(true, "reversed:           ", reversed)
-		logger.TestLog(true, "reserve0:           ", reserve0)
-		logger.TestLog(true, "reserve1:           ", reserve1)
-		logger.TestLog(true, "price:              ", bigPrice)
-	}
-
-	price, _ = bigPrice.Float64()
-	price *= multiplier
-	source = "uniswap"
-	return price, source, nil
-}
-
-// GetStatementFromTransaction returns a statement from a given transaction
-func (ledgers *Ledger) GetStatementFromTransaction(trans *types.SimpleTransaction) (statement *types.SimpleStatement) {
-	key := fmt.Sprintf("%09d-%05d", trans.BlockNumber, trans.TransactionIndex)
-	ctx := ledgers.Contexts[key]
-
-	pBal, _ := rpcClient.GetBalanceAt(ledgers.Chain, common.HexToAddress(ledgers.AccountFor.Hex()), ctx.PrevBlock)
-	bBal, _ := rpcClient.GetBalanceAt(ledgers.Chain, common.HexToAddress(ledgers.AccountFor.Hex()), ctx.CurBlock-1)
-	eBal, _ := rpcClient.GetBalanceAt(ledgers.Chain, common.HexToAddress(ledgers.AccountFor.Hex()), ctx.CurBlock)
-
-	gasUsed := new(big.Int).SetUint64(trans.Receipt.GasUsed)
-	gasPrice := new(big.Int).SetUint64(trans.GasPrice)
-	gasOut := new(big.Int).Mul(gasUsed, gasPrice)
-
-	ret := types.SimpleStatement{
-		AccountedFor:     ledgers.AccountFor,
-		Sender:           trans.From,
-		Recipient:        trans.To,
-		BlockNumber:      trans.BlockNumber,
-		TransactionIndex: trans.TransactionIndex,
-		TransactionHash:  trans.Hash,
-		LogIndex:         0,
-		Timestamp:        trans.Timestamp,
-		AssetAddr:        FAKE_ETH_ADDRESS,
-		AssetSymbol:      "WEI",
-		Decimals:         18,
-		SpotPrice:        0.0,
-		PriceSource:      "not-priced",
-		PrevAppBlk:       ctx.PrevBlock,
-		PrevBal:          *pBal,
-		BegBal:           *bBal,
-		EndBal:           *eBal,
-	}
-
-	ofInterst := false
-	if ledgers.AccountFor == ret.Sender {
-		ret.AmountOut = trans.Value
-		ret.GasOut = *gasOut
-		ofInterst = true
-	}
-	// Do not collapse, may be both (self-send)
-	if ledgers.AccountFor == ret.Recipient {
-		ret.AmountIn = trans.Value
-		ofInterst = true
-	}
-
-	if ledgers.AsEther {
-		ret.AssetSymbol = "ETH"
-	}
-
-	if len(trans.Input) > 10 {
-		ret.Encoding = trans.Input[:10]
-	}
-
-	if ofInterst {
-		ret.SpotPrice, ret.PriceSource, _ = ledgers.PriceUsd(ledgers.Chain, &ret)
-		ledgers.TrialBalance("ETH", &ret)
-	} else {
-		logger.TestLog(ledgers.TestMode, "Transaction", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), "does not transfer value")
-	}
-
-	return &ret
-}
-
-// GetStatementFromLog returns a statement from a given log
-func (ledgers *Ledger) GetStatementFromLog(log *types.SimpleLog) (r *types.SimpleStatement, err error) {
-	if !rpcClient.IsTransferTopic(log.Topics[0].Hex()) || len(log.Topics) < 3 {
-		// isn't a transfer, return silently
-		return nil, nil
-	}
-
-	sym := log.Address.Hex()[:6]
-	key := fmt.Sprintf("%09d-%05d", log.BlockNumber, log.TransactionIndex)
-	ctx := ledgers.Contexts[key]
-
-	pBal := new(big.Int)
-	if pBal, err = token.GetBalanceAt(ledgers.Chain, log.Address, ledgers.AccountFor, fmt.Sprintf("0x%x", ctx.PrevBlock)); pBal == nil {
-		return nil, err
-	}
-
-	bBal := new(big.Int)
-	if bBal, err = token.GetBalanceAt(ledgers.Chain, log.Address, ledgers.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock-1)); bBal == nil {
-		return nil, err
-	}
-
-	eBal := new(big.Int)
-	if eBal, err = token.GetBalanceAt(ledgers.Chain, log.Address, ledgers.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock)); eBal == nil {
-		return nil, err
-	}
-
-	b := strings.Replace(log.Data, "0x", "", -1)
-	val, _ := new(big.Int).SetString(b, 16)
-	ret := types.SimpleStatement{
-		AccountedFor:     ledgers.AccountFor,
-		Sender:           base.HexToAddress(log.Topics[1].Hex()),
-		Recipient:        base.HexToAddress(log.Topics[2].Hex()),
-		BlockNumber:      log.BlockNumber,
-		TransactionIndex: log.TransactionIndex,
-		LogIndex:         log.LogIndex,
-		TransactionHash:  log.TransactionHash,
-		Timestamp:        log.Timestamp,
-		AssetAddr:        log.Address,
-		AssetSymbol:      sym,
-		Decimals:         18,
-		SpotPrice:        0.0,
-		PriceSource:      "not-priced",
-		PrevAppBlk:       ctx.PrevBlock,
-		PrevBal:          *pBal,
-		BegBal:           *bBal,
-		EndBal:           *eBal,
-	}
-
-	ofInterst := false
-	if ledgers.AccountFor == ret.Sender {
-		ret.AmountOut = *val
-		ofInterst = true
-	}
-
-	// Do not collapse, may be both (self-send)
-	if ledgers.AccountFor == ret.Recipient {
-		ret.AmountIn = *val
-		ofInterst = true
-	}
-
-	if ofInterst {
-		ledgers.TrialBalance("TOKENS", &ret)
-	} else {
-		logger.TestLog(ledgers.TestMode, "Log", log.LogIndex, "at", fmt.Sprintf("%d.%d", log.BlockNumber, log.TransactionIndex), "(a token transfer) is not relevant")
-	}
-
-	return &ret, nil
-}
-
-func (l *Ledger) SetContexts(chain string, txIds []identifiers.Identifier) error {
-	for _, rng := range txIds {
-		txIds, err := rng.ResolveTxs(chain)
-		if err != nil && !errors.Is(err, ethereum.NotFound) {
-			return err
-		}
-		for i := 0; i < len(txIds); i++ {
-			key := fmt.Sprintf("%09d-%05d", txIds[i].BlockNumber, txIds[i].TransactionIndex)
-			prev := uint32(0)
-			if txIds[i].BlockNumber > 0 {
-				prev = txIds[i].BlockNumber - 1
-			}
-			next := txIds[i].BlockNumber + 1
-			cur := txIds[i].BlockNumber
-			getReconType := func(isPrevDiff bool, isNextDiff bool) (reconType string) {
-				if isPrevDiff && isNextDiff {
-					return "regular"
-				} else if !isPrevDiff && !isNextDiff {
-					return "both-not-diff"
-				} else if isPrevDiff {
-					return "prevDiff"
-				} else if isNextDiff {
-					return "nextDiff"
-				} else {
-					return "unknown"
-				}
-			}
-			ctext := Context{
-				PrevBlock:  base.Blknum(prev),
-				CurBlock:   base.Blknum(cur),
-				NextBlock:  base.Blknum(next),
-				IsPrevDiff: prev != cur,
-				IsNextDiff: cur != next,
-				ReconType:  getReconType(prev != cur, cur != next),
-			}
-			l.Contexts[key] = ctext
-		}
-	}
-	return nil
-}
-
-var FAKE_ETH_ADDRESS = base.HexToAddress("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-
-// TrialBalance returns true of the reconciliation balances, false otherwise. It also prints the trial balance to the console.
-func (l *Ledger) TrialBalance(msg string, r *types.SimpleStatement) bool {
-	key := fmt.Sprintf("%09d-%05d", r.BlockNumber, r.TransactionIndex)
-	ctx := l.Contexts[key]
-	r.ReconciliationType = ctx.ReconType
-	if r.AssetAddr == FAKE_ETH_ADDRESS {
-		r.ReconciliationType += "-eth"
-	} else {
-		r.ReconciliationType += "-token"
-	}
-
-	if !l.TestMode {
-		return r.Reconciled()
-	}
-
+func Report(r *types.SimpleStatement, ctx LedgerContext, msg string) {
 	logger.TestLog(true, "===================================================")
 	logger.TestLog(true, fmt.Sprintf("====> %s", msg))
 	logger.TestLog(true, "===================================================")
@@ -420,6 +86,4 @@ func (l *Ledger) TrialBalance(msg string, r *types.SimpleStatement) bool {
 	// Encoding            string         `json:"encoding"`
 	// Signature           string         `json:"signature"`
 	logger.TestLog(true, "---------------------------------------------------")
-
-	return r.Reconciled()
 }

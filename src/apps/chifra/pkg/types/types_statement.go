@@ -328,4 +328,19 @@ func (s *SimpleStatement) Reconciled() bool {
 	return val
 }
 
+func (s *SimpleStatement) ClearInternal() {
+	// s.AmountIn.SetUint64(0)
+	// s.AmountOut.SetUint64(0)
+	// s.GasOut.SetUint64(0)
+	s.InternalIn.SetUint64(0)
+	s.InternalOut.SetUint64(0)
+	s.MinerBaseRewardIn.SetUint64(0)
+	s.MinerNephewRewardIn.SetUint64(0)
+	s.MinerTxFeeIn.SetUint64(0)
+	s.MinerUncleRewardIn.SetUint64(0)
+	s.PrefundIn.SetUint64(0)
+	s.SelfDestructIn.SetUint64(0)
+	s.SelfDestructOut.SetUint64(0)
+}
+
 // EXISTING_CODE

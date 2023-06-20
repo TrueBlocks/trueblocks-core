@@ -1,58 +1,9 @@
-chifra transactions  10681057.170 10607241.278 --account_for 0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3 --fmt json --log_level 10
+chifra transactions  10681057.170 10607241.278 --account_for 0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3 --fmt json --log_level 10 --traces
 TEST[DATE|TIME] Transactions:  [10681057.170 10607241.278]
+TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] AccountFor:  0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  json
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> ETH
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ledger.blockNumber:     10681056
-TEST[DATE|TIME] prevBlock:              10681056
-TEST[DATE|TIME] transfer.blockNumber:   10681057
-TEST[DATE|TIME] nextBlock:              10681058
-TEST[DATE|TIME] isPrevDiff:             true
-TEST[DATE|TIME] isNextDiff:             true
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-eth
-TEST[DATE|TIME]    accountedFor:        0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3
-TEST[DATE|TIME]    sender:              0x3b5b67a19b196a2ec022b41a78dfed90b7796f20
-TEST[DATE|TIME]    recipient:           0x61edb6b025867c1a5354ed46a13c10b616e32ab0
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME]    assetSymbol:         WEI
-TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    prevAppBlk:          10681056
-TEST[DATE|TIME]    hash:                0x39a7c959c11489f7c0a84ed67f960e441ae5be106a1a42afb75ee9f0119d16bb
-TEST[DATE|TIME]    timestamp:           1597714516
-TEST[DATE|TIME]    blockNumber:         10681057
-TEST[DATE|TIME]    transactionIndex:    170
-TEST[DATE|TIME]    logIndex:            0
-TEST[DATE|TIME]    priceSource:         not-priced
-TEST[DATE|TIME]    spotPrice:           0
-TEST[DATE|TIME]    prevBal:             163750000000000000
-TEST[DATE|TIME]    begBal:              163750000000000000
-TEST[DATE|TIME]    amountIn:            0
-TEST[DATE|TIME]    internalIn:          0
-TEST[DATE|TIME]    minerBaseRewardIn:   0
-TEST[DATE|TIME]    minerNephewRewardIn: 0
-TEST[DATE|TIME]    minerTxFeeIn:        0
-TEST[DATE|TIME]    minerUncleRewardIn:  0
-TEST[DATE|TIME]    prefundIn:           0
-TEST[DATE|TIME]    selfDestructIn:      0
-TEST[DATE|TIME]    totalIn:             0
-TEST[DATE|TIME]    amountOut:           0
-TEST[DATE|TIME]    internalOut:         0
-TEST[DATE|TIME]    selfDestructOut:     0
-TEST[DATE|TIME]    gasOut:              0
-TEST[DATE|TIME]    totalOut:            0
-TEST[DATE|TIME]    amountNet:           0
-TEST[DATE|TIME]    endBal:              167500000000000000
-TEST[DATE|TIME]    begBalDiff:          0
-TEST[DATE|TIME]    endBalDiff:          -3750000000000000
-TEST[DATE|TIME]    endBalCalc:          163750000000000000
-TEST[DATE|TIME]    trialBalance:        false
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Trial balance failed for  0x39a7c959c11489f7c0a84ed67f960e441ae5be106a1a42afb75ee9f0119d16bb need to decend into traces
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING
 TEST[DATE|TIME] =========================================================
@@ -173,7 +124,7 @@ TEST[DATE|TIME] reserve0:            6.029512901282362815e+24
 TEST[DATE|TIME] reserve1:            1.5218033899674162274e+22
 TEST[DATE|TIME] price:               396.20840254610435976
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> ETH
+TEST[DATE|TIME] ====> ETH TRACES
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     10607240
 TEST[DATE|TIME] prevBlock:              10607240
@@ -183,7 +134,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-eth
+TEST[DATE|TIME]    reconciliationType:  trace-eth
 TEST[DATE|TIME]    accountedFor:        0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3
 TEST[DATE|TIME]    sender:              0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3
 TEST[DATE|TIME]    recipient:           0xc1681e85f8c6b24dff4fdc93b8db88cb0fa77539
@@ -251,7 +202,7 @@ TEST[DATE|TIME] ---------------------------------------------------
       "priceSource": "uniswap",
       "recipient": "0xc1681e85f8c6b24dff4fdc93b8db88cb0fa77539",
       "reconciled": true,
-      "reconciliationType": "regular-eth",
+      "reconciliationType": "trace-eth",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3",

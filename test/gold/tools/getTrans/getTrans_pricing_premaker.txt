@@ -4,6 +4,7 @@ TEST[DATE|TIME] AccountFor:  0xea674fdde714fd979de3edf0f56aa9716b898ec8
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  json
 TEST[DATE|TIME] Call to smart contract 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 1433233 prior to its deployment 10000835
+EROR[DATE|TIME] Failed to get price for WEI at 1433233 8 : -32602: invalid argument 0: json: cannot unmarshal hex string of odd length into Go struct field CallArgs.to of type common.Address
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
@@ -29,7 +30,7 @@ TEST[DATE|TIME]    blockNumber:         1433233
 TEST[DATE|TIME]    transactionIndex:    8
 TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    priceSource:         not-priced
-TEST[DATE|TIME]    spotPrice:           1
+TEST[DATE|TIME]    spotPrice:           0
 TEST[DATE|TIME]    prevBal:             359699855029506296530
 TEST[DATE|TIME]    begBal:              359699855029506296530
 TEST[DATE|TIME]    amountIn:            0
@@ -53,7 +54,6 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          358693424617370130430
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Call to smart contract 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 1433233 prior to its deployment 10000835
 {
   "data": [
     {
@@ -89,7 +89,7 @@ TEST[DATE|TIME] Call to smart contract 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xea674fdde714fd979de3edf0f56aa9716b898ec8",
-      "spotPrice": 1,
+      "spotPrice": 0,
       "timestamp": 1462044111,
       "totalIn": "0",
       "totalOut": "1006430412136166100",

@@ -100,3 +100,6 @@ func IsPrecompile(addr string) bool {
 	test := HexToAddress(addr) // normalizes the input as an address
 	return test.Hex() <= maxPrecompile
 }
+
+// FAKE_ETH_ADDRESS is the address we use to represent ETH in the ledgers
+var FAKE_ETH_ADDRESS = HexToAddress("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")

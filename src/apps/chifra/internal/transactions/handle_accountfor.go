@@ -24,6 +24,7 @@ func (opts *TransactionsOptions) HandleAccounting() (err error) {
 		ether,
 		testMode,
 		noZero,
+		opts.Traces,
 	)
 	ledgers.SetContexts(chain, opts.TransactionIds)
 
