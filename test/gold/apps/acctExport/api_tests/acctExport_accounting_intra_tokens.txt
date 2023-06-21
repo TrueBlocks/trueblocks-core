@@ -416,7 +416,7 @@ export?addrs=0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E&maxRecords=3&firstRecord
           "timestamp": 1654793734,
           "date": "2022-06-09 16:55:34 UTC",
           "assetAddr": "0x3506424f91fd33084466f402d5d97f05f8e3b4af",
-          "assetSymbol": "0x35",
+          "assetSymbol": "0x350642",
           "decimals": 18,
           "spotPrice": 0.11947,
           "priceSource": "uniswap",
