@@ -4,20 +4,7 @@ TEST[DATE|TIME] Articulate:  true
 TEST[DATE|TIME] AccountFor:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  json
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:		   12697303
-TEST[DATE|TIME] uniswapFactoryV2:    0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
-TEST[DATE|TIME] theCall:             getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
-TEST[DATE|TIME] pairAddress:         0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
-TEST[DATE|TIME] theCall:             getReserves()
-TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
-TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
-TEST[DATE|TIME] reversed:            false
-TEST[DATE|TIME] reserve0:            4.106775302973316816e+25
-TEST[DATE|TIME] reserve1:            2.0930227421206321723e+22
-TEST[DATE|TIME] price:               1962.1264596544079208
+TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
@@ -42,8 +29,8 @@ TEST[DATE|TIME]    timestamp:           1624544065
 TEST[DATE|TIME]    blockNumber:         12697303
 TEST[DATE|TIME]    transactionIndex:    99
 TEST[DATE|TIME]    logIndex:            0
-TEST[DATE|TIME]    priceSource:         uniswap
-TEST[DATE|TIME]    spotPrice:           1962.1264596544079
+TEST[DATE|TIME]    priceSource:         not-priced
+TEST[DATE|TIME]    spotPrice:           0
 TEST[DATE|TIME]    prevBal:             31419034761192445316
 TEST[DATE|TIME]    begBal:              31419034761192445316
 TEST[DATE|TIME]    amountIn:            0
@@ -67,6 +54,7 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          31419034761192445316
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] End of trial balance report
 TEST[DATE|TIME] Tx reconciled with a zero value net amount. It's okay.
 TEST[DATE|TIME] Log 278 at 12697303.99 (a token transfer) is not relevant
 TEST[DATE|TIME] Log 280 at 12697303.99 (a token transfer) is not relevant

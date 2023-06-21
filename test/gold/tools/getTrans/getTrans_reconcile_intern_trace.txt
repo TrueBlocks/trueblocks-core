@@ -4,20 +4,24 @@ TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] AccountFor:  0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  json
+TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
 TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:		   10681057
-TEST[DATE|TIME] uniswapFactoryV2:    0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
-TEST[DATE|TIME] theCall:             getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
-TEST[DATE|TIME] pairAddress:         0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
-TEST[DATE|TIME] theCall:             getReserves()
+TEST[DATE|TIME] blockNumber:         10681057
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
 TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 TEST[DATE|TIME] reversed:            false
-TEST[DATE|TIME] reserve0:            5.8260222656470447817e+24
-TEST[DATE|TIME] reserve1:            1.3533829454672360055e+22
-TEST[DATE|TIME] price:               430.4784750805097777
+TEST[DATE|TIME] float0:              5.8260222656470447817e+24
+TEST[DATE|TIME] float1:              1.3533829454672360055e+22
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            430.4784750805097777
+TEST[DATE|TIME] price:               430.4784750805098
+TEST[DATE|TIME] source:              uniswap
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH TRACES
 TEST[DATE|TIME] ===================================================
@@ -67,6 +71,7 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          167500000000000000
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] End of trial balance report
 {
   "data": [
     {
@@ -109,20 +114,24 @@ TEST[DATE|TIME] ---------------------------------------------------
       "totalOutLessGas": "0",
       "transactionHash": "0x39a7c959c11489f7c0a84ed67f960e441ae5be106a1a42afb75ee9f0119d16bb",
       "transactionIndex": 170
-    }TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING
+    }TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:		   10607241
-TEST[DATE|TIME] uniswapFactoryV2:    0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
-TEST[DATE|TIME] theCall:             getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
-TEST[DATE|TIME] pairAddress:         0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
-TEST[DATE|TIME] theCall:             getReserves()
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         10607241
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
 TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 TEST[DATE|TIME] reversed:            false
-TEST[DATE|TIME] reserve0:            6.029512901282362815e+24
-TEST[DATE|TIME] reserve1:            1.5218033899674162274e+22
-TEST[DATE|TIME] price:               396.20840254610435976
+TEST[DATE|TIME] float0:              6.029512901282362815e+24
+TEST[DATE|TIME] float1:              1.5218033899674162274e+22
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            396.20840254610435976
+TEST[DATE|TIME] price:               396.20840254610437
+TEST[DATE|TIME] source:              uniswap
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH TRACES
 TEST[DATE|TIME] ===================================================
@@ -172,6 +181,7 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          63000000000000
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] End of trial balance report
 ,
     {
       "accountedFor": "0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3",

@@ -4,20 +4,24 @@ TEST[DATE|TIME] AccountFor:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] Format:  json
+TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Uniswap
 TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:		   15157311
-TEST[DATE|TIME] uniswapFactoryV2:    0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
-TEST[DATE|TIME] theCall:             getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
-TEST[DATE|TIME] pairAddress:         0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
-TEST[DATE|TIME] theCall:             getReserves()
+TEST[DATE|TIME] blockNumber:         15157311
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
 TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 TEST[DATE|TIME] reversed:            false
-TEST[DATE|TIME] reserve0:            6.991437542708446439e+24
-TEST[DATE|TIME] reserve1:            5.2408413847652023086e+21
-TEST[DATE|TIME] price:               1334.0296012453491777
+TEST[DATE|TIME] float0:              6.991437542708446439e+24
+TEST[DATE|TIME] float1:              5.2408413847652023086e+21
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            1334.0296012453491777
+TEST[DATE|TIME] price:               1334.029601245349
+TEST[DATE|TIME] source:              uniswap
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
@@ -67,6 +71,7 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          35692831136276694166
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] End of trial balance report
 {
   "data": [
     {

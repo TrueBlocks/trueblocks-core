@@ -7,7 +7,7 @@ TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  json
 { "data": [
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> FLOW ETH
+TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     14933656
 TEST[DATE|TIME] prevBlock:              14933656
@@ -202,10 +202,8 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
-TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : 
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> FLOW TOKEN
+TEST[DATE|TIME] ====> TOKENS
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     14933656
 TEST[DATE|TIME] prevBlock:              14933656
@@ -302,71 +300,48 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
-TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : 
-TEST[DATE|TIME] Calling 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 14933657 ...:
-TEST[DATE|TIME] call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 14933657 at four-byte 0xe6a43905 returned 0x000000000000000000000000a478c2975ab1ea89e8196811f51a7b7ade33eb11
-TEST[DATE|TIME] Calling 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11 at block 14933657 ...:
-TEST[DATE|TIME] call to 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11 at block 14933657 at four-byte 0x0902f1ac returned 0x00000000000000000000000000000000000000000007159c51b1bf70176b9b4b000000000000000000000000000000000000000000000101ad3766958a3693730000000000000000000000000000000000000000000000000000000062a224c2
 TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI)
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] blockNumber:         14933657
-TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
-TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 TEST[DATE|TIME] uniswapFactoryV2:    0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
 TEST[DATE|TIME] theCall:             getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
-
 TEST[DATE|TIME] pairAddress:         0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
 TEST[DATE|TIME] theCall:             getReserves()
-TEST[DATE|TIME] r1:                  0x6b175474e89094c44da98b954eedeac495271d0f
-TEST[DATE|TIME] r2:                  0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
 TEST[DATE|TIME] reserve0:            8564534.0122148413
 TEST[DATE|TIME] reserve1:            4753.2947846281
 TEST[DATE|TIME] price:               1801.8099866038
-TEST[DATE|TIME] reversed:            0
-TEST[DATE|TIME] Calling 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 14933657 ...:
-TEST[DATE|TIME] call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 14933657 at four-byte 0xe6a43905 returned 0x00000000000000000000000043ae24960e5534731fc831386c07755a2dc33d47
-TEST[DATE|TIME] Calling 0x43ae24960e5534731fc831386c07755a2dc33d47 at block 14933657 ...:
-TEST[DATE|TIME] call to 0x43ae24960e5534731fc831386c07755a2dc33d47 at block 14933657 at four-byte 0x0902f1ac returned 0x0000000000000000000000000000000000000000000046aad88ee11ecf13916600000000000000000000000000000000000000000000001ba4d83cd6da3459720000000000000000000000000000000000000000000000000000000062a2191a
 TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING
+TEST[DATE|TIME] ===> PRICING FOR 0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f (0xc011a7)
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] blockNumber:         14933657
-TEST[DATE|TIME] first:               0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f
-TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 TEST[DATE|TIME] uniswapFactoryV2:    0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
 TEST[DATE|TIME] theCall:             getPair(0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
-
 TEST[DATE|TIME] pairAddress:         0x43ae24960e5534731fc831386c07755a2dc33d47
 TEST[DATE|TIME] theCall:             getReserves()
-TEST[DATE|TIME] r1:                  0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f
-TEST[DATE|TIME] r2:                  0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] first:               0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            true
 TEST[DATE|TIME] reserve0:            333717.2049506871
 TEST[DATE|TIME] reserve1:            509.9404009008
 TEST[DATE|TIME] price:               0.0015280615
-TEST[DATE|TIME] reversed:            1
-TEST[DATE|TIME] Calling 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 14933657 ...:
-TEST[DATE|TIME] call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 14933657 at four-byte 0xe6a43905 returned 0x000000000000000000000000a478c2975ab1ea89e8196811f51a7b7ade33eb11
-TEST[DATE|TIME] Calling 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11 at block 14933657 ...:
-TEST[DATE|TIME] call to 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11 at block 14933657 at four-byte 0x0902f1ac returned 0x00000000000000000000000000000000000000000007159c51b1bf70176b9b4b000000000000000000000000000000000000000000000101ad3766958a3693730000000000000000000000000000000000000000000000000000000062a224c2
 TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI)
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] blockNumber:         14933657
-TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
-TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 TEST[DATE|TIME] uniswapFactoryV2:    0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
 TEST[DATE|TIME] theCall:             getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
-
 TEST[DATE|TIME] pairAddress:         0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
 TEST[DATE|TIME] theCall:             getReserves()
-TEST[DATE|TIME] r1:                  0x6b175474e89094c44da98b954eedeac495271d0f
-TEST[DATE|TIME] r2:                  0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
 TEST[DATE|TIME] reserve0:            8564534.0122148413
 TEST[DATE|TIME] reserve1:            4753.2947846281
 TEST[DATE|TIME] price:               1801.8099866038
-TEST[DATE|TIME] reversed:            0
 TEST[DATE|TIME] ethPerTok:           0.00152806
 TEST[DATE|TIME] usdPerEth:           1801.81
 TEST[DATE|TIME] price:               2.75328
@@ -519,7 +494,7 @@ TEST[DATE|TIME] price:               2.75328
   "ether": 0.000000000000000000
 }
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> FLOW ETH
+TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     14933657
 TEST[DATE|TIME] prevBlock:              14933657
@@ -714,10 +689,8 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
-TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : 
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> FLOW TOKEN
+TEST[DATE|TIME] ====> TOKENS
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     14933656
 TEST[DATE|TIME] prevBlock:              14933656
@@ -814,71 +787,48 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
-TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : 
-TEST[DATE|TIME] Calling 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 14933657 ...:
-TEST[DATE|TIME] call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 14933657 at four-byte 0xe6a43905 returned 0x000000000000000000000000a478c2975ab1ea89e8196811f51a7b7ade33eb11
-TEST[DATE|TIME] Calling 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11 at block 14933657 ...:
-TEST[DATE|TIME] call to 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11 at block 14933657 at four-byte 0x0902f1ac returned 0x00000000000000000000000000000000000000000007159c51b1bf70176b9b4b000000000000000000000000000000000000000000000101ad3766958a3693730000000000000000000000000000000000000000000000000000000062a224c2
 TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI)
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] blockNumber:         14933657
-TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
-TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 TEST[DATE|TIME] uniswapFactoryV2:    0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
 TEST[DATE|TIME] theCall:             getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
-
 TEST[DATE|TIME] pairAddress:         0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
 TEST[DATE|TIME] theCall:             getReserves()
-TEST[DATE|TIME] r1:                  0x6b175474e89094c44da98b954eedeac495271d0f
-TEST[DATE|TIME] r2:                  0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
 TEST[DATE|TIME] reserve0:            8564534.0122148413
 TEST[DATE|TIME] reserve1:            4753.2947846281
 TEST[DATE|TIME] price:               1801.8099866038
-TEST[DATE|TIME] reversed:            0
-TEST[DATE|TIME] Calling 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 14933657 ...:
-TEST[DATE|TIME] call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 14933657 at four-byte 0xe6a43905 returned 0x0000000000000000000000002fdbadf3c4d5a8666bc06645b8358ab803996e28
-TEST[DATE|TIME] Calling 0x2fdbadf3c4d5a8666bc06645b8358ab803996e28 at block 14933657 ...:
-TEST[DATE|TIME] call to 0x2fdbadf3c4d5a8666bc06645b8358ab803996e28 at block 14933657 at four-byte 0x0902f1ac returned 0x000000000000000000000000000000000000000000000001f52e3d51b902cfff0000000000000000000000000000000000000000000000084675ff3c47e1b34a0000000000000000000000000000000000000000000000000000000062a216e4
 TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING
+TEST[DATE|TIME] ===> PRICING FOR 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (0x0bc529)
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] blockNumber:         14933657
-TEST[DATE|TIME] first:               0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
-TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 TEST[DATE|TIME] uniswapFactoryV2:    0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
 TEST[DATE|TIME] theCall:             getPair(0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
-
 TEST[DATE|TIME] pairAddress:         0x2fdbadf3c4d5a8666bc06645b8358ab803996e28
 TEST[DATE|TIME] theCall:             getReserves()
-TEST[DATE|TIME] r1:                  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
-TEST[DATE|TIME] r2:                  0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] first:               0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            true
 TEST[DATE|TIME] reserve0:            36.1138698831
 TEST[DATE|TIME] reserve1:            152.651197379
 TEST[DATE|TIME] price:               4.2269410028
-TEST[DATE|TIME] reversed:            1
-TEST[DATE|TIME] Calling 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 14933657 ...:
-TEST[DATE|TIME] call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 14933657 at four-byte 0xe6a43905 returned 0x000000000000000000000000a478c2975ab1ea89e8196811f51a7b7ade33eb11
-TEST[DATE|TIME] Calling 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11 at block 14933657 ...:
-TEST[DATE|TIME] call to 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11 at block 14933657 at four-byte 0x0902f1ac returned 0x00000000000000000000000000000000000000000007159c51b1bf70176b9b4b000000000000000000000000000000000000000000000101ad3766958a3693730000000000000000000000000000000000000000000000000000000062a224c2
 TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI)
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] blockNumber:         14933657
-TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
-TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 TEST[DATE|TIME] uniswapFactoryV2:    0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
 TEST[DATE|TIME] theCall:             getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
-
 TEST[DATE|TIME] pairAddress:         0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
 TEST[DATE|TIME] theCall:             getReserves()
-TEST[DATE|TIME] r1:                  0x6b175474e89094c44da98b954eedeac495271d0f
-TEST[DATE|TIME] r2:                  0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
 TEST[DATE|TIME] reserve0:            8564534.0122148413
 TEST[DATE|TIME] reserve1:            4753.2947846281
 TEST[DATE|TIME] price:               1801.8099866038
-TEST[DATE|TIME] reversed:            0
 TEST[DATE|TIME] ethPerTok:           4.22694
 TEST[DATE|TIME] usdPerEth:           1801.81
 TEST[DATE|TIME] price:               7616.14
@@ -1031,7 +981,7 @@ TEST[DATE|TIME] price:               7616.14
   "ether": 0.000000000000000000
 }
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> FLOW ETH
+TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     14933657
 TEST[DATE|TIME] prevBlock:              14933657
@@ -1226,10 +1176,8 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
-TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : 
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> FLOW TOKEN
+TEST[DATE|TIME] ====> TOKENS
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     14933656
 TEST[DATE|TIME] prevBlock:              14933656
@@ -1326,71 +1274,48 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
-TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : 
-TEST[DATE|TIME] Calling 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 14933657 ...:
-TEST[DATE|TIME] call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 14933657 at four-byte 0xe6a43905 returned 0x000000000000000000000000a478c2975ab1ea89e8196811f51a7b7ade33eb11
-TEST[DATE|TIME] Calling 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11 at block 14933657 ...:
-TEST[DATE|TIME] call to 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11 at block 14933657 at four-byte 0x0902f1ac returned 0x00000000000000000000000000000000000000000007159c51b1bf70176b9b4b000000000000000000000000000000000000000000000101ad3766958a3693730000000000000000000000000000000000000000000000000000000062a224c2
 TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI)
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] blockNumber:         14933657
-TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
-TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 TEST[DATE|TIME] uniswapFactoryV2:    0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
 TEST[DATE|TIME] theCall:             getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
-
 TEST[DATE|TIME] pairAddress:         0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
 TEST[DATE|TIME] theCall:             getReserves()
-TEST[DATE|TIME] r1:                  0x6b175474e89094c44da98b954eedeac495271d0f
-TEST[DATE|TIME] r2:                  0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
 TEST[DATE|TIME] reserve0:            8564534.0122148413
 TEST[DATE|TIME] reserve1:            4753.2947846281
 TEST[DATE|TIME] price:               1801.8099866038
-TEST[DATE|TIME] reversed:            0
-TEST[DATE|TIME] Calling 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 14933657 ...:
-TEST[DATE|TIME] call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 14933657 at four-byte 0xe6a43905 returned 0x000000000000000000000000ff58711683be66dad6e0e20e0043af46fc7f5f49
-TEST[DATE|TIME] Calling 0xff58711683be66dad6e0e20e0043af46fc7f5f49 at block 14933657 ...:
-TEST[DATE|TIME] call to 0xff58711683be66dad6e0e20e0043af46fc7f5f49 at block 14933657 at four-byte 0x0902f1ac returned 0x00000000000000000000000000000000000000000000434490630d307fe21a3d0000000000000000000000000000000000000000000000012450a65b6066796e0000000000000000000000000000000000000000000000000000000062a0d6c4
 TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING
+TEST[DATE|TIME] ===> PRICING FOR 0x3506424f91fd33084466f402d5d97f05f8e3b4af (0x350642)
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] blockNumber:         14933657
-TEST[DATE|TIME] first:               0x3506424f91fd33084466f402d5d97f05f8e3b4af
-TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 TEST[DATE|TIME] uniswapFactoryV2:    0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
 TEST[DATE|TIME] theCall:             getPair(0x3506424f91fd33084466f402d5d97f05f8e3b4af, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
-
 TEST[DATE|TIME] pairAddress:         0xff58711683be66dad6e0e20e0043af46fc7f5f49
 TEST[DATE|TIME] theCall:             getReserves()
-TEST[DATE|TIME] r1:                  0x3506424f91fd33084466f402d5d97f05f8e3b4af
-TEST[DATE|TIME] r2:                  0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] first:               0x3506424f91fd33084466f402d5d97f05f8e3b4af
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            true
 TEST[DATE|TIME] reserve0:            317663.3371233446
 TEST[DATE|TIME] reserve1:            21.0635183686
 TEST[DATE|TIME] price:               0.0000663077
-TEST[DATE|TIME] reversed:            1
-TEST[DATE|TIME] Calling 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 14933657 ...:
-TEST[DATE|TIME] call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 14933657 at four-byte 0xe6a43905 returned 0x000000000000000000000000a478c2975ab1ea89e8196811f51a7b7ade33eb11
-TEST[DATE|TIME] Calling 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11 at block 14933657 ...:
-TEST[DATE|TIME] call to 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11 at block 14933657 at four-byte 0x0902f1ac returned 0x00000000000000000000000000000000000000000007159c51b1bf70176b9b4b000000000000000000000000000000000000000000000101ad3766958a3693730000000000000000000000000000000000000000000000000000000062a224c2
 TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI)
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] blockNumber:         14933657
-TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
-TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 TEST[DATE|TIME] uniswapFactoryV2:    0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
 TEST[DATE|TIME] theCall:             getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
-
 TEST[DATE|TIME] pairAddress:         0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
 TEST[DATE|TIME] theCall:             getReserves()
-TEST[DATE|TIME] r1:                  0x6b175474e89094c44da98b954eedeac495271d0f
-TEST[DATE|TIME] r2:                  0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
 TEST[DATE|TIME] reserve0:            8564534.0122148413
 TEST[DATE|TIME] reserve1:            4753.2947846281
 TEST[DATE|TIME] price:               1801.8099866038
-TEST[DATE|TIME] reversed:            0
 TEST[DATE|TIME] ethPerTok:           6.63077e-05
 TEST[DATE|TIME] usdPerEth:           1801.81
 TEST[DATE|TIME] price:               0.119474

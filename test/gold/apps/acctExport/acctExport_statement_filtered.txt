@@ -9,7 +9,7 @@ TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] Format:  json
 { "data": [
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> FLOW TOKEN
+TEST[DATE|TIME] ====> TOKENS
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     8860512
 TEST[DATE|TIME] prevBlock:              8860512
@@ -106,8 +106,6 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
-TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : 
 {
   "blockNumber": 8860513,
   "transactionIndex": 85,
@@ -152,7 +150,7 @@ TIME ~ CLOCK - <INFO>  :
   "endBalCalc": "7000.0000000"
 }
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> FLOW TOKEN
+TEST[DATE|TIME] ====> TOKENS
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     8860513
 TEST[DATE|TIME] prevBlock:              8860513
@@ -249,8 +247,6 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
-TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : 
 , {
   "blockNumber": 8860531,
   "transactionIndex": 152,

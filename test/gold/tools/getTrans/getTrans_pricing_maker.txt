@@ -3,7 +3,20 @@ TEST[DATE|TIME] Transactions:  [5218355.232]
 TEST[DATE|TIME] AccountFor:  0x7fd5c846121bed2e2e46a55f992e35d85da7ffad
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  json
-TEST[DATE|TIME] Block 5218355 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker
+TEST[DATE|TIME] Start of trial balance report
+TEST[DATE|TIME] Block 5218355 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         5218355
+TEST[DATE|TIME] source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] str0 (call):         peek()
+TEST[DATE|TIME] str1 (call/data):    0x00000000000000000000000000000000000000000000002993a384ff8db78000
+TEST[DATE|TIME] int0:                76695500000000000000000000
+TEST[DATE|TIME] int1:                76695500
+TEST[DATE|TIME] bigPrice:            766.955
+TEST[DATE|TIME] price:               766.955
+TEST[DATE|TIME] source:              maker
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
@@ -29,7 +42,7 @@ TEST[DATE|TIME]    blockNumber:         5218355
 TEST[DATE|TIME]    transactionIndex:    232
 TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    priceSource:         maker
-TEST[DATE|TIME]    spotPrice:           766.95
+TEST[DATE|TIME]    spotPrice:           766.955
 TEST[DATE|TIME]    prevBal:             1259925280741022040
 TEST[DATE|TIME]    begBal:              1259925280741022040
 TEST[DATE|TIME]    amountIn:            0
@@ -53,6 +66,8 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          1259710448741022040
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] End of trial balance report
+TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 5218355 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> TOKENS
@@ -70,7 +85,7 @@ TEST[DATE|TIME]    accountedFor:        0x7fd5c846121bed2e2e46a55f992e35d85da7ff
 TEST[DATE|TIME]    sender:              0x7fd5c846121bed2e2e46a55f992e35d85da7ffad
 TEST[DATE|TIME]    recipient:           0x6b374d334d25cc9c9e15add727fdc6d647c2dc4c
 TEST[DATE|TIME]    assetAddr:           0xec7954f452a6473c21c4078501f0bcf8b266bc99
-TEST[DATE|TIME]    assetSymbol:         0xec79
+TEST[DATE|TIME]    assetSymbol:         ADS
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          5218354
 TEST[DATE|TIME]    hash:                0x4973ab1d7be0aa2823946359bbea1831f10ceaa096a4fce9c20b5658cc237f33
@@ -78,7 +93,7 @@ TEST[DATE|TIME]    timestamp:           1520510761
 TEST[DATE|TIME]    blockNumber:         5218355
 TEST[DATE|TIME]    transactionIndex:    232
 TEST[DATE|TIME]    logIndex:            69
-TEST[DATE|TIME]    priceSource:         not-priced
+TEST[DATE|TIME]    priceSource:         token-not-priced-pre-uni
 TEST[DATE|TIME]    spotPrice:           0
 TEST[DATE|TIME]    prevBal:             117708109
 TEST[DATE|TIME]    begBal:              117708109
@@ -103,6 +118,7 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          117492936
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] End of trial balance report
 {
   "data": [
     {
@@ -138,7 +154,7 @@ TEST[DATE|TIME] ---------------------------------------------------
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x7fd5c846121bed2e2e46a55f992e35d85da7ffad",
-      "spotPrice": 766.95,
+      "spotPrice": 766.955,
       "timestamp": 1520510761,
       "totalIn": "0",
       "totalOut": "214832000000000",
@@ -152,7 +168,7 @@ TEST[DATE|TIME] ---------------------------------------------------
       "amountNet": "-215173",
       "amountOut": "215173",
       "assetAddr": "0xec7954f452a6473c21c4078501f0bcf8b266bc99",
-      "assetSymbol": "0xec79",
+      "assetSymbol": "ADS",
       "begBal": "117708109",
       "begBalDiff": "0",
       "blockNumber": 5218355,
@@ -172,7 +188,7 @@ TEST[DATE|TIME] ---------------------------------------------------
       "prefundIn": "0",
       "prevAppBlk": 5218354,
       "prevBal": "117708109",
-      "priceSource": "not-priced",
+      "priceSource": "token-not-priced-pre-uni",
       "recipient": "0x6b374d334d25cc9c9e15add727fdc6d647c2dc4c",
       "reconciled": true,
       "reconciliationType": "regular-token",
