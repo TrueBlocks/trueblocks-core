@@ -457,3 +457,33 @@ func TestArticulateArgumentsTupleTuple(t *testing.T) {
 		t.Fatal("wrong value of the third input:", value)
 	}
 }
+
+func TestArticulateAnonymousArguments(t *testing.T) {
+	// peek() from 0x729d19f657bd0614b4985cf1d82531c67569197b
+	abiJson := `[{"constant":true,"inputs":[],"name":"peek","outputs":[{"name":"","type":"bytes32"},{"name":"","type":"bool"}],"payable":false,"type":"function"}]`
+	abi, err := abi.JSON(strings.NewReader(abiJson))
+	if err != nil {
+		t.Fatal(err)
+	}
+	output := `0x00000000000000000000000000000000000000000000002993a384ff8db780000000000000000000000000000000000000000000000000000000000000000001`
+
+	abiMethod := abi.Methods["peek"]
+	f := types.FunctionFromAbiMethod(&abiMethod)
+	if err = ArticulateArguments(abiMethod.Outputs, output[2:], nil, f.Outputs); err != nil {
+		t.Fatal(err)
+	}
+
+	if paramType := f.Outputs[0].ParameterType; paramType != "bytes32" {
+		t.Fatal("wrong type of the first parameter", paramType)
+	}
+	if value := f.Outputs[0].Value; value != "0x00000000000000000000000000000000000000000000002993a384ff8db78000" {
+		t.Fatal("wrong value of the first parameter", value)
+	}
+
+	if paramType := f.Outputs[1].ParameterType; paramType != "bool" {
+		t.Fatal("wrong type of the second parameter", paramType)
+	}
+	if value := f.Outputs[1].Value; value != true {
+		t.Fatal("wrong value of the second parameter", value)
+	}
+}
