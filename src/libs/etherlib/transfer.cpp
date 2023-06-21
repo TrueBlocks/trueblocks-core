@@ -464,6 +464,8 @@ string_q statementKey(const address_t& accountedFor, const address_t& assetAddr)
 
 //---------------------------------------------------------------------------
 int CTransfer::compare(const CTransfer& it) const {
+// OLD_CODE
+#if 1
     auto ret = assetAddr.compare(it.assetAddr);
     if (ret) {
         return ret;
@@ -477,6 +479,21 @@ int CTransfer::compare(const CTransfer& it) const {
         return ret;
     }
     return int(logIndex) - int(it.logIndex);
+#else
+    auto ret = int(blockNumber) - int(it.blockNumber);
+    if (ret) {
+        return ret;
+    }
+    ret = int(transactionIndex) - int(it.transactionIndex);
+    if (ret) {
+        return ret;
+    }
+    ret = int(logIndex) - int(it.logIndex);
+    if (ret) {
+        return ret;
+    }
+    return assetAddr.compare(it.assetAddr);
+#endif
 }
 // EXISTING_CODE
 }  // namespace qblocks

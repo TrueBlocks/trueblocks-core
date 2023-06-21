@@ -25,7 +25,6 @@ namespace qblocks {
 #define LOG_TRIAL_BALANCE(msg)                                                                                         \
     if (isTestMode()) {                                                                                                \
         rCtx.DEBUG(msg);                                                                                               \
-        ((CReconciliation*)this)->priceSource = (priceSource.empty() ? "uniswap" : priceSource);                       \
         cerr << "TEST[DATE|TIME] ---------------------------------------------------" << endl;                         \
         cerr << "TEST[DATE|TIME] Trial balance:" << endl;                                                              \
         LOG_ONE("reconciliationType", reconciliationType, "");                                                         \
@@ -124,8 +123,10 @@ bool CReconciliation::reconcileFlows(const CTransfer& transfer, const CReconCont
     begBal = blockNumber == 0 ? 0 : getTokenBalanceAt(assetAddr, accountedFor, blockNumber - 1);
     endBal = getTokenBalanceAt(assetAddr, accountedFor, blockNumber);
 
+    ((CReconciliation*)this)->priceSource = (priceSource.empty() ? "uniswap" : priceSource);
+
     ostringstream os;
-    LOG_TRIAL_BALANCE((isEth ? "FLOW ETH" : "FLOW TOKEN"));
+    LOG_TRIAL_BALANCE((isEth ? "ETH" : "TOKENS"));
     if (trialBalance()) {
         return true;
     }
@@ -228,8 +229,11 @@ bool CReconciliation::reconcileFlows_traces(const CReconContext& rCtx) {
         }
     }
 
+    priceSource = (priceSource.empty() ? "uniswap" : priceSource);
+
     ostringstream os;
     LOG_TRIAL_BALANCE("traces");
+
     return trialBalance();
 }
 
@@ -288,12 +292,12 @@ bool CReconciliation::reconcileBalances(bigint_t& begBalOut, bigint_t& endBalOut
         endBal = endBalCalc();
     }
 
-    ostringstream os;
-    os << "[" << blockNumber << "] " << rCtx.isPrevDiff << " " << rCtx.isNextDiff;
-    LOG_TRIAL_BALANCE((isEtherAddr(assetAddr) ? "BALANCE ETH" : "BALANCE TOKEN"));
-    if (isTestMode()) {
-        LOG_INFO("");
-        LOG_INFO("");
+    ((CReconciliation*)this)->priceSource = (priceSource.empty() ? "uniswap" : priceSource);
+
+    if (getEnvStr("OLD") == "") {
+        ostringstream os;
+        os << "[" << blockNumber << "] " << rCtx.isPrevDiff << " " << rCtx.isNextDiff;
+        LOG_TRIAL_BALANCE((isEtherAddr(assetAddr) ? "BALANCE ETH" : "BALANCE TOKEN"));
     }
 
     return trialBalance();

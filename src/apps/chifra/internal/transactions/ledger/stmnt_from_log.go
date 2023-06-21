@@ -20,6 +20,13 @@ func (ledgers *Ledger) GetStatementFromLog(log *types.SimpleLog) (r *types.Simpl
 	}
 
 	sym := log.Address.Hex()[:6]
+	decimals := uint64(18)
+	name := ledgers.Names[log.Address]
+	if name.Address == log.Address {
+		sym = name.Symbol
+		decimals = name.Decimals
+	}
+
 	key := fmt.Sprintf("%09d-%05d", log.BlockNumber, log.TransactionIndex)
 	ctx := ledgers.Contexts[key]
 
@@ -51,9 +58,9 @@ func (ledgers *Ledger) GetStatementFromLog(log *types.SimpleLog) (r *types.Simpl
 		Timestamp:        log.Timestamp,
 		AssetAddr:        log.Address,
 		AssetSymbol:      sym,
-		Decimals:         18,
+		Decimals:         decimals,
 		SpotPrice:        0.0,
-		PriceSource:      "not-priced",
+		PriceSource:      "not-yet-priced",
 		PrevAppBlk:       ctx.PrevBlock,
 		PrevBal:          *pBal,
 		BegBal:           *bBal,

@@ -459,7 +459,8 @@ bool doEthCall(CEthCall& theCall, bool checkProxy) {
     if (isTestMode()) {
         // If we don't do this, we get a different result every time we run the test
         theCall.blockNumber = min(blknum_t(17000000), theCall.blockNumber);
-        cerr << "TEST[DATE|TIME] Calling " << theCall.address << " at block " << theCall.blockNumber << " ...:" << endl;
+        // cerr << "TEST[DATE|TIME] Calling " << theCall.address << " at block " << theCall.blockNumber << " ...:" <<
+        // endl;
     }
 
     ostringstream cmd;
@@ -473,8 +474,8 @@ bool doEthCall(CEthCall& theCall, bool checkProxy) {
     string_q ret = callRPC("eth_call", cmd.str(), false);
     if (startsWith(ret, "0x")) {
         if (isTestMode()) {
-            cerr << "TEST[DATE|TIME] call to " << theCall.address << " at block " << theCall.blockNumber
-                 << " at four-byte " << theCall.encoding << " returned " << ret << endl;
+            // cerr << "TEST[DATE|TIME] call to " << theCall.address << " at block " << theCall.blockNumber
+            //      << " at four-byte " << theCall.encoding << " returned " << ret << endl;
         }
         theCall.encoding = orig;
         theCall.blockNumber = o;

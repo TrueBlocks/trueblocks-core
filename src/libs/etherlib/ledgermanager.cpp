@@ -190,8 +190,9 @@ bool CLedgerManager::getTransfers(const CTransaction& trans) {
                 if (transfer.assetSymbol.empty()) {
                     transfer.assetSymbol = getTokenSymbol(transfer.assetAddr, trans.blockNumber);
                     if (transfer.assetSymbol.empty()) {
-                        transfer.assetSymbol = transfer.assetAddr.substr(0, 4);
+                        transfer.assetSymbol = transfer.assetAddr.substr(0, 8);
                     }
+                    tokenName.symbol = transfer.assetSymbol;
                 }
 
                 transfer.decimals = tokenName.decimals;
@@ -200,6 +201,7 @@ bool CLedgerManager::getTransfers(const CTransaction& trans) {
                     if (transfer.decimals == 0) {
                         transfer.decimals = 18;
                     }
+                    tokenName.decimals = transfer.decimals;
                 }
 
                 tmp.push_back(transfer);

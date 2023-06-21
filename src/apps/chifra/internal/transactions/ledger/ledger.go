@@ -5,6 +5,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -12,6 +13,7 @@ import (
 type Ledger struct {
 	Chain      string
 	AccountFor base.Address
+	Names      map[base.Address]types.SimpleName
 	TestMode   bool
 	Contexts   map[string]LedgerContext
 	AsEther    bool
@@ -21,7 +23,7 @@ type Ledger struct {
 
 // NewLedger returns a new empty Ledger struct
 func NewLedger(chain string, acctFor base.Address, asEther, testMode, noZero, useTraces bool) *Ledger {
-	return &Ledger{
+	l := &Ledger{
 		Chain:      chain,
 		AccountFor: acctFor,
 		Contexts:   make(map[string]LedgerContext),
@@ -30,6 +32,11 @@ func NewLedger(chain string, acctFor base.Address, asEther, testMode, noZero, us
 		NoZero:     noZero,
 		UseTraces:  useTraces,
 	}
+
+	parts := names.Custom | names.Prefund | names.Regular
+	l.Names, _ = names.LoadNamesMap(chain, parts, []string{})
+
+	return l
 }
 
 func Report(r *types.SimpleStatement, ctx LedgerContext, msg string) {

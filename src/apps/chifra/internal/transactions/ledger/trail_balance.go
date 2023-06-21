@@ -25,15 +25,23 @@ func (l *Ledger) TrialBalance(msg string, r *types.SimpleStatement) bool {
 		r.ReconciliationType += "-token"
 	}
 
-	if r.Reconciled() {
+	if l.TestMode {
+		logger.TestLog(l.TestMode, "Start of trial balance report")
+	}
+
+	if !r.Reconciled() {
+		logger.Error("Statement is not reconciled", r.AssetSymbol, "at", r.BlockNumber, r.TransactionIndex)
+	} else if len(r.AmountNet().Bits()) != 0 {
 		var err error
 		if r.SpotPrice, r.PriceSource, err = pricing.PriceUsd(l.Chain, l.TestMode, r); err != nil {
-			logger.Error("Failed to get price for", r.AssetSymbol, "at", r.BlockNumber, r.TransactionIndex, ":", err)
+			logger.Error("Failed to get price for", r.AssetSymbol, "at", r.BlockNumber, r.TransactionIndex)
+			logger.Error("Error returned from PriceUsd:", err)
 		}
 	}
 
 	if l.TestMode {
 		Report(r, ctx, msg)
+		logger.TestLog(l.TestMode, "End of trial balance report")
 	}
 
 	return r.Reconciled()

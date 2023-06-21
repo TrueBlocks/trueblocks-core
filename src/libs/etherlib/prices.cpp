@@ -41,6 +41,8 @@ class CUniPair : public CEthCall {
     address_t r2;
     bool reversed;
     bool selfie;
+    address_t which;
+    string_q sym;
     CUniPair(blknum_t bn, const address_t& r1In, const address_t& r2In)
         : CEthCall(), r1(r1In), r2(r2In), reversed(false), selfie(false) {
         blockNumber = bn;
@@ -174,23 +176,21 @@ bool CUniPair::getPrice(blknum_t bn, string_q& priceSource, double& priceOut) {
 
     if (isTestMode()) {
         ostringstream os;
-        os << "getPair(" << r1 << ", " << r2 << ")" << endl;
+        os << "getPair(" << r1 << ", " << r2 << ")";
         cerr << "TEST[DATE|TIME] =========================================================" << endl;
-        cerr << "TEST[DATE|TIME] ===> PRICING" << endl;
+        cerr << "TEST[DATE|TIME] ===> PRICING FOR " << which << " (" << sym << ")" << endl;
         cerr << "TEST[DATE|TIME] =========================================================" << endl;
         LOG_ONE("blockNumber", bn);
-        LOG_ONE("first", r1);
-        LOG_ONE("second", r2);
         LOG_ONE("uniswapFactoryV2", uniswapFactory);
         LOG_ONE("theCall", os.str());
         LOG_ONE("pairAddress", address);
         LOG_ONE("theCall", "getReserves()");
-        LOG_ONE("r1", r1);
-        LOG_ONE("r2", r2);
+        LOG_ONE("first", r1);
+        LOG_ONE("second", r2);
+        LOG_ONE("reversed", (reversed ? "true" : "false"));
         LOG_ONE("reserve0", double_2_Str(reserve1));
         LOG_ONE("reserve1", double_2_Str(reserve2));
         LOG_ONE("price", double_2_Str(priceOut));
-        LOG_ONE("reversed", reversed);
     }
 
     return true;
@@ -201,6 +201,8 @@ double getPrice_UsdPerEth(string_q& priceSource, blknum_t bn) {
     CUniPair usdEth(bn, dai, wEth);
     if (usdEth.findPair()) {
         double price;
+        usdEth.which = FAKE_ETH_ADDRESS;
+        usdEth.sym = "WEI";
         if (usdEth.getPrice(bn, priceSource, price))
             return price;
     }
@@ -243,6 +245,8 @@ double getPrice_EthPerTok(const address_t& tokenAddr, string_q& priceSource, blk
     CUniPair thePair(bn, wEth, tokenAddr);
     if (thePair.findPair()) {
         double price;
+        thePair.which = tokenAddr;
+        thePair.sym = tokenAddr.substr(0, 8);
         if (thePair.getPrice(bn, priceSource, price))
             return price;
     }
