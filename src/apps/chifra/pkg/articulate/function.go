@@ -84,9 +84,15 @@ func ArticulateArguments(args abi.Arguments, data string, topics []base.Hash, de
 		if err != nil {
 			return err
 		}
-		destinationIndex, ok := argNameToIndex[currentArg.Name]
-		if !ok {
-			return fmt.Errorf("cannot find destination index of argument %s", currentArg.Name)
+		var destinationIndex int
+		if currentArg.Name != "" {
+			var ok bool
+			destinationIndex, ok = argNameToIndex[currentArg.Name]
+			if !ok {
+				return fmt.Errorf("cannot find destination index of argument %s", currentArg.Name)
+			}
+		} else {
+			destinationIndex = index
 		}
 		destination[destinationIndex].Value = result
 	}
