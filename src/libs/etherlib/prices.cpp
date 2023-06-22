@@ -41,6 +41,8 @@ class CUniPair : public CEthCall {
     address_t r2;
     bool reversed;
     bool selfie;
+    address_t which;
+    string_q sym;
     CUniPair(blknum_t bn, const address_t& r1In, const address_t& r2In)
         : CEthCall(), r1(r1In), r2(r2In), reversed(false), selfie(false) {
         blockNumber = bn;
@@ -111,7 +113,8 @@ bool CUniPair::findPair(void) {
     uniFactory.bytes = hex_2_Pad64(r1) + hex_2_Pad64(r2);
     if (!doEthCall(uniFactory, true /* proxy */)) {
         if (isTestMode()) {
-            LOG_INFO("doEthCall in CUniPrice::findPair returned false");
+            cerr << "TEST[DATE|TIME] "
+                 << "doEthCall in CUniPrice::findPair returned false" << endl;
         }
         notPairs[key] = true;
         return false;
@@ -131,6 +134,12 @@ bool CUniPair::findPair(void) {
     pairs[key] = *this;
     return true;
 }
+
+#define LOG_ONE(a, b)                                                                                                  \
+    {                                                                                                                  \
+        string_q ttt = ":";                                                                                            \
+        cerr << padRight("TEST[DATE|TIME]", 16) << padRight(((a) + ttt), 20) << " " << (b) << endl;                    \
+    }
 
 //---------------------------------------------------------------------------
 bool CUniPair::getPrice(blknum_t bn, string_q& priceSource, double& priceOut) {
@@ -164,8 +173,26 @@ bool CUniPair::getPrice(blknum_t bn, string_q& priceSource, double& priceOut) {
             priceSource = "uniswap";
         }
     }
-    LOG4("r1: ", r1, " r2: ", r2);
-    LOG4("reserve1: ", reserve1, " reserve2: ", reserve2, " priceOut: ", priceOut, " reversed: ", reversed);
+
+    if (isTestMode()) {
+        ostringstream os;
+        os << "getPair(" << r1 << ", " << r2 << ")";
+        cerr << "TEST[DATE|TIME] =========================================================" << endl;
+        cerr << "TEST[DATE|TIME] ===> PRICING FOR " << which << " (" << sym << ")" << endl;
+        cerr << "TEST[DATE|TIME] =========================================================" << endl;
+        LOG_ONE("blockNumber", bn);
+        LOG_ONE("uniswapFactoryV2", uniswapFactory);
+        LOG_ONE("theCall", os.str());
+        LOG_ONE("pairAddress", address);
+        LOG_ONE("theCall", "getReserves()");
+        LOG_ONE("first", r1);
+        LOG_ONE("second", r2);
+        LOG_ONE("reversed", (reversed ? "true" : "false"));
+        LOG_ONE("reserve0", double_2_Str(reserve1));
+        LOG_ONE("reserve1", double_2_Str(reserve2));
+        LOG_ONE("price", double_2_Str(priceOut));
+    }
+
     return true;
 }
 
@@ -174,6 +201,8 @@ double getPrice_UsdPerEth(string_q& priceSource, blknum_t bn) {
     CUniPair usdEth(bn, dai, wEth);
     if (usdEth.findPair()) {
         double price;
+        usdEth.which = FAKE_ETH_ADDRESS;
+        usdEth.sym = "WEI";
         if (usdEth.getPrice(bn, priceSource, price))
             return price;
     }
@@ -203,7 +232,11 @@ double getPrice_UsdPerTok(const address_t& assetAddr, string_q& priceSource, blk
     if (ethPerTok == 0.)
         return 0.;
     double usdPerEth = getPrice_UsdPerEth(priceSource, bn);
-    LOG4("ethPerTok: ", ethPerTok, " usdPerEth: ", usdPerEth, " price: ", (usdPerEth * ethPerTok));
+    if (isTestMode()) {
+        LOG_ONE("ethPerTok", ethPerTok);
+        LOG_ONE("usdPerEth", usdPerEth);
+        LOG_ONE("price", (usdPerEth * ethPerTok));
+    }
     return usdPerEth * ethPerTok;
 }
 
@@ -212,6 +245,8 @@ double getPrice_EthPerTok(const address_t& tokenAddr, string_q& priceSource, blk
     CUniPair thePair(bn, wEth, tokenAddr);
     if (thePair.findPair()) {
         double price;
+        thePair.which = tokenAddr;
+        thePair.sym = tokenAddr.substr(0, 8);
         if (thePair.getPrice(bn, priceSource, price))
             return price;
     }
@@ -232,15 +267,42 @@ double getPriceMaker_UsdPerEth(string_q& priceSource, blknum_t bn) {
     theCall.address = makerMedianizer;
     theCall.encoding = peek;
     theCall.abi_spec = spec;
+    if (isTestMode()) {
+        cerr << "TEST[DATE|TIME] ===================== maker pricing ========================" << endl;
+        cerr << "TEST[DATE|TIME] CEthCall:" << endl;
+        cerr << "TEST[DATE|TIME] blockNumber: " << theCall.blockNumber << endl;
+        cerr << "TEST[DATE|TIME] address:     " << theCall.address << endl;
+        cerr << "TEST[DATE|TIME] signature:   " << theCall.signature << endl;
+        cerr << "TEST[DATE|TIME] encoding:    " << theCall.encoding << endl;
+        cerr << "TEST[DATE|TIME] bytes:       " << theCall.bytes << endl;
+    }
     if (doEthCall(theCall, true /* proxy */)) {
         CStringArray results;
         theCall.getCallResult(results);
+        if (isTestMode()) {
+            cerr << "TEST[DATE|TIME] result:" << endl;
+            cerr << "TEST[DATE|TIME] " << results.size() << " results" << endl;
+        }
         if (results.size() > 1 && results[1] == "true") {
             string_q hex = results[0];
-            wei_t wei = str_2_Wei(hex) * 100;
+            wei_t wei1 = str_2_Wei(hex);
+            wei_t wei = wei1 * 100;
             wei_t ether = wei / weiPerEther();
             priceSource = "maker";
-            return str_2_Uint(wei_2_Str(ether)) / 100.;
+            double price = str_2_Uint(wei_2_Str(ether)) / 100.;
+            if (isTestMode()) {
+                cerr << "TEST[DATE|TIME] results[0]: " << results[0] << endl;
+                cerr << "TEST[DATE|TIME] results[1]: " << results[1] << endl;
+                cerr << "TEST[DATE|TIME] hex: " << hex << endl;
+                cerr << "TEST[DATE|TIME] wei1: " << wei1 << endl;
+                cerr << "TEST[DATE|TIME] wei: " << wei << endl;
+                cerr << "TEST[DATE|TIME] weiPerEther: " << weiPerEther() << endl;
+                cerr << "TEST[DATE|TIME] ether: " << ether << endl;
+                cerr << "TEST[DATE|TIME] price: " << price << endl;
+            }
+            return price;
+        } else if (isTestMode()) {
+            LOG_INFO("doEthCall into makerMedianizer returned false");
         }
     } else {
         if (isTestMode()) {
@@ -249,7 +311,7 @@ double getPriceMaker_UsdPerEth(string_q& priceSource, blknum_t bn) {
     }
 
     priceSource = "not-priced";
-    return 1.;
+    return 0.;
 }
 
 //---------------------------------------------------------------------------

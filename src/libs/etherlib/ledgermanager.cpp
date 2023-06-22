@@ -45,28 +45,29 @@ bool CLedgerManager::getStatements(CTransaction& trans) {
                 ledgers[tokenKey] = prevStatement;
             }
 
+            bool isPrevDiff = transfer.blockNumber == 0 || (ledgers[tokenKey].blockNumber != transfer.blockNumber);
+            bool isNextDiff = nextBlock != transfer.blockNumber && i == transfers.size() - 1;
+
             CReconciliation statement(accountedFor, transfer.assetAddr, &trans);
             statement.logIndex = transfer.logIndex;
             statement.assetSymbol = transfer.assetSymbol;
             statement.decimals = transfer.decimals;
-            if (!statement.reconcileFlows(transfer)) {
-                statement.reconcileFlows_traces();
-            }
 
-            bool isPrevDiff = transfer.blockNumber == 0 || (ledgers[tokenKey].blockNumber != transfer.blockNumber);
-            bool isNextDiff = nextBlock != transfer.blockNumber && i == transfers.size() - 1;
-            if (isTestMode()) {
-                LOG_INFO("isPrevDiff: ", isPrevDiff, " isNextDiff: ", isNextDiff);
-                LOG_INFO("ledger.blockNumber: ", ledgers[tokenKey].blockNumber,
-                         " prevBlock: ", ledgers[tokenKey].blockNumber, " transfer.blockNumber: ", transfer.blockNumber,
-                         " nextBlock: ", nextBlock);
+            CReconContext rCtx;
+            rCtx.lBn = ledgers[tokenKey].blockNumber;
+            rCtx.tBn = transfer.blockNumber;
+            rCtx.nBn = nextBlock;
+            rCtx.isPrevDiff = isPrevDiff;
+            rCtx.isNextDiff = isNextDiff;
+            if (!statement.reconcileFlows(transfer, rCtx)) {
+                statement.reconcileFlows_traces(rCtx);
             }
 
             statement.prevAppBlk = ledgers[tokenKey].blockNumber;
             statement.prevBal = ledgers[tokenKey].balance;
             bigint_t begBal, endBal;
             bool isBogus = false;
-            if (!statement.reconcileBalances(isPrevDiff, isNextDiff, begBal, endBal)) {
+            if (!statement.reconcileBalances(begBal, endBal, rCtx)) {
                 // This fixes a lot of unreconciled transactions.
                 //
                 // We need to do this because sometimes hackers generate Transfer events but do not change
@@ -189,8 +190,9 @@ bool CLedgerManager::getTransfers(const CTransaction& trans) {
                 if (transfer.assetSymbol.empty()) {
                     transfer.assetSymbol = getTokenSymbol(transfer.assetAddr, trans.blockNumber);
                     if (transfer.assetSymbol.empty()) {
-                        transfer.assetSymbol = transfer.assetAddr.substr(0, 4);
+                        transfer.assetSymbol = transfer.assetAddr.substr(0, 8);
                     }
+                    tokenName.symbol = transfer.assetSymbol;
                 }
 
                 transfer.decimals = tokenName.decimals;
@@ -199,6 +201,7 @@ bool CLedgerManager::getTransfers(const CTransaction& trans) {
                     if (transfer.decimals == 0) {
                         transfer.decimals = 18;
                     }
+                    tokenName.decimals = transfer.decimals;
                 }
 
                 tmp.push_back(transfer);

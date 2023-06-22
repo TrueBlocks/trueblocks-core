@@ -11,7 +11,7 @@ transactions?transactions=0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "spotPrice": 1,
+      "spotPrice": 0,
       "priceSource": "not-priced",
       "accountedFor": "0x42c8fcbc73d625f1d258a32915b6a573095de93d",
       "sender": "0x42c8fcbc73d625f1d258a32915b6a573095de93d",

@@ -19,7 +19,7 @@ transactions?transactions=10681057.170%2010607241.278&accountFor=0x65eab68cdb0da
       "begBal": "163750000000000000",
       "amountNet": "3750000000000000",
       "endBal": "167500000000000000",
-      "reconciliationType": "trace-regular-eth",
+      "reconciliationType": "traces-regular-eth",
       "reconciled": true,
       "totalIn": "3750000000000000",
       "amountIn": "0",

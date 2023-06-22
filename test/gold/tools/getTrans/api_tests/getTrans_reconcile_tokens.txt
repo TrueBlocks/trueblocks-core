@@ -19,7 +19,7 @@ transactions?transactions=0x332df8459d5357d05d59c4e186eeb7b0b9380343962ac978d2e5
       "begBal": "58493539865107179246",
       "amountNet": "100000000000000000",
       "endBal": "58593539865107179246",
-      "reconciliationType": "trace-prevDiff-same-eth",
+      "reconciliationType": "traces-prevDiff-same-eth",
       "reconciled": true,
       "totalIn": "100000000000000000",
       "amountIn": "0",
