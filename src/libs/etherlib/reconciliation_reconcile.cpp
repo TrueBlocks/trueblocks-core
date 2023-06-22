@@ -293,7 +293,6 @@ bool CReconciliation::reconcileBalances(bigint_t& begBalOut, bigint_t& endBalOut
     }
 
     ((CReconciliation*)this)->priceSource = (priceSource.empty() ? "uniswap" : priceSource);
-
     if (getEnvStr("OLD") == "") {
         ostringstream os;
         os << "[" << blockNumber << "] " << rCtx.isPrevDiff << " " << rCtx.isNextDiff;

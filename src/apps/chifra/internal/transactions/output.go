@@ -51,24 +51,26 @@ func (opts *TransactionsOptions) TransactionsInternal() (err error, handled bool
 
 	// EXISTING_CODE
 	if opts.IsPorted() {
+		handled = true
 		if opts.Decache {
-			return opts.HandleDecache(), true
+			err = opts.HandleDecache()
 
 		} else if opts.Logs {
-			return opts.HandleLogs(), true
+			err = opts.HandleLogs()
 
 		} else if opts.Source {
-			return opts.HandleSource(), true
+			err = opts.HandleSource()
 
 		} else if opts.Uniq {
-			return opts.HandleUniq(), true
+			err = opts.HandleUniq()
 
 		} else if len(opts.AccountFor) > 0 {
-			return opts.HandleAccounting(), true
+			err = opts.HandleAccounting()
 
 		} else {
-			return opts.HandleShowTxs(), true
+			err = opts.HandleShowTxs()
 		}
+		return
 	}
 
 	if opts.Globals.IsApiMode() {
