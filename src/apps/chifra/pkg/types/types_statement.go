@@ -12,8 +12,11 @@ package types
 import (
 	"io"
 	"math/big"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
@@ -108,6 +111,66 @@ func (s *SimpleStatement) Model(verbose bool, format string, extraOptions map[st
 	var order = []string{}
 
 	// EXISTING_CODE
+	fmt := func(in big.Int) string {
+		if extraOptions["ether"] == true {
+			return utils.WeiToEther(&in).Text('f', -1*int(s.Decimals))
+		}
+		return in.Text(10)
+	}
+
+	model = map[string]any{
+		"blockNumber":         s.BlockNumber,
+		"transactionIndex":    s.TransactionIndex,
+		"logIndex":            s.LogIndex,
+		"transactionHash":     s.TransactionHash,
+		"timestamp":           s.Timestamp,
+		"date":                s.Date(),
+		"assetAddr":           s.AssetAddr,
+		"assetSymbol":         s.AssetSymbol,
+		"decimals":            s.Decimals,
+		"spotPrice":           s.SpotPrice,
+		"priceSource":         s.PriceSource,
+		"accountedFor":        s.AccountedFor,
+		"sender":              s.Sender,
+		"recipient":           s.Recipient,
+		"begBal":              fmt(s.BegBal),
+		"amountNet":           fmt(*s.AmountNet()),
+		"endBal":              fmt(s.EndBal),
+		"reconciliationType":  s.ReconciliationType,
+		"reconciled":          s.Reconciled(),
+		"totalIn":             fmt(*s.TotalIn()),
+		"amountIn":            fmt(s.AmountIn),
+		"internalIn":          fmt(s.InternalIn),
+		"selfDestructIn":      fmt(s.SelfDestructIn),
+		"minerBaseRewardIn":   fmt(s.MinerBaseRewardIn),
+		"minerNephewRewardIn": fmt(s.MinerNephewRewardIn),
+		"minerTxFeeIn":        fmt(s.MinerTxFeeIn),
+		"minerUncleRewardIn":  fmt(s.MinerUncleRewardIn),
+		"correctingIn":        fmt(s.CorrectingIn),
+		"prefundIn":           fmt(s.PrefundIn),
+		"totalOut":            fmt(*s.TotalOut()),
+		"amountOut":           fmt(s.AmountOut),
+		"internalOut":         fmt(s.InternalOut),
+		"correctingOut":       fmt(s.CorrectingOut),
+		"selfDestructOut":     fmt(s.SelfDestructOut),
+		"gasOut":              fmt(s.GasOut),
+		"totalOutLessGas":     fmt(*s.TotalOutLessGas()),
+		"prevAppBlk":          s.PrevAppBlk,
+		"prevBal":             fmt(s.PrevBal),
+		"begBalDiff":          fmt(*s.BegBalDiff()),
+		"endBalDiff":          fmt(*s.EndBalDiff()),
+		"endBalCalc":          fmt(*s.EndBalCalc()),
+		"correctingReason":    s.CorrectingReason,
+	}
+	order = []string{
+		"blockNumber", "transactionIndex", "logindex", "transactionHash", "timestamp", "date",
+		"assetAddress", "assetSymbol", "decimals", "spotPrice", "priceSource", "accountedFor",
+		"sender", "recipient", "begBal", "amountNet", "endBal", "reconciliationType", "reconciled",
+		"totalIn", "amountIn", "internalIn", "selfDestructIn", "minerBaseRewardIn", "minerNephewRewardIn",
+		"minerTxFeeIn", "minerUncleRewardIn", "prefundIn", "totalOut", "amountOut", "internalOut",
+		"selfDestructOut", "gasOut", "totalOutLessGas", "prevAppBlk", "prevBal", "begBalDiff",
+		"endBalDiff", "endBalCalc", "correctingReason",
+	}
 	// EXISTING_CODE
 
 	return Model{
@@ -129,4 +192,195 @@ func (s *SimpleStatement) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
+func (s *SimpleStatement) Date() string {
+	return utils.FormattedDate(s.Timestamp)
+}
+
+func (s *SimpleStatement) TotalIn() *big.Int {
+	vals := []big.Int{
+		s.AmountIn,
+		s.InternalIn,
+		s.SelfDestructIn,
+		s.MinerBaseRewardIn,
+		s.MinerNephewRewardIn,
+		s.MinerTxFeeIn,
+		s.MinerUncleRewardIn,
+		s.CorrectingIn,
+		s.PrefundIn,
+	}
+
+	sum := big.NewInt(0)
+	for _, n := range vals {
+		sum = sum.Add(sum, &n)
+	}
+
+	return sum
+}
+
+func (s *SimpleStatement) TotalOut() *big.Int {
+	vals := []big.Int{
+		s.AmountOut,
+		s.InternalOut,
+		s.CorrectingOut,
+		s.SelfDestructOut,
+		s.GasOut,
+	}
+
+	sum := big.NewInt(0)
+	for _, n := range vals {
+		sum = sum.Add(sum, &n)
+	}
+
+	return sum
+}
+
+func (s *SimpleStatement) MoneyMoved() bool {
+	return s.TotalIn() != new(big.Int).SetUint64(0) || s.TotalOut() != new(big.Int).SetUint64(0)
+}
+
+func (s *SimpleStatement) AmountNet() *big.Int {
+	return new(big.Int).Sub(s.TotalIn(), s.TotalOut())
+}
+
+func (s *SimpleStatement) TotalOutLessGas() *big.Int {
+	val := s.TotalOut()
+	return new(big.Int).Sub(val, &s.GasOut)
+}
+
+func (s *SimpleStatement) BegBalDiff() *big.Int {
+	val := &big.Int{}
+
+	if s.BlockNumber == 0 {
+		val = new(big.Int).SetInt64(0)
+	} else {
+		new(big.Int).Sub(&s.BegBal, &s.PrevBal)
+	}
+
+	return val
+}
+
+func (s *SimpleStatement) EndBalCalc() *big.Int {
+	return new(big.Int).Add(&s.BegBal, s.AmountNet())
+}
+
+func (s *SimpleStatement) EndBalDiff() *big.Int {
+	return new(big.Int).Sub(s.EndBalCalc(), &s.EndBal)
+}
+
+func (s *SimpleStatement) Reconciled() bool {
+	zero := new(big.Int).SetInt64(0)
+	return (s.EndBalDiff().Cmp(zero) == 0 && s.BegBalDiff().Cmp(zero) == 0)
+}
+
+func (s *SimpleStatement) ClearInternal() {
+	// s.AmountIn.SetUint64(0)
+	s.InternalIn.SetUint64(0)
+	s.MinerBaseRewardIn.SetUint64(0)
+	s.MinerNephewRewardIn.SetUint64(0)
+	s.MinerTxFeeIn.SetUint64(0)
+	s.MinerUncleRewardIn.SetUint64(0)
+	s.CorrectingIn.SetUint64(0)
+	s.PrefundIn.SetUint64(0)
+	s.SelfDestructIn.SetUint64(0)
+
+	// s.AmountOut.SetUint64(0)
+	// s.GasOut.SetUint64(0)
+	s.InternalOut.SetUint64(0)
+	s.CorrectingOut.SetUint64(0)
+	s.SelfDestructOut.SetUint64(0)
+}
+
+func (s *SimpleStatement) IsEth() bool {
+	return s.AssetAddr == base.FAKE_ETH_ADDRESS
+}
+
+var (
+	sai  = base.HexToAddress("0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359")
+	dai  = base.HexToAddress("0x6b175474e89094c44da98b954eedeac495271d0f")
+	usdc = base.HexToAddress("0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48")
+	usdt = base.HexToAddress("0xdac17f958d2ee523a2206206994597c13d831ec7")
+)
+
+func (s *SimpleStatement) IsStableCoin() bool {
+	stables := map[base.Address]bool{
+		sai:  true,
+		dai:  true,
+		usdc: true,
+		usdt: true,
+	}
+	return stables[s.AssetAddr]
+}
+
+func (s *SimpleStatement) isNullTransfer(tx *SimpleTransaction) bool {
+	lotsOfLogs := len(tx.Receipt.Logs) > 10
+	mayBeAirdrop := s.Sender.IsZero() || s.Sender == tx.To
+	noBalanceChange := s.EndBal.Cmp(&s.BegBal) == 0 && s.MoneyMoved()
+	ret := (lotsOfLogs || mayBeAirdrop) && noBalanceChange
+
+	logger.Warn("Statement is not reconciled", s.AssetSymbol, "at", s.BlockNumber, s.TransactionIndex, s.LogIndex)
+	logger.TestLog(true, "A possible nullTransfer")
+	logger.TestLog(true, "  nLogs:            ", len(tx.Receipt.Logs))
+	logger.TestLog(true, "    lotsOfLogs:      -->", lotsOfLogs)
+
+	logger.TestLog(true, "  Sender.IsZero:    ", s.Sender, s.Sender.IsZero())
+	logger.TestLog(true, "  or Sender == To:  ", s.Sender == tx.To)
+	logger.TestLog(true, "    mayBeAirdrop:    -->", mayBeAirdrop)
+
+	logger.TestLog(true, "  EndBal-BegBal:    ", s.EndBal.Cmp(&s.BegBal))
+	logger.TestLog(true, "  MoneyMoved:       ", s.MoneyMoved())
+	logger.TestLog(true, "    noBalanceChange: -->", noBalanceChange)
+
+	if !ret {
+		logger.TestLog(true, "  ---> Not a nullTransfer")
+	}
+	return ret
+}
+
+func (s *SimpleStatement) CorrectForNullTransfer(tx *SimpleTransaction) bool {
+	if s.isNullTransfer(tx) && !s.IsEth() {
+		logger.TestLog(true, "Correcting token transfer for a null transfer")
+		amt := s.TotalIn() // use totalIn since this is the amount that was faked
+		s.AmountOut = *new(big.Int)
+		s.AmountIn = *new(big.Int)
+		s.CorrectingIn = *amt
+		s.CorrectingOut = *amt
+		s.CorrectingReason = "null-transfer"
+	}
+	return s.Reconciled()
+}
+
+func (s *SimpleStatement) CorrectForSomethingElse(tx *SimpleTransaction) bool {
+	if !s.IsEth() {
+		logger.TestLog(true, "Correcting token transfer for unknown income or outflow")
+
+		s.CorrectingIn.SetUint64(0)
+		s.CorrectingOut.SetUint64(0)
+		s.CorrectingReason = ""
+		zero := new(big.Int).SetInt64(0)
+		cmpBegBal := s.BegBalDiff().Cmp(zero)
+		cmpEndBal := s.EndBalDiff().Cmp(zero)
+
+		if cmpBegBal > 0 {
+			s.CorrectingIn = *s.BegBalDiff()
+			s.CorrectingReason = "begbal"
+		} else if cmpBegBal < 0 {
+			s.CorrectingOut = *s.BegBalDiff()
+			s.CorrectingReason = "begbal"
+		}
+
+		if cmpEndBal > 0 {
+			n := new(big.Int).Add(&s.CorrectingIn, s.EndBalDiff())
+			s.CorrectingIn = *n
+			s.CorrectingReason += "endbal"
+		} else if cmpEndBal < 0 {
+			n := new(big.Int).Add(&s.CorrectingOut, s.EndBalDiff())
+			s.CorrectingOut = *n
+			s.CorrectingReason += "endbal"
+		}
+		s.CorrectingReason = strings.Replace(s.CorrectingReason, "begbalendbal", "begbal-endbal", -1)
+	}
+
+	return s.Reconciled()
+}
+
 // EXISTING_CODE

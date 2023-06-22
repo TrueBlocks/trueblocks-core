@@ -64,8 +64,7 @@ func (opts *TransactionsOptions) TransactionsInternal() (err error, handled bool
 			return opts.HandleUniq(), true
 
 		} else if len(opts.AccountFor) > 0 {
-			// TODO: Imcomplete?
-			return opts.HandleAccountFor(), true
+			return opts.HandleAccounting(), true
 
 		} else {
 			return opts.HandleShowTxs(), true

@@ -179,6 +179,7 @@ func CallContract(chain string, call *ContractCall) (results *types.SimpleCallRe
 		Encoding:         call.Method.Encoding,
 		Signature:        call.Method.Signature,
 		EncodedArguments: encodedArguments,
+		RawReturn:        *rawReturn,
 	}
 	results.Outputs = make(map[string]string)
 
