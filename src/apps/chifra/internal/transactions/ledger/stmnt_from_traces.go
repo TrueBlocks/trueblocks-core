@@ -25,8 +25,9 @@ func (ledgers *Ledger) GetStatementsFromTraces(trans *types.SimpleTransaction, s
 			}
 
 			// Do not collapse, more than one of these can be true at the same time
+			// interesting := false
 			if trace.Action.From == s.AccountedFor {
-				ret.InternalIn = trace.Action.Value
+				ret.InternalOut = trace.Action.Value
 				ret.Sender = trace.Action.From
 				if trace.Action.To.IsZero() {
 					if trace.Result != nil {
@@ -35,30 +36,68 @@ func (ledgers *Ledger) GetStatementsFromTraces(trans *types.SimpleTransaction, s
 				} else {
 					ret.Recipient = trace.Action.To
 				}
+				// interesting = true
 			}
 
 			if trace.Action.To == s.AccountedFor {
+				ret.InternalIn = trace.Action.Value
 				ret.Sender = trace.Action.From
 				ret.Recipient = trace.Action.To
-				ret.InternalIn = trace.Action.Value
+				// interesting = true
 			}
 
-			if trace.Result != nil && trace.Result.Address == s.AccountedFor {
-				ret.Sender = trace.Action.From
-				ret.Recipient = trace.Result.Address
-				ret.InternalIn = trace.Action.Value
+			// if interesting
+			// {
+			// 	fmt.Println("--------------------------")
+			// 	fmt.Println("trace:", trace)
+			// 	fmt.Println("action:", trace.Action)
+			// 	fmt.Println("result:", trace.Result)
+			// 	fmt.Println("--------------------------")
+			// }
+
+			if trace.Action.SelfDestructed == s.AccountedFor {
+				ret.Sender = trace.Action.SelfDestructed
+				if ret.Sender.IsZero() {
+					ret.Sender = trace.Action.Address
+				}
+				ret.Recipient = trace.Action.RefundAddress
+				ret.SelfDestructOut = trace.Action.Balance
+			}
+
+			if trace.Action.RefundAddress == s.AccountedFor {
+				ret.Sender = trace.Action.SelfDestructed
+				if ret.Sender.IsZero() {
+					ret.Sender = trace.Action.Address
+				}
+				ret.Recipient = trace.Action.RefundAddress
+				ret.SelfDestructIn = trace.Action.Balance
+			}
+
+			if trace.Action.Address == s.AccountedFor && !trace.Action.RefundAddress.IsZero() {
+				// self destructed send
+				ret.Sender = trace.Action.Address
+				ret.Recipient = trace.Action.RefundAddress
+				ret.SelfDestructOut = trace.Action.Balance
+			}
+
+			if trace.Result != nil {
+				if trace.Result.Address == s.AccountedFor {
+					ret.Sender = trace.Action.From
+					ret.Recipient = trace.Result.Address
+					ret.InternalIn = trace.Action.Value
+				}
 			}
 		}
 	}
 
 	if ledgers.TrialBalance("ETH TRACES", &ret) {
-		if len(ret.AmountNet().Bits()) == 0 {
-			logger.TestLog(true, "Tx reconciled with a zero value net amount. It's okay.")
-		} else {
+		if ret.MoneyMoved() {
 			statements = append(statements, &ret)
+		} else {
+			logger.TestLog(true, "Tx reconciled with a zero value net amount. It's okay.")
 		}
 	} else {
-		logger.Warn(ledgers.TestMode, "Transaction", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), "does not reconcile")
+		logger.Warn("Transaction", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), "does not reconcile")
 		statements = append(statements, &ret)
 	}
 

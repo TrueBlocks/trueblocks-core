@@ -2648,6 +2648,10 @@ components:
           type: string
           format: int256
           description: "the uncle reward if the miner who won the uncle block is the accountedFor address"
+        correctingIn:
+          type: string
+          format: int256
+          description: "for unreconciled token transfers only, the incoming amount needed to correct the transfer so it balances"
         prefundIn:
           type: string
           format: int256
@@ -2664,6 +2668,10 @@ components:
           type: string
           format: int256
           description: "the value of any internal value transfers out of the accountedFor account"
+        correctingOut:
+          type: string
+          format: int256
+          description: "for unreconciled token transfers only, the outgoing amount needed to correct the transfer so it balances"
         selfDestructOut:
           type: string
           format: int256
@@ -2697,6 +2705,9 @@ components:
           type: string
           format: int256
           description: "a calculated field -- begBal + amountNet"
+        correctingReason:
+          type: string
+          description: "the reason for the correcting entries, if any"
     block:
       description: "block data as returned from the RPC (with slight enhancements)"
       type: object

@@ -51,8 +51,15 @@ func PriceUsdUniswap(chain string, testMode bool, statement *types.SimpleStateme
 		return 0.0, "not-priced", err
 	}
 	contractCall.BlockNumber = statement.BlockNumber
-	result, _ := call.CallContract(chain, contractCall)
+	result, err := call.CallContract(chain, contractCall)
+	if err != nil {
+		return 0.0, "not-priced", err
+	}
 	pairAddress := base.HexToAddress(result.Outputs["val_0"])
+	if pairAddress.IsZero() {
+		msg := fmt.Sprintf("no pair found for %s and %s", first.Hex(), second.Hex())
+		return 0.0, "not-priced", fmt.Errorf(msg)
+	}
 	theCall2 := "getReserves()"
 	contractCall, err = call.NewContractCall(chain, pairAddress, theCall2, false)
 	if err != nil {

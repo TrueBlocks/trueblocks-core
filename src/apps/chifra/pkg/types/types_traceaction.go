@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -137,4 +138,9 @@ func (s *SimpleTraceAction) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
+func (s *SimpleTraceAction) String() string {
+	ret, _ := json.MarshalIndent(s, "", "  ")
+	return string(ret)
+}
+
 // EXISTING_CODE

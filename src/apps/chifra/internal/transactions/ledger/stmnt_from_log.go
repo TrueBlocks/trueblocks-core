@@ -23,8 +23,12 @@ func (ledgers *Ledger) GetStatementFromLog(log *types.SimpleLog) (r *types.Simpl
 	decimals := uint64(18)
 	name := ledgers.Names[log.Address]
 	if name.Address == log.Address {
-		sym = name.Symbol
-		decimals = name.Decimals
+		if name.Symbol != "" {
+			sym = name.Symbol
+		}
+		if name.Decimals != 0 {
+			decimals = name.Decimals
+		}
 	}
 
 	key := fmt.Sprintf("%09d-%05d", log.BlockNumber, log.TransactionIndex)
@@ -60,7 +64,7 @@ func (ledgers *Ledger) GetStatementFromLog(log *types.SimpleLog) (r *types.Simpl
 		AssetSymbol:      sym,
 		Decimals:         decimals,
 		SpotPrice:        0.0,
-		PriceSource:      "not-yet-priced",
+		PriceSource:      "not-priced",
 		PrevAppBlk:       ctx.PrevBlock,
 		PrevBal:          *pBal,
 		BegBal:           *bBal,
@@ -80,9 +84,11 @@ func (ledgers *Ledger) GetStatementFromLog(log *types.SimpleLog) (r *types.Simpl
 	}
 
 	if ofInterst {
-		ledgers.TrialBalance("TOKENS", &ret)
-	} else {
-		logger.TestLog(ledgers.TestMode, "Log", log.LogIndex, "at", fmt.Sprintf("%d.%d", log.BlockNumber, log.TransactionIndex), "(a token transfer) is not relevant")
+		if !ledgers.TrialBalance("TOKENS", &ret) {
+			logger.Warn("Transaction", fmt.Sprintf("%d.%d.%d", ret.BlockNumber, ret.TransactionIndex, ret.LogIndex), "does not reconcile")
+		}
+		// } else {
+		// 	logger.TestLog(ledgers.TestMode, "Log", log.LogIndex, "at", fmt.Sprintf("%d.%d", log.BlockNumber, log.TransactionIndex), "(a token transfer) is not relevant")
 	}
 
 	return &ret, nil

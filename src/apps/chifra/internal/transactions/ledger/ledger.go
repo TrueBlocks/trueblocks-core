@@ -19,6 +19,7 @@ type Ledger struct {
 	AsEther    bool
 	NoZero     bool
 	UseTraces  bool
+	Tx         *types.SimpleTransaction
 }
 
 // NewLedger returns a new empty Ledger struct
@@ -74,11 +75,13 @@ func Report(r *types.SimpleStatement, ctx LedgerContext, msg string) {
 	logger.TestLog(true, "   minerNephewRewardIn:", r.MinerNephewRewardIn.Text(10))
 	logger.TestLog(true, "   minerTxFeeIn:       ", r.MinerTxFeeIn.Text(10))
 	logger.TestLog(true, "   minerUncleRewardIn: ", r.MinerUncleRewardIn.Text(10))
+	logger.TestLog(true, "   correctingIn:       ", r.CorrectingIn.Text(10))
 	logger.TestLog(true, "   prefundIn:          ", r.PrefundIn.Text(10))
 	logger.TestLog(true, "   selfDestructIn:     ", r.SelfDestructIn.Text(10))
 	logger.TestLog(true, "   totalIn:            ", r.TotalIn().Text(10))
 	logger.TestLog(true, "   amountOut:          ", r.AmountOut.Text(10))
 	logger.TestLog(true, "   internalOut:        ", r.InternalOut.Text(10))
+	logger.TestLog(true, "   correctingOut:      ", r.CorrectingOut.Text(10))
 	logger.TestLog(true, "   selfDestructOut:    ", r.SelfDestructOut.Text(10))
 	logger.TestLog(true, "   gasOut:             ", r.GasOut.Text(10))
 	logger.TestLog(true, "   totalOut:           ", r.TotalOut().Text(10))
@@ -87,8 +90,8 @@ func Report(r *types.SimpleStatement, ctx LedgerContext, msg string) {
 	logger.TestLog(true, "   begBalDiff:         ", r.BegBalDiff().Text(10))
 	logger.TestLog(true, "   endBalDiff:         ", r.EndBalDiff().Text(10))
 	logger.TestLog(true, "   endBalCalc:         ", r.EndBalCalc().Text(10))
+	logger.TestLog(true, "   correctingReason:   ", r.CorrectingReason)
+	logger.TestLog(true, "   moneyMoved:         ", r.MoneyMoved())
 	logger.TestLog(true, "   trialBalance:       ", r.Reconciled())
-	// Encoding            string         `json:"encoding"`
-	// Signature           string         `json:"signature"`
 	logger.TestLog(true, "---------------------------------------------------")
 }

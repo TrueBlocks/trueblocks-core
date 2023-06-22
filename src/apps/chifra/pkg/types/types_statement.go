@@ -12,6 +12,7 @@ package types
 import (
 	"io"
 	"math/big"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -28,6 +29,9 @@ type RawStatement struct {
 	AssetSymbol         string `json:"assetSymbol"`
 	BegBal              string `json:"begBal"`
 	BlockNumber         string `json:"blockNumber"`
+	CorrectingIn        string `json:"correctingIn"`
+	CorrectingOut       string `json:"correctingOut"`
+	CorrectingReason    string `json:"correctingReason"`
 	Decimals            string `json:"decimals"`
 	EndBal              string `json:"endBal"`
 	GasOut              string `json:"gasOut"`
@@ -63,6 +67,9 @@ type SimpleStatement struct {
 	AssetSymbol         string         `json:"assetSymbol"`
 	BegBal              big.Int        `json:"begBal"`
 	BlockNumber         base.Blknum    `json:"blockNumber"`
+	CorrectingIn        big.Int        `json:"correctingIn,omitempty"`
+	CorrectingOut       big.Int        `json:"correctingOut,omitempty"`
+	CorrectingReason    string         `json:"correctingReason,omitempty"`
 	Decimals            uint64         `json:"decimals"`
 	EndBal              big.Int        `json:"endBal"`
 	GasOut              big.Int        `json:"gasOut,omitempty"`
@@ -139,10 +146,12 @@ func (s *SimpleStatement) Model(verbose bool, format string, extraOptions map[st
 		"minerNephewRewardIn": fmt(s.MinerNephewRewardIn),
 		"minerTxFeeIn":        fmt(s.MinerTxFeeIn),
 		"minerUncleRewardIn":  fmt(s.MinerUncleRewardIn),
+		"correctingIn":        fmt(s.CorrectingIn),
 		"prefundIn":           fmt(s.PrefundIn),
 		"totalOut":            fmt(*s.TotalOut()),
 		"amountOut":           fmt(s.AmountOut),
 		"internalOut":         fmt(s.InternalOut),
+		"correctingOut":       fmt(s.CorrectingOut),
 		"selfDestructOut":     fmt(s.SelfDestructOut),
 		"gasOut":              fmt(s.GasOut),
 		"totalOutLessGas":     fmt(*s.TotalOutLessGas()),
@@ -151,6 +160,7 @@ func (s *SimpleStatement) Model(verbose bool, format string, extraOptions map[st
 		"begBalDiff":          fmt(*s.BegBalDiff()),
 		"endBalDiff":          fmt(*s.EndBalDiff()),
 		"endBalCalc":          fmt(*s.EndBalCalc()),
+		"correctingReason":    s.CorrectingReason,
 	}
 	order = []string{
 		"blockNumber", "transactionIndex", "logindex", "transactionHash", "timestamp", "date",
@@ -158,7 +168,8 @@ func (s *SimpleStatement) Model(verbose bool, format string, extraOptions map[st
 		"sender", "recipient", "begBal", "amountNet", "endBal", "reconciliationType", "reconciled",
 		"totalIn", "amountIn", "internalIn", "selfDestructIn", "minerBaseRewardIn", "minerNephewRewardIn",
 		"minerTxFeeIn", "minerUncleRewardIn", "prefundIn", "totalOut", "amountOut", "internalOut",
-		"selfDestructOut", "gasOut", "totalOutLessGas", "prevAppBlk", "prevBal", "begBalDiff", "endBalDiff", "endBalCalc",
+		"selfDestructOut", "gasOut", "totalOutLessGas", "prevAppBlk", "prevBal", "begBalDiff",
+		"endBalDiff", "endBalCalc", "correctingReason",
 	}
 	// EXISTING_CODE
 
@@ -196,6 +207,7 @@ func (s *SimpleStatement) TotalIn() *big.Int {
 		s.MinerNephewRewardIn,
 		s.MinerTxFeeIn,
 		s.MinerUncleRewardIn,
+		s.CorrectingIn,
 		s.PrefundIn,
 	}
 
@@ -212,6 +224,7 @@ func (s *SimpleStatement) TotalIn() *big.Int {
 	logger.TestLog(debugging, "MinerNephewRewardIn: ", s.MinerNephewRewardIn.Text(10))
 	logger.TestLog(debugging, "MinerTxFeeIn:        ", s.MinerTxFeeIn.Text(10))
 	logger.TestLog(debugging, "MinerUncleRewardIn:  ", s.MinerUncleRewardIn.Text(10))
+	logger.TestLog(debugging, "CorrectingIn:        ", s.CorrectingIn.Text(10))
 	logger.TestLog(debugging, "PrefundIn:           ", s.PrefundIn.Text(10))
 	logger.TestLog(debugging, "TotalIn:             ", sum.Text(10))
 
@@ -222,6 +235,7 @@ func (s *SimpleStatement) TotalOut() *big.Int {
 	vals := []big.Int{
 		s.AmountOut,
 		s.InternalOut,
+		s.CorrectingOut,
 		s.SelfDestructOut,
 		s.GasOut,
 	}
@@ -234,11 +248,16 @@ func (s *SimpleStatement) TotalOut() *big.Int {
 	logger.TestLog(debugging, "-------- TotalOut ----------------")
 	logger.TestLog(debugging, "AmountOut:      ", s.AmountOut.Text(10))
 	logger.TestLog(debugging, "InternalOut:    ", s.InternalOut.Text(10))
+	logger.TestLog(debugging, "NullTransferOut:", s.CorrectingOut.Text(10))
 	logger.TestLog(debugging, "SelfDestructOut:", s.SelfDestructOut.Text(10))
 	logger.TestLog(debugging, "GasOut:         ", s.GasOut.Text(10))
 	logger.TestLog(debugging, "TotalOut:       ", sum.Text(10))
 
 	return sum
+}
+
+func (s *SimpleStatement) MoneyMoved() bool {
+	return s.TotalIn() != new(big.Int).SetUint64(0) || s.TotalOut() != new(big.Int).SetUint64(0)
 }
 
 func (s *SimpleStatement) AmountNet() *big.Int {
@@ -322,16 +341,19 @@ func (s *SimpleStatement) Reconciled() bool {
 
 func (s *SimpleStatement) ClearInternal() {
 	// s.AmountIn.SetUint64(0)
-	// s.AmountOut.SetUint64(0)
-	// s.GasOut.SetUint64(0)
 	s.InternalIn.SetUint64(0)
-	s.InternalOut.SetUint64(0)
 	s.MinerBaseRewardIn.SetUint64(0)
 	s.MinerNephewRewardIn.SetUint64(0)
 	s.MinerTxFeeIn.SetUint64(0)
 	s.MinerUncleRewardIn.SetUint64(0)
+	s.CorrectingIn.SetUint64(0)
 	s.PrefundIn.SetUint64(0)
 	s.SelfDestructIn.SetUint64(0)
+
+	// s.AmountOut.SetUint64(0)
+	// s.GasOut.SetUint64(0)
+	s.InternalOut.SetUint64(0)
+	s.CorrectingOut.SetUint64(0)
 	s.SelfDestructOut.SetUint64(0)
 }
 
@@ -354,6 +376,80 @@ func (s *SimpleStatement) IsStableCoin() bool {
 		usdt: true,
 	}
 	return stables[s.AssetAddr]
+}
+
+func (s *SimpleStatement) isNullTransfer(tx *SimpleTransaction) bool {
+	logger.Warn("Statement is not reconciled", s.AssetSymbol, "at", s.BlockNumber, s.TransactionIndex, s.LogIndex)
+	logger.TestLog(true, "A possible nullTransfer")
+	lotsOfLogs := len(tx.Receipt.Logs) > 10
+	logger.TestLog(true, "  nLogs:            ", len(tx.Receipt.Logs))
+	logger.TestLog(true, "    lotsOfLogs:      -->", lotsOfLogs)
+	mayBeAirdrop := s.Sender.IsZero() || s.Sender == tx.To
+	logger.TestLog(true, "  Sender.IsZero:    ", s.Sender, s.Sender.IsZero())
+	logger.TestLog(true, "  or Sender == To:  ", s.Sender == tx.To)
+	logger.TestLog(true, "    mayBeAirdrop:    -->", mayBeAirdrop)
+	noBalanceChange := s.EndBal.Cmp(&s.BegBal) == 0 && s.MoneyMoved()
+	logger.TestLog(true, "  EndBal-BegBal:    ", s.EndBal.Cmp(&s.BegBal))
+	logger.TestLog(true, "  MoneyMoved:       ", s.MoneyMoved())
+	logger.TestLog(true, "    noBalanceChange: -->", noBalanceChange)
+	ret := (lotsOfLogs || mayBeAirdrop) && noBalanceChange
+	if !ret {
+		logger.TestLog(true, "  ---> Not a nullTransfer")
+	}
+	return ret
+}
+
+func (s *SimpleStatement) CorrectForNullTransfer(tx *SimpleTransaction) bool {
+	if s.isNullTransfer(tx) && !s.IsEth() {
+		logger.TestLog(true, "Correcting token transfer for a null transfer")
+		amt := s.TotalIn() // use totalIn since this is the amount that was faked
+		s.AmountOut = *new(big.Int)
+		s.AmountIn = *new(big.Int)
+		s.CorrectingIn = *amt
+		s.CorrectingOut = *amt
+		s.CorrectingReason = "null-transfer"
+	}
+	return s.Reconciled()
+}
+
+func (s *SimpleStatement) CorrectForSomethingElse(tx *SimpleTransaction) bool {
+	if !s.IsEth() {
+		logger.TestLog(true, "Correcting token transfer for unknown income or outflow")
+
+		s.CorrectingIn.SetUint64(0)
+		s.CorrectingOut.SetUint64(0)
+		s.CorrectingReason = ""
+		zero := new(big.Int).SetInt64(0)
+		cmpBegBal := s.BegBalDiff().Cmp(zero)
+		cmpEndBal := s.EndBalDiff().Cmp(zero)
+
+		if cmpBegBal > 0 {
+			s.CorrectingIn = *s.BegBalDiff()
+			s.CorrectingReason = "begbal"
+		} else if cmpBegBal < 0 {
+			s.CorrectingOut = *s.BegBalDiff()
+			s.CorrectingReason = "begbal"
+		}
+
+		if cmpEndBal > 0 {
+			n := new(big.Int).Add(&s.CorrectingIn, s.EndBalDiff())
+			s.CorrectingIn = *n
+			s.CorrectingReason += "endbal"
+		} else if cmpEndBal < 0 {
+			n := new(big.Int).Add(&s.CorrectingOut, s.EndBalDiff())
+			s.CorrectingOut = *n
+			s.CorrectingReason += "endbal"
+		}
+		s.CorrectingReason = strings.Replace(s.CorrectingReason, "begbalendbal", "begbal-endbal", -1)
+
+		// amt := s.TotalIn() // use totalIn since this is the amount that was faked
+		// s.AmountOut = *new(big.Int)
+		// s.AmountIn = *new(big.Int)
+		// s.CorrectingIn = *amt
+		// s.CorrectingOut = *amt
+		// s.CorrectingReason = "null-transfer"
+	}
+	return s.Reconciled()
 }
 
 // EXISTING_CODE

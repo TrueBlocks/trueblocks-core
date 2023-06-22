@@ -51,11 +51,13 @@ TEST[DATE|TIME]    minerBaseRewardIn:   0
 TEST[DATE|TIME]    minerNephewRewardIn: 0
 TEST[DATE|TIME]    minerTxFeeIn:        0
 TEST[DATE|TIME]    minerUncleRewardIn:  0
+TEST[DATE|TIME]    correctingIn:        0
 TEST[DATE|TIME]    prefundIn:           0
 TEST[DATE|TIME]    selfDestructIn:      0
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    amountOut:           0
 TEST[DATE|TIME]    internalOut:         0
+TEST[DATE|TIME]    correctingOut:       0
 TEST[DATE|TIME]    selfDestructOut:     0
 TEST[DATE|TIME]    gasOut:              214832000000000
 TEST[DATE|TIME]    totalOut:            214832000000000
@@ -64,6 +66,8 @@ TEST[DATE|TIME]    endBal:              1259710448741022040
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          1259710448741022040
+TEST[DATE|TIME]    correctingReason:    
+TEST[DATE|TIME]    moneyMoved:          true
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -103,11 +107,13 @@ TEST[DATE|TIME]    minerBaseRewardIn:   0
 TEST[DATE|TIME]    minerNephewRewardIn: 0
 TEST[DATE|TIME]    minerTxFeeIn:        0
 TEST[DATE|TIME]    minerUncleRewardIn:  0
+TEST[DATE|TIME]    correctingIn:        0
 TEST[DATE|TIME]    prefundIn:           0
 TEST[DATE|TIME]    selfDestructIn:      0
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    amountOut:           215173
 TEST[DATE|TIME]    internalOut:         0
+TEST[DATE|TIME]    correctingOut:       0
 TEST[DATE|TIME]    selfDestructOut:     0
 TEST[DATE|TIME]    gasOut:              0
 TEST[DATE|TIME]    totalOut:            215173
@@ -116,6 +122,8 @@ TEST[DATE|TIME]    endBal:              117492936
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          117492936
+TEST[DATE|TIME]    correctingReason:    
+TEST[DATE|TIME]    moneyMoved:          true
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -131,6 +139,9 @@ TEST[DATE|TIME] End of trial balance report
       "begBal": "1259925280741022040",
       "begBalDiff": "0",
       "blockNumber": 5218355,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "",
       "date": "2018-03-08 12:06:01 UTC",
       "decimals": 18,
       "endBal": "1259710448741022040",
@@ -172,6 +183,9 @@ TEST[DATE|TIME] End of trial balance report
       "begBal": "117708109",
       "begBalDiff": "0",
       "blockNumber": 5218355,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "",
       "date": "2018-03-08 12:06:01 UTC",
       "decimals": 18,
       "endBal": "117492936",

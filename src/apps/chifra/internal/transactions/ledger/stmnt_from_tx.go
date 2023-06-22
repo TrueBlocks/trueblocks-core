@@ -68,10 +68,10 @@ func (ledgers *Ledger) GetStatementsFromTransaction(trans *types.SimpleTransacti
 	}
 
 	if !ledgers.UseTraces && ledgers.TrialBalance("ETH", &ret) {
-		if len(ret.AmountNet().Bits()) == 0 {
-			logger.TestLog(true, "Tx reconciled with a zero value net amount. It's okay.")
-		} else {
+		if ret.MoneyMoved() {
 			statements = append(statements, &ret)
+		} else {
+			logger.TestLog(true, "Tx reconciled with a zero value net amount. It's okay.")
 		}
 	} else {
 		logger.TestLog(!ledgers.UseTraces, "Trial balance failed for ", ret.TransactionHash.Hex(), "need to decend into traces")
@@ -85,7 +85,7 @@ func (ledgers *Ledger) GetStatementsFromTransaction(trans *types.SimpleTransacti
 	for _, log := range trans.Receipt.Logs {
 		if s, err := ledgers.GetStatementFromLog(&log); s != nil {
 			if s.Sender == ledgers.AccountFor || s.Recipient == ledgers.AccountFor {
-				add := !ledgers.NoZero || len(s.AmountNet().Bits()) != 0
+				add := !ledgers.NoZero || s.MoneyMoved()
 				if add {
 					statements = append(statements, s)
 				}

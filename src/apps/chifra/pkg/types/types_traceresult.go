@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -55,7 +56,7 @@ func (s *SimpleTraceResult) Model(verbose bool, format string, extraOptions map[
 			model["gasUsed"] = s.GasUsed
 			order = append(order, "gasUsed")
 		}
-		if len(s.Output) > 2 {  // "0x" is empty
+		if len(s.Output) > 2 { // "0x" is empty
 			model["output"] = s.Output
 			order = append(order, "output")
 		}
@@ -63,7 +64,7 @@ func (s *SimpleTraceResult) Model(verbose bool, format string, extraOptions map[
 			model["address"] = s.Address
 			order = append(order, "address")
 		}
-		if extraOptions["traces"] != true && len(s.Code) > 2 {  // "0x" is empty
+		if extraOptions["traces"] != true && len(s.Code) > 2 { // "0x" is empty
 			model["code"] = s.Code
 			order = append(order, "code")
 		}
@@ -107,4 +108,9 @@ func (s *SimpleTraceResult) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
+func (s *SimpleTraceResult) String() string {
+	ret, _ := json.MarshalIndent(s, "", "  ")
+	return string(ret)
+}
+
 // EXISTING_CODE

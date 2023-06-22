@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"strconv"
@@ -199,6 +200,11 @@ func (s *SimpleTrace) ReadFrom(r io.Reader) (n int64, err error) {
 func mustParseUint(input any) (result uint64) {
 	result, _ = strconv.ParseUint(fmt.Sprint(input), 0, 64)
 	return
+}
+
+func (s *SimpleTrace) String() string {
+	ret, _ := json.MarshalIndent(s, "", "  ")
+	return string(ret)
 }
 
 // EXISTING_CODE

@@ -331,10 +331,12 @@ Statements consist of the following fields:
 | minerNephewRewardIn | the nephew reward if the miner is the accountedFor address                                                                                     | int256    |
 | minerTxFeeIn        | the transaction fee reward if the miner is the accountedFor address                                                                            | int256    |
 | minerUncleRewardIn  | the uncle reward if the miner who won the uncle block is the accountedFor address                                                              | int256    |
+| correctingIn        | for unreconciled token transfers only, the incoming amount needed to correct the transfer so it balances                                       | int256    |
 | prefundIn           | at block zero (0) only, the amount of genesis income for the accountedFor address                                                              | int256    |
 | totalOut            | a calculated field -- the sum of the following `Out` fields                                                                                    | int256    |
 | amountOut           | the amount (in units of the asset) of regular outflow during this transaction                                                                  | int256    |
 | internalOut         | the value of any internal value transfers out of the accountedFor account                                                                      | int256    |
+| correctingOut       | for unreconciled token transfers only, the outgoing amount needed to correct the transfer so it balances                                       | int256    |
 | selfDestructOut     | the value of the self-destructed value out if the accountedFor address was self-destructed                                                     | int256    |
 | gasOut              | if the transaction's original sender is the accountedFor address, the amount of gas expended                                                   | int256    |
 | totalOutLessGas     | a calculated field -- totalOut - gasOut                                                                                                        | int256    |
@@ -343,6 +345,7 @@ Statements consist of the following fields:
 | begBalDiff          | a calculated field -- difference between expected beginning balance and balance at last reconciliation, if non-zero, the reconciliation failed | int256    |
 | endBalDiff          | a calculated field -- endBal - endBalCalc, if non-zero, the reconciliation failed                                                              | int256    |
 | endBalCalc          | a calculated field -- begBal + amountNet                                                                                                       | int256    |
+| correctingReason    | the reason for the correcting entries, if any                                                                                                  | string    |
 
 ## Base types
 

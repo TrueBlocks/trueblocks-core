@@ -29,9 +29,14 @@ func (l *Ledger) TrialBalance(msg string, r *types.SimpleStatement) bool {
 		logger.TestLog(l.TestMode, "Start of trial balance report")
 	}
 
-	if !r.Reconciled() {
-		logger.Error("Statement is not reconciled", r.AssetSymbol, "at", r.BlockNumber, r.TransactionIndex)
-	} else if len(r.AmountNet().Bits()) != 0 {
+	okay := r.Reconciled()
+	if !okay {
+		if okay = r.CorrectForNullTransfer(l.Tx); !okay {
+			okay = r.CorrectForSomethingElse(l.Tx)
+		}
+	}
+
+	if okay && r.MoneyMoved() {
 		var err error
 		if r.SpotPrice, r.PriceSource, err = pricing.PriceUsd(l.Chain, l.TestMode, r); err != nil {
 			logger.Error("Failed to get price for", r.AssetSymbol, "at", r.BlockNumber, r.TransactionIndex)

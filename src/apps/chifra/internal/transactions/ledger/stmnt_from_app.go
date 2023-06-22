@@ -6,15 +6,16 @@ import (
 )
 
 // GetStatementsFromAppearance visits an appearance and returns a list of (hopefully) reconciled statements.
-func (l *Ledger) GetStatementsFromAppearance(chain string, app *types.RawAppearance) (statements []types.SimpleStatement, err error) {
+func (ledgers *Ledger) GetStatementsFromAppearance(chain string, app *types.RawAppearance) (statements []types.SimpleStatement, err error) {
 	var tx *types.SimpleTransaction
 	if tx, err = rpcClient.GetTransactionByAppearance(chain, app, false); err != nil {
 		return []types.SimpleStatement{}, err
 
 	} else {
-		if stmts := l.GetStatementsFromTransaction(tx); len(stmts) > 0 {
+		ledgers.Tx = tx // we need this below
+		if stmts := ledgers.GetStatementsFromTransaction(tx); len(stmts) > 0 {
 			for _, s := range stmts {
-				add := !l.NoZero || len(s.AmountNet().Bits()) != 0
+				add := !ledgers.NoZero || s.MoneyMoved()
 				if add {
 					statements = append(statements, *s)
 				}

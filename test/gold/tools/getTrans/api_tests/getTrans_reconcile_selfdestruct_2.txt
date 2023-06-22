@@ -1,4 +1,4 @@
-transactions?transactions=0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd0e4309&fmt=json&accountFor=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
+transactions?transactions=0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd0e4309&fmt=json&accountFor=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&traces
 {
   "data": [
     {
@@ -11,6 +11,9 @@ transactions?transactions=0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af
       "begBal": "3918480150279762757516",
       "begBalDiff": "0",
       "blockNumber": 2608034,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "",
       "date": "2016-11-11 16:03:57 UTC",
       "decimals": 18,
       "endBal": "3918970522967974756789",
@@ -27,14 +30,14 @@ transactions?transactions=0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af
       "prefundIn": "0",
       "prevAppBlk": 2608033,
       "prevBal": "3918480150279762757516",
-      "priceSource": "not-priced",
+      "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
       "reconciled": true,
       "reconciliationType": "trace-eth",
       "selfDestructIn": "490372688211999273",
       "selfDestructOut": "0",
-      "sender": "0x42c8fcbc73d625f1d258a32915b6a573095de93d",
-      "spotPrice": 1,
+      "sender": "0x9bd20e68b22f63c651a30f2cdbf6d539e465f83c",
+      "spotPrice": 0,
       "timestamp": 1478880237,
       "totalIn": "490372688211999273",
       "totalOut": "0",
