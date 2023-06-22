@@ -246,6 +246,12 @@ string_q specialCase(const CClassDefinition& model, const CMember& field, const 
 
 //------------------------------------------------------------------------------------------------------------
 bool skipField(const CClassDefinition& model, const CMember& field, bool raw) {
+    bool noGo =
+        (field.memberFlags & IS_MINIMAL) && (field.memberFlags & IS_NOWRITE) && (field.memberFlags & IS_NOADDFLD);
+    if (noGo) {
+        return true;
+    }
+
     if (!raw && field.memberFlags & IS_RAWONLY) {
         return true;
     }

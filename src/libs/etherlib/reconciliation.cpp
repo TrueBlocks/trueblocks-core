@@ -927,7 +927,7 @@ string_q bni_2_Export(const timestamp_t& ts, const bigint_t& numIn, uint64_t dec
         quote = "";  // will be quoted automatically
 
     if (numIn == 0)
-        return quote + quote;
+        return quote + "0" + quote;
     if (expContext().asEther) {
         return quote + bni_2_Ether(numIn, decimals) + quote;
     } else {

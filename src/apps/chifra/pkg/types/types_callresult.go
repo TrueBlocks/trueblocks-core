@@ -39,6 +39,7 @@ type SimpleCallResult struct {
 	Signature        string            `json:"signature"`
 	raw              *RawCallResult    `json:"-"`
 	// EXISTING_CODE
+	RawReturn string
 	// EXISTING_CODE
 }
 

@@ -56,6 +56,7 @@ type SimpleTransfer struct {
 	TransactionIndex base.Blknum    `json:"transactionIndex"`
 	raw              *RawTransfer   `json:"-"`
 	// EXISTING_CODE
+	Log *SimpleLog `json:"-"`
 	// EXISTING_CODE
 }
 
