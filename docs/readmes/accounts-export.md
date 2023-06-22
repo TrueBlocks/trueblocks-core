@@ -71,6 +71,7 @@ Data models produced by this tool:
 - [reconciliation](/data-model/accounts/#reconciliation)
 - [monitor](/data-model/accounts/#monitor)
 - [appearancecount](/data-model/accounts/#appearancecount)
+- [statement](/data-model/accounts/#statement)
 - [transaction](/data-model/chaindata/#transaction)
 - [transfer](/data-model/chaindata/#transfer)
 - [receipt](/data-model/chaindata/#receipt)
