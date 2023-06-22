@@ -21,21 +21,16 @@ import (
 type RawStatement struct {
 	AccountedFor        string `json:"accountedFor"`
 	AmountIn            string `json:"amountIn"`
-	AmountNet           string `json:"amountNet"`
 	AmountOut           string `json:"amountOut"`
 	AssetAddr           string `json:"assetAddr"`
 	AssetSymbol         string `json:"assetSymbol"`
 	BegBal              string `json:"begBal"`
-	BegBalDiff          string `json:"begBalDiff"`
 	BlockNumber         string `json:"blockNumber"`
 	CorrectingIn        string `json:"correctingIn"`
 	CorrectingOut       string `json:"correctingOut"`
 	CorrectingReason    string `json:"correctingReason"`
-	Date                string `json:"date"`
 	Decimals            string `json:"decimals"`
 	EndBal              string `json:"endBal"`
-	EndBalCalc          string `json:"endBalCalc"`
-	EndBalDiff          string `json:"endBalDiff"`
 	GasOut              string `json:"gasOut"`
 	InternalIn          string `json:"internalIn"`
 	InternalOut         string `json:"internalOut"`
@@ -49,16 +44,12 @@ type RawStatement struct {
 	PrevBal             string `json:"prevBal"`
 	PriceSource         string `json:"priceSource"`
 	Recipient           string `json:"recipient"`
-	Reconciled          string `json:"reconciled"`
 	ReconciliationType  string `json:"reconciliationType"`
 	SelfDestructIn      string `json:"selfDestructIn"`
 	SelfDestructOut     string `json:"selfDestructOut"`
 	Sender              string `json:"sender"`
 	SpotPrice           string `json:"spotPrice"`
 	Timestamp           string `json:"timestamp"`
-	TotalIn             string `json:"totalIn"`
-	TotalOut            string `json:"totalOut"`
-	TotalOutLessGas     string `json:"totalOutLessGas"`
 	TransactionHash     string `json:"transactionHash"`
 	TransactionIndex    string `json:"transactionIndex"`
 	// EXISTING_CODE
@@ -68,21 +59,16 @@ type RawStatement struct {
 type SimpleStatement struct {
 	AccountedFor        base.Address   `json:"accountedFor"`
 	AmountIn            big.Int        `json:"amountIn,omitempty"`
-	AmountNet           big.Int        `json:"amountNet"`
 	AmountOut           big.Int        `json:"amountOut,omitempty"`
 	AssetAddr           base.Address   `json:"assetAddr"`
 	AssetSymbol         string         `json:"assetSymbol"`
 	BegBal              big.Int        `json:"begBal"`
-	BegBalDiff          big.Int        `json:"begBalDiff,omitempty"`
 	BlockNumber         base.Blknum    `json:"blockNumber"`
 	CorrectingIn        big.Int        `json:"correctingIn,omitempty"`
 	CorrectingOut       big.Int        `json:"correctingOut,omitempty"`
 	CorrectingReason    string         `json:"correctingReason,omitempty"`
-	Date                string         `json:"date"`
 	Decimals            uint64         `json:"decimals"`
 	EndBal              big.Int        `json:"endBal"`
-	EndBalCalc          big.Int        `json:"endBalCalc,omitempty"`
-	EndBalDiff          big.Int        `json:"endBalDiff,omitempty"`
 	GasOut              big.Int        `json:"gasOut,omitempty"`
 	InternalIn          big.Int        `json:"internalIn,omitempty"`
 	InternalOut         big.Int        `json:"internalOut,omitempty"`
@@ -96,16 +82,12 @@ type SimpleStatement struct {
 	PrevBal             big.Int        `json:"prevBal,omitempty"`
 	PriceSource         string         `json:"priceSource"`
 	Recipient           base.Address   `json:"recipient"`
-	Reconciled          bool           `json:"reconciled"`
 	ReconciliationType  string         `json:"reconciliationType"`
 	SelfDestructIn      big.Int        `json:"selfDestructIn,omitempty"`
 	SelfDestructOut     big.Int        `json:"selfDestructOut,omitempty"`
 	Sender              base.Address   `json:"sender"`
 	SpotPrice           float64        `json:"spotPrice"`
 	Timestamp           base.Timestamp `json:"timestamp"`
-	TotalIn             big.Int        `json:"totalIn"`
-	TotalOut            big.Int        `json:"totalOut"`
-	TotalOutLessGas     big.Int        `json:"totalOutLessGas"`
 	TransactionHash     base.Hash      `json:"transactionHash"`
 	TransactionIndex    base.Blknum    `json:"transactionIndex"`
 	raw                 *RawStatement  `json:"-"`
