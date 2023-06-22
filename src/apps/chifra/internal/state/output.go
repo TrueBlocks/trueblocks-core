@@ -55,7 +55,6 @@ func (opts *StateOptions) StateInternal() (err error, handled bool) {
 	}
 
 	handled = true
-
 	if opts.IsPorted() {
 		err = opts.HandleCall()
 	} else {

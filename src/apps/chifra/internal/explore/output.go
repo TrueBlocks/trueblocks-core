@@ -16,6 +16,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -55,15 +56,20 @@ func (opts *ExploreOptions) ExploreInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.Globals.IsApiMode() {
-		return validate.Usage("Cannot use explore route in API mode."), true
+	if !opts.IsPorted() {
+		logger.Fatal("Should not happen in ExploreInternal")
 	}
 
-	for _, url := range urls {
-		ret := url.getUrl(opts)
-		fmt.Printf("Opening %s\n", ret)
-		if !opts.Globals.TestMode {
-			utils.OpenBrowser(ret)
+	handled = true
+	if opts.Globals.IsApiMode() {
+		err = validate.Usage("Cannot use explore route in API mode.")
+	} else {
+		for _, url := range urls {
+			ret := url.getUrl(opts)
+			fmt.Printf("Opening %s\n", ret)
+			if !opts.Globals.TestMode {
+				utils.OpenBrowser(ret)
+			}
 		}
 	}
 	// EXISTING_CODE
@@ -82,6 +88,7 @@ func GetExploreOptions(args []string, g *globals.GlobalOptions) *ExploreOptions 
 
 func (opts *ExploreOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
+	ported = true
 	// EXISTING_CODE
 	return
 }

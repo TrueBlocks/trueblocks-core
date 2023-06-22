@@ -92,7 +92,7 @@ int main(int argc, const char* argv[]) {
         }
         once = false;
     }
-    cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
+    cout << export Postamble(options.errors, expContext().fmtMap["meta"]);
 
     etherlib_cleanup();
     return 0;

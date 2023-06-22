@@ -159,7 +159,6 @@ func CallContract(chain string, call *ContractCall) (results *types.SimpleCallRe
 		},
 		blockNumberHex,
 	})
-
 	if err != nil {
 		return nil, err
 	}

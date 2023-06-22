@@ -55,7 +55,7 @@ func (s *SimpleTraceResult) Model(verbose bool, format string, extraOptions map[
 			model["gasUsed"] = s.GasUsed
 			order = append(order, "gasUsed")
 		}
-		if len(s.Output) > 2 {  // "0x" is empty
+		if len(s.Output) > 2 { // "0x" is empty
 			model["output"] = s.Output
 			order = append(order, "output")
 		}
@@ -63,7 +63,7 @@ func (s *SimpleTraceResult) Model(verbose bool, format string, extraOptions map[
 			model["address"] = s.Address
 			order = append(order, "address")
 		}
-		if extraOptions["traces"] != true && len(s.Code) > 2 {  // "0x" is empty
+		if extraOptions["traces"] != true && len(s.Code) > 2 { // "0x" is empty
 			model["code"] = s.Code
 			order = append(order, "code")
 		}

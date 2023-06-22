@@ -74,6 +74,7 @@ func GetScrapeOptions(args []string, g *globals.GlobalOptions) *ScrapeOptions {
 
 func (opts *ScrapeOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
+	ported = true
 	// EXISTING_CODE
 	return
 }

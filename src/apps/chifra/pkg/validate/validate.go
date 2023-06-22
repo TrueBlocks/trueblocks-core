@@ -100,6 +100,22 @@ func ValidateAddresses(args []string) error {
 	return nil
 }
 
+func ValidateExactlyOneAddr(args []string) error {
+	if err := ValidateAtLeastOneAddr(args); err != nil {
+		return Usage("Please specify a valid Ethereum address.")
+	}
+
+	if len(args) > 1 {
+		return Usage("Please specify only a single Ethereum address.")
+	}
+
+	if !IsValidAddress(args[0]) {
+		return Usage("The value {0} is not a valid address.", args[0])
+	}
+
+	return nil
+}
+
 func ValidateAtLeastOneAddr(args []string) error {
 	hasOne := false
 	for _, arg := range args {

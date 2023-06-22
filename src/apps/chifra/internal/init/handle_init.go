@@ -112,7 +112,6 @@ var m sync.Mutex
 // TODO: So we can capture both the blooms and the index portions in one summary. Once we move to single stream, this can go local
 var nProcessed12 int
 var nStarted12 int
-var nUpdated12 int
 
 // downloadAndReportProgress Downloads the chunks and reports progress to the progressChannel
 func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord, chunkType cache.CacheType, nTotal int) ([]manifest.ChunkRecord, bool) {
@@ -169,7 +168,6 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord
 		case progress.Update:
 			msg := fmt.Sprintf("%s%s%s", colors.Yellow, event.Message, colors.Off)
 			logger.Info(msg, spaces)
-			nUpdated12++
 
 		case progress.Finished:
 			nProcessed12++
