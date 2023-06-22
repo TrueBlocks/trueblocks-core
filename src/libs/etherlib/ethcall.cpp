@@ -445,8 +445,11 @@ bool CEthCall::getCallResult(CStringArray& out) const {
 bool doEthCall(CEthCall& theCall, bool checkProxy) {
     if (theCall.deployed != NOPOS && theCall.deployed > theCall.blockNumber) {
         if (isTestMode()) {
-            LOG_INFO(theCall.Format(
-                "Calling a contract ([{ADDRESS}]) at block [{BLOCKNUMBER}] prior to its deployment [{DEPLOYED}]"));
+            cerr << "TEST[DATE|TIME] "
+                 << theCall.Format(
+                        "Call to a smart contract ([{ADDRESS}]) at block [{BLOCKNUMBER}] prior to its "
+                        "deployment [{DEPLOYED}]")
+                 << endl;
         }
         return false;
     }
@@ -454,9 +457,8 @@ bool doEthCall(CEthCall& theCall, bool checkProxy) {
     string_q orig = theCall.encoding;
     blknum_t o = theCall.blockNumber;
     if (isTestMode()) {
-        theCall.blockNumber = min(blknum_t(15000000), theCall.blockNumber);
-        // TODO: "WHAT?"
-        LOG_INFO("Calling ", theCall.address, " at block ", theCall.blockNumber, "...: ", getEnvStr("WHAT?"));
+        // If we don't do this, we get a different result every time we run the test
+        theCall.blockNumber = min(blknum_t(17000000), theCall.blockNumber);
     }
 
     ostringstream cmd;
@@ -469,10 +471,6 @@ bool doEthCall(CEthCall& theCall, bool checkProxy) {
 
     string_q ret = callRPC("eth_call", cmd.str(), false);
     if (startsWith(ret, "0x")) {
-        if (isTestMode()) {
-            LOG_INFO("call to ", theCall.address, " at block ", theCall.blockNumber, " at four-byte ", theCall.encoding,
-                     " returned ", ret);
-        }
         theCall.encoding = orig;
         theCall.blockNumber = o;
         theCall.abi_spec.articulateOutputs(theCall.encoding.substr(0, 10), ret, theCall.callResult);

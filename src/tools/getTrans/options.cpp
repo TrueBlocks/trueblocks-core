@@ -116,7 +116,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!ledgerManager.accountedFor.empty()) {
         string_q fmt = STR_DISPLAY_RECONCILIATION;
         if (!articulate) {
-            fmt = substitute(fmt, "[{ENCODING}]\t[{SIGNATURE}]\t", "");
+            fmt = substitute(fmt, "\t[{ENCODING}]\t[{SIGNATURE}]", "");
         }
         configureDisplay("getTrans", "CReconciliation", fmt);
     } else {

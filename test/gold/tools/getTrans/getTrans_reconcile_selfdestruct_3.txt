@@ -1,0 +1,34 @@
+chifra transactions  0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd0e4309 --fmt json --account_for 0x9bd20e68b22f63c651a30f2cdbf6d539e465f83c --traces
+TEST[DATE|TIME] Transactions:  [0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd0e4309]
+TEST[DATE|TIME] Traces:  true
+TEST[DATE|TIME] AccountFor:  0x9bd20e68b22f63c651a30f2cdbf6d539e465f83c
+TEST[DATE|TIME] Format:  json
+{ "data": [
+TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0x9bd20e68b22f63c651a30f2cdbf6d539e465f83c
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
+TIME ~ CLOCK - <INFO>  :    hash:                0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd0e4309
+TIME ~ CLOCK - <INFO>  :    blockNumber:         2608034
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    5
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 2608033 prevBlock: 2608033 transfer.blockNumber: 2608034 nextBlock: 18446744073709551615
+TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
+TIME ~ CLOCK - <INFO>  :    blks:                [2608034] 1 1
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0x9bd20e68b22f63c651a30f2cdbf6d539e465f83c
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
+TIME ~ CLOCK - <INFO>  :    hash:                0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd0e4309
+TIME ~ CLOCK - <INFO>  :    blockNumber:         2608034
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    5
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+] }

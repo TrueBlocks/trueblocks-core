@@ -1,0 +1,183 @@
+chifra transactions  10681057.170 10607241.278 --account_for 0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3 --fmt json --log_level 10
+TEST[DATE|TIME] Transactions:  [10681057.170 10607241.278]
+TEST[DATE|TIME] AccountFor:  0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3
+TEST[DATE|TIME] LogLevel:  10
+TEST[DATE|TIME] Format:  json
+{ "data": [
+TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
+TIME ~ CLOCK - <INFO>  :    hash:                0x39a7c959c11489f7c0a84ed67f960e441ae5be106a1a42afb75ee9f0119d16bb
+TIME ~ CLOCK - <INFO>  :    blockNumber:         10681057
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    170
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
+TIME ~ CLOCK - <INFO>  :    begBal:              163750000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              167500000000000000
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          163750000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          -3750000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          163750000000000000
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------traces-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: trace-
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
+TIME ~ CLOCK - <INFO>  :    hash:                0x39a7c959c11489f7c0a84ed67f960e441ae5be106a1a42afb75ee9f0119d16bb
+TIME ~ CLOCK - <INFO>  :    blockNumber:         10681057
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    170
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
+TIME ~ CLOCK - <INFO>  :    begBal:              163750000000000000
+TIME ~ CLOCK - <INFO>  :    internalIn:          3750000000000000
+TIME ~ CLOCK - <INFO>  :    totalIn:             3750000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           3750000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              167500000000000000
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 10681056 prevBlock: 10681056 transfer.blockNumber: 10681057 nextBlock: 18446744073709551615
+TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: trace-regular-eth
+TIME ~ CLOCK - <INFO>  :    blks:                [10681057] 1 1
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
+TIME ~ CLOCK - <INFO>  :    hash:                0x39a7c959c11489f7c0a84ed67f960e441ae5be106a1a42afb75ee9f0119d16bb
+TIME ~ CLOCK - <INFO>  :    blockNumber:         10681057
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    170
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
+TIME ~ CLOCK - <INFO>  :    begBal:              163750000000000000
+TIME ~ CLOCK - <INFO>  :    internalIn:          3750000000000000
+TIME ~ CLOCK - <INFO>  :    totalIn:             3750000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           3750000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              167500000000000000
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TIME ~ CLOCK - : 4-----reserve1: 5.82602e+06 reserve2: 13533.8 priceOut: 430.478 reversed: 0
+  {
+    "blockNumber": 10681057,
+    "transactionIndex": 170,
+    "logIndex": 0,
+    "transactionHash": "0x39a7c959c11489f7c0a84ed67f960e441ae5be106a1a42afb75ee9f0119d16bb",
+    "timestamp": 1597714516,
+    "date": "2020-08-18 01:35:16 UTC",
+    "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "assetSymbol": "WEI",
+    "decimals": 18,
+    "spotPrice": 430.47848,
+    "priceSource": "uniswap",
+    "accountedFor": "0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3",
+    "sender": "0x61edb6b025867c1a5354ed46a13c10b616e32ab0",
+    "recipient": "0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3",
+    "begBal": "163750000000000000",
+    "amountNet": "3750000000000000",
+    "endBal": "167500000000000000",
+    "reconciliationType": "trace-regular-eth",
+    "reconciled": true,
+    "totalIn": "3750000000000000",
+    "amountIn": "0",
+    "internalIn": "3750000000000000",
+    "selfDestructIn": "0",
+    "minerBaseRewardIn": "0",
+    "minerNephewRewardIn": "0",
+    "minerTxFeeIn": "0",
+    "minerUncleRewardIn": "0",
+    "prefundIn": "0",
+    "totalOut": "0",
+    "amountOut": "0",
+    "internalOut": "0",
+    "selfDestructOut": "0",
+    "gasOut": "0",
+    "totalOutLessGas": "0",
+    "prevAppBlk": 10681056,
+    "prevBal": "163750000000000000",
+    "begBalDiff": "0",
+    "endBalDiff": "0",
+    "endBalCalc": "167500000000000000"
+  }TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
+TIME ~ CLOCK - <INFO>  :    hash:                0x9447da655ed79671917701902b028df5c79fe597282ba8e6025d82fb044acacf
+TIME ~ CLOCK - <INFO>  :    blockNumber:         10607241
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    278
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
+TIME ~ CLOCK - <INFO>  :    begBal:              2070392590800000000
+TIME ~ CLOCK - <INFO>  :    amountOut:           2068649590800000000
+TIME ~ CLOCK - <INFO>  :    gasOut:              1680000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2070329590800000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2070329590800000000
+TIME ~ CLOCK - <INFO>  :    endBal:              63000000000000
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 10681057 prevBlock: 10681057 transfer.blockNumber: 10607241 nextBlock: 18446744073709551615
+TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
+TIME ~ CLOCK - <INFO>  :    blks:                [10607241] 1 1
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
+TIME ~ CLOCK - <INFO>  :    hash:                0x9447da655ed79671917701902b028df5c79fe597282ba8e6025d82fb044acacf
+TIME ~ CLOCK - <INFO>  :    blockNumber:         10607241
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    278
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
+TIME ~ CLOCK - <INFO>  :    begBal:              2070392590800000000
+TIME ~ CLOCK - <INFO>  :    amountOut:           2068649590800000000
+TIME ~ CLOCK - <INFO>  :    gasOut:              1680000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2070329590800000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2070329590800000000
+TIME ~ CLOCK - <INFO>  :    endBal:              63000000000000
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TIME ~ CLOCK - : 4-----reserve1: 6.02951e+06 reserve2: 15218 priceOut: 396.208 reversed: 0
+,  {
+    "blockNumber": 10607241,
+    "transactionIndex": 278,
+    "logIndex": 0,
+    "transactionHash": "0x9447da655ed79671917701902b028df5c79fe597282ba8e6025d82fb044acacf",
+    "timestamp": 1596729942,
+    "date": "2020-08-06 16:05:42 UTC",
+    "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "assetSymbol": "WEI",
+    "decimals": 18,
+    "spotPrice": 396.20840,
+    "priceSource": "uniswap",
+    "accountedFor": "0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3",
+    "sender": "0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3",
+    "recipient": "0xc1681e85f8c6b24dff4fdc93b8db88cb0fa77539",
+    "begBal": "2070392590800000000",
+    "amountNet": "-2070329590800000000",
+    "endBal": "63000000000000",
+    "reconciliationType": "regular-eth",
+    "reconciled": false,
+    "totalIn": "0",
+    "amountIn": "0",
+    "internalIn": "0",
+    "selfDestructIn": "0",
+    "minerBaseRewardIn": "0",
+    "minerNephewRewardIn": "0",
+    "minerTxFeeIn": "0",
+    "minerUncleRewardIn": "0",
+    "prefundIn": "0",
+    "totalOut": "2070329590800000000",
+    "amountOut": "2068649590800000000",
+    "internalOut": "0",
+    "selfDestructOut": "0",
+    "gasOut": "1680000000000000",
+    "totalOutLessGas": "2068649590800000000",
+    "prevAppBlk": 10681057,
+    "prevBal": "167500000000000000",
+    "begBalDiff": "1902892590800000000",
+    "endBalDiff": "0",
+    "endBalCalc": "63000000000000"
+  }] }

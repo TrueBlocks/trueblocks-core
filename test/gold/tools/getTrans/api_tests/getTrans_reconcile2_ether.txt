@@ -11,7 +11,7 @@ transactions?transactions=0x3f095a4b4e1b85e148b8b97aa91841f28280692b6045de8e690d
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "ETH",
       "decimals": 18,
-      "spotPrice": 1118.93628,
+      "spotPrice": 1334.0296,
       "priceSource": "uniswap",
       "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "sender": "0xb5d85cbf7cb3ee0d56b3bb207d5fc4b82f43f511",

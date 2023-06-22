@@ -41,12 +41,8 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : Calling 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 15000000...: 
-TIME ~ CLOCK - <INFO>  : call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 15000000 at four-byte 0xe6a43905 returned 0x000000000000000000000000a478c2975ab1ea89e8196811f51a7b7ade33eb11
-TIME ~ CLOCK - <INFO>  : Calling 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11 at block 15000000...: 
-TIME ~ CLOCK - <INFO>  : call to 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11 at block 15000000 at four-byte 0x0902f1ac returned 0x0000000000000000000000000000000000000000000559810c412d7963889f2600000000000000000000000000000000000000000000013953bc193865743ba70000000000000000000000000000000000000000000000000000000062b12ca7
 TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
-TIME ~ CLOCK - : 4-----reserve1: 6.4673e+06 reserve2: 5779.86 priceOut: 1118.94 reversed: 0
+TIME ~ CLOCK - : 4-----reserve1: 6.99144e+06 reserve2: 5240.84 priceOut: 1334.03 reversed: 0
   {
     "blockNumber": 15157311,
     "transactionIndex": 138,
@@ -57,7 +53,7 @@ TIME ~ CLOCK - : 4-----reserve1: 6.4673e+06 reserve2: 5779.86 priceOut: 1118.94 
     "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
     "assetSymbol": "WEI",
     "decimals": 18,
-    "spotPrice": 1118.93628,
+    "spotPrice": 1334.02960,
     "priceSource": "uniswap",
     "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
     "sender": "0xb5d85cbf7cb3ee0d56b3bb207d5fc4b82f43f511",

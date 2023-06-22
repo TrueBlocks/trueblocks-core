@@ -17,7 +17,7 @@ namespace qblocks {
 
 //--------------------------------------------------------------
 bool CLedgerManager::getStatements(CTransaction& trans) {
-    if (trans.readReconsFromCache(accountedFor)) {
+    if (trans.readStatementsFromCache(accountedFor)) {
         searchOp = READ;
         for (auto& statement : trans.statements) {
             string_q key = statementKey(statement.accountedFor, statement.assetAddr);
