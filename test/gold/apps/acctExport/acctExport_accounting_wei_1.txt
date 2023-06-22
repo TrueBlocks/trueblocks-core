@@ -4,7 +4,6 @@ TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] MaxRecords:  5
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  json
-TIME ~ CLOCK - : 4-----Loaded timestamp file
 { "data": [
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 

@@ -4,7 +4,6 @@ TEST[DATE|TIME] AccountFor:  0xea674fdde714fd979de3edf0f56aa9716b898ec8
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  json
 { "data": [
-TIME ~ CLOCK - : 4-----Loaded timestamp file
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    accountedFor:        0xea674fdde714fd979de3edf0f56aa9716b898ec8
