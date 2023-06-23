@@ -293,11 +293,9 @@ bool CReconciliation::reconcileBalances(bigint_t& begBalOut, bigint_t& endBalOut
     }
 
     ((CReconciliation*)this)->priceSource = (priceSource.empty() ? "uniswap" : priceSource);
-    if (getEnvStr("OLD") == "") {
-        ostringstream os;
-        os << "[" << blockNumber << "] " << rCtx.isPrevDiff << " " << rCtx.isNextDiff;
-        LOG_TRIAL_BALANCE((isEtherAddr(assetAddr) ? "BALANCE ETH" : "BALANCE TOKEN"));
-    }
+    ostringstream os;
+    os << "[" << blockNumber << "] " << rCtx.isPrevDiff << " " << rCtx.isNextDiff;
+    LOG_TRIAL_BALANCE((isEtherAddr(assetAddr) ? "BALANCE ETH" : "BALANCE TOKEN"));
 
     return trialBalance();
 }
