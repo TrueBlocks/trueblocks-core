@@ -13,6 +13,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -50,9 +51,23 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	_, err = opts.FreshenMonitorsForExport()
-	if err != nil {
-		return err, true
+	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
+	var canceled bool
+	if canceled, err = opts.FreshenMonitorsForExport(&monitorArray); err != nil || canceled {
+		handled = true
+		return
+	}
+
+	if opts.IsPorted() {
+		handled = true
+		if opts.Count {
+			err = opts.HandleListCount(monitorArray)
+		} else if opts.Logs {
+			err = opts.HandleLogs(monitorArray)
+		} else if opts.Appearances {
+			err = opts.HandleAppearances(monitorArray)
+		}
+		return
 	}
 
 	if opts.Globals.IsApiMode() {
@@ -78,7 +93,7 @@ func GetExportOptions(args []string, g *globals.GlobalOptions) *ExportOptions {
 
 func (opts *ExportOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	ported = false
+	ported = opts.Appearances || opts.Count // opts.Logs
 	// EXISTING_CODE
 	return
 }

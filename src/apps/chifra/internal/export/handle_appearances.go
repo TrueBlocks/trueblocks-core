@@ -2,7 +2,7 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package listPkg
+package exportPkg
 
 import (
 	"context"
@@ -13,13 +13,14 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) error {
+func (opts *ExportOptions) HandleAppearances(monitorArray []monitor.Monitor) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	exportRange := base.FileRange{First: opts.FirstBlock, Last: opts.LastBlock}
@@ -65,7 +66,7 @@ func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) e
 					nExported++
 
 					logger.Progress(!testMode && nSeen%723 == 0, "Processing: ", mon.Address.Hex(), " ", app.BlockNumber, ".", app.TransactionId)
-					if app.BlockNumber != currentBn {
+					if app.BlockNumber != currentBn || app.BlockNumber == 0 {
 						currentTs, _ = tslib.FromBnToTs(chain, uint64(app.BlockNumber))
 					}
 					currentBn = app.BlockNumber
@@ -85,10 +86,24 @@ func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) e
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	extra := map[string]interface{}{
+		"testMode": testMode,
+		"export":   true,
+	}
+
+	if opts.Globals.Verbose || opts.Globals.Format == "json" {
+		parts := names.Custom | names.Prefund | names.Regular
+		namesMap, err := names.LoadNamesMap(chain, parts, nil)
+		if err != nil {
+			return err
+		}
+		extra["namesMap"] = namesMap
+	}
+
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }
 
-func (opts *ListOptions) IsMax(cnt uint64) bool {
+func (opts *ExportOptions) IsMax(cnt uint64) bool {
 	max := opts.MaxRecords
 	if max == 250 && !opts.Globals.IsApiMode() {
 		max = utils.NOPOS

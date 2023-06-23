@@ -3,7 +3,7 @@ list?addrs=trueblocks.eth&count&fmt=json&firstBlock=8854725&lastBlock=9000000
   "data": [
     {
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "fileSize": 1001001,
+      "fileSize": 57005,
       "nRecords": 13
     }
   ],

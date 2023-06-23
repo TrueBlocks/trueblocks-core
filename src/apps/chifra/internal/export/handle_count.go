@@ -2,7 +2,7 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package listPkg
+package exportPkg
 
 import (
 	"context"
@@ -16,7 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *ListOptions) HandleListCount(monitorArray []monitor.Monitor) error {
+func (opts *ExportOptions) HandleListCount(monitorArray []monitor.Monitor) error {
 	testMode := opts.Globals.TestMode
 	if opts.Globals.Verbose {
 		for i := 0; i < len(monitorArray); i++ {
@@ -30,7 +30,7 @@ func (opts *ListOptions) HandleListCount(monitorArray []monitor.Monitor) error {
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawMonitor], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if !opts.NoZero || mon.Count() > 0 {
+			if true { // !opts.NoZero || mon.Count() > 0 {
 				mon.Close()
 				apps := make([]index.AppearanceRecord, mon.Count())
 				if err := mon.ReadAppearances(&apps); err != nil {
@@ -65,8 +65,10 @@ func (opts *ListOptions) HandleListCount(monitorArray []monitor.Monitor) error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
-func (opts *ListOptions) minMax() (ret base.FileRange) {
+func (opts *ExportOptions) minMax() (ret base.FileRange) {
 	ret.First = utils.Max(0, opts.FirstBlock)
 	ret.Last = utils.Min(utils.NOPOS, opts.LastBlock)
 	return
 }
+
+const maxTestingBlock = 15000000

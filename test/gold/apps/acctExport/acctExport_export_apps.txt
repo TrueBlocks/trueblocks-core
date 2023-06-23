@@ -3,13 +3,15 @@ TEST[DATE|TIME] Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
 TEST[DATE|TIME] Appearances:  true
 TEST[DATE|TIME] MaxRecords:  1
 TEST[DATE|TIME] Format:  json
-{ "data": [
 {
-  "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
-  "blockNumber": 0,
-  "transactionIndex": 2,
-  "name": "Prefund_0002",
-  "timestamp": 1438269975,
-  "date": "2015-07-30 15:26:15 UTC"
+  "data": [
+    {
+      "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
+      "blockNumber": 0,
+      "date": "2015-07-30 15:26:15 UTC",
+      "name": "Prefund_0002",
+      "timestamp": 1438269975,
+      "transactionIndex": 2
+    }
+  ]
 }
-] }

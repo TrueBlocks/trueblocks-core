@@ -337,7 +337,6 @@ func StreamAppearance(procFunc UniqProcFunc, flow string, reason string, address
 			TransactionIndex: uint32(txid),
 			Reason:           reason,
 			Timestamp:        ts,
-			Date:             utils.FormattedDate(ts),
 		}
 
 		if traceid != utils.NOPOS {

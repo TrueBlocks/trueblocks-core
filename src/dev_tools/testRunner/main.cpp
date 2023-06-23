@@ -70,12 +70,14 @@ int main(int argc, const char* argv[]) {
             explode(lines, contents, '\n');
 
             map<string_q, CTestCase> testMap;
-            bool testTestOnly = getEnvStr("TEST_TEST_ONLY") == "true";
+            string_q ttOnly = getEnvStr("TEST_TEST_ONLY");
+            bool ttOnlyB = !ttOnly.empty();
             for (auto line : lines) {
-                if (testTestOnly) {
+                if (ttOnlyB) {
                     runLocal = false;
-                    if (startsWith(line, "test")) {
+                    if (startsWith(line, "test") || startsWith(line, ttOnly)) {
                         replace(line, "test", "on");
+                        replace(line, ttOnly, "on");
                     } else if (startsWith(line, "on")) {
                         replace(line, "on", "local");
                     }
@@ -142,8 +144,8 @@ int main(int argc, const char* argv[]) {
 
             expContext().exportFmt = CSV1;
             perf_fmt = substitute(cleanFmt(STR_DISPLAY_MEASURE), "\"", "");
-            options.doTests(total, testArray, path, testName, API, !testTestOnly);
-            options.doTests(total, testArray, path, testName, CMD, !testTestOnly);
+            options.doTests(total, testArray, path, testName, API, !ttOnlyB);
+            options.doTests(total, testArray, path, testName, CMD, !ttOnlyB);
             if (shouldQuit())
                 break;
 
