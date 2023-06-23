@@ -54,5 +54,3 @@ extern void interumReport(ostream& os, blknum_t i);
 
 //----------------------------------------------------------------
 extern void oneAppearance(const CAppearance& item, void* data);
-extern bool visitAddrs(const CAppearance& item, void* data);
-extern bool transFilter(const CTransaction* trans, void* data);

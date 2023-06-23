@@ -13,6 +13,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -50,35 +51,29 @@ func (opts *TransactionsOptions) TransactionsInternal() (err error, handled bool
 	}
 
 	// EXISTING_CODE
-	if opts.IsPorted() {
-		handled = true
-		if opts.Decache {
-			err = opts.HandleDecache()
-
-		} else if opts.Logs {
-			err = opts.HandleLogs()
-
-		} else if opts.Source {
-			err = opts.HandleSource()
-
-		} else if opts.Uniq {
-			err = opts.HandleUniq()
-
-		} else if len(opts.AccountFor) > 0 {
-			err = opts.HandleAccounting()
-
-		} else {
-			err = opts.HandleShowTxs()
-		}
-		return
-	}
-
-	if opts.Globals.IsApiMode() {
-		return nil, false
+	if !opts.IsPorted() {
+		logger.Fatal("Should never happen")
 	}
 
 	handled = true
-	err = opts.Globals.PassItOn("getTrans", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
+	if opts.Decache {
+		err = opts.HandleDecache()
+
+	} else if opts.Logs {
+		err = opts.HandleLogs()
+
+	} else if opts.Source {
+		err = opts.HandleSource()
+
+	} else if opts.Uniq {
+		err = opts.HandleUniq()
+
+	} else if len(opts.AccountFor) > 0 {
+		err = opts.HandleAccounting()
+
+	} else {
+		err = opts.HandleShowTxs()
+	}
 	// EXISTING_CODE
 
 	return
@@ -95,7 +90,7 @@ func GetTransactionsOptions(args []string, g *globals.GlobalOptions) *Transactio
 
 func (opts *TransactionsOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	ported = !opts.Cache
+	ported = true
 	// EXISTING_CODE
 	return
 }
