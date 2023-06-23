@@ -25,6 +25,10 @@ func (a *Address) Hex() string {
 	return bytesToAddressString(a.Address.Bytes())
 }
 
+func (a *Address) Encoded32() string {
+	return "000000000000000000000000" + a.Hex()[2:]
+}
+
 func (a *Address) String() string {
 	return a.Hex()
 }
@@ -96,3 +100,6 @@ func IsPrecompile(addr string) bool {
 	test := HexToAddress(addr) // normalizes the input as an address
 	return test.Hex() <= maxPrecompile
 }
+
+// FAKE_ETH_ADDRESS is the address we use to represent ETH in the ledgers
+var FAKE_ETH_ADDRESS = HexToAddress("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")

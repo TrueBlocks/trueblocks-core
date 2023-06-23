@@ -137,6 +137,13 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    string_q localFile = getCWD() + "addresses.tsv";
+    replace(localFile, "test/gold/dev_tools/testRunner", "build");
+    if (fileExists(localFile)) {
+        LOG_ERR(localFile, " found in local folder. Chifra monitor tests will fail.");
+        exit(0);
+    }
+
     if (getGlobalConfig("")->getConfigBool("dev", "debug_curl", false))
         return usage("[dev]debug_curl is set in config file. All tests will fail.");
 
@@ -243,11 +250,11 @@ void establishTestData(void) {
     // TODO(tjayrush): and re-run. You will see the tests that fail.
 
     // Forces a few blocks into the cache
-    doCommand("chifra blocks --uniq 0");
+    doCommand("chifra blocks --uniq 0 2>/dev/null");
     doCommand("chifra blocks --cache 2768801 1995314 1958017 2769609 2799895 2872831 3076260");
     doCommand("chifra blocks --cache 4369999 1001001 1234567 1590000 4000001-4000004 3657480");
-    doCommand("chifra transactions --cache 47055.0");
-    doCommand("chifra transactions --cache 46147.0");
+    // doCommand("chifra transactions --cache 47055.0");
+    // doCommand("chifra transactions --cache 46147.0");
 
     doCommand("chifra monitors --decache 0xf503017d7baf7fbc0fff7492b751025c6a78179b 2>/dev/null");
     doCommand("chifra monitors --decache 0x9531c059098e3d194ff87febb587ab07b30b1306 2>/dev/null");

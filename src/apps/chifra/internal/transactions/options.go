@@ -9,7 +9,6 @@ package transactionsPkg
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -64,36 +63,6 @@ func (opts *TransactionsOptions) testLog() {
 func (opts *TransactionsOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
-}
-
-// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
-func (opts *TransactionsOptions) getEnvStr() []string {
-	envStr := []string{}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return envStr
-}
-
-// toCmdLine converts the option to a command line for calling out to the system.
-func (opts *TransactionsOptions) toCmdLine() string {
-	options := ""
-	if opts.Articulate {
-		options += " --articulate"
-	}
-	if opts.Traces {
-		options += " --traces"
-	}
-	if len(opts.AccountFor) > 0 {
-		options += " --account_for " + opts.AccountFor
-	}
-	if opts.Cache {
-		options += " --cache"
-	}
-	options += " " + strings.Join(opts.Transactions, " ")
-	// EXISTING_CODE
-	// EXISTING_CODE
-	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
-	return options
 }
 
 // transactionsFinishParseApi finishes the parsing for server invocations. Returns a new TransactionsOptions.

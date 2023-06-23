@@ -67,7 +67,7 @@ func ParseEnsTransferEvent(log *types.SimpleLog) (function *types.SimpleFunction
 	function = &types.SimpleFunction{}
 	function.Name = "Transfer"
 	function.FunctionType = "event"
-	function.Encoding = transferTopic.Hex()
+	function.Encoding = transferTopic.Hex() // TODO: THIS IS WRONG! SHOULDN'T THIS BE ENSTRANSFERTOPIC?
 	function.Inputs = []types.SimpleParameter{
 		{
 			Name:          "_node",
@@ -97,7 +97,7 @@ func ParseApprovalEvent(log *types.SimpleLog) (function *types.SimpleFunction) {
 	function = &types.SimpleFunction{}
 	function.Name = "Approval"
 	function.FunctionType = "event"
-	function.Encoding = transferTopic.Hex()
+	function.Encoding = transferTopic.Hex() // TODO: THIS IS WRONG! SHOULDN'T THIS BE APPROVALTOPIC?
 	function.Inputs = []types.SimpleParameter{
 		{
 			Name:          "_owner",

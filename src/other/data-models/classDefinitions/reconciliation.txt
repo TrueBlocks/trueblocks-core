@@ -10,4 +10,4 @@ doc_route = 102-reconciliation
 doc_producer = export
 
 cpp_output = src/libs/etherlib/
-go_output = src/apps/chifra/pkg/types
+go_output =

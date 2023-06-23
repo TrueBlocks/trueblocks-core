@@ -1,5 +1,16 @@
 package rpcClient
 
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+
+// TODO: Dupped
+var transferTopic = base.HexToHash(
+	"0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+)
+
+func IsTransferTopic(needle string) bool {
+	return needle == transferTopic.String()
+}
+
 func IsTokenRelated(needle string) bool {
 	var tokenRelated = map[string]bool{
 		"0x095ea7b3": true, // approve(address spender, uint256 value)

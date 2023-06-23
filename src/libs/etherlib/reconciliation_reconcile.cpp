@@ -15,55 +15,65 @@
 
 namespace qblocks {
 
-//---------------------------------------------------------------------------
-#define LOG_ONE(a, b, d)                                                                                               \
-    if ((b) != (d)) {                                                                                                  \
-        LOG_INFO("   ", (a), (b));                                                                                     \
+#define LOG_ONE(a, b, c)                                                                                               \
+    {                                                                                                                  \
+        string_q t = ":";                                                                                              \
+        cerr << padRight("TEST[DATE|TIME]", 19) << padRight(((a) + t), 20) << " " << (b) << endl;                      \
     }
 
 //---------------------------------------------------------------------------
 #define LOG_TRIAL_BALANCE(msg)                                                                                         \
     if (isTestMode()) {                                                                                                \
-        LOG_INFO("-------------", msg, "-----------------------------");                                               \
-        LOG_INFO("Trial balance: ", reconciliationType);                                                               \
-        LOG_ONE("blks:                ", os.str(), "");                                                                \
-        LOG_ONE("accountedFor:        ", accountedFor, "");                                                            \
-        LOG_ONE("assetAddr:           ", assetAddr, "");                                                               \
-        LOG_ONE("assetSymbol:         ", assetSymbol, "");                                                             \
-        LOG_ONE("hash:                ", transactionHash, "");                                                         \
-        LOG_ONE("blockNumber:         ", blockNumber, NOPOS);                                                          \
-        LOG_ONE("transactionIndex:    ", transactionIndex, NOPOS);                                                     \
-        LOG_ONE("logIndex:            ", logIndex, NOPOS);                                                             \
-        LOG_ONE("begBal:              ", begBal, 0);                                                                   \
-        LOG_ONE("amountIn:            ", amountIn, 0);                                                                 \
-        LOG_ONE("internalIn:          ", internalIn, 0);                                                               \
-        LOG_ONE("selfDestructIn:      ", selfDestructIn, 0);                                                           \
-        LOG_ONE("minerBaseRewardIn:   ", minerBaseRewardIn, 0);                                                        \
-        LOG_ONE("minerNephewRewardIn: ", minerNephewRewardIn, 0);                                                      \
-        LOG_ONE("minerTxFeeIn:        ", minerTxFeeIn, 0);                                                             \
-        LOG_ONE("minerUncleRewardIn:  ", minerUncleRewardIn, 0);                                                       \
-        LOG_ONE("prefundIn:           ", prefundIn, 0);                                                                \
-        LOG_ONE("totalIn:             ", totalIn(), 0);                                                                \
-        LOG_ONE("amountOut:           ", amountOut, 0);                                                                \
-        LOG_ONE("internalOut:         ", internalOut, 0);                                                              \
-        LOG_ONE("selfDestructOut:     ", selfDestructOut, 0);                                                          \
-        LOG_ONE("gasOut:              ", gasOut, 0);                                                                   \
-        LOG_ONE("totalOut:            ", totalOut(), 0);                                                               \
-        LOG_ONE("amountNet:           ", amountNet(), 0);                                                              \
-        LOG_ONE("endBal:              ", endBal, 0);                                                                   \
-        LOG_ONE("begBalDiff:          ", trialBalance() ? 0 : begBalDiff(), 0);                                        \
-        LOG_ONE("endBalDiff:          ", trialBalance() ? 0 : endBalDiff(), 0);                                        \
-        LOG_ONE("endBalCalc:          ", trialBalance() ? 0 : endBalCalc(), 0);                                        \
-        LOG_INFO("   trialBalance:        ", (trialBalance() ? "balanced" : "not balanced"));                          \
-        LOG_INFO("--------------------------------------------------------");                                          \
+        rCtx.DEBUG(msg);                                                                                               \
+        cerr << "TEST[DATE|TIME] ---------------------------------------------------" << endl;                         \
+        cerr << "TEST[DATE|TIME] Trial balance:" << endl;                                                              \
+        LOG_ONE("reconciliationType", reconciliationType, "");                                                         \
+        LOG_ONE("accountedFor", accountedFor, "");                                                                     \
+        LOG_ONE("sender", sender, "");                                                                                 \
+        LOG_ONE("recipient", recipient, "");                                                                           \
+        LOG_ONE("assetAddr", assetAddr, "");                                                                           \
+        LOG_ONE("assetSymbol", assetSymbol, "");                                                                       \
+        LOG_ONE("decimals", decimals, "");                                                                             \
+        LOG_ONE("prevAppBlk", prevAppBlk, "");                                                                         \
+        LOG_ONE("hash", transactionHash, "");                                                                          \
+        LOG_ONE("timestamp", timestamp, "");                                                                           \
+        LOG_ONE("blockNumber", blockNumber, NOPOS);                                                                    \
+        LOG_ONE("transactionIndex", transactionIndex, NOPOS);                                                          \
+        LOG_ONE("logIndex", logIndex, NOPOS);                                                                          \
+        LOG_ONE("priceSource", priceSource, 0);                                                                        \
+        LOG_ONE("spotPrice", spotPrice, 0);                                                                            \
+        LOG_ONE("prevBal", prevBal, 0);                                                                                \
+        LOG_ONE("begBal", begBal, 0);                                                                                  \
+        LOG_ONE("amountIn", amountIn, 0);                                                                              \
+        LOG_ONE("internalIn", internalIn, 0);                                                                          \
+        LOG_ONE("minerBaseRewardIn", minerBaseRewardIn, 0);                                                            \
+        LOG_ONE("minerNephewRewardIn", minerNephewRewardIn, 0);                                                        \
+        LOG_ONE("minerTxFeeIn", minerTxFeeIn, 0);                                                                      \
+        LOG_ONE("minerUncleRewardIn", minerUncleRewardIn, 0);                                                          \
+        LOG_ONE("prefundIn", prefundIn, 0);                                                                            \
+        LOG_ONE("selfDestructIn", selfDestructIn, 0);                                                                  \
+        LOG_ONE("totalIn", totalIn(), 0);                                                                              \
+        LOG_ONE("amountOut", amountOut, 0);                                                                            \
+        LOG_ONE("internalOut", internalOut, 0);                                                                        \
+        LOG_ONE("selfDestructOut", selfDestructOut, 0);                                                                \
+        LOG_ONE("gasOut", gasOut, 0);                                                                                  \
+        LOG_ONE("totalOut", totalOut(), 0);                                                                            \
+        LOG_ONE("amountNet", amountNet(), 0);                                                                          \
+        LOG_ONE("endBal", endBal, 0);                                                                                  \
+        LOG_ONE("begBalDiff", (trialBalance() ? 0 : begBalDiff()), 0);                                                 \
+        LOG_ONE("endBalDiff", (trialBalance() ? 0 : endBalDiff()), 0);                                                 \
+        LOG_ONE("endBalCalc", (trialBalance() ? 0 : endBalCalc()), 0);                                                 \
+        LOG_ONE("trialBalance", (trialBalance() ? "true" : "false"), string_q(""));                                    \
+        cerr << "TEST[DATE|TIME] ---------------------------------------------------" << endl;                         \
     }
 
 //-----------------------------------------------------------------------
-bool CReconciliation::reconcileFlows(const CTransfer& transfer) {
+bool CReconciliation::reconcileFlows(const CTransfer& transfer, const CReconContext& rCtx) {
     sender = transfer.sender;
     recipient = transfer.recipient;
 
     bool isEth = isEtherAddr(assetAddr);
+    reconciliationType = rCtx.reconType(isEth, pTransaction->blockNumber == 0, "");
     if (isEth) {
         if (pTransaction->from == accountedFor) {
             gasOut = str_2_BigInt(pTransaction->getValueByName("gasCost"));
@@ -113,21 +123,24 @@ bool CReconciliation::reconcileFlows(const CTransfer& transfer) {
     begBal = blockNumber == 0 ? 0 : getTokenBalanceAt(assetAddr, accountedFor, blockNumber - 1);
     endBal = getTokenBalanceAt(assetAddr, accountedFor, blockNumber);
 
+    ((CReconciliation*)this)->priceSource = (priceSource.empty() ? "uniswap" : priceSource);
+
     ostringstream os;
-    LOG_TRIAL_BALANCE(isEth ? "flows-top" : "flows-token");
+    LOG_TRIAL_BALANCE((isEth ? "ETH" : "TOKENS"));
     if (trialBalance()) {
         return true;
     }
 
-    return reconcileFlows_traces();
+    return reconcileFlows_traces(rCtx);
 }
 
 //-----------------------------------------------------------------------
-bool CReconciliation::reconcileFlows_traces(void) {
+bool CReconciliation::reconcileFlows_traces(const CReconContext& rCtx) {
     bool isEth = isEtherAddr(assetAddr);
     if (!isEth) {
         return true;
     }
+    reconciliationType = rCtx.reconType(isEth, pTransaction->blockNumber == 0, "traces-");
 
     amountIn = 0;
     internalIn = selfDestructIn = prefundIn = 0;
@@ -142,7 +155,6 @@ bool CReconciliation::reconcileFlows_traces(void) {
         prefundIn = pTransaction->value;
 
     } else {
-        reconciliationType = "trace-";
         bool tracesAllocated = false;
         if (pTransaction->traces.size() == 0) {
             blknum_t bn = pTransaction->blockNumber;
@@ -217,14 +229,40 @@ bool CReconciliation::reconcileFlows_traces(void) {
         }
     }
 
+    priceSource = (priceSource.empty() ? "uniswap" : priceSource);
+
     ostringstream os;
     LOG_TRIAL_BALANCE("traces");
+
     return trialBalance();
 }
 
 //-----------------------------------------------------------------------
-bool CReconciliation::reconcileBalances(bool prevDifferent, bool nextDifferent, bigint_t& begBalOut,
-                                        bigint_t& endBalOut) {
+string_q CReconContext::reconType(bool isEth, bool isGenesis, const string_q& in) const {
+    string_q ret;
+    if (isGenesis) {
+        ret = "genesis";
+
+    } else {
+        if (isPrevDiff && isNextDiff) {
+            ret = "regular";
+
+        } else if (isPrevDiff) {
+            ret = "prevDiff-same";
+
+        } else if (isNextDiff) {
+            ret = "same-nextDiff";
+
+        } else {
+            ret = "same-same";
+        }
+    }
+
+    return in + ret + (isEth ? "-eth" : "-token");
+}
+
+//-----------------------------------------------------------------------
+bool CReconciliation::reconcileBalances(bigint_t& begBalOut, bigint_t& endBalOut, const CReconContext& rCtx) {
     bigint_t balEOLB = blockNumber == 0 ? 0 : getTokenBalanceAt(assetAddr, accountedFor, blockNumber - 1);
     bigint_t balEOB = getTokenBalanceAt(assetAddr, accountedFor, blockNumber);
     begBalOut = balEOLB;
@@ -233,17 +271,17 @@ bool CReconciliation::reconcileBalances(bool prevDifferent, bool nextDifferent, 
     if (blockNumber == 0) {
         // balances are zero
 
-    } else if (prevDifferent && nextDifferent) {
+    } else if (rCtx.isPrevDiff && rCtx.isNextDiff) {
         // The trace reconcile may have changed values
         begBal = balEOLB;
         endBal = balEOB;
 
-    } else if (prevDifferent) {
+    } else if (rCtx.isPrevDiff) {
         // This tx has a tx after it in the same block but none before it
         begBal = balEOLB;
         endBal = endBalCalc();
 
-    } else if (nextDifferent) {
+    } else if (rCtx.isNextDiff) {
         // This tx has a tx before it in the block but none after it
         begBal = prevBal;
         endBal = balEOB;
@@ -254,32 +292,10 @@ bool CReconciliation::reconcileBalances(bool prevDifferent, bool nextDifferent, 
         endBal = endBalCalc();
     }
 
-    if (pTransaction->blockNumber == 0) {
-        reconciliationType = "genesis";
-
-    } else {
-        if (prevDifferent && nextDifferent) {
-            reconciliationType += "regular";
-
-        } else if (prevDifferent) {
-            reconciliationType += "prevDiff-same";
-
-        } else if (nextDifferent) {
-            reconciliationType += "same-nextDiff";
-
-        } else {
-            reconciliationType += "same-same";
-        }
-    }
-    reconciliationType += isEtherAddr(assetAddr) ? "-eth" : "-token";
-
+    ((CReconciliation*)this)->priceSource = (priceSource.empty() ? "uniswap" : priceSource);
     ostringstream os;
-    os << "[" << blockNumber << "] " << prevDifferent << " " << nextDifferent;
-    LOG_TRIAL_BALANCE(isEtherAddr(assetAddr) ? "balances-top" : "balances-token");
-    if (isTestMode()) {
-        LOG_INFO("");
-        LOG_INFO("");
-    }
+    os << "[" << blockNumber << "] " << rCtx.isPrevDiff << " " << rCtx.isNextDiff;
+    LOG_TRIAL_BALANCE((isEtherAddr(assetAddr) ? "BALANCE ETH" : "BALANCE TOKEN"));
 
     return trialBalance();
 }

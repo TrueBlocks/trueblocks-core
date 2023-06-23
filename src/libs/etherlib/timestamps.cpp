@@ -25,7 +25,6 @@ timestamp_t bn_2_Timestamp(blknum_t blk) {
             LOG_WARN("Could not load timestamp file");
             return 0;
         }
-        LOG4("Loaded timestamp file");
     }
 
     if (expContext().tsMemMap && blk < expContext().tsCnt) {

@@ -4,43 +4,116 @@ TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] LastBlock:  4000000
 TEST[DATE|TIME] Format:  json
 { "data": [
-TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
-TIME ~ CLOCK - <INFO>  : Trial balance: 
-TIME ~ CLOCK - <INFO>  :    accountedFor:        0x08166f02313feae18bb044e7877c808b55b5bf58
-TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
-TIME ~ CLOCK - <INFO>  :    blockNumber:         0
-TIME ~ CLOCK - <INFO>  :    transactionIndex:    270
-TIME ~ CLOCK - <INFO>  :    logIndex:            0
-TIME ~ CLOCK - <INFO>  :    prefundIn:           1970000000000000000000
-TIME ~ CLOCK - <INFO>  :    totalIn:             1970000000000000000000
-TIME ~ CLOCK - <INFO>  :    amountNet:           1970000000000000000000
-TIME ~ CLOCK - <INFO>  :    endBal:              1970000000000000000000
-TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
-TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 0 prevBlock: 0 transfer.blockNumber: 0 nextBlock: 46685
-TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
-TIME ~ CLOCK - <INFO>  : Trial balance: genesis-eth
-TIME ~ CLOCK - <INFO>  :    blks:                [0] 1 1
-TIME ~ CLOCK - <INFO>  :    accountedFor:        0x08166f02313feae18bb044e7877c808b55b5bf58
-TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
-TIME ~ CLOCK - <INFO>  :    blockNumber:         0
-TIME ~ CLOCK - <INFO>  :    transactionIndex:    270
-TIME ~ CLOCK - <INFO>  :    logIndex:            0
-TIME ~ CLOCK - <INFO>  :    prefundIn:           1970000000000000000000
-TIME ~ CLOCK - <INFO>  :    totalIn:             1970000000000000000000
-TIME ~ CLOCK - <INFO>  :    amountNet:           1970000000000000000000
-TIME ~ CLOCK - <INFO>  :    endBal:              1970000000000000000000
-TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
-TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : Calling a contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 0 prior to its deployment 10000835
-TIME ~ CLOCK - <INFO>  : doEthCall in CUniPrice::findPair returned false
-TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 0...: 
-TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 0 at four-byte 0x59e02dd7 returned 0x
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ====> ETH
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ledger.blockNumber:     0
+TEST[DATE|TIME] prevBlock:              0
+TEST[DATE|TIME] transfer.blockNumber:   0
+TEST[DATE|TIME] nextBlock:              46685
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    reconciliationType:  genesis-eth
+TEST[DATE|TIME]    accountedFor:        0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME]    sender:              0xPrefund
+TEST[DATE|TIME]    recipient:           0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    assetSymbol:         WEI
+TEST[DATE|TIME]    decimals:            18
+TEST[DATE|TIME]    prevAppBlk:          0
+TEST[DATE|TIME]    hash:                
+TEST[DATE|TIME]    timestamp:           1438269975
+TEST[DATE|TIME]    blockNumber:         0
+TEST[DATE|TIME]    transactionIndex:    270
+TEST[DATE|TIME]    logIndex:            0
+TEST[DATE|TIME]    priceSource:         uniswap
+TEST[DATE|TIME]    spotPrice:           1
+TEST[DATE|TIME]    prevBal:             0
+TEST[DATE|TIME]    begBal:              0
+TEST[DATE|TIME]    amountIn:            0
+TEST[DATE|TIME]    internalIn:          0
+TEST[DATE|TIME]    minerBaseRewardIn:   0
+TEST[DATE|TIME]    minerNephewRewardIn: 0
+TEST[DATE|TIME]    minerTxFeeIn:        0
+TEST[DATE|TIME]    minerUncleRewardIn:  0
+TEST[DATE|TIME]    prefundIn:           1970000000000000000000
+TEST[DATE|TIME]    selfDestructIn:      0
+TEST[DATE|TIME]    totalIn:             1970000000000000000000
+TEST[DATE|TIME]    amountOut:           0
+TEST[DATE|TIME]    internalOut:         0
+TEST[DATE|TIME]    selfDestructOut:     0
+TEST[DATE|TIME]    gasOut:              0
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           1970000000000000000000
+TEST[DATE|TIME]    endBal:              1970000000000000000000
+TEST[DATE|TIME]    begBalDiff:          0
+TEST[DATE|TIME]    endBalDiff:          0
+TEST[DATE|TIME]    endBalCalc:          0
+TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ====> BALANCE ETH
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ledger.blockNumber:     0
+TEST[DATE|TIME] prevBlock:              0
+TEST[DATE|TIME] transfer.blockNumber:   0
+TEST[DATE|TIME] nextBlock:              46685
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    reconciliationType:  genesis-eth
+TEST[DATE|TIME]    accountedFor:        0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME]    sender:              0xPrefund
+TEST[DATE|TIME]    recipient:           0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    assetSymbol:         WEI
+TEST[DATE|TIME]    decimals:            18
+TEST[DATE|TIME]    prevAppBlk:          0
+TEST[DATE|TIME]    hash:                
+TEST[DATE|TIME]    timestamp:           1438269975
+TEST[DATE|TIME]    blockNumber:         0
+TEST[DATE|TIME]    transactionIndex:    270
+TEST[DATE|TIME]    logIndex:            0
+TEST[DATE|TIME]    priceSource:         uniswap
+TEST[DATE|TIME]    spotPrice:           1
+TEST[DATE|TIME]    prevBal:             0
+TEST[DATE|TIME]    begBal:              0
+TEST[DATE|TIME]    amountIn:            0
+TEST[DATE|TIME]    internalIn:          0
+TEST[DATE|TIME]    minerBaseRewardIn:   0
+TEST[DATE|TIME]    minerNephewRewardIn: 0
+TEST[DATE|TIME]    minerTxFeeIn:        0
+TEST[DATE|TIME]    minerUncleRewardIn:  0
+TEST[DATE|TIME]    prefundIn:           1970000000000000000000
+TEST[DATE|TIME]    selfDestructIn:      0
+TEST[DATE|TIME]    totalIn:             1970000000000000000000
+TEST[DATE|TIME]    amountOut:           0
+TEST[DATE|TIME]    internalOut:         0
+TEST[DATE|TIME]    selfDestructOut:     0
+TEST[DATE|TIME]    gasOut:              0
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           1970000000000000000000
+TEST[DATE|TIME]    endBal:              1970000000000000000000
+TEST[DATE|TIME]    begBalDiff:          0
+TEST[DATE|TIME]    endBalDiff:          0
+TEST[DATE|TIME]    endBalCalc:          0
+TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Call to a smart contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 0 prior to its deployment 10000835
+TEST[DATE|TIME] doEthCall in CUniPrice::findPair returned false
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 0
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
 {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -73,35 +146,35 @@ TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at b
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "spotPrice": 1.00000,
+      "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "accountedFor": "0x08166f02313feae18bb044e7877c808b55b5bf58",
       "sender": "0xPrefund",
       "recipient": "0x08166f02313feae18bb044e7877c808b55b5bf58",
-      "begBal": "",
+      "begBal": "0",
       "amountNet": "1970000000000000000000",
       "endBal": "1970000000000000000000",
       "reconciliationType": "genesis-eth",
       "reconciled": true,
       "totalIn": "1970000000000000000000",
-      "amountIn": "",
-      "internalIn": "",
-      "selfDestructIn": "",
-      "minerBaseRewardIn": "",
-      "minerNephewRewardIn": "",
-      "minerTxFeeIn": "",
-      "minerUncleRewardIn": "",
+      "amountIn": "0",
+      "internalIn": "0",
+      "selfDestructIn": "0",
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
       "prefundIn": "1970000000000000000000",
-      "totalOut": "",
-      "amountOut": "",
-      "internalOut": "",
-      "selfDestructOut": "",
-      "gasOut": "",
-      "totalOutLessGas": "",
+      "totalOut": "0",
+      "amountOut": "0",
+      "internalOut": "0",
+      "selfDestructOut": "0",
+      "gasOut": "0",
+      "totalOutLessGas": "0",
       "prevAppBlk": 0,
-      "prevBal": "",
-      "begBalDiff": "",
-      "endBalDiff": "",
+      "prevBal": "0",
+      "begBalDiff": "0",
+      "endBalDiff": "0",
       "endBalCalc": "1970000000000000000000"
     }
   ],
@@ -110,47 +183,114 @@ TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at b
   "date": "2015-07-30 15:26:15 UTC",
   "ether": 1970.000000000000000000
 }
-TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
-TIME ~ CLOCK - <INFO>  : Trial balance: 
-TIME ~ CLOCK - <INFO>  :    accountedFor:        0x08166f02313feae18bb044e7877c808b55b5bf58
-TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
-TIME ~ CLOCK - <INFO>  :    hash:                0x10893338fa5633ab747450b8698457fb047098f87f78e98b3dbee3134067b6b8
-TIME ~ CLOCK - <INFO>  :    blockNumber:         46685
-TIME ~ CLOCK - <INFO>  :    transactionIndex:    0
-TIME ~ CLOCK - <INFO>  :    logIndex:            0
-TIME ~ CLOCK - <INFO>  :    begBal:              1970000000000000000000
-TIME ~ CLOCK - <INFO>  :    amountOut:           5000000000000000000
-TIME ~ CLOCK - <INFO>  :    gasOut:              10500000000000000
-TIME ~ CLOCK - <INFO>  :    totalOut:            5010500000000000000
-TIME ~ CLOCK - <INFO>  :    amountNet:           -5010500000000000000
-TIME ~ CLOCK - <INFO>  :    endBal:              1964989500000000000000
-TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
-TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 0 prevBlock: 0 transfer.blockNumber: 46685 nextBlock: 46709
-TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
-TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
-TIME ~ CLOCK - <INFO>  :    blks:                [46685] 1 1
-TIME ~ CLOCK - <INFO>  :    accountedFor:        0x08166f02313feae18bb044e7877c808b55b5bf58
-TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
-TIME ~ CLOCK - <INFO>  :    hash:                0x10893338fa5633ab747450b8698457fb047098f87f78e98b3dbee3134067b6b8
-TIME ~ CLOCK - <INFO>  :    blockNumber:         46685
-TIME ~ CLOCK - <INFO>  :    transactionIndex:    0
-TIME ~ CLOCK - <INFO>  :    logIndex:            0
-TIME ~ CLOCK - <INFO>  :    begBal:              1970000000000000000000
-TIME ~ CLOCK - <INFO>  :    amountOut:           5000000000000000000
-TIME ~ CLOCK - <INFO>  :    gasOut:              10500000000000000
-TIME ~ CLOCK - <INFO>  :    totalOut:            5010500000000000000
-TIME ~ CLOCK - <INFO>  :    amountNet:           -5010500000000000000
-TIME ~ CLOCK - <INFO>  :    endBal:              1964989500000000000000
-TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
-TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 46685...: 
-TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 46685 at four-byte 0x59e02dd7 returned 0x
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ====> ETH
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ledger.blockNumber:     0
+TEST[DATE|TIME] prevBlock:              0
+TEST[DATE|TIME] transfer.blockNumber:   46685
+TEST[DATE|TIME] nextBlock:              46709
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    reconciliationType:  regular-eth
+TEST[DATE|TIME]    accountedFor:        0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME]    sender:              0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME]    recipient:           0xad00b7a324f31351d397408c8c3952ea198317eb
+TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    assetSymbol:         WEI
+TEST[DATE|TIME]    decimals:            18
+TEST[DATE|TIME]    prevAppBlk:          0
+TEST[DATE|TIME]    hash:                0x10893338fa5633ab747450b8698457fb047098f87f78e98b3dbee3134067b6b8
+TEST[DATE|TIME]    timestamp:           1438927408
+TEST[DATE|TIME]    blockNumber:         46685
+TEST[DATE|TIME]    transactionIndex:    0
+TEST[DATE|TIME]    logIndex:            0
+TEST[DATE|TIME]    priceSource:         uniswap
+TEST[DATE|TIME]    spotPrice:           1
+TEST[DATE|TIME]    prevBal:             0
+TEST[DATE|TIME]    begBal:              1970000000000000000000
+TEST[DATE|TIME]    amountIn:            0
+TEST[DATE|TIME]    internalIn:          0
+TEST[DATE|TIME]    minerBaseRewardIn:   0
+TEST[DATE|TIME]    minerNephewRewardIn: 0
+TEST[DATE|TIME]    minerTxFeeIn:        0
+TEST[DATE|TIME]    minerUncleRewardIn:  0
+TEST[DATE|TIME]    prefundIn:           0
+TEST[DATE|TIME]    selfDestructIn:      0
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    amountOut:           5000000000000000000
+TEST[DATE|TIME]    internalOut:         0
+TEST[DATE|TIME]    selfDestructOut:     0
+TEST[DATE|TIME]    gasOut:              10500000000000000
+TEST[DATE|TIME]    totalOut:            5010500000000000000
+TEST[DATE|TIME]    amountNet:           -5010500000000000000
+TEST[DATE|TIME]    endBal:              1964989500000000000000
+TEST[DATE|TIME]    begBalDiff:          0
+TEST[DATE|TIME]    endBalDiff:          0
+TEST[DATE|TIME]    endBalCalc:          0
+TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ====> BALANCE ETH
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ledger.blockNumber:     0
+TEST[DATE|TIME] prevBlock:              0
+TEST[DATE|TIME] transfer.blockNumber:   46685
+TEST[DATE|TIME] nextBlock:              46709
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    reconciliationType:  regular-eth
+TEST[DATE|TIME]    accountedFor:        0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME]    sender:              0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME]    recipient:           0xad00b7a324f31351d397408c8c3952ea198317eb
+TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    assetSymbol:         WEI
+TEST[DATE|TIME]    decimals:            18
+TEST[DATE|TIME]    prevAppBlk:          0
+TEST[DATE|TIME]    hash:                0x10893338fa5633ab747450b8698457fb047098f87f78e98b3dbee3134067b6b8
+TEST[DATE|TIME]    timestamp:           1438927408
+TEST[DATE|TIME]    blockNumber:         46685
+TEST[DATE|TIME]    transactionIndex:    0
+TEST[DATE|TIME]    logIndex:            0
+TEST[DATE|TIME]    priceSource:         uniswap
+TEST[DATE|TIME]    spotPrice:           1
+TEST[DATE|TIME]    prevBal:             1970000000000000000000
+TEST[DATE|TIME]    begBal:              1970000000000000000000
+TEST[DATE|TIME]    amountIn:            0
+TEST[DATE|TIME]    internalIn:          0
+TEST[DATE|TIME]    minerBaseRewardIn:   0
+TEST[DATE|TIME]    minerNephewRewardIn: 0
+TEST[DATE|TIME]    minerTxFeeIn:        0
+TEST[DATE|TIME]    minerUncleRewardIn:  0
+TEST[DATE|TIME]    prefundIn:           0
+TEST[DATE|TIME]    selfDestructIn:      0
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    amountOut:           5000000000000000000
+TEST[DATE|TIME]    internalOut:         0
+TEST[DATE|TIME]    selfDestructOut:     0
+TEST[DATE|TIME]    gasOut:              10500000000000000
+TEST[DATE|TIME]    totalOut:            5010500000000000000
+TEST[DATE|TIME]    amountNet:           -5010500000000000000
+TEST[DATE|TIME]    endBal:              1964989500000000000000
+TEST[DATE|TIME]    begBalDiff:          0
+TEST[DATE|TIME]    endBalDiff:          0
+TEST[DATE|TIME]    endBalCalc:          0
+TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 46685
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
 , {
   "hash": "0x10893338fa5633ab747450b8698457fb047098f87f78e98b3dbee3134067b6b8",
   "blockHash": "0x0da43b7f59c4e370097b5fe5b02c119c02888eaeccc2af502cb695db4b67c278",
@@ -184,7 +324,7 @@ TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at b
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "spotPrice": 1.00000,
+      "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "accountedFor": "0x08166f02313feae18bb044e7877c808b55b5bf58",
       "sender": "0x08166f02313feae18bb044e7877c808b55b5bf58",
@@ -195,25 +335,25 @@ TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at b
       "encoding": "0x",
       "reconciliationType": "regular-eth",
       "reconciled": true,
-      "totalIn": "",
-      "amountIn": "",
-      "internalIn": "",
-      "selfDestructIn": "",
-      "minerBaseRewardIn": "",
-      "minerNephewRewardIn": "",
-      "minerTxFeeIn": "",
-      "minerUncleRewardIn": "",
-      "prefundIn": "",
+      "totalIn": "0",
+      "amountIn": "0",
+      "internalIn": "0",
+      "selfDestructIn": "0",
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
       "totalOut": "5010500000000000000",
       "amountOut": "5000000000000000000",
-      "internalOut": "",
-      "selfDestructOut": "",
+      "internalOut": "0",
+      "selfDestructOut": "0",
       "gasOut": "10500000000000000",
       "totalOutLessGas": "5000000000000000000",
       "prevAppBlk": 0,
       "prevBal": "1970000000000000000000",
-      "begBalDiff": "",
-      "endBalDiff": "",
+      "begBalDiff": "0",
+      "endBalDiff": "0",
       "endBalCalc": "1964989500000000000000"
     }
   ],
@@ -222,47 +362,114 @@ TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at b
   "date": "2015-08-07 06:03:28 UTC",
   "ether": 5.000000000000000000
 }
-TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
-TIME ~ CLOCK - <INFO>  : Trial balance: 
-TIME ~ CLOCK - <INFO>  :    accountedFor:        0x08166f02313feae18bb044e7877c808b55b5bf58
-TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
-TIME ~ CLOCK - <INFO>  :    hash:                0x10d5c5f2386c6d6d93ca6b43fa25e8679971d07448db8d6c81d856ff3c3c001a
-TIME ~ CLOCK - <INFO>  :    blockNumber:         46709
-TIME ~ CLOCK - <INFO>  :    transactionIndex:    0
-TIME ~ CLOCK - <INFO>  :    logIndex:            0
-TIME ~ CLOCK - <INFO>  :    begBal:              1964989500000000000000
-TIME ~ CLOCK - <INFO>  :    amountOut:           1964889500000000000000
-TIME ~ CLOCK - <INFO>  :    gasOut:              10500000000000000
-TIME ~ CLOCK - <INFO>  :    totalOut:            1964900000000000000000
-TIME ~ CLOCK - <INFO>  :    amountNet:           -1964900000000000000000
-TIME ~ CLOCK - <INFO>  :    endBal:              89500000000000000
-TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
-TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 46685 prevBlock: 46685 transfer.blockNumber: 46709 nextBlock: 18446744073709551615
-TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
-TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
-TIME ~ CLOCK - <INFO>  :    blks:                [46709] 1 1
-TIME ~ CLOCK - <INFO>  :    accountedFor:        0x08166f02313feae18bb044e7877c808b55b5bf58
-TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
-TIME ~ CLOCK - <INFO>  :    hash:                0x10d5c5f2386c6d6d93ca6b43fa25e8679971d07448db8d6c81d856ff3c3c001a
-TIME ~ CLOCK - <INFO>  :    blockNumber:         46709
-TIME ~ CLOCK - <INFO>  :    transactionIndex:    0
-TIME ~ CLOCK - <INFO>  :    logIndex:            0
-TIME ~ CLOCK - <INFO>  :    begBal:              1964989500000000000000
-TIME ~ CLOCK - <INFO>  :    amountOut:           1964889500000000000000
-TIME ~ CLOCK - <INFO>  :    gasOut:              10500000000000000
-TIME ~ CLOCK - <INFO>  :    totalOut:            1964900000000000000000
-TIME ~ CLOCK - <INFO>  :    amountNet:           -1964900000000000000000
-TIME ~ CLOCK - <INFO>  :    endBal:              89500000000000000
-TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
-TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 46709...: 
-TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 46709 at four-byte 0x59e02dd7 returned 0x
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ====> ETH
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ledger.blockNumber:     46685
+TEST[DATE|TIME] prevBlock:              46685
+TEST[DATE|TIME] transfer.blockNumber:   46709
+TEST[DATE|TIME] nextBlock:              18446744073709551615
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    reconciliationType:  regular-eth
+TEST[DATE|TIME]    accountedFor:        0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME]    sender:              0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME]    recipient:           0xad00b7a324f31351d397408c8c3952ea198317eb
+TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    assetSymbol:         WEI
+TEST[DATE|TIME]    decimals:            18
+TEST[DATE|TIME]    prevAppBlk:          0
+TEST[DATE|TIME]    hash:                0x10d5c5f2386c6d6d93ca6b43fa25e8679971d07448db8d6c81d856ff3c3c001a
+TEST[DATE|TIME]    timestamp:           1438927854
+TEST[DATE|TIME]    blockNumber:         46709
+TEST[DATE|TIME]    transactionIndex:    0
+TEST[DATE|TIME]    logIndex:            0
+TEST[DATE|TIME]    priceSource:         uniswap
+TEST[DATE|TIME]    spotPrice:           1
+TEST[DATE|TIME]    prevBal:             0
+TEST[DATE|TIME]    begBal:              1964989500000000000000
+TEST[DATE|TIME]    amountIn:            0
+TEST[DATE|TIME]    internalIn:          0
+TEST[DATE|TIME]    minerBaseRewardIn:   0
+TEST[DATE|TIME]    minerNephewRewardIn: 0
+TEST[DATE|TIME]    minerTxFeeIn:        0
+TEST[DATE|TIME]    minerUncleRewardIn:  0
+TEST[DATE|TIME]    prefundIn:           0
+TEST[DATE|TIME]    selfDestructIn:      0
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    amountOut:           1964889500000000000000
+TEST[DATE|TIME]    internalOut:         0
+TEST[DATE|TIME]    selfDestructOut:     0
+TEST[DATE|TIME]    gasOut:              10500000000000000
+TEST[DATE|TIME]    totalOut:            1964900000000000000000
+TEST[DATE|TIME]    amountNet:           -1964900000000000000000
+TEST[DATE|TIME]    endBal:              89500000000000000
+TEST[DATE|TIME]    begBalDiff:          0
+TEST[DATE|TIME]    endBalDiff:          0
+TEST[DATE|TIME]    endBalCalc:          0
+TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ====> BALANCE ETH
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ledger.blockNumber:     46685
+TEST[DATE|TIME] prevBlock:              46685
+TEST[DATE|TIME] transfer.blockNumber:   46709
+TEST[DATE|TIME] nextBlock:              18446744073709551615
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    reconciliationType:  regular-eth
+TEST[DATE|TIME]    accountedFor:        0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME]    sender:              0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME]    recipient:           0xad00b7a324f31351d397408c8c3952ea198317eb
+TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    assetSymbol:         WEI
+TEST[DATE|TIME]    decimals:            18
+TEST[DATE|TIME]    prevAppBlk:          46685
+TEST[DATE|TIME]    hash:                0x10d5c5f2386c6d6d93ca6b43fa25e8679971d07448db8d6c81d856ff3c3c001a
+TEST[DATE|TIME]    timestamp:           1438927854
+TEST[DATE|TIME]    blockNumber:         46709
+TEST[DATE|TIME]    transactionIndex:    0
+TEST[DATE|TIME]    logIndex:            0
+TEST[DATE|TIME]    priceSource:         uniswap
+TEST[DATE|TIME]    spotPrice:           1
+TEST[DATE|TIME]    prevBal:             1964989500000000000000
+TEST[DATE|TIME]    begBal:              1964989500000000000000
+TEST[DATE|TIME]    amountIn:            0
+TEST[DATE|TIME]    internalIn:          0
+TEST[DATE|TIME]    minerBaseRewardIn:   0
+TEST[DATE|TIME]    minerNephewRewardIn: 0
+TEST[DATE|TIME]    minerTxFeeIn:        0
+TEST[DATE|TIME]    minerUncleRewardIn:  0
+TEST[DATE|TIME]    prefundIn:           0
+TEST[DATE|TIME]    selfDestructIn:      0
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    amountOut:           1964889500000000000000
+TEST[DATE|TIME]    internalOut:         0
+TEST[DATE|TIME]    selfDestructOut:     0
+TEST[DATE|TIME]    gasOut:              10500000000000000
+TEST[DATE|TIME]    totalOut:            1964900000000000000000
+TEST[DATE|TIME]    amountNet:           -1964900000000000000000
+TEST[DATE|TIME]    endBal:              89500000000000000
+TEST[DATE|TIME]    begBalDiff:          0
+TEST[DATE|TIME]    endBalDiff:          0
+TEST[DATE|TIME]    endBalCalc:          0
+TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] ===================== maker pricing ========================
+TEST[DATE|TIME] CEthCall:
+TEST[DATE|TIME] blockNumber: 46709
+TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] signature:   
+TEST[DATE|TIME] encoding:    0x59e02dd7
+TEST[DATE|TIME] bytes:       
+TEST[DATE|TIME] result:
+TEST[DATE|TIME] 0 results
+TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
 , {
   "hash": "0x10d5c5f2386c6d6d93ca6b43fa25e8679971d07448db8d6c81d856ff3c3c001a",
   "blockHash": "0xb13645388b8316c2bcbcf4f55717f9cc6ea87d3de9a1071e885bda92599f336a",
@@ -296,7 +503,7 @@ TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at b
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "spotPrice": 1.00000,
+      "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "accountedFor": "0x08166f02313feae18bb044e7877c808b55b5bf58",
       "sender": "0x08166f02313feae18bb044e7877c808b55b5bf58",
@@ -307,25 +514,25 @@ TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at b
       "encoding": "0x",
       "reconciliationType": "regular-eth",
       "reconciled": true,
-      "totalIn": "",
-      "amountIn": "",
-      "internalIn": "",
-      "selfDestructIn": "",
-      "minerBaseRewardIn": "",
-      "minerNephewRewardIn": "",
-      "minerTxFeeIn": "",
-      "minerUncleRewardIn": "",
-      "prefundIn": "",
+      "totalIn": "0",
+      "amountIn": "0",
+      "internalIn": "0",
+      "selfDestructIn": "0",
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
       "totalOut": "1964900000000000000000",
       "amountOut": "1964889500000000000000",
-      "internalOut": "",
-      "selfDestructOut": "",
+      "internalOut": "0",
+      "selfDestructOut": "0",
       "gasOut": "10500000000000000",
       "totalOutLessGas": "1964889500000000000000",
       "prevAppBlk": 46685,
       "prevBal": "1964989500000000000000",
-      "begBalDiff": "",
-      "endBalDiff": "",
+      "begBalDiff": "0",
+      "endBalDiff": "0",
       "endBalCalc": "89500000000000000"
     }
   ],

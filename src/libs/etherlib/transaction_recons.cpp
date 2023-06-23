@@ -23,7 +23,7 @@ string_q CTransaction::getReconcilationPath(const address_t& address) const {
 }
 
 //-----------------------------------------------------------------------
-bool CTransaction::readReconsFromCache(const address_t& accountedFor) {
+bool CTransaction::readStatementsFromCache(const address_t& accountedFor) {
     statements.clear();
     if (isTestMode()) {
         return false;

@@ -28,25 +28,25 @@ signature           	1023	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 reconciliationType  	1024	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 reconciled          	1025	0	8388628	T_BOOL TS_NUMERAL
 totalIn             	1026	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
-amountIn            	1027	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-internalIn          	1028	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-selfDestructIn      	1029	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-minerBaseRewardIn   	1030	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-minerNephewRewardIn 	1031	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-minerTxFeeIn        	1032	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-minerUncleRewardIn  	1033	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-prefundIn           	1034	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
+amountIn            	1027	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+internalIn          	1028	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+selfDestructIn      	1029	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+minerBaseRewardIn   	1030	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+minerNephewRewardIn 	1031	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+minerTxFeeIn        	1032	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+minerUncleRewardIn  	1033	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+prefundIn           	1034	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 totalOut            	1035	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
-amountOut           	1036	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-internalOut         	1037	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-selfDestructOut     	1038	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-gasOut              	1039	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
+amountOut           	1036	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+internalOut         	1037	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+selfDestructOut     	1038	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+gasOut              	1039	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 totalOutLessGas     	1040	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
-prevAppBlk          	1041	0	1086324764	T_BLOCKNUM TS_NUMERAL TS_INTEGER TS_OMITEMPTY
-prevBal             	1042	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-begBalDiff          	1043	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-endBalDiff          	1044	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-endBalCalc          	1045	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
+prevAppBlk          	1041	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+prevBal             	1042	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+begBalDiff          	1043	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+endBalDiff          	1044	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+endBalCalc          	1045	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 {
   "blockNumber": 0,
   "transactionIndex": 0,
@@ -61,30 +61,30 @@ endBalCalc          	1045	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
   "accountedFor": "0x0",
   "sender": "0x0",
   "recipient": "0x0",
-  "begBal": "",
-  "amountNet": "",
-  "endBal": "",
+  "begBal": "0",
+  "amountNet": "0",
+  "endBal": "0",
   "reconciled": true,
-  "totalIn": "",
-  "amountIn": "",
-  "internalIn": "",
-  "selfDestructIn": "",
-  "minerBaseRewardIn": "",
-  "minerNephewRewardIn": "",
-  "minerTxFeeIn": "",
-  "minerUncleRewardIn": "",
-  "prefundIn": "",
-  "totalOut": "",
-  "amountOut": "",
-  "internalOut": "",
-  "selfDestructOut": "",
-  "gasOut": "",
-  "totalOutLessGas": "",
+  "totalIn": "0",
+  "amountIn": "0",
+  "internalIn": "0",
+  "selfDestructIn": "0",
+  "minerBaseRewardIn": "0",
+  "minerNephewRewardIn": "0",
+  "minerTxFeeIn": "0",
+  "minerUncleRewardIn": "0",
+  "prefundIn": "0",
+  "totalOut": "0",
+  "amountOut": "0",
+  "internalOut": "0",
+  "selfDestructOut": "0",
+  "gasOut": "0",
+  "totalOutLessGas": "0",
   "prevAppBlk": 0,
-  "prevBal": "",
-  "begBalDiff": "",
-  "endBalDiff": "",
-  "endBalCalc": ""
+  "prevBal": "0",
+  "begBalDiff": "0",
+  "endBalDiff": "0",
+  "endBalCalc": "0"
 }
 
 --------------------------------------------------------------------------------
@@ -116,25 +116,25 @@ signature           	1023	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 reconciliationType  	1024	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 reconciled          	1025	1	8388628	T_BOOL TS_NUMERAL
 totalIn             	1026	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
-amountIn            	1027	1	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-internalIn          	1028	1	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-selfDestructIn      	1029	1	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-minerBaseRewardIn   	1030	1	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-minerNephewRewardIn 	1031	1	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-minerTxFeeIn        	1032	1	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-minerUncleRewardIn  	1033	1	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-prefundIn           	1034	1	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
+amountIn            	1027	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+internalIn          	1028	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+selfDestructIn      	1029	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+minerBaseRewardIn   	1030	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+minerNephewRewardIn 	1031	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+minerTxFeeIn        	1032	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+minerUncleRewardIn  	1033	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+prefundIn           	1034	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 totalOut            	1035	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
-amountOut           	1036	1	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-internalOut         	1037	1	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-selfDestructOut     	1038	1	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-gasOut              	1039	1	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
+amountOut           	1036	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+internalOut         	1037	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+selfDestructOut     	1038	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+gasOut              	1039	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 totalOutLessGas     	1040	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
-prevAppBlk          	1041	1	1086324764	T_BLOCKNUM TS_NUMERAL TS_INTEGER TS_OMITEMPTY
-prevBal             	1042	1	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-begBalDiff          	1043	1	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-endBalDiff          	1044	1	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-endBalCalc          	1045	1	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
+prevAppBlk          	1041	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+prevBal             	1042	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+begBalDiff          	1043	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+endBalDiff          	1044	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+endBalCalc          	1045	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 {
 }
 
@@ -167,27 +167,27 @@ signature           	1023	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 reconciliationType  	1024	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 reconciled          	1025	0	8388628	T_BOOL TS_NUMERAL
 totalIn             	1026	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
-amountIn            	1027	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-internalIn          	1028	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-selfDestructIn      	1029	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-minerBaseRewardIn   	1030	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-minerNephewRewardIn 	1031	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-minerTxFeeIn        	1032	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-minerUncleRewardIn  	1033	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-prefundIn           	1034	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
+amountIn            	1027	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+internalIn          	1028	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+selfDestructIn      	1029	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+minerBaseRewardIn   	1030	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+minerNephewRewardIn 	1031	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+minerTxFeeIn        	1032	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+minerUncleRewardIn  	1033	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+prefundIn           	1034	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 totalOut            	1035	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
-amountOut           	1036	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-internalOut         	1037	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-selfDestructOut     	1038	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-gasOut              	1039	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
+amountOut           	1036	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+internalOut         	1037	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+selfDestructOut     	1038	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+gasOut              	1039	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 totalOutLessGas     	1040	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
-prevAppBlk          	1041	0	1086324764	T_BLOCKNUM TS_NUMERAL TS_INTEGER TS_OMITEMPTY
-prevBal             	1042	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-begBalDiff          	1043	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-endBalDiff          	1044	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
-endBalCalc          	1045	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
+prevAppBlk          	1041	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+prevBal             	1042	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+begBalDiff          	1043	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+endBalDiff          	1044	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+endBalCalc          	1045	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 {
-  "schema": 71000,
+  "schema": 72000,
   "deleted": false,
   "showing": true,
   "cname": "Reconciliation",
@@ -204,29 +204,29 @@ endBalCalc          	1045	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
   "accountedFor": "0x0",
   "sender": "0x0",
   "recipient": "0x0",
-  "begBal": "",
-  "amountNet": "",
-  "endBal": "",
+  "begBal": "0",
+  "amountNet": "0",
+  "endBal": "0",
   "reconciled": true,
-  "totalIn": "",
-  "amountIn": "",
-  "internalIn": "",
-  "selfDestructIn": "",
-  "minerBaseRewardIn": "",
-  "minerNephewRewardIn": "",
-  "minerTxFeeIn": "",
-  "minerUncleRewardIn": "",
-  "prefundIn": "",
-  "totalOut": "",
-  "amountOut": "",
-  "internalOut": "",
-  "selfDestructOut": "",
-  "gasOut": "",
-  "totalOutLessGas": "",
+  "totalIn": "0",
+  "amountIn": "0",
+  "internalIn": "0",
+  "selfDestructIn": "0",
+  "minerBaseRewardIn": "0",
+  "minerNephewRewardIn": "0",
+  "minerTxFeeIn": "0",
+  "minerUncleRewardIn": "0",
+  "prefundIn": "0",
+  "totalOut": "0",
+  "amountOut": "0",
+  "internalOut": "0",
+  "selfDestructOut": "0",
+  "gasOut": "0",
+  "totalOutLessGas": "0",
   "prevAppBlk": 0,
-  "prevBal": "",
-  "begBalDiff": "",
-  "endBalDiff": "",
-  "endBalCalc": ""
+  "prevBal": "0",
+  "begBalDiff": "0",
+  "endBalDiff": "0",
+  "endBalCalc": "0"
 }
 

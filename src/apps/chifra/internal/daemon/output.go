@@ -58,6 +58,10 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
+	if !opts.IsPorted() {
+		logger.Fatal("Should not happen in DaemonInternal")
+	}
+
 	handled = true
 	apiUrl := opts.Port
 	if !strings.HasPrefix(apiUrl, "http") {
@@ -79,7 +83,7 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 		logger.Fatal("")
 	} else {
 		nTs, _ := tslib.NTimestamps(opts.Globals.Chain)
-		msg := fmt.Sprintf("%d, %d, %d,  %d, ts: %d", meta.Latest, meta.Finalized, meta.Staging, meta.Unripe, nTs)
+		msg := fmt.Sprintf("%d, %d, %d, %d, ts: %d", meta.Latest, meta.Finalized, meta.Staging, meta.Unripe, nTs)
 		logger.InfoTable("Progress:          ", msg)
 	}
 
@@ -108,6 +112,7 @@ func GetDaemonOptions(args []string, g *globals.GlobalOptions) *DaemonOptions {
 
 func (opts *DaemonOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
+	ported = true
 	// EXISTING_CODE
 	return
 }

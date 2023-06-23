@@ -78,6 +78,7 @@ func GetExportOptions(args []string, g *globals.GlobalOptions) *ExportOptions {
 
 func (opts *ExportOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
+	ported = false
 	// EXISTING_CODE
 	return
 }

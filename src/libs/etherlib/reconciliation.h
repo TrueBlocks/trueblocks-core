@@ -22,6 +22,29 @@ namespace qblocks {
 // EXISTING_CODE
 class CTransaction;
 class CTransfer;
+class CReconContext {
+  public:
+    blknum_t lBn;
+    blknum_t tBn;
+    blknum_t nBn;
+    bool isPrevDiff;
+    bool isNextDiff;
+    void DEBUG(const string_q& mmm) const {
+        if (!isTestMode())
+            return;
+        cerr << "TEST[DATE|TIME] ===================================================" << endl;
+        cerr << "TEST[DATE|TIME] ====> " << (mmm) << endl;
+        cerr << "TEST[DATE|TIME] ===================================================" << endl;
+        cerr << "TEST[DATE|TIME] ledger.blockNumber:     " << lBn << endl;
+        cerr << "TEST[DATE|TIME] prevBlock:              " << lBn << endl;
+        cerr << "TEST[DATE|TIME] transfer.blockNumber:   " << tBn << endl;
+        cerr << "TEST[DATE|TIME] nextBlock:              " << nBn << endl;
+        cerr << "TEST[DATE|TIME] isPrevDiff:             " << (isPrevDiff ? "true" : "false") << endl;
+        cerr << "TEST[DATE|TIME] isNextDiff:             " << (isNextDiff ? "true" : "false") << endl;
+        return;
+    }
+    string_q reconType(bool isEth, bool isGenesis, const string_q& in) const;
+};
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -72,9 +95,9 @@ class CReconciliation : public CBaseNode {
     CReconciliation(const address_t& aF, const address_t& asset, const CTransaction* pT);
     const CTransaction* pTransaction = NULL;
 
-    bool reconcileFlows(const CTransfer& transfer);
-    bool reconcileFlows_traces(void);
-    bool reconcileBalances(bool prevDifferent, bool nextDifferent, bigint_t& begBalOut, bigint_t& endBalOut);
+    bool reconcileFlows(const CTransfer& transfer, const CReconContext& ctx);
+    bool reconcileFlows_traces(const CReconContext& ctx);
+    bool reconcileBalances(bigint_t& begBalOut, bigint_t& endBalOut, const CReconContext& ctx);
 
     bigint_t begBalDiff(void) const;
     bigint_t endBalCalc(void) const;
