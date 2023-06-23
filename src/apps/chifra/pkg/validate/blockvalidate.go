@@ -29,6 +29,9 @@ func IsBlockHash(str string) bool {
 	if !IsHex(str) {
 		return false
 	}
+	if _, err := strconv.ParseUint(str, 0, 64); err != nil {
+		return false
+	}
 
 	return true
 }
