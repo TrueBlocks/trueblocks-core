@@ -71,7 +71,6 @@ func (ledgers *Ledger) GetStatementFromLog(log *types.SimpleLog) (r *types.Simpl
 		EndBal:           *eBal,
 	}
 
-	// TODO: BOGUS - THIS OFINTEREST STUFF IS WEIRD. WHAT DOES THIS DO?
 	ofInterst := false
 	if ledgers.AccountFor == ret.Sender {
 		ret.AmountOut = *val
@@ -88,8 +87,6 @@ func (ledgers *Ledger) GetStatementFromLog(log *types.SimpleLog) (r *types.Simpl
 		if !ledgers.TrialBalance("TOKENS", &ret) {
 			logger.Warn("Transaction", fmt.Sprintf("%d.%d.%d", ret.BlockNumber, ret.TransactionIndex, ret.LogIndex), "does not reconcile")
 		}
-		// } else {
-		// 	logger.TestLog(ledgers.TestMode, "Log", log.LogIndex, "at", fmt.Sprintf("%d.%d", log.BlockNumber, log.TransactionIndex), "(a token transfer) is not relevant")
 	}
 
 	return &ret, nil

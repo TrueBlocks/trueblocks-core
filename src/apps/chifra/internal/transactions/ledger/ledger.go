@@ -9,9 +9,9 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// TODO: BOGUS - IF THIS STRUCTURE HELD BALANCES FOR EACH ASSET AT EACH APPEARANCE, IT COULD BE FILLED IN A CONCURRENT WAY
-// TODO: BOGUS - AND WE COULD TRAVERSE IN REVERSE SO WE COULD DELIVER IN REVERSE CHRONOLOGICAL ORDER
-// Ledger is a struct that holds the context for each appearance and, for each asset encountered, the previous reconcilation record for balance accounting
+// TODO: Two things to note. (1) if balances were part of this structure, we could fill those
+// TODO: balances in a concurrent way before spinning through the appearances. And (2) if we did that
+// TODO: prior to doing the accounting, we could easily travers in reverse order.
 type Ledger struct {
 	Chain      string
 	AccountFor base.Address

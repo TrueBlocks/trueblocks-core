@@ -29,7 +29,7 @@ type reporter struct {
 	source      string
 }
 
-// TODO: BOGUS - THIS IS A TOTAL HACK
+// TODO: Much of this reporting could be removed by using a String function on the types.SimpleStatement
 func (r *reporter) report(msg string, testMode bool) {
 	isStable := strings.Contains(msg, "stable-coin")
 	if isStable {

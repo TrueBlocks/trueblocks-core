@@ -7,7 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// TODO: BOGUS A lot of the "reporting" in this file should be removed. It's only used for debugging.
+// TODO: Much of this reporting could be removed as it's only used for debugging
 
 // PriceUsd returns the price of the asset in USD
 func PriceUsd(chain string, testMode bool, statement *types.SimpleStatement) (price float64, source string, err error) {
@@ -22,7 +22,6 @@ func PriceUsd(chain string, testMode bool, statement *types.SimpleStatement) (pr
 
 	if statement.BlockNumber <= uniswapFactoryV2_deployed {
 		if statement.IsEth() {
-			// TODO: BOGUS IT WOULD BE MORE CONSISTENT IF WE CHECKED FOR PRE-DEPLOYMENT HERE
 			return PriceUsdMaker(chain, testMode, statement)
 		} else {
 			msg := fmt.Sprintf("Block %d is prior to deployment (%d) of Uniswap V2. No other source for tokens prior to UniSwap", statement.BlockNumber, uniswapFactoryV2_deployed)

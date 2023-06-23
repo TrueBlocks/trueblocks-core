@@ -8,7 +8,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// TODO: BOGUS - THIS IS INCOMPLETE - FOR EXAMPLE, IT DOESN'T HANDLE MINING REWARDS
+// TODO: When we get to doing chifra export --accounting, we will need to expand this
 
 func (ledgers *Ledger) GetStatementsFromTraces(trans *types.SimpleTransaction, s *types.SimpleStatement) (statements []*types.SimpleStatement) {
 	chain := ledgers.Chain

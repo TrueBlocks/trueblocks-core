@@ -17,7 +17,6 @@ var (
 )
 
 func PriceUsdMaker(chain string, testMode bool, statement *types.SimpleStatement) (price float64, source string, err error) {
-    // TODO: BOGUS - THIS COULD BE DONE IN THE CALLER
 	if statement.BlockNumber <= makerDeployment {
 		msg := fmt.Sprintf("Block %d is prior to deployment (%d) of Maker. No fallback pricing method", statement.BlockNumber, makerDeployment)
 		logger.TestLog(true, msg)
@@ -41,7 +40,8 @@ func PriceUsdMaker(chain string, testMode bool, statement *types.SimpleStatement
 	divisor := new(big.Int)
 	divisor.SetString("1000000000000000000", 10)
 
-    // TODO: BOGUS - THIS SHOULD USE THE RESULT VALUE RETURNED INSTEAD OF PEEKING AT RAWDATA
+	// TODO: Since Dawid fixed the articulate code, we should use the value at results["val_1"] instead of this
+	//       hacky string manipulation
 	rawHex := strings.TrimPrefix(string(result.RawReturn), "0x")
 	rawHex = rawHex[:64]
 	int0 := new(big.Int)

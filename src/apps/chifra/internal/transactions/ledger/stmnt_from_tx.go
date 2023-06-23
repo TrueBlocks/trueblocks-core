@@ -14,7 +14,7 @@ import (
 // GetStatementFromTransaction returns a statement from a given transaction
 func (ledgers *Ledger) GetStatementsFromTransaction(trans *types.SimpleTransaction) (statements []*types.SimpleStatement) {
 	statements = make([]*types.SimpleStatement, 0, 20) // a high estimate of the number of statements we'll need
-	// TODO: BOGUS - DO WE HAVE ANY TESTS WHERE IS_ERROR IS USED TO NOT BALANCE A TRANSACTION? DOES MONEYMOVED MAKE THAT NOT NECESSARY?
+	// TODO: We ignore errors here, but we should not
 	// if trans.IsError {
 	// 	return nil
 	// }

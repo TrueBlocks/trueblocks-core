@@ -10,8 +10,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// TODO: BOGUS - NOTHING SHOULD CHANGE IN THIS FUNCTION -- JUST TEST AND REPORT
-
 // TrialBalance returns true of the reconciliation balances, false otherwise. It also prints the trial balance to the console.
 func (l *Ledger) TrialBalance(msg string, r *types.SimpleStatement) bool {
 	key := fmt.Sprintf("%09d-%05d", r.BlockNumber, r.TransactionIndex)
