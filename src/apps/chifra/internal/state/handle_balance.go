@@ -28,7 +28,7 @@ func (opts *StateOptions) HandleBalance() error {
 				}
 
 				if opts.NoZero {
-					return balance != big.NewInt(0)
+					return len(balance.Bytes()) > 0
 				}
 				return true
 			},
@@ -39,25 +39,26 @@ func (opts *StateOptions) HandleBalance() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawEthState], errorChan chan error) {
-		for _, br := range opts.BlockIds {
-			blockNums, err := br.ResolveBlocks(chain)
-			if err != nil {
-				errorChan <- err
-				if errors.Is(err, ethereum.NotFound) {
-					continue
+		for _, addressStr := range opts.Addrs {
+			address := base.HexToAddress(addressStr)
+			for _, br := range opts.BlockIds {
+				blockNums, err := br.ResolveBlocks(chain)
+				if err != nil {
+					errorChan <- err
+					if errors.Is(err, ethereum.NotFound) {
+						continue
+					}
+					cancel()
+					return
 				}
-				cancel()
-				return
-			}
 
-			for _, bn := range blockNums {
-				for _, addressStr := range opts.Addrs {
-					address := base.HexToAddress(addressStr)
+				for _, bn := range blockNums {
 					if none {
 						modelChan <- &types.SimpleEthState{
 							Address:     address,
 							BlockNumber: bn,
 						}
+						return
 					}
 
 					state, err := account.GetState(
@@ -85,10 +86,14 @@ func (opts *StateOptions) HandleBalance() error {
 }
 
 func (opts *StateOptions) PartsToFields() (stateFields account.GetStateField, outputFields []string, none bool) {
-	outputFields = make([]string, 0)
+	balanceOutputField := "balance"
+	if opts.Globals.Ether {
+		balanceOutputField = "ether"
+	}
+
 	if len(opts.Parts) == 0 {
 		stateFields = account.Balance
-		outputFields = []string{"balance"}
+		outputFields = []string{balanceOutputField}
 		return
 	}
 
@@ -100,42 +105,44 @@ func (opts *StateOptions) PartsToFields() (stateFields account.GetStateField, ou
 			return
 		case "some":
 			stateFields |= account.Balance | account.Nonce | account.Code | account.Type
-			outputFields = append(outputFields, []string{
-				"balance",
-				"nonce",
-				"code",
-				"type",
-			}...)
 		case "all":
 			stateFields |= account.Balance | account.Nonce | account.Code | account.Proxy | account.Deployed | account.Type
-			outputFields = []string{
-				"balance",
-				"nonce",
-				"code",
-				"proxy",
-				"deployed",
-				"type",
-			}
-			return
 		case "balance":
 			stateFields |= account.Balance
-			outputFields = append(outputFields, "balance")
 		case "nonce":
 			stateFields |= account.Nonce
-			outputFields = append(outputFields, "nonce")
 		case "code":
 			stateFields |= account.Code
-			outputFields = append(outputFields, "code")
 		case "proxy":
 			stateFields |= account.Proxy
-			outputFields = append(outputFields, "proxy")
 		case "deployed":
 			stateFields |= account.Deployed
-			outputFields = append(outputFields, "deployed")
 		case "accttype":
 			stateFields |= account.Type
-			outputFields = append(outputFields, "type")
 		}
 	}
+
+	outputFields = make([]string, 0, 6)
+	if (stateFields & account.Proxy) != 0 {
+		outputFields = append(outputFields, "proxy")
+	}
+
+	// Always show balance for non-none parts
+	stateFields |= account.Balance
+	outputFields = append(outputFields, balanceOutputField)
+
+	if (stateFields & account.Nonce) != 0 {
+		outputFields = append(outputFields, "nonce")
+	}
+	if (stateFields & account.Code) != 0 {
+		outputFields = append(outputFields, "code")
+	}
+	if (stateFields & account.Deployed) != 0 {
+		outputFields = append(outputFields, "deployed")
+	}
+	if (stateFields & account.Type) != 0 {
+		outputFields = append(outputFields, "accttype")
+	}
+
 	return
 }

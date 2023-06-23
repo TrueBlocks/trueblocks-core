@@ -96,7 +96,7 @@ func GetProxy(chain string, address base.Address, blockNumber base.Blknum) (prox
 	proxy = base.Address{}
 
 	bn := big.NewInt(0).SetUint64(blockNumber)
-	// TODO: multicall
+
 	for _, location := range locations {
 		var value []byte
 		value, err = client.StorageAt(
@@ -110,6 +110,11 @@ func GetProxy(chain string, address base.Address, blockNumber base.Blknum) (prox
 		}
 		proxy = base.BytesToAddress(value)
 		if !proxy.IsZero() && proxy.Hex() != address.Hex() {
+			err = IsContractAt(chain, proxy, &types.SimpleNamedBlock{BlockNumber: blockNumber})
+			if errors.Is(err, ErrNotAContract) {
+				// Not a proxy
+				return base.Address{}, nil
+			}
 			return
 		}
 		proxy = base.Address{}

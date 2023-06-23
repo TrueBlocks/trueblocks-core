@@ -64,14 +64,23 @@ func (s *SimpleEthState) Model(verbose bool, format string, extraOptions map[str
 
 	order = []string{"blockNumber", "address"}
 
-	// TODO: fixme
+	getEtherBalance := func() string {
+		strValue := utils.WeiToEther(&s.Balance).Text('f', 18)
+		return strings.Replace(strValue, ".000000000000000000", "", 1)
+	}
+	getWeiBalance := func() string {
+		return s.Balance.String()
+	}
+
 	if extraOptions != nil {
 		if fields, ok := extraOptions["fields"]; ok {
 			if fields, ok := fields.([]string); ok {
 				for _, field := range fields {
 					switch field {
+					case "ether":
+						model["ether"] = getEtherBalance()
 					case "balance":
-						model["balance"] = s.Balance.String()
+						model["balance"] = getWeiBalance()
 					case "nonce":
 						model["nonce"] = s.Nonce
 					case "code":
@@ -88,12 +97,21 @@ func (s *SimpleEthState) Model(verbose bool, format string, extraOptions map[str
 						} else {
 							model["deployed"] = s.Deployed
 						}
-					case "type":
-						model["type"] = s.Accttype
+					case "accttype":
+						model["accttype"] = s.Accttype
 					}
 				}
 				order = append(order, fields...)
 			}
+		}
+	}
+	if format == "json" {
+		// In JSON format we display both balances
+		if _, ok := model["ether"]; !ok {
+			model["ether"] = getEtherBalance()
+		}
+		if _, ok := model["balance"]; !ok {
+			model["balance"] = getWeiBalance()
 		}
 	}
 	// EXISTING_CODE
