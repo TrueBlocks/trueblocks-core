@@ -2,10 +2,10 @@ state?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&blocks=4000000&verbose
 {
   "data": [
     {
-      "blockNumber": 4000000,
       "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
-      "balance": 4098334073083150700000,
-      "ether": 4098.3340730831505
+      "balance": "4098334073083150747787",
+      "blockNumber": 4000000,
+      "ether": "4098.334073083150747787"
     }
   ],
   "meta": {
