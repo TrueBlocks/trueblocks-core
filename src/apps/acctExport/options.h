@@ -55,8 +55,6 @@ class COptions : public CStatementOptions {
   public:
     // BEG_CODE_DECLARE
     CFourbyteArray fourbytes;
-    bool appearances;
-    bool receipts;
     bool logs;
     bool traces;
     bool neighbors;
@@ -65,7 +63,6 @@ class COptions : public CStatementOptions {
     bool articulate;
     bool cache;
     bool cache_traces;
-    bool count;
     uint64_t first_record;
     uint64_t max_records;
     bool relevant;

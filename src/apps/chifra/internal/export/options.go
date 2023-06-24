@@ -110,12 +110,6 @@ func (opts *ExportOptions) getEnvStr() []string {
 // toCmdLine converts the option to a command line for calling out to the system.
 func (opts *ExportOptions) toCmdLine() string {
 	options := ""
-	if opts.Appearances {
-		options += " --appearances"
-	}
-	if opts.Receipts {
-		options += " --receipts"
-	}
 	if opts.Logs {
 		options += " --logs"
 	}
@@ -139,9 +133,6 @@ func (opts *ExportOptions) toCmdLine() string {
 	}
 	if opts.CacheTraces {
 		options += " --cache_traces"
-	}
-	if opts.Count {
-		options += " --count"
 	}
 	if opts.FirstRecord != 1 {
 		options += (" --first_record " + fmt.Sprintf("%d", opts.FirstRecord))

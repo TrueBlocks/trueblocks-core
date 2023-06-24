@@ -1,3 +1,51 @@
+// } else if (receipts) {
+//     expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["receipt_fmt"]);
+// } else if (appearances) {
+//     expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["appearance_fmt"]);
+// if (count) {
+//     string_q format =
+//         getGlobalConfig("acctExport")->getConfigStr("display", "format", isText ? STR_DISPLAY_MONITORCOUNT : "");
+//     expContext().fmtMap["monitorcount_fmt"] = cleanFmt(format);
+//     expContext().fmtMap["header"] = noHeader ? "" : cleanFmt(format);
+// } else {
+// if (receipts) {
+//     SHOW_FIELD(CReceipt, "blockNumber");
+//     SHOW_FIELD(CReceipt, "transactionIndex");
+// } else if (appearances) {
+//     manageFields("CName:all", false);
+//     manageFields(verbose ? "CName:address,name" : "CName:address,name,timestamp,date", true);
+// }
+// if (appearances || count) {
+//     articulate = false;
+// }
+// if (count) {
+//     cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CMonitorCount)->m_ClassName);
+//     for (auto monitor : allMonitors) {
+//         CMonitorCount monCount;
+//         monCount.address = monitor.address;
+//         // CMonitorCount doesn't have a petname
+//         // monCount.petname = addr_2_Petname(monCount.address, '-');
+//         monCount.fileSize = fileSize(monitor.getPathToMonitor(monitor.address, false));
+//         monCount.nRecords = monitor.getRecordCnt(monitor.getPathToMonitor(monitor.address, false));
+//         cout << ((isJson() && !firstOut) ? ", " : "");
+//         cout << monCount;
+//         firstOut = false;
+//         if (shouldQuit())
+//             break;
+//     }
+//     cout << exportPostamble(errors, expContext().fmtMap["meta"]);
+//     return false;
+// } else {
+// if (options.appearances) {
+//     CAppearanceTraverser at;
+//     traversers.push_back(at);
+// }
+
+// if (options.receipts) {
+//     CReceiptTraverser rt;
+//     traversers.push_back(rt);
+// }
+
 // TODO(tjayrush): If an abi file is newer than the monitor file - clear the cache
 // TODO(tjayrush): accounting disallows freshen, apps, logs, receipts, statements, traces, but requires articulate
 // TODO(tjayrush): accounting must be for one monitor address - why?
@@ -33,8 +81,6 @@ static const COption params[] = {
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) to export"),
     COption("topics", "", "list<topic>", OPT_POSITIONAL, "filter by one or more log topics (only for --logs option)"),
     COption("fourbytes", "", "list<fourbyte>", OPT_POSITIONAL, "filter by one or more fourbytes (only for transactions and trace options)"),  // NOLINT
-    COption("appearances", "p", "", OPT_SWITCH, "export a list of appearances"),
-    COption("receipts", "r", "", OPT_SWITCH, "export receipts instead of transactional data"),
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transactional data"),
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transactional data"),
     COption("neighbors", "n", "", OPT_SWITCH, "export the neighbors of the given address"),
@@ -43,7 +89,6 @@ static const COption params[] = {
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("cache", "o", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
     COption("cache_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
-    COption("count", "U", "", OPT_SWITCH, "only available for --appearances mode, if present, return only the number of records"),  // NOLINT
     COption("first_record", "c", "<uint64>", OPT_FLAG, "the first record to process"),
     COption("max_records", "e", "<uint64>", OPT_FLAG, "the maximum number of records to process"),
     COption("relevant", "N", "", OPT_SWITCH, "for log and accounting export only, export only logs relevant to one of the given export addresses"),  // NOLINT
@@ -103,12 +148,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "--cache_tx") {
             cache = true;
             // BEG_CODE_AUTO
-        } else if (arg == "-p" || arg == "--appearances") {
-            appearances = true;
-
-        } else if (arg == "-r" || arg == "--receipts") {
-            receipts = true;
-
         } else if (arg == "-l" || arg == "--logs") {
             logs = true;
 
@@ -132,9 +171,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-R" || arg == "--cache_traces") {
             cache_traces = true;
-
-        } else if (arg == "-U" || arg == "--count") {
-            count = true;
 
         } else if (startsWith(arg, "-c:") || startsWith(arg, "--first_record:")) {
             if (!confirmUint("first_record", first_record, arg))
@@ -270,10 +306,6 @@ bool COptions::parseArguments(string_q& command) {
         allMonitors.push_back(monitor);
     }
 
-    if (appearances || count) {
-        articulate = false;
-    }
-
     if (articulate) {
         abi_spec.loadAbisFromKnown();
         for (auto monitor : allMonitors) {
@@ -290,51 +322,31 @@ bool COptions::parseArguments(string_q& command) {
     CMonitor m;
     cleanFolder(m.getPathToMonitor("", true));
 
-    if (count) {
-        cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CMonitorCount)->m_ClassName);
-        for (auto monitor : allMonitors) {
-            CMonitorCount monCount;
-            monCount.address = monitor.address;
-            // CMonitorCount doesn't have a petname
-            // monCount.petname = addr_2_Petname(monCount.address, '-');
-            monCount.fileSize = fileSize(monitor.getPathToMonitor(monitor.address, false));
-            monCount.nRecords = monitor.getRecordCnt(monitor.getPathToMonitor(monitor.address, false));
-            cout << ((isJson() && !firstOut) ? ", " : "");
-            cout << monCount;
-            firstOut = false;
-            if (shouldQuit())
-                break;
-        }
-        cout << exportPostamble(errors, expContext().fmtMap["meta"]);
-        return false;
+    if (load.empty()) {
+        if (!loadMonitors())
+            return false;
 
     } else {
-        if (load.empty()) {
-            if (!loadMonitors())
-                return false;
+        string_q fileName = cacheFolder_objs + load;
+        LOG_INFO("Trying to load dynamic library ", fileName);
+
+        if (!fileExists(fileName)) {
+            replace(fileName, "/objs/", "/objs/lib");
+            fileName = fileName + ".so";
+            LOG_INFO("Trying to load dynamic library ", fileName);
+        }
+
+        if (!fileExists(fileName)) {
+            fileName = substitute(fileName, ".so", ".dylib");
+            LOG_INFO("Trying to load dynamic library ", fileName);
+        }
+
+        if (fileExists(fileName)) {
+            LOG_INFO(bYellow, "Found dynamic library ", fileName, cOff);
+            load = fileName;
 
         } else {
-            string_q fileName = cacheFolder_objs + load;
-            LOG_INFO("Trying to load dynamic library ", fileName);
-
-            if (!fileExists(fileName)) {
-                replace(fileName, "/objs/", "/objs/lib");
-                fileName = fileName + ".so";
-                LOG_INFO("Trying to load dynamic library ", fileName);
-            }
-
-            if (!fileExists(fileName)) {
-                fileName = substitute(fileName, ".so", ".dylib");
-                LOG_INFO("Trying to load dynamic library ", fileName);
-            }
-
-            if (fileExists(fileName)) {
-                LOG_INFO(bYellow, "Found dynamic library ", fileName, cOff);
-                load = fileName;
-
-            } else {
-                return usage("Could not load dynamic traverser for " + fileName + ".");
-            }
+            return usage("Could not load dynamic traverser for " + fileName + ".");
         }
     }
 
@@ -348,8 +360,6 @@ void COptions::Init(void) {
     // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT
-    appearances = false;
-    receipts = false;
     logs = false;
     traces = false;
     neighbors = false;
@@ -360,7 +370,6 @@ void COptions::Init(void) {
     cache = getGlobalConfig("acctExport")->getConfigBool("settings", "cache", false);
     cache_traces = getGlobalConfig("acctExport")->getConfigBool("settings", "cache_traces", false);
     // clang-format on
-    count = false;
     first_record = 1;
     max_records = 250;
     relevant = false;
@@ -436,136 +445,117 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 bool COptions::setDisplayFormatting(void) {
     bool isText = expContext().exportFmt != JSON1;
-    if (count) {
-        string_q format =
-            getGlobalConfig("acctExport")->getConfigStr("display", "format", isText ? STR_DISPLAY_MONITORCOUNT : "");
-        expContext().fmtMap["monitorcount_fmt"] = cleanFmt(format);
-        expContext().fmtMap["header"] = noHeader ? "" : cleanFmt(format);
+    string_q hide = substitute(defHide, "|CLog: data, topics", "");
+    manageFields(hide, false);
+    string_q show = defShow;
+    show += (isApiMode() ? "|CTransaction:encoding,function,input,etherGasCost|CTrace:traceAddress" : "");
+    manageFields(show, true);
+    manageFields("CTrace: blockHash, blockNumber, transactionHash, transactionIndex", false);  // hide
+    if (isText) {
+        string_q format;
 
+        format = getGlobalConfig("acctExport")->getConfigStr("display", "format", STR_DISPLAY_TRANSACTION);
+        expContext().fmtMap["transaction_fmt"] = cleanFmt(format);
+        manageFields("CTransaction:" + format);
+
+        if (format.empty())
+            return usage("For non-json export a 'trans_fmt' string is required. Check your config file.");
+        if (!contains(toLower(format), "trace"))
+            HIDE_FIELD(CTransaction, "traces");
+
+        format = getGlobalConfig("acctExport")->getConfigStr("display", "receipt", STR_DISPLAY_RECEIPT);
+        expContext().fmtMap["receipt_fmt"] = cleanFmt(format);
+        manageFields("CReceipt:" + format);
+
+        format = getGlobalConfig("acctExport")->getConfigStr("display", "log", STR_DISPLAY_LOG);
+        expContext().fmtMap["log_fmt"] = cleanFmt(format);
+        manageFields("CLog:" + format);
+
+        format = getGlobalConfig("acctExport")->getConfigStr("display", "statement", STR_DISPLAY_RECONCILIATION);
+        expContext().fmtMap["reconciliation_fmt"] = cleanFmt(format);
+        manageFields("CReconciliation:" + format);
+
+        format = getGlobalConfig("acctExport")->getConfigStr("display", "neighbor", STR_DISPLAY_APPEARANCE);
+        if (neighbors || !verbose) {
+            replace(format, "\t[{NAME}]", "");
+            replace(format, "\t[{TIMESTAMP}]", "");
+            replace(format, "\t[{DATE}]", "");
+        }
+        if (!neighbors) {
+            replace(format, "\t[{REASON}]", "");
+        }
+        replace(format, "\t[{TRACEINDEX}]", "");
+        replaceAll(format, "\t\t", "\t");
+        format = trim(format, '\t');
+        expContext().fmtMap["appearance_fmt"] = cleanFmt(format);
+        manageFields("CAppearance:" + format);
+
+        format = getGlobalConfig("acctExport")->getConfigStr("display", "trace", STR_DISPLAY_TRACE);
+        expContext().fmtMap["trace_fmt"] = cleanFmt(format);
+        manageFields("CTrace:" + format);
     } else {
-        string_q hide = substitute(defHide, "|CLog: data, topics", "");
-        manageFields(hide, false);
-        string_q show = defShow;
-        show += (isApiMode() ? "|CTransaction:encoding,function,input,etherGasCost|CTrace:traceAddress" : "");
-        manageFields(show, true);
-        manageFields("CTrace: blockHash, blockNumber, transactionHash, transactionIndex", false);  // hide
-        if (isText) {
-            string_q format;
-
-            format = getGlobalConfig("acctExport")->getConfigStr("display", "format", STR_DISPLAY_TRANSACTION);
-            expContext().fmtMap["transaction_fmt"] = cleanFmt(format);
-            manageFields("CTransaction:" + format);
-
-            if (format.empty())
-                return usage("For non-json export a 'trans_fmt' string is required. Check your config file.");
-            if (!contains(toLower(format), "trace"))
-                HIDE_FIELD(CTransaction, "traces");
-
-            format = getGlobalConfig("acctExport")->getConfigStr("display", "receipt", STR_DISPLAY_RECEIPT);
-            expContext().fmtMap["receipt_fmt"] = cleanFmt(format);
-            manageFields("CReceipt:" + format);
-
-            format = getGlobalConfig("acctExport")->getConfigStr("display", "log", STR_DISPLAY_LOG);
-            expContext().fmtMap["log_fmt"] = cleanFmt(format);
-            manageFields("CLog:" + format);
-
-            format = getGlobalConfig("acctExport")->getConfigStr("display", "statement", STR_DISPLAY_RECONCILIATION);
-            expContext().fmtMap["reconciliation_fmt"] = cleanFmt(format);
-            manageFields("CReconciliation:" + format);
-
-            format = getGlobalConfig("acctExport")->getConfigStr("display", "neighbor", STR_DISPLAY_APPEARANCE);
-            if (neighbors || !verbose) {
-                replace(format, "\t[{NAME}]", "");
-                replace(format, "\t[{TIMESTAMP}]", "");
-                replace(format, "\t[{DATE}]", "");
-            }
-            if (!neighbors) {
-                replace(format, "\t[{REASON}]", "");
-            }
-            replace(format, "\t[{TRACEINDEX}]", "");
-            replaceAll(format, "\t\t", "\t");
-            format = trim(format, '\t');
-            expContext().fmtMap["appearance_fmt"] = cleanFmt(format);
-            manageFields("CAppearance:" + format);
-
-            format = getGlobalConfig("acctExport")->getConfigStr("display", "trace", STR_DISPLAY_TRACE);
-            expContext().fmtMap["trace_fmt"] = cleanFmt(format);
-            manageFields("CTrace:" + format);
+        if (neighbors) {
+            HIDE_FIELD(CAppearance, "name");
+            HIDE_FIELD(CAppearance, "timestamp");
+            HIDE_FIELD(CAppearance, "date");
         } else {
-            if (neighbors) {
-                HIDE_FIELD(CAppearance, "name");
-                HIDE_FIELD(CAppearance, "timestamp");
-                HIDE_FIELD(CAppearance, "date");
-            } else {
-                HIDE_FIELD(CAppearance, "traceIndex");
-                HIDE_FIELD(CAppearance, "reason");
-            }
-        }
-        HIDE_FIELD(CFunction, "stateMutability");
-        HIDE_FIELD(CParameter, "strDefault");
-        HIDE_FIELD(CParameter, "components");
-        HIDE_FIELD(CParameter, "internalType");
-        SHOW_FIELD(CTransaction, "traces");
-
-        expContext().fmtMap["header"] = "";
-        if (!noHeader) {
-            if (traces) {
-                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["trace_fmt"]);
-            } else if (receipts) {
-                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["receipt_fmt"]);
-            } else if (statements) {
-                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["reconciliation_fmt"]);
-            } else if (neighbors) {
-                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["appearance_fmt"]);
-            } else if (logs) {
-                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["log_fmt"]);
-            } else if (appearances) {
-                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["appearance_fmt"]);
-            } else {
-                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["transaction_fmt"]);
-            }
-        }
-
-        if (accounting) {
-            articulate = !getEtherscanKey(false).empty();
-            manageFields("CTransaction:statements", true);
-            if (statements && isText) {
-                string_q format =
-                    getGlobalConfig("acctExport")->getConfigStr("display", "statement", STR_DISPLAY_RECONCILIATION);
-                expContext().fmtMap["header"] = noHeader ? "" : cleanFmt(format);
-                expContext().fmtMap["reconciliation_fmt"] = cleanFmt(format);
-                manageFields("CReconciliation:" + format);
-            }
-        }
-
-        if (logs) {
-            SHOW_FIELD(CLog, "blockNumber");
-            SHOW_FIELD(CLog, "transactionIndex");
-            SHOW_FIELD(CLog, "transactionHash");
-            SHOW_FIELD(CReceipt, "blockNumber");
-            SHOW_FIELD(CReceipt, "transactionIndex");
-        }
-
-        if (traces) {
-            SHOW_FIELD(CTrace, "blockNumber");
-            SHOW_FIELD(CTrace, "transactionIndex");
-            SHOW_FIELD(CTrace, "blockHash");
-            SHOW_FIELD(CTrace, "transactionHash");
+            HIDE_FIELD(CAppearance, "traceIndex");
+            HIDE_FIELD(CAppearance, "reason");
         }
     }
+    HIDE_FIELD(CFunction, "stateMutability");
+    HIDE_FIELD(CParameter, "strDefault");
+    HIDE_FIELD(CParameter, "components");
+    HIDE_FIELD(CParameter, "internalType");
+    SHOW_FIELD(CTransaction, "traces");
+
+    expContext().fmtMap["header"] = "";
+    if (!noHeader) {
+        if (traces) {
+            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["trace_fmt"]);
+        } else if (statements) {
+            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["reconciliation_fmt"]);
+        } else if (neighbors) {
+            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["appearance_fmt"]);
+        } else if (logs) {
+            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["log_fmt"]);
+        } else {
+            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["transaction_fmt"]);
+        }
+    }
+
+    if (accounting) {
+        articulate = !getEtherscanKey(false).empty();
+        manageFields("CTransaction:statements", true);
+        if (statements && isText) {
+            string_q format =
+                getGlobalConfig("acctExport")->getConfigStr("display", "statement", STR_DISPLAY_RECONCILIATION);
+            expContext().fmtMap["header"] = noHeader ? "" : cleanFmt(format);
+            expContext().fmtMap["reconciliation_fmt"] = cleanFmt(format);
+            manageFields("CReconciliation:" + format);
+        }
+    }
+
+    if (logs) {
+        SHOW_FIELD(CLog, "blockNumber");
+        SHOW_FIELD(CLog, "transactionIndex");
+        SHOW_FIELD(CLog, "transactionHash");
+        SHOW_FIELD(CReceipt, "blockNumber");
+        SHOW_FIELD(CReceipt, "transactionIndex");
+    }
+
+    if (traces) {
+        SHOW_FIELD(CTrace, "blockNumber");
+        SHOW_FIELD(CTrace, "transactionIndex");
+        SHOW_FIELD(CTrace, "blockHash");
+        SHOW_FIELD(CTrace, "transactionHash");
+    }
+
     articulate = (articulate && (!isTestMode() || getEnvStr("TEST_NO_ARTICULATION") != "true"));
 
     // TODO(tjayrush): This doesn't work for some reason (see test case acctExport_export_logs.txt)
     if (!articulate)
         HIDE_FIELD(CLog, "compressedTx");
-
-    if (receipts) {
-        SHOW_FIELD(CReceipt, "blockNumber");
-        SHOW_FIELD(CReceipt, "transactionIndex");
-    } else if (appearances) {
-        manageFields("CName:all", false);
-        manageFields(verbose ? "CName:address,name" : "CName:address,name,timestamp,date", true);
-    }
 
     return true;
 }
