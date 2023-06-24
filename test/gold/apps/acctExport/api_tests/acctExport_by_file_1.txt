@@ -1,6 +1,6 @@
 export?file=cmd_file&fmt=csv
 {
   "errors": [
-    "You must provide at least one Ethereum address for this command."
+    "The --file option is not available in Api mode"
   ]
 }

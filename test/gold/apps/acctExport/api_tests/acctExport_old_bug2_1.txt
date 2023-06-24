@@ -26,7 +26,7 @@ export?addrs=0x000001f568875f378bf6d170b790967fe429c81a&maxRecords=1&firstRecord
       },
       "traces": [],
       "articulatedTx": {
-        "name": "approve0",
+        "name": "approve",
         "inputs": {
           "spender": "0x755cdba6ae4f479f7164792b318b2a06c759833b",
           "value": "0"
@@ -35,10 +35,10 @@ export?addrs=0x000001f568875f378bf6d170b790967fe429c81a&maxRecords=1&firstRecord
           "ret_0": "null"
         }
       },
-      "compressedTx": "{name:approve0|inputs:{spender:0x755cdba6ae4f479f7164792b318b2a06c759833b|value:0}|outputs:{ret_0:null}}",
+      "compressedTx": "{name:approve|inputs:{spender:0x755cdba6ae4f479f7164792b318b2a06c759833b|value:0}|outputs:{ret_0:null}}",
       "gasCost": 563280000000000,
       "etherGasCost": 0.00056328,
-      "function": "approve0",
+      "function": "approve",
       "gasUsed": 28164,
       "date": "2016-09-08 13:05:19 UTC",
       "ether": 0,
@@ -46,11 +46,14 @@ export?addrs=0x000001f568875f378bf6d170b790967fe429c81a&maxRecords=1&firstRecord
     }
   ],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "finalized": "0xdeadbeef",
     "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet",
     "first_block": "0xdeadbeef",
     "last_block": "0xdeadbeef",
     "accountedFor": {

@@ -62,7 +62,9 @@ export?addrs=rhyslindmark.eth&firstBlock=4037786&lastBlock=4081450
               "0xd04826430767fb7582777641958913bab449a3a2f8d19bd4de26af34ab43ab7a"
             ],
             "data": "0x000000000000000000000000000000000000000000000000000000000000008000000000000000000000000052f1e49cd13fb420ed6dfe8ed2c05c838eb55108000000000000000000000000ff9387a9aae1f5daab1cd8eb0e92113ea9d19ca300000000000000000000000000000000000000000000000000c4485378fb9fcc00000000000000000000000000000000000000000000000000000000000000317a64707541776357344845384c53376f454a6355614369545934726e6f78566838476f69324a6778565a70395339584768000000000000000000000000000000",
-            "compressedLog": ""
+            "compressedLog": "",
+            "timestamp": 1500353298,
+            "date": "2017-07-18 04:48:18 UTC"
           }
         ],
         "status": null
@@ -106,7 +108,9 @@ export?addrs=rhyslindmark.eth&firstBlock=4037786&lastBlock=4081450
               "0x0000000000000000000000000000000000000000000000000000000000000011"
             ],
             "data": "0x",
-            "compressedLog": ""
+            "compressedLog": "",
+            "timestamp": 1501167645,
+            "date": "2017-07-27 15:00:45 UTC"
           },
           {
             "address": "0x5deda52dc2b3a565d77e10f0f8d4bd738401d7d3",
@@ -117,7 +121,9 @@ export?addrs=rhyslindmark.eth&firstBlock=4037786&lastBlock=4081450
               "0x0000000000000000000000000000000000000000000000000000000000000011"
             ],
             "data": "0x",
-            "compressedLog": ""
+            "compressedLog": "",
+            "timestamp": 1501167645,
+            "date": "2017-07-27 15:00:45 UTC"
           },
           {
             "address": "0x5deda52dc2b3a565d77e10f0f8d4bd738401d7d3",
@@ -127,7 +133,9 @@ export?addrs=rhyslindmark.eth&firstBlock=4037786&lastBlock=4081450
               "0x0000000000000000000000000000000000000000000000000000000000000011"
             ],
             "data": "0x",
-            "compressedLog": ""
+            "compressedLog": "",
+            "timestamp": 1501167645,
+            "date": "2017-07-27 15:00:45 UTC"
           }
         ],
         "status": null
@@ -144,11 +152,14 @@ export?addrs=rhyslindmark.eth&firstBlock=4037786&lastBlock=4081450
     }
   ],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "finalized": "0xdeadbeef",
     "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet",
     "first_block": "0xdeadbeef",
     "last_block": "0xdeadbeef",
     "accountedFor": {

@@ -75,8 +75,9 @@ int main(int argc, const char* argv[]) {
             for (auto line : lines) {
                 if (ttOnlyB) {
                     runLocal = false;
-                    if (startsWith(line, "test") || startsWith(line, ttOnly)) {
+                    if (startsWith(line, "test")) {
                         replace(line, "test", "on");
+                    } else if (startsWith(line, ttOnly)) {
                         replace(line, ttOnly, "on");
                     } else if (startsWith(line, "on")) {
                         replace(line, "on", "local");

@@ -15,12 +15,12 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *ExportOptions) HandleAppearances(monitorArray []monitor.Monitor) error {
+func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	exportRange := base.FileRange{First: opts.FirstBlock, Last: opts.LastBlock}
@@ -28,10 +28,25 @@ func (opts *ExportOptions) HandleAppearances(monitorArray []monitor.Monitor) err
 	nSeen := uint64(0)
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawReceipt], errorChan chan error) {
 		visitAppearance := func(app *types.SimpleAppearance) error {
-			modelChan <- app
-			return nil
+			raw := types.RawAppearance{
+				Address:          app.Address.Hex(),
+				BlockNumber:      uint32(app.BlockNumber),
+				TransactionIndex: uint32(app.TransactionIndex),
+			}
+			if tx, err := rpcClient.GetTransactionByAppearance(chain, &raw, false); err != nil {
+				errorChan <- err
+				return nil
+			} else {
+				if tx.Receipt != nil {
+					if !opts.Globals.Verbose && opts.Globals.Format == "json" {
+						tx.Receipt.Logs = []types.SimpleLog{}
+					}
+					modelChan <- tx.Receipt
+				}
+				return nil
+			}
 		}
 
 		for _, mon := range monitorArray {
@@ -108,12 +123,4 @@ func (opts *ExportOptions) HandleAppearances(monitorArray []monitor.Monitor) err
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
-}
-
-func (opts *ExportOptions) IsMax(cnt uint64) bool {
-	max := opts.MaxRecords
-	if max == 250 && !opts.Globals.IsApiMode() {
-		max = utils.NOPOS
-	}
-	return cnt > max
 }

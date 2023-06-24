@@ -71,4 +71,4 @@ func (opts *ExportOptions) minMax() (ret base.FileRange) {
 	return
 }
 
-const maxTestingBlock = 15000000
+const maxTestingBlock = 17000000
