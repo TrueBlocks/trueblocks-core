@@ -2,37 +2,24 @@ export?addrs=0x05a56e2d52c817161883f50c441c3228cfe54d9f&firstBlock=0&lastBlock=1
 {
   "data": [
     {
-      "hash": "0x0",
-      "blockHash": "0x0",
+      "blockHash": "0x88e96d4537bea4d9c05d12549907b32561d3bf31f45aae734cdc119f13406cb6",
       "blockNumber": 1,
-      "transactionIndex": 99999,
-      "timestamp": 1438269988,
-      "from": "0xBlockReward",
-      "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "value": 5e+18,
-      "gas": 0,
-      "gasPrice": 0,
-      "maxFeePerGas": 0,
-      "maxPriorityFeePerGas": 0,
-      "input": "",
-      "isError": 0,
-      "hasToken": 0,
-      "receipt": {
-        "contractAddress": "0x0",
-        "gasUsed": 0,
-        "effectiveGasPrice": 0,
-        "logs": [],
-        "status": null
-      },
-      "traces": [],
-      "compressedTx": "",
-      "gasCost": 0,
-      "etherGasCost": 0,
-      "function": "",
-      "gasUsed": 0,
       "date": "2015-07-30 15:26:28 UTC",
-      "ether": 5,
-      "encoding": ""
+      "ether": "5",
+      "from": "0xBlockReward",
+      "gas": 0,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hasToken": 0,
+      "hash": "0x0",
+      "input": "",
+      "receipt": {},
+      "timestamp": 1438269988,
+      "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "traces": [],
+      "transactionIndex": 99999,
+      "value": "5000000000000000000"
     }
   ],
   "meta": {
@@ -43,17 +30,9 @@ export?addrs=0x05a56e2d52c817161883f50c441c3228cfe54d9f&firstBlock=0&lastBlock=1
     "unripe": "0xdeadbeef",
     "chainId": 1,
     "networkId": 1,
-    "chain": "mainnet",
-    "first_block": "0xdeadbeef",
-    "last_block": "0xdeadbeef",
-    "accountedFor": {
-      "tags": "",
-      "address": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "name": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "symbol": "",
-      "source": "",
-      "decimals": 18,
-      "petname": "early-definite-sunbird"
-    }
-  }
+    "chain": "mainnet"
+  },
+  "errors": [
+    "not found"
+  ]
 }

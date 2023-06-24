@@ -1,51 +1,3 @@
-// } else if (receipts) {
-//     expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["receipt_fmt"]);
-// } else if (appearances) {
-//     expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["appearance_fmt"]);
-// if (count) {
-//     string_q format =
-//         getGlobalConfig("acctExport")->getConfigStr("display", "format", isText ? STR_DISPLAY_MONITORCOUNT : "");
-//     expContext().fmtMap["monitorcount_fmt"] = cleanFmt(format);
-//     expContext().fmtMap["header"] = noHeader ? "" : cleanFmt(format);
-// } else {
-// if (receipts) {
-//     SHOW_FIELD(CReceipt, "blockNumber");
-//     SHOW_FIELD(CReceipt, "transactionIndex");
-// } else if (appearances) {
-//     manageFields("CName:all", false);
-//     manageFields(verbose ? "CName:address,name" : "CName:address,name,timestamp,date", true);
-// }
-// if (appearances || count) {
-//     articulate = false;
-// }
-// if (count) {
-//     cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CMonitorCount)->m_ClassName);
-//     for (auto monitor : allMonitors) {
-//         CMonitorCount monCount;
-//         monCount.address = monitor.address;
-//         // CMonitorCount doesn't have a petname
-//         // monCount.petname = addr_2_Petname(monCount.address, '-');
-//         monCount.fileSize = fileSize(monitor.getPathToMonitor(monitor.address, false));
-//         monCount.nRecords = monitor.getRecordCnt(monitor.getPathToMonitor(monitor.address, false));
-//         cout << ((isJson() && !firstOut) ? ", " : "");
-//         cout << monCount;
-//         firstOut = false;
-//         if (shouldQuit())
-//             break;
-//     }
-//     cout << exportPostamble(errors, expContext().fmtMap["meta"]);
-//     return false;
-// } else {
-// if (options.appearances) {
-//     CAppearanceTraverser at;
-//     traversers.push_back(at);
-// }
-
-// if (options.receipts) {
-//     CReceiptTraverser rt;
-//     traversers.push_back(rt);
-// }
-
 // TODO(tjayrush): If an abi file is newer than the monitor file - clear the cache
 // TODO(tjayrush): accounting disallows freshen, apps, logs, receipts, statements, traces, but requires articulate
 // TODO(tjayrush): accounting must be for one monitor address - why?
@@ -54,7 +6,6 @@
 // TODO(tjayrush): What does blkRewardMap do? Needs testing
 // TODO(tjayrush): Reconciliation loads traces -- plus it reduplicates the isSuicide, isGeneration, isUncle shit
 // TODO(tjayrush): If a monitor file is locked, remove the lock and move on (don't read) but don't wait either
-
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)

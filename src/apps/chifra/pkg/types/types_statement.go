@@ -111,13 +111,8 @@ func (s *SimpleStatement) Model(verbose bool, format string, extraOptions map[st
 	var order = []string{}
 
 	// EXISTING_CODE
-	fmt := func(in big.Int) string {
-		if extraOptions["ether"] == true {
-			return utils.WeiToEther(&in).Text('f', -1*int(s.Decimals))
-		}
-		return in.Text(10)
-	}
-
+	asEther := extraOptions["ether"] == true
+	decimals := int(s.Decimals)
 	model = map[string]any{
 		"blockNumber":         s.BlockNumber,
 		"transactionIndex":    s.TransactionIndex,
@@ -133,33 +128,33 @@ func (s *SimpleStatement) Model(verbose bool, format string, extraOptions map[st
 		"accountedFor":        s.AccountedFor,
 		"sender":              s.Sender,
 		"recipient":           s.Recipient,
-		"begBal":              fmt(s.BegBal),
-		"amountNet":           fmt(*s.AmountNet()),
-		"endBal":              fmt(s.EndBal),
+		"begBal":              utils.FormattedValue(s.BegBal, asEther, decimals),
+		"amountNet":           utils.FormattedValue(*s.AmountNet(), asEther, decimals),
+		"endBal":              utils.FormattedValue(s.EndBal, asEther, decimals),
 		"reconciliationType":  s.ReconciliationType,
 		"reconciled":          s.Reconciled(),
-		"totalIn":             fmt(*s.TotalIn()),
-		"amountIn":            fmt(s.AmountIn),
-		"internalIn":          fmt(s.InternalIn),
-		"selfDestructIn":      fmt(s.SelfDestructIn),
-		"minerBaseRewardIn":   fmt(s.MinerBaseRewardIn),
-		"minerNephewRewardIn": fmt(s.MinerNephewRewardIn),
-		"minerTxFeeIn":        fmt(s.MinerTxFeeIn),
-		"minerUncleRewardIn":  fmt(s.MinerUncleRewardIn),
-		"correctingIn":        fmt(s.CorrectingIn),
-		"prefundIn":           fmt(s.PrefundIn),
-		"totalOut":            fmt(*s.TotalOut()),
-		"amountOut":           fmt(s.AmountOut),
-		"internalOut":         fmt(s.InternalOut),
-		"correctingOut":       fmt(s.CorrectingOut),
-		"selfDestructOut":     fmt(s.SelfDestructOut),
-		"gasOut":              fmt(s.GasOut),
-		"totalOutLessGas":     fmt(*s.TotalOutLessGas()),
+		"totalIn":             utils.FormattedValue(*s.TotalIn(), asEther, decimals),
+		"amountIn":            utils.FormattedValue(s.AmountIn, asEther, decimals),
+		"internalIn":          utils.FormattedValue(s.InternalIn, asEther, decimals),
+		"selfDestructIn":      utils.FormattedValue(s.SelfDestructIn, asEther, decimals),
+		"minerBaseRewardIn":   utils.FormattedValue(s.MinerBaseRewardIn, asEther, decimals),
+		"minerNephewRewardIn": utils.FormattedValue(s.MinerNephewRewardIn, asEther, decimals),
+		"minerTxFeeIn":        utils.FormattedValue(s.MinerTxFeeIn, asEther, decimals),
+		"minerUncleRewardIn":  utils.FormattedValue(s.MinerUncleRewardIn, asEther, decimals),
+		"correctingIn":        utils.FormattedValue(s.CorrectingIn, asEther, decimals),
+		"prefundIn":           utils.FormattedValue(s.PrefundIn, asEther, decimals),
+		"totalOut":            utils.FormattedValue(*s.TotalOut(), asEther, decimals),
+		"amountOut":           utils.FormattedValue(s.AmountOut, asEther, decimals),
+		"internalOut":         utils.FormattedValue(s.InternalOut, asEther, decimals),
+		"correctingOut":       utils.FormattedValue(s.CorrectingOut, asEther, decimals),
+		"selfDestructOut":     utils.FormattedValue(s.SelfDestructOut, asEther, decimals),
+		"gasOut":              utils.FormattedValue(s.GasOut, asEther, decimals),
+		"totalOutLessGas":     utils.FormattedValue(*s.TotalOutLessGas(), asEther, decimals),
 		"prevAppBlk":          s.PrevAppBlk,
-		"prevBal":             fmt(s.PrevBal),
-		"begBalDiff":          fmt(*s.BegBalDiff()),
-		"endBalDiff":          fmt(*s.EndBalDiff()),
-		"endBalCalc":          fmt(*s.EndBalCalc()),
+		"prevBal":             utils.FormattedValue(s.PrevBal, asEther, decimals),
+		"begBalDiff":          utils.FormattedValue(*s.BegBalDiff(), asEther, decimals),
+		"endBalDiff":          utils.FormattedValue(*s.EndBalDiff(), asEther, decimals),
+		"endBalCalc":          utils.FormattedValue(*s.EndBalCalc(), asEther, decimals),
 		"correctingReason":    s.CorrectingReason,
 	}
 	order = []string{

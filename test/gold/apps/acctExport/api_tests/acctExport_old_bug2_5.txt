@@ -2,37 +2,30 @@ export?addrs=0x000001f568875f378bf6d170b790967fe429c81a&maxRecords=1&firstRecord
 {
   "data": [
     {
-      "hash": "0xefd07cb7281ef20dbd68df4df5164f3d04c3848bf83e1db70be7903d5da908cb",
       "blockHash": "0x6bd7db2bda8a567560489c475d9db62e12ed813e88c800184879a2c7da82252a",
       "blockNumber": 2671834,
-      "transactionIndex": 0,
-      "timestamp": 1479785719,
+      "date": "2016-11-22 03:35:19 UTC",
+      "ether": "2.5",
       "from": "0x0020dba1d308339182239056a00fcc146d2e26e0",
-      "to": "0x000001f568875f378bf6d170b790967fe429c81a",
-      "value": 2.5e+18,
       "gas": 21000,
+      "gasCost": 912154515006000,
       "gasPrice": 43435929286,
-      "maxFeePerGas": 0,
-      "maxPriorityFeePerGas": 0,
+      "gasUsed": 21000,
+      "hash": "0xefd07cb7281ef20dbd68df4df5164f3d04c3848bf83e1db70be7903d5da908cb",
       "input": "0x",
-      "isError": 0,
-      "hasToken": 0,
+      "nonce": 56,
       "receipt": {
         "contractAddress": "0x0",
-        "gasUsed": 21000,
         "effectiveGasPrice": 43435929286,
+        "gasUsed": 21000,
         "logs": [],
         "status": null
       },
+      "timestamp": 1479785719,
+      "to": "0x000001f568875f378bf6d170b790967fe429c81a",
       "traces": [],
-      "compressedTx": "0x()",
-      "gasCost": 912154515006000,
-      "etherGasCost": 0.000912154515006,
-      "function": "",
-      "gasUsed": 21000,
-      "date": "2016-11-22 03:35:19 UTC",
-      "ether": 2.5,
-      "encoding": "0x"
+      "transactionIndex": 0,
+      "value": "2500000000000000000"
     }
   ],
   "meta": {
@@ -43,22 +36,6 @@ export?addrs=0x000001f568875f378bf6d170b790967fe429c81a&maxRecords=1&firstRecord
     "unripe": "0xdeadbeef",
     "chainId": 1,
     "networkId": 1,
-    "chain": "mainnet",
-    "first_block": "0xdeadbeef",
-    "last_block": "0xdeadbeef",
-    "accountedFor": {
-      "tags": "90-Individuals:DevCon2",
-      "address": "0x000001f568875f378bf6d170b790967fe429c81a",
-      "name": "Name 0x000001f5",
-      "symbol": "",
-      "source": "DevCon2 Token Contract",
-      "decimals": 0,
-      "petname": "firmly-teaching-gazelle",
-      "isCustom": false,
-      "isPrefund": false,
-      "isContract": false,
-      "isErc20": false,
-      "isErc721": false
-    }
+    "chain": "mainnet"
   }
 }

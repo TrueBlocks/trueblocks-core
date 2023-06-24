@@ -13,7 +13,6 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 #include "monitor.h"
-#include "monitorcount.h"
 #include "acctlib.h"
 #include "apispec.h"
 #include "ethstate.h"

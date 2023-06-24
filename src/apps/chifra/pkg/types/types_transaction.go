@@ -126,7 +126,6 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 		"hash",
 		"isError",
 		"encoding",
-		"compressedTx",
 	}
 
 	model["date"] = utils.FormattedDate(s.Timestamp)
@@ -135,6 +134,9 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 	// TODO: Shouldn't this use the SimpleFunction model - the answer is yes?
 	var articulatedTx map[string]interface{}
 	isArticulated := extraOptions["articulate"] == true && s.ArticulatedTx != nil
+	if isArticulated && format != "json" {
+		order = append(order, "compressedTx")
+	}
 	if isArticulated {
 		articulatedTx = map[string]interface{}{
 			"name": s.ArticulatedTx.Name,
@@ -161,10 +163,8 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 		model["value"] = s.Value.String()
 		model["gas"] = s.Gas
 
-		// TODO: this value could be created when RPC is queried and cached
-		// if s.Value > 0 {
-		model["ether"] = utils.WeiToEther(&s.Value).Text('f', 18)
-		// }
+		model["ether"] = utils.FormattedValue(s.Value, true, 18)
+
 		if s.MaxFeePerGas > 0 {
 			model["maxFeePerGas"] = s.MaxFeePerGas
 		}
@@ -204,10 +204,12 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 			logs := make([]map[string]any, 0, len(s.Receipt.Logs))
 			for _, log := range s.Receipt.Logs {
 				logModel := map[string]any{
-					"address":  log.Address.Hex(),
-					"logIndex": log.LogIndex,
-					"topics":   log.Topics,
-					"data":     log.Data,
+					"address":   log.Address.Hex(),
+					"logIndex":  log.LogIndex,
+					"topics":    log.Topics,
+					"data":      log.Data,
+					"timestamp": s.Timestamp,
+					"date":      utils.FormattedDate(s.Timestamp),
 				}
 				if extraOptions["articulate"] == true && log.ArticulatedLog != nil {
 					inputModels := ParametersToMap(log.ArticulatedLog.Inputs)
@@ -229,6 +231,8 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 				traceModels = append(traceModels, trace.Model(verbose, format, extraOptions).Data)
 			}
 			model["traces"] = traceModels
+		} else {
+			model["traces"] = make([]map[string]any, 0, 0)
 		}
 
 		if isArticulated {
