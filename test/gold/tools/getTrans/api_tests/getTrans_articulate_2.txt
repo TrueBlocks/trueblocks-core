@@ -17,7 +17,7 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
       "blockHash": "0x836c4866ea68fbe3b9786cdb3c2c8a36fa0c689e77b0f9fc441d37fb85489fad",
       "blockNumber": 3648669,
       "date": "2017-05-04 11:27:22 UTC",
-      "ether": "0.010000000000000000",
+      "ether": "0.01",
       "from": "0xd1220a0cf47c7b9be7a2e6ba89f429762e7b9adb",
       "gas": 900000,
       "gasCost": 10849501969331552,
@@ -41,7 +41,9 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
               "name": "AuctionStarted"
             },
             "data": "0x000000000000000000000000000000000000000000000000000000005911a79a",
+            "date": "2017-05-04 11:27:22 UTC",
             "logIndex": 4,
+            "timestamp": 1493897242,
             "topics": [
               "0x87e97e825a1d1fa0c54e1d36c7506c1dea8b1efd451fe68b000cf96f7cf40003",
               "0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c"
@@ -57,7 +59,9 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
               "name": "AuctionStarted"
             },
             "data": "0x000000000000000000000000000000000000000000000000000000005911a79a",
+            "date": "2017-05-04 11:27:22 UTC",
             "logIndex": 5,
+            "timestamp": 1493897242,
             "topics": [
               "0x87e97e825a1d1fa0c54e1d36c7506c1dea8b1efd451fe68b000cf96f7cf40003",
               "0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc"
@@ -73,7 +77,9 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
               "name": "AuctionStarted"
             },
             "data": "0x000000000000000000000000000000000000000000000000000000005911a79a",
+            "date": "2017-05-04 11:27:22 UTC",
             "logIndex": 6,
+            "timestamp": 1493897242,
             "topics": [
               "0x87e97e825a1d1fa0c54e1d36c7506c1dea8b1efd451fe68b000cf96f7cf40003",
               "0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573"
@@ -90,7 +96,9 @@ transactions?transactions=3648669.24&articulate&verbose&traces&fmt=json
               "name": "NewBid"
             },
             "data": "0x000000000000000000000000000000000000000000000000002386f26fc10000",
+            "date": "2017-05-04 11:27:22 UTC",
             "logIndex": 7,
+            "timestamp": 1493897242,
             "topics": [
               "0xb556ff269c1b6714f432c36431e2041d28436a73b6c3f19c021827bbdc6bfc29",
               "0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811",

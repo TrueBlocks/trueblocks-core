@@ -7,7 +7,7 @@ TEST[DATE|TIME] Format:  json
       "blockHash": "0xe821b0f2752e49d421127f74b14d9a65dd8d5f48ad240b4b592043803f644372",
       "blockNumber": 4000002,
       "date": "2017-07-09 20:52:54 UTC",
-      "ether": "15.000000000000000000",
+      "ether": "15",
       "from": "0xd5f1eaa0be5f7b15b062b82a54eadaaa5a16e90f",
       "gas": 31500,
       "gasCost": 441000000000000,
@@ -25,6 +25,7 @@ TEST[DATE|TIME] Format:  json
       },
       "timestamp": 1499633574,
       "to": "0x904b7190718aa2d025b2aded0f20a0a0fe6e6bd5",
+      "traces": [],
       "transactionIndex": 5,
       "value": "15000000000000000000"
     },
@@ -32,7 +33,7 @@ TEST[DATE|TIME] Format:  json
       "blockHash": "0xe821b0f2752e49d421127f74b14d9a65dd8d5f48ad240b4b592043803f644372",
       "blockNumber": 4000002,
       "date": "2017-07-09 20:52:54 UTC",
-      "ether": "15.000000000000000000",
+      "ether": "15",
       "from": "0xd5f1eaa0be5f7b15b062b82a54eadaaa5a16e90f",
       "gas": 31500,
       "gasCost": 441000000000000,
@@ -50,6 +51,7 @@ TEST[DATE|TIME] Format:  json
       },
       "timestamp": 1499633574,
       "to": "0x904b7190718aa2d025b2aded0f20a0a0fe6e6bd5",
+      "traces": [],
       "transactionIndex": 5,
       "value": "15000000000000000000"
     },
@@ -57,7 +59,7 @@ TEST[DATE|TIME] Format:  json
       "blockHash": "0xe821b0f2752e49d421127f74b14d9a65dd8d5f48ad240b4b592043803f644372",
       "blockNumber": 4000002,
       "date": "2017-07-09 20:52:54 UTC",
-      "ether": "15.000000000000000000",
+      "ether": "15",
       "from": "0xd5f1eaa0be5f7b15b062b82a54eadaaa5a16e90f",
       "gas": 31500,
       "gasCost": 441000000000000,
@@ -75,6 +77,7 @@ TEST[DATE|TIME] Format:  json
       },
       "timestamp": 1499633574,
       "to": "0x904b7190718aa2d025b2aded0f20a0a0fe6e6bd5",
+      "traces": [],
       "transactionIndex": 5,
       "value": "15000000000000000000"
     }

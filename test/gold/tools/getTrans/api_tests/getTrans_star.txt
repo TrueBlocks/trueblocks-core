@@ -5,7 +5,7 @@ transactions?transactions=2222221.*&fmt=json
       "blockHash": "0xe4c2b8cb9ddd1acb41043afb3bd0149c281eca23f1bc563af5899bac748ec372",
       "blockNumber": 2222221,
       "date": "2016-09-08 15:22:44 UTC",
-      "ether": "50.000000000000000000",
+      "ether": "50",
       "from": "0x6273f7ea9a2ed87ccf5e1c2ab86e46811078f20e",
       "gas": 121000,
       "gasCost": 1050000000000000,
@@ -23,6 +23,7 @@ transactions?transactions=2222221.*&fmt=json
       },
       "timestamp": 1473348164,
       "to": "0x4d3f8e9f000409ca9f49432ccb2a1f84e8673bf1",
+      "traces": [],
       "transactionIndex": 0,
       "value": "50000000000000000000"
     },
@@ -30,7 +31,7 @@ transactions?transactions=2222221.*&fmt=json
       "blockHash": "0xe4c2b8cb9ddd1acb41043afb3bd0149c281eca23f1bc563af5899bac748ec372",
       "blockNumber": 2222221,
       "date": "2016-09-08 15:22:44 UTC",
-      "ether": "19.377212010000000000",
+      "ether": "19.37721201",
       "from": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
       "gas": 333333,
       "gasCost": 630000000000000,
@@ -48,6 +49,7 @@ transactions?transactions=2222221.*&fmt=json
       },
       "timestamp": 1473348164,
       "to": "0x079af03aaa85ca10b9f15b036a91289ac3d8c2b8",
+      "traces": [],
       "transactionIndex": 1,
       "value": "19377212010000000000"
     },
@@ -55,7 +57,7 @@ transactions?transactions=2222221.*&fmt=json
       "blockHash": "0xe4c2b8cb9ddd1acb41043afb3bd0149c281eca23f1bc563af5899bac748ec372",
       "blockNumber": 2222221,
       "date": "2016-09-08 15:22:44 UTC",
-      "ether": "21.990000000000000000",
+      "ether": "21.99",
       "from": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
       "gas": 121000,
       "gasCost": 494827921224000,
@@ -73,6 +75,7 @@ transactions?transactions=2222221.*&fmt=json
       },
       "timestamp": 1473348164,
       "to": "0x71316cb345b2b978bfbe3f28a4761fe3136273a5",
+      "traces": [],
       "transactionIndex": 2,
       "value": "21990000000000000000"
     },
@@ -80,7 +83,7 @@ transactions?transactions=2222221.*&fmt=json
       "blockHash": "0xe4c2b8cb9ddd1acb41043afb3bd0149c281eca23f1bc563af5899bac748ec372",
       "blockNumber": 2222221,
       "date": "2016-09-08 15:22:44 UTC",
-      "ether": "2.154968800000000000",
+      "ether": "2.1549688",
       "from": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
       "gas": 333333,
       "gasCost": 630000000000000,
@@ -98,6 +101,7 @@ transactions?transactions=2222221.*&fmt=json
       },
       "timestamp": 1473348164,
       "to": "0xb7831ba70c989e7b2ab03ff804e8cdab83a67ba3",
+      "traces": [],
       "transactionIndex": 3,
       "value": "2154968800000000000"
     }
