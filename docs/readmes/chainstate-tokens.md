@@ -45,7 +45,7 @@ Notes:
 
 Data models produced by this tool:
 
-- [tokenbalance](/data-model/chainstate/#tokenbalance)
+- [tokenbal](/data-model/chainstate/#tokenbal)
 
 Links:
 

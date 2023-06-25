@@ -44,14 +44,35 @@ CallResults consist of the following fields:
 | encodedArguments | the bytes data following the encoding of the call | string  |
 | outputs          | the result of the call to the contract            | Outputs |
 
+## TokenBal
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+The data model displays the token balance records for the `chifra tokens` tool.
+
+The following commands produce and manage TokenBals:
+
+- [chifra tokens](/chifra/chainstate/#chifra-tokens)
+
+TokenBals consist of the following fields:
+
+| Field      | Description                                                  | Type    |
+| ---------- | ------------------------------------------------------------ | ------- |
+| holder     | the address for which we are reporting the token balance     | address |
+| balance    | the balance at the address at the given block height         | int256  |
+| address    | the address of the token contract being queried              | address |
+| name       | the name of the token contract, if available                 | string  |
+| symbol     | the symbol for this token contract                           | string  |
+| decimals   | the number of decimals for the token contract                | uint64  |
+| isContract | `true` if the address is a smart contract, `false` otherwise | bool    |
+| isErc20    | `true` if the address is an ERC20, `false` otherwise         | bool    |
+| isErc721   | `true` if the address is an ERC720, `false` otherwise        | bool    |
+
 ## TokenBalance
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
 The data model displays the token balance records for the `chifra tokens` tool.
 
 The following commands produce and manage TokenBalances:
-
-- [chifra tokens](/chifra/chainstate/#chifra-tokens)
 
 TokenBalances consist of the following fields:
 
@@ -99,6 +120,7 @@ This documentation mentions the following basic data types.
 | address | an '0x'-prefixed 20-byte hex string | lowercase   |
 | blknum  | an alias for a uint64               |             |
 | bool    | either `true`, `false`, `1`, or `0` |             |
+| int256  | a signed big number                 | as a string |
 | string  | a normal character string           |             |
 | uint64  | a 64-bit unsigned integer           |             |
 | wei     | an unsigned big number              | as a string |

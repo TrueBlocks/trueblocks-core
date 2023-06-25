@@ -34,7 +34,7 @@ List of types that support the Modeler interface
 | ./pkg/types         | types_parameter.go       | SimpleParameter       | parameter         | x       | x      |
 | ./pkg/types         | types_receipt.go         | SimpleReceipt         | receipt           | x       | x      |
 | ./pkg/types         | types_reconciliation.go  | SimpleReconciliation  | reconciliation    | x       | x      |
-| ./pkg/types         | types_tokenbalance.go    | SimpleTokenBalance    | tokenBalance      | x       | x      |
+| ./pkg/types         | types_tokenbalance.go    | SimpleTokenBal        | tokenBalance      | x       | x      |
 | ./pkg/types         | types_trace.go           | SimpleTrace           | trace             | x       | x      |
 | ./pkg/types         | types_traceaction.go     | SimpleTraceAction     | traceAction       | x       | x      |
 | ./pkg/types         | types_tracefilter.go     | SimpleTraceFilter     | traceFilter       |         | x      |

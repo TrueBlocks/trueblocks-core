@@ -8,7 +8,7 @@ sort = v1.address < v2.address
 doc_group = 03-Chain State
 doc_descr = on-chain token-related data such as totalSupply, symbol, decimals, and individual balances for a given address at a given block
 doc_route = 303-tokenBalance
-doc_producer = tokens
+doc_producer =
 
 cpp_output = src/tools/getTokens/
-go_output = src/apps/chifra/pkg/types/
+go_output =

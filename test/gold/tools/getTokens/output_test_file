@@ -1,3 +1,5 @@
-blockNumber	holder	address	name	symbol	decimals	balance
-2000000	0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken	OMG	18	""
-2000002	0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken	OMG	18	""
+address	balance	blockNumber	decimals	holder	isContract	isErc20	name	symbol
+0xd26114cd6ee289accf82350c8d8487fedb8a0c07	0	17000000	18	0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	true	true	The Name	The Symbol
+0xd26114cd6ee289accf82350c8d8487fedb8a0c07	0	17000000	18	0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	true	true	The Name	The Symbol
+0xd26114cd6ee289accf82350c8d8487fedb8a0c07	0	17000000	18	0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	true	true	The Name	The Symbol
+0xd26114cd6ee289accf82350c8d8487fedb8a0c07	0	17000000	18	0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	true	true	The Name	The Symbol

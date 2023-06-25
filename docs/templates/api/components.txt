@@ -1152,6 +1152,47 @@ components:
         outputs:
           type: Outputs
           description: "the result of the call to the contract"
+    tokenBal:
+      description: "on-chain token-related data such as totalSupply, symbol, decimals, and individual balances for a given address at a given block"
+      type: object
+      properties:
+        holder:
+          type: string
+          format: address
+          example: "0x2910...63d2"
+          description: "the address for which we are reporting the token balance"
+        balance:
+          type: string
+          format: int256
+          example: "258843698360318500"
+          description: "the balance at the address at the given block height"
+        address:
+          type: string
+          format: address
+          example: "0xa1e4...63b4"
+          description: "the address of the token contract being queried"
+        name:
+          type: string
+          example: "The DAO Original"
+          description: "the name of the token contract, if available"
+        symbol:
+          type: string
+          example: "GTC"
+          description: "the symbol for this token contract"
+        decimals:
+          type: number
+          format: uint64
+          example: 18
+          description: "the number of decimals for the token contract"
+        isContract:
+          type: boolean
+          description: "`true` if the address is a smart contract, `false` otherwise"
+        isErc20:
+          type: boolean
+          description: "`true` if the address is an ERC20, `false` otherwise"
+        isErc721:
+          type: boolean
+          description: "`true` if the address is an ERC720, `false` otherwise"
     tokenBalance:
       description: "on-chain token-related data such as totalSupply, symbol, decimals, and individual balances for a given address at a given block"
       type: object
