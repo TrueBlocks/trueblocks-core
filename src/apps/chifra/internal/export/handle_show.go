@@ -8,6 +8,7 @@ import (
 	"context"
 	"fmt"
 	"sort"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -39,7 +40,15 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 				errorChan <- err
 				return nil
 			} else {
-				modelChan <- tx
+				matches := len(opts.Fourbytes) == 0 // either there is no four bytes...
+				for _, fb := range opts.Fourbytes {
+					if strings.HasPrefix(tx.Input, fb) {
+						matches = true
+					}
+				}
+				if matches {
+					modelChan <- tx
+				}
 				return nil
 			}
 		}

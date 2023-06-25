@@ -17,9 +17,13 @@
 namespace qblocks {
 
 //----------------------------------------------------------------------
-extern wei_t getBlockReward2(blknum_t bn);
-extern wei_t getNephewReward(blknum_t bn);
-extern wei_t getUncleReward(blknum_t bn, blknum_t uncleBn);
-extern wei_t getTransFees(blknum_t bn);
+typedef enum {
+    BLOCK_REWARD = (1 << 1),
+    UNCLE_REWARD = (1 << 2),
+    NEPHEW_REWARD = (1 << 3),
+    TXFEE_REWARD = (1 << 4),
+} reward_t;
+
+extern wei_t getReward(reward_t type, blknum_t bn, blknum_t uncleBn = NOPOS);
 
 }  // namespace qblocks

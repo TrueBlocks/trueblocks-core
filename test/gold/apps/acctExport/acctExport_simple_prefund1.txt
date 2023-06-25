@@ -2,5 +2,5 @@ chifra export  0x05a56e2d52c817161883f50c441c3228cfe54d9f --first_block 0 --last
 TEST[DATE|TIME] Addrs:  [0x05a56e2d52c817161883f50c441c3228cfe54d9f]
 TEST[DATE|TIME] LastBlock:  1
 TEST[DATE|TIME] Format:  txt
-blockNumber	transactionIndex	date	timestamp	from	to	ether	gasPrice	gasUsed	gasUsed	hash	isError	encoding
-1	99999	2015-07-30 15:26:28 UTC	1438269988	0xBlockReward	0x05a56e2d52c817161883f50c441c3228cfe54d9f	5.000000000000000000	0	0	0	0x0	false	
+blockNumber	transactionIndex	date	timestamp	from	to	ether	gasPrice	gasUsed	gasCost	hash	isError	encoding
+1	99999	2015-07-30 15:26:28 UTC	1438269988	0xBlockReward	0x05a56e2d52c817161883f50c441c3228cfe54d9f	5	0	0	0	0x0	false	

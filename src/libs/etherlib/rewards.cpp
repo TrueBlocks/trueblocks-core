@@ -15,6 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
+// TODO: REWARD
 void CTrace::loadTraceAsBlockReward(const CTransaction& trans, blknum_t bn, blknum_t txid) {
     ASSERT(txid == 99996 || txid == 99997 || txid == 99999);
     blockNumber = bn;
@@ -22,8 +23,8 @@ void CTrace::loadTraceAsBlockReward(const CTransaction& trans, blknum_t bn, blkn
     action.from = "0xBlockReward";
     action.to = trans.to;
     action.callType = "block-reward";
-    action.value = getBlockReward2(bn);
-    action.extraValue1 = getNephewReward(bn);
+    action.value = getReward(BLOCK_REWARD, bn);
+    action.extraValue1 = getReward(NEPHEW_REWARD, bn);
     action.extraValue2 = (result.gasUsed * trans.gasPrice);
     traceAddress.push_back("null-b-s");
     // transactionHash = uint_2_Hex(bn * 100000 + txid);
@@ -32,6 +33,7 @@ void CTrace::loadTraceAsBlockReward(const CTransaction& trans, blknum_t bn, blkn
 }
 
 //---------------------------------------------------------------------------
+// TODO: REWARD
 void CTrace::loadTraceAsUncleReward(const CTransaction& trans, blknum_t bn, blknum_t uncleBn) {
     ASSERT(txid == 99998);
     blockNumber = bn;
@@ -40,12 +42,13 @@ void CTrace::loadTraceAsUncleReward(const CTransaction& trans, blknum_t bn, blkn
     action.to = trans.to;
     action.callType = "uncle-reward";
     action.value +=
-        getUncleReward(bn, uncleBn);  // we use += here because you can win more than one uncle block per block
+        getReward(UNCLE_REWARD, bn, uncleBn);  // we use += here because you can win more than one uncle block per block
     action.input = "0x";
     pTransaction = &trans;
 }
 
 //---------------------------------------------------------------------------
+// TODO: REWARD
 void CTrace::loadTraceAsTransFee(const CTransaction& trans, blknum_t bn, blknum_t txid) {
     blockNumber = bn;
     transactionIndex = txid;
@@ -60,6 +63,7 @@ void CTrace::loadTraceAsTransFee(const CTransaction& trans, blknum_t bn, blknum_
 }
 
 //---------------------------------------------------------------------------
+// TODO: REWARD
 void CTrace::loadTraceAsDdos(const CTransaction& trans, blknum_t bn, blknum_t txid) {
     blockNumber = bn;
     transactionIndex = txid;
@@ -74,6 +78,7 @@ void CTrace::loadTraceAsDdos(const CTransaction& trans, blknum_t bn, blknum_t tx
 }
 
 //-------------------------------------------------------------------------
+// TODO: REWARD
 bool CTransaction::loadTransAsPrefund(blknum_t bn, blknum_t txid, const address_t& addr, const wei_t& amount) {
     initialize();
     blockNumber = bn;
@@ -87,6 +92,7 @@ bool CTransaction::loadTransAsPrefund(blknum_t bn, blknum_t txid, const address_
 }
 
 //-------------------------------------------------------------------------
+// TODO: REWARD
 bool CTransaction::loadTransAsBlockReward(blknum_t bn, blknum_t txid, const address_t& addr) {
     ASSERT(txid == 99996 || txid == 99997 || txid == 99999);
     initialize();
@@ -94,15 +100,16 @@ bool CTransaction::loadTransAsBlockReward(blknum_t bn, blknum_t txid, const addr
     transactionIndex = txid;
     from = "0xBlockReward";
     to = addr;
-    value = getBlockReward2(bn);
-    extraValue1 = getNephewReward(bn);
-    extraValue2 = getTransFees(bn);  // weird temp value for reconciliation only
+    value = getReward(BLOCK_REWARD, bn);
+    extraValue1 = getReward(NEPHEW_REWARD, bn);
+    extraValue2 = getReward(TXFEE_REWARD, bn);  // weird temp value for reconciliation only
     receipt = CReceipt();
     receipt.pTransaction = this;
     return true;
 }
 
 //-------------------------------------------------------------------------
+// TODO: REWARD
 bool CTransaction::loadTransAsUncleReward(blknum_t bn, blknum_t uncleBn, const address_t& addr) {
     ASSERT(txid == 99998);
     initialize();
@@ -110,14 +117,16 @@ bool CTransaction::loadTransAsUncleReward(blknum_t bn, blknum_t uncleBn, const a
     transactionIndex = 99998;
     from = "0xUncleReward";
     to = addr;
-    value += getUncleReward(bn, uncleBn);  // we use += here because you can win more than one uncle block per block
+    value +=
+        getReward(UNCLE_REWARD, bn, uncleBn);  // we use += here because you can win more than one uncle block per block
     receipt = CReceipt();
     receipt.pTransaction = this;
     return true;
 }
 
 //---------------------------------------------------------------------------
-wei_t getBlockReward2(blknum_t bn) {
+// TODO: REWARD
+wei_t getBlockReward(blknum_t bn) {
     if (bn == 0)
         return 0;
 
@@ -133,6 +142,7 @@ wei_t getBlockReward2(blknum_t bn) {
 }
 
 //---------------------------------------------------------------------------
+// TODO: REWARD
 wei_t getNephewReward(blknum_t bn) {
     if (bn == 0)
         return 0;
@@ -140,16 +150,17 @@ wei_t getNephewReward(blknum_t bn) {
     wei_t reward = 0;
     blknum_t nUncles = getUncleCount(bn);
     if (nUncles)
-        reward += ((getBlockReward2(bn) * nUncles) / 32);
+        reward += ((getBlockReward(bn) * nUncles) / 32);
     return reward;
 }
 
 //---------------------------------------------------------------------------
+// TODO: REWARD
 wei_t getUncleReward(blknum_t bn, blknum_t uncleBn) {
     if (bn == 0)
         return 0;
 
-    wei_t reward = getBlockReward2(bn);
+    wei_t reward = getBlockReward(bn);
     if ((uncleBn + 6) < bn)
         return 0;
     blknum_t diff = (uncleBn + 8 - bn);
@@ -157,7 +168,8 @@ wei_t getUncleReward(blknum_t bn, blknum_t uncleBn) {
 }
 
 //---------------------------------------------------------------------------
-extern wei_t getTransFees(blknum_t bn) {
+// TODO: REWARD
+wei_t getTransFees(blknum_t bn) {
     if (bn == 0)
         return 0;
 
@@ -167,6 +179,23 @@ extern wei_t getTransFees(blknum_t bn) {
     for (auto tx : block.transactions)
         fees += (tx.receipt.gasUsed * tx.gasPrice);
     return fees;
+}
+
+//---------------------------------------------------------------------------
+// TODO: REWARD
+wei_t getReward(reward_t type, blknum_t bn, blknum_t uncleBn) {
+    switch (type) {
+        case BLOCK_REWARD:
+            return getBlockReward(bn);
+        case NEPHEW_REWARD:
+            return getNephewReward(bn);
+        case UNCLE_REWARD:
+            return getUncleReward(bn, uncleBn);
+        case TXFEE_REWARD:
+            return getTransFees(bn);
+        default:
+            return 0;
+    }
 }
 
 }  // namespace qblocks
