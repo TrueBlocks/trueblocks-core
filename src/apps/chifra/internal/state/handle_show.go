@@ -12,7 +12,7 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-func (opts *StateOptions) HandleBalance() error {
+func (opts *StateOptions) HandleShow() error {
 	chain := opts.Globals.Chain
 	previousBalance := make(map[base.Address]*big.Int, len(opts.Addrs))
 	var filters account.GetStateFilters

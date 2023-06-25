@@ -51,13 +51,11 @@ func (opts *StateOptions) StateInternal() (err error, handled bool) {
 
 	// EXISTING_CODE
 	handled = true
-
 	if opts.Call != "" {
 		err = opts.HandleCall()
-		return
+	} else {
+		err = opts.HandleShow()
 	}
-
-	err = opts.HandleBalance()
 	// EXISTING_CODE
 
 	return

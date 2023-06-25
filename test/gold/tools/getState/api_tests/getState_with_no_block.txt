@@ -3,9 +3,9 @@ state?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
   "data": [
     {
       "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
-      "balance": "2910685340015980069700",
-      "blockNumber": 4370000,
-      "ether": "2910.6853400159800697"
+      "balance": "32466153927049510583",
+      "blockNumber": 17000000,
+      "ether": "32.466153927049510583"
     }
   ],
   "meta": {
