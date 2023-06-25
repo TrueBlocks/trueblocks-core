@@ -65,7 +65,6 @@ void etherlib_init(QUITHANDLER qh) {
 
     CReconciliation::registerClass();
     CTransfer::registerClass();
-    CEthState::registerClass();
     CEthCall::registerClass();
     CAppearance::registerClass();
     CRPCResult::registerClass();
@@ -479,6 +478,37 @@ bool queryRawTrace(string_q& trace, const string_q& hashIn) {
 bool queryRawStateDiff(string_q& diffs, const string_q& hashIn) {
     diffs = "[" + callRPC("trace_replayTransaction", "[\"" + str_2_Hash(hashIn) + "\",[\"stateDiff\"]]", true) + "]";
     return true;
+}
+
+//-----------------------------------------------------------------------
+string_q getCodeAt(const string_q& addr, blknum_t num) {
+    if (num == NOPOS)
+        num = getLatestBlock_client();
+    string_q params = "[\"[{ADDRESS}]\",\"[{NUM}]\"]";
+    replace(params, "[{ADDRESS}]", str_2_Addr(addr));
+    replace(params, "[{NUM}]", uint_2_Hex(num));
+    return callRPC("eth_getCode", params, false);
+}
+
+//-------------------------------------------------------------------------
+bool isContractAt(const address_t& addr, blknum_t num) {
+    if (isZeroAddr(addr))
+        return false;
+    return !substitute(getCodeAt(addr, num), "0x", "").empty();
+}
+
+//-------------------------------------------------------------------------
+wei_t getBalanceAt(const string_q& addr, blknum_t num) {
+    if (num == NOPOS)
+        num = getLatestBlock_client();
+    string_q params = "[\"[{ADDRESS}]\",\"[{NUM}]\"]";
+    address_t a = isZeroAddr(addr) ? "0x0000000000000000000000000000000000000000" : str_2_Addr(addr);
+    replace(params, "[{ADDRESS}]", a);
+    replace(params, "[{NUM}]", uint_2_Hex(num));
+    string_q ret = callRPC("eth_getBalance", params, false);
+    if (contains(ret, "error") || contains(ret, "message"))
+        return 0;
+    return str_2_Wei(ret);
 }
 
 //-------------------------------------------------------------------------

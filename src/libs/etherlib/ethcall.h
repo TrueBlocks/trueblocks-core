@@ -16,7 +16,7 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 #include "utillib.h"
-#include "ethstate.h"
+#include "abi.h"
 
 namespace qblocks {
 

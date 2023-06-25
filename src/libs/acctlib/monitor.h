@@ -18,7 +18,7 @@
 #include "etherlib.h"
 #include "transaction.h"
 #include "reconciliation.h"
-#include "ethstate.h"
+#include "abi.h"
 #include "monitordapp.h"
 
 namespace qblocks {

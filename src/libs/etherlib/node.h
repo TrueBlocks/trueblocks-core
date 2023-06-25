@@ -139,6 +139,10 @@ extern bool forEveryBlock(BLOCKVISITFUNC func, void* data, uint64_t start, uint6
                           uint64_t skip = 1);  // NOLINT
 extern bool forEveryTransaction(TRANSVISITFUNC func, void* data, const string_q& trans_list);
 
+//-----------------------------------------------------------------------
+extern string_q getCodeAt(const string_q& addr, blknum_t num);
+extern bool isContractAt(const address_t& addr, blknum_t num);
+
 //-------------------------------------------------------------------------
 extern biguint_t weiPerEther(void);
 
@@ -155,7 +159,6 @@ string_q exportPostamble(const CStringArray& errors, const string_q& extra);
 
 //-------------------------------------------------------------------------
 extern bool excludeTrace(const CTransaction* trans, size_t maxTraces);
-
 extern wei_t getBalanceAt(const address_t& addr, blknum_t blockNum);
 
 #ifdef LOGGING_LEVEL

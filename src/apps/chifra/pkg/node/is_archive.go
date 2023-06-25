@@ -63,7 +63,7 @@ func IsArchiveNode(chain string) bool {
 //     // the allocation amount for that account. We use the largest allocation so as
 //     // to ensure we get an actual balance
 //     Allocation largest = largestPrefund();
-//     return getBalanceAt(largest.address, 0) == largest.amount;
+//     return get BalanceAt(largest.address, 0) == largest.amount;
 // }
 //
 // // #if 0
