@@ -12,5 +12,4 @@ include_directories(${BASE_INCLUDE})
 
 # Compilation order of the src subdirectories
 add_subdirectory(getBlocks)
-add_subdirectory(getState)
 add_subdirectory(getTokens)

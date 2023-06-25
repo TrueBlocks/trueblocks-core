@@ -530,6 +530,19 @@ bool isPotentialAddr(biguint_t test, address_t& addrOut) {
 }
 
 //-----------------------------------------------------------------------
+string_q getStorageAt(const string_q& addr, const hash_t& hash, blknum_t num) {
+    if (!isContractAt(addr, num))
+        return "0x";
+    if (num == NOPOS)
+        num = getLatestBlock_client();
+    string_q params = "[\"[{ADDRESS}]\",\"[{POS}]\",\"[{NUM}]\"]";
+    replace(params, "[{ADDRESS}]", str_2_Addr(addr));
+    replace(params, "[{POS}]", hash);
+    replace(params, "[{NUM}]", uint_2_Hex(num));
+    return callRPC("eth_getStorageAt", params, false);
+}
+
+//-----------------------------------------------------------------------
 string_q getPC_internal(const address_t& contract, blknum_t blockNum) {
     // We try the following two not-so-useful methods of calling the implementation function directly
     CEthCall theCall;

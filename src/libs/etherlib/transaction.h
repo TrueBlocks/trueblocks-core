@@ -19,7 +19,7 @@
 #include "abi.h"
 #include "receipt.h"
 #include "trace.h"
-#include "ethstate.h"
+#include "abi.h"
 #include "ledgermanager.h"
 
 namespace qblocks {

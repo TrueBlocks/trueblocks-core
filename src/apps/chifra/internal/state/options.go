@@ -9,7 +9,6 @@ package statePkg
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -54,34 +53,6 @@ func (opts *StateOptions) testLog() {
 func (opts *StateOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
-}
-
-// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
-func (opts *StateOptions) getEnvStr() []string {
-	envStr := []string{}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return envStr
-}
-
-// toCmdLine converts the option to a command line for calling out to the system.
-func (opts *StateOptions) toCmdLine() string {
-	options := ""
-	for _, part := range opts.Parts {
-		options += " --parts " + part
-	}
-	if opts.Changes {
-		options += " --changes"
-	}
-	if opts.NoZero {
-		options += " --no_zero"
-	}
-	options += " " + strings.Join(opts.Addrs, " ")
-	options += " " + strings.Join(opts.Blocks, " ")
-	// EXISTING_CODE
-	// EXISTING_CODE
-	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
-	return options
 }
 
 // stateFinishParseApi finishes the parsing for server invocations. Returns a new StateOptions.

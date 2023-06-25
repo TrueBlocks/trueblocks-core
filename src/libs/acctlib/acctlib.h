@@ -16,7 +16,6 @@
 #include "monitorcount.h"
 #include "acctlib.h"
 #include "apispec.h"
-#include "ethstate.h"
 #include "traverser.h"
 
 extern void acctlib_init(QUITHANDLER qh);
