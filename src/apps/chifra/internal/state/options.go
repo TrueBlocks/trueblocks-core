@@ -129,6 +129,13 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 	}
 	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
 	opts.ProxyFor, _ = ens.ConvertOneEns(opts.Globals.Chain, opts.ProxyFor)
+	if len(opts.Blocks) == 0 {
+		if opts.Globals.TestMode {
+			opts.Blocks = []string{"17000000"}
+		} else {
+			opts.Blocks = []string{"latest"}
+		}
+	}
 	// EXISTING_CODE
 
 	return opts

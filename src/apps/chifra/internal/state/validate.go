@@ -80,11 +80,6 @@ func (opts *StateOptions) validateState() error {
 		}
 	}
 
-	// Set default block for testing
-	if opts.Globals.TestMode && len(opts.Blocks) == 0 {
-		opts.Blocks = append(opts.Blocks, "4370000")
-	}
-
 	// Blocks are optional, but if they are present, they must be valid
 	if len(opts.Blocks) > 0 {
 		bounds, err := validate.ValidateIdentifiersWithBounds(
