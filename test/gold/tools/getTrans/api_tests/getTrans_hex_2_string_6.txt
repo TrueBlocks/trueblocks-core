@@ -63,7 +63,7 @@ transactions?transactions=0xc12685b2f235e540892f709b09aa5b5e552a328097550b13964a
       "blockHash": "0x8eb09452e76f50fa4338cbc8054239713fc7fd454afa7a54dc2f4bde25300045",
       "blockNumber": 5165305,
       "date": "2018-02-27 12:10:24 UTC",
-      "ether": "0.000000000000000000",
+      "ether": "0",
       "from": "0x7874fac6c2a0f1422e17435e744fa5ed711a6bad",
       "gas": 2000000,
       "gasCost": 2520773394320604,

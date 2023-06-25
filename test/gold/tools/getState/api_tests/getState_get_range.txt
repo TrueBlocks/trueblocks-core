@@ -41,55 +41,55 @@ state?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&blocks=1428000-1438000:20
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
       "balance": "2474106600000000000",
       "blockNumber": 1429200,
-      "ether": "2.474106600000000000"
+      "ether": "2.4741066"
     },
     {
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
       "balance": "2694261540000000000",
       "blockNumber": 1429400,
-      "ether": "2.694261540000000000"
+      "ether": "2.69426154"
     },
     {
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
       "balance": "2819584520000000000",
       "blockNumber": 1429600,
-      "ether": "2.819584520000000000"
+      "ether": "2.81958452"
     },
     {
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
       "balance": "2819584520000000000",
       "blockNumber": 1429800,
-      "ether": "2.819584520000000000"
+      "ether": "2.81958452"
     },
     {
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
       "balance": "2819584520000000000",
       "blockNumber": 1430000,
-      "ether": "2.819584520000000000"
+      "ether": "2.81958452"
     },
     {
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
       "balance": "2834984520000000000",
       "blockNumber": 1430200,
-      "ether": "2.834984520000000000"
+      "ether": "2.83498452"
     },
     {
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
       "balance": "2834984520000000000",
       "blockNumber": 1430400,
-      "ether": "2.834984520000000000"
+      "ether": "2.83498452"
     },
     {
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
       "balance": "2834986520000000000",
       "blockNumber": 1430600,
-      "ether": "2.834986520000000000"
+      "ether": "2.83498652"
     },
     {
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
       "balance": "2834986520000000000",
       "blockNumber": 1430800,
-      "ether": "2.834986520000000000"
+      "ether": "2.83498652"
     },
     {
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
@@ -113,7 +113,7 @@ state?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&blocks=1428000-1438000:20
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
       "balance": "135575748634549637783540",
       "blockNumber": 1431600,
-      "ether": "135575.748634549637783540"
+      "ether": "135575.74863454963778354"
     },
     {
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
@@ -155,7 +155,7 @@ state?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&blocks=1428000-1438000:20
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
       "balance": "392671236321728544052620",
       "blockNumber": 1433000,
-      "ether": "392671.236321728544052620"
+      "ether": "392671.23632172854405262"
     },
     {
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
@@ -191,13 +191,13 @@ state?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&blocks=1428000-1438000:20
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
       "balance": "509906029905516634771010",
       "blockNumber": 1434200,
-      "ether": "509906.029905516634771010"
+      "ether": "509906.02990551663477101"
     },
     {
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
       "balance": "564979109602420201598820",
       "blockNumber": 1434400,
-      "ether": "564979.109602420201598820"
+      "ether": "564979.10960242020159882"
     },
     {
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
@@ -251,7 +251,7 @@ state?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&blocks=1428000-1438000:20
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
       "balance": "669194906954924705878280",
       "blockNumber": 1436200,
-      "ether": "669194.906954924705878280"
+      "ether": "669194.90695492470587828"
     },
     {
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",

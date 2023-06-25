@@ -43,6 +43,7 @@ var deployedCacheMutex sync.Mutex
 var deployedCache = make(map[base.Address]base.Blknum)
 
 func GetContractDeployBlock(chain string, address base.Address) (block base.Blknum, err error) {
+	// TODO: Couldn't we wait here to lock until we need it? Doesn't this lock even when we only read the cache?
 	deployedCacheMutex.Lock()
 	defer deployedCacheMutex.Unlock()
 
