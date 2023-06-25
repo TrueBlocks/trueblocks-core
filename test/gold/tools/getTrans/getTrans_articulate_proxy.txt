@@ -8,7 +8,7 @@ TEST[DATE|TIME] Format:  json
       "blockHash": "0xe6990361cd16e324842ba5dd867f69a749e8a5336ad2b011da8d63d0acd1a43d",
       "blockNumber": 11476466,
       "date": "2020-12-18 09:48:29 UTC",
-      "ether": "0.000000000000000000",
+      "ether": "0",
       "from": "0x7ce594737e1e456a8d7969e21a61f169a399ac5a",
       "gas": 255543,
       "gasCost": 13427465760000000,

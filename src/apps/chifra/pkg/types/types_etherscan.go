@@ -127,7 +127,7 @@ func (s *SimpleEtherscan) Model(verbose bool, format string, extraOptions map[st
 	if s.IsError {
 		model["isError"] = s.IsError
 	}
-	model["ether"] = utils.WeiToEther(&s.Value).Text('f', 18)
+	model["ether"] = utils.FormattedValue(s.Value, true, 18)
 	if s.BlockHash != base.HexToHash("0xdeadbeef") {
 		model["blockHash"] = s.BlockHash
 	}

@@ -163,7 +163,7 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 
 		// TODO: this value could be created when RPC is queried and cached
 		// if s.Value > 0 {
-		model["ether"] = utils.WeiToEther(&s.Value).Text('f', 18)
+		model["ether"] = utils.FormattedValue(s.Value, true, 18)
 		// }
 		if s.MaxFeePerGas > 0 {
 			model["maxFeePerGas"] = s.MaxFeePerGas
@@ -241,9 +241,8 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 		}
 
 	} else {
-		etherValue := utils.WeiToEther(&s.Value).Text('f', 18)
-		model["ether"] = etherValue
-		ethGasPrice := utils.WeiToEther(big.NewInt(0).SetUint64(s.GasPrice)).Text('f', 18)
+		model["ether"] = utils.FormattedValue(s.Value, true, 18)
+		ethGasPrice := utils.FormattedValue(*big.NewInt(0).SetUint64(s.GasPrice), true, 18)
 		model["ethGasPrice"] = ethGasPrice
 		model["isError"] = s.IsError
 

@@ -65,11 +65,10 @@ func (s *SimpleEthState) Model(verbose bool, format string, extraOptions map[str
 	order = []string{"blockNumber", "address"}
 
 	getEtherBalance := func() string {
-		strValue := utils.WeiToEther(&s.Balance).Text('f', 18)
-		return strings.Replace(strValue, ".000000000000000000", "", 1)
+		return utils.FormattedValue(s.Balance, true, 18)
 	}
 	getWeiBalance := func() string {
-		return s.Balance.String()
+		return utils.FormattedValue(s.Balance, false, 18)
 	}
 
 	if extraOptions != nil {
