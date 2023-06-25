@@ -1,8 +1,9 @@
-chifra state  0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2a
+chifra state  0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
 TEST[DATE|TIME] Addrs:  [0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98]
-TEST[DATE|TIME] Blocks:  [0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2a]
+TEST[DATE|TIME] Blocks:  [0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2]
 TEST[DATE|TIME] Format:  txt
-Error: The given value '0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2a' is not a valid identifier.
+THIS SHOULD BE THE ANSWER
+Error: block at 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2 returned an error: not found.
 Usage:
   chifra state [flags] <address> [address...] [block...]
 
