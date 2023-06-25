@@ -2,10 +2,10 @@ state?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&blocks=first
 {
   "data": [
     {
-      "blockNumber": 0,
       "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
-      "balance": 0,
-      "ether": 0
+      "balance": "0",
+      "blockNumber": 0,
+      "ether": "0"
     }
   ],
   "meta": {

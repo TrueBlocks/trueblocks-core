@@ -11,8 +11,10 @@ package types
 // EXISTING_CODE
 import (
 	"io"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
@@ -57,6 +59,61 @@ func (s *SimpleEthState) Model(verbose bool, format string, extraOptions map[str
 	var order = []string{}
 
 	// EXISTING_CODE
+	model["blockNumber"] = s.BlockNumber
+	model["address"] = s.Address
+
+	order = []string{"blockNumber", "address"}
+
+	getEtherBalance := func() string {
+		strValue := utils.WeiToEther(&s.Balance).Text('f', 18)
+		return strings.Replace(strValue, ".000000000000000000", "", 1)
+	}
+	getWeiBalance := func() string {
+		return s.Balance.String()
+	}
+
+	if extraOptions != nil {
+		if fields, ok := extraOptions["fields"]; ok {
+			if fields, ok := fields.([]string); ok {
+				for _, field := range fields {
+					switch field {
+					case "ether":
+						model["ether"] = getEtherBalance()
+					case "balance":
+						model["balance"] = getWeiBalance()
+					case "nonce":
+						model["nonce"] = s.Nonce
+					case "code":
+						if !verbose {
+							model["code"] = s.CodeShort()
+						} else {
+							model["code"] = s.Code
+						}
+					case "proxy":
+						model["proxy"] = s.Proxy
+					case "deployed":
+						if s.Deployed == utils.NOPOS {
+							model["deployed"] = ""
+						} else {
+							model["deployed"] = s.Deployed
+						}
+					case "accttype":
+						model["accttype"] = s.Accttype
+					}
+				}
+				order = append(order, fields...)
+			}
+		}
+	}
+	if format == "json" {
+		// In JSON format we display both balances
+		if _, ok := model["ether"]; !ok {
+			model["ether"] = getEtherBalance()
+		}
+		if _, ok := model["balance"]; !ok {
+			model["balance"] = getWeiBalance()
+		}
+	}
 	// EXISTING_CODE
 
 	return Model{
@@ -78,4 +135,19 @@ func (s *SimpleEthState) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
+func (s *SimpleEthState) CodeShort() string {
+	codeLen := len(s.Code)
+	if codeLen <= 250 {
+		return s.Code
+	}
+
+	return strings.Join(
+		[]string{
+			s.Code[:20],
+			s.Code[codeLen-20:],
+		},
+		"...",
+	)
+}
+
 // EXISTING_CODE

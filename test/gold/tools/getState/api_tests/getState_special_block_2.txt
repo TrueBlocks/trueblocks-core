@@ -2,10 +2,10 @@ state?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&blocks=stateclear
 {
   "data": [
     {
-      "blockNumber": 2717576,
       "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
-      "balance": 3928489490687974700000,
-      "ether": 3928.489490687975
+      "balance": "3928489490687974756789",
+      "blockNumber": 2717576,
+      "ether": "3928.489490687974756789"
     }
   ],
   "meta": {
