@@ -33,7 +33,8 @@ on      ,both ,fast  ,state ,tools/getState ,special_block_2                ,y  
 on      ,both ,fast  ,state ,tools/getState ,special_block_3                ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = first
 on      ,both ,fast  ,state ,tools/getState ,wei                            ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 4000000 & wei
 on      ,both ,fast  ,state ,tools/getState ,ether                          ,n    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 4000000 & ether & fmt = txt
-on      ,both ,medi  ,state ,tools/getState ,changes                        ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & blocks = 1430957-1430966 & changes & fmt = txt
+# See issue 3003
+local   ,both ,medi  ,state ,tools/getState ,changes                        ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & blocks = 1430957-1430966 & changes & fmt = txt
 on      ,both ,fast  ,state ,tools/getState ,e_dao_1500000                  ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & blocks = 1500000 & ether & fmt = txt
 on      ,both ,fast  ,state ,tools/getState ,e_two_accts                    ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 0x7cb57b5a97eabe94205c07890be4c1ad31e486a8 & blocks = 1500000 & ether & fmt = txt
 on      ,both ,fast  ,state ,tools/getState ,e_tip_4                        ,n    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 1500000 2000000 2500000 3000000 & ether & fmt = txt
@@ -102,9 +103,11 @@ on      ,cmd  ,fast  ,state ,tools/getState ,from_file                      ,y  
 on      ,both ,fast  ,state ,tools/getState ,redir_output                   ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & blocks = 2000000 & fmt = txt & output = output_test_file
 on      ,both ,fast  ,state ,tools/getState ,redir_output_append            ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & blocks = 2000001 & fmt = txt & output = output_test_file & no_header & append
 
-#invalid bytes length
-#invalid four-bytes length
-#weird abi for a function within a function alla Ben D.'s smart contract
-#use an actual abi signature
-#use a abi function call
-#why fail if there is no ABI? just report bytes
+# See issue #3004
+# invalid bytes length
+# invalid four-bytes length
+# weird abi for a function within a function alla Ben D.'s smart contract
+# use an actual abi signature
+# use a abi function call
+# why fail if there is no ABI? just report bytes
+# add a raw test
