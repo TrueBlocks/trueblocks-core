@@ -6,7 +6,17 @@ monitors?addrs=0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533&list&fmt=json&verbose
       "deleted": false,
       "fileSize": 48,
       "lastScanned": "--lastScanned--",
-      "nRecords": 5
+      "nRecords": 5,
+      "name": {
+        "address": "0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533",
+        "decimals": 0,
+        "isCustom": true,
+        "name": "Temp Hackathon Wallet",
+        "petname": "hopelessly-natural-kiwi",
+        "source": "",
+        "symbol": "",
+        "tags": "12-Empty"
+      }
     }
   ],
   "meta": {

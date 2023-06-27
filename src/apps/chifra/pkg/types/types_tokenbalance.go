@@ -19,7 +19,7 @@ import (
 
 // EXISTING_CODE
 
-type RawTokenBal struct {
+type RawTokenBalance struct {
 	Address          string `json:"address"`
 	Balance          string `json:"balance"`
 	BlockNumber      string `json:"blockNumber"`
@@ -39,36 +39,36 @@ type RawTokenBal struct {
 	// EXISTING_CODE
 }
 
-type SimpleTokenBal struct {
-	Address          base.Address `json:"address"`
-	Balance          big.Int      `json:"balance"`
-	BlockNumber      base.Blknum  `json:"blockNumber"`
-	Date             string       `json:"date"`
-	Decimals         uint64       `json:"decimals"`
-	Diff             big.Int      `json:"diff,omitempty"`
-	Holder           base.Address `json:"holder"`
-	IsContract       bool         `json:"isContract,omitempty"`
-	IsErc20          bool         `json:"isErc20,omitempty"`
-	IsErc721         bool         `json:"isErc721,omitempty"`
-	Name             string       `json:"name"`
-	PriorBalance     big.Int      `json:"priorBalance,omitempty"`
-	Symbol           string       `json:"symbol"`
-	TotalSupply      big.Int      `json:"totalSupply"`
-	TransactionIndex base.Blknum  `json:"transactionIndex,omitempty"`
-	raw              *RawTokenBal `json:"-"`
+type SimpleTokenBalance struct {
+	Address          base.Address     `json:"address"`
+	Balance          big.Int          `json:"balance"`
+	BlockNumber      base.Blknum      `json:"blockNumber"`
+	Date             string           `json:"date"`
+	Decimals         uint64           `json:"decimals"`
+	Diff             big.Int          `json:"diff,omitempty"`
+	Holder           base.Address     `json:"holder"`
+	IsContract       bool             `json:"isContract,omitempty"`
+	IsErc20          bool             `json:"isErc20,omitempty"`
+	IsErc721         bool             `json:"isErc721,omitempty"`
+	Name             string           `json:"name"`
+	PriorBalance     big.Int          `json:"priorBalance,omitempty"`
+	Symbol           string           `json:"symbol"`
+	TotalSupply      big.Int          `json:"totalSupply"`
+	TransactionIndex base.Blknum      `json:"transactionIndex,omitempty"`
+	raw              *RawTokenBalance `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *SimpleTokenBal) Raw() *RawTokenBal {
+func (s *SimpleTokenBalance) Raw() *RawTokenBalance {
 	return s.raw
 }
 
-func (s *SimpleTokenBal) SetRaw(raw *RawTokenBal) {
+func (s *SimpleTokenBalance) SetRaw(raw *RawTokenBalance) {
 	s.raw = raw
 }
 
-func (s *SimpleTokenBal) Model(verbose bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleTokenBalance) Model(verbose bool, format string, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -138,13 +138,13 @@ func (s *SimpleTokenBal) Model(verbose bool, format string, extraOptions map[str
 	}
 }
 
-func (s *SimpleTokenBal) WriteTo(w io.Writer) (n int64, err error) {
+func (s *SimpleTokenBalance) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil
 }
 
-func (s *SimpleTokenBal) ReadFrom(r io.Reader) (n int64, err error) {
+func (s *SimpleTokenBalance) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return 0, nil

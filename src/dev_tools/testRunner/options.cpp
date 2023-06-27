@@ -251,8 +251,8 @@ void establishTestData(void) {
 
     // Forces a few blocks into the cache
     doCommand("chifra blocks --uniq 0 2>/dev/null");
-    doCommand("chifra blocks --cache 2768801 1995314 1958017 2769609 2799895 2872831 3076260");
-    doCommand("chifra blocks --cache 4369999 1001001 1234567 1590000 4000001-4000004 3657480");
+    // doCommand("chifra blocks --cache 2768801 1995314 1958017 2769609 2799895 2872831 3076260");
+    // doCommand("chifra blocks --cache 4369999 1001001 1234567 1590000 4000001-4000004 3657480");
     // doCommand("chifra transactions --cache 47055.0");
     // doCommand("chifra transactions --cache 46147.0");
 
@@ -273,8 +273,17 @@ void establishTestData(void) {
     doCommand("chifra abis --clean 0x0000000000004946c0e9f43f4dee607b0ef1fa1c 2>/dev/null");
     doCommand("chifra abis --clean 0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7 2>/dev/null");
     doCommand("chifra abis --clean 0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031 2>/dev/null");
+    doCommand("chifra abis --clean 0x6d903f6003cca6255d85cca4d3b5e5146dc33925 2>/dev/null");
+    doCommand("chifra abis --clean 0x9ba00d6856a4edf4665bca2c2309936572473b7e 2>/dev/null");
+    doCommand("chifra abis --clean 0x1a9c8182c09f50c8318d769245bea52c32be35bc 2>/dev/null");
+    doCommand("chifra abis --clean 0x729d19f657bd0614b4985cf1d82531c67569197b 2>/dev/null");
 
-    // Forces the retreival of a few ABI files without which some tests will fail
+    // TODO: If the following lines are commented out, these tests cases fail:
+    // getState_proxy_imp.txt, getState_proxy_imp.txt, getTrans_old_parsing_bug_1.txt
+    // getTrans_old_parsing_bug_2.txt, getTrans_old_parsing_bug_1.txt, getTrans_old_parsing_bug_2.txt
+    // grabABI_ens_test.txt, grabABI_ens_test.txt, acctExport_statement_unfiltered.txt,
+    // acctExport_statement_unfiltered.txt It's all related to abis being in the cache Forces the retreival of a few ABI
+    // files without which some tests will fail
     doCommand("chifra abis 0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51");
     doCommand("chifra abis 0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373");
     doCommand("chifra abis 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359");
@@ -287,4 +296,8 @@ void establishTestData(void) {
     doCommand("chifra abis 0x0000000000004946c0e9f43f4dee607b0ef1fa1c");
     doCommand("chifra abis 0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7");
     doCommand("chifra abis 0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031");
+    doCommand("chifra abis 0x6d903f6003cca6255d85cca4d3b5e5146dc33925");
+    doCommand("chifra abis 0x9ba00d6856a4edf4665bca2c2309936572473b7e");
+    doCommand("chifra abis 0x1a9c8182c09f50c8318d769245bea52c32be35bc");
+    doCommand("chifra abis 0x729d19f657bd0614b4985cf1d82531c67569197b");
 }

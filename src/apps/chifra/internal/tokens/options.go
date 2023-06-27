@@ -9,7 +9,6 @@ package tokensPkg
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -52,34 +51,6 @@ func (opts *TokensOptions) testLog() {
 func (opts *TokensOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
-}
-
-// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
-func (opts *TokensOptions) getEnvStr() []string {
-	envStr := []string{}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return envStr
-}
-
-// toCmdLine converts the option to a command line for calling out to the system.
-func (opts *TokensOptions) toCmdLine() string {
-	options := ""
-	for _, part := range opts.Parts {
-		options += " --parts " + part
-	}
-	if opts.ByAcct {
-		options += " --by_acct"
-	}
-	if opts.NoZero {
-		options += " --no_zero"
-	}
-	options += " " + strings.Join(opts.Addrs, " ")
-	options += " " + strings.Join(opts.Blocks, " ")
-	// EXISTING_CODE
-	// EXISTING_CODE
-	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
-	return options
 }
 
 // tokensFinishParseApi finishes the parsing for server invocations. Returns a new TokensOptions.

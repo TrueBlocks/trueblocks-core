@@ -1,8 +1,8 @@
 enabled  ,mode ,speed ,route  ,path/tool       ,filename              ,post ,options
-on       ,cmd  ,fast  ,blocks ,tools/getBlocks ,force_01              ,y    ,blocks = 2768801 1995314 1958017 & cache
-on       ,cmd  ,fast  ,blocks ,tools/getBlocks ,force_02              ,y    ,blocks = 2769609 2799895 2872831 3076260 & cache
-on       ,cmd  ,fast  ,blocks ,tools/getBlocks ,force_03              ,y    ,blocks = 4369999 1001001 1234567 1590000 4000001-4000004 & cache
-on       ,cmd  ,fast  ,blocks ,tools/getBlocks ,force_04              ,y    ,blocks = stateclear daofork & cache
+cache    ,cmd  ,fast  ,blocks ,tools/getBlocks ,force_01              ,y    ,blocks = 2768801 1995314 1958017 & cache
+cache    ,cmd  ,fast  ,blocks ,tools/getBlocks ,force_02              ,y    ,blocks = 2769609 2799895 2872831 3076260 & cache
+cache    ,cmd  ,fast  ,blocks ,tools/getBlocks ,force_03              ,y    ,blocks = 4369999 1001001 1234567 1590000 4000001-4000004 & cache
+cache    ,cmd  ,fast  ,blocks ,tools/getBlocks ,force_04              ,y    ,blocks = stateclear daofork & cache
 on       ,cmd  ,fast  ,blocks ,tools/getBlocks ,help                  ,n    ,@h
 on       ,cmd  ,fast  ,blocks ,tools/getBlocks ,help_long             ,n    ,help
 on       ,both ,fast  ,blocks ,tools/getBlocks ,no_params             ,y    ,

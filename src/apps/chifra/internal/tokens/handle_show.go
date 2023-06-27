@@ -24,7 +24,7 @@ func (opts *TokensOptions) HandleShow() error {
 	tokenAddr := base.HexToAddress(opts.Addrs[0])
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawTokenBal], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawTokenBalance], errorChan chan error) {
 		for _, address := range opts.Addrs[1:] {
 			addr := base.HexToAddress(address)
 			for _, br := range opts.BlockIds {
@@ -42,7 +42,7 @@ func (opts *TokensOptions) HandleShow() error {
 					if bal, err := token.GetBalanceAt(chain, tokenAddr, addr, fmt.Sprintf("0x%x", bn)); bal == nil {
 						errorChan <- err
 					} else {
-						s := &types.SimpleTokenBal{
+						s := &types.SimpleTokenBalance{
 							Holder:      addr,
 							Address:     tokenAddr,
 							Balance:     *bal,
@@ -72,64 +72,16 @@ func (opts *TokensOptions) HandleShow() error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }
 
-// func (opts *TokensOptions) PartsToFields() (stateFields account.GetStateField, outputFields []string, none bool) {
-// 	balanceOutputField := "balance"
-// 	if opts.Globals.Ether {
-// 		balanceOutputField = "ether"
-// 	}
-
-// 	if len(opts.Parts) == 0 {
-// 		stateFields = account.Balance
-// 		outputFields = []string{balanceOutputField}
-// 		return
-// 	}
-
-// 	for _, part := range opts.Parts {
-// 		switch part {
-// 		case "none":
-// 			none = true
-// 			outputFields = nil
-// 			return
-// 		case "some":
-// 			stateFields |= account.Balance | account.Nonce | account.Code | account.Type
-// 		case "all":
-// 			stateFields |= account.Balance | account.Nonce | account.Code | account.Proxy | account.Deployed | account.Type
-// 		case "balance":
-// 			stateFields |= account.Balance
-// 		case "nonce":
-// 			stateFields |= account.Nonce
-// 		case "code":
-// 			stateFields |= account.Code
-// 		case "proxy":
-// 			stateFields |= account.Proxy
-// 		case "deployed":
-// 			stateFields |= account.Deployed
-// 		case "accttype":
-// 			stateFields |= account.Type
-// 		}
-// 	}
-
-// 	outputFields = make([]string, 0, 6)
-// 	if (stateFields & account.Proxy) != 0 {
-// 		outputFields = append(outputFields, "proxy")
-// 	}
-
-// 	// Always show balance for non-none parts
-// 	stateFields |= account.Balance
-// 	outputFields = append(outputFields, balanceOutputField)
-
-// 	if (stateFields & account.Nonce) != 0 {
-// 		outputFields = append(outputFields, "nonce")
-// 	}
-// 	if (stateFields & account.Code) != 0 {
-// 		outputFields = append(outputFields, "code")
-// 	}
-// 	if (stateFields & account.Deployed) != 0 {
-// 		outputFields = append(outputFields, "deployed")
-// 	}
-// 	if (stateFields & account.Type) != 0 {
-// 		outputFields = append(outputFields, "accttype")
-// 	}
-
-// 	return
-// }
+// TODO: NOTE THIS - DOES IT STILL WORK THIS WAY?
+// } else if (by_acct) {
+//     // All user-provided addresses are assumed to be tokens, except the last one which is the holder
+//     holders.push_back(addrs[addrs.size() - 1]);
+//     CAddressArray::iterator it;
+//     it = prev(addrs.end());
+//     addrs.erase(it);
+//     for (auto addr : addrs) {
+//         if (!isContractAt(addr, latestBlock))
+//             errors.push_back("Address '" + addr + "' is not a token contract.");
+//         else
+//             tokens.push_back(addr);
+//     }

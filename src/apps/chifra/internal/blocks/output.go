@@ -13,6 +13,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -50,43 +51,34 @@ func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.IsPorted() {
-		handled = true
-		if opts.Decache {
-			err = opts.HandleDecache()
+	if !opts.IsPorted() {
+		logger.Fatal("Should not happen in BlocksInternal")
+	}
 
-		} else if opts.Count {
-			err = opts.HandleCounts()
+	handled = true
+	if opts.Decache {
+		err = opts.HandleDecache()
 
-		} else if opts.Logs {
-			err = opts.HandleLogs()
+	} else if opts.Count {
+		err = opts.HandleCounts()
 
-		} else if opts.Traces {
-			err = opts.HandleTraces()
+	} else if opts.Logs {
+		err = opts.HandleLogs()
 
-		} else if opts.Uncles {
-			err = opts.HandleUncles()
+	} else if opts.Traces {
+		err = opts.HandleTraces()
 
-		} else if opts.List > 0 {
-			err = opts.HandleList()
+	} else if opts.Uncles {
+		err = opts.HandleUncles()
 
-		} else if opts.Uniq {
-			err = opts.HandleUniq()
+	} else if opts.List > 0 {
+		err = opts.HandleList()
 
-		} else {
-			err = opts.HandleShowBlocks()
-		}
+	} else if opts.Uniq {
+		err = opts.HandleUniq()
 
 	} else {
-		if opts.Globals.IsApiMode() {
-			return nil, false
-		}
-
-		handled = true
-		err = opts.Globals.PassItOn("getBlocks", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
-		// TODO: BOGUS -- this is a hack to prevent the output from being written twice. It will be
-		// TODO: removed when the etnire command is ported
-		opts.Globals.Writer = nil
+		err = opts.HandleShowBlocks()
 	}
 	// EXISTING_CODE
 
@@ -104,7 +96,7 @@ func GetBlocksOptions(args []string, g *globals.GlobalOptions) *BlocksOptions {
 
 func (opts *BlocksOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	ported = !opts.Cache
+	ported = true
 	// EXISTING_CODE
 	return
 }

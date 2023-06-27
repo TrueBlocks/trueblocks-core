@@ -73,7 +73,7 @@ on      ,both ,fast  ,state ,tools/getState ,uniswap_reserve                ,n  
 on      ,both ,fast  ,state ,tools/getState ,uniswap_fail                   ,y    ,call = '0x0902f1ad()' & addrs = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 & blocks = 10092000
 on      ,both ,fast  ,state ,tools/getState ,proxy_fail                     ,y    ,call = '0x0902f1ac()' & addrs = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B & blocks = 10092000
 on      ,both ,fast  ,state ,tools/getState ,proxy_call_direct              ,y    ,call = '0x0902f1ac()' & addrs = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 & blocks = 10092000
-on      ,both ,fast  ,state ,tools/getState ,proxy_imp                      ,n    ,call = '0xbb82aa5e()' & addrs = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B & blocks = 10092000 & fmt = csv
+cache   ,both ,fast  ,state ,tools/getState ,proxy_imp                      ,n    ,call = '0xbb82aa5e()' & addrs = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B & blocks = 10092000 & fmt = csv
 on      ,both ,fast  ,state ,tools/getState ,proxy_for                      ,y    ,call = '0x0902f1ac()' & addrs = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B & proxy_for = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 & blocks = 10092000
 on      ,both ,fast  ,state ,tools/getState ,proxy_2                        ,y    ,parts = all & addrs = 0x7cfb89D6DF1b89A678Dcaf42B9c262593e881E22 & fmt = json & blocks = 14000000
 
