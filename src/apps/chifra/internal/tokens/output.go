@@ -56,7 +56,11 @@ func (opts *TokensOptions) TokensInternal() (err error, handled bool) {
 	}
 
 	handled = true
-	err = opts.HandleShow()
+	if len(opts.Parts) > 0 {
+		err = opts.HandleParts()
+	} else {
+		err = opts.HandleShow()
+	}
 	// EXISTING_CODE
 
 	return

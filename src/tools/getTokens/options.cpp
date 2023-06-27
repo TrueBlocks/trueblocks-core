@@ -252,6 +252,7 @@ COptions::COptions(void) : CHistoryOptions() {
     notes.push_back("If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.");  // NOLINT
     notes.push_back("If the queried node does not store historical state, the results are undefined.");
     notes.push_back("`Special` blocks are detailed under `chifra when --list`.");
+    notes.push_back("If the `--parts` option is not empty, all addresses are considered tokens and each token's attributes are presented.");  // NOLINT
     // clang-format on
     // END_CODE_NOTES
 

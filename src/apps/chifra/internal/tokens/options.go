@@ -27,6 +27,7 @@ type TokensOptions struct {
 	BlockIds []identifiers.Identifier `json:"blockIds,omitempty"` // Block identifiers
 	Parts    []string                 `json:"parts,omitempty"`    // Which parts of the token information to retrieve
 	ByAcct   bool                     `json:"byAcct,omitempty"`   // Consider each address an ERC20 token except the last, whose balance is reported for each token
+	Changes  bool                     `json:"changes,omitempty"`  // Only report a balance when it changes from one block to the next
 	NoZero   bool                     `json:"noZero,omitempty"`   // Suppress the display of zero balance accounts
 	Globals  globals.GlobalOptions    `json:"globals,omitempty"`  // The global options
 	BadFlag  error                    `json:"badFlag,omitempty"`  // An error flag if needed
@@ -42,6 +43,7 @@ func (opts *TokensOptions) testLog() {
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(len(opts.Parts) > 0, "Parts: ", opts.Parts)
 	logger.TestLog(opts.ByAcct, "ByAcct: ", opts.ByAcct)
+	logger.TestLog(opts.Changes, "Changes: ", opts.Changes)
 	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
 	opts.Globals.TestLog()
 }
@@ -103,6 +105,8 @@ func tokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions
 			}
 		case "byAcct":
 			opts.ByAcct = true
+		case "changes":
+			opts.Changes = true
 		case "noZero":
 			opts.NoZero = true
 		default:
@@ -115,6 +119,13 @@ func tokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
 	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	if len(opts.Blocks) == 0 {
+		if opts.Globals.TestMode {
+			opts.Blocks = []string{"17000000"}
+		} else {
+			opts.Blocks = []string{"latest"}
+		}
+	}
 	// EXISTING_CODE
 
 	return opts
@@ -126,18 +137,30 @@ func tokensFinishParse(args []string) *TokensOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	// EXISTING_CODE
-	dupMap := make(map[string]bool)
-	for _, arg := range args {
-		if !dupMap[arg] {
-			if validate.IsValidAddress(arg) {
-				opts.Addrs = append(opts.Addrs, arg)
-			} else {
-				opts.Blocks = append(opts.Blocks, arg)
+	if len(args) > 0 {
+		dupMap := make(map[string]bool)
+		for index, arg := range args {
+			if !dupMap[arg] {
+				if validate.IsValidAddress(arg) {
+					opts.Addrs = append(opts.Addrs, arg)
+				} else {
+					opts.Blocks = append(opts.Blocks, arg)
+				}
+			}
+			if index > 0 {
+				// the first item is the token, so never dupped
+				dupMap[arg] = true
 			}
 		}
-		dupMap[arg] = true
 	}
 	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	if len(opts.Blocks) == 0 {
+		if opts.Globals.TestMode {
+			opts.Blocks = []string{"17000000"}
+		} else {
+			opts.Blocks = []string{"latest"}
+		}
+	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

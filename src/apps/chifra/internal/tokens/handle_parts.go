@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -14,18 +15,17 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-func (opts *TokensOptions) HandleShow() error {
-	if len(opts.Addrs) < 2 && len(opts.Parts) == 0 {
+func (opts *TokensOptions) HandleParts() error {
+	if len(opts.Parts) == 0 {
 		logger.Fatal("Implementation error. Should not happen")
 	}
 
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
-	tokenAddr := base.HexToAddress(opts.Addrs[0])
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTokenBal], errorChan chan error) {
-		for _, address := range opts.Addrs[1:] {
+		for _, address := range opts.Addrs {
 			addr := base.HexToAddress(address)
 			for _, br := range opts.BlockIds {
 				blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
@@ -39,16 +39,15 @@ func (opts *TokensOptions) HandleShow() error {
 				}
 
 				for _, bn := range blockNums {
-					if bal, err := token.GetBalanceAt(chain, tokenAddr, addr, fmt.Sprintf("0x%x", bn)); bal == nil {
+					if state, err := token.GetState(chain, addr, fmt.Sprintf("0x%x", bn)); err != nil {
 						errorChan <- err
 					} else {
+						ts, _ := new(big.Int).SetString(state.TotalSupply, 10)
 						s := &types.SimpleTokenBal{
-							Holder:      addr,
-							Address:     tokenAddr,
-							Balance:     *bal,
+							Address:     state.Address,
 							BlockNumber: bn,
-							IsContract:  true,
-							IsErc20:     true,
+							TotalSupply: *ts,
+							Decimals:    uint64(state.Decimals),
 						}
 						modelChan <- s
 					}
@@ -57,8 +56,8 @@ func (opts *TokensOptions) HandleShow() error {
 		}
 	}
 
-	nameParts := names.Custom | names.Prefund | names.Regular
-	namesMap, err := names.LoadNamesMap(chain, nameParts, nil)
+	parts := names.Custom | names.Prefund | names.Regular
+	namesMap, err := names.LoadNamesMap(chain, parts, nil)
 	if err != nil {
 		return err
 	}
@@ -66,7 +65,7 @@ func (opts *TokensOptions) HandleShow() error {
 	extra := map[string]interface{}{
 		"testMode": testMode,
 		"namesMap": namesMap,
-		"parts":    []string{"all_held"},
+		"parts":    opts.Parts,
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))

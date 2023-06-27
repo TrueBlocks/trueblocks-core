@@ -1604,6 +1604,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: changes
+          description: only report a balance when it changes from one block to the next
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: noZero
           description: suppress the display of zero balance accounts
           required: false

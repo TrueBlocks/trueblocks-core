@@ -25,14 +25,6 @@ func (opts *TokensOptions) validateTokens() error {
 		return err
 	}
 
-	err = validate.ValidateIdentifiers(
-		opts.Globals.Chain,
-		opts.Blocks,
-		validate.ValidBlockIdWithRangeAndDate,
-		1,
-		&opts.BlockIds,
-	)
-
 	if err != nil {
 		if invalidLiteral, ok := err.(*validate.InvalidIdentifierLiteralError); ok {
 			return invalidLiteral

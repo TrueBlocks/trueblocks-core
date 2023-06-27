@@ -2,76 +2,64 @@ tokens?addrs=0xd26114cd6ee289accf82350c8d8487fedb8a0c07%200x5e44c3e467a49c9ca029
 {
   "data": [
     {
+      "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
+      "balance": "0",
       "blockNumber": 2717576,
+      "decimals": 18,
       "holder": "0x5e44c3e467a49c9ca0296a9f130fc433041aaa28",
-      "balance": "",
-      "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
       "name": "OMGToken",
       "symbol": "OMG",
-      "decimals": 18,
-      "isContract": true,
-      "isErc20": true,
-      "isErc721": false
+      "units": "0"
     },
     {
+      "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
+      "balance": "0",
       "blockNumber": 1428756,
+      "decimals": 18,
       "holder": "0x5e44c3e467a49c9ca0296a9f130fc433041aaa28",
-      "balance": "",
-      "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
       "name": "OMGToken",
       "symbol": "OMG",
-      "decimals": 18,
-      "isContract": true,
-      "isErc20": true,
-      "isErc721": false
+      "units": "0"
     },
     {
-      "blockNumber": 4370000,
-      "holder": "0x5e44c3e467a49c9ca0296a9f130fc433041aaa28",
+      "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
       "balance": "18622.119641743650475474",
-      "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-      "name": "OMGToken",
-      "symbol": "OMG",
-      "decimals": 18,
-      "isContract": true,
-      "isErc20": true,
-      "isErc721": false
-    },
-    {
-      "blockNumber": 2717576,
-      "holder": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
-      "balance": "",
-      "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-      "name": "OMGToken",
-      "symbol": "OMG",
-      "decimals": 18,
-      "isContract": true,
-      "isErc20": true,
-      "isErc721": false
-    },
-    {
-      "blockNumber": 1428756,
-      "holder": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
-      "balance": "",
-      "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-      "name": "OMGToken",
-      "symbol": "OMG",
-      "decimals": 18,
-      "isContract": true,
-      "isErc20": true,
-      "isErc721": false
-    },
-    {
       "blockNumber": 4370000,
-      "holder": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
-      "balance": "22961881.657450937415214049",
-      "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
+      "decimals": 18,
+      "holder": "0x5e44c3e467a49c9ca0296a9f130fc433041aaa28",
       "name": "OMGToken",
       "symbol": "OMG",
+      "units": "18622119641743650475474"
+    },
+    {
+      "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
+      "balance": "0",
+      "blockNumber": 2717576,
       "decimals": 18,
-      "isContract": true,
-      "isErc20": true,
-      "isErc721": false
+      "holder": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
+      "name": "OMGToken",
+      "symbol": "OMG",
+      "units": "0"
+    },
+    {
+      "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
+      "balance": "0",
+      "blockNumber": 1428756,
+      "decimals": 18,
+      "holder": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
+      "name": "OMGToken",
+      "symbol": "OMG",
+      "units": "0"
+    },
+    {
+      "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
+      "balance": "22961881.657450937415214049",
+      "blockNumber": 4370000,
+      "decimals": 18,
+      "holder": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
+      "name": "OMGToken",
+      "symbol": "OMG",
+      "units": "22961881657450937415214049"
     }
   ],
   "meta": {
