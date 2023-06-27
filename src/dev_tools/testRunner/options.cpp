@@ -251,10 +251,6 @@ void establishTestData(void) {
 
     // Forces a few blocks into the cache
     doCommand("chifra blocks --uniq 0 2>/dev/null");
-    // doCommand("chifra blocks --cache 2768801 1995314 1958017 2769609 2799895 2872831 3076260");
-    // doCommand("chifra blocks --cache 4369999 1001001 1234567 1590000 4000001-4000004 3657480");
-    // doCommand("chifra transactions --cache 47055.0");
-    // doCommand("chifra transactions --cache 46147.0");
 
     doCommand("chifra monitors --decache 0xf503017d7baf7fbc0fff7492b751025c6a78179b 2>/dev/null");
     doCommand("chifra monitors --decache 0x9531c059098e3d194ff87febb587ab07b30b1306 2>/dev/null");

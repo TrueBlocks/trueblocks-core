@@ -26,6 +26,10 @@ func (opts *TokensOptions) validateTokens() error {
 		return err
 	}
 
+	if opts.Changes {
+		return validate.Usage("The {0} is not yet implemented.", "--changes")
+	}
+
 	if err != nil {
 		if invalidLiteral, ok := err.(*validate.InvalidIdentifierLiteralError); ok {
 			return invalidLiteral
