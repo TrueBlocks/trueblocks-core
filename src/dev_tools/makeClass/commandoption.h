@@ -275,7 +275,6 @@ extern const char* STR_DISPLAY_COMMANDOPTION;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------------------------------
-// TODO: search for go-port
 extern bool goPortNewCode(const string_q& a);
 extern bool isFullyPorted(const string_q& a);
 extern string_q get_corresponds_link(const string_q& toolGroup, const string_q& toolRoute);

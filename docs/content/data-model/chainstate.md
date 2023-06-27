@@ -22,30 +22,6 @@ are specific to the particular smart contract.
 
 Each data structure is created by one or more tools which are detailed below.
 
-## EthState
-
-<!-- markdownlint-disable MD033 MD036 MD041 -->
-The `state` object displays information about the type of account associated with an address, the
-block the address first appeared on the chain, the proxy address if the address is a proxied smart
-contract as well as account balance and a few other things.
-
-The following commands produce and manage EthStates:
-
-- [chifra state](/chifra/chainstate/#chifra-state)
-
-EthStates consist of the following fields:
-
-| Field       | Description                                                                      | Type    |
-| ----------- | -------------------------------------------------------------------------------- | ------- |
-| blockNumber | the block number at which this state was taken                                   | blknum  |
-| address     | the address of the state being queried                                           | address |
-| proxy       | if this is a proxy, this is the proxied-to address                               | address |
-| balance     | the balance at the address at the given block height                             | wei     |
-| nonce       | the nonce of the address at the given block height                               | uint64  |
-| code        | the byte code at the address (if this is a smart contract)                       | bytes   |
-| deployed    | the block number at which this smart contract was deployed (if a smart contract) | blknum  |
-| accttype    | the type of the address at the given block                                       | string  |
-
 ## CallResult
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
@@ -82,7 +58,7 @@ TokenBalances consist of the following fields:
 | Field      | Description                                                  | Type    |
 | ---------- | ------------------------------------------------------------ | ------- |
 | holder     | the address for which we are reporting the token balance     | address |
-| balance    | the balance at the address at the given block height         | wei     |
+| balance    | the balance at the address at the given block height         | int256  |
 | address    | the address of the token contract being queried              | address |
 | name       | the name of the token contract, if available                 | string  |
 | symbol     | the symbol for this token contract                           | string  |
@@ -123,7 +99,6 @@ This documentation mentions the following basic data types.
 | address | an '0x'-prefixed 20-byte hex string | lowercase   |
 | blknum  | an alias for a uint64               |             |
 | bool    | either `true`, `false`, `1`, or `0` |             |
-| bytes   | an arbitrarily long string of bytes |             |
+| int256  | a signed big number                 | as a string |
 | string  | a normal character string           |             |
 | uint64  | a 64-bit unsigned integer           |             |
-| wei     | an unsigned big number              | as a string |

@@ -1,13 +1,13 @@
 [settings]
 class = CEthCall
 fields = ethcall.csv
-includes = utillib.h|ethstate.h
+includes = utillib.h|abi.h
 cpp_includes = etherlib.h
 sort = v1.blockNumber < v2.blockNumber
 equals = blockNumber == it.blockNumber
 doc_group = 03-Chain State
 doc_descr = the result (articulated if possible, as bytes otherwise) of a call to a smart contract (deprecated)
-doc_route = 304-ethCall
+doc_route = 303-ethCall
 doc_producer = state
 
 cpp_output = src/libs/etherlib/

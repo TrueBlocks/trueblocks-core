@@ -109,8 +109,8 @@ bool reconcileIssuance(const CAppearance& app) {
         }
     }
 
-    bigint_t begBal = getBalanceAt(app.addr, app.bn - 1);
-    bigint_t endBal = getBalanceAt(app.addr, app.bn);
+    bigint_t begBal = get BalanceAt(app.addr, app.bn - 1);
+    bigint_t endBal = get BalanceAt(app.addr, app.bn);
     bigint_t expected = begBal + minerReward + nephewReward + minerTxFee + uncleReward1 + uncleReward2;
 
     if (expected == endBal) {

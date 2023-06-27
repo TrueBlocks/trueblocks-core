@@ -429,7 +429,7 @@ func cleanNonContract(name *types.SimpleName, wasContract bool) (modified bool) 
 
 // static const string_q erc721QueryBytes = "0x" + padRight(substitute(_INTERFACE_ID_ERC721, "0x", ""), 64, '0');
 // inline bool isErc721(const address_t& addr, const CAbi& abi_spec, blknum_t latest) {
-//     string_q val = getTokenState(addr, "supportsInterface", abi_spec, latest, erc721QueryBytes);
+//     string_q val = get TokenState(addr, "supportsInterface", abi_spec, latest, erc721QueryBytes);
 //     return val == "T" || val == "true";
 // }
 
@@ -452,9 +452,9 @@ func cleanNonContract(name *types.SimpleName, wasContract bool) (modified bool) 
 //         // This is a contract...
 //         account.isContract = true;
 
-//         string_q name = getTokenState(account.address, "name", opts->abi_spec, latestBlock);
-//         string_q symbol = getTokenState(account.address, "symbol", opts->abi_spec, latestBlock);
-//         uint64_t decimals = str_2_Uint(getTokenState(account.address, "decimals", opts->abi_spec, latestBlock));
+//         string_q name = getToken State(account.address, "name", opts->abi_spec, latestBlock);
+//         string_q symbol = getToken State(account.address, "symbol", opts->abi_spec, latestBlock);
+//         uint64_t decimals = str_2_Uint(getToken State(account.address, "decimals", opts->abi_spec, latestBlock));
 //         if (!name.empty() || !symbol.empty() || decimals > 0) {
 //             account.isErc20 = true;
 //             account.source =

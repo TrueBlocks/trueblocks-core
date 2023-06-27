@@ -65,7 +65,6 @@ void etherlib_init(QUITHANDLER qh) {
 
     CReconciliation::registerClass();
     CTransfer::registerClass();
-    CEthState::registerClass();
     CEthCall::registerClass();
     CAppearance::registerClass();
     CRPCResult::registerClass();
@@ -481,6 +480,37 @@ bool queryRawStateDiff(string_q& diffs, const string_q& hashIn) {
     return true;
 }
 
+//-----------------------------------------------------------------------
+string_q getCodeAt(const string_q& addr, blknum_t num) {
+    if (num == NOPOS)
+        num = getLatestBlock_client();
+    string_q params = "[\"[{ADDRESS}]\",\"[{NUM}]\"]";
+    replace(params, "[{ADDRESS}]", str_2_Addr(addr));
+    replace(params, "[{NUM}]", uint_2_Hex(num));
+    return callRPC("eth_getCode", params, false);
+}
+
+//-------------------------------------------------------------------------
+bool isContractAt(const address_t& addr, blknum_t num) {
+    if (isZeroAddr(addr))
+        return false;
+    return !substitute(getCodeAt(addr, num), "0x", "").empty();
+}
+
+//-------------------------------------------------------------------------
+wei_t getBalanceAt(const string_q& addr, blknum_t num) {
+    if (num == NOPOS)
+        num = getLatestBlock_client();
+    string_q params = "[\"[{ADDRESS}]\",\"[{NUM}]\"]";
+    address_t a = isZeroAddr(addr) ? "0x0000000000000000000000000000000000000000" : str_2_Addr(addr);
+    replace(params, "[{ADDRESS}]", a);
+    replace(params, "[{NUM}]", uint_2_Hex(num));
+    string_q ret = callRPC("eth_getBalance", params, false);
+    if (contains(ret, "error") || contains(ret, "message"))
+        return 0;
+    return str_2_Wei(ret);
+}
+
 //-------------------------------------------------------------------------
 bigint_t getTokenBalanceAt(const address_t& token, const address_t& holder, blknum_t blockNum) {
     if (isZeroAddr(token) || isEtherAddr(token))
@@ -521,32 +551,6 @@ uint64_t getTokenDecimals(const address_t& token, blknum_t blockNum) {
     if (!contains(ret, "error") && !contains(ret, "reverted") && !startsWith(ret, "0x"))
         return str_2_Uint(ret);
     return 0;
-}
-
-//-------------------------------------------------------------------------
-string_q getTokenState(const address_t& token, const string_q& what, const CAbi& abi_spec, blknum_t blockNum,
-                       const string_q& bytes) {
-    static map<string_q, string_q> sigMap;
-    if (sigMap.size() == 0) {
-        sigMap["totalSupply"] = "0x18160ddd";
-        sigMap["decimals"] = "0x313ce567";
-        sigMap["symbol"] = "0x95d89b41";
-        sigMap["name"] = "0x06fdde03";
-        sigMap["supportsInterface"] = "0x01ffc9a7";
-    }
-
-    if (sigMap[what].empty())
-        return "";
-
-    CEthCall theCall;
-    theCall.address = token;
-    theCall.encoding = sigMap[what];
-    theCall.bytes = bytes;
-    theCall.blockNumber = blockNum;
-    theCall.abi_spec = abi_spec;
-    if (doEthCall(theCall, true /* proxy */))
-        return theCall.getCallResult();
-    return "";
 }
 
 //-------------------------------------------------------------------------

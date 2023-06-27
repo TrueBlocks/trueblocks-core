@@ -1,3 +1,4 @@
+// return usage("Use either --parts or provide at least one token and one other account.");
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
@@ -25,13 +26,9 @@ func (opts *TokensOptions) validateTokens() error {
 		return err
 	}
 
-	err = validate.ValidateIdentifiers(
-		opts.Globals.Chain,
-		opts.Blocks,
-		validate.ValidBlockIdWithRangeAndDate,
-		1,
-		&opts.BlockIds,
-	)
+	if opts.Changes {
+		return validate.Usage("The {0} is not yet implemented.", "--changes")
+	}
 
 	if err != nil {
 		if invalidLiteral, ok := err.(*validate.InvalidIdentifierLiteralError); ok {

@@ -1123,49 +1123,6 @@ components:
           type: number
           format: uint64
           description: "the number of timestamps in the timestamps database"
-    ethState:
-      description: "the on-chain state of a given address including ETH balance, nonce, and smart contract byte code if present"
-      type: object
-      properties:
-        blockNumber:
-          type: number
-          format: blknum
-          example: 10021
-          description: "the block number at which this state was taken"
-        address:
-          type: string
-          format: address
-          example: "0xa1e4...63b4"
-          description: "the address of the state being queried"
-        proxy:
-          type: string
-          format: address
-          example: "0xa1e4...63b4"
-          description: "if this is a proxy, this is the proxied-to address"
-        balance:
-          type: string
-          format: wei
-          example: "258843698360318500"
-          description: "the balance at the address at the given block height"
-        nonce:
-          type: number
-          format: uint64
-          example: 115
-          description: "the nonce of the address at the given block height"
-        code:
-          type: string
-          format: bytes
-          example: "0x"
-          description: "the byte code at the address (if this is a smart contract)"
-        deployed:
-          type: number
-          format: blknum
-          example: 8901011
-          description: "the block number at which this smart contract was deployed (if a smart contract)"
-        accttype:
-          type: string
-          example: "one of 'EOA' or 'Contract'"
-          description: "the type of the address at the given block"
     callResult:
       description: "the result (articulated if possible, as bytes otherwise) of a call to a smart contract"
       type: object
@@ -1206,7 +1163,7 @@ components:
           description: "the address for which we are reporting the token balance"
         balance:
           type: string
-          format: wei
+          format: int256
           example: "258843698360318500"
           description: "the balance at the address at the given block height"
         address:

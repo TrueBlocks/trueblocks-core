@@ -85,6 +85,41 @@ double getPriceInUsd(const address_t& assetAddr, string& priceSource, blknum_t b
                                                               : getPrice_UsdPerTok(assetAddr, priceSource, bn);
 }
 
+//--------------------------------------------------------------
+static blknum_t findCodeAt_binarySearch(const address_t& addr, blknum_t first, blknum_t last) {
+    if (last > first) {
+        size_t mid = first + ((last - first) / 2);
+        bool atMid = isContractAt(addr, mid);
+        bool atMid1 = isContractAt(addr, mid + 1);
+        if (!atMid && atMid1)
+            return mid;  // found it
+        if (atMid) {
+            // we're too high, so search below
+            return findCodeAt_binarySearch(addr, first, mid - 1);
+        }
+        // we're too low, so search above
+        return findCodeAt_binarySearch(addr, mid + 1, last);
+    }
+    return first;
+}
+
+static map<address_t, blknum_t> deployMap;
+//-------------------------------------------------------------------------------------
+blknum_t getDeployBlock(const address_t& addr) {
+    if (deployMap[addr] > 0) {
+        return deployMap[addr];
+    }
+
+    blknum_t latest = getLatestBlock_client();
+    if (!isContractAt(addr, latest))
+        return NOPOS;
+    blknum_t num = findCodeAt_binarySearch(addr, 0, latest);
+    if (num) {
+        deployMap[addr] = (num + 1);
+    }
+    return (num ? num + 1 : NOPOS);
+}
+
 //---------------------------------------------------------------------------
 bool CUniPair::findPair(void) {
     if (selfie)

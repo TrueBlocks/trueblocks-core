@@ -3,17 +3,18 @@ TEST[DATE|TIME] Addrs:  [0x7cfb89d6df1b89a678dcaf42b9c262593e881e22]
 TEST[DATE|TIME] Blocks:  [14000000]
 TEST[DATE|TIME] Parts:  [all]
 TEST[DATE|TIME] Format:  json
-{ "data": [
-TIME ~ CLOCK - <INFO>  : call to 0x7cfb89d6df1b89a678dcaf42b9c262593e881e22 at block 14000000 at four-byte 0x59679b0f returned {code:-32000,message:executionreverted}
-TIME ~ CLOCK - <INFO>  : getPC_internal: query for slot 0x contract 0x7cfb89d6df1b89a678dcaf42b9c262593e881e22 block 14000000 returned: 0xd9db270c1b5e3bd161e8c8503c55ceabee709552
-  {
-    "blockNumber": 14000000,
-    "address": "0x7cfb89d6df1b89a678dcaf42b9c262593e881e22",
-    "proxy": "0xd9db270c1b5e3bd161e8c8503c55ceabee709552",
-    "balance": 21438692222319941062,
-    "nonce": 1,
-    "code": "0x608060405273ffffff...736f6c63430007060033",
-    "deployed": 12983248,
-    "accttype": "Proxy",
-    "ether": 21.438692222319941062
-  }] }
+{
+  "data": [
+    {
+      "accttype": "Proxy",
+      "address": "0x7cfb89d6df1b89a678dcaf42b9c262593e881e22",
+      "balance": "21438692222319941062",
+      "blockNumber": 14000000,
+      "code": "0x608060405273ffffff...736f6c63430007060033",
+      "deployed": 12983248,
+      "ether": "21.438692222319941062",
+      "nonce": 1,
+      "proxy": "0xd9db270c1b5e3bd161e8c8503c55ceabee709552"
+    }
+  ]
+}

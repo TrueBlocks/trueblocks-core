@@ -2,7 +2,7 @@
 class = CMonitor
 base_class = CName
 fields = monitor.csv
-includes = etherlib.h|transaction.h|reconciliation.h|ethstate.h|monitordapp.h
+includes = etherlib.h|transaction.h|reconciliation.h|abi.h|monitordapp.h
 force_objget = true
 doc_group = 01-Accounts
 doc_descr = a local file indicating a user's interest in an address. Includes caches for reconicilations, transactions, and appearances as well as an optional association to named account

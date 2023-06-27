@@ -3,10 +3,8 @@ tokens?addrs=0xd26114cd6ee289accf82350c8d8487fedb8a0c07&parts=decimals
   "data": [
     {
       "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-      "decimals": 18,
-      "isContract": true,
-      "isErc20": true,
-      "isErc721": false
+      "blockNumber": 17000000,
+      "decimals": 18
     }
   ],
   "meta": {
