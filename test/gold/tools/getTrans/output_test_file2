@@ -4,7 +4,7 @@
       "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
       "blockNumber": 12655579,
       "date": "2021-06-18 01:53:30 UTC",
-      "ether": "0.000000000000000000",
+      "ether": "0",
       "from": "0x37da92c11a2d5c05077ce41ac2243aa38032d4af",
       "gas": 2892788,
       "gasCost": 28323430000000000,

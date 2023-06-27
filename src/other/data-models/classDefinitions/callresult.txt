@@ -3,7 +3,7 @@ class = CCallResult
 fields = callresult.csv
 doc_group = 03-Chain State
 doc_descr = the result (articulated if possible, as bytes otherwise) of a call to a smart contract
-doc_route = 302-callResult
+doc_route = 301-callResult
 doc_producer = state
 
 # cpp_output = src/libs/etherlib/

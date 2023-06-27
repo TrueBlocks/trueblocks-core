@@ -69,8 +69,6 @@ extern bool queryRawStateDiff(string_q& results, const hash_t& hashIn);
 extern bigint_t getTokenBalanceAt(const address_t& token, const address_t& holder, blknum_t blockNum);
 extern string_q getTokenSymbol(const address_t& token, blknum_t blockNum);
 extern uint64_t getTokenDecimals(const address_t& token, blknum_t blockNum);
-extern string_q getTokenState(const address_t& token, const string_q& whichState, const CAbi& abi_spec,
-                              blknum_t blockNum, const string_q& bytes = "");
 
 //-----------------------------------------------------------------------
 // https://ethereum.stackexchange.com/questions/82822/obtaining-erc721-interface-ids
@@ -104,7 +102,6 @@ extern bool readFromJson(CBaseNode& node, const string_q& fileName);
 //-----------------------------------------------------------------------
 extern bool writeNodeToBinary(const CBaseNode& node, const string_q& fileName);
 extern bool readNodeFromBinary(CBaseNode& item, const string_q& fileName);
-#define writeBlockToBinary writeNodeToBinary
 #define writeTransToBinary writeNodeToBinary
 #define readBlockFromBinary readNodeFromBinary
 #define readTransFromBinary readNodeFromBinary

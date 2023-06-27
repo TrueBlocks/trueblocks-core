@@ -2,20 +2,14 @@ tokens?addrs=0xd26114cd6ee289accf82350c8d8487fedb8a0c07%200xb9e7f8568e08d5659f5d
 {
   "data": [
     {
-      "blockNumber": 4001001,
       "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-      "name": "OMGToken",
-      "isContract": true,
-      "isErc20": true,
-      "isErc721": false
+      "blockNumber": 4001001,
+      "name": "OMGToken"
     },
     {
-      "blockNumber": 4001001,
       "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
-      "name": "Swarm City Token",
-      "isContract": true,
-      "isErc20": true,
-      "isErc721": false
+      "blockNumber": 4001001,
+      "name": "Swarm City Token"
     }
   ],
   "meta": {

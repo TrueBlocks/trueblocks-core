@@ -9,7 +9,6 @@ package blocksPkg
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -73,27 +72,6 @@ func (opts *BlocksOptions) testLog() {
 func (opts *BlocksOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
-}
-
-// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
-func (opts *BlocksOptions) getEnvStr() []string {
-	envStr := []string{}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return envStr
-}
-
-// toCmdLine converts the option to a command line for calling out to the system.
-func (opts *BlocksOptions) toCmdLine() string {
-	options := ""
-	if opts.Cache {
-		options += " --cache"
-	}
-	options += " " + strings.Join(opts.Blocks, " ")
-	// EXISTING_CODE
-	// EXISTING_CODE
-	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
-	return options
 }
 
 // blocksFinishParseApi finishes the parsing for server invocations. Returns a new BlocksOptions.

@@ -52,7 +52,8 @@ Notes:
   - Blocks is a space-separated list of values, a start-end range, a special, or any combination.
   - If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.
   - If the queried node does not store historical state, the results are undefined.
-  - Special blocks are detailed under chifra when --list.`
+  - Special blocks are detailed under chifra when --list.
+  - If the --parts option is not empty, all addresses are considered tokens and each token's attributes are presented.`
 
 func init() {
 	tokensCmd.Flags().SortFlags = false
@@ -60,6 +61,7 @@ func init() {
 	tokensCmd.Flags().StringSliceVarP(&tokensPkg.GetOptions().Parts, "parts", "p", nil, `which parts of the token information to retrieve
 One or more of [ name | symbol | decimals | totalSupply | version | all ]`)
 	tokensCmd.Flags().BoolVarP(&tokensPkg.GetOptions().ByAcct, "by_acct", "b", false, "consider each address an ERC20 token except the last, whose balance is reported for each token")
+	tokensCmd.Flags().BoolVarP(&tokensPkg.GetOptions().Changes, "changes", "c", false, "only report a balance when it changes from one block to the next")
 	tokensCmd.Flags().BoolVarP(&tokensPkg.GetOptions().NoZero, "no_zero", "n", false, "suppress the display of zero balance accounts")
 	globals.InitGlobals(tokensCmd, &tokensPkg.GetOptions().Globals)
 

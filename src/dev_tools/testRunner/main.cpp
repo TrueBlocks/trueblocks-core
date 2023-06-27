@@ -266,7 +266,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                 } else {
                     exe = test.tool;
                     if (test.isCmd)
-                        exe = "chifra " + (test.extra.empty() ? test.route : test.extra);
+                        exe = "chifra " + test.route;
                 }
 
                 string_q fullCmd = exe + " " + test.options;

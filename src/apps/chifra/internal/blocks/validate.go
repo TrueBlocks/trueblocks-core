@@ -118,6 +118,10 @@ func (opts *BlocksOptions) validateBlocks() error {
 				return validate.Usage("Tracing is required for this program to work properly.")
 			}
 		}
+
+		if opts.Cache {
+			return validate.Usage("The {0} option is temporarily disabled", "--cache")
+		}
 	}
 
 	return opts.Globals.Validate()

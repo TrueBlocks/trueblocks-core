@@ -1163,7 +1163,7 @@ components:
           description: "the address for which we are reporting the token balance"
         balance:
           type: string
-          format: wei
+          format: int256
           example: "258843698360318500"
           description: "the balance at the address at the given block height"
         address:

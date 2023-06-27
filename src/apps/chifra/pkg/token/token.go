@@ -36,6 +36,7 @@ const (
 
 // Token type wraps information about ERC-20 token or ERC-721 NFT. Call
 // Token.IsErcXXX to check the token type.
+// TODO: This is a type and should be auto-generated
 type Token struct {
 	Address     base.Address
 	Name        string

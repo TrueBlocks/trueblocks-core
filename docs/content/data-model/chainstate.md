@@ -58,7 +58,7 @@ TokenBalances consist of the following fields:
 | Field      | Description                                                  | Type    |
 | ---------- | ------------------------------------------------------------ | ------- |
 | holder     | the address for which we are reporting the token balance     | address |
-| balance    | the balance at the address at the given block height         | wei     |
+| balance    | the balance at the address at the given block height         | int256  |
 | address    | the address of the token contract being queried              | address |
 | name       | the name of the token contract, if available                 | string  |
 | symbol     | the symbol for this token contract                           | string  |
@@ -99,6 +99,6 @@ This documentation mentions the following basic data types.
 | address | an '0x'-prefixed 20-byte hex string | lowercase   |
 | blknum  | an alias for a uint64               |             |
 | bool    | either `true`, `false`, `1`, or `0` |             |
+| int256  | a signed big number                 | as a string |
 | string  | a normal character string           |             |
 | uint64  | a 64-bit unsigned integer           |             |
-| wei     | an unsigned big number              | as a string |

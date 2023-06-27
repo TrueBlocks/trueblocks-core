@@ -41,7 +41,7 @@ func (opts *StateOptions) HandleShow() error {
 	fetchData := func(modelChan chan types.Modeler[types.RawEthState], errorChan chan error) {
 		for _, addressStr := range opts.Addrs {
 			address := base.HexToAddress(addressStr)
-			for _, br := range opts.BlockIds {
+			for _, br := range opts.BlockIds {  // TODO: use the regular way to do this
 				blockNums, err := br.ResolveBlocks(chain)
 				if err != nil {
 					errorChan <- err

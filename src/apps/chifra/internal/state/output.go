@@ -13,6 +13,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -50,6 +51,10 @@ func (opts *StateOptions) StateInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
+	if !opts.IsPorted() {
+		logger.Fatal("Should not happen in StateInternal")
+	}
+
 	handled = true
 	if opts.Call != "" {
 		err = opts.HandleCall()

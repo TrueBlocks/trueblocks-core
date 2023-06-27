@@ -1,5 +1,4 @@
-enabled  ,mode ,speed ,route  ,path/tool       ,filename            ,post ,options                                                                                                                                                                                                                             ,opt_cmd
-on       ,cmd  ,fast  ,blocks ,tools/getTraces ,preload             ,n    ,transactions = 3657480 & cache                                                                                                                                                                                                      ,getBlocks
+enabled  ,mode ,speed ,route  ,path/tool       ,filename            ,post ,options
 on       ,cmd  ,fast  ,traces ,tools/getTraces ,help                ,n    ,@h
 on       ,cmd  ,fast  ,traces ,tools/getTraces ,help_long           ,n    ,help
 on       ,both ,fast  ,traces ,tools/getTraces ,default             ,y    ,address = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
