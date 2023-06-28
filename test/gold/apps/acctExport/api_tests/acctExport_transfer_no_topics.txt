@@ -1,4 +1,4 @@
-export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&logs
+export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=3&logs
 {
   "data": [
     {
@@ -11,7 +11,9 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&logs
       "data": "0x000000000000000000000000000000000000000000000000000000000000008000000000000000000000000052f1e49cd13fb420ed6dfe8ed2c05c838eb55108000000000000000000000000ff9387a9aae1f5daab1cd8eb0e92113ea9d19ca300000000000000000000000000000000000000000000000000c4485378fb9fcc00000000000000000000000000000000000000000000000000000000000000317a64707541776357344845384c53376f454a6355614369545934726e6f78566838476f69324a6778565a70395339584768000000000000000000000000000000",
       "compressedLog": "",
       "transactionHash": "0xc39838a404828fc7c57d9c58c2cbfb1e9f62506ada5f036089298643a7092a91",
-      "transactionIndex": 77
+      "transactionIndex": 77,
+      "timestamp": 1500353298,
+      "date": "2017-07-18 04:48:18 UTC"
     },
     {
       "address": "0x5deda52dc2b3a565d77e10f0f8d4bd738401d7d3",
@@ -24,7 +26,9 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&logs
       "data": "0x",
       "compressedLog": "",
       "transactionHash": "0x0d5f4d9059547a84a31c4615d2552caf615d0ad208f43fb5162d2ec86c99a67c",
-      "transactionIndex": 20
+      "transactionIndex": 20,
+      "timestamp": 1501167645,
+      "date": "2017-07-27 15:00:45 UTC"
     },
     {
       "address": "0x5deda52dc2b3a565d77e10f0f8d4bd738401d7d3",
@@ -38,7 +42,9 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&logs
       "data": "0x",
       "compressedLog": "",
       "transactionHash": "0x0d5f4d9059547a84a31c4615d2552caf615d0ad208f43fb5162d2ec86c99a67c",
-      "transactionIndex": 20
+      "transactionIndex": 20,
+      "timestamp": 1501167645,
+      "date": "2017-07-27 15:00:45 UTC"
     },
     {
       "address": "0x5deda52dc2b3a565d77e10f0f8d4bd738401d7d3",
@@ -515,11 +521,14 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&logs
     }
   ],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "finalized": "0xdeadbeef",
     "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet",
     "first_block": "0xdeadbeef",
     "last_block": "0xdeadbeef",
     "accountedFor": {

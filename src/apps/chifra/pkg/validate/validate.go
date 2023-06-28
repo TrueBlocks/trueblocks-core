@@ -5,17 +5,15 @@
 package validate
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
-
-func IsHex(str string) bool {
-	return len(strings.Trim(str[2:], "0123456789abcdefABCDEF")) == 0
-}
 
 func Usage(msg string, values ...string) error {
 	return usage.Usage(msg, values...)
@@ -25,22 +23,33 @@ func Deprecated(cmd, rep string) error {
 	return usage.Deprecated(cmd, rep)
 }
 
-func Is0xPrefixed(str string) bool {
-	if len(str) < 3 {
-		return false
-	}
-	return str[:2] == "0x"
-}
-
 func IsValidHex(typ string, val string, nBytes int) (bool, error) {
-	if !Is0xPrefixed(val) {
-		return false, Usage("The {0} option ({1}) must {2}.", typ, val, "start with '0x'")
-	} else if len(val) != (2 + nBytes*2) {
-		return false, Usage("The {0} option ({1}) must {2}.", typ, val, fmt.Sprintf("be %d bytes long", nBytes))
-	} else if !IsHex(val) {
-		return false, Usage("The {0} option ({1}) must {2}.", typ, val, "be hex")
+	if _, err := base.ValidHex(typ, val, nBytes); err != nil {
+		if errors.Is(err, base.ErrInvalidLength) {
+			return false, Usage("The {0} option ({1}) must {2}.", typ, val, fmt.Sprintf("be %d bytes long", nBytes))
+		} else if errors.Is(err, base.ErrInvalidHex) {
+			return false, Usage("The {0} option ({1}) must {2}.", typ, val, "be hex")
+		} else if errors.Is(err, base.ErrNoLeading0x) {
+			return false, Usage("The {0} option ({1}) must {2}.", typ, val, "start with '0x'")
+		}
+		return false, err
 	}
 	return true, nil
+}
+
+func IsValidAddress(val string) bool {
+	if strings.Contains(val, ".eth") {
+		return true
+	}
+	ok, _ := IsValidHex("address", val, 20)
+	return ok
+}
+
+func IsValidAddressE(val string) (bool, error) {
+	if strings.Contains(val, ".eth") {
+		return true, nil
+	}
+	return IsValidHex("address", val, 20)
 }
 
 func IsValidHash(hash string) bool {
@@ -66,21 +75,6 @@ func IsValidTopic(val string) bool {
 	return ok
 }
 
-func IsValidAddress(val string) bool {
-	if strings.Contains(val, ".eth") {
-		return true
-	}
-	ok, _ := IsValidHex("address", val, 20)
-	return ok
-}
-
-func IsValidAddressE(val string) (bool, error) {
-	if strings.Contains(val, ".eth") {
-		return true, nil
-	}
-	return IsValidHex("address", val, 20)
-}
-
 func IsSmartContract(chain, addr string) (bool, error) {
 	bytes, err := rpcClient.GetCodeAt(chain, addr, utils.NOPOS)
 	return len(bytes) > 0, err
@@ -93,7 +87,7 @@ func IsZeroAddress(val string) bool {
 
 func ValidateAddresses(args []string) error {
 	for _, arg := range args {
-		if !IsValidAddress(arg) {
+		if !base.IsValidAddress(arg) {
 			return Usage("The value {0} is not a valid address.", arg)
 		}
 	}
@@ -109,7 +103,7 @@ func ValidateExactlyOneAddr(args []string) error {
 		return Usage("Please specify only a single Ethereum address.")
 	}
 
-	if !IsValidAddress(args[0]) {
+	if !base.IsValidAddress(args[0]) {
 		return Usage("The value {0} is not a valid address.", args[0])
 	}
 
@@ -122,7 +116,7 @@ func ValidateAtLeastOneAddr(args []string) error {
 		if hasOne {
 			break
 		}
-		hasOne = IsValidAddress(arg)
+		hasOne = base.IsValidAddress(arg)
 	}
 	if hasOne {
 		return nil

@@ -13,6 +13,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
@@ -112,7 +113,7 @@ func tokensFinishParse(args []string) *TokensOptions {
 		dupMap := make(map[string]bool)
 		for index, arg := range args {
 			if !dupMap[arg] {
-				if validate.IsValidAddress(arg) {
+				if base.IsValidAddress(arg) {
 					opts.Addrs = append(opts.Addrs, arg)
 				} else {
 					opts.Blocks = append(opts.Blocks, arg)

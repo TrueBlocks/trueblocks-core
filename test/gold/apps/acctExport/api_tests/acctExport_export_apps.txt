@@ -18,22 +18,6 @@ export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&maxRecords=1&appearances
     "unripe": "0xdeadbeef",
     "chainId": 1,
     "networkId": 1,
-    "chain": "mainnet",
-    "first_block": "0xdeadbeef",
-    "last_block": "0xdeadbeef",
-    "accountedFor": {
-      "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
-      "decimals": 0,
-      "isContract": false,
-      "isCustom": false,
-      "isErc20": false,
-      "isErc721": false,
-      "isPrefund": true,
-      "name": "Prefund_0002",
-      "petname": "noticeably-noble-pangolin",
-      "source": "Genesis",
-      "symbol": "",
-      "tags": "80-Prefund"
-    }
+    "chain": "mainnet"
   }
 }

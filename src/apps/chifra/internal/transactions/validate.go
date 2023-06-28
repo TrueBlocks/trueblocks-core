@@ -5,6 +5,7 @@
 package transactionsPkg
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/node"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -62,7 +63,7 @@ func (opts *TransactionsOptions) validateTransactions() error {
 			if opts.Uniq {
 				return validate.Usage("The {0} option is not available with the {1} option", "--uniq", "--account_for")
 			}
-			if !validate.IsValidAddress(opts.AccountFor) {
+			if !base.IsValidAddress(opts.AccountFor) {
 				return validate.Usage("Invalid reconcilation address {0}.", opts.AccountFor)
 			}
 		}

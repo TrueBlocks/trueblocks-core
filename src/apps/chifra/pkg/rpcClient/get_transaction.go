@@ -1,9 +1,11 @@
 package rpcClient
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -55,20 +57,35 @@ func GetAppearanceFromHash(chain string, hash string) (uint64, uint64, error) {
 	}
 }
 
-// func GetPrefundByAppearance(chain string, appearance *types.RawAppearance) (tx *types.SimpleTransaction, err error) {
-// 	alloc, err := prefunds.GetPrefundAt(chain, appearance.Address, appearance.TransactionIndex)
-// 	if err != nil {
-// 		return
-// 	}
-
-// 	return &types.SimpleTransaction{
-// 		BlockNumber:      uint64(appearance.BlockNumber),
-// 		TransactionIndex: uint64(appearance.TransactionIndex),
-// 		From:             base.HexToAddress("0xfedcba9876543210123456789abcdefdeadbeef"),
-// 		To:               base.HexToAddress(appearance.Address),
-// 		Value:            alloc.Amount,
-// 	}, nil
-// }
+func GetPrefundByAppearance(chain string, appearance *types.RawAppearance, ts int64) (tx *types.SimpleTransaction, err error) {
+	prefundPath := prefunds.GetPrefundPath(chain)
+	if prefundMap, err := prefunds.LoadPrefundMap(chain, prefundPath); err != nil {
+		return nil, err
+	} else {
+		entry := (*prefundMap)[base.HexToAddress(appearance.Address)]
+		// fmt.Println(entry.Address.Hex())
+		// fmt.Println(appearance.Address)
+		// fmt.Println(entry.Address.Hex() == appearance.Address)
+		// fmt.Println(entry.Prefund.Text(10))
+		if entry.Address.Hex() == appearance.Address {
+			ret := types.SimpleTransaction{
+				BlockNumber:      uint64(appearance.BlockNumber),
+				TransactionIndex: uint64(appearance.TransactionIndex),
+				Timestamp:        ts,
+				From:             base.HexToAddress("0x0"),
+				To:               base.HexToAddress(appearance.Address),
+				Value:            entry.Prefund,
+				Receipt: &types.SimpleReceipt{
+					Status:           1,
+					BlockNumber:      uint64(appearance.BlockNumber),
+					TransactionIndex: uint64(appearance.TransactionIndex),
+				},
+			}
+			return &ret, nil
+		}
+	}
+	return nil, errors.New("not found")
+}
 
 // var FakeBlockRewardSender = base.HexToAddress("0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef")
 // var FakeUncleRewardSender = base.HexToAddress("0xdeadbeeedeadbeeedeadbeeedeadbeeedeadbeee")
@@ -150,15 +167,16 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 	bn := uint64(appearance.BlockNumber)
 	txid := uint64(appearance.TransactionIndex)
 
-	// if bn == 0 {
-	// 	return GetPrefundByAppearance(chain, appearance)
-	// } else if txid == 99999 || txid == 99997 || txid == 99996 {
+	blockTs := rpc.GetBlockTimestamp(chain, bn)
+	if bn == 0 {
+		return GetPrefundByAppearance(chain, appearance, blockTs)
+	}
+	// else if txid == 99999 || txid == 99997 || txid == 99996 {
 	// 	return GetMinerRewardByAppearance(chain, appearance)
 	// } else if txid == 99998 {
 	// 	return GetUncleRewardByAppearance(chain, appearance)
 	// }
 
-	blockTs := rpc.GetBlockTimestamp(chain, bn)
 	receipt, err := GetTransactionReceipt(chain, ReceiptQuery{
 		Bn:      bn,
 		Txid:    txid,

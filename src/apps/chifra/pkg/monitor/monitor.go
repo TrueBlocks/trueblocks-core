@@ -194,7 +194,7 @@ func ListMonitors(chain string, monitorChan chan<- Monitor) {
 				parts := strings.Split(line, "\t")
 				if len(parts) > 0 {
 					addr := strings.Trim(parts[0], " ")
-					if !addrMap[addr] && validate.IsValidAddress(addr) && !validate.IsZeroAddress(addr) {
+					if !addrMap[addr] && base.IsValidAddress(addr) && !validate.IsZeroAddress(addr) {
 						monitorChan <- NewMonitor(chain, addr, true /* create */)
 					}
 					addrMap[addr] = true

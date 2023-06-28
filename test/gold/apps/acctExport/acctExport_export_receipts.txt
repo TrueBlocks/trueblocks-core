@@ -6,6 +6,14 @@ TEST[DATE|TIME] Format:  json
 {
   "data": [
     {
+      "blockNumber": 0,
+      "gasUsed": 0,
+      "logs": [],
+      "status": 1,
+      "transactionHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "transactionIndex": 2
+    },
+    {
       "blockNumber": 202249,
       "gasUsed": 21612,
       "logs": [],
@@ -21,8 +29,5 @@ TEST[DATE|TIME] Format:  json
       "transactionHash": "0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5",
       "transactionIndex": 2
     }
-  ],
-  "errors": [
-    "not found"
   ]
 }

@@ -236,7 +236,7 @@ func cleanCommon(name *types.SimpleName) (modified bool) {
 	}
 
 	if len(name.Petname) == 0 {
-		name.Petname = names.AddrToPetname(name.Address.Hex(), "-")
+		name.Petname = base.AddrToPetname(name.Address.Hex(), "-")
 		modified = true
 	}
 	return

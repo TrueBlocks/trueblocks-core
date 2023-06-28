@@ -101,5 +101,36 @@ func IsPrecompile(addr string) bool {
 	return test.Hex() <= maxPrecompile
 }
 
+func IsHex(str string) bool {
+	return len(strings.Trim(str[2:], "0123456789abcdefABCDEF")) == 0
+}
+
+var ErrNoLeading0x = errors.New("hex string must start with 0x")
+var ErrInvalidLength = errors.New("hex string must be an even length")
+var ErrInvalidHex = errors.New("hex string must contain only hex characters")
+
+func ValidHex(typ string, val string, nBytes int) (bool, error) {
+	return isValidHex(typ, val, nBytes)
+}
+
+func isValidHex(typ string, val string, nBytes int) (bool, error) {
+	if !strings.HasPrefix(val, "0x") {
+		return false, ErrNoLeading0x
+	} else if len(val) != (2 + nBytes*2) {
+		return false, ErrInvalidLength
+	} else if !IsHex(val) {
+		return false, ErrInvalidHex
+	}
+	return true, nil
+}
+
+func IsValidAddress(val string) bool {
+	if strings.Contains(val, ".eth") {
+		return true
+	}
+	ok, _ := isValidHex("address", val, 20)
+	return ok
+}
+
 // FAKE_ETH_ADDRESS is the address we use to represent ETH in the ledgers
 var FAKE_ETH_ADDRESS = HexToAddress("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")

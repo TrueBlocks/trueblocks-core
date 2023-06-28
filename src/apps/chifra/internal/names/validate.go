@@ -56,7 +56,7 @@ func (opts *NamesOptions) validateNames() error {
 	if strings.Contains(opts.Autoname, ".eth") {
 		zero = false
 	}
-	if len(opts.Autoname) > 0 && (!validate.IsValidAddress(opts.Autoname) || zero) {
+	if len(opts.Autoname) > 0 && (!base.IsValidAddress(opts.Autoname) || zero) {
 		return validate.Usage("You must provide an address to the {0} option.", "--autoname")
 	}
 

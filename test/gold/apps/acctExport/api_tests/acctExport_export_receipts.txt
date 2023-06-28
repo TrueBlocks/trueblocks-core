@@ -2,6 +2,14 @@ export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&maxRecords=3&receipts&fm
 {
   "data": [
     {
+      "blockNumber": 0,
+      "gasUsed": 0,
+      "logs": [],
+      "status": 1,
+      "transactionHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "transactionIndex": 2
+    },
+    {
       "blockNumber": 202249,
       "gasUsed": 21612,
       "logs": [],
@@ -27,8 +35,5 @@ export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&maxRecords=3&receipts&fm
     "chainId": 1,
     "networkId": 1,
     "chain": "mainnet"
-  },
-  "errors": [
-    "not found"
-  ]
+  }
 }

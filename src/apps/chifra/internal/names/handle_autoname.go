@@ -64,7 +64,7 @@ func (opts *NamesOptions) readContractAndClean() (name *types.SimpleName, err er
 	address := base.HexToAddress(term)
 	name = &types.SimpleName{
 		Address:  address,
-		Name:     names.AddrToPetname(address.Hex(), "-"),
+		Name:     base.AddrToPetname(address.Hex(), "-"),
 		Source:   "TrueBlocks.io",
 		IsCustom: false,
 	}
