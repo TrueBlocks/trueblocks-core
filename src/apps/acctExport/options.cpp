@@ -321,7 +321,7 @@ void COptions::Init(void) {
     cache = getGlobalConfig("acctExport")->getConfigBool("settings", "cache", false);
     cache_traces = getGlobalConfig("acctExport")->getConfigBool("settings", "cache_traces", false);
     // clang-format on
-    first_record = 1;
+    first_record = 0;
     max_records = 250;
     relevant = false;
     flow = "";
@@ -375,6 +375,7 @@ COptions::COptions(void) {
     notes.push_back("The --logs option is significantly faster if you provide an --emitter or a --topic.");
     notes.push_back("Neighbors include every address that appears in any transaction in which the export address also appears.");  // NOLINT
     notes.push_back("If provided, --max_records dominates, also, if provided, --first_record overrides --first_block.");
+    notes.push_back("The --first_record and --max_record options are zero-based (as are the block options).");
     // clang-format on
     // END_CODE_NOTES
 

@@ -53,7 +53,7 @@ Flags:
   -s, --silent              freshen the monitor only (no reporting)
   -n, --no_zero             suppress the display of zero appearance accounts
   -u, --unripe              list transactions labeled upripe (i.e. less than 28 blocks old)
-  -c, --first_record uint   the first record to process (default 1)
+  -c, --first_record uint   the first record to process
   -e, --max_records uint    the maximum number of records to process (default 250)
   -F, --first_block uint    first block to export (inclusive, ignored when freshening)
   -L, --last_block uint     last block to export (inclusive, ignored when freshening)
@@ -121,7 +121,7 @@ Flags:
   -o, --cache               write transactions to the cache (see notes)
   -R, --cache_traces        write traces to the cache (see notes)
   -U, --count               only available for --appearances mode, if present, return only the number of records
-  -c, --first_record uint   the first record to process (default 1)
+  -c, --first_record uint   the first record to process
   -e, --max_records uint    the maximum number of records to process (default 250)
   -N, --relevant            for log and accounting export only, export only logs relevant to one of the given export addresses
   -m, --emitter strings     for log export only, export only logs if emitted by one of these address(es)
@@ -144,6 +144,7 @@ Notes:
   - The --logs option is significantly faster if you provide an --emitter or a --topic.
   - Neighbors include every address that appears in any transaction in which the export address also appears.
   - If provided, --max_records dominates, also, if provided, --first_record overrides --first_block.
+  - The --first_record and --max_record options are zero-based (as are the block options).
 ```
 
 Data models produced by this tool:

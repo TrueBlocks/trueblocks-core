@@ -54,7 +54,7 @@ Notes:
 func init() {
 	statusCmd.Flags().SortFlags = false
 
-	statusCmd.Flags().Uint64VarP(&statusPkg.GetOptions().FirstRecord, "first_record", "c", 1, "the first record to process")
+	statusCmd.Flags().Uint64VarP(&statusPkg.GetOptions().FirstRecord, "first_record", "c", 0, "the first record to process")
 	statusCmd.Flags().Uint64VarP(&statusPkg.GetOptions().MaxRecords, "max_records", "e", 10000, "the maximum number of records to process")
 	globals.InitGlobals(statusCmd, &statusPkg.GetOptions().Globals)
 

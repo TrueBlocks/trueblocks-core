@@ -25,8 +25,8 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	exportRange := base.FileRange{First: opts.FirstBlock, Last: opts.LastBlock}
-	nExported := uint64(1)
-	nSeen := uint64(0)
+	nExported := uint64(0)
+	nSeen := int64(-1)
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
@@ -80,7 +80,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 				nSeen++
 				appRange := base.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)}
 				if appRange.Intersects(exportRange) {
-					if nSeen < opts.FirstRecord {
+					if nSeen < int64(opts.FirstRecord) {
 						logger.Progress(!testMode && true, "Skipping:", nExported, opts.FirstRecord)
 						continue
 					} else if opts.IsMax(nExported) {

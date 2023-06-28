@@ -31,14 +31,13 @@ type StatusOptions struct {
 }
 
 var defaultStatusOptions = StatusOptions{
-	FirstRecord: 1,
-	MaxRecords:  10000,
+	MaxRecords: 10000,
 }
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *StatusOptions) testLog() {
 	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
-	logger.TestLog(opts.FirstRecord != 1, "FirstRecord: ", opts.FirstRecord)
+	logger.TestLog(opts.FirstRecord != 0, "FirstRecord: ", opts.FirstRecord)
 	logger.TestLog(opts.MaxRecords != 10000, "MaxRecords: ", opts.MaxRecords)
 	opts.Globals.TestLog()
 }
@@ -53,7 +52,7 @@ func (opts *StatusOptions) String() string {
 func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions {
 	copy := defaultStatusOptions
 	opts := &copy
-	opts.FirstRecord = 1
+	opts.FirstRecord = 0
 	opts.MaxRecords = 10000
 	for key, value := range r.URL.Query() {
 		switch key {
