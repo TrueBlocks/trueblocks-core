@@ -6,13 +6,12 @@ export?addrs=0x08166f02313feae18bb044e7877c808b55b5bf58&lastBlock=4000000&fmt=js
       "blockNumber": 0,
       "date": "2015-07-30 15:26:15 UTC",
       "ether": "1970",
-      "from": "0xPrefund",
+      "from": "0x0000000000000000000000000050726566756e64",
       "gas": 0,
       "gasCost": 0,
       "gasPrice": 0,
       "gasUsed": 0,
-      "hasToken": 0,
-      "hash": "0x0",
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
       "receipt": {},
       "timestamp": 1438269975,
       "to": "0x08166f02313feae18bb044e7877c808b55b5bf58",
@@ -81,8 +80,5 @@ export?addrs=0x08166f02313feae18bb044e7877c808b55b5bf58&lastBlock=4000000&fmt=js
     "chainId": 1,
     "networkId": 1,
     "chain": "mainnet"
-  },
-  "errors": [
-    "not found"
-  ]
+  }
 }

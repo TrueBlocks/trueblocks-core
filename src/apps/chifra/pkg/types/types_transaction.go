@@ -15,7 +15,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 type StorageSlot struct {
@@ -95,7 +94,7 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 	var order = []string{}
 
 	// EXISTING_CODE
-	to := hexutil.Encode(s.To.Bytes())
+	to := s.To.Hex()
 	if to == "0x0000000000000000000000000000000000000000" {
 		to = "0x0" // weird special case to preserve what RPC does
 	}
@@ -170,7 +169,9 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 		if s.MaxPriorityFeePerGas > 0 {
 			model["maxPriorityFeePerGas"] = s.MaxPriorityFeePerGas
 		}
-		model["input"] = s.Input
+		if len(s.Input) > 0 {
+			model["input"] = s.Input
+		}
 		if s.HasToken {
 			model["hasToken"] = s.HasToken
 		}
@@ -178,8 +179,7 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 			model["isError"] = s.IsError
 		}
 
-		// model["receipt"] = nil
-		if s.Receipt != nil {
+		if s.Receipt != nil && !s.Receipt.IsDefault() {
 			contractAddress := s.Receipt.ContractAddress.Hex()
 
 			// TODO: this should not be hardcoded here. We have tslib.GetSpecials(), but there
@@ -222,6 +222,8 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 			}
 			receiptModel["logs"] = logs
 			model["receipt"] = receiptModel
+		} else {
+			model["receipt"] = map[string]interface{}{}
 		}
 
 		if extraOptions["traces"] == true && len(s.Traces) > 0 {

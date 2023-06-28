@@ -17,6 +17,7 @@
 #include "traceaction.h"
 #include "trace.h"
 #include "reconciliation.h"
+#include "ledgermanager.h"
 
 namespace qblocks {
 
@@ -226,6 +227,14 @@ bool CTraceAction::setValueByName(const string_q& fieldNameIn, const string_q& f
 //---------------------------------------------------------------------------------------------------
 void CTraceAction::finishParse() {
     // EXISTING_CODE
+    // Convert these values if they are in the cache, for example
+    if (from == "0xPrefund") {
+        from = PrefundSender;
+    } else if (from == "0xBlockReward") {
+        from = BlockRewardSender;
+    } else if (from == "0xUncleReward") {
+        from = UncleRewardSender;
+    }
     // EXISTING_CODE
 }
 

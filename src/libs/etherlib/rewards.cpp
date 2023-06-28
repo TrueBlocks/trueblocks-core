@@ -20,7 +20,7 @@ void CTrace::loadTraceAsBlockReward(const CTransaction& trans, blknum_t bn, blkn
     ASSERT(txid == 99996 || txid == 99997 || txid == 99999);
     blockNumber = bn;
     transactionIndex = txid;
-    action.from = "0xBlockReward";
+    action.from = BlockRewardSender;
     action.to = trans.to;
     action.callType = "block-reward";
     action.value = getReward(BLOCK_REWARD, bn);
@@ -38,7 +38,7 @@ void CTrace::loadTraceAsUncleReward(const CTransaction& trans, blknum_t bn, blkn
     ASSERT(txid == 99998);
     blockNumber = bn;
     transactionIndex = 99998;
-    action.from = "0xUncleReward";
+    action.from = UncleRewardSender;
     action.to = trans.to;
     action.callType = "uncle-reward";
     action.value +=
@@ -83,7 +83,7 @@ bool CTransaction::loadTransAsPrefund(blknum_t bn, blknum_t txid, const address_
     initialize();
     blockNumber = bn;
     transactionIndex = txid;
-    from = "0xPrefund";
+    from = PrefundSender;
     to = addr;
     value = amount;
     receipt = CReceipt();
@@ -98,7 +98,7 @@ bool CTransaction::loadTransAsBlockReward(blknum_t bn, blknum_t txid, const addr
     initialize();
     blockNumber = bn;
     transactionIndex = txid;
-    from = "0xBlockReward";
+    from = BlockRewardSender;
     to = addr;
     value = getReward(BLOCK_REWARD, bn);
     extraValue1 = getReward(NEPHEW_REWARD, bn);
@@ -115,7 +115,7 @@ bool CTransaction::loadTransAsUncleReward(blknum_t bn, blknum_t uncleBn, const a
     initialize();
     blockNumber = bn;
     transactionIndex = 99998;
-    from = "0xUncleReward";
+    from = UncleRewardSender;
     to = addr;
     value +=
         getReward(UNCLE_REWARD, bn, uncleBn);  // we use += here because you can win more than one uncle block per block

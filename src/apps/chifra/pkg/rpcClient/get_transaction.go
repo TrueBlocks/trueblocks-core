@@ -57,27 +57,41 @@ func GetAppearanceFromHash(chain string, hash string) (uint64, uint64, error) {
 	}
 }
 
+// These purposefully chosen baddresses are used to indicate that the transaction is a prefund
+// and uncle reward, or a mining reward. They are not real addresses, but are used to indicate
+// that the transaction is not a normal transaction. They are not (currently) indexed.
+var (
+	PrefundSender     = base.HexToAddress("0x0000000000000000000000000050726566756e64") // The word "Prefund" in hex
+	BlockRewardSender = base.HexToAddress("0x0000000000000000000000000000004d696e6572") // The word "Miner" in hex
+	UncleRewardSender = base.HexToAddress("0x000000000000000000000000000000556e636c65") // The word "Uncle" in hex
+)
+
 func GetPrefundByAppearance(chain string, appearance *types.RawAppearance, ts int64) (tx *types.SimpleTransaction, err error) {
 	prefundPath := prefunds.GetPrefundPath(chain)
 	if prefundMap, err := prefunds.LoadPrefundMap(chain, prefundPath); err != nil {
 		return nil, err
 	} else {
+		var blockHash base.Hash
+		if blk, err := GetBlockByNumber(chain, uint64(0)); err != nil {
+			return nil, err
+		} else {
+			blockHash = blk.Hash
+		}
+
 		entry := (*prefundMap)[base.HexToAddress(appearance.Address)]
-		// fmt.Println(entry.Address.Hex())
-		// fmt.Println(appearance.Address)
-		// fmt.Println(entry.Address.Hex() == appearance.Address)
-		// fmt.Println(entry.Prefund.Text(10))
 		if entry.Address.Hex() == appearance.Address {
 			ret := types.SimpleTransaction{
+				BlockHash:        blockHash,
 				BlockNumber:      uint64(appearance.BlockNumber),
 				TransactionIndex: uint64(appearance.TransactionIndex),
 				Timestamp:        ts,
-				From:             base.HexToAddress("0x0"),
+				From:             PrefundSender,
 				To:               base.HexToAddress(appearance.Address),
 				Value:            entry.Prefund,
 				Receipt: &types.SimpleReceipt{
 					Status:           1,
 					BlockNumber:      uint64(appearance.BlockNumber),
+					BlockHash:        blockHash,
 					TransactionIndex: uint64(appearance.TransactionIndex),
 				},
 			}
@@ -126,7 +140,7 @@ if (blk == 0) {
 	trav->trans.loadTransAsPrefund(trav->app->blk, trav->app->txid, addr, prefundAt(addr));
     blockNumber = bn;
     transactionIndex = txid;
-    from = "0xPrefund";
+    from = PrefundSender;
     to = addr;
     value = amount;
     return true;
@@ -134,7 +148,7 @@ if (blk == 0) {
 	trav->trans.loadTransAsBlockReward(trav->app->blk, trav->app->txid, opt->blkRewardMap[trav->app->blk]);
     blockNumber = bn;
     transactionIndex = txid;
-    from = "0xBlockReward";
+    from = BlockRewardSender;
     to = addr;
     value = getBlock Reward2(bn);
     extraValue1 = getNephew Reward(bn);
@@ -149,7 +163,7 @@ if (blk == 0) {
 		getUncle(uncle, trav->app->blk, u);
 		if (uncle.miner == opt->blkRewardMap[trav->app->blk]) {
 			trav->trans.loadTransAsUncleReward(trav->app->blk, uncle.blockNumber, uncle.miner);
-			from = "0xUncleReward";
+			from = UncleRewardSender;
 			to = addr;
 			value += getUncle Reward(bn, uncleBn);  // we use += here because you can win more than one uncle block per block
 			receipt = CReceipt();

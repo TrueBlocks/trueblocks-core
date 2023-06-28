@@ -86,15 +86,15 @@ bool CReconciliation::reconcileFlows(const CTransfer& transfer, const CReconCont
 
         // Do not collapse. Both may be true.
         if (recipient == accountedFor) {
-            if (sender == "0xPrefund") {
+            if (sender == PrefundSender) {
                 prefundIn = pTransaction->value;
 
-            } else if (sender == "0xBlockReward") {
+            } else if (sender == BlockRewardSender) {
                 minerBaseRewardIn = pTransaction->value;
                 minerNephewRewardIn = pTransaction->extraValue1;
                 minerTxFeeIn = pTransaction->extraValue2;
 
-            } else if (sender == "0xUncleReward") {
+            } else if (sender == UncleRewardSender) {
                 minerUncleRewardIn = pTransaction->value;
 
             } else {
@@ -201,15 +201,15 @@ bool CReconciliation::reconcileFlows_traces(const CReconContext& rCtx) {
                 if (trace.action.to == accountedFor && !trace.isDelegateCall()) {
                     sender = trace.action.from;
                     recipient = trace.action.to;
-                    if (pTransaction->from == "0xPrefund") {
+                    if (pTransaction->from == PrefundSender) {
                         prefundIn = pTransaction->value;
 
-                    } else if (pTransaction->from == "0xBlockReward") {
+                    } else if (pTransaction->from == BlockRewardSender) {
                         minerBaseRewardIn = pTransaction->value;
                         minerNephewRewardIn = pTransaction->extraValue1;
                         minerTxFeeIn = pTransaction->extraValue2;
 
-                    } else if (pTransaction->from == "0xUncleReward") {
+                    } else if (pTransaction->from == UncleRewardSender) {
                         minerUncleRewardIn = pTransaction->value;
 
                     } else {

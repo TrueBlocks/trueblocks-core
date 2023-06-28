@@ -71,6 +71,11 @@ func unlockForAddress(address string) {
 }
 
 func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) (bool, error) {
+	// TODO: There are special case addresses for the sender of mining rewards and
+	// TODO: prefund allocations that get ignored here because they are baddresses.
+	// TODO: We could, if we wished, create special cases here to (for example) report
+	// TODO: the balance sheet for "Ethereum" as a whole. How much has been spent on mining?
+	// TODO: How much was the original allocation worth?
 	for _, address := range opts.Addrs {
 		lockForAddress(address)
 		defer unlockForAddress(address) // reminder: this defers until the function returns, not this loop

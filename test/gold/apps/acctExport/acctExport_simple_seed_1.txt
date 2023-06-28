@@ -9,7 +9,7 @@ TEST[DATE|TIME] Format:  json
       "blockNumber": 0,
       "date": "2015-07-30 15:26:15 UTC",
       "ether": "4200",
-      "from": "0xPrefund",
+      "from": "0x0000000000000000000000000050726566756e64",
       "gas": 0,
       "gasCost": 0,
       "gasPrice": 0,

@@ -17,7 +17,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  genesis-eth
 TEST[DATE|TIME]    accountedFor:        0x08166f02313feae18bb044e7877c808b55b5bf58
-TEST[DATE|TIME]    sender:              0xPrefund
+TEST[DATE|TIME]    sender:              0x0000000000000000000000000050726566756e64
 TEST[DATE|TIME]    recipient:           0x08166f02313feae18bb044e7877c808b55b5bf58
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -66,7 +66,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  genesis-eth
 TEST[DATE|TIME]    accountedFor:        0x08166f02313feae18bb044e7877c808b55b5bf58
-TEST[DATE|TIME]    sender:              0xPrefund
+TEST[DATE|TIME]    sender:              0x0000000000000000000000000050726566756e64
 TEST[DATE|TIME]    recipient:           0x08166f02313feae18bb044e7877c808b55b5bf58
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -120,7 +120,7 @@ TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
   "blockNumber": 0,
   "transactionIndex": 270,
   "timestamp": 1438269975,
-  "from": "0xPrefund",
+  "from": "0x0000000000000000000000000050726566756e64",
   "to": "0x08166f02313feae18bb044e7877c808b55b5bf58",
   "value": 1970000000000000000000,
   "gas": 0,
@@ -149,7 +149,7 @@ TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
       "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "accountedFor": "0x08166f02313feae18bb044e7877c808b55b5bf58",
-      "sender": "0xPrefund",
+      "sender": "0x0000000000000000000000000050726566756e64",
       "recipient": "0x08166f02313feae18bb044e7877c808b55b5bf58",
       "begBal": "0",
       "amountNet": "1970000000000000000000",

@@ -20,7 +20,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  genesis-eth
 TEST[DATE|TIME]    accountedFor:        0x001d14804b399c6ef80e64576f657660804fec0b
-TEST[DATE|TIME]    sender:              0xPrefund
+TEST[DATE|TIME]    sender:              0x0000000000000000000000000050726566756e64
 TEST[DATE|TIME]    recipient:           0x001d14804b399c6ef80e64576f657660804fec0b
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
@@ -69,7 +69,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  genesis-eth
 TEST[DATE|TIME]    accountedFor:        0x001d14804b399c6ef80e64576f657660804fec0b
-TEST[DATE|TIME]    sender:              0xPrefund
+TEST[DATE|TIME]    sender:              0x0000000000000000000000000050726566756e64
 TEST[DATE|TIME]    recipient:           0x001d14804b399c6ef80e64576f657660804fec0b
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
@@ -123,7 +123,7 @@ TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
   "blockNumber": 0,
   "transactionIndex": 2,
   "timestamp": 1438269975,
-  "from": "0xPrefund",
+  "from": "0x0000000000000000000000000050726566756e64",
   "to": "0x001d14804b399c6ef80e64576f657660804fec0b",
   "value": 4200000000000000000000,
   "gas": 0,
@@ -152,7 +152,7 @@ TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
       "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "accountedFor": "0x001d14804b399c6ef80e64576f657660804fec0b",
-      "sender": "0xPrefund",
+      "sender": "0x0000000000000000000000000050726566756e64",
       "recipient": "0x001d14804b399c6ef80e64576f657660804fec0b",
       "begBal": "0",
       "amountNet": "4200.0000000",

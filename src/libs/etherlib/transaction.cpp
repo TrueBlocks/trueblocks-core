@@ -444,6 +444,14 @@ void CTransaction::finishParse() {
     for (size_t i = 0; i < traces.size(); i++) {
         traces[i].pTransaction = this;
     }
+    // Convert these values if they are in the cache, for example
+    if (from == "0xPrefund") {
+        from = PrefundSender;
+    } else if (from == "0xBlockReward") {
+        from = BlockRewardSender;
+    } else if (from == "0xUncleReward") {
+        from = UncleRewardSender;
+    }
     // EXISTING_CODE
 }
 

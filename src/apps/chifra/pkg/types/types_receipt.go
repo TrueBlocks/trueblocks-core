@@ -168,4 +168,12 @@ func (s *SimpleReceipt) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
+func (s *SimpleReceipt) IsDefault() bool {
+	a := s.ContractAddress.IsZero()
+	b := s.EffectiveGasPrice == 0
+	c := s.GasUsed == 0
+	d := len(s.Logs) == 0
+	return a && b && c && d
+}
+
 // EXISTING_CODE

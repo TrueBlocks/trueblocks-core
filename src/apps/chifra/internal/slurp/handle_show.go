@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -200,13 +201,13 @@ func (opts *SlurpOptions) GetTransactionsFromEtherscan(chain string, addr, tt st
 		} else if tt == "miner" {
 			t.BlockHash = base.HexToHash("0xdeadbeef")
 			t.TransactionIndex = 99999
-			t.Input = "0xBlockReward"
+			t.From = rpcClient.BlockRewardSender
 			t.Value.SetString("5000000000000000000", 0)
 			t.To = base.HexToAddress(addr)
 		} else if tt == "uncles" {
 			t.BlockHash = base.HexToHash("0xdeadbeef")
 			t.TransactionIndex = 99998
-			t.Input = "0xUncleReward"
+			t.From = rpcClient.UncleRewardSender
 			t.Value.SetString("3750000000000000000", 0)
 			t.To = base.HexToAddress(addr)
 		}
