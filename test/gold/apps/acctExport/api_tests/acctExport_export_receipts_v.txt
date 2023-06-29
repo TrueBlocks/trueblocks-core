@@ -2,16 +2,6 @@ export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&maxRecords=3&receipts&fm
 {
   "data": [
     {
-      "blockHash": "0xd4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3",
-      "blockNumber": 0,
-      "cumulativeGasUsed": "",
-      "gasUsed": 0,
-      "logs": null,
-      "status": 1,
-      "transactionHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-      "transactionIndex": 2
-    },
-    {
       "blockHash": "0x1816ff22f84af23df70df8e6ae5c40a8780c16a0860ca1a25a4c911eba76c65a",
       "blockNumber": 202249,
       "cumulativeGasUsed": "21612",
