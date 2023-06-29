@@ -132,6 +132,33 @@ on      ,both ,fast  ,export   ,apps/acctExport ,old_bug2_1               ,y    
 on      ,both ,fast  ,export   ,apps/acctExport ,old_bug2_5               ,y    ,addrs = 0x000001f568875f378bf6d170b790967fe429c81a & max_records = 1 & first_record = 6 & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,old_bug2_336             ,y    ,addrs = 0x000001f568875f378bf6d170b790967fe429c81a & max_records = 2 & first_record = 336 & articulate & fmt = json
 
+on      ,both ,fast  ,export   ,apps/acctExport ,factory_traces           ,y    ,addrs = 0x8b3b3b624c3c0397d3da8fd861512393d51dcbac & factory & traces & last_block = 1603174
+on      ,both ,fast  ,export   ,apps/acctExport ,factory_traces_v         ,y    ,addrs = 0x8b3b3b624c3c0397d3da8fd861512393d51dcbac & factory & traces & last_block = 1603174 & verbose
+on      ,both ,fast  ,export   ,apps/acctExport ,export_traces            ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & last_block = 1506480 & max_records = 5 & traces & fmt = json
+on      ,both ,fast  ,export   ,apps/acctExport ,export_traces_cache      ,y    ,addrs = 0xd714dd60e22bbb1cbafd0e40de5cfa7bbdd3f3c8 & max_records = 10 & cache_traces & traces
+on      ,both ,fast  ,export   ,apps/acctExport ,transfer_fourbytes_trace ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & max_records = 10 & fourbytes = 0xa9059cbb & traces & fmt = json
+
+local    ,both ,fast  ,export   ,apps/acctExport ,neighbor1                ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors
+local   ,both ,fast  ,export   ,apps/acctExport ,neighbor2                ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors
+local   ,both ,fast  ,export   ,apps/acctExport ,neighbor3                ,y    ,addrs = 0xffeac0305ede3a915295ec8e61c7f881006f4474 & neighbors & first_block = 0 & last_block = 10
+local   ,both ,fast  ,export   ,apps/acctExport ,neighbor4                ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & neighbors & first_block = 0 & last_block = 10
+local   ,both ,fast  ,export   ,apps/acctExport ,neighbor_mulitple        ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f 0x004bfbe1546bc6c65b5c7eaa55304b38bbfec6d3 & neighbors & first_block = 0 & last_block = 10
+local   ,both ,fast  ,export   ,apps/acctExport ,neighbor_mulitple2       ,y    ,addrs = 0x33990122638b9132ca29c723bdf037f1a891a70c 0x72202bb5d0645d495e4bbc1feffbdc3c9cb8d6e1 0x5de92686587b10cd47e03b71f2e2350606fcaf14 & neighbors & max_records = 30 & no_header
+local   ,both ,fast  ,export   ,apps/acctExport ,neighbor1_csv            ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors & fmt = csv
+local   ,both ,fast  ,export   ,apps/acctExport ,neighbor2_csv            ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors & fmt = csv
+
+# other reasons for failing
+local   ,both ,fast  ,export   ,apps/acctExport ,by_file_1                ,n    ,file = cmd_file & fmt = csv
+local   ,both ,fast  ,export   ,apps/acctExport ,by_file_v                ,n    ,file = cmd_file_2 & fmt = json
+local   ,both ,fast  ,export   ,apps/acctExport ,redir_output             ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10278000 & articulate & output = output_test_file
+local   ,both ,fast  ,export   ,apps/acctExport ,redir_output_append      ,n    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 5 & articulate & output = output_test_file & no_header & append
+
+# correctly reports an error, but should report a not found error instead, it reports a not an integer error. first_block/last_block should accept hashes
+local   ,both ,fast  ,export   ,apps/acctExport ,block_not_found          ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
+
+# See issue #3002 - if an otherwise valid command does not return data, include header anyway for txt and csv
+local   ,both ,fast  ,export   ,apps/acctExport ,simple_prefund2          ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & first_block = 2 & last_block = 3
+
 acct    ,both ,fast  ,export   ,apps/acctExport ,accounting_wei_1         ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 3 & accounting & fmt = json
 acct    ,both ,fast  ,export   ,apps/acctExport ,accounting_wei_2         ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & max_records = 15 & accounting & fmt = json & log_level = 10
 acct    ,both ,fast  ,export   ,apps/acctExport ,accounting_ofx_bad       ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 3 & fmt = ofx
@@ -158,36 +185,9 @@ acct    ,both ,fast  ,export   ,apps/acctExport ,failed_statement_2572_1  ,y    
 acct    ,both ,fast  ,export   ,apps/acctExport ,failed_statement_2572_2  ,y    ,addrs = 0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 & accounting & statements & ether & fmt = json & first_block = 11670418 & last_block = 11670420 & asset = 0xc713e5e149d5d0715dcd1c156a020976e7e56b88 & max_records = 10000
 acct    ,both ,fast  ,export   ,apps/acctExport ,statement_forward        ,y    ,addrs = 0x868b8fd259abfcfdf9634c343593b34ef359641d & last_block = 8769141 & accounting & statements & ether & fmt = json
 
-neig    ,both ,fast  ,export   ,apps/acctExport ,neighbor1                ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors
-neig    ,both ,fast  ,export   ,apps/acctExport ,neighbor2                ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors
-neig    ,both ,fast  ,export   ,apps/acctExport ,neighbor3                ,y    ,addrs = 0xffeac0305ede3a915295ec8e61c7f881006f4474 & neighbors & first_block = 0 & last_block = 10
-neig    ,both ,fast  ,export   ,apps/acctExport ,neighbor4                ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & neighbors & first_block = 0 & last_block = 10
-neig    ,both ,fast  ,export   ,apps/acctExport ,neighbor_mulitple        ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f 0x004bfbe1546bc6c65b5c7eaa55304b38bbfec6d3 & neighbors & first_block = 0 & last_block = 10
-neig    ,both ,fast  ,export   ,apps/acctExport ,neighbor_mulitple2       ,y    ,addrs = 0x33990122638b9132ca29c723bdf037f1a891a70c 0x72202bb5d0645d495e4bbc1feffbdc3c9cb8d6e1 0x5de92686587b10cd47e03b71f2e2350606fcaf14 & neighbors & max_records = 30 & no_header
-neig    ,both ,fast  ,export   ,apps/acctExport ,neighbor1_csv            ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors & fmt = csv
-neig    ,both ,fast  ,export   ,apps/acctExport ,neighbor2_csv            ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors & fmt = csv
-
 # reverse does not work
 rev     ,both ,fast  ,export   ,apps/acctExport ,statement_reverse        ,y    ,addrs = 0x868b8fd259abfcfdf9634c343593b34ef359641d & last_block = 8769141 & accounting & statements & ether & reversed & fmt = json
 rev     ,both ,fast  ,export   ,apps/acctExport ,reversed_not_accounting  ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & last_block = 8856511 & ether & max_records = 100 & log_level = 10 & fmt = json
 rev     ,both ,fast  ,export   ,apps/acctExport ,reversed_accounting      ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & last_block = 8856511 & ether & max_records = 100 & log_level = 10 & fmt = json & reversed
 rev     ,both ,fast  ,export   ,apps/acctExport ,reversed_not_reversed    ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & last_block = 8856511 & ether & max_records = 100 & fmt = json
 rev     ,both ,fast  ,export   ,apps/acctExport ,reversed_reversed        ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & last_block = 8856511 & ether & max_records = 100 & fmt = json & reversed
-
-# other reasons for failing
-local   ,both ,fast  ,export   ,apps/acctExport ,by_file_1                ,n    ,file = cmd_file & fmt = csv
-local   ,both ,fast  ,export   ,apps/acctExport ,by_file_v                ,n    ,file = cmd_file_2 & fmt = json
-local   ,both ,fast  ,export   ,apps/acctExport ,redir_output             ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10278000 & articulate & output = output_test_file
-local   ,both ,fast  ,export   ,apps/acctExport ,redir_output_append      ,n    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 5 & articulate & output = output_test_file & no_header & append
-
-# correctly reports an error, but should report a not found error instead, it reports a not an integer error. first_block/last_block should accept hashes
-local   ,both ,fast  ,export   ,apps/acctExport ,block_not_found          ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
-
-# See issue #3002 - if an otherwise valid command does not return data, include header anyway for txt and csv
-local   ,both ,fast  ,export   ,apps/acctExport ,simple_prefund2          ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & first_block = 2 & last_block = 3
-
-trace   ,both ,fast  ,export   ,apps/acctExport ,factory_traces           ,y    ,addrs = 0x8b3b3b624c3c0397d3da8fd861512393d51dcbac & factory & traces & last_block = 1603174
-trace   ,both ,fast  ,export   ,apps/acctExport ,factory_traces_v         ,y    ,addrs = 0x8b3b3b624c3c0397d3da8fd861512393d51dcbac & factory & traces & last_block = 1603174 & verbose
-trace   ,both ,fast  ,export   ,apps/acctExport ,export_traces            ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & last_block = 1506480 & max_records = 5 & traces & fmt = json
-trace   ,both ,fast  ,export   ,apps/acctExport ,export_traces_cache      ,y    ,addrs = 0xd714dd60e22bbb1cbafd0e40de5cfa7bbdd3f3c8 & max_records = 10 & cache_traces & traces
-trace   ,both ,fast  ,export   ,apps/acctExport ,transfer_fourbytes_trace ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & max_records = 10 & fourbytes = 0xa9059cbb & traces & fmt = json

@@ -105,7 +105,7 @@ func (s *SimpleTraceAction) Model(verbose bool, format string, extraOptions map[
 			model["value"] = s.Value.String()
 		}
 		if len(s.Init) > 0 {
-			model["init"] = s.Init
+			model["init"] = utils.FormattedCode(verbose, s.Init)
 		}
 		if !s.Address.IsZero() {
 			model["address"] = s.Address

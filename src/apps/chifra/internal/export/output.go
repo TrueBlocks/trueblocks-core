@@ -99,7 +99,7 @@ func GetExportOptions(args []string, g *globals.GlobalOptions) *ExportOptions {
 
 func (opts *ExportOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	ported = !opts.Accounting && !opts.Neighbors
+	ported = !opts.Accounting
 	// EXISTING_CODE
 	return
 }
