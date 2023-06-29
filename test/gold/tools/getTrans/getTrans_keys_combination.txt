@@ -14,7 +14,6 @@ TEST[DATE|TIME] Format:  json
       "gasPrice": 4000000000,
       "gasUsed": 39512,
       "hash": "0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765",
-      "input": "0x",
       "nonce": 2333166,
       "receipt": {
         "contractAddress": "0x0",
@@ -101,7 +100,6 @@ TEST[DATE|TIME] Format:  json
       "gasPrice": 49775761060,
       "gasUsed": 30416,
       "hash": "0xf1e398af74afe7dff17573ab30ae0b5bdbbcfc65a5d22d69b096cf620363a3c0",
-      "input": "0x",
       "nonce": 476,
       "receipt": {
         "contractAddress": "0x0",

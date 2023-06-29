@@ -83,7 +83,7 @@ func (s *SimpleTraceAction) Model(verbose bool, format string, extraOptions map[
 		if s.Gas != 0 {
 			model["gas"] = s.Gas
 		}
-		if len(s.Input) > 0 {
+		if len(s.Input) > 2 {
 			model["input"] = s.Input
 		}
 		if s.Value.String() != "0" {

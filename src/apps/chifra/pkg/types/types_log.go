@@ -75,12 +75,12 @@ func (s *SimpleLog) Model(verbose bool, format string, extraOptions map[string]a
 
 	order = []string{
 		"blockNumber",
-		"blockHash",
 		"transactionIndex",
+		"logIndex",
+		"blockHash",
 		"transactionHash",
 		"timestamp",
 		"date",
-		"logIndex",
 		"address",
 		"topic0",
 		"topic1",
@@ -102,8 +102,6 @@ func (s *SimpleLog) Model(verbose bool, format string, extraOptions map[string]a
 	if format == "json" {
 		if len(s.Data) > 2 {
 			model["data"] = s.Data
-		} else {
-			model["data"] = ""
 		}
 		if isArticulated {
 			model["articulatedLog"] = articulatedLog
@@ -114,6 +112,8 @@ func (s *SimpleLog) Model(verbose bool, format string, extraOptions map[string]a
 	} else {
 		if len(s.Data) > 2 {
 			model["data"] = s.Data
+		} else {
+			model["data"] = ""
 		}
 
 		if isArticulated {

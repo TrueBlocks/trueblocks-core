@@ -76,8 +76,10 @@ type SimpleTransaction struct {
 	Value                base.Wei        `json:"value"`
 	raw                  *RawTransaction `json:"-"`
 	// EXISTING_CODE
-	GasCost base.Gas `json:"gasCost"`
-	Message string   `json:"-"`
+	GasCost     base.Gas `json:"gasCost"`
+	Message     string   `json:"-"`
+	ExtraValue1 big.Int  `json:"-"`
+	ExtraValue2 big.Int  `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -169,7 +171,7 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 		if s.MaxPriorityFeePerGas > 0 {
 			model["maxPriorityFeePerGas"] = s.MaxPriorityFeePerGas
 		}
-		if len(s.Input) > 0 {
+		if len(s.Input) > 2 {
 			model["input"] = s.Input
 		}
 		if s.HasToken {

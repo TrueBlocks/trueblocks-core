@@ -40,7 +40,6 @@ Results in ./output_test_file
         "callType": "call",
         "from": "0xb73fa05c12ffc1926a4e8c2b585f168cf4028671",
         "gas": 19000,
-        "input": "0x",
         "to": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
         "value": "1007817120000000000"
       },
@@ -61,7 +60,6 @@ Results in ./output_test_file
         "callType": "call",
         "from": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
         "gas": 2300,
-        "input": "0x",
         "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
         "value": "1007817120000000000"
       },

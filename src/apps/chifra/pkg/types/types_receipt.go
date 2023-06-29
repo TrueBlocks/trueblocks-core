@@ -100,8 +100,11 @@ func (s *SimpleReceipt) Model(verbose bool, format string, extraOptions map[stri
 					"address":  log.Address.Hex(),
 					"logIndex": log.LogIndex,
 					"topics":   log.Topics,
-					"data":     log.Data,
 				}
+				if len(log.Data) > 2 {
+					logModel["data"] = log.Data
+				}
+
 				if log.ArticulatedLog != nil {
 					articulatedLog := map[string]any{
 						"name": log.ArticulatedLog.Name,
@@ -117,7 +120,6 @@ func (s *SimpleReceipt) Model(verbose bool, format string, extraOptions map[stri
 			model["logs"] = logs
 		} else {
 			model["logs"] = s.Logs
-			// order = append(order, "logs")
 		}
 
 		if verbose {

@@ -26,7 +26,6 @@ blocks?blocks=2222222&traces&fmt=json
         "callType": "call",
         "from": "0x91337a300e0361bddb2e377dd4e88ccb7796663d",
         "gas": 69000,
-        "input": "0x",
         "to": "0xe9475a01ba4095760d9f9c02b79c6e8094a30d74",
         "value": "18446744073709551615"
       },
@@ -44,7 +43,6 @@ blocks?blocks=2222222&traces&fmt=json
       "action": {
         "callType": "call",
         "from": "0xcd88e0e0c455345833ce31c5452c1c37f4b4c438",
-        "input": "0x",
         "to": "0x95d07a26b6b65c66492d40171f08e5b7980c3110",
         "value": "2245430000000000"
       },
@@ -63,7 +61,6 @@ blocks?blocks=2222222&traces&fmt=json
         "callType": "call",
         "from": "0xb2930b35844a230f00e51431acae96fe543a0347",
         "gas": 919000,
-        "input": "0x",
         "to": "0x4655e26af6f139702fdc120bbfdae72172f73f76",
         "value": "10077690000000000"
       },
@@ -81,7 +78,6 @@ blocks?blocks=2222222&traces&fmt=json
       "action": {
         "callType": "call",
         "from": "0xcd88e0e0c455345833ce31c5452c1c37f4b4c438",
-        "input": "0x",
         "to": "0x0c60643d137e430e0e20aa84ec29c7dc882ac778",
         "value": "2101380000000000"
       },
@@ -100,7 +96,6 @@ blocks?blocks=2222222&traces&fmt=json
         "callType": "call",
         "from": "0xb2930b35844a230f00e51431acae96fe543a0347",
         "gas": 919000,
-        "input": "0x",
         "to": "0x1fbe8dad27dbd28935fc6ca71a41d12f8be9d8a7",
         "value": "3004621300000000000"
       },
@@ -119,7 +114,6 @@ blocks?blocks=2222222&traces&fmt=json
         "callType": "call",
         "from": "0x9e6316f44baeeee5d41a1070516cc5fa47baf227",
         "gas": 229000,
-        "input": "0x",
         "to": "0x098449d48e7c40ca33025e4ec7337e5ffd414b8e",
         "value": "5463912680000000000"
       },
@@ -138,7 +132,6 @@ blocks?blocks=2222222&traces&fmt=json
         "callType": "call",
         "from": "0xb2930b35844a230f00e51431acae96fe543a0347",
         "gas": 919000,
-        "input": "0x",
         "to": "0x346c078fcf7d694666cb4bad0403ce7641999ce0",
         "value": "10003562600000000000"
       },
@@ -157,7 +150,6 @@ blocks?blocks=2222222&traces&fmt=json
         "callType": "call",
         "from": "0x9e6316f44baeeee5d41a1070516cc5fa47baf227",
         "gas": 229000,
-        "input": "0x",
         "to": "0x804c66efac67f818f7ca63ee6d14be790d504e36",
         "value": "270000000000000000"
       },
@@ -176,7 +168,6 @@ blocks?blocks=2222222&traces&fmt=json
         "callType": "call",
         "from": "0xb2930b35844a230f00e51431acae96fe543a0347",
         "gas": 919000,
-        "input": "0x",
         "to": "0xf8b9cd050f5b8b337f1ed259a2f4355e0884d0eb",
         "value": "100151880000000000"
       },
@@ -216,7 +207,6 @@ blocks?blocks=2222222&traces&fmt=json
         "callType": "call",
         "from": "0xb2930b35844a230f00e51431acae96fe543a0347",
         "gas": 919000,
-        "input": "0x",
         "to": "0xbf6ceb4d62256459216dfa6a87651c1e4f45da5d",
         "value": "257408100000000000"
       },

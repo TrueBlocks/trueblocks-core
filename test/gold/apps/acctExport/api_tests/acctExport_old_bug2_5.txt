@@ -12,7 +12,6 @@ export?addrs=0x000001f568875f378bf6d170b790967fe429c81a&maxRecords=1&firstRecord
       "gasPrice": 19999840000,
       "gasUsed": 21000,
       "hash": "0xefb518c87145be3a0158f599ddf1bffcf37f9cf182f4ee77d3750d4dfbc4fc2d",
-      "input": "0x",
       "nonce": 4,
       "receipt": {
         "contractAddress": "0x0",

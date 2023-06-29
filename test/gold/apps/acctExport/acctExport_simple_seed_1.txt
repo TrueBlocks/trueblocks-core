@@ -14,14 +14,13 @@ TEST[DATE|TIME] Format:  json
       "gasCost": 0,
       "gasPrice": 0,
       "gasUsed": 0,
-      "hasToken": 0,
-      "hash": "0x0",
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
       "receipt": {},
       "timestamp": 1438269975,
       "to": "0x001d14804b399c6ef80e64576f657660804fec0b",
       "traces": [],
       "transactionIndex": 2,
-      "value": 4200000000000000000000
+      "value": "4200000000000000000000"
     },
     {
       "blockHash": "0x1816ff22f84af23df70df8e6ae5c40a8780c16a0860ca1a25a4c911eba76c65a",
@@ -59,7 +58,6 @@ TEST[DATE|TIME] Format:  json
       "gasPrice": 20000000000,
       "gasUsed": 21000,
       "hash": "0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5",
-      "input": "0x",
       "nonce": 1,
       "receipt": {
         "contractAddress": "0x0",

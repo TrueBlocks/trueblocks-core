@@ -3,6 +3,7 @@ package rpcClient
 import (
 	"errors"
 	"fmt"
+	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
@@ -66,16 +67,18 @@ var (
 	UncleRewardSender = base.HexToAddress("0x000000000000000000000000000000556e636c65") // The word "Uncle" in hex
 )
 
-func GetPrefundByAppearance(chain string, appearance *types.RawAppearance, ts int64) (tx *types.SimpleTransaction, err error) {
+func GetPrefundTxByApp(chain string, appearance *types.RawAppearance) (tx *types.SimpleTransaction, err error) {
 	prefundPath := prefunds.GetPrefundPath(chain)
 	if prefundMap, err := prefunds.LoadPrefundMap(chain, prefundPath); err != nil {
 		return nil, err
 	} else {
 		var blockHash base.Hash
-		if blk, err := GetBlockByNumber(chain, uint64(0)); err != nil {
+		var ts int64
+		if block, err := GetBlockByNumber(chain, uint64(0)); err != nil {
 			return nil, err
 		} else {
-			blockHash = blk.Hash
+			blockHash = block.Hash
+			ts = block.Timestamp
 		}
 
 		entry := (*prefundMap)[base.HexToAddress(appearance.Address)]
@@ -88,12 +91,6 @@ func GetPrefundByAppearance(chain string, appearance *types.RawAppearance, ts in
 				From:             PrefundSender,
 				To:               base.HexToAddress(appearance.Address),
 				Value:            entry.Prefund,
-				Receipt: &types.SimpleReceipt{
-					Status:           1,
-					BlockNumber:      uint64(appearance.BlockNumber),
-					BlockHash:        blockHash,
-					TransactionIndex: uint64(appearance.TransactionIndex),
-				},
 			}
 			return &ret, nil
 		}
@@ -101,96 +98,134 @@ func GetPrefundByAppearance(chain string, appearance *types.RawAppearance, ts in
 	return nil, errors.New("not found")
 }
 
-// var FakeBlockRewardSender = base.HexToAddress("0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef")
-// var FakeUncleRewardSender = base.HexToAddress("0xdeadbeeedeadbeeedeadbeeedeadbeeedeadbeee")
+type RewardType int
 
-// func GetMinerRewardByAppearance(chain string, appearance *types.RawAppearance) (tx *types.SimpleTransaction, err error) {
-// 	block, err := GetBlockByNumber(chain, uint64(appearance.BlockNumber))
-// 	if err != nil {
-// 		return
-// 	}
+const (
+	BLOCK_REWARD RewardType = iota
+	NEPHEW_REWARD
+	UNCLE_REWARD
+	TXFEE_REWARD
+)
 
-// 	reward := big.Int{}
-// 	reward.SetString("5000000000000000000", 10)
-// 	return &types.SimpleTransaction{
-// 		BlockNumber:      uint64(appearance.BlockNumber),
-// 		TransactionIndex: uint64(appearance.TransactionIndex),
-// 		BlockHash:        block.Hash,
-// 		From:             FakeBlockRewardSender,
-// 		To:               base.HexToAddress(appearance.Address),
-// 		Value:            reward,
-// 	}, nil
+// // This data was taken from Geth ./params/config.go
+// blknum_t hardForkBlock(const string_q& hf) {
+//     if (hf == "byzantium") {
+//         map<string_q, blknum_t> theMap = {
+//             make_pair("mainnet", 4370000),
+//         };
+//         return theMap[getChain()];
+//     } else if (hf == "constantinople") {
+//         map<string_q, blknum_t> theMap = {
+//             make_pair("mainnet", 7280000),
+//         };
+//         return theMap[getChain()];
+//     } else if (hf == "london") {
+//         map<string_q, blknum_t> theMap = {
+//             make_pair("goerli", 5062605),
+//             make_pair("mainnet", 12965000),
+//         };
+//         return theMap[getChain()];
+//     }
+//     return 0;
 // }
 
-// func GetUncleRewardByAppearance(chain string, appearance *types.RawAppearance) (tx *types.SimpleTransaction, err error) {
-// 	reward := big.Int{}
-// 	reward.SetString("3500000000000000000", 10)
-// 	return &types.SimpleTransaction{
-// 		BlockNumber:      uint64(appearance.BlockNumber),
-// 		TransactionIndex: uint64(appearance.TransactionIndex),
-// 		From:             FakeUncleRewardSender,
-// 		To:               base.HexToAddress(appearance.Address),
-// 		Value:            reward,
-// 	}, nil
-// }
-
-/*
-if (blk == 0) {
-	address_t addr = opt->prefundAddrMap[trav->app->txid];
-	trav->trans.loadTransAsPrefund(trav->app->blk, trav->app->txid, addr, prefundAt(addr));
-    blockNumber = bn;
-    transactionIndex = txid;
-    from = PrefundSender;
-    to = addr;
-    value = amount;
-    return true;
-} else if (trav->app->txid == 99996 || trav->app->txid == 99997 || trav->app->txid == 99999) {
-	trav->trans.loadTransAsBlockReward(trav->app->blk, trav->app->txid, opt->blkRewardMap[trav->app->blk]);
-    blockNumber = bn;
-    transactionIndex = txid;
-    from = BlockRewardSender;
-    to = addr;
-    value = getBlock Reward2(bn);
-    extraValue1 = getNephew Reward(bn);
-    extraValue2 = getTrans Fees(bn);  // weird temp value for reconciliation only
-    receipt = CReceipt();
-    receipt.pTransaction = this;
-    return true;
-} else if (trav->app->txid == 99998) {
-	uint64_t nUncles = getUncleCount(trav->app->blk);
-	for (size_t u = 0; u < nUncles; u++) {
-		CBlock uncle;
-		getUncle(uncle, trav->app->blk, u);
-		if (uncle.miner == opt->blkRewardMap[trav->app->blk]) {
-			trav->trans.loadTransAsUncleReward(trav->app->blk, uncle.blockNumber, uncle.miner);
-			from = UncleRewardSender;
-			to = addr;
-			value += getUncle Reward(bn, uncleBn);  // we use += here because you can win more than one uncle block per block
-			receipt = CReceipt();
-			receipt.pTransaction = this;
-			return true;
-		}
+func getReward(chain string, rt RewardType, block *types.SimpleBlock[types.SimpleTransaction]) big.Int {
+	byzantiumBlock := uint64(4370000)
+	constantinopleBlock := uint64(7280000)
+	bn := block.BlockNumber
+	if bn == 0 {
+		return *big.NewInt(0)
 	}
-} else {
-	getTransaction(trav->trans, trav->app->blk, trav->app->txid);
-	getFullReceipt(&trav->trans, true);
+
+	switch rt {
+	case BLOCK_REWARD:
+		if bn < byzantiumBlock {
+			return *big.NewInt(5000000000000000000)
+		} else if bn < constantinopleBlock {
+			return *big.NewInt(3000000000000000000)
+		} else {
+			return *big.NewInt(2000000000000000000)
+		}
+	case NEPHEW_REWARD:
+		//     blknum_t nUncles = getUncleCount(bn);
+		//     if (nUncles)
+		//         reward += ((getBlockReward(bn) * nUncles) / 32);
+		//     return reward;
+		// }
+		return *big.NewInt(3000000000000000000)
+	case UNCLE_REWARD:
+		//     wei_t reward = getBlockReward(bn);
+		//     if ((uncleBn + 6) < bn)
+		//         return 0;
+		//     blknum_t diff = (uncleBn + 8 - bn);
+		//     return (reward / 8 * diff);
+		// }
+		return *big.NewInt(2000000000000000000)
+	case TXFEE_REWARD:
+		//     CBlock block;
+		//     getBlock(block, bn);
+		//     for (auto tx : block.transactions)
+		//         fees += (tx.receipt.gasUsed * tx.gasPrice);
+		//     return fees;
+		// }
+		return *big.NewInt(0)
+	default:
+		return *big.NewInt(0)
+	}
 }
-*/
+
+func GetBlockRewardTxByApp(chain string, appearance *types.RawAppearance) (*types.SimpleTransaction, error) {
+	if block, err := GetBlockByNumberWithTxs(chain, uint64(appearance.BlockNumber)); err != nil {
+		return nil, err
+	} else {
+		tx := &types.SimpleTransaction{
+			BlockNumber:      uint64(appearance.BlockNumber),
+			BlockHash:        block.Hash,
+			TransactionIndex: uint64(appearance.TransactionIndex),
+			Timestamp:        block.Timestamp,
+			From:             BlockRewardSender,
+			To:               base.HexToAddress(appearance.Address),
+			Value:            getReward(chain, BLOCK_REWARD, &block),
+			ExtraValue1:      getReward(chain, NEPHEW_REWARD, &block),
+			ExtraValue2:      getReward(chain, TXFEE_REWARD, &block),
+		}
+		return tx, nil
+	}
+}
+
+func GetUncleRewardTxByApp(chain string, appearance *types.RawAppearance) (tx *types.SimpleTransaction, err error) {
+	if uncles, err := GetUnclesByNumber(chain, uint64(appearance.BlockNumber)); err != nil {
+		return nil, err
+	} else {
+		tx = &types.SimpleTransaction{
+			BlockNumber:      uint64(appearance.BlockNumber),
+			TransactionIndex: uint64(appearance.TransactionIndex),
+			From:             UncleRewardSender,
+			To:               base.HexToAddress(appearance.Address),
+		}
+		for _, uncle := range uncles {
+			if uncle.Miner.Hex() == appearance.Address {
+				r := getReward(chain, UNCLE_REWARD, &uncle)
+				tx.Value.Add(&tx.Value, &r)
+			}
+		}
+		return tx, nil
+	}
+}
 
 func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, fetchTraces bool) (tx *types.SimpleTransaction, err error) {
 	bn := uint64(appearance.BlockNumber)
 	txid := uint64(appearance.TransactionIndex)
 
-	blockTs := rpc.GetBlockTimestamp(chain, bn)
 	if bn == 0 {
-		return GetPrefundByAppearance(chain, appearance, blockTs)
+		return GetPrefundTxByApp(chain, appearance)
+	} else if txid == 99999 || txid == 99997 || txid == 99996 {
+		return GetBlockRewardTxByApp(chain, appearance)
+	} else if txid == 99998 {
+		return GetUncleRewardTxByApp(chain, appearance)
 	}
-	// else if txid == 99999 || txid == 99997 || txid == 99996 {
-	// 	return GetMinerRewardByAppearance(chain, appearance)
-	// } else if txid == 99998 {
-	// 	return GetUncleRewardByAppearance(chain, appearance)
-	// }
 
+	blockTs := rpc.GetBlockTimestamp(chain, bn)
 	receipt, err := GetTransactionReceipt(chain, ReceiptQuery{
 		Bn:      bn,
 		Txid:    txid,

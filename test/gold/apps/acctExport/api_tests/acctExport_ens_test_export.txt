@@ -12,7 +12,6 @@ export?addrs=rhyslindmark.eth&firstBlock=4037786&lastBlock=4081450
       "gasPrice": 20000000000,
       "gasUsed": 21000,
       "hash": "0x78a17b79e638190d72a3030a79645c32cf3420a133ea2835206778e5ab63fdc7",
-      "input": "0x",
       "receipt": {
         "contractAddress": "0x0",
         "effectiveGasPrice": 20000000000,

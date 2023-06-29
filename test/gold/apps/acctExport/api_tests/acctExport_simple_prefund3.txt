@@ -11,8 +11,8 @@ export?addrs=0x05a56e2d52c817161883f50c441c3228cfe54d9f&firstBlock=2&lastBlock=7
       "gasCost": 0,
       "gasPrice": 0,
       "gasUsed": 0,
-      "hash": "0x0",
-      "input": "",
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "receipt": {},
       "timestamp": 1438270083,
       "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "traces": [],
@@ -29,8 +29,5 @@ export?addrs=0x05a56e2d52c817161883f50c441c3228cfe54d9f&firstBlock=2&lastBlock=7
     "chainId": 1,
     "networkId": 1,
     "chain": "mainnet"
-  },
-  "errors": [
-    "not found"
-  ]
+  }
 }
