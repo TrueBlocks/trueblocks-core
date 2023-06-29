@@ -66,6 +66,8 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 			err = opts.HandleReceipts(monitorArray)
 		} else if opts.Logs {
 			err = opts.HandleLogs(monitorArray)
+		} else if opts.Traces {
+			err = opts.HandleTraces(monitorArray)
 		} else if opts.Appearances {
 			err = opts.HandleAppearances(monitorArray)
 		} else {
@@ -97,7 +99,7 @@ func GetExportOptions(args []string, g *globals.GlobalOptions) *ExportOptions {
 
 func (opts *ExportOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	ported = !opts.Accounting && !opts.Traces && !opts.Neighbors
+	ported = !opts.Accounting && !opts.Neighbors
 	// EXISTING_CODE
 	return
 }

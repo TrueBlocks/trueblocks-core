@@ -13,6 +13,7 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
@@ -69,7 +70,7 @@ func (s *SimpleTraceAction) Model(verbose bool, format string, extraOptions map[
 	// EXISTING_CODE
 	if format == "json" {
 		if extraOptions["traces"] != true && len(s.Init) > 0 {
-			model["init"] = s.Init
+			model["init"] = utils.FormattedCode(verbose, s.Init)
 		}
 		if !s.SelfDestructed.IsZero() {
 			model["selfDestructed"] = s.SelfDestructed
