@@ -7,7 +7,6 @@ package exportPkg
 import (
 	"context"
 	"fmt"
-	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -58,28 +57,19 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 
 		for _, mon := range monitorArray {
 			count := mon.Count()
-			apps := make([]index.AppearanceRecord, count)
-			err := mon.ReadAppearances(&apps)
-			if err != nil {
+			opts.Apps = make([]index.AppearanceRecord, count)
+			if err := mon.ReadAppearances(&opts.Apps); err != nil {
 				errorChan <- err
 				return
-			}
-			if len(apps) == 0 {
+			} else if len(opts.Apps) == 0 {
 				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
 				return
 			}
-
-			sort.Slice(apps, func(i, j int) bool {
-				si := uint64(apps[i].BlockNumber)
-				si = (si << 32) + uint64(apps[i].TransactionId)
-				sj := uint64(apps[j].BlockNumber)
-				sj = (sj << 32) + uint64(apps[j].TransactionId)
-				return si < sj
-			})
+			opts.Sort()
 
 			currentBn := uint32(0)
 			currentTs := int64(0)
-			for i, app := range apps {
+			for i, app := range opts.Apps {
 				nSeen++
 				appRange := base.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)}
 				if appRange.Intersects(exportRange) {
@@ -98,7 +88,7 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 					}
 					currentBn = app.BlockNumber
 
-					if err = visitAppearance(&types.SimpleAppearance{
+					if err := visitAppearance(&types.SimpleAppearance{
 						Address:          mon.Address,
 						BlockNumber:      app.BlockNumber,
 						TransactionIndex: app.TransactionId,

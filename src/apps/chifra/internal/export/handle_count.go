@@ -6,6 +6,7 @@ package exportPkg
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -32,15 +33,20 @@ func (opts *ExportOptions) HandleListCount(monitorArray []monitor.Monitor) error
 		for _, mon := range monitorArray {
 			if true { // !opts.NoZero || mon.Count() > 0 {
 				mon.Close()
-				apps := make([]index.AppearanceRecord, mon.Count())
-				if err := mon.ReadAppearances(&apps); err != nil {
+				count := mon.Count()
+				opts.Apps = make([]index.AppearanceRecord, count)
+				if err := mon.ReadAppearances(&opts.Apps); err != nil {
 					errorChan <- err
-					continue
+					return
+				} else if len(opts.Apps) == 0 {
+					errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
+					return
 				}
+				opts.Sort()
 
 				nRecords := 0
-				for _, appearance := range apps {
-					if exportRange.IntersectsB(uint64(appearance.BlockNumber)) {
+				for _, app := range opts.Apps {
+					if exportRange.IntersectsB(uint64(app.BlockNumber)) {
 						nRecords++
 					}
 				}

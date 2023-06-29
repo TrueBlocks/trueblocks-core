@@ -1,6 +1,7 @@
-chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 8856511 --ether --max_records 100 --fmt json
+chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 8856511 --fmt json --ether --max_records 10 --reversed
 TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
-TEST[DATE|TIME] MaxRecords:  100
+TEST[DATE|TIME] MaxRecords:  10
+TEST[DATE|TIME] Reversed:  true
 TEST[DATE|TIME] LastBlock:  8856511
 TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] Format:  json

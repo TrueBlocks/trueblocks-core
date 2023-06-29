@@ -14,6 +14,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -52,6 +53,7 @@ type ExportOptions struct {
 	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
 	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
 	// EXISTING_CODE
+	Apps []index.AppearanceRecord
 	// EXISTING_CODE
 }
 
