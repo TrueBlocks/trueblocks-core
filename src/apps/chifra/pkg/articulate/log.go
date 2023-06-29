@@ -7,7 +7,27 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func ArticulateLog(log *types.SimpleLog, abiMap abi.AbiInterfaceMap) (articulated *types.SimpleFunction, err error) {
+func (cache *AbiCache) ArticulateLog(chain string, log *types.SimpleLog) (err error) {
+	address := log.Address
+	if !cache.loadedMap[address] && !cache.skipMap[address] {
+		if err = abi.LoadAbi(chain, address, cache.abiMap); err != nil {
+			cache.skipMap[address] = true
+			return err
+		} else {
+			cache.loadedMap[address] = true
+		}
+	}
+
+	if !cache.skipMap[address] {
+		if log.ArticulatedLog, err = articulateLog(log, cache.abiMap); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func articulateLog(log *types.SimpleLog, abiMap abi.AbiInterfaceMap) (articulated *types.SimpleFunction, err error) {
 	// Try to articulate the log using some common events
 	articulated = findCommonEvent(log)
 

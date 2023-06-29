@@ -10,6 +10,7 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -22,6 +23,7 @@ import (
 )
 
 func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
+	abiCache := articulate.NewAbiCache()
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	exportRange := base.FileRange{First: opts.FirstBlock, Last: opts.LastBlock}
@@ -51,6 +53,11 @@ func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
 						log := log
 						if opts.isRelevant(monitorArray, log) {
 							if opts.matchesFilter(&log) {
+								if opts.Articulate {
+									if err = abiCache.ArticulateLog(chain, &log); err != nil {
+										errorChan <- err // continue even on error
+									}
+								}
 								modelChan <- &log
 							}
 						}
@@ -122,8 +129,9 @@ func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
 	}
 
 	extra := map[string]interface{}{
-		"testMode": testMode,
-		"export":   true,
+		"articulate": opts.Articulate,
+		"testMode":   testMode,
+		"export":     true,
 	}
 
 	if opts.Globals.Verbose || opts.Globals.Format == "json" {

@@ -10,6 +10,7 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -22,6 +23,7 @@ import (
 )
 
 func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
+	abiCache := articulate.NewAbiCache()
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	exportRange := base.FileRange{First: opts.FirstBlock, Last: opts.LastBlock}
@@ -47,6 +49,11 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 					}
 				}
 				if matches {
+					if opts.Articulate {
+						if err = abiCache.ArticulateTx(chain, tx); err != nil {
+							errorChan <- err // continue even on error
+						}
+					}
 					modelChan <- tx
 				}
 				return nil

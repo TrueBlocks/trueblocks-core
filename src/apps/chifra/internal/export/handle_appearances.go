@@ -96,8 +96,9 @@ func (opts *ExportOptions) HandleAppearances(monitorArray []monitor.Monitor) err
 	}
 
 	extra := map[string]interface{}{
-		"testMode": testMode,
-		"export":   true,
+		"articulate": opts.Articulate,
+		"testMode":   testMode,
+		"export":     true,
 	}
 
 	if opts.Globals.Verbose || opts.Globals.Format == "json" {

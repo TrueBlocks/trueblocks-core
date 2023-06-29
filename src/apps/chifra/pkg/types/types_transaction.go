@@ -135,9 +135,9 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 	// TODO: Shouldn't this use the SimpleFunction model - the answer is yes?
 	var articulatedTx map[string]interface{}
 	isArticulated := extraOptions["articulate"] == true && s.ArticulatedTx != nil
-	if isArticulated && format != "json" {
-		order = append(order, "compressedTx")
-	}
+	// if isArticulated && format != "json" {
+	// 	order = append(order, "compressedTx")
+	// }
 	if isArticulated {
 		articulatedTx = map[string]interface{}{
 			"name": s.ArticulatedTx.Name,

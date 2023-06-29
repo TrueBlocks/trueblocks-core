@@ -3,9 +3,7 @@ package tracesPkg
 import (
 	"context"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
@@ -13,9 +11,7 @@ import (
 )
 
 func (opts *TracesOptions) HandleFilter() error {
-	abiMap := make(abi.AbiInterfaceMap)
-	loadedMap := make(map[base.Address]bool)
-	skipMap := make(map[base.Address]bool)
+	abiCache := articulate.NewAbiCache()
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -30,29 +26,14 @@ func (opts *TracesOptions) HandleFilter() error {
 			return
 		}
 
-		for _, trace := range traces {
-			// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
-			trace := trace
-			trace.Timestamp = rpc.GetBlockTimestamp(opts.Globals.Chain, uint64(trace.BlockNumber))
+		for index := range traces {
+			traces[index].Timestamp = rpc.GetBlockTimestamp(opts.Globals.Chain, uint64(traces[index].BlockNumber))
 			if opts.Articulate {
-				address := trace.Action.To
-				if !loadedMap[address] && !skipMap[address] {
-					if err := abi.LoadAbi(chain, address, abiMap); err != nil {
-						skipMap[address] = true
-						errorChan <- err // continue even with an error
-					} else {
-						loadedMap[address] = true
-					}
-				}
-
-				if !skipMap[address] {
-					if trace.ArticulatedTrace, err = articulate.ArticulateTrace(&trace, abiMap); err != nil {
-						errorChan <- err // continue even with an error
-					}
+				if err = abiCache.ArticulateTrace(chain, &traces[index]); err != nil {
+					errorChan <- err // continue even with an error
 				}
 			}
-
-			modelChan <- &trace
+			modelChan <- &traces[index]
 		}
 	}
 
