@@ -187,7 +187,7 @@ acct    ,both ,fast  ,export   ,apps/acctExport ,statement_forward        ,y    
 
 # reverse does not work
 
-rev     ,both ,fast  ,export   ,apps/acctExport ,rev_not_rev_not_acct     ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & last_block = 8856511 & fmt = json & ether & max_records = 10
-rev     ,both ,fast  ,export   ,apps/acctExport ,rev_rev_not_acct         ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & last_block = 8856511 & fmt = json & ether & max_records = 10 & reversed
+on       ,both ,fast  ,export   ,apps/acctExport ,rev_not_rev_not_acct     ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & last_block = 8856511 & fmt = json & ether & max_records = 10
+on       ,both ,fast  ,export   ,apps/acctExport ,rev_rev_not_acct         ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & last_block = 8856511 & fmt = json & ether & max_records = 10 & reversed
 xrev     ,both ,fast  ,export   ,apps/acctExport ,rev_not_rev_acct         ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & last_block = 8856511 & fmt = json & ether & max_records = 10 & accounting
 xrev     ,both ,fast  ,export   ,apps/acctExport ,rev_rev_acct             ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & last_block = 8856511 & fmt = json & ether & max_records = 10 & accounting & reversed
