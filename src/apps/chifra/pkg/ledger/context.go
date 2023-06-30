@@ -24,18 +24,17 @@ type LedgerContext struct {
 // we must know this information to be able to calculate the correct post-tx balance.
 func (l *Ledger) SetContexts(chain string, txIds []identifiers.Identifier) error {
 	for _, rng := range txIds {
-		txIds, err := rng.ResolveTxs(chain)
+		apps, err := rng.ResolveTxs(chain)
 		if err != nil && !errors.Is(err, ethereum.NotFound) {
 			return err
 		}
-		for i := 0; i < len(txIds); i++ {
-			key := fmt.Sprintf("%09d-%05d", txIds[i].BlockNumber, txIds[i].TransactionIndex)
+		for i := 0; i < len(apps); i++ {
 			prev := uint32(0)
-			if txIds[i].BlockNumber > 0 {
-				prev = txIds[i].BlockNumber - 1
+			if apps[i].BlockNumber > 0 {
+				prev = apps[i].BlockNumber - 1
 			}
-			next := txIds[i].BlockNumber + 1
-			cur := txIds[i].BlockNumber
+			next := apps[i].BlockNumber + 1
+			cur := apps[i].BlockNumber
 			getReconType := func(isPrevDiff bool, isNextDiff bool) (reconType string) {
 				if isPrevDiff && isNextDiff {
 					return "regular"
@@ -57,6 +56,7 @@ func (l *Ledger) SetContexts(chain string, txIds []identifiers.Identifier) error
 				IsNextDiff: cur != next,
 				ReconType:  getReconType(prev != cur, cur != next),
 			}
+			key := fmt.Sprintf("%09d-%05d", apps[i].BlockNumber, apps[i].TransactionIndex)
 			l.Contexts[key] = ctext
 		}
 	}

@@ -16,9 +16,11 @@ func (cache *AbiCache) ArticulateTx(chain string, tx *types.SimpleTransaction) (
 		}
 	}
 
-	for index := range tx.Receipt.Logs {
-		if err = cache.ArticulateLog(chain, &tx.Receipt.Logs[index]); err != nil {
-			return err
+	if tx.Receipt != nil {
+		for index := range tx.Receipt.Logs {
+			if err = cache.ArticulateLog(chain, &tx.Receipt.Logs[index]); err != nil {
+				return err
+			}
 		}
 	}
 

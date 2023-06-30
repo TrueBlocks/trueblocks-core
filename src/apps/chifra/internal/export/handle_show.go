@@ -28,6 +28,10 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 	exportRange := base.FileRange{First: opts.FirstBlock, Last: opts.LastBlock}
 	nExported := uint64(0)
 	nSeen := int64(-1)
+	if opts.Accounting {
+		// TODO: BOGUS - RECONSIDER THIS
+		opts.Articulate = true
+	}
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
