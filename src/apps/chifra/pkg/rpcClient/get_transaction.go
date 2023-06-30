@@ -162,27 +162,42 @@ func GetRewardTxByTypeAndApp(chain string, rt RewardType, appearance *types.RawA
 			blockReward = getBlockReward(bn)
 			switch rt {
 			case BLOCK_REWARD:
-				nUncles := len(uncles)
-				if nUncles > 0 {
-					nephewReward = blockReward.Mul(blockReward, big.NewInt(int64(nUncles)))
-					nephewReward.Div(nephewReward, big.NewInt(32))
-				}
-				for _, tx := range block.Transactions {
-					gp := big.NewInt(int64(tx.GasPrice))
-					gu := big.NewInt(int64(tx.Receipt.GasUsed))
-					feeReward.Add(feeReward, gp.Mul(gp, gu))
+				if block.Miner.Hex() == appearance.Address {
+					nUncles := len(uncles)
+					if nUncles > 0 {
+						nephewReward = new(big.Int).Mul(blockReward, big.NewInt(int64(nUncles)))
+						nephewReward.Div(nephewReward, big.NewInt(32))
+					}
+					for _, tx := range block.Transactions {
+						gp := big.NewInt(int64(tx.GasPrice))
+						gu := big.NewInt(int64(tx.Receipt.GasUsed))
+						feeReward.Add(feeReward, gp.Mul(gp, gu))
+					}
+				} else {
+					blockReward = big.NewInt(0)
 				}
 			case UNCLE_REWARD:
 				for _, uncle := range uncles {
 					if uncle.Miner.Hex() == appearance.Address {
-						if uncle.BlockNumber+6 < bn {
+						if bn < uncle.BlockNumber+6 {
 							diff := (uncle.BlockNumber + 8 - bn) // positive since +6 < bn
-							uncleReward = blockReward.Mul(blockReward, big.NewInt(int64(diff)))
+							uncleReward = new(big.Int).Mul(blockReward, big.NewInt(int64(diff)))
 							uncleReward.Div(uncleReward, big.NewInt(8))
 						}
 					}
 				}
-				blockReward = big.NewInt(0)
+				if block.Miner.Hex() == appearance.Address {
+					// The uncle miner may also have been the miner of the block
+					if minerTx, err := GetRewardTxByTypeAndApp(chain, BLOCK_REWARD, appearance); err != nil {
+						return nil, err
+					} else {
+						blockReward = &minerTx.Rewards.Block
+						nephewReward = &minerTx.Rewards.Nephew
+						feeReward = &minerTx.Rewards.TxFee
+					}
+				} else {
+					blockReward = big.NewInt(0)
+				}
 			case NEPHEW_REWARD:
 				fallthrough
 			case TXFEE_REWARD:

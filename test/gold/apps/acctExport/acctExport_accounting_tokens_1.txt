@@ -5,7 +5,11 @@ TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Articulate:  true
 TEST[DATE|TIME] LastBlock:  8860511
 TEST[DATE|TIME] Ether:  true
+TEST[DATE|TIME] OutputFn:  accounting_tokens_1_out.file
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
+TEST[DATE|TIME] Start of trial balance report
+TEST[DATE|TIME] Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
@@ -13,7 +17,7 @@ TEST[DATE|TIME] ledger.blockNumber:     0
 TEST[DATE|TIME] prevBlock:              0
 TEST[DATE|TIME] transfer.blockNumber:   0
 TEST[DATE|TIME] nextBlock:              202249
-TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isPrevDiff:             false
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
@@ -25,13 +29,13 @@ TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
 TEST[DATE|TIME]    decimals:            18
 TEST[DATE|TIME]    prevAppBlk:          0
-TEST[DATE|TIME]    hash:                
+TEST[DATE|TIME]    hash:                0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME]    timestamp:           1438269975
 TEST[DATE|TIME]    blockNumber:         0
 TEST[DATE|TIME]    transactionIndex:    2
 TEST[DATE|TIME]    logIndex:            0
-TEST[DATE|TIME]    priceSource:         uniswap
-TEST[DATE|TIME]    spotPrice:           1
+TEST[DATE|TIME]    priceSource:         eth-not-priced-pre-maker
+TEST[DATE|TIME]    spotPrice:           0
 TEST[DATE|TIME]    prevBal:             0
 TEST[DATE|TIME]    begBal:              0
 TEST[DATE|TIME]    amountIn:            0
@@ -40,11 +44,13 @@ TEST[DATE|TIME]    minerBaseRewardIn:   0
 TEST[DATE|TIME]    minerNephewRewardIn: 0
 TEST[DATE|TIME]    minerTxFeeIn:        0
 TEST[DATE|TIME]    minerUncleRewardIn:  0
+TEST[DATE|TIME]    correctingIn:        0
 TEST[DATE|TIME]    prefundIn:           4200000000000000000000
 TEST[DATE|TIME]    selfDestructIn:      0
 TEST[DATE|TIME]    totalIn:             4200000000000000000000
 TEST[DATE|TIME]    amountOut:           0
 TEST[DATE|TIME]    internalOut:         0
+TEST[DATE|TIME]    correctingOut:       0
 TEST[DATE|TIME]    selfDestructOut:     0
 TEST[DATE|TIME]    gasOut:              0
 TEST[DATE|TIME]    totalOut:            0
@@ -52,70 +58,14 @@ TEST[DATE|TIME]    amountNet:           4200000000000000000000
 TEST[DATE|TIME]    endBal:              4200000000000000000000
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
-TEST[DATE|TIME]    endBalCalc:          0
+TEST[DATE|TIME]    endBalCalc:          4200000000000000000000
+TEST[DATE|TIME]    correctingReason:    
+TEST[DATE|TIME]    moneyMoved:          true
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> BALANCE ETH
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ledger.blockNumber:     0
-TEST[DATE|TIME] prevBlock:              0
-TEST[DATE|TIME] transfer.blockNumber:   0
-TEST[DATE|TIME] nextBlock:              202249
-TEST[DATE|TIME] isPrevDiff:             true
-TEST[DATE|TIME] isNextDiff:             true
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  genesis-eth
-TEST[DATE|TIME]    accountedFor:        0x001d14804b399c6ef80e64576f657660804fec0b
-TEST[DATE|TIME]    sender:              0x0000000000000000000000000050726566756e64
-TEST[DATE|TIME]    recipient:           0x001d14804b399c6ef80e64576f657660804fec0b
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME]    assetSymbol:         ETH
-TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    prevAppBlk:          0
-TEST[DATE|TIME]    hash:                
-TEST[DATE|TIME]    timestamp:           1438269975
-TEST[DATE|TIME]    blockNumber:         0
-TEST[DATE|TIME]    transactionIndex:    2
-TEST[DATE|TIME]    logIndex:            0
-TEST[DATE|TIME]    priceSource:         uniswap
-TEST[DATE|TIME]    spotPrice:           1
-TEST[DATE|TIME]    prevBal:             0
-TEST[DATE|TIME]    begBal:              0
-TEST[DATE|TIME]    amountIn:            0
-TEST[DATE|TIME]    internalIn:          0
-TEST[DATE|TIME]    minerBaseRewardIn:   0
-TEST[DATE|TIME]    minerNephewRewardIn: 0
-TEST[DATE|TIME]    minerTxFeeIn:        0
-TEST[DATE|TIME]    minerUncleRewardIn:  0
-TEST[DATE|TIME]    prefundIn:           4200000000000000000000
-TEST[DATE|TIME]    selfDestructIn:      0
-TEST[DATE|TIME]    totalIn:             4200000000000000000000
-TEST[DATE|TIME]    amountOut:           0
-TEST[DATE|TIME]    internalOut:         0
-TEST[DATE|TIME]    selfDestructOut:     0
-TEST[DATE|TIME]    gasOut:              0
-TEST[DATE|TIME]    totalOut:            0
-TEST[DATE|TIME]    amountNet:           4200000000000000000000
-TEST[DATE|TIME]    endBal:              4200000000000000000000
-TEST[DATE|TIME]    begBalDiff:          0
-TEST[DATE|TIME]    endBalDiff:          0
-TEST[DATE|TIME]    endBalCalc:          0
-TEST[DATE|TIME]    trialBalance:        true
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Call to a smart contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 0 prior to its deployment 10000835
-TEST[DATE|TIME] doEthCall in CUniPrice::findPair returned false
-TEST[DATE|TIME] ===================== maker pricing ========================
-TEST[DATE|TIME] CEthCall:
-TEST[DATE|TIME] blockNumber: 0
-TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
-TEST[DATE|TIME] signature:   
-TEST[DATE|TIME] encoding:    0x59e02dd7
-TEST[DATE|TIME] bytes:       
-TEST[DATE|TIME] result:
-TEST[DATE|TIME] 0 results
-TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
+TEST[DATE|TIME] End of trial balance report
+TEST[DATE|TIME] Start of trial balance report
+TEST[DATE|TIME] Block 202249 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
@@ -140,57 +90,8 @@ TEST[DATE|TIME]    timestamp:           1441703356
 TEST[DATE|TIME]    blockNumber:         202249
 TEST[DATE|TIME]    transactionIndex:    0
 TEST[DATE|TIME]    logIndex:            0
-TEST[DATE|TIME]    priceSource:         uniswap
-TEST[DATE|TIME]    spotPrice:           1
-TEST[DATE|TIME]    prevBal:             0
-TEST[DATE|TIME]    begBal:              4200000000000000000000
-TEST[DATE|TIME]    amountIn:            0
-TEST[DATE|TIME]    internalIn:          0
-TEST[DATE|TIME]    minerBaseRewardIn:   0
-TEST[DATE|TIME]    minerNephewRewardIn: 0
-TEST[DATE|TIME]    minerTxFeeIn:        0
-TEST[DATE|TIME]    minerUncleRewardIn:  0
-TEST[DATE|TIME]    prefundIn:           0
-TEST[DATE|TIME]    selfDestructIn:      0
-TEST[DATE|TIME]    totalIn:             0
-TEST[DATE|TIME]    amountOut:           4199900000000000000000
-TEST[DATE|TIME]    internalOut:         0
-TEST[DATE|TIME]    selfDestructOut:     0
-TEST[DATE|TIME]    gasOut:              25320679510922664
-TEST[DATE|TIME]    totalOut:            4199925320679510922664
-TEST[DATE|TIME]    amountNet:           -4199925320679510922664
-TEST[DATE|TIME]    endBal:              74679320489077336
-TEST[DATE|TIME]    begBalDiff:          0
-TEST[DATE|TIME]    endBalDiff:          0
-TEST[DATE|TIME]    endBalCalc:          0
-TEST[DATE|TIME]    trialBalance:        true
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> BALANCE ETH
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ledger.blockNumber:     0
-TEST[DATE|TIME] prevBlock:              0
-TEST[DATE|TIME] transfer.blockNumber:   202249
-TEST[DATE|TIME] nextBlock:              1501459
-TEST[DATE|TIME] isPrevDiff:             true
-TEST[DATE|TIME] isNextDiff:             true
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-eth
-TEST[DATE|TIME]    accountedFor:        0x001d14804b399c6ef80e64576f657660804fec0b
-TEST[DATE|TIME]    sender:              0x001d14804b399c6ef80e64576f657660804fec0b
-TEST[DATE|TIME]    recipient:           0x2910543af39aba0cd09dbb2d50200b3e800a63d2
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME]    assetSymbol:         ETH
-TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    prevAppBlk:          0
-TEST[DATE|TIME]    hash:                0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8
-TEST[DATE|TIME]    timestamp:           1441703356
-TEST[DATE|TIME]    blockNumber:         202249
-TEST[DATE|TIME]    transactionIndex:    0
-TEST[DATE|TIME]    logIndex:            0
-TEST[DATE|TIME]    priceSource:         uniswap
-TEST[DATE|TIME]    spotPrice:           1
+TEST[DATE|TIME]    priceSource:         eth-not-priced-pre-maker
+TEST[DATE|TIME]    spotPrice:           0
 TEST[DATE|TIME]    prevBal:             4200000000000000000000
 TEST[DATE|TIME]    begBal:              4200000000000000000000
 TEST[DATE|TIME]    amountIn:            0
@@ -199,11 +100,13 @@ TEST[DATE|TIME]    minerBaseRewardIn:   0
 TEST[DATE|TIME]    minerNephewRewardIn: 0
 TEST[DATE|TIME]    minerTxFeeIn:        0
 TEST[DATE|TIME]    minerUncleRewardIn:  0
+TEST[DATE|TIME]    correctingIn:        0
 TEST[DATE|TIME]    prefundIn:           0
 TEST[DATE|TIME]    selfDestructIn:      0
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    amountOut:           4199900000000000000000
 TEST[DATE|TIME]    internalOut:         0
+TEST[DATE|TIME]    correctingOut:       0
 TEST[DATE|TIME]    selfDestructOut:     0
 TEST[DATE|TIME]    gasOut:              25320679510922664
 TEST[DATE|TIME]    totalOut:            4199925320679510922664
@@ -211,75 +114,21 @@ TEST[DATE|TIME]    amountNet:           -4199925320679510922664
 TEST[DATE|TIME]    endBal:              74679320489077336
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
-TEST[DATE|TIME]    endBalCalc:          0
+TEST[DATE|TIME]    endBalCalc:          74679320489077336
+TEST[DATE|TIME]    correctingReason:    
+TEST[DATE|TIME]    moneyMoved:          true
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] ===================== maker pricing ========================
-TEST[DATE|TIME] CEthCall:
-TEST[DATE|TIME] blockNumber: 202249
-TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
-TEST[DATE|TIME] signature:   
-TEST[DATE|TIME] encoding:    0x59e02dd7
-TEST[DATE|TIME] bytes:       
-TEST[DATE|TIME] result:
-TEST[DATE|TIME] 0 results
-TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
+TEST[DATE|TIME] End of trial balance report
+TEST[DATE|TIME] Start of trial balance report
+TEST[DATE|TIME] Block 1501459 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     202249
 TEST[DATE|TIME] prevBlock:              202249
 TEST[DATE|TIME] transfer.blockNumber:   1501459
-TEST[DATE|TIME] nextBlock:              18446744073709551615
-TEST[DATE|TIME] isPrevDiff:             true
-TEST[DATE|TIME] isNextDiff:             true
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-eth
-TEST[DATE|TIME]    accountedFor:        0x001d14804b399c6ef80e64576f657660804fec0b
-TEST[DATE|TIME]    sender:              0x001d14804b399c6ef80e64576f657660804fec0b
-TEST[DATE|TIME]    recipient:           0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME]    assetSymbol:         ETH
-TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    prevAppBlk:          0
-TEST[DATE|TIME]    hash:                0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5
-TEST[DATE|TIME]    timestamp:           1463025233
-TEST[DATE|TIME]    blockNumber:         1501459
-TEST[DATE|TIME]    transactionIndex:    2
-TEST[DATE|TIME]    logIndex:            0
-TEST[DATE|TIME]    priceSource:         uniswap
-TEST[DATE|TIME]    spotPrice:           1
-TEST[DATE|TIME]    prevBal:             0
-TEST[DATE|TIME]    begBal:              74679320489077336
-TEST[DATE|TIME]    amountIn:            0
-TEST[DATE|TIME]    internalIn:          0
-TEST[DATE|TIME]    minerBaseRewardIn:   0
-TEST[DATE|TIME]    minerNephewRewardIn: 0
-TEST[DATE|TIME]    minerTxFeeIn:        0
-TEST[DATE|TIME]    minerUncleRewardIn:  0
-TEST[DATE|TIME]    prefundIn:           0
-TEST[DATE|TIME]    selfDestructIn:      0
-TEST[DATE|TIME]    totalIn:             0
-TEST[DATE|TIME]    amountOut:           74259320489077336
-TEST[DATE|TIME]    internalOut:         0
-TEST[DATE|TIME]    selfDestructOut:     0
-TEST[DATE|TIME]    gasOut:              420000000000000
-TEST[DATE|TIME]    totalOut:            74679320489077336
-TEST[DATE|TIME]    amountNet:           -74679320489077336
-TEST[DATE|TIME]    endBal:              0
-TEST[DATE|TIME]    begBalDiff:          0
-TEST[DATE|TIME]    endBalDiff:          0
-TEST[DATE|TIME]    endBalCalc:          0
-TEST[DATE|TIME]    trialBalance:        true
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> BALANCE ETH
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ledger.blockNumber:     202249
-TEST[DATE|TIME] prevBlock:              202249
-TEST[DATE|TIME] transfer.blockNumber:   1501459
-TEST[DATE|TIME] nextBlock:              18446744073709551615
+TEST[DATE|TIME] nextBlock:              15507094
 TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
@@ -297,8 +146,8 @@ TEST[DATE|TIME]    timestamp:           1463025233
 TEST[DATE|TIME]    blockNumber:         1501459
 TEST[DATE|TIME]    transactionIndex:    2
 TEST[DATE|TIME]    logIndex:            0
-TEST[DATE|TIME]    priceSource:         uniswap
-TEST[DATE|TIME]    spotPrice:           1
+TEST[DATE|TIME]    priceSource:         eth-not-priced-pre-maker
+TEST[DATE|TIME]    spotPrice:           0
 TEST[DATE|TIME]    prevBal:             74679320489077336
 TEST[DATE|TIME]    begBal:              74679320489077336
 TEST[DATE|TIME]    amountIn:            0
@@ -307,11 +156,13 @@ TEST[DATE|TIME]    minerBaseRewardIn:   0
 TEST[DATE|TIME]    minerNephewRewardIn: 0
 TEST[DATE|TIME]    minerTxFeeIn:        0
 TEST[DATE|TIME]    minerUncleRewardIn:  0
+TEST[DATE|TIME]    correctingIn:        0
 TEST[DATE|TIME]    prefundIn:           0
 TEST[DATE|TIME]    selfDestructIn:      0
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    amountOut:           74259320489077336
 TEST[DATE|TIME]    internalOut:         0
+TEST[DATE|TIME]    correctingOut:       0
 TEST[DATE|TIME]    selfDestructOut:     0
 TEST[DATE|TIME]    gasOut:              420000000000000
 TEST[DATE|TIME]    totalOut:            74679320489077336
@@ -320,18 +171,13 @@ TEST[DATE|TIME]    endBal:              0
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
+TEST[DATE|TIME]    correctingReason:    
+TEST[DATE|TIME]    moneyMoved:          true
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] ===================== maker pricing ========================
-TEST[DATE|TIME] CEthCall:
-TEST[DATE|TIME] blockNumber: 1501459
-TEST[DATE|TIME] address:     0x729d19f657bd0614b4985cf1d82531c67569197b
-TEST[DATE|TIME] signature:   
-TEST[DATE|TIME] encoding:    0x59e02dd7
-TEST[DATE|TIME] bytes:       
-TEST[DATE|TIME] result:
-TEST[DATE|TIME] 0 results
-TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
+TEST[DATE|TIME] End of trial balance report
+----
+Results in ./accounting_tokens_1_out.file
 {
   "data": [
     {
@@ -350,17 +196,20 @@ TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
         {
           "accountedFor": "0x001d14804b399c6ef80e64576f657660804fec0b",
           "amountIn": "0",
-          "amountNet": "4200.0000000",
+          "amountNet": "4200",
           "amountOut": "0",
           "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "assetSymbol": "ETH",
           "begBal": "0",
           "begBalDiff": "0",
           "blockNumber": 0,
+          "correctingIn": "0",
+          "correctingOut": "0",
+          "correctingReason": "",
           "date": "2015-07-30 15:26:15 UTC",
           "decimals": 18,
-          "endBal": "4200.0000000",
-          "endBalCalc": "4200.0000000",
+          "endBal": "4200",
+          "endBalCalc": "4200",
           "endBalDiff": "0",
           "gasOut": "0",
           "internalIn": "0",
@@ -370,10 +219,10 @@ TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
           "minerNephewRewardIn": "0",
           "minerTxFeeIn": "0",
           "minerUncleRewardIn": "0",
-          "prefundIn": "4200.0000000",
+          "prefundIn": "4200",
           "prevAppBlk": 0,
           "prevBal": "0",
-          "priceSource": "not-priced",
+          "priceSource": "eth-not-priced-pre-maker",
           "recipient": "0x001d14804b399c6ef80e64576f657660804fec0b",
           "reconciled": true,
           "reconciliationType": "genesis-eth",
@@ -382,10 +231,10 @@ TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
           "sender": "0x0000000000000000000000000050726566756e64",
           "spotPrice": 0,
           "timestamp": 1438269975,
-          "totalIn": "4200.0000000",
+          "totalIn": "4200",
           "totalOut": "0",
           "totalOutLessGas": "0",
-          "transactionHash": "0x0",
+          "transactionHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "transactionIndex": 2
         }
       ],
@@ -420,15 +269,17 @@ TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
           "accountedFor": "0x001d14804b399c6ef80e64576f657660804fec0b",
           "amountIn": "0",
           "amountNet": "-4199.925320679510922664",
-          "amountOut": "4199.900000000000000000",
+          "amountOut": "4199.9",
           "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "assetSymbol": "ETH",
-          "begBal": "4200.0000000",
+          "begBal": "4200",
           "begBalDiff": "0",
           "blockNumber": 202249,
+          "correctingIn": "0",
+          "correctingOut": "0",
+          "correctingReason": "",
           "date": "2015-09-08 09:09:16 UTC",
           "decimals": 18,
-          "encoding": "0x454e3456",
           "endBal": "0.074679320489077336",
           "endBalCalc": "0.074679320489077336",
           "endBalDiff": "0",
@@ -442,8 +293,8 @@ TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
           "minerUncleRewardIn": "0",
           "prefundIn": "0",
           "prevAppBlk": 0,
-          "prevBal": "4200.0000000",
-          "priceSource": "not-priced",
+          "prevBal": "4200",
+          "priceSource": "eth-not-priced-pre-maker",
           "recipient": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
           "reconciled": true,
           "reconciliationType": "regular-eth",
@@ -454,7 +305,7 @@ TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
           "timestamp": 1441703356,
           "totalIn": "0",
           "totalOut": "4199.925320679510922664",
-          "totalOutLessGas": "4199.900000000000000000",
+          "totalOutLessGas": "4199.9",
           "transactionHash": "0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8",
           "transactionIndex": 0
         }
@@ -495,13 +346,15 @@ TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
           "begBal": "0.074679320489077336",
           "begBalDiff": "0",
           "blockNumber": 1501459,
+          "correctingIn": "0",
+          "correctingOut": "0",
+          "correctingReason": "",
           "date": "2016-05-12 03:53:53 UTC",
           "decimals": 18,
-          "encoding": "0x",
           "endBal": "0",
           "endBalCalc": "0",
           "endBalDiff": "0",
-          "gasOut": "0.000420000000000000",
+          "gasOut": "0.00042",
           "internalIn": "0",
           "internalOut": "0",
           "logIndex": 0,
@@ -512,7 +365,7 @@ TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
           "prefundIn": "0",
           "prevAppBlk": 202249,
           "prevBal": "0.074679320489077336",
-          "priceSource": "not-priced",
+          "priceSource": "eth-not-priced-pre-maker",
           "recipient": "0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902",
           "reconciled": true,
           "reconciliationType": "regular-eth",
@@ -536,3 +389,4 @@ TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
     }
   ]
 }
+

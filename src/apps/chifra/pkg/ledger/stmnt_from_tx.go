@@ -23,10 +23,16 @@ func (ledgers *Ledger) GetStatementsFromTransaction(trans *types.SimpleTransacti
 	ctx := ledgers.Contexts[key]
 
 	pBal, _ := rpcClient.GetBalanceAt(ledgers.Chain, common.HexToAddress(ledgers.AccountFor.Hex()), ctx.PrevBlock)
+	if trans.BlockNumber == 0 {
+		pBal = new(big.Int)
+	}
 	bBal, _ := rpcClient.GetBalanceAt(ledgers.Chain, common.HexToAddress(ledgers.AccountFor.Hex()), ctx.CurBlock-1)
 	eBal, _ := rpcClient.GetBalanceAt(ledgers.Chain, common.HexToAddress(ledgers.AccountFor.Hex()), ctx.CurBlock)
 
-	gasUsed := new(big.Int).SetUint64(trans.Receipt.GasUsed)
+	gasUsed := new(big.Int)
+	if trans.Receipt != nil {
+		gasUsed.SetUint64(trans.Receipt.GasUsed)
+	}
 	gasPrice := new(big.Int).SetUint64(trans.GasPrice)
 	gasOut := new(big.Int).Mul(gasUsed, gasPrice)
 
@@ -61,7 +67,18 @@ func (ledgers *Ledger) GetStatementsFromTransaction(trans *types.SimpleTransacti
 
 	// Do not collapse, may be both (self-send)
 	if ledgers.AccountFor == ret.Recipient {
-		ret.AmountIn = trans.Value
+		if ret.BlockNumber == 0 {
+			ret.PrefundIn = trans.Value
+		} else {
+			if trans.Rewards != nil {
+				ret.MinerBaseRewardIn = trans.Rewards.Block
+				ret.MinerNephewRewardIn = trans.Rewards.Nephew
+				ret.MinerTxFeeIn = trans.Rewards.TxFee
+				ret.MinerUncleRewardIn = trans.Rewards.Uncle
+			} else {
+				ret.AmountIn = trans.Value
+			}
+		}
 	}
 
 	if ledgers.AsEther {
@@ -83,16 +100,18 @@ func (ledgers *Ledger) GetStatementsFromTransaction(trans *types.SimpleTransacti
 		}
 	}
 
-	for _, log := range trans.Receipt.Logs {
-		if s, err := ledgers.GetStatementFromLog(&log); s != nil {
-			if s.Sender == ledgers.AccountFor || s.Recipient == ledgers.AccountFor {
-				add := !ledgers.NoZero || s.MoneyMoved()
-				if add {
-					statements = append(statements, s)
+	if trans.Receipt != nil {
+		for _, log := range trans.Receipt.Logs {
+			if s, err := ledgers.GetStatementFromLog(&log); s != nil {
+				if s.Sender == ledgers.AccountFor || s.Recipient == ledgers.AccountFor {
+					add := !ledgers.NoZero || s.MoneyMoved()
+					if add {
+						statements = append(statements, s)
+					}
 				}
+			} else if err != nil {
+				logger.Warn(ledgers.TestMode, "Error getting statement from log: ", err)
 			}
-		} else if err != nil {
-			logger.Warn(ledgers.TestMode, "Error getting statement from log: ", err)
 		}
 	}
 

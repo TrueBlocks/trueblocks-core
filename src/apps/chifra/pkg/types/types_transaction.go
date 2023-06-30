@@ -95,9 +95,10 @@ type SimpleTransaction struct {
 	Value                base.Wei        `json:"value"`
 	raw                  *RawTransaction `json:"-"`
 	// EXISTING_CODE
-	GasCost base.Gas `json:"gasCost"`
-	Message string   `json:"-"`
-	Rewards *Rewards `json:"-"`
+	GasCost    base.Gas           `json:"gasCost"`
+	Message    string             `json:"-"`
+	Rewards    *Rewards           `json:"-"`
+	Statements *[]SimpleStatement `json:"statements"`
 	// EXISTING_CODE
 }
 
@@ -175,6 +176,13 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 	}
 
 	if format == "json" {
+		if s.Statements != nil {
+			statements := make([]map[string]any, 0, len(*s.Statements))
+			for _, statement := range *s.Statements {
+				statements = append(statements, statement.Model(verbose, format, extraOptions).Data)
+			}
+			model["statements"] = statements
+		}
 		model["blockHash"] = s.BlockHash
 		if s.Nonce > 0 {
 			model["nonce"] = s.Nonce

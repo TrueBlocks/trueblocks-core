@@ -25,7 +25,7 @@ func (opts *TransactionsOptions) HandleAccounting() (err error) {
 		noZero,
 		opts.Traces,
 	)
-	ledgers.SetContexts(chain, opts.TransactionIds)
+	ledgers.SetContextsFromIds(chain, opts.TransactionIds)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawStatement], errorChan chan error) {

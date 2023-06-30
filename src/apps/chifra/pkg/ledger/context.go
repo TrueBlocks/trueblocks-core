@@ -6,6 +6,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/ethereum/go-ethereum"
 )
 
@@ -22,7 +23,49 @@ type LedgerContext struct {
 // SetContexts visits the list of appearances and notes the block numbers of the next and previous
 // appearance's and if they are the same or different. Because balances are only available per block,
 // we must know this information to be able to calculate the correct post-tx balance.
-func (l *Ledger) SetContexts(chain string, txIds []identifiers.Identifier) error {
+func (l *Ledger) SetContexts(chain string, apps []index.AppearanceRecord) error {
+	for i := 0; i < len(apps); i++ {
+		prev := uint32(0)
+		if i > 0 && apps[i].BlockNumber > 0 {
+			prev = apps[i-1].BlockNumber
+		}
+		next := uint32(^uint32(0))
+		if i < len(apps)-1 {
+			next = apps[i+1].BlockNumber
+		}
+		cur := apps[i].BlockNumber
+		getReconType := func(isPrevDiff bool, isNextDiff bool) (reconType string) {
+			if isPrevDiff && isNextDiff {
+				return "regular"
+			} else if !isPrevDiff && !isNextDiff {
+				return "both-not-diff"
+			} else if isPrevDiff {
+				return "prevDiff"
+			} else if isNextDiff {
+				return "nextDiff"
+			} else {
+				return "unknown"
+			}
+		}
+		t := getReconType(prev != cur, cur != next)
+		if cur == 0 {
+			t = "genesis"
+		}
+		ctext := LedgerContext{
+			PrevBlock:  base.Blknum(prev),
+			CurBlock:   base.Blknum(cur),
+			NextBlock:  base.Blknum(next),
+			IsPrevDiff: prev != cur,
+			IsNextDiff: cur != next,
+			ReconType:  t,
+		}
+		key := fmt.Sprintf("%09d-%05d", apps[i].BlockNumber, apps[i].TransactionId)
+		l.Contexts[key] = ctext
+	}
+	return nil
+}
+
+func (l *Ledger) SetContextsFromIds(chain string, txIds []identifiers.Identifier) error {
 	for _, rng := range txIds {
 		apps, err := rng.ResolveTxs(chain)
 		if err != nil && !errors.Is(err, ethereum.NotFound) {

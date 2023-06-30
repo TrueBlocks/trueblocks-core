@@ -12,6 +12,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
@@ -32,6 +33,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 		// TODO: BOGUS - RECONSIDER THIS
 		opts.Articulate = true
 	}
+	ledgers := &ledger.Ledger{}
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
@@ -57,6 +59,15 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 							errorChan <- err // continue even on error
 						}
 					}
+
+					if opts.Accounting {
+						if statements, err := ledgers.GetStatementsFromAppearance(chain, &raw); err != nil {
+							errorChan <- err
+						} else {
+							tx.Statements = &statements
+						}
+					}
+
 					modelChan <- tx
 				}
 				return nil
@@ -74,6 +85,19 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 				return
 			}
 			opts.Sort()
+
+			noZero := false // opts.Globals.NoZero
+			ledgers = ledger.NewLedger(
+				chain,
+				mon.Address,
+				opts.Globals.Ether,
+				testMode,
+				noZero,
+				opts.Traces,
+			)
+			if opts.Accounting {
+				ledgers.SetContexts(chain, opts.Apps)
+			}
 
 			currentBn := uint32(0)
 			currentTs := int64(0)
@@ -117,6 +141,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 		"articulate": opts.Articulate,
 		"testMode":   testMode,
 		"export":     true,
+		"ether":      opts.Globals.Ether,
 	}
 
 	if opts.Globals.Verbose || opts.Globals.Format == "json" {
