@@ -234,16 +234,11 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             ostringstream cmd;
 
             CStringArray fileLines;
-            string_q allFile = substitute(test.goldPath, "/api_tests", "") + "all_tests.env";
-            if (fileExists(allFile))
-                asciiFileToLines(allFile, fileLines);
-
             string_q envFile = substitute(test.goldPath, "/api_tests", "") + test.name + ".env";
             if (fileExists(envFile))
                 asciiFileToLines(envFile, fileLines);
 
             ostringstream prepender;
-
             CStringArray envLines;
             for (auto f : fileLines) {
                 if (!startsWith(f, "#")) {
@@ -273,6 +268,11 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                 string_q debugCmd = relativize(fullCmd);
                 string_q redir = test.workPath + test.fileName;
                 cmd << "echo \"" << debugCmd << "\" >" << redir + " && ";
+                string_q rFile = substitute(test.goldPath, "/api_tests", "") + test.name + ".redir";
+                if (fileExists(rFile)) {
+                    fullCmd += " --output " + test.name + "_out.file";
+                    test.origLine += " & output = " + test.name + "_out.file";
+                }
                 cmd << env << fullCmd << " >>" << redir << " 2>&1";
 
             } else {

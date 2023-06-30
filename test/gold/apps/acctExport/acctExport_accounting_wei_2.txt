@@ -4,8 +4,8 @@ TEST[DATE|TIME] Addrs:  [0x05a56e2d52c817161883f50c441c3228cfe54d9f]
 TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] MaxRecords:  15
 TEST[DATE|TIME] LogLevel:  10
+TEST[DATE|TIME] OutputFn:  accounting_wei_2_out.file
 TEST[DATE|TIME] Format:  json
-{ "data": [
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
@@ -19,7 +19,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
+TEST[DATE|TIME]    sender:              0xBlockReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -68,7 +68,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
+TEST[DATE|TIME]    sender:              0xBlockReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -116,75 +116,6 @@ TEST[DATE|TIME] bytes:
 TEST[DATE|TIME] result:
 TEST[DATE|TIME] 0 results
 TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
-{
-  "hash": "0x0",
-  "blockHash": "0x0",
-  "blockNumber": 1,
-  "transactionIndex": 99999,
-  "timestamp": 1438269988,
-  "from": "0x0000000000000000000000000000004d696e6572",
-  "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "value": 5000000000000000000,
-  "gas": 0,
-  "gasPrice": 0,
-  "maxFeePerGas": 0,
-  "maxPriorityFeePerGas": 0,
-  "isError": 0,
-  "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
-  "statements": [
-    {
-      "blockNumber": 1,
-      "transactionIndex": 99999,
-      "logIndex": 0,
-      "transactionHash": "0x0",
-      "timestamp": 1438269988,
-      "date": "2015-07-30 15:26:28 UTC",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
-      "decimals": 18,
-      "spotPrice": 0.00000,
-      "priceSource": "not-priced",
-      "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "sender": "0x0000000000000000000000000000004d696e6572",
-      "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "begBal": "0",
-      "amountNet": "5000000000000000000",
-      "endBal": "5000000000000000000",
-      "reconciliationType": "regular-eth",
-      "reconciled": true,
-      "totalIn": "5000000000000000000",
-      "amountIn": "0",
-      "internalIn": "0",
-      "selfDestructIn": "0",
-      "minerBaseRewardIn": "5000000000000000000",
-      "minerNephewRewardIn": "0",
-      "minerTxFeeIn": "0",
-      "minerUncleRewardIn": "0",
-      "prefundIn": "0",
-      "totalOut": "0",
-      "amountOut": "0",
-      "internalOut": "0",
-      "selfDestructOut": "0",
-      "gasOut": "0",
-      "totalOutLessGas": "0",
-      "prevAppBlk": 0,
-      "prevBal": "0",
-      "begBalDiff": "0",
-      "endBalDiff": "0",
-      "endBalCalc": "5000000000000000000"
-    }
-  ],
-  "gasCost": 0,
-  "gasUsed": 0,
-  "date": "2015-07-30 15:26:28 UTC",
-  "ether": 5.000000000000000000
-}
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
@@ -198,7 +129,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
+TEST[DATE|TIME]    sender:              0xBlockReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -247,7 +178,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
+TEST[DATE|TIME]    sender:              0xBlockReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -293,75 +224,6 @@ TEST[DATE|TIME] bytes:
 TEST[DATE|TIME] result:
 TEST[DATE|TIME] 0 results
 TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
-, {
-  "hash": "0x0",
-  "blockHash": "0x0",
-  "blockNumber": 5,
-  "transactionIndex": 99999,
-  "timestamp": 1438270083,
-  "from": "0x0000000000000000000000000000004d696e6572",
-  "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "value": 5000000000000000000,
-  "gas": 0,
-  "gasPrice": 0,
-  "maxFeePerGas": 0,
-  "maxPriorityFeePerGas": 0,
-  "isError": 0,
-  "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
-  "statements": [
-    {
-      "blockNumber": 5,
-      "transactionIndex": 99999,
-      "logIndex": 0,
-      "transactionHash": "0x0",
-      "timestamp": 1438270083,
-      "date": "2015-07-30 15:28:03 UTC",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
-      "decimals": 18,
-      "spotPrice": 0.00000,
-      "priceSource": "not-priced",
-      "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "sender": "0x0000000000000000000000000000004d696e6572",
-      "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "begBal": "5000000000000000000",
-      "amountNet": "5000000000000000000",
-      "endBal": "10000000000000000000",
-      "reconciliationType": "regular-eth",
-      "reconciled": true,
-      "totalIn": "5000000000000000000",
-      "amountIn": "0",
-      "internalIn": "0",
-      "selfDestructIn": "0",
-      "minerBaseRewardIn": "5000000000000000000",
-      "minerNephewRewardIn": "0",
-      "minerTxFeeIn": "0",
-      "minerUncleRewardIn": "0",
-      "prefundIn": "0",
-      "totalOut": "0",
-      "amountOut": "0",
-      "internalOut": "0",
-      "selfDestructOut": "0",
-      "gasOut": "0",
-      "totalOutLessGas": "0",
-      "prevAppBlk": 1,
-      "prevBal": "5000000000000000000",
-      "begBalDiff": "0",
-      "endBalDiff": "0",
-      "endBalCalc": "10000000000000000000"
-    }
-  ],
-  "gasCost": 0,
-  "gasUsed": 0,
-  "date": "2015-07-30 15:28:03 UTC",
-  "ether": 5.000000000000000000
-}
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
@@ -375,7 +237,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x000000000000000000000000000000556e636c65
+TEST[DATE|TIME]    sender:              0xUncleReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -424,7 +286,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x000000000000000000000000000000556e636c65
+TEST[DATE|TIME]    sender:              0xUncleReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -470,75 +332,6 @@ TEST[DATE|TIME] bytes:
 TEST[DATE|TIME] result:
 TEST[DATE|TIME] 0 results
 TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
-, {
-  "hash": "0x0",
-  "blockHash": "0x0",
-  "blockNumber": 56,
-  "transactionIndex": 99998,
-  "timestamp": 1438270322,
-  "from": "0x000000000000000000000000000000556e636c65",
-  "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "value": 3750000000000000000,
-  "gas": 0,
-  "gasPrice": 0,
-  "maxFeePerGas": 0,
-  "maxPriorityFeePerGas": 0,
-  "isError": 0,
-  "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
-  "statements": [
-    {
-      "blockNumber": 56,
-      "transactionIndex": 99998,
-      "logIndex": 0,
-      "transactionHash": "0x0",
-      "timestamp": 1438270322,
-      "date": "2015-07-30 15:32:02 UTC",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
-      "decimals": 18,
-      "spotPrice": 0.00000,
-      "priceSource": "not-priced",
-      "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "sender": "0x000000000000000000000000000000556e636c65",
-      "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "begBal": "10000000000000000000",
-      "amountNet": "3750000000000000000",
-      "endBal": "13750000000000000000",
-      "reconciliationType": "regular-eth",
-      "reconciled": true,
-      "totalIn": "3750000000000000000",
-      "amountIn": "0",
-      "internalIn": "0",
-      "selfDestructIn": "0",
-      "minerBaseRewardIn": "0",
-      "minerNephewRewardIn": "0",
-      "minerTxFeeIn": "0",
-      "minerUncleRewardIn": "3750000000000000000",
-      "prefundIn": "0",
-      "totalOut": "0",
-      "amountOut": "0",
-      "internalOut": "0",
-      "selfDestructOut": "0",
-      "gasOut": "0",
-      "totalOutLessGas": "0",
-      "prevAppBlk": 5,
-      "prevBal": "10000000000000000000",
-      "begBalDiff": "0",
-      "endBalDiff": "0",
-      "endBalCalc": "13750000000000000000"
-    }
-  ],
-  "gasCost": 0,
-  "gasUsed": 0,
-  "date": "2015-07-30 15:32:02 UTC",
-  "ether": 3.750000000000000000
-}
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
@@ -552,7 +345,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
+TEST[DATE|TIME]    sender:              0xBlockReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -601,7 +394,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
+TEST[DATE|TIME]    sender:              0xBlockReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -647,75 +440,6 @@ TEST[DATE|TIME] bytes:
 TEST[DATE|TIME] result:
 TEST[DATE|TIME] 0 results
 TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
-, {
-  "hash": "0x0",
-  "blockHash": "0x0",
-  "blockNumber": 235,
-  "transactionIndex": 99999,
-  "timestamp": 1438270713,
-  "from": "0x0000000000000000000000000000004d696e6572",
-  "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "value": 5000000000000000000,
-  "gas": 0,
-  "gasPrice": 0,
-  "maxFeePerGas": 0,
-  "maxPriorityFeePerGas": 0,
-  "isError": 0,
-  "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
-  "statements": [
-    {
-      "blockNumber": 235,
-      "transactionIndex": 99999,
-      "logIndex": 0,
-      "transactionHash": "0x0",
-      "timestamp": 1438270713,
-      "date": "2015-07-30 15:38:33 UTC",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
-      "decimals": 18,
-      "spotPrice": 0.00000,
-      "priceSource": "not-priced",
-      "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "sender": "0x0000000000000000000000000000004d696e6572",
-      "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "begBal": "13750000000000000000",
-      "amountNet": "5000000000000000000",
-      "endBal": "18750000000000000000",
-      "reconciliationType": "regular-eth",
-      "reconciled": true,
-      "totalIn": "5000000000000000000",
-      "amountIn": "0",
-      "internalIn": "0",
-      "selfDestructIn": "0",
-      "minerBaseRewardIn": "5000000000000000000",
-      "minerNephewRewardIn": "0",
-      "minerTxFeeIn": "0",
-      "minerUncleRewardIn": "0",
-      "prefundIn": "0",
-      "totalOut": "0",
-      "amountOut": "0",
-      "internalOut": "0",
-      "selfDestructOut": "0",
-      "gasOut": "0",
-      "totalOutLessGas": "0",
-      "prevAppBlk": 56,
-      "prevBal": "13750000000000000000",
-      "begBalDiff": "0",
-      "endBalDiff": "0",
-      "endBalCalc": "18750000000000000000"
-    }
-  ],
-  "gasCost": 0,
-  "gasUsed": 0,
-  "date": "2015-07-30 15:38:33 UTC",
-  "ether": 5.000000000000000000
-}
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
@@ -729,7 +453,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x000000000000000000000000000000556e636c65
+TEST[DATE|TIME]    sender:              0xUncleReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -778,7 +502,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x000000000000000000000000000000556e636c65
+TEST[DATE|TIME]    sender:              0xUncleReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -824,75 +548,6 @@ TEST[DATE|TIME] bytes:
 TEST[DATE|TIME] result:
 TEST[DATE|TIME] 0 results
 TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
-, {
-  "hash": "0x0",
-  "blockHash": "0x0",
-  "blockNumber": 247,
-  "transactionIndex": 99998,
-  "timestamp": 1438270739,
-  "from": "0x000000000000000000000000000000556e636c65",
-  "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "value": 3125000000000000000,
-  "gas": 0,
-  "gasPrice": 0,
-  "maxFeePerGas": 0,
-  "maxPriorityFeePerGas": 0,
-  "isError": 0,
-  "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
-  "statements": [
-    {
-      "blockNumber": 247,
-      "transactionIndex": 99998,
-      "logIndex": 0,
-      "transactionHash": "0x0",
-      "timestamp": 1438270739,
-      "date": "2015-07-30 15:38:59 UTC",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
-      "decimals": 18,
-      "spotPrice": 0.00000,
-      "priceSource": "not-priced",
-      "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "sender": "0x000000000000000000000000000000556e636c65",
-      "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "begBal": "18750000000000000000",
-      "amountNet": "3125000000000000000",
-      "endBal": "21875000000000000000",
-      "reconciliationType": "regular-eth",
-      "reconciled": true,
-      "totalIn": "3125000000000000000",
-      "amountIn": "0",
-      "internalIn": "0",
-      "selfDestructIn": "0",
-      "minerBaseRewardIn": "0",
-      "minerNephewRewardIn": "0",
-      "minerTxFeeIn": "0",
-      "minerUncleRewardIn": "3125000000000000000",
-      "prefundIn": "0",
-      "totalOut": "0",
-      "amountOut": "0",
-      "internalOut": "0",
-      "selfDestructOut": "0",
-      "gasOut": "0",
-      "totalOutLessGas": "0",
-      "prevAppBlk": 235,
-      "prevBal": "18750000000000000000",
-      "begBalDiff": "0",
-      "endBalDiff": "0",
-      "endBalCalc": "21875000000000000000"
-    }
-  ],
-  "gasCost": 0,
-  "gasUsed": 0,
-  "date": "2015-07-30 15:38:59 UTC",
-  "ether": 3.125000000000000000
-}
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
@@ -906,7 +561,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
+TEST[DATE|TIME]    sender:              0xBlockReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -955,7 +610,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
+TEST[DATE|TIME]    sender:              0xBlockReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -1001,75 +656,6 @@ TEST[DATE|TIME] bytes:
 TEST[DATE|TIME] result:
 TEST[DATE|TIME] 0 results
 TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
-, {
-  "hash": "0x0",
-  "blockHash": "0x0",
-  "blockNumber": 348,
-  "transactionIndex": 99999,
-  "timestamp": 1438270943,
-  "from": "0x0000000000000000000000000000004d696e6572",
-  "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "value": 5000000000000000000,
-  "gas": 0,
-  "gasPrice": 0,
-  "maxFeePerGas": 0,
-  "maxPriorityFeePerGas": 0,
-  "isError": 0,
-  "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
-  "statements": [
-    {
-      "blockNumber": 348,
-      "transactionIndex": 99999,
-      "logIndex": 0,
-      "transactionHash": "0x0",
-      "timestamp": 1438270943,
-      "date": "2015-07-30 15:42:23 UTC",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
-      "decimals": 18,
-      "spotPrice": 0.00000,
-      "priceSource": "not-priced",
-      "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "sender": "0x0000000000000000000000000000004d696e6572",
-      "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "begBal": "21875000000000000000",
-      "amountNet": "5000000000000000000",
-      "endBal": "26875000000000000000",
-      "reconciliationType": "regular-eth",
-      "reconciled": true,
-      "totalIn": "5000000000000000000",
-      "amountIn": "0",
-      "internalIn": "0",
-      "selfDestructIn": "0",
-      "minerBaseRewardIn": "5000000000000000000",
-      "minerNephewRewardIn": "0",
-      "minerTxFeeIn": "0",
-      "minerUncleRewardIn": "0",
-      "prefundIn": "0",
-      "totalOut": "0",
-      "amountOut": "0",
-      "internalOut": "0",
-      "selfDestructOut": "0",
-      "gasOut": "0",
-      "totalOutLessGas": "0",
-      "prevAppBlk": 247,
-      "prevBal": "21875000000000000000",
-      "begBalDiff": "0",
-      "endBalDiff": "0",
-      "endBalCalc": "26875000000000000000"
-    }
-  ],
-  "gasCost": 0,
-  "gasUsed": 0,
-  "date": "2015-07-30 15:42:23 UTC",
-  "ether": 5.000000000000000000
-}
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
@@ -1083,7 +669,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x000000000000000000000000000000556e636c65
+TEST[DATE|TIME]    sender:              0xUncleReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -1132,7 +718,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x000000000000000000000000000000556e636c65
+TEST[DATE|TIME]    sender:              0xUncleReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -1178,75 +764,6 @@ TEST[DATE|TIME] bytes:
 TEST[DATE|TIME] result:
 TEST[DATE|TIME] 0 results
 TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
-, {
-  "hash": "0x0",
-  "blockHash": "0x0",
-  "blockNumber": 500,
-  "transactionIndex": 99998,
-  "timestamp": 1438271212,
-  "from": "0x000000000000000000000000000000556e636c65",
-  "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "value": 3750000000000000000,
-  "gas": 0,
-  "gasPrice": 0,
-  "maxFeePerGas": 0,
-  "maxPriorityFeePerGas": 0,
-  "isError": 0,
-  "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
-  "statements": [
-    {
-      "blockNumber": 500,
-      "transactionIndex": 99998,
-      "logIndex": 0,
-      "transactionHash": "0x0",
-      "timestamp": 1438271212,
-      "date": "2015-07-30 15:46:52 UTC",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
-      "decimals": 18,
-      "spotPrice": 0.00000,
-      "priceSource": "not-priced",
-      "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "sender": "0x000000000000000000000000000000556e636c65",
-      "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "begBal": "26875000000000000000",
-      "amountNet": "3750000000000000000",
-      "endBal": "30625000000000000000",
-      "reconciliationType": "regular-eth",
-      "reconciled": true,
-      "totalIn": "3750000000000000000",
-      "amountIn": "0",
-      "internalIn": "0",
-      "selfDestructIn": "0",
-      "minerBaseRewardIn": "0",
-      "minerNephewRewardIn": "0",
-      "minerTxFeeIn": "0",
-      "minerUncleRewardIn": "3750000000000000000",
-      "prefundIn": "0",
-      "totalOut": "0",
-      "amountOut": "0",
-      "internalOut": "0",
-      "selfDestructOut": "0",
-      "gasOut": "0",
-      "totalOutLessGas": "0",
-      "prevAppBlk": 348,
-      "prevBal": "26875000000000000000",
-      "begBalDiff": "0",
-      "endBalDiff": "0",
-      "endBalCalc": "30625000000000000000"
-    }
-  ],
-  "gasCost": 0,
-  "gasUsed": 0,
-  "date": "2015-07-30 15:46:52 UTC",
-  "ether": 3.750000000000000000
-}
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
@@ -1260,7 +777,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x000000000000000000000000000000556e636c65
+TEST[DATE|TIME]    sender:              0xUncleReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -1309,7 +826,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x000000000000000000000000000000556e636c65
+TEST[DATE|TIME]    sender:              0xUncleReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -1355,75 +872,6 @@ TEST[DATE|TIME] bytes:
 TEST[DATE|TIME] result:
 TEST[DATE|TIME] 0 results
 TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
-, {
-  "hash": "0x0",
-  "blockHash": "0x0",
-  "blockNumber": 563,
-  "transactionIndex": 99998,
-  "timestamp": 1438271337,
-  "from": "0x000000000000000000000000000000556e636c65",
-  "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "value": 3750000000000000000,
-  "gas": 0,
-  "gasPrice": 0,
-  "maxFeePerGas": 0,
-  "maxPriorityFeePerGas": 0,
-  "isError": 0,
-  "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
-  "statements": [
-    {
-      "blockNumber": 563,
-      "transactionIndex": 99998,
-      "logIndex": 0,
-      "transactionHash": "0x0",
-      "timestamp": 1438271337,
-      "date": "2015-07-30 15:48:57 UTC",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
-      "decimals": 18,
-      "spotPrice": 0.00000,
-      "priceSource": "not-priced",
-      "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "sender": "0x000000000000000000000000000000556e636c65",
-      "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "begBal": "30625000000000000000",
-      "amountNet": "3750000000000000000",
-      "endBal": "34375000000000000000",
-      "reconciliationType": "regular-eth",
-      "reconciled": true,
-      "totalIn": "3750000000000000000",
-      "amountIn": "0",
-      "internalIn": "0",
-      "selfDestructIn": "0",
-      "minerBaseRewardIn": "0",
-      "minerNephewRewardIn": "0",
-      "minerTxFeeIn": "0",
-      "minerUncleRewardIn": "3750000000000000000",
-      "prefundIn": "0",
-      "totalOut": "0",
-      "amountOut": "0",
-      "internalOut": "0",
-      "selfDestructOut": "0",
-      "gasOut": "0",
-      "totalOutLessGas": "0",
-      "prevAppBlk": 500,
-      "prevBal": "30625000000000000000",
-      "begBalDiff": "0",
-      "endBalDiff": "0",
-      "endBalCalc": "34375000000000000000"
-    }
-  ],
-  "gasCost": 0,
-  "gasUsed": 0,
-  "date": "2015-07-30 15:48:57 UTC",
-  "ether": 3.750000000000000000
-}
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
@@ -1437,7 +885,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x000000000000000000000000000000556e636c65
+TEST[DATE|TIME]    sender:              0xUncleReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -1486,7 +934,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x000000000000000000000000000000556e636c65
+TEST[DATE|TIME]    sender:              0xUncleReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -1532,75 +980,6 @@ TEST[DATE|TIME] bytes:
 TEST[DATE|TIME] result:
 TEST[DATE|TIME] 0 results
 TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
-, {
-  "hash": "0x0",
-  "blockHash": "0x0",
-  "blockNumber": 987,
-  "transactionIndex": 99998,
-  "timestamp": 1438272114,
-  "from": "0x000000000000000000000000000000556e636c65",
-  "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "value": 2500000000000000000,
-  "gas": 0,
-  "gasPrice": 0,
-  "maxFeePerGas": 0,
-  "maxPriorityFeePerGas": 0,
-  "isError": 0,
-  "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
-  "statements": [
-    {
-      "blockNumber": 987,
-      "transactionIndex": 99998,
-      "logIndex": 0,
-      "transactionHash": "0x0",
-      "timestamp": 1438272114,
-      "date": "2015-07-30 16:01:54 UTC",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
-      "decimals": 18,
-      "spotPrice": 0.00000,
-      "priceSource": "not-priced",
-      "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "sender": "0x000000000000000000000000000000556e636c65",
-      "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "begBal": "34375000000000000000",
-      "amountNet": "2500000000000000000",
-      "endBal": "36875000000000000000",
-      "reconciliationType": "regular-eth",
-      "reconciled": true,
-      "totalIn": "2500000000000000000",
-      "amountIn": "0",
-      "internalIn": "0",
-      "selfDestructIn": "0",
-      "minerBaseRewardIn": "0",
-      "minerNephewRewardIn": "0",
-      "minerTxFeeIn": "0",
-      "minerUncleRewardIn": "2500000000000000000",
-      "prefundIn": "0",
-      "totalOut": "0",
-      "amountOut": "0",
-      "internalOut": "0",
-      "selfDestructOut": "0",
-      "gasOut": "0",
-      "totalOutLessGas": "0",
-      "prevAppBlk": 563,
-      "prevBal": "34375000000000000000",
-      "begBalDiff": "0",
-      "endBalDiff": "0",
-      "endBalCalc": "36875000000000000000"
-    }
-  ],
-  "gasCost": 0,
-  "gasUsed": 0,
-  "date": "2015-07-30 16:01:54 UTC",
-  "ether": 2.500000000000000000
-}
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
@@ -1614,7 +993,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
+TEST[DATE|TIME]    sender:              0xBlockReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -1663,7 +1042,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
+TEST[DATE|TIME]    sender:              0xBlockReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -1709,75 +1088,6 @@ TEST[DATE|TIME] bytes:
 TEST[DATE|TIME] result:
 TEST[DATE|TIME] 0 results
 TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
-, {
-  "hash": "0x0",
-  "blockHash": "0x0",
-  "blockNumber": 1450,
-  "transactionIndex": 99999,
-  "timestamp": 1438273130,
-  "from": "0x0000000000000000000000000000004d696e6572",
-  "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "value": 5000000000000000000,
-  "gas": 0,
-  "gasPrice": 0,
-  "maxFeePerGas": 0,
-  "maxPriorityFeePerGas": 0,
-  "isError": 0,
-  "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
-  "statements": [
-    {
-      "blockNumber": 1450,
-      "transactionIndex": 99999,
-      "logIndex": 0,
-      "transactionHash": "0x0",
-      "timestamp": 1438273130,
-      "date": "2015-07-30 16:18:50 UTC",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
-      "decimals": 18,
-      "spotPrice": 0.00000,
-      "priceSource": "not-priced",
-      "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "sender": "0x0000000000000000000000000000004d696e6572",
-      "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "begBal": "36875000000000000000",
-      "amountNet": "5156250000000000000",
-      "endBal": "42031250000000000000",
-      "reconciliationType": "regular-eth",
-      "reconciled": true,
-      "totalIn": "5156250000000000000",
-      "amountIn": "0",
-      "internalIn": "0",
-      "selfDestructIn": "0",
-      "minerBaseRewardIn": "5000000000000000000",
-      "minerNephewRewardIn": "156250000000000000",
-      "minerTxFeeIn": "0",
-      "minerUncleRewardIn": "0",
-      "prefundIn": "0",
-      "totalOut": "0",
-      "amountOut": "0",
-      "internalOut": "0",
-      "selfDestructOut": "0",
-      "gasOut": "0",
-      "totalOutLessGas": "0",
-      "prevAppBlk": 987,
-      "prevBal": "36875000000000000000",
-      "begBalDiff": "0",
-      "endBalDiff": "0",
-      "endBalCalc": "42031250000000000000"
-    }
-  ],
-  "gasCost": 0,
-  "gasUsed": 0,
-  "date": "2015-07-30 16:18:50 UTC",
-  "ether": 5.000000000000000000
-}
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
@@ -1791,7 +1101,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x000000000000000000000000000000556e636c65
+TEST[DATE|TIME]    sender:              0xUncleReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -1840,7 +1150,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x000000000000000000000000000000556e636c65
+TEST[DATE|TIME]    sender:              0xUncleReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -1886,75 +1196,6 @@ TEST[DATE|TIME] bytes:
 TEST[DATE|TIME] result:
 TEST[DATE|TIME] 0 results
 TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
-, {
-  "hash": "0x0",
-  "blockHash": "0x0",
-  "blockNumber": 1580,
-  "transactionIndex": 99998,
-  "timestamp": 1438273478,
-  "from": "0x000000000000000000000000000000556e636c65",
-  "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "value": 3750000000000000000,
-  "gas": 0,
-  "gasPrice": 0,
-  "maxFeePerGas": 0,
-  "maxPriorityFeePerGas": 0,
-  "isError": 0,
-  "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
-  "statements": [
-    {
-      "blockNumber": 1580,
-      "transactionIndex": 99998,
-      "logIndex": 0,
-      "transactionHash": "0x0",
-      "timestamp": 1438273478,
-      "date": "2015-07-30 16:24:38 UTC",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
-      "decimals": 18,
-      "spotPrice": 0.00000,
-      "priceSource": "not-priced",
-      "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "sender": "0x000000000000000000000000000000556e636c65",
-      "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "begBal": "42031250000000000000",
-      "amountNet": "3750000000000000000",
-      "endBal": "45781250000000000000",
-      "reconciliationType": "regular-eth",
-      "reconciled": true,
-      "totalIn": "3750000000000000000",
-      "amountIn": "0",
-      "internalIn": "0",
-      "selfDestructIn": "0",
-      "minerBaseRewardIn": "0",
-      "minerNephewRewardIn": "0",
-      "minerTxFeeIn": "0",
-      "minerUncleRewardIn": "3750000000000000000",
-      "prefundIn": "0",
-      "totalOut": "0",
-      "amountOut": "0",
-      "internalOut": "0",
-      "selfDestructOut": "0",
-      "gasOut": "0",
-      "totalOutLessGas": "0",
-      "prevAppBlk": 1450,
-      "prevBal": "42031250000000000000",
-      "begBalDiff": "0",
-      "endBalDiff": "0",
-      "endBalCalc": "45781250000000000000"
-    }
-  ],
-  "gasCost": 0,
-  "gasUsed": 0,
-  "date": "2015-07-30 16:24:38 UTC",
-  "ether": 3.750000000000000000
-}
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
@@ -1968,7 +1209,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x000000000000000000000000000000556e636c65
+TEST[DATE|TIME]    sender:              0xUncleReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -2017,7 +1258,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x000000000000000000000000000000556e636c65
+TEST[DATE|TIME]    sender:              0xUncleReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -2063,75 +1304,6 @@ TEST[DATE|TIME] bytes:
 TEST[DATE|TIME] result:
 TEST[DATE|TIME] 0 results
 TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
-, {
-  "hash": "0x0",
-  "blockHash": "0x0",
-  "blockNumber": 1586,
-  "transactionIndex": 99998,
-  "timestamp": 1438273492,
-  "from": "0x000000000000000000000000000000556e636c65",
-  "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "value": 3750000000000000000,
-  "gas": 0,
-  "gasPrice": 0,
-  "maxFeePerGas": 0,
-  "maxPriorityFeePerGas": 0,
-  "isError": 0,
-  "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
-  "statements": [
-    {
-      "blockNumber": 1586,
-      "transactionIndex": 99998,
-      "logIndex": 0,
-      "transactionHash": "0x0",
-      "timestamp": 1438273492,
-      "date": "2015-07-30 16:24:52 UTC",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
-      "decimals": 18,
-      "spotPrice": 0.00000,
-      "priceSource": "not-priced",
-      "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "sender": "0x000000000000000000000000000000556e636c65",
-      "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "begBal": "45781250000000000000",
-      "amountNet": "3750000000000000000",
-      "endBal": "49531250000000000000",
-      "reconciliationType": "regular-eth",
-      "reconciled": true,
-      "totalIn": "3750000000000000000",
-      "amountIn": "0",
-      "internalIn": "0",
-      "selfDestructIn": "0",
-      "minerBaseRewardIn": "0",
-      "minerNephewRewardIn": "0",
-      "minerTxFeeIn": "0",
-      "minerUncleRewardIn": "3750000000000000000",
-      "prefundIn": "0",
-      "totalOut": "0",
-      "amountOut": "0",
-      "internalOut": "0",
-      "selfDestructOut": "0",
-      "gasOut": "0",
-      "totalOutLessGas": "0",
-      "prevAppBlk": 1580,
-      "prevBal": "45781250000000000000",
-      "begBalDiff": "0",
-      "endBalDiff": "0",
-      "endBalCalc": "49531250000000000000"
-    }
-  ],
-  "gasCost": 0,
-  "gasUsed": 0,
-  "date": "2015-07-30 16:24:52 UTC",
-  "ether": 3.750000000000000000
-}
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
@@ -2145,7 +1317,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
+TEST[DATE|TIME]    sender:              0xBlockReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -2194,7 +1366,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
+TEST[DATE|TIME]    sender:              0xBlockReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -2240,75 +1412,6 @@ TEST[DATE|TIME] bytes:
 TEST[DATE|TIME] result:
 TEST[DATE|TIME] 0 results
 TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
-, {
-  "hash": "0x0",
-  "blockHash": "0x0",
-  "blockNumber": 1861,
-  "transactionIndex": 99999,
-  "timestamp": 1438274241,
-  "from": "0x0000000000000000000000000000004d696e6572",
-  "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "value": 5000000000000000000,
-  "gas": 0,
-  "gasPrice": 0,
-  "maxFeePerGas": 0,
-  "maxPriorityFeePerGas": 0,
-  "isError": 0,
-  "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
-  "statements": [
-    {
-      "blockNumber": 1861,
-      "transactionIndex": 99999,
-      "logIndex": 0,
-      "transactionHash": "0x0",
-      "timestamp": 1438274241,
-      "date": "2015-07-30 16:37:21 UTC",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
-      "decimals": 18,
-      "spotPrice": 0.00000,
-      "priceSource": "not-priced",
-      "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "sender": "0x0000000000000000000000000000004d696e6572",
-      "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "begBal": "49531250000000000000",
-      "amountNet": "5000000000000000000",
-      "endBal": "54531250000000000000",
-      "reconciliationType": "regular-eth",
-      "reconciled": true,
-      "totalIn": "5000000000000000000",
-      "amountIn": "0",
-      "internalIn": "0",
-      "selfDestructIn": "0",
-      "minerBaseRewardIn": "5000000000000000000",
-      "minerNephewRewardIn": "0",
-      "minerTxFeeIn": "0",
-      "minerUncleRewardIn": "0",
-      "prefundIn": "0",
-      "totalOut": "0",
-      "amountOut": "0",
-      "internalOut": "0",
-      "selfDestructOut": "0",
-      "gasOut": "0",
-      "totalOutLessGas": "0",
-      "prevAppBlk": 1586,
-      "prevBal": "49531250000000000000",
-      "begBalDiff": "0",
-      "endBalDiff": "0",
-      "endBalCalc": "54531250000000000000"
-    }
-  ],
-  "gasCost": 0,
-  "gasUsed": 0,
-  "date": "2015-07-30 16:37:21 UTC",
-  "ether": 5.000000000000000000
-}
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
@@ -2322,7 +1425,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x000000000000000000000000000000556e636c65
+TEST[DATE|TIME]    sender:              0xUncleReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -2371,7 +1474,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x000000000000000000000000000000556e636c65
+TEST[DATE|TIME]    sender:              0xUncleReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -2417,75 +1520,6 @@ TEST[DATE|TIME] bytes:
 TEST[DATE|TIME] result:
 TEST[DATE|TIME] 0 results
 TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
-, {
-  "hash": "0x0",
-  "blockHash": "0x0",
-  "blockNumber": 1912,
-  "transactionIndex": 99998,
-  "timestamp": 1438274378,
-  "from": "0x000000000000000000000000000000556e636c65",
-  "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "value": 3750000000000000000,
-  "gas": 0,
-  "gasPrice": 0,
-  "maxFeePerGas": 0,
-  "maxPriorityFeePerGas": 0,
-  "isError": 0,
-  "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
-  "statements": [
-    {
-      "blockNumber": 1912,
-      "transactionIndex": 99998,
-      "logIndex": 0,
-      "transactionHash": "0x0",
-      "timestamp": 1438274378,
-      "date": "2015-07-30 16:39:38 UTC",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
-      "decimals": 18,
-      "spotPrice": 0.00000,
-      "priceSource": "not-priced",
-      "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "sender": "0x000000000000000000000000000000556e636c65",
-      "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "begBal": "54531250000000000000",
-      "amountNet": "3750000000000000000",
-      "endBal": "58281250000000000000",
-      "reconciliationType": "regular-eth",
-      "reconciled": true,
-      "totalIn": "3750000000000000000",
-      "amountIn": "0",
-      "internalIn": "0",
-      "selfDestructIn": "0",
-      "minerBaseRewardIn": "0",
-      "minerNephewRewardIn": "0",
-      "minerTxFeeIn": "0",
-      "minerUncleRewardIn": "3750000000000000000",
-      "prefundIn": "0",
-      "totalOut": "0",
-      "amountOut": "0",
-      "internalOut": "0",
-      "selfDestructOut": "0",
-      "gasOut": "0",
-      "totalOutLessGas": "0",
-      "prevAppBlk": 1861,
-      "prevBal": "54531250000000000000",
-      "begBalDiff": "0",
-      "endBalDiff": "0",
-      "endBalCalc": "58281250000000000000"
-    }
-  ],
-  "gasCost": 0,
-  "gasUsed": 0,
-  "date": "2015-07-30 16:39:38 UTC",
-  "ether": 3.750000000000000000
-}
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
@@ -2499,7 +1533,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
+TEST[DATE|TIME]    sender:              0xBlockReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -2548,7 +1582,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
+TEST[DATE|TIME]    sender:              0xBlockReward
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -2594,73 +1628,925 @@ TEST[DATE|TIME] bytes:
 TEST[DATE|TIME] result:
 TEST[DATE|TIME] 0 results
 TIME ~ CLOCK - <INFO>  : doEthCall into makerMedianizer returned false
-, {
-  "hash": "0x0",
-  "blockHash": "0x0",
-  "blockNumber": 2057,
-  "transactionIndex": 99999,
-  "timestamp": 1438274782,
-  "from": "0x0000000000000000000000000000004d696e6572",
-  "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "value": 5000000000000000000,
-  "gas": 0,
-  "gasPrice": 0,
-  "maxFeePerGas": 0,
-  "maxPriorityFeePerGas": 0,
-  "isError": 0,
-  "hasToken": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "effectiveGasPrice": 0,
-    "status": null
-  },
-  "statements": [
+{ "outputFilename": "--output_filename--" }
+----
+Results in ./accounting_wei_2_out.file
+{
+  "data": [
     {
-      "blockNumber": 2057,
+      "blockHash": "0x88e96d4537bea4d9c05d12549907b32561d3bf31f45aae734cdc119f13406cb6",
+      "blockNumber": 1,
+      "date": "2015-07-30 15:26:28 UTC",
+      "ether": "5",
+      "from": "0x0000000000000000000000000000004d696e6572",
+      "gas": 0,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "receipt": {},
+      "statements": [
+        {
+          "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "amountIn": "0",
+          "amountNet": "5000000000000000000",
+          "amountOut": "0",
+          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetSymbol": "WEI",
+          "begBal": "0",
+          "begBalDiff": "0",
+          "blockNumber": 1,
+          "date": "2015-07-30 15:26:28 UTC",
+          "decimals": 18,
+          "endBal": "5000000000000000000",
+          "endBalCalc": "5000000000000000000",
+          "endBalDiff": "0",
+          "gasOut": "0",
+          "internalIn": "0",
+          "internalOut": "0",
+          "logIndex": 0,
+          "minerBaseRewardIn": "5000000000000000000",
+          "minerNephewRewardIn": "0",
+          "minerTxFeeIn": "0",
+          "minerUncleRewardIn": "0",
+          "prefundIn": "0",
+          "prevAppBlk": 0,
+          "prevBal": "0",
+          "priceSource": "not-priced",
+          "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "reconciled": true,
+          "reconciliationType": "regular-eth",
+          "selfDestructIn": "0",
+          "selfDestructOut": "0",
+          "sender": "0xBlockReward",
+          "spotPrice": 0,
+          "timestamp": 1438269988,
+          "totalIn": "5000000000000000000",
+          "totalOut": "0",
+          "totalOutLessGas": "0",
+          "transactionHash": "0x0",
+          "transactionIndex": 99999
+        }
+      ],
+      "timestamp": 1438269988,
+      "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "traces": [],
       "transactionIndex": 99999,
-      "logIndex": 0,
-      "transactionHash": "0x0",
-      "timestamp": 1438274782,
+      "value": "5000000000000000000"
+    },
+    {
+      "blockHash": "0xf37c632d361e0a93f08ba29b1a2c708d9caa3ee19d1ee8d2a02612bffe49f0a9",
+      "blockNumber": 5,
+      "date": "2015-07-30 15:28:03 UTC",
+      "ether": "5",
+      "from": "0x0000000000000000000000000000004d696e6572",
+      "gas": 0,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "receipt": {},
+      "statements": [
+        {
+          "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "amountIn": "0",
+          "amountNet": "5000000000000000000",
+          "amountOut": "0",
+          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetSymbol": "WEI",
+          "begBal": "5000000000000000000",
+          "begBalDiff": "0",
+          "blockNumber": 5,
+          "date": "2015-07-30 15:28:03 UTC",
+          "decimals": 18,
+          "endBal": "10000000000000000000",
+          "endBalCalc": "10000000000000000000",
+          "endBalDiff": "0",
+          "gasOut": "0",
+          "internalIn": "0",
+          "internalOut": "0",
+          "logIndex": 0,
+          "minerBaseRewardIn": "5000000000000000000",
+          "minerNephewRewardIn": "0",
+          "minerTxFeeIn": "0",
+          "minerUncleRewardIn": "0",
+          "prefundIn": "0",
+          "prevAppBlk": 1,
+          "prevBal": "5000000000000000000",
+          "priceSource": "not-priced",
+          "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "reconciled": true,
+          "reconciliationType": "regular-eth",
+          "selfDestructIn": "0",
+          "selfDestructOut": "0",
+          "sender": "0xBlockReward",
+          "spotPrice": 0,
+          "timestamp": 1438270083,
+          "totalIn": "5000000000000000000",
+          "totalOut": "0",
+          "totalOutLessGas": "0",
+          "transactionHash": "0x0",
+          "transactionIndex": 99999
+        }
+      ],
+      "timestamp": 1438270083,
+      "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "traces": [],
+      "transactionIndex": 99999,
+      "value": "5000000000000000000"
+    },
+    {
+      "blockHash": "0x60b813933719e5597bddace3821f89be8f4389d44199eb8fdae9e1e2670bf51e",
+      "blockNumber": 56,
+      "date": "2015-07-30 15:32:02 UTC",
+      "ether": "3.75",
+      "from": "0x0000000000000000000000000000004d696uncle",
+      "gas": 0,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "receipt": {},
+      "statements": [
+        {
+          "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "amountIn": "0",
+          "amountNet": "3750000000000000000",
+          "amountOut": "0",
+          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetSymbol": "WEI",
+          "begBal": "10000000000000000000",
+          "begBalDiff": "0",
+          "blockNumber": 56,
+          "date": "2015-07-30 15:32:02 UTC",
+          "decimals": 18,
+          "endBal": "13750000000000000000",
+          "endBalCalc": "13750000000000000000",
+          "endBalDiff": "0",
+          "gasOut": "0",
+          "internalIn": "0",
+          "internalOut": "0",
+          "logIndex": 0,
+          "minerBaseRewardIn": "0",
+          "minerNephewRewardIn": "0",
+          "minerTxFeeIn": "0",
+          "minerUncleRewardIn": "3750000000000000000",
+          "prefundIn": "0",
+          "prevAppBlk": 5,
+          "prevBal": "10000000000000000000",
+          "priceSource": "not-priced",
+          "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "reconciled": true,
+          "reconciliationType": "regular-eth",
+          "selfDestructIn": "0",
+          "selfDestructOut": "0",
+          "sender": "0xUncleReward",
+          "spotPrice": 0,
+          "timestamp": 1438270322,
+          "totalIn": "3750000000000000000",
+          "totalOut": "0",
+          "totalOutLessGas": "0",
+          "transactionHash": "0x0",
+          "transactionIndex": 99998
+        }
+      ],
+      "timestamp": 1438270322,
+      "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "traces": [],
+      "transactionIndex": 99998,
+      "value": "3750000000000000000"
+    },
+    {
+      "blockHash": "0xe5579014f7045e8de0c4bb4a7336e8b589530814acb9caf4630fb3261cec7d10",
+      "blockNumber": 235,
+      "date": "2015-07-30 15:38:33 UTC",
+      "ether": "5",
+      "from": "0x0000000000000000000000000000004d696e6572",
+      "gas": 0,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "receipt": {},
+      "statements": [
+        {
+          "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "amountIn": "0",
+          "amountNet": "5000000000000000000",
+          "amountOut": "0",
+          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetSymbol": "WEI",
+          "begBal": "13750000000000000000",
+          "begBalDiff": "0",
+          "blockNumber": 235,
+          "date": "2015-07-30 15:38:33 UTC",
+          "decimals": 18,
+          "endBal": "18750000000000000000",
+          "endBalCalc": "18750000000000000000",
+          "endBalDiff": "0",
+          "gasOut": "0",
+          "internalIn": "0",
+          "internalOut": "0",
+          "logIndex": 0,
+          "minerBaseRewardIn": "5000000000000000000",
+          "minerNephewRewardIn": "0",
+          "minerTxFeeIn": "0",
+          "minerUncleRewardIn": "0",
+          "prefundIn": "0",
+          "prevAppBlk": 56,
+          "prevBal": "13750000000000000000",
+          "priceSource": "not-priced",
+          "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "reconciled": true,
+          "reconciliationType": "regular-eth",
+          "selfDestructIn": "0",
+          "selfDestructOut": "0",
+          "sender": "0xBlockReward",
+          "spotPrice": 0,
+          "timestamp": 1438270713,
+          "totalIn": "5000000000000000000",
+          "totalOut": "0",
+          "totalOutLessGas": "0",
+          "transactionHash": "0x0",
+          "transactionIndex": 99999
+        }
+      ],
+      "timestamp": 1438270713,
+      "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "traces": [],
+      "transactionIndex": 99999,
+      "value": "5000000000000000000"
+    },
+    {
+      "blockHash": "0xc63d744ca30a43cafbcc33d6c455091a8ca8545532a242ea3cca485e3e9ec3f0",
+      "blockNumber": 247,
+      "date": "2015-07-30 15:38:59 UTC",
+      "ether": "3.125",
+      "from": "0x0000000000000000000000000000004d696uncle",
+      "gas": 0,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "receipt": {},
+      "statements": [
+        {
+          "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "amountIn": "0",
+          "amountNet": "3125000000000000000",
+          "amountOut": "0",
+          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetSymbol": "WEI",
+          "begBal": "18750000000000000000",
+          "begBalDiff": "0",
+          "blockNumber": 247,
+          "date": "2015-07-30 15:38:59 UTC",
+          "decimals": 18,
+          "endBal": "21875000000000000000",
+          "endBalCalc": "21875000000000000000",
+          "endBalDiff": "0",
+          "gasOut": "0",
+          "internalIn": "0",
+          "internalOut": "0",
+          "logIndex": 0,
+          "minerBaseRewardIn": "0",
+          "minerNephewRewardIn": "0",
+          "minerTxFeeIn": "0",
+          "minerUncleRewardIn": "3125000000000000000",
+          "prefundIn": "0",
+          "prevAppBlk": 235,
+          "prevBal": "18750000000000000000",
+          "priceSource": "not-priced",
+          "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "reconciled": true,
+          "reconciliationType": "regular-eth",
+          "selfDestructIn": "0",
+          "selfDestructOut": "0",
+          "sender": "0xUncleReward",
+          "spotPrice": 0,
+          "timestamp": 1438270739,
+          "totalIn": "3125000000000000000",
+          "totalOut": "0",
+          "totalOutLessGas": "0",
+          "transactionHash": "0x0",
+          "transactionIndex": 99998
+        }
+      ],
+      "timestamp": 1438270739,
+      "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "traces": [],
+      "transactionIndex": 99998,
+      "value": "3125000000000000000"
+    },
+    {
+      "blockHash": "0x0b2975c03c468f3ce7eb05935f2910fd3d07fc2964d0399491c86645fd5bb113",
+      "blockNumber": 348,
+      "date": "2015-07-30 15:42:23 UTC",
+      "ether": "5",
+      "from": "0x0000000000000000000000000000004d696e6572",
+      "gas": 0,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "receipt": {},
+      "statements": [
+        {
+          "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "amountIn": "0",
+          "amountNet": "5000000000000000000",
+          "amountOut": "0",
+          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetSymbol": "WEI",
+          "begBal": "21875000000000000000",
+          "begBalDiff": "0",
+          "blockNumber": 348,
+          "date": "2015-07-30 15:42:23 UTC",
+          "decimals": 18,
+          "endBal": "26875000000000000000",
+          "endBalCalc": "26875000000000000000",
+          "endBalDiff": "0",
+          "gasOut": "0",
+          "internalIn": "0",
+          "internalOut": "0",
+          "logIndex": 0,
+          "minerBaseRewardIn": "5000000000000000000",
+          "minerNephewRewardIn": "0",
+          "minerTxFeeIn": "0",
+          "minerUncleRewardIn": "0",
+          "prefundIn": "0",
+          "prevAppBlk": 247,
+          "prevBal": "21875000000000000000",
+          "priceSource": "not-priced",
+          "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "reconciled": true,
+          "reconciliationType": "regular-eth",
+          "selfDestructIn": "0",
+          "selfDestructOut": "0",
+          "sender": "0xBlockReward",
+          "spotPrice": 0,
+          "timestamp": 1438270943,
+          "totalIn": "5000000000000000000",
+          "totalOut": "0",
+          "totalOutLessGas": "0",
+          "transactionHash": "0x0",
+          "transactionIndex": 99999
+        }
+      ],
+      "timestamp": 1438270943,
+      "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "traces": [],
+      "transactionIndex": 99999,
+      "value": "5000000000000000000"
+    },
+    {
+      "blockHash": "0x165f73c83ca0393c988c8b4bbc2c62db6052ddd97697dbeb49c61c979a38a7e4",
+      "blockNumber": 500,
+      "date": "2015-07-30 15:46:52 UTC",
+      "ether": "3.75",
+      "from": "0x0000000000000000000000000000004d696uncle",
+      "gas": 0,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "receipt": {},
+      "statements": [
+        {
+          "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "amountIn": "0",
+          "amountNet": "3750000000000000000",
+          "amountOut": "0",
+          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetSymbol": "WEI",
+          "begBal": "26875000000000000000",
+          "begBalDiff": "0",
+          "blockNumber": 500,
+          "date": "2015-07-30 15:46:52 UTC",
+          "decimals": 18,
+          "endBal": "30625000000000000000",
+          "endBalCalc": "30625000000000000000",
+          "endBalDiff": "0",
+          "gasOut": "0",
+          "internalIn": "0",
+          "internalOut": "0",
+          "logIndex": 0,
+          "minerBaseRewardIn": "0",
+          "minerNephewRewardIn": "0",
+          "minerTxFeeIn": "0",
+          "minerUncleRewardIn": "3750000000000000000",
+          "prefundIn": "0",
+          "prevAppBlk": 348,
+          "prevBal": "26875000000000000000",
+          "priceSource": "not-priced",
+          "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "reconciled": true,
+          "reconciliationType": "regular-eth",
+          "selfDestructIn": "0",
+          "selfDestructOut": "0",
+          "sender": "0xUncleReward",
+          "spotPrice": 0,
+          "timestamp": 1438271212,
+          "totalIn": "3750000000000000000",
+          "totalOut": "0",
+          "totalOutLessGas": "0",
+          "transactionHash": "0x0",
+          "transactionIndex": 99998
+        }
+      ],
+      "timestamp": 1438271212,
+      "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "traces": [],
+      "transactionIndex": 99998,
+      "value": "3750000000000000000"
+    },
+    {
+      "blockHash": "0xccce8bf3bc7c6ca3ddc63ab0d5135054158d931b7b169cd1cef502cbd21c99bc",
+      "blockNumber": 563,
+      "date": "2015-07-30 15:48:57 UTC",
+      "ether": "3.75",
+      "from": "0x0000000000000000000000000000004d696uncle",
+      "gas": 0,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "receipt": {},
+      "statements": [
+        {
+          "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "amountIn": "0",
+          "amountNet": "3750000000000000000",
+          "amountOut": "0",
+          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetSymbol": "WEI",
+          "begBal": "30625000000000000000",
+          "begBalDiff": "0",
+          "blockNumber": 563,
+          "date": "2015-07-30 15:48:57 UTC",
+          "decimals": 18,
+          "endBal": "34375000000000000000",
+          "endBalCalc": "34375000000000000000",
+          "endBalDiff": "0",
+          "gasOut": "0",
+          "internalIn": "0",
+          "internalOut": "0",
+          "logIndex": 0,
+          "minerBaseRewardIn": "0",
+          "minerNephewRewardIn": "0",
+          "minerTxFeeIn": "0",
+          "minerUncleRewardIn": "3750000000000000000",
+          "prefundIn": "0",
+          "prevAppBlk": 500,
+          "prevBal": "30625000000000000000",
+          "priceSource": "not-priced",
+          "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "reconciled": true,
+          "reconciliationType": "regular-eth",
+          "selfDestructIn": "0",
+          "selfDestructOut": "0",
+          "sender": "0xUncleReward",
+          "spotPrice": 0,
+          "timestamp": 1438271337,
+          "totalIn": "3750000000000000000",
+          "totalOut": "0",
+          "totalOutLessGas": "0",
+          "transactionHash": "0x0",
+          "transactionIndex": 99998
+        }
+      ],
+      "timestamp": 1438271337,
+      "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "traces": [],
+      "transactionIndex": 99998,
+      "value": "3750000000000000000"
+    },
+    {
+      "blockHash": "0xb5130c57cf01ce96cc7c21d92c45fbe53993839a1cdb5691e019c02fb8416871",
+      "blockNumber": 987,
+      "date": "2015-07-30 16:01:54 UTC",
+      "ether": "2.5",
+      "from": "0x0000000000000000000000000000004d696uncle",
+      "gas": 0,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "receipt": {},
+      "statements": [
+        {
+          "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "amountIn": "0",
+          "amountNet": "2500000000000000000",
+          "amountOut": "0",
+          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetSymbol": "WEI",
+          "begBal": "34375000000000000000",
+          "begBalDiff": "0",
+          "blockNumber": 987,
+          "date": "2015-07-30 16:01:54 UTC",
+          "decimals": 18,
+          "endBal": "36875000000000000000",
+          "endBalCalc": "36875000000000000000",
+          "endBalDiff": "0",
+          "gasOut": "0",
+          "internalIn": "0",
+          "internalOut": "0",
+          "logIndex": 0,
+          "minerBaseRewardIn": "0",
+          "minerNephewRewardIn": "0",
+          "minerTxFeeIn": "0",
+          "minerUncleRewardIn": "2500000000000000000",
+          "prefundIn": "0",
+          "prevAppBlk": 563,
+          "prevBal": "34375000000000000000",
+          "priceSource": "not-priced",
+          "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "reconciled": true,
+          "reconciliationType": "regular-eth",
+          "selfDestructIn": "0",
+          "selfDestructOut": "0",
+          "sender": "0xUncleReward",
+          "spotPrice": 0,
+          "timestamp": 1438272114,
+          "totalIn": "2500000000000000000",
+          "totalOut": "0",
+          "totalOutLessGas": "0",
+          "transactionHash": "0x0",
+          "transactionIndex": 99998
+        }
+      ],
+      "timestamp": 1438272114,
+      "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "traces": [],
+      "transactionIndex": 99998,
+      "value": "2500000000000000000"
+    },
+    {
+      "blockHash": "0x49deca89a4392c11ff51feb27c23d57d96a63e6500ba5969341aaab86451dc97",
+      "blockNumber": 1450,
+      "date": "2015-07-30 16:18:50 UTC",
+      "ether": 5.15625,
+      "from": "0x0000000000000000000000000000004d696e6572",
+      "gas": 0,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "receipt": {},
+      "statements": [
+        {
+          "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "amountIn": "0",
+          "amountNet": "5156250000000000000",
+          "amountOut": "0",
+          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetSymbol": "WEI",
+          "begBal": "36875000000000000000",
+          "begBalDiff": "0",
+          "blockNumber": 1450,
+          "date": "2015-07-30 16:18:50 UTC",
+          "decimals": 18,
+          "endBal": "42031250000000000000",
+          "endBalCalc": "42031250000000000000",
+          "endBalDiff": "0",
+          "gasOut": "0",
+          "internalIn": "0",
+          "internalOut": "0",
+          "logIndex": 0,
+          "minerBaseRewardIn": "5000000000000000000",
+          "minerNephewRewardIn": "156250000000000000",
+          "minerTxFeeIn": "0",
+          "minerUncleRewardIn": "0",
+          "prefundIn": "0",
+          "prevAppBlk": 987,
+          "prevBal": "36875000000000000000",
+          "priceSource": "not-priced",
+          "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "reconciled": true,
+          "reconciliationType": "regular-eth",
+          "selfDestructIn": "0",
+          "selfDestructOut": "0",
+          "sender": "0xBlockReward",
+          "spotPrice": 0,
+          "timestamp": 1438273130,
+          "totalIn": "5156250000000000000",
+          "totalOut": "0",
+          "totalOutLessGas": "0",
+          "transactionHash": "0x0",
+          "transactionIndex": 99999
+        }
+      ],
+      "timestamp": 1438273130,
+      "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "traces": [],
+      "transactionIndex": 99999,
+      "value": "5156250000000000000"
+    },
+    {
+      "blockHash": "0xd25cae3c092380ac7d2b27fcd0d753cd241172beb4efa79e6b36072a9e046760",
+      "blockNumber": 1580,
+      "date": "2015-07-30 16:24:38 UTC",
+      "ether": "3.75",
+      "from": "0x0000000000000000000000000000004d696uncle",
+      "gas": 0,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "receipt": {},
+      "statements": [
+        {
+          "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "amountIn": "0",
+          "amountNet": "3750000000000000000",
+          "amountOut": "0",
+          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetSymbol": "WEI",
+          "begBal": "42031250000000000000",
+          "begBalDiff": "0",
+          "blockNumber": 1580,
+          "date": "2015-07-30 16:24:38 UTC",
+          "decimals": 18,
+          "endBal": "45781250000000000000",
+          "endBalCalc": "45781250000000000000",
+          "endBalDiff": "0",
+          "gasOut": "0",
+          "internalIn": "0",
+          "internalOut": "0",
+          "logIndex": 0,
+          "minerBaseRewardIn": "0",
+          "minerNephewRewardIn": "0",
+          "minerTxFeeIn": "0",
+          "minerUncleRewardIn": "3750000000000000000",
+          "prefundIn": "0",
+          "prevAppBlk": 1450,
+          "prevBal": "42031250000000000000",
+          "priceSource": "not-priced",
+          "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "reconciled": true,
+          "reconciliationType": "regular-eth",
+          "selfDestructIn": "0",
+          "selfDestructOut": "0",
+          "sender": "0xUncleReward",
+          "spotPrice": 0,
+          "timestamp": 1438273478,
+          "totalIn": "3750000000000000000",
+          "totalOut": "0",
+          "totalOutLessGas": "0",
+          "transactionHash": "0x0",
+          "transactionIndex": 99998
+        }
+      ],
+      "timestamp": 1438273478,
+      "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "traces": [],
+      "transactionIndex": 99998,
+      "value": "3750000000000000000"
+    },
+    {
+      "blockHash": "0x14c7f1a14f313bd5952d800083116a2a39b114e621e753f95c9fb4ad1e79f32d",
+      "blockNumber": 1586,
+      "date": "2015-07-30 16:24:52 UTC",
+      "ether": "3.75",
+      "from": "0x0000000000000000000000000000004d696uncle",
+      "gas": 0,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "receipt": {},
+      "statements": [
+        {
+          "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "amountIn": "0",
+          "amountNet": "3750000000000000000",
+          "amountOut": "0",
+          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetSymbol": "WEI",
+          "begBal": "45781250000000000000",
+          "begBalDiff": "0",
+          "blockNumber": 1586,
+          "date": "2015-07-30 16:24:52 UTC",
+          "decimals": 18,
+          "endBal": "49531250000000000000",
+          "endBalCalc": "49531250000000000000",
+          "endBalDiff": "0",
+          "gasOut": "0",
+          "internalIn": "0",
+          "internalOut": "0",
+          "logIndex": 0,
+          "minerBaseRewardIn": "0",
+          "minerNephewRewardIn": "0",
+          "minerTxFeeIn": "0",
+          "minerUncleRewardIn": "3750000000000000000",
+          "prefundIn": "0",
+          "prevAppBlk": 1580,
+          "prevBal": "45781250000000000000",
+          "priceSource": "not-priced",
+          "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "reconciled": true,
+          "reconciliationType": "regular-eth",
+          "selfDestructIn": "0",
+          "selfDestructOut": "0",
+          "sender": "0xUncleReward",
+          "spotPrice": 0,
+          "timestamp": 1438273492,
+          "totalIn": "3750000000000000000",
+          "totalOut": "0",
+          "totalOutLessGas": "0",
+          "transactionHash": "0x0",
+          "transactionIndex": 99998
+        }
+      ],
+      "timestamp": 1438273492,
+      "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "traces": [],
+      "transactionIndex": 99998,
+      "value": "3750000000000000000"
+    },
+    {
+      "blockHash": "0x7601af59393f44a8fd535bdfab180efc2217bb72e74063fdc016e9daf7a0356f",
+      "blockNumber": 1861,
+      "date": "2015-07-30 16:37:21 UTC",
+      "ether": "5",
+      "from": "0x0000000000000000000000000000004d696e6572",
+      "gas": 0,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "receipt": {},
+      "statements": [
+        {
+          "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "amountIn": "0",
+          "amountNet": "5000000000000000000",
+          "amountOut": "0",
+          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetSymbol": "WEI",
+          "begBal": "49531250000000000000",
+          "begBalDiff": "0",
+          "blockNumber": 1861,
+          "date": "2015-07-30 16:37:21 UTC",
+          "decimals": 18,
+          "endBal": "54531250000000000000",
+          "endBalCalc": "54531250000000000000",
+          "endBalDiff": "0",
+          "gasOut": "0",
+          "internalIn": "0",
+          "internalOut": "0",
+          "logIndex": 0,
+          "minerBaseRewardIn": "5000000000000000000",
+          "minerNephewRewardIn": "0",
+          "minerTxFeeIn": "0",
+          "minerUncleRewardIn": "0",
+          "prefundIn": "0",
+          "prevAppBlk": 1586,
+          "prevBal": "49531250000000000000",
+          "priceSource": "not-priced",
+          "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "reconciled": true,
+          "reconciliationType": "regular-eth",
+          "selfDestructIn": "0",
+          "selfDestructOut": "0",
+          "sender": "0xBlockReward",
+          "spotPrice": 0,
+          "timestamp": 1438274241,
+          "totalIn": "5000000000000000000",
+          "totalOut": "0",
+          "totalOutLessGas": "0",
+          "transactionHash": "0x0",
+          "transactionIndex": 99999
+        }
+      ],
+      "timestamp": 1438274241,
+      "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "traces": [],
+      "transactionIndex": 99999,
+      "value": "5000000000000000000"
+    },
+    {
+      "blockHash": "0x550938110403347b408f8a94f6ea661ad6562bc9dee950d3dac74acf22f695b6",
+      "blockNumber": 1912,
+      "date": "2015-07-30 16:39:38 UTC",
+      "ether": "3.75",
+      "from": "0x0000000000000000000000000000004d696uncle",
+      "gas": 0,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "receipt": {},
+      "statements": [
+        {
+          "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "amountIn": "0",
+          "amountNet": "3750000000000000000",
+          "amountOut": "0",
+          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetSymbol": "WEI",
+          "begBal": "54531250000000000000",
+          "begBalDiff": "0",
+          "blockNumber": 1912,
+          "date": "2015-07-30 16:39:38 UTC",
+          "decimals": 18,
+          "endBal": "58281250000000000000",
+          "endBalCalc": "58281250000000000000",
+          "endBalDiff": "0",
+          "gasOut": "0",
+          "internalIn": "0",
+          "internalOut": "0",
+          "logIndex": 0,
+          "minerBaseRewardIn": "0",
+          "minerNephewRewardIn": "0",
+          "minerTxFeeIn": "0",
+          "minerUncleRewardIn": "3750000000000000000",
+          "prefundIn": "0",
+          "prevAppBlk": 1861,
+          "prevBal": "54531250000000000000",
+          "priceSource": "not-priced",
+          "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "reconciled": true,
+          "reconciliationType": "regular-eth",
+          "selfDestructIn": "0",
+          "selfDestructOut": "0",
+          "sender": "0xUncleReward",
+          "spotPrice": 0,
+          "timestamp": 1438274378,
+          "totalIn": "3750000000000000000",
+          "totalOut": "0",
+          "totalOutLessGas": "0",
+          "transactionHash": "0x0",
+          "transactionIndex": 99998
+        }
+      ],
+      "timestamp": 1438274378,
+      "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "traces": [],
+      "transactionIndex": 99998,
+      "value": "3750000000000000000"
+    },
+    {
+      "blockHash": "0x51c30729dc5dc19f703085a55fa95a7892c6f284781fd1327dfefa408a83497b",
+      "blockNumber": 2057,
       "date": "2015-07-30 16:46:22 UTC",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
-      "decimals": 18,
-      "spotPrice": 0.00000,
-      "priceSource": "not-priced",
-      "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "sender": "0x0000000000000000000000000000004d696e6572",
-      "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "begBal": "58281250000000000000",
-      "amountNet": "5000000000000000000",
-      "endBal": "63281250000000000000",
-      "reconciliationType": "regular-eth",
-      "reconciled": true,
-      "totalIn": "5000000000000000000",
-      "amountIn": "0",
-      "internalIn": "0",
-      "selfDestructIn": "0",
-      "minerBaseRewardIn": "5000000000000000000",
-      "minerNephewRewardIn": "0",
-      "minerTxFeeIn": "0",
-      "minerUncleRewardIn": "0",
-      "prefundIn": "0",
-      "totalOut": "0",
-      "amountOut": "0",
-      "internalOut": "0",
-      "selfDestructOut": "0",
-      "gasOut": "0",
-      "totalOutLessGas": "0",
-      "prevAppBlk": 1912,
-      "prevBal": "58281250000000000000",
-      "begBalDiff": "0",
-      "endBalDiff": "0",
-      "endBalCalc": "63281250000000000000"
+      "ether": "5",
+      "from": "0x0000000000000000000000000000004d696e6572",
+      "gas": 0,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "receipt": {},
+      "statements": [
+        {
+          "accountedFor": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "amountIn": "0",
+          "amountNet": "5000000000000000000",
+          "amountOut": "0",
+          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "assetSymbol": "WEI",
+          "begBal": "58281250000000000000",
+          "begBalDiff": "0",
+          "blockNumber": 2057,
+          "date": "2015-07-30 16:46:22 UTC",
+          "decimals": 18,
+          "endBal": "63281250000000000000",
+          "endBalCalc": "63281250000000000000",
+          "endBalDiff": "0",
+          "gasOut": "0",
+          "internalIn": "0",
+          "internalOut": "0",
+          "logIndex": 0,
+          "minerBaseRewardIn": "5000000000000000000",
+          "minerNephewRewardIn": "0",
+          "minerTxFeeIn": "0",
+          "minerUncleRewardIn": "0",
+          "prefundIn": "0",
+          "prevAppBlk": 1912,
+          "prevBal": "58281250000000000000",
+          "priceSource": "not-priced",
+          "recipient": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+          "reconciled": true,
+          "reconciliationType": "regular-eth",
+          "selfDestructIn": "0",
+          "selfDestructOut": "0",
+          "sender": "0xBlockReward",
+          "spotPrice": 0,
+          "timestamp": 1438274782,
+          "totalIn": "5000000000000000000",
+          "totalOut": "0",
+          "totalOutLessGas": "0",
+          "transactionHash": "0x0",
+          "transactionIndex": 99999
+        }
+      ],
+      "timestamp": 1438274782,
+      "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "traces": [],
+      "transactionIndex": 99999,
+      "value": "5000000000000000000"
     }
-  ],
-  "gasCost": 0,
-  "gasUsed": 0,
-  "date": "2015-07-30 16:46:22 UTC",
-  "ether": 5.000000000000000000
+  ]
 }
-] }

@@ -22,6 +22,25 @@ type StorageSlot struct {
 	StorageKeys []base.Hash  `json:"storageKeys"`
 }
 
+type Rewards struct {
+	Block  big.Int `json:"block"`
+	Nephew big.Int `json:"nephew"`
+	TxFee  big.Int `json:"txFee"`
+	Uncle  big.Int `json:"uncle"`
+}
+
+func NewReward(block, nephew, txFee, uncle *big.Int) (Rewards, big.Int) {
+	total := new(big.Int).Add(block, nephew)
+	total.Add(total, txFee)
+	total.Add(total, uncle)
+	return Rewards{
+		Block:  *block,
+		Nephew: *nephew,
+		TxFee:  *txFee,
+		Uncle:  *uncle,
+	}, *total
+}
+
 // EXISTING_CODE
 
 type RawTransaction struct {
@@ -76,10 +95,9 @@ type SimpleTransaction struct {
 	Value                base.Wei        `json:"value"`
 	raw                  *RawTransaction `json:"-"`
 	// EXISTING_CODE
-	GasCost     base.Gas `json:"gasCost"`
-	Message     string   `json:"-"`
-	ExtraValue1 big.Int  `json:"-"`
-	ExtraValue2 big.Int  `json:"-"`
+	GasCost base.Gas `json:"gasCost"`
+	Message string   `json:"-"`
+	Rewards *Rewards `json:"-"`
 	// EXISTING_CODE
 }
 

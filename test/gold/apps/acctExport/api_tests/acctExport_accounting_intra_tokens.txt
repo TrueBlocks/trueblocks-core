@@ -27,7 +27,7 @@ export?addrs=0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E&maxRecords=3&firstRecord
       "nonce": 252,
       "receipt": {
         "contractAddress": "0x0",
-        "effectiveGasPrice": 104634629487,
+        "effectiveGasPrice": 0,
         "gasUsed": 87389,
         "logs": [
           {
@@ -173,7 +173,7 @@ export?addrs=0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E&maxRecords=3&firstRecord
       "nonce": 253,
       "receipt": {
         "contractAddress": "0x0",
-        "effectiveGasPrice": 104646629487,
+        "effectiveGasPrice": 0,
         "gasUsed": 34696,
         "logs": [
           {
@@ -319,7 +319,7 @@ export?addrs=0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E&maxRecords=3&firstRecord
       "nonce": 254,
       "receipt": {
         "contractAddress": "0x0",
-        "effectiveGasPrice": 104634629487,
+        "effectiveGasPrice": 0,
         "gasUsed": 54355,
         "logs": [
           {

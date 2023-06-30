@@ -165,7 +165,7 @@ on      ,both ,fast  ,export   ,apps/acctExport ,statement_1              ,y    
 on      ,both ,fast  ,export   ,apps/acctExport ,statement_3_bad          ,y    ,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & statements & last_block = 4000000 & fmt = json
 
 okacct    ,both ,fast  ,export   ,apps/acctExport ,accounting_intra_tokens  ,y    ,addrs = 0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E & max_records = 3 & first_record = 683 & accounting & fmt = json & log_level = 10
-acct    ,both ,fast  ,export   ,apps/acctExport ,accounting_wei_1         ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 3 & accounting & fmt = json
+okacct    ,both ,fast  ,export   ,apps/acctExport ,accounting_wei_1         ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 3 & accounting & fmt = json
 acct    ,both ,fast  ,export   ,apps/acctExport ,accounting_wei_2         ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & max_records = 15 & accounting & fmt = json & log_level = 10
 
 xacct    ,both ,fast  ,export   ,apps/acctExport ,accounting_to_cache      ,y    ,addrs = 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c & last_block = 100 & accounting & statements

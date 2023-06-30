@@ -22,8 +22,8 @@ type AppearanceRecord struct {
 // TODO: hack alert - this is because of a circular dependency only. Could not import index into cache package
 func AppsToNumPairs(apps []AppearanceRecord) []base.NumPair[uint32] {
 	pairs := make([]base.NumPair[uint32], len(apps))
-	for i, app := range apps {
-		pairs[i] = base.NumPair[uint32]{N1: app.BlockNumber, N2: app.TransactionId}
+	for index, app := range apps {
+		pairs[index] = base.NumPair[uint32]{N1: app.BlockNumber, N2: app.TransactionId}
 	}
 	return pairs
 }
