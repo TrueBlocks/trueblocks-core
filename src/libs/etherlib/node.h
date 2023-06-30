@@ -14,7 +14,6 @@
 #include "etherlib.h"
 #include "node_curl.h"
 #include "rewards.h"
-#include "logfilter.h"
 #include "ethcall.h"
 #include "metadata.h"
 

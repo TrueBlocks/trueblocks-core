@@ -175,3 +175,6 @@ func (opts *ExportOptions) matchesTopic(log *types.SimpleLog) bool {
 	}
 	return len(opts.Topics) == 0
 }
+
+// TODO: Just a reminder that eth_getLogs is way faster if one uses it for multiple blocks and/or addresses and or topics
+// TODO: It used to work this way in the C++ code, but we lost that during the port.

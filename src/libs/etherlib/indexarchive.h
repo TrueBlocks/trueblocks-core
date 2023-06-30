@@ -40,17 +40,6 @@ class CIndexArchive : public CArchive {
     explicit CIndexArchive(bool mode);
     virtual ~CIndexArchive(void);
     bool ReadIndexFromBinary(const string_q& fn, indexpart_t parts);
-    blkrange_t getAppRangeForAddrAt(size_t i) const {
-        ASSERT(addresses2 && i < header.nAddrs);
-        blkrange_t r;
-        r.first = addresses2[i].offset;
-        r.second = r.first + addresses2[i].cnt - 1;
-        return r;
-    }
-    CIndexedAppearance* getAppearanceAt(size_t i) {
-        ASSERT(appearances2 && i < header.nApps);
-        return &appearances2[i];
-    }
     CIndexedAddress* getAddressAt(size_t i) {
         ASSERT(addresses2 && i < header.nAddrs);
         return &addresses2[i];

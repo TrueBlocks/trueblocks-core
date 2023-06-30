@@ -22,42 +22,11 @@
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
 
-typedef struct CReverseAppMapEntry {
-  public:
-    uint32_t n;
-    uint32_t blk;
-    uint32_t tx;
-} CReverseAppMapEntry;
-
-//---------------------------------------------------------------------------
-class CIndexArchiveWithNeighborMaps : public CIndexArchive {
-  public:
-    CBlockRangeArray reverseAddrRanges;
-    CReverseAppMapEntry* reverseAppMap{nullptr};
-    explicit CIndexArchiveWithNeighborMaps(bool mode) : CIndexArchive(mode) {
-        reverseAppMap = nullptr;
-    }
-    ~CIndexArchiveWithNeighborMaps();
-    bool LoadReverseMaps(const blkrange_t& range);
-
-  private:
-    void clean(void) {
-        if (reverseAppMap) {
-            delete[] reverseAppMap;
-            reverseAppMap = nullptr;
-        }
-        reverseAddrRanges.clear();
-    }
-};
-
 //-----------------------------------------------------------------------
 class COptions : public CStatementOptions {
   public:
     // BEG_CODE_DECLARE
     CFourbyteArray fourbytes;
-    bool logs;
-    bool traces;
-    bool neighbors;
     bool accounting;
     bool statements;
     bool articulate;
@@ -65,9 +34,7 @@ class COptions : public CStatementOptions {
     bool cache_traces;
     uint64_t first_record;
     uint64_t max_records;
-    bool relevant;
     string_q flow;
-    bool factory;
     string_q load;
     bool reversed;
     // END_CODE_DECLARE
@@ -80,19 +47,8 @@ class COptions : public CStatementOptions {
     CBlockAddressMap prefundAddrMap;
     CBlockAddressMap blkRewardMap;
 
-    // neighbor maps
-    CAddressUintMap toAddrMap;
-    CAddressUintMap fromAddrMap;
-    CAddressUintMap emitterAddrMap;
-    CAddressUintMap creationMap;
-    CAddressUintMap toTraceAddrMap;
-    CAddressUintMap fromTraceAddrMap;
-
     // abiMap allows fast access to abis
     CAddressUintMap abiMap;
-
-    CLogFilter logFilter;
-
     CScrapeStatistics stats;
 
     blkrange_t fileRange;
@@ -112,22 +68,11 @@ class COptions : public CStatementOptions {
 
     bool handle_traversers(void);
 
-    void addNeighbor(CAddressUintMap& map, const address_t& addr);
-    void markNeighbors(const CTransaction& trans);
     bool articulateAll(CTransaction& trans);
-    bool reportNeighbors(void);
 
-    bool isEmitter(const address_t& test) const;
-    bool wasEmittedBy(const address_t& test) const;
-    bool isRelevant(const CLog& log) const;
     bool fourByteFilter(const string_q& input) const;
 
     void writePerformanceData(void);
-
-    // Used as temporary data to count neighbor traversals
-    size_t neighborCount{0};
-    CIndexArchiveWithNeighborMaps* theIndex{nullptr};
-    bool showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CAppearance_mon& app);
 };
 
 //--------------------------------------------------------------------------------

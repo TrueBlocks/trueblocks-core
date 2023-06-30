@@ -38,7 +38,6 @@ using hashbytes_t = vector<uint8_t>;
 //-------------------------------------------------------------------------
 using CStringArray = vector<string_q>;
 using CBlknumArray = vector<uint64_t>;
-using CBlockRangeArray = vector<blkrange_t>;
 using CUintArray = vector<uint64_t>;
 using CIntArray = vector<int64_t>;
 using CBigUintArray = vector<biguint_t>;

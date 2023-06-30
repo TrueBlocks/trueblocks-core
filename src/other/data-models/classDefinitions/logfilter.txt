@@ -7,5 +7,5 @@ doc_descr = used by the fast path log queries for various commands
 doc_route = 206-logFilter
 doc_producer = blocks, logs
 
-cpp_output = src/libs/etherlib/
+cpp_output =
 go_output = src/apps/chifra/pkg/types/

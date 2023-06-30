@@ -134,3 +134,35 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }
+
+/*
+TODO: NOTE
+        bool isSelfDestruct = trace.action.selfDestructed != "";
+        if (isSelfDestruct) {
+            copy.action.from = trace.action.selfDestructed;
+            copy.action.to = trace.action.refundAddress;
+            copy.action.callType = "suicide";
+            copy.action.value = trace.action.balance;
+            copy.traceAddress.push_back("s");
+            copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionIndex);
+            copy.action.input = "0x";
+        }
+        cout << ((isJson() && !opt->firstOut) ? ", " : "");
+        cout << copy;
+        opt->firstOut = false;
+        bool isCreation = trace.result.address != "";
+        if (isCreation) {
+            copy.action.from = "0x0";
+            copy.action.to = trace.result.address;
+            copy.action.callType = "creation";
+            copy.action.value = trace.action.value;
+            if (copy.traceAddress.size() == 0)
+                copy.traceAddress.push_back("null");
+            copy.traceAddress.push_back("s");
+            copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionIndex);
+            copy.action.input = trace.action.input;
+            cout << ((isJson() && !opt->firstOut) ? ", " : "");
+            cout << copy;
+            opt->firstOut = false;
+
+*/

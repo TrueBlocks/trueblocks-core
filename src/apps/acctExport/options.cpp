@@ -32,9 +32,6 @@ static const COption params[] = {
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) to export"),
     COption("topics", "", "list<topic>", OPT_POSITIONAL, "filter by one or more log topics (only for --logs option)"),
     COption("fourbytes", "", "list<fourbyte>", OPT_POSITIONAL, "filter by one or more fourbytes (only for transactions and trace options)"),  // NOLINT
-    COption("logs", "l", "", OPT_SWITCH, "export logs instead of transactional data"),
-    COption("traces", "t", "", OPT_SWITCH, "export traces instead of transactional data"),
-    COption("neighbors", "n", "", OPT_SWITCH, "export the neighbors of the given address"),
     COption("accounting", "C", "", OPT_SWITCH, "attach accounting records to the exported data (applies to transactions export only)"),  // NOLINT
     COption("statements", "A", "", OPT_SWITCH, "for the accounting options only, export only statements"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
@@ -42,12 +39,8 @@ static const COption params[] = {
     COption("cache_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
     COption("first_record", "c", "<uint64>", OPT_FLAG, "the first record to process"),
     COption("max_records", "e", "<uint64>", OPT_FLAG, "the maximum number of records to process"),
-    COption("relevant", "N", "", OPT_SWITCH, "for log and accounting export only, export only logs relevant to one of the given export addresses"),  // NOLINT
-    COption("emitter", "m", "list<addr>", OPT_FLAG, "for log export only, export only logs if emitted by one of these address(es)"),  // NOLINT
-    COption("topic", "B", "list<topic>", OPT_FLAG, "for log export only, export only logs with this topic(s)"),
     COption("asset", "P", "list<addr>", OPT_FLAG, "for the accounting options only, export statements only for this asset"),  // NOLINT
     COption("flow", "f", "enum[in|out|zero]", OPT_FLAG, "for the accounting options only, export statements with incoming, outgoing, or zero value"),  // NOLINT
-    COption("factory", "y", "", OPT_SWITCH, "for --traces only, report addresses created by (or self-destructed by) the given address(es)"),  // NOLINT
     COption("load", "O", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
     COption("reversed", "E", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
     COption("first_block", "F", "<blknum>", OPT_FLAG, "first block to process (inclusive)"),
@@ -66,8 +59,6 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_CODE_LOCAL_INIT
     CAddressArray addrs;
     CTopicArray topics;
-    CAddressArray emitter;
-    CStringArray topic;
     CAddressArray asset;
     blknum_t first_block = 0;
     blknum_t last_block = NOPOS;
@@ -99,15 +90,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "--cache_tx") {
             cache = true;
             // BEG_CODE_AUTO
-        } else if (arg == "-l" || arg == "--logs") {
-            logs = true;
-
-        } else if (arg == "-t" || arg == "--traces") {
-            traces = true;
-
-        } else if (arg == "-n" || arg == "--neighbors") {
-            neighbors = true;
-
         } else if (arg == "-C" || arg == "--accounting") {
             accounting = true;
 
@@ -135,23 +117,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-e" || arg == "--max_records") {
             return flag_required("max_records");
 
-        } else if (arg == "-N" || arg == "--relevant") {
-            relevant = true;
-
-        } else if (startsWith(arg, "-m:") || startsWith(arg, "--emitter:")) {
-            arg = substitute(substitute(arg, "-m:", ""), "--emitter:", "");
-            if (!parseAddressList(this, emitter, arg))
-                return false;
-        } else if (arg == "-m" || arg == "--emitter") {
-            return flag_required("emitter");
-
-        } else if (startsWith(arg, "-B:") || startsWith(arg, "--topic:")) {
-            arg = substitute(substitute(arg, "-B:", ""), "--topic:", "");
-            if (!parseTopicList2(this, topic, arg))
-                return false;
-        } else if (arg == "-B" || arg == "--topic") {
-            return flag_required("topic");
-
         } else if (startsWith(arg, "-P:") || startsWith(arg, "--asset:")) {
             arg = substitute(substitute(arg, "-P:", ""), "--asset:", "");
             if (!parseAddressList(this, asset, arg))
@@ -164,9 +129,6 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
         } else if (arg == "-f" || arg == "--flow") {
             return flag_required("flow");
-
-        } else if (arg == "-y" || arg == "--factory") {
-            factory = true;
 
         } else if (startsWith(arg, "-O:") || startsWith(arg, "--load:")) {
             load = substitute(substitute(arg, "-O:", ""), "--load:", "");
@@ -216,18 +178,6 @@ bool COptions::parseArguments(string_q& command) {
 
     if (!isApiMode() && (max_records == 250 || max_records == 0))
         max_records = (((size_t)-100000000));  // this is a very large number that won't wrap
-
-    for (auto e : emitter) {
-        logFilter.emitters.push_back(e);
-    }
-
-    for (auto t : topics) {
-        logFilter.topics.push_back(t);
-    }
-
-    for (auto t : topic) {
-        logFilter.topics.push_back(t);
-    }
 
     for (auto addr : asset) {  // asset is an array even though it's singular
         ledgerManager.setAssetFilter(addr);
@@ -311,9 +261,6 @@ void COptions::Init(void) {
     // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT
-    logs = false;
-    traces = false;
-    neighbors = false;
     accounting = false;
     statements = false;
     articulate = false;
@@ -323,9 +270,7 @@ void COptions::Init(void) {
     // clang-format on
     first_record = 0;
     max_records = 250;
-    relevant = false;
     flow = "";
-    factory = false;
     load = "";
     reversed = false;
     // END_CODE_INIT
@@ -428,14 +373,12 @@ bool COptions::setDisplayFormatting(void) {
         manageFields("CReconciliation:" + format);
 
         format = getGlobalConfig("acctExport")->getConfigStr("display", "neighbor", STR_DISPLAY_APPEARANCE);
-        if (neighbors || !verbose) {
+        if (!verbose) {
             replace(format, "\t[{NAME}]", "");
             replace(format, "\t[{TIMESTAMP}]", "");
             replace(format, "\t[{DATE}]", "");
         }
-        if (!neighbors) {
-            replace(format, "\t[{REASON}]", "");
-        }
+        replace(format, "\t[{REASON}]", "");
         replace(format, "\t[{TRACEINDEX}]", "");
         replaceAll(format, "\t\t", "\t");
         format = trim(format, '\t');
@@ -446,14 +389,8 @@ bool COptions::setDisplayFormatting(void) {
         expContext().fmtMap["trace_fmt"] = cleanFmt(format);
         manageFields("CTrace:" + format);
     } else {
-        if (neighbors) {
-            HIDE_FIELD(CAppearance, "name");
-            HIDE_FIELD(CAppearance, "timestamp");
-            HIDE_FIELD(CAppearance, "date");
-        } else {
-            HIDE_FIELD(CAppearance, "traceIndex");
-            HIDE_FIELD(CAppearance, "reason");
-        }
+        HIDE_FIELD(CAppearance, "traceIndex");
+        HIDE_FIELD(CAppearance, "reason");
     }
     HIDE_FIELD(CFunction, "stateMutability");
     HIDE_FIELD(CParameter, "strDefault");
@@ -463,14 +400,8 @@ bool COptions::setDisplayFormatting(void) {
 
     expContext().fmtMap["header"] = "";
     if (!noHeader) {
-        if (traces) {
-            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["trace_fmt"]);
-        } else if (statements) {
+        if (statements) {
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["reconciliation_fmt"]);
-        } else if (neighbors) {
-            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["appearance_fmt"]);
-        } else if (logs) {
-            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["log_fmt"]);
         } else {
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["transaction_fmt"]);
         }
@@ -488,21 +419,6 @@ bool COptions::setDisplayFormatting(void) {
         }
     }
 
-    if (logs) {
-        SHOW_FIELD(CLog, "blockNumber");
-        SHOW_FIELD(CLog, "transactionIndex");
-        SHOW_FIELD(CLog, "transactionHash");
-        SHOW_FIELD(CReceipt, "blockNumber");
-        SHOW_FIELD(CReceipt, "transactionIndex");
-    }
-
-    if (traces) {
-        SHOW_FIELD(CTrace, "blockNumber");
-        SHOW_FIELD(CTrace, "transactionIndex");
-        SHOW_FIELD(CTrace, "blockHash");
-        SHOW_FIELD(CTrace, "transactionHash");
-    }
-
     articulate = (articulate && (!isTestMode() || getEnvStr("TEST_NO_ARTICULATION") != "true"));
 
     // TODO(tjayrush): This doesn't work for some reason (see test case acctExport_export_logs.txt)
@@ -510,27 +426,6 @@ bool COptions::setDisplayFormatting(void) {
         HIDE_FIELD(CLog, "compressedTx");
 
     return true;
-}
-
-//-----------------------------------------------------------------------
-bool COptions::isEmitter(const address_t& test) const {
-    for (auto monitor : allMonitors) {
-        if (monitor.address == test) {
-            return true;
-        }
-    }
-    return false;
-}
-
-//-----------------------------------------------------------------------
-bool COptions::isRelevant(const CLog& log) const {
-    string_q str = toLower(log.Format(STR_DISPLAY_LOG));
-    for (auto monitor : allMonitors) {
-        if (contains(str, monitor.address.substr(2))) {
-            return true;
-        }
-    }
-    return false;
 }
 
 //-----------------------------------------------------------------------
