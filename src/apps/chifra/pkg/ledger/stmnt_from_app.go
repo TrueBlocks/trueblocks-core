@@ -14,10 +14,22 @@ func (ledgers *Ledger) GetStatementsFromAppearance(chain string, app *types.RawA
 	} else {
 		ledgers.Tx = tx // we need this below
 		if stmts := ledgers.GetStatementsFromTransaction(tx); len(stmts) > 0 {
-			for _, s := range stmts {
-				add := !ledgers.NoZero || s.MoneyMoved()
+			for _, statement := range stmts {
+				passes := false
+				if ledgers.AssetFilter != nil && len(*ledgers.AssetFilter) > 0 {
+					for _, asset := range *ledgers.AssetFilter {
+						if asset == statement.AssetAddr {
+							passes = true
+							break
+						}
+					}
+				} else {
+					passes = true
+				}
+				add := passes && (!ledgers.NoZero || statement.MoneyMoved())
 				if add {
-					statements = append(statements, *s)
+					statement := statement
+					statements = append(statements, *statement)
 				}
 			}
 		} else if err != nil {

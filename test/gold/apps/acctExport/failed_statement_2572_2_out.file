@@ -1,4 +1,3 @@
-export?addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7&accounting&statements&ether&fmt=json&firstBlock=11670418&lastBlock=11670420&asset=0xc713e5e149d5d0715dcd1c156a020976e7e56b88&maxRecords=10000
 {
   "data": [
     {
@@ -45,15 +44,5 @@ export?addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7&accounting&statements&et
       "transactionHash": "0x634799410165000edaf1b1e8e5e8055b39cdd534d3c3dc9738865d39adb5d888",
       "transactionIndex": 91
     }
-  ],
-  "meta": {
-    "client": "0xdeadbeef",
-    "finalized": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "unripe": "0xdeadbeef",
-    "chainId": 1,
-    "networkId": 1,
-    "chain": "mainnet"
-  }
+  ]
 }

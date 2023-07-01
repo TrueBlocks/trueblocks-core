@@ -158,8 +158,8 @@ func (s *SimpleStatement) Model(verbose bool, format string, extraOptions map[st
 		"correctingReason":    s.CorrectingReason,
 	}
 	order = []string{
-		"blockNumber", "transactionIndex", "logindex", "transactionHash", "timestamp", "date",
-		"assetAddress", "assetSymbol", "decimals", "spotPrice", "priceSource", "accountedFor",
+		"blockNumber", "transactionIndex", "logIndex", "transactionHash", "timestamp", "date",
+		"assetAddr", "assetSymbol", "decimals", "spotPrice", "priceSource", "accountedFor",
 		"sender", "recipient", "begBal", "amountNet", "endBal", "reconciliationType", "reconciled",
 		"totalIn", "amountIn", "internalIn", "selfDestructIn", "minerBaseRewardIn", "minerNephewRewardIn",
 		"minerTxFeeIn", "minerUncleRewardIn", "prefundIn", "totalOut", "amountOut", "internalOut",

@@ -69,6 +69,7 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 					}
 
 					for _, statement := range *tx.Statements {
+						statement := statement
 						modelChan <- &statement
 					}
 				}
@@ -96,6 +97,7 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 				testMode,
 				noZero,
 				opts.Traces,
+				&opts.Asset,
 			)
 			if opts.Accounting {
 				ledgers.SetContexts(chain, opts.Apps)

@@ -94,6 +94,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 				testMode,
 				noZero,
 				opts.Traces,
+				&opts.Asset,
 			)
 			if opts.Accounting {
 				ledgers.SetContexts(chain, opts.Apps)
