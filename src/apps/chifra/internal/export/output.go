@@ -13,6 +13,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -58,31 +59,26 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 		return
 	}
 
-	if opts.IsPorted() {
-		handled = true
-		if opts.Count {
-			err = opts.HandleListCount(monitorArray)
-		} else if opts.Receipts {
-			err = opts.HandleReceipts(monitorArray)
-		} else if opts.Logs {
-			err = opts.HandleLogs(monitorArray)
-		} else if opts.Traces {
-			err = opts.HandleTraces(monitorArray)
-		} else if opts.Appearances {
-			err = opts.HandleAppearances(monitorArray)
-		} else {
-			err = opts.HandleShow(monitorArray)
-		}
-		return
-	}
-
-	if opts.Globals.IsApiMode() {
-		// The caller has to handle this when in API mode
-		return nil, false
+	if !opts.IsPorted() {
+		logger.Fatal("Should not happen in BlocksInternal")
 	}
 
 	handled = true
-	err = opts.Globals.PassItOn("acctExport", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
+	if opts.Count {
+		err = opts.HandleListCount(monitorArray)
+	} else if opts.Receipts {
+		err = opts.HandleReceipts(monitorArray)
+	} else if opts.Logs {
+		err = opts.HandleLogs(monitorArray)
+	} else if opts.Traces {
+		err = opts.HandleTraces(monitorArray)
+	} else if opts.Appearances {
+		err = opts.HandleAppearances(monitorArray)
+	} else if opts.Statements {
+		err = opts.HandleStatements(monitorArray)
+	} else {
+		err = opts.HandleShow(monitorArray)
+	}
 	// EXISTING_CODE
 
 	return
@@ -99,7 +95,7 @@ func GetExportOptions(args []string, g *globals.GlobalOptions) *ExportOptions {
 
 func (opts *ExportOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	ported = true // !opts.Accounting
+	ported = true
 	// EXISTING_CODE
 	return
 }

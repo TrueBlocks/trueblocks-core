@@ -50,7 +50,10 @@ func (ledgers *Ledger) GetStatementFromLog(log *types.SimpleLog) (r *types.Simpl
 	}
 
 	b := strings.Replace(log.Data, "0x", "", -1)
-	val, _ := new(big.Int).SetString(b, 16)
+	val := big.NewInt(0)
+	if val, _ = new(big.Int).SetString(b, 16); val == nil {
+		val = big.NewInt(0)
+	}
 	ret := types.SimpleStatement{
 		AccountedFor:     ledgers.AccountFor,
 		Sender:           base.HexToAddress(log.Topics[1].Hex()),
