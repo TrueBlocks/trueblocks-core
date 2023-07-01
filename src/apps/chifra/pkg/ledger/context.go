@@ -25,46 +25,34 @@ type LedgerContext struct {
 // we must know this information to be able to calculate the correct post-tx balance.
 func (l *Ledger) SetContexts(chain string, apps []index.AppearanceRecord) error {
 	for i := 0; i < len(apps); i++ {
+		cur := apps[i].BlockNumber
+
 		prev := uint32(0)
-		if i > 0 && apps[i].BlockNumber > 0 {
+		if i > 0 {
 			prev = apps[i-1].BlockNumber
 		}
+
 		next := uint32(^uint32(0))
 		if i < len(apps)-1 {
 			next = apps[i+1].BlockNumber
 		}
-		cur := apps[i].BlockNumber
-		getReconType := func(isPrevDiff bool, isNextDiff bool) (reconType string) {
-			if isPrevDiff && isNextDiff {
-				return "regular"
-			} else if !isPrevDiff && !isNextDiff {
-				return "both-not-diff"
-			} else if isPrevDiff {
-				return "prevDiff"
-			} else if isNextDiff {
-				return "nextDiff"
-			} else {
-				return "unknown"
-			}
-		}
-		t := getReconType(prev != cur, cur != next)
-		if cur == 0 {
-			t = "genesis"
-		}
-		ctext := LedgerContext{
+
+		key := fmt.Sprintf("%09d-%05d", apps[i].BlockNumber, apps[i].TransactionId)
+		l.Contexts[key] = LedgerContext{
 			PrevBlock:  base.Blknum(prev),
 			CurBlock:   base.Blknum(cur),
 			NextBlock:  base.Blknum(next),
 			IsPrevDiff: prev != cur,
 			IsNextDiff: cur != next,
-			ReconType:  t,
+			ReconType:  getReconType(cur, prev != cur, cur != next),
 		}
-		key := fmt.Sprintf("%09d-%05d", apps[i].BlockNumber, apps[i].TransactionId)
-		l.Contexts[key] = ctext
 	}
 	return nil
 }
 
+// SetContextsFromIds produces reconciliation contexts for a list of transaction id that
+// most probably won't reconicile since there will be missing gaps in the list. (For example,
+// from chifra transactions --account_for 10 100 1000.)
 func (l *Ledger) SetContextsFromIds(chain string, txIds []identifiers.Identifier) error {
 	for _, rng := range txIds {
 		apps, err := rng.ResolveTxs(chain)
@@ -72,36 +60,43 @@ func (l *Ledger) SetContextsFromIds(chain string, txIds []identifiers.Identifier
 			return err
 		}
 		for i := 0; i < len(apps); i++ {
+			cur := apps[i].BlockNumber
+
 			prev := uint32(0)
 			if apps[i].BlockNumber > 0 {
 				prev = apps[i].BlockNumber - 1
 			}
+
 			next := apps[i].BlockNumber + 1
-			cur := apps[i].BlockNumber
-			getReconType := func(isPrevDiff bool, isNextDiff bool) (reconType string) {
-				if isPrevDiff && isNextDiff {
-					return "regular"
-				} else if !isPrevDiff && !isNextDiff {
-					return "both-not-diff"
-				} else if isPrevDiff {
-					return "prevDiff"
-				} else if isNextDiff {
-					return "nextDiff"
-				} else {
-					return "unknown"
-				}
-			}
-			ctext := LedgerContext{
+
+			key := fmt.Sprintf("%09d-%05d", apps[i].BlockNumber, apps[i].TransactionIndex)
+			l.Contexts[key] = LedgerContext{
 				PrevBlock:  base.Blknum(prev),
 				CurBlock:   base.Blknum(cur),
 				NextBlock:  base.Blknum(next),
 				IsPrevDiff: prev != cur,
 				IsNextDiff: cur != next,
-				ReconType:  getReconType(prev != cur, cur != next),
+				ReconType:  getReconType(cur, prev != cur, cur != next),
 			}
-			key := fmt.Sprintf("%09d-%05d", apps[i].BlockNumber, apps[i].TransactionIndex)
-			l.Contexts[key] = ctext
 		}
 	}
 	return nil
+}
+
+func getReconType(bn uint32, isPrevDiff bool, isNextDiff bool) (reconType string) {
+	if bn == 0 {
+		return "gensis"
+	}
+
+	if isPrevDiff && isNextDiff {
+		return "regular"
+	} else if !isPrevDiff && !isNextDiff {
+		return "both-not-diff"
+	} else if isPrevDiff {
+		return "prevDiff"
+	} else if isNextDiff {
+		return "nextDiff"
+	} else {
+		return "should-not-happen"
+	}
 }

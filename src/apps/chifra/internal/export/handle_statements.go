@@ -38,6 +38,10 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawStatement], errorChan chan error) {
 		visitAppearance := func(app *types.SimpleAppearance) error {
+			if app.BlockNumber == 8769052 {
+				fmt.Println(app)
+				fmt.Println("")
+			}
 			raw := types.RawAppearance{
 				Address:          app.Address.Hex(),
 				BlockNumber:      uint32(app.BlockNumber),
