@@ -158,11 +158,13 @@ func GetRewardTxByTypeAndApp(chain string, rt RewardType, appearance *types.RawA
 			var feeReward = big.NewInt(0)
 			var uncleReward = big.NewInt(0)
 
+			sender := base.HexToAddress(appearance.Address)
 			bn := uint64(appearance.BlockNumber)
 			blockReward = getBlockReward(bn)
 			switch rt {
 			case BLOCK_REWARD:
 				if block.Miner.Hex() == appearance.Address {
+					sender = BlockRewardSender
 					nUncles := len(uncles)
 					if nUncles > 0 {
 						nephewReward = new(big.Int).Mul(blockReward, big.NewInt(int64(nUncles)))
@@ -179,6 +181,7 @@ func GetRewardTxByTypeAndApp(chain string, rt RewardType, appearance *types.RawA
 			case UNCLE_REWARD:
 				for _, uncle := range uncles {
 					if uncle.Miner.Hex() == appearance.Address {
+						sender = UncleRewardSender
 						if bn < uncle.BlockNumber+6 {
 							diff := (uncle.BlockNumber + 8 - bn) // positive since +6 < bn
 							uncleReward = new(big.Int).Mul(blockReward, big.NewInt(int64(diff)))
@@ -187,6 +190,7 @@ func GetRewardTxByTypeAndApp(chain string, rt RewardType, appearance *types.RawA
 					}
 				}
 				if block.Miner.Hex() == appearance.Address {
+					sender = BlockRewardSender // if it's both, it's the block reward
 					// The uncle miner may also have been the miner of the block
 					if minerTx, err := GetRewardTxByTypeAndApp(chain, BLOCK_REWARD, appearance); err != nil {
 						return nil, err
@@ -212,7 +216,7 @@ func GetRewardTxByTypeAndApp(chain string, rt RewardType, appearance *types.RawA
 				BlockHash:        block.Hash,
 				TransactionIndex: uint64(appearance.TransactionIndex),
 				Timestamp:        block.Timestamp,
-				From:             BlockRewardSender,
+				From:             sender,
 				To:               base.HexToAddress(appearance.Address),
 				Value:            total,
 				Rewards:          &rewards,

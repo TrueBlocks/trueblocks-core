@@ -11,4 +11,4 @@ doc_route = 203-transfer
 doc_producer = transactions, export
 
 cpp_output = src/libs/etherlib/
-go_output = src/apps/chifra/pkg/types
+go_output =

@@ -134,7 +134,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
+TEST[DATE|TIME]    sender:              0x000000000000000000000000000000556e636c65
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -246,7 +246,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
+TEST[DATE|TIME]    sender:              0x000000000000000000000000000000556e636c65
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -358,7 +358,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
+TEST[DATE|TIME]    sender:              0x000000000000000000000000000000556e636c65
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -414,7 +414,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
+TEST[DATE|TIME]    sender:              0x000000000000000000000000000000556e636c65
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -470,7 +470,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
+TEST[DATE|TIME]    sender:              0x000000000000000000000000000000556e636c65
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -582,7 +582,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
+TEST[DATE|TIME]    sender:              0x000000000000000000000000000000556e636c65
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -638,7 +638,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
+TEST[DATE|TIME]    sender:              0x000000000000000000000000000000556e636c65
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -750,7 +750,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  regular-eth
 TEST[DATE|TIME]    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
-TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
+TEST[DATE|TIME]    sender:              0x000000000000000000000000000000556e636c65
 TEST[DATE|TIME]    recipient:           0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
@@ -984,7 +984,7 @@ Results in ./accounting_wei_2_out.file
       "blockNumber": 56,
       "date": "2015-07-30 15:32:02 UTC",
       "ether": "3.75",
-      "from": "0x0000000000000000000000000000004d696e6572",
+      "from": "0x000000000000000000000000000000556e636c65",
       "gas": 0,
       "gasCost": 0,
       "gasPrice": 0,
@@ -1027,7 +1027,7 @@ Results in ./accounting_wei_2_out.file
           "reconciliationType": "regular-eth",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
-          "sender": "0x0000000000000000000000000000004d696e6572",
+          "sender": "0x000000000000000000000000000000556e636c65",
           "spotPrice": 0,
           "timestamp": 1438270322,
           "totalIn": "3750000000000000000",
@@ -1112,7 +1112,7 @@ Results in ./accounting_wei_2_out.file
       "blockNumber": 247,
       "date": "2015-07-30 15:38:59 UTC",
       "ether": "3.125",
-      "from": "0x0000000000000000000000000000004d696e6572",
+      "from": "0x000000000000000000000000000000556e636c65",
       "gas": 0,
       "gasCost": 0,
       "gasPrice": 0,
@@ -1155,7 +1155,7 @@ Results in ./accounting_wei_2_out.file
           "reconciliationType": "regular-eth",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
-          "sender": "0x0000000000000000000000000000004d696e6572",
+          "sender": "0x000000000000000000000000000000556e636c65",
           "spotPrice": 0,
           "timestamp": 1438270739,
           "totalIn": "3125000000000000000",
@@ -1240,7 +1240,7 @@ Results in ./accounting_wei_2_out.file
       "blockNumber": 500,
       "date": "2015-07-30 15:46:52 UTC",
       "ether": "3.75",
-      "from": "0x0000000000000000000000000000004d696e6572",
+      "from": "0x000000000000000000000000000000556e636c65",
       "gas": 0,
       "gasCost": 0,
       "gasPrice": 0,
@@ -1283,7 +1283,7 @@ Results in ./accounting_wei_2_out.file
           "reconciliationType": "regular-eth",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
-          "sender": "0x0000000000000000000000000000004d696e6572",
+          "sender": "0x000000000000000000000000000000556e636c65",
           "spotPrice": 0,
           "timestamp": 1438271212,
           "totalIn": "3750000000000000000",
@@ -1304,7 +1304,7 @@ Results in ./accounting_wei_2_out.file
       "blockNumber": 563,
       "date": "2015-07-30 15:48:57 UTC",
       "ether": "3.75",
-      "from": "0x0000000000000000000000000000004d696e6572",
+      "from": "0x000000000000000000000000000000556e636c65",
       "gas": 0,
       "gasCost": 0,
       "gasPrice": 0,
@@ -1347,7 +1347,7 @@ Results in ./accounting_wei_2_out.file
           "reconciliationType": "regular-eth",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
-          "sender": "0x0000000000000000000000000000004d696e6572",
+          "sender": "0x000000000000000000000000000000556e636c65",
           "spotPrice": 0,
           "timestamp": 1438271337,
           "totalIn": "3750000000000000000",
@@ -1368,7 +1368,7 @@ Results in ./accounting_wei_2_out.file
       "blockNumber": 987,
       "date": "2015-07-30 16:01:54 UTC",
       "ether": "2.5",
-      "from": "0x0000000000000000000000000000004d696e6572",
+      "from": "0x000000000000000000000000000000556e636c65",
       "gas": 0,
       "gasCost": 0,
       "gasPrice": 0,
@@ -1411,7 +1411,7 @@ Results in ./accounting_wei_2_out.file
           "reconciliationType": "regular-eth",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
-          "sender": "0x0000000000000000000000000000004d696e6572",
+          "sender": "0x000000000000000000000000000000556e636c65",
           "spotPrice": 0,
           "timestamp": 1438272114,
           "totalIn": "2500000000000000000",
@@ -1496,7 +1496,7 @@ Results in ./accounting_wei_2_out.file
       "blockNumber": 1580,
       "date": "2015-07-30 16:24:38 UTC",
       "ether": "3.75",
-      "from": "0x0000000000000000000000000000004d696e6572",
+      "from": "0x000000000000000000000000000000556e636c65",
       "gas": 0,
       "gasCost": 0,
       "gasPrice": 0,
@@ -1539,7 +1539,7 @@ Results in ./accounting_wei_2_out.file
           "reconciliationType": "regular-eth",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
-          "sender": "0x0000000000000000000000000000004d696e6572",
+          "sender": "0x000000000000000000000000000000556e636c65",
           "spotPrice": 0,
           "timestamp": 1438273478,
           "totalIn": "3750000000000000000",
@@ -1560,7 +1560,7 @@ Results in ./accounting_wei_2_out.file
       "blockNumber": 1586,
       "date": "2015-07-30 16:24:52 UTC",
       "ether": "3.75",
-      "from": "0x0000000000000000000000000000004d696e6572",
+      "from": "0x000000000000000000000000000000556e636c65",
       "gas": 0,
       "gasCost": 0,
       "gasPrice": 0,
@@ -1603,7 +1603,7 @@ Results in ./accounting_wei_2_out.file
           "reconciliationType": "regular-eth",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
-          "sender": "0x0000000000000000000000000000004d696e6572",
+          "sender": "0x000000000000000000000000000000556e636c65",
           "spotPrice": 0,
           "timestamp": 1438273492,
           "totalIn": "3750000000000000000",
@@ -1688,7 +1688,7 @@ Results in ./accounting_wei_2_out.file
       "blockNumber": 1912,
       "date": "2015-07-30 16:39:38 UTC",
       "ether": "3.75",
-      "from": "0x0000000000000000000000000000004d696e6572",
+      "from": "0x000000000000000000000000000000556e636c65",
       "gas": 0,
       "gasCost": 0,
       "gasPrice": 0,
@@ -1731,7 +1731,7 @@ Results in ./accounting_wei_2_out.file
           "reconciliationType": "regular-eth",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
-          "sender": "0x0000000000000000000000000000004d696e6572",
+          "sender": "0x000000000000000000000000000000556e636c65",
           "spotPrice": 0,
           "timestamp": 1438274378,
           "totalIn": "3750000000000000000",
