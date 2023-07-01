@@ -20,6 +20,10 @@ type LedgerContext struct {
 	ReconType  string
 }
 
+func (l *Ledger) CtxKey(bn, txid uint64) string {
+	return fmt.Sprintf("%s-%09d-%05d", l.AccountFor.Hex(), bn, txid)
+}
+
 // SetContexts visits the list of appearances and notes the block numbers of the next and previous
 // appearance's and if they are the same or different. Because balances are only available per block,
 // we must know this information to be able to calculate the correct post-tx balance.
@@ -37,7 +41,7 @@ func (l *Ledger) SetContexts(chain string, apps []index.AppearanceRecord) error 
 			next = apps[i+1].BlockNumber
 		}
 
-		key := fmt.Sprintf("%09d-%05d", apps[i].BlockNumber, apps[i].TransactionId)
+		key := l.CtxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionId))
 		l.Contexts[key] = LedgerContext{
 			PrevBlock:  base.Blknum(prev),
 			CurBlock:   base.Blknum(cur),
@@ -69,7 +73,7 @@ func (l *Ledger) SetContextsFromIds(chain string, txIds []identifiers.Identifier
 
 			next := apps[i].BlockNumber + 1
 
-			key := fmt.Sprintf("%09d-%05d", apps[i].BlockNumber, apps[i].TransactionIndex)
+			key := l.CtxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionIndex))
 			l.Contexts[key] = LedgerContext{
 				PrevBlock:  base.Blknum(prev),
 				CurBlock:   base.Blknum(cur),
@@ -85,7 +89,7 @@ func (l *Ledger) SetContextsFromIds(chain string, txIds []identifiers.Identifier
 
 func getReconType(bn uint32, isPrevDiff bool, isNextDiff bool) (reconType string) {
 	if bn == 0 {
-		return "gensis"
+		return "genesis"
 	}
 
 	if isPrevDiff && isNextDiff {

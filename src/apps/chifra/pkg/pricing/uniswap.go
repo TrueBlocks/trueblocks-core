@@ -89,7 +89,7 @@ func PriceUsdUniswap(chain string, testMode bool, statement *types.SimpleStateme
 	price *= multiplier
 	source = "uniswap"
 
-	r := reporter{
+	r := priceDebugger{
 		address:     statement.AssetAddr,
 		symbol:      statement.AssetSymbol,
 		blockNumber: statement.BlockNumber,

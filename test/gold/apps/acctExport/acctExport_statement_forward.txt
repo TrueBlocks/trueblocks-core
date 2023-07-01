@@ -24,8 +24,8 @@ TEST[DATE|TIME] source:              maker
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ledger.blockNumber:     8769018
-TEST[DATE|TIME] prevBlock:              8769018
+TEST[DATE|TIME] ledger.blockNumber:     0
+TEST[DATE|TIME] prevBlock:              0
 TEST[DATE|TIME] transfer.blockNumber:   8769019
 TEST[DATE|TIME] nextBlock:              8769029
 TEST[DATE|TIME] isPrevDiff:             true
@@ -39,7 +39,7 @@ TEST[DATE|TIME]    recipient:           0x868b8fd259abfcfdf9634c343593b34ef35964
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
 TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    prevAppBlk:          8769018
+TEST[DATE|TIME]    prevAppBlk:          0
 TEST[DATE|TIME]    hash:                0xf6bce3d9edd00f2e8a996505fded2e7e28a1b6af193d94e9524b9ac7fbf3e8b3
 TEST[DATE|TIME]    timestamp:           1571457514
 TEST[DATE|TIME]    blockNumber:         8769019

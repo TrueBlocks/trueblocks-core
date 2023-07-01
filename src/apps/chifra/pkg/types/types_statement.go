@@ -267,6 +267,9 @@ func (s *SimpleStatement) Reconciled() bool {
 	return (s.EndBalDiff().Cmp(zero) == 0 && s.BegBalDiff().Cmp(zero) == 0)
 }
 
+// ClearInternal clears all the internal accounting values. Keeps AmountIn, AmountOut and GasOut
+// because those are at the top level (both the transaction itself and trace '0' have them). We
+// skip trace '0' because it's the same as the transaction.
 func (s *SimpleStatement) ClearInternal() {
 	// s.AmountIn.SetUint64(0)
 	s.InternalIn.SetUint64(0)

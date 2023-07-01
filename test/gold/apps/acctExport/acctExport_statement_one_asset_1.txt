@@ -1,0 +1,119 @@
+chifra export  0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 --max_records 3 --asset 0x6b175474e89094c44da98b954eedeac495271d0f --accounting --statements --fmt json
+TEST[DATE|TIME] Addrs:  [0x054993ab0f2b1acc0fdc65405ee203b4271bebe6]
+TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] Statements:  true
+TEST[DATE|TIME] MaxRecords:  3
+TEST[DATE|TIME] Asset:  [0x6b175474e89094c44da98b954eedeac495271d0f]
+TEST[DATE|TIME] OutputFn:  statement_one_asset_1_out.file
+TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
+TEST[DATE|TIME] Start of trial balance report
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] stable-coin
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ====> TOKENS
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ledger.blockNumber:     10277683
+TEST[DATE|TIME] prevBlock:              10277683
+TEST[DATE|TIME] transfer.blockNumber:   10277711
+TEST[DATE|TIME] nextBlock:              10277776
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    reconciliationType:  regular-token
+TEST[DATE|TIME]    accountedFor:        0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
+TEST[DATE|TIME]    sender:              0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME]    recipient:           0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
+TEST[DATE|TIME]    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME]    assetSymbol:         DAI
+TEST[DATE|TIME]    decimals:            18
+TEST[DATE|TIME]    prevAppBlk:          10277683
+TEST[DATE|TIME]    hash:                0xc738fc254b05db7933e9b465b2db63ae854215359dc1bd789a647a1850a62acd
+TEST[DATE|TIME]    timestamp:           1592322766
+TEST[DATE|TIME]    blockNumber:         10277711
+TEST[DATE|TIME]    transactionIndex:    64
+TEST[DATE|TIME]    logIndex:            73
+TEST[DATE|TIME]    priceSource:         stable-coin
+TEST[DATE|TIME]    spotPrice:           1
+TEST[DATE|TIME]    prevBal:             0
+TEST[DATE|TIME]    begBal:              0
+TEST[DATE|TIME]    amountIn:            51334962093571123198
+TEST[DATE|TIME]    internalIn:          0
+TEST[DATE|TIME]    minerBaseRewardIn:   0
+TEST[DATE|TIME]    minerNephewRewardIn: 0
+TEST[DATE|TIME]    minerTxFeeIn:        0
+TEST[DATE|TIME]    minerUncleRewardIn:  0
+TEST[DATE|TIME]    correctingIn:        0
+TEST[DATE|TIME]    prefundIn:           0
+TEST[DATE|TIME]    selfDestructIn:      0
+TEST[DATE|TIME]    totalIn:             51334962093571123198
+TEST[DATE|TIME]    amountOut:           0
+TEST[DATE|TIME]    internalOut:         0
+TEST[DATE|TIME]    correctingOut:       0
+TEST[DATE|TIME]    selfDestructOut:     0
+TEST[DATE|TIME]    gasOut:              0
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           51334962093571123198
+TEST[DATE|TIME]    endBal:              51334962093571123198
+TEST[DATE|TIME]    begBalDiff:          0
+TEST[DATE|TIME]    endBalDiff:          0
+TEST[DATE|TIME]    endBalCalc:          51334962093571123198
+TEST[DATE|TIME]    correctingReason:    
+TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] End of trial balance report
+----
+Results in ./statement_one_asset_1_out.file
+{
+  "data": [
+    {
+      "accountedFor": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+      "amountIn": "51334962093571123198",
+      "amountNet": "51334962093571123198",
+      "amountOut": "0",
+      "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "assetSymbol": "DAI",
+      "begBal": "0",
+      "begBalDiff": "0",
+      "blockNumber": 10277711,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "",
+      "date": "2020-06-16 15:52:46 UTC",
+      "decimals": 18,
+      "endBal": "51334962093571123198",
+      "endBalCalc": "51334962093571123198",
+      "endBalDiff": "0",
+      "gasOut": "0",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 73,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevAppBlk": 10277683,
+      "prevBal": "0",
+      "priceSource": "stable-coin",
+      "recipient": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+      "reconciled": true,
+      "reconciliationType": "regular-token",
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11",
+      "spotPrice": 1,
+      "timestamp": 1592322766,
+      "totalIn": "51334962093571123198",
+      "totalOut": "0",
+      "totalOutLessGas": "0",
+      "transactionHash": "0xc738fc254b05db7933e9b465b2db63ae854215359dc1bd789a647a1850a62acd",
+      "transactionIndex": 64
+    }
+  ]
+}
+

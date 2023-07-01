@@ -53,7 +53,7 @@ func PriceUsdMaker(chain string, testMode bool, statement *types.SimpleStatement
 	bigPrice = bigPrice.Quo(bigPrice, new(big.Float).SetInt64(100000))
 	price, _ = bigPrice.Float64()
 	source = "maker"
-	r := reporter{
+	r := priceDebugger{
 		address:     statement.AssetAddr,
 		symbol:      statement.AssetSymbol,
 		blockNumber: statement.BlockNumber,

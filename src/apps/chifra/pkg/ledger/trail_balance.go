@@ -1,7 +1,6 @@
 package ledger
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -12,8 +11,9 @@ import (
 
 // TrialBalance returns true of the reconciliation balances, false otherwise. It also prints the trial balance to the console.
 func (l *Ledger) TrialBalance(msg string, r *types.SimpleStatement) bool {
-	key := fmt.Sprintf("%09d-%05d", r.BlockNumber, r.TransactionIndex)
+	key := l.CtxKey(r.BlockNumber, r.TransactionIndex)
 	ctx := l.Contexts[key]
+
 	r.ReconciliationType = ctx.ReconType
 	if r.AssetAddr == base.FAKE_ETH_ADDRESS {
 		if strings.Contains(msg, "TRACE") {
