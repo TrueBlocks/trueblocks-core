@@ -36,6 +36,7 @@ func NewLedgerContext(prev, cur, next base.Blknum) *LedgerContext {
 
 func (c *LedgerContext) getReconType() (reconType string) {
 	if c.CurBlock == 0 {
+		c.IsPrevDiff = true
 		return "genesis"
 	} else {
 		if c.IsPrevDiff && c.IsNextDiff {
@@ -56,11 +57,17 @@ func (l *Ledger) CtxKey(bn, txid uint64) string {
 	return fmt.Sprintf("%s-%09d-%05d", l.AccountFor.Hex(), bn, txid)
 }
 
+const maxTestingBlock = 17000000
+
 // SetContexts visits the list of appearances and notes the block numbers of the next and previous
 // appearance's and if they are the same or different. Because balances are only available per block,
 // we must know this information to be able to calculate the correct post-tx balance.
 func (l *Ledger) SetContexts(chain string, apps []index.AppearanceRecord) error {
 	for i := 0; i < len(apps); i++ {
+		if apps[i].BlockNumber > maxTestingBlock {
+			continue
+		}
+
 		cur := apps[i].BlockNumber
 
 		prev := uint32(0)
