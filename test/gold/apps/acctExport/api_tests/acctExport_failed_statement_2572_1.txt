@@ -1,4 +1,4 @@
-export?addrs=0x054993ab0f2b1acc0fdc65405ee203b4271bebe6&accounting&statements&ether&fmt=json&firstBlock=15549161&lastBlock=15549163&asset=0xf5b2c59f6db42ffcdfc1625999c81fdf17953384&maxRecords=10000
+export?addrs=0x054993ab0f2b1acc0fdc65405ee203b4271bebe6&accounting&statements&ether&fmt=json&lastBlock=15549163&asset=0xf5b2c59f6db42ffcdfc1625999c81fdf17953384&maxRecords=40
 {
   "data": [
     {
@@ -29,7 +29,7 @@ export?addrs=0x054993ab0f2b1acc0fdc65405ee203b4271bebe6&accounting&statements&et
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
       "prevAppBlk": 14469880,
-      "prevBal": "2017.044745122853478376",
+      "prevBal": "0",
       "priceSource": "not-priced",
       "recipient": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
       "reconciled": true,

@@ -10,19 +10,10 @@ TEST[DATE|TIME] OutputFn:  statement_filtered_out.file
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Start of trial balance report
-TEST[DATE|TIME] Block 8860513 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
+TEST[DATE|TIME] ===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
 TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         8860513
-TEST[DATE|TIME] source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-TEST[DATE|TIME] str0 (call):         peek()
-TEST[DATE|TIME] str1 (call/data):    0x000000000000000000000000000000000000000000000009ece258f296450000
-TEST[DATE|TIME] int0:                18309000000000000000000000
-TEST[DATE|TIME] int1:                18309000
-TEST[DATE|TIME] bigPrice:            183.09
-TEST[DATE|TIME] price:               183.09
-TEST[DATE|TIME] source:              maker
+TEST[DATE|TIME] stable-coin
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> TOKENS
 TEST[DATE|TIME] ===================================================
@@ -78,19 +69,10 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 TEST[DATE|TIME] Start of trial balance report
-TEST[DATE|TIME] Block 8860529 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
+TEST[DATE|TIME] ===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
 TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         8860529
-TEST[DATE|TIME] source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-TEST[DATE|TIME] str0 (call):         peek()
-TEST[DATE|TIME] str1 (call/data):    0x000000000000000000000000000000000000000000000009ece258f296450000
-TEST[DATE|TIME] int0:                18309000000000000000000000
-TEST[DATE|TIME] int1:                18309000
-TEST[DATE|TIME] bigPrice:            183.09
-TEST[DATE|TIME] price:               183.09
-TEST[DATE|TIME] source:              maker
+TEST[DATE|TIME] stable-coin
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> TOKENS
 TEST[DATE|TIME] ===================================================

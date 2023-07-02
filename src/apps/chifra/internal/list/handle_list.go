@@ -65,16 +65,18 @@ func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) e
 					nExported++
 
 					logger.Progress(!testMode && nSeen%723 == 0, "Processing: ", mon.Address.Hex(), " ", app.BlockNumber, ".", app.TransactionId)
-					if app.BlockNumber != currentBn {
-						currentTs, _ = tslib.FromBnToTs(chain, uint64(app.BlockNumber))
-					}
-					currentBn = app.BlockNumber
-
 					s := types.SimpleAppearance{
 						Address:          mon.Address,
 						BlockNumber:      app.BlockNumber,
 						TransactionIndex: app.TransactionId,
-						Timestamp:        currentTs,
+						Timestamp:        utils.NOPOSI,
+					}
+					if opts.Globals.Verbose {
+						if app.BlockNumber != currentBn || app.BlockNumber == 0 {
+							currentTs, _ = tslib.FromBnToTs(chain, uint64(app.BlockNumber))
+						}
+						currentBn = app.BlockNumber
+						s.Timestamp = currentTs
 					}
 
 					modelChan <- &s

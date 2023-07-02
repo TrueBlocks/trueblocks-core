@@ -62,19 +62,21 @@ func (opts *ExportOptions) HandleAppearances(monitorArray []monitor.Monitor) err
 					nExported++
 
 					logger.Progress(!testMode && nSeen%723 == 0, "Processing: ", mon.Address.Hex(), " ", app.BlockNumber, ".", app.TransactionId)
-
-					logger.Progress(!testMode && nSeen%723 == 0, "Processing: ", mon.Address.Hex(), " ", app.BlockNumber, ".", app.TransactionId)
-					if app.BlockNumber != currentBn || app.BlockNumber == 0 {
-						currentTs, _ = tslib.FromBnToTs(chain, uint64(app.BlockNumber))
-					}
-					currentBn = app.BlockNumber
-
-					if err := visitAppearance(&types.SimpleAppearance{
+					s := types.SimpleAppearance{
 						Address:          mon.Address,
 						BlockNumber:      app.BlockNumber,
 						TransactionIndex: app.TransactionId,
-						Timestamp:        currentTs,
-					}); err != nil {
+						Timestamp:        utils.NOPOSI,
+					}
+					if opts.Globals.Verbose {
+						if app.BlockNumber != currentBn || app.BlockNumber == 0 {
+							currentTs, _ = tslib.FromBnToTs(chain, uint64(app.BlockNumber))
+						}
+						currentBn = app.BlockNumber
+						s.Timestamp = currentTs
+					}
+
+					if err := visitAppearance(&s); err != nil {
 						errorChan <- err
 						return
 					}

@@ -148,7 +148,7 @@ date                	1037	0	37748741	T_DATE TS_DATE TS_OMITEMPTY
 ether               	1038	0	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
 encoding            	1039	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 {
-  "schema": 72000,
+  "schema": 75000,
   "deleted": false,
   "showing": true,
   "cname": "Transaction",

@@ -52,18 +52,17 @@ func NewLedger(chain string, acctFor base.Address, asEther, testMode, noZero, us
 
 // AssetOfInterest returns true if the asset filter is empty or the asset matches
 func (l *Ledger) AssetOfInterest(needle base.Address) bool {
-	// if l.AssetFilter == nil {
-	// 	return true
-	// }
+	if l.AssetFilter == nil || len(*l.AssetFilter) == 0 {
+		return true
+	}
 
-	// for _, asset := range *l.AssetFilter {
-	// 	if asset == needle {
-	// 		return true
-	// 	}
-	// }
+	for _, asset := range *l.AssetFilter {
+		if asset.Hex() == needle.Hex() {
+			return true
+		}
+	}
 
-	// return false
-	return true
+	return false
 }
 
 func Report(r *types.SimpleStatement, ctx LedgerContext, msg string) {

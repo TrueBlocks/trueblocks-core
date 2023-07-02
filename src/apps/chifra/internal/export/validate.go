@@ -104,10 +104,6 @@ func (opts *ExportOptions) validateExport() error {
 			if len(opts.Flow) > 0 {
 				return validate.Usage("The {0} option is only available with {1} option.", "--flow", "--statements")
 			}
-
-			if len(opts.Asset) > 0 {
-				return validate.Usage("The {0} option is only available with the {1} option.", "--asset", "--statements")
-			}
 		}
 
 		if !node.IsArchiveNode(opts.Globals.Chain) {
@@ -122,6 +118,10 @@ func (opts *ExportOptions) validateExport() error {
 		if opts.Globals.Format == "ofx" {
 			return validate.Usage("The {0} option is only available with the {1} option.", "--fmt ofx", "--accounting")
 		}
+	}
+
+	if len(opts.Asset) > 0 && !opts.Statements {
+		return validate.Usage("The {0} option is only available with the {1} option.", "--asset", "--statements")
 	}
 
 	if !validate.CanArticulate(opts.Articulate) {
