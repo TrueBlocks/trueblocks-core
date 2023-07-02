@@ -1,7 +1,10 @@
-chifra list  --help
-Purpose:
-  List every appearance of an address anywhere on the chain.
-
+chifra list  0x007f7f58d3eb5b7510a301ecc749fc1fcddbe14d 0x4444DEADdeadDEADdeadDEADdeadDEADdeadDEAD 0x2910543af39aba0cd09dbb2d50200b3e800a63d2 --first_block 100000 --last_block 100100 --fmt txt --no_zero
+TEST[DATE|TIME] Addrs:  [0x007f7f58d3eb5b7510a301ecc749fc1fcddbe14d 0x4444deaddeaddeaddeaddeaddeaddeaddeaddead 0x2910543af39aba0cd09dbb2d50200b3e800a63d2]
+TEST[DATE|TIME] NoZero:  true
+TEST[DATE|TIME] FirstBlock:  100000
+TEST[DATE|TIME] LastBlock:  100100
+TEST[DATE|TIME] Format:  txt
+Error: The --no_zero option is only available with the --count option.
 Usage:
   chifra list [flags] <address> [address...]
 
@@ -25,3 +28,4 @@ Flags:
 Notes:
   - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - No other options are permitted when --silent is selected.
+

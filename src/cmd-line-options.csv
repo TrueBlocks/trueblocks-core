@@ -51,17 +51,17 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 12005,apps,Accounts,list,acctExport,addrs,,,true,false,true,true,gocmd,positional,list<addr>,one or more addresses (0x...) to list
 12015,apps,Accounts,list,acctExport,count,U,,false,false,true,true,gocmd,switch,<boolean>,display only the count of records for each monitor
-11210,apps,Accounts,list,acctExport,silent,s,,false,false,true,true,gocmd,switch,<boolean>,freshen the monitor only (no reporting)
-11215,apps,Accounts,list,acctExport,no_zero,n,,false,false,true,true,gocmd,switch,<boolean>,suppress the display of zero appearance accounts
-11220,apps,Accounts,list,acctExport,unripe,u,,false,false,true,true,gocmd,switch,<boolean>,list transactions labeled upripe (i.e. less than 28 blocks old)
-11430,apps,Accounts,list,acctExport,first_record,c,1,false,false,true,true,gocmd,flag,<uint64>,the first record to process
-11435,apps,Accounts,list,acctExport,max_records,e,250,false,false,true,true,gocmd,flag,<uint64>,the maximum number of records to process
-11440,apps,Accounts,list,acctExport,first_block,F,0,false,false,true,true,gocmd,flag,<blknum>,first block to export (inclusive&#44; ignored when freshening)
-11450,apps,Accounts,list,acctExport,last_block,L,NOPOS,false,false,true,true,gocmd,flag,<blknum>,last block to export (inclusive&#44; ignored when freshening)
-11500,apps,Accounts,list,acctExport,bounds,b,,false,false,true,true,gocmd,switch,<boolean>,report first and last block this address appears
-12025,apps,Accounts,list,acctExport,,,,false,false,true,true,--,description,,List every appearance of an address anywhere on the chain.
-12030,apps,Accounts,list,acctExport,n1,,,false,false,false,false,--,note,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
-12035,apps,Accounts,list,acctExport,n2,,,false,false,false,false,--,note,,No other options are permitted when --silent is selected.
+12020,apps,Accounts,list,acctExport,no_zero,n,,false,false,true,true,gocmd,switch,<boolean>,for the --count option only&#44; suppress the display of zero appearance accounts
+12025,apps,Accounts,list,acctExport,bounds,b,,false,false,true,true,gocmd,switch,<boolean>,report first and last block this address appears
+12030,apps,Accounts,list,acctExport,unripe,u,,false,false,true,true,gocmd,switch,<boolean>,list transactions labeled upripe (i.e. less than 28 blocks old)
+12010,apps,Accounts,list,acctExport,silent,s,,false,false,true,true,gocmd,switch,<boolean>,freshen the monitor only (no reporting)
+12035,apps,Accounts,list,acctExport,first_record,c,1,false,false,true,true,gocmd,flag,<uint64>,the first record to process
+12040,apps,Accounts,list,acctExport,max_records,e,250,false,false,true,true,gocmd,flag,<uint64>,the maximum number of records to process
+12045,apps,Accounts,list,acctExport,first_block,F,0,false,false,true,true,gocmd,flag,<blknum>,first block to export (inclusive&#44; ignored when freshening)
+12050,apps,Accounts,list,acctExport,last_block,L,NOPOS,false,false,true,true,gocmd,flag,<blknum>,last block to export (inclusive&#44; ignored when freshening)
+12055,apps,Accounts,list,acctExport,,,,false,false,true,true,--,description,,List every appearance of an address anywhere on the chain.
+12060,apps,Accounts,list,acctExport,n1,,,false,false,false,false,--,note,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
+12065,apps,Accounts,list,acctExport,n2,,,false,false,false,false,--,note,,No other options are permitted when --silent is selected.
 
 12260,tools,Accounts,names,ethNames,terms,,,true,false,true,true,gocmd,positional,list<string>,a space separated list of one or more search terms
 12265,tools,Accounts,names,ethNames,expand,e,,false,false,true,true,gocmd,switch,<boolean>,expand search to include all fields (search name&#44; address&#44; and symbol otherwise)

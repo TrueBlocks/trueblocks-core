@@ -4,49 +4,52 @@ on      ,cmd  ,fast  ,export   ,apps/acctExport ,export_help_long         ,n    
 on      ,cmd  ,fast  ,export   ,apps/acctExport ,export_no_params         ,y    ,
 
 # Testing chifra list...
-list    ,cmd  ,fast  ,list     ,apps/acctExport ,list_help                ,n    ,@h
-list    ,cmd  ,fast  ,list     ,apps/acctExport ,list_long_help           ,n    ,help
-list    ,both ,fast  ,list     ,apps/acctExport ,list_no_params           ,y    ,
+on      ,cmd  ,fast  ,list     ,apps/acctExport ,list_help                ,n    ,@h
+on      ,cmd  ,fast  ,list     ,apps/acctExport ,list_long_help           ,n    ,help
+on      ,both ,fast  ,list     ,apps/acctExport ,list_no_params           ,y    ,
 
-list    ,both ,fast  ,list     ,apps/acctExport ,list_list                ,n    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = txt & last_block = 2000000
-list    ,both ,fast  ,list     ,apps/acctExport ,list_appearances         ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000
-list    ,both ,fast  ,list     ,apps/acctExport ,list_appearances_csv     ,n    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & fmt = csv & no_header
-list    ,both ,fast  ,list     ,apps/acctExport ,list_appearances_dates   ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & verbose
-list    ,both ,fast  ,list     ,apps/acctExport ,list_appearances_count   ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & count
-list    ,both ,fast  ,list     ,apps/acctExport ,list_appearances_nozero  ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & no_zero
-list    ,both ,fast  ,list     ,apps/acctExport ,list_ens                 ,y    ,addrs = rhyslindmark.eth & first_block = 4037786 & last_block = 4081406
-list    ,both ,fast  ,list     ,apps/acctExport ,list_bounds_1a           ,n    ,addrs = trueblocks.eth & fmt = csv & last_block = 9000000
-list    ,both ,fast  ,list     ,apps/acctExport ,list_bounds_1b           ,n    ,addrs = trueblocks.eth & count & fmt = csv & last_block = 9000000
-list    ,both ,fast  ,list     ,apps/acctExport ,list_bounds_2a           ,n    ,addrs = trueblocks.eth & fmt = txt & first_block = 8854723 & last_block = 9000000
-list    ,both ,fast  ,list     ,apps/acctExport ,list_bounds_2b           ,n    ,addrs = trueblocks.eth & count & fmt = txt & first_block = 8854723 & last_block = 9000000
-list    ,both ,fast  ,list     ,apps/acctExport ,list_bounds_3a           ,y    ,addrs = trueblocks.eth & fmt = json & first_block = 8854725 & last_block = 9000000
-list    ,both ,fast  ,list     ,apps/acctExport ,list_bounds_3b           ,y    ,addrs = trueblocks.eth & count & fmt = json & first_block = 8854725 & last_block = 9000000
+on      ,both ,fast  ,list     ,apps/acctExport ,list_list                ,n    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = txt & last_block = 2000000
+on      ,both ,fast  ,list     ,apps/acctExport ,list_appearances         ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000
+on      ,both ,fast  ,list     ,apps/acctExport ,list_appearances_csv     ,n    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & fmt = csv & no_header
+on      ,both ,fast  ,list     ,apps/acctExport ,list_appearances_dates   ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & verbose
+on      ,both ,fast  ,list     ,apps/acctExport ,list_appearances_count   ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & count
+on      ,both ,fast  ,list     ,apps/acctExport ,list_appearances_nozero1 ,n    ,addrs = 0x007f7f58d3eb5b7510a301ecc749fc1fcddbe14d 0x4444DEADdeadDEADdeadDEADdeadDEADdeadDEAD 0x2910543af39aba0cd09dbb2d50200b3e800a63d2 & first_block = 100000 & last_block = 100100 & fmt = txt & count
+on      ,both ,fast  ,list     ,apps/acctExport ,list_appearances_nozero2 ,n    ,addrs = 0x007f7f58d3eb5b7510a301ecc749fc1fcddbe14d & addrs = 0x4444DEADdeadDEADdeadDEADdeadDEADdeadDEAD & addrs = 0x2910543af39aba0cd09dbb2d50200b3e800a63d2 & first_block = 100000 & last_block = 100100 & fmt = txt & no_zero & count
+on      ,both ,fast  ,list     ,apps/acctExport ,list_err_nozero          ,n    ,addrs = 0x007f7f58d3eb5b7510a301ecc749fc1fcddbe14d & addrs = 0x4444DEADdeadDEADdeadDEADdeadDEADdeadDEAD & addrs = 0x2910543af39aba0cd09dbb2d50200b3e800a63d2 & first_block = 100000 & last_block = 100100 & fmt = txt & no_zero
 
-list    ,both ,fast  ,list     ,apps/acctExport ,100_list_n               ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & max_records = 100
-list    ,both ,fast  ,list     ,apps/acctExport ,102_list_mr              ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & max_records = 10
-list    ,both ,fast  ,list     ,apps/acctExport ,104_list_fr              ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_record = 3 & max_records = 100
-list    ,both ,fast  ,list     ,apps/acctExport ,106_list_fr_mr           ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_record = 3 & max_records = 10
-list    ,both ,fast  ,list     ,apps/acctExport ,108_list_lb              ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & last_block = 100
-list    ,both ,fast  ,list     ,apps/acctExport ,110_list_lb_mr           ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & last_block = 100 & max_records = 10
-list    ,both ,fast  ,list     ,apps/acctExport ,110_list_lb_mr_2         ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & last_block = 100 & max_records = 1
-list    ,both ,fast  ,list     ,apps/acctExport ,112_list_lb_fr           ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & last_block = 100 & first_record = 1
-list    ,both ,fast  ,list     ,apps/acctExport ,114_list_lb_fr_mr        ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & last_block = 100 & first_record = 1 & max_records = 10
-list    ,both ,fast  ,list     ,apps/acctExport ,114_list_lb_fr_mr_2      ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & last_block = 100 & first_record = 1 & max_records = 1
+on      ,both ,fast  ,list     ,apps/acctExport ,list_ens                 ,y    ,addrs = rhyslindmark.eth & first_block = 4037786 & last_block = 4081406
+on      ,both ,fast  ,list     ,apps/acctExport ,list_bounds_1a           ,n    ,addrs = trueblocks.eth & fmt = csv & last_block = 9000000
+on      ,both ,fast  ,list     ,apps/acctExport ,list_bounds_1b           ,n    ,addrs = trueblocks.eth & count & fmt = csv & last_block = 9000000
+on      ,both ,fast  ,list     ,apps/acctExport ,list_bounds_2a           ,n    ,addrs = trueblocks.eth & fmt = txt & first_block = 8854723 & last_block = 9000000
+on      ,both ,fast  ,list     ,apps/acctExport ,list_bounds_2b           ,n    ,addrs = trueblocks.eth & count & fmt = txt & first_block = 8854723 & last_block = 9000000
+on      ,both ,fast  ,list     ,apps/acctExport ,list_bounds_3a           ,y    ,addrs = trueblocks.eth & fmt = json & first_block = 8854725 & last_block = 9000000
+on      ,both ,fast  ,list     ,apps/acctExport ,list_bounds_3b           ,y    ,addrs = trueblocks.eth & count & fmt = json & first_block = 8854725 & last_block = 9000000
 
-list    ,both ,fast  ,list     ,apps/acctExport ,116_list_fb              ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 90 & max_records = 100
-list    ,both ,fast  ,list     ,apps/acctExport ,118_list_fb_mr           ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 90 & max_records = 10
-list    ,both ,fast  ,list     ,apps/acctExport ,120_list_fb_fr           ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 90 & first_record = 3 & max_records = 100
-list    ,both ,fast  ,list     ,apps/acctExport ,122_list_fb_fr_mr        ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 90 & first_record = 3 & max_records = 10
-list    ,both ,fast  ,list     ,apps/acctExport ,124_list_fb_lb           ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 55 & last_block = 236
-list    ,both ,fast  ,list     ,apps/acctExport ,124_list_fb_lb_2         ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 236
-list    ,both ,fast  ,list     ,apps/acctExport ,124_list_fb_lb_3         ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 235
-list    ,both ,fast  ,list     ,apps/acctExport ,124_list_fb_lb_4         ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 55 & last_block = 235
-list    ,both ,fast  ,list     ,apps/acctExport ,126_list_fb_lb_mr        ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 2516 & max_records = 10
-list    ,both ,fast  ,list     ,apps/acctExport ,126_list_fb_lb_mr_2      ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 2516 & max_records = 8
-list    ,both ,fast  ,list     ,apps/acctExport ,128_list_fb_lb_fr        ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 2516 & first_record = 3
-list    ,both ,fast  ,list     ,apps/acctExport ,128_list_fb_lb_fr_2      ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 235 & first_record = 3
-list    ,both ,fast  ,list     ,apps/acctExport ,128_list_fb_lb_fr_3      ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 235 & first_record = 4
-list    ,both ,fast  ,list     ,apps/acctExport ,130_list_fb_lb_fr_mr     ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 235 & first_record = 3 & max_records = 10
+on      ,both ,fast  ,list     ,apps/acctExport ,100_list_n               ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & max_records = 100
+on      ,both ,fast  ,list     ,apps/acctExport ,102_list_mr              ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & max_records = 10
+on      ,both ,fast  ,list     ,apps/acctExport ,104_list_fr              ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_record = 3 & max_records = 100
+on      ,both ,fast  ,list     ,apps/acctExport ,106_list_fr_mr           ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_record = 3 & max_records = 10
+on      ,both ,fast  ,list     ,apps/acctExport ,108_list_lb              ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & last_block = 100
+on      ,both ,fast  ,list     ,apps/acctExport ,110_list_lb_mr           ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & last_block = 100 & max_records = 10
+on      ,both ,fast  ,list     ,apps/acctExport ,110_list_lb_mr_2         ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & last_block = 100 & max_records = 1
+on      ,both ,fast  ,list     ,apps/acctExport ,112_list_lb_fr           ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & last_block = 100 & first_record = 1
+on      ,both ,fast  ,list     ,apps/acctExport ,114_list_lb_fr_mr        ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & last_block = 100 & first_record = 1 & max_records = 10
+on      ,both ,fast  ,list     ,apps/acctExport ,114_list_lb_fr_mr_2      ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & last_block = 100 & first_record = 1 & max_records = 1
+
+on      ,both ,fast  ,list     ,apps/acctExport ,116_list_fb              ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 90 & max_records = 100
+on      ,both ,fast  ,list     ,apps/acctExport ,118_list_fb_mr           ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 90 & max_records = 10
+on      ,both ,fast  ,list     ,apps/acctExport ,120_list_fb_fr           ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 90 & first_record = 3 & max_records = 100
+on      ,both ,fast  ,list     ,apps/acctExport ,122_list_fb_fr_mr        ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 90 & first_record = 3 & max_records = 10
+on      ,both ,fast  ,list     ,apps/acctExport ,124_list_fb_lb           ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 55 & last_block = 236
+on      ,both ,fast  ,list     ,apps/acctExport ,124_list_fb_lb_2         ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 236
+on      ,both ,fast  ,list     ,apps/acctExport ,124_list_fb_lb_3         ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 235
+on      ,both ,fast  ,list     ,apps/acctExport ,124_list_fb_lb_4         ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 55 & last_block = 235
+on      ,both ,fast  ,list     ,apps/acctExport ,126_list_fb_lb_mr        ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 2516 & max_records = 10
+on      ,both ,fast  ,list     ,apps/acctExport ,126_list_fb_lb_mr_2      ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 2516 & max_records = 8
+on      ,both ,fast  ,list     ,apps/acctExport ,128_list_fb_lb_fr        ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 2516 & first_record = 3
+on      ,both ,fast  ,list     ,apps/acctExport ,128_list_fb_lb_fr_2      ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 235 & first_record = 3
+on      ,both ,fast  ,list     ,apps/acctExport ,128_list_fb_lb_fr_3      ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 235 & first_record = 4
+on      ,both ,fast  ,list     ,apps/acctExport ,130_list_fb_lb_fr_mr     ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 235 & first_record = 3 & max_records = 10
 
 # These work but are very slow
 slow    ,both ,fast  ,list     ,apps/acctExport ,export_relevant_list     ,y    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & count & fmt = json
