@@ -3,9 +3,8 @@ list?addrs=0x9531c059098e3d194ff87febb587ab07b30b1306&count&fmt=json
   "data": [
     {
       "address": "0x9531c059098e3d194ff87febb587ab07b30b1306",
-      "nRecords": 1001001,
       "fileSize": 1001001,
-      "lastScanned": 15000000
+      "nRecords": 3782
     }
   ],
   "meta": {
