@@ -97,3 +97,17 @@ func (opts *ListOptions) IsMax(cnt uint64) bool {
 	}
 	return cnt >= max
 }
+
+// TODO: We used to keep these stats on the chifra list process. Lost during port from C++
+// nBloomHits
+// nBloomMisses
+// nCacheWrites
+// nChecked
+// nFalsePositive
+// nFileRecords
+// nFiles
+// nPositive
+// nSkipped
+// nStageChecked
+// nStageHits
+// nTotalHits
