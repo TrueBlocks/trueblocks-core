@@ -80,14 +80,14 @@ func listFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
 			}
 		case "count":
 			opts.Count = true
-		case "silent":
-			opts.Silent = true
 		case "noZero":
 			opts.NoZero = true
 		case "bounds":
 			opts.Bounds = true
 		case "unripe":
 			opts.Unripe = true
+		case "silent":
+			opts.Silent = true
 		case "firstRecord":
 			opts.FirstRecord = globals.ToUint64(value[0])
 		case "maxRecords":

@@ -3,17 +3,8 @@ TEST[DATE|TIME] Transactions:  [0x332df8459d5357d05d59c4e186eeb7b0b9380343962ac9
 TEST[DATE|TIME] AccountFor:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Format:  json
 TEST[DATE|TIME] Start of trial balance report
-WARN[DATE|TIME] Statement is not reconciled WEI at 15828830 112 0
-TEST[DATE|TIME] A possible nullTransfer
-TEST[DATE|TIME]   nLogs:             25
-TEST[DATE|TIME]     lotsOfLogs:      --> true
-TEST[DATE|TIME]   Sender.IsZero:     0xb19feccea1cf597255719a6b8d4e0691ae29e118 false
-TEST[DATE|TIME]   or Sender == To:   false
-TEST[DATE|TIME]     mayBeAirdrop:    --> false
-TEST[DATE|TIME]   EndBal-BegBal:     1
-TEST[DATE|TIME]   MoneyMoved:        true
-TEST[DATE|TIME]     noBalanceChange: --> false
-TEST[DATE|TIME]   ---> Not a nullTransfer
+TEST[DATE|TIME] Needs correction for eth
+TEST[DATE|TIME] Needs correction for eth
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================

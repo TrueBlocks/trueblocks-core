@@ -7,8 +7,8 @@ TEST[DATE|TIME] Format:  json
   "data": [
     {
       "address": "0x9531c059098e3d194ff87febb587ab07b30b1306",
-      "fileSize": 1001001,
-      "nRecords": 3782
+      "fileSize": 57005,
+      "nRecords": 620
     }
   ]
 }
