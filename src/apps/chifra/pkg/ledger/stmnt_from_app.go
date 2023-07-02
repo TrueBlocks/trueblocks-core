@@ -15,22 +15,24 @@ func (l *Ledger) GetStatementsFromAppearance(chain string, app *types.RawAppeara
 		l.Tx = tx // we need this below
 		if stmts := l.GetStatementsFromTransaction(tx); len(stmts) > 0 {
 			for _, statement := range stmts {
-				passes := false
-				if l.AssetFilter != nil && len(*l.AssetFilter) > 0 {
-					for _, asset := range *l.AssetFilter {
-						if asset == statement.AssetAddr {
-							passes = true
-							break
-						}
-					}
-				} else {
-					passes = true
-				}
-				add := passes && (!l.NoZero || statement.MoneyMoved())
-				if add {
-					statement := statement
-					statements = append(statements, *statement)
-				}
+				statement := statement
+				statements = append(statements, *statement)
+				// passes := false
+				// if l.AssetFilter != nil && len(*l.AssetFilter) > 0 {
+				// 	for _, asset := range *l.AssetFilter {
+				// 		if asset == statement.AssetAddr {
+				// 			passes = true
+				// 			break
+				// 		}
+				// 	}
+				// } else {
+				// 	passes = true
+				// }
+				// add := passes && (!l.NoZero || statement.MoneyMoved())
+				// if add {
+				// 	statement := statement
+				// 	statements = append(statements, *statement)
+				// }
 			}
 		} else if err != nil {
 			return []types.SimpleStatement{}, err

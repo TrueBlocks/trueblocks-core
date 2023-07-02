@@ -33,7 +33,7 @@ export?addrs=0x054993ab0f2b1acc0fdc65405ee203b4271bebe6&maxRecords=3&asset=0x6b1
       "priceSource": "stable-coin",
       "recipient": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
       "reconciled": true,
-      "reconciliationType": "regular-token",
+      "reconciliationType": "diff-diff-token",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11",

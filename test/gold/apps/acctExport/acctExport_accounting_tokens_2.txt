@@ -7,6 +7,10 @@ TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] OutputFn:  accounting_tokens_2_out.file
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
+INFO[DATE|TIME] 0x001d14804b399c6ef80e64576f657660804fec0b-000000000-00002:          0          0      202249      genesis true true
+INFO[DATE|TIME] 0x001d14804b399c6ef80e64576f657660804fec0b-000202249-00000:          0     202249     1501459    diff-diff true true
+INFO[DATE|TIME] 0x001d14804b399c6ef80e64576f657660804fec0b-001501459-00002:     202249    1501459    15507094    diff-diff true true
+INFO[DATE|TIME] 0x001d14804b399c6ef80e64576f657660804fec0b-015507094-00088:    1501459   15507094  4294967295    diff-diff true true
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -76,7 +80,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-eth
+TEST[DATE|TIME]    reconciliationType:  diff-diff-eth
 TEST[DATE|TIME]    accountedFor:        0x001d14804b399c6ef80e64576f657660804fec0b
 TEST[DATE|TIME]    sender:              0x001d14804b399c6ef80e64576f657660804fec0b
 TEST[DATE|TIME]    recipient:           0x2910543af39aba0cd09dbb2d50200b3e800a63d2
@@ -132,7 +136,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-eth
+TEST[DATE|TIME]    reconciliationType:  diff-diff-eth
 TEST[DATE|TIME]    accountedFor:        0x001d14804b399c6ef80e64576f657660804fec0b
 TEST[DATE|TIME]    sender:              0x001d14804b399c6ef80e64576f657660804fec0b
 TEST[DATE|TIME]    recipient:           0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902
@@ -296,7 +300,7 @@ Results in ./accounting_tokens_2_out.file
           "priceSource": "eth-not-priced-pre-maker",
           "recipient": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
           "reconciled": true,
-          "reconciliationType": "regular-eth",
+          "reconciliationType": "diff-diff-eth",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x001d14804b399c6ef80e64576f657660804fec0b",
@@ -367,7 +371,7 @@ Results in ./accounting_tokens_2_out.file
           "priceSource": "eth-not-priced-pre-maker",
           "recipient": "0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902",
           "reconciled": true,
-          "reconciliationType": "regular-eth",
+          "reconciliationType": "diff-diff-eth",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x001d14804b399c6ef80e64576f657660804fec0b",

@@ -5,6 +5,635 @@ TEST[DATE|TIME] Statements:  true
 TEST[DATE|TIME] LastBlock:  100
 TEST[DATE|TIME] OutputFn:  accounting_to_cache_out.file
 TEST[DATE|TIME] Format:  txt
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000013-99999:          0         13          22    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000022-99999:         13         22          37    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000037-99998:         22         37          39    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000039-99999:         37         39          43    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000043-99999:         39         43          53    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000053-99999:         43         53          55    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000055-99998:         53         55          64    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000064-99999:         55         64          67    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000067-99999:         64         67          78    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000078-99999:         67         78          84    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000084-99999:         78         84          90    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000090-99999:         84         90          94    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000094-99999:         90         94         105    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000105-99998:         94        105         106    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000106-99999:        105        106         107    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000107-99999:        106        107         111    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000111-99998:        107        111         112    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000112-99999:        111        112         129    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000129-99999:        112        129         141    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000141-99998:        129        141         151    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000151-99998:        141        151         192    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000192-99999:        151        192         196    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000196-99999:        192        196         219    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000219-99998:        196        219         221    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000221-99999:        219        221         223    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000223-99998:        221        223         236    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000236-99999:        223        236         313    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000313-99999:        236        313         318    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000318-99998:        313        318         334    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000334-99999:        318        334         337    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000337-99999:        334        337         351    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000351-99998:        337        351         377    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000377-99999:        351        377         379    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000379-99999:        377        379         407    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000407-99998:        379        407         473    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000473-99999:        407        473         484    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000484-99998:        473        484         495    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000495-99999:        484        495         503    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000503-99999:        495        503         504    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000504-99999:        503        504         508    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000508-99998:        504        508         513    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000513-99999:        508        513         542    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000542-99998:        513        542         589    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000589-99999:        542        589         591    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000591-99998:        589        591         602    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000602-99998:        591        602         604    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000604-99999:        602        604         630    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000630-99998:        604        630         639    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000639-99998:        630        639         662    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000662-99998:        639        662         670    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000670-99998:        662        670         685    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000685-99998:        670        685         686    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000686-99999:        685        686         720    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000720-99999:        686        720         782    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000782-99999:        720        782         783    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000783-99998:        782        783         791    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000791-99998:        783        791         815    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000815-99998:        791        815         852    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000852-99998:        815        852         867    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000867-99998:        852        867         880    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000880-99999:        867        880         894    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000894-99999:        880        894         914    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000914-99998:        894        914         927    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000927-99999:        914        927         985    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000000985-99998:        927        985        1013    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001013-99998:        985       1013        1075    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001075-99999:       1013       1075        1083    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001083-99999:       1075       1083        1181    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001181-99999:       1083       1181        1231    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001231-99999:       1181       1231        1277    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001277-99999:       1231       1277        1303    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001303-99998:       1277       1303        1325    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001325-99998:       1303       1325        1397    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001397-99999:       1325       1397        1401    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001401-99999:       1397       1401        1408    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001408-99999:       1401       1408        1415    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001415-99998:       1408       1415        1463    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001463-99999:       1415       1463        1489    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001489-99999:       1463       1489        1549    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001549-99998:       1489       1549        1605    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001605-99999:       1549       1605        1660    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001660-99998:       1605       1660        1665    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001665-99999:       1660       1665        1677    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001677-99998:       1665       1677        1691    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001691-99999:       1677       1691        1715    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001715-99999:       1691       1715        1755    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001755-99999:       1715       1755        1768    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001768-99998:       1755       1768        1776    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001776-99999:       1768       1776        1778    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001778-99999:       1776       1778        1802    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001802-99999:       1778       1802        1810    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001810-99998:       1802       1810        1846    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001846-99998:       1810       1846        1873    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001873-99999:       1846       1873        1888    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001888-99998:       1873       1888        1919    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001919-99999:       1888       1919        1920    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001920-99998:       1919       1920        1924    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000001924-99999:       1920       1924        2054    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002054-99999:       1924       2054        2056    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002056-99998:       2054       2056        2084    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002084-99999:       2056       2084        2090    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002090-99999:       2084       2090        2143    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002143-99998:       2090       2143        2184    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002184-99998:       2143       2184        2204    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002204-99998:       2184       2204        2206    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002206-99998:       2204       2206        2238    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002238-99999:       2206       2238        2247    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002247-99999:       2238       2247        2266    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002266-99998:       2247       2266        2274    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002274-99998:       2266       2274        2278    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002278-99999:       2274       2278        2280    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002280-99999:       2278       2280        2289    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002289-99998:       2280       2289        2294    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002294-99998:       2289       2294        2294    diff-same true false
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002294-99999:       2294       2294        2317    same-diff false true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002317-99999:       2294       2317        2334    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002334-99999:       2317       2334        2360    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002360-99998:       2334       2360        2441    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002441-99998:       2360       2441        2454    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002454-99999:       2441       2454        2473    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002473-99998:       2454       2473        2537    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002537-99998:       2473       2537        2592    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002592-99998:       2537       2592        2635    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002635-99998:       2592       2635        2642    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002642-99999:       2635       2642        2655    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002655-99999:       2642       2655        2679    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002679-99999:       2655       2679        2689    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002689-99999:       2679       2689        2700    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002700-99999:       2689       2700        2734    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002734-99999:       2700       2734        2751    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002751-99999:       2734       2751        2757    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002757-99998:       2751       2757        2790    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002790-99998:       2757       2790        2809    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002809-99999:       2790       2809        2814    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002814-99999:       2809       2814        2821    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002821-99998:       2814       2821        2865    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002865-99999:       2821       2865        2867    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002867-99998:       2865       2867        2936    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002936-99999:       2867       2936        2952    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002952-99998:       2936       2952        2981    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000002981-99999:       2952       2981        3085    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003085-99999:       2981       3085        3086    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003086-99999:       3085       3086        3101    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003101-99999:       3086       3101        3105    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003105-99998:       3101       3105        3113    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003113-99999:       3105       3113        3126    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003126-99999:       3113       3126        3145    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003145-99998:       3126       3145        3151    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003151-99999:       3145       3151        3168    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003168-99998:       3151       3168        3184    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003184-99999:       3168       3184        3218    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003218-99998:       3184       3218        3268    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003268-99998:       3218       3268        3364    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003364-99999:       3268       3364        3373    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003373-99999:       3364       3373        3426    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003426-99999:       3373       3426        3435    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003435-99999:       3426       3435        3469    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003469-99999:       3435       3469        3494    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003494-99999:       3469       3494        3504    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003504-99999:       3494       3504        3519    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003519-99998:       3504       3519        3549    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003549-99998:       3519       3549        3556    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003556-99999:       3549       3556        3575    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003575-99999:       3556       3575        3773    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003773-99999:       3575       3773        3790    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003790-99998:       3773       3790        3813    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003813-99999:       3790       3813        3816    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003816-99999:       3813       3816        3879    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003879-99999:       3816       3879        3884    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003884-99999:       3879       3884        3888    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003888-99999:       3884       3888        3890    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003890-99999:       3888       3890        3921    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003921-99999:       3890       3921        3924    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003924-99998:       3921       3924        3973    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000003973-99999:       3924       3973        4043    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004043-99999:       3973       4043        4047    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004047-99998:       4043       4047        4119    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004119-99998:       4047       4119        4126    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004126-99998:       4119       4126        4165    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004165-99999:       4126       4165        4167    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004167-99999:       4165       4167        4189    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004189-99999:       4167       4189        4218    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004218-99999:       4189       4218        4226    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004226-99999:       4218       4226        4231    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004231-99999:       4226       4231        4291    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004291-99999:       4231       4291        4317    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004317-99999:       4291       4317        4337    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004337-99999:       4317       4337        4347    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004347-99999:       4337       4347        4363    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004363-99999:       4347       4363        4372    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004372-99999:       4363       4372        4401    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004401-99999:       4372       4401        4402    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004402-99999:       4401       4402        4408    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004408-99999:       4402       4408        4435    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004435-99999:       4408       4435        4448    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004448-99999:       4435       4448        4469    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004469-99999:       4448       4469        4475    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004475-99998:       4469       4475        4498    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004498-99999:       4475       4498        4543    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004543-99999:       4498       4543        4551    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004551-99999:       4543       4551        4575    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004575-99999:       4551       4575        4577    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004577-99999:       4575       4577        4586    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004586-99999:       4577       4586        4596    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004596-99998:       4586       4596        4643    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004643-99999:       4596       4643        4660    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004660-99998:       4643       4660        4677    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004677-99999:       4660       4677        4682    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004682-99999:       4677       4682        4694    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004694-99999:       4682       4694        4701    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004701-99999:       4694       4701        4709    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004709-99999:       4701       4709        4774    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004774-99999:       4709       4774        4859    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004859-99998:       4774       4859        4926    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004926-99999:       4859       4926        4930    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004930-99999:       4926       4930        4936    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004936-99999:       4930       4936        4955    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004955-99999:       4936       4955        4962    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004962-99999:       4955       4962        4968    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004968-99999:       4962       4968        4996    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004996-99999:       4968       4996        4998    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000004998-99999:       4996       4998        5015    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005015-99999:       4998       5015        5064    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005064-99999:       5015       5064        5075    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005075-99999:       5064       5075        5076    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005076-99998:       5075       5076        5096    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005096-99999:       5076       5096        5133    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005133-99999:       5096       5133        5181    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005181-99999:       5133       5181        5193    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005193-99999:       5181       5193        5236    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005236-99998:       5193       5236        5243    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005243-99999:       5236       5243        5260    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005260-99999:       5243       5260        5270    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005270-99998:       5260       5270        5301    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005301-99998:       5270       5301        5303    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005303-99999:       5301       5303        5319    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005319-99999:       5303       5319        5335    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005335-99998:       5319       5335        5340    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005340-99999:       5335       5340        5407    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005407-99999:       5340       5407        5419    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005419-99999:       5407       5419        5451    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005451-99999:       5419       5451        5472    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005472-99999:       5451       5472        5473    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005473-99998:       5472       5473        5476    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005476-99999:       5473       5476        5548    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005548-99999:       5476       5548        5577    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005577-99999:       5548       5577        5602    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005602-99998:       5577       5602        5659    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005659-99999:       5602       5659        5661    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005661-99998:       5659       5661        5665    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005665-99998:       5661       5665        5671    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005671-99999:       5665       5671        5691    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005691-99999:       5671       5691        5713    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005713-99999:       5691       5713        5823    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005823-99999:       5713       5823        5830    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005830-99999:       5823       5830        5837    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005837-99998:       5830       5837        5853    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005853-99999:       5837       5853        5865    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005865-99999:       5853       5865        5883    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005883-99999:       5865       5883        5908    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005908-99999:       5883       5908        5914    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005914-99999:       5908       5914        5918    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005918-99999:       5914       5918        5939    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005939-99998:       5918       5939        5941    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005941-99998:       5939       5941        5970    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005970-99999:       5941       5970        5998    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000005998-99999:       5970       5998        6025    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006025-99999:       5998       6025        6044    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006044-99998:       6025       6044        6056    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006056-99999:       6044       6056        6060    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006060-99999:       6056       6060        6080    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006080-99999:       6060       6080        6089    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006089-99999:       6080       6089        6096    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006096-99999:       6089       6096        6137    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006137-99999:       6096       6137        6145    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006145-99998:       6137       6145        6155    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006155-99999:       6145       6155        6202    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006202-99999:       6155       6202        6211    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006211-99998:       6202       6211        6232    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006232-99999:       6211       6232        6262    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006262-99999:       6232       6262        6276    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006276-99998:       6262       6276        6291    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006291-99998:       6276       6291        6309    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006309-99999:       6291       6309        6341    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006341-99999:       6309       6341        6385    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006385-99999:       6341       6385        6509    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006509-99999:       6385       6509        6559    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006559-99999:       6509       6559        6581    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006581-99999:       6559       6581        6611    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006611-99999:       6581       6611        6613    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006613-99999:       6611       6613        6643    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006643-99999:       6613       6643        6663    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006663-99999:       6643       6663        6692    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006692-99998:       6663       6692        6700    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006700-99999:       6692       6700        6702    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006702-99999:       6700       6702        6721    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006721-99999:       6702       6721        6795    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006795-99999:       6721       6795        6841    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006841-99999:       6795       6841        6931    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006931-99999:       6841       6931        6961    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006961-99999:       6931       6961        6967    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006967-99999:       6961       6967        6977    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006977-99999:       6967       6977        6999    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000006999-99999:       6977       6999        7019    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007019-99999:       6999       7019        7042    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007042-99999:       7019       7042        7047    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007047-99999:       7042       7047        7049    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007049-99999:       7047       7049        7067    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007067-99999:       7049       7067        7081    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007081-99999:       7067       7081        7098    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007098-99999:       7081       7098        7119    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007119-99999:       7098       7119        7149    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007149-99999:       7119       7149        7152    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007152-99999:       7149       7152        7155    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007155-99999:       7152       7155        7199    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007199-99999:       7155       7199        7236    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007236-99999:       7199       7236        7247    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007247-99999:       7236       7247        7284    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007284-99999:       7247       7284        7293    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007293-99999:       7284       7293        7321    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007321-99999:       7293       7321        7324    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007324-99999:       7321       7324        7410    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007410-99998:       7324       7410        7415    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007415-99998:       7410       7415        7428    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007428-99999:       7415       7428        7431    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007431-99999:       7428       7431        7448    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007448-99999:       7431       7448        7464    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007464-99999:       7448       7464        7474    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007474-99998:       7464       7474        7522    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007522-99999:       7474       7522        7530    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007530-99999:       7522       7530        7559    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007559-99999:       7530       7559        7566    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007566-99999:       7559       7566        7578    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007578-99999:       7566       7578        7587    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007587-99999:       7578       7587        7589    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007589-99999:       7587       7589        7688    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007688-99999:       7589       7688        7716    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007716-99999:       7688       7716        7744    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007744-99999:       7716       7744        7866    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007866-99999:       7744       7866        7871    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007871-99999:       7866       7871        7915    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007915-99999:       7871       7915        7940    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007940-99999:       7915       7940        7958    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007958-99999:       7940       7958        7990    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007990-99999:       7958       7990        7992    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000007992-99999:       7990       7992        8002    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008002-99999:       7992       8002        8031    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008031-99999:       8002       8031        8040    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008040-99999:       8031       8040        8075    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008075-99998:       8040       8075        8107    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008107-99999:       8075       8107        8142    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008142-99998:       8107       8142        8173    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008173-99999:       8142       8173        8182    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008182-99999:       8173       8182        8405    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008405-99999:       8182       8405        8448    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008448-99999:       8405       8448        8480    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008480-99999:       8448       8480        8495    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008495-99999:       8480       8495        8525    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008525-99998:       8495       8525        8543    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008543-99999:       8525       8543        8552    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008552-99999:       8543       8552        8571    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008571-99999:       8552       8571        8595    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008595-99999:       8571       8595        8667    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008667-99998:       8595       8667        8677    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008677-99999:       8667       8677        8687    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008687-99999:       8677       8687        8800    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008800-99999:       8687       8800        8840    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008840-99999:       8800       8840        8866    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008866-99999:       8840       8866        8880    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008880-99999:       8866       8880        8895    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008895-99999:       8880       8895        8904    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008904-99999:       8895       8904        8922    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008922-99999:       8904       8922        8924    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008924-99999:       8922       8924        8929    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008929-99999:       8924       8929        8933    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008933-99999:       8929       8933        8947    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008947-99999:       8933       8947        8975    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008975-99999:       8947       8975        8984    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008984-99999:       8975       8984        8989    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008989-99999:       8984       8989        8994    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000008994-99999:       8989       8994        9112    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009112-99999:       8994       9112        9176    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009176-99999:       9112       9176        9198    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009198-99999:       9176       9198        9204    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009204-99999:       9198       9204        9233    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009233-99999:       9204       9233        9318    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009318-99999:       9233       9318        9324    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009324-99999:       9318       9324        9356    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009356-99999:       9324       9356        9373    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009373-99999:       9356       9373        9421    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009421-99999:       9373       9421        9435    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009435-99999:       9421       9435        9455    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009455-99999:       9435       9455        9515    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009515-99999:       9455       9515        9545    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009545-99999:       9515       9545        9567    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009567-99999:       9545       9567        9646    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009646-99999:       9567       9646        9660    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009660-99999:       9646       9660        9661    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009661-99999:       9660       9661        9687    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009687-99999:       9661       9687        9716    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009716-99999:       9687       9716        9718    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009718-99999:       9716       9718        9726    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009726-99999:       9718       9726        9742    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009742-99999:       9726       9742        9758    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009758-99999:       9742       9758        9780    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009780-99999:       9758       9780        9800    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009800-99999:       9780       9800        9807    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009807-99999:       9800       9807        9837    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009837-99999:       9807       9837        9839    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009839-99999:       9837       9839        9847    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009847-99999:       9839       9847        9848    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009848-99999:       9847       9848        9863    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009863-99999:       9848       9863        9899    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009899-99999:       9863       9899        9902    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009902-99999:       9899       9902        9915    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009915-99999:       9902       9915        9936    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009936-99999:       9915       9936        9938    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009938-99999:       9936       9938        9939    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009939-99999:       9938       9939        9953    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009953-99998:       9939       9953        9995    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000009995-99999:       9953       9995       10016    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010016-99999:       9995      10016       10022    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010022-99999:      10016      10022       10078    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010078-99999:      10022      10078       10123    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010123-99999:      10078      10123       10153    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010153-99999:      10123      10153       10174    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010174-99999:      10153      10174       10216    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010216-99999:      10174      10216       10278    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010278-99999:      10216      10278       10287    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010287-99999:      10278      10287       10293    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010293-99999:      10287      10293       10297    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010297-99999:      10293      10297       10354    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010354-99999:      10297      10354       10390    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010390-99999:      10354      10390       10431    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010431-99999:      10390      10431       10436    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010436-99999:      10431      10436       10460    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010460-99999:      10436      10460       10465    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010465-99999:      10460      10465       10502    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010502-99999:      10465      10502       10515    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010515-99999:      10502      10515       10547    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010547-99998:      10515      10547       10550    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010550-99999:      10547      10550       10599    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010599-99999:      10550      10599       10605    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010605-99999:      10599      10605       10615    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010615-99999:      10605      10615       10625    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010625-99999:      10615      10625       10635    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010635-99999:      10625      10635       10666    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010666-99999:      10635      10666       10741    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010741-99999:      10666      10741       10755    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010755-99999:      10741      10755       10770    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010770-99999:      10755      10770       10778    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010778-99999:      10770      10778       10811    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010811-99999:      10778      10811       10832    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010832-99999:      10811      10832       10851    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010851-99999:      10832      10851       10869    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010869-99999:      10851      10869       10895    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010895-99999:      10869      10895       10952    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010952-99999:      10895      10952       10954    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010954-99999:      10952      10954       10969    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010969-99999:      10954      10969       10995    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000010995-99998:      10969      10995       11063    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011063-99998:      10995      11063       11103    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011103-99999:      11063      11103       11135    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011135-99999:      11103      11135       11202    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011202-99999:      11135      11202       11241    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011241-99999:      11202      11241       11271    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011271-99999:      11241      11271       11277    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011277-99999:      11271      11277       11299    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011299-99999:      11277      11299       11307    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011307-99999:      11299      11307       11339    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011339-99999:      11307      11339       11354    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011354-99999:      11339      11354       11379    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011379-99999:      11354      11379       11386    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011386-99999:      11379      11386       11443    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011443-99999:      11386      11443       11491    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011491-99999:      11443      11491       11502    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011502-99999:      11491      11502       11505    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011505-99999:      11502      11505       11606    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011606-99999:      11505      11606       11617    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011617-99999:      11606      11617       11714    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011714-99999:      11617      11714       11715    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011715-99999:      11714      11715       11748    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011748-99999:      11715      11748       11755    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011755-99999:      11748      11755       11761    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011761-99999:      11755      11761       11771    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011771-99999:      11761      11771       11778    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011778-99999:      11771      11778       11784    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011784-99999:      11778      11784       11877    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011877-99998:      11784      11877       11926    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011926-99999:      11877      11926       11929    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011929-99999:      11926      11929       11988    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000011988-99999:      11929      11988       12035    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012035-99999:      11988      12035       12132    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012132-99999:      12035      12132       12138    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012138-99998:      12132      12138       12178    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012178-99999:      12138      12178       12221    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012221-99999:      12178      12221       12257    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012257-99999:      12221      12257       12264    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012264-99999:      12257      12264       12268    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012268-99999:      12264      12268       12270    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012270-99998:      12268      12270       12272    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012272-99999:      12270      12272       12305    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012305-99999:      12272      12305       12357    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012357-99999:      12305      12357       12444    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012444-99999:      12357      12444       12461    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012461-99999:      12444      12461       12477    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012477-99999:      12461      12477       12694    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012694-99998:      12477      12694       12713    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012713-99999:      12694      12713       12731    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012731-99999:      12713      12731       12737    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012737-99999:      12731      12737       12753    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012753-99999:      12737      12753       12754    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012754-99999:      12753      12754       12762    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012762-99999:      12754      12762       12778    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012778-99999:      12762      12778       12787    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012787-99999:      12778      12787       12834    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012834-99999:      12787      12834       12846    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012846-99999:      12834      12846       12864    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012864-99999:      12846      12864       12904    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012904-99999:      12864      12904       12941    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012941-99999:      12904      12941       12952    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012952-99999:      12941      12952       12954    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012954-99999:      12952      12954       12999    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000012999-99999:      12954      12999       13031    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000013031-99999:      12999      13031       13070    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000013070-99999:      13031      13070       13076    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000013076-99999:      13070      13076       13080    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000013080-99999:      13076      13080       13081    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000013081-99999:      13080      13081       13118    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000013118-99999:      13081      13118       13140    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000013140-99999:      13118      13140       13152    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000013152-99999:      13140      13152       13160    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000013160-99999:      13152      13160       13162    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000013162-99999:      13160      13162       13217    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000013217-99999:      13162      13217       13240    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000013240-99999:      13217      13240       13286    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000013286-99999:      13240      13286       13298    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000013298-99999:      13286      13298       13346    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000013346-99999:      13298      13346       13365    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000013365-99999:      13346      13365       13495    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000013495-99998:      13365      13495       13502    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000013502-99999:      13495      13502       13562    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000013562-99999:      13502      13562       13606    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000013606-99999:      13562      13606       13631    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000013631-99999:      13606      13631       13852    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000013852-99999:      13631      13852       13890    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000013890-99999:      13852      13890       13898    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000013898-99999:      13890      13898       13902    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000013902-99999:      13898      13902       13913    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000013913-99999:      13902      13913       13987    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000013987-99999:      13913      13987       13997    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000013997-99999:      13987      13997       14005    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000014005-99998:      13997      14005       14017    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000014017-99999:      14005      14017       14029    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000014029-99999:      14017      14029       14039    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000014039-99999:      14029      14039       14085    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000014085-99999:      14039      14085       14117    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000014117-99999:      14085      14117       14166    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000014166-99999:      14117      14166       14204    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000014204-99999:      14166      14204       14207    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000014207-99999:      14204      14207       14209    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000014209-99999:      14207      14209       14232    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000014232-99999:      14209      14232       14278    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000014278-99998:      14232      14278       14280    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000014280-99999:      14278      14280       14313    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000014313-99998:      14280      14313       14673    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000014673-99999:      14313      14673       14886    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000014886-99999:      14673      14886       15020    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000015020-99998:      14886      15020       15252    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000015252-99999:      15020      15252       15300    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000015300-99999:      15252      15300       15383    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000015383-99999:      15300      15383       15568    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000015568-99999:      15383      15568       15914    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000015914-99999:      15568      15914       15929    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000015929-99999:      15914      15929       15983    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000015983-99999:      15929      15983       16108    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000016108-99998:      15983      16108       16188    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000016188-99999:      16108      16188       16193    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000016193-99999:      16188      16193       16304    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000016304-99999:      16193      16304       16504    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000016504-99999:      16304      16504       16608    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000016608-99999:      16504      16608       16678    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000016678-99998:      16608      16678       16725    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000016725-99999:      16678      16725       16789    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000016789-99999:      16725      16789       17075    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000017075-99999:      16789      17075       17076    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000017076-99999:      17075      17076       17128    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000017128-99999:      17076      17128       17326    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000017326-99999:      17128      17326       17337    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000017337-99999:      17326      17337       17377    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000017377-99999:      17337      17377       17474    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000017474-99999:      17377      17474       17705    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000017705-99999:      17474      17705       17722    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000017722-99999:      17705      17722       17769    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000017769-99999:      17722      17769       18042    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000018042-99999:      17769      18042       18319    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000018319-99999:      18042      18319       18450    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000018450-99999:      18319      18450       18585    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000018585-99999:      18450      18585       18925    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000018925-99999:      18585      18925       19111    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000019111-99999:      18925      19111       19511    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000019511-99999:      19111      19511       19521    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000019521-99999:      19511      19521       19747    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000019747-99999:      19521      19747       20232    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000020232-99999:      19747      20232       20590    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000020590-99999:      20232      20590       20762    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000020762-99999:      20590      20762       20975    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000020975-99999:      20762      20975       21632    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000021632-99999:      20975      21632       21848    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000021848-99999:      21632      21848       21939    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000021939-99999:      21848      21939       22037    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000022037-99999:      21939      22037       22051    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000022051-99999:      22037      22051       22090    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000022090-99999:      22051      22090       22295    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000022295-99999:      22090      22295       22399    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000022399-99999:      22295      22399       22714    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000022714-99999:      22399      22714       23053    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000023053-99999:      22714      23053       23072    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000023072-99999:      23053      23072       23113    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000023113-99999:      23072      23113       23303    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000023303-99999:      23113      23303       46528    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000046528-00000:      23303      46528       46560    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000046560-00000:      46528      46560       46863    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000046863-00000:      46560      46863       46880    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000046880-00000:      46863      46880       46897    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000046897-00000:      46880      46897       46920    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-000046920-00000:      46897      46920     6953868    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-006953868-00032:      46920    6953868     7406592    diff-diff true true
+INFO[DATE|TIME] 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c-007406592-00047:    6953868    7406592  4294967295    diff-diff true true
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 13 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -18,7 +647,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-eth
+TEST[DATE|TIME]    reconciliationType:  diff-diff-eth
 TEST[DATE|TIME]    accountedFor:        0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
 TEST[DATE|TIME]    recipient:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -74,7 +703,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-eth
+TEST[DATE|TIME]    reconciliationType:  diff-diff-eth
 TEST[DATE|TIME]    accountedFor:        0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
 TEST[DATE|TIME]    recipient:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -130,7 +759,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-eth
+TEST[DATE|TIME]    reconciliationType:  diff-diff-eth
 TEST[DATE|TIME]    accountedFor:        0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 TEST[DATE|TIME]    sender:              0x000000000000000000000000000000556e636c65
 TEST[DATE|TIME]    recipient:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -186,7 +815,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-eth
+TEST[DATE|TIME]    reconciliationType:  diff-diff-eth
 TEST[DATE|TIME]    accountedFor:        0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
 TEST[DATE|TIME]    recipient:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -242,7 +871,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-eth
+TEST[DATE|TIME]    reconciliationType:  diff-diff-eth
 TEST[DATE|TIME]    accountedFor:        0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
 TEST[DATE|TIME]    recipient:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -298,7 +927,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-eth
+TEST[DATE|TIME]    reconciliationType:  diff-diff-eth
 TEST[DATE|TIME]    accountedFor:        0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
 TEST[DATE|TIME]    recipient:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -354,7 +983,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-eth
+TEST[DATE|TIME]    reconciliationType:  diff-diff-eth
 TEST[DATE|TIME]    accountedFor:        0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 TEST[DATE|TIME]    sender:              0x000000000000000000000000000000556e636c65
 TEST[DATE|TIME]    recipient:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -410,7 +1039,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-eth
+TEST[DATE|TIME]    reconciliationType:  diff-diff-eth
 TEST[DATE|TIME]    accountedFor:        0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
 TEST[DATE|TIME]    recipient:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -466,7 +1095,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-eth
+TEST[DATE|TIME]    reconciliationType:  diff-diff-eth
 TEST[DATE|TIME]    accountedFor:        0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
 TEST[DATE|TIME]    recipient:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -522,7 +1151,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-eth
+TEST[DATE|TIME]    reconciliationType:  diff-diff-eth
 TEST[DATE|TIME]    accountedFor:        0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
 TEST[DATE|TIME]    recipient:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -578,7 +1207,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-eth
+TEST[DATE|TIME]    reconciliationType:  diff-diff-eth
 TEST[DATE|TIME]    accountedFor:        0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
 TEST[DATE|TIME]    recipient:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -634,7 +1263,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-eth
+TEST[DATE|TIME]    reconciliationType:  diff-diff-eth
 TEST[DATE|TIME]    accountedFor:        0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
 TEST[DATE|TIME]    recipient:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -690,7 +1319,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-eth
+TEST[DATE|TIME]    reconciliationType:  diff-diff-eth
 TEST[DATE|TIME]    accountedFor:        0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
 TEST[DATE|TIME]    recipient:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -736,17 +1365,17 @@ TEST[DATE|TIME] End of trial balance report
 ----
 Results in ./accounting_to_cache_out.file
 blockNumber	transactionIndex	logIndex	transactionHash	timestamp	date	assetAddr	assetSymbol	decimals	spotPrice	priceSource	accountedFor	sender	recipient	begBal	amountNet	endBal	reconciliationType	reconciled	totalIn	amountIn	internalIn	selfDestructIn	minerBaseRewardIn	minerNephewRewardIn	minerTxFeeIn	minerUncleRewardIn	prefundIn	totalOut	amountOut	internalOut	selfDestructOut	gasOut	totalOutLessGas	prevAppBlk	prevBal	begBalDiff	endBalDiff	endBalCalc	correctingReason
-13	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270158	2015-07-30 15:29:18 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0	5000000000000000000	5000000000000000000	regular-eth	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	0	0	0	0	5000000000000000000	
-22	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270204	2015-07-30 15:30:04 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	5000000000000000000	5000000000000000000	10000000000000000000	regular-eth	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	13	5000000000000000000	0	0	10000000000000000000	
-37	99998	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270267	2015-07-30 15:31:07 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x000000000000000000000000000000556e636c65	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	10000000000000000000	3750000000000000000	13750000000000000000	regular-eth	true	3750000000000000000	0	0	0	0	0	0	3750000000000000000	0	0	0	0	0	0	0	22	10000000000000000000	0	0	13750000000000000000	
-39	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270272	2015-07-30 15:31:12 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	13750000000000000000	5000000000000000000	18750000000000000000	regular-eth	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	37	13750000000000000000	0	0	18750000000000000000	
-43	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270279	2015-07-30 15:31:19 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	18750000000000000000	5000000000000000000	23750000000000000000	regular-eth	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	39	18750000000000000000	0	0	23750000000000000000	
-53	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270312	2015-07-30 15:31:52 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	23750000000000000000	5000000000000000000	28750000000000000000	regular-eth	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	43	23750000000000000000	0	0	28750000000000000000	
-55	99998	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270320	2015-07-30 15:32:00 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x000000000000000000000000000000556e636c65	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	28750000000000000000	3750000000000000000	32500000000000000000	regular-eth	true	3750000000000000000	0	0	0	0	0	0	3750000000000000000	0	0	0	0	0	0	0	53	28750000000000000000	0	0	32500000000000000000	
-64	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270345	2015-07-30 15:32:25 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	32500000000000000000	5000000000000000000	37500000000000000000	regular-eth	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	55	32500000000000000000	0	0	37500000000000000000	
-67	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270366	2015-07-30 15:32:46 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	37500000000000000000	5000000000000000000	42500000000000000000	regular-eth	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	64	37500000000000000000	0	0	42500000000000000000	
-78	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270389	2015-07-30 15:33:09 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	42500000000000000000	5156250000000000000	47656250000000000000	regular-eth	true	5156250000000000000	0	0	0	5000000000000000000	156250000000000000	0	0	0	0	0	0	0	0	0	67	42500000000000000000	0	0	47656250000000000000	
-84	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270408	2015-07-30 15:33:28 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	47656250000000000000	5000000000000000000	52656250000000000000	regular-eth	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	78	47656250000000000000	0	0	52656250000000000000	
-90	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270422	2015-07-30 15:33:42 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	52656250000000000000	5000000000000000000	57656250000000000000	regular-eth	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	84	52656250000000000000	0	0	57656250000000000000	
-94	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270431	2015-07-30 15:33:51 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	57656250000000000000	5156250000000000000	62812500000000000000	regular-eth	true	5156250000000000000	0	0	0	5000000000000000000	156250000000000000	0	0	0	0	0	0	0	0	0	90	57656250000000000000	0	0	62812500000000000000	
+13	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270158	2015-07-30 15:29:18 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0	5000000000000000000	5000000000000000000	diff-diff-eth	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	0	0	0	0	5000000000000000000	
+22	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270204	2015-07-30 15:30:04 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	5000000000000000000	5000000000000000000	10000000000000000000	diff-diff-eth	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	13	5000000000000000000	0	0	10000000000000000000	
+37	99998	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270267	2015-07-30 15:31:07 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x000000000000000000000000000000556e636c65	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	10000000000000000000	3750000000000000000	13750000000000000000	diff-diff-eth	true	3750000000000000000	0	0	0	0	0	0	3750000000000000000	0	0	0	0	0	0	0	22	10000000000000000000	0	0	13750000000000000000	
+39	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270272	2015-07-30 15:31:12 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	13750000000000000000	5000000000000000000	18750000000000000000	diff-diff-eth	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	37	13750000000000000000	0	0	18750000000000000000	
+43	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270279	2015-07-30 15:31:19 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	18750000000000000000	5000000000000000000	23750000000000000000	diff-diff-eth	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	39	18750000000000000000	0	0	23750000000000000000	
+53	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270312	2015-07-30 15:31:52 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	23750000000000000000	5000000000000000000	28750000000000000000	diff-diff-eth	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	43	23750000000000000000	0	0	28750000000000000000	
+55	99998	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270320	2015-07-30 15:32:00 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x000000000000000000000000000000556e636c65	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	28750000000000000000	3750000000000000000	32500000000000000000	diff-diff-eth	true	3750000000000000000	0	0	0	0	0	0	3750000000000000000	0	0	0	0	0	0	0	53	28750000000000000000	0	0	32500000000000000000	
+64	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270345	2015-07-30 15:32:25 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	32500000000000000000	5000000000000000000	37500000000000000000	diff-diff-eth	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	55	32500000000000000000	0	0	37500000000000000000	
+67	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270366	2015-07-30 15:32:46 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	37500000000000000000	5000000000000000000	42500000000000000000	diff-diff-eth	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	64	37500000000000000000	0	0	42500000000000000000	
+78	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270389	2015-07-30 15:33:09 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	42500000000000000000	5156250000000000000	47656250000000000000	diff-diff-eth	true	5156250000000000000	0	0	0	5000000000000000000	156250000000000000	0	0	0	0	0	0	0	0	0	67	42500000000000000000	0	0	47656250000000000000	
+84	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270408	2015-07-30 15:33:28 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	47656250000000000000	5000000000000000000	52656250000000000000	diff-diff-eth	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	78	47656250000000000000	0	0	52656250000000000000	
+90	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270422	2015-07-30 15:33:42 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	52656250000000000000	5000000000000000000	57656250000000000000	diff-diff-eth	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	84	52656250000000000000	0	0	57656250000000000000	
+94	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270431	2015-07-30 15:33:51 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	57656250000000000000	5156250000000000000	62812500000000000000	diff-diff-eth	true	5156250000000000000	0	0	0	5000000000000000000	156250000000000000	0	0	0	0	0	0	0	0	0	90	57656250000000000000	0	0	62812500000000000000	
 

@@ -3,10 +3,12 @@ package ledger
 import (
 	"errors"
 	"fmt"
+	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/ethereum/go-ethereum"
 )
 
@@ -18,6 +20,36 @@ type LedgerContext struct {
 	IsPrevDiff bool
 	IsNextDiff bool
 	ReconType  string
+}
+
+func NewLedgerContext(prev, cur, next base.Blknum) *LedgerContext {
+	c := &LedgerContext{
+		PrevBlock:  prev,
+		CurBlock:   cur,
+		NextBlock:  next,
+		IsPrevDiff: prev != cur,
+		IsNextDiff: cur != next,
+	}
+	c.ReconType = c.getReconType()
+	return c
+}
+
+func (c *LedgerContext) getReconType() (reconType string) {
+	if c.CurBlock == 0 {
+		return "genesis"
+	} else {
+		if c.IsPrevDiff && c.IsNextDiff {
+			return "diff-diff"
+		} else if !c.IsPrevDiff && !c.IsNextDiff {
+			return "same-same"
+		} else if c.IsPrevDiff {
+			return "diff-same"
+		} else if c.IsNextDiff {
+			return "same-diff"
+		} else {
+			return "should-not-happen"
+		}
+	}
 }
 
 func (l *Ledger) CtxKey(bn, txid uint64) string {
@@ -42,15 +74,21 @@ func (l *Ledger) SetContexts(chain string, apps []index.AppearanceRecord) error 
 		}
 
 		key := l.CtxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionId))
-		l.Contexts[key] = LedgerContext{
-			PrevBlock:  base.Blknum(prev),
-			CurBlock:   base.Blknum(cur),
-			NextBlock:  base.Blknum(next),
-			IsPrevDiff: prev != cur,
-			IsNextDiff: cur != next,
-			ReconType:  getReconType(cur, prev != cur, cur != next),
+		l.Contexts[key] = *NewLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next))
+	}
+
+	if l.TestMode {
+		keys := []string{}
+		for key := range l.Contexts {
+			keys = append(keys, key)
+		}
+		sort.Strings(keys)
+		for _, key := range keys {
+			c := l.Contexts[key]
+			logger.Info(fmt.Sprintf("%s: % 10d % 10d % 11d %12.12s %t %t", key, c.PrevBlock, c.CurBlock, c.NextBlock, c.ReconType, c.IsPrevDiff, c.IsNextDiff))
 		}
 	}
+
 	return nil
 }
 
@@ -74,33 +112,8 @@ func (l *Ledger) SetContextsFromIds(chain string, txIds []identifiers.Identifier
 			next := apps[i].BlockNumber + 1
 
 			key := l.CtxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionIndex))
-			l.Contexts[key] = LedgerContext{
-				PrevBlock:  base.Blknum(prev),
-				CurBlock:   base.Blknum(cur),
-				NextBlock:  base.Blknum(next),
-				IsPrevDiff: prev != cur,
-				IsNextDiff: cur != next,
-				ReconType:  getReconType(cur, prev != cur, cur != next),
-			}
+			l.Contexts[key] = *NewLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next))
 		}
 	}
 	return nil
-}
-
-func getReconType(bn uint32, isPrevDiff bool, isNextDiff bool) (reconType string) {
-	if bn == 0 {
-		return "genesis"
-	}
-
-	if isPrevDiff && isNextDiff {
-		return "regular"
-	} else if !isPrevDiff && !isNextDiff {
-		return "both-not-diff"
-	} else if isPrevDiff {
-		return "prevDiff"
-	} else if isNextDiff {
-		return "nextDiff"
-	} else {
-		return "should-not-happen"
-	}
 }

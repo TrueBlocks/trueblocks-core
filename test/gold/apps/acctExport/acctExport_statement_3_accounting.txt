@@ -5,6 +5,10 @@ TEST[DATE|TIME] LastBlock:  4000000
 TEST[DATE|TIME] OutputFn:  statement_3_accounting_out.file
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
+INFO[DATE|TIME] 0x08166f02313feae18bb044e7877c808b55b5bf58-000000000-00270:          0          0       46685      genesis true true
+INFO[DATE|TIME] 0x08166f02313feae18bb044e7877c808b55b5bf58-000046685-00000:          0      46685       46709    diff-diff true true
+INFO[DATE|TIME] 0x08166f02313feae18bb044e7877c808b55b5bf58-000046709-00000:      46685      46709    15507092    diff-diff true true
+INFO[DATE|TIME] 0x08166f02313feae18bb044e7877c808b55b5bf58-015507092-00056:      46709   15507092  4294967295    diff-diff true true
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -74,7 +78,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-eth
+TEST[DATE|TIME]    reconciliationType:  diff-diff-eth
 TEST[DATE|TIME]    accountedFor:        0x08166f02313feae18bb044e7877c808b55b5bf58
 TEST[DATE|TIME]    sender:              0x08166f02313feae18bb044e7877c808b55b5bf58
 TEST[DATE|TIME]    recipient:           0xad00b7a324f31351d397408c8c3952ea198317eb
@@ -130,7 +134,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-eth
+TEST[DATE|TIME]    reconciliationType:  diff-diff-eth
 TEST[DATE|TIME]    accountedFor:        0x08166f02313feae18bb044e7877c808b55b5bf58
 TEST[DATE|TIME]    sender:              0x08166f02313feae18bb044e7877c808b55b5bf58
 TEST[DATE|TIME]    recipient:           0xad00b7a324f31351d397408c8c3952ea198317eb
@@ -292,7 +296,7 @@ Results in ./statement_3_accounting_out.file
           "priceSource": "eth-not-priced-pre-maker",
           "recipient": "0xad00b7a324f31351d397408c8c3952ea198317eb",
           "reconciled": true,
-          "reconciliationType": "regular-eth",
+          "reconciliationType": "diff-diff-eth",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x08166f02313feae18bb044e7877c808b55b5bf58",
@@ -363,7 +367,7 @@ Results in ./statement_3_accounting_out.file
           "priceSource": "eth-not-priced-pre-maker",
           "recipient": "0xad00b7a324f31351d397408c8c3952ea198317eb",
           "reconciled": true,
-          "reconciliationType": "regular-eth",
+          "reconciliationType": "diff-diff-eth",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x08166f02313feae18bb044e7877c808b55b5bf58",

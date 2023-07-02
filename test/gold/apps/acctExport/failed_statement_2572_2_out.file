@@ -32,7 +32,7 @@
       "priceSource": "not-priced",
       "recipient": "0x0",
       "reconciled": true,
-      "reconciliationType": "regular-token",
+      "reconciliationType": "diff-diff-token",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7",

@@ -7,6 +7,44 @@ TEST[DATE|TIME] Asset:  [0x6b175474e89094c44da98b954eedeac495271d0f]
 TEST[DATE|TIME] OutputFn:  statement_one_asset_1_out.file
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-010277683-00200:          0   10277683   10277711    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-010277711-00064:   10277683   10277711   10277776    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-010277776-00094:   10277711   10277776   10277780    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-010277780-00102:   10277776   10277780   10367593    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-010367593-00194:   10277780   10367593   10367608    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-010367608-00023:   10367593   10367608   10958509    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-010958509-00072:   10367608   10958509   10958518    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-010958518-00077:   10958509   10958518   10972535    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-010972535-00102:   10958518   10972535   10972735    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-010972735-00084:   10972535   10972735   11472274    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-011472274-00222:   10972735   11472274   11947926    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-011947926-00077:   11472274   11947926   12110203    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-012110203-00088:   11947926   12110203   12517694    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-012517694-00073:   12110203   12517694   12655959    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-012655959-00195:   12517694   12655959   12697277    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-012697277-00188:   12655959   12697277   12697303    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-012697303-00099:   12697277   12697303   12697322    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-012697322-00281:   12697303   12697322   12697324    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-012697324-00088:   12697322   12697324   13193257    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-013193257-00227:   12697324   13193257   13269886    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-013269886-00045:   13193257   13269886   13269900    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-013269900-00177:   13269886   13269900   13269973    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-013269973-00178:   13269900   13269973   13772984    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-013772984-00129:   13269973   13772984   14359849    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-014359849-00140:   13772984   14359849   14359857    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-014359857-00202:   14359849   14359857   14359877    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-014359877-00153:   14359857   14359877   14360325    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-014360325-00141:   14359877   14360325   14360361    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-014360361-00080:   14360325   14360361   14366254    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-014366254-00017:   14360361   14366254   14436713    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-014436713-00058:   14366254   14436713   14436713    diff-same true false
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-014436713-00059:   14436713   14436713   14469880    same-diff false true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-014469880-00033:   14436713   14469880   15549162    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-015549162-00083:   14469880   15549162   15552509    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-015552509-00117:   15549162   15552509   16065503    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-016065503-00157:   15552509   16065503   16529733    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-016529733-00087:   16065503   16529733   16529736    diff-diff true true
+INFO[DATE|TIME] 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6-016529736-00100:   16529733   16529736  4294967295    diff-diff true true
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
@@ -23,7 +61,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-token
+TEST[DATE|TIME]    reconciliationType:  diff-diff-token
 TEST[DATE|TIME]    accountedFor:        0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
 TEST[DATE|TIME]    sender:              0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
 TEST[DATE|TIME]    recipient:           0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
@@ -102,7 +140,7 @@ Results in ./statement_one_asset_1_out.file
       "priceSource": "stable-coin",
       "recipient": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
       "reconciled": true,
-      "reconciliationType": "regular-token",
+      "reconciliationType": "diff-diff-token",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11",
