@@ -24,14 +24,14 @@ Arguments:
 
 Flags:
   -U, --count               display only the count of records for each monitor
-  -s, --silent              freshen the monitor only (no reporting)
-  -n, --no_zero             suppress the display of zero appearance accounts
+  -n, --no_zero             for the --count option only, suppress the display of zero appearance accounts
+  -b, --bounds              report first and last block this address appears
   -u, --unripe              list transactions labeled upripe (i.e. less than 28 blocks old)
+  -s, --silent              freshen the monitor only (no reporting)
   -c, --first_record uint   the first record to process (default 1)
   -e, --max_records uint    the maximum number of records to process (default 250)
   -F, --first_block uint    first block to export (inclusive, ignored when freshening)
   -L, --last_block uint     last block to export (inclusive, ignored when freshening)
-  -b, --bounds              report first and last block this address appears
   -x, --fmt string          export format, one of [none|json*|txt|csv]
   -v, --verbose             enable verbose (increase detail with --log_level)
   -h, --help                display this help screen
