@@ -1,4 +1,4 @@
-list?addrs=trueblocks.eth&count&fmt=json&firstBlock=8854725&lastBlock=9000000
+list?addrs=trueblocks.eth&count&fmt=json&firstBlock=8854725&lastBlock=9000000&bounds
 {
   "data": [
     {
