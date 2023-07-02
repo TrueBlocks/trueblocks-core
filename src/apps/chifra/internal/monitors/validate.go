@@ -54,6 +54,10 @@ func (opts *MonitorsOptions) validateMonitors() error {
 			}
 
 		} else {
+			if opts.Sleep != 14 {
+				return validate.Usage("The {0} option is not available in non-watch mode.", "--sleep")
+			}
+
 			// We validate some of the simpler curd commands here and the rest in HandleCrudCommands
 			if opts.Undelete {
 				if opts.Delete || opts.Remove {

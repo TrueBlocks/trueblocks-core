@@ -26,12 +26,16 @@ func (opts *ListOptions) validateList() error {
 		opts.LastBlock = utils.NOPOS
 	}
 
+	if opts.MaxRecords == 0 {
+		opts.MaxRecords = 250
+	}
+
 	if opts.FirstBlock >= opts.LastBlock {
 		msg := fmt.Sprintf("first_block (%d) must be strictly earlier than last_block (%d).", opts.FirstBlock, opts.LastBlock)
 		return validate.Usage(msg)
 	}
 
-	if opts.LastBlock != utils.NOPOS {
+	if opts.LastBlock != utils.NOPOS && !opts.Globals.TestMode {
 		provider := config.GetRpcProvider(opts.Globals.Chain)
 		latest := rpcClient.BlockNumber(provider)
 		if opts.LastBlock > latest {
@@ -40,16 +44,16 @@ func (opts *ListOptions) validateList() error {
 		}
 	}
 
-	if opts.MaxRecords == 0 {
-		opts.MaxRecords = 250
-	}
-
 	if opts.Globals.TestMode && opts.Unripe {
 		return validate.Usage("--unripe is disabled for testing.")
 	}
 
 	if opts.Count && opts.MaxRecords != 250 {
 		return validate.Usage("The {0} option is not available with the {1}-{2} option.", "--count", "--max_records", fmt.Sprintf("%d", opts.MaxRecords))
+	}
+
+	if opts.NoZero && !opts.Count {
+		return validate.Usage("The {0} option is only available with the {1} option.", "--no_zero", "--count")
 	}
 
 	if len(opts.Globals.File) == 0 {

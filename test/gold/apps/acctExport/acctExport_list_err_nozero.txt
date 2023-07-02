@@ -1,6 +1,10 @@
-chifra list  
+chifra list  0x007f7f58d3eb5b7510a301ecc749fc1fcddbe14d 0x4444DEADdeadDEADdeadDEADdeadDEADdeadDEAD 0x2910543af39aba0cd09dbb2d50200b3e800a63d2 --first_block 100000 --last_block 100100 --fmt txt --no_zero
+TEST[DATE|TIME] Addrs:  [0x007f7f58d3eb5b7510a301ecc749fc1fcddbe14d 0x4444deaddeaddeaddeaddeaddeaddeaddeaddead 0x2910543af39aba0cd09dbb2d50200b3e800a63d2]
+TEST[DATE|TIME] NoZero:  true
+TEST[DATE|TIME] FirstBlock:  100000
+TEST[DATE|TIME] LastBlock:  100100
 TEST[DATE|TIME] Format:  txt
-Error: Please specify at least one valid Ethereum address.
+Error: The --no_zero option is only available with the --count option.
 Usage:
   chifra list [flags] <address> [address...]
 
@@ -13,7 +17,7 @@ Flags:
   -b, --bounds              report first and last block this address appears
   -u, --unripe              list transactions labeled upripe (i.e. less than 28 blocks old)
   -s, --silent              freshen the monitor only (no reporting)
-  -c, --first_record uint   the first record to process
+  -c, --first_record uint   the first record to process (default 1)
   -e, --max_records uint    the maximum number of records to process (default 250)
   -F, --first_block uint    first block to export (inclusive, ignored when freshening)
   -L, --last_block uint     last block to export (inclusive, ignored when freshening)

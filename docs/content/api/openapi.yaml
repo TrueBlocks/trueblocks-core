@@ -106,16 +106,17 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: silent
-          description: freshen the monitor only (no reporting)
+        - name: noZero
+          description: >
+            for the --count option only, suppress the display of zero appearance accounts
           required: false
           style: form
           in: query
           explode: true
           schema:
             type: boolean
-        - name: noZero
-          description: suppress the display of zero appearance accounts
+        - name: bounds
+          description: report first and last block this address appears
           required: false
           style: form
           in: query
@@ -124,6 +125,14 @@ paths:
             type: boolean
         - name: unripe
           description: list transactions labeled upripe (i.e. less than 28 blocks old)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: silent
+          description: freshen the monitor only (no reporting)
           required: false
           style: form
           in: query
@@ -166,14 +175,6 @@ paths:
           schema:
             type: number
             format: blknum
-        - name: bounds
-          description: report first and last block this address appears
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
       responses:
         "200":
           description: returns the requested data
