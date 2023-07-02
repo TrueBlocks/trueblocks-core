@@ -6,10 +6,10 @@ TEST[DATE|TIME] LastBlock:  4000000
 TEST[DATE|TIME] OutputFn:  statement_3_out.file
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
-INFO[DATE|TIME] 0x08166f02313feae18bb044e7877c808b55b5bf58-000000000-00270:          0          0       46685      genesis true true
-INFO[DATE|TIME] 0x08166f02313feae18bb044e7877c808b55b5bf58-000046685-00000:          0      46685       46709    diff-diff true true
-INFO[DATE|TIME] 0x08166f02313feae18bb044e7877c808b55b5bf58-000046709-00000:      46685      46709    15507092    diff-diff true true
-INFO[DATE|TIME] 0x08166f02313feae18bb044e7877c808b55b5bf58-015507092-00056:      46709   15507092  4294967295    diff-diff true true
+INFO[DATE|TIME] 000000000-00270:          0          0       46685
+INFO[DATE|TIME] 000046685-00000:          0      46685       46709
+INFO[DATE|TIME] 000046709-00000:      46685      46709    15507092
+INFO[DATE|TIME] 015507092-00056:      46709   15507092  4294967295
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================

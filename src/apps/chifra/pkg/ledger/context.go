@@ -54,7 +54,8 @@ func (c *LedgerContext) getReconType() (reconType string) {
 }
 
 func (l *Ledger) CtxKey(bn, txid uint64) string {
-	return fmt.Sprintf("%s-%09d-%05d", l.AccountFor.Hex(), bn, txid)
+	// return fmt.Sprintf("%s-%09d-%05d", l.AccountFor.Hex(), bn, txid)
+	return fmt.Sprintf("%09d-%05d", bn, txid)
 }
 
 const maxTestingBlock = 17000000
@@ -64,11 +65,10 @@ const maxTestingBlock = 17000000
 // we must know this information to be able to calculate the correct post-tx balance.
 func (l *Ledger) SetContexts(chain string, apps []index.AppearanceRecord) error {
 	for i := 0; i < len(apps); i++ {
-		if apps[i].BlockNumber > maxTestingBlock {
+		cur := apps[i].BlockNumber
+		if cur > maxTestingBlock {
 			continue
 		}
-
-		cur := apps[i].BlockNumber
 
 		prev := uint32(0)
 		if i > 0 {
@@ -78,6 +78,10 @@ func (l *Ledger) SetContexts(chain string, apps []index.AppearanceRecord) error 
 		next := uint32(^uint32(0))
 		if i < len(apps)-1 {
 			next = apps[i+1].BlockNumber
+		}
+
+		if next < uint32(l.FirstBlock) || prev > uint32(l.LastBlock) {
+			continue
 		}
 
 		key := l.CtxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionId))
@@ -92,7 +96,11 @@ func (l *Ledger) SetContexts(chain string, apps []index.AppearanceRecord) error 
 		sort.Strings(keys)
 		for _, key := range keys {
 			c := l.Contexts[key]
-			logger.Info(fmt.Sprintf("%s: % 10d % 10d % 11d %12.12s %t %t", key, c.PrevBlock, c.CurBlock, c.NextBlock, c.ReconType, c.IsPrevDiff, c.IsNextDiff))
+			msg := ""
+			if !c.IsPrevDiff || !c.IsNextDiff {
+				msg = fmt.Sprintf(" %12.12s %t %t", c.ReconType, c.IsPrevDiff, c.IsNextDiff)
+			}
+			logger.Info(fmt.Sprintf("%s: % 10d % 10d % 11d%s", key, c.PrevBlock, c.CurBlock, c.NextBlock, msg))
 		}
 	}
 

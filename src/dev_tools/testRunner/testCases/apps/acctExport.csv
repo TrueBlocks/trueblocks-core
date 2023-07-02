@@ -143,7 +143,6 @@ on      ,both ,fast  ,export   ,apps/acctExport ,accounting_ofx           ,y    
 on      ,both ,fast  ,export   ,apps/acctExport ,statement_1              ,y    ,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & last_block = 4000000 & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,statement_3_bad          ,y    ,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & statements & last_block = 4000000 & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,accounting_wei_1         ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 3 & accounting & fmt = json
-on      ,both ,fast  ,export   ,apps/acctExport ,accounting_wei_2         ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & max_records = 15 & accounting & fmt = json & log_level = 10
 on      ,both ,fast  ,export   ,apps/acctExport ,statement_3_accounting   ,y    ,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & last_block = 4000000 & fmt = json
 
 on      ,both ,fast  ,list     ,apps/acctExport ,accounting_list_0        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = json
@@ -155,9 +154,10 @@ on      ,both ,fast  ,export   ,apps/acctExport ,accounting_tokens_2      ,y    
 
 on      ,both ,fast  ,export   ,apps/acctExport ,statement_2              ,y    ,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & statements & last_block = 4000000 & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,statement_3              ,y    ,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & accounting & statements & last_block = 4000000 & fmt = json
-on      ,both ,fast  ,export   ,apps/acctExport ,statements_wei_2         ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & max_records = 15 & accounting & statements & fmt = csv
 on      ,both ,fast  ,export   ,apps/acctExport ,statement_unfiltered     ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & statements & first_block = 8860513 & last_block = 8860531 & ether & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,accounting_to_cache      ,y    ,addrs = 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c & last_block = 100 & accounting & statements
+
+acct6   ,both ,fast  ,export   ,apps/acctExport ,statements_wei_2_1       ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & max_records = 15 & accounting & statements & fmt = json
 
 acct1   ,both ,fast  ,export   ,apps/acctExport ,statement_one_asset_1    ,y    ,addrs = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & max_records = 3 & asset = 0x6b175474e89094c44da98b954eedeac495271d0f & accounting & statements & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,statement_one_asset_all  ,y    ,addrs = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & max_records = 3 & accounting & statements & fmt = json

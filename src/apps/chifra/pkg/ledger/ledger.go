@@ -15,6 +15,8 @@ import (
 type Ledger struct {
 	Chain       string
 	AccountFor  base.Address
+	FirstBlock  base.Blknum
+	LastBlock   base.Blknum
 	Names       map[base.Address]types.SimpleName
 	TestMode    bool
 	Contexts    map[string]LedgerContext
@@ -26,10 +28,12 @@ type Ledger struct {
 }
 
 // NewLedger returns a new empty Ledger struct
-func NewLedger(chain string, acctFor base.Address, asEther, testMode, noZero, useTraces bool, assetFilters *[]string) *Ledger {
+func NewLedger(chain string, acctFor base.Address, fb, lb base.Blknum, asEther, testMode, noZero, useTraces bool, assetFilters *[]string) *Ledger {
 	l := &Ledger{
 		Chain:      chain,
 		AccountFor: acctFor,
+		FirstBlock: fb,
+		LastBlock:  lb,
 		Contexts:   make(map[string]LedgerContext),
 		AsEther:    asEther,
 		TestMode:   testMode,

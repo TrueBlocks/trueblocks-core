@@ -8,10 +8,10 @@ TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] OutputFn:  accounting_tokens_1_out.file
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
-INFO[DATE|TIME] 0x001d14804b399c6ef80e64576f657660804fec0b-000000000-00002:          0          0      202249      genesis true true
-INFO[DATE|TIME] 0x001d14804b399c6ef80e64576f657660804fec0b-000202249-00000:          0     202249     1501459    diff-diff true true
-INFO[DATE|TIME] 0x001d14804b399c6ef80e64576f657660804fec0b-001501459-00002:     202249    1501459    15507094    diff-diff true true
-INFO[DATE|TIME] 0x001d14804b399c6ef80e64576f657660804fec0b-015507094-00088:    1501459   15507094  4294967295    diff-diff true true
+INFO[DATE|TIME] 000000000-00002:          0          0      202249
+INFO[DATE|TIME] 000202249-00000:          0     202249     1501459
+INFO[DATE|TIME] 001501459-00002:     202249    1501459    15507094
+INFO[DATE|TIME] 015507094-00088:    1501459   15507094  4294967295
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================

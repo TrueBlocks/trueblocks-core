@@ -93,6 +93,8 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 			ledgers = ledger.NewLedger(
 				chain,
 				mon.Address,
+				opts.FirstBlock,
+				opts.LastBlock,
 				opts.Globals.Ether,
 				testMode,
 				noZero,

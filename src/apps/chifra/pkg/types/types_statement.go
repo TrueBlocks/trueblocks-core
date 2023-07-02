@@ -335,14 +335,20 @@ func (s *SimpleStatement) isNullTransfer(tx *SimpleTransaction) bool {
 }
 
 func (s *SimpleStatement) CorrectForNullTransfer(tx *SimpleTransaction) bool {
-	if s.isNullTransfer(tx) && !s.IsEth() {
-		logger.TestLog(true, "Correcting token transfer for a null transfer")
-		amt := s.TotalIn() // use totalIn since this is the amount that was faked
-		s.AmountOut = *new(big.Int)
-		s.AmountIn = *new(big.Int)
-		s.CorrectingIn = *amt
-		s.CorrectingOut = *amt
-		s.CorrectingReason = "null-transfer"
+	if !s.IsEth() {
+		if s.isNullTransfer(tx) {
+			logger.TestLog(true, "Correcting token transfer for a null transfer")
+			amt := s.TotalIn() // use totalIn since this is the amount that was faked
+			s.AmountOut = *new(big.Int)
+			s.AmountIn = *new(big.Int)
+			s.CorrectingIn = *amt
+			s.CorrectingOut = *amt
+			s.CorrectingReason = "null-transfer"
+		} else {
+			logger.TestLog(true, "Needs correction for token transfer")
+		}
+	} else {
+		logger.TestLog(true, "Needs correction for eth")
 	}
 	return s.Reconciled()
 }
@@ -376,6 +382,8 @@ func (s *SimpleStatement) CorrectForSomethingElse(tx *SimpleTransaction) bool {
 			s.CorrectingReason += "endbal"
 		}
 		s.CorrectingReason = strings.Replace(s.CorrectingReason, "begbalendbal", "begbal-endbal", -1)
+	} else {
+		logger.TestLog(true, "Needs correction for eth")
 	}
 
 	return s.Reconciled()

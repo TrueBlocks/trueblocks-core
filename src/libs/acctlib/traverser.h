@@ -39,7 +39,7 @@ class CTraverser {
     CMonitor* curMonitor;
     monitor_map_t monitorMap;
     CTraverser(const string_q& o) : index(0), nProcessed(0), searchType(o) {
-        logging = !isTestMode() || getEnvStr("FORCE_LOGGING") == "true";
+        logging = !isTestMode();
         curMonitor = nullptr;
         filterFunc = filterByRange;
     }
