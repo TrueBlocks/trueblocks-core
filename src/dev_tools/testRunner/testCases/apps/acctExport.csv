@@ -18,11 +18,11 @@ on      ,both ,fast  ,list     ,apps/acctExport ,list_appearances_nozero2 ,n    
 on      ,both ,fast  ,list     ,apps/acctExport ,list_err_nozero          ,n    ,addrs = 0x007f7f58d3eb5b7510a301ecc749fc1fcddbe14d & addrs = 0x4444DEADdeadDEADdeadDEADdeadDEADdeadDEAD & addrs = 0x2910543af39aba0cd09dbb2d50200b3e800a63d2 & first_block = 100000 & last_block = 100100 & fmt = txt & no_zero
 
 on      ,both ,fast  ,list     ,apps/acctExport ,list_ens                 ,y    ,addrs = rhyslindmark.eth & first_block = 4037786 & last_block = 4081406
-on      ,both ,fast  ,list     ,apps/acctExport ,list_bounds_1a           ,n    ,addrs = trueblocks.eth & fmt = csv & last_block = 9000000 & bounds
+local   ,both ,fast  ,list     ,apps/acctExport ,list_bounds_1a           ,n    ,addrs = trueblocks.eth & fmt = csv & last_block = 9000000 & bounds
+local   ,both ,fast  ,list     ,apps/acctExport ,list_bounds_2a           ,n    ,addrs = trueblocks.eth & fmt = txt & first_block = 8854723 & last_block = 9000000 & bounds
+local   ,both ,fast  ,list     ,apps/acctExport ,list_bounds_3a           ,y    ,addrs = trueblocks.eth & fmt = json & first_block = 8854725 & last_block = 9000000 & bounds
 on      ,both ,fast  ,list     ,apps/acctExport ,list_bounds_1b           ,n    ,addrs = trueblocks.eth & count & fmt = csv & last_block = 9000000 & bounds
-on      ,both ,fast  ,list     ,apps/acctExport ,list_bounds_2a           ,n    ,addrs = trueblocks.eth & fmt = txt & first_block = 8854723 & last_block = 9000000 & bounds
 on      ,both ,fast  ,list     ,apps/acctExport ,list_bounds_2b           ,n    ,addrs = trueblocks.eth & count & fmt = txt & first_block = 8854723 & last_block = 9000000 & bounds
-on      ,both ,fast  ,list     ,apps/acctExport ,list_bounds_3a           ,y    ,addrs = trueblocks.eth & fmt = json & first_block = 8854725 & last_block = 9000000 & bounds
 on      ,both ,fast  ,list     ,apps/acctExport ,list_bounds_3b           ,y    ,addrs = trueblocks.eth & count & fmt = json & first_block = 8854725 & last_block = 9000000 & bounds
 
 on      ,both ,fast  ,list     ,apps/acctExport ,100_list_n               ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & max_records = 100
