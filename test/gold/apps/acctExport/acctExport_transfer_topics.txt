@@ -1,4 +1,4 @@
-chifra export  0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 --max_records 4 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef --logs
+chifra export  0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 --logs 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef --max_records 4
 TEST[DATE|TIME] Addrs:  [0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3]
 TEST[DATE|TIME] Topics:  [0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef]
 TEST[DATE|TIME] Logs:  true

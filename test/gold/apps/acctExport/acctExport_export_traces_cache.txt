@@ -1,4 +1,4 @@
-chifra export  0xd714dd60e22bbb1cbafd0e40de5cfa7bbdd3f3c8 --max_records 10 --cache_traces --traces
+chifra export  0xd714dd60e22bbb1cbafd0e40de5cfa7bbdd3f3c8 --traces --max_records 10 --cache_traces
 TEST[DATE|TIME] Addrs:  [0xd714dd60e22bbb1cbafd0e40de5cfa7bbdd3f3c8]
 TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] CacheTraces:  true

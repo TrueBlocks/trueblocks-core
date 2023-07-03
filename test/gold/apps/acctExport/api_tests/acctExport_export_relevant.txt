@@ -1,5 +1,5 @@
 Env: TEST_NO_ARTICULATION=true
-export?addrs=0x9531c059098e3d194ff87febb587ab07b30b1306&logs&lastBlock=10272064&fmt=json&relevant
+export?addrs=0x9531c059098e3d194ff87febb587ab07b30b1306&logs&relevant&lastBlock=10272064&fmt=json
 {
   "data": [
     {

@@ -55,7 +55,8 @@ Notes:
   - The --logs option is significantly faster if you provide an --emitter or a --topic.
   - Neighbors include every address that appears in any transaction in which the export address also appears.
   - If provided, --max_records dominates, also, if provided, --first_record overrides --first_block.
-  - The --first_record and --max_record options are zero-based (as are the block options).`
+  - The --first_record and --max_record options are zero-based (as are the block options).
+  - The _block and _record options are ignored when used with the --count option.`
 
 func init() {
 	exportCmd.Flags().SortFlags = false

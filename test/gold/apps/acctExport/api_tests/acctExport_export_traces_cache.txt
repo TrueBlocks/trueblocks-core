@@ -1,4 +1,4 @@
-export?addrs=0xd714dd60e22bbb1cbafd0e40de5cfa7bbdd3f3c8&maxRecords=10&cacheTraces&traces
+export?addrs=0xd714dd60e22bbb1cbafd0e40de5cfa7bbdd3f3c8&traces&maxRecords=10&cacheTraces
 {
   "data": [
     {

@@ -321,6 +321,7 @@ COptions::COptions(void) {
     notes.push_back("Neighbors include every address that appears in any transaction in which the export address also appears.");  // NOLINT
     notes.push_back("If provided, --max_records dominates, also, if provided, --first_record overrides --first_block.");
     notes.push_back("The --first_record and --max_record options are zero-based (as are the block options).");
+    notes.push_back("The _block and _record options are ignored when used with the --count option.");
     // clang-format on
     // END_CODE_NOTES
 
