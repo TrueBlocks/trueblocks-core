@@ -110,8 +110,14 @@ func (opts *ExportOptions) Validate() error {
 // TODO(tjayrush): accounting must be for one monitor address - why?
 // TODO(tjayrush): accounting requires node balances - why?
 // TODO(tjayrush): Used to do this: if any ABI files was newer, re-read abi and re-articulate in cache
-// TODO(tjayrush): What does blkRewardMap do? Needs testing
 // TODO(tjayrush): Reconciliation loads traces -- plus it reduplicates the isSuicide, isGeneration, isUncle shit
 // TODO(tjayrush): If a monitor file is locked, remove the lock and move on (don't read) but don't wait either
+
+// TODO: In the old C++ code, we used to be able to customize the display of the output with a configuration string. This is a VERY important feature as it captures users
+// TODO: In the old C++ code, the first address on the command line was `accountedFor`. Is that still true? Or do we now do accounting for multiple addresses? There should be testing.
+// TODO: In the old C++ code, we used to load knownABIs if we were articulating. Is this still true? Do we load the known ABIs and then overlay them with contract specific clashes? (We should.)
+// TODO: In the old C++ code, we used to be able to configure certain things - for example, `--cache` is on by default for all queries, `--cache_traces` is on by default, display strings, max_records, max_traces for dDos protection, etc.
+// TODO: Need much better testing surrounding fourBytes, topics, emitters, relevant, etc. It's also very poorly documented.
+// TODO: In the old C++ code, the ArticulateAll routine used to identify transactions as token related. Do we still do that? Must we? Why did we do that?
 
 // EXISTING_CODE

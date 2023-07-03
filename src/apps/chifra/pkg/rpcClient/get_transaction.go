@@ -68,6 +68,9 @@ var (
 )
 
 func GetPrefundTxByApp(chain string, appearance *types.RawAppearance) (tx *types.SimpleTransaction, err error) {
+	// TODO: performance - This loads and then drops the file every time it's called. Quite slow.
+	// TODO: performance - in the old C++ we stored these values in a pre fundAddrMap so that given a txid in block zero
+	// TODO: performance - we knew which address was granted allocation at that transaction.
 	prefundPath := prefunds.GetPrefundPath(chain)
 	if prefundMap, err := prefunds.LoadPrefundMap(chain, prefundPath); err != nil {
 		return nil, err

@@ -250,3 +250,5 @@ local   ,both ,fast  ,export   ,apps/acctExport ,simple_prefund2          ,y    
 # chifra export --cache
 # chifra export --cache_traces
 # chifra export --unripe
+
+# --no_header (and other global options) work, but there's no testing for them here

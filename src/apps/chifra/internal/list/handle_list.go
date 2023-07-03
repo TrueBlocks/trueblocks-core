@@ -98,16 +98,17 @@ func (opts *ListOptions) IsMax(cnt uint64) bool {
 	return cnt >= max
 }
 
-// TODO: We used to keep these stats on the chifra list process. Lost during port from C++
-// nBloomHits
-// nBloomMisses
-// nCacheWrites
-// nChecked
-// nFalsePositive
-// nFileRecords
-// nFiles
-// nPositive
-// nSkipped
-// nStageChecked
-// nStageHits
-// nTotalHits
+// TODO: We used to keep these stats on the chifra list process. Lost during port from C++ currently stored in $HOME/.../TrueBlocks/perf
+// We could use Graphenpa or something to display them.
+// n BloomHits
+// n BloomMisses
+// n CacheWrites
+// n Checked
+// n FalsePositive
+// n FileRecords
+// n Files
+// n Positive
+// n Skipped
+// n StageChecked
+// n StageHits
+// n TotalHits
