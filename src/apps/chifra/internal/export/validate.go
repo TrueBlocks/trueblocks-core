@@ -23,6 +23,16 @@ func (opts *ExportOptions) validateExport() error {
 		return opts.BadFlag
 	}
 
+	if opts.TooManyOptions() {
+		return validate.Usage("Please choose only a single mode (--appearances, --logs, etc.")
+	}
+
+	if opts.Count {
+		if opts.Logs || opts.Traces || opts.Neighbors {
+			return validate.Usage("The {0} option is not available with {}.", "--count", "--logs, --traces, or --neighbors")
+		}
+	}
+
 	if opts.Neighbors {
 		return validate.Usage("The {0} option is currenlty disabled.", "--neighbors")
 	}
@@ -52,15 +62,6 @@ func (opts *ExportOptions) validateExport() error {
 		if opts.LastBlock > latest {
 			msg := fmt.Sprintf("latest block (%d) must be before the chain's latest block (%d).", opts.LastBlock, latest)
 			return validate.Usage(msg)
-		}
-	}
-
-	if opts.Count {
-		if opts.Logs || opts.Receipts || opts.Traces || opts.Neighbors {
-			return validate.Usage("The {0} option is only available with transactional options.", "--count")
-		}
-		if opts.MaxRecords > 0 && opts.MaxRecords != 250 {
-			return validate.Usage("The {0} option is not available with the {1} option.", "--count", "--max_records")
 		}
 	}
 
@@ -143,4 +144,27 @@ func (opts *ExportOptions) validateExport() error {
 	// 	err = nil
 	// }
 	// return err
+}
+
+func (opts *ExportOptions) TooManyOptions() bool {
+	cnt := 0
+	if opts.Appearances {
+		cnt++
+	}
+	if opts.Receipts {
+		cnt++
+	}
+	if opts.Logs {
+		cnt++
+	}
+	if opts.Traces {
+		cnt++
+	}
+	if opts.Neighbors {
+		cnt++
+	}
+	if opts.Accounting {
+		cnt++
+	}
+	return cnt > 1
 }
