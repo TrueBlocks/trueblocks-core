@@ -14,35 +14,34 @@
 
 //-----------------------------------------------------------------------
 bool COptions::handle_traversers(void) {
-    CDynamicTraverser lib(load);
-    if (!lib.is_valid())
-        return usage("Dynamic library " + load + " was found but is not valid.");
-    if (!loadNames())
-        return usage("Could not load names database.");
+    // CDynamicTraverser lib(load);
+    // if (!lib.is_valid())
+    //     return usage("Dynamic library " + load + " was found but is not valid.");
+    // if (!loadNames())
+    //     return usage("Could not load names database.");
 
-    auto libFactory = lib.get_function<CTraverser*(uint32_t)>("makeTraverser");
-    if (!libFactory) {
-        LOG_ERR("Could not instantiate traverser. Quitting.");
-        return false;
-    }
-    LOG_INFO(bBlue, "Instantiating traverser", cOff);
-    CTraverser* trav = libFactory(getVersionNum());
-    if (trav->dataFunc == noopFunc || trav->dataFunc == nullptr)
-        trav->dataFunc = loadTx_Func;
-    for (auto monitor : allMonitors) {
-        findName(monitor.address, monitor);
-        trav->monitorMap[monitor.address] = monitor;
-    }
+    // auto libFactory = lib.get_function<CTraverser*(uint32_t)>("makeTraverser");
+    // if (!libFactory) {
+    //     LOG_ERR("Could not instantiate traverser. Quitting.");
+    //     return false;
+    // }
+    // LOG_INFO(bBlue, "Instantiating traverser", cOff);
+    // CTraverser* trav = libFactory(getVersionNum());
+    // if (trav->dataFunc == noopFunc || trav->dataFunc == nullptr)
+    //     trav->dataFunc = loadTx_Func;
+    // for (auto monitor : allMonitors) {
+    //     findName(monitor.address, monitor);
+    //     trav->monitorMap[monitor.address] = monitor;
+    // }
 
-    for (auto monitor : allMonitors) {
-        LOG_INFO(bBlue, "Starting traversal of ", monitor.address, cOff);
-        trav->curMonitor = &monitor;
-        curMonitor = &monitor;
-        monitor.readAppearances(visitOnLoad, this);
-        if (reversed)  // TODO(tjayrush): remove this comment once account works backwardly
-            sort(monitor.apps.begin(), monitor.apps.end(), sortMonitoredAppearanceReverse);
-        trav->traverse(monitor.apps, this);
-    }
-
+    // for (auto monitor : allMonitors) {
+    //     LOG_INFO(bBlue, "Starting traversal of ", monitor.address, cOff);
+    //     trav->curMonitor = &monitor;
+    //     curMonitor = &monitor;
+    //     monitor.readAppearances(visitOnLoad, this);
+    //     if (reversed)  // TODO(tjayrush): remove this comment once account works backwardly
+    //         sort(monitor.apps.begin(), monitor.apps.end(), sortMonitoredAppearanceReverse);
+    //     trav->traverse(monitor.apps, this);
+    // }
     return true;
 }

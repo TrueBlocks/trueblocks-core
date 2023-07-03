@@ -26,17 +26,6 @@
 class COptions : public CStatementOptions {
   public:
     // BEG_CODE_DECLARE
-    CFourbyteArray fourbytes;
-    bool accounting;
-    bool statements;
-    bool articulate;
-    bool cache;
-    bool cache_traces;
-    uint64_t first_record;
-    uint64_t max_records;
-    string_q flow;
-    string_q load;
-    bool reversed;
     // END_CODE_DECLARE
 
     bool skip_ddos{true};

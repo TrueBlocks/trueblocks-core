@@ -96,6 +96,9 @@ func (l *Ledger) SetContexts(chain string, apps []index.AppearanceRecord) error 
 		sort.Strings(keys)
 		for _, key := range keys {
 			c := l.Contexts[key]
+			if c.CurBlock > maxTestingBlock {
+				continue
+			}
 			msg := ""
 			if !c.IsPrevDiff || !c.IsNextDiff {
 				msg = fmt.Sprintf(" %12.12s %t %t", c.ReconType, c.IsPrevDiff, c.IsNextDiff)

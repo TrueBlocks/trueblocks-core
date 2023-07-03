@@ -29,22 +29,6 @@ extern const char* STR_MONITOR_LOCKED;
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) to export"),
-    COption("topics", "", "list<topic>", OPT_POSITIONAL, "filter by one or more log topics (only for --logs option)"),
-    COption("fourbytes", "", "list<fourbyte>", OPT_POSITIONAL, "filter by one or more fourbytes (only for transactions and trace options)"),  // NOLINT
-    COption("accounting", "C", "", OPT_SWITCH, "attach accounting records to the exported data (applies to transactions export only)"),  // NOLINT
-    COption("statements", "A", "", OPT_SWITCH, "for the accounting options only, export only statements"),
-    COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
-    COption("cache", "o", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
-    COption("cache_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
-    COption("first_record", "c", "<uint64>", OPT_FLAG, "the first record to process"),
-    COption("max_records", "e", "<uint64>", OPT_FLAG, "the maximum number of records to process"),
-    COption("asset", "P", "list<addr>", OPT_FLAG, "for the accounting options only, export statements only for this asset"),  // NOLINT
-    COption("flow", "f", "enum[in|out|zero]", OPT_FLAG, "for the accounting options only, export statements with incoming, outgoing, or zero value"),  // NOLINT
-    COption("load", "O", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
-    COption("reversed", "E", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
-    COption("first_block", "F", "<blknum>", OPT_FLAG, "first block to process (inclusive)"),
-    COption("last_block", "L", "<blknum>", OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more addresses."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -57,163 +41,86 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
-    CAddressArray addrs;
-    CTopicArray topics;
-    CAddressArray asset;
-    blknum_t first_block = 0;
-    blknum_t last_block = NOPOS;
     // END_CODE_LOCAL_INIT
 
-    blknum_t latest = meta.client;
+    // blknum_t latest = meta.client;
     string_q origCmd = command;
 
     Init();
     explode(arguments, command, ' ');
 
     // Weirdness, if the user doesn't provide a valid address, topic, or fourbyte, report bad addr
-    string_q term, legit;
-    for (auto arg : arguments) {
-        if (!contains(arg, "-")) {  // is positional
-            if (isAddress(arg) || isTopic(arg) || isFourbyte(arg)) {
-                legit = arg;
-            }
-            term = arg;
-        }
-    }
-    if (legit.empty() && !term.empty())
-        return parseAddressList(this, addrs, term);
+    // string_q term, legit;
+    // for (auto arg : arguments) {
+    //     if (!contains(arg, "-")) {  // is positional
+    //         if (isAddress(arg) || isTopic(arg) || isFourbyte(arg)) {
+    //             legit = arg;
+    //         }
+    //         term = arg;
+    //     }
+    // }
+    // if (legit.empty() && !term.empty())
+    //     return parseAddressList(this, addrs, term);
     // Weirdness, if the user doesn't provide a valid address, topic, or fourbyte, report bad addr
 
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
-        } else if (arg == "--cache_tx") {
-            cache = true;
+            // } else if (arg == "--cache_tx") {
+            //     cache = true;
             // BEG_CODE_AUTO
-        } else if (arg == "-C" || arg == "--accounting") {
-            accounting = true;
-
-        } else if (arg == "-A" || arg == "--statements") {
-            statements = true;
-
-        } else if (arg == "-a" || arg == "--articulate") {
-            articulate = true;
-
-        } else if (arg == "-o" || arg == "--cache") {
-            cache = true;
-
-        } else if (arg == "-R" || arg == "--cache_traces") {
-            cache_traces = true;
-
-        } else if (startsWith(arg, "-c:") || startsWith(arg, "--first_record:")) {
-            if (!confirmUint("first_record", first_record, arg))
-                return false;
-        } else if (arg == "-c" || arg == "--first_record") {
-            return flag_required("first_record");
-
-        } else if (startsWith(arg, "-e:") || startsWith(arg, "--max_records:")) {
-            if (!confirmUint("max_records", max_records, arg))
-                return false;
-        } else if (arg == "-e" || arg == "--max_records") {
-            return flag_required("max_records");
-
-        } else if (startsWith(arg, "-P:") || startsWith(arg, "--asset:")) {
-            arg = substitute(substitute(arg, "-P:", ""), "--asset:", "");
-            if (!parseAddressList(this, asset, arg))
-                return false;
-        } else if (arg == "-P" || arg == "--asset") {
-            return flag_required("asset");
-
-        } else if (startsWith(arg, "-f:") || startsWith(arg, "--flow:")) {
-            if (!confirmEnum("flow", flow, arg))
-                return false;
-        } else if (arg == "-f" || arg == "--flow") {
-            return flag_required("flow");
-
-        } else if (startsWith(arg, "-O:") || startsWith(arg, "--load:")) {
-            load = substitute(substitute(arg, "-O:", ""), "--load:", "");
-        } else if (arg == "-O" || arg == "--load") {
-            return flag_required("load");
-
-        } else if (arg == "-E" || arg == "--reversed") {
-            reversed = true;
-
-        } else if (startsWith(arg, "-F:") || startsWith(arg, "--first_block:")) {
-            if (!confirmBlockNum("first_block", first_block, arg, latest))
-                return false;
-        } else if (arg == "-F" || arg == "--first_block") {
-            return flag_required("first_block");
-
-        } else if (startsWith(arg, "-L:") || startsWith(arg, "--last_block:")) {
-            if (!confirmBlockNum("last_block", last_block, arg, latest))
-                return false;
-        } else if (arg == "-L" || arg == "--last_block") {
-            return flag_required("last_block");
-
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 return invalid_option(arg);
             }
 
-        } else if (isAddress(arg)) {
-            if (!parseAddressList(this, addrs, arg))
-                return false;
-
-        } else if (isTopic(arg)) {
-            if (!parseTopicList2(this, topics, arg))
-                return false;
-
-        } else {
-            if (!parseFourbyteList(this, fourbytes, arg))
-                return false;
-
             // END_CODE_AUTO
         }
     }
 
-    if (first_record == 0) {
-        first_record = 1;
-    }
+    // if (first_record == 0) {
+    //     first_record = 1;
+    // }
 
-    if (!isApiMode() && (max_records == 250 || max_records == 0))
-        max_records = (((size_t)-100000000));  // this is a very large number that won't wrap
+    // if (!isApiMode() && (max_records == 250 || max_records == 0))
+    //     max_records = (((size_t)-100000000));  // this is a very large number that won't wrap
 
-    for (auto addr : asset) {  // asset is an array even though it's singular
-        ledgerManager.setAssetFilter(addr);
-    }
+    // for (auto addr : asset) {  // asset is an array even though it's singular
+    //     ledgerManager.setAssetFilter(addr);
+    // }
 
     if (!loadNames()) {
         return usage("Could not load names database.");
     }
 
-    exportRange = make_pair(first_block, last_block);
+    // exportRange = make_pair(first_block, last_block);
 
-    for (auto addr : addrs) {
-        CMonitor monitor;
-        monitor.setValueByName("address", toLower(addr));
-        monitor.setValueByName("name", toLower(addr));
-        monitor.finishParse();
-        monitor.isStaging = !fileExists(monitor.getPathToMonitor(monitor.address, false));
+    // for (auto addr : addrs) {
+    //     CMonitor monitor;
+    //     monitor.setValueByName("address", toLower(addr));
+    //     monitor.setValueByName("name", toLower(addr));
+    //     monitor.finishParse();
+    //     monitor.isStaging = !fileExists(monitor.getPathToMonitor(monitor.address, false));
 
-        if (ledgerManager.accountedFor.empty()) {
-            ledgerManager.accountedFor = monitor.address;
-            ledgerManager.name.address = monitor.address;
-            findName(monitor.address, ledgerManager.name);
-            ledgerManager.name.petname = addr_2_Petname(ledgerManager.accountedFor, '-');  // order matters
-            ledgerManager.name.isContract = !getCodeAt(monitor.address, latest).empty();
-        }
+    //     if (ledgerManager.accountedFor.empty()) {
+    //         ledgerManager.accountedFor = monitor.address;
+    //         ledgerManager.name.address = monitor.address;
+    //         findName(monitor.address, ledgerManager.name);
+    //         ledgerManager.name.petname = addr_2_Petname(ledgerManager.accountedFor, '-');  // order matters
+    //         ledgerManager.name.isContract = !getCodeAt(monitor.address, latest).empty();
+    //     }
 
-        allMonitors.push_back(monitor);
-    }
+    //     allMonitors.push_back(monitor);
+    // }
 
-    if (articulate) {
-        abi_spec.loadAbisFromKnown();
-        for (auto monitor : allMonitors) {
-            if (isContractAt(monitor.address, meta.client))
-                abi_spec.loadAbiFromEtherscan(monitor.address);
-        }
-    }
+    // if (articulate) {
+    //     abi_spec.loadAbisFromKnown();
+    //     for (auto monitor : allMonitors) {
+    //         if (isContractAt(monitor.address, meta.client))
+    //             abi_spec.loadAbiFromEtherscan(monitor.address);
+    //     }
+    // }
 
     if (!setDisplayFormatting()) {
         return false;
@@ -223,33 +130,33 @@ bool COptions::parseArguments(string_q& command) {
     CMonitor m;
     cleanFolder(m.getPathToMonitor("", true));
 
-    if (load.empty()) {
-        if (!loadMonitors())
-            return false;
+    // if (load.empty()) {
+    if (!loadMonitors())
+        return false;
 
-    } else {
-        string_q fileName = cacheFolder_objs + load;
-        LOG_INFO("Trying to load dynamic library ", fileName);
+    // } else {
+    //     string_q fileName = cacheFolder_objs + load;
+    //     LOG_INFO("Trying to load dynamic library ", fileName);
 
-        if (!fileExists(fileName)) {
-            replace(fileName, "/objs/", "/objs/lib");
-            fileName = fileName + ".so";
-            LOG_INFO("Trying to load dynamic library ", fileName);
-        }
+    //     if (!fileExists(fileName)) {
+    //         replace(fileName, "/objs/", "/objs/lib");
+    //         fileName = fileName + ".so";
+    //         LOG_INFO("Trying to load dynamic library ", fileName);
+    //     }
 
-        if (!fileExists(fileName)) {
-            fileName = substitute(fileName, ".so", ".dylib");
-            LOG_INFO("Trying to load dynamic library ", fileName);
-        }
+    //     if (!fileExists(fileName)) {
+    //         fileName = substitute(fileName, ".so", ".dylib");
+    //         LOG_INFO("Trying to load dynamic library ", fileName);
+    //     }
 
-        if (fileExists(fileName)) {
-            LOG_INFO(bYellow, "Found dynamic library ", fileName, cOff);
-            load = fileName;
+    //     if (fileExists(fileName)) {
+    //         LOG_INFO(bYellow, "Found dynamic library ", fileName, cOff);
+    //         load = fileName;
 
-        } else {
-            return usage("Could not load dynamic traverser for " + fileName + ".");
-        }
-    }
+    //     } else {
+    //         return usage("Could not load dynamic traverser for " + fileName + ".");
+    //     }
+    // }
 
     return true;
 }
@@ -261,18 +168,6 @@ void COptions::Init(void) {
     // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT
-    accounting = false;
-    statements = false;
-    articulate = false;
-    // clang-format off
-    cache = getGlobalConfig("acctExport")->getConfigBool("settings", "cache", false);
-    cache_traces = getGlobalConfig("acctExport")->getConfigBool("settings", "cache_traces", false);
-    // clang-format on
-    first_record = 0;
-    max_records = 250;
-    flow = "";
-    load = "";
-    reversed = false;
     // END_CODE_INIT
 
     // clang-format off
@@ -280,8 +175,8 @@ void COptions::Init(void) {
     max_traces = getGlobalConfig("acctExport")->getConfigInt("settings", "max_traces", 250);
     // clang-format on
 
-    if (!cache && getGlobalConfig("acctExport")->getConfigBool("settings", "cache_txs", false))
-        cache = true;  // backwards compat
+    // if (!cache && getGlobalConfig("acctExport")->getConfigBool("settings", "cache_txs", false))
+    //     cache = true;  // backwards compat
 
     meta = getMetaData();
 
@@ -401,48 +296,48 @@ bool COptions::setDisplayFormatting(void) {
 
     expContext().fmtMap["header"] = "";
     if (!noHeader) {
-        if (statements) {
-            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["reconciliation_fmt"]);
-        } else {
-            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["transaction_fmt"]);
-        }
+        // if (statements) {
+        //     expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["reconciliation_fmt"]);
+        // } else {
+        expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["transaction_fmt"]);
+        // }
     }
 
-    if (accounting) {
-        articulate = !getEtherscanKey(false).empty();
-        manageFields("CTransaction:statements", true);
-        if (statements && isText) {
-            string_q format =
-                getGlobalConfig("acctExport")->getConfigStr("display", "statement", STR_DISPLAY_RECONCILIATION);
-            expContext().fmtMap["header"] = noHeader ? "" : cleanFmt(format);
-            expContext().fmtMap["reconciliation_fmt"] = cleanFmt(format);
-            manageFields("CReconciliation:" + format);
-        }
-    }
+    // if (accounting) {
+    //     articulate = !getEtherscanKey(false).empty();
+    //     manageFields("CTransaction:statements", true);
+    //     // if (statements && isText) {
+    //     //     string_q format =
+    //     //         getGlobalConfig("acctExport")->getConfigStr("display", "statement", STR_DISPLAY_RECONCILIATION);
+    //     //     expContext().fmtMap["header"] = noHeader ? "" : cleanFmt(format);
+    //     //     expContext().fmtMap["reconciliation_fmt"] = cleanFmt(format);
+    //     //     manageFields("CReconciliation:" + format);
+    //     // }
+    // }
 
-    articulate = (articulate && (!isTestMode() || getEnvStr("TEST_NO_ARTICULATION") != "true"));
+    // articulate = (articulate && (!isTestMode() || getEnvStr("TEST_NO_ARTICULATION") != "true"));
 
-    // TODO(tjayrush): This doesn't work for some reason (see test case acctExport_export_logs.txt)
-    if (!articulate)
-        HIDE_FIELD(CLog, "compressedTx");
+    // // TODO(tjayrush): This doesn't work for some reason (see test case acctExport_export_logs.txt)
+    // if (!articulate)
+    //     HIDE_FIELD(CLog, "compressedTx");
 
     return true;
 }
 
 //-----------------------------------------------------------------------
 bool COptions::fourByteFilter(const string_q& input) const {
-    ASSERT(!opt->watch);
-    if (fourbytes.empty()) {
-        return true;
-    }
+    // ASSERT(!opt->watch);
+    // if (fourbytes.empty()) {
+    return true;
+    // }
 
-    for (auto four : fourbytes) {
-        if (startsWith(input, four)) {
-            return true;
-        }
-    }
+    // for (auto four : fourbytes) {
+    //     if (startsWith(input, four)) {
+    //         return true;
+    //     }
+    // }
 
-    return false;
+    // return false;
 }
 
 //-----------------------------------------------------------------------

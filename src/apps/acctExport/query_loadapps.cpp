@@ -60,27 +60,28 @@ bool COptions::loadMonitors(void) {
     }
 
     // Sort the file as it may or may not be sorted already
-    if (reversed) {  // TODO(tjayrush): remove this comment once account works backwardly
-        sort(monTmp.begin(), monTmp.end(), sortMonitoredAppearanceReverse);
-    }
+    // if (reversed) {  // TODO(tjayrush): remove this comment once account works backwardly
+    //     sort(monTmp.begin(), monTmp.end(), sortMonitoredAppearanceReverse);
+    // }
 
     for (size_t i = 0; i < monTmp.size(); i++) {
         CAppearance_mon* app = &monTmp[i];
         if (app->blk < exportRange.first || app->blk > exportRange.second) {
             // do nothing
         } else {
-            if ((i + 1) >= first_record && (max_records == 250 || ledgerManager.appArray.size() < max_records)) {
-                if (app->blk > meta.client) {
-                    static bool hasFuture = false;
-                    if (!hasFuture) {
-                        if (!isTestMode())
-                            LOG_WARN("Cache file contains blocks ahead of the chain. Some apps will not be exported.");
-                        hasFuture = true;
-                    }
-                } else {
-                    ledgerManager.appArray.push_back(*app);
-                }
-            }
+            // if ((i + 1) >= first_record && (max_records == 250 || ledgerManager.appArray.size() < max_records)) {
+            //     if (app->blk > meta.client) {
+            //         static bool hasFuture = false;
+            //         if (!hasFuture) {
+            //             if (!isTestMode())
+            //                 LOG_WARN("Cache file contains blocks ahead of the chain. Some apps will not be
+            //                 exported.");
+            //             hasFuture = true;
+            //         }
+            //     } else {
+            ledgerManager.appArray.push_back(*app);
+            //     }
+            // }
         }
     }
 

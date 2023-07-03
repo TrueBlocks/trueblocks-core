@@ -23,6 +23,14 @@ func (opts *ExportOptions) validateExport() error {
 		return opts.BadFlag
 	}
 
+	if opts.Neighbors {
+		return validate.Usage("The {0} option is currenlty disabled.", "--neighbors")
+	}
+
+	if len(opts.Load) > 0 {
+		return validate.Usage("The {0} option is currenlty disabled.", "--load")
+	}
+
 	if opts.TooManyOptions() {
 		return validate.Usage("Please choose only a single mode (--appearances, --logs, etc.")
 	}
@@ -33,13 +41,20 @@ func (opts *ExportOptions) validateExport() error {
 		}
 	}
 
-	if opts.Neighbors {
-		return validate.Usage("The {0} option is currenlty disabled.", "--neighbors")
-	}
-
 	if len(opts.Globals.File) == 0 {
 		if err := validate.ValidateAtLeastOneAddr(opts.Addrs); err != nil {
 			return err
+		}
+		for _, a := range opts.Addrs {
+			if !validate.IsValidAddress(a) {
+				if len(a) < 10 {
+					return validate.Usage("Invalid fourbyte: {0}", a)
+				} else if len(a) > 60 {
+					return validate.Usage("Invalid hash: {0}", a)
+				} else {
+					return validate.Usage("Invalid address: {0}", a)
+				}
+			}
 		}
 	}
 
@@ -104,7 +119,7 @@ func (opts *ExportOptions) validateExport() error {
 
 	if len(opts.Fourbytes) > 0 {
 		if opts.Logs || opts.Receipts || opts.Appearances {
-			return validate.Usage("The {0} option is only available with the {1} option.", "--fourbyte", "no option or the --accounting")
+			return validate.Usage("The {0} option is only available {1} option.", "--fourbyte", "when exporting or with the --accounting")
 		}
 		for _, t := range opts.Fourbytes {
 			if !validate.IsValidFourByte(t) {

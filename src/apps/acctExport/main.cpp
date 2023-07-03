@@ -26,27 +26,24 @@ int main(int argc, const char* argv[]) {
             return 0;
 
         CTraverserArray traversers;
-        if (options.load.empty()) {
-            // clang-format off
-            options.className =
-            options.statements
-                  ? GETRUNTIME_CLASS(CReconciliation)->m_ClassName
-                    : GETRUNTIME_CLASS(CTransaction)->m_ClassName;
-            // clang-format on
+        // if (options.load.empty()) {
+        // clang-format off
+        options.className = GETRUNTIME_CLASS(CTransaction)->m_ClassName;
+        // clang-format on
 
-            if (once)
-                cout << exportPreamble(expContext().fmtMap["header"], options.className);
+        if (once)
+            cout << exportPreamble(expContext().fmtMap["header"], options.className);
 
-            if (traversers.empty()) {
-                CTransactionTraverser tt;
-                traversers.push_back(tt);
-            }
-
-            forEveryAppearance(traversers, options.ledgerManager.appArray, &options);
-
-        } else {
-            options.handle_traversers();
+        if (traversers.empty()) {
+            CTransactionTraverser tt;
+            traversers.push_back(tt);
         }
+
+        forEveryAppearance(traversers, options.ledgerManager.appArray, &options);
+
+        // } else {
+        //     options.handle_traversers();
+        // }
 
         if (shouldQuit())
             break;
@@ -100,7 +97,7 @@ extern const CStringArray searchOps;
 //-----------------------------------------------------------------------
 // Returns false if the loop shouldQuit
 bool prog_Log(CTraverser* trav, void* data) {
-    COptions* opt = (COptions*)data;
+    // COptions* opt = (COptions*)data;
     if (!trav->logging || isTestMode())
         return !shouldQuit();
 
@@ -113,16 +110,16 @@ bool prog_Log(CTraverser* trav, void* data) {
         found << " (found " << trav->nProcessed << " " << trav->searchType << ")";
     }
 
-    LOG_PROG(searchOps[opt->ledgerManager.searchOp], " ", opt->first_record + trav->index, " of ",
-             opt->stats.nFileRecords, " txs at block ", trav->trans.blockNumber, found.str(), " for address ",
-             opt->ledgerManager.accountedFor, "\r");
+    // LOG_PROG(searchOps[opt->ledgerManager.searchOp], " ", opt->first_record + trav->index, " of ",
+    //          opt->stats.nFileRecords, " txs at block ", trav->trans.blockNumber, found.str(), " for address ",
+    //          opt->ledgerManager.accountedFor, "\r");
 
     return !shouldQuit();
 }
 
 //-----------------------------------------------------------------------
 void end_Log(CTraverser* trav, void* data) {
-    const COptions* opt = (const COptions*)data;
+    // const COptions* opt = (const COptions*)data;
     if (!trav->logging || isTestMode())
         return;
 
@@ -131,9 +128,9 @@ void end_Log(CTraverser* trav, void* data) {
         found << " (found " << trav->nProcessed << " " << trav->searchType << ")";
     }
 
-    LOG_PROG(searchOps[opt->ledgerManager.searchOp], " ", opt->first_record + trav->index, " of ",
-             opt->stats.nFileRecords, " txs at block ", trav->trans.blockNumber, found.str(), " for address ",
-             opt->ledgerManager.accountedFor, "\r");
+    // LOG_PROG(searchOps[opt->ledgerManager.searchOp], " ", opt->first_record + trav->index, " of ",
+    //          opt->stats.nFileRecords, " txs at block ", trav->trans.blockNumber, found.str(), " for address ",
+    //          opt->ledgerManager.accountedFor, "\r");
 
     return;
 }
@@ -148,7 +145,7 @@ bool loadTx_Func(CTraverser* trav, void* data) {
     trav->block.blockNumber = trav->app->blk;
     trav->trans.pBlock = &trav->block;
 
-    bool dirty = false;
+    // bool dirty = false;
     string_q txFilename = getBinaryCacheFilename(CT_TXS, trav->app->blk, trav->app->txid);
     bool inCache = trav->app->blk != 0 && fileExists(txFilename);
     if (inCache) {
@@ -157,7 +154,7 @@ bool loadTx_Func(CTraverser* trav, void* data) {
 
     } else {
         opt->ledgerManager.searchOp = EXTRACT;
-        dirty = true;
+        // dirty = true;
         if (trav->app->blk == 0) {
             address_t addr = opt->prefundAddrMap[trav->app->txid];
             trav->trans.loadTransAsPrefund(trav->app->blk, trav->app->txid, addr, prefundAt(addr));
@@ -185,16 +182,16 @@ bool loadTx_Func(CTraverser* trav, void* data) {
     trav->trans.timestamp = bn_2_Timestamp(trav->app->blk);
     trav->block.timestamp = bn_2_Timestamp(trav->app->blk);
 
-    dirty |= opt->articulateAll(trav->trans);
+    // dirty |= opt->articulateAll(trav->trans);
 
     // TODO(tjayrush): This could be in post_Func so that other functions can also make it dirty
-    if (opt->cache && dirty) {
-        opt->stats.nCacheWrites++;
-        // if the node is behind the index, this will sometimes happen - don't write in that case
-        if (!trav->trans.hash.empty()) {
-            writeTransToBinary(trav->trans, txFilename);
-        }
-    }
+    // if (opt->cache && dirty) {
+    //     opt->stats.nCacheWrites++;
+    //     // if the node is behind the index, this will sometimes happen - don't write in that case
+    //     if (!trav->trans.hash.empty()) {
+    //         writeTransToBinary(trav->trans, txFilename);
+    //     }
+    // }
 
     return true;
 }

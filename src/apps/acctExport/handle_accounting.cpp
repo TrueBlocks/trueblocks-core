@@ -20,39 +20,39 @@ bool acct_Display(CTraverser* trav, void* data) {
         return true;
     }
 
-    if (opt->accounting) {
-        opt->ledgerManager.getPrevNext(trav->index, trav->trans);
-        if (!opt->ledgerManager.getStatements(trav->trans)) {
-            return false;  // user quit
-        }
-        if (!opt->ledgerManager.isFilterOn()) {
-            // only cache the reconciliation if it's a full set
-            if (trav->trans.isReconciled(opt->ledgerManager.accountedFor)) {
-                trav->trans.cacheConditional(opt->ledgerManager.accountedFor);
-            }
-        }
-    }
+    // if (opt->accounting) {
+    //     opt->ledgerManager.getPrevNext(trav->index, trav->trans);
+    //     if (!opt->ledgerManager.getStatements(trav->trans)) {
+    //         return false;  // user quit
+    //     }
+    //     if (!opt->ledgerManager.isFilterOn()) {
+    //         // only cache the reconciliation if it's a full set
+    //         if (trav->trans.isReconciled(opt->ledgerManager.accountedFor)) {
+    //             trav->trans.cacheConditional(opt->ledgerManager.accountedFor);
+    //         }
+    //     }
+    // }
 
-    if (opt->statements) {
-        // only show the statments...
-        for (auto statement : trav->trans.statements) {
-            // ... only if they're of the right type
-            bool checkFlow = !opt->flow.empty();
-            bool in = opt->flow == "in" && statement.amountNet() > 0;
-            bool out = opt->flow == "out" && statement.amountNet() < 0;
-            bool zero = opt->flow == "zero" && statement.amountNet() == 0;
-            if (!checkFlow || in || out || zero) {
-                cout << ((isJson() && !opt->firstOut) ? ", " : "");
-                cout << statement;
-                opt->firstOut = false;
-            }
-        }
+    // if (opt->statements) {
+    //     // only show the statments...
+    //     for (auto statement : trav->trans.statements) {
+    //         // ... only if they're of the right type
+    //         bool checkFlow = !opt->flow.empty();
+    //         bool in = opt->flow == "in" && statement.amountNet() > 0;
+    //         bool out = opt->flow == "out" && statement.amountNet() < 0;
+    //         bool zero = opt->flow == "zero" && statement.amountNet() == 0;
+    //         if (!checkFlow || in || out || zero) {
+    //             cout << ((isJson() && !opt->firstOut) ? ", " : "");
+    //             cout << statement;
+    //             opt->firstOut = false;
+    //         }
+    //     }
 
-    } else {
-        cout << ((isJson() && !opt->firstOut) ? ", " : "");
-        cout << trav->trans;
-        opt->firstOut = false;
-    }
+    // } else {
+    cout << ((isJson() && !opt->firstOut) ? ", " : "");
+    cout << trav->trans;
+    opt->firstOut = false;
+    // }
 
     return prog_Log(trav, data);
 }

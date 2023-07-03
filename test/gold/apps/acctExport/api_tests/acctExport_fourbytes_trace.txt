@@ -1,4 +1,4 @@
-export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&traces&fourbytes=0xa9059cbb&maxRecords=10&fmt=json
+export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&fourbytes=0xa9059cbb&traces&maxRecords=10&fmt=json
 {
   "data": [
     {
