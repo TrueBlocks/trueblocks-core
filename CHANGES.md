@@ -3,7 +3,8 @@
 
 This file details changes made to TrueBlocks over time. See the [migration notes](./MIGRATIONS.md) for any required actions you must take to stay up to date.
 
-## v0.71.0 (xxx)
+## v0.80.0 (xxx)
+Major re-write of chifra export to port to GoLang
 Removes use of FromRpc in favor of Query methods for interacting with the RPC
 Removes a bunch of old tests in ./src/libs cpp code
 Fixes bug related to loadedMap in articulation code
