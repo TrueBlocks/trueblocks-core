@@ -1,7 +1,0 @@
-tomlTest2  grabABI.toml
-tests/grabABI.toml
-[version]
-current = "vers-beta"
-
-[display]
-format = "[{address}]\t[{encoding}]\t[{type}]\t[{constant}]\t[{name}]\t[{signature}]"

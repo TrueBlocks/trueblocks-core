@@ -1,4 +1,0 @@
-tomlTest2  ethNames.toml
-tests/ethNames.toml
-[version]
-current = "vers-beta"

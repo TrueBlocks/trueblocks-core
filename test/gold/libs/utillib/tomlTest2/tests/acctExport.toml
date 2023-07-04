@@ -1,6 +1,0 @@
-[settings]
-# writeBlocks = false
-# writeTrxs = false
-# writeTraces = false
-# skipDdos = true
-# maxTraces = 250
