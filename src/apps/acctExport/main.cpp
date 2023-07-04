@@ -70,11 +70,7 @@ int main(int argc, const char* argv[]) {
         os << ", \"accountedFor\": " << options.allMonitors[0] << endl;
     }
     expContext().fmtMap["meta"] += os.str();
-
     cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
-
-    options.writePerformanceData();
-
     acctlib_cleanup();
     return 0;
 }
@@ -110,10 +106,6 @@ bool prog_Log(CTraverser* trav, void* data) {
         found << " (found " << trav->nProcessed << " " << trav->searchType << ")";
     }
 
-    // LOG_PROG(searchOps[opt->ledgerManager.searchOp], " ", opt->first_record + trav->index, " of ",
-    //          opt->stats.nFileRecords, " txs at block ", trav->trans.blockNumber, found.str(), " for address ",
-    //          opt->ledgerManager.accountedFor, "\r");
-
     return !shouldQuit();
 }
 
@@ -128,10 +120,6 @@ void end_Log(CTraverser* trav, void* data) {
         found << " (found " << trav->nProcessed << " " << trav->searchType << ")";
     }
 
-    // LOG_PROG(searchOps[opt->ledgerManager.searchOp], " ", opt->first_record + trav->index, " of ",
-    //          opt->stats.nFileRecords, " txs at block ", trav->trans.blockNumber, found.str(), " for address ",
-    //          opt->ledgerManager.accountedFor, "\r");
-
     return;
 }
 
@@ -145,7 +133,6 @@ bool loadTx_Func(CTraverser* trav, void* data) {
     trav->block.blockNumber = trav->app->blk;
     trav->trans.pBlock = &trav->block;
 
-    // bool dirty = false;
     string_q txFilename = getBinaryCacheFilename(CT_TXS, trav->app->blk, trav->app->txid);
     bool inCache = trav->app->blk != 0 && fileExists(txFilename);
     if (inCache) {
@@ -154,7 +141,6 @@ bool loadTx_Func(CTraverser* trav, void* data) {
 
     } else {
         opt->ledgerManager.searchOp = EXTRACT;
-        // dirty = true;
         if (trav->app->blk == 0) {
             address_t addr = opt->prefundAddrMap[trav->app->txid];
             trav->trans.loadTransAsPrefund(trav->app->blk, trav->app->txid, addr, prefundAt(addr));
@@ -181,17 +167,6 @@ bool loadTx_Func(CTraverser* trav, void* data) {
     trav->trans.pBlock = &trav->block;
     trav->trans.timestamp = bn_2_Timestamp(trav->app->blk);
     trav->block.timestamp = bn_2_Timestamp(trav->app->blk);
-
-    // dirty |= opt->articulateAll(trav->trans);
-
-    // TODO(tjayrush): This could be in post_Func so that other functions can also make it dirty
-    // if (opt->cache && dirty) {
-    //     opt->stats.nCacheWrites++;
-    //     // if the node is behind the index, this will sometimes happen - don't write in that case
-    //     if (!trav->trans.hash.empty()) {
-    //         writeTransToBinary(trav->trans, txFilename);
-    //     }
-    // }
 
     return true;
 }

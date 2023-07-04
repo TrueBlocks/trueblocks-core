@@ -16,7 +16,6 @@
  * the code outside of the BEG_CODE/END_CODE sections
  */
 #include "acctlib.h"
-#include "scrapestatistics.h"
 #include "traversers.h"
 
 // BEG_ERROR_DEFINES
@@ -38,7 +37,6 @@ class COptions : public CStatementOptions {
 
     // abiMap allows fast access to abis
     CAddressUintMap abiMap;
-    CScrapeStatistics stats;
 
     blkrange_t fileRange;
     blkrange_t exportRange;
@@ -52,16 +50,11 @@ class COptions : public CStatementOptions {
     bool parseArguments(string_q& command);
     void Init(void);
 
-    bool setDisplayFormatting(void);
     bool loadMonitors(void);
 
     bool handle_traversers(void);
 
     bool articulateAll(CTransaction& trans);
-
-    bool fourByteFilter(const string_q& input) const;
-
-    void writePerformanceData(void);
 };
 
 //--------------------------------------------------------------------------------

@@ -1,11 +1,3 @@
-// TODO(tjayrush): If an abi file is newer than the monitor file - clear the cache
-// TODO(tjayrush): accounting disallows freshen, apps, logs, receipts, statements, traces, but requires articulate
-// TODO(tjayrush): accounting must be for one monitor address - why?
-// TODO(tjayrush): accounting requires node balances - why?
-// TODO(tjayrush): Used to do this: if any ABI files was newer, re-read abi and re-articulate in cache
-// TODO(tjayrush): What does blkRewardMap do? Needs testing
-// TODO(tjayrush): Reconciliation loads traces -- plus it reduplicates the isSuicide, isGeneration, isUncle shit
-// TODO(tjayrush): If a monitor file is locked, remove the lock and move on (don't read) but don't wait either
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -24,7 +16,6 @@
  */
 #include "options.h"
 
-extern const char* STR_MONITOR_LOCKED;
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
@@ -43,31 +34,12 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_CODE_LOCAL_INIT
     // END_CODE_LOCAL_INIT
 
-    // blknum_t latest = meta.client;
-    string_q origCmd = command;
-
     Init();
     explode(arguments, command, ' ');
-
-    // Weirdness, if the user doesn't provide a valid address, topic, or fourbyte, report bad addr
-    // string_q term, legit;
-    // for (auto arg : arguments) {
-    //     if (!contains(arg, "-")) {  // is positional
-    //         if (isAddress(arg) || isTopic(arg) || isFourbyte(arg)) {
-    //             legit = arg;
-    //         }
-    //         term = arg;
-    //     }
-    // }
-    // if (legit.empty() && !term.empty())
-    //     return parseAddressList(this, addrs, term);
-    // Weirdness, if the user doesn't provide a valid address, topic, or fourbyte, report bad addr
 
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
-            // } else if (arg == "--cache_tx") {
-            //     cache = true;
             // BEG_CODE_AUTO
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -79,84 +51,16 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // if (first_record == 0) {
-    //     first_record = 1;
-    // }
-
-    // if (!isApiMode() && (max_records == 250 || max_records == 0))
-    //     max_records = (((size_t)-100000000));  // this is a very large number that won't wrap
-
-    // for (auto addr : asset) {  // asset is an array even though it's singular
-    //     ledgerManager.setAssetFilter(addr);
-    // }
-
     if (!loadNames()) {
         return usage("Could not load names database.");
-    }
-
-    // exportRange = make_pair(first_block, last_block);
-
-    // for (auto addr : addrs) {
-    //     CMonitor monitor;
-    //     monitor.setValueByName("address", toLower(addr));
-    //     monitor.setValueByName("name", toLower(addr));
-    //     monitor.finishParse();
-    //     monitor.isStaging = !fileExists(monitor.getPathToMonitor(monitor.address, false));
-
-    //     if (ledgerManager.accountedFor.empty()) {
-    //         ledgerManager.accountedFor = monitor.address;
-    //         ledgerManager.name.address = monitor.address;
-    //         findName(monitor.address, ledgerManager.name);
-    //         ledgerManager.name.petname = addr_2_Petname(ledgerManager.accountedFor, '-');  // order matters
-    //         ledgerManager.name.isContract = !getCodeAt(monitor.address, latest).empty();
-    //     }
-
-    //     allMonitors.push_back(monitor);
-    // }
-
-    // if (articulate) {
-    //     abi_spec.loadAbisFromKnown();
-    //     for (auto monitor : allMonitors) {
-    //         if (isContractAt(monitor.address, meta.client))
-    //             abi_spec.loadAbiFromEtherscan(monitor.address);
-    //     }
-    // }
-
-    if (!setDisplayFormatting()) {
-        return false;
     }
 
     // TODO: This can be removed
     CMonitor m;
     cleanFolder(m.getPathToMonitor("", true));
 
-    // if (load.empty()) {
     if (!loadMonitors())
         return false;
-
-    // } else {
-    //     string_q fileName = cacheFolder_objs + load;
-    //     LOG_INFO("Trying to load dynamic library ", fileName);
-
-    //     if (!fileExists(fileName)) {
-    //         replace(fileName, "/objs/", "/objs/lib");
-    //         fileName = fileName + ".so";
-    //         LOG_INFO("Trying to load dynamic library ", fileName);
-    //     }
-
-    //     if (!fileExists(fileName)) {
-    //         fileName = substitute(fileName, ".so", ".dylib");
-    //         LOG_INFO("Trying to load dynamic library ", fileName);
-    //     }
-
-    //     if (fileExists(fileName)) {
-    //         LOG_INFO(bYellow, "Found dynamic library ", fileName, cOff);
-    //         load = fileName;
-
-    //     } else {
-    //         return usage("Could not load dynamic traverser for " + fileName + ".");
-    //     }
-    // }
 
     return true;
 }
@@ -234,139 +138,3 @@ COptions::COptions(void) {
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
 }
-
-//--------------------------------------------------------------------------------
-bool COptions::setDisplayFormatting(void) {
-    bool isText = expContext().exportFmt != JSON1;
-    string_q hide = substitute(defHide, "|CLog: data, topics", "");
-    manageFields(hide, false);
-    string_q show = defShow;
-    show += (isApiMode() ? "|CTransaction:encoding,function,input,etherGasCost|CTrace:traceAddress" : "");
-    manageFields(show, true);
-    manageFields("CTrace: blockHash, blockNumber, transactionHash, transactionIndex", false);  // hide
-    if (isText) {
-        string_q format;
-
-        format = getGlobalConfig("acctExport")->getConfigStr("display", "format", STR_DISPLAY_TRANSACTION);
-        expContext().fmtMap["transaction_fmt"] = cleanFmt(format);
-        manageFields("CTransaction:" + format);
-
-        if (format.empty())
-            return usage("For non-json export a 'trans_fmt' string is required. Check your config file.");
-        if (!contains(toLower(format), "trace"))
-            HIDE_FIELD(CTransaction, "traces");
-
-        format = getGlobalConfig("acctExport")->getConfigStr("display", "receipt", STR_DISPLAY_RECEIPT);
-        expContext().fmtMap["receipt_fmt"] = cleanFmt(format);
-        manageFields("CReceipt:" + format);
-
-        format = getGlobalConfig("acctExport")->getConfigStr("display", "log", STR_DISPLAY_LOG);
-        expContext().fmtMap["log_fmt"] = cleanFmt(format);
-        manageFields("CLog:" + format);
-
-        format = getGlobalConfig("acctExport")->getConfigStr("display", "statement", STR_DISPLAY_RECONCILIATION);
-        expContext().fmtMap["reconciliation_fmt"] = cleanFmt(format);
-        manageFields("CReconciliation:" + format);
-
-        format = getGlobalConfig("acctExport")->getConfigStr("display", "neighbor", STR_DISPLAY_APPEARANCE);
-        if (!verbose) {
-            replace(format, "\t[{NAME}]", "");
-            replace(format, "\t[{TIMESTAMP}]", "");
-            replace(format, "\t[{DATE}]", "");
-        }
-        replace(format, "\t[{REASON}]", "");
-        replace(format, "\t[{TRACEINDEX}]", "");
-        replaceAll(format, "\t\t", "\t");
-        format = trim(format, '\t');
-        expContext().fmtMap["appearance_fmt"] = cleanFmt(format);
-        manageFields("CAppearance:" + format);
-
-        format = getGlobalConfig("acctExport")->getConfigStr("display", "trace", STR_DISPLAY_TRACE);
-        expContext().fmtMap["trace_fmt"] = cleanFmt(format);
-        manageFields("CTrace:" + format);
-    } else {
-        HIDE_FIELD(CAppearance, "traceIndex");
-        HIDE_FIELD(CAppearance, "reason");
-    }
-    HIDE_FIELD(CFunction, "stateMutability");
-    HIDE_FIELD(CParameter, "strDefault");
-    HIDE_FIELD(CParameter, "components");
-    HIDE_FIELD(CParameter, "internalType");
-    SHOW_FIELD(CTransaction, "traces");
-
-    expContext().fmtMap["header"] = "";
-    if (!noHeader) {
-        // if (statements) {
-        //     expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["reconciliation_fmt"]);
-        // } else {
-        expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["transaction_fmt"]);
-        // }
-    }
-
-    // if (accounting) {
-    //     articulate = !getEtherscanKey(false).empty();
-    //     manageFields("CTransaction:statements", true);
-    //     // if (statements && isText) {
-    //     //     string_q format =
-    //     //         getGlobalConfig("acctExport")->getConfigStr("display", "statement", STR_DISPLAY_RECONCILIATION);
-    //     //     expContext().fmtMap["header"] = noHeader ? "" : cleanFmt(format);
-    //     //     expContext().fmtMap["reconciliation_fmt"] = cleanFmt(format);
-    //     //     manageFields("CReconciliation:" + format);
-    //     // }
-    // }
-
-    // articulate = (articulate && (!isTestMode() || getEnvStr("TEST_NO_ARTICULATION") != "true"));
-
-    // // TODO(tjayrush): This doesn't work for some reason (see test case acctExport_export_logs.txt)
-    // if (!articulate)
-    //     HIDE_FIELD(CLog, "compressedTx");
-
-    return true;
-}
-
-//-----------------------------------------------------------------------
-bool COptions::fourByteFilter(const string_q& input) const {
-    // ASSERT(!opt->watch);
-    // if (fourbytes.empty()) {
-    return true;
-    // }
-
-    // for (auto four : fourbytes) {
-    //     if (startsWith(input, four)) {
-    //         return true;
-    //     }
-    // }
-
-    // return false;
-}
-
-//-----------------------------------------------------------------------
-string_q CScrapeStatistics::Header(const string_q& fmt) const {
-    return Format(substitute(fmt, "{", "{p:"));
-}
-
-//-----------------------------------------------------------------------
-void COptions::writePerformanceData(void) {
-    if (stats.nFiles == stats.nSkipped)
-        return;
-
-    string_q statsFile = rootConfigs + "perf/performance_scraper.csv";
-
-    string_q fmt = substitute(STR_DISPLAY_SCRAPESTATISTICS, "\t", ",");
-    if (!fileExists(statsFile)) {
-        ostringstream header;
-        header << stats.Header(fmt) << endl;
-        stringToAsciiFile(statsFile, header.str());
-    }
-
-    ostringstream data;
-    data << stats.Format(fmt) << endl;
-    appendToAsciiFile(statsFile, data.str());
-}
-
-//-----------------------------------------------------------------------
-const char* STR_MONITOR_LOCKED =
-    "The cache file is locked. The program is either already "
-    "running or it did not end cleanly the\n\tlast time it ran. "
-    "Quit the already running program or, if it is not running, "
-    "remove the lock\n\tfile: '{0}.lck'.";
