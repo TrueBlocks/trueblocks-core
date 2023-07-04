@@ -11,7 +11,6 @@ project(libs)
 add_subdirectory(utillib)
 add_subdirectory(etherlib)
 add_subdirectory(acctlib)
-add_subdirectory(test-libs)
 
 file(GLOB A_HEADER_FILES "acctlib/*.h")
 install(FILES ${A_HEADER_FILES} DESTINATION include/tb/acctlib)

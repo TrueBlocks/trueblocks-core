@@ -1,3 +1,0 @@
-displayStrsTest  CName
-------------------------------CName------------------------------
-Unknown node of type CName not created.

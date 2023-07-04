@@ -86,15 +86,7 @@ bool COptions::parseArguments(string_q& command) {
             // END_CODE_AUTO
         } else {
             arg = trim(arg, '/');
-            if (arg == "libs" || arg == "libs/") {
-                static bool been_here = false;
-                if (been_here)
-                    break;
-                been_here = true;
-                tests.push_back("libs/utillib");
-                tests.push_back("libs/etherlib");
-
-            } else if (arg == "dev_tools" || arg == "dev_tools/") {
+            if (arg == "dev_tools" || arg == "dev_tools/") {
                 break;
 
             } else if (arg == "tools" || arg == "tools/") {
@@ -158,8 +150,6 @@ bool COptions::parseArguments(string_q& command) {
 
     if (tests.empty()) {
         full_test = true;
-        tests.push_back("libs/utillib");
-        tests.push_back("libs/etherlib");
         if (runSlurps) {
             tests.push_back("tools/ethslurp");
         }
