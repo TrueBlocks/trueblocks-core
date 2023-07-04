@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/gob"
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -44,7 +45,7 @@ type RawBlock struct {
 	Transactions     []any  `json:"transactions"`
 	TransactionsRoot string `json:"transactionsRoot"`
 	// EXISTING_CODE
-	Uncles           []string `json:"uncles"`
+	Uncles []string `json:"uncles"`
 	// EXISTING_CODE
 }
 
@@ -63,8 +64,8 @@ type SimpleBlock[Tx BlockTransaction] struct {
 	// EXISTING_CODE
 	// Used to be Finalized which has since been removed. Until we implement IsBackLevel
 	// and upgrading cache items, this exists. We can remove it once we do so.
-	UnusedBool bool `json:"-"`
-	Uncles        []base.Hash    `json:"uncles,omitempty"`
+	UnusedBool bool        `json:"-"`
+	Uncles     []base.Hash `json:"uncles,omitempty"`
 	// EXISTING_CODE
 }
 
@@ -187,15 +188,29 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 
 func (s *SimpleBlock[Tx]) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
+	enc := gob.NewEncoder(w)
+	err = enc.Encode(s)
+	if err != nil {
+		return
+	}
 	// EXISTING_CODE
 	return 0, nil
 }
 
 func (s *SimpleBlock[Tx]) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
+	dec := gob.NewDecoder(r)
+	err = dec.Decode(s)
+	if err != nil {
+		return
+	}
 	// EXISTING_CODE
 	return 0, nil
 }
 
 // EXISTING_CODE
+func init() {
+	gob.Register(&SimpleBlock[SimpleTransaction]{})
+}
+
 // EXISTING_CODE
