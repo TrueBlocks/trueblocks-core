@@ -15,10 +15,7 @@ INFO[DATE|TIME] map[count:1 fromBlock:0x42ae50 toBlock:0x42ae52]
       },
       "blockHash": "0xb1fcff633029ee18ab6482b58ff8b6e95dd7c82a954c852157152a7a6d32785e",
       "blockNumber": 4370000,
-      "result": {
-        "gasUsed": 0,
-        "output": "0x"
-      },
+      "result": {},
       "subtraces": 0,
       "timestamp": 1508131331,
       "traceAddress": [],
