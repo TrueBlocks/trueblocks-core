@@ -104,7 +104,6 @@ bool display(CTraverser* trav, void* data) {
     tt->trans.timestamp = bn_2_Timestamp(tt->app->blk);
     tt->block.timestamp = bn_2_Timestamp(tt->app->blk);
 
-    cerr << tt->searchType << " ";
     if (doEthCall(tt->uni, true /* proxy */) && !tt->uni.result.outputs.empty()) {
         CStringArray results;
         if (tt->uni.getResults(results) && results.size() > 1) {

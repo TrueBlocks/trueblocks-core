@@ -82,9 +82,6 @@ class CTransaction : public CBaseNode {
     const CBlock* pBlock;
     bool forEveryLog(LOGVISITFUNC func, void* data) const;
     bool forEveryTrace(TRACEVISITFUNC func, void* data) const;
-    bool loadTransAsPrefund(blknum_t bn, blknum_t txid, const address_t& addr, const wei_t& amount);
-    bool loadTransAsBlockReward(blknum_t bn, blknum_t txid, const address_t& addr);
-    bool loadTransAsUncleReward(blknum_t bn, blknum_t uncleBn, const address_t& addr);
     bool isReconciled(const address_t& accountedFor) const;
     bool readStatementsFromCache(const address_t& accountedFor);
     void cacheConditional(const address_t& accountedFor) const;

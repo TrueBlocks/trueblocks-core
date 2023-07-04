@@ -77,53 +77,6 @@ void CTrace::loadTraceAsDdos(const CTransaction& trans, blknum_t bn, blknum_t tx
     pTransaction = &trans;
 }
 
-//-------------------------------------------------------------------------
-// TODO: REWARD
-bool CTransaction::loadTransAsPrefund(blknum_t bn, blknum_t txid, const address_t& addr, const wei_t& amount) {
-    initialize();
-    blockNumber = bn;
-    transactionIndex = txid;
-    from = PrefundSender;
-    to = addr;
-    value = amount;
-    receipt = CReceipt();
-    receipt.pTransaction = this;
-    return true;
-}
-
-//-------------------------------------------------------------------------
-// TODO: REWARD
-bool CTransaction::loadTransAsBlockReward(blknum_t bn, blknum_t txid, const address_t& addr) {
-    ASSERT(txid == 99996 || txid == 99997 || txid == 99999);
-    initialize();
-    blockNumber = bn;
-    transactionIndex = txid;
-    from = BlockRewardSender;
-    to = addr;
-    value = getReward(BLOCK_REWARD, bn);
-    extraValue1 = getReward(NEPHEW_REWARD, bn);
-    extraValue2 = getReward(TXFEE_REWARD, bn);  // weird temp value for reconciliation only
-    receipt = CReceipt();
-    receipt.pTransaction = this;
-    return true;
-}
-
-//-------------------------------------------------------------------------
-// TODO: REWARD
-bool CTransaction::loadTransAsUncleReward(blknum_t bn, blknum_t uncleBn, const address_t& addr) {
-    ASSERT(txid == 99998);
-    initialize();
-    blockNumber = bn;
-    transactionIndex = 99998;
-    from = UncleRewardSender;
-    to = addr;
-    value +=
-        getReward(UNCLE_REWARD, bn, uncleBn);  // we use += here because you can win more than one uncle block per block
-    receipt = CReceipt();
-    receipt.pTransaction = this;
-    return true;
-}
-
 //---------------------------------------------------------------------------
 // TODO: REWARD
 wei_t getBlockReward(blknum_t bn) {

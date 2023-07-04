@@ -15,23 +15,6 @@
 namespace qblocks {
 
 //-----------------------------------------------------------------------
-bool forEveryAppearance(const CTraverserArray& traversers, const CAppearanceArray_mon& apps, void* data) {
-    // If we have nothing to do, return success
-    if (!apps.size() || !traversers.size())
-        return true;
-
-    // for each traverser...
-    for (auto trav : traversers) {
-        if (shouldQuit())
-            break;
-        if (!trav.traverse(apps, data))
-            return false;
-    }
-
-    return true;
-};
-
-//-----------------------------------------------------------------------
 bool CTraverser::traverse(const CAppearanceArray_mon& apps, void* data) {
     // Prepare the export...
     if (preFunc && !(*preFunc)(this, data))
