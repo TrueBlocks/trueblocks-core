@@ -13,17 +13,6 @@ on       ,both ,fast  ,traces ,tools/getTraces ,three_ways          ,n    ,trans
 
 on       ,both ,fast  ,traces ,tools/getTraces ,not_articulated     ,y    ,transactions = 0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33 & fmt = json
 on       ,both ,slow  ,traces ,tools/getTraces ,articulate_2        ,n    ,transactions = 3648669.24 & articulate & verbose & fmt = csv & no_header
-
-# This test loads 0x159cf1e9ae58211b588f5e3bf1d7e423952d959b ABI from the local folder (which does not exist in the API mode), so only run against `cmd`
-on       ,cmd  ,slow  ,traces ,tools/getTraces ,articulate_arrays   ,y    ,transactions = 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f & articulate & fmt = json & verbose
-
-# These two fail because they don't articulate a given function correctly. One of them only runs against `cmd`.
-broken   ,cmd  ,slow  ,traces ,tools/getTraces ,articulate          ,y    ,transactions = 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12 & articulate & fmt = json
-broken   ,both ,fast  ,traces ,tools/getTraces ,articulated         ,y    ,transactions = 0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33 & fmt = json & articulate
-
-# Issue #2793: This one has the initialize5/initialize problem (GoEthereum adds a number to a conflicting name)
-broken   ,both ,fast  ,traces ,tools/getTraces ,multi_articulate    ,y    ,transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json
-
 on       ,both ,fast  ,traces ,tools/getTraces ,verbose_blk_idx1    ,y    ,transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 & fmt = json
 on       ,both ,fast  ,traces ,tools/getTraces ,verbose_blk_idx2    ,y    ,transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 & fmt = json
 on       ,both ,fast  ,traces ,tools/getTraces ,verbose_blk_idx3    ,n    ,transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 & fmt = txt
@@ -49,6 +38,7 @@ on       ,both ,fast  ,traces ,tools/getTraces ,no_tracing          ,y    ,trans
 on       ,both ,medi  ,traces ,tools/getTraces ,00                  ,y    ,transactions = 0x0cc945824def6a5c81d86ca56848f92163838bbd480a3bd2ff85f6d5b13d72ab & raw
 on       ,both ,fast  ,traces ,tools/getTraces ,04                  ,y    ,transactions = 0x3d762e5f4c2a5c4ed3f4678d81f9078ff68e9d236d87dbcf3eee024dbb11f497 & raw & fmt = json
 on       ,both ,medi  ,traces ,tools/getTraces ,25                  ,y    ,transactions = 0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328 & raw
+on       ,both ,fast  ,traces ,tools/getTraces ,26                  ,n    ,transactions = 0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328 & fmt = csv
 on       ,both ,fast  ,traces ,tools/getTraces ,27                  ,y    ,transactions = 0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b & raw
 on       ,both ,fast  ,traces ,tools/getTraces ,bad_hash_msg_raw    ,y    ,transactions = 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 & raw
 on       ,both ,fast  ,traces ,tools/getTraces ,bad_blkhash_msg_raw ,y    ,transactions = 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 & raw
@@ -58,11 +48,16 @@ on       ,both ,fast  ,traces ,tools/getTraces ,04_01               ,y    ,trans
 on       ,both ,medi  ,traces ,tools/getTraces ,25_01               ,y    ,transactions = 0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328 & fmt = json
 on       ,cmd  ,fast  ,traces ,tools/getTraces ,by_filebad          ,n    ,bad & file = cmd_file
 on       ,cmd  ,fast  ,traces ,tools/getTraces ,by_file             ,n    ,file = cmd_file
-file_cmd ,cmd  ,fast  ,traces ,tools/getTraces ,by_file_v           ,y    ,verbose & file = cmd_file & fmt = json
-on       ,both ,fast  ,traces ,tools/getTraces ,redir_output        ,y    ,transactions = 3657480.12 & verbose & fmt = json & output = output_test_file
-on       ,both ,fast  ,traces ,tools/getTraces ,redir_output_append ,n    ,transactions = 3657480.9 & fmt = json & output = output_test_file & no_header & append
 
-on       ,both ,fast  ,traces ,tools/getTraces ,26                  ,n    ,transactions = 0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328 & fmt = csv
+# This test loads 0x159cf1e9ae58211b588f5e3bf1d7e423952d959b ABI from the local folder (which does not exist in the API mode), so only run against `cmd`
+on       ,cmd  ,slow  ,traces ,tools/getTraces ,articulate_arrays   ,y    ,transactions = 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f & articulate & fmt = json & verbose
+
+# These two fail because they don't articulate a given function correctly. One of them only runs against `cmd`.
+on       ,cmd  ,slow  ,traces ,tools/getTraces ,articulate          ,y    ,transactions = 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12 & articulate & fmt = json
+on       ,both ,fast  ,traces ,tools/getTraces ,articulated         ,y    ,transactions = 0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33 & fmt = json & articulate
+
+# Issue #2793: This one has the initialize5/initialize problem (GoEthereum adds a number to a conflicting name)
+on       ,both ,fast  ,traces ,tools/getTraces ,multi_articulate    ,y    ,transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json
 
 # These used to create a phony trace for contract creation which was needed for reconciliation. They pass but may indicate a future issue with recons
 on       ,both ,medi  ,traces ,tools/getTraces ,suicidesend_1       ,y    ,transactions = 0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd0e4309
@@ -88,3 +83,7 @@ local    ,both ,fast  ,traces ,tools/getTraces ,nav_prev1           ,y    ,trans
 local    ,both ,medi  ,traces ,tools/getTraces ,nav_prev2           ,y    ,transactions = 1001001.0:prev
 local    ,both ,fast  ,traces ,tools/getTraces ,nav_next1           ,y    ,transactions = 1001001.2:next
 local    ,both ,fast  ,traces ,tools/getTraces ,nav_next2           ,y    ,transactions = 1001001.3:next
+
+file_cmd ,cmd  ,fast  ,traces ,tools/getTraces ,by_file_v           ,y    ,verbose & file = cmd_file & fmt = json
+on       ,both ,fast  ,traces ,tools/getTraces ,redir_output        ,y    ,transactions = 3657480.12 & verbose & fmt = json & output = output_test_file
+on       ,both ,fast  ,traces ,tools/getTraces ,redir_output_append ,n    ,transactions = 3657480.9 & fmt = json & output = output_test_file & no_header & append

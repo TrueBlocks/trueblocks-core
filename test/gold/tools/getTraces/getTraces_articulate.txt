@@ -15,9 +15,9 @@ TEST[DATE|TIME] Format:  json
       },
       "articulatedTrace": {
         "inputs": {
-          "from": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
-          "to": "0x713fa27cb26b5902ea398b04d21e6018bba3a2f1",
-          "value": "8263636363636363636"
+          "_from": null,
+          "_to": null,
+          "_value": null
         },
         "name": "transferFrom",
         "outputs": {
@@ -53,8 +53,7 @@ TEST[DATE|TIME] Format:  json
       "blockHash": "0x9a06b1e8e7249a36a5e532997882429805c7a6510e91b05fd9b5ad6e367acb13",
       "blockNumber": 6687987,
       "result": {
-        "gasUsed": 57054,
-        "output": "0x"
+        "gasUsed": 57054
       },
       "subtraces": 0,
       "timestamp": 1541987121,
@@ -130,16 +129,12 @@ TEST[DATE|TIME] Format:  json
         "callType": "call",
         "from": "0xebf2bf80c3ddb0b6ac2f88be8dceec7bf12dff22",
         "gas": 2300,
-        "input": "0x",
         "to": "0x167a9333bf582556f35bd4d16a7e80e191aa6476",
         "value": "4569662960000000000"
       },
       "blockHash": "0xcd4dbd459893241b0c21c91d64b445b1eb0579f7341afd17e7b797795a7f1d7e",
       "blockNumber": 2001002,
-      "result": {
-        "gasUsed": 0,
-        "output": "0x"
-      },
+      "result": {},
       "subtraces": 0,
       "timestamp": 1470188068,
       "traceAddress": [
