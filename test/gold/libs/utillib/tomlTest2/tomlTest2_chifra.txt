@@ -1,7 +1,0 @@
-tomlTest2  chifra.toml
-tests/chifra.toml
-[version]
-current = "vers-beta"
-
-[settings]
-# none =

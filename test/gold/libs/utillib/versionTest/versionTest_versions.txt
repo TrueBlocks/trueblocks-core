@@ -1,7 +1,0 @@
-versionTest  
-0. Running TestTest_1
-	000.000 getVersionNum                    ==> passed 'getVersionNum(0, 9, 5)' is equal to '9005'
-	000.001 getVersionNum                    ==> passed 'getVersionNum(0, 10, 1)' is equal to '10001'
-	000.002 getVersionNum                    ==> passed 'getVersionNum(0, 100, 12)' is equal to '100012'
-	000.003 getVersionNum                    ==> passed 'getVersionNum(0, 1000, 12)' is equal to '1000012'
-	000.004 getVersionNum                    ==> passed 'getVersionNum(1, 0, 12)' is equal to '1000012'
