@@ -3546,7 +3546,7 @@ traces?transactions=0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c86
       "articulatedTrace": {
         "inputs": {
           "_app": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
-          "_entity": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f",
+          "_entity": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031",
           "_role": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
         },
         "name": "revokePermission"
