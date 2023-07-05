@@ -1,11 +1,6 @@
-abis?find=0x1aa3a008
+abis?find=0x1aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a008
 {
-  "data": [
-    {
-      "encoding": "0x1aa3a008",
-      "signature": "register()"
-    }
-  ],
+  "data": [],
   "meta": {
     "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",

@@ -113,7 +113,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x017e7e58",
       "name": "feeTo",
       "signature": "feeTo()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -150,7 +149,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x01ffc9a7",
       "name": "supportsInterface",
       "signature": "supportsInterface(bytes4)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -181,7 +179,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x025e7c27",
       "name": "owners",
       "signature": "owners(uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -230,7 +227,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x0356fe3a",
       "name": "genesisBlockNumber",
       "signature": "genesisBlockNumber()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -283,7 +279,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x04ebc8c4",
-      "name": "mulScalar0",
+      "name": "mulScalar",
       "signature": "mulScalar((),uint256)",
       "type": "function"
     },
@@ -291,14 +287,12 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x04f3bcec",
       "name": "resolver",
       "signature": "resolver()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x0519ce79",
       "name": "cfoAddress",
       "signature": "cfoAddress()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -312,7 +306,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x0560ff44",
       "name": "tokenMetadata",
       "signature": "tokenMetadata(uint256,string)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -331,7 +324,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x05e45546",
       "name": "promoCreatedCount",
       "signature": "promoCreatedCount()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -408,19 +400,19 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x07cff6f2",
-      "name": "getERC201",
+      "name": "getERC20",
       "signature": "getERC20(address,uint256,address,uint256)",
       "type": "function"
     },
     {
       "encoding": "0x07d7535b",
-      "name": "get1",
+      "name": "get",
       "signature": "get((),uint256,string)",
       "type": "function"
     },
     {
       "encoding": "0x07efbaf1",
-      "name": "arr5",
+      "name": "arr",
       "signature": "arr(address,uint256,uint256,uint256)",
       "type": "function"
     },
@@ -446,7 +438,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x081812fc",
       "name": "getApproved",
       "signature": "getApproved(uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -493,7 +484,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x08937f62",
-      "name": "transferChildToParent0",
+      "name": "transferChildToParent",
       "signature": "transferChildToParent(uint256,address,uint256,address,uint256,bytes)",
       "type": "function"
     },
@@ -507,7 +498,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x08ae4b0c",
       "name": "members",
       "signature": "members(address)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -527,19 +517,17 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x0902f1ac",
       "name": "getReserves",
       "signature": "getReserves()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x094b7415",
       "name": "feeToSetter",
       "signature": "feeToSetter()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x095ea7b3",
-      "name": "approve0",
+      "name": "approve",
       "signature": "approve(address,uint256)",
       "type": "function"
     },
@@ -547,7 +535,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x09648a9d",
       "name": "getState",
       "signature": "getState(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -590,7 +577,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x0a0f8168",
       "name": "ceoAddress",
       "signature": "ceoAddress()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -607,7 +593,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x0a3b0a4f",
-      "name": "add1",
+      "name": "add",
       "signature": "add(address)",
       "type": "function"
     },
@@ -639,12 +625,11 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x0a93efa3",
       "name": "getVerifierList",
       "signature": "getVerifierList(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x0b3bff3e",
-      "name": "contains1",
+      "name": "contains",
       "signature": "contains((),uint256)",
       "type": "function"
     },
@@ -713,7 +698,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x0d2020dd",
       "name": "getContractAddress",
       "signature": "getContractAddress(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -736,13 +720,13 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x0d5a621b",
-      "name": "childContractByIndex2",
+      "name": "childContractByIndex",
       "signature": "childContractByIndex(uint256,uint256)",
       "type": "function"
     },
     {
       "encoding": "0x0d5d6716",
-      "name": "divExp0",
+      "name": "divExp",
       "signature": "divExp((),())",
       "type": "function"
     },
@@ -768,7 +752,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x0dfe1681",
       "name": "token0",
       "signature": "token0()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -791,7 +774,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x0e454254",
-      "name": "withdrawFromStreamInternal0",
+      "name": "withdrawFromStreamInternal",
       "signature": "withdrawFromStreamInternal(uint256,uint256)",
       "type": "function"
     },
@@ -799,7 +782,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x0e583df0",
       "name": "GEN0_STARTING_PRICE",
       "signature": "GEN0_STARTING_PRICE()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -853,7 +835,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x0f2c9329",
-      "name": "split0",
+      "name": "split",
       "signature": "split(address,address)",
       "type": "function"
     },
@@ -907,7 +889,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x102d32c0",
-      "name": "getBidPrice0",
+      "name": "getBidPrice",
       "signature": "getBidPrice(address,uint256)",
       "type": "function"
     },
@@ -925,7 +907,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x10f13a8c",
-      "name": "setText0",
+      "name": "setText",
       "signature": "setText(bytes32,string,string)",
       "type": "function"
     },
@@ -937,7 +919,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x115b2d18",
-      "name": "submitGuildKickProposal0",
+      "name": "submitGuildKickProposal",
       "signature": "submitGuildKickProposal(address,string)",
       "type": "function"
     },
@@ -949,7 +931,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x119df25f",
-      "name": "_msgSender1",
+      "name": "_msgSender",
       "signature": "_msgSender()",
       "type": "function"
     },
@@ -975,12 +957,11 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x12065fe0",
       "name": "getBalance",
       "signature": "getBalance()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x120f966d",
-      "name": "isZeroExp0",
+      "name": "isZeroExp",
       "signature": "isZeroExp(())",
       "type": "function"
     },
@@ -1006,7 +987,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x124a319c",
       "name": "interfaceImplementer",
       "signature": "interfaceImplementer(bytes32,bytes4)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -1041,7 +1021,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x131b9c04",
-      "name": "getEarnings0",
+      "name": "getEarnings",
       "signature": "getEarnings(address)",
       "type": "function"
     },
@@ -1067,7 +1047,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x13d8628a",
       "name": "canClaimAbandonedJackpots",
       "signature": "canClaimAbandonedJackpots(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -1138,7 +1117,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x150b7a02",
-      "name": "onERC721Received4",
+      "name": "onERC721Received",
       "signature": "onERC721Received(address,address,uint256,bytes)",
       "type": "function"
     },
@@ -1162,7 +1141,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x159d526f",
-      "name": "calcStateHash0",
+      "name": "calcStateHash",
       "signature": "calcStateHash(bytes32[10],uint256[4])",
       "type": "function"
     },
@@ -1170,7 +1149,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x15a29035",
       "name": "getTask",
       "signature": "getTask(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -1193,7 +1171,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x160b01a1",
-      "name": "childTokenByIndex0",
+      "name": "childTokenByIndex",
       "signature": "childTokenByIndex(uint256,address,uint256)",
       "type": "function"
     },
@@ -1211,7 +1189,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x16279055",
-      "name": "isContract0",
+      "name": "isContract",
       "signature": "isContract(address)",
       "type": "function"
     },
@@ -1241,7 +1219,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x16c3e8e4",
-      "name": "_mintTokens0",
+      "name": "_mintTokens",
       "signature": "_mintTokens(address,address,address[],uint256)",
       "type": "function"
     },
@@ -1277,13 +1255,13 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x1791cf01",
-      "name": "arr14",
+      "name": "arr",
       "signature": "arr(uint256,uint256,uint256,uint256,uint256)",
       "type": "function"
     },
     {
       "encoding": "0x1798de81",
-      "name": "initialize2",
+      "name": "initialize",
       "signature": "initialize(address,uint64)",
       "type": "function"
     },
@@ -1301,7 +1279,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x18178358",
-      "name": "poke0",
+      "name": "poke",
       "signature": "poke()",
       "type": "function"
     },
@@ -1309,7 +1287,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x183a7947",
       "name": "pregnantKitties",
       "signature": "pregnantKitties()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -1326,7 +1303,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x1896f70a",
-      "name": "setResolver0",
+      "name": "setResolver",
       "signature": "setResolver(bytes32,address)",
       "type": "function"
     },
@@ -1346,7 +1323,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x18d95092",
       "name": "domainOwner",
       "signature": "domainOwner(string)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -1363,7 +1339,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x19165587",
-      "name": "release1",
+      "name": "release",
       "signature": "release(address)",
       "type": "function"
     },
@@ -1377,7 +1353,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x1940a936",
       "name": "isPregnant",
       "signature": "isPregnant(uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -1396,7 +1371,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x19c2f201",
       "name": "GEN0_AUCTION_DURATION",
       "signature": "GEN0_AUCTION_DURATION()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -1419,7 +1393,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x1aa3a008",
-      "name": "register0",
+      "name": "register",
       "signature": "register()",
       "type": "function"
     },
@@ -1449,7 +1423,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x1bc2b813",
-      "name": "divUInt0",
+      "name": "divUInt",
       "signature": "divUInt(uint256,uint256)",
       "type": "function"
     },
@@ -1473,7 +1447,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x1c4e23de8d72c94b22992bd4d7b6786b215ba876af214ff63e6a0ca38fc97af4",
-      "name": "AdminGranted0",
+      "name": "AdminGranted",
       "signature": "AdminGranted(address)",
       "type": "event"
     },
@@ -1485,13 +1459,13 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x1cfef7fb7190f56297ab36883b20210188115eb9dd9c097c1165dd170a64b289",
-      "name": "CastVote0",
+      "name": "CastVote",
       "signature": "CastVote(uint256,address,uint256,uint256,uint256)",
       "type": "event"
     },
     {
       "encoding": "0x1cff79cd",
-      "name": "execute0",
+      "name": "execute",
       "signature": "execute(address,bytes)",
       "type": "function"
     },
@@ -1521,7 +1495,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x1d98f3c5",
-      "name": "safeTransferChild5",
+      "name": "safeTransferChild",
       "signature": "safeTransferChild(uint256,address,address,uint256)",
       "type": "function"
     },
@@ -1541,7 +1515,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x1dd1349d",
       "name": "getNameHash",
       "signature": "getNameHash(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -1560,7 +1533,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x1e3dd18b",
       "name": "allPairs",
       "signature": "allPairs(uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -1573,7 +1545,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x1e5f9149",
       "name": "getWinner",
       "signature": "getWinner(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -1592,7 +1563,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x1eba152d",
       "name": "getUnbondedDeposit",
       "signature": "getUnbondedDeposit(address)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -1605,7 +1575,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x1f00ca74",
       "name": "getAmountsIn",
       "signature": "getAmountsIn(uint256,address[])",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -1640,7 +1609,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x1fe0aa9d",
-      "name": "register1",
+      "name": "register",
       "signature": "register(string,address,bytes)",
       "type": "function"
     },
@@ -1676,13 +1645,13 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x20b43094",
-      "name": "mulUInt0",
+      "name": "mulUInt",
       "signature": "mulUInt(uint256,uint256)",
       "type": "function"
     },
     {
       "encoding": "0x20c13b0b",
-      "name": "isValidSignature0",
+      "name": "isValidSignature",
       "signature": "isValidSignature(bytes,bytes)",
       "type": "function"
     },
@@ -1694,7 +1663,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x20ee0a55",
-      "name": "submitMiningSolution0",
+      "name": "submitMiningSolution",
       "signature": "submitMiningSolution(bytes,uint256[5],uint256[5])",
       "type": "function"
     },
@@ -1732,7 +1701,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x21717ebf",
       "name": "siringAuction",
       "signature": "siringAuction()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -1751,12 +1719,11 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x21f57325",
       "name": "getUploadNames",
       "signature": "getUploadNames(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x2203ab56",
-      "name": "ABI1",
+      "name": "ABI",
       "signature": "ABI(bytes32,uint256)",
       "type": "function"
     },
@@ -1780,7 +1747,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x22b53192",
-      "name": "arr0",
+      "name": "arr",
       "signature": "arr(bytes32)",
       "type": "function"
     },
@@ -1788,7 +1755,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x22b93266",
       "name": "OPEX_COST",
       "signature": "OPEX_COST()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -1799,7 +1765,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x22c6ae15",
-      "name": "mul0",
+      "name": "mul",
       "signature": "mul(uint64,uint64)",
       "type": "function"
     },
@@ -1847,7 +1813,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x23b872dd",
-      "name": "transferFrom0",
+      "name": "transferFrom",
       "signature": "transferFrom(address,address,uint256)",
       "type": "function"
     },
@@ -1877,15 +1843,14 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x247007f2",
-      "name": "divScalar0",
+      "name": "divScalar",
       "signature": "divScalar((),uint256)",
       "type": "function"
     },
     {
       "encoding": "0x248a9ca3",
-      "name": "getRoleAdmin0",
+      "name": "getRoleAdmin",
       "signature": "getRoleAdmin(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -1914,7 +1879,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x24d7806c",
-      "name": "isAdmin0",
+      "name": "isAdmin",
       "signature": "isAdmin(address)",
       "type": "function"
     },
@@ -1968,7 +1933,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x26099593",
-      "name": "_installNonDefaultApp0",
+      "name": "_installNonDefaultApp",
       "signature": "_installNonDefaultApp(address,bytes32,bytes)",
       "type": "function"
     },
@@ -1986,7 +1951,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x2676006d",
-      "name": "get0",
+      "name": "get",
       "signature": "get((),uint256)",
       "type": "function"
     },
@@ -2004,7 +1969,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x2754c7e3",
-      "name": "_get0",
+      "name": "_get",
       "signature": "_get((),bytes32,string)",
       "type": "function"
     },
@@ -2034,7 +1999,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x27a0d669",
-      "name": "getImplementation0",
+      "name": "getImplementation",
       "signature": "getImplementation(string,string)",
       "type": "function"
     },
@@ -2042,7 +2007,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x27a28f68",
       "name": "opex",
       "signature": "opex()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -2085,7 +2049,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x285d146c",
       "name": "getVerifierInfo",
       "signature": "getVerifierInfo(bytes32,uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -2122,7 +2085,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x29118a9b",
       "name": "getBondedDeposit",
       "signature": "getBondedDeposit(bytes32,address)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -2151,7 +2113,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x29cd62ea",
-      "name": "setPubkey1",
+      "name": "setPubkey",
       "signature": "setPubkey(bytes32,bytes32,bytes32)",
       "type": "function"
     },
@@ -2163,7 +2125,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x2a151090",
-      "name": "canPerform0",
+      "name": "canPerform",
       "signature": "canPerform(address,address,bytes32,uint256[])",
       "type": "function"
     },
@@ -2199,7 +2161,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x2b8a119d",
-      "name": "getCompoundingStream0",
+      "name": "getCompoundingStream",
       "signature": "getCompoundingStream(uint256)",
       "type": "function"
     },
@@ -2213,7 +2175,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x2bad8ba0",
       "name": "_getBeacon",
       "signature": "_getBeacon()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -2224,7 +2185,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x2be72cd5",
-      "name": "deploy0",
+      "name": "deploy",
       "signature": "deploy(string,uint256,uint256,uint256,address,address)",
       "type": "function"
     },
@@ -2260,7 +2221,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x2c68bd92",
-      "name": "set0",
+      "name": "set",
       "signature": "set((),uint256,address)",
       "type": "function"
     },
@@ -2308,7 +2269,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x2da466a7b24304f47e87fa2e1e5a81b9831ce54fec19055ce277ca2f39ba42c4",
-      "name": "Deposited0",
+      "name": "Deposited",
       "signature": "Deposited(address,uint256)",
       "type": "event"
     },
@@ -2344,7 +2305,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x2e1a7d4d",
-      "name": "withdraw0",
+      "name": "withdraw",
       "signature": "withdraw(uint256)",
       "type": "function"
     },
@@ -2382,7 +2343,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x2f0ae513",
       "name": "calculateTotalWithdrawableTokenAmount",
       "signature": "calculateTotalWithdrawableTokenAmount(address,address)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -2393,7 +2353,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x2f2ff15d",
-      "name": "grantRole0",
+      "name": "grantRole",
       "signature": "grantRole(bytes32,address)",
       "type": "function"
     },
@@ -2405,7 +2365,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x2f52e595",
-      "name": "isCToken1",
+      "name": "isCToken",
       "signature": "isCToken(address)",
       "type": "function"
     },
@@ -2423,7 +2383,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x2f8788117e7eff1d82e926ec794901d17c78024a50270940304540a733656f0d",
-      "name": "RoleGranted0",
+      "name": "RoleGranted",
       "signature": "RoleGranted(bytes32,address,address)",
       "type": "event"
     },
@@ -2461,7 +2421,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x309d5816",
       "name": "getSolverUploads",
       "signature": "getSolverUploads(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -2474,7 +2433,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x30adf81f",
       "name": "PERMIT_TYPEHASH",
       "signature": "PERMIT_TYPEHASH()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -2497,7 +2455,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x315394b1",
-      "name": "_ensureMembershipSettings0",
+      "name": "_ensureMembershipSettings",
       "signature": "_ensureMembershipSettings(address[],uint64[3])",
       "type": "function"
     },
@@ -2539,7 +2497,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x3207ad96",
-      "name": "callSender0",
+      "name": "callSender",
       "signature": "callSender(address)",
       "type": "function"
     },
@@ -2581,7 +2539,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x32f0a3b5",
-      "name": "getRecoveryVault0",
+      "name": "getRecoveryVault",
       "signature": "getRecoveryVault()",
       "type": "function"
     },
@@ -2607,7 +2565,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x337f3f32",
       "name": "manifestHash",
       "signature": "manifestHash()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -2618,7 +2575,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x3381292c",
-      "name": "remove1",
+      "name": "remove",
       "signature": "remove((),uint256)",
       "type": "function"
     },
@@ -2656,7 +2613,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x3411c81c",
       "name": "confirmations",
       "signature": "confirmations(uint256,address)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -2675,7 +2631,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x346692b7",
       "name": "tokenKeys",
       "signature": "tokenKeys(uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -2712,7 +2667,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x3644e515",
       "name": "DOMAIN_SEPARATOR",
       "signature": "DOMAIN_SEPARATOR()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -2723,7 +2677,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x3656eec2",
-      "name": "balanceOf3",
+      "name": "balanceOf",
       "signature": "balanceOf(uint256,address)",
       "type": "function"
     },
@@ -2741,7 +2695,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x36c3ab437e6a424ed25dc4bfdeb62706aa06558660fab2dab229d2555adaf89c",
-      "name": "WithdrawFromStream0",
+      "name": "WithdrawFromStream",
       "signature": "WithdrawFromStream(uint256,address,uint256)",
       "type": "event"
     },
@@ -2803,7 +2757,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x389435e8",
       "name": "calculateTotalWithdrawableAmount",
       "signature": "calculateTotalWithdrawableAmount(address)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -2814,7 +2767,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x38e229a7f3f9c329892d08eb37c4e91ccac6d12c798d394990ca4f56028ec266",
-      "name": "UpdateFee0",
+      "name": "UpdateFee",
       "signature": "UpdateFee(uint256)",
       "type": "event"
     },
@@ -2880,7 +2833,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x397edd41",
-      "name": "newAppInstance0",
+      "name": "newAppInstance",
       "signature": "newAppInstance(bytes32,address,bytes,bool)",
       "type": "function"
     },
@@ -2924,7 +2877,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x3a98ef39",
       "name": "totalShares",
       "signature": "totalShares()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -2947,13 +2899,13 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x3af9e669",
-      "name": "balanceOfUnderlying0",
+      "name": "balanceOfUnderlying",
       "signature": "balanceOfUnderlying(address)",
       "type": "function"
     },
     {
       "encoding": "0x3b3b57de",
-      "name": "addr2",
+      "name": "addr",
       "signature": "addr(bytes32)",
       "type": "function"
     },
@@ -2983,7 +2935,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x3ccfd60b",
-      "name": "withdraw0",
+      "name": "withdraw",
       "signature": "withdraw()",
       "type": "function"
     },
@@ -3032,7 +2984,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x3da24c024582931cfaf8267d8ed24d13a82a8068d5bd337d30ec45cea4e506ae",
-      "name": "NameRenewed0",
+      "name": "NameRenewed",
       "signature": "NameRenewed(string,bytes32,uint256,uint256)",
       "type": "event"
     },
@@ -3076,7 +3028,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x3ec6dac2",
       "name": "getSize",
       "signature": "getSize(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -3087,9 +3038,8 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x3f15457f",
-      "name": "ens2",
+      "name": "ens",
       "signature": "ens()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -3100,7 +3050,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x3f4ba83a",
-      "name": "unpause0",
+      "name": "unpause",
       "signature": "unpause()",
       "type": "function"
     },
@@ -3112,7 +3062,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x3fe3f1cf",
-      "name": "initialize3",
+      "name": "initialize",
       "signature": "initialize(address,address,address,uint64)",
       "type": "function"
     },
@@ -3150,7 +3100,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x40a6f869",
       "name": "getCodeFileId",
       "signature": "getCodeFileId(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -3194,7 +3143,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x42404e07",
       "name": "_getImplementation",
       "signature": "_getImplementation()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -3223,7 +3171,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x42a7cfd5",
-      "name": "naturalUnit0",
+      "name": "naturalUnit",
       "signature": "naturalUnit()",
       "type": "function"
     },
@@ -3259,7 +3207,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x43509138",
-      "name": "div1",
+      "name": "div",
       "signature": "div(int256,int256)",
       "type": "function"
     },
@@ -3296,7 +3244,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x43a61a8e",
-      "name": "rootOwnerOf0",
+      "name": "rootOwnerOf",
       "signature": "rootOwnerOf(uint256)",
       "type": "function"
     },
@@ -3332,7 +3280,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x44d17187",
-      "name": "burn1",
+      "name": "burn",
       "signature": "burn(address,uint256,bytes)",
       "type": "function"
     },
@@ -3356,7 +3304,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x454a2ab3",
-      "name": "bid0",
+      "name": "bid",
       "signature": "bid(uint256)",
       "type": "function"
     },
@@ -3374,7 +3322,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x45d0695f",
-      "name": "arr11",
+      "name": "arr",
       "signature": "arr(uint256,uint256)",
       "type": "function"
     },
@@ -3382,7 +3330,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x46116e6f",
       "name": "sireAllowedToAddress",
       "signature": "sireAllowedToAddress(uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -3407,12 +3354,11 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x46d22c70",
       "name": "canBreedWith",
       "signature": "canBreedWith(uint256,uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x46fbf68e",
-      "name": "isPauser0",
+      "name": "isPauser",
       "signature": "isPauser(address)",
       "type": "function"
     },
@@ -3450,7 +3396,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x481af3d3",
       "name": "kittyIndexToApproved",
       "signature": "kittyIndexToApproved(uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -3467,7 +3412,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x485cc955",
-      "name": "initialize5",
+      "name": "initialize",
       "signature": "initialize(address,address)",
       "type": "function"
     },
@@ -3491,7 +3436,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x4905d0ef",
-      "name": "_installVotingApp0",
+      "name": "_installVotingApp",
       "signature": "_installVotingApp(address,address,uint64,uint64,uint64)",
       "type": "function"
     },
@@ -3527,7 +3472,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x4a504a94899432a9846e1aa406dceb1bcfd538bb839071d49d1e5e23f5be30ef",
-      "name": "Confirmation0",
+      "name": "Confirmation",
       "signature": "Confirmation(address,uint256)",
       "type": "event"
     },
@@ -3535,7 +3480,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x4a914e8c",
       "name": "calculateTotalExpenseWithdrawableAmount",
       "signature": "calculateTotalExpenseWithdrawableAmount()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -3548,7 +3492,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x4ae05da7",
       "name": "transferPeriodEnds",
       "signature": "transferPeriodEnds()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -3559,7 +3502,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x4b12311c",
-      "name": "getVoterState0",
+      "name": "getVoterState",
       "signature": "getVoterState(uint256,address)",
       "type": "function"
     },
@@ -3567,7 +3510,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x4b319713",
       "name": "totalWithdrawn",
       "signature": "totalWithdrawn()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -3596,7 +3538,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x4ba9bb67",
-      "name": "arr9",
+      "name": "arr",
       "signature": "arr(address,address,uint256)",
       "type": "function"
     },
@@ -3674,13 +3616,13 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x4cbe6250",
-      "name": "contains2",
+      "name": "contains",
       "signature": "contains((),address)",
       "type": "function"
     },
     {
       "encoding": "0x4cc82215",
-      "name": "remove0",
+      "name": "remove",
       "signature": "remove(uint256)",
       "type": "function"
     },
@@ -3692,7 +3634,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x4cd88b76",
-      "name": "initialize4",
+      "name": "initialize",
       "signature": "initialize(string,string)",
       "type": "function"
     },
@@ -3752,7 +3694,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x4e1273f4",
-      "name": "balanceOfBatch1",
+      "name": "balanceOfBatch",
       "signature": "balanceOfBatch(address[],uint256[])",
       "type": "function"
     },
@@ -3788,7 +3730,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x4e71d92d",
-      "name": "claim0",
+      "name": "claim",
       "signature": "claim()",
       "type": "function"
     },
@@ -3806,7 +3748,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x4f01f6f1",
-      "name": "setParameters0",
+      "name": "setParameters",
       "signature": "setParameters()",
       "type": "function"
     },
@@ -3938,7 +3880,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x51cff8d9",
-      "name": "withdraw0",
+      "name": "withdraw",
       "signature": "withdraw(address)",
       "type": "function"
     },
@@ -3988,7 +3930,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x52ad0d5e",
       "name": "status",
       "signature": "status(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -3999,7 +3940,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x52d7d861f09ab3d26239d492e8968629f95e9e318cf0b73bfddc441522a15fd2",
-      "name": "AddrChanged0",
+      "name": "AddrChanged",
       "signature": "AddrChanged(bytes32,address)",
       "type": "event"
     },
@@ -4017,7 +3958,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x52efea6e",
-      "name": "clear0",
+      "name": "clear",
       "signature": "clear()",
       "type": "function"
     },
@@ -4029,7 +3970,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x5353a2d8",
-      "name": "changeName0",
+      "name": "changeName",
       "signature": "changeName(string)",
       "type": "function"
     },
@@ -4043,7 +3984,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x54741525",
       "name": "getTransactionCount",
       "signature": "getTransactionCount(bool,bool)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -4074,7 +4014,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x54b8d5e3",
       "name": "getName",
       "signature": "getName(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -4147,7 +4086,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x5619cf4a",
       "name": "getFileType",
       "signature": "getFileType(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -4170,13 +4108,13 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x5680a3ad",
-      "name": "childExists0",
+      "name": "childExists",
       "signature": "childExists(address,uint256)",
       "type": "function"
     },
     {
       "encoding": "0x569f7494",
-      "name": "createSet0",
+      "name": "createSet",
       "signature": "createSet(address[],uint256[],uint256,bytes32,bytes32,bytes)",
       "type": "function"
     },
@@ -4188,7 +4126,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x56de03bd",
-      "name": "newInstance0",
+      "name": "newInstance",
       "signature": "newInstance(string,address[],uint64[3],uint64,bool,uint256[4])",
       "type": "function"
     },
@@ -4214,7 +4152,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x574f2ba3",
       "name": "allPairsLength",
       "signature": "allPairsLength()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -4249,7 +4186,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x584e492a",
-      "name": "arr6",
+      "name": "arr",
       "signature": "arr(address,uint256)",
       "type": "function"
     },
@@ -4281,7 +4218,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x5909c0d5",
       "name": "price0CumulativeLast",
       "signature": "price0CumulativeLast()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -4312,12 +4248,11 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x59679b0f",
       "name": "_implementation",
       "signature": "_implementation()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x59699d7c9076678da939b1a98c86f40d8780564966fb30bf84d01b686dbb24c9",
-      "name": "DiscardCToken1",
+      "name": "DiscardCToken",
       "signature": "DiscardCToken(address)",
       "type": "event"
     },
@@ -4371,9 +4306,8 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x59d1d43c",
-      "name": "text0",
+      "name": "text",
       "signature": "text(bytes32,string)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -4404,7 +4338,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x5a3d5493",
       "name": "price1CumulativeLast",
       "signature": "price1CumulativeLast()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -4469,7 +4402,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x5b7b72c1",
-      "name": "createCloneToken0",
+      "name": "createCloneToken",
       "signature": "createCloneToken(address,uint256,string,uint8,string,bool)",
       "type": "function"
     },
@@ -4505,13 +4438,13 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x5c60da1b",
-      "name": "implementation1",
+      "name": "implementation",
       "signature": "implementation()",
       "type": "function"
     },
     {
       "encoding": "0x5c975abb",
-      "name": "paused0",
+      "name": "paused",
       "signature": "paused()",
       "type": "function"
     },
@@ -4523,7 +4456,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x5ca4d4bb",
-      "name": "disableScriptExecutor0",
+      "name": "disableScriptExecutor",
       "signature": "disableScriptExecutor(uint256)",
       "type": "function"
     },
@@ -4537,7 +4470,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x5d68153e",
       "name": "getIndices",
       "signature": "getIndices(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -4554,7 +4486,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x5db9ee0a495bf2e6ff9c91a7834c1ba4fdd244a5e8aa4e537bd38aeae4b073aa",
-      "name": "Unpaused0",
+      "name": "Unpaused",
       "signature": "Unpaused(address)",
       "type": "event"
     },
@@ -4616,7 +4548,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x5ea66a6b",
       "name": "TASKS_PER_LICENSE",
       "signature": "TASKS_PER_LICENSE()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -4689,7 +4620,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x6030bbcf",
       "name": "getUploadTypes",
       "signature": "getUploadTypes(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -4742,7 +4672,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x61513210",
-      "name": "_approveRelayedCall0",
+      "name": "_approveRelayedCall",
       "signature": "_approveRelayedCall(bytes)",
       "type": "function"
     },
@@ -4784,7 +4714,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x627c81ff",
-      "name": "erc20ContractByIndex2",
+      "name": "erc20ContractByIndex",
       "signature": "erc20ContractByIndex(uint256,uint256)",
       "type": "function"
     },
@@ -4808,7 +4738,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x631ff1c4e1a02c54b480a34b810e03bcee61fe38efcb243930a7f820914923e2",
-      "name": "AdminRevoked0",
+      "name": "AdminRevoked",
       "signature": "AdminRevoked(address)",
       "type": "event"
     },
@@ -4816,7 +4746,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x6352211e",
       "name": "ownerOf",
       "signature": "ownerOf(uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -4894,7 +4823,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x65a31545",
-      "name": "doDeposit1",
+      "name": "doDeposit",
       "signature": "doDeposit(address,uint256)",
       "type": "function"
     },
@@ -4906,7 +4835,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x65dbcc0f",
-      "name": "addThenSubUInt0",
+      "name": "addThenSubUInt",
       "signature": "addThenSubUInt(uint256,uint256,uint256)",
       "type": "function"
     },
@@ -4960,7 +4889,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x6719d08c1888103bea251a4ed56406bd0c3e69723c8a1686e017e7bbe159b6f8",
-      "name": "PauserAdded0",
+      "name": "PauserAdded",
       "signature": "PauserAdded(address)",
       "type": "event"
     },
@@ -4991,7 +4920,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x67e0c999",
-      "name": "length1",
+      "name": "length",
       "signature": "length(())",
       "type": "function"
     },
@@ -4999,7 +4928,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x680eba27",
       "name": "GEN0_CREATION_LIMIT",
       "signature": "GEN0_CREATION_LIMIT()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -5034,7 +4962,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x68a5ef4c",
-      "name": "add3",
+      "name": "add",
       "signature": "add((),uint256)",
       "type": "function"
     },
@@ -5058,19 +4986,19 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x691f3431",
-      "name": "name2",
+      "name": "name",
       "signature": "name(bytes32)",
       "type": "function"
     },
     {
       "encoding": "0x69328dec",
-      "name": "withdraw0",
+      "name": "withdraw",
       "signature": "withdraw(address,uint256,address)",
       "type": "function"
     },
     {
       "encoding": "0x69573f06",
-      "name": "greaterThanExp0",
+      "name": "greaterThanExp",
       "signature": "greaterThanExp((),())",
       "type": "function"
     },
@@ -5088,13 +5016,13 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x6a4f832b",
-      "name": "_safeMint0",
+      "name": "_safeMint",
       "signature": "_safeMint(address,uint256,bytes)",
       "type": "function"
     },
     {
       "encoding": "0x6a627842",
-      "name": "mint0",
+      "name": "mint",
       "signature": "mint(address)",
       "type": "function"
     },
@@ -5132,7 +5060,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x6af04a57",
       "name": "newContractAddress",
       "signature": "newContractAddress()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -5145,7 +5072,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x6b1bd1c5",
       "name": "MIGRATION_LOCK_PERIOD",
       "signature": "MIGRATION_LOCK_PERIOD()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -5171,7 +5097,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x6b7cd7c8",
       "name": "SOLVER",
       "signature": "SOLVER()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -5184,7 +5109,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x6ba6ccc0",
       "name": "getCodeType",
       "signature": "getCodeType(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -5225,7 +5149,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x6d6712d8",
-      "name": "hasPermission3",
+      "name": "hasPermission",
       "signature": "hasPermission(address,address,bytes32)",
       "type": "function"
     },
@@ -5237,25 +5161,25 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x6db9241b",
-      "name": "cancelStream1",
+      "name": "cancelStream",
       "signature": "cancelStream(uint256)",
       "type": "function"
     },
     {
       "encoding": "0x6db92acf",
-      "name": "divScalarByExp0",
+      "name": "divScalarByExp",
       "signature": "divScalarByExp(uint256,())",
       "type": "function"
     },
     {
       "encoding": "0x6ded82f8",
-      "name": "isPaid0",
+      "name": "isPaid",
       "signature": "isPaid(address)",
       "type": "function"
     },
     {
       "encoding": "0x6e2c732d",
-      "name": "add0",
+      "name": "add",
       "signature": "add(uint64,uint64)",
       "type": "function"
     },
@@ -5263,12 +5187,11 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x6e2fd470",
       "name": "sharedExpenseWithdrawn",
       "signature": "sharedExpenseWithdrawn()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x6e4a1a77",
-      "name": "add0",
+      "name": "add",
       "signature": "add((),address)",
       "type": "function"
     },
@@ -5286,7 +5209,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x6ec612e2",
-      "name": "divScalarByExpTruncate0",
+      "name": "divScalarByExpTruncate",
       "signature": "divScalarByExpTruncate(uint256,())",
       "type": "function"
     },
@@ -5342,7 +5265,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x701e00e0",
       "name": "getStateAt",
       "signature": "getStateAt(bytes32,uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -5353,7 +5275,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x7065cb48",
-      "name": "addOwner0",
+      "name": "addOwner",
       "signature": "addOwner(address)",
       "type": "function"
     },
@@ -5365,7 +5287,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x7084f5476618d8e60b11ef0d7d3f06914655adb8793e28ff7f018d4c76d505d5",
-      "name": "Withdrawn0",
+      "name": "Withdrawn",
       "signature": "Withdrawn(address,uint256)",
       "type": "event"
     },
@@ -5373,12 +5295,11 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x7087e4bd",
       "name": "manifestHashMap",
       "signature": "manifestHashMap(address,string)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x70a08231",
-      "name": "balanceOf1",
+      "name": "balanceOf",
       "signature": "balanceOf(address)",
       "type": "function"
     },
@@ -5390,13 +5311,13 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x711085b2",
-      "name": "arr7",
+      "name": "arr",
       "signature": "arr(address,address,uint256,uint256,uint256)",
       "type": "function"
     },
     {
       "encoding": "0x715018a6",
-      "name": "renounceOwnership0",
+      "name": "renounceOwnership",
       "signature": "renounceOwnership()",
       "type": "function"
     },
@@ -5414,13 +5335,13 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x71af23e8",
-      "name": "mod0",
+      "name": "mod",
       "signature": "mod(uint256,uint256,string)",
       "type": "function"
     },
     {
       "encoding": "0x71e5ee5f",
-      "name": "arr10",
+      "name": "arr",
       "signature": "arr(uint256)",
       "type": "function"
     },
@@ -5510,7 +5431,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x734b9a87",
-      "name": "mod0",
+      "name": "mod",
       "signature": "mod(uint64,uint64)",
       "type": "function"
     },
@@ -5542,7 +5463,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x7464fc3d",
       "name": "kLast",
       "signature": "kLast()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -5553,7 +5473,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x7484fc5e",
-      "name": "decrement0",
+      "name": "decrement",
       "signature": "decrement(())",
       "type": "function"
     },
@@ -5571,7 +5491,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x74e861d6",
-      "name": "getHubAddr0",
+      "name": "getHubAddr",
       "signature": "getHubAddr()",
       "type": "function"
     },
@@ -5643,7 +5563,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x770d0c5d",
-      "name": "startRebalance0",
+      "name": "startRebalance",
       "signature": "startRebalance(address,bytes)",
       "type": "function"
     },
@@ -5655,7 +5575,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x77372213",
-      "name": "setName1",
+      "name": "setName",
       "signature": "setName(bytes32,string)",
       "type": "function"
     },
@@ -5673,13 +5593,13 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x77b7a8d8",
-      "name": "getCombinedTokenArray0",
+      "name": "getCombinedTokenArray",
       "signature": "getCombinedTokenArray(address)",
       "type": "function"
     },
     {
       "encoding": "0x77d4c48b",
-      "name": "arr2",
+      "name": "arr",
       "signature": "arr(address)",
       "type": "function"
     },
@@ -5687,7 +5607,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x77db8b2e",
       "name": "PLATFORM_FEE_TASK_GIVER",
       "signature": "PLATFORM_FEE_TASK_GIVER()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -5698,7 +5617,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x78065306",
-      "name": "computeAddress0",
+      "name": "computeAddress",
       "signature": "computeAddress(bytes32,bytes32,address)",
       "type": "function"
     },
@@ -5706,7 +5625,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x784547a7",
       "name": "isConfirmed",
       "signature": "isConfirmed(uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -5741,7 +5659,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x78ed6d7d",
-      "name": "mulExp1",
+      "name": "mulExp",
       "signature": "mulExp((),())",
       "type": "function"
     },
@@ -5795,7 +5713,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x7a564768",
-      "name": "increment0",
+      "name": "increment",
       "signature": "increment(())",
       "type": "function"
     },
@@ -5803,7 +5721,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x7a7d4937",
       "name": "secondsPerBlock",
       "signature": "secondsPerBlock()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -5814,7 +5731,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x7a9b2c6c",
-      "name": "withdrawFromStream1",
+      "name": "withdrawFromStream",
       "signature": "withdrawFromStream(uint256,uint256)",
       "type": "function"
     },
@@ -5838,7 +5755,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x7b01d409597969366dc268d7f957a990d1ca3d3449baf8fb45db67351aecfe78",
-      "name": "CreateStream0",
+      "name": "CreateStream",
       "signature": "CreateStream(uint256,address,address,uint256,address,uint256,uint256)",
       "type": "event"
     },
@@ -5846,7 +5763,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x7b103999",
       "name": "registry",
       "signature": "registry()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -5857,13 +5773,13 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x7b72aadf",
-      "name": "_at0",
+      "name": "_at",
       "signature": "_at((),uint256)",
       "type": "function"
     },
     {
       "encoding": "0x7b7d7225",
-      "name": "_approve0",
+      "name": "_approve",
       "signature": "_approve(address,uint256)",
       "type": "function"
     },
@@ -5901,14 +5817,12 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x7cc1f867",
       "name": "getContractInfo",
       "signature": "getContractInfo()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x7d22f431",
       "name": "delegatePercent",
       "signature": "delegatePercent(uint256,uint256,uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -5931,7 +5845,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x7e128bb2",
-      "name": "lessThanOrEqualExp0",
+      "name": "lessThanOrEqualExp",
       "signature": "lessThanOrEqualExp((),())",
       "type": "function"
     },
@@ -5955,7 +5869,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x7e7db6e1",
-      "name": "allowRecoverability2",
+      "name": "allowRecoverability",
       "signature": "allowRecoverability(address)",
       "type": "function"
     },
@@ -5963,7 +5877,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x7ecebe00",
       "name": "nonces",
       "signature": "nonces(address)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -6005,7 +5918,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x80274db7",
-      "name": "preRelayedCall0",
+      "name": "preRelayedCall",
       "signature": "preRelayedCall(bytes)",
       "type": "function"
     },
@@ -6065,7 +5978,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x8129fc1c",
-      "name": "initialize1",
+      "name": "initialize",
       "signature": "initialize()",
       "type": "function"
     },
@@ -6077,7 +5990,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x8195aeaa",
-      "name": "createCompoundingStream0",
+      "name": "createCompoundingStream",
       "signature": "createCompoundingStream(address,uint256,address,uint256,uint256,uint256,uint256)",
       "type": "function"
     },
@@ -6097,7 +6010,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x820e0d1f",
       "name": "getChallenger",
       "signature": "getChallenger(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -6126,13 +6038,13 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x82dc1ec4",
-      "name": "addPauser0",
+      "name": "addPauser",
       "signature": "addPauser(address)",
       "type": "function"
     },
     {
       "encoding": "0x830ef41b",
-      "name": "transferERC200",
+      "name": "transferERC20",
       "signature": "transferERC20(uint256,address,address,uint256)",
       "type": "function"
     },
@@ -6144,7 +6056,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x8333d9b2",
-      "name": "executorType0",
+      "name": "executorType",
       "signature": "executorType()",
       "type": "function"
     },
@@ -6156,7 +6068,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x83947ea0",
-      "name": "acceptRelayedCall0",
+      "name": "acceptRelayedCall",
       "signature": "acceptRelayedCall(address,address,bytes,uint256,uint256,uint256,uint256,bytes,uint256)",
       "type": "function"
     },
@@ -6164,14 +6076,12 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x839df945",
       "name": "commitments",
       "signature": "commitments(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x839f5fb8",
       "name": "_getAdmin",
       "signature": "_getAdmin()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -6182,9 +6092,8 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x83e7f6ff",
-      "name": "rentPrice0",
+      "name": "rentPrice",
       "signature": "rentPrice(string,uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -6201,7 +6110,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x8456cb59",
-      "name": "pause0",
+      "name": "pause",
       "signature": "pause()",
       "type": "function"
     },
@@ -6209,7 +6118,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x8462151c",
       "name": "tokensOfOwner",
       "signature": "tokensOfOwner(address)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -6228,12 +6136,11 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x84f94221",
       "name": "getRoot",
       "signature": "getRoot(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x852a12e3",
-      "name": "redeemUnderlying0",
+      "name": "redeemUnderlying",
       "signature": "redeemUnderlying(uint256)",
       "type": "function"
     },
@@ -6271,12 +6178,11 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x85dcbb5a",
       "name": "returnMember",
       "signature": "returnMember(address)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x85f6d155",
-      "name": "register2",
+      "name": "register",
       "signature": "register(string,address,uint256,bytes32)",
       "stateMutability": "payable",
       "type": "function"
@@ -6338,7 +6244,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x87a16f12",
-      "name": "addScriptExecutor0",
+      "name": "addScriptExecutor",
       "signature": "addScriptExecutor(address)",
       "type": "function"
     },
@@ -6362,7 +6268,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x8832e6e3",
-      "name": "safeMint0",
+      "name": "safeMint",
       "signature": "safeMint(address,uint256,bytes)",
       "type": "function"
     },
@@ -6395,7 +6301,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x89569688",
       "name": "subsidyPool",
       "signature": "subsidyPool()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -6424,7 +6329,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x8a411b76",
-      "name": "endFailedRebalance0",
+      "name": "endFailedRebalance",
       "signature": "endFailedRebalance()",
       "type": "function"
     },
@@ -6438,7 +6343,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x8a95b09f",
       "name": "MIN_REGISTRATION_DURATION",
       "signature": "MIN_REGISTRATION_DURATION()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -6473,7 +6377,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x8b49d47e",
-      "name": "_msgData2",
+      "name": "_msgData",
       "signature": "_msgData()",
       "type": "function"
     },
@@ -6481,7 +6385,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x8b51d13f",
       "name": "getConfirmationCount",
       "signature": "getConfirmationCount(uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -6570,7 +6473,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x8d81f51e",
-      "name": "safeTransferChild2",
+      "name": "safeTransferChild",
       "signature": "safeTransferChild(uint256,address,address,uint256,bytes)",
       "type": "function"
     },
@@ -6578,7 +6481,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x8d839ffe",
       "name": "minCommitmentAge",
       "signature": "minCommitmentAge()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -6649,7 +6551,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x8f32d59b",
-      "name": "isOwner0",
+      "name": "isOwner",
       "signature": "isOwner()",
       "type": "function"
     },
@@ -6673,9 +6575,8 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x9010d07c",
-      "name": "getRoleMember0",
+      "name": "getRoleMember",
       "signature": "getRoleMember(bytes32,uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -6698,7 +6599,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x911b5f4e",
-      "name": "sub0",
+      "name": "sub",
       "signature": "sub(uint64,uint64)",
       "type": "function"
     },
@@ -6724,7 +6625,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x91911c19",
       "name": "TRUburnBox",
       "signature": "TRUburnBox()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -6737,7 +6637,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x91d14854",
       "name": "hasRole",
       "signature": "hasRole(bytes32,address)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -6768,7 +6667,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x932fe013",
       "name": "getProver",
       "signature": "getProver(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -6785,7 +6683,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x93634702",
-      "name": "isValidSignature1",
+      "name": "isValidSignature",
       "signature": "isValidSignature(bytes32,address,bytes)",
       "type": "function"
     },
@@ -6805,7 +6703,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x93862c3b",
       "name": "bundles",
       "signature": "bundles(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -6818,7 +6715,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x93fa67a0",
       "name": "isRejected",
       "signature": "isRejected(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -6895,7 +6791,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x962ccc55",
-      "name": "_deposit0",
+      "name": "_deposit",
       "signature": "_deposit(address,uint256,string,address,bool)",
       "type": "function"
     },
@@ -6921,7 +6817,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x96e494e8",
       "name": "available",
       "signature": "available(uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -6962,9 +6857,8 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x9791c097",
-      "name": "valid0",
+      "name": "valid",
       "signature": "valid(string)",
-      "stateMutability": "pure",
       "type": "function"
     },
     {
@@ -7011,7 +6905,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x989a8366",
-      "name": "initialize5",
+      "name": "initialize",
       "signature": "initialize(address,uint64,uint64)",
       "type": "function"
     },
@@ -7037,18 +6931,17 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x997072f7",
       "name": "getMemberCount",
       "signature": "getMemberCount()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x9979ef45",
-      "name": "placeBid0",
+      "name": "placeBid",
       "signature": "placeBid(uint256)",
       "type": "function"
     },
     {
       "encoding": "0x9989a5ae",
-      "name": "setLimitOfParticipants0",
+      "name": "setLimitOfParticipants",
       "signature": "setLimitOfParticipants(uint256)",
       "type": "function"
     },
@@ -7066,7 +6959,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x99f5f52e",
-      "name": "diamondCut0",
+      "name": "diamondCut",
       "signature": "diamondCut(bytes[])",
       "type": "function"
     },
@@ -7098,7 +6991,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x9ace38c2",
       "name": "transactions",
       "signature": "transactions(uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -7127,7 +7019,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x9b1f9e74",
-      "name": "_burn1",
+      "name": "_burn",
       "signature": "_burn(uint256)",
       "type": "function"
     },
@@ -7141,12 +7033,11 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x9b3bc6fb",
       "name": "checkERC20Balance",
       "signature": "checkERC20Balance(address)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x9b7efac7",
-      "name": "subUInt0",
+      "name": "subUInt",
       "signature": "subUInt(uint256,uint256)",
       "type": "function"
     },
@@ -7166,7 +7057,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x9bf0d01b",
       "name": "taskParameters",
       "signature": "taskParameters(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -7203,7 +7093,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x9d21328f",
       "name": "sharedExpense",
       "signature": "sharedExpense()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -7222,12 +7111,11 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x9d6fac6f",
       "name": "cooldowns",
       "signature": "cooldowns(uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x9d76ea58",
-      "name": "tokenAddress1",
+      "name": "tokenAddress",
       "signature": "tokenAddress()",
       "type": "function"
     },
@@ -7257,7 +7145,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x9e2a78dc",
-      "name": "_burn0",
+      "name": "_burn",
       "signature": "_burn(address,uint256,bytes,bytes)",
       "type": "function"
     },
@@ -7281,7 +7169,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0x9e95670d",
-      "name": "erc20Received0",
+      "name": "erc20Received",
       "signature": "erc20Received(address,uint256,address,uint256)",
       "type": "function"
     },
@@ -7342,7 +7230,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xa065172b",
-      "name": "getAuctionPriceParameters0",
+      "name": "getAuctionPriceParameters",
       "signature": "getAuctionPriceParameters()",
       "type": "function"
     },
@@ -7354,7 +7242,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xa07f3a56",
-      "name": "isAttended0",
+      "name": "isAttended",
       "signature": "isAttended(address)",
       "type": "function"
     },
@@ -7362,7 +7250,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xa0e67e2b",
       "name": "getOwners",
       "signature": "getOwners()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -7403,7 +7290,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xa175b638",
-      "name": "setShouldReject0",
+      "name": "setShouldReject",
       "signature": "setShouldReject(bool)",
       "type": "function"
     },
@@ -7417,7 +7304,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xa217fddf",
       "name": "DEFAULT_ADMIN_ROLE",
       "signature": "DEFAULT_ADMIN_ROLE()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -7436,7 +7322,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xa2787bd0",
       "name": "getStep",
       "signature": "getStep(bytes32,uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -7552,7 +7437,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xa45f4bfc",
       "name": "kittyIndexToOwner",
       "signature": "kittyIndexToOwner(uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -7569,7 +7453,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xa5761399",
-      "name": "current0",
+      "name": "current",
       "signature": "current(())",
       "type": "function"
     },
@@ -7593,7 +7477,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xa5f3c23b",
-      "name": "add0",
+      "name": "add",
       "signature": "add(int256,int256)",
       "type": "function"
     },
@@ -7635,7 +7519,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xa734d51b",
-      "name": "isCompoundingStream0",
+      "name": "isCompoundingStream",
       "signature": "isCompoundingStream(uint256)",
       "type": "function"
     },
@@ -7643,7 +7527,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xa75911bd",
       "name": "bonusTable",
       "signature": "bonusTable()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -7654,7 +7537,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xa7811732",
-      "name": "totalERC20Contracts1",
+      "name": "totalERC20Contracts",
       "signature": "totalERC20Contracts(uint256)",
       "type": "function"
     },
@@ -7696,7 +7579,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xa82ccd4d",
-      "name": "deltaOf0",
+      "name": "deltaOf",
       "signature": "deltaOf(uint256)",
       "type": "function"
     },
@@ -7740,7 +7623,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xa8abe69a",
       "name": "getTransactionIds",
       "signature": "getTransactionIds(uint256,uint256,bool,bool)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -7757,7 +7639,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xa9059cbb",
-      "name": "transfer0",
+      "name": "transfer",
       "signature": "transfer(address,uint256)",
       "type": "function"
     },
@@ -7793,7 +7675,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xaa121bbeef5f32f5961a2a28966e769023910fc9479059ee3495d4c1a696efe3",
-      "name": "ABIChanged1",
+      "name": "ABIChanged",
       "signature": "ABIChanged(bytes32,uint256)",
       "type": "event"
     },
@@ -7813,7 +7695,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xaa5b7b16",
       "name": "blockedTime",
       "signature": "blockedTime(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -7830,7 +7711,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xaacaaf88",
-      "name": "execute1",
+      "name": "execute",
       "signature": "execute(address,bytes,uint256,bytes,uint256,uint256)",
       "type": "function"
     },
@@ -7844,7 +7725,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xaaf5eb68",
       "name": "PRECISION",
       "signature": "PRECISION()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -7857,7 +7737,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xab14ec59",
       "name": "previousRegistrar",
       "signature": "previousRegistrar()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -7868,7 +7747,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xab568152",
-      "name": "_mintTokens1",
+      "name": "_mintTokens",
       "signature": "_mintTokens(address,address,address,uint256)",
       "type": "function"
     },
@@ -7928,7 +7807,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xacf1a841",
-      "name": "renew0",
+      "name": "renew",
       "signature": "renew(string,uint256)",
       "stateMutability": "payable",
       "type": "function"
@@ -7949,7 +7828,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xad5c4648",
       "name": "WETH",
       "signature": "WETH()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -7974,13 +7852,13 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xad7a672f",
-      "name": "totalBalance1",
+      "name": "totalBalance",
       "signature": "totalBalance()",
       "type": "function"
     },
     {
       "encoding": "0xad8733ca",
-      "name": "multisend0",
+      "name": "multisend",
       "signature": "multisend(address,address[],uint256[])",
       "type": "function"
     },
@@ -7994,7 +7872,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xadd4c784",
       "name": "getResult",
       "signature": "getResult(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -8005,7 +7882,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xadefc37b",
-      "name": "sub0",
+      "name": "sub",
       "signature": "sub(int256,int256)",
       "type": "function"
     },
@@ -8035,7 +7912,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xae5b2540",
-      "name": "setApp0",
+      "name": "setApp",
       "signature": "setApp(bytes32,bytes32,address)",
       "type": "function"
     },
@@ -8053,16 +7930,14 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xaeb8ce9b",
-      "name": "available0",
+      "name": "available",
       "signature": "available(string)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0xaec8fae8",
       "name": "getMemberAtKey",
       "signature": "getMemberAtKey(uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -8130,7 +8005,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xb047fb50",
       "name": "cooAddress",
       "signature": "cooAddress()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -8143,14 +8017,12 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xb0698763",
       "name": "subdomainOwner",
       "signature": "subdomainOwner(string,string)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0xb0c35c05",
       "name": "autoBirthFee",
       "signature": "autoBirthFee()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -8217,7 +8089,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xb27ec27c",
       "name": "getFormattedBytesData",
       "signature": "getFormattedBytesData(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -8300,7 +8171,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xb56ccd93",
-      "name": "arr8",
+      "name": "arr",
       "signature": "arr(address,address,address)",
       "type": "function"
     },
@@ -8308,7 +8179,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xb59f7f90",
       "name": "getFileList",
       "signature": "getFileList(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -8321,7 +8191,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xb5dc40c3",
       "name": "getConfirmations",
       "signature": "getConfirmations(uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -8332,7 +8201,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xb6006379",
-      "name": "has0",
+      "name": "has",
       "signature": "has((),address)",
       "type": "function"
     },
@@ -8387,7 +8256,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xb745d336",
-      "name": "div0",
+      "name": "div",
       "signature": "div(uint256,uint256,string)",
       "type": "function"
     },
@@ -8413,7 +8282,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xb77bf600",
       "name": "transactionCount",
       "signature": "transactionCount()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -8430,7 +8298,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xb7d29e911041e8d9b843369e890bcb72c9388692ba48b65ac54e7214c4c348f7",
-      "name": "NameChanged0",
+      "name": "NameChanged",
       "signature": "NameChanged(bytes32,string)",
       "type": "event"
     },
@@ -8438,7 +8306,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xb820a0ed",
       "name": "getDescription",
       "signature": "getDescription(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -8449,7 +8316,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xb88d4fde",
-      "name": "safeTransferFrom0",
+      "name": "safeTransferFrom",
       "signature": "safeTransferFrom(address,address,uint256,bytes)",
       "type": "function"
     },
@@ -8509,7 +8376,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xba6b5f96",
-      "name": "getChild1",
+      "name": "getChild",
       "signature": "getChild(address,uint256,address,uint256)",
       "type": "function"
     },
@@ -8523,12 +8390,11 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xba9a7a56",
       "name": "MINIMUM_LIQUIDITY",
       "signature": "MINIMUM_LIQUIDITY()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0xbaa2abde",
-      "name": "removeLiquidity0",
+      "name": "removeLiquidity",
       "signature": "removeLiquidity(address,address,uint256,uint256,uint256,address,uint256)",
       "type": "function"
     },
@@ -8540,7 +8406,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xbb23e3a9",
-      "name": "arr12",
+      "name": "arr",
       "signature": "arr(uint256,uint256,uint256)",
       "type": "function"
     },
@@ -8558,13 +8424,13 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xbbe93d91",
-      "name": "mul0",
+      "name": "mul",
       "signature": "mul(int256,int256)",
       "type": "function"
     },
     {
       "encoding": "0xbc197c81",
-      "name": "onERC1155BatchReceived0",
+      "name": "onERC1155BatchReceived",
       "signature": "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)",
       "type": "function"
     },
@@ -8572,7 +8438,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xbc1c58d1",
       "name": "contenthash",
       "signature": "contenthash(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -8591,7 +8456,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xbc4006f5",
       "name": "erc721Metadata",
       "signature": "erc721Metadata()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -8634,7 +8498,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xbda09cd4",
       "name": "numTasks",
       "signature": "numTasks()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -8657,7 +8520,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xbe45fd62",
-      "name": "transfer2",
+      "name": "transfer",
       "signature": "transfer(address,uint256,bytes)",
       "type": "function"
     },
@@ -8671,7 +8534,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xbe6a1495",
       "name": "getInitialHash",
       "signature": "getInitialHash(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -8688,13 +8550,13 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xbeabacc8",
-      "name": "transfer1",
+      "name": "transfer",
       "signature": "transfer(address,address,uint256)",
       "type": "function"
     },
     {
       "encoding": "0xbeb38b43",
-      "name": "set0",
+      "name": "set",
       "signature": "set(bytes12,address)",
       "type": "function"
     },
@@ -8712,7 +8574,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xbef44f18",
-      "name": "transferChild1",
+      "name": "transferChild",
       "signature": "transferChild(uint256,address,address,uint256)",
       "type": "function"
     },
@@ -8726,7 +8588,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xbf057bf8",
       "name": "vmParameters",
       "signature": "vmParameters(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -8761,7 +8622,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xbfe07da6",
-      "name": "deposit0",
+      "name": "deposit",
       "signature": "deposit(address,uint256,string)",
       "type": "function"
     },
@@ -8779,7 +8640,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xc050a7a6",
-      "name": "newPinnedAppInstance0",
+      "name": "newPinnedAppInstance",
       "signature": "newPinnedAppInstance(bytes32,address,bytes,bool)",
       "type": "function"
     },
@@ -8791,7 +8652,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xc0774df3",
-      "name": "canForward0",
+      "name": "canForward",
       "signature": "canForward(address,bytes)",
       "type": "function"
     },
@@ -8803,13 +8664,13 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xc0c53b8b",
-      "name": "initialize7",
+      "name": "initialize",
       "signature": "initialize(address,address,address)",
       "type": "function"
     },
     {
       "encoding": "0xc0ee0b8a",
-      "name": "tokenFallback0",
+      "name": "tokenFallback",
       "signature": "tokenFallback(address,uint256,bytes)",
       "type": "function"
     },
@@ -8841,7 +8702,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xc1a287e2",
       "name": "GRACE_PERIOD",
       "signature": "GRACE_PERIOD()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -8860,7 +8720,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xc1e69b66",
       "name": "challenges",
       "signature": "challenges(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -8891,12 +8750,11 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xc29c2a14",
       "name": "calculateId",
       "signature": "calculateId(uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0xc2a2ce06",
-      "name": "changeDeposit0",
+      "name": "changeDeposit",
       "signature": "changeDeposit(uint256)",
       "type": "function"
     },
@@ -8914,7 +8772,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xc34052e0",
-      "name": "contains0",
+      "name": "contains",
       "signature": "contains(uint256)",
       "type": "function"
     },
@@ -8968,7 +8826,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xc3c5a547",
-      "name": "isRegistered0",
+      "name": "isRegistered",
       "signature": "isRegistered(address)",
       "type": "function"
     },
@@ -9012,7 +8870,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xc45a0155",
       "name": "factory",
       "signature": "factory()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -9029,7 +8886,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xc47f0027",
-      "name": "setName2",
+      "name": "setName",
       "signature": "setName(string)",
       "type": "function"
     },
@@ -9041,7 +8898,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xc4d66de8",
-      "name": "initialize0",
+      "name": "initialize",
       "signature": "initialize(address)",
       "type": "function"
     },
@@ -9049,7 +8906,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xc4fd5002",
       "name": "getRetirePrice",
       "signature": "getRetirePrice(uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -9080,7 +8936,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xc59d5633",
       "name": "getPurchasePrice",
       "signature": "getPurchasePrice(uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -9157,7 +9012,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xc8690233",
-      "name": "pubkey1",
+      "name": "pubkey",
       "signature": "pubkey(bytes32)",
       "type": "function"
     },
@@ -9211,9 +9066,8 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xca15c873",
-      "name": "getRoleMemberCount0",
+      "name": "getRoleMemberCount",
       "signature": "getRoleMemberCount(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -9230,7 +9084,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xca3e6079b726e7728802a0537949e2d1c7762304fa641fb06eb56daf2ba8c6b9",
-      "name": "CancelStream0",
+      "name": "CancelStream",
       "signature": "CancelStream(uint256,address,address,uint256,uint256)",
       "type": "event"
     },
@@ -9242,7 +9096,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xca6abbe9d7f11422cb6ca7629fbf6fe9efb1c621f71ce8f02b9f2a230097404f",
-      "name": "NameRegistered0",
+      "name": "NameRegistered",
       "signature": "NameRegistered(string,bytes32,address,uint256,uint256)",
       "type": "event"
     },
@@ -9272,7 +9126,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xcad3be83",
-      "name": "_beforeTokenTransfer0",
+      "name": "_beforeTokenTransfer",
       "signature": "_beforeTokenTransfer(address,address,uint256)",
       "type": "function"
     },
@@ -9310,7 +9164,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xcb9a4b9a",
       "name": "getPhase",
       "signature": "getPhase(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -9321,13 +9174,13 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xcbf1c354",
-      "name": "adjustFee0",
+      "name": "adjustFee",
       "signature": "adjustFee(bytes)",
       "type": "function"
     },
     {
       "encoding": "0xcc10e401",
-      "name": "create0",
+      "name": "create",
       "signature": "create(string,bool)",
       "type": "function"
     },
@@ -9371,7 +9224,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xcd3293de",
       "name": "reserve",
       "signature": "reserve()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -9388,7 +9240,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xcd59bed9",
-      "name": "findUpperBound0",
+      "name": "findUpperBound",
       "signature": "findUpperBound(uint256[],uint256)",
       "type": "function"
     },
@@ -9412,13 +9264,13 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xcdb026a1",
-      "name": "getCombinedNextSetUnits0",
+      "name": "getCombinedNextSetUnits",
       "signature": "getCombinedNextSetUnits()",
       "type": "function"
     },
     {
       "encoding": "0xcdb2867b",
-      "name": "canVote0",
+      "name": "canVote",
       "signature": "canVote(uint256,address)",
       "type": "function"
     },
@@ -9430,7 +9282,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xcdf3c437",
-      "name": "_transferRootPermissionsFromTemplateAndFinalizeDAO0",
+      "name": "_transferRootPermissionsFromTemplateAndFinalizeDAO",
       "signature": "_transferRootPermissionsFromTemplateAndFinalizeDAO(address,address,address)",
       "type": "function"
     },
@@ -9456,7 +9308,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xce1e09c0",
       "name": "maxCommitmentAge",
       "signature": "maxCommitmentAge()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -9481,7 +9332,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xce791011",
       "name": "BASIC_TIMEOUT",
       "signature": "BASIC_TIMEOUT()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -9507,12 +9357,11 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xcf309012",
       "name": "locked",
       "signature": "locked()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0xcf5a7a22",
-      "name": "at1",
+      "name": "at",
       "signature": "at((),uint256)",
       "type": "function"
     },
@@ -9524,7 +9373,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xcfcccaa2",
-      "name": "addExp0",
+      "name": "addExp",
       "signature": "addExp((),())",
       "type": "function"
     },
@@ -9538,7 +9387,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xd06ca61f",
       "name": "getAmountsOut",
       "signature": "getAmountsOut(uint256,address[])",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -9585,7 +9433,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xd162f8b0",
-      "name": "newAppProxyPinned0",
+      "name": "newAppProxyPinned",
       "signature": "newAppProxyPinned(address,bytes32,bytes)",
       "type": "function"
     },
@@ -9623,7 +9471,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xd21220a7",
       "name": "token1",
       "signature": "token1()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -9640,7 +9487,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xd29d44ee",
-      "name": "_transferOwnership0",
+      "name": "_transferOwnership",
       "signature": "_transferOwnership(address)",
       "type": "function"
     },
@@ -9702,7 +9549,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xd3e6f49f",
       "name": "isReadyToBreed",
       "signature": "isReadyToBreed(uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -9713,7 +9559,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xd4735d920b0f87494915f556dd9b54c8f309026070caea5c737245152564d266",
-      "name": "Transfer0",
+      "name": "Transfer",
       "signature": "Transfer(bytes32,address)",
       "type": "event"
     },
@@ -9751,12 +9597,11 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xd5391393",
       "name": "MINTER_ROLE",
       "signature": "MINTER_ROLE()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0xd547741f",
-      "name": "revokeRole0",
+      "name": "revokeRole",
       "signature": "revokeRole(bytes32,address)",
       "type": "function"
     },
@@ -9792,13 +9637,13 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xd5fa2b00",
-      "name": "setAddr0",
+      "name": "setAddr",
       "signature": "setAddr(bytes32,address)",
       "type": "function"
     },
     {
       "encoding": "0xd600ae48",
-      "name": "auctionPriceParameters0",
+      "name": "auctionPriceParameters",
       "signature": "auctionPriceParameters()",
       "type": "function"
     },
@@ -9834,7 +9679,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xd66d6c10",
-      "name": "register0",
+      "name": "register",
       "signature": "register(uint256,uint256)",
       "type": "function"
     },
@@ -9854,7 +9699,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xd6e4fa86",
       "name": "nameExpires",
       "signature": "nameExpires(uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -9871,9 +9715,8 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xd70754ec",
-      "name": "node0",
+      "name": "node",
       "signature": "node()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -9898,7 +9741,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xd74f8edd",
       "name": "MAX_OWNER_COUNT",
       "signature": "MAX_OWNER_COUNT()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -9963,13 +9805,13 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xd9057007",
-      "name": "supportsInterface0",
+      "name": "supportsInterface",
       "signature": "supportsInterface(address,bytes4)",
       "type": "function"
     },
     {
       "encoding": "0xd948d468",
-      "name": "forward3",
+      "name": "forward",
       "signature": "forward(bytes)",
       "type": "function"
     },
@@ -9993,7 +9835,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xda682aeb",
-      "name": "onApprove0",
+      "name": "onApprove",
       "signature": "onApprove(address,address,uint256)",
       "type": "function"
     },
@@ -10001,7 +9843,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xda8c229e",
       "name": "controllers",
       "signature": "controllers(address)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -10012,13 +9853,13 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xdaaadd8e",
-      "name": "arr3",
+      "name": "arr",
       "signature": "arr(address,address)",
       "type": "function"
     },
     {
       "encoding": "0xdb006a75",
-      "name": "redeem1",
+      "name": "redeem",
       "signature": "redeem(uint256)",
       "type": "function"
     },
@@ -10055,7 +9896,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xdb9abbd4",
-      "name": "arr1",
+      "name": "arr",
       "signature": "arr(bytes32,bytes32)",
       "type": "function"
     },
@@ -10067,7 +9908,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xdc0bd75f",
-      "name": "arr4",
+      "name": "arr",
       "signature": "arr(address,uint256,uint256)",
       "type": "function"
     },
@@ -10081,7 +9922,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xdc8452cd",
       "name": "required",
       "signature": "required()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -10098,7 +9938,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xdd219635",
-      "name": "discardCToken0",
+      "name": "discardCToken",
       "signature": "discardCToken(address)",
       "type": "function"
     },
@@ -10110,13 +9950,13 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xdd62ed3e",
-      "name": "allowance0",
+      "name": "allowance",
       "signature": "allowance(address,address)",
       "type": "function"
     },
     {
       "encoding": "0xddc8d7a6",
-      "name": "_removePauser0",
+      "name": "_removePauser",
       "signature": "_removePauser(address)",
       "type": "function"
     },
@@ -10124,7 +9964,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xdddc24f4",
       "name": "getContractCode",
       "signature": "getContractCode(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -10143,7 +9982,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xddf7fcb0",
       "name": "baseNode",
       "signature": "baseNode()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -10172,7 +10010,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xde32abd1",
-      "name": "mulExp0",
+      "name": "mulExp",
       "signature": "mulExp(uint256,uint256)",
       "type": "function"
     },
@@ -10184,7 +10022,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xde4813f7525e49908b98ef6c9c80c5bc8c7d0842981a49420eb45ef36a60e0c0",
-      "name": "MockFunctionCalled0",
+      "name": "MockFunctionCalled",
       "signature": "MockFunctionCalled(uint256)",
       "type": "event"
     },
@@ -10204,7 +10042,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xdefb9584",
       "name": "PROMO_CREATION_LIMIT",
       "signature": "PROMO_CREATION_LIMIT()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -10227,7 +10064,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xdf3d3305",
-      "name": "initialize1",
+      "name": "initialize",
       "signature": "initialize(address,uint64,uint64,uint64)",
       "type": "function"
     },
@@ -10269,7 +10106,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xe0a1fdad",
-      "name": "unset0",
+      "name": "unset",
       "signature": "unset(bytes12)",
       "type": "function"
     },
@@ -10359,7 +10196,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xe226ed22",
-      "name": "balanceOfERC200",
+      "name": "balanceOfERC20",
       "signature": "balanceOfERC20(uint256,address)",
       "type": "function"
     },
@@ -10373,7 +10210,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xe2787405",
       "name": "IPFS_ADMIN",
       "signature": "IPFS_ADMIN()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -10386,7 +10222,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xe29581aa",
       "name": "getNodes",
       "signature": "getNodes()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -10405,7 +10240,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xe2e1dfb7",
       "name": "containsNameHash",
       "signature": "containsNameHash(bytes32,bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -10416,7 +10250,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xe31bdc0a",
-      "name": "sub1",
+      "name": "sub",
       "signature": "sub(uint256,uint256,string)",
       "type": "function"
     },
@@ -10428,13 +10262,13 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xe379c1624ed7e714cc0937528a32359d69d5281337765313dba4e081b72d7578",
-      "name": "ContenthashChanged0",
+      "name": "ContenthashChanged",
       "signature": "ContenthashChanged(bytes32,bytes)",
       "type": "event"
     },
     {
       "encoding": "0xe37ff29f",
-      "name": "initialize4",
+      "name": "initialize",
       "signature": "initialize(address,bool,uint256)",
       "type": "function"
     },
@@ -10484,7 +10318,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xe4860339",
       "name": "tokens",
       "signature": "tokens(address)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -10513,7 +10346,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xe5ac808e",
-      "name": "checkProof0",
+      "name": "checkProof",
       "signature": "checkProof(bytes32,bytes32,bytes32[],uint256)",
       "type": "function"
     },
@@ -10521,7 +10354,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xe5c7b2eb",
       "name": "numLicenses",
       "signature": "numLicenses()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -10540,7 +10372,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xe63ab1e9",
       "name": "PAUSER_ROLE",
       "signature": "PAUSER_ROLE()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -10553,7 +10384,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xe6a43905",
       "name": "getPair",
       "signature": "getPair(address,address)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -10566,7 +10396,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xe6cbe351",
       "name": "saleAuction",
       "signature": "saleAuction()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -10637,13 +10466,13 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xe8e33700",
-      "name": "addLiquidity0",
+      "name": "addLiquidity",
       "signature": "addLiquidity(address,address,uint256,uint256,uint256,uint256,address,uint256)",
       "type": "function"
     },
     {
       "encoding": "0xe8eda9df",
-      "name": "deposit0",
+      "name": "deposit",
       "signature": "deposit(address,uint256,address,uint16)",
       "type": "function"
     },
@@ -10681,14 +10510,12 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xe985e9c5",
       "name": "isApprovedForAll",
       "signature": "isApprovedForAll(address,address)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0xe98b7f4d",
       "name": "getKitty",
       "signature": "getKitty(uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -10755,12 +10582,11 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xead13092",
       "name": "SLASH_RATE",
       "signature": "SLASH_RATE()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0xeadb80b8",
-      "name": "ownerOfChild1",
+      "name": "ownerOfChild",
       "signature": "ownerOfChild(address,uint256)",
       "type": "function"
     },
@@ -10768,7 +10594,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xeb1fbf15",
       "name": "getIpfsHash",
       "signature": "getIpfsHash(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -10817,7 +10642,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xec590164",
       "name": "timeoutBlock",
       "signature": "timeoutBlock(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -10853,7 +10677,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xed81cdda",
-      "name": "rootOwnerOfChild2",
+      "name": "rootOwnerOfChild",
       "signature": "rootOwnerOfChild(address,uint256)",
       "type": "function"
     },
@@ -10878,7 +10702,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xede658b0",
-      "name": "newAppProxy0",
+      "name": "newAppProxy",
       "signature": "newAppProxy(address,bytes32,bytes)",
       "type": "function"
     },
@@ -10904,19 +10728,17 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xee5ae4b0",
       "name": "canRunVerificationGame",
       "signature": "canRunVerificationGame(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0xee73c78e",
       "name": "PLATFORM_FEE_SOLVER",
       "signature": "PLATFORM_FEE_SOLVER()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0xeec4fdf2",
-      "name": "truncate0",
+      "name": "truncate",
       "signature": "truncate(())",
       "type": "function"
     },
@@ -10940,7 +10762,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xf0284b1c",
-      "name": "getFailedAuctionWithdrawComponents0",
+      "name": "getFailedAuctionWithdrawComponents",
       "signature": "getFailedAuctionWithdrawComponents()",
       "type": "function"
     },
@@ -10952,7 +10774,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xf0b9e5ba",
-      "name": "onERC721Received0",
+      "name": "onERC721Received",
       "signature": "onERC721Received(address,uint256,bytes)",
       "type": "function"
     },
@@ -10988,7 +10810,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xf1a0a85c",
-      "name": "div0",
+      "name": "div",
       "signature": "div(uint64,uint64)",
       "type": "function"
     },
@@ -10996,14 +10818,12 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xf1ca9410",
       "name": "gen0CreatedCount",
       "signature": "gen0CreatedCount()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0xf1cb7e06",
-      "name": "addr0",
+      "name": "addr",
       "signature": "addr(bytes32,uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -11026,7 +10846,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xf242432a",
-      "name": "safeTransferFrom2",
+      "name": "safeTransferFrom",
       "signature": "safeTransferFrom(address,address,uint256,uint256,bytes)",
       "type": "function"
     },
@@ -11052,7 +10872,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xf2b47d52",
       "name": "geneScience",
       "signature": "geneScience()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -11167,7 +10986,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xf48c3054",
-      "name": "proxyPayment0",
+      "name": "proxyPayment",
       "signature": "proxyPayment(address)",
       "type": "function"
     },
@@ -11180,7 +10999,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xf4b00513",
-      "name": "newVote0",
+      "name": "newVote",
       "signature": "newVote(bytes,string,bool,bool)",
       "type": "function"
     },
@@ -11194,7 +11013,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xf504b089",
       "name": "memberKeys",
       "signature": "memberKeys(uint256)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -11205,13 +11023,13 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xf50acfa0",
-      "name": "transferToParent0",
+      "name": "transferToParent",
       "signature": "transferToParent(address,address,uint256,uint256,bytes)",
       "type": "function"
     },
     {
       "encoding": "0xf520b58d",
-      "name": "hasPermission2",
+      "name": "hasPermission",
       "signature": "hasPermission(address,address,bytes32,uint256[])",
       "type": "function"
     },
@@ -11303,7 +11121,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xf72ed274",
       "name": "getBytesData",
       "signature": "getBytesData(bytes32)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -11354,7 +11171,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xf846a885",
       "name": "BURN_RATE",
       "signature": "BURN_RATE()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -11379,7 +11195,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xf86bc879",
       "name": "authorisations",
       "signature": "authorisations(bytes32,address,address)",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -11408,7 +11223,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xf8c8765e",
-      "name": "initialize2",
+      "name": "initialize",
       "signature": "initialize(address,address,address,address)",
       "type": "function"
     },
@@ -11486,7 +11301,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xfa2d8c90",
-      "name": "settleRebalance0",
+      "name": "settleRebalance",
       "signature": "settleRebalance()",
       "type": "function"
     },
@@ -11541,7 +11356,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xfbffbcec",
-      "name": "_installDefaultApp0",
+      "name": "_installDefaultApp",
       "signature": "_installDefaultApp(address,bytes32,bytes)",
       "type": "function"
     },
@@ -11555,7 +11370,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xfc22290b",
       "name": "THETA",
       "signature": "THETA()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -11580,7 +11394,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xfcbe7b33",
       "name": "LICENSE_FEE",
       "signature": "LICENSE_FEE()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -11615,7 +11428,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xfdef9106",
-      "name": "hasPermission0",
+      "name": "hasPermission",
       "signature": "hasPermission(address,address,bytes32,bytes)",
       "type": "function"
     },
@@ -11639,7 +11452,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xfe9c44ae",
-      "name": "isCToken4",
+      "name": "isCToken",
       "signature": "isCToken()",
       "type": "function"
     },
@@ -11665,7 +11478,6 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0xfeb9bf89",
       "name": "SOLVER_ADMIN",
       "signature": "SOLVER_ADMIN()",
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -11677,7 +11489,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
     },
     {
       "encoding": "0xfec5d7bb",
-      "name": "_length0",
+      "name": "_length",
       "signature": "_length(())",
       "type": "function"
     },
