@@ -9,9 +9,9 @@ on      ,both ,fast  ,scrape ,apps/blockScrape ,nAProcs_invalid              ,n 
 
 on      ,both ,fast  ,scrape ,apps/blockScrape ,nBlocks                      ,n    ,block_cnt = 12
 on      ,both ,fast  ,scrape ,apps/blockScrape ,listpins                     ,n    ,listpins
-local   ,both ,fast  ,scrape ,apps/blockScrape ,pin                          ,n    ,pin
+delay   ,both ,fast  ,scrape ,apps/blockScrape ,pin                          ,n    ,pin
 on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_01_fail                 ,n    ,action = badmode
-local   ,both ,fast  ,scrape ,apps/blockScrape ,real_run                     ,n    ,sleep = .5 & pin & log_level = 8
+delay   ,both ,fast  ,scrape ,apps/blockScrape ,real_run                     ,n    ,sleep = .5 & pin & log_level = 8
 on      ,both ,fast  ,scrape ,apps/blockScrape ,real_run2                    ,n    ,sleep = .5
 on      ,api  ,fast  ,scrape ,apps/blockScrape ,no_tracing                   ,y    ,chain = non-tracing
 
