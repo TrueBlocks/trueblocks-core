@@ -78,6 +78,8 @@ func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
 	if err != nil {
 		return bn, err
 	}
+
+	// within five minutes of the period, snap to the future, otherwise snap to the past
 	switch period {
 	case "hourly":
 		dt = dt.ShiftMinutes(5)
@@ -87,11 +89,21 @@ func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
 		dt = dt.FloorDay()
 	case "weekly":
 		dt = dt.ShiftMinutes(5)
-		dt = dt.FloorWeek() // returns Monday -- we want Sunday
-		dt = dt.ShiftDays(-1).FloorDay()
+		dt = dt.FloorWeek()
+		dt = dt.ShiftDays(-1).FloorDay() // returns Monday -- we want Sunday
 	case "monthly":
 		dt = dt.ShiftMinutes(5)
 		dt = dt.FloorMonth()
+	case "quarterly": // we assume here that the data is already on the quarter
+		dt = dt.ShiftMinutes(5)
+		dt = dt.FloorMonth()
+		for {
+			if dt.Month() == 1 || dt.Month() == 4 || dt.Month() == 7 || dt.Month() == 10 {
+				break
+			}
+			dt = dt.ShiftMonths(1)
+			dt = dt.FloorMonth()
+		}
 	case "annually":
 		dt = dt.ShiftMinutes(5)
 		dt = dt.FloorYear()
@@ -135,6 +147,10 @@ func (id *Identifier) nextBlock(chain string, current uint64) (uint64, error) {
 			case "monthly":
 				dt = dt.ShiftMinutes(5)
 				dt = dt.ShiftMonths(1)
+				dt = dt.FloorMonth()
+			case "quarterly":
+				dt = dt.ShiftMinutes(5)
+				dt = dt.ShiftMonths(3)
 				dt = dt.FloorMonth()
 			case "annually":
 				dt = dt.ShiftMinutes(5)
