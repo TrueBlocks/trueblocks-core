@@ -91,8 +91,8 @@ on       ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_art         ,y    ,blo
 on       ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_csv_art     ,n    ,blocks = 4012000-4012001 & logs & fmt = csv & articulate
 
 # We should support reconcilations for chifra blocks
-on       ,both ,fast  ,blocks ,tools/getBlocks ,reconcile_miner        ,y    ,blocks = 3 & fmt = json & account_for = 0x5088d623ba0fcf0131e0897a91734a4d83596aa0
-on       ,both ,fast  ,blocks ,tools/getBlocks ,reconcile_uncle        ,y    ,blocks = 3 & fmt = json & account_for = 0xc8ebccc5f5689fa8659d83713341e5ad19349448
+local    ,both ,fast  ,blocks ,tools/getBlocks ,reconcile_miner        ,y    ,blocks = 3 & fmt = json & account_for = 0x5088d623ba0fcf0131e0897a91734a4d83596aa0
+local    ,both ,fast  ,blocks ,tools/getBlocks ,reconcile_uncle        ,y    ,blocks = 3 & fmt = json & account_for = 0xc8ebccc5f5689fa8659d83713341e5ad19349448
 
 # These fail because they do not create value JSON
 file_cmd ,cmd  ,fast  ,blocks ,tools/getBlocks ,cmd_file1             ,n    ,file = cmd_file1 & cache
