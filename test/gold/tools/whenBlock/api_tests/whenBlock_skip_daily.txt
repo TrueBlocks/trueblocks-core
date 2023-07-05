@@ -1,6 +1,4 @@
-chifra when  --fmt txt 1065497-1125561:daily
-TEST[DATE|TIME] Blocks:  [1065497-1125561:daily]
-TEST[DATE|TIME] Format:  txt
+when?fmt=txt&blocks=1065497-1125561:daily
 blockNumber	timestamp	date	name
 1065497	1456531170	2016-02-26 23:59:30 UTC	
 1070489	1456617593	2016-02-27 23:59:53 UTC	

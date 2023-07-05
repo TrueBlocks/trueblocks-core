@@ -1,6 +1,4 @@
-chifra when  --fmt txt 768414-1856235:monthly
-TEST[DATE|TIME] Blocks:  [768414-1856235:monthly]
-TEST[DATE|TIME] Format:  txt
+when?fmt=txt&blocks=768414-1856235:monthly
 blockNumber	timestamp	date	name
 622213	1448927970	2015-11-30 23:59:30 UTC	
 778482	1451606392	2015-12-31 23:59:52 UTC	
