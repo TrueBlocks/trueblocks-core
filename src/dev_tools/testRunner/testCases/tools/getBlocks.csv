@@ -17,7 +17,7 @@ on       ,both ,fast  ,blocks ,tools/getBlocks ,special_2             ,y    ,blo
 on       ,both ,fast  ,blocks ,tools/getBlocks ,combo_one_range       ,y    ,blocks = 1590000 4000001-4000002 1001001 1234567
 on       ,both ,fast  ,blocks ,tools/getBlocks ,combo_two_range       ,y    ,blocks = 1590000 4000001-4000002 1001001-1001100 1234567
 on       ,both ,medi  ,blocks ,tools/getBlocks ,hashes_1              ,y    ,blocks = 4001001 & hashes
-slow2    ,both ,medi  ,blocks ,tools/getBlocks ,address_uniqTx1       ,n    ,blocks = 3982128 & uniq
+slow    ,both ,medi  ,blocks ,tools/getBlocks ,address_uniqTx1       ,n    ,blocks = 3982128 & uniq
 slow     ,both ,medi  ,blocks ,tools/getBlocks ,mulitBlock_uniq_2630  ,y    ,blocks = 3982128-3982133 & uniq & fmt = json
 slow     ,both ,slow  ,blocks ,tools/getBlocks ,byzantium_1           ,y    ,blocks = 4369999 4370000 4380101
 on       ,both ,fast  ,blocks ,tools/getBlocks ,blockByHash           ,y    ,blocks = 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
@@ -25,7 +25,7 @@ on       ,both ,fast  ,blocks ,tools/getBlocks ,miner                 ,y    ,blo
 on       ,both ,fast  ,blocks ,tools/getBlocks ,addrMisconfig         ,y    ,blocks = 32279 & uniq & verbose
 on       ,both ,fast  ,blocks ,tools/getBlocks ,addrBlockZero         ,y    ,blocks = 0 & uniq
 
-slow2    ,both ,medi  ,blocks ,tools/getBlocks ,uniqTxCnt1            ,y    ,blocks = 3982128 & uniq & count & fmt = json & verbose
+slow    ,both ,medi  ,blocks ,tools/getBlocks ,uniqTxCnt1            ,y    ,blocks = 3982128 & uniq & count & fmt = json & verbose
 on       ,both ,fast  ,blocks ,tools/getBlocks ,addrCntFail           ,y    ,blocks = 3982128 & count
 on       ,both ,fast  ,blocks ,tools/getBlocks ,uncles_count          ,y    ,blocks = 3 469 & uncles & count
 on       ,both ,medi  ,blocks ,tools/getBlocks ,count1                ,y    ,blocks = 3 & fmt = json & count
@@ -34,10 +34,10 @@ on       ,both ,medi  ,blocks ,tools/getBlocks ,count5                ,y    ,blo
 on       ,both ,medi  ,blocks ,tools/getBlocks ,count6                ,y    ,blocks = 3 & fmt = json & count & traces & uncles & fmt = txt
 on       ,both ,medi  ,blocks ,tools/getBlocks ,count_uncles_uniq     ,y    ,blocks = 3 469 & count & uncles & uniq & fmt = json
 on       ,both ,medi  ,blocks ,tools/getBlocks ,count_logs            ,y    ,blocks = 6001002 & count & traces & uncles & logs & fmt = json
-slow2    ,both ,medi  ,blocks ,tools/getBlocks ,count_logs_uniq       ,y    ,blocks = 6001002 & count & logs & uniq & fmt = json
-slow2    ,both ,medi  ,blocks ,tools/getBlocks ,count_traces_uniq     ,y    ,blocks = 6001002 & count & traces & uniq & fmt = json
-slow2    ,both ,medi  ,blocks ,tools/getBlocks ,count_all_uniq        ,y    ,blocks = 3 6001002 & count & uncles & logs & traces & uniq & fmt = json
-slow2    ,both ,medi  ,blocks ,tools/getBlocks ,uniqTxCnt2            ,y    ,blocks = 1301011-1312011:313 & uniq & count & fmt = json
+slow    ,both ,medi  ,blocks ,tools/getBlocks ,count_logs_uniq       ,y    ,blocks = 6001002 & count & logs & uniq & fmt = json
+slow    ,both ,medi  ,blocks ,tools/getBlocks ,count_traces_uniq     ,y    ,blocks = 6001002 & count & traces & uniq & fmt = json
+slow    ,both ,medi  ,blocks ,tools/getBlocks ,count_all_uniq        ,y    ,blocks = 3 6001002 & count & uncles & logs & traces & uniq & fmt = json
+slow    ,both ,medi  ,blocks ,tools/getBlocks ,uniqTxCnt2            ,y    ,blocks = 1301011-1312011:313 & uniq & count & fmt = json
 on       ,both ,fast  ,blocks ,tools/getBlocks ,list_fail             ,y    ,list = 0 & list_count = 12
 on       ,both ,fast  ,blocks ,tools/getBlocks ,list_list_count       ,y    ,list = 1000 & list_count = 10
 on       ,both ,fast  ,blocks ,tools/getBlocks ,list_count_block_fail ,y    ,list_count = 10 & blocks = 1000
@@ -75,8 +75,8 @@ on       ,both ,fast  ,blocks ,tools/getBlocks ,bigrange_not_logs     ,y    ,blo
 on       ,both ,fast  ,blocks ,tools/getBlocks ,access_list           ,y    ,blocks = 16500011 & fmt = json & raw
 
 on       ,both ,fast  ,blocks ,tools/getBlocks ,flow_error_1          ,n    ,blocks = 4102000 & fmt = txt & flow = to
-slow2    ,both ,fast  ,blocks ,tools/getBlocks ,flow_uniq_from        ,n    ,blocks = 4102000 & fmt = txt & uniq & flow = from
-slow2    ,both ,fast  ,blocks ,tools/getBlocks ,flow_uniq_reward      ,n    ,blocks = 4102000 & fmt = txt & uniq & flow = reward
+slow    ,both ,fast  ,blocks ,tools/getBlocks ,flow_uniq_from        ,n    ,blocks = 4102000 & fmt = txt & uniq & flow = from
+slow    ,both ,fast  ,blocks ,tools/getBlocks ,flow_uniq_reward      ,n    ,blocks = 4102000 & fmt = txt & uniq & flow = reward
 
 on       ,both ,fast  ,blocks ,tools/getBlocks ,list_block_fail       ,y    ,list = 1000 & blocks = 1000
 
@@ -86,17 +86,17 @@ on       ,both ,fast  ,blocks ,tools/getBlocks ,raw_01                ,y    ,blo
 on       ,both ,slow  ,blocks ,tools/getBlocks ,terse_no_raw          ,y    ,blocks = 4001001-4001003 & hashes
 on       ,both ,fast  ,blocks ,tools/getBlocks ,terse_yes_raw         ,y    ,blocks = 4001001 & hashes & raw
 
+# Not sure why these fail remotely only
+on       ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_art         ,y    ,blocks = 4012000-4012001 & logs & articulate
+on       ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_csv_art     ,n    ,blocks = 4012000-4012001 & logs & fmt = csv & articulate
+
+# We should support reconcilations for chifra blocks
+on       ,both ,fast  ,blocks ,tools/getBlocks ,reconcile_miner        ,y    ,blocks = 3 & fmt = json & account_for = 0x5088d623ba0fcf0131e0897a91734a4d83596aa0
+on       ,both ,fast  ,blocks ,tools/getBlocks ,reconcile_uncle        ,y    ,blocks = 3 & fmt = json & account_for = 0xc8ebccc5f5689fa8659d83713341e5ad19349448
+
 # These fail because they do not create value JSON
 file_cmd ,cmd  ,fast  ,blocks ,tools/getBlocks ,cmd_file1             ,n    ,file = cmd_file1 & cache
 file_cmd ,cmd  ,fast  ,blocks ,tools/getBlocks ,cmd_file2             ,n    ,file = cmd_file2 & cache
 
 on       ,both ,fast  ,blocks ,tools/getBlocks ,redir_output          ,n    ,blocks = 1001001-1001005 & fmt = csv & output = output_test_file
 on       ,both ,fast  ,blocks ,tools/getBlocks ,redir_output_append   ,n    ,blocks = 1001005-1001010 & fmt = csv & output = output_test_file & no_header & append
-
-# Not sure why these fail remotely only
-local    ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_art         ,y    ,blocks = 4012000-4012001 & logs & articulate
-local    ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_csv_art     ,n    ,blocks = 4012000-4012001 & logs & fmt = csv & articulate
-
-# Blocks could easily have reconcilations
-local    ,both ,fast  ,blocks ,tools/getBlocks ,reconcile_miner        ,y    ,blocks = 3 & fmt = json & account_for = 0x5088d623ba0fcf0131e0897a91734a4d83596aa0
-local    ,both ,fast  ,blocks ,tools/getBlocks ,reconcile_uncle        ,y    ,blocks = 3 & fmt = json & account_for = 0xc8ebccc5f5689fa8659d83713341e5ad19349448

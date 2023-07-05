@@ -2,7 +2,7 @@ blocks?blocks=1301011-1312011:313&uniq&count&fmt=json
 {
   "data": [
     {
-      "addressCnt": 4,
+      "addressCnt": 5,
       "blockNumber": 1301011,
       "transactionsCnt": 1
     },
@@ -47,7 +47,7 @@ blocks?blocks=1301011-1312011:313&uniq&count&fmt=json
       "transactionsCnt": 3
     },
     {
-      "addressCnt": 10,
+      "addressCnt": 11,
       "blockNumber": 1303828,
       "transactionsCnt": 1
     },
@@ -62,7 +62,7 @@ blocks?blocks=1301011-1312011:313&uniq&count&fmt=json
       "transactionsCnt": 14
     },
     {
-      "addressCnt": 26,
+      "addressCnt": 28,
       "blockNumber": 1304767,
       "transactionsCnt": 12
     },
@@ -72,7 +72,7 @@ blocks?blocks=1301011-1312011:313&uniq&count&fmt=json
       "transactionsCnt": 3
     },
     {
-      "addressCnt": 2,
+      "addressCnt": 3,
       "blockNumber": 1305393,
       "transactionsCnt": 0
     },
@@ -127,7 +127,7 @@ blocks?blocks=1301011-1312011:313&uniq&count&fmt=json
       "transactionsCnt": 4
     },
     {
-      "addressCnt": 14,
+      "addressCnt": 15,
       "blockNumber": 1308836,
       "transactionsCnt": 6
     },
@@ -177,7 +177,7 @@ blocks?blocks=1301011-1312011:313&uniq&count&fmt=json
       "transactionsCnt": 16
     },
     {
-      "addressCnt": 24,
+      "addressCnt": 25,
       "blockNumber": 1311966,
       "transactionsCnt": 11
     }
