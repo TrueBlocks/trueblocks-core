@@ -9,6 +9,8 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
@@ -17,6 +19,9 @@ import (
 )
 
 func (opts *BlocksOptions) HandleLogs() error {
+	abiMap := make(abi.AbiInterfaceMap)
+	loadedMap := make(map[base.Address]bool)
+	skipMap := make(map[base.Address]bool)
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -65,6 +70,23 @@ func (opts *BlocksOptions) HandleLogs() error {
 				for _, log := range logs {
 					// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
 					log := log
+					if opts.Articulate {
+						address := log.Address
+						if !loadedMap[address] && !skipMap[address] {
+							if err := abi.LoadAbi(chain, address, abiMap); err != nil {
+								skipMap[address] = true
+								errorChan <- err // continue even with an error
+							} else {
+								loadedMap[address] = true
+							}
+						}
+
+						if !skipMap[address] {
+							if log.ArticulatedLog, err = articulate.ArticulateLog(&log, abiMap); err != nil {
+								errorChan <- err // continue even with an error
+							}
+						}
+					}
 					if !opts.shouldShow(&log) {
 						continue
 					}
@@ -75,11 +97,12 @@ func (opts *BlocksOptions) HandleLogs() error {
 	}
 
 	extra := map[string]interface{}{
-		"count":     opts.Count,
-		"uncles":    opts.Uncles,
-		"logs":      opts.Logs,
-		"traces":    opts.Traces,
-		"addresses": opts.Uniq,
+		"count":      opts.Count,
+		"uncles":     opts.Uncles,
+		"logs":       opts.Logs,
+		"traces":     opts.Traces,
+		"addresses":  opts.Uniq,
+		"articulate": opts.Articulate,
 	}
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }

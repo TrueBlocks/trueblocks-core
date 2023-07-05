@@ -435,7 +435,7 @@ TEST[DATE|TIME] Format:  json
         },
         "name": "balanceOf",
         "outputs": {
-          "val_0": "2750000000000000000"
+          "val_0": "8000000000000000000000"
         }
       },
       "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",

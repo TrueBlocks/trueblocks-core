@@ -69,7 +69,6 @@ on       ,both ,fast  ,blocks ,tools/getBlocks ,no_cache_uncles       ,y    ,blo
 on       ,both ,fast  ,blocks ,tools/getBlocks ,no_cache_uniq         ,y    ,blocks = 4012000-4012001 & cache & uniq
 on       ,both ,fast  ,blocks ,tools/getBlocks ,no_trace_hashes       ,y    ,blocks = 4012000-4012001 & traces & hashes
 on       ,both ,fast  ,blocks ,tools/getBlocks ,no_trace_uniq         ,y    ,blocks = 4012000-4012001 & traces & uniq
-on       ,both ,fast  ,blocks ,tools/getBlocks ,artic_not_logs        ,y    ,blocks = 4012000-4012001 & articulate
 on       ,both ,fast  ,blocks ,tools/getBlocks ,bigrange_not_logs     ,y    ,blocks = 4012000-4012001 & big_range = 100
 
 on       ,both ,fast  ,blocks ,tools/getBlocks ,access_list           ,y    ,blocks = 16500011 & fmt = json & raw
@@ -86,17 +85,20 @@ on       ,both ,fast  ,blocks ,tools/getBlocks ,raw_01                ,y    ,blo
 on       ,both ,slow  ,blocks ,tools/getBlocks ,terse_no_raw          ,y    ,blocks = 4001001-4001003 & hashes
 on       ,both ,fast  ,blocks ,tools/getBlocks ,terse_yes_raw         ,y    ,blocks = 4001001 & hashes & raw
 
+on       ,both ,fast  ,blocks ,tools/getBlocks ,artic_not_logs        ,y    ,blocks = 4012000-4012001 & articulate
+on       ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_art         ,y    ,blocks = 4012000-4012001 & logs & articulate
+on       ,both ,fast  ,blocks ,tools/getBlocks ,with_traces_art       ,y    ,blocks = 4012000-4012001 & traces & articulate
+on       ,both ,fast  ,blocks ,tools/getBlocks ,with_uncles_art       ,y    ,blocks = 4012000-4012001 & uncles & articulate
+on       ,both ,fast  ,blocks ,tools/getBlocks ,with_hashes_art       ,y    ,blocks = 4012000-4012001 & hashes & articulate
+on       ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_csv_art     ,n    ,blocks = 4012000-4012001 & logs & fmt = csv & articulate
+
+# We should support reconcilations for chifra blocks
+delay    ,both ,fast  ,blocks ,tools/getBlocks ,reconcile_miner       ,y    ,blocks = 3 & fmt = json & account_for = 0x5088d623ba0fcf0131e0897a91734a4d83596aa0
+delay    ,both ,fast  ,blocks ,tools/getBlocks ,reconcile_uncle       ,y    ,blocks = 3 & fmt = json & account_for = 0xc8ebccc5f5689fa8659d83713341e5ad19349448
+
 # These fail because they do not create value JSON
 file_cmd ,cmd  ,fast  ,blocks ,tools/getBlocks ,cmd_file1             ,n    ,file = cmd_file1 & cache
 file_cmd ,cmd  ,fast  ,blocks ,tools/getBlocks ,cmd_file2             ,n    ,file = cmd_file2 & cache
 
 on       ,both ,fast  ,blocks ,tools/getBlocks ,redir_output          ,n    ,blocks = 1001001-1001005 & fmt = csv & output = output_test_file
 on       ,both ,fast  ,blocks ,tools/getBlocks ,redir_output_append   ,n    ,blocks = 1001005-1001010 & fmt = csv & output = output_test_file & no_header & append
-
-# Not sure why these fail remotely only
-local    ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_art         ,y    ,blocks = 4012000-4012001 & logs & articulate
-local    ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_csv_art     ,n    ,blocks = 4012000-4012001 & logs & fmt = csv & articulate
-
-# Blocks could easily have reconcilations
-local    ,both ,fast  ,blocks ,tools/getBlocks ,reconcile_miner        ,y    ,blocks = 3 & fmt = json & account_for = 0x5088d623ba0fcf0131e0897a91734a4d83596aa0
-local    ,both ,fast  ,blocks ,tools/getBlocks ,reconcile_uncle        ,y    ,blocks = 3 & fmt = json & account_for = 0xc8ebccc5f5689fa8659d83713341e5ad19349448

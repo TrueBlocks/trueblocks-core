@@ -2,7 +2,7 @@ blocks?blocks=3%206001002&count&uncles&logs&traces&uniq&fmt=json
 {
   "data": [
     {
-      "addressCnt": 2,
+      "addressCnt": 3,
       "blockNumber": 3,
       "tracesCnt": 2,
       "transactionsCnt": 0,

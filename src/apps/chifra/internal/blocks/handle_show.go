@@ -57,9 +57,10 @@ func (opts *BlocksOptions) HandleShowBlocks() error {
 	}
 
 	extra := map[string]interface{}{
-		"hashes": opts.Hashes,
-		"count":  opts.Count,
-		"uncles": opts.Uncles,
+		"hashes":     opts.Hashes,
+		"count":      opts.Count,
+		"uncles":     opts.Uncles,
+		"articulate": opts.Articulate,
 	}
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }

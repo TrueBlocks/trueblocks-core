@@ -52,11 +52,12 @@ func (opts *BlocksOptions) HandleTraces() error {
 	}
 
 	extra := map[string]interface{}{
-		"count":     opts.Count,
-		"uncles":    opts.Uncles,
-		"logs":      opts.Logs,
-		"traces":    opts.Traces,
-		"addresses": opts.Uniq,
+		"count":      opts.Count,
+		"uncles":     opts.Uncles,
+		"logs":       opts.Logs,
+		"traces":     opts.Traces,
+		"addresses":  opts.Uniq,
+		"articulate": opts.Articulate,
 	}
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }
