@@ -6859,6 +6859,7 @@ abis?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&known
       "encoding": "0x9791c097",
       "name": "valid",
       "signature": "valid(string)",
+      "stateMutability": "pure",
       "type": "function"
     },
     {
