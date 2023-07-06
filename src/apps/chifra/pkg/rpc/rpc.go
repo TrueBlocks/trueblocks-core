@@ -22,18 +22,18 @@ type Payload struct {
 
 type RpcResponse[T any] struct {
 	Result T             `json:"result"`
-	Error  *Eip1474Error `json:"error"`
+	Error  *eip1474Error `json:"error"`
 }
 
-type Eip1474Error struct {
+type eip1474Error struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
 }
 
 var rpcCounter uint32
 
-// FromRpc Returns all traces for a given block.
-func FromRpc(rpcProvider string, payload *Payload, ret interface{}) error {
+// fromRpc Returns all traces for a given block.
+func fromRpc(rpcProvider string, payload *Payload, ret interface{}) error {
 	type rpcPayload struct {
 		Jsonrpc string `json:"jsonrpc"`
 		Method  string `json:"method"`
@@ -56,7 +56,7 @@ func FromRpc(rpcProvider string, payload *Payload, ret interface{}) error {
 	return sendRpcRequest(rpcProvider, plBytes, ret)
 }
 
-func FromRpcBatch(rpcProvider string, payloads []Payload, ret interface{}) error {
+func fromRpcBatch(rpcProvider string, payloads []Payload, ret interface{}) error {
 	type rpcPayload struct {
 		Jsonrpc string `json:"jsonrpc"`
 		Method  string `json:"method"`
@@ -113,7 +113,7 @@ func Query[T any](chain string, method string, params Params) (*T, error) {
 		Params: params,
 	}
 
-	err := FromRpc(config.GetRpcProvider(chain), &payload, &response)
+	err := fromRpc(config.GetRpcProvider(chain), &payload, &response)
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +132,7 @@ func QuerySlice[T any](chain string, method string, params Params) ([]T, error) 
 		Params: params,
 	}
 
-	err := FromRpc(config.GetRpcProvider(chain), &payload, &response)
+	err := fromRpc(config.GetRpcProvider(chain), &payload, &response)
 	if err != nil {
 		return nil, err
 	}
@@ -147,9 +147,9 @@ type BatchPayload struct {
 	*Payload
 }
 
-// BatchQuery batches requests to the node. Returned values are stored in map, with the same keys as defined
+// QueryBatch batches requests to the node. Returned values are stored in map, with the same keys as defined
 // in `batchPayload` (this way we don't have to operate on array indices)
-func BatchQuery[T any](chain string, batchPayload []BatchPayload) (map[string]*T, error) {
+func QueryBatch[T any](chain string, batchPayload []BatchPayload) (map[string]*T, error) {
 	var rpcResponse []RpcResponse[T]
 
 	keys := make([]string, 0, len(batchPayload))
@@ -159,7 +159,7 @@ func BatchQuery[T any](chain string, batchPayload []BatchPayload) (map[string]*T
 		payloads = append(payloads, *config.Payload)
 	}
 
-	err := FromRpcBatch(config.GetRpcProvider(chain), payloads, &rpcResponse)
+	err := fromRpcBatch(config.GetRpcProvider(chain), payloads, &rpcResponse)
 	if err != nil {
 		return nil, err
 	}

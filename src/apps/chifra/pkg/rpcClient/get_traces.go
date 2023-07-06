@@ -104,7 +104,7 @@ func GetTracesCountByTransactionId(chain string, bn, txid uint64) (uint64, error
 func GetTracesByTransactionId(chain string, bn, txid uint64) ([]types.SimpleTrace, error) {
 	var ret []types.SimpleTrace
 
-	txHash, err := rpc.TxHashFromNumberAndId(chain, bn, txid)
+	txHash, err := rpc.GetTxHashFromNumberAndId(chain, bn, txid)
 	if err != nil {
 		return ret, err
 	}
