@@ -10,7 +10,6 @@ package types
 
 // EXISTING_CODE
 import (
-	"encoding/gob"
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -188,29 +187,15 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 
 func (s *SimpleBlock[Tx]) WriteTo(w io.Writer) (n int64, err error) {
 	// EXISTING_CODE
-	enc := gob.NewEncoder(w)
-	err = enc.Encode(s)
-	if err != nil {
-		return
-	}
 	// EXISTING_CODE
 	return 0, nil
 }
 
 func (s *SimpleBlock[Tx]) ReadFrom(r io.Reader) (n int64, err error) {
 	// EXISTING_CODE
-	dec := gob.NewDecoder(r)
-	err = dec.Decode(s)
-	if err != nil {
-		return
-	}
 	// EXISTING_CODE
 	return 0, nil
 }
 
 // EXISTING_CODE
-func init() {
-	gob.Register(&SimpleBlock[SimpleTransaction]{})
-}
-
 // EXISTING_CODE
