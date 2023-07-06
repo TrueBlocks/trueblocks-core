@@ -52,7 +52,7 @@ func (i *Item) writeHeader() error {
 func (i *Item) readHeader() (h *header, err error) {
 	h = new(header)
 	i.header = h
-	i.unmarshal(&h)
+	i.unmarshal(h)
 	return
 }
 

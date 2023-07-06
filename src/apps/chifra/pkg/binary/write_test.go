@@ -72,7 +72,7 @@ func TestWriteValue(t *testing.T) {
 		t.Fatal(err)
 	}
 	stringSliceValue := make([]string, 0, sliceSize)
-	for _ = range expectedStrSlice {
+	for range expectedStrSlice {
 		var strLen uint64
 		if err := binary.Read(buf, binary.LittleEndian, &strLen); err != nil {
 			t.Fatal(err)
