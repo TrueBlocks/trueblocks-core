@@ -2,7 +2,7 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package rpcClient
+package rpc
 
 import (
 	"encoding/json"
@@ -26,18 +26,18 @@ func TestFromRpcCounter(t *testing.T) {
 	}))
 	defer server.Close()
 
-	// var result map[string]string
-	// for i := 0; i < 20; i++ {
-	// 	// TODO: Use rpc.Query
-	// 	err := rpc.fromRpc(
-	// 		server.URL,
-	// 		&rpc.Payload{},
-	// 		&result,
-	// 	)
-	// 	if err != nil {
-	// 		t.Fatal(err)
-	// 	}
-	// }
+	var result map[string]string
+	for i := 0; i < 20; i++ {
+		// TODO: Use rpc.Query
+		err := fromRpc(
+			server.URL,
+			&Payload{},
+			&result,
+		)
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
 
 	seen := map[int]bool{}
 	for index, id := range ids {
