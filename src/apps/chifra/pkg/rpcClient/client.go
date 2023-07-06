@@ -137,8 +137,8 @@ func TxHashFromHashAndId(provider, hash string, txId uint64) (string, error) {
 	return tx.Hash().Hex(), nil
 }
 
-// TxFromNumberAndId returns an actual transaction
-func TxFromNumberAndId(chain string, blkNum, txId uint64) (ethTypes.Transaction, error) {
+// GetTxFromNumberAndId returns an actual transaction
+func GetTxFromNumberAndId(chain string, blkNum, txId uint64) (ethTypes.Transaction, error) {
 	provider := config.GetRpcProvider(chain)
 	ec := GetClient(provider)
 	defer ec.Close()
@@ -300,7 +300,7 @@ func Id_2_TxHash(chain, arg string, isBlockHash func(arg string) bool) (string, 
 		return "", nil
 	}
 
-	return rpc.TxHashFromNumberAndId(chain, blockNum, txId)
+	return rpc.GetTxHashFromNumberAndId(chain, blockNum, txId)
 }
 
 func Id_2_BlockHash(chain, arg string, isBlockHash func(arg string) bool) (string, error) {
