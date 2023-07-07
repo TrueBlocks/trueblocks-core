@@ -1,10 +1,11 @@
-package cache
+package cacheNew
 
 import (
 	"bytes"
 	"errors"
 	"fmt"
 	"io"
+	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/binary"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
@@ -76,7 +77,58 @@ func (e *ExampleBlock) UnmarshalCache(itemVersion uint64, reader io.Reader) (err
 	return
 }
 
+// We we also implement all the methods needed for ExampleBlock to become Locator.
+// Locator interface job is to locate an item in cache.
+
+// First of all, we need to tell the cache what the ID should be for ExampleBlock.
+// We will make BlockNumber our ID:
+func (e *ExampleBlock) CacheId() string {
+	return strconv.FormatUint(e.BlockNumber, 10)
+}
+
+// We also have to provide some low level details like directory and file extension:
+func (e *ExampleBlock) CacheLocation() (directory string, extension string) {
+	return "example", "bin"
+}
+
+// Sometimes (e.g. in `chifra status`) we also need human readable name:
+func (e *ExampleBlock) CacheName() string {
+	return "ExampleBlock"
+}
+
 func Example() {
+	// This example shows the usage of Locator interface, which is higher level
+	// abstraction over Cache(un)Marshaler
+
+	// Let's create something to store
+	block := &ExampleBlock{
+		BlockNumber: 4436721,
+		Name:        "Test block",
+		Timestamp:   1688667358,
+	}
+
+	// We made `BlockNumber` our cache ID (see implementation of ExampleBlock.CacheId above)
+	fmt.Println(block.CacheId())
+
+	// we will store it in memory cache (if StoreOptions is nil, then file system
+	// cache is used)
+	if err := Write(block, &StoreOptions{Location: MemoryCache}); err != nil {
+		panic(err)
+	}
+
+	readFromCache := new(ExampleBlock)
+	if err := Read(readFromCache, "4436721", &StoreOptions{Location: MemoryCache}); err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("%+v\n", readFromCache)
+
+	// Output:
+	// 4436721
+	// &{BlockNumber:4436721 Date: Name:Test block Timestamp:1688667358 raw:<nil>}
+}
+
+func ExampleCacheMarshaler() {
 	// We start with a simple example of storing uint64 serialized to binary
 
 	// First, we create a fake file (we need something that implements io.ReadWriter)
