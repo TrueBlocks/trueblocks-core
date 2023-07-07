@@ -7,6 +7,7 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/binary"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
 // Here we define a struct that we want to write or read from the cache
@@ -33,9 +34,6 @@ func (e *ExampleBlock) MarshalCache(writer io.Writer) (err error) {
 	if err = binary.WriteValue(writer, e.BlockNumber); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, e.Date); err != nil {
-		return err
-	}
 	if err = binary.WriteValue(writer, e.Name); err != nil {
 		return err
 	}
@@ -47,25 +45,32 @@ func (e *ExampleBlock) MarshalCache(writer io.Writer) (err error) {
 	return
 }
 
+var minimalVersion version.Version
+
+func init() {
+	var err error
+	minimalVersion, err = version.NewVersion("GHC-TrueBlocks//0.10.0-beta")
+	if err != nil {
+		panic(err)
+	}
+}
+
 // Now we make ExampleBlock implement CacheUnmarshaler interface, which is like
 // CacheMarshaler, but for reading
-func (e *ExampleBlock) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (e *ExampleBlock) UnmarshalCache(itemVersion uint64, reader io.Reader) (err error) {
 	// We will see where version is extracted in Example() below
-	if version < uint64(10) {
+	if itemVersion < minimalVersion.Uint64() {
 		// In real life we would read back level
 		return errors.New("unsupported version")
 	}
 
-	if err = binary.ReadValue(reader, &e.BlockNumber, version); err != nil {
+	if err = binary.ReadValue(reader, &e.BlockNumber, itemVersion); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &e.Date, version); err != nil {
+	if err = binary.ReadValue(reader, &e.Name, itemVersion); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &e.Name, version); err != nil {
-		return err
-	}
-	if err = binary.ReadValue(reader, &e.Timestamp, version); err != nil {
+	if err = binary.ReadValue(reader, &e.Timestamp, itemVersion); err != nil {
 		return err
 	}
 	return
@@ -123,5 +128,5 @@ func Example() {
 
 	// Output:
 	// 1688667358
-	// &{BlockNumber:17636511 Date:2023-07-06 Name:Nice Block Timestamp:1688667358 raw:<nil>}
+	// &{BlockNumber:17636511 Date: Name:Nice Block Timestamp:1688667358 raw:<nil>}
 }

@@ -85,28 +85,20 @@ func ReadString(reader io.Reader, str *string) (err error) {
 }
 
 func ReadBigInt(reader io.Reader, target *big.Int) (err error) {
-	descriptor := struct{ Capacity, Length int32 }{}
-	// read descriptor
-	if err = read(reader, &descriptor); err != nil {
+	// we first need to learn how many bytes we should read
+	// (GobEncode that we use to write big.Int produces
+	// variable-length []byte)
+	var size uint64
+	if err = read(reader, &size); err != nil {
 		return
 	}
 
-	if descriptor.Length == 0 {
-		*target = *big.NewInt(0)
+	// now we read as many bytes as we need
+	data := make([]byte, size)
+	if err = read(reader, data); err != nil {
 		return
 	}
-
-	// read items as slice of bytes
-	items := make([]byte, descriptor.Length*8)
-	if err = read(reader, &items); err != nil {
-		return
-	}
-	result := big.NewInt(0)
-	// in order to get the correct number, we have to manually reverse bytes
-	// see https://github.com/golang/go/issues/40891
-	orderedItems := reverseBytes(items)
-	// load bytes into big.Int
-	result.SetBytes(orderedItems)
-	*target = *result
+	// and use big.Int.GobDecode to decode the value
+	err = target.GobDecode(data)
 	return
 }

@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/binary"
 	"io"
-	"math"
 	"math/big"
 )
 
@@ -80,31 +79,16 @@ func WriteString(writer io.Writer, str *string) (err error) {
 }
 
 func WriteBigInt(writer io.Writer, value *big.Int) (err error) {
-	// check how many blocks of uint64 we need
-	length := int(math.Ceil(float64(value.BitLen()) / float64(64)))
-	items := make([]byte, length*8)
-	// dump value into slice of bytes
-	value.FillBytes(items)
-
-	orderedItems := reverseBytes(items)
-
-	// capacity
-	err = write(writer, int32(length))
+	data, err := value.GobEncode()
 	if err != nil {
 		return
 	}
-	// len
-	err = write(writer, int32(length))
-	if err != nil {
-		return
+	// write length of data, so ReadBigInt knows how many bytes to read
+	if err = write(writer, uint64(len(data))); err != nil {
+		return err
 	}
 
-	if length > 0 {
-		err = write(writer, orderedItems)
-		if err != nil {
-			return
-		}
-	}
-
+	// write the data
+	_, err = writer.Write(data)
 	return
 }

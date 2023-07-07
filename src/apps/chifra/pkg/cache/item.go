@@ -33,9 +33,8 @@ func init() {
 type Item struct {
 	// We can set writer, so it's easier to test. Cache<Layout?> struct can
 	// set it to a file automatically
-	readWriter    io.ReadWriter
-	header        *header
-	headerWritten bool
+	readWriter io.ReadWriter
+	header     *header
 }
 
 func NewItem(rw io.ReadWriter) *Item {
@@ -45,7 +44,6 @@ func NewItem(rw io.ReadWriter) *Item {
 }
 
 func (i *Item) writeHeader() error {
-	i.headerWritten = true
 	return i.marshal(currentHeader)
 }
 
@@ -66,10 +64,8 @@ func (i *Item) unmarshal(value any) (err error) {
 }
 
 func (i *Item) Encode(value any) (err error) {
-	if !i.headerWritten {
-		if err = i.writeHeader(); err != nil {
-			return
-		}
+	if err = i.writeHeader(); err != nil {
+		return
 	}
 
 	return i.marshal(value)

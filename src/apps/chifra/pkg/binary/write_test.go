@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/binary"
 	"io"
+	"math/big"
 	"reflect"
 	"strconv"
 	"testing"
@@ -100,5 +101,40 @@ func TestWriteValue(t *testing.T) {
 	}
 	if marshalResult != expectedMarshalValue {
 		t.Fatal("unmarshal wrong value", marshalResult)
+	}
+}
+
+func TestWriteBigInt(t *testing.T) {
+	buf := new(bytes.Buffer)
+	bigint := big.NewInt(0)
+	_, ok := bigint.SetString("57006123709077586392", 10)
+	if !ok {
+		t.Fatal("cannot set test value")
+	}
+	if err := WriteBigInt(buf, bigint); err != nil {
+		t.Fatal(err)
+	}
+
+	var size uint64
+	if err := read(buf, &size); err != nil {
+		t.Fatal(err)
+	}
+	// we expect size to be len(bigint.Bytes()) + 1, because GobEncode adds 1 byte
+	// for storing the sign
+	if byteLen := len(bigint.Bytes()) + 1; int(size) != byteLen {
+		t.Fatal("size is", size, "expected", byteLen)
+	}
+
+	data := make([]byte, size)
+	if err := read(buf, data); err != nil {
+		t.Fatal(err)
+	}
+
+	result := big.NewInt(0)
+	if err := result.GobDecode(data); err != nil {
+		t.Fatal(err)
+	}
+	if result.Cmp(bigint) != 0 {
+		t.Fatal("values are not same")
 	}
 }
