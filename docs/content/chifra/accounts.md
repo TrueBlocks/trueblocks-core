@@ -114,6 +114,7 @@ Flags:
   -r, --receipts            export receipts instead of transactional data
   -l, --logs                export logs instead of transactional data
   -t, --traces              export traces instead of transactional data
+  -b, --balances            export ETH balances and balance diffs instead of transactional data
   -n, --neighbors           export the neighbors of the given address
   -C, --accounting          attach accounting records to the exported data (applies to transactions export only)
   -A, --statements          for the accounting options only, export only statements

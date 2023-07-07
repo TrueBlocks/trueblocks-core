@@ -15,11 +15,6 @@ list?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&fmt=json&lastBlock=1501460
       "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
       "blockNumber": 1501459,
       "transactionIndex": 2
-    },
-    {
-      "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
-      "blockNumber": 15507094,
-      "transactionIndex": 88
     }
   ],
   "meta": {

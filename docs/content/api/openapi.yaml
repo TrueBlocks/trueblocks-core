@@ -282,6 +282,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: balances
+          description: export ETH balances and balance diffs instead of transactional data
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: neighbors
           description: export the neighbors of the given address
           required: false

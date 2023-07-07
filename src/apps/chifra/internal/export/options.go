@@ -29,6 +29,7 @@ type ExportOptions struct {
 	Receipts    bool                  `json:"receipts,omitempty"`    // Export receipts instead of transactional data
 	Logs        bool                  `json:"logs,omitempty"`        // Export logs instead of transactional data
 	Traces      bool                  `json:"traces,omitempty"`      // Export traces instead of transactional data
+	Balances    bool                  `json:"balances,omitempty"`    // Export ETH balances and balance diffs instead of transactional data
 	Neighbors   bool                  `json:"neighbors,omitempty"`   // Export the neighbors of the given address
 	Accounting  bool                  `json:"accounting,omitempty"`  // Attach accounting records to the exported data (applies to transactions export only)
 	Statements  bool                  `json:"statements,omitempty"`  // For the accounting options only, export only statements
@@ -70,6 +71,7 @@ func (opts *ExportOptions) testLog() {
 	logger.TestLog(opts.Receipts, "Receipts: ", opts.Receipts)
 	logger.TestLog(opts.Logs, "Logs: ", opts.Logs)
 	logger.TestLog(opts.Traces, "Traces: ", opts.Traces)
+	logger.TestLog(opts.Balances, "Balances: ", opts.Balances)
 	logger.TestLog(opts.Neighbors, "Neighbors: ", opts.Neighbors)
 	logger.TestLog(opts.Accounting, "Accounting: ", opts.Accounting)
 	logger.TestLog(opts.Statements, "Statements: ", opts.Statements)
@@ -132,6 +134,8 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 			opts.Logs = true
 		case "traces":
 			opts.Traces = true
+		case "balances":
+			opts.Balances = true
 		case "neighbors":
 			opts.Neighbors = true
 		case "accounting":

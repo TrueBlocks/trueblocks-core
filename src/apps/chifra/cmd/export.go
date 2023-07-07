@@ -65,6 +65,7 @@ func init() {
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Receipts, "receipts", "r", false, "export receipts instead of transactional data")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Logs, "logs", "l", false, "export logs instead of transactional data")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Traces, "traces", "t", false, "export traces instead of transactional data")
+	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Balances, "balances", "b", false, "export ETH balances and balance diffs instead of transactional data")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Neighbors, "neighbors", "n", false, "export the neighbors of the given address")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Accounting, "accounting", "C", false, "attach accounting records to the exported data (applies to transactions export only)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Statements, "statements", "A", false, "for the accounting options only, export only statements")
