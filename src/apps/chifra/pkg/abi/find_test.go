@@ -4,6 +4,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/parser"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -95,16 +96,20 @@ func init() {
 		panic(err)
 	}
 
-	abis = make(AbiInterfaceMap, len(testAbi.Methods))
-	for _, method := range testAbi.Methods {
-		method := method
-		encoding := "0x" + strings.ToLower(common.Bytes2Hex(method.ID))
-		abis[encoding] = types.FunctionFromAbiMethod(&method)
-	}
+	helperLoadAbisFromJson(&testAbi, &abis)
 
 	packTestAbi, err = abi.JSON(strings.NewReader(packTestAbiSource))
 	if err != nil {
 		panic(err)
+	}
+}
+
+func helperLoadAbisFromJson(parsedAbi *abi.ABI, destination *map[string]*types.SimpleFunction) {
+	*destination = make(AbiInterfaceMap, len(parsedAbi.Methods))
+	for _, method := range parsedAbi.Methods {
+		method := method
+		encoding := "0x" + strings.ToLower(common.Bytes2Hex(method.ID))
+		(*destination)[encoding] = types.FunctionFromAbiMethod(&method)
 	}
 }
 
@@ -247,5 +252,53 @@ func Test_findAbiFunctionBySelector(t *testing.T) {
 
 	if len(hints) != 0 {
 		t.Fatal("expected no hints")
+	}
+}
+
+func Test_findAbiFunctionMisleading(t *testing.T) {
+	// This test makes sure we choose the right function
+	// when given two very similar ones. In this case, it's
+	// transfer(bytes32, address) and transfer(address, address).
+	parsedAbi, err := abi.JSON(strings.NewReader(`
+		[
+			{ "type" : "function", "name" : "transfer", "inputs" : [ { "name" : "from", "type" : "bytes32" }, { "name" : "to", "type" : "address" } ] },
+			{ "type" : "function", "name" : "transfer", "inputs" : [ { "name" : "from", "type" : "address" }, { "name" : "to", "type" : "address" } ] }
+		]
+	`))
+	if err != nil {
+		t.Fatal(err)
+	}
+	abis := make(map[string]*types.SimpleFunction)
+	helperLoadAbisFromJson(&parsedAbi, &abis)
+
+	call := &parser.FunctionContractCall{
+		Name: "transfer",
+		Arguments: []*parser.ContractCallArgument{
+			{
+				Hex: &parser.ContractCallHex{
+					Address: utils.PointerOf(base.HexToAddress("0x6B175474E89094C44Da98b954EedeAC495271d0F")),
+				},
+			},
+			{
+				Hex: &parser.ContractCallHex{
+					Address: utils.PointerOf(base.HexToAddress("0x6B175474E89094C44Da98b954EedeAC495271d0F")),
+				},
+			},
+		},
+	}
+
+	result, hints, err := FindAbiFunction(FindByName, call.Name, call.Arguments, abis)
+	if err != nil {
+		t.Fatal(err)
+	}
+	wanted := parsedAbi.Methods["transfer0"]
+	if result == nil {
+		t.Fatal("did not find anything")
+	}
+	if result.Signature != wanted.Sig {
+		t.Fatal("found wrong function:", result.Signature)
+	}
+	if len(hints) > 0 {
+		t.Fatal("expected no hints:", hints)
 	}
 }
