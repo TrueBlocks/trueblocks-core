@@ -208,6 +208,9 @@ xacct   ,both ,fast  ,export   ,apps/acctExport ,accounting_intra_tokens  ,y    
 #   asset           []strings
 #   flow            enum
 
+# Testing --balances
+bal      ,both ,fast  ,export   ,apps/acctExport ,balances                 ,n    ,addrs = trueblocks.eth & balances & fmt = txt & first_block = 16000000 & last_block = 16219539
+
 # Testing --accounting --statements
 on      ,both ,fast  ,export   ,apps/acctExport ,statement_3_bad          ,y    ,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & statements & last_block = 4000000 & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,statement_2              ,y    ,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & statements & last_block = 4000000 & fmt = json

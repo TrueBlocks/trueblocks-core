@@ -3363,6 +3363,9 @@ components:
           format: address
           example: "0xa1e4...63b4"
           description: "the address of the token contract being queried"
+        timestamp:
+          type: number
+          format: timestamp
         name:
           type: string
           example: "The DAO Original"

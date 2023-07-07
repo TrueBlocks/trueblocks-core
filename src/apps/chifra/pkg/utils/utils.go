@@ -223,7 +223,7 @@ func weiToEther(wei *big.Int) *big.Float {
 
 func FormattedValue(in big.Int, asEther bool, decimals int) string {
 	if asEther {
-		return weiToEther(&in).Text('f', -1*int(decimals))
+		return weiToEther(&in).Text('f', -1*decimals)
 	}
 	return in.Text(10)
 }

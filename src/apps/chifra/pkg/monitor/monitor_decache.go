@@ -36,6 +36,7 @@ func (mon *Monitor) ReadAppearances2(sortBy AppearanceSort) (apps []index.Appear
 	}
 
 	Sort(apps, sortBy)
+	mon.Close()
 
 	return apps, len(apps), nil
 }

@@ -261,7 +261,7 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 			}
 			model["traces"] = traceModels
 		} else {
-			model["traces"] = make([]map[string]any, 0, 0)
+			model["traces"] = make([]map[string]any, 0)
 		}
 
 		if isArticulated {

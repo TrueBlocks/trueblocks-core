@@ -32,6 +32,7 @@ type RawTokenBalance struct {
 	Name             string `json:"name"`
 	PriorBalance     string `json:"priorBalance"`
 	Symbol           string `json:"symbol"`
+	Timestamp        string `json:"timestamp"`
 	TotalSupply      string `json:"totalSupply"`
 	TransactionIndex string `json:"transactionIndex"`
 	// EXISTING_CODE
@@ -51,11 +52,11 @@ type SimpleTokenBalance struct {
 	Name             string           `json:"name"`
 	PriorBalance     big.Int          `json:"priorBalance,omitempty"`
 	Symbol           string           `json:"symbol"`
+	Timestamp        base.Timestamp   `json:"timestamp"`
 	TotalSupply      big.Int          `json:"totalSupply"`
 	TransactionIndex base.Blknum      `json:"transactionIndex,omitempty"`
 	raw              *RawTokenBalance `json:"-"`
 	// EXISTING_CODE
-	Timestamp int64 `json:"timestamp"`
 	// EXISTING_CODE
 }
 
@@ -99,7 +100,6 @@ func (s *SimpleTokenBalance) Model(verbose bool, format string, extraOptions map
 	if len(wanted) > 0 && (wanted[0] != "address" && wanted[0] != "blockNumber") {
 		order = append([]string{"address", "blockNumber"}, wanted...)
 	}
-	order = append(order, []string{"timestamp", "date"}...)
 
 	for _, part := range order {
 		switch part {
@@ -113,6 +113,8 @@ func (s *SimpleTokenBalance) Model(verbose bool, format string, extraOptions map
 			model["date"] = s.Date()
 		case "decimals":
 			model["decimals"] = name.Decimals
+		case "diff":
+			model["diff"] = utils.FormattedValue(s.Diff, true, int(name.Decimals))
 		case "holder":
 			model["holder"] = s.Holder
 		case "name":
@@ -123,6 +125,8 @@ func (s *SimpleTokenBalance) Model(verbose bool, format string, extraOptions map
 			model["timestamp"] = s.Timestamp
 		case "totalSupply":
 			model["totalSupply"] = utils.FormattedValue(s.TotalSupply, true, int(name.Decimals))
+		case "transactionIndex":
+			model["transactionIndex"] = s.TransactionIndex
 		case "units":
 			model["units"] = utils.FormattedValue(s.Balance, false, int(name.Decimals)) // present underlying units
 		case "version":

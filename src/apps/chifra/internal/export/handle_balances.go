@@ -42,12 +42,14 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 				errorChan <- err
 			} else {
 				if balCtx.Previous.Cmp(bb) != 0 {
+					diff := big.NewInt(0).Sub(bb, balCtx.Previous)
 					bal := types.SimpleTokenBalance{
 						Holder:           app.Address,
 						BlockNumber:      uint64(app.BlockNumber),
 						TransactionIndex: uint64(app.TransactionIndex),
 						Balance:          *bb,
 						Timestamp:        balCtx.Timestamp,
+						Diff:             *diff,
 					}
 					modelChan <- &bal
 					*balCtx.Previous = *bb
@@ -66,7 +68,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 			} else {
 				currentBn := uint32(0)
 				currentTs := int64(0)
-				prevBal := big.NewInt(0)
+				prevBal, _ := rpcClient.GetBalanceAt(chain, common.HexToAddress(mon.Address.Hex()), opts.FirstBlock)
 				for i, app := range apps {
 					nSeen++
 					appRange := base.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)}
@@ -118,7 +120,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 	extra := map[string]interface{}{
 		"testMode": testMode,
 		"namesMap": namesMap,
-		"parts":    []string{"blockNumber", "holder", "decimals", "balance", "units"},
+		"parts":    []string{"blockNumber", "date", "holder", "balance", "diff", "units"},
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
