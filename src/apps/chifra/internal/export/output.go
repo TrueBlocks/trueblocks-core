@@ -55,8 +55,7 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
 	var canceled bool
 	if canceled, err = opts.FreshenMonitorsForExport(&monitorArray); err != nil || canceled {
-		handled = true
-		return
+		return err, true
 	}
 
 	if !opts.IsPorted() {
@@ -65,7 +64,7 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 
 	handled = true
 	if opts.Count {
-		err = opts.HandleListCount(monitorArray)
+		err = opts.HandleCount(monitorArray)
 	} else if opts.Receipts {
 		err = opts.HandleReceipts(monitorArray)
 	} else if opts.Logs {
@@ -76,6 +75,8 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 		err = opts.HandleAppearances(monitorArray)
 	} else if opts.Statements {
 		err = opts.HandleStatements(monitorArray)
+	} else if opts.Balances {
+		err = opts.HandleBalances(monitorArray)
 	} else {
 		err = opts.HandleShow(monitorArray)
 	}

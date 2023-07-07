@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -23,6 +24,10 @@ func (a *Address) Hex() string {
 		return "0x0"
 	}
 	return bytesToAddressString(a.Address.Bytes())
+}
+
+func (a *Address) Prefix(n int) string {
+	return a.Hex()[:utils.Min(len(a.Hex()), 6)]
 }
 
 func (a *Address) Encoded32() string {

@@ -1,14 +1,10 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
-// Use of this source code is governed by a license that can
-// be found in the LICENSE file.
-
 package exportPkg
 
 import (
 	"context"
 	"fmt"
+	"math/big"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
@@ -17,10 +13,16 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/ethereum/go-ethereum/common"
 )
 
-func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error {
-	abiCache := articulate.NewAbiCache()
+type BalanceHistory struct {
+	App       *types.SimpleAppearance
+	Timestamp int64
+	Previous  *big.Int
+}
+
+func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	sortBy := monitor.Sorted
@@ -32,30 +34,26 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 	nSeen := int64(-1)
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawReceipt], errorChan chan error) {
-		visitAppearance := func(app *types.SimpleAppearance) error {
-			raw := types.RawAppearance{
-				Address:          app.Address.Hex(),
-				BlockNumber:      uint32(app.BlockNumber),
-				TransactionIndex: uint32(app.TransactionIndex),
-			}
-			if tx, err := rpcClient.GetTransactionByAppearance(chain, &raw, false); err != nil {
+	fetchData := func(modelChan chan types.Modeler[types.RawTokenBalance], errorChan chan error) {
+		visitAppearance := func(balCtx *BalanceHistory) error {
+			app := balCtx.App
+			a := common.HexToAddress(app.Address.Hex())
+			if bb, err := rpcClient.GetBalanceAt(chain, a, uint64(app.BlockNumber)); err != nil {
 				errorChan <- err
-				return nil
 			} else {
-				if tx.Receipt != nil {
-					if !opts.Globals.Verbose && opts.Globals.Format == "json" {
-						tx.Receipt.Logs = []types.SimpleLog{}
+				if balCtx.Previous.Cmp(bb) != 0 {
+					bal := types.SimpleTokenBalance{
+						Holder:           app.Address,
+						BlockNumber:      uint64(app.BlockNumber),
+						TransactionIndex: uint64(app.TransactionIndex),
+						Balance:          *bb,
+						Timestamp:        balCtx.Timestamp,
 					}
-					if opts.Articulate {
-						if err := abiCache.ArticulateReceipt(chain, tx.Receipt); err != nil {
-							errorChan <- err // continue even on error
-						}
-					}
-					modelChan <- tx.Receipt
+					modelChan <- &bal
+					*balCtx.Previous = *bb
 				}
-				return nil
 			}
+			return nil
 		}
 
 		for _, mon := range monitorArray {
@@ -68,6 +66,7 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 			} else {
 				currentBn := uint32(0)
 				currentTs := int64(0)
+				prevBal := big.NewInt(0)
 				for i, app := range apps {
 					nSeen++
 					appRange := base.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)}
@@ -87,11 +86,16 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 						}
 						currentBn = app.BlockNumber
 
-						if err := visitAppearance(&types.SimpleAppearance{
+						s := &types.SimpleAppearance{
 							Address:          mon.Address,
 							BlockNumber:      app.BlockNumber,
 							TransactionIndex: app.TransactionId,
 							Timestamp:        currentTs,
+						}
+						if err := visitAppearance(&BalanceHistory{
+							App:       s,
+							Timestamp: currentTs,
+							Previous:  prevBal,
 						}); err != nil {
 							errorChan <- err
 							return
@@ -105,19 +109,16 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 		}
 	}
 
-	extra := map[string]interface{}{
-		"articulate": opts.Articulate,
-		"testMode":   testMode,
-		"export":     true,
+	nameParts := names.Custom | names.Prefund | names.Regular
+	namesMap, err := names.LoadNamesMap(chain, nameParts, nil)
+	if err != nil {
+		return err
 	}
 
-	if opts.Globals.Verbose || opts.Globals.Format == "json" {
-		parts := names.Custom | names.Prefund | names.Regular
-		namesMap, err := names.LoadNamesMap(chain, parts, nil)
-		if err != nil {
-			return err
-		}
-		extra["namesMap"] = namesMap
+	extra := map[string]interface{}{
+		"testMode": testMode,
+		"namesMap": namesMap,
+		"parts":    []string{"blockNumber", "holder", "decimals", "balance", "units"},
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))

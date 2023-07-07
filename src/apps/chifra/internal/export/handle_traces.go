@@ -11,7 +11,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
@@ -25,6 +24,10 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 	abiCache := articulate.NewAbiCache()
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
+	sortBy := monitor.Sorted
+	if opts.Reversed {
+		sortBy = monitor.Reversed
+	}
 	exportRange := base.FileRange{First: opts.FirstBlock, Last: opts.LastBlock}
 	nExported := uint64(0)
 	nSeen := int64(-1)
@@ -44,7 +47,7 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 				matchesFourByte := len(opts.Fourbytes) == 0 // either there is no four bytes...
 				for _, fb := range opts.Fourbytes {
 					if strings.HasPrefix(tx.Input, fb) {
-						matchesFourByte = true
+						matchesFourByte = true // ... or the four bytes match
 					}
 				}
 				if matchesFourByte {
@@ -66,52 +69,47 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 		}
 
 		for _, mon := range monitorArray {
-			count := mon.Count()
-			opts.Apps = make([]index.AppearanceRecord, count)
-			if err := mon.ReadAppearances(&opts.Apps); err != nil {
+			if apps, cnt, err := mon.ReadAppearances2(sortBy); err != nil {
 				errorChan <- err
 				return
-			} else if len(opts.Apps) == 0 {
+			} else if cnt == 0 {
 				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
 				return
-			}
-			opts.Sort()
+			} else {
+				currentBn := uint32(0)
+				currentTs := int64(0)
+				for i, app := range apps {
+					nSeen++
+					appRange := base.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)}
+					if appRange.Intersects(exportRange) {
+						if nSeen < int64(opts.FirstRecord) {
+							logger.Progress(!testMode && true, "Skipping:", nExported, opts.FirstRecord)
+							continue
+						} else if opts.IsMax(nExported) {
+							logger.Progress(!testMode && true, "Quitting:", nExported, opts.FirstRecord)
+							return
+						}
+						nExported++
 
-			currentBn := uint32(0)
-			currentTs := int64(0)
-			for i, app := range opts.Apps {
-				nSeen++
-				appRange := base.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)}
-				if appRange.Intersects(exportRange) {
-					if nSeen < int64(opts.FirstRecord) {
-						logger.Progress(!testMode && true, "Skipping:", nExported, opts.FirstRecord)
-						continue
-					} else if opts.IsMax(nExported) {
-						logger.Progress(!testMode && true, "Quitting:", nExported, opts.FirstRecord)
-						return
+						logger.Progress(!testMode && nSeen%723 == 0, "Processing: ", mon.Address.Hex(), " ", app.BlockNumber, ".", app.TransactionId)
+						if app.BlockNumber != currentBn || app.BlockNumber == 0 {
+							currentTs, _ = tslib.FromBnToTs(chain, uint64(app.BlockNumber))
+						}
+						currentBn = app.BlockNumber
+
+						if err := visitAppearance(&types.SimpleAppearance{
+							Address:          mon.Address,
+							BlockNumber:      app.BlockNumber,
+							TransactionIndex: app.TransactionId,
+							Timestamp:        currentTs,
+						}); err != nil {
+							errorChan <- err
+							return
+						}
+
+					} else {
+						logger.Progress(!testMode && i%100 == 0, "Skipping:", app)
 					}
-					nExported++
-
-					logger.Progress(!testMode && nSeen%723 == 0, "Processing: ", mon.Address.Hex(), " ", app.BlockNumber, ".", app.TransactionId)
-
-					logger.Progress(!testMode && nSeen%723 == 0, "Processing: ", mon.Address.Hex(), " ", app.BlockNumber, ".", app.TransactionId)
-					if app.BlockNumber != currentBn || app.BlockNumber == 0 {
-						currentTs, _ = tslib.FromBnToTs(chain, uint64(app.BlockNumber))
-					}
-					currentBn = app.BlockNumber
-
-					if err := visitAppearance(&types.SimpleAppearance{
-						Address:          mon.Address,
-						BlockNumber:      app.BlockNumber,
-						TransactionIndex: app.TransactionId,
-						Timestamp:        currentTs,
-					}); err != nil {
-						errorChan <- err
-						return
-					}
-
-				} else {
-					logger.Progress(!testMode && i%100 == 0, "Skipping:", app)
 				}
 			}
 		}

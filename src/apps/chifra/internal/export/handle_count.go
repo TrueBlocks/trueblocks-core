@@ -10,15 +10,18 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *ExportOptions) HandleListCount(monitorArray []monitor.Monitor) error {
+func (opts *ExportOptions) HandleCount(monitorArray []monitor.Monitor) error {
 	testMode := opts.Globals.TestMode
+	sortBy := monitor.Sorted
+	if opts.Reversed {
+		sortBy = monitor.Reversed
+	}
 	if opts.Globals.Verbose {
 		for i := 0; i < len(monitorArray); i++ {
 			monitorArray[i].ReadMonitorHeader()
@@ -32,37 +35,33 @@ func (opts *ExportOptions) HandleListCount(monitorArray []monitor.Monitor) error
 	fetchData := func(modelChan chan types.Modeler[types.RawMonitor], errorChan chan error) {
 		for _, mon := range monitorArray {
 			if true { // !opts.NoZero || mon.Count() > 0 {
-				mon.Close()
-				count := mon.Count()
-				opts.Apps = make([]index.AppearanceRecord, count)
-				if err := mon.ReadAppearances(&opts.Apps); err != nil {
+				if apps, cnt, err := mon.ReadAppearances2(sortBy); err != nil {
 					errorChan <- err
 					return
-				} else if len(opts.Apps) == 0 {
+				} else if cnt == 0 {
 					errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
 					return
-				}
-				opts.Sort()
-
-				nRecords := 0
-				for _, app := range opts.Apps {
-					if exportRange.IntersectsB(uint64(app.BlockNumber)) {
-						nRecords++
+				} else {
+					nRecords := 0
+					for _, app := range apps {
+						if exportRange.IntersectsB(uint64(app.BlockNumber)) {
+							nRecords++
+						}
 					}
-				}
 
-				s := types.SimpleMonitor{
-					Address:     mon.Address.Hex(),
-					NRecords:    int(nRecords),
-					FileSize:    file.FileSize(mon.Path()),
-					LastScanned: mon.LastScanned,
-					Deleted:     mon.Deleted,
+					s := types.SimpleMonitor{
+						Address:     mon.Address.Hex(),
+						NRecords:    int(nRecords),
+						FileSize:    file.FileSize(mon.Path()),
+						LastScanned: mon.LastScanned,
+						Deleted:     mon.Deleted,
+					}
+					if testMode {
+						s.FileSize = 0xdead
+						s.LastScanned = maxTestingBlock
+					}
+					modelChan <- &s
 				}
-				if testMode {
-					s.FileSize = 0xdead
-					s.LastScanned = maxTestingBlock
-				}
-				modelChan <- &s
 			}
 			mon.Close()
 		}

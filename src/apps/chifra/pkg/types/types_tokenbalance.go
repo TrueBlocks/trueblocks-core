@@ -23,7 +23,6 @@ type RawTokenBalance struct {
 	Address          string `json:"address"`
 	Balance          string `json:"balance"`
 	BlockNumber      string `json:"blockNumber"`
-	Date             string `json:"date"`
 	Decimals         string `json:"decimals"`
 	Diff             string `json:"diff"`
 	Holder           string `json:"holder"`
@@ -43,7 +42,6 @@ type SimpleTokenBalance struct {
 	Address          base.Address     `json:"address"`
 	Balance          big.Int          `json:"balance"`
 	BlockNumber      base.Blknum      `json:"blockNumber"`
-	Date             string           `json:"date"`
 	Decimals         uint64           `json:"decimals"`
 	Diff             big.Int          `json:"diff,omitempty"`
 	Holder           base.Address     `json:"holder"`
@@ -57,6 +55,7 @@ type SimpleTokenBalance struct {
 	TransactionIndex base.Blknum      `json:"transactionIndex,omitempty"`
 	raw              *RawTokenBalance `json:"-"`
 	// EXISTING_CODE
+	Timestamp int64 `json:"timestamp"`
 	// EXISTING_CODE
 }
 
@@ -74,18 +73,15 @@ func (s *SimpleTokenBalance) Model(verbose bool, format string, extraOptions map
 
 	// EXISTING_CODE
 	name := SimpleName{}
+	name.Name = "Unknown"
 	if extraOptions["namesMap"] != nil {
 		name = extraOptions["namesMap"].(map[base.Address]SimpleName)[s.Address]
-	}
-	if name.Address.Hex() == "0x0" {
-		name.Name = "Unknown"
-		name.Symbol = name.Address.Hex()[:6]
 	}
 	if name.Decimals == 0 {
 		name.Decimals = 18
 	}
 	if name.Symbol == "" {
-		name.Symbol = name.Address.Hex()[:6]
+		name.Symbol = name.Address.Prefix(6)
 	}
 
 	wanted := extraOptions["parts"].([]string)
@@ -103,6 +99,7 @@ func (s *SimpleTokenBalance) Model(verbose bool, format string, extraOptions map
 	if len(wanted) > 0 && (wanted[0] != "address" && wanted[0] != "blockNumber") {
 		order = append([]string{"address", "blockNumber"}, wanted...)
 	}
+	order = append(order, []string{"timestamp", "date"}...)
 
 	for _, part := range order {
 		switch part {
@@ -112,6 +109,8 @@ func (s *SimpleTokenBalance) Model(verbose bool, format string, extraOptions map
 			model["balance"] = utils.FormattedValue(s.Balance, true, int(name.Decimals))
 		case "blockNumber":
 			model["blockNumber"] = s.BlockNumber
+		case "date":
+			model["date"] = s.Date()
 		case "decimals":
 			model["decimals"] = name.Decimals
 		case "holder":
@@ -120,6 +119,8 @@ func (s *SimpleTokenBalance) Model(verbose bool, format string, extraOptions map
 			model["name"] = name.Name
 		case "symbol":
 			model["symbol"] = name.Symbol
+		case "timestamp":
+			model["timestamp"] = s.Timestamp
 		case "totalSupply":
 			model["totalSupply"] = utils.FormattedValue(s.TotalSupply, true, int(name.Decimals))
 		case "units":
@@ -151,4 +152,8 @@ func (s *SimpleTokenBalance) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
+func (s *SimpleTokenBalance) Date() string {
+	return utils.FormattedDate(s.Timestamp)
+}
+
 // EXISTING_CODE

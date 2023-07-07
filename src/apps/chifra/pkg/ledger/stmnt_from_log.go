@@ -19,7 +19,7 @@ func (l *Ledger) GetStatementFromLog(log *types.SimpleLog) (r *types.SimpleState
 		return nil, nil
 	}
 
-	sym := log.Address.Hex()[:6]
+	sym := log.Address.Prefix(6)
 	decimals := uint64(18)
 	name := l.Names[log.Address]
 	if name.Address == log.Address {

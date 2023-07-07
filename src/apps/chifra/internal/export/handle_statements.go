@@ -11,7 +11,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
@@ -26,6 +25,10 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 	abiCache := articulate.NewAbiCache()
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
+	sortBy := monitor.Sorted
+	if opts.Reversed {
+		sortBy = monitor.Reversed
+	}
 	exportRange := base.FileRange{First: opts.FirstBlock, Last: opts.LastBlock}
 	nExported := uint64(0)
 	nSeen := int64(-1)
@@ -78,66 +81,63 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 		}
 
 		for _, mon := range monitorArray {
-			count := mon.Count()
-			opts.Apps = make([]index.AppearanceRecord, count)
-			if err := mon.ReadAppearances(&opts.Apps); err != nil {
+			if apps, cnt, err := mon.ReadAppearances2(sortBy); err != nil {
 				errorChan <- err
 				return
-			} else if len(opts.Apps) == 0 {
+			} else if cnt == 0 {
 				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
 				return
-			}
-			opts.Sort()
+			} else {
+				noZero := false // opts.Globals.NoZero
+				ledgers = ledger.NewLedger(
+					chain,
+					mon.Address,
+					opts.FirstBlock,
+					opts.LastBlock,
+					opts.Globals.Ether,
+					testMode,
+					noZero,
+					opts.Traces,
+					&opts.Asset,
+				)
+				if opts.Accounting {
+					ledgers.SetContexts(chain, apps)
+				}
 
-			noZero := false // opts.Globals.NoZero
-			ledgers = ledger.NewLedger(
-				chain,
-				mon.Address,
-				opts.FirstBlock,
-				opts.LastBlock,
-				opts.Globals.Ether,
-				testMode,
-				noZero,
-				opts.Traces,
-				&opts.Asset,
-			)
-			if opts.Accounting {
-				ledgers.SetContexts(chain, opts.Apps)
-			}
+				currentBn := uint32(0)
+				currentTs := int64(0)
+				for i, app := range apps {
+					nSeen++
+					appRange := base.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)}
+					if appRange.Intersects(exportRange) {
+						if nSeen < int64(opts.FirstRecord) {
+							logger.Progress(!testMode && true, "Skipping:", nExported, opts.FirstRecord)
+							continue
+						} else if opts.IsMax(nExported) {
+							logger.Progress(!testMode && true, "Quitting:", nExported, opts.FirstRecord)
+							return
+						}
+						nExported++
 
-			currentBn := uint32(0)
-			currentTs := int64(0)
-			for i, app := range opts.Apps {
-				nSeen++
-				appRange := base.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)}
-				if appRange.Intersects(exportRange) {
-					if nSeen < int64(opts.FirstRecord) {
-						logger.Progress(!testMode && true, "Skipping:", nExported, opts.FirstRecord)
-						continue
-					} else if opts.IsMax(nExported) {
-						logger.Progress(!testMode && true, "Quitting:", nExported, opts.FirstRecord)
-						return
+						logger.Progress(!testMode && nSeen%723 == 0, "Processing: ", mon.Address.Hex(), " ", app.BlockNumber, ".", app.TransactionId)
+						if app.BlockNumber != currentBn || app.BlockNumber == 0 {
+							currentTs, _ = tslib.FromBnToTs(chain, uint64(app.BlockNumber))
+						}
+						currentBn = app.BlockNumber
+
+						if err := visitAppearance(&types.SimpleAppearance{
+							Address:          mon.Address,
+							BlockNumber:      app.BlockNumber,
+							TransactionIndex: app.TransactionId,
+							Timestamp:        currentTs,
+						}); err != nil {
+							errorChan <- err
+							return
+						}
+
+					} else {
+						logger.Progress(!testMode && i%100 == 0, "Skipping:", app)
 					}
-					nExported++
-
-					logger.Progress(!testMode && nSeen%723 == 0, "Processing: ", mon.Address.Hex(), " ", app.BlockNumber, ".", app.TransactionId)
-					if app.BlockNumber != currentBn || app.BlockNumber == 0 {
-						currentTs, _ = tslib.FromBnToTs(chain, uint64(app.BlockNumber))
-					}
-					currentBn = app.BlockNumber
-
-					if err := visitAppearance(&types.SimpleAppearance{
-						Address:          mon.Address,
-						BlockNumber:      app.BlockNumber,
-						TransactionIndex: app.TransactionId,
-						Timestamp:        currentTs,
-					}); err != nil {
-						errorChan <- err
-						return
-					}
-
-				} else {
-					logger.Progress(!testMode && i%100 == 0, "Skipping:", app)
 				}
 			}
 		}
