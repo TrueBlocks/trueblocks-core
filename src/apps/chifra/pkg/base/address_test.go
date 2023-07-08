@@ -68,7 +68,7 @@ func TestAddressCompareToCommon(t *testing.T) {
 	c := common.HexToAddress("0x00000123456789abcde")
 	b := HexToAddress("0x00000123456789abcde")
 	if c != b.ToCommon() {
-		t.Fatal("base.Hash.toCommon() does not match common.Hash")
+		t.Fatal("base.Hash.toCommon() does not match")
 	}
 	if b != new(Address).FromCommon(&c) {
 		t.Fatal("fromCommon(c) does not match Hash")
