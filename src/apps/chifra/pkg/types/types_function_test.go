@@ -132,7 +132,7 @@ func TestPack(t *testing.T) {
 				},
 				function: functions["string"],
 			},
-			want: common.Hex2Bytes("3fcf74c60000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000568656c6c6f000000000000000000000000000000000000000000000000000000"),
+			want: base.Hex2Bytes("3fcf74c60000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000568656c6c6f000000000000000000000000000000000000000000000000000000"),
 		},
 		{
 			name: "boolean argument",
@@ -142,7 +142,7 @@ func TestPack(t *testing.T) {
 				},
 				function: functions["bool"],
 			},
-			want: common.Hex2Bytes("17192efc0000000000000000000000000000000000000000000000000000000000000001"),
+			want: base.Hex2Bytes("17192efc0000000000000000000000000000000000000000000000000000000000000001"),
 		},
 		{
 			name: "address argument",
@@ -152,7 +152,7 @@ func TestPack(t *testing.T) {
 				},
 				function: functions["address"],
 			},
-			want: common.Hex2Bytes("0706105e000000000000000000000000e2e87901a3e1cb22b9853ae0827de34e6fae0575"),
+			want: base.Hex2Bytes("0706105e000000000000000000000000e2e87901a3e1cb22b9853ae0827de34e6fae0575"),
 		},
 		{
 			name: "uint64 argument",
@@ -162,7 +162,7 @@ func TestPack(t *testing.T) {
 				},
 				function: functions["uint64"],
 			},
-			want: common.Hex2Bytes("8ab008da000000000000000000000000000000000000000000000000ffffffffffffffff"),
+			want: base.Hex2Bytes("8ab008da000000000000000000000000000000000000000000000000ffffffffffffffff"),
 		},
 		{
 			name: "uint256 argument",
@@ -172,7 +172,7 @@ func TestPack(t *testing.T) {
 				},
 				function: functions["uint256"],
 			},
-			want: common.Hex2Bytes("6449cd53ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"),
+			want: base.Hex2Bytes("6449cd53ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"),
 		},
 		{
 			name: "int8 argument",
@@ -182,7 +182,7 @@ func TestPack(t *testing.T) {
 				},
 				function: functions["int8"],
 			},
-			want: common.Hex2Bytes("22aca450ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff80"),
+			want: base.Hex2Bytes("22aca450ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff80"),
 		},
 		{
 			name: "int64 argument",
@@ -192,7 +192,7 @@ func TestPack(t *testing.T) {
 				},
 				function: functions["int64"],
 			},
-			want: common.Hex2Bytes("4949bf43ffffffffffffffffffffffffffffffffffffffffffffffff8000000000000000"),
+			want: base.Hex2Bytes("4949bf43ffffffffffffffffffffffffffffffffffffffffffffffff8000000000000000"),
 		},
 		{
 			name: "int256 argument",
@@ -202,7 +202,7 @@ func TestPack(t *testing.T) {
 				},
 				function: functions["int256"],
 			},
-			want: common.Hex2Bytes("4280896d8000000000000000000000000000000000000000000000000000000000000000"),
+			want: base.Hex2Bytes("4280896d8000000000000000000000000000000000000000000000000000000000000000"),
 		},
 		{
 			name: "fixed-bytes argument",
@@ -212,7 +212,7 @@ func TestPack(t *testing.T) {
 				},
 				function: functions["bytes4"],
 			},
-			want: common.Hex2Bytes("f571323280ac58cd00000000000000000000000000000000000000000000000000000000"),
+			want: base.Hex2Bytes("f571323280ac58cd00000000000000000000000000000000000000000000000000000000"),
 		},
 	}
 	for _, tt := range tests {

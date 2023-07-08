@@ -13,7 +13,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 type ContractCall struct {
@@ -138,7 +137,7 @@ func CallContract(chain string, call *ContractCall) (results *types.SimpleCallRe
 
 	var packed []byte
 	if call.encoded != "" {
-		packed = common.Hex2Bytes(call.encoded[2:])
+		packed = base.Hex2Bytes(call.encoded[2:])
 	} else {
 		packed, err = call.Method.Pack(call.Arguments)
 		if err != nil {
