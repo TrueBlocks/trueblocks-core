@@ -39,7 +39,7 @@ func (opts *TokensOptions) HandleShow() error {
 				}
 
 				for _, bn := range blockNums {
-					if bal, err := token.GetBalanceAt(chain, tokenAddr, addr, fmt.Sprintf("0x%x", bn)); bal == nil {
+					if bal, err := token.GetTokenBalanceAt(chain, tokenAddr, addr, fmt.Sprintf("0x%x", bn)); bal == nil {
 						errorChan <- err
 					} else {
 						s := &types.SimpleTokenBalance{
