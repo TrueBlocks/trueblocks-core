@@ -132,8 +132,6 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	errorChan := make(chan error)
-	defer close(errorChan)
-
 	utils.IterateOverMap(ctx, errorChan, theMap, procFunc)
 
 	// Block until we get an error from any of the iterations or the iteration finishes

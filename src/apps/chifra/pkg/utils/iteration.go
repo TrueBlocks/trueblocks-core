@@ -17,7 +17,7 @@ type stepFunc[Key, Value any] func(key Key, value Value) error
 // is faster than synchronous one.
 func IterateOverMap[Key comparable, Value any](ctx context.Context, errorChan chan error, target map[Key]Value, step stepFunc[Key, Value]) {
 	var wg sync.WaitGroup
-	// defer close(errorChan) // allow the caller to close the channel when they wish
+	defer close(errorChan)
 
 	itemsPerPool := len(target) / runtime.GOMAXPROCS(0)
 	if itemsPerPool < 1 {
@@ -69,7 +69,7 @@ func IterateOverMap[Key comparable, Value any](ctx context.Context, errorChan ch
 			wg.Add(1)
 			err = pool.Invoke(payload)
 			if err != nil {
-				errChannel <- err
+				errorChan <- err
 				return
 			}
 			// new batch
@@ -82,7 +82,7 @@ func IterateOverMap[Key comparable, Value any](ctx context.Context, errorChan ch
 		wg.Add(1)
 		err = pool.Invoke(payload)
 		if err != nil {
-			errChannel <- err
+			errorChan <- err
 			return
 		}
 	}

@@ -65,7 +65,7 @@ func (mon *Monitor) ReadAppearanceAt(idx int64, app *index.AppearanceRecord) (er
 // ReadAppearances returns appearances starting at the first appearance in the file. The call
 // will read as many records as are available in the array. The file remains opened.
 func (mon *Monitor) ReadAppearances(apps *[]index.AppearanceRecord) (err error) {
-	if len(*apps) > mon.Count() {
+	if int64(len(*apps)) > mon.Count() {
 		err = fmt.Errorf("array is larger than the size of the file in ReadAppearances (%d,%d)", len(*apps), mon.Count())
 		return
 	}
@@ -111,6 +111,20 @@ func Sort(apps []index.AppearanceRecord, sortBy AppearanceSort) {
 				return si < sj
 			}
 		})
+	}
+}
+
+func ReadAppearancesToMap[T any](mon *Monitor) (theMap map[index.AppearanceRecord]*T, cnt int, err error) {
+	if apps, cnt, err := mon.ReadAppearancesToSlice(NotSorted); err != nil {
+		return nil, 0, err
+	} else if cnt == 0 {
+		return nil, 0, nil
+	} else {
+		m := make(map[index.AppearanceRecord]*T, mon.Count())
+		for _, app := range apps {
+			m[app] = new(T)
+		}
+		return m, len(m), nil
 	}
 }
 

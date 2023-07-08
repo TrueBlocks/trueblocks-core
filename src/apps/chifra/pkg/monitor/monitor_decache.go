@@ -15,13 +15,12 @@ import (
 )
 
 // Decache removes a monitor and all cached data from the cache
-func (mon *Monitor) Decache(chain string, processor cache.DecacheFunc) (err error) {
+func (mon *Monitor) Decache(chain string, processor cache.DecacheFunc) error {
 	if mon.IsOpen() {
 		defer mon.Close()
 	}
 
-	apps, cnt, err := mon.ReadAppearancesToSlice(NotSorted)
-	if err != nil {
+	if apps, cnt, err := mon.ReadAppearancesToSlice(NotSorted); err != nil {
 		return err
 	} else if cnt == 0 {
 		return nil
@@ -35,9 +34,9 @@ func (mon *Monitor) Decache(chain string, processor cache.DecacheFunc) (err erro
 		// Clean up the stage if there's anything there
 		path := filepath.Join(config.GetApiProvider(chain), "monitors/staging/", mon.Address.Hex()+".mon.bin")
 		if file.FileExists(path) {
-			err = os.Remove(path)
+			return os.Remove(path)
 		}
 	}
 
-	return err
+	return nil
 }
