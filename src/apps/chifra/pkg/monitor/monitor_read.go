@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -89,4 +90,58 @@ func (mon *Monitor) ReadAppearances(apps *[]index.AppearanceRecord) (err error) 
 	}
 
 	return
+}
+
+type AppearanceSort int
+
+const (
+	NotSorted AppearanceSort = iota
+	Sorted
+	Reversed
+)
+
+func Sort(apps []index.AppearanceRecord, sortBy AppearanceSort) {
+	if sortBy == Sorted || sortBy == Reversed {
+		sort.Slice(apps, func(i, j int) bool {
+			si := (uint64(apps[i].BlockNumber) << 32) + uint64(apps[i].TransactionId)
+			sj := (uint64(apps[j].BlockNumber) << 32) + uint64(apps[j].TransactionId)
+			if sortBy == Reversed {
+				return sj < si
+			} else {
+				return si < sj
+			}
+		})
+	}
+}
+
+func ReadAppearancesToMap[T any](mon *Monitor) (theMap map[index.AppearanceRecord]*T, cnt int, err error) {
+	if apps, cnt, err := mon.ReadAppearancesToSlice(NotSorted); err != nil {
+		return nil, 0, err
+	} else if cnt == 0 {
+		return nil, 0, nil
+	} else {
+		m := make(map[index.AppearanceRecord]*T, mon.Count())
+		for _, app := range apps {
+			m[app] = new(T)
+		}
+		return m, len(m), nil
+	}
+}
+
+func (mon *Monitor) ReadAppearancesToSlice(sortBy AppearanceSort) (apps []index.AppearanceRecord, cnt int, err error) {
+	if mon.Count() == 0 {
+		return nil, 0, nil
+	}
+
+	apps = make([]index.AppearanceRecord, mon.Count())
+	if err := mon.ReadAppearances(&apps); err != nil {
+		return nil, 0, err
+	} else if len(apps) == 0 {
+		return nil, 0, nil
+	}
+
+	Sort(apps, sortBy)
+	mon.Close()
+
+	return apps, len(apps), nil
 }
