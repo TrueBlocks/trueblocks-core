@@ -15,32 +15,28 @@ import (
 )
 
 // Decache removes a monitor and all cached data from the cache
-func (mon *Monitor) Decache(chain string, processor cache.DecacheFunc) (err error) {
+func (mon *Monitor) Decache(chain string, processor cache.DecacheFunc) error {
 	if mon.IsOpen() {
 		defer mon.Close()
 	}
 
-	if mon.Count() == 0 {
+	if apps, cnt, err := mon.ReadAppearancesToSlice(NotSorted); err != nil {
+		return err
+	} else if cnt == 0 {
 		return nil
+	} else {
+		// TODO: This should use go routines
+		caches := []string{"blocks", "txs", "traces", "recons", "abis"}
+		if cont, err := cache.DecacheItems(chain, mon.Address.Hex(), processor, caches, index.AppsToNumPairs(apps)); err != nil || !cont {
+			return err
+		}
+
+		// Clean up the stage if there's anything there
+		path := filepath.Join(config.GetApiProvider(chain), "monitors/staging/", mon.Address.Hex()+".mon.bin")
+		if file.FileExists(path) {
+			return os.Remove(path)
+		}
 	}
 
-	apps := make([]index.AppearanceRecord, mon.Count())
-	err = mon.ReadAppearances(&apps)
-	if err != nil {
-		return err
-	}
-
-	// TODO: This should use go routines
-	caches := []string{"blocks", "txs", "traces", "recons", "abis"}
-	if cont, err := cache.DecacheItems(chain, mon.Address.Hex(), processor, caches, index.AppsToNumPairs(apps)); err != nil || !cont {
-		return err
-	}
-
-	// Clean up the stage if there's anything there
-	path := filepath.Join(config.GetApiProvider(chain), "monitors/staging/", mon.Address.Hex()+".mon.bin")
-	if file.FileExists(path) {
-		err = os.Remove(path)
-	}
-
-	return err
+	return nil
 }

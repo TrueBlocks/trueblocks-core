@@ -62,7 +62,7 @@ func (mon *Monitor) WriteAppearancesAppend(lastScanned uint32, apps *[]index.App
 
 // TODO: Protect against overwriting files on disc
 // WriteAppearances writes appearances to a Monitor
-func (mon *Monitor) WriteAppearances(apps []index.AppearanceRecord, append bool) (uint32, error) {
+func (mon *Monitor) WriteAppearances(apps []index.AppearanceRecord, append bool) (int64, error) {
 	var f *os.File
 	var err error
 	path := mon.Path()

@@ -84,7 +84,7 @@ func (opts *MonitorsOptions) HandleDecache() error {
 	return nil
 }
 
-func getWarning(addr string, count uint32) string {
+func getWarning(addr string, count int64) string {
 	var warning = strings.Replace("Are sure you want to decache {0}{1} (Yy)?", "{0}", addr, -1)
 	if count > 5000 {
 		return strings.Replace(strings.Replace(warning, "{1}", ". It may take a long time to process {2} records.", -1), "{2}", fmt.Sprintf("%d", count), -1)
