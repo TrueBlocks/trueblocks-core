@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -31,7 +32,7 @@ func (mon *Monitor) ReadMonitorHeader() (err error) {
 }
 
 // ReadAppearanceAt returns the appearance at the one-based index. The file remains open.
-func (mon *Monitor) ReadAppearanceAt(idx uint32, app *index.AppearanceRecord) (err error) {
+func (mon *Monitor) ReadAppearanceAt(idx int64, app *index.AppearanceRecord) (err error) {
 	if idx == 0 || idx > mon.Count() {
 		// the file contains a header one record wide, so a one-based index eases caller code
 		err = fmt.Errorf("index out of range in ReadAppearanceAt[%d]", idx)
@@ -64,7 +65,7 @@ func (mon *Monitor) ReadAppearanceAt(idx uint32, app *index.AppearanceRecord) (e
 // ReadAppearances returns appearances starting at the first appearance in the file. The call
 // will read as many records as are available in the array. The file remains opened.
 func (mon *Monitor) ReadAppearances(apps *[]index.AppearanceRecord) (err error) {
-	if uint32(len(*apps)) > mon.Count() {
+	if len(*apps) > mon.Count() {
 		err = fmt.Errorf("array is larger than the size of the file in ReadAppearances (%d,%d)", len(*apps), mon.Count())
 		return
 	}
@@ -89,4 +90,44 @@ func (mon *Monitor) ReadAppearances(apps *[]index.AppearanceRecord) (err error) 
 	}
 
 	return
+}
+
+type AppearanceSort int
+
+const (
+	NotSorted AppearanceSort = iota
+	Sorted
+	Reversed
+)
+
+func Sort(apps []index.AppearanceRecord, sortBy AppearanceSort) {
+	if sortBy == Sorted || sortBy == Reversed {
+		sort.Slice(apps, func(i, j int) bool {
+			si := (uint64(apps[i].BlockNumber) << 32) + uint64(apps[i].TransactionId)
+			sj := (uint64(apps[j].BlockNumber) << 32) + uint64(apps[j].TransactionId)
+			if sortBy == Reversed {
+				return sj < si
+			} else {
+				return si < sj
+			}
+		})
+	}
+}
+
+func (mon *Monitor) ReadAppearancesToSlice(sortBy AppearanceSort) (apps []index.AppearanceRecord, cnt int, err error) {
+	if mon.Count() == 0 {
+		return nil, 0, nil
+	}
+
+	apps = make([]index.AppearanceRecord, mon.Count())
+	if err := mon.ReadAppearances(&apps); err != nil {
+		return nil, 0, err
+	} else if len(apps) == 0 {
+		return nil, 0, nil
+	}
+
+	Sort(apps, sortBy)
+	mon.Close()
+
+	return apps, len(apps), nil
 }

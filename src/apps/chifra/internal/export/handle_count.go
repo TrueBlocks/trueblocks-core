@@ -35,7 +35,7 @@ func (opts *ExportOptions) HandleCount(monitorArray []monitor.Monitor) error {
 	fetchData := func(modelChan chan types.Modeler[types.RawMonitor], errorChan chan error) {
 		for _, mon := range monitorArray {
 			if true { // !opts.NoZero || mon.Count() > 0 {
-				if apps, cnt, err := mon.ReadAppearances2(sortBy); err != nil {
+				if apps, cnt, err := mon.ReadAppearancesToSlice(sortBy); err != nil {
 					errorChan <- err
 					return
 				} else if cnt == 0 {

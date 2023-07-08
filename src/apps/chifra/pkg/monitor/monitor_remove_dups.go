@@ -10,7 +10,7 @@ import (
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-func (mon *Monitor) RemoveDups() (uint32, uint32, error) {
+func (mon *Monitor) RemoveDups() (int64, int64, error) {
 	if mon.Count() == 0 {
 		return 0, 0, nil
 	}

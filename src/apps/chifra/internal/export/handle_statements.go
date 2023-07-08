@@ -81,7 +81,7 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 		}
 
 		for _, mon := range monitorArray {
-			if apps, cnt, err := mon.ReadAppearances2(sortBy); err != nil {
+			if apps, cnt, err := mon.ReadAppearancesToSlice(sortBy); err != nil {
 				errorChan <- err
 				return
 			} else if cnt == 0 {

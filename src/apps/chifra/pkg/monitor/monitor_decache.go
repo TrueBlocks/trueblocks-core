@@ -7,7 +7,6 @@ package monitor
 import (
 	"os"
 	"path/filepath"
-	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -15,53 +14,13 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 )
 
-type AppearanceSort int
-
-const (
-	NotSorted AppearanceSort = iota
-	Sorted
-	Reversed
-)
-
-func (mon *Monitor) ReadAppearances2(sortBy AppearanceSort) (apps []index.AppearanceRecord, cnt int, err error) {
-	if mon.Count() == 0 {
-		return nil, 0, nil
-	}
-
-	apps = make([]index.AppearanceRecord, mon.Count())
-	if err := mon.ReadAppearances(&apps); err != nil {
-		return nil, 0, err
-	} else if len(apps) == 0 {
-		return nil, 0, nil
-	}
-
-	Sort(apps, sortBy)
-	mon.Close()
-
-	return apps, len(apps), nil
-}
-
-func Sort(apps []index.AppearanceRecord, sortBy AppearanceSort) {
-	if sortBy == Sorted || sortBy == Reversed {
-		sort.Slice(apps, func(i, j int) bool {
-			si := (uint64(apps[i].BlockNumber) << 32) + uint64(apps[i].TransactionId)
-			sj := (uint64(apps[j].BlockNumber) << 32) + uint64(apps[j].TransactionId)
-			if sortBy == Reversed {
-				return sj < si
-			} else {
-				return si < sj
-			}
-		})
-	}
-}
-
 // Decache removes a monitor and all cached data from the cache
 func (mon *Monitor) Decache(chain string, processor cache.DecacheFunc) (err error) {
 	if mon.IsOpen() {
 		defer mon.Close()
 	}
 
-	apps, cnt, err := mon.ReadAppearances2(NotSorted)
+	apps, cnt, err := mon.ReadAppearancesToSlice(NotSorted)
 	if err != nil {
 		return err
 	} else if cnt == 0 {
