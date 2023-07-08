@@ -86,7 +86,7 @@ func GetBalanceAt(chain string, token, holder base.Address, blockNumber string) 
 				Params: rpc.Params{
 					map[string]any{
 						"to":   token.Hex(),
-						"data": TokenStateBalanceOf + holder.Encoded32(),
+						"data": TokenStateBalanceOf + holder.Pad32(),
 					},
 					blockNumber,
 				},

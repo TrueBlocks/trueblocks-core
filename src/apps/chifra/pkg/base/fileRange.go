@@ -61,8 +61,8 @@ func RangeFromRangeString(rngStr string) FileRange {
 	return RangeFromFilename(config.GetPathToIndex("mainnet") + "finalized/" + rngStr + ".bin") // okay to use mainnet since we're only interested in range
 }
 
-func (fR FileRange) String() string {
-	return fmt.Sprintf("%09d-%09d", fR.First, fR.Last)
+func (r FileRange) String() string {
+	return fmt.Sprintf("%09d-%09d", r.First, r.Last)
 }
 
 // RangeToFilename returns a fileName and and existance bool given a file range and a type
@@ -71,43 +71,43 @@ func (r *FileRange) RangeToFilename(chain string) (bool, string) {
 	return file.FileExists(fileName), fileName
 }
 
-// Follows returns true if the range is strictly after the test range.
+// Follows returns true if the range is strictly after the needle range.
 // (If 'sequential' is true, then the first block in the range must be
-// one more than the last block in the test range.)
-func (r *FileRange) Follows(test FileRange, sequential bool) bool {
+// one more than the last block in the needle range.)
+func (r *FileRange) Follows(needle FileRange, sequential bool) bool {
 	if sequential {
-		return r.First == test.Last+1
+		return r.First == needle.Last+1
 	}
-	return r.LaterThan(test)
+	return r.LaterThan(needle)
 }
 
-// Preceeds returns true if the range is strictly before the test range.
+// Preceeds returns true if the range is strictly before the needle range.
 // (If 'sequential' is true, then the last block in the range must be
-// one less than the first block in the test range.) If the test range
+// one less than the first block in the needle range.) If the needle range
 // starts at zero, returns false (nothing is before the first range)
-func (r *FileRange) Preceeds(test FileRange, sequential bool) bool {
+func (r *FileRange) Preceeds(needle FileRange, sequential bool) bool {
 	if sequential {
-		if test.First == 0 {
+		if needle.First == 0 {
 			return false
 		}
-		return r.Last == test.First-1
+		return r.Last == needle.First-1
 	}
-	return r.EarlierThan(test)
+	return r.EarlierThan(needle)
 }
 
 // Intersects returns true if the two ranges intersect
-func (r *FileRange) Intersects(test FileRange) bool {
-	return !r.EarlierThan(test) && !r.LaterThan(test)
+func (r *FileRange) Intersects(needle FileRange) bool {
+	return !r.EarlierThan(needle) && !r.LaterThan(needle)
 }
 
-// EarlierThan returns true if range is strictly before the given test range
-func (r *FileRange) EarlierThan(test FileRange) bool {
-	return r.Last < test.First
+// EarlierThan returns true if range is strictly before the given needle range
+func (r *FileRange) EarlierThan(needle FileRange) bool {
+	return r.Last < needle.First
 }
 
-// LaterThan returns true if range is strictly after the given test range
-func (r *FileRange) LaterThan(test FileRange) bool {
-	return r.First > test.Last
+// LaterThan returns true if range is strictly after the given needle range
+func (r *FileRange) LaterThan(needle FileRange) bool {
+	return r.First > needle.Last
 }
 
 // IntersectsB returns true if the block is inside the range (inclusive on both ends)
@@ -126,6 +126,6 @@ func (r *FileRange) LaterThanB(blk uint64) bool {
 }
 
 // Equals returns true if the two ranges are equal
-func (r *FileRange) Equals(test FileRange) bool {
-	return r.First == test.First && r.Last == test.Last
+func (r *FileRange) Equals(needle FileRange) bool {
+	return r.First == needle.First && r.Last == needle.Last
 }
