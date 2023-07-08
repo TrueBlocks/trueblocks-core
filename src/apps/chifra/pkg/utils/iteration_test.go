@@ -23,6 +23,7 @@ func TestIterateOverMap(t *testing.T) {
 	}
 	var mu sync.Mutex
 	errorChan := make(chan error)
+
 	IterateOverMap(context.Background(), errorChan, target, func(key int, value testStruct) error {
 		mu.Lock()
 		defer mu.Unlock()
@@ -73,6 +74,7 @@ func BenchmarkIterateOverMap(b *testing.B) {
 
 	ctx := context.Background()
 	errorChan := make(chan error)
+
 	for i := 0; i < b.N; i++ {
 		IterateOverMap(ctx, errorChan, target, func(key int, value bool) error {
 			time.Sleep(5 * time.Millisecond)

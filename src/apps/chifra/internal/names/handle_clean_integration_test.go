@@ -269,9 +269,8 @@ func BenchmarkCleanConcurrent(b *testing.B) {
 			dataset[addr] = name
 		}
 		ctx := context.Background()
-		errorChan := make(chan error)
-
 		b.StartTimer()
+		errorChan := make(chan error)
 		utils.IterateOverMap(ctx, errorChan, dataset, func(key base.Address, name types.SimpleName) error {
 			modified, err := cleanName("mainnet", &name)
 			if err != nil {
