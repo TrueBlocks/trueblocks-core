@@ -218,7 +218,7 @@ func getCommandsFromFile(globals globals.GlobalOptions) ([]SemiParse, error) {
 
 const spaces = "                                                                                 "
 
-func preProcessBatch(batch []monitor.Monitor, i, nMons int) ([]string, []uint32) {
+func preProcessBatch(batch []monitor.Monitor, i, nMons int) ([]string, []int64) {
 	var addrs []string
 	for j := 0; j < len(batch); j++ {
 		addrs = append(addrs, batch[j].Address.Hex())
@@ -228,7 +228,7 @@ func preProcessBatch(batch []monitor.Monitor, i, nMons int) ([]string, []uint32)
 	s := fmt.Sprintf("%s\r%d-%d", colors.BrightBlue+spaces, i*addrsPerBatch, nMons)
 	fmt.Println(s, colors.Green, "chifra export --freshen", strings.Replace(strings.Join(addrs, " "), "0x", " \\\n\t0x", -1), colors.Off)
 
-	countsBefore := []uint32{}
+	countsBefore := []int64{}
 	for j := 0; j < len(batch); j++ {
 		countsBefore = append(countsBefore, (batch)[j].Count())
 	}

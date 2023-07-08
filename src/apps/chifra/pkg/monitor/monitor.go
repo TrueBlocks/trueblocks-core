@@ -106,7 +106,7 @@ func (mon *Monitor) Path() (path string) {
 }
 
 // Reload loads information about the monitor such as the file's size and record count
-func (mon *Monitor) Reload(create bool) (uint32, error) {
+func (mon *Monitor) Reload(create bool) (int64, error) {
 	if create && !file.FileExists(mon.Path()) {
 		// Make sure the file exists since we've been told to monitor it
 		err := mon.WriteMonHeader(false, 0, false /* force */)
@@ -117,13 +117,13 @@ func (mon *Monitor) Reload(create bool) (uint32, error) {
 	return mon.Count(), nil
 }
 
-func (mon *Monitor) Count() uint32 {
+func (mon *Monitor) Count() int64 {
 	if file.FileSize(mon.Path()) == 0 {
 		return 0
 	}
-	s := uint32(file.FileSize(mon.Path()))
-	w := uint32(index.AppRecordWidth)
-	n := uint32(s / w)
+	s := file.FileSize(mon.Path())
+	w := int64(index.AppRecordWidth)
+	n := s / w
 	return n - 1
 }
 
