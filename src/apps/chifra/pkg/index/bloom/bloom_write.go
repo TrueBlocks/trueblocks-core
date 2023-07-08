@@ -11,7 +11,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
-	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
@@ -35,7 +34,7 @@ func (bl *ChunkBloom) WriteBloom(chain, fileName string) ( /* changed */ bool, e
 
 			fp.Seek(0, io.SeekStart) // already true, but can't hurt
 			bl.Header.Magic = file.SmallMagicNumber
-			bl.Header.Hash = base.HexToHash(common.BytesToHash(crypto.Keccak256([]byte(version.ManifestVersion))).Hex())
+			bl.Header.Hash = base.BytesToHash(crypto.Keccak256([]byte(version.ManifestVersion)))
 			if err = binary.Write(fp, binary.LittleEndian, bl.Header); err != nil {
 				return false, err
 			}
