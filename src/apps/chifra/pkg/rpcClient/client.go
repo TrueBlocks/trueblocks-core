@@ -12,6 +12,7 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -210,12 +211,12 @@ func BlockHashFromNumber(provider string, blkNum uint64) (string, error) {
 }
 
 // GetBalanceAt returns a balance for an address at a block
-func GetBalanceAt(chain string, addr common.Address, blkNum uint64) (*big.Int, error) {
+func GetBalanceAt(chain string, addr base.Address, blkNum uint64) (*big.Int, error) {
 	provider := config.GetRpcProvider(chain)
 	ec := GetClient(provider)
 	defer ec.Close()
 
-	bal, err := ec.BalanceAt(context.Background(), addr, new(big.Int).SetUint64(blkNum))
+	bal, err := ec.BalanceAt(context.Background(), addr.ToCommon(), new(big.Int).SetUint64(blkNum))
 	if err != nil {
 		return bal, err
 	}
