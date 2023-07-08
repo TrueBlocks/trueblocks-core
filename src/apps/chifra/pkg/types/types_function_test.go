@@ -8,7 +8,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/ethereum/go-ethereum/accounts/abi"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 func TestFunctionToAbiMethod(t *testing.T) {
@@ -114,6 +113,9 @@ func TestPack(t *testing.T) {
 		functions[abiMethod.Name] = *FunctionFromAbiMethod(&abiMethod)
 	}
 
+	a := base.HexToAddress("0xE2e87901a3E1CB22b9853AE0827DE34E6Fae0575")
+	addr := a.ToCommon()
+
 	type args struct {
 		callArguments []any
 		function      SimpleFunction
@@ -147,10 +149,8 @@ func TestPack(t *testing.T) {
 		{
 			name: "address argument",
 			args: args{
-				callArguments: []any{
-					common.HexToAddress("0xE2e87901a3E1CB22b9853AE0827DE34E6Fae0575"),
-				},
-				function: functions["address"],
+				callArguments: []any{addr},
+				function:      functions["address"],
 			},
 			want: base.Hex2Bytes("0706105e000000000000000000000000e2e87901a3e1cb22b9853ae0827de34e6fae0575"),
 		},

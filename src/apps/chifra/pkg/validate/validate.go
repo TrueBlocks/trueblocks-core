@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -82,7 +83,7 @@ func IsValidAddressE(val string) (bool, error) {
 }
 
 func IsSmartContract(chain, addr string) (bool, error) {
-	bytes, err := rpcClient.GetCodeAt(chain, addr, utils.NOPOS)
+	bytes, err := rpcClient.GetCodeAt(chain, base.HexToAddress(addr), utils.NOPOS)
 	return len(bytes) > 0, err
 }
 

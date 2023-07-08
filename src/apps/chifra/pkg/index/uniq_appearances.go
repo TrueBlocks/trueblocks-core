@@ -11,7 +11,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -224,7 +223,8 @@ func addAddressToMaps(address string, bn, txid uint64, addrMap AddressBooleanMap
 
 	// Normalize implicit strings. (Implicit strings come in 32-bytes long with no leading `0x`.)
 	if !strings.HasPrefix(address, "0x") {
-		address = hexutil.Encode(common.HexToAddress(address).Bytes())
+		addr := base.HexToAddress("0x" + address)
+		address = addr.Hex()
 	}
 
 	mapSync.Lock()
