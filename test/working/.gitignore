@@ -1,5 +1,7 @@
 *.env
 *_test_file
+*.redir
+*_out.file
 testing_file
 test_file
 *.sol

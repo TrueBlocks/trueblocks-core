@@ -107,8 +107,8 @@ func (opts *NamesOptions) cleanNames() (int, error) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	errorChannel := make(chan error)
-	go utils.IterateOverMap(ctx, errorChannel, allNames, func(address base.Address, name types.SimpleName) error {
+	errorChan := make(chan error)
+	go utils.IterateOverMap(ctx, errorChan, allNames, func(address base.Address, name types.SimpleName) error {
 		modified, err := cleanName(opts.Globals.Chain, &name)
 		if err != nil {
 			return wrapErrorWithAddr(&address, err)
@@ -141,7 +141,7 @@ func (opts *NamesOptions) cleanNames() (int, error) {
 	})
 
 	// Block until we get an error from any of the iterations or the iteration finishes
-	if stepErr := <-errorChannel; stepErr != nil {
+	if stepErr := <-errorChan; stepErr != nil {
 		cancel()
 		return 0, stepErr
 	}
