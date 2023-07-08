@@ -146,7 +146,7 @@ func CallContract(chain string, call *ContractCall) (results *types.SimpleCallRe
 		}
 	}
 
-	packedHex := "0x" + common.Bytes2Hex(packed)
+	packedHex := "0x" + base.Bytes2Hex(packed)
 	encodedArguments := ""
 	if len(packedHex) > 10 {
 		encodedArguments = packedHex[10:]

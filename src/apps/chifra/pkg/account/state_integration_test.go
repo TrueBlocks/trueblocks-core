@@ -14,7 +14,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 func TestGetState(t *testing.T) {
@@ -71,7 +70,7 @@ func TestGetState(t *testing.T) {
 					if len(code) == 0 {
 						t.Fatal("got empty code for smart contract")
 					}
-					return "0x" + common.Bytes2Hex(code)
+					return "0x" + base.Bytes2Hex(code)
 				}(),
 				Deployed: func() uint64 {
 					n, _ := strconv.ParseUint("18446744073709551615", 10, 64)

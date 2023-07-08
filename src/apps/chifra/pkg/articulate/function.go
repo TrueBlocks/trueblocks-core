@@ -194,7 +194,7 @@ func formatValue(argType *abi.Type, value any) (result any, err error) {
 	case abi.FunctionTy:
 		item, ok := value.([]byte)
 		if ok {
-			result = common.Bytes2Hex(item)
+			result = base.Bytes2Hex(item)
 			break
 		}
 		result = value

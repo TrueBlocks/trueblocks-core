@@ -6,6 +6,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 )
@@ -222,7 +223,7 @@ func TestPack(t *testing.T) {
 				return
 			}
 			if !reflect.DeepEqual(gotPacked, tt.want) {
-				t.Errorf("function.Pack() = %v (= %s), want %v", gotPacked, common.Bytes2Hex(gotPacked), tt.want)
+				t.Errorf("function.Pack() = %v (= %s), want %v", gotPacked, base.Bytes2Hex(gotPacked), tt.want)
 			}
 		})
 	}

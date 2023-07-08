@@ -6,8 +6,8 @@ import (
 	"io"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
@@ -113,7 +113,7 @@ func visitNodes(node *solcNode) (result []types.SimpleFunction) {
 		}
 
 		result = append(result, types.SimpleFunction{
-			Encoding:        common.Bytes2Hex(selector),
+			Encoding:        base.Bytes2Hex(selector),
 			Signature:       sig,
 			Name:            node.Name,
 			FunctionType:    fnType,
