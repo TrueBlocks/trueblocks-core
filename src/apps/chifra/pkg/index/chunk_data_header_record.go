@@ -9,12 +9,11 @@ import (
 	"path/filepath"
 	"unsafe"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // HeaderRecord is the first 44 bytes of an ChunkData. This structure carries a magic number (4 bytes),
@@ -22,7 +21,7 @@ import (
 // of the two tables.
 type IndexHeaderRecord struct {
 	Magic           uint32
-	Hash            common.Hash
+	Hash            base.Hash
 	AddressCount    uint32
 	AppearanceCount uint32
 }
@@ -63,7 +62,7 @@ func ReadChunkHeader(fileName string, checkHash bool) (header IndexHeaderRecord,
 		return
 	}
 
-	headerHash := hexutil.Encode(header.Hash.Bytes())
+	headerHash := header.Hash.Hex()
 	hasMagicHash := headerHash == unchained.HeaderMagicHash
 	if !hasMagicHash {
 		return header, fmt.Errorf("header has incorrect hash in %s, expected %s, got %s", fileName, unchained.HeaderMagicHash, headerHash)
@@ -72,7 +71,7 @@ func ReadChunkHeader(fileName string, checkHash bool) (header IndexHeaderRecord,
 	return
 }
 
-func WriteChunkHeaderHash(chain, fileName string, headerHash common.Hash) ( /* changed */ bool, error) {
+func WriteChunkHeaderHash(chain, fileName string, headerHash base.Hash) ( /* changed */ bool, error) {
 	var err error
 
 	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")

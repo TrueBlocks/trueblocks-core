@@ -3,7 +3,7 @@ package articulate
 import (
 	"testing"
 
-	"github.com/ethereum/go-ethereum/common"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
 func Test_toPrintable(t *testing.T) {
@@ -35,7 +35,7 @@ func Test_toPrintable(t *testing.T) {
 		{
 			name: "string with newline",
 			args: args{
-				hex: "0x" + common.Bytes2Hex([]byte("Line1\nLine2")),
+				hex: "0x" + base.Bytes2Hex([]byte("Line1\nLine2")),
 			},
 			wantResult:  "Line1[n]Line2",
 			wantSuccess: true,

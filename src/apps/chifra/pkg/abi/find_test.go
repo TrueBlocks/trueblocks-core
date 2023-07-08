@@ -9,7 +9,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/accounts/abi"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 var abiSource = `
@@ -108,7 +107,7 @@ func helperLoadAbisFromJson(parsedAbi *abi.ABI, destination *map[string]*types.S
 	*destination = make(AbiInterfaceMap, len(parsedAbi.Methods))
 	for _, method := range parsedAbi.Methods {
 		method := method
-		encoding := "0x" + strings.ToLower(common.Bytes2Hex(method.ID))
+		encoding := "0x" + strings.ToLower(base.Bytes2Hex(method.ID))
 		(*destination)[encoding] = types.FunctionFromAbiMethod(&method)
 	}
 }

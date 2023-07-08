@@ -20,7 +20,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
-	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
@@ -110,7 +109,7 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 			fp.Seek(0, io.SeekStart) // already true, but can't hurt
 			header := IndexHeaderRecord{
 				Magic:           file.MagicNumber,
-				Hash:            common.BytesToHash(crypto.Keccak256([]byte(version.ManifestVersion))),
+				Hash:            base.BytesToHash(crypto.Keccak256([]byte(version.ManifestVersion))),
 				AddressCount:    uint32(len(addressTable)),
 				AppearanceCount: uint32(len(appearanceTable)),
 			}

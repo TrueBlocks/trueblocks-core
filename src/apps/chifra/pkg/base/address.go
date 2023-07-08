@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"math/big"
 	"path/filepath"
 	"strings"
 
@@ -25,18 +26,16 @@ func (a *Address) Hex() string {
 	return bytesToAddressString(a.Address.Bytes())
 }
 
-func (a *Address) Encoded32() string {
-	return "000000000000000000000000" + a.Hex()[2:]
-}
-
 func (a *Address) String() string {
 	return a.Hex()
 }
 
+// Format is used by Stringer don't remove
 func (a Address) Format(s fmt.State, c rune) {
 	s.Write([]byte(a.Hex()))
 }
 
+// MarshalText is used by Stringer don't remove
 func (a Address) MarshalText() ([]byte, error) {
 	return []byte(a.Hex()), nil
 }
@@ -52,11 +51,23 @@ func (a *Address) IsZero() bool {
 	return v == "0x0000000000000000000000000000000000000000"
 }
 
+func (h *Address) ToCommon() common.Address {
+	return common.BytesToAddress(h.Bytes())
+}
+
+func (h *Address) FromCommon(c *common.Address) Address {
+	return BytesToAddress(c.Bytes())
+}
+
 // HexToAddress returns new address with the given string
 // as value.
 func HexToAddress(hex string) (addr Address) {
 	addr.SetHex(hex)
 	return
+}
+
+func BigToAddress(b *big.Int) Address {
+	return BytesToAddress(b.Bytes())
 }
 
 func BytesToAddress(b []byte) (addr Address) {
@@ -68,19 +79,23 @@ func bytesToAddressString(addressBytes []byte) string {
 	return "0x" + hex.EncodeToString(addressBytes)
 }
 
-// AddrFromPath returns an address from a path -- is assumes the filename is
+func (a *Address) Pad32() string {
+	return "000000000000000000000000" + a.Hex()[2:]
+}
+
+// AddressFromPath returns an address from a path -- is assumes the filename is
 // a valid address starting with 0x and ends with the fileType. if the path does
 // not contain an address, an error is returned. If the path does not end with the
 // given fileType, it panics.
-func AddrFromPath(path, fileType string) (string, error) {
+func AddressFromPath(path, fileType string) (string, error) {
 	_, fileName := filepath.Split(path)
 
 	if !strings.HasSuffix(fileName, fileType) {
-		log.Panic("should not happen - path should contain fileType in AddrFromPath")
+		log.Panic("should not happen - path should contain fileType")
 	}
 
 	if !strings.HasPrefix(fileType, ".") {
-		log.Panic("should not happen - fileType should have a leading dot in AddrFromPath")
+		log.Panic("should not happen - fileType should have a leading dot")
 	}
 
 	if len(fileName) < (42+len(fileType)) || !strings.HasPrefix(fileName, "0x") || !strings.Contains(fileName, ".") {
