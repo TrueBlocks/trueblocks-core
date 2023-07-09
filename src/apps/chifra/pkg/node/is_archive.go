@@ -6,7 +6,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 func IsArchiveNode(chain string) bool {
@@ -25,7 +24,7 @@ func IsArchiveNode(chain string) bool {
 		return false
 	}
 
-	bal, err := rpcClient.GetBalanceAt(chain, common.HexToAddress(largest.Address.Hex()), 0)
+	bal, err := rpcClient.GetBalanceAt(chain, largest.Address, 0)
 	if err != nil {
 		return false
 	}

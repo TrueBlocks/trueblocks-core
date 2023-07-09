@@ -9,6 +9,8 @@ import (
 	"log"
 	"math"
 	"os"
+	"strings"
+	"sync/atomic"
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -139,8 +141,53 @@ func PctProgress(done int32, total int, tick int32) {
 	}
 
 	percentage := math.Round(float64(done) / float64(total) * 100)
-	Progress(
-		true,
-		fmt.Sprintf("Processing: %.f%% (%d items, %d total)", percentage, done, total),
-	)
+	toLog(progress, fmt.Sprintf("\r\t\t\t Processing: %.f%% (%d of %d)%s", percentage, done, total, strings.Repeat(" ", 40)))
+}
+
+type ProgressBar struct {
+	// done    atomic.Int64
+	percent int64  // progress percentage
+	cur     int64  // current progress
+	total   int64  // total value for progress
+	rate    string // the actual progress bar to be printed
+	graphic string // the fill value for progress bar
+}
+
+func NewBar(total int64) (bar *ProgressBar) {
+	return NewBarWithGraphic(total, ".")
+}
+
+func NewBarWithGraphic(total int64, graphic string) (bar *ProgressBar) {
+	if graphic == "" {
+		graphic = "."
+	}
+
+	bar = new(ProgressBar)
+	bar.cur = 0
+	bar.total = total
+	bar.graphic = graphic
+	bar.percent = int64(float32(bar.cur) * 100 / float32(bar.total))
+	for i := 0; i < int(bar.percent); i += 2 {
+		bar.rate += bar.graphic // initial progress position
+	}
+	return bar
+}
+
+func (bar *ProgressBar) Tick() {
+	bar.cur = atomic.AddInt64(&bar.cur, 1)
+	last := bar.percent
+	bar.percent = int64(float32(bar.cur) * 100 / float32(bar.total))
+	if bar.percent != last && bar.percent%2 == 0 {
+		bar.rate += bar.graphic
+	}
+	timeDatePart := "DATE|TIME"
+	if timingMode {
+		now := time.Now()
+		timeDatePart = now.Format("02-01|15:04:05.000")
+	}
+	fmt.Fprintf(os.Stderr, "\r%s[%s] [%-50s]%3d%% %6d/%d", severityToLabel[progress], timeDatePart, bar.rate, bar.percent, bar.cur, bar.total)
+}
+
+func (bar *ProgressBar) Finish() {
+	fmt.Fprintf(os.Stderr, "\n")
 }
