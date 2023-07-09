@@ -13,7 +13,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 type BalanceHistory struct {
@@ -37,8 +36,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 	fetchData := func(modelChan chan types.Modeler[types.RawTokenBalance], errorChan chan error) {
 		visitAppearance := func(balCtx *BalanceHistory) error {
 			app := balCtx.App
-			a := common.HexToAddress(app.Address.Hex())
-			if bb, err := rpcClient.GetBalanceAt(chain, a, uint64(app.BlockNumber)); err != nil {
+			if bb, err := rpcClient.GetBalanceAt(chain, app.Address, uint64(app.BlockNumber)); err != nil {
 				errorChan <- err
 			} else {
 				if balCtx.Previous.Cmp(bb) != 0 {
@@ -68,7 +66,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 			} else {
 				currentBn := uint32(0)
 				currentTs := int64(0)
-				prevBal, _ := rpcClient.GetBalanceAt(chain, common.HexToAddress(mon.Address.Hex()), opts.FirstBlock)
+				prevBal, _ := rpcClient.GetBalanceAt(chain, mon.Address, opts.FirstBlock)
 				for i, app := range apps {
 					nSeen++
 					appRange := base.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)}

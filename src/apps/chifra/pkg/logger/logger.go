@@ -174,7 +174,7 @@ func NewBarWithGraphic(total int64, graphic string) (bar *ProgressBar) {
 }
 
 func (bar *ProgressBar) Tick() {
-	bar.cur = atomic.AddInt64(&bar.cur, 1)
+	atomic.AddInt64(&bar.cur, 1)
 	last := bar.percent
 	bar.percent = int64(float32(bar.cur) * 100 / float32(bar.total))
 	if bar.percent != last && bar.percent%2 == 0 {
