@@ -157,6 +157,14 @@ paths:
           schema:
             type: number
             format: uint64
+        - name: reversed
+          description: produce results in reverse chronological order
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: firstBlock
           description: first block to export (inclusive, ignored when freshening)
           required: false
@@ -433,6 +441,14 @@ paths:
             type: boolean
         - name: unripe
           description: export transactions labeled upripe (i.e. less than 28 blocks old)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: reversed
+          description: produce results in reverse chronological order
           required: false
           style: form
           in: query

@@ -84,7 +84,6 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 					errorChan <- stepErr
 					return
 				}
-
 				histories := make([]BalanceHistory, 0, len(theMap))
 				for _, v := range theMap {
 					histories = append(histories, *v)
@@ -92,6 +91,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 				sort.Slice(histories, func(i, j int) bool {
 					return histories[i].BlockNumber < histories[j].BlockNumber
 				})
+
 				currentBn := base.Blknum(0)
 				currentTs := base.Timestamp(0)
 				prevBal, _ := rpcClient.GetBalanceAt(chain, mon.Address, opts.FirstBlock)

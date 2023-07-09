@@ -75,7 +75,6 @@ func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
 				return
 			} else if cnt == 0 {
 				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
-				return
 			} else {
 				currentBn := uint32(0)
 				currentTs := int64(0)

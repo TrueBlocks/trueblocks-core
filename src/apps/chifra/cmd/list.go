@@ -60,6 +60,7 @@ func init() {
 	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Silent, "silent", "s", false, "freshen the monitor only (no reporting)")
 	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().FirstRecord, "first_record", "c", 0, "the first record to process")
 	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().MaxRecords, "max_records", "e", 250, "the maximum number of records to process")
+	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Reversed, "reversed", "E", false, "produce results in reverse chronological order")
 	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to export (inclusive, ignored when freshening)")
 	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to export (inclusive, ignored when freshening)")
 	globals.InitGlobals(listCmd, &listPkg.GetOptions().Globals)
