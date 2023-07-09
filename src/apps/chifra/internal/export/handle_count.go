@@ -37,27 +37,25 @@ func (opts *ExportOptions) HandleCount(monitorArray []monitor.Monitor) error {
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawMonitor], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if true { // !opts.NoZero || mon.Count() > 0 {
-				if apps, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
-					errorChan <- err
-					return
-				} else if cnt == 0 {
-					errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
-					continue
-				} else {
-					s := types.SimpleMonitor{
-						Address:     mon.Address.Hex(),
-						NRecords:    len(apps),
-						FileSize:    file.FileSize(mon.Path()),
-						LastScanned: mon.LastScanned,
-						Deleted:     mon.Deleted,
-					}
-					if testMode {
-						s.FileSize = 0xdead
-						s.LastScanned = maxTestingBlock
-					}
-					modelChan <- &s
+			if apps, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
+				errorChan <- err
+				return
+			} else if !opts.NoZero || cnt > 0 {
+				s := types.SimpleMonitor{
+					Address:     mon.Address.Hex(),
+					NRecords:    len(apps),
+					FileSize:    file.FileSize(mon.Path()),
+					LastScanned: mon.LastScanned,
+					Deleted:     mon.Deleted,
 				}
+				if testMode {
+					s.FileSize = 0xdead
+					s.LastScanned = maxTestingBlock
+				}
+				modelChan <- &s
+			} else {
+				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
+				continue
 			}
 			mon.Close()
 		}

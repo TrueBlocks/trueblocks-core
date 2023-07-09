@@ -63,10 +63,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 			if theMap, cnt, err := monitor.ReadAppearancesToMap[BalanceHistory](&mon, filter); err != nil {
 				errorChan <- err
 				return
-			} else if cnt == 0 {
-				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex()) // continue even on errors
-				continue
-			} else {
+			} else if !opts.NoZero || cnt > 0 {
 				errorChan2 := make(chan error)
 				utils.IterateOverMap(ctx, errorChan2, theMap, func(key types.SimpleAppearance, value *BalanceHistory) error {
 					if b, err := rpcClient.GetBalanceAt(chain, mon.Address, uint64(key.BlockNumber)); err != nil {
@@ -107,6 +104,9 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 						return
 					}
 				}
+			} else {
+				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
+				continue
 			}
 			bar.Finish(!utils.IsTerminal())
 		}

@@ -47,6 +47,7 @@ type ExportOptions struct {
 	Unripe      bool                  `json:"unripe,omitempty"`      // Export transactions labeled upripe (i.e. less than 28 blocks old)
 	Load        string                `json:"load,omitempty"`        // A comma separated list of dynamic traversers to load
 	Reversed    bool                  `json:"reversed,omitempty"`    // Produce results in reverse chronological order
+	NoZero      bool                  `json:"noZero,omitempty"`      // For the --count option only, suppress the display of zero appearance accounts
 	FirstBlock  uint64                `json:"firstBlock,omitempty"`  // First block to process (inclusive)
 	LastBlock   uint64                `json:"lastBlock,omitempty"`   // Last block to process (inclusive)
 	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
@@ -88,6 +89,7 @@ func (opts *ExportOptions) testLog() {
 	logger.TestLog(opts.Unripe, "Unripe: ", opts.Unripe)
 	logger.TestLog(len(opts.Load) > 0, "Load: ", opts.Load)
 	logger.TestLog(opts.Reversed, "Reversed: ", opts.Reversed)
+	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 	opts.Globals.TestLog()
@@ -179,6 +181,8 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 			opts.Load = value[0]
 		case "reversed":
 			opts.Reversed = true
+		case "noZero":
+			opts.NoZero = true
 		case "firstBlock":
 			opts.FirstBlock = globals.ToUint64(value[0])
 		case "lastBlock":

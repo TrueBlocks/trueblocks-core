@@ -85,6 +85,7 @@ One of [ in | out | zero ]`)
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Unripe, "unripe", "u", false, "export transactions labeled upripe (i.e. less than 28 blocks old)")
 	exportCmd.Flags().StringVarP(&exportPkg.GetOptions().Load, "load", "O", "", "a comma separated list of dynamic traversers to load (hidden)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Reversed, "reversed", "E", false, "produce results in reverse chronological order")
+	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().NoZero, "no_zero", "z", false, "for the --count option only, suppress the display of zero appearance accounts")
 	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to process (inclusive)")
 	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to process (inclusive)")
 	if os.Getenv("TEST_MODE") != "true" {

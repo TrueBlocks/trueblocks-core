@@ -81,10 +81,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
 				errorChan <- err
 				return
-			} else if cnt == 0 {
-				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
-				continue
-			} else {
+			} else if !opts.NoZero || cnt > 0 {
 				ledgers = ledger.NewLedger(
 					chain,
 					mon.Address,
@@ -92,12 +89,11 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 					opts.LastBlock,
 					opts.Globals.Ether,
 					testMode,
-					false, // opts.Globals.NoZero
+					opts.NoZero,
 					opts.Traces,
 					&opts.Asset,
 				)
 				if opts.Accounting {
-					// logger.Info(filter.GetOuterBounds())
 					ledgers.SetContexts(chain, apps, filter.GetOuterBounds())
 				}
 
@@ -108,6 +104,9 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 						return
 					}
 				}
+			} else {
+				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
+				continue
 			}
 		}
 	}

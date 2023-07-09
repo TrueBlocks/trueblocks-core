@@ -4,7 +4,7 @@ list?addrs=0x9531c059098e3d194ff87febb587ab07b30b1306&count&fmt=json&lastBlock=1
     {
       "address": "0x9531c059098e3d194ff87febb587ab07b30b1306",
       "fileSize": 57005,
-      "nRecords": 620
+      "nRecords": 250
     }
   ],
   "meta": {

@@ -71,10 +71,7 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
 				errorChan <- err
 				return
-			} else if cnt == 0 {
-				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
-				continue
-			} else {
+			} else if !opts.NoZero || cnt > 0 {
 				for _, app := range apps {
 					app := app
 					if err := visitAppearance(&app); err != nil {
@@ -82,6 +79,9 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 						return
 					}
 				}
+			} else {
+				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
+				continue
 			}
 		}
 	}

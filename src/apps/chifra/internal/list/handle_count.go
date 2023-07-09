@@ -40,12 +40,7 @@ func (opts *ListOptions) HandleCount(monitorArray []monitor.Monitor) error {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
 				errorChan <- err
 				return
-			} else if cnt == 0 {
-				if !opts.NoZero {
-					errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
-				}
-				continue
-			} else {
+			} else if !opts.NoZero || cnt > 0 {
 				s := types.SimpleMonitor{
 					Address:     mon.Address.Hex(),
 					NRecords:    len(apps),
@@ -58,6 +53,9 @@ func (opts *ListOptions) HandleCount(monitorArray []monitor.Monitor) error {
 					s.LastScanned = maxTestingBlock
 				}
 				modelChan <- &s
+			} else {
+				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
+				continue
 			}
 			mon.Close()
 		}

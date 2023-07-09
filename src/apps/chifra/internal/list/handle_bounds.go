@@ -3,6 +3,7 @@ package listPkg
 import (
 	"context"
 	"errors"
+	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
@@ -34,10 +35,7 @@ func (opts *ListOptions) HandleBounds(monitorArray []monitor.Monitor) error {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
 				errorChan <- err
 				return
-			} else if cnt == 0 {
-				errorChan <- errors.New("no appearances found in monitor for " + mon.Address.Hex())
-				continue
-			} else {
+			} else if !opts.NoZero || cnt > 0 {
 				firstTs, _ := tslib.FromBnToTs(chain, uint64(apps[0].BlockNumber))
 				latestTs, _ := tslib.FromBnToTs(chain, uint64(apps[len(apps)-1].BlockNumber))
 				s := simpleBounds{
@@ -56,6 +54,9 @@ func (opts *ListOptions) HandleBounds(monitorArray []monitor.Monitor) error {
 					LatestTs: latestTs,
 				}
 				modelChan <- &s
+			} else {
+				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
+				continue
 			}
 		}
 	}

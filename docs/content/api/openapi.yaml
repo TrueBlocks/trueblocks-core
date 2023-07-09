@@ -455,6 +455,15 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: noZero
+          description: >
+            for the --count option only, suppress the display of zero appearance accounts
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: firstBlock
           description: first block to process (inclusive)
           required: false

@@ -52,6 +52,7 @@ Flags:
   -y, --factory             for --traces only, report addresses created by (or self-destructed by) the given address(es)
   -u, --unripe              export transactions labeled upripe (i.e. less than 28 blocks old)
   -E, --reversed            produce results in reverse chronological order
+  -z, --no_zero             for the --count option only, suppress the display of zero appearance accounts
   -F, --first_block uint    first block to process (inclusive)
   -L, --last_block uint     last block to process (inclusive)
   -x, --fmt string          export format, one of [none|json*|txt|csv]

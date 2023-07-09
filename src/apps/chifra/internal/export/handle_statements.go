@@ -84,11 +84,7 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
 				errorChan <- err
 				return
-			} else if cnt == 0 {
-				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
-				continue
-			} else {
-				noZero := false // opts.Globals.NoZero
+			} else if !opts.NoZero || cnt > 0 {
 				ledgers = ledger.NewLedger(
 					chain,
 					mon.Address,
@@ -96,7 +92,7 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 					opts.LastBlock,
 					opts.Globals.Ether,
 					testMode,
-					noZero,
+					opts.NoZero,
 					opts.Traces,
 					&opts.Asset,
 				)
@@ -110,6 +106,9 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 						return
 					}
 				}
+			} else {
+				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
+				continue
 			}
 		}
 	}
