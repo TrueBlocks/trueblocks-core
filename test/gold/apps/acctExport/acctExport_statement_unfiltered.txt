@@ -8,11 +8,9 @@ TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] OutputFn:  statement_unfiltered_out.file
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
-INFO[DATE|TIME] 008860511-00047:    8860434    8860511     8860513
 INFO[DATE|TIME] 008860513-00085:    8860511    8860513     8860529
 INFO[DATE|TIME] 008860529-00145:    8860513    8860529     8860531
-INFO[DATE|TIME] 008860531-00152:    8860529    8860531     8867898
-INFO[DATE|TIME] 008867898-00028:    8860531    8867898     8875684
+INFO[DATE|TIME] 008860531-00152:    8860529    8860531     8860532
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 8860513 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 TEST[DATE|TIME] =========================================================
@@ -228,7 +226,7 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     8860529
 TEST[DATE|TIME] prevBlock:              8860529
 TEST[DATE|TIME] transfer.blockNumber:   8860531
-TEST[DATE|TIME] nextBlock:              8867898
+TEST[DATE|TIME] nextBlock:              8860532
 TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
@@ -287,7 +285,7 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     8860529
 TEST[DATE|TIME] prevBlock:              8860529
 TEST[DATE|TIME] transfer.blockNumber:   8860531
-TEST[DATE|TIME] nextBlock:              8867898
+TEST[DATE|TIME] nextBlock:              8860532
 TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------

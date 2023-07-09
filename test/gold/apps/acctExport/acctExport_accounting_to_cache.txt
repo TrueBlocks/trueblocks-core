@@ -5,7 +5,7 @@ TEST[DATE|TIME] Statements:  true
 TEST[DATE|TIME] LastBlock:  100
 TEST[DATE|TIME] OutputFn:  accounting_to_cache_out.file
 TEST[DATE|TIME] Format:  txt
-INFO[DATE|TIME] 000000013-99999:          0         13          22
+INFO[DATE|TIME] 000000013-99999:         13         13          22    same-diff false true
 INFO[DATE|TIME] 000000022-99999:         13         22          37
 INFO[DATE|TIME] 000000037-99998:         22         37          39
 INFO[DATE|TIME] 000000039-99999:         37         39          43
@@ -17,29 +17,28 @@ INFO[DATE|TIME] 000000067-99999:         64         67          78
 INFO[DATE|TIME] 000000078-99999:         67         78          84
 INFO[DATE|TIME] 000000084-99999:         78         84          90
 INFO[DATE|TIME] 000000090-99999:         84         90          94
-INFO[DATE|TIME] 000000094-99999:         90         94         105
-INFO[DATE|TIME] 000000105-99998:         94        105         106
+INFO[DATE|TIME] 000000094-99999:         90         94          95
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 13 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ledger.blockNumber:     0
-TEST[DATE|TIME] prevBlock:              0
+TEST[DATE|TIME] ledger.blockNumber:     13
+TEST[DATE|TIME] prevBlock:              13
 TEST[DATE|TIME] transfer.blockNumber:   13
 TEST[DATE|TIME] nextBlock:              22
-TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isPrevDiff:             false
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  diff-diff-eth
+TEST[DATE|TIME]    reconciliationType:  same-diff-eth
 TEST[DATE|TIME]    accountedFor:        0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 TEST[DATE|TIME]    sender:              0x0000000000000000000000000000004d696e6572
 TEST[DATE|TIME]    recipient:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
 TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    prevAppBlk:          0
+TEST[DATE|TIME]    prevAppBlk:          13
 TEST[DATE|TIME]    hash:                0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME]    timestamp:           1438270158
 TEST[DATE|TIME]    blockNumber:         13
@@ -47,7 +46,7 @@ TEST[DATE|TIME]    transactionIndex:    99999
 TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    priceSource:         eth-not-priced-pre-maker
 TEST[DATE|TIME]    spotPrice:           0
-TEST[DATE|TIME]    prevBal:             0
+TEST[DATE|TIME]    prevBal:             5000000000000000000
 TEST[DATE|TIME]    begBal:              0
 TEST[DATE|TIME]    amountIn:            0
 TEST[DATE|TIME]    internalIn:          0
@@ -699,7 +698,7 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     90
 TEST[DATE|TIME] prevBlock:              90
 TEST[DATE|TIME] transfer.blockNumber:   94
-TEST[DATE|TIME] nextBlock:              105
+TEST[DATE|TIME] nextBlock:              95
 TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
@@ -750,7 +749,7 @@ TEST[DATE|TIME] End of trial balance report
 ----
 Results in ./accounting_to_cache_out.file
 blockNumber	transactionIndex	logIndex	transactionHash	timestamp	date	assetAddr	assetSymbol	decimals	spotPrice	priceSource	accountedFor	sender	recipient	begBal	amountNet	endBal	reconciliationType	reconciled	totalIn	amountIn	internalIn	selfDestructIn	minerBaseRewardIn	minerNephewRewardIn	minerTxFeeIn	minerUncleRewardIn	prefundIn	totalOut	amountOut	internalOut	selfDestructOut	gasOut	totalOutLessGas	prevAppBlk	prevBal	begBalDiff	endBalDiff	endBalCalc	correctingReason
-13	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270158	2015-07-30 15:29:18 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0	5000000000000000000	5000000000000000000	diff-diff-eth	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	0	0	0	0	5000000000000000000	
+13	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270158	2015-07-30 15:29:18 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0	5000000000000000000	5000000000000000000	same-diff-eth	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	13	5000000000000000000	0	0	5000000000000000000	
 22	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270204	2015-07-30 15:30:04 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	5000000000000000000	5000000000000000000	10000000000000000000	diff-diff-eth	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	13	5000000000000000000	0	0	10000000000000000000	
 37	99998	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270267	2015-07-30 15:31:07 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x000000000000000000000000000000556e636c65	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	10000000000000000000	3750000000000000000	13750000000000000000	diff-diff-eth	true	3750000000000000000	0	0	0	0	0	0	3750000000000000000	0	0	0	0	0	0	0	22	10000000000000000000	0	0	13750000000000000000	
 39	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270272	2015-07-30 15:31:12 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	13750000000000000000	5000000000000000000	18750000000000000000	diff-diff-eth	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	37	13750000000000000000	0	0	18750000000000000000	

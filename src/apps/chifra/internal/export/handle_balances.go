@@ -7,13 +7,11 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -31,9 +29,14 @@ type BalanceHistory struct {
 func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
-	exportRange := base.FileRange{First: opts.FirstBlock, Last: opts.LastBlock}
-	nExported := uint64(0)
-	nSeen := int64(-1)
+	filter := monitor.NewFilter(
+		chain,
+		true,
+		opts.Reversed,
+		!testMode,
+		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
+		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
+	)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTokenBalance], errorChan chan error) {
@@ -55,16 +58,17 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 		}
 
 		for _, mon := range monitorArray {
+			filter.Reset()
 			var bar = logger.NewBar(mon.Count())
-			if theMap, cnt, err := monitor.ReadAppearancesToMap[BalanceHistory](&mon); err != nil {
+			if theMap, cnt, err := monitor.ReadAppearancesToMap[BalanceHistory](&mon, filter); err != nil {
 				errorChan <- err
 				return
 			} else if cnt == 0 {
 				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex()) // continue even on errors
+				continue
 			} else {
-				// At this point, theMap does not contain any data, just keys (appearances) with empty BalanceHistories. Fill the histories in.
 				errorChan2 := make(chan error)
-				utils.IterateOverMap(ctx, errorChan2, theMap, func(key index.AppearanceRecord, value *BalanceHistory) error {
+				utils.IterateOverMap(ctx, errorChan2, theMap, func(key types.SimpleAppearance, value *BalanceHistory) error {
 					if b, err := rpcClient.GetBalanceAt(chain, mon.Address, uint64(key.BlockNumber)); err != nil {
 						errorChan <- err
 						return err
@@ -72,8 +76,9 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 						*value = BalanceHistory{
 							Address:          mon.Address,
 							BlockNumber:      uint64(key.BlockNumber),
-							TransactionIndex: uint64(key.TransactionId),
+							TransactionIndex: uint64(key.TransactionIndex),
 							Balance:          b,
+							Timestamp:        key.Timestamp,
 						}
 						bar.Tick()
 						return nil
@@ -84,6 +89,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 					errorChan <- stepErr
 					return
 				}
+
 				histories := make([]BalanceHistory, 0, len(theMap))
 				for _, v := range theMap {
 					histories = append(histories, *v)
@@ -92,39 +98,17 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 					return histories[i].BlockNumber < histories[j].BlockNumber
 				})
 
-				currentBn := base.Blknum(0)
-				currentTs := base.Timestamp(0)
-				prevBal, _ := rpcClient.GetBalanceAt(chain, mon.Address, opts.FirstBlock)
+				prevBal, _ := rpcClient.GetBalanceAt(chain, mon.Address, filter.GetOuterBounds().First)
 				for _, h := range histories {
-					nSeen++
-					appRange := base.FileRange{First: h.BlockNumber, Last: h.BlockNumber}
-					if appRange.Intersects(exportRange) {
-						if nSeen < int64(opts.FirstRecord) {
-							logger.Progress(!testMode && true, "Skipping:", nExported, opts.FirstRecord)
-							continue
-						} else if opts.IsMax(nExported) {
-							logger.Progress(!testMode && true, "Quitting:", nExported, opts.FirstRecord)
-							return
-						}
-						nExported++
-
-						logger.Progress(!testMode && nSeen%723 == 0, "Processing: ", mon.Address.Hex(), " ", h.BlockNumber, ".", h.TransactionIndex)
-						if h.BlockNumber != currentBn || h.BlockNumber == 0 {
-							currentTs, _ = tslib.FromBnToTs(chain, uint64(h.BlockNumber))
-						}
-						currentBn = h.BlockNumber
-						h.Timestamp = currentTs
-						h.Previous = prevBal
-						if err := visitAppearance(&h); err != nil {
-							errorChan <- err
-							return
-						}
+					h := h
+					h.Previous = prevBal
+					if err := visitAppearance(&h); err != nil {
+						errorChan <- err
+						return
 					}
 				}
 			}
-			if !utils.IsTerminal() {
-				bar.Finish()
-			}
+			bar.Finish(!utils.IsTerminal())
 		}
 	}
 

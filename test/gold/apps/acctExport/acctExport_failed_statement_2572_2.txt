@@ -10,9 +10,7 @@ TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] OutputFn:  failed_statement_2572_2_out.file
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
-INFO[DATE|TIME] 011670405-00065:   11670314   11670405    11670419
-INFO[DATE|TIME] 011670419-00091:   11670405   11670419    11670437
-INFO[DATE|TIME] 011670437-00065:   11670419   11670437    11670447
+INFO[DATE|TIME] 011670419-00091:   11670405   11670419    11670420
 TEST[DATE|TIME] Start of trial balance report
 WARN[DATE|TIME] Statement is not reconciled aMKR at 11670419 91 195
 TEST[DATE|TIME] A possible nullTransfer
@@ -52,7 +50,7 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     11670405
 TEST[DATE|TIME] prevBlock:              11670405
 TEST[DATE|TIME] transfer.blockNumber:   11670419
-TEST[DATE|TIME] nextBlock:              11670437
+TEST[DATE|TIME] nextBlock:              11670420
 TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------

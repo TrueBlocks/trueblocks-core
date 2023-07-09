@@ -30,7 +30,7 @@ package exportPkg
 //     LOG_INFO(bBlue, "Starting traversal of ", monitor.address, cOff);
 //     trav->curMonitor = &monitor;
 //     curMonitor = &monitor;
-//     monitor.readAppearances(visitOnLoad, this);
+//     monitor.read Appearances(visitOnLoad, this);
 //     if (reversed)  // TODO(tjayrush): remove this comment once account works backwardly
 //         sort(monitor.apps.begin(), monitor.apps.end(), sortMonitoredAppearanceReverse);
 //     trav->traverse(monitor.apps, this);

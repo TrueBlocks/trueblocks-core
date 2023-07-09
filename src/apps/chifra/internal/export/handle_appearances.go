@@ -19,19 +19,14 @@ import (
 func (opts *ExportOptions) HandleAppearances(monitorArray []monitor.Monitor) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
-	max := opts.MaxRecords
-	if max == 250 && !opts.Globals.IsApiMode() {
-		max = utils.NOPOS
-	}
-	filter := &AppearanceFilter{
-		logging:     !testMode,
-		reversed:    opts.Reversed,
-		firstRecord: opts.FirstRecord,
-		maxRecords:  max,
-		exportRange: base.FileRange{First: opts.FirstBlock, Last: opts.LastBlock},
-		nSeen:       int64(-1),
-		nExported:   0,
-	}
+	filter := monitor.NewFilter(
+		chain,
+		opts.Globals.Verbose,
+		opts.Reversed,
+		!testMode,
+		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
+		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
+	)
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
@@ -41,18 +36,15 @@ func (opts *ExportOptions) HandleAppearances(monitorArray []monitor.Monitor) err
 		}
 
 		for _, mon := range monitorArray {
-			if apps, cnt, err := ReadAppearancesToSlice2(&mon, filter); err != nil {
+			if apps, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
 				errorChan <- err
 				return
 			} else if cnt == 0 {
 				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
-				return
+				continue
 			} else {
 				for _, app := range apps {
 					app := app
-					if opts.Globals.Verbose {
-						app.Timestamp = filter.GetTimestamp(chain, app.BlockNumber)
-					}
 					if err := visitAppearance(&app); err != nil {
 						errorChan <- err
 						return
@@ -86,4 +78,11 @@ func (opts *ExportOptions) IsMax(cnt uint64) bool {
 		max = utils.NOPOS
 	}
 	return cnt >= max
+}
+
+func (opts *ExportOptions) GetMax() uint64 {
+	if opts.MaxRecords == 250 && !opts.Globals.IsApiMode() {
+		return utils.NOPOS
+	}
+	return opts.MaxRecords
 }

@@ -145,49 +145,66 @@ func PctProgress(done int32, total int, tick int32) {
 }
 
 type ProgressBar struct {
-	// done    atomic.Int64
 	percent int64  // progress percentage
 	cur     int64  // current progress
 	total   int64  // total value for progress
-	rate    string // the actual progress bar to be printed
-	graphic string // the fill value for progress bar
+	graph   string // the actual progress bar to be printed
+	ch      string // the fill value for progress bar
 }
 
 func NewBar(total int64) (bar *ProgressBar) {
 	return NewBarWithGraphic(total, ".")
 }
 
-func NewBarWithGraphic(total int64, graphic string) (bar *ProgressBar) {
-	if graphic == "" {
-		graphic = "."
+func NewBarWithGraphic(total int64, ch string) (bar *ProgressBar) {
+	if ch == "" {
+		ch = "."
 	}
 
 	bar = new(ProgressBar)
 	bar.cur = 0
 	bar.total = total
-	bar.graphic = graphic
+	bar.ch = ch
 	bar.percent = int64(float32(bar.cur) * 100 / float32(bar.total))
 	for i := 0; i < int(bar.percent); i += 2 {
-		bar.rate += bar.graphic // initial progress position
+		bar.graph += bar.ch // initial progress position
 	}
 	return bar
 }
 
-func (bar *ProgressBar) Tick() {
-	atomic.AddInt64(&bar.cur, 1)
+func (bar *ProgressBar) display() {
 	last := bar.percent
-	bar.percent = int64(float32(bar.cur) * 100 / float32(bar.total))
+	if bar.total == 0 {
+		bar.percent = 99
+	} else {
+		bar.percent = int64(float32(bar.cur) * 100 / float32(bar.total))
+	}
 	if bar.percent != last && bar.percent%2 == 0 {
-		bar.rate += bar.graphic
+		bar.graph += bar.ch
+	}
+	if bar.total == 0 {
+		bar.percent = 100
 	}
 	timeDatePart := "DATE|TIME"
 	if timingMode {
 		now := time.Now()
 		timeDatePart = now.Format("02-01|15:04:05.000")
 	}
-	fmt.Fprintf(os.Stderr, "\r%s[%s] [%-50s]%3d%% %6d/%d", severityToLabel[progress], timeDatePart, bar.rate, bar.percent, bar.cur, bar.total)
+	fmt.Fprintf(os.Stderr, "\r%s[%s] [%-50s]%3d%% %6d/%d", severityToLabel[progress], timeDatePart, bar.graph, bar.percent, bar.cur, bar.total)
 }
 
-func (bar *ProgressBar) Finish() {
-	fmt.Fprintf(os.Stderr, "\n")
+func (bar *ProgressBar) Tick() {
+	atomic.AddInt64(&bar.cur, 1)
+	bar.display()
+}
+
+func (bar *ProgressBar) Finish(newLine bool) {
+	bar.graph = ""
+	for i := 0; i < 100; i += 2 {
+		bar.graph += bar.ch
+	}
+	bar.display()
+	if newLine {
+		fmt.Fprintf(os.Stderr, "\n")
+	}
 }
