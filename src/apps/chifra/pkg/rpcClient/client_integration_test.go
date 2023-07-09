@@ -13,10 +13,10 @@ import (
 	"math/big"
 	"testing"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 func Test_Client(t *testing.T) {
@@ -27,8 +27,8 @@ func Test_Client(t *testing.T) {
 		t.Error("incorrect result from DecodeHex")
 	}
 
-	addr := common.HexToAddress("0x00000000000000000000000000000000deadbeef")
-	expected := common.BigToAddress(big.NewInt(0x00000000000000000000000000000000DEADBeeF))
+	addr := base.HexToAddress("0x00000000000000000000000000000000deadbeef")
+	expected := base.BigToAddress(big.NewInt(0x00000000000000000000000000000000DEADBeeF))
 	if addr != expected {
 		t.Error("incorrect result from HexToAddress")
 	}

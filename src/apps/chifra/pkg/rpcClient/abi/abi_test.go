@@ -20,7 +20,7 @@ func Test_Abi_Decode(t *testing.T) {
 	//	if err != nil {
 	//		panic(err)
 	//	}
-	//	out, err := abi.Pack("isBar", common.HexToAddress("01"))
+	//	out, err := abi.Pack("isBar", base.HexToAddress("01"))
 	//	if err != nil {
 	//		panic(err)
 	//	}

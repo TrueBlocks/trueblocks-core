@@ -14,7 +14,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 func TestGetState(t *testing.T) {
@@ -64,14 +63,14 @@ func TestGetState(t *testing.T) {
 				}(),
 				Nonce: 0,
 				Code: func() string {
-					code, err := rpcClient.GetCodeAt("mainnet", "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359", uint64(15531843))
+					code, err := rpcClient.GetCodeAt("mainnet", base.HexToAddress("0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359"), uint64(15531843))
 					if err != nil {
 						t.Fatal("error when fetching code for smart contract:", err)
 					}
 					if len(code) == 0 {
 						t.Fatal("got empty code for smart contract")
 					}
-					return "0x" + common.Bytes2Hex(code)
+					return "0x" + base.Bytes2Hex(code)
 				}(),
 				Deployed: func() uint64 {
 					n, _ := strconv.ParseUint("18446744073709551615", 10, 64)

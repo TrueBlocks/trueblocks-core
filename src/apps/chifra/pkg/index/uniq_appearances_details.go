@@ -13,7 +13,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -322,7 +321,8 @@ func StreamAppearance(procFunc UniqProcFunc, flow string, reason string, address
 
 	// Normalize implicit strings. (Implicit strings come in 32-bytes long with no leading `0x`.)
 	if !strings.HasPrefix(address, "0x") {
-		address = hexutil.Encode(common.HexToAddress(address).Bytes())
+		addr := base.HexToAddress("0x" + address)
+		address = addr.Hex()
 	}
 
 	mapSync2.Lock()

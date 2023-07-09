@@ -106,7 +106,7 @@ func (a *ContractCallArgument) AbiType(abiType *abi.Type) (any, error) {
 			return nil, errors.New("no value for fixed-size bytes argument")
 		}
 
-		arrayInterface, err := abi.ReadFixedBytes(*abiType, common.Hex2Bytes(hex[2:]))
+		arrayInterface, err := abi.ReadFixedBytes(*abiType, base.Hex2Bytes(hex[2:]))
 		if err != nil {
 			return nil, err
 		}

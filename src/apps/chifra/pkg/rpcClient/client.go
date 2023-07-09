@@ -227,29 +227,29 @@ func GetBalanceAt(chain string, addr base.Address, blkNum uint64) (*big.Int, err
 /*
 // Functions available in the client
 func NewClient(c *rpc.Client) *Client
-func (ec *Client) BalanceAt(ctx context.Context, account common.Address, blockNumber *big.Int) (*big.Int, error)
+func (ec *Client) BalanceAt(ctx context.Context, account commo n.Address, blockNumber *big.Int) (*big.Int, error)
 func (ec *Client) CallContract(ctx context.Context, msg ethereum.CallMsg, blockNumber *big.Int) ([]byte, error)
-func (ec *Client) CodeAt(ctx context.Context, account common.Address, blockNumber *big.Int) ([]byte, error)
+func (ec *Client) Code At(ctx context.Context, account commo n.Address, blockNumber *big.Int) ([]byte, error)
 func (ec *Client) EstimateGas(ctx context.Context, msg ethereum.CallMsg) (uint64, error)
 func (ec *Client) FilterLogs(ctx context.Context, q ethereum.FilterQuery) ([]types.Log, error)
-func (ec *Client) HeaderByHash(ctx context.Context, hash common.Hash) (*types.Header, error)
+func (ec *Client) HeaderByHash(ctx context.Context, hash commo n.Hash) (*types.Header, error)
 func (ec *Client) HeaderByNumber(ctx context.Context, number *big.Int) (*types.Header, error)
-func (ec *Client) NonceAt(ctx context.Context, account common.Address, blockNumber *big.Int) (uint64, error)
-func (ec *Client) PendingBalanceAt(ctx context.Context, account common.Address) (*big.Int, error)
+func (ec *Client) NonceAt(ctx context.Context, account commo n.Address, blockNumber *big.Int) (uint64, error)
+func (ec *Client) PendingBalanceAt(ctx context.Context, account commo n.Address) (*big.Int, error)
 func (ec *Client) PendingCallContract(ctx context.Context, msg ethereum.CallMsg) ([]byte, error)
-func (ec *Client) PendingCodeAt(ctx context.Context, account common.Address) ([]byte, error)
-func (ec *Client) PendingNonceAt(ctx context.Context, account common.Address) (uint64, error)
-func (ec *Client) PendingStorageAt(ctx context.Context, account common.Address, key common.Hash) ([]byte, error)
+func (ec *Client) PendingCode At(ctx context.Context, account commo n.Address) ([]byte, error)
+func (ec *Client) PendingNonceAt(ctx context.Context, account commo n.Address) (uint64, error)
+func (ec *Client) PendingStorageAt(ctx context.Context, account commo n.Address, key commo n.Hash) ([]byte, error)
 func (ec *Client) PendingTransactionCount(ctx context.Context) (uint, error)
 func (ec *Client) SendTransaction(ctx context.Context, tx *types.Transaction) error
-func (ec *Client) StorageAt(ctx context.Context, account common.Address, key common.Hash, ...) ([]byte, error)
+func (ec *Client) StorageAt(ctx context.Context, account commo n.Address, key commo n.Hash, ...) ([]byte, error)
 func (ec *Client) SubscribeFilterLogs(ctx context.Context, q ethereum.FilterQuery, ch chan<- types.Log) (ethereum.Subscription, error)
 func (ec *Client) SubscribeNewHead(ctx context.Context, ch chan<- *types.Header) (ethereum.Subscription, error)
 func (ec *Client) SuggestGasPrice(ctx context.Context) (*big.Int, error)
 func (ec *Client) SuggestGasTipCap(ctx context.Context) (*big.Int, error)
 func (ec *Client) SyncProgress(ctx context.Context) (*ethereum.SyncProgress, error)
-func (ec *Client) TransactionCount(ctx context.Context, blockHash common.Hash) (uint, error)
-func (ec *Client) TransactionSender(ctx context.Context, tx *types.Transaction, block common.Hash, index uint) (common.Address, error)
+func (ec *Client) TransactionCount(ctx context.Context, blockHash commo n.Hash) (uint, error)
+func (ec *Client) TransactionSender(ctx context.Context, tx *types.Transaction, block commo n.Hash, index uint) (commo n.Address, error)
 */
 
 // DecodeHex decodes a string with hex into a slice of bytes
@@ -257,13 +257,12 @@ func DecodeHex(hex string) []byte {
 	return hexutil.MustDecode(hex)
 }
 
-func GetCodeAt(chain, addr string, bn uint64) ([]byte, error) {
+func GetCodeAt(chain string, addr base.Address, bn uint64) ([]byte, error) {
 	// return IsValidAddress(addr)
 	provider := config.GetRpcProvider(chain)
 	ec := GetClient(provider)
-	address := common.HexToAddress(addr)
 	// TODO: we don't use block number, but we should - we need to convert it
-	return ec.CodeAt(context.Background(), address, nil) // nil is latest block
+	return ec.CodeAt(context.Background(), addr.ToCommon(), nil) // nil is latest block
 }
 
 // Id_2_TxHash takes a valid identifier (txHash/blockHash, blockHash.txId, blockNumber.txId)

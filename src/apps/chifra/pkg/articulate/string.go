@@ -3,8 +3,8 @@ package articulate
 import (
 	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/ethereum/go-ethereum/accounts/abi"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 var AbiStringType abi.Type
@@ -28,7 +28,7 @@ func ArticulateString(hex string) (strResult string, success bool) {
 	if len(hex) < 2 {
 		return "", false
 	}
-	byteValue := common.Hex2Bytes(hex[2:])
+	byteValue := base.Hex2Bytes(hex[2:])
 	return articulateBytes(byteValue)
 }
 
@@ -102,7 +102,7 @@ func ArticulateEncodedString(hex string) (result string, err error) {
 		result = ""
 		return
 	}
-	byteValue := common.Hex2Bytes(hex[2:])
+	byteValue := base.Hex2Bytes(hex[2:])
 	unpacked, err := abiStringArguments.Unpack(byteValue)
 	if err != nil {
 		return
@@ -116,7 +116,7 @@ func ArticulateBytes32String(hex string) (result string) {
 	if len(hex) < 2 {
 		return
 	}
-	input := common.Hex2Bytes(hex[2:])
+	input := base.Hex2Bytes(hex[2:])
 	if len(input) == 0 {
 		return ""
 	}

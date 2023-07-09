@@ -76,7 +76,7 @@ func IsValidTopic(val string) bool {
 }
 
 func IsSmartContract(chain, addr string) (bool, error) {
-	bytes, err := rpcClient.GetCodeAt(chain, addr, utils.NOPOS)
+	bytes, err := rpcClient.GetCodeAt(chain, base.HexToAddress(addr), utils.NOPOS)
 	return len(bytes) > 0, err
 }
 

@@ -49,7 +49,7 @@ package file
 
 // 	// Use full path as name (FileInfoHeader only takes the basename)
 // 	// If we don't do this the directory strucuture would not be preserved
-// 	// https://golang.org/src/archive/tar/common.go?#L626. If we're told
+// 	// https://golang.org/src/archive/tar/commo n.go?#L626. If we're told
 // 	// where to write it, write it there
 // 	header.Name = filename
 // 	if len(relativeTo) > 0 {
