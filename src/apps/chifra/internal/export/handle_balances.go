@@ -38,7 +38,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
 
-	ctx, cancel := context.WithCancel(context.Background())
+	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawTokenBalance], errorChan chan error) {
 		visitAppearance := func(bal *BalanceHistory) error {
 			if opts.Globals.Verbose || bal.Previous.Cmp(bal.Balance) != 0 {
@@ -58,14 +58,12 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 		}
 
 		for _, mon := range monitorArray {
-			filter.Reset()
 			var bar = logger.NewBar(mon.Count())
 			if theMap, cnt, err := monitor.ReadAppearancesToMap[BalanceHistory](&mon, filter); err != nil {
 				errorChan <- err
 				return
 			} else if !opts.NoZero || cnt > 0 {
-				errorChan2 := make(chan error)
-				utils.IterateOverMap(ctx, errorChan2, theMap, func(key types.SimpleAppearance, value *BalanceHistory) error {
+				iterFunc := func(key types.SimpleAppearance, value *BalanceHistory) error {
 					if b, err := rpcClient.GetBalanceAt(chain, mon.Address, uint64(key.BlockNumber)); err != nil {
 						errorChan <- err
 						return err
@@ -82,11 +80,16 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 						}
 						return nil
 					}
-				})
+				}
+
+				errorChan2 := make(chan error)
+				utils.IterateOverMap(ctx, errorChan2, theMap, iterFunc)
 				if stepErr := <-errorChan2; stepErr != nil {
-					cancel()
 					errorChan <- stepErr
 					return
+				}
+				if !testMode {
+					bar.Finish(!utils.IsTerminal())
 				}
 
 				histories := make([]BalanceHistory, 0, len(theMap))
@@ -109,9 +112,6 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 			} else {
 				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
 				continue
-			}
-			if !testMode {
-				bar.Finish(!utils.IsTerminal())
 			}
 		}
 	}
