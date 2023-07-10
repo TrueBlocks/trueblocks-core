@@ -130,7 +130,7 @@ on      ,both ,fast  ,export   ,apps/acctExport ,128_export_fb_lb_fr_2    ,n    
 on      ,both ,fast  ,export   ,apps/acctExport ,128_export_fb_lb_fr_3    ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt & first_block = 56 & last_block = 235 & first_record = 4
 on      ,both ,fast  ,export   ,apps/acctExport ,130_export_fb_lb_fr_mr   ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt & first_block = 56 & last_block = 235 & first_record = 3 & max_records = 10
 on      ,both ,fast  ,export   ,apps/acctExport ,export_apps              ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & fmt = json & max_records = 1 & verbose
-slow    ,both ,fast  ,export   ,apps/acctExport ,simple_data2             ,n    ,addrs = 0x1234567890123456789012345678901234567890 & addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 3000000 & last_block = 3375498 & fmt = csv & no_header
+on      ,both ,fast  ,export   ,apps/acctExport ,simple_data2             ,n    ,addrs = 0x1234567890123456789012345678901234567890 & addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 3000000 & last_block = 3375498 & fmt = csv & no_header & max_records = 20
 
 # Testing --receipts
 on      ,both ,fast  ,export   ,apps/acctExport ,export_receipts          ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 3 & receipts & fmt = json
@@ -150,8 +150,8 @@ neigh   ,both ,fast  ,export   ,apps/acctExport ,neighbor2_csv            ,n    
 on      ,both ,fast  ,export   ,apps/acctExport ,export_traces            ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & traces & max_records = 5 & last_block = 1506480 & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,export_traces_cache      ,y    ,addrs = 0xd714dd60e22bbb1cbafd0e40de5cfa7bbdd3f3c8 & traces & max_records = 10 & cache_traces
 on      ,both ,fast  ,export   ,apps/acctExport ,factory_not_trace_fail   ,y    ,addrs = 0x8b3b3b624c3c0397d3da8fd861512393d51dcbac & factory
-slow    ,both ,fast  ,export   ,apps/acctExport ,factory_traces           ,y    ,addrs = 0x8b3b3b624c3c0397d3da8fd861512393d51dcbac & traces & factory & last_block = 1603174
-slow    ,both ,fast  ,export   ,apps/acctExport ,factory_traces_v         ,y    ,addrs = 0x8b3b3b624c3c0397d3da8fd861512393d51dcbac & traces & factory & last_block = 1603174 & verbose
+factory ,both ,fast  ,export   ,apps/acctExport ,factory_traces           ,y    ,addrs = 0x8b3b3b624c3c0397d3da8fd861512393d51dcbac & traces & factory & last_block = 1603174
+factory ,both ,fast  ,export   ,apps/acctExport ,factory_traces_v         ,y    ,addrs = 0x8b3b3b624c3c0397d3da8fd861512393d51dcbac & traces & factory & last_block = 1603174 & verbose
 
 # Testing --articulation
 on      ,both ,fast  ,export   ,apps/acctExport ,old_bug2_1               ,y    ,addrs = 0x000001f568875f378bf6d170b790967fe429c81a & articulate & first_record = 1 & max_records = 1 & fmt = json
@@ -164,7 +164,7 @@ on      ,both ,fast  ,export   ,apps/acctExport ,invalid_emitter_fail     ,y    
 on      ,both ,fast  ,export   ,apps/acctExport ,invalid_topic_fail       ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & logs  & topic = 0x7d655c57f71464b6f83811c55d84009cd9f5221c
 on      ,both ,fast  ,export   ,apps/acctExport ,transfer_no_topics       ,y    ,addrs = 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 & logs & max_records = 3
 on      ,both ,fast  ,export   ,apps/acctExport ,transfer_topics          ,y    ,addrs = 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 & logs & topics = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & max_records = 4
-slow    ,both ,fast  ,export   ,apps/acctExport ,export_logs              ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & logs & first_block = 1429283 & last_block = 1429468 & fmt = json
+x1    ,both ,fast  ,export   ,apps/acctExport ,export_logs              ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & logs & first_block = 1429283 & last_block = 1429468 & fmt = json
 slow    ,both ,fast  ,export   ,apps/acctExport ,export_logs_art          ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & logs & first_block = 1429283 & last_block = 1429468 & fmt = json & articulate
 slow    ,both ,fast  ,export   ,apps/acctExport ,export_logs_emit         ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & logs & emitter = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & first_block = 1429283 & last_block = 1429468 & fmt = csv
 slow    ,both ,fast  ,export   ,apps/acctExport ,export_relevant_not      ,y    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & logs & last_block = 10272064 & fmt = json
