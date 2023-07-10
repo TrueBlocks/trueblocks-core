@@ -1,7 +1,7 @@
 package locations
 
 import (
-	"errors"
+	"context"
 	"io"
 	"os"
 	"path/filepath"
@@ -9,6 +9,8 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
+
+const FS_PERMISSIONS = 0644
 
 // Each Storer implementation is global and thread-safe to save resources
 // when reading/writing large number of items
@@ -26,19 +28,49 @@ func FileSystem() (*fileSystem, error) {
 }
 
 // Writer returns io.WriterCloser for the item at given path
-func (l *fileSystem) Writer(path string) (io.WriteCloser, error) {
-	// TODO: add file locks
-	// TODO: add mkdir
-	file, err := os.OpenFile(path, os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0666)
+func (l *fileSystem) Writer(ctx context.Context, path string) (io.WriteCloser, error) {
+	if err := l.makeParentDirectories(path); err != nil {
+		return nil, err
+	}
+
+	output, err := os.OpenFile(path, os.O_WRONLY|os.O_TRUNC|os.O_CREATE, FS_PERMISSIONS)
 	if err != nil {
 		return nil, err
 	}
-	return file, nil
+	if err := file.Lock(output); err != nil {
+		return nil, err
+	}
+
+	// We unlock file when the caller is done
+	go func() {
+		<-ctx.Done()
+		file.Unlock(output)
+	}()
+
+	return output, nil
 }
 
 // Reader returns io.ReaderCloser for the item at given path
-func (l *fileSystem) Reader(path string) (io.ReadCloser, error) {
-	return nil, errors.New("not implemented")
+func (l *fileSystem) Reader(ctx context.Context, path string) (io.ReadCloser, error) {
+	if err := l.makeParentDirectories(path); err != nil {
+		return nil, err
+	}
+
+	input, err := os.OpenFile(path, os.O_RDONLY|os.O_CREATE, FS_PERMISSIONS)
+	if err != nil {
+		return nil, err
+	}
+	if err := file.Lock(input); err != nil {
+		return nil, err
+	}
+
+	// We unlock file when the caller is done
+	go func() {
+		<-ctx.Done()
+		file.Unlock(input)
+	}()
+
+	return input, nil
 }
 
 // Remove removes the item at given path
@@ -64,4 +96,9 @@ func (l *fileSystem) Stat(path string) (*ItemInfo, error) {
 	return &ItemInfo{
 		fileSize: int(info.Size()),
 	}, err
+}
+
+func (l *fileSystem) makeParentDirectories(path string) error {
+	dirPath, _ := filepath.Split(path)
+	return os.MkdirAll(dirPath, FS_PERMISSIONS)
 }

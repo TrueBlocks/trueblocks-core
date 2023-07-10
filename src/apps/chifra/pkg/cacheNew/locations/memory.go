@@ -2,6 +2,7 @@ package locations
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"io"
 	"sync"
@@ -45,21 +46,30 @@ func Memory() (*memory, error) {
 }
 
 // Writer returns io.WriterCloser for the item at given path
-func (l *memory) Writer(path string) (io.WriteCloser, error) {
+func (l *memory) Writer(ctx context.Context, path string) (io.WriteCloser, error) {
 	l.mutex.Lock()
-	defer l.mutex.Unlock()
+	go func() {
+		<-ctx.Done()
+		l.mutex.Unlock()
+	}()
+
 	record, ok := l.records[path]
 	if !ok {
 		record = new(memoryReadWriteCloser)
 		l.records[path] = record
 	}
+
 	return record, nil
 }
 
 // Reader returns io.ReaderCloser for the item at given path
-func (l *memory) Reader(path string) (io.ReadCloser, error) {
+func (l *memory) Reader(ctx context.Context, path string) (io.ReadCloser, error) {
 	l.mutex.RLock()
-	defer l.mutex.RUnlock()
+	go func() {
+		<-ctx.Done()
+		l.mutex.RUnlock()
+	}()
+
 	record, ok := l.records[path]
 	if !ok {
 		return nil, fmt.Errorf("%s: %w", path, ErrNotFound)

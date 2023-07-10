@@ -2,6 +2,7 @@ package cacheNew
 
 import (
 	"bytes"
+	"context"
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew/locations"
@@ -52,7 +53,10 @@ func (s *Store) Write(value Locator, options *WriteOptions) (err error) {
 		return
 	}
 
-	writer, err := s.location.Writer(itemPath)
+	ctx, done := context.WithCancel(context.Background())
+	defer done()
+
+	writer, err := s.location.Writer(ctx, itemPath)
 	if err != nil {
 		return
 	}
@@ -80,7 +84,10 @@ func (s *Store) Read(value Locator, id string, options *ReadOptions) (err error)
 		return
 	}
 
-	reader, err := s.location.Reader(itemPath)
+	ctx, done := context.WithCancel(context.Background())
+	defer done()
+
+	reader, err := s.location.Reader(ctx, itemPath)
 	if err != nil {
 		return
 	}

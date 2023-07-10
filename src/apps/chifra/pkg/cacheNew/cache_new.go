@@ -1,6 +1,7 @@
 package cacheNew
 
 import (
+	"context"
 	"errors"
 	"io"
 	"path"
@@ -17,8 +18,12 @@ const (
 )
 
 type Storer interface {
-	Writer(path string) (io.WriteCloser, error)
-	Reader(path string) (io.ReadCloser, error)
+	// Writer returns io.WriteCloser for the given cache item. ctx can be used in order
+	// to notify Writer that the caller has finished, so that any locks can be unlocked.
+	Writer(ctx context.Context, path string) (io.WriteCloser, error)
+	// Reader returns io.ReaderCloser for the given cache item. ctx can be used in order
+	// to notify Writer that the caller has finished, so that any locks can be unlocked.
+	Reader(ctx context.Context, path string) (io.ReadCloser, error)
 	Remove(path string) error
 	Stat(path string) (*locations.ItemInfo, error)
 }
