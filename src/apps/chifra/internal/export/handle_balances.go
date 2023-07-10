@@ -77,7 +77,9 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 							Balance:          b,
 							Timestamp:        key.Timestamp,
 						}
-						bar.Tick()
+						if !testMode {
+							bar.Tick()
+						}
 						return nil
 					}
 				})
@@ -108,7 +110,9 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
 				continue
 			}
-			bar.Finish(!utils.IsTerminal())
+			if !testMode {
+				bar.Finish(!utils.IsTerminal())
+			}
 		}
 	}
 
