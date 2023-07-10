@@ -52,21 +52,27 @@ The data model displays the token balance records for the `chifra tokens` tool.
 The following commands produce and manage TokenBalances:
 
 - [chifra tokens](/chifra/chainstate/#chifra-tokens)
+- [chifra export](/chifra/accounts/#chifra-export)
 
 TokenBalances consist of the following fields:
 
-| Field      | Description                                                  | Type      |
-| ---------- | ------------------------------------------------------------ | --------- |
-| holder     | the address for which we are reporting the token balance     | address   |
-| balance    | the balance at the address at the given block height         | int256    |
-| address    | the address of the token contract being queried              | address   |
-| timestamp  |                                                              | timestamp |
-| name       | the name of the token contract, if available                 | string    |
-| symbol     | the symbol for this token contract                           | string    |
-| decimals   | the number of decimals for the token contract                | uint64    |
-| isContract | `true` if the address is a smart contract, `false` otherwise | bool      |
-| isErc20    | `true` if the address is an ERC20, `false` otherwise         | bool      |
-| isErc721   | `true` if the address is an ERC720, `false` otherwise        | bool      |
+| Field            | Description                                                           | Type      |
+| ---------------- | --------------------------------------------------------------------- | --------- |
+| blockNumber      | the block at which the report is made                                 | blknum    |
+| transactionIndex | the transaction index (if applicable) at which the report is made     | blknum    |
+| timestamp        | the timestamp of the block                                            | timestamp |
+| totalSupply      | the total supply of the token contract                                | int256    |
+| address          | the address of the token contract                                     | address   |
+| holder           | the holder address for which we are reporting                         | address   |
+| priorBalance     | the holder's asset balance at its prior appearance                    | int256    |
+| balance          | the holder's asset balance at the given block height                  | int256    |
+| diff             | the difference#&44; if any#&44; between the prior and current balance | int256    |
+| name             | the name of the token contract, if available                          | string    |
+| symbol           | the symbol of the token contract                                      | string    |
+| decimals         | the number of decimals for the token contract                         | uint64    |
+| isContract       | `true` if the address is a smart contract, `false` otherwise          | bool      |
+| isErc20          | `true` if the address is an ERC20, `false` otherwise                  | bool      |
+| isErc721         | `true` if the address is an ERC720, `false` otherwise                 | bool      |
 
 ## EthCall
 

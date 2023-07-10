@@ -84,6 +84,7 @@ Data models produced by this tool:
 - [trace](/data-model/chaindata/#trace)
 - [traceaction](/data-model/chaindata/#traceaction)
 - [traceresult](/data-model/chaindata/#traceresult)
+- [tokenbalance](/data-model/chainstate/#tokenbalance)
 - [function](/data-model/other/#function)
 - [parameter](/data-model/other/#parameter)
 

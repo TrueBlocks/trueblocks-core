@@ -49,6 +49,7 @@ endif(CURL_FOUND)
 #
 message(STATUS "======== LOOKING FOR PROTOC ========================")
 find_package(Protobuf 3.21)
+message(STATUS ${Protobuf_PROTOC_EXECUTABLE})
 
 # ----------------------------------------------------------------------------------------
 # Globally available C++ settings

@@ -16,16 +16,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-type BalanceHistory struct {
-	Address          base.Address
-	BlockNumber      base.Blknum
-	TransactionIndex base.Txnum
-	Timestamp        base.Timestamp
-	Previous         *big.Int
-	Balance          *big.Int
-	Diff             *big.Int
-}
-
 func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
@@ -40,41 +30,39 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawTokenBalance], errorChan chan error) {
-		visitAppearance := func(bal *BalanceHistory) error {
-			if opts.Globals.Verbose || bal.Previous.Cmp(bal.Balance) != 0 {
-				diff := big.NewInt(0).Sub(bal.Balance, bal.Previous)
+		visitAppearance := func(index int, bal *types.SimpleTokenBalance) (*big.Int, error) {
+			if index == 0 || opts.Globals.Verbose || bal.PriorBalance.Cmp(&bal.Balance) != 0 {
+				diff := big.NewInt(0).Sub(&bal.Balance, &bal.PriorBalance)
 				tb := types.SimpleTokenBalance{
 					Holder:           bal.Address,
 					BlockNumber:      bal.BlockNumber,
 					TransactionIndex: bal.TransactionIndex,
 					Timestamp:        bal.Timestamp,
 					Diff:             *diff,
-					Balance:          *bal.Balance,
+					Balance:          bal.Balance,
 				}
 				modelChan <- &tb
-				*bal.Previous = *bal.Balance
+				bal.PriorBalance = bal.Balance
 			}
-			return nil
+			return &bal.PriorBalance, nil
 		}
 
 		for _, mon := range monitorArray {
 			var bar = logger.NewBar(mon.Count())
-			if theMap, cnt, err := monitor.ReadAppearancesToMap[BalanceHistory](&mon, filter); err != nil {
+			if theMap, cnt, err := monitor.ReadAppearancesToMap[types.SimpleTokenBalance](&mon, filter); err != nil {
 				errorChan <- err
 				return
 			} else if !opts.NoZero || cnt > 0 {
-				iterFunc := func(key types.SimpleAppearance, value *BalanceHistory) error {
+				iterFunc := func(key types.SimpleAppearance, value *types.SimpleTokenBalance) error {
 					if b, err := rpcClient.GetBalanceAt(chain, mon.Address, uint64(key.BlockNumber)); err != nil {
 						errorChan <- err
 						return err
 					} else {
-						*value = BalanceHistory{
-							Address:          mon.Address,
-							BlockNumber:      uint64(key.BlockNumber),
-							TransactionIndex: uint64(key.TransactionIndex),
-							Balance:          b,
-							Timestamp:        key.Timestamp,
-						}
+						value.Address = mon.Address
+						value.BlockNumber = uint64(key.BlockNumber)
+						value.TransactionIndex = uint64(key.TransactionIndex)
+						value.Balance = *b
+						value.Timestamp = key.Timestamp
 						if !testMode {
 							bar.Tick()
 						}
@@ -89,22 +77,22 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 					return
 				}
 				if !testMode {
-					bar.Finish(!utils.IsTerminal())
+					bar.Finish(true)
 				}
 
-				histories := make([]BalanceHistory, 0, len(theMap))
+				balances := make([]*types.SimpleTokenBalance, 0, len(theMap))
 				for _, v := range theMap {
-					histories = append(histories, *v)
+					balances = append(balances, v)
 				}
-				sort.Slice(histories, func(i, j int) bool {
-					return histories[i].BlockNumber < histories[j].BlockNumber
+				sort.Slice(balances, func(i, j int) bool {
+					return balances[i].BlockNumber < balances[j].BlockNumber
 				})
 
 				prevBal, _ := rpcClient.GetBalanceAt(chain, mon.Address, filter.GetOuterBounds().First)
-				for _, h := range histories {
-					h := h
-					h.Previous = prevBal
-					if err := visitAppearance(&h); err != nil {
+				for i, bal := range balances {
+					bal := bal
+					bal.PriorBalance = *prevBal
+					if prevBal, err = visitAppearance(i, bal); err != nil {
 						errorChan <- err
 						return
 					}

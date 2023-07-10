@@ -210,6 +210,7 @@ on      ,both ,fast  ,export   ,apps/acctExport ,statement_3_accounting   ,y    
 
 # Testing --balances
 on      ,both ,fast  ,export   ,apps/acctExport ,balances                 ,n    ,addrs = trueblocks.eth & balances & fmt = txt & first_block = 13000000 & last_block = 13025000
+bal     ,both ,fast  ,export   ,apps/acctExport ,balances_2               ,n    ,addrs = trueblocks.eth & balances & fmt = txt & max_records = 2
 
 # Testing --accounting --statements
 on      ,both ,fast  ,export   ,apps/acctExport ,statement_3_bad          ,y    ,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & statements & last_block = 4000000 & fmt = json
