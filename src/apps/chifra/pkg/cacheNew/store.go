@@ -2,6 +2,8 @@ package cacheNew
 
 import (
 	"bytes"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew/locations"
 )
 
 // prepare performs read/write setup
@@ -61,4 +63,22 @@ func Read(value Locator, id string, options *StoreOptions) (err error) {
 
 	item := NewItem(buffer)
 	return item.Decode(value)
+}
+
+func Stat(value Locator, options *StoreOptions) (result *locations.ItemInfo, err error) {
+	// TODO: finish this func. Also, make Store a struct, so no need to call prepare
+	// every time.
+	loc, itemPath, err := prepare(value, "", options)
+	if err != nil {
+		return
+	}
+	return loc.Stat(itemPath)
+}
+
+func Remove(value Locator, options *StoreOptions) error {
+	loc, itemPath, err := prepare(value, "", options)
+	if err != nil {
+		return err
+	}
+	return loc.Remove(itemPath)
 }

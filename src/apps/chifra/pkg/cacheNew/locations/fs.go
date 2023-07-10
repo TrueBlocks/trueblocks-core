@@ -4,7 +4,10 @@ import (
 	"errors"
 	"io"
 	"os"
+	"path/filepath"
 	"sync"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
 // Each Storer implementation is global and thread-safe to save resources
@@ -25,6 +28,7 @@ func FileSystem() (*fileSystem, error) {
 // Writer returns io.WriterCloser for the item at given path
 func (l *fileSystem) Writer(path string) (io.WriteCloser, error) {
 	// TODO: add file locks
+	// TODO: add mkdir
 	file, err := os.OpenFile(path, os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0666)
 	if err != nil {
 		return nil, err
@@ -39,5 +43,25 @@ func (l *fileSystem) Reader(path string) (io.ReadCloser, error) {
 
 // Remove removes the item at given path
 func (l *fileSystem) Remove(path string) error {
-	return os.Remove(path)
+	if err := os.Remove(path); err != nil {
+		return err
+	}
+
+	dirPath, _ := filepath.Split(path)
+	if empty, _ := file.IsFolderEmpty(dirPath); empty {
+		// we ignore the error
+		os.RemoveAll(dirPath)
+	}
+	return nil
+}
+
+func (l *fileSystem) Stat(path string) (*ItemInfo, error) {
+	info, err := os.Stat(path)
+	if err != nil {
+		return nil, err
+	}
+
+	return &ItemInfo{
+		fileSize: int(info.Size()),
+	}, err
 }

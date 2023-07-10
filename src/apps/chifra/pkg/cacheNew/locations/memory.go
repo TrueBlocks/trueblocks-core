@@ -74,3 +74,15 @@ func (l *memory) Remove(path string) error {
 	l.records[path] = nil
 	return nil
 }
+
+func (l *memory) Stat(path string) (*ItemInfo, error) {
+	l.mutex.RLock()
+	defer l.mutex.RUnlock()
+	var fileSize int
+	if item, ok := l.records[path]; ok {
+		fileSize = item.buf.Len()
+	}
+	return &ItemInfo{
+		fileSize,
+	}, nil
+}

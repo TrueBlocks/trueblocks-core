@@ -20,7 +20,7 @@ type Storer interface {
 	Writer(path string) (io.WriteCloser, error)
 	Reader(path string) (io.ReadCloser, error)
 	Remove(path string) error
-	// Stat(path string) (for querying items and their validity)
+	Stat(path string) (*locations.ItemInfo, error)
 }
 
 type Locator interface {
