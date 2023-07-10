@@ -4,9 +4,9 @@ import (
 	"context"
 	"errors"
 	"io"
-	"path"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew/locations"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
 type StoreLocation uint
@@ -36,6 +36,9 @@ type Locator interface {
 
 type StoreOptions struct {
 	Location StoreLocation
+	Chain    string
+	// Optional
+	RootDir string
 }
 
 func (s *StoreOptions) location() (loc Storer, err error) {
@@ -58,19 +61,14 @@ func (s *StoreOptions) location() (loc Storer, err error) {
 	return
 }
 
-func cachePath(value Locator, id string) (locPath string, err error) {
-	if id == "" {
-		id = value.CacheId()
+func (s *StoreOptions) rootDir() string {
+	chain := s.Chain
+	if chain == "" {
+		chain = config.GetDefaultChain()
+		s.Chain = chain
 	}
-	directory, extension := value.CacheLocation()
-	if id == "" {
-		err = errors.New("empty CacheId")
-		return
+	if s == nil {
+		return config.GetPathToCache(chain)
 	}
-	if directory == "" || extension == "" {
-		err = errors.New("empty CacheLocation")
-		return
-	}
-	locPath = path.Join(directory, (id + "." + extension))
-	return
+	return s.RootDir
 }

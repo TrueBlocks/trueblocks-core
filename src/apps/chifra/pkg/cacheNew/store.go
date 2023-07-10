@@ -3,6 +3,8 @@ package cacheNew
 import (
 	"bytes"
 	"context"
+	"errors"
+	"path"
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew/locations"
@@ -14,6 +16,7 @@ var defaultStoreOnce sync.Once
 type Store struct {
 	resolvedPaths map[Locator]string
 	location      Storer
+	rootDir       string
 }
 
 func NewStore(options *StoreOptions) (*Store, error) {
@@ -23,6 +26,7 @@ func NewStore(options *StoreOptions) (*Store, error) {
 	}
 	return &Store{
 		location: location,
+		rootDir:  options.rootDir(),
 	}, nil
 }
 
@@ -34,11 +38,25 @@ func DefaultStore() (*Store, error) {
 	return defaultStore, err
 }
 
-func (s *Store) resolvePath(value Locator, id string) (string, error) {
-	if path, ok := s.resolvedPaths[value]; ok {
-		return path, nil
+func (s *Store) resolvePath(value Locator, id string) (resolved string, err error) {
+	if cachedPath, ok := s.resolvedPaths[value]; ok {
+		return cachedPath, nil
 	}
-	return cachePath(value, id)
+
+	if id == "" {
+		id = value.CacheId()
+	}
+	directory, extension := value.CacheLocation()
+	if id == "" {
+		err = errors.New("empty CacheId")
+		return
+	}
+	if directory == "" || extension == "" {
+		err = errors.New("empty CacheLocation")
+		return
+	}
+	resolved = path.Join(s.rootDir, directory, (id + "." + extension))
+	return
 }
 
 // Write options that we might need in the future
