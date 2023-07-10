@@ -3,15 +3,15 @@ list?addrs=trueblocks.eth&fmt=json&firstBlock=8854725&lastBlock=9000000&bounds
   "data": [
     {
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "blockFreq": 2579,
-      "blockSpan": 6140717,
-      "count": 2381,
-      "firstApp": "8856290.62",
-      "firstDate": "2019-11-02 02:16:06 UTC",
-      "firstTs": 1572660966,
-      "latestApp": "14997007.121",
-      "latestDate": "2022-06-20 14:15:59 UTC",
-      "latestTs": 1655734559
+      "blockFreq": 1586,
+      "blockSpan": 20629,
+      "count": 13,
+      "firstApp": "8855603.121",
+      "firstDate": "2019-11-01 23:31:45 UTC",
+      "firstTs": 1572651105,
+      "latestApp": "8876232.84",
+      "latestDate": "2019-11-05 07:18:48 UTC",
+      "latestTs": 1572938328
     }
   ],
   "meta": {

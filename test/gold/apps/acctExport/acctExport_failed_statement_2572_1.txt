@@ -9,7 +9,7 @@ TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] OutputFn:  failed_statement_2572_1_out.file
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
-INFO[DATE|TIME] 010277683-00200:          0   10277683    10277711
+INFO[DATE|TIME] 010277683-00200:   10277683   10277683    10277711    same-diff false true
 INFO[DATE|TIME] 010277711-00064:   10277683   10277711    10277776
 INFO[DATE|TIME] 010277776-00094:   10277711   10277776    10277780
 INFO[DATE|TIME] 010277780-00102:   10277776   10277780    10367593
@@ -42,8 +42,7 @@ INFO[DATE|TIME] 014366254-00017:   14360361   14366254    14436713
 INFO[DATE|TIME] 014436713-00058:   14366254   14436713    14436713    diff-same true false
 INFO[DATE|TIME] 014436713-00059:   14436713   14436713    14469880    same-diff false true
 INFO[DATE|TIME] 014469880-00033:   14436713   14469880    15549162
-INFO[DATE|TIME] 015549162-00083:   14469880   15549162    15552509
-INFO[DATE|TIME] 015552509-00117:   15549162   15552509    16065503
+INFO[DATE|TIME] 015549162-00083:   14469880   15549162    15549163
 TEST[DATE|TIME] Start of trial balance report
 WARN[DATE|TIME] Statement is not reconciled mdai.io at 15549162 83 1774
 TEST[DATE|TIME] A possible nullTransfer
@@ -81,7 +80,7 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     14469880
 TEST[DATE|TIME] prevBlock:              14469880
 TEST[DATE|TIME] transfer.blockNumber:   15549162
-TEST[DATE|TIME] nextBlock:              15552509
+TEST[DATE|TIME] nextBlock:              15549163
 TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------

@@ -7,8 +7,6 @@ TEST[DATE|TIME] MaxRecords:  15
 TEST[DATE|TIME] OutputFn:  statements_wei_2_2_out.file
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
-INFO[DATE|TIME] 006419392-00047:    6408722    6419392     7053546
-INFO[DATE|TIME] 007053546-00020:    6419392    7053546     7053572
 INFO[DATE|TIME] 007053572-00054:    7053546    7053572     7243835
 INFO[DATE|TIME] 007243835-00014:    7053572    7243835     7406592
 INFO[DATE|TIME] 007406592-00047:    7243835    7406592     7604845
@@ -23,6 +21,7 @@ INFO[DATE|TIME] 012751771-00078:   11290737   12751771    12812092
 INFO[DATE|TIME] 012812092-00014:   12751771   12812092    13466288
 INFO[DATE|TIME] 013466288-00207:   12812092   13466288    13719258
 INFO[DATE|TIME] 013719258-00010:   13466288   13719258    14821090
+INFO[DATE|TIME] 014821090-00280:   13719258   14821090    14821091
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 7053572 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 TEST[DATE|TIME] =========================================================
@@ -1721,7 +1720,7 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     13719258
 TEST[DATE|TIME] prevBlock:              13719258
 TEST[DATE|TIME] transfer.blockNumber:   14821090
-TEST[DATE|TIME] nextBlock:              15699908
+TEST[DATE|TIME] nextBlock:              14821091
 TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
@@ -1795,7 +1794,7 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     13719258
 TEST[DATE|TIME] prevBlock:              13719258
 TEST[DATE|TIME] transfer.blockNumber:   14821090
-TEST[DATE|TIME] nextBlock:              15699908
+TEST[DATE|TIME] nextBlock:              14821091
 TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------

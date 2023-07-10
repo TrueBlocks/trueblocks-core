@@ -7,7 +7,6 @@ TEST[DATE|TIME] LastBlock:  15700075
 TEST[DATE|TIME] OutputFn:  statements_wei_2_3_out.file
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
-INFO[DATE|TIME] 015700072-00070:   15700072   15700072    15700073    same-diff false true
 INFO[DATE|TIME] 015700073-00007:   15700072   15700073    15700073    diff-same true false
 INFO[DATE|TIME] 015700073-00010:   15700073   15700073    15700073    same-same false false
 INFO[DATE|TIME] 015700073-00011:   15700073   15700073    15700073    same-same false false
@@ -326,7 +325,6 @@ INFO[DATE|TIME] 015700075-00165:   15700075   15700075    15700075    same-same 
 INFO[DATE|TIME] 015700075-00166:   15700075   15700075    15700075    same-same false false
 INFO[DATE|TIME] 015700075-00167:   15700075   15700075    15700075    same-same false false
 INFO[DATE|TIME] 015700075-00168:   15700075   15700075    15700076    same-diff false true
-INFO[DATE|TIME] 015700076-00001:   15700075   15700076    15700076    diff-same true false
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap

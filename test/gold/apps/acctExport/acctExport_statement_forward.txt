@@ -7,6 +7,14 @@ TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] OutputFn:  statement_forward_out.file
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
+INFO[DATE|TIME] 008769019-00124:    8769019    8769019     8769029    same-diff false true
+INFO[DATE|TIME] 008769029-00080:    8769019    8769029     8769052
+INFO[DATE|TIME] 008769052-00073:    8769029    8769052     8769052    diff-same true false
+INFO[DATE|TIME] 008769052-00074:    8769052    8769052     8769064    same-diff false true
+INFO[DATE|TIME] 008769064-00130:    8769052    8769064     8769064    diff-same true false
+INFO[DATE|TIME] 008769064-00131:    8769064    8769064     8769130    same-diff false true
+INFO[DATE|TIME] 008769130-00051:    8769064    8769130     8769141
+INFO[DATE|TIME] 008769141-00027:    8769130    8769141     8769142
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 8769019 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 TEST[DATE|TIME] =========================================================

@@ -108,10 +108,12 @@ func (s *SimpleAppearance) Model(verbose bool, format string, extraOptions map[s
 			}...)
 		}
 	} else if extraOptions["export"] == true && format == "json" {
-		if s.Timestamp != utils.NOPOSI {
-			model["timestamp"] = s.Timestamp
+		if verbose {
+			if s.Timestamp != utils.NOPOSI {
+				model["timestamp"] = s.Timestamp
+			}
+			model["date"] = s.Date()
 		}
-		model["date"] = s.Date()
 		if extraOptions["namesMap"] != nil {
 			name := extraOptions["namesMap"].(map[base.Address]SimpleName)[s.Address]
 			if name.Address.Hex() != "0x0" {
