@@ -40,7 +40,7 @@ func (t *testStoreData) CacheName() string {
 	return "StoreDataTest"
 }
 
-func TestStoreSave(t *testing.T) {
+func TestStoreWrite(t *testing.T) {
 	value := &testStoreData{
 		Id:    "1",
 		Value: "trueblocks",
@@ -48,15 +48,19 @@ func TestStoreSave(t *testing.T) {
 	opts := &StoreOptions{
 		Location: MemoryCache,
 	}
+	cacheStore, err := NewStore(opts)
+	if err != nil {
+		panic(err)
+	}
 
 	// Write
-	if err := Write(value, opts); err != nil {
+	if err := cacheStore.Write(value, nil); err != nil {
 		t.Fatal(err)
 	}
 
 	// Retrieve the same value
 	result := new(testStoreData)
-	if err := Read(result, "1", opts); err != nil {
+	if err := cacheStore.Read(result, "1", nil); err != nil {
 		t.Fatal(err)
 	}
 	if result.Value != value.Value {

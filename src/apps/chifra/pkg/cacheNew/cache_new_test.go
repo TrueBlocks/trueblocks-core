@@ -17,12 +17,6 @@ type ExampleBlock struct {
 	Date        string
 	Name        string
 	Timestamp   uint64
-	raw         *RawExampleBlock
-}
-
-// This is a "raw" version of the data, just like in our types package
-type RawExampleBlock struct {
-	BlockNumber uint64
 }
 
 // We now make ExampleBlock implement CacheMarshaler interface, by
@@ -112,12 +106,17 @@ func Example() {
 
 	// we will store it in memory cache (if StoreOptions is nil, then file system
 	// cache is used)
-	if err := Write(block, &StoreOptions{Location: MemoryCache}); err != nil {
+	cacheStore, err := NewStore(&StoreOptions{Location: MemoryCache})
+	if err != nil {
+		panic(err)
+	}
+
+	if err := cacheStore.Write(block, nil); err != nil {
 		panic(err)
 	}
 
 	readFromCache := new(ExampleBlock)
-	if err := Read(readFromCache, "4436721", &StoreOptions{Location: MemoryCache}); err != nil {
+	if err := cacheStore.Read(readFromCache, "4436721", nil); err != nil {
 		panic(err)
 	}
 
@@ -150,13 +149,9 @@ func ExampleCacheMarshaler() {
 	}
 	fmt.Println(timestamp)
 
-	// Now we will write a structer which implements Cache(un)Marshaler
-
-	rawBlock := &RawExampleBlock{
-		BlockNumber: 17636511,
-	}
+	// Now we will write a structure which implements Cache(un)Marshaler
 	block := &ExampleBlock{
-		BlockNumber: rawBlock.BlockNumber,
+		BlockNumber: 17636511,
 		Date:        "2023-07-06",
 		Name:        "Nice Block",
 		Timestamp:   1688667358,
