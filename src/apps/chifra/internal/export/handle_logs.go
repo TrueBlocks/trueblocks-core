@@ -7,14 +7,13 @@ package exportPkg
 import (
 	"context"
 	"fmt"
-	"strings"
+	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -33,51 +32,18 @@ func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
-		visitAppearance := func(app *types.SimpleAppearance) error {
-			raw := types.RawAppearance{
-				Address:          app.Address.Hex(),
-				BlockNumber:      uint32(app.BlockNumber),
-				TransactionIndex: uint32(app.TransactionIndex),
-			}
-			if tx, err := rpcClient.GetTransactionByAppearance(chain, &raw, false); err != nil {
-				errorChan <- err
-				return nil
-			} else {
-				matchesFourByte := len(opts.Fourbytes) == 0 // either there is no four bytes...
-				for _, fb := range opts.Fourbytes {
-					if strings.HasPrefix(tx.Input, fb) {
-						matchesFourByte = true
-					}
-				}
-				if matchesFourByte {
-					for _, log := range tx.Receipt.Logs {
-						log := log
-						if opts.isRelevant(monitorArray, log) {
-							if opts.matchesFilter(&log) {
-								if opts.Articulate {
-									if err = abiCache.ArticulateLog(chain, &log); err != nil {
-										errorChan <- err // continue even on error
-									}
-								}
-								modelChan <- &log
-							}
-						}
-					}
-				}
-				return nil
-			}
-		}
-
 		for _, mon := range monitorArray {
-			if apps, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
+			if theMap, cnt, err := monitor.ReadAppearancesToMap[types.SimpleTransaction](&mon, filter); err != nil {
 				errorChan <- err
 				return
 			} else if !opts.NoZero || cnt > 0 {
-				for _, app := range apps {
-					app := app
-					if err := visitAppearance(&app); err != nil {
-						errorChan <- err
-						return
+				if items, err := opts.readLogs(&mon, theMap, abiCache); err != nil {
+					errorChan <- err
+					continue
+				} else {
+					for _, item := range items {
+						item := item
+						modelChan <- item
 					}
 				}
 			} else {
@@ -88,18 +54,18 @@ func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
 	}
 
 	extra := map[string]interface{}{
-		"articulate": opts.Articulate,
 		"testMode":   testMode,
+		"articulate": opts.Articulate,
 		"export":     true,
 	}
 
 	if opts.Globals.Verbose || opts.Globals.Format == "json" {
 		parts := names.Custom | names.Prefund | names.Regular
-		namesMap, err := names.LoadNamesMap(chain, parts, nil)
-		if err != nil {
+		if namesMap, err := names.LoadNamesMap(chain, parts, nil); err != nil {
 			return err
+		} else {
+			extra["namesMap"] = namesMap
 		}
-		extra["namesMap"] = namesMap
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
@@ -143,6 +109,48 @@ func (opts *ExportOptions) matchesTopic(log *types.SimpleLog) bool {
 		}
 	}
 	return len(opts.Topics) == 0
+}
+
+func (opts *ExportOptions) readLogs(mon *monitor.Monitor, theMap map[types.SimpleAppearance]*types.SimpleTransaction, abiCache *articulate.AbiCache) ([]*types.SimpleLog, error) {
+	chain := opts.Globals.Chain
+	if err := opts.readTransactions(mon, theMap, true); err != nil {
+		return nil, err
+	}
+
+	// Sort the items back into an ordered array by block number
+	items := make([]*types.SimpleLog, 0, len(theMap))
+	for _, v := range theMap {
+		if v.Receipt != nil {
+			for _, log := range v.Receipt.Logs {
+				log := log
+				if opts.isRelevant(monitorArray, log) {
+					if opts.matchesFilter(&log) {
+						if opts.Articulate {
+							if err := abiCache.ArticulateLog(chain, &log); err != nil {
+								// TODO: BOGUS - We need the errorChan here
+								fmt.Fprintf(os.Stderr, "error articulating log: %v\n", err)
+							}
+						}
+						items = append(items, &log)
+					}
+				}
+			}
+		}
+	}
+	sort.Slice(items, func(i, j int) bool {
+		itemI := items[i]
+		itemJ := items[j]
+		if itemI.BlockNumber == itemJ.BlockNumber {
+			if itemI.TransactionIndex == itemJ.TransactionIndex {
+				return itemI.LogIndex < itemJ.LogIndex
+			}
+			return itemI.TransactionIndex < itemJ.TransactionIndex
+		}
+		return itemI.BlockNumber < itemJ.BlockNumber
+	})
+
+	// Return the array of items
+	return items, nil
 }
 
 // TODO: Just a reminder that eth_getLogs is way faster if one uses it for multiple blocks and/or addresses and or topics

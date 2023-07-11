@@ -88,6 +88,7 @@ func (opts *ExportOptions) readTraces(mon *monitor.Monitor, theMap map[types.Sim
 			if !opts.Factory || isCreate {
 				if opts.Articulate {
 					if err := abiCache.ArticulateTrace(chain, &trace); err != nil {
+						// TODO: BOGUS - we need the errorChan
 						fmt.Fprintf(os.Stderr, "error articulating trace: %v\n", err)
 					}
 				}
