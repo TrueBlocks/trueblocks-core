@@ -7,7 +7,9 @@ package exportPkg
 import (
 	"context"
 	"fmt"
+	"os"
 	"sort"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -111,7 +113,7 @@ func (opts *ExportOptions) matchesTopic(log *types.SimpleLog) bool {
 	return len(opts.Topics) == 0
 }
 
-func (opts *ExportOptions) readLogs(mon *monitor.Monitor, theMap map[types.SimpleAppearance]*types.SimpleTransaction, abiCache *articulate.AbiCache) ([]*types.SimpleLog, error) {
+func (opts *ExportOptions) readLogs(monitorArray []monitor.Monitor, mon *monitor.Monitor, theMap map[types.SimpleAppearance]*types.SimpleTransaction, abiCache *articulate.AbiCache) ([]*types.SimpleLog, error) {
 	chain := opts.Globals.Chain
 	if err := opts.readTransactions(mon, theMap, true); err != nil {
 		return nil, err
