@@ -17,8 +17,10 @@ type Version struct {
 }
 
 func NewVersion(str string) (vers Version, err error) {
-	// First, remove the part that cannot be parsed with ParseInt
-	str = str[len("GHC-TrueBlocks//"):]
+	if str[:3] == "GHC" {
+		// First, remove the part that cannot be parsed with ParseInt
+		str = str[len("GHC-TrueBlocks//"):]
+	}
 	str = strings.Replace(strings.Replace(str, "-", ".", -1), "v", "", -1)
 	parts := strings.Split(str, ".")
 	if len(parts) > 0 {
