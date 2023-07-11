@@ -1,7 +1,6 @@
 package locations
 
 import (
-	"context"
 	"errors"
 	"io"
 	"os"
@@ -18,6 +17,21 @@ const FS_PERMISSIONS = 0644
 var fsInstance *fileSystem
 var fsInitOnce sync.Once
 
+// fsReadWriteCloser is a wrapper around os.File that removes any file locks
+// when Close() is called
+type fsReadWriteCloser struct {
+	*os.File
+}
+
+// Close closes the underlying os.File and removes file lock
+func (f *fsReadWriteCloser) Close() error {
+	// We unlock file when the caller is done
+	if err := file.Unlock(f.File); err != nil {
+		return err
+	}
+	return f.File.Close()
+}
+
 type fileSystem struct{}
 
 // FileSystem returns an instance of fileSystem Storer, ready to be used
@@ -29,36 +43,25 @@ func FileSystem() (*fileSystem, error) {
 }
 
 // Writer returns io.WriterCloser for the item at given path
-func (l *fileSystem) Writer(ctx context.Context, path string) (io.WriteCloser, error) {
+func (l *fileSystem) Writer(path string) (io.WriteCloser, error) {
 	if err := l.makeParentDirectories(path); err != nil {
 		return nil, err
 	}
 
-	// output, err := os.OpenFile(path, os.O_WRONLY|os.O_TRUNC|os.O_CREATE, FS_PERMISSIONS)
 	output, err := file.WaitOnLock(path, os.O_WRONLY|os.O_TRUNC|os.O_CREATE)
 	if err != nil {
 		return nil, err
 	}
-	// if err := file.Lock(output); err != nil {
-	// 	return nil, err
-	// }
 
-	// We unlock file when the caller is done
-	go func() {
-		<-ctx.Done()
-		file.Unlock(output)
-	}()
-
-	return output, nil
+	return &fsReadWriteCloser{output}, nil
 }
 
 // Reader returns io.ReaderCloser for the item at given path
-func (l *fileSystem) Reader(ctx context.Context, path string) (io.ReadCloser, error) {
+func (l *fileSystem) Reader(path string) (io.ReadCloser, error) {
 	if err := l.makeParentDirectories(path); err != nil {
 		return nil, err
 	}
 
-	// input, err := os.OpenFile(path, os.O_RDONLY|os.O_CREATE, FS_PERMISSIONS)
 	input, err := file.WaitOnLock(path, os.O_RDWR)
 	if err != nil {
 		if errors.Is(err, os.ErrNotExist) {
@@ -66,17 +69,8 @@ func (l *fileSystem) Reader(ctx context.Context, path string) (io.ReadCloser, er
 		}
 		return nil, err
 	}
-	// if err := file.WaitOnLock(path, os.O_RDONLY); err != nil {
-	// 	return nil, err
-	// }
 
-	// We unlock file when the caller is done
-	go func() {
-		<-ctx.Done()
-		file.Unlock(input)
-	}()
-
-	return input, nil
+	return &fsReadWriteCloser{input}, nil
 }
 
 // Remove removes the item at given path

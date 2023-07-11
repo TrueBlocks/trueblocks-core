@@ -2,7 +2,6 @@ package cacheNew
 
 import (
 	"bytes"
-	"context"
 	"errors"
 	"path"
 	"sync"
@@ -71,10 +70,7 @@ func (s *Store) Write(value Locator, options *WriteOptions) (err error) {
 		return
 	}
 
-	ctx, done := context.WithCancel(context.Background())
-	defer done()
-
-	writer, err := s.location.Writer(ctx, itemPath)
+	writer, err := s.location.Writer(itemPath)
 	if err != nil {
 		return
 	}
@@ -102,10 +98,7 @@ func (s *Store) Read(value Locator, id string, options *ReadOptions) (err error)
 		return
 	}
 
-	ctx, done := context.WithCancel(context.Background())
-	defer done()
-
-	reader, err := s.location.Reader(ctx, itemPath)
+	reader, err := s.location.Reader(itemPath)
 	if err != nil {
 		return
 	}

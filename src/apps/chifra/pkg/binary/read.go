@@ -15,37 +15,26 @@ func read(reader io.Reader, value any) (err error) {
 // big.Int, CacheUnmarshaler and slices of these values. Version number
 // is passed to any CacheUnmarshaler to ease reading older formats.
 func ReadValue(reader io.Reader, value any, version uint64) (err error) {
-	unmarshaler, ok := value.(CacheUnmarshaler)
-	if ok {
-		return unmarshaler.UnmarshalCache(version, reader)
-	}
+	switch v := value.(type) {
+	case CacheUnmarshaler:
+		err = v.UnmarshalCache(version, reader)
 
 	// binary.Read takes care of slices of fixed-size types, e.g. []uint8,
 	// so we only have to support []string, []big.Int and []CacheUnmarshaler
-	strSlice, ok := any(value).(*[]string)
-	if ok {
-		return ReadSlice(reader, strSlice, version)
+	case *[]string:
+		err = ReadSlice(reader, v, version)
+	case *[]big.Int:
+		err = ReadSlice(reader, v, version)
+	case *[]CacheUnmarshaler:
+		err = ReadSlice(reader, v, version)
+	case *string:
+		err = ReadString(reader, v)
+	case *big.Int:
+		err = ReadBigInt(reader, v)
+	default:
+		err = read(reader, value)
 	}
-	bigSlice, ok := any(value).(*[]big.Int)
-	if ok {
-		return ReadSlice(reader, bigSlice, version)
-	}
-	cacheMarshalerSlice, ok := any(value).(*[]CacheUnmarshaler)
-	if ok {
-		return ReadSlice(reader, cacheMarshalerSlice, version)
-	}
-
-	str, ok := any(value).(*string)
-	if ok {
-		return ReadString(reader, str)
-	}
-
-	bigint, ok := any(value).(*big.Int)
-	if ok {
-		return ReadBigInt(reader, bigint)
-	}
-
-	return read(reader, value)
+	return
 }
 
 // ReadSlice reads binary representation of slice of T. ReadValue is called for each

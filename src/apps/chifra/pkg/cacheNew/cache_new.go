@@ -1,8 +1,6 @@
 package cacheNew
 
 import (
-	"context"
-	"errors"
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew/locations"
@@ -13,17 +11,15 @@ type StoreLocation uint
 
 const (
 	FsCache StoreLocation = iota
-	IpfsCache
+	// IpfsCache
 	MemoryCache
 )
 
 type Storer interface {
-	// Writer returns io.WriteCloser for the given cache item. ctx can be used in order
-	// to notify Writer that the caller has finished, so that any locks can be unlocked.
-	Writer(ctx context.Context, path string) (io.WriteCloser, error)
-	// Reader returns io.ReaderCloser for the given cache item. ctx can be used in order
-	// to notify Writer that the caller has finished, so that any locks can be unlocked.
-	Reader(ctx context.Context, path string) (io.ReadCloser, error)
+	// Writer returns io.WriteCloser for the given cache item
+	Writer(path string) (io.WriteCloser, error)
+	// Reader returns io.ReaderCloser for the given cache item
+	Reader(path string) (io.ReadCloser, error)
 	Remove(path string) error
 	Stat(path string) (*locations.ItemInfo, error)
 }
@@ -49,9 +45,9 @@ func (s *StoreOptions) location() (loc Storer, err error) {
 	switch s.Location {
 	case MemoryCache:
 		loc, err = locations.Memory()
-	case IpfsCache:
-		// TODO: use ipfs
-		return nil, errors.New("not implemented")
+	// case IpfsCache:
+	// 	// TODO: use ipfs
+	// 	return nil, errors.New("not implemented")
 	case FsCache:
 		fallthrough
 	default:

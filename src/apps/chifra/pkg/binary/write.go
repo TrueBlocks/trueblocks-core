@@ -17,37 +17,26 @@ func write(writer io.Writer, value any) (err error) {
 // ReadValue, it doesn't support versioning, because it is expected that
 // only the most recent data format is used when writing.
 func WriteValue(writer io.Writer, value any) (err error) {
-	marshaler, ok := value.(CacheMarshaler)
-	if ok {
-		return marshaler.MarshalCache(writer)
-	}
+	switch v := value.(type) {
+	case CacheMarshaler:
+		err = v.MarshalCache(writer)
 
 	// binary.Write takes care of slices of fixed-size types, e.g. []uint8,
 	// so we only have to support []string, []big.Int and []CacheUnmarshaler
-	strSlice, ok := value.([]string)
-	if ok {
-		return WriteSlice(writer, strSlice)
+	case []string:
+		err = WriteSlice(writer, v)
+	case []big.Int:
+		err = WriteSlice(writer, v)
+	case []CacheMarshaler:
+		err = WriteSlice(writer, v)
+	case string:
+		err = WriteString(writer, &v)
+	case *big.Int:
+		err = WriteBigInt(writer, v)
+	default:
+		err = write(writer, value)
 	}
-	bigSlice, ok := value.([]big.Int)
-	if ok {
-		return WriteSlice(writer, bigSlice)
-	}
-	cacheMarshalerSlice, ok := value.([]CacheMarshaler)
-	if ok {
-		return WriteSlice(writer, cacheMarshalerSlice)
-	}
-
-	str, ok := value.(string)
-	if ok {
-		return WriteString(writer, &str)
-	}
-
-	bigint, ok := value.(*big.Int)
-	if ok {
-		return WriteBigInt(writer, bigint)
-	}
-
-	return write(writer, value)
+	return err
 }
 
 // WriteSlice reads binary representation of slice of T. WriteValue is called for each

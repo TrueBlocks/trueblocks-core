@@ -2,7 +2,6 @@ package locations
 
 import (
 	"bytes"
-	"context"
 	"fmt"
 	"io"
 	"sync"
@@ -13,10 +12,15 @@ import (
 var memoryInstance *memory
 var memoryInitOnce sync.Once
 
-// We have to use ReadWriteCloser to conform with Storer
-// interface
+// Helper interface that will allow us to implement memoryReadWriteCloser.Close
+type unlocker interface {
+	unlock()
+}
+
+// We have to use ReadWriteCloser to conform with Storer interface
 type memoryReadWriteCloser struct {
 	buf bytes.Buffer
+	u   unlocker
 }
 
 func (m *memoryReadWriteCloser) Write(p []byte) (n int, err error) {
@@ -28,12 +32,18 @@ func (m *memoryReadWriteCloser) Read(p []byte) (n int, err error) {
 }
 
 func (m *memoryReadWriteCloser) Close() error {
+	m.u.unlock()
 	return nil
 }
 
 type memory struct {
 	records map[string]*memoryReadWriteCloser
-	mutex   sync.RWMutex
+	mutex   sync.Mutex
+}
+
+// unlock is being called by memoryReadWriteCloser.Close to unlock the mutex
+func (l *memory) unlock() {
+	l.mutex.Unlock()
 }
 
 // Memory returns an instance of memory Storer, ready to be used
@@ -46,16 +56,14 @@ func Memory() (*memory, error) {
 }
 
 // Writer returns io.WriterCloser for the item at given path
-func (l *memory) Writer(ctx context.Context, path string) (io.WriteCloser, error) {
+func (l *memory) Writer(path string) (io.WriteCloser, error) {
 	l.mutex.Lock()
-	go func() {
-		<-ctx.Done()
-		l.mutex.Unlock()
-	}()
 
 	record, ok := l.records[path]
 	if !ok {
-		record = new(memoryReadWriteCloser)
+		record = &memoryReadWriteCloser{
+			u: l,
+		}
 		l.records[path] = record
 	}
 
@@ -63,12 +71,8 @@ func (l *memory) Writer(ctx context.Context, path string) (io.WriteCloser, error
 }
 
 // Reader returns io.ReaderCloser for the item at given path
-func (l *memory) Reader(ctx context.Context, path string) (io.ReadCloser, error) {
-	l.mutex.RLock()
-	go func() {
-		<-ctx.Done()
-		l.mutex.RUnlock()
-	}()
+func (l *memory) Reader(path string) (io.ReadCloser, error) {
+	l.mutex.Lock()
 
 	record, ok := l.records[path]
 	if !ok {
@@ -80,14 +84,13 @@ func (l *memory) Reader(ctx context.Context, path string) (io.ReadCloser, error)
 // Remove removes the item at given path
 func (l *memory) Remove(path string) error {
 	l.mutex.Lock()
-	defer l.mutex.Unlock()
 	l.records[path] = nil
 	return nil
 }
 
 func (l *memory) Stat(path string) (*ItemInfo, error) {
-	l.mutex.RLock()
-	defer l.mutex.RUnlock()
+	l.mutex.Lock()
+	defer l.mutex.Unlock()
 	var fileSize int
 	if item, ok := l.records[path]; ok {
 		fileSize = item.buf.Len()

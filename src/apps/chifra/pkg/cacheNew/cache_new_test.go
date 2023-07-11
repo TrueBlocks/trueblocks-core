@@ -124,7 +124,7 @@ func Example() {
 
 	// Output:
 	// 4436721
-	// &{BlockNumber:4436721 Date: Name:Test block Timestamp:1688667358 raw:<nil>}
+	// &{BlockNumber:4436721 Date: Name:Test block Timestamp:1688667358}
 }
 
 func ExampleCacheMarshaler() {
@@ -175,5 +175,5 @@ func ExampleCacheMarshaler() {
 
 	// Output:
 	// 1688667358
-	// &{BlockNumber:17636511 Date: Name:Nice Block Timestamp:1688667358 raw:<nil>}
+	// &{BlockNumber:17636511 Date: Name:Nice Block Timestamp:1688667358}
 }
