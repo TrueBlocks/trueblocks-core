@@ -119,7 +119,7 @@ func (opts *BlocksOptions) validateBlocks() error {
 			}
 		}
 
-		if opts.Cache {
+		if opts.Cache && !opts.Hashes {
 			return validate.Usage("The {0} option is temporarily disabled", "--cache")
 		}
 	}

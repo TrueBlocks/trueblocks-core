@@ -223,7 +223,7 @@ func (s *SimpleBlock[Tx]) CacheLocation() (directory string, extension string) {
 	return
 }
 
-func (s *SimpleBlock[string]) MarshalCache(writer io.Writer) (err error) {
+func (s *SimpleBlock[Tx]) MarshalCache(writer io.Writer) (err error) {
 	if err = binary.WriteValue(writer, s.GasLimit); err != nil {
 		return err
 	}
@@ -252,7 +252,19 @@ func (s *SimpleBlock[string]) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	if err = binary.WriteValue(writer, s.Transactions); err != nil {
+	// We only cache transaction hashes (not transaction structs), so if
+	// s.Transactions is []SimpleTransaction, we have to extract them
+	var txHashes []string
+	switch v := any(s.Transactions).(type) {
+	case []string:
+		txHashes = v
+	case []SimpleTransaction:
+		txHashes = make([]string, 0, len(s.Transactions))
+		for _, tx := range v {
+			txHashes = append(txHashes, tx.Hash.Hex())
+		}
+	}
+	if err = binary.WriteValue(writer, txHashes); err != nil {
 		return err
 	}
 
