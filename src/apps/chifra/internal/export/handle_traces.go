@@ -7,14 +7,14 @@ package exportPkg
 import (
 	"context"
 	"fmt"
-	"strings"
+	"os"
+	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -24,7 +24,7 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 	testMode := opts.Globals.TestMode
 	filter := monitor.NewFilter(
 		chain,
-		true, // should we actually avoid reading timestamp if possible for all unless verbose?
+		opts.Globals.Verbose,
 		opts.Reversed,
 		!testMode,
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
@@ -33,50 +33,18 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
-		visitAppearance := func(app *types.SimpleAppearance) error {
-			raw := types.RawAppearance{
-				Address:          app.Address.Hex(),
-				BlockNumber:      uint32(app.BlockNumber),
-				TransactionIndex: uint32(app.TransactionIndex),
-			}
-			if tx, err := rpcClient.GetTransactionByAppearance(chain, &raw, true); err != nil {
-				errorChan <- err
-				return nil
-			} else {
-				matchesFourByte := len(opts.Fourbytes) == 0 // either there is no four bytes...
-				for _, fb := range opts.Fourbytes {
-					if strings.HasPrefix(tx.Input, fb) {
-						matchesFourByte = true // ... or the four bytes match
-					}
-				}
-				if matchesFourByte {
-					for _, trace := range tx.Traces {
-						trace := trace
-						isCreate := trace.Action.CallType == "creation" || trace.TraceType == "create"
-						if !opts.Factory || isCreate {
-							if opts.Articulate {
-								if err = abiCache.ArticulateTrace(chain, &trace); err != nil {
-									errorChan <- err // continue even on error
-								}
-							}
-							modelChan <- &trace
-						}
-					}
-				}
-				return nil
-			}
-		}
-
 		for _, mon := range monitorArray {
-			if apps, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
+			if theMap, cnt, err := monitor.ReadAppearancesToMap[types.SimpleTransaction](&mon, filter); err != nil {
 				errorChan <- err
 				return
 			} else if !opts.NoZero || cnt > 0 {
-				for _, app := range apps {
-					app := app
-					if err := visitAppearance(&app); err != nil {
-						errorChan <- err
-						return
+				if items, err := opts.readTraces(&mon, theMap, abiCache); err != nil {
+					errorChan <- err
+					continue
+				} else {
+					for _, item := range items {
+						item := item
+						modelChan <- item
 					}
 				}
 			} else {
@@ -87,21 +55,60 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 	}
 
 	extra := map[string]interface{}{
-		"articulate": opts.Articulate,
 		"testMode":   testMode,
+		"articulate": opts.Articulate,
 		"export":     true,
 	}
 
 	if opts.Globals.Verbose || opts.Globals.Format == "json" {
 		parts := names.Custom | names.Prefund | names.Regular
-		namesMap, err := names.LoadNamesMap(chain, parts, nil)
-		if err != nil {
+		if namesMap, err := names.LoadNamesMap(chain, parts, nil); err != nil {
 			return err
+		} else {
+			extra["namesMap"] = namesMap
 		}
-		extra["namesMap"] = namesMap
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+}
+
+func (opts *ExportOptions) readTraces(mon *monitor.Monitor, theMap map[types.SimpleAppearance]*types.SimpleTransaction, abiCache *articulate.AbiCache) ([]*types.SimpleTrace, error) {
+	chain := opts.Globals.Chain
+	if err := opts.readTransactions(mon, theMap, true); err != nil {
+		return nil, err
+	}
+
+	// Sort the items back into an ordered array by block number
+	items := make([]*types.SimpleTrace, 0, len(theMap))
+	for _, v := range theMap {
+		for index, trace := range v.Traces {
+			trace := trace
+			trace.TraceIndex = uint64(index)
+			isCreate := trace.Action.CallType == "creation" || trace.TraceType == "create"
+			if !opts.Factory || isCreate {
+				if opts.Articulate {
+					if err := abiCache.ArticulateTrace(chain, &trace); err != nil {
+						fmt.Fprintf(os.Stderr, "error articulating trace: %v\n", err)
+					}
+				}
+				items = append(items, &trace)
+			}
+		}
+	}
+	sort.Slice(items, func(i, j int) bool {
+		itemI := items[i]
+		itemJ := items[j]
+		if itemI.BlockNumber == itemJ.BlockNumber {
+			if itemI.TransactionIndex == itemJ.TransactionIndex {
+				return itemI.TraceIndex < itemJ.TraceIndex
+			}
+			return itemI.TransactionIndex < itemJ.TransactionIndex
+		}
+		return itemI.BlockNumber < itemJ.BlockNumber
+	})
+
+	// Return the array of items
+	return items, nil
 }
 
 /*

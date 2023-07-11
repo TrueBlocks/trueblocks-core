@@ -1,3 +1,7 @@
+// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+
 package exportPkg
 
 import (
@@ -35,18 +39,18 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 				errorChan <- err
 				return
 			} else if !opts.NoZero || cnt > 0 {
-				if balances, err := opts.readBalances(&mon, theMap); err != nil {
+				if items, err := opts.readBalances(&mon, theMap); err != nil {
 					errorChan <- err
 					continue
 				} else {
 					prevBalance, _ := rpcClient.GetBalanceAt(chain, mon.Address, filter.GetOuterBounds().First)
-					for index, bal := range balances {
-						bal := bal
-						bal.PriorBalance = *prevBalance
-						if opts.Globals.Verbose || index == 0 || bal.PriorBalance.Cmp(&bal.Balance) != 0 {
-							bal.Diff = *big.NewInt(0).Sub(&bal.Balance, &bal.PriorBalance)
-							modelChan <- bal
-							prevBalance = &bal.Balance
+					for index, item := range items {
+						item := item
+						item.PriorBalance = *prevBalance
+						if opts.Globals.Verbose || index == 0 || item.PriorBalance.Cmp(&item.Balance) != 0 {
+							item.Diff = *big.NewInt(0).Sub(&item.Balance, &item.PriorBalance)
+							modelChan <- item
+							prevBalance = &item.Balance
 						}
 					}
 				}
@@ -57,16 +61,19 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 		}
 	}
 
-	nameParts := names.Custom | names.Prefund | names.Regular
-	namesMap, err := names.LoadNamesMap(chain, nameParts, nil)
-	if err != nil {
-		return err
-	}
-
 	extra := map[string]interface{}{
 		"testMode": testMode,
-		"namesMap": namesMap,
+		"export":   true,
 		"parts":    []string{"blockNumber", "date", "holder", "balance", "diff", "units"},
+	}
+
+	if opts.Globals.Verbose || opts.Globals.Format == "json" {
+		parts := names.Custom | names.Prefund | names.Regular
+		if namesMap, err := names.LoadNamesMap(chain, parts, nil); err != nil {
+			return err
+		} else {
+			extra["namesMap"] = namesMap
+		}
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
@@ -78,16 +85,16 @@ func (opts *ExportOptions) readBalances(mon *monitor.Monitor, theMap map[types.S
 	var bar = logger.NewBar(mon.Address.Hex(), showProgress, mon.Count())
 
 	// This is called concurrently, once for each appearance
-	iterFunc := func(key types.SimpleAppearance, value *types.SimpleTokenBalance) error {
-		if b, err := rpcClient.GetBalanceAt(chain, mon.Address, uint64(key.BlockNumber)); err != nil {
+	iterFunc := func(app types.SimpleAppearance, value *types.SimpleTokenBalance) error {
+		if b, err := rpcClient.GetBalanceAt(chain, mon.Address, uint64(app.BlockNumber)); err != nil {
 			return err
 		} else {
 			value.Address = base.FAKE_ETH_ADDRESS
 			value.Holder = mon.Address
-			value.BlockNumber = uint64(key.BlockNumber)
-			value.TransactionIndex = uint64(key.TransactionIndex)
+			value.BlockNumber = uint64(app.BlockNumber)
+			value.TransactionIndex = uint64(app.TransactionIndex)
 			value.Balance = *b
-			value.Timestamp = key.Timestamp
+			value.Timestamp = app.Timestamp
 			bar.Tick()
 			return nil
 		}
@@ -103,15 +110,15 @@ func (opts *ExportOptions) readBalances(mon *monitor.Monitor, theMap map[types.S
 		bar.Finish(true)
 	}
 
-	// Sort the balances back into an ordered array by block number
-	balances := make([]*types.SimpleTokenBalance, 0, len(theMap))
+	// Sort the items back into an ordered array by block number
+	items := make([]*types.SimpleTokenBalance, 0, len(theMap))
 	for _, v := range theMap {
-		balances = append(balances, v)
+		items = append(items, v)
 	}
-	sort.Slice(balances, func(i, j int) bool {
-		return balances[i].BlockNumber < balances[j].BlockNumber
+	sort.Slice(items, func(i, j int) bool {
+		return items[i].BlockNumber < items[j].BlockNumber
 	})
 
-	// Return the array of balances
-	return balances, nil
+	// Return the array of items
+	return items, nil
 }

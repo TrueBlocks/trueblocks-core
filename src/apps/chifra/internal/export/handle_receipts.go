@@ -7,13 +7,13 @@ package exportPkg
 import (
 	"context"
 	"fmt"
+	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -32,41 +32,18 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawReceipt], errorChan chan error) {
-		visitAppearance := func(app *types.SimpleAppearance) error {
-			raw := types.RawAppearance{
-				Address:          app.Address.Hex(),
-				BlockNumber:      uint32(app.BlockNumber),
-				TransactionIndex: uint32(app.TransactionIndex),
-			}
-			if tx, err := rpcClient.GetTransactionByAppearance(chain, &raw, false); err != nil {
-				errorChan <- err
-				return nil
-			} else {
-				if tx.Receipt != nil {
-					if !opts.Globals.Verbose && opts.Globals.Format == "json" {
-						tx.Receipt.Logs = []types.SimpleLog{}
-					}
-					if opts.Articulate {
-						if err := abiCache.ArticulateReceipt(chain, tx.Receipt); err != nil {
-							errorChan <- err // continue even on error
-						}
-					}
-					modelChan <- tx.Receipt
-				}
-				return nil
-			}
-		}
-
 		for _, mon := range monitorArray {
-			if apps, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
+			if theMap, cnt, err := monitor.ReadAppearancesToMap[types.SimpleTransaction](&mon, filter); err != nil {
 				errorChan <- err
 				return
 			} else if !opts.NoZero || cnt > 0 {
-				for _, app := range apps {
-					app := app
-					if err := visitAppearance(&app); err != nil {
-						errorChan <- err
-						return
+				if items, err := opts.readReceipts(&mon, theMap, abiCache); err != nil {
+					errorChan <- err
+					continue
+				} else {
+					for _, item := range items {
+						item := item
+						modelChan <- item
 					}
 				}
 			} else {
@@ -77,19 +54,43 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 	}
 
 	extra := map[string]interface{}{
-		"articulate": opts.Articulate,
 		"testMode":   testMode,
+		"articulate": opts.Articulate,
 		"export":     true,
 	}
 
 	if opts.Globals.Verbose || opts.Globals.Format == "json" {
 		parts := names.Custom | names.Prefund | names.Regular
-		namesMap, err := names.LoadNamesMap(chain, parts, nil)
-		if err != nil {
+		if namesMap, err := names.LoadNamesMap(chain, parts, nil); err != nil {
 			return err
+		} else {
+			extra["namesMap"] = namesMap
 		}
-		extra["namesMap"] = namesMap
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+}
+
+func (opts *ExportOptions) readReceipts(mon *monitor.Monitor, theMap map[types.SimpleAppearance]*types.SimpleTransaction, abiCache *articulate.AbiCache) ([]*types.SimpleReceipt, error) {
+	if err := opts.readTransactions(mon, theMap, false); err != nil {
+		return nil, err
+	}
+
+	// Sort the items back into an ordered array by block number
+	items := make([]*types.SimpleReceipt, 0, len(theMap))
+	for _, v := range theMap {
+		if v.Receipt == nil {
+			continue
+		}
+		items = append(items, v.Receipt)
+	}
+	sort.Slice(items, func(i, j int) bool {
+		if items[i].BlockNumber == items[j].BlockNumber {
+			return items[i].TransactionIndex < items[j].TransactionIndex
+		}
+		return items[i].BlockNumber < items[j].BlockNumber
+	})
+
+	// Return the array of items
+	return items, nil
 }
