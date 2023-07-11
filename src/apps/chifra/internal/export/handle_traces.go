@@ -70,19 +70,19 @@ func (opts *ExportOptions) readTraces(
 	errorChan chan error,
 	abiCache *articulate.AbiCache,
 ) ([]*types.SimpleTrace, error) {
-	if theMap, cnt, err := monitor.ReadAppearancesToMap[types.SimpleTransaction](mon, filter); err != nil {
+	if txMap, cnt, err := monitor.ReadAppearancesToMap[types.SimpleTransaction](mon, filter); err != nil {
 		errorChan <- err
 		return nil, err
 	} else if !opts.NoZero || cnt > 0 {
 		chain := opts.Globals.Chain
-		if err := opts.readTransactions(mon, theMap, true); err != nil {
+		if err := opts.readTransactions(mon, txMap, true); err != nil {
 			return nil, err
 		}
 
 		// Sort the items back into an ordered array by block number
-		items := make([]*types.SimpleTrace, 0, len(theMap))
-		for _, v := range theMap {
-			for index, trace := range v.Traces {
+		items := make([]*types.SimpleTrace, 0, len(txMap))
+		for _, tx := range txMap {
+			for index, trace := range tx.Traces {
 				trace := trace
 				trace.TraceIndex = uint64(index)
 				isCreate := trace.Action.CallType == "creation" || trace.TraceType == "create"

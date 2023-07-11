@@ -76,7 +76,7 @@ func (opts *ExportOptions) readBalances(
 	filter *monitor.AppearanceFilter,
 	errorChan chan error,
 ) ([]*types.SimpleTokenBalance, error) {
-	if theMap, cnt, err := monitor.ReadAppearancesToMap[types.SimpleTokenBalance](mon, filter); err != nil {
+	if txMap, cnt, err := monitor.ReadAppearancesToMap[types.SimpleTokenBalance](mon, filter); err != nil {
 		errorChan <- err
 		return nil, err
 	} else if !opts.NoZero || cnt > 0 {
@@ -103,7 +103,7 @@ func (opts *ExportOptions) readBalances(
 		// Set up and interate over the map calling iterFunc for each appearance
 		errChan := make(chan error)
 		ctx := context.Background()
-		utils.IterateOverMap(ctx, errChan, theMap, iterFunc)
+		utils.IterateOverMap(ctx, errChan, txMap, iterFunc)
 		if stepErr := <-errChan; stepErr != nil {
 			return nil, stepErr
 		} else {
@@ -111,9 +111,9 @@ func (opts *ExportOptions) readBalances(
 		}
 
 		// Sort the items back into an ordered array by block number
-		items := make([]*types.SimpleTokenBalance, 0, len(theMap))
-		for _, v := range theMap {
-			items = append(items, v)
+		items := make([]*types.SimpleTokenBalance, 0, len(txMap))
+		for _, tx := range txMap {
+			items = append(items, tx)
 		}
 		sort.Slice(items, func(i, j int) bool {
 			return items[i].BlockNumber < items[j].BlockNumber
