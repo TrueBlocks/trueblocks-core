@@ -11,6 +11,7 @@ import (
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
@@ -100,16 +101,31 @@ func GetBlockByNumberWithTxs(chain string, bn uint64) (types.SimpleBlock[types.S
 }
 
 // GetBlockByNumber fetches the block with only transactions' hashes from the RPC
-func GetBlockByNumber(chain string, bn uint64) (types.SimpleBlock[string], error) {
+func GetBlockByNumber(chain string, bn uint64) (block types.SimpleBlock[string], err error) {
+	store, err := cacheNew.DefaultStore()
+	if err != nil {
+		return
+	}
+	block.BlockNumber = bn
+	if err = store.Read(&block, block.CacheId(), nil); err == nil {
+		// Success
+		return
+	}
+
 	block, rawBlock, err := loadBlock[string](chain, bn, false)
 	block.SetRaw(rawBlock) // may have failed, but it's ok
 	if err != nil {
 		return block, err
 	}
 
+	// TODO: this is empty
 	block.Transactions = make([]string, 0, len(rawBlock.Transactions))
 	for _, rawTx := range rawBlock.Transactions {
 		block.Transactions = append(block.Transactions, fmt.Sprint(rawTx))
+	}
+
+	if err = store.Write(&block, nil); err != nil {
+		return
 	}
 
 	return block, nil

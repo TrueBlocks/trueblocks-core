@@ -10,9 +10,12 @@ package types
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"io"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/binary"
 )
 
 type BlockTransaction interface {
@@ -198,4 +201,98 @@ func (s *SimpleBlock[Tx]) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
+func (s *SimpleBlock[Tx]) CacheName() string {
+	return "Block"
+}
+
+func (s *SimpleBlock[Tx]) CacheId() string {
+	return fmt.Sprintf("%09d", s.BlockNumber)
+}
+
+func (s *SimpleBlock[Tx]) CacheLocation() (directory string, extension string) {
+	extension = "bin"
+
+	// TODO: move somewhere else
+	paddedBn := s.CacheId()
+
+	parts := make([]string, 3)
+	parts[0] = paddedBn[:2]
+	parts[1] = paddedBn[2:4]
+	parts[2] = paddedBn[4:6]
+	directory = filepath.Join("blocks", filepath.Join(parts...))
+	return
+}
+
+func (s *SimpleBlock[Tx]) MarshalCache(writer io.Writer) (err error) {
+	if err = binary.WriteValue(writer, s.GasLimit); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.GasUsed); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.Hash); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.BlockNumber); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.ParentHash); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.Miner); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.Difficulty); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.Timestamp); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, &s.BaseFeePerGas); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.Transactions); err != nil {
+		return err
+	}
+
+	return
+}
+
+func (s *SimpleBlock[Tx]) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	if err = binary.ReadValue(reader, &s.GasLimit, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.GasUsed, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.Hash, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.BlockNumber, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.ParentHash, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.Miner, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.Difficulty, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.Timestamp, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.BaseFeePerGas, version); err != nil {
+		return err
+	}
+
+	s.Transactions = make([]Tx, 0)
+	if err = binary.ReadValue(reader, &s.Transactions, version); err != nil {
+		return err
+	}
+
+	return
+}
+
 // EXISTING_CODE

@@ -14,6 +14,7 @@ import (
 	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/binary"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
@@ -296,6 +297,122 @@ func (s *SimpleTransaction) SetGasCost(receipt *SimpleReceipt) base.Gas {
 	}
 	s.GasCost = s.GasPrice * receipt.GasUsed
 	return s.GasCost
+}
+
+func (s *SimpleTransaction) MarshalCache(writer io.Writer) (err error) {
+	if err = binary.WriteValue(writer, s.Hash); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.BlockHash); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.BlockNumber); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.TransactionIndex); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.Nonce); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.Timestamp); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.From); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.To); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, &s.Value); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.Gas); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.GasPrice); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.MaxFeePerGas); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.MaxPriorityFeePerGas); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.Input); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.IsError); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.HasToken); err != nil {
+		return err
+	}
+
+	// TODO:
+	// Receipts
+	// Traces
+	// ArticulatedTx
+
+	return
+}
+
+func (s *SimpleTransaction) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	if err = binary.ReadValue(reader, &s.Hash, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.BlockHash, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.BlockNumber, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.TransactionIndex, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.Nonce, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.Timestamp, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.From, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.To, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.Value, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.Gas, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.GasPrice, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.MaxFeePerGas, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.MaxPriorityFeePerGas, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.Input, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.IsError, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.HasToken, version); err != nil {
+		return err
+	}
+
+	// TODO:
+	// Receipts
+	// Traces
+	// ArticulatedTx
+
+	return
 }
 
 // EXISTING_CODE
