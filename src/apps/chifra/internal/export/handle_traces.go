@@ -7,7 +7,6 @@ package exportPkg
 import (
 	"context"
 	"fmt"
-	"os"
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
@@ -34,30 +33,22 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if theMap, cnt, err := monitor.ReadAppearancesToMap[types.SimpleTransaction](&mon, filter); err != nil {
+			if items, err := opts.readTraces(monitorArray, &mon, filter, errorChan, abiCache); err != nil {
 				errorChan <- err
-				return
-			} else if !opts.NoZero || cnt > 0 {
-				if items, err := opts.readTraces(&mon, theMap, abiCache); err != nil {
-					errorChan <- err
-					continue
-				} else {
-					for _, item := range items {
-						item := item
-						modelChan <- item
-					}
-				}
-			} else {
-				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
 				continue
+			} else {
+				for _, item := range items {
+					item := item
+					modelChan <- item
+				}
 			}
 		}
 	}
 
 	extra := map[string]interface{}{
 		"testMode":   testMode,
-		"articulate": opts.Articulate,
 		"export":     true,
+		"articulate": opts.Articulate,
 	}
 
 	if opts.Globals.Verbose || opts.Globals.Format == "json" {
@@ -72,44 +63,57 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }
 
-func (opts *ExportOptions) readTraces(mon *monitor.Monitor, theMap map[types.SimpleAppearance]*types.SimpleTransaction, abiCache *articulate.AbiCache) ([]*types.SimpleTrace, error) {
-	chain := opts.Globals.Chain
-	if err := opts.readTransactions(mon, theMap, true); err != nil {
+func (opts *ExportOptions) readTraces(
+	monitorArray []monitor.Monitor,
+	mon *monitor.Monitor,
+	filter *monitor.AppearanceFilter,
+	errorChan chan error,
+	abiCache *articulate.AbiCache,
+) ([]*types.SimpleTrace, error) {
+	if theMap, cnt, err := monitor.ReadAppearancesToMap[types.SimpleTransaction](mon, filter); err != nil {
+		errorChan <- err
 		return nil, err
-	}
+	} else if !opts.NoZero || cnt > 0 {
+		chain := opts.Globals.Chain
+		if err := opts.readTransactions(mon, theMap, true); err != nil {
+			return nil, err
+		}
 
-	// Sort the items back into an ordered array by block number
-	items := make([]*types.SimpleTrace, 0, len(theMap))
-	for _, v := range theMap {
-		for index, trace := range v.Traces {
-			trace := trace
-			trace.TraceIndex = uint64(index)
-			isCreate := trace.Action.CallType == "creation" || trace.TraceType == "create"
-			if !opts.Factory || isCreate {
-				if opts.Articulate {
-					if err := abiCache.ArticulateTrace(chain, &trace); err != nil {
-						// TODO: BOGUS - we need the errorChan
-						fmt.Fprintf(os.Stderr, "error articulating trace: %v\n", err)
+		// Sort the items back into an ordered array by block number
+		items := make([]*types.SimpleTrace, 0, len(theMap))
+		for _, v := range theMap {
+			for index, trace := range v.Traces {
+				trace := trace
+				trace.TraceIndex = uint64(index)
+				isCreate := trace.Action.CallType == "creation" || trace.TraceType == "create"
+				if !opts.Factory || isCreate {
+					if opts.Articulate {
+						if err := abiCache.ArticulateTrace(chain, &trace); err != nil {
+							errorChan <- fmt.Errorf("error articulating trace: %v", err)
+						}
 					}
+					items = append(items, &trace)
 				}
-				items = append(items, &trace)
 			}
 		}
-	}
-	sort.Slice(items, func(i, j int) bool {
-		itemI := items[i]
-		itemJ := items[j]
-		if itemI.BlockNumber == itemJ.BlockNumber {
-			if itemI.TransactionIndex == itemJ.TransactionIndex {
-				return itemI.TraceIndex < itemJ.TraceIndex
+		sort.Slice(items, func(i, j int) bool {
+			itemI := items[i]
+			itemJ := items[j]
+			if itemI.BlockNumber == itemJ.BlockNumber {
+				if itemI.TransactionIndex == itemJ.TransactionIndex {
+					return itemI.TraceIndex < itemJ.TraceIndex
+				}
+				return itemI.TransactionIndex < itemJ.TransactionIndex
 			}
-			return itemI.TransactionIndex < itemJ.TransactionIndex
-		}
-		return itemI.BlockNumber < itemJ.BlockNumber
-	})
+			return itemI.BlockNumber < itemJ.BlockNumber
+		})
 
-	// Return the array of items
-	return items, nil
+		// Return the array of items
+		return items, nil
+	} else {
+		errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
+		return nil, nil
+	}
 }
 
 /*

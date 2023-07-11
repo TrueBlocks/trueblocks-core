@@ -101,7 +101,7 @@ func (opts *ExportOptions) validateExport() error {
 		if len(opts.Emitter) > 0 {
 			return validate.Usage("The {0} option is only available with the {1} option.", "--emitter", "--logs")
 		}
-		if len(opts.Topics) > 0 {
+		if !opts.Receipts && len(opts.Topics) > 0 {
 			return validate.Usage("You may only provide topics with the {0} option.", "--logs")
 		}
 		if len(opts.Topic) > 0 {

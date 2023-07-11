@@ -35,28 +35,20 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawTokenBalance], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if theMap, cnt, err := monitor.ReadAppearancesToMap[types.SimpleTokenBalance](&mon, filter); err != nil {
+			if items, err := opts.readBalances(&mon, filter, errorChan); err != nil {
 				errorChan <- err
-				return
-			} else if !opts.NoZero || cnt > 0 {
-				if items, err := opts.readBalances(&mon, theMap); err != nil {
-					errorChan <- err
-					continue
-				} else {
-					prevBalance, _ := rpcClient.GetBalanceAt(chain, mon.Address, filter.GetOuterBounds().First)
-					for index, item := range items {
-						item := item
-						item.PriorBalance = *prevBalance
-						if opts.Globals.Verbose || index == 0 || item.PriorBalance.Cmp(&item.Balance) != 0 {
-							item.Diff = *big.NewInt(0).Sub(&item.Balance, &item.PriorBalance)
-							modelChan <- item
-							prevBalance = &item.Balance
-						}
+				continue
+			} else {
+				prevBalance, _ := rpcClient.GetBalanceAt(chain, mon.Address, filter.GetOuterBounds().First)
+				for index, item := range items {
+					item := item
+					item.PriorBalance = *prevBalance
+					if opts.Globals.Verbose || index == 0 || item.PriorBalance.Cmp(&item.Balance) != 0 {
+						item.Diff = *big.NewInt(0).Sub(&item.Balance, &item.PriorBalance)
+						modelChan <- item
+						prevBalance = &item.Balance
 					}
 				}
-			} else {
-				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
-				continue
 			}
 		}
 	}
@@ -79,46 +71,58 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }
 
-func (opts *ExportOptions) readBalances(mon *monitor.Monitor, theMap map[types.SimpleAppearance]*types.SimpleTokenBalance) ([]*types.SimpleTokenBalance, error) {
-	chain := opts.Globals.Chain
-	showProgress := !opts.Globals.TestMode
-	var bar = logger.NewBar(mon.Address.Hex(), showProgress, mon.Count())
+func (opts *ExportOptions) readBalances(
+	mon *monitor.Monitor,
+	filter *monitor.AppearanceFilter,
+	errorChan chan error,
+) ([]*types.SimpleTokenBalance, error) {
+	if theMap, cnt, err := monitor.ReadAppearancesToMap[types.SimpleTokenBalance](mon, filter); err != nil {
+		errorChan <- err
+		return nil, err
+	} else if !opts.NoZero || cnt > 0 {
+		chain := opts.Globals.Chain
+		showProgress := !opts.Globals.TestMode
+		var bar = logger.NewBar(mon.Address.Hex(), showProgress, mon.Count())
 
-	// This is called concurrently, once for each appearance
-	iterFunc := func(app types.SimpleAppearance, value *types.SimpleTokenBalance) error {
-		if b, err := rpcClient.GetBalanceAt(chain, mon.Address, uint64(app.BlockNumber)); err != nil {
-			return err
-		} else {
-			value.Address = base.FAKE_ETH_ADDRESS
-			value.Holder = mon.Address
-			value.BlockNumber = uint64(app.BlockNumber)
-			value.TransactionIndex = uint64(app.TransactionIndex)
-			value.Balance = *b
-			value.Timestamp = app.Timestamp
-			bar.Tick()
-			return nil
+		// This is called concurrently, once for each appearance
+		iterFunc := func(app types.SimpleAppearance, value *types.SimpleTokenBalance) error {
+			if b, err := rpcClient.GetBalanceAt(chain, mon.Address, uint64(app.BlockNumber)); err != nil {
+				return err
+			} else {
+				value.Address = base.FAKE_ETH_ADDRESS
+				value.Holder = mon.Address
+				value.BlockNumber = uint64(app.BlockNumber)
+				value.TransactionIndex = uint64(app.TransactionIndex)
+				value.Balance = *b
+				value.Timestamp = app.Timestamp
+				bar.Tick()
+				return nil
+			}
 		}
-	}
 
-	// Set up and interate over the map calling iterFunc for each appearance
-	errChan := make(chan error)
-	ctx := context.Background()
-	utils.IterateOverMap(ctx, errChan, theMap, iterFunc)
-	if stepErr := <-errChan; stepErr != nil {
-		return nil, stepErr
+		// Set up and interate over the map calling iterFunc for each appearance
+		errChan := make(chan error)
+		ctx := context.Background()
+		utils.IterateOverMap(ctx, errChan, theMap, iterFunc)
+		if stepErr := <-errChan; stepErr != nil {
+			return nil, stepErr
+		} else {
+			bar.Finish(true)
+		}
+
+		// Sort the items back into an ordered array by block number
+		items := make([]*types.SimpleTokenBalance, 0, len(theMap))
+		for _, v := range theMap {
+			items = append(items, v)
+		}
+		sort.Slice(items, func(i, j int) bool {
+			return items[i].BlockNumber < items[j].BlockNumber
+		})
+
+		// Return the array of items
+		return items, nil
 	} else {
-		bar.Finish(true)
+		errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
+		return nil, nil
 	}
-
-	// Sort the items back into an ordered array by block number
-	items := make([]*types.SimpleTokenBalance, 0, len(theMap))
-	for _, v := range theMap {
-		items = append(items, v)
-	}
-	sort.Slice(items, func(i, j int) bool {
-		return items[i].BlockNumber < items[j].BlockNumber
-	})
-
-	// Return the array of items
-	return items, nil
 }
