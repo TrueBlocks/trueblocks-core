@@ -19,7 +19,7 @@ import (
 )
 
 func GetBlockHeaderByNumber(chain string, bn uint64) (types.SimpleBlock[string], error) {
-	return GetBlockByNumber(chain, bn)
+	return GetBlockByNumber(chain, bn, nil)
 }
 
 // GetBlockByNumberWithTxs fetches the block with transactions from the RPC.
@@ -101,15 +101,13 @@ func GetBlockByNumberWithTxs(chain string, bn uint64) (types.SimpleBlock[types.S
 }
 
 // GetBlockByNumber fetches the block with only transactions' hashes from the RPC
-func GetBlockByNumber(chain string, bn uint64) (block types.SimpleBlock[string], err error) {
-	store, err := cacheNew.DefaultStore()
-	if err != nil {
-		return
-	}
-	block.BlockNumber = bn
-	if err = store.Read(&block, block.CacheId(), nil); err == nil {
-		// Success
-		return
+func GetBlockByNumber(chain string, bn uint64, cache *cacheNew.Store) (block types.SimpleBlock[string], err error) {
+	if cache != nil {
+		block.BlockNumber = bn
+		if err = cache.Read(&block, block.CacheId(), nil); err == nil {
+			// Success
+			return
+		}
 	}
 
 	block, rawBlock, err := loadBlock[string](chain, bn, false)
@@ -118,14 +116,15 @@ func GetBlockByNumber(chain string, bn uint64) (block types.SimpleBlock[string],
 		return block, err
 	}
 
-	// TODO: this is empty
 	block.Transactions = make([]string, 0, len(rawBlock.Transactions))
 	for _, rawTx := range rawBlock.Transactions {
 		block.Transactions = append(block.Transactions, fmt.Sprint(rawTx))
 	}
 
-	if err = store.Write(&block, nil); err != nil {
-		return
+	if cache != nil {
+		if err = cache.Write(&block, nil); err != nil {
+			return
+		}
 	}
 
 	return block, nil

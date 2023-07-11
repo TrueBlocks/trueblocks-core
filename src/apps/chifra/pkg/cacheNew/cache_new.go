@@ -61,10 +61,15 @@ func (s *StoreOptions) location() (loc Storer, err error) {
 	return
 }
 
-func (s *StoreOptions) rootDir() string {
+func (s *StoreOptions) rootDir() (dir string) {
 	if s == nil {
+		dir = config.GetPathToCache(config.GetDefaultChain())
+	} else if s.RootDir == "" {
+		dir = config.GetPathToCache(s.Chain)
+	}
+	if dir != "" {
 		// TODO: v1 suffix
-		return config.GetPathToCache(config.GetDefaultChain()) + "/v1"
+		return dir + "/v1"
 	}
 	return s.RootDir
 }
