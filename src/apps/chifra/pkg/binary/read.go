@@ -17,8 +17,7 @@ func read(reader io.Reader, value any) (err error) {
 func ReadValue(reader io.Reader, value any, version uint64) (err error) {
 	unmarshaler, ok := value.(CacheUnmarshaler)
 	if ok {
-		// TODO: fix version
-		return unmarshaler.UnmarshalCache(uint64(41000), reader)
+		return unmarshaler.UnmarshalCache(version, reader)
 	}
 
 	// binary.Read takes care of slices of fixed-size types, e.g. []uint8,
