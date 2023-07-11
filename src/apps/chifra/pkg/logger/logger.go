@@ -145,23 +145,26 @@ func PctProgress(done int32, total int, tick int32) {
 }
 
 type ProgressBar struct {
+	prefix  string // the string to display first
 	percent int64  // progress percentage
 	cur     int64  // current progress
 	total   int64  // total value for progress
 	graph   string // the actual progress bar to be printed
 	ch      string // the fill value for progress bar
+	enabled bool   // enable progress bar
 }
 
-func NewBar(total int64) (bar *ProgressBar) {
-	return NewBarWithGraphic(total, ".")
+func NewBar(prefix string, enabled bool, total int64) (bar *ProgressBar) {
+	return NewBarWithGraphic(prefix, enabled, total, ".")
 }
 
-func NewBarWithGraphic(total int64, ch string) (bar *ProgressBar) {
+func NewBarWithGraphic(prefix string, enabled bool, total int64, ch string) (bar *ProgressBar) {
 	if ch == "" {
 		ch = "."
 	}
 
 	bar = new(ProgressBar)
+	bar.prefix = prefix
 	bar.cur = 0
 	bar.total = total
 	bar.ch = ch
@@ -169,10 +172,35 @@ func NewBarWithGraphic(total int64, ch string) (bar *ProgressBar) {
 	for i := 0; i < int(bar.percent); i += 2 {
 		bar.graph += bar.ch // initial progress position
 	}
+	bar.enabled = enabled
 	return bar
 }
 
+func (bar *ProgressBar) Tick() {
+	atomic.AddInt64(&bar.cur, 1)
+	bar.display()
+}
+
+func (bar *ProgressBar) Finish(newLine bool) {
+	if !bar.enabled {
+		return
+	}
+
+	bar.graph = ""
+	for i := 0; i < 100; i += 2 {
+		bar.graph += bar.ch
+	}
+	bar.display()
+	if newLine {
+		fmt.Fprintf(os.Stderr, "\n")
+	}
+}
+
 func (bar *ProgressBar) display() {
+	if !bar.enabled {
+		return
+	}
+
 	last := bar.percent
 	if bar.total == 0 {
 		bar.percent = 99
@@ -190,21 +218,14 @@ func (bar *ProgressBar) display() {
 		now := time.Now()
 		timeDatePart = now.Format("02-01|15:04:05.000")
 	}
-	fmt.Fprintf(os.Stderr, "\r%s[%s] [%-50s]%3d%% %6d/%d", severityToLabel[progress], timeDatePart, bar.graph, bar.percent, bar.cur, bar.total)
-}
-
-func (bar *ProgressBar) Tick() {
-	atomic.AddInt64(&bar.cur, 1)
-	bar.display()
-}
-
-func (bar *ProgressBar) Finish(newLine bool) {
-	bar.graph = ""
-	for i := 0; i < 100; i += 2 {
-		bar.graph += bar.ch
-	}
-	bar.display()
-	if newLine {
-		fmt.Fprintf(os.Stderr, "\n")
-	}
+	fmt.Fprintf(os.Stderr, "\r%s[%s] [%s%-50s%s]%3d%% %5d/% 5d %s\r",
+		severityToLabel[progress],
+		timeDatePart,
+		colors.BrightGreen,
+		bar.graph,
+		colors.Off,
+		bar.percent,
+		bar.cur,
+		bar.total,
+		colors.BrightGreen+bar.prefix+colors.Off)
 }

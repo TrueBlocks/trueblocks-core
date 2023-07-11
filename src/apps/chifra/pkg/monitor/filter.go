@@ -25,7 +25,7 @@ type AppearanceFilter struct {
 	recordRange base.RecordRange
 	outerBounds base.BlockRange
 	logging     bool
-	verbose     bool
+	readTs      bool
 	nSeen       int64
 	nExported   uint64
 	currentBn   uint32
@@ -33,7 +33,7 @@ type AppearanceFilter struct {
 	sortBy      AppearanceSort
 }
 
-func NewFilter(chain string, verbose, reversed, logging bool, exportRange base.BlockRange, recordRange base.RecordRange) *AppearanceFilter {
+func NewFilter(chain string, readTs, reversed, logging bool, exportRange base.BlockRange, recordRange base.RecordRange) *AppearanceFilter {
 	sortBy := Sorted
 	if reversed {
 		sortBy = Reversed
@@ -45,7 +45,7 @@ func NewFilter(chain string, verbose, reversed, logging bool, exportRange base.B
 		recordRange: recordRange,
 		outerBounds: base.BlockRange{First: 0, Last: utils.NOPOS},
 		logging:     logging,
-		verbose:     verbose,
+		readTs:      readTs,
 		nSeen:       -1,
 		sortBy:      sortBy,
 	}
@@ -143,7 +143,7 @@ func (mon *Monitor) ReadAndFilterAppearances(filter *AppearanceFilter) (apps []t
 				TransactionIndex: uint32(app.TransactionId),
 				Timestamp:        utils.NOPOSI,
 			}
-			if filter.verbose {
+			if filter.readTs {
 				s.Timestamp = filter.GetTimestamp(filter.chain, app.BlockNumber)
 			}
 			apps = append(apps, s)
@@ -175,6 +175,5 @@ func (f *AppearanceFilter) passes(address base.Address, app *index.AppearanceRec
 	}
 
 	f.nExported++
-	logger.Progress(f.logging && f.nSeen%723 == 0, "Processing: ", address.Hex(), " ", app.BlockNumber, ".", app.TransactionId)
 	return true, false
 }
