@@ -54,13 +54,12 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 					}
 				}
 
-				errorChan2 := make(chan error)
-				utils.IterateOverMap(ctx, errorChan2, theMap, iterFunc)
-				if stepErr := <-errorChan2; stepErr != nil {
+				errChan := make(chan error)
+				utils.IterateOverMap(ctx, errChan, theMap, iterFunc)
+				if stepErr := <-errChan; stepErr != nil {
 					errorChan <- stepErr
 					return
-				}
-				if !testMode {
+				} else if !testMode {
 					bar.Finish(true)
 				}
 
