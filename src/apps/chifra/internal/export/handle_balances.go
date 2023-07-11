@@ -34,7 +34,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 			if index == 0 || opts.Globals.Verbose || bal.PriorBalance.Cmp(&bal.Balance) != 0 {
 				diff := big.NewInt(0).Sub(&bal.Balance, &bal.PriorBalance)
 				tb := types.SimpleTokenBalance{
-					Holder:           bal.Address,
+					Holder:           bal.Holder,
 					BlockNumber:      bal.BlockNumber,
 					TransactionIndex: bal.TransactionIndex,
 					Timestamp:        bal.Timestamp,
@@ -58,7 +58,8 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 						errorChan <- err
 						return err
 					} else {
-						value.Address = mon.Address
+						value.Address = base.FAKE_ETH_ADDRESS
+						value.Holder = mon.Address
 						value.BlockNumber = uint64(key.BlockNumber)
 						value.TransactionIndex = uint64(key.TransactionIndex)
 						value.Balance = *b
@@ -76,6 +77,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 					errorChan <- stepErr
 					return
 				}
+
 				if !testMode {
 					bar.Finish(true)
 				}
