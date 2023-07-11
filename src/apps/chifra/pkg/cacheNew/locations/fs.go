@@ -2,6 +2,7 @@ package locations
 
 import (
 	"context"
+	"errors"
 	"io"
 	"os"
 	"path/filepath"
@@ -33,13 +34,14 @@ func (l *fileSystem) Writer(ctx context.Context, path string) (io.WriteCloser, e
 		return nil, err
 	}
 
-	output, err := os.OpenFile(path, os.O_WRONLY|os.O_TRUNC|os.O_CREATE, FS_PERMISSIONS)
+	// output, err := os.OpenFile(path, os.O_WRONLY|os.O_TRUNC|os.O_CREATE, FS_PERMISSIONS)
+	output, err := file.WaitOnLock(path, os.O_WRONLY|os.O_TRUNC|os.O_CREATE)
 	if err != nil {
 		return nil, err
 	}
-	if err := file.Lock(output); err != nil {
-		return nil, err
-	}
+	// if err := file.Lock(output); err != nil {
+	// 	return nil, err
+	// }
 
 	// We unlock file when the caller is done
 	go func() {
@@ -56,13 +58,17 @@ func (l *fileSystem) Reader(ctx context.Context, path string) (io.ReadCloser, er
 		return nil, err
 	}
 
-	input, err := os.OpenFile(path, os.O_RDONLY|os.O_CREATE, FS_PERMISSIONS)
+	// input, err := os.OpenFile(path, os.O_RDONLY|os.O_CREATE, FS_PERMISSIONS)
+	input, err := file.WaitOnLock(path, os.O_RDWR)
 	if err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			return nil, ErrNotFound
+		}
 		return nil, err
 	}
-	if err := file.Lock(input); err != nil {
-		return nil, err
-	}
+	// if err := file.WaitOnLock(path, os.O_RDONLY); err != nil {
+	// 	return nil, err
+	// }
 
 	// We unlock file when the caller is done
 	go func() {
