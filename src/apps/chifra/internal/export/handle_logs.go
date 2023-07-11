@@ -39,7 +39,7 @@ func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
 				errorChan <- err
 				return
 			} else if !opts.NoZero || cnt > 0 {
-				if items, err := opts.readLogs(&mon, theMap, abiCache); err != nil {
+				if items, err := opts.readLogs(monitorArray, &mon, theMap, abiCache); err != nil {
 					errorChan <- err
 					continue
 				} else {
