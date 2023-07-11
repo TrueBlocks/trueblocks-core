@@ -104,7 +104,7 @@ func GetBlockByNumberWithTxs(chain string, bn uint64) (types.SimpleBlock[types.S
 func GetBlockByNumber(chain string, bn uint64, cache *cacheNew.Store) (block types.SimpleBlock[string], err error) {
 	if cache != nil {
 		block.BlockNumber = bn
-		if err = cache.Read(&block, block.CacheId(), nil); err == nil {
+		if err = cache.Read(&block, nil); err == nil {
 			// Success
 			return
 		}

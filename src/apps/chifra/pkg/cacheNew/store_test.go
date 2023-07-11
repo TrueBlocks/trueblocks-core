@@ -59,8 +59,10 @@ func TestStoreWrite(t *testing.T) {
 	}
 
 	// Retrieve the same value
-	result := new(testStoreData)
-	if err := cacheStore.Read(result, "1", nil); err != nil {
+	result := &testStoreData{
+		Id: "1",
+	}
+	if err := cacheStore.Read(result, nil); err != nil {
 		t.Fatal(err)
 	}
 	if result.Value != value.Value {

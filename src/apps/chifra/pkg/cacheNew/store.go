@@ -37,19 +37,13 @@ func DefaultStore() (*Store, error) {
 	return defaultStore, err
 }
 
-func (s *Store) resolvePath(value Locator, id string) (resolved string, err error) {
+func (s *Store) resolvePath(value Locator) (resolved string, err error) {
 	if cachedPath, ok := s.resolvedPaths[value]; ok {
 		return cachedPath, nil
 	}
 
-	if id == "" {
-		id = value.CacheId()
-	}
+	id := value.CacheId()
 	directory, extension := value.CacheLocation()
-	if id == "" {
-		err = errors.New("empty CacheId")
-		return
-	}
 	if directory == "" || extension == "" {
 		err = errors.New("empty CacheLocation")
 		return
@@ -65,7 +59,7 @@ type WriteOptions interface{}
 // then FileSystem is used. The value has to implement Locator interface, which
 // provides information about in-cache path and ID.
 func (s *Store) Write(value Locator, options *WriteOptions) (err error) {
-	itemPath, err := s.resolvePath(value, "")
+	itemPath, err := s.resolvePath(value)
 	if err != nil {
 		return
 	}
@@ -89,11 +83,11 @@ func (s *Store) Write(value Locator, options *WriteOptions) (err error) {
 // Read options that we might need in the future
 type ReadOptions interface{}
 
-// Read retrieves value of ID id from a location defined by options.Location. If options is nil,
+// Read retrieves value from a location defined by options.Location. If options is nil,
 // then FileSystem is used. The value has to implement Locator interface, which
 // provides information about in-cache path
-func (s *Store) Read(value Locator, id string, options *ReadOptions) (err error) {
-	itemPath, err := s.resolvePath(value, id)
+func (s *Store) Read(value Locator, options *ReadOptions) (err error) {
+	itemPath, err := s.resolvePath(value)
 	if err != nil {
 		return
 	}
@@ -114,7 +108,7 @@ func (s *Store) Read(value Locator, id string, options *ReadOptions) (err error)
 }
 
 func (s *Store) Stat(value Locator) (result *locations.ItemInfo, err error) {
-	itemPath, err := s.resolvePath(value, "")
+	itemPath, err := s.resolvePath(value)
 	if err != nil {
 		return
 	}
@@ -122,7 +116,7 @@ func (s *Store) Stat(value Locator) (result *locations.ItemInfo, err error) {
 }
 
 func (s *Store) Remove(value Locator) error {
-	itemPath, err := s.resolvePath(value, "")
+	itemPath, err := s.resolvePath(value)
 	if err != nil {
 		return err
 	}

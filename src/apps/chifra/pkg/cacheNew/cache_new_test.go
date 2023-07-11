@@ -115,8 +115,10 @@ func Example() {
 		panic(err)
 	}
 
-	readFromCache := new(ExampleBlock)
-	if err := cacheStore.Read(readFromCache, "4436721", nil); err != nil {
+	readFromCache := &ExampleBlock{
+		BlockNumber: 4436721,
+	}
+	if err := cacheStore.Read(readFromCache, nil); err != nil {
 		panic(err)
 	}
 
