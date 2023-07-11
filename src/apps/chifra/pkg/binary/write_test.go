@@ -102,6 +102,32 @@ func TestWriteValue(t *testing.T) {
 	if marshalResult != expectedMarshalValue {
 		t.Fatal("unmarshal wrong value", marshalResult)
 	}
+
+	buf.Reset()
+	expectedMarshalerSlice := []CacheMarshaler{
+		&testMarshaler{"10"},
+		&testMarshaler{"21"},
+	}
+	if err := WriteValue(buf, expectedMarshalerSlice); err != nil {
+		t.Fatal(err)
+	}
+	if err := binary.Read(buf, binary.LittleEndian, &sliceSize); err != nil {
+		t.Fatal(err)
+	}
+	marshalerSliceValue := make([]int32, 0, sliceSize)
+	for range expectedMarshalerSlice {
+		var value int32
+		if err := binary.Read(buf, binary.LittleEndian, &value); err != nil {
+			t.Fatal(err)
+		}
+		marshalerSliceValue = append(marshalerSliceValue, value)
+	}
+	if len(marshalerSliceValue) != len(expectedMarshalerSlice) {
+		t.Fatal("marshaler slice wrong len")
+	}
+	if !reflect.DeepEqual(marshalerSliceValue, []int32{10, 21}) {
+		t.Fatal("string slice wrong value", marshalerSliceValue)
+	}
 }
 
 func TestWriteBigInt(t *testing.T) {

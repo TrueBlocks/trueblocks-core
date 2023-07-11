@@ -24,15 +24,15 @@ func WriteValue(writer io.Writer, value any) (err error) {
 
 	// binary.Write takes care of slices of fixed-size types, e.g. []uint8,
 	// so we only have to support []string, []big.Int and []CacheUnmarshaler
-	strSlice, ok := any(value).([]string)
+	strSlice, ok := value.([]string)
 	if ok {
 		return WriteSlice(writer, strSlice)
 	}
-	bigSlice, ok := any(value).([]big.Int)
+	bigSlice, ok := value.([]big.Int)
 	if ok {
 		return WriteSlice(writer, bigSlice)
 	}
-	cacheMarshalerSlice, ok := any(value).([]CacheMarshaler)
+	cacheMarshalerSlice, ok := value.([]CacheMarshaler)
 	if ok {
 		return WriteSlice(writer, cacheMarshalerSlice)
 	}

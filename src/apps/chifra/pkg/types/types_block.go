@@ -223,7 +223,7 @@ func (s *SimpleBlock[Tx]) CacheLocation() (directory string, extension string) {
 	return
 }
 
-func (s *SimpleBlock[Tx]) MarshalCache(writer io.Writer) (err error) {
+func (s *SimpleBlock[string]) MarshalCache(writer io.Writer) (err error) {
 	if err = binary.WriteValue(writer, s.GasLimit); err != nil {
 		return err
 	}
@@ -251,6 +251,7 @@ func (s *SimpleBlock[Tx]) MarshalCache(writer io.Writer) (err error) {
 	if err = binary.WriteValue(writer, &s.BaseFeePerGas); err != nil {
 		return err
 	}
+
 	if err = binary.WriteValue(writer, s.Transactions); err != nil {
 		return err
 	}
@@ -258,7 +259,7 @@ func (s *SimpleBlock[Tx]) MarshalCache(writer io.Writer) (err error) {
 	return
 }
 
-func (s *SimpleBlock[Tx]) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *SimpleBlock[string]) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	if err = binary.ReadValue(reader, &s.GasLimit, version); err != nil {
 		return err
 	}
@@ -287,7 +288,7 @@ func (s *SimpleBlock[Tx]) UnmarshalCache(version uint64, reader io.Reader) (err 
 		return err
 	}
 
-	s.Transactions = make([]Tx, 0)
+	s.Transactions = make([]string, 0)
 	if err = binary.ReadValue(reader, &s.Transactions, version); err != nil {
 		return err
 	}
