@@ -30,23 +30,6 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawTokenBalance], errorChan chan error) {
-		visitAppearance := func(index int, bal *types.SimpleTokenBalance) (*big.Int, error) {
-			if index == 0 || opts.Globals.Verbose || bal.PriorBalance.Cmp(&bal.Balance) != 0 {
-				diff := big.NewInt(0).Sub(&bal.Balance, &bal.PriorBalance)
-				tb := types.SimpleTokenBalance{
-					Holder:           bal.Holder,
-					BlockNumber:      bal.BlockNumber,
-					TransactionIndex: bal.TransactionIndex,
-					Timestamp:        bal.Timestamp,
-					Diff:             *diff,
-					Balance:          bal.Balance,
-				}
-				modelChan <- &tb
-				bal.PriorBalance = bal.Balance
-			}
-			return &bal.PriorBalance, nil
-		}
-
 		for _, mon := range monitorArray {
 			var bar = logger.NewBar(mon.Count())
 			if theMap, cnt, err := monitor.ReadAppearancesToMap[types.SimpleTokenBalance](&mon, filter); err != nil {
@@ -77,7 +60,6 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 					errorChan <- stepErr
 					return
 				}
-
 				if !testMode {
 					bar.Finish(true)
 				}
@@ -90,14 +72,15 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 					return balances[i].BlockNumber < balances[j].BlockNumber
 				})
 
-				prevBal, _ := rpcClient.GetBalanceAt(chain, mon.Address, filter.GetOuterBounds().First)
-				for i, bal := range balances {
+				prevBalance, _ := rpcClient.GetBalanceAt(chain, mon.Address, filter.GetOuterBounds().First)
+				for index, bal := range balances {
 					bal := bal
-					bal.PriorBalance = *prevBal
-					if prevBal, err = visitAppearance(i, bal); err != nil {
-						errorChan <- err
-						return
+					bal.PriorBalance = *prevBalance
+					if opts.Globals.Verbose || index == 0 || bal.PriorBalance.Cmp(&bal.Balance) != 0 {
+						bal.Diff = *big.NewInt(0).Sub(&bal.Balance, &bal.PriorBalance)
+						modelChan <- bal
 					}
+					prevBalance = &bal.Balance
 				}
 			} else {
 				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
