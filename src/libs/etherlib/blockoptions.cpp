@@ -316,9 +316,3 @@ bool parseFourbyteList(COptionsBase* opt, CFourbyteArray& fourbytes, const strin
     fourbytes.push_back(toLower(str_2_Fourbyte(argIn)));
     return true;
 }
-
-//--------------------------------------------------------------------------------
-bool parseStringList2(COptionsBase* opt, CStringArray& strings, const string& argIn) {
-    strings.push_back(argIn);
-    return true;
-}
