@@ -55,6 +55,7 @@ func init() {
 	receiptsCmd.Flags().SortFlags = false
 
 	receiptsCmd.Flags().BoolVarP(&receiptsPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
+	receiptsCmd.Flags().BoolVarP(&receiptsPkg.GetOptions().Cache, "cache", "o", false, "write the results of the query into the cache")
 	globals.InitGlobals(receiptsCmd, &receiptsPkg.GetOptions().Globals)
 
 	receiptsCmd.SetUsageTemplate(UsageWithNotes(notesReceipts))
