@@ -30,6 +30,7 @@ func (opts *ReceiptsOptions) HandleShowReceipts() error {
 			// This is called concurrently, once for each appearance
 			iterCtx, iterCancel := context.WithCancel(context.Background())
 			defer iterCancel()
+
 			iterFunc := func(app identifiers.ResolvedId, value *types.SimpleReceipt) error {
 				if receipt, err := rpcClient.GetTransactionReceipt(opts.Globals.Chain, rpcClient.ReceiptQuery{
 					Bn:      app.BlockNumber,
@@ -62,7 +63,9 @@ func (opts *ReceiptsOptions) HandleShowReceipts() error {
 			// Sort the items back into an ordered array by block number
 			items := make([]*types.SimpleReceipt, 0, len(appMap))
 			for _, r := range appMap {
-				items = append(items, r)
+				if r.BlockNumber != 0 { // TODO: this is needed because we don't properly handle errors
+					items = append(items, r)
+				}
 			}
 			sort.Slice(items, func(i, j int) bool {
 				if items[i].BlockNumber == items[j].BlockNumber {
@@ -73,9 +76,7 @@ func (opts *ReceiptsOptions) HandleShowReceipts() error {
 
 			for _, receipt := range items {
 				receipt := receipt
-				if receipt.BlockNumber != 0 { // TODO: this is needed because we don't properly handle errors
-					modelChan <- receipt
-				}
+				modelChan <- receipt
 			}
 		}
 	}
