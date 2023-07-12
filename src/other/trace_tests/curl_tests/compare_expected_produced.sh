@@ -32,7 +32,10 @@ rm -f "$diffs_dir"*.diff
 for file in "$expected_dir"*; do  # Loop over all files in expected_dir
     basefile=$(basename "$file")  # Get the base name of the file (removing directory path)
     if [[ -f "$comparison_dir$basefile" ]]; then  # If the file exists, run the git diff
-        diff_output=$(git diff --no-index "$expected_dir$basefile" "$comparison_dir$basefile")
+        # save command to run in a command_list
+        command_to_run="git diff --no-index $expected_dir$basefile $comparison_dir$basefile"
+        command_list+=("$command_to_run")
+        diff_output=$(eval "$command_to_run")
         if [[ -n "$diff_output" ]]; then  # if we have non-empty diffs
             echo "$diff_output" > "$diffs_dir$basefile.diff"  # save to a diff file
             difference_list+=("$file")  # add the file to the list of differences
@@ -47,6 +50,8 @@ done
 # Save a file to the diffs directory to tell people the command used and time of execution
 echo """Comparing $comparison_dir to $expected_dir, placing results into $diffs_dir
 Command executed on $(date)
+=== Commands executed ===
+$(printf "%s\n" "${command_list[@]}")
 === Not found ===
 $(printf "%s\n" "${not_found_list[@]}")
 === Identical ===

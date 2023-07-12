@@ -1,5 +1,39 @@
 Comparing reth_2023_07_11/ to erigon_2023_07_12/, placing results into reth_erigon/
-Command executed on Wed Jul 12 19:36:46 UTC 2023
+Command executed on Wed Jul 12 19:49:51 UTC 2023
+=== Commands executed ===
+git diff --no-index erigon_2023_07_12/trace_block.json reth_2023_07_11/trace_block.json
+git diff --no-index erigon_2023_07_12/trace_callMany_all.json reth_2023_07_11/trace_callMany_all.json
+git diff --no-index erigon_2023_07_12/trace_callMany_none.json reth_2023_07_11/trace_callMany_none.json
+git diff --no-index erigon_2023_07_12/trace_callMany_stateDiff.json reth_2023_07_11/trace_callMany_stateDiff.json
+git diff --no-index erigon_2023_07_12/trace_callMany_trace.json reth_2023_07_11/trace_callMany_trace.json
+git diff --no-index erigon_2023_07_12/trace_callMany_vmTrace.json reth_2023_07_11/trace_callMany_vmTrace.json
+git diff --no-index erigon_2023_07_12/trace_call_all.json reth_2023_07_11/trace_call_all.json
+git diff --no-index erigon_2023_07_12/trace_call_error.json reth_2023_07_11/trace_call_error.json
+git diff --no-index erigon_2023_07_12/trace_call_none.json reth_2023_07_11/trace_call_none.json
+git diff --no-index erigon_2023_07_12/trace_call_stateDiff.json reth_2023_07_11/trace_call_stateDiff.json
+git diff --no-index erigon_2023_07_12/trace_call_trace.json reth_2023_07_11/trace_call_trace.json
+git diff --no-index erigon_2023_07_12/trace_call_view.json reth_2023_07_11/trace_call_view.json
+git diff --no-index erigon_2023_07_12/trace_call_view_none.json reth_2023_07_11/trace_call_view_none.json
+git diff --no-index erigon_2023_07_12/trace_call_vmTrace.json reth_2023_07_11/trace_call_vmTrace.json
+git diff --no-index erigon_2023_07_12/trace_filter.json reth_2023_07_11/trace_filter.json
+git diff --no-index erigon_2023_07_12/trace_get_0.json reth_2023_07_11/trace_get_0.json
+git diff --no-index erigon_2023_07_12/trace_get_10.json reth_2023_07_11/trace_get_10.json
+git diff --no-index erigon_2023_07_12/trace_get_3.json reth_2023_07_11/trace_get_3.json
+git diff --no-index erigon_2023_07_12/trace_get_5.json reth_2023_07_11/trace_get_5.json
+git diff --no-index erigon_2023_07_12/trace_rawTransaction_none.json reth_2023_07_11/trace_rawTransaction_none.json
+git diff --no-index erigon_2023_07_12/trace_rawTransaction_trace.json reth_2023_07_11/trace_rawTransaction_trace.json
+git diff --no-index erigon_2023_07_12/trace_rawTransaction_vmTrace.json reth_2023_07_11/trace_rawTransaction_vmTrace.json
+git diff --no-index erigon_2023_07_12/trace_replayBlockTransactions_all.json reth_2023_07_11/trace_replayBlockTransactions_all.json
+git diff --no-index erigon_2023_07_12/trace_replayBlockTransactions_none.json reth_2023_07_11/trace_replayBlockTransactions_none.json
+git diff --no-index erigon_2023_07_12/trace_replayBlockTransactions_stateDiff.json reth_2023_07_11/trace_replayBlockTransactions_stateDiff.json
+git diff --no-index erigon_2023_07_12/trace_replayBlockTransactions_trace.json reth_2023_07_11/trace_replayBlockTransactions_trace.json
+git diff --no-index erigon_2023_07_12/trace_replayBlockTransactions_vmTrace.json reth_2023_07_11/trace_replayBlockTransactions_vmTrace.json
+git diff --no-index erigon_2023_07_12/trace_replayTransaction_all.json reth_2023_07_11/trace_replayTransaction_all.json
+git diff --no-index erigon_2023_07_12/trace_replayTransaction_none.json reth_2023_07_11/trace_replayTransaction_none.json
+git diff --no-index erigon_2023_07_12/trace_replayTransaction_stateDiff.json reth_2023_07_11/trace_replayTransaction_stateDiff.json
+git diff --no-index erigon_2023_07_12/trace_replayTransaction_trace.json reth_2023_07_11/trace_replayTransaction_trace.json
+git diff --no-index erigon_2023_07_12/trace_replayTransaction_vmTrace.json reth_2023_07_11/trace_replayTransaction_vmTrace.json
+git diff --no-index erigon_2023_07_12/trace_transaction.json reth_2023_07_11/trace_transaction.json
 === Not found ===
 
 === Identical ===
