@@ -15,7 +15,7 @@
  * Parts of this file were generated with makeClass --options. Edit only those parts of
  * the code outside of the BEG_CODE/END_CODE sections
  */
-#include "etherlib.h"
+#include "utillib.h"
 #include "testcase.h"
 #include "measure.h"
 

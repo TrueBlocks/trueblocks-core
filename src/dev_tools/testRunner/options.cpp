@@ -140,8 +140,6 @@ bool COptions::parseArguments(string_q& command) {
         return usage("[dev]debug_curl is set in config file. All tests will fail.");
 
     modes = (mode == "both" ? BOTH : (mode == "api" ? API : CMD));
-    if (!isNodeRunning())
-        return usage("Ethereum at " + getCurlContext()->baseURL + " was not found. All tests will fail.");
 
     if (filter.empty())
         filter = "fast";

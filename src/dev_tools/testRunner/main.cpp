@@ -10,7 +10,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "etherlib.h"
+#include "utillib.h"
 #include "options.h"
 #include "testcase.h"
 #include "measure.h"
@@ -24,7 +24,6 @@ string_q perf_fmt;
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     loadEnvironmentPaths();
-    etherlib_init(quickQuitHandler);
     CTestCase::registerClass();
 
     establishFolder(cacheFolder_tmp);
@@ -234,16 +233,11 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             ostringstream cmd;
 
             CStringArray fileLines;
-            string_q allFile = substitute(test.goldPath, "/api_tests", "") + "all_tests.env";
-            if (fileExists(allFile))
-                asciiFileToLines(allFile, fileLines);
-
             string_q envFile = substitute(test.goldPath, "/api_tests", "") + test.name + ".env";
             if (fileExists(envFile))
                 asciiFileToLines(envFile, fileLines);
 
             ostringstream prepender;
-
             CStringArray envLines;
             for (auto f : fileLines) {
                 if (!startsWith(f, "#")) {
@@ -273,6 +267,11 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                 string_q debugCmd = relativize(fullCmd);
                 string_q redir = test.workPath + test.fileName;
                 cmd << "echo \"" << debugCmd << "\" >" << redir + " && ";
+                string_q rFile = substitute(test.goldPath, "/api_tests", "") + test.name + ".redir";
+                if (fileExists(rFile)) {
+                    fullCmd += " --output " + test.name + "_out.file";
+                    test.origLine += " & output = " + test.name + "_out.file";
+                }
                 cmd << env << fullCmd << " >>" << redir << " 2>&1";
 
             } else {
