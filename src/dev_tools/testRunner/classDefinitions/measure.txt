@@ -2,6 +2,6 @@
 class = CMeasure
 fields = measure.csv
 includes = utillib.h
-
-cpp_output = src/dev_tools/testRunner
+# doc_route = 00-no_doc
 # go_output = src/dev_tools/testRunner
+cpp_output = src/dev_tools/testRunner

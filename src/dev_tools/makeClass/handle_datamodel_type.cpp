@@ -10,7 +10,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "acctlib.h"
+#include "utillib.h"
 #include "options.h"
 
 string_q type_2_GoType(const CMember& field);

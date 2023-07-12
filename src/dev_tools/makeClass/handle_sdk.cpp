@@ -10,7 +10,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "acctlib.h"
+#include "utillib.h"
 #include "options.h"
 
 extern bool sortByDataModelName2(const CClassDefinition& c1, const CClassDefinition& c2);

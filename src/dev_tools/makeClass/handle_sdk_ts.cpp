@@ -10,7 +10,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "acctlib.h"
+#include "utillib.h"
 #include "options.h"
 
 extern const char* STR_PATH_FILE;
@@ -51,6 +51,9 @@ bool COptions::handle_sdk_ts(void) {
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_sdk_ts_types(CStringArray& typesOut) {
     for (auto model : dataModels) {
+        if (model.doc_route == "no_doc") {
+            continue;
+        }
         string_q modelName = substitute(model.class_name, "Array", "");
         modelName = firstUpper(modelName);
         replace(modelName, "C", "");
