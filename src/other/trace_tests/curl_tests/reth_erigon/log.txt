@@ -1,4 +1,39 @@
 Comparing reth_2023_07_11/ to erigon_2023_07_12/, placing results into reth_erigon/
-Command executed on Wed Jul 12 19:18:43 UTC 2023
-Log:
-Saved diff of erigon_2023_07_12/trace_block.json to reth_erigon/trace_block.json.diff\n
+Command executed on Wed Jul 12 19:36:46 UTC 2023
+=== Not found ===
+
+=== Identical ===
+erigon_2023_07_12/trace_get_0.json
+erigon_2023_07_12/trace_get_3.json
+erigon_2023_07_12/trace_replayBlockTransactions_trace.json
+erigon_2023_07_12/trace_replayTransaction_all.json
+erigon_2023_07_12/trace_replayTransaction_trace.json
+=== Difference found ===
+erigon_2023_07_12/trace_block.json
+erigon_2023_07_12/trace_callMany_all.json
+erigon_2023_07_12/trace_callMany_none.json
+erigon_2023_07_12/trace_callMany_stateDiff.json
+erigon_2023_07_12/trace_callMany_trace.json
+erigon_2023_07_12/trace_callMany_vmTrace.json
+erigon_2023_07_12/trace_call_all.json
+erigon_2023_07_12/trace_call_error.json
+erigon_2023_07_12/trace_call_none.json
+erigon_2023_07_12/trace_call_stateDiff.json
+erigon_2023_07_12/trace_call_trace.json
+erigon_2023_07_12/trace_call_view.json
+erigon_2023_07_12/trace_call_view_none.json
+erigon_2023_07_12/trace_call_vmTrace.json
+erigon_2023_07_12/trace_filter.json
+erigon_2023_07_12/trace_get_10.json
+erigon_2023_07_12/trace_get_5.json
+erigon_2023_07_12/trace_rawTransaction_none.json
+erigon_2023_07_12/trace_rawTransaction_trace.json
+erigon_2023_07_12/trace_rawTransaction_vmTrace.json
+erigon_2023_07_12/trace_replayBlockTransactions_all.json
+erigon_2023_07_12/trace_replayBlockTransactions_none.json
+erigon_2023_07_12/trace_replayBlockTransactions_stateDiff.json
+erigon_2023_07_12/trace_replayBlockTransactions_vmTrace.json
+erigon_2023_07_12/trace_replayTransaction_none.json
+erigon_2023_07_12/trace_replayTransaction_stateDiff.json
+erigon_2023_07_12/trace_replayTransaction_vmTrace.json
+erigon_2023_07_12/trace_transaction.json

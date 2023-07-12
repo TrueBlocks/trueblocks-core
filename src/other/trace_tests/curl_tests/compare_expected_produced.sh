@@ -29,36 +29,30 @@ read
 mkdir -p "$diffs_dir"
 rm -f "$diffs_dir"*.diff
 
-# Loop over all files in expected_dir
-for file in "$expected_dir"*; do
-    # Get the base name of the file (removing directory path)
-    basefile=$(basename "$file")
-
-    # Check if the file exists in comparison_dir
-    if [[ -f "$comparison_dir$basefile" ]]; then
-        # If the file exists, run the git diff
+for file in "$expected_dir"*; do  # Loop over all files in expected_dir
+    basefile=$(basename "$file")  # Get the base name of the file (removing directory path)
+    if [[ -f "$comparison_dir$basefile" ]]; then  # If the file exists, run the git diff
         diff_output=$(git diff --no-index "$expected_dir$basefile" "$comparison_dir$basefile")
-
-        # Check if the diff output is non-empty
-        if [[ -n "$diff_output" ]]; then
-            # If it is non-empty, save it to a file in diffs_dir
-            echo "$diff_output" > "$diffs_dir$basefile.diff"
-            result_string="Saved diff of $file to $diffs_dir$basefile.diff"
+        if [[ -n "$diff_output" ]]; then  # if we have non-empty diffs
+            echo "$diff_output" > "$diffs_dir$basefile.diff"  # save to a diff file
+            difference_list+=("$file")  # add the file to the list of differences
         else
-            result_string="Diff of $file is exactly identical, not saving diffs"
+            identical_list+=("$file")  # add the file to the list of identical files
         fi
     else
-        # If the file does not exist in comparison_dir, print a warning
-        result_string="File $basefile does not exist in $comparison_dir"
+        not_found_list+=("$file")  # add the file to the list of not found files
     fi
-
-    echo "$result_string"
-    # add result_string to the list of results
-    result_list+=("$result_string\n")
 done
 
 # Save a file to the diffs directory to tell people the command used and time of execution
 echo """Comparing $comparison_dir to $expected_dir, placing results into $diffs_dir
 Command executed on $(date)
-Log:
-$result_list""" > "$diffs_dir"log.txt
+=== Not found ===
+$(printf "%s\n" "${not_found_list[@]}")
+=== Identical ===
+$(printf "%s\n" "${identical_list[@]}")
+=== Difference found ===
+$(printf "%s\n" "${difference_list[@]}")""" > "$diffs_dir"log.txt
+
+# print the log file
+cat "$diffs_dir"log.txt
