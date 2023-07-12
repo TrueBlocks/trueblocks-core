@@ -10,7 +10,6 @@ import (
 	"math"
 	"os"
 	"strings"
-	"sync/atomic"
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
