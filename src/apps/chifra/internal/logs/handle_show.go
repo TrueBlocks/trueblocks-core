@@ -14,8 +14,8 @@ import (
 )
 
 func (opts *LogsOptions) HandleShowLogs() (err error) {
-	chain := opts.Globals.Chain
 	abiCache := articulate.NewAbiCache()
+	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
