@@ -6,7 +6,27 @@ import (
 	goEthAbi "github.com/ethereum/go-ethereum/accounts/abi"
 )
 
-func ArticulateTrace(trace *types.SimpleTrace, abiMap abi.AbiInterfaceMap) (articulated *types.SimpleFunction, err error) {
+func (cache *AbiCache) ArticulateTrace(chain string, trace *types.SimpleTrace) (err error) {
+	address := trace.Action.To
+	if !cache.loadedMap[address] && !cache.skipMap[address] {
+		if err := abi.LoadAbi(chain, address, cache.abiMap); err != nil {
+			cache.skipMap[address] = true
+			return err
+		} else {
+			cache.loadedMap[address] = true
+		}
+	}
+
+	if !cache.skipMap[address] {
+		if trace.ArticulatedTrace, err = articulateTrace(trace, cache.abiMap); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func articulateTrace(trace *types.SimpleTrace, abiMap abi.AbiInterfaceMap) (articulated *types.SimpleFunction, err error) {
 	input := trace.Action.Input
 	if len(input) < 10 {
 		return
