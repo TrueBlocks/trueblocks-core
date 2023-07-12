@@ -707,7 +707,7 @@ void CClassDefinition::ReadSettings(const CToml& toml) {
     doc_descr = toml.getConfigStr("settings", "doc_descr", "");
     doc_route = toml.getConfigStr("settings", "doc_route", "");
     doc_alias = toml.getConfigStr("settings", "doc_alias", "");
-    doc_order = nextTokenClear(doc_group, '-') + nextTokenClear(doc_route, '-');
+    doc_order = trim(nextTokenClear(doc_group, '-')) + trim(nextTokenClear(doc_route, '-'));
 
     cpp_output = substitute(toml.getConfigStr("settings", "cpp_output", ""), "src/", "./");
     go_output = substitute(toml.getConfigStr("settings", "go_output", ""), "src/", "./");

@@ -1,7 +1,7 @@
 [settings]
 class = CClassDefinition
 fields = classdefinition.csv
-includes = etherlib.h|member.h
-
+includes = utillib.h|member.h
+# doc_route = 00-no_doc
+# go_output = src/dev_tools/makeClass
 cpp_output = src/dev_tools/makeClass
-go_output =
