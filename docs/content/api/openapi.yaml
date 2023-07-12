@@ -1257,6 +1257,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: cache
+          description: write the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data

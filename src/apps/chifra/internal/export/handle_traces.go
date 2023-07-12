@@ -75,7 +75,7 @@ func (opts *ExportOptions) readTraces(
 		return nil, err
 	} else if !opts.NoZero || cnt > 0 {
 		chain := opts.Globals.Chain
-		if err := opts.readTransactions(mon, txMap, true); err != nil {
+		if err := opts.readTransactions(mon, txMap, true /* readTraces */); err != nil {
 			return nil, err
 		}
 

@@ -47,7 +47,7 @@ func (l *Ledger) GetStatementsFromTransaction(trans *types.SimpleTransaction) (s
 			EndBal:           *endBal,
 		}
 
-		if trans.To.IsZero() && !trans.Receipt.ContractAddress.IsZero() {
+		if trans.To.IsZero() && trans.Receipt != nil && !trans.Receipt.ContractAddress.IsZero() {
 			ret.Recipient = trans.Receipt.ContractAddress
 		}
 
