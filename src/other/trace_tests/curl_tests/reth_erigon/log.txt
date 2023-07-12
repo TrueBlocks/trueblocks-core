@@ -1,0 +1,4 @@
+Comparing reth_2023_07_11/ to erigon_2023_07_12/, placing results into reth_erigon/
+Command executed on Wed Jul 12 19:18:43 UTC 2023
+Log:
+Saved diff of erigon_2023_07_12/trace_block.json to reth_erigon/trace_block.json.diff\n

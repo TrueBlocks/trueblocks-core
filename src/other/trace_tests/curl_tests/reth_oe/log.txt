@@ -1,0 +1,4 @@
+Comparing reth_2023_07_11/ to openethereum_2020_12_12/, placing results into reth_oe/
+Command executed on Wed Jul 12 19:18:17 UTC 2023
+Log:
+Saved diff of openethereum_2020_12_12/trace_block.json to reth_oe/trace_block.json.diff\n
