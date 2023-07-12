@@ -16,8 +16,6 @@
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     loadEnvironmentPaths();
-    // nodeNotRequired();
-
     CMember::registerClass();
 
     COptions options;
