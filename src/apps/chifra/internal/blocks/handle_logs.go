@@ -9,7 +9,6 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -19,9 +18,7 @@ import (
 )
 
 func (opts *BlocksOptions) HandleLogs() error {
-	abiMap := make(abi.AbiInterfaceMap)
-	loadedMap := make(map[base.Address]bool)
-	skipMap := make(map[base.Address]bool)
+	abiCache := articulate.NewAbiCache()
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -71,20 +68,8 @@ func (opts *BlocksOptions) HandleLogs() error {
 					// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
 					log := log
 					if opts.Articulate {
-						address := log.Address
-						if !loadedMap[address] && !skipMap[address] {
-							if err := abi.LoadAbi(chain, address, abiMap); err != nil {
-								skipMap[address] = true
-								errorChan <- err // continue even with an error
-							} else {
-								loadedMap[address] = true
-							}
-						}
-
-						if !skipMap[address] {
-							if log.ArticulatedLog, err = articulate.ArticulateLog(&log, abiMap); err != nil {
-								errorChan <- err // continue even with an error
-							}
+						if err := abiCache.ArticulateLog(chain, &log); err != nil {
+							errorChan <- err // continue even on error
 						}
 					}
 					if !opts.shouldShow(&log) {

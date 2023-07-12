@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"sort"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -14,7 +15,7 @@ import (
 )
 
 func (opts *ReceiptsOptions) HandleShowReceipts() error {
-	// abiCache := articulate.NewAbiCache()
+	abiCache := articulate.NewAbiCache()
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -37,11 +38,11 @@ func (opts *ReceiptsOptions) HandleShowReceipts() error {
 				}); err != nil {
 					return fmt.Errorf("transaction at %s returned an error: %w", app.String(), err)
 				} else {
-					// if opts.Articulate {
-					// 	if err = abiCache.ArticulateReceipt(chain, &receipt); err != nil {
-					// 		errorChan <- err // continue even with an error
-					// 	}
-					// }
+					if opts.Articulate {
+						if err = abiCache.ArticulateReceipt(chain, &receipt); err != nil {
+							errorChan <- err // continue even with an error
+						}
+					}
 					*value = receipt
 					bar.Tick()
 					return nil
