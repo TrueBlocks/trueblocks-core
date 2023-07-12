@@ -24,7 +24,6 @@ string_q perf_fmt;
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     loadEnvironmentPaths();
-    // utillib_init(quickQuitHandler);
     CTestCase::registerClass();
 
     establishFolder(cacheFolder_tmp);
