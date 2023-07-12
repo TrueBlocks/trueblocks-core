@@ -47,6 +47,9 @@ bool COptions::handle_datamodel(void) {
 
     bool badStuff = false;
     for (auto model : dataModels) {
+        if (model.doc_route == "no_doc") {
+            continue;
+        }
         string_q groupLow = toLower(substitute(model.doc_group, " ", ""));
         string_q groupFn = getDocsPathTemplates("model-groups/" + groupLow + ".md");
         if (!fileExists(groupFn)) {

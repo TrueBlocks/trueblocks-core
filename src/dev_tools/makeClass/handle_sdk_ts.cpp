@@ -51,6 +51,9 @@ bool COptions::handle_sdk_ts(void) {
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_sdk_ts_types(CStringArray& typesOut) {
     for (auto model : dataModels) {
+        if (model.doc_route == "no_doc") {
+            continue;
+        }
         string_q modelName = substitute(model.class_name, "Array", "");
         modelName = firstUpper(modelName);
         replace(modelName, "C", "");
