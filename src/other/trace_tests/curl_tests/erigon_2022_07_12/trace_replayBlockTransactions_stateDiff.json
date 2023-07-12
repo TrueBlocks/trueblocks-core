@@ -1,0 +1,53 @@
+{
+  "id": "1",
+  "jsonrpc": "2.0",
+  "result": [
+    {
+      "output": "0x",
+      "stateDiff": {
+        "0x104994f45d9d697ca104e5704a7b77d7fec3537c": {
+          "balance": {
+            "+": "0x821878651a4d70000"
+          },
+          "code": {
+            "+": "0x"
+          },
+          "nonce": {
+            "+": "0x0"
+          },
+          "storage": {}
+        },
+        "0x32be343b94f860124dc4fee278fdcbd38c102d88": {
+          "balance": {
+            "*": {
+              "from": "0x29dd8f1fcd55eef7fe5c",
+              "to": "0x29d56d960a08fbeb9e5c"
+            }
+          },
+          "code": "=",
+          "nonce": {
+            "*": {
+              "from": "0x1efc5",
+              "to": "0x1efc6"
+            }
+          },
+          "storage": {}
+        },
+        "0x61c808d82a3ac53231750dadc13c777b59310bd9": {
+          "balance": {
+            "*": {
+              "from": "0x16d21cbe94fc6c3ebf7",
+              "to": "0x16d21ce264b14f94bf7"
+            }
+          },
+          "code": "=",
+          "nonce": "=",
+          "storage": {}
+        }
+      },
+      "trace": [],
+      "transactionHash": "0xc55e2b90168af6972193c1f86fa4d7d7b31a29c156665d15b9cd48618b5177ef",
+      "vmTrace": null
+    }
+  ]
+}
