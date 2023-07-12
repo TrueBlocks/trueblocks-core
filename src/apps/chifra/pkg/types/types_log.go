@@ -121,7 +121,10 @@ func (s *SimpleLog) Model(verbose bool, format string, extraOptions map[string]a
 			order = append(order, "compressedLog")
 		}
 
-		model["topic0"] = s.Topics[0]
+		model["topic0"] = ""
+		if len(s.Topics) > 0 {
+			model["topic0"] = s.Topics[0]
+		}
 		model["topic1"] = ""
 		if len(s.Topics) > 1 {
 			model["topic1"] = s.Topics[1]
