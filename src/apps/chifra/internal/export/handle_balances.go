@@ -101,9 +101,10 @@ func (opts *ExportOptions) readBalances(
 		}
 
 		// Set up and interate over the map calling iterFunc for each appearance
+		ctx, cancel := context.WithCancel(context.Background())
+		defer cancel()
 		errChan := make(chan error)
-		ctx := context.Background()
-		utils.IterateOverMap(ctx, errChan, txMap, iterFunc)
+		go utils.IterateOverMap(ctx, errChan, txMap, iterFunc)
 		if stepErr := <-errChan; stepErr != nil {
 			return nil, stepErr
 		} else {

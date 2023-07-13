@@ -48,8 +48,8 @@ func (opts *ReceiptsOptions) HandleShowReceipts() error {
 				}
 			}
 
-			iterErrorChan := make(chan error, 10)
-			utils.IterateOverMap(iterCtx, iterErrorChan, txMap, iterFunc)
+			iterErrorChan := make(chan error)
+			go utils.IterateOverMap(iterCtx, iterErrorChan, txMap, iterFunc)
 			for err := range iterErrorChan {
 				// TODO: I don't really want to quit looping here. Just report the error and keep going.
 				iterCancel()
