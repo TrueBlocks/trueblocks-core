@@ -1,6 +1,6 @@
 **Group:  Accounts**  
 **Module:** account  
-**url:** https://api.etherscan.io/api?module=&lt;MODULE&gt;&apikey=<key>
+**url:** https://api.etherscan.io/api?module=MODULE&apikey=<key>
 ```
     action: balance             <address>               <tag>
     action: balancehistory      <address>               <tag>
@@ -18,7 +18,7 @@
 
 **Group:  Contracts**  
 **Module:** contract
-**url:** https://api.etherscan.io/api?module=&lt;MODULE&gt;&apikey=<key>
+**url:** https://api.etherscan.io/api?module=MODULE&apikey=<key>
 ```
     action: getabi              <address>
     action: getsourcecode       <address>
@@ -27,7 +27,7 @@
 
 **Group:  Transactions**  
 **Module:** transaction
-**url:** https://api.etherscan.io/api?module=&lt;MODULE&gt;&apikey=<key>
+**url:** https://api.etherscan.io/api?module=MODULE&apikey=<key>
 ```
     action: getstatus           <hash>
     action: gettxreceiptstatus  <hash>
@@ -35,7 +35,7 @@
 
 **Group:  Blocks**  
 **Module:** block
-**url:** https://api.etherscan.io/api?module=&lt;MODULE&gt;&apikey=<key>
+**url:** https://api.etherscan.io/api?module=MODULE&apikey=<key>
 ```
     action: getblockreward              <blknum>
     action: getblockcountdown           <blknum>
@@ -44,7 +44,7 @@
 
 **Group:  Blocks**  
 **Module:** blockstats
-**url:** https://api.etherscan.io/api?module=&lt;MODULE&gt;&apikey=<key>
+**url:** https://api.etherscan.io/api?module=MODULE&apikey=<key>
 ```
     action: dailyavgblocksize           <date-range>    <sort>
     action: dailyblkcount               <date-range>    <sort> 
@@ -55,7 +55,7 @@
 
 **Group:  Logs**  
 **Module:** logs
-**url:** https://api.etherscan.io/api?module=&lt;MODULE&gt;&apikey=<key>
+**url:** https://api.etherscan.io/api?module=MODULE&apikey=<key>
 ```
     action: getLogs                     <block-range>    <topics>    <pagination>
     action: getLogs         <address>   <block-range>                <pagination>
@@ -64,7 +64,7 @@
 
 **Group:  Proxy**  
 **Module:** proxy
-**url:** https://api.etherscan.io/api?module=&lt;MODULE&gt;&apikey=<key>
+**url:** https://api.etherscan.io/api?module=MODULE&apikey=<key>
 ```
     action: eth_blockNumber
     action: eth_getBlockByNumber                    <tag>           boolean=true
@@ -84,7 +84,7 @@
 
 **Group:  Tokens**  
 **Module:** account
-**url:** https://api.etherscan.io/api?module=&lt;MODULE&gt;&apikey=<key>
+**url:** https://api.etherscan.io/api?module=MODULE&apikey=<key>
 ```
     action: addresstokenbalance         <address>                       <pagination>
     action: addresstokennftinventory    <contract>      <address>       <pagination>
@@ -94,7 +94,7 @@
 
 **Group:  Tokens**  
 **Module:** stats
-**url:** https://api.etherscan.io/api?module=&lt;MODULE&gt;&apikey=<key>
+**url:** https://api.etherscan.io/api?module=MODULE&apikey=<key>
 ```
     action: tokensupply                 <contract>
 ​    action: tokensupplyhistory          <contract>      <tag> 
@@ -102,7 +102,7 @@
 
 **Group:  Tokens**  
 **Module:** token
-**url:** https://api.etherscan.io/api?module=&lt;MODULE&gt;&apikey=<key>
+**url:** https://api.etherscan.io/api?module=MODULE&apikey=<key>
 ```
     action: tokenholderlist             <contract>      <pagination>
     action: tokeninfo                   <contract> 
@@ -110,7 +110,7 @@
 
 **Group:  GasTracker**  
 **Module:** gastracker
-**url:** https://api.etherscan.io/api?module=&lt;MODULE&gt;&apikey=<key>
+**url:** https://api.etherscan.io/api?module=MODULE&apikey=<key>
 ```
     action: gasestimate                 <gasprice>
     action: gasoracle 
@@ -118,7 +118,7 @@
 
 **Group:  GasTracker**  
 **Module:** stats
-**url:** https://api.etherscan.io/api?module=&lt;MODULE&gt;&apikey=<key>
+**url:** https://api.etherscan.io/api?module=MODULE&apikey=<key>
 ```
     action: dailyavggaslimit            <date-range>        <sort> 
     action: dailygasused                <date-range>        <sort> 
@@ -127,7 +127,7 @@
 
 **Group:  Stats**  
 **Module:** stats
-**url:** https://api.etherscan.io/api?module=&lt;MODULE&gt;&apikey=<key>
+**url:** https://api.etherscan.io/api?module=MODULE&apikey=<key>
 ```
     action: ethsupply
     action: ethsupply2
@@ -146,7 +146,7 @@
 
 **Group:  Pro**  
 **Module:** account
-**url:** https://api.etherscan.io/api?module=&lt;MODULE&gt;&apikey=<key>
+**url:** https://api.etherscan.io/api?module=MODULE&apikey=<key>
 ```
     action: balancehistory              <address>              blockno=8000000
 ​    action: tokenbalancehistory         <contract>      <address>            blockno=8000000 
@@ -154,7 +154,7 @@
 
 **Group:  Pro**  
 **Module:** stats
-**url:** https://api.etherscan.io/api?module=&lt;MODULE&gt;&apikey=<key>
+**url:** https://api.etherscan.io/api?module=MODULE&apikey=<key>
 ```
     action: dailyavgblocksize           <date-range>        <sort>
     action: dailyblkcount               <date-range>        <sort> 
@@ -177,7 +177,7 @@
 
 **Group:  Pro**  
 **Module:** token
-**url:** https://api.etherscan.io/api?module=&lt;MODULE&gt;&apikey=<key>
+**url:** https://api.etherscan.io/api?module=MODULE&apikey=<key>
 ```
     action: tokeninfo                   <contract> 
 ```
