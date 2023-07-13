@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -55,9 +56,28 @@ func GetAppearanceFromHash(chain string, hash string) (uint64, uint64, error) {
 	}
 }
 
-func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, fetchTraces bool) (tx *types.SimpleTransaction, err error) {
+func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, fetchTraces bool, cache *cacheNew.Store) (tx *types.SimpleTransaction, err error) {
 	bn := uint64(appearance.BlockNumber)
 	txid := uint64(appearance.TransactionIndex)
+
+	if cache != nil {
+		tx = &types.SimpleTransaction{
+			BlockNumber:      bn,
+			TransactionIndex: txid,
+		}
+
+		if err := cache.Read(tx, nil); err == nil {
+			// success
+			if fetchTraces {
+				traces, err := GetTracesByTransactionHash(chain, tx.Hash.Hex(), tx, cache)
+				if err != nil {
+					return nil, err
+				}
+				tx.Traces = traces
+			}
+			return tx, nil
+		}
+	}
 
 	blockTs := rpc.GetBlockTimestamp(chain, bn)
 	receipt, err := GetTransactionReceipt(chain, ReceiptQuery{
@@ -96,12 +116,73 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 	tx.SetGasCost(&receipt)
 	tx.SetRaw(rawTx)
 
+	if cache != nil {
+		cache.Write(tx, nil)
+	}
+
 	if fetchTraces {
-		traces, err := GetTracesByTransactionHash(chain, tx.Hash.Hex(), tx)
+		traces, err := GetTracesByTransactionHash(chain, tx.Hash.Hex(), tx, cache)
 		if err != nil {
 			return nil, err
 		}
 		tx.Traces = traces
+	}
+
+	return
+}
+
+func GetTransactionByBlockAndId(chain string, bn base.Blknum, txid uint64, cache *cacheNew.Store) (tx *types.SimpleTransaction, err error) {
+	if cache != nil {
+		tx = &types.SimpleTransaction{
+			BlockNumber:      bn,
+			TransactionIndex: txid,
+		}
+
+		if err := cache.Read(tx, nil); err == nil {
+			// success
+			return tx, nil
+		}
+	}
+
+	rawTx, err := GetRawTransactionByBlockAndId(chain, bn, txid)
+	if err != nil {
+		return
+	}
+	blockTs := rpc.GetBlockTimestamp(chain, bn)
+	receipt, err := GetTransactionReceipt(chain, ReceiptQuery{
+		Bn:      bn,
+		Txid:    txid,
+		NeedsTs: true,
+		Ts:      blockTs,
+	})
+	if err != nil {
+		return
+	}
+
+	// TODO: this gets repeated
+	tx = &types.SimpleTransaction{
+		Hash:             base.HexToHash(rawTx.Hash),
+		BlockHash:        base.HexToHash(rawTx.BlockHash),
+		BlockNumber:      bn,
+		TransactionIndex: txid,
+		Nonce:            mustParseUint(rawTx.Nonce),
+		Timestamp:        blockTs,
+		From:             base.HexToAddress(rawTx.From),
+		To:               base.HexToAddress(rawTx.To),
+		Gas:              mustParseUint(rawTx.Gas),
+		GasPrice:         mustParseUint(rawTx.GasPrice),
+		GasUsed:          receipt.GasUsed,
+		Input:            rawTx.Input,
+		IsError:          receipt.IsError,
+		HasToken:         IsTokenRelated(rawTx.Input),
+		Receipt:          &receipt,
+	}
+	tx.Value.SetString(rawTx.Value, 0)
+	tx.SetGasCost(&receipt)
+	tx.SetRaw(rawTx)
+
+	if cache != nil {
+		cache.Write(tx, nil)
 	}
 
 	return

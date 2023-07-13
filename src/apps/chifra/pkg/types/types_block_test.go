@@ -1,42 +1,47 @@
 package types
 
 import (
-	"bytes"
+	"math/big"
 	"reflect"
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 )
 
-func TestBlockEncode(t *testing.T) {
-	expected := &SimpleBlock[SimpleTransaction]{
-		BlockNumber: 57831,
-		Hash:        base.HexToHash("0x65a1119526538c12891a644ff12362710cb27cacbc95cf03001d5dd2d268140c"),
-		Transactions: []SimpleTransaction{
-			{
-				Hash: base.HexToHash("0x682767553fcdc49de838b63cb2730a90a0c92b36040828b751e646b7cde4da27"),
-			},
-			{
-				Hash: base.HexToHash("0xfc7e6a17103a9aac9bde235a27ba9a5f4fdea1d027e2764ed407a38cbccc48a6"),
-			},
-			{
-				Hash: base.HexToHash("0x2787860f83df0f7938c4987656d7c6f58f936a8a97860f7057dce2e52ccb911b"),
-			},
+func TestBlockCache(t *testing.T) {
+	expected := &SimpleBlock[string]{
+		BlockNumber:   4000001,
+		BaseFeePerGas: *(big.NewInt(0)),
+		Difficulty:    uint64(1097113993909745),
+		GasLimit:      uint64(6712392),
+		GasUsed:       uint64(337966),
+		Hash:          base.HexToHash("0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39"),
+		Miner:         base.HexToAddress("0xea674fdde714fd979de3edf0f56aa9716b898ec8"),
+		ParentHash:    base.HexToHash("0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853"),
+		Timestamp:     1499633571,
+		Transactions: []string{
+			"0x62974c8152c87e14880c54007260e0d5fe9d182c2cd22c58797735a9ae88370a",
 		},
 	}
-	buffer := new(bytes.Buffer)
-	_, err := expected.WriteTo(buffer)
+	cache, err := cacheNew.NewStore(&cacheNew.StoreOptions{Location: cacheNew.MemoryCache})
 	if err != nil {
-		t.Fatal("writing:", err)
+		t.Fatal(err)
 	}
 
-	result := &SimpleBlock[SimpleTransaction]{}
-	_, err = result.ReadFrom(buffer)
-	if err != nil {
-		t.Fatal("reading:", err)
+	if err := cache.Write(expected, nil); err != nil {
+		t.Fatal(err)
 	}
 
-	if !reflect.DeepEqual(result, expected) {
-		t.Errorf("SimpleBlock.Encode() = %+v, want %+v", result, expected)
+	// Read
+	readBack := &SimpleBlock[string]{
+		BlockNumber: expected.BlockNumber,
+	}
+	if err := cache.Read(readBack, nil); err != nil {
+		t.Fatal(err)
+	}
+
+	if !reflect.DeepEqual(expected, readBack) {
+		t.Fatalf("value mismatch: got %+v want %+v\n", readBack, expected)
 	}
 }

@@ -10,8 +10,10 @@ package types
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"io"
 	"math/big"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/binary"
@@ -299,11 +301,38 @@ func (s *SimpleTransaction) SetGasCost(receipt *SimpleReceipt) base.Gas {
 	return s.GasCost
 }
 
+func (s *SimpleTransaction) CacheName() string {
+	return "Transaction"
+}
+
+func (s *SimpleTransaction) CacheId() string {
+	return fmt.Sprintf("%09d-%05d", s.BlockNumber, s.TransactionIndex)
+}
+
+func (s *SimpleTransaction) CacheLocation() (directory string, extension string) {
+	extension = "bin"
+
+	id := s.CacheId()
+
+	parts := make([]string, 3)
+	parts[0] = id[:2]
+	parts[1] = id[2:4]
+	parts[2] = id[4:6]
+	directory = filepath.Join("txs", filepath.Join(parts...))
+	return
+}
+
 func (s *SimpleTransaction) MarshalCache(writer io.Writer) (err error) {
-	if err = binary.WriteValue(writer, s.Hash); err != nil {
+	optArticulatedTx := &binary.Optional[SimpleFunction]{
+		Value: s.ArticulatedTx,
+	}
+	if err = binary.WriteValue(writer, optArticulatedTx); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.BlockHash); err != nil {
+	if err = binary.WriteValue(writer, &s.Hash); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, &s.BlockHash); err != nil {
 		return err
 	}
 	if err = binary.WriteValue(writer, s.BlockNumber); err != nil {
@@ -333,6 +362,12 @@ func (s *SimpleTransaction) MarshalCache(writer io.Writer) (err error) {
 	if err = binary.WriteValue(writer, s.GasPrice); err != nil {
 		return err
 	}
+	if err = binary.WriteValue(writer, s.GasUsed); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.GasCost); err != nil {
+		return err
+	}
 	if err = binary.WriteValue(writer, s.MaxFeePerGas); err != nil {
 		return err
 	}
@@ -348,16 +383,25 @@ func (s *SimpleTransaction) MarshalCache(writer io.Writer) (err error) {
 	if err = binary.WriteValue(writer, s.HasToken); err != nil {
 		return err
 	}
+	if err = binary.WriteValue(writer, s.Receipt); err != nil {
+		return err
+	}
 
 	// TODO:
-	// Receipts
 	// Traces
-	// ArticulatedTx
 
 	return
 }
 
 func (s *SimpleTransaction) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	optArticulatedTx := &binary.Optional[SimpleFunction]{
+		Value: s.ArticulatedTx,
+	}
+	if err = binary.ReadValue(reader, optArticulatedTx, version); err != nil {
+		return err
+	}
+	s.ArticulatedTx = optArticulatedTx.Get()
+
 	if err = binary.ReadValue(reader, &s.Hash, version); err != nil {
 		return err
 	}
@@ -391,6 +435,12 @@ func (s *SimpleTransaction) UnmarshalCache(version uint64, reader io.Reader) (er
 	if err = binary.ReadValue(reader, &s.GasPrice, version); err != nil {
 		return err
 	}
+	if err = binary.ReadValue(reader, &s.GasUsed, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.GasCost, version); err != nil {
+		return err
+	}
 	if err = binary.ReadValue(reader, &s.MaxFeePerGas, version); err != nil {
 		return err
 	}
@@ -407,10 +457,15 @@ func (s *SimpleTransaction) UnmarshalCache(version uint64, reader io.Reader) (er
 		return err
 	}
 
+	s.Receipt = &SimpleReceipt{}
+	if err = binary.ReadValue(reader, s.Receipt, version); err != nil {
+		return err
+	}
+
+	s.Date = utils.FormattedDate(s.Timestamp)
+
 	// TODO:
-	// Receipts
 	// Traces
-	// ArticulatedTx
 
 	return
 }

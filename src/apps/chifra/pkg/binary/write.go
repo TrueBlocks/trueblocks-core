@@ -5,6 +5,7 @@ import (
 	"encoding/binary"
 	"io"
 	"math/big"
+	"reflect"
 )
 
 // write writes bytes in a correct byte order
@@ -34,6 +35,10 @@ func WriteValue(writer io.Writer, value any) (err error) {
 	case *big.Int:
 		err = WriteBigInt(writer, v)
 	default:
+		if rf := reflect.ValueOf(value); rf.Kind() == reflect.Slice {
+			return WriteSliceReflect(writer, &rf)
+		}
+
 		err = write(writer, value)
 	}
 	return err
@@ -51,6 +56,34 @@ func WriteSlice[T any](writer io.Writer, slice []T) (err error) {
 	for _, sliceItem := range slice {
 		if err = WriteValue(buffer, sliceItem); err != nil {
 			return
+		}
+	}
+	if _, err = buffer.WriteTo(writer); err != nil {
+		return err
+	}
+
+	return
+}
+
+func WriteSliceReflect(writer io.Writer, sliceValue *reflect.Value) (err error) {
+	buffer := new(bytes.Buffer)
+	sliceLen := sliceValue.Len()
+
+	if err = write(buffer, uint64(sliceLen)); err != nil {
+		return
+	}
+	for i := 0; i < sliceLen; i++ {
+		item := sliceValue.Index(i)
+
+		cm, ok := item.Addr().Interface().(CacheMarshaler)
+		if !ok {
+			if err = WriteValue(buffer, item.Interface()); err != nil {
+				return
+			}
+		} else {
+			if err = WriteValue(buffer, cm); err != nil {
+				return
+			}
 		}
 	}
 	if _, err = buffer.WriteTo(writer); err != nil {

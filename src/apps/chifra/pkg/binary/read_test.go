@@ -98,6 +98,23 @@ func TestReadValue(t *testing.T) {
 		t.Fatal("unmarshal wrong value", unmarshalValue.value)
 	}
 
+	expectedIntSliceValue := []int32{42, 10}
+	if err := binary.Write(buf, binary.LittleEndian, uint64(len(expectedIntSliceValue))); err != nil {
+		t.Fatal(err)
+	}
+	for _, item := range expectedIntSliceValue {
+		if err := binary.Write(buf, binary.LittleEndian, item); err != nil {
+			t.Fatal(err)
+		}
+	}
+	intSliceValue := make([]int32, 0)
+	if err := ReadValue(buf, &intSliceValue, 0); err != nil {
+		t.Fatal(err)
+	}
+	if !reflect.DeepEqual(intSliceValue, expectedIntSliceValue) {
+		t.Fatal("unmarshal wrong int slice value", intSliceValue)
+	}
+
 	// This test checks the use of CacheUnmarshaler being implement by a custom string type.
 	// We will write int32 to the buffer. If the support for CacheUnmarshaler doesn't work, we would get an
 	// error (we cannot read int32 into a string). But if it does work, UnmarshalCache will be called, intercept
@@ -113,6 +130,31 @@ func TestReadValue(t *testing.T) {
 	}
 	if likeStringValue != likeString(expectedLikeStringValue) {
 		t.Fatal("unmarshal wrong value", unmarshalValue.value)
+	}
+
+	buf.Reset()
+	expectedUnmarshalSlice := []testUnmarshaler{
+		{value: 42},
+		{value: 10},
+	}
+	if err := binary.Write(buf, binary.LittleEndian, uint64(len(expectedUnmarshalSlice))); err != nil {
+		t.Fatal(err)
+	}
+	for _, item := range expectedUnmarshalSlice {
+		if err := binary.Write(buf, binary.LittleEndian, item.value); err != nil {
+			t.Fatal(err)
+		}
+	}
+	unmarshalSliceValue := make([]testUnmarshaler, 0)
+	if err := ReadValue(buf, &unmarshalSliceValue, 0); err != nil {
+		t.Fatal(err)
+	}
+	// e := []testUnmarshaler{
+	// 	{value: 42},
+	// 	{value: 10},
+	// }
+	if !reflect.DeepEqual(expectedUnmarshalSlice, unmarshalSliceValue) {
+		t.Fatal("unmarshal wrong value", unmarshalSliceValue)
 	}
 }
 

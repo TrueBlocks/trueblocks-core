@@ -3,7 +3,9 @@ package base
 import (
 	"encoding/hex"
 	"fmt"
+	"io"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/binary"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -41,6 +43,15 @@ func (h *Hash) SetHex(hex string) {
 func (h *Hash) IsZero() bool {
 	zero := common.HexToHash("0x0")
 	return h.Hash.Hex() == zero.Hex()
+}
+
+func (h *Hash) UnmarshalCache(version uint64, reader io.Reader) error {
+	var value [32]byte
+	if err := binary.ReadValue(reader, &value, version); err != nil {
+		return err
+	}
+	h.SetBytes(value[:])
+	return nil
 }
 
 func HexToHash(hex string) (hash Hash) {

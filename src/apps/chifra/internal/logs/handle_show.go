@@ -31,7 +31,7 @@ func (opts *LogsOptions) HandleShowLogs() (err error) {
 			}
 
 			for _, appearance := range txIds {
-				tx, err := rpcClient.GetTransactionByAppearance(chain, &appearance, false /* no traces for logs */)
+				tx, err := rpcClient.GetTransactionByAppearance(chain, &appearance, false /* no traces for logs */, nil)
 				if err != nil {
 					errorChan <- fmt.Errorf("transaction at %s returned an error: %w", strings.Replace(rng.Orig, "-", ".", -1), err)
 					continue

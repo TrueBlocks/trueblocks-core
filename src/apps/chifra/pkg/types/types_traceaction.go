@@ -13,6 +13,7 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/binary"
 )
 
 // EXISTING_CODE
@@ -137,4 +138,118 @@ func (s *SimpleTraceAction) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
+func (s *SimpleTraceAction) MarshalCache(writer io.Writer) (err error) {
+	// Address        base.Address    `json:"address,omitempty"`
+	// Author         base.Address    `json:"author,omitempty"`
+	// Balance        base.Wei        `json:"balance,omitempty"`
+	// CallType       string          `json:"callType"`
+	// From           base.Address    `json:"from"`
+	// Gas            base.Gas        `json:"gas"`
+	// Init           string          `json:"init,omitempty"`
+	// Input          string          `json:"input,omitempty"`
+	// RefundAddress  base.Address    `json:"refundAddress,omitempty"`
+	// RewardType     string          `json:"rewardType,omitempty"`
+	// SelfDestructed base.Address    `json:"selfDestructed,omitempty"`
+	// To             base.Address    `json:"to"`
+	// Value          base.Wei        `json:"value"`
+	if err = binary.WriteValue(writer, s.Address); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.Author); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, &s.Balance); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.CallType); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.From); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.Gas); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.Init); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.Input); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.RefundAddress); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.RewardType); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.SelfDestructed); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.To); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, &s.Value); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (s *SimpleTraceAction) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	// Address        base.Address    `json:"address,omitempty"`
+	// Author         base.Address    `json:"author,omitempty"`
+	// Balance        base.Wei        `json:"balance,omitempty"`
+	// CallType       string          `json:"callType"`
+	// From           base.Address    `json:"from"`
+	// Gas            base.Gas        `json:"gas"`
+	// Init           string          `json:"init,omitempty"`
+	// Input          string          `json:"input,omitempty"`
+	// RefundAddress  base.Address    `json:"refundAddress,omitempty"`
+	// RewardType     string          `json:"rewardType,omitempty"`
+	// SelfDestructed base.Address    `json:"selfDestructed,omitempty"`
+	// To             base.Address    `json:"to"`
+	// Value          base.Wei        `json:"value"`
+	if err = binary.ReadValue(reader, &s.Address, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.Author, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.Balance, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.CallType, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.From, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.Gas, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.Init, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.Input, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.RefundAddress, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.RewardType, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.SelfDestructed, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.To, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.Value, version); err != nil {
+		return err
+	}
+
+	return
+}
+
 // EXISTING_CODE

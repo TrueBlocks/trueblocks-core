@@ -20,6 +20,7 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 	loadedMap := make(map[base.Address]bool)
 	skipMap := make(map[base.Address]bool)
 	chain := opts.Globals.Chain
+	cache := opts.Globals.CacheStore(false)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
@@ -31,7 +32,7 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 			}
 
 			for _, appearance := range txIds {
-				tx, err := rpcClient.GetTransactionByAppearance(chain, &appearance, opts.Traces)
+				tx, err := rpcClient.GetTransactionByAppearance(chain, &appearance, opts.Traces, cache)
 				if err != nil {
 					errorChan <- fmt.Errorf("transaction at %s returned an error: %w", strings.Replace(rng.Orig, "-", ".", -1), err)
 					continue
@@ -41,7 +42,7 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 					continue
 				}
 
-				if opts.Articulate {
+				if opts.Articulate && tx.ArticulatedTx == nil {
 					address := tx.To
 					if !loadedMap[address] && !skipMap[address] {
 						if err := abi.LoadAbi(chain, address, abiMap); err != nil {

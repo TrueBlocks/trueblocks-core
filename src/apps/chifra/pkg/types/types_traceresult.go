@@ -13,6 +13,7 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/binary"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -107,4 +108,47 @@ func (s *SimpleTraceResult) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
+func (s *SimpleTraceResult) MarshalCache(writer io.Writer) (err error) {
+	// Address base.Address    `json:"address,omitempty"`
+	// Code    string          `json:"code,omitempty"`
+	// GasUsed base.Gas        `json:"gasUsed,omitempty"`
+	// Output  string          `json:"output,omitempty"`
+
+	if err = binary.WriteValue(writer, s.Address); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.Code); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.GasUsed); err != nil {
+		return err
+	}
+	if err = binary.WriteValue(writer, s.Output); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (s *SimpleTraceResult) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	// Address base.Address    `json:"address,omitempty"`
+	// Code    string          `json:"code,omitempty"`
+	// GasUsed base.Gas        `json:"gasUsed,omitempty"`
+	// Output  string          `json:"output,omitempty"`
+	if err = binary.ReadValue(reader, &s.Address, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.Code, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.GasUsed, version); err != nil {
+		return err
+	}
+	if err = binary.ReadValue(reader, &s.Output, version); err != nil {
+		return err
+	}
+
+	return
+}
+
 // EXISTING_CODE

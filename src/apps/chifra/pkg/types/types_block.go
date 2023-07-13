@@ -212,7 +212,6 @@ func (s *SimpleBlock[Tx]) CacheId() string {
 func (s *SimpleBlock[Tx]) CacheLocation() (directory string, extension string) {
 	extension = "bin"
 
-	// TODO: move somewhere else
 	paddedBn := s.CacheId()
 
 	parts := make([]string, 3)
@@ -306,6 +305,21 @@ func (s *SimpleBlock[string]) UnmarshalCache(version uint64, reader io.Reader) (
 	}
 
 	return
+}
+
+// Dup duplicates all fields but Transactions into target
+func (s *SimpleBlock[string]) Dup(target *SimpleBlock[SimpleTransaction]) {
+	target.BaseFeePerGas = s.BaseFeePerGas
+	target.BlockNumber = s.BlockNumber
+	target.Difficulty = s.Difficulty
+	target.GasLimit = s.GasLimit
+	target.GasUsed = s.GasUsed
+	target.Hash = s.Hash
+	target.Miner = s.Miner
+	target.ParentHash = s.ParentHash
+	target.Timestamp = s.Timestamp
+	target.Uncles = s.Uncles
+	target.raw = s.raw
 }
 
 // EXISTING_CODE

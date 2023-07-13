@@ -2,8 +2,10 @@ package binary
 
 import (
 	"encoding/binary"
+	"errors"
 	"io"
 	"math/big"
+	"reflect"
 )
 
 // read reads bytes in a correct byte order
@@ -18,20 +20,28 @@ func ReadValue(reader io.Reader, value any, version uint64) (err error) {
 	switch v := value.(type) {
 	case CacheUnmarshaler:
 		err = v.UnmarshalCache(version, reader)
-
-	// binary.Read takes care of slices of fixed-size types, e.g. []uint8,
-	// so we only have to support []string, []big.Int and []CacheUnmarshaler
 	case *[]string:
 		err = ReadSlice(reader, v, version)
 	case *[]big.Int:
-		err = ReadSlice(reader, v, version)
-	case *[]CacheUnmarshaler:
 		err = ReadSlice(reader, v, version)
 	case *string:
 		err = ReadString(reader, v)
 	case *big.Int:
 		err = ReadBigInt(reader, v)
 	default:
+		// Reading []CacheUnmarshaler is a bit more complex. The type switch won't work and
+		// we'll end up here. If value is a pointer to a slice, then it may contain CacheUnmarshalers
+		reflectedValue := reflect.ValueOf(value)
+		if reflectedValue.Kind() == reflect.Pointer {
+			if reflectedValue.Elem().Kind() == reflect.Slice {
+				// It is what we want, so let's try to read. If we get an error, we'll ignore it and still
+				err = ReadSliceReflect(reader, reflect.TypeOf(value).Elem(), reflectedValue.Elem(), version)
+				if err == nil {
+					return
+				}
+			}
+		}
+
 		err = read(reader, value)
 	}
 	return
@@ -55,6 +65,48 @@ func ReadSlice[T any](reader io.Reader, slice *[]T, version uint64) (err error) 
 
 		*slice = append(*slice, *item)
 	}
+	return nil
+}
+
+// ReadSliceReflect uses reflection to read a slice (typically of CacheUnmarshaler)
+func ReadSliceReflect(reader io.Reader, slice reflect.Type, destPointer reflect.Value, version uint64) (err error) {
+	var itemCount uint64 = 0
+	if err = read(reader, &itemCount); err != nil {
+		return
+	}
+
+	sliceItemType := slice.Elem()
+	if !reflect.New(sliceItemType).CanInterface() {
+		return errors.New("cannot cast value to interface")
+	}
+	sliceOfType := reflect.SliceOf(sliceItemType)
+
+	// Make sure we return a correct zero value for empty arrays
+	if itemCount == 0 {
+		destPointer.Set(reflect.Zero(sliceOfType))
+		return
+	}
+
+	result := reflect.MakeSlice(sliceOfType, 0, int(itemCount))
+	for i := 0; uint64(i) < itemCount; i++ {
+		item := reflect.New(sliceItemType)
+
+		unmarshaler, ok := item.Interface().(CacheUnmarshaler)
+		if !ok {
+			// If it's not CacheUnmarshaler, it can be a simpler type, which we can read into
+			if err = ReadValue(reader, item.Interface(), version); err != nil {
+				return
+			}
+		} else {
+			if err = ReadValue(reader, unmarshaler, version); err != nil {
+				return
+			}
+		}
+		result = reflect.Append(result, item.Elem())
+	}
+
+	destPointer.Set(result)
+
 	return nil
 }
 

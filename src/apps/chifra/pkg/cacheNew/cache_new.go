@@ -58,6 +58,10 @@ func (s *StoreOptions) location() (loc Storer, err error) {
 }
 
 func (s *StoreOptions) rootDir() (dir string) {
+	if s != nil && s.Location == MemoryCache {
+		return "memory"
+	}
+
 	if s == nil {
 		dir = config.GetPathToCache(config.GetDefaultChain())
 	} else if s.RootDir == "" {
