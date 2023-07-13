@@ -9,7 +9,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -33,7 +32,7 @@ func (opts *LogsOptions) HandleShowLogs() error {
 			defer iterCancel()
 
 			iterFunc := func(app identifiers.ResolvedId, value *types.SimpleReceipt) error {
-				if tx, err := GetTransactionById(chain, app, false /* needsTraces */); err != nil {
+				if tx, err := app.FetchTransactionById(chain, false /* needsTraces */); err != nil {
 					return fmt.Errorf("transaction at %s returned an error: %w", app.String(), err)
 				} else if tx == nil || tx.Receipt == nil {
 					return fmt.Errorf("transaction at %s has no logs", app.String())
@@ -54,6 +53,7 @@ func (opts *LogsOptions) HandleShowLogs() error {
 			iterErrorChan := make(chan error, 10)
 			utils.IterateOverMap(iterCtx, iterErrorChan, txMap, iterFunc)
 			for err := range iterErrorChan {
+				// TODO: I don't really want to quit looping here. Just report the error and keep going.
 				iterCancel()
 				if !testMode || nErrors == 0 {
 					errorChan <- err
@@ -78,9 +78,11 @@ func (opts *LogsOptions) HandleShowLogs() error {
 				return items[i].BlockNumber < items[j].BlockNumber
 			})
 
-			for _, log := range items {
-				log := log
-				modelChan <- &log
+			for _, item := range items {
+				item := item
+				if item.BlockNumber != 0 {
+					modelChan <- &item
+				}
 			}
 		}
 	}
@@ -90,14 +92,4 @@ func (opts *LogsOptions) HandleShowLogs() error {
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
-}
-
-func GetTransactionById(chain string, app identifiers.ResolvedId, fetchTraces bool) (tx *types.SimpleTransaction, err error) {
-	return rpcClient.GetTransactionByAppearance(
-		chain,
-		&types.RawAppearance{
-			BlockNumber:      uint32(app.BlockNumber),
-			TransactionIndex: uint32(app.TransactionIndex),
-		},
-		fetchTraces)
 }
