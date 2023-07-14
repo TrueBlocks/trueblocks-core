@@ -28,7 +28,7 @@ func IsContractAt(chain string, address base.Address, block *types.SimpleNamedBl
 	}
 
 	ctx := context.Background()
-	if code, err := client.CodeAt(ctx, common.HexToAddress(address.Hex()), clientBlockArg); err != nil {
+	if code, err := client.CodeAt(ctx, address.ToCommon(), clientBlockArg); err != nil {
 		return err
 	} else {
 		if len(code) == 0 {

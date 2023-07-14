@@ -2,6 +2,6 @@
 class = CCommandOption
 fields = commandoption.csv
 includes = utillib.h
-
+# doc_route = 00-no_doc
+# go_output = src/dev_tools/makeClass
 cpp_output = src/dev_tools/makeClass
-go_output =

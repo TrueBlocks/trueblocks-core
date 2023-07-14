@@ -6,6 +6,7 @@ package base
 
 import (
 	"fmt"
+	"strings"
 	"testing"
 )
 
@@ -59,148 +60,159 @@ func TestFileRange(t *testing.T) {
 }
 
 func TestFilenameFromRange(t *testing.T) {
-	// TODO: Turn these back on even though things don't work like this any more
-	// type args struct {
-	// 	fileRange FileRange
-	// 	extension string
-	// }
-	// tests := []struct {
-	// 	name string
-	// 	args args
-	// 	want string
-	// }{
-	// 	{
-	// 		name: "Pads numbers",
-	// 		args: args{
-	// 			fileRange: FileRange{
-	// 				First: 0,
-	// 				Last:  1,
-	// 			},
-	// 			extension: "bloom",
-	// 		},
-	// 		want: "000000000-000000001.bloom",
-	// 	},
-	// 	{
-	// 		name: "Random range 1",
-	// 		args: args{
-	// 			fileRange: FileRange{
-	// 				First: 14040187,
-	// 				Last:  14043115,
-	// 			},
-	// 			extension: "bloom",
-	// 		},
-	// 		want: "014040187-014043115.bloom",
-	// 	},
-	// 	{
-	// 		name: "Random range 2",
-	// 		args: args{
-	// 			fileRange: FileRange{
-	// 				First: 1371353,
-	// 				Last:  1504328,
-	// 			},
-	// 			extension: "bloom",
-	// 		},
-	// 		want: "001371353-001504328.bloom",
-	// 	},
-	// 	{
-	// 		name: "Works without extension",
-	// 		args: args{
-	// 			fileRange: FileRange{
-	// 				First: 1371353,
-	// 				Last:  1504328,
-	// 			},
-	// 			extension: "",
-	// 		},
-	// 		want: "001371353-001504328",
-	// 	},
-	// }
-	// for _, tt := range tests {
-	// 	t.Run(tt.name, func(t *testing.T) {
-	// 		if got := FilenameFromRange(tt.args.fileRange, tt.args.extension); got != tt.want {
-	// 			t.Errorf("FilenameFromRange() = %v, want %v", got, tt.want)
-	// 		}
-	// 	})
-	// }
+	type TestType struct {
+		name      string
+		fileRange FileRange
+		rangeStr  string
+	}
+	tests := []TestType{
+		{
+			name:      "Pads numbers",
+			fileRange: FileRange{0, 1},
+			rangeStr:  "000000000-000000001",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got, err := RangeFromFilenameE(tt.rangeStr); err != nil {
+				t.Errorf("FilenameFromRange() error: %v", err)
+			} else if got != tt.fileRange {
+				t.Errorf("FilenameFromRange() = %v, want %v", got, tt.rangeStr)
+			}
+			if got := RangeFromRangeString(tt.rangeStr); got != tt.fileRange {
+				t.Errorf("FilenameFromRange() = %v, want %v", got, tt.rangeStr)
+			}
+		})
+	}
+
+	fR := FileRange{0, 100}
+	want := "mainnet/finalized/000000000-000000100.bin"
+	_, got := fR.RangeToFilename("mainnet")
+	parts := strings.Split(got, "unchained/")
+	if len(parts) != 2 || parts[1] != want {
+		t.Errorf("FilenameFromRange() = %v, want %v", got, parts[1])
+	}
 }
 
 func Test_RangeRangeIntersect(t *testing.T) {
 	type TestType struct {
-		name string
-		r1   FileRange
-		r2   FileRange
-		want []bool
+		name  string
+		left  FileRange
+		right FileRange
+		want  []bool
 	}
 	tests := []TestType{
 		{
-			name: "right less than left",
-			r1:   FileRange{200, 300},
-			r2:   FileRange{100, 150},
-			want: []bool{false, false, false, true, false},
+			name:  "right less than left",
+			left:  FileRange{200, 300},
+			right: FileRange{100, 150},
+			want:  []bool{false, false, false, true, false},
 		},
 		{
-			name: "fully overlap",
-			r1:   FileRange{200, 300},
-			r2:   FileRange{100, 400},
-			want: []bool{true, false, false, true, true},
+			name:  "fully overlap",
+			left:  FileRange{200, 300},
+			right: FileRange{100, 400},
+			want:  []bool{true, false, false, true, true},
 		},
 		{
-			name: "fully contained",
-			r1:   FileRange{200, 300},
-			r2:   FileRange{250, 275},
-			want: []bool{true, true, true, false, false},
+			name:  "fully contained",
+			left:  FileRange{200, 300},
+			right: FileRange{250, 275},
+			want:  []bool{true, true, true, false, false},
 		},
 		{
-			name: "lefts align",
-			r1:   FileRange{200, 300},
-			r2:   FileRange{200, 400},
-			want: []bool{true, true, false, false, true},
+			name:  "lefts align",
+			left:  FileRange{200, 300},
+			right: FileRange{200, 400},
+			want:  []bool{true, true, false, false, true},
 		},
 		{
-			name: "left greater than",
-			r1:   FileRange{200, 300},
-			r2:   FileRange{250, 400},
-			want: []bool{true, true, false, false, true},
+			name:  "left greater than",
+			left:  FileRange{200, 300},
+			right: FileRange{250, 400},
+			want:  []bool{true, true, false, false, true},
 		},
 		{
-			name: "left aligns right",
-			r1:   FileRange{200, 300},
-			r2:   FileRange{300, 400},
-			want: []bool{true, true, false, false, true},
+			name:  "left aligns right",
+			left:  FileRange{200, 300},
+			right: FileRange{300, 400},
+			want:  []bool{true, true, false, false, true},
 		},
 		{
-			name: "rights align",
-			r1:   FileRange{200, 300},
-			r2:   FileRange{250, 300},
-			want: []bool{true, true, true, false, false},
+			name:  "rights align",
+			left:  FileRange{200, 300},
+			right: FileRange{250, 300},
+			want:  []bool{true, true, true, false, false},
 		},
 		{
-			name: "left greater than right",
-			r1:   FileRange{200, 300},
-			r2:   FileRange{350, 400},
-			want: []bool{false, false, false, false, true},
+			name:  "left greater than right",
+			left:  FileRange{200, 300},
+			right: FileRange{350, 400},
+			want:  []bool{false, false, false, false, true},
 		},
 	}
 
 	for _, tt := range tests {
-		s := tt.r1.Intersects(tt.r2)
+		s := tt.left.Intersects(tt.right)
 		if s != tt.want[0] {
 			t.Error("Test", tt.name, "failed Intersects.")
 		}
-		s = tt.r1.IntersectsB(tt.r2.First)
+		s = tt.left.IntersectsB(tt.right.First)
 		if s != tt.want[1] {
 			t.Error("Test", tt.name, "failed IntersectsB 1.")
 		}
-		s = tt.r1.IntersectsB(tt.r2.Last)
+		s = tt.left.IntersectsB(tt.right.Last)
 		if s != tt.want[2] {
 			t.Error("Test", tt.name, "failed IntersectsB 2.")
 		}
-		s = tt.r1.LaterThanB(tt.r2.First)
+		// s = tt.left.LaterThan(tt.right)
+		// if s != tt.want[3] {
+		// 	t.Error("Test", tt.name, "failed LaterThan.")
+		// }
+		s = tt.left.LaterThanB(tt.right.First)
 		if s != tt.want[3] {
 			t.Error("Test", tt.name, "failed LaterThanB.")
 		}
-		s = tt.r1.EarlierThanB(tt.r2.Last)
+		// s = tt.left.EarlierThan(tt.right)
+		// if s != tt.want[4] {
+		// 	t.Error("Test", tt.name, "failed EarlierThan.")
+		// }
+		s = tt.left.EarlierThanB(tt.right.Last)
 		if s != tt.want[4] {
 			t.Error("Test", tt.name, "failed EarlierThanB.")
+		}
+	}
+}
+
+func Test_Relative(t *testing.T) {
+	type TestType struct {
+		name  string
+		left  FileRange
+		right FileRange
+		want  []bool
+	}
+	tests := []TestType{
+		{
+			name:  "left preceeds right",
+			left:  FileRange{100, 200},
+			right: FileRange{300, 400},
+			want:  []bool{true, false},
+		},
+		{
+			name:  "left preceeds right",
+			left:  FileRange{300, 400},
+			right: FileRange{100, 200},
+			want:  []bool{false, true},
+		},
+	}
+	for _, tt := range tests {
+		s := tt.left.Preceeds(tt.right, false)
+		if s != tt.want[0] {
+			t.Error("Test", tt.name, "failed Preceeds.")
+		}
+		s = tt.left.Follows(tt.right, false)
+		if s != tt.want[1] {
+			t.Error("Test", tt.name, "failed Follows.")
 		}
 	}
 }

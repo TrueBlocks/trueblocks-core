@@ -36,6 +36,12 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
+//--------------------------------------------------------------------------------
+bool parseStringList2(COptionsBase* opt, CStringArray& strings, const string& argIn) {
+    strings.push_back(argIn);
+    return true;
+}
+
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))

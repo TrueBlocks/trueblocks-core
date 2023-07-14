@@ -35,17 +35,17 @@ func (ledgers *Ledger) GetStatementFromLog(log *types.SimpleLog) (r *types.Simpl
 	ctx := ledgers.Contexts[key]
 
 	pBal := new(big.Int)
-	if pBal, err = token.GetBalanceAt(ledgers.Chain, log.Address, ledgers.AccountFor, fmt.Sprintf("0x%x", ctx.PrevBlock)); pBal == nil {
+	if pBal, err = token.GetTokenBalanceAt(ledgers.Chain, log.Address, ledgers.AccountFor, fmt.Sprintf("0x%x", ctx.PrevBlock)); pBal == nil {
 		return nil, err
 	}
 
 	bBal := new(big.Int)
-	if bBal, err = token.GetBalanceAt(ledgers.Chain, log.Address, ledgers.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock-1)); bBal == nil {
+	if bBal, err = token.GetTokenBalanceAt(ledgers.Chain, log.Address, ledgers.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock-1)); bBal == nil {
 		return nil, err
 	}
 
 	eBal := new(big.Int)
-	if eBal, err = token.GetBalanceAt(ledgers.Chain, log.Address, ledgers.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock)); eBal == nil {
+	if eBal, err = token.GetTokenBalanceAt(ledgers.Chain, log.Address, ledgers.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock)); eBal == nil {
 		return nil, err
 	}
 

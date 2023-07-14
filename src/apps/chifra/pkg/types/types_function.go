@@ -16,9 +16,9 @@ import (
 	"io"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/ethereum/go-ethereum/accounts/abi"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 // `payable` was present in ABIs before Solidity 0.5.0 and was replaced by `stateMutability`
@@ -169,7 +169,7 @@ func FunctionFromAbiEvent(ethEvent *abi.Event) *SimpleFunction {
 // FunctionFromAbiMethod converts go-ethereum's abi.Method to our SimpleFunction
 func FunctionFromAbiMethod(ethMethod *abi.Method) *SimpleFunction {
 	// method.ID is our "four-byte"
-	fourByte := "0x" + strings.ToLower(string(common.Bytes2Hex(ethMethod.ID)))
+	fourByte := "0x" + strings.ToLower(string(base.Bytes2Hex(ethMethod.ID)))
 
 	var functionType string
 	switch ethMethod.Type {

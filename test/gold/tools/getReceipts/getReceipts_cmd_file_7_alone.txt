@@ -32,6 +32,7 @@ Arguments:
 
 Flags:
   -a, --articulate   articulate the retrieved data if ABIs can be found
+  -o, --cache        write the results of the query into the cache
   -x, --fmt string   export format, one of [none|json*|txt|csv]
   -v, --verbose      enable verbose (increase detail with --log_level)
   -h, --help         display this help screen

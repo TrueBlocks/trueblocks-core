@@ -6,9 +6,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -16,9 +14,7 @@ import (
 )
 
 func (opts *LogsOptions) HandleShowLogs() (err error) {
-	abiMap := make(abi.AbiInterfaceMap)
-	loadedMap := make(map[base.Address]bool)
-	skipMap := make(map[base.Address]bool)
+	abiCache := articulate.NewAbiCache()
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -41,28 +37,14 @@ func (opts *LogsOptions) HandleShowLogs() (err error) {
 					continue
 				}
 
-				for _, log := range tx.Receipt.Logs {
-					log := log
-					log.Timestamp = tx.Timestamp
+				for index := range tx.Receipt.Logs {
+					tx.Receipt.Logs[index].Timestamp = tx.Timestamp
 					if opts.Articulate {
-						address := log.Address
-						if !loadedMap[address] && !skipMap[address] {
-							if err := abi.LoadAbi(chain, address, abiMap); err != nil {
-								skipMap[address] = true
-								errorChan <- err // continue even with an error
-							} else {
-								loadedMap[address] = true
-							}
-						}
-
-						if !skipMap[address] {
-							if log.ArticulatedLog, err = articulate.ArticulateLog(&log, abiMap); err != nil {
-								errorChan <- err // continue even with an error
-							}
+						if err = abiCache.ArticulateLog(chain, &tx.Receipt.Logs[index]); err != nil {
+							errorChan <- err // continue even with an error
 						}
 					}
-
-					modelChan <- &log
+					modelChan <- &tx.Receipt.Logs[index]
 				}
 			}
 		}

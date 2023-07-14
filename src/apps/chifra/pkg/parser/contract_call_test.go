@@ -8,6 +8,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/alecthomas/participle/v2/lexer"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 )
@@ -197,7 +198,7 @@ const packTestAbiSource = `
 	{ "type" : "function", "name" : "bytes32", "inputs" : [ { "name" : "inputs", "type" : "bytes32" } ] }
 ]`
 
-func TestArgument_ToAbiType(t *testing.T) {
+func TestArgument_AbiType(t *testing.T) {
 	testAbi, err := abi.JSON(strings.NewReader(packTestAbiSource))
 	if err != nil {
 		panic(err)
@@ -302,5 +303,45 @@ func TestArgument_ToAbiType(t *testing.T) {
 				t.Errorf("Argument.ToAbiType() = %v, want %v", got, tt.want)
 			}
 		})
+	}
+}
+
+func TestArgument_AbiType_Errors(t *testing.T) {
+	testAbi, err := abi.JSON(strings.NewReader(packTestAbiSource))
+	if err != nil {
+		panic(err)
+	}
+	// the second argument is string instead of address
+	parsed, err := ParseContractCall(`transfer(0x6982508145454ce325ddbe47a25d4ec3d23119a1, "0x6982508145454ce325ddbe47a25d4ec3d23119a1")`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := parsed.FunctionNameCall.Arguments[0].AbiType(&testAbi.Methods["address"].Inputs[0].Type); err != nil {
+		t.Fatal(err)
+	}
+	_, err = parsed.FunctionNameCall.Arguments[1].AbiType(&testAbi.Methods["address"].Inputs[0].Type)
+	expectedError := newWrongTypeError("address", lexer.Token{Value: `0x6982508145454ce325ddbe47a25d4ec3d23119a1`}, "0x6982508145454ce325ddbe47a25d4ec3d23119a1")
+	if err.Error() != expectedError.Error() {
+		t.Fatal("got wrong error:", err, "expected:", expectedError)
+	}
+
+	parsed, err = ParseContractCall(`someBool(111)`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = parsed.FunctionNameCall.Arguments[0].AbiType(&testAbi.Methods["bool"].Inputs[0].Type)
+	expectedError = newWrongTypeError("bool", lexer.Token{Value: `111`}, 111)
+	if err.Error() != expectedError.Error() {
+		t.Fatal("got wrong error:", err, "expected:", expectedError)
+	}
+
+	parsed, err = ParseContractCall(`someBytes32("hello")`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = parsed.FunctionNameCall.Arguments[0].AbiType(&testAbi.Methods["bytes32"].Inputs[0].Type)
+	expectedError = newWrongTypeError("hash", lexer.Token{Value: `hello`}, "hello")
+	if err.Error() != expectedError.Error() {
+		t.Fatal("got wrong error:", err, "expected:", expectedError)
 	}
 }

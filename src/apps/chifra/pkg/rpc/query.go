@@ -30,7 +30,7 @@ import (
 var perProviderClientMap = map[string]*ethclient.Client{}
 var clientMutex sync.Mutex
 
-func GetClient(provider string) *ethclient.Client {
+func getClient(provider string) *ethclient.Client {
 	clientMutex.Lock()
 	if perProviderClientMap[provider] == nil {
 		// TODO: I don't like the fact that we Dail In every time we want to us this
@@ -46,10 +46,10 @@ func GetClient(provider string) *ethclient.Client {
 	return perProviderClientMap[provider]
 }
 
-// TxHashFromNumberAndId returns a transaction's hash if it's a valid transaction
-func TxHashFromNumberAndId(chain string, blkNum, txId uint64) (string, error) {
+// GetTxHashFromNumberAndId returns a transaction's hash if it's a valid transaction
+func GetTxHashFromNumberAndId(chain string, blkNum, txId uint64) (string, error) {
 	provider := config.GetRpcProvider(chain)
-	ec := GetClient(provider)
+	ec := getClient(provider)
 	defer ec.Close()
 
 	block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(blkNum))
@@ -66,9 +66,9 @@ func TxHashFromNumberAndId(chain string, blkNum, txId uint64) (string, error) {
 }
 
 // TODO: DUPLICATED DUE TO CYCLICAL IMPORT
-func TxFromNumberAndId(chain string, blkNum, txId uint64) (ethTypes.Transaction, error) {
+func GetTxFromNumberAndId(chain string, blkNum, txId uint64) (ethTypes.Transaction, error) {
 	provider := config.GetRpcProvider(chain)
-	ec := GetClient(provider)
+	ec := getClient(provider)
 	defer ec.Close()
 
 	block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(blkNum))
@@ -87,7 +87,7 @@ func TxFromNumberAndId(chain string, blkNum, txId uint64) (ethTypes.Transaction,
 // GetBlockTimestamp returns the timestamp associated with a given block
 func GetBlockTimestamp(chain string, bn uint64) base.Timestamp {
 	provider := config.GetRpcProvider(chain)
-	ec := GetClient(provider)
+	ec := getClient(provider)
 	defer ec.Close()
 
 	r, err := ec.HeaderByNumber(context.Background(), big.NewInt(int64(bn)))

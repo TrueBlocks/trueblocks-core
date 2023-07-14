@@ -8,7 +8,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 // GetStatementFromTransaction returns a statement from a given transaction
@@ -22,9 +21,9 @@ func (ledgers *Ledger) GetStatementsFromTransaction(trans *types.SimpleTransacti
 	key := fmt.Sprintf("%09d-%05d", trans.BlockNumber, trans.TransactionIndex)
 	ctx := ledgers.Contexts[key]
 
-	pBal, _ := rpcClient.GetBalanceAt(ledgers.Chain, common.HexToAddress(ledgers.AccountFor.Hex()), ctx.PrevBlock)
-	bBal, _ := rpcClient.GetBalanceAt(ledgers.Chain, common.HexToAddress(ledgers.AccountFor.Hex()), ctx.CurBlock-1)
-	eBal, _ := rpcClient.GetBalanceAt(ledgers.Chain, common.HexToAddress(ledgers.AccountFor.Hex()), ctx.CurBlock)
+	pBal, _ := rpcClient.GetBalanceAt(ledgers.Chain, ledgers.AccountFor, ctx.PrevBlock)
+	bBal, _ := rpcClient.GetBalanceAt(ledgers.Chain, ledgers.AccountFor, ctx.CurBlock-1)
+	eBal, _ := rpcClient.GetBalanceAt(ledgers.Chain, ledgers.AccountFor, ctx.CurBlock)
 
 	gasUsed := new(big.Int).SetUint64(trans.Receipt.GasUsed)
 	gasPrice := new(big.Int).SetUint64(trans.GasPrice)

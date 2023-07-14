@@ -1,0 +1,87 @@
+state?addrs=0xa1e4380a3b1f749673e270229993ee55f35663b4%200x5df9b87991262f6ba471f09758cde1c0fc1de734&blocks=0-2900000:quarterly
+{
+  "data": [
+    {
+      "address": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
+      "balance": "2000000000000000000000",
+      "blockNumber": 0,
+      "ether": "2000"
+    },
+    {
+      "address": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
+      "balance": "1183943463073949865351",
+      "blockNumber": 314572,
+      "ether": "1183.943463073949865351"
+    },
+    {
+      "address": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
+      "balance": "1183943463073949865351",
+      "blockNumber": 778482,
+      "ether": "1183.943463073949865351"
+    },
+    {
+      "address": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
+      "balance": "307140883478653724312",
+      "blockNumber": 1253720,
+      "ether": "307.140883478653724312"
+    },
+    {
+      "address": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
+      "balance": "32040696668585113217",
+      "blockNumber": 1801798,
+      "ether": "32.040696668585113217"
+    },
+    {
+      "address": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
+      "balance": "74298973541582540705",
+      "blockNumber": 2357372,
+      "ether": "74.298973541582540705"
+    },
+    {
+      "address": "0x5df9b87991262f6ba471f09758cde1c0fc1de734",
+      "balance": "0",
+      "blockNumber": 0,
+      "ether": "0"
+    },
+    {
+      "address": "0x5df9b87991262f6ba471f09758cde1c0fc1de734",
+      "balance": "62674",
+      "blockNumber": 314572,
+      "ether": "0.000000000000062674"
+    },
+    {
+      "address": "0x5df9b87991262f6ba471f09758cde1c0fc1de734",
+      "balance": "62674",
+      "blockNumber": 778482,
+      "ether": "0.000000000000062674"
+    },
+    {
+      "address": "0x5df9b87991262f6ba471f09758cde1c0fc1de734",
+      "balance": "62674",
+      "blockNumber": 1253720,
+      "ether": "0.000000000000062674"
+    },
+    {
+      "address": "0x5df9b87991262f6ba471f09758cde1c0fc1de734",
+      "balance": "62674",
+      "blockNumber": 1801798,
+      "ether": "0.000000000000062674"
+    },
+    {
+      "address": "0x5df9b87991262f6ba471f09758cde1c0fc1de734",
+      "balance": "62674",
+      "blockNumber": 2357372,
+      "ether": "0.000000000000062674"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

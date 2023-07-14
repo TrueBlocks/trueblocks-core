@@ -76,8 +76,8 @@ func GetState(chain string, tokenAddress base.Address, blockNumber string) (toke
 	return queryToken(chain, tokenAddress, blockNumber)
 }
 
-func GetBalanceAt(chain string, token, holder base.Address, blockNumber string) (balance *big.Int, err error) {
-	output, err := rpc.BatchQuery[string](
+func GetTokenBalanceAt(chain string, token, holder base.Address, blockNumber string) (balance *big.Int, err error) {
+	output, err := rpc.QueryBatch[string](
 		chain,
 		[]rpc.BatchPayload{{
 			Key: "balance",
@@ -86,7 +86,7 @@ func GetBalanceAt(chain string, token, holder base.Address, blockNumber string) 
 				Params: rpc.Params{
 					map[string]any{
 						"to":   token.Hex(),
-						"data": TokenStateBalanceOf + holder.Encoded32(),
+						"data": TokenStateBalanceOf + holder.Pad32(),
 					},
 					blockNumber,
 				},
@@ -104,7 +104,7 @@ func GetBalanceAt(chain string, token, holder base.Address, blockNumber string) 
 }
 
 func queryToken(chain string, address base.Address, blockNumber string) (token *Token, err error) {
-	results, err := rpc.BatchQuery[string](
+	results, err := rpc.QueryBatch[string](
 		chain,
 		[]rpc.BatchPayload{
 			{

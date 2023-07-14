@@ -23,6 +23,7 @@ type ReceiptsOptions struct {
 	Transactions   []string                 `json:"transactions,omitempty"`   // A space-separated list of one or more transaction identifiers
 	TransactionIds []identifiers.Identifier `json:"transactionIds,omitempty"` // Transaction identifiers
 	Articulate     bool                     `json:"articulate,omitempty"`     // Articulate the retrieved data if ABIs can be found
+	Cache          bool                     `json:"cache,omitempty"`          // Write the results of the query into the cache
 	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
 	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
 	// EXISTING_CODE
@@ -35,6 +36,7 @@ var defaultReceiptsOptions = ReceiptsOptions{}
 func (opts *ReceiptsOptions) testLog() {
 	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
+	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
 	opts.Globals.TestLog()
 }
 
@@ -57,6 +59,8 @@ func receiptsFinishParseApi(w http.ResponseWriter, r *http.Request) *ReceiptsOpt
 			}
 		case "articulate":
 			opts.Articulate = true
+		case "cache":
+			opts.Cache = true
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "receipts")

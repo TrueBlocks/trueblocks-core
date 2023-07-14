@@ -4,11 +4,11 @@ import (
 	"encoding/binary"
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 type ChunkSizes struct {
@@ -96,7 +96,7 @@ func checkHeader(path string) (ErrorType, error) {
 			return WRONG_MAGIC, nil
 		}
 
-		var hash common.Hash
+		var hash base.Hash
 		err = binary.Read(ff, binary.LittleEndian, &hash)
 		if err != nil {
 			return FILE_ERROR, err
@@ -117,7 +117,7 @@ func checkHeader(path string) (ErrorType, error) {
 			return WRONG_MAGIC, nil
 		}
 
-		var hash common.Hash
+		var hash base.Hash
 		err = binary.Read(ff, binary.LittleEndian, &hash)
 		if err != nil {
 			return FILE_ERROR, err

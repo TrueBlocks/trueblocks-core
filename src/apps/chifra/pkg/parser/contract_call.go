@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"math/big"
+	"reflect"
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -66,6 +67,8 @@ type FunctionContractCall struct {
 // ContractCallArgument represents input to the smart contract method call, e.g.
 // `true` in `setSomething(true)`
 type ContractCallArgument struct {
+	Tokens []lexer.Token
+
 	String  *string             `parser:"@String"`
 	Number  *ContractCallNumber `parser:"| @Decimal"`
 	Boolean *Boolean            `parser:"| @('true'|'false')"`
@@ -94,13 +97,16 @@ func (a *ContractCallArgument) Interface() any {
 
 func (a *ContractCallArgument) AbiType(abiType *abi.Type) (any, error) {
 	if abiType.T == abi.FixedBytesTy {
-		// We only support fixed bytes as hex strings
+		// We only support fixed bytes as hashes
+		if a.Hex == nil {
+			return nil, newWrongTypeError("hash", a.Tokens[0], a.Interface())
+		}
 		hex := *a.Hex.String
 		if len(hex) == 0 {
 			return nil, errors.New("no value for fixed-size bytes argument")
 		}
 
-		arrayInterface, err := abi.ReadFixedBytes(*abiType, common.Hex2Bytes(hex[2:]))
+		arrayInterface, err := abi.ReadFixedBytes(*abiType, base.Hex2Bytes(hex[2:]))
 		if err != nil {
 			return nil, err
 		}
@@ -108,6 +114,9 @@ func (a *ContractCallArgument) AbiType(abiType *abi.Type) (any, error) {
 	}
 
 	if abiType.T == abi.IntTy {
+		if a.Number == nil {
+			return nil, newWrongTypeError(abiType.String(), a.Tokens[0], a.Interface())
+		}
 		// We have to convert int64 to a correct int type, otherwise go-ethereum will
 		// return an error. It's not needed for uints, because they handle them differently.
 		if a.Number.Big != nil {
@@ -123,13 +132,23 @@ func (a *ContractCallArgument) AbiType(abiType *abi.Type) (any, error) {
 
 	if abiType.T == abi.AddressTy {
 		// We need go-ethereum's Address type, not ours
+		if a.Hex == nil {
+			return nil, newWrongTypeError(abiType.String(), a.Tokens[0], a.Interface())
+		}
 		address := a.Hex.Address
 		if address == nil {
-			return nil, errors.New("expected address")
+			return nil, errors.New("expected address, but got hash instead (check length)")
 		}
 
 		addressHex := common.HexToAddress(address.Hex())
 		return addressHex, nil
+	}
+
+	// Below checks are for nice errors only
+	if (abiType.T == abi.UintTy && a.Number == nil) ||
+		(abiType.T == abi.StringTy && a.String == nil) ||
+		(abiType.T == abi.BoolTy && a.Boolean == nil) {
+		return nil, newWrongTypeError(abiType.String(), a.Tokens[0], a.Interface())
 	}
 
 	return a.Interface(), nil
@@ -254,6 +273,17 @@ func (s *Selector) Capture(values []string) error {
 
 	s.Value = literal
 	return nil
+}
+
+func newWrongTypeError(expectedType string, token lexer.Token, value any) error {
+	t := reflect.TypeOf(value)
+	typeName := t.String()
+	kind := t.Kind()
+	// kinds between this range are all (u)int, called "integer" in Solidity
+	if kind > 1 && kind < 12 {
+		typeName = "integer"
+	}
+	return fmt.Errorf("expected %s, but got %s \"%s\"", expectedType, typeName, token)
 }
 
 // Build parser

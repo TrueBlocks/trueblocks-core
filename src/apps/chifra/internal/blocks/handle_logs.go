@@ -9,6 +9,7 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
@@ -17,6 +18,7 @@ import (
 )
 
 func (opts *BlocksOptions) HandleLogs() error {
+	abiCache := articulate.NewAbiCache()
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -65,6 +67,11 @@ func (opts *BlocksOptions) HandleLogs() error {
 				for _, log := range logs {
 					// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
 					log := log
+					if opts.Articulate {
+						if err := abiCache.ArticulateLog(chain, &log); err != nil {
+							errorChan <- err // continue even on error
+						}
+					}
 					if !opts.shouldShow(&log) {
 						continue
 					}
@@ -75,11 +82,12 @@ func (opts *BlocksOptions) HandleLogs() error {
 	}
 
 	extra := map[string]interface{}{
-		"count":     opts.Count,
-		"uncles":    opts.Uncles,
-		"logs":      opts.Logs,
-		"traces":    opts.Traces,
-		"addresses": opts.Uniq,
+		"count":      opts.Count,
+		"uncles":     opts.Uncles,
+		"logs":       opts.Logs,
+		"traces":     opts.Traces,
+		"addresses":  opts.Uniq,
+		"articulate": opts.Articulate,
 	}
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }

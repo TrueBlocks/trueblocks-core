@@ -74,7 +74,7 @@ func GetState(chain string, fields GetStateField, address base.Address, blockNum
 		})
 	}
 
-	queryResults, err := rpc.BatchQuery[string](chain, rpcPayload)
+	queryResults, err := rpc.QueryBatch[string](chain, rpcPayload)
 	if err != nil {
 		return
 	}

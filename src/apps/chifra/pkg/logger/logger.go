@@ -9,6 +9,7 @@ import (
 	"log"
 	"math"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -139,8 +140,5 @@ func PctProgress(done int32, total int, tick int32) {
 	}
 
 	percentage := math.Round(float64(done) / float64(total) * 100)
-	Progress(
-		true,
-		fmt.Sprintf("Processing: %.f%% (%d items, %d total)", percentage, done, total),
-	)
+	toLog(progress, fmt.Sprintf("\r\t\t\t Processing: %.f%% (%d of %d)%s", percentage, done, total, strings.Repeat(" ", 40)))
 }

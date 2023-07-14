@@ -10,14 +10,13 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "acctlib.h"
+#include "utillib.h"
 #include "options.h"
 
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     loadEnvironmentPaths();
-    nodeNotRequired();
-    acctlib_init(quickQuitHandler);
+    // nodeNotRequired();
 
     CMember::registerClass();
 
@@ -42,6 +41,5 @@ int main(int argc, const char* argv[]) {
                  options.counter.nProcessed, ").", string_q(40, ' '));
     }
 
-    acctlib_cleanup();
     return 0;
 }
