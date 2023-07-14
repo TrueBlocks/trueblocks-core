@@ -30,11 +30,11 @@ type Locator interface {
 	CacheName() string
 }
 
-type CacheUnmarshaler interface {
+type Unmarshaler interface {
 	UnmarshalCache(version uint64, reader io.Reader) error
 }
 
-type CacheMarshaler interface {
+type Marshaler interface {
 	MarshalCache(writer io.Writer) error
 }
 

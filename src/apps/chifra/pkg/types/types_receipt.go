@@ -200,7 +200,7 @@ func (s *SimpleReceipt) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	logs := make([]cacheNew.CacheMarshaler, 0, len(s.Logs))
+	logs := make([]cacheNew.Marshaler, 0, len(s.Logs))
 	for _, log := range s.Logs {
 		logs = append(logs, &log)
 	}

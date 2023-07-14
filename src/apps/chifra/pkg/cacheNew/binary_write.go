@@ -14,21 +14,21 @@ func write(writer io.Writer, value any) (err error) {
 }
 
 // WriteValue writes binary representation of fixed-size values, strings,
-// big.Int, CacheUnmarshaler and slices of these values. Contrary to
+// big.Int, Marshaler and slices of these values. Contrary to
 // ReadValue, it doesn't support versioning, because it is expected that
 // only the most recent data format is used when writing.
 func WriteValue(writer io.Writer, value any) (err error) {
 	switch v := value.(type) {
-	case CacheMarshaler:
+	case Marshaler:
 		err = v.MarshalCache(writer)
 
 	// binary.Write takes care of slices of fixed-size types, e.g. []uint8,
-	// so we only have to support []string, []big.Int and []CacheUnmarshaler
+	// so we only have to support []string, []big.Int and []Marshaler
 	case []string:
 		err = WriteSlice(writer, v)
 	case []big.Int:
 		err = WriteSlice(writer, v)
-	case []CacheMarshaler:
+	case []Marshaler:
 		err = WriteSlice(writer, v)
 	case string:
 		err = WriteString(writer, &v)
@@ -75,7 +75,7 @@ func WriteSliceReflect(writer io.Writer, sliceValue *reflect.Value) (err error) 
 	for i := 0; i < sliceLen; i++ {
 		item := sliceValue.Index(i)
 
-		cm, ok := item.Addr().Interface().(CacheMarshaler)
+		cm, ok := item.Addr().Interface().(Marshaler)
 		if !ok {
 			if err = WriteValue(buffer, item.Interface()); err != nil {
 				return

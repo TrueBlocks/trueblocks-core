@@ -104,7 +104,7 @@ func TestWriteValue(t *testing.T) {
 	}
 
 	buf.Reset()
-	expectedMarshalerSlice := []CacheMarshaler{
+	expectedMarshalerSlice := []Marshaler{
 		&testMarshaler{"10"},
 		&testMarshaler{"21"},
 	}

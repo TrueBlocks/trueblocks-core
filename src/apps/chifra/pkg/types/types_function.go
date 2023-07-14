@@ -389,7 +389,7 @@ func (s *SimpleFunction) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	inputs := make([]cacheNew.CacheMarshaler, 0, len(s.Inputs))
+	inputs := make([]cacheNew.Marshaler, 0, len(s.Inputs))
 	for _, input := range s.Inputs {
 		input := input
 		inputs = append(inputs, &input)
@@ -405,7 +405,7 @@ func (s *SimpleFunction) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	outputs := make([]cacheNew.CacheMarshaler, 0, len(s.Outputs))
+	outputs := make([]cacheNew.Marshaler, 0, len(s.Outputs))
 	for _, output := range s.Outputs {
 		outputs = append(outputs, &output)
 	}

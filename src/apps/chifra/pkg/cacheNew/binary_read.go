@@ -14,11 +14,11 @@ func read(reader io.Reader, value any) (err error) {
 }
 
 // ReadValue reads binary representation of fixed-size values, strings,
-// big.Int, CacheUnmarshaler and slices of these values. Version number
-// is passed to any CacheUnmarshaler to ease reading older formats.
+// big.Int, Unmarshaler and slices of these values. Version number
+// is passed to any Unmarshaler to ease reading older formats.
 func ReadValue(reader io.Reader, value any, version uint64) (err error) {
 	switch v := value.(type) {
-	case CacheUnmarshaler:
+	case Unmarshaler:
 		err = v.UnmarshalCache(version, reader)
 	case *[]string:
 		err = ReadSlice(reader, v, version)
@@ -29,8 +29,8 @@ func ReadValue(reader io.Reader, value any, version uint64) (err error) {
 	case *big.Int:
 		err = ReadBigInt(reader, v)
 	default:
-		// Reading []CacheUnmarshaler is a bit more complex. The type switch won't work and
-		// we'll end up here. If value is a pointer to a slice, then it may contain CacheUnmarshalers
+		// Reading []Unmarshaler is a bit more complex. The type switch won't work and
+		// we'll end up here. If value is a pointer to a slice, then it may contain Unmarshalers
 		reflectedValue := reflect.ValueOf(value)
 		if reflectedValue.Kind() == reflect.Pointer {
 			if reflectedValue.Elem().Kind() == reflect.Slice {
@@ -68,7 +68,7 @@ func ReadSlice[T any](reader io.Reader, slice *[]T, version uint64) (err error) 
 	return nil
 }
 
-// ReadSliceReflect uses reflection to read a slice (typically of CacheUnmarshaler)
+// ReadSliceReflect uses reflection to read a slice (typically of Unmarshaler)
 func ReadSliceReflect(reader io.Reader, slice reflect.Type, destPointer reflect.Value, version uint64) (err error) {
 	var itemCount uint64 = 0
 	if err = read(reader, &itemCount); err != nil {
@@ -91,9 +91,9 @@ func ReadSliceReflect(reader io.Reader, slice reflect.Type, destPointer reflect.
 	for i := 0; uint64(i) < itemCount; i++ {
 		item := reflect.New(sliceItemType)
 
-		unmarshaler, ok := item.Interface().(CacheUnmarshaler)
+		unmarshaler, ok := item.Interface().(Unmarshaler)
 		if !ok {
-			// If it's not CacheUnmarshaler, it can be a simpler type, which we can read into
+			// If it's not Unmarshaler, it can be a simpler type, which we can read into
 			if err = ReadValue(reader, item.Interface(), version); err != nil {
 				return
 			}

@@ -128,7 +128,7 @@ func Example() {
 	// &{BlockNumber:4436721 Date: Name:Test block Timestamp:1688667358}
 }
 
-func ExampleCacheMarshaler() {
+func ExampleMarshaler() {
 	// We start with a simple example of storing uint64 serialized to binary
 
 	// First, we create a fake file (we need something that implements io.ReadWriter)
