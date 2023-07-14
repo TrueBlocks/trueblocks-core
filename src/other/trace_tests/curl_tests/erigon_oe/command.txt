@@ -1,2 +1,0 @@
-Comparing erigon_2023_07_12/ to openethereum_2020_12_12/, placing results into erigon_oe
-Command executed on Wed Jul 12 19:06:10 UTC 2023
