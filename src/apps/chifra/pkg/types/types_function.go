@@ -16,7 +16,7 @@ import (
 	"io"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/binary"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 )
@@ -379,47 +379,47 @@ func (s *SimpleFunction) Pack(callArguments []any) (packed []byte, err error) {
 }
 
 func (s *SimpleFunction) MarshalCache(writer io.Writer) (err error) {
-	if err = binary.WriteValue(writer, s.Anonymous); err != nil {
+	if err = cacheNew.WriteValue(writer, s.Anonymous); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.Constant); err != nil {
+	if err = cacheNew.WriteValue(writer, s.Constant); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.Encoding); err != nil {
+	if err = cacheNew.WriteValue(writer, s.Encoding); err != nil {
 		return err
 	}
 
-	inputs := make([]binary.CacheMarshaler, 0, len(s.Inputs))
+	inputs := make([]cacheNew.CacheMarshaler, 0, len(s.Inputs))
 	for _, input := range s.Inputs {
 		input := input
 		inputs = append(inputs, &input)
 	}
-	if err = binary.WriteValue(writer, inputs); err != nil {
+	if err = cacheNew.WriteValue(writer, inputs); err != nil {
 		return err
 	}
 
-	if err = binary.WriteValue(writer, s.Message); err != nil {
+	if err = cacheNew.WriteValue(writer, s.Message); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.Name); err != nil {
+	if err = cacheNew.WriteValue(writer, s.Name); err != nil {
 		return err
 	}
 
-	outputs := make([]binary.CacheMarshaler, 0, len(s.Outputs))
+	outputs := make([]cacheNew.CacheMarshaler, 0, len(s.Outputs))
 	for _, output := range s.Outputs {
 		outputs = append(outputs, &output)
 	}
-	if err = binary.WriteValue(writer, outputs); err != nil {
+	if err = cacheNew.WriteValue(writer, outputs); err != nil {
 		return err
 	}
 
-	if err = binary.WriteValue(writer, s.Signature); err != nil {
+	if err = cacheNew.WriteValue(writer, s.Signature); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.StateMutability); err != nil {
+	if err = cacheNew.WriteValue(writer, s.StateMutability); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.FunctionType); err != nil {
+	if err = cacheNew.WriteValue(writer, s.FunctionType); err != nil {
 		return err
 	}
 
@@ -427,40 +427,40 @@ func (s *SimpleFunction) MarshalCache(writer io.Writer) (err error) {
 }
 
 func (s *SimpleFunction) UnmarshalCache(version uint64, reader io.Reader) (err error) {
-	if err = binary.ReadValue(reader, &s.Anonymous, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.Anonymous, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.Constant, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.Constant, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.Encoding, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.Encoding, version); err != nil {
 		return err
 	}
 
 	s.Inputs = make([]SimpleParameter, 0)
-	if err = binary.ReadValue(reader, &s.Inputs, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.Inputs, version); err != nil {
 		return err
 	}
 
-	if err = binary.ReadValue(reader, &s.Message, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.Message, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.Name, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.Name, version); err != nil {
 		return err
 	}
 
 	s.Outputs = make([]SimpleParameter, 0)
-	if err = binary.ReadValue(reader, &s.Outputs, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.Outputs, version); err != nil {
 		return err
 	}
 
-	if err = binary.ReadValue(reader, &s.Signature, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.Signature, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.StateMutability, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.StateMutability, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.FunctionType, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.FunctionType, version); err != nil {
 		return err
 	}
 

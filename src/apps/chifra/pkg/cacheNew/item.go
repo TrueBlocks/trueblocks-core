@@ -4,7 +4,6 @@ import (
 	"errors"
 	"io"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/binary"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
@@ -55,12 +54,12 @@ func (i *Item) readHeader() (h *header, err error) {
 }
 
 func (i *Item) marshal(value any) (err error) {
-	return binary.WriteValue(i.readWriter, value)
+	return WriteValue(i.readWriter, value)
 }
 
 func (i *Item) unmarshal(value any) (err error) {
 	// i.header.Version will be 0 when reading header
-	return binary.ReadValue(i.readWriter, value, i.header.Version)
+	return ReadValue(i.readWriter, value, i.header.Version)
 }
 
 func (i *Item) Encode(value any) (err error) {

@@ -3,8 +3,6 @@ package cacheNew
 import (
 	"io"
 	"testing"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/binary"
 )
 
 // We have to create a struct that implements Cache(un)Marshaler and Locator
@@ -15,14 +13,14 @@ type testStoreData struct {
 }
 
 func (t *testStoreData) MarshalCache(writer io.Writer) error {
-	if err := binary.WriteValue(writer, t.Value); err != nil {
+	if err := WriteValue(writer, t.Value); err != nil {
 		return err
 	}
 	return nil
 }
 
 func (t *testStoreData) UnmarshalCache(version uint64, reader io.Reader) error {
-	if err := binary.ReadValue(reader, &t.Value, version); err != nil {
+	if err := ReadValue(reader, &t.Value, version); err != nil {
 		return err
 	}
 	return nil

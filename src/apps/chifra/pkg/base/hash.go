@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/binary"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -47,7 +47,7 @@ func (h *Hash) IsZero() bool {
 
 func (h *Hash) UnmarshalCache(version uint64, reader io.Reader) error {
 	var value [32]byte
-	if err := binary.ReadValue(reader, &value, version); err != nil {
+	if err := cacheNew.ReadValue(reader, &value, version); err != nil {
 		return err
 	}
 	h.SetBytes(value[:])

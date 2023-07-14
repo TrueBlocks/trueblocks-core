@@ -16,7 +16,7 @@ import (
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/binary"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
@@ -204,48 +204,48 @@ func mustParseUint(input any) (result uint64) {
 }
 
 func (s *SimpleTrace) MarshalCache(writer io.Writer) (err error) {
-	if err = binary.WriteValue(writer, s.Action); err != nil {
+	if err = cacheNew.WriteValue(writer, s.Action); err != nil {
 		return err
 	}
 
-	optArticulatedTrace := &binary.Optional[SimpleFunction]{
+	optArticulatedTrace := &cacheNew.Optional[SimpleFunction]{
 		Value: s.ArticulatedTrace,
 	}
-	if err = binary.WriteValue(writer, optArticulatedTrace); err != nil {
+	if err = cacheNew.WriteValue(writer, optArticulatedTrace); err != nil {
 		return err
 	}
 
-	if err = binary.WriteValue(writer, &s.BlockHash); err != nil {
+	if err = cacheNew.WriteValue(writer, &s.BlockHash); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.BlockNumber); err != nil {
+	if err = cacheNew.WriteValue(writer, s.BlockNumber); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.CompressedTrace); err != nil {
+	if err = cacheNew.WriteValue(writer, s.CompressedTrace); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.Error); err != nil {
+	if err = cacheNew.WriteValue(writer, s.Error); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.Result); err != nil {
+	if err = cacheNew.WriteValue(writer, s.Result); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.Subtraces); err != nil {
+	if err = cacheNew.WriteValue(writer, s.Subtraces); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.Timestamp); err != nil {
+	if err = cacheNew.WriteValue(writer, s.Timestamp); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.TraceAddress); err != nil {
+	if err = cacheNew.WriteValue(writer, s.TraceAddress); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, &s.TransactionHash); err != nil {
+	if err = cacheNew.WriteValue(writer, &s.TransactionHash); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.TransactionIndex); err != nil {
+	if err = cacheNew.WriteValue(writer, s.TransactionIndex); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.TraceType); err != nil {
+	if err = cacheNew.WriteValue(writer, s.TraceType); err != nil {
 		return err
 	}
 
@@ -256,55 +256,55 @@ func (s *SimpleTrace) UnmarshalCache(version uint64, reader io.Reader) (err erro
 	if s.Action == nil {
 		s.Action = new(SimpleTraceAction)
 	}
-	if err = binary.ReadValue(reader, s.Action, version); err != nil {
+	if err = cacheNew.ReadValue(reader, s.Action, version); err != nil {
 		return err
 	}
 
 	// ArticulatedTrace can be missing
-	optArticulatedTrace := &binary.Optional[SimpleFunction]{
+	optArticulatedTrace := &cacheNew.Optional[SimpleFunction]{
 		Value: s.ArticulatedTrace,
 	}
-	if err = binary.ReadValue(reader, optArticulatedTrace, version); err != nil {
+	if err = cacheNew.ReadValue(reader, optArticulatedTrace, version); err != nil {
 		return err
 	}
 	s.ArticulatedTrace = optArticulatedTrace.Get()
 
-	if err = binary.ReadValue(reader, &s.BlockHash, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.BlockHash, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.BlockNumber, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.BlockNumber, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.CompressedTrace, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.CompressedTrace, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.Error, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.Error, version); err != nil {
 		return err
 	}
 
 	if s.Result == nil {
 		s.Result = new(SimpleTraceResult)
 	}
-	if err = binary.ReadValue(reader, s.Result, version); err != nil {
+	if err = cacheNew.ReadValue(reader, s.Result, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.Subtraces, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.Subtraces, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.Timestamp, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.Timestamp, version); err != nil {
 		return err
 	}
 
-	if err = binary.ReadValue(reader, &s.TraceAddress, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.TraceAddress, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.TransactionHash, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.TransactionHash, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.TransactionIndex, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.TransactionIndex, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.TraceType, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.TraceType, version); err != nil {
 		return err
 	}
 
@@ -351,11 +351,11 @@ func (s *SimpleTraceGroup) CacheLocation() (directory string, extension string) 
 }
 
 func (s *SimpleTraceGroup) MarshalCache(writer io.Writer) (err error) {
-	return binary.WriteValue(writer, s.Traces)
+	return cacheNew.WriteValue(writer, s.Traces)
 }
 
 func (s *SimpleTraceGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
-	return binary.ReadValue(reader, &s.Traces, version)
+	return cacheNew.ReadValue(reader, &s.Traces, version)
 }
 
 // EXISTING_CODE

@@ -16,7 +16,7 @@ import (
 	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/binary"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
@@ -132,7 +132,11 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 		"compressedTx",
 	}
 
-	model["date"] = utils.FormattedDate(s.Timestamp)
+	if s.Date == "" {
+		model["date"] = utils.FormattedDate(s.Timestamp)
+	} else {
+		model["date"] = s.Date
+	}
 	model["gasCost"] = s.SetGasCost(s.Receipt)
 
 	// TODO: Shouldn't this use the SimpleFunction model - the answer is yes?
@@ -323,149 +327,143 @@ func (s *SimpleTransaction) CacheLocation() (directory string, extension string)
 }
 
 func (s *SimpleTransaction) MarshalCache(writer io.Writer) (err error) {
-	optArticulatedTx := &binary.Optional[SimpleFunction]{
+	optArticulatedTx := &cacheNew.Optional[SimpleFunction]{
 		Value: s.ArticulatedTx,
 	}
-	if err = binary.WriteValue(writer, optArticulatedTx); err != nil {
+	if err = cacheNew.WriteValue(writer, optArticulatedTx); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, &s.Hash); err != nil {
+	if err = cacheNew.WriteValue(writer, &s.Hash); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, &s.BlockHash); err != nil {
+	if err = cacheNew.WriteValue(writer, &s.BlockHash); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.BlockNumber); err != nil {
+	if err = cacheNew.WriteValue(writer, s.BlockNumber); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.TransactionIndex); err != nil {
+	if err = cacheNew.WriteValue(writer, s.TransactionIndex); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.Nonce); err != nil {
+	if err = cacheNew.WriteValue(writer, s.Nonce); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.Timestamp); err != nil {
+	if err = cacheNew.WriteValue(writer, s.Timestamp); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.From); err != nil {
+	if err = cacheNew.WriteValue(writer, s.From); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.To); err != nil {
+	if err = cacheNew.WriteValue(writer, s.To); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, &s.Value); err != nil {
+	if err = cacheNew.WriteValue(writer, &s.Value); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.Gas); err != nil {
+	if err = cacheNew.WriteValue(writer, s.Gas); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.GasPrice); err != nil {
+	if err = cacheNew.WriteValue(writer, s.GasPrice); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.GasUsed); err != nil {
+	if err = cacheNew.WriteValue(writer, s.GasUsed); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.GasCost); err != nil {
+	if err = cacheNew.WriteValue(writer, s.GasCost); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.MaxFeePerGas); err != nil {
+	if err = cacheNew.WriteValue(writer, s.MaxFeePerGas); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.MaxPriorityFeePerGas); err != nil {
+	if err = cacheNew.WriteValue(writer, s.MaxPriorityFeePerGas); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.Input); err != nil {
+	if err = cacheNew.WriteValue(writer, s.Input); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.IsError); err != nil {
+	if err = cacheNew.WriteValue(writer, s.IsError); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.HasToken); err != nil {
+	if err = cacheNew.WriteValue(writer, s.HasToken); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.Receipt); err != nil {
+	if err = cacheNew.WriteValue(writer, s.Receipt); err != nil {
 		return err
 	}
-
-	// TODO:
-	// Traces
 
 	return
 }
 
 func (s *SimpleTransaction) UnmarshalCache(version uint64, reader io.Reader) (err error) {
-	optArticulatedTx := &binary.Optional[SimpleFunction]{
+	optArticulatedTx := &cacheNew.Optional[SimpleFunction]{
 		Value: s.ArticulatedTx,
 	}
-	if err = binary.ReadValue(reader, optArticulatedTx, version); err != nil {
+	if err = cacheNew.ReadValue(reader, optArticulatedTx, version); err != nil {
 		return err
 	}
 	s.ArticulatedTx = optArticulatedTx.Get()
 
-	if err = binary.ReadValue(reader, &s.Hash, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.Hash, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.BlockHash, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.BlockHash, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.BlockNumber, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.BlockNumber, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.TransactionIndex, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.TransactionIndex, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.Nonce, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.Nonce, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.Timestamp, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.Timestamp, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.From, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.From, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.To, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.To, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.Value, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.Value, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.Gas, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.Gas, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.GasPrice, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.GasPrice, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.GasUsed, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.GasUsed, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.GasCost, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.GasCost, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.MaxFeePerGas, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.MaxFeePerGas, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.MaxPriorityFeePerGas, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.MaxPriorityFeePerGas, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.Input, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.Input, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.IsError, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.IsError, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.HasToken, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.HasToken, version); err != nil {
 		return err
 	}
 
 	s.Receipt = &SimpleReceipt{}
-	if err = binary.ReadValue(reader, s.Receipt, version); err != nil {
+	if err = cacheNew.ReadValue(reader, s.Receipt, version); err != nil {
 		return err
 	}
 
 	s.Date = utils.FormattedDate(s.Timestamp)
-
-	// TODO:
-	// Traces
 
 	return
 }

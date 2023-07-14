@@ -30,6 +30,14 @@ type Locator interface {
 	CacheName() string
 }
 
+type CacheUnmarshaler interface {
+	UnmarshalCache(version uint64, reader io.Reader) error
+}
+
+type CacheMarshaler interface {
+	MarshalCache(writer io.Writer) error
+}
+
 type StoreOptions struct {
 	Location StoreLocation
 	Chain    string

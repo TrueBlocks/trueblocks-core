@@ -14,7 +14,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/binary"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 )
 
 // EXISTING_CODE
@@ -126,22 +126,22 @@ func ParametersToMap(params []SimpleParameter) (result map[string]any) {
 }
 
 func (s *SimpleParameter) MarshalCache(writer io.Writer) (err error) {
-	if err = binary.WriteValue(writer, s.Components); err != nil {
+	if err = cacheNew.WriteValue(writer, s.Components); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.Indexed); err != nil {
+	if err = cacheNew.WriteValue(writer, s.Indexed); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.InternalType); err != nil {
+	if err = cacheNew.WriteValue(writer, s.InternalType); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.Name); err != nil {
+	if err = cacheNew.WriteValue(writer, s.Name); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.StrDefault); err != nil {
+	if err = cacheNew.WriteValue(writer, s.StrDefault); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, s.ParameterType); err != nil {
+	if err = cacheNew.WriteValue(writer, s.ParameterType); err != nil {
 		return err
 	}
 
@@ -150,7 +150,7 @@ func (s *SimpleParameter) MarshalCache(writer io.Writer) (err error) {
 	if err != nil {
 		return fmt.Errorf("cannot marshal Value: %w", err)
 	}
-	if err = binary.WriteValue(writer, value); err != nil {
+	if err = cacheNew.WriteValue(writer, value); err != nil {
 		return err
 	}
 
@@ -159,29 +159,29 @@ func (s *SimpleParameter) MarshalCache(writer io.Writer) (err error) {
 
 func (s *SimpleParameter) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	s.Components = make([]SimpleParameter, 0)
-	if err = binary.ReadValue(reader, &s.Components, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.Components, version); err != nil {
 		return err
 	}
 
-	if err = binary.ReadValue(reader, &s.Indexed, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.Indexed, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.InternalType, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.InternalType, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.Name, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.Name, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.StrDefault, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.StrDefault, version); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &s.ParameterType, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &s.ParameterType, version); err != nil {
 		return err
 	}
 
 	// s.Value can be anything, so we store it as a marshaled string
 	var value string
-	if err = binary.ReadValue(reader, &value, version); err != nil {
+	if err = cacheNew.ReadValue(reader, &value, version); err != nil {
 		return err
 	}
 	if err = json.Unmarshal([]byte(value), &s.Value); err != nil {

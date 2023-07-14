@@ -7,7 +7,6 @@ import (
 	"io"
 	"strconv"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/binary"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
@@ -23,16 +22,16 @@ type ExampleBlock struct {
 // defining MarshalCache. MarshalCache job is to serialize the data more
 // complex than uint8, uint64, ..., int64, etc.
 func (e *ExampleBlock) MarshalCache(writer io.Writer) (err error) {
-	// binary.WriteValue serializes its second argument. It works for
+	// WriteValue serializes its second argument. It works for
 	// fixed-size numeric types, slices and structs that implement
 	// CacheMarshaler interface (and slices of such types).
-	if err = binary.WriteValue(writer, e.BlockNumber); err != nil {
+	if err = WriteValue(writer, e.BlockNumber); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, e.Name); err != nil {
+	if err = WriteValue(writer, e.Name); err != nil {
 		return err
 	}
-	if err = binary.WriteValue(writer, e.Timestamp); err != nil {
+	if err = WriteValue(writer, e.Timestamp); err != nil {
 		return err
 	}
 	// We are not saving e.raw, although it's possible
@@ -59,13 +58,13 @@ func (e *ExampleBlock) UnmarshalCache(itemVersion uint64, reader io.Reader) (err
 		return errors.New("unsupported version")
 	}
 
-	if err = binary.ReadValue(reader, &e.BlockNumber, itemVersion); err != nil {
+	if err = ReadValue(reader, &e.BlockNumber, itemVersion); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &e.Name, itemVersion); err != nil {
+	if err = ReadValue(reader, &e.Name, itemVersion); err != nil {
 		return err
 	}
-	if err = binary.ReadValue(reader, &e.Timestamp, itemVersion); err != nil {
+	if err = ReadValue(reader, &e.Timestamp, itemVersion); err != nil {
 		return err
 	}
 	return
@@ -163,7 +162,7 @@ func ExampleCacheMarshaler() {
 	// more automated later
 	blocksCacheFile := new(bytes.Buffer)
 	blocksCacheItem := NewItem(blocksCacheFile)
-	// We call Encode() to serialize to binary. Cache header is written by default
+	// We call Encode() to serialize to  Cache header is written by default
 	if err := blocksCacheItem.Encode(block); err != nil {
 		panic(err)
 	}
