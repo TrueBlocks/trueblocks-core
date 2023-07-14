@@ -97,5 +97,6 @@ func (l *memory) Stat(path string) (*ItemInfo, error) {
 	}
 	return &ItemInfo{
 		fileSize,
+		path,
 	}, nil
 }

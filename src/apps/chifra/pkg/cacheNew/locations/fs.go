@@ -95,6 +95,7 @@ func (l *fileSystem) Stat(path string) (*ItemInfo, error) {
 
 	return &ItemInfo{
 		fileSize: int(info.Size()),
+		name:     info.Name(),
 	}, err
 }
 
