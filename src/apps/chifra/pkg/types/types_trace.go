@@ -12,9 +12,11 @@ package types
 import (
 	"fmt"
 	"io"
+	"path/filepath"
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
@@ -199,6 +201,161 @@ func (s *SimpleTrace) ReadFrom(r io.Reader) (n int64, err error) {
 func mustParseUint(input any) (result uint64) {
 	result, _ = strconv.ParseUint(fmt.Sprint(input), 0, 64)
 	return
+}
+
+func (s *SimpleTrace) MarshalCache(writer io.Writer) (err error) {
+	if err = cacheNew.WriteValue(writer, s.Action); err != nil {
+		return err
+	}
+
+	optArticulatedTrace := &cacheNew.Optional[SimpleFunction]{
+		Value: s.ArticulatedTrace,
+	}
+	if err = cacheNew.WriteValue(writer, optArticulatedTrace); err != nil {
+		return err
+	}
+
+	if err = cacheNew.WriteValue(writer, &s.BlockHash); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.BlockNumber); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.CompressedTrace); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.Error); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.Result); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.Subtraces); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.Timestamp); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.TraceAddress); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, &s.TransactionHash); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.TransactionIndex); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.TraceType); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (s *SimpleTrace) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	if s.Action == nil {
+		s.Action = new(SimpleTraceAction)
+	}
+	if err = cacheNew.ReadValue(reader, s.Action, version); err != nil {
+		return err
+	}
+
+	// ArticulatedTrace can be missing
+	optArticulatedTrace := &cacheNew.Optional[SimpleFunction]{
+		Value: s.ArticulatedTrace,
+	}
+	if err = cacheNew.ReadValue(reader, optArticulatedTrace, version); err != nil {
+		return err
+	}
+	s.ArticulatedTrace = optArticulatedTrace.Get()
+
+	if err = cacheNew.ReadValue(reader, &s.BlockHash, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.BlockNumber, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.CompressedTrace, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.Error, version); err != nil {
+		return err
+	}
+
+	if s.Result == nil {
+		s.Result = new(SimpleTraceResult)
+	}
+	if err = cacheNew.ReadValue(reader, s.Result, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.Subtraces, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.Timestamp, version); err != nil {
+		return err
+	}
+
+	if err = cacheNew.ReadValue(reader, &s.TraceAddress, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.TransactionHash, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.TransactionIndex, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.TraceType, version); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// We store traces in the cache as an array, so we need
+// a data type reflecting this.
+type SimpleTraceGroup struct {
+	// The actual traces being cached
+	Traces []SimpleTrace
+	// Details for cache locator
+	BlockNumber      base.Blknum
+	TransactionIndex int
+}
+
+func NewSimpleTraceGroup(tx *SimpleTransaction) *SimpleTraceGroup {
+	return &SimpleTraceGroup{
+		Traces:           make([]SimpleTrace, 0, len(tx.Traces)),
+		BlockNumber:      tx.Receipt.BlockNumber,
+		TransactionIndex: int(tx.TransactionIndex),
+	}
+}
+
+func (s *SimpleTraceGroup) CacheName() string {
+	return "Trace"
+}
+
+func (s *SimpleTraceGroup) CacheId() string {
+	return fmt.Sprintf("%09d-%05d", s.BlockNumber, s.TransactionIndex)
+}
+
+func (s *SimpleTraceGroup) CacheLocation() (directory string, extension string) {
+	extension = "bin"
+
+	id := s.CacheId()
+
+	parts := make([]string, 3)
+	parts[0] = id[:2]
+	parts[1] = id[2:4]
+	parts[2] = id[4:6]
+	directory = filepath.Join("traces", filepath.Join(parts...))
+	return
+}
+
+func (s *SimpleTraceGroup) MarshalCache(writer io.Writer) (err error) {
+	return cacheNew.WriteValue(writer, s.Traces)
+}
+
+func (s *SimpleTraceGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	return cacheNew.ReadValue(reader, &s.Traces, version)
 }
 
 // EXISTING_CODE

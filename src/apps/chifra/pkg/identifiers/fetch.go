@@ -14,5 +14,6 @@ func (app *ResolvedId) FetchTransactionById(chain string, fetchTraces bool) (tx 
 			BlockNumber:      uint32(app.BlockNumber),
 			TransactionIndex: uint32(app.TransactionIndex),
 		},
-		fetchTraces)
+		fetchTraces,
+		nil)
 }

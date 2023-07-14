@@ -34,7 +34,7 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 				ts := rpc.GetBlockTimestamp(chain, bn)
 				addrMap := make(index.AddressBooleanMap)
 
-				if trans, err := rpcClient.GetTransactionByAppearance(chain, &app, true); err != nil {
+				if trans, err := rpcClient.GetTransactionByAppearance(chain, &app, true, nil); err != nil {
 					errorChan <- err
 				} else {
 					if err = index.UniqFromTransDetails(chain, procFunc, opts.Flow, trans, ts, addrMap); err != nil {
