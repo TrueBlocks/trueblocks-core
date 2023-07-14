@@ -16,10 +16,6 @@ func (opts *TransactionsOptions) validateTransactions() error {
 		return opts.BadFlag
 	}
 
-	if opts.Cache {
-		return validate.Usage("The {0} option is temporarily disabled", "--cache")
-	}
-
 	if len(opts.Flow) > 0 {
 		if !opts.Uniq {
 			return validate.Usage("The {0} option is only available with the {1} option", "--flow", "--uniq")
