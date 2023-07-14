@@ -15,7 +15,7 @@ import (
 )
 
 func (opts *BlocksOptions) HandleShowBlocks() error {
-	cache := opts.Globals.CacheStore(opts.Cache)
+	cache := opts.Globals.CacheStore(false)
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
 		for _, br := range opts.BlockIds {
