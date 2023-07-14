@@ -139,19 +139,6 @@ func (s *SimpleTraceAction) ReadFrom(r io.Reader) (n int64, err error) {
 
 // EXISTING_CODE
 func (s *SimpleTraceAction) MarshalCache(writer io.Writer) (err error) {
-	// Address        base.Address    `json:"address,omitempty"`
-	// Author         base.Address    `json:"author,omitempty"`
-	// Balance        base.Wei        `json:"balance,omitempty"`
-	// CallType       string          `json:"callType"`
-	// From           base.Address    `json:"from"`
-	// Gas            base.Gas        `json:"gas"`
-	// Init           string          `json:"init,omitempty"`
-	// Input          string          `json:"input,omitempty"`
-	// RefundAddress  base.Address    `json:"refundAddress,omitempty"`
-	// RewardType     string          `json:"rewardType,omitempty"`
-	// SelfDestructed base.Address    `json:"selfDestructed,omitempty"`
-	// To             base.Address    `json:"to"`
-	// Value          base.Wei        `json:"value"`
 	if err = cacheNew.WriteValue(writer, s.Address); err != nil {
 		return err
 	}
@@ -196,19 +183,6 @@ func (s *SimpleTraceAction) MarshalCache(writer io.Writer) (err error) {
 }
 
 func (s *SimpleTraceAction) UnmarshalCache(version uint64, reader io.Reader) (err error) {
-	// Address        base.Address    `json:"address,omitempty"`
-	// Author         base.Address    `json:"author,omitempty"`
-	// Balance        base.Wei        `json:"balance,omitempty"`
-	// CallType       string          `json:"callType"`
-	// From           base.Address    `json:"from"`
-	// Gas            base.Gas        `json:"gas"`
-	// Init           string          `json:"init,omitempty"`
-	// Input          string          `json:"input,omitempty"`
-	// RefundAddress  base.Address    `json:"refundAddress,omitempty"`
-	// RewardType     string          `json:"rewardType,omitempty"`
-	// SelfDestructed base.Address    `json:"selfDestructed,omitempty"`
-	// To             base.Address    `json:"to"`
-	// Value          base.Wei        `json:"value"`
 	if err = cacheNew.ReadValue(reader, &s.Address, version); err != nil {
 		return err
 	}

@@ -387,7 +387,11 @@ func (s *SimpleTransaction) MarshalCache(writer io.Writer) (err error) {
 	if err = cacheNew.WriteValue(writer, s.HasToken); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.Receipt); err != nil {
+
+	optReceipt := &cacheNew.Optional[SimpleReceipt]{
+		Value: s.Receipt,
+	}
+	if err = cacheNew.WriteValue(writer, optReceipt); err != nil {
 		return err
 	}
 
@@ -458,10 +462,13 @@ func (s *SimpleTransaction) UnmarshalCache(version uint64, reader io.Reader) (er
 		return err
 	}
 
-	s.Receipt = &SimpleReceipt{}
-	if err = cacheNew.ReadValue(reader, s.Receipt, version); err != nil {
+	optReceipt := &cacheNew.Optional[SimpleReceipt]{
+		Value: s.Receipt,
+	}
+	if err = cacheNew.ReadValue(reader, optReceipt, version); err != nil {
 		return err
 	}
+	s.Receipt = optReceipt.Get()
 
 	s.Date = utils.FormattedDate(s.Timestamp)
 

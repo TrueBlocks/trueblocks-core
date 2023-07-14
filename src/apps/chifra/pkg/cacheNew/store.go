@@ -23,6 +23,8 @@ func init() {
 var defaultStore *Store
 var defaultStoreOnce sync.Once
 
+// Store holds all information neccessary to access the cache, no matter
+// which concrete location (FS, IPFS, memory, etc.) is being used
 type Store struct {
 	resolvedPaths map[Locator]string
 	location      Storer
