@@ -38,12 +38,12 @@ for file in "$expected_dir"*; do  # Loop over all files in expected_dir
         diff_output=$(eval "$command_to_run")
         if [[ -n "$diff_output" ]]; then  # if we have non-empty diffs
             echo "$diff_output" > "$diffs_dir$basefile.diff"  # save to a diff file
-            difference_list+=("$file")  # add the file to the list of differences
+            difference_list+=("$basefile")  # add the file to the list of differences
         else
-            identical_list+=("$file")  # add the file to the list of identical files
+            identical_list+=("$basefile")  # add the file to the list of identical files
         fi
     else
-        not_found_list+=("$file")  # add the file to the list of not found files
+        not_found_list+=("$basefile")  # add the file to the list of not found files
     fi
 done
 

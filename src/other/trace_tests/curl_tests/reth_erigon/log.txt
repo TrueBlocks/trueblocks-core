@@ -1,5 +1,5 @@
 Comparing reth_2023_07_11/ to erigon_2023_07_12/, placing results into reth_erigon/
-Command executed on Wed Jul 12 19:49:51 UTC 2023
+Command executed on Fri Jul 14 12:26:01 UTC 2023
 === Commands executed ===
 git diff --no-index erigon_2023_07_12/trace_block.json reth_2023_07_11/trace_block.json
 git diff --no-index erigon_2023_07_12/trace_callMany_all.json reth_2023_07_11/trace_callMany_all.json
@@ -37,37 +37,37 @@ git diff --no-index erigon_2023_07_12/trace_transaction.json reth_2023_07_11/tra
 === Not found ===
 
 === Identical ===
-erigon_2023_07_12/trace_get_0.json
-erigon_2023_07_12/trace_get_3.json
-erigon_2023_07_12/trace_replayBlockTransactions_trace.json
-erigon_2023_07_12/trace_replayTransaction_all.json
-erigon_2023_07_12/trace_replayTransaction_trace.json
+trace_get_0.json
+trace_get_3.json
+trace_replayBlockTransactions_trace.json
+trace_replayTransaction_all.json
+trace_replayTransaction_trace.json
 === Difference found ===
-erigon_2023_07_12/trace_block.json
-erigon_2023_07_12/trace_callMany_all.json
-erigon_2023_07_12/trace_callMany_none.json
-erigon_2023_07_12/trace_callMany_stateDiff.json
-erigon_2023_07_12/trace_callMany_trace.json
-erigon_2023_07_12/trace_callMany_vmTrace.json
-erigon_2023_07_12/trace_call_all.json
-erigon_2023_07_12/trace_call_error.json
-erigon_2023_07_12/trace_call_none.json
-erigon_2023_07_12/trace_call_stateDiff.json
-erigon_2023_07_12/trace_call_trace.json
-erigon_2023_07_12/trace_call_view.json
-erigon_2023_07_12/trace_call_view_none.json
-erigon_2023_07_12/trace_call_vmTrace.json
-erigon_2023_07_12/trace_filter.json
-erigon_2023_07_12/trace_get_10.json
-erigon_2023_07_12/trace_get_5.json
-erigon_2023_07_12/trace_rawTransaction_none.json
-erigon_2023_07_12/trace_rawTransaction_trace.json
-erigon_2023_07_12/trace_rawTransaction_vmTrace.json
-erigon_2023_07_12/trace_replayBlockTransactions_all.json
-erigon_2023_07_12/trace_replayBlockTransactions_none.json
-erigon_2023_07_12/trace_replayBlockTransactions_stateDiff.json
-erigon_2023_07_12/trace_replayBlockTransactions_vmTrace.json
-erigon_2023_07_12/trace_replayTransaction_none.json
-erigon_2023_07_12/trace_replayTransaction_stateDiff.json
-erigon_2023_07_12/trace_replayTransaction_vmTrace.json
-erigon_2023_07_12/trace_transaction.json
+trace_block.json
+trace_callMany_all.json
+trace_callMany_none.json
+trace_callMany_stateDiff.json
+trace_callMany_trace.json
+trace_callMany_vmTrace.json
+trace_call_all.json
+trace_call_error.json
+trace_call_none.json
+trace_call_stateDiff.json
+trace_call_trace.json
+trace_call_view.json
+trace_call_view_none.json
+trace_call_vmTrace.json
+trace_filter.json
+trace_get_10.json
+trace_get_5.json
+trace_rawTransaction_none.json
+trace_rawTransaction_trace.json
+trace_rawTransaction_vmTrace.json
+trace_replayBlockTransactions_all.json
+trace_replayBlockTransactions_none.json
+trace_replayBlockTransactions_stateDiff.json
+trace_replayBlockTransactions_vmTrace.json
+trace_replayTransaction_none.json
+trace_replayTransaction_stateDiff.json
+trace_replayTransaction_vmTrace.json
+trace_transaction.json
