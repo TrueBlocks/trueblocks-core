@@ -1,0 +1,108 @@
+{
+  "id": "1",
+  "jsonrpc": "2.0",
+  "result": [
+    {
+      "output": "0x",
+      "stateDiff": {
+        "0x407d73d8a49eeb85d32cf465507dd71d507100c1": {
+          "balance": {
+            "+": "0x0"
+          },
+          "code": {
+            "+": "0x"
+          },
+          "nonce": {
+            "+": "0x1"
+          },
+          "storage": {}
+        },
+        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b": {
+          "balance": {
+            "+": "0x186a0"
+          },
+          "code": {
+            "+": "0x"
+          },
+          "nonce": {
+            "+": "0x0"
+          },
+          "storage": {}
+        }
+      },
+      "trace": [
+        {
+          "action": {
+            "callType": "call",
+            "from": "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
+            "gas": "0x1dcd12f8",
+            "input": "0x",
+            "to": "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+            "value": "0x186a0"
+          },
+          "result": {
+            "gasUsed": "0x0",
+            "output": "0x"
+          },
+          "subtraces": 0,
+          "traceAddress": [],
+          "type": "call"
+        }
+      ],
+      "vmTrace": {
+        "code": "0x",
+        "ops": []
+      }
+    },
+    {
+      "output": "0x",
+      "stateDiff": {
+        "0x407d73d8a49eeb85d32cf465507dd71d507100c1": {
+          "balance": "=",
+          "code": "=",
+          "nonce": {
+            "*": {
+              "from": "0x1",
+              "to": "0x2"
+            }
+          },
+          "storage": {}
+        },
+        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b": {
+          "balance": {
+            "*": {
+              "from": "0x186a0",
+              "to": "0x30d40"
+            }
+          },
+          "code": "=",
+          "nonce": "=",
+          "storage": {}
+        }
+      },
+      "trace": [
+        {
+          "action": {
+            "callType": "call",
+            "from": "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
+            "gas": "0x1dcd12f8",
+            "input": "0x",
+            "to": "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+            "value": "0x186a0"
+          },
+          "result": {
+            "gasUsed": "0x0",
+            "output": "0x"
+          },
+          "subtraces": 0,
+          "traceAddress": [],
+          "type": "call"
+        }
+      ],
+      "vmTrace": {
+        "code": "0x",
+        "ops": []
+      }
+    }
+  ]
+}
