@@ -1,0 +1,36 @@
+{
+  "id": "1",
+  "jsonrpc": "2.0",
+  "result": [
+    {
+      "action": {
+        "author": "0x5088d623ba0fcf0131e0897a91734a4d83596aa0",
+        "rewardType": "block",
+        "value": "0x478eae0e571ba000"
+      },
+      "blockHash": "0x3d6122660cc824376f11ee842f83addc3525e2dd6756b9bcf0affa6aa88cf741",
+      "blockNumber": 3,
+      "result": null,
+      "subtraces": 0,
+      "traceAddress": [],
+      "transactionHash": null,
+      "transactionPosition": null,
+      "type": "reward"
+    },
+    {
+      "action": {
+        "author": "0xc8ebccc5f5689fa8659d83713341e5ad19349448",
+        "rewardType": "uncle",
+        "value": "0x340aad21b3b70000"
+      },
+      "blockHash": "0x3d6122660cc824376f11ee842f83addc3525e2dd6756b9bcf0affa6aa88cf741",
+      "blockNumber": 3,
+      "result": null,
+      "subtraces": 0,
+      "traceAddress": [],
+      "transactionHash": null,
+      "transactionPosition": null,
+      "type": "reward"
+    }
+  ]
+}
