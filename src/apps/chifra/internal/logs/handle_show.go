@@ -32,7 +32,7 @@ func (opts *LogsOptions) HandleShowLogs() error {
 			defer iterCancel()
 
 			iterFunc := func(app identifiers.ResolvedId, value *types.SimpleReceipt) error {
-				if tx, err := app.FetchTransactionById(chain, false /* needsTraces */); err != nil {
+				if tx, err := app.FetchTransactionById(chain, false /* needsTraces */, nil); err != nil {
 					return fmt.Errorf("transaction at %s returned an error: %w", app.String(), err)
 				} else if tx == nil || tx.Receipt == nil {
 					return fmt.Errorf("transaction at %s has no logs", app.String())

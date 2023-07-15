@@ -13,6 +13,7 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -159,4 +160,100 @@ func (s *SimpleLog) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
+func (s *SimpleLog) MarshalCache(writer io.Writer) (err error) {
+	if err = cacheNew.WriteValue(writer, s.Address); err != nil {
+		return err
+	}
+
+	optArticulatedLog := &cacheNew.Optional[SimpleFunction]{
+		Value: s.ArticulatedLog,
+	}
+	if err = cacheNew.WriteValue(writer, optArticulatedLog); err != nil {
+		return err
+	}
+
+	if err = cacheNew.WriteValue(writer, &s.BlockHash); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.BlockNumber); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.CompressedLog); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.Data); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.LogIndex); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.Timestamp); err != nil {
+		return err
+	}
+
+	if err = cacheNew.WriteValue(writer, s.Topics); err != nil {
+		return err
+	}
+
+	if err = cacheNew.WriteValue(writer, &s.TransactionHash); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.TransactionIndex); err != nil {
+		return err
+	}
+
+	return
+}
+
+func (s *SimpleLog) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	if err = cacheNew.ReadValue(reader, &s.Address, version); err != nil {
+		return err
+	}
+
+	optArticulatedLog := &cacheNew.Optional[SimpleFunction]{
+		Value: s.ArticulatedLog,
+	}
+	if err = cacheNew.ReadValue(reader, optArticulatedLog, version); err != nil {
+		return err
+	}
+	s.ArticulatedLog = optArticulatedLog.Get()
+
+	if err = cacheNew.ReadValue(reader, &s.BlockHash, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.BlockNumber, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.CompressedLog, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.Data, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.LogIndex, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.Timestamp, version); err != nil {
+		return err
+	}
+
+	s.Topics = make([]base.Hash, 0)
+	if err = cacheNew.ReadValue(reader, &s.Topics, version); err != nil {
+		return err
+	}
+
+	if err = cacheNew.ReadValue(reader, &s.TransactionHash, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.TransactionIndex, version); err != nil {
+		return err
+	}
+
+	if s.Timestamp > 0 {
+		s.Date = utils.FormattedDate(s.Timestamp)
+	}
+
+	return
+}
+
 // EXISTING_CODE

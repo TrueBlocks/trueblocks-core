@@ -34,7 +34,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 
 			for _, bn := range blockNums {
 				var block types.SimpleBlock[string]
-				if block, err = rpcClient.GetBlockByNumber(chain, bn); err != nil {
+				if block, err = rpcClient.GetBlockByNumber(chain, bn, nil); err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
 						continue
