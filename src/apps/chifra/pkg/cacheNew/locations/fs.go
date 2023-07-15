@@ -10,7 +10,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
-const FS_PERMISSIONS = 0644
+const FS_PERMISSIONS = 0755
 
 // Each Storer implementation is global and thread-safe to save resources
 // when reading/writing large number of items
