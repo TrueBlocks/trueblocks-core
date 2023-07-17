@@ -3,8 +3,10 @@ package base
 import (
 	"encoding/hex"
 	"fmt"
+	"io"
 	"math/big"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -45,6 +47,15 @@ func (h *Hash) SetHex(hexStr string) {
 func (h *Hash) IsZero() bool {
 	v := bytesToHashString(h.Hash.Bytes())
 	return v == "0x0000000000000000000000000000000000000000000000000000000000000000"
+}
+
+func (h *Hash) UnmarshalCache(version uint64, reader io.Reader) error {
+	var value [32]byte
+	if err := cacheNew.ReadValue(reader, &value, version); err != nil {
+		return err
+	}
+	h.SetBytes(value[:])
+	return nil
 }
 
 func (h *Hash) ToCommon() common.Hash {

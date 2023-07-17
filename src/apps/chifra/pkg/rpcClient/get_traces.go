@@ -9,6 +9,7 @@ import (
 	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -108,12 +109,12 @@ func GetTracesByTransactionId(chain string, bn, txid uint64) ([]types.SimpleTrac
 	if err != nil {
 		return ret, err
 	}
-	return GetTracesByTransactionHash(chain, txHash, nil)
+	return GetTracesByTransactionHash(chain, txHash, nil, nil)
 }
 
 // GetTracesCountByTransactionHash returns the number of traces in a given transaction
 func GetTracesCountByTransactionHash(chain string, txHash string) (uint64, error) {
-	traces, err := GetTracesByTransactionHash(chain, txHash, nil)
+	traces, err := GetTracesByTransactionHash(chain, txHash, nil, nil)
 	if err != nil {
 		return 0, err
 	}
@@ -205,7 +206,16 @@ func GetTracesByFilter(chain string, filter string) ([]types.SimpleTrace, error)
 }
 
 // GetTracesByTransactionHash returns a slice of traces in a given transaction's hash
-func GetTracesByTransactionHash(chain string, txHash string, transaction *types.SimpleTransaction) ([]types.SimpleTrace, error) {
+func GetTracesByTransactionHash(chain string, txHash string, transaction *types.SimpleTransaction, cache *cacheNew.Store) ([]types.SimpleTrace, error) {
+	if cache != nil && transaction != nil {
+		traceGroup := types.NewSimpleTraceGroup(transaction)
+
+		if err := cache.Read(traceGroup, nil); err == nil {
+			// success
+			return traceGroup.Traces, nil
+		}
+	}
+
 	method := "trace_transaction"
 	params := rpc.Params{txHash}
 
@@ -283,6 +293,13 @@ func GetTracesByTransactionHash(chain string, txHash string, transaction *types.
 			trace.SetRaw(&rawTrace)
 			ret = append(ret, trace)
 		}
+
+		if cache != nil && transaction != nil {
+			traceGroup := types.NewSimpleTraceGroup(transaction)
+			traceGroup.Traces = ret
+			cache.Write(traceGroup, nil)
+		}
+
 		return ret, nil
 	}
 }

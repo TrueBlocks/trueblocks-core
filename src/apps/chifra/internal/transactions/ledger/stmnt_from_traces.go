@@ -17,7 +17,7 @@ func (ledgers *Ledger) GetStatementsFromTraces(trans *types.SimpleTransaction, s
 	ret := *s
 	ret.ClearInternal()
 
-	if traces, err := rpcClient.GetTracesByTransactionHash(chain, trans.Hash.Hex(), trans); err != nil {
+	if traces, err := rpcClient.GetTracesByTransactionHash(chain, trans.Hash.Hex(), trans, nil); err != nil {
 		logger.Error(err)
 	} else {
 		for i, trace := range traces {

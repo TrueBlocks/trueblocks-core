@@ -16,6 +16,7 @@ import (
 func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 	abiCache := articulate.NewAbiCache()
 	chain := opts.Globals.Chain
+	cache := opts.Globals.CacheStore(false)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
@@ -27,7 +28,7 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 			}
 
 			for _, appearance := range txIds {
-				tx, err := rpcClient.GetTransactionByAppearance(chain, &appearance, opts.Traces)
+				tx, err := rpcClient.GetTransactionByAppearance(chain, &appearance, opts.Traces, cache)
 				if err != nil {
 					errorChan <- fmt.Errorf("transaction at %s returned an error: %w", strings.Replace(rng.Orig, "-", ".", -1), err)
 					continue

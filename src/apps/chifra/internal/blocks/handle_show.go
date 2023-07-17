@@ -15,6 +15,7 @@ import (
 )
 
 func (opts *BlocksOptions) HandleShowBlocks() error {
+	cache := opts.Globals.CacheStore(false)
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
 		for _, br := range opts.BlockIds {
@@ -34,11 +35,11 @@ func (opts *BlocksOptions) HandleShowBlocks() error {
 				var err error
 				if !opts.Hashes {
 					var b types.SimpleBlock[types.SimpleTransaction]
-					b, err = rpcClient.GetBlockByNumberWithTxs(opts.Globals.Chain, bn)
+					b, err = rpcClient.GetBlockByNumberWithTxs(opts.Globals.Chain, bn, cache)
 					block = &b
 				} else {
 					var b types.SimpleBlock[string]
-					b, err = rpcClient.GetBlockByNumber(opts.Globals.Chain, bn)
+					b, err = rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, cache)
 					block = &b
 				}
 

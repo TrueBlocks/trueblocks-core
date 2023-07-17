@@ -32,7 +32,7 @@ func (opts *BlocksOptions) HandleList() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
 		for bn := start; bn > end; bn-- {
-			block, err := rpcClient.GetBlockByNumber(opts.Globals.Chain, bn)
+			block, err := rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, nil)
 			if err != nil {
 				errorChan <- err
 				if errors.Is(err, ethereum.NotFound) {
