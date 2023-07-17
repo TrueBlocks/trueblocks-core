@@ -516,7 +516,17 @@ bool COptions::setDisplayFormatting(void) {
             } else if (statements) {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["reconciliation_fmt"]);
             } else if (neighbors) {
-                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["appearance_fmt"]);
+                if (isText) {
+                    const char* STR_DISPLAY_APPEARANCE12 =
+                        "[{BLOCKNUMBER}]\t"
+                        "[{TRANSACTIONINDEX}]\t"
+                        "[{ADDRESS}]\t"
+                        "[{REASON}]";
+                    string_q ff = STR_DISPLAY_APPEARANCE12;
+                    expContext().fmtMap["appearance_fmt"] = cleanFmt(ff);
+                    manageFields("CAppearance:" + ff);
+                    expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["appearance_fmt"]);
+                }
             } else if (logs) {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["log_fmt"]);
             } else if (appearances) {
