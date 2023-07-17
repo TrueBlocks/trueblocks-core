@@ -211,18 +211,15 @@ func (opts *GlobalOptions) FinishParse(args []string) {
 	}
 }
 
-// CacheStore returns cache for the given chain. If override is false, it returns
-// nil (no cache) - to ease working with command options
-func (opts *GlobalOptions) CacheStore(override bool) *cacheNew.Store {
-	if !override {
-		// User doesn't want cache
-		return nil
-	}
+// CacheStore returns cache for the given chain. If readonly is true, it returns
+// a cache that will not write new items. If nil is returned, it means "no caching"
+func (opts *GlobalOptions) CacheStore(readonly bool) *cacheNew.Store {
 	// We call NewStore, but Storer implementation (Fs by default) should decide
 	// whether it has to return a new instance or reuse the existing one
 	store, err := cacheNew.NewStore(&cacheNew.StoreOptions{
 		Location: cacheNew.FsCache,
 		Chain:    opts.Chain,
+		ReadOnly: readonly,
 	})
 	// If there was an error, we won't use the cache
 	if err != nil {

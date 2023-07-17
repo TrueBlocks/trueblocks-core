@@ -20,6 +20,8 @@ func init() {
 	}
 }
 
+var ErrReadOnly = errors.New("cache is read-only")
+
 var defaultStore *Store
 var defaultStoreOnce sync.Once
 
@@ -29,6 +31,9 @@ type Store struct {
 	resolvedPaths map[Locator]string
 	location      Storer
 	rootDir       string
+	// If readOnly is true, Store will not write to the cache, but
+	// still read (issue #3047)
+	readOnly bool
 }
 
 func NewStore(options *StoreOptions) (*Store, error) {
@@ -39,6 +44,7 @@ func NewStore(options *StoreOptions) (*Store, error) {
 	return &Store{
 		location: location,
 		rootDir:  options.rootDir(),
+		readOnly: options.ReadOnly,
 	}, nil
 }
 
@@ -72,6 +78,12 @@ type WriteOptions interface{}
 // then FileSystem is used. The value has to implement Locator interface, which
 // provides information about in-cache path and ID.
 func (s *Store) Write(value Locator, options *WriteOptions) (err error) {
+	if s.readOnly {
+		err = ErrReadOnly
+		printErr("write", err)
+		return
+	}
+
 	itemPath, err := s.resolvePath(value)
 	if err != nil {
 		printErr("write resolving path", err)
@@ -143,25 +155,33 @@ func (s *Store) Stat(value Locator) (result *locations.ItemInfo, err error) {
 	return
 }
 
-func (s *Store) Remove(value Locator) error {
+func (s *Store) Remove(value Locator) (err error) {
+	if s.readOnly {
+		err = ErrReadOnly
+		printErr("write", err)
+		return
+	}
 	itemPath, err := s.resolvePath(value)
 	if err != nil {
 		printErr("remove resolving path", err)
-		return err
+		return
 	}
 	err = s.location.Remove(itemPath)
 	if err != nil {
 		printErr("removing", err)
 	}
-	return err
+	return
 }
 
 type DecacheFunc func(*locations.ItemInfo) bool
 
 func (s *Store) Decache(locators []Locator, processor DecacheFunc) (err error) {
+	if s.readOnly {
+		err = ErrReadOnly
+		printErr("write", err)
+		return
+	}
 	for _, locator := range locators {
-		// directory, extension := locator.CacheLocation()
-		// cachePath := path.Join(directory, locator.CacheId(), extension)
 		stats, err := s.Stat(locator)
 		if err != nil {
 			return err
@@ -183,5 +203,5 @@ func printErr(desc string, err error) {
 		return
 	}
 
-	logger.Warn("cache error:", desc, ":", err)
+	logger.Warn("cache error:", desc+":", err)
 }

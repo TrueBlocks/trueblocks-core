@@ -16,7 +16,7 @@ import (
 func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 	abiCache := articulate.NewAbiCache()
 	chain := opts.Globals.Chain
-	cache := opts.Globals.CacheStore(false)
+	cache := opts.Globals.CacheStore(!opts.Cache)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {

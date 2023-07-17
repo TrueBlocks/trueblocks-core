@@ -50,8 +50,12 @@ type Marshaler interface {
 type StoreOptions struct {
 	Location StoreLocation
 	Chain    string
+
 	// Optional
+
 	RootDir string
+	// If ReadOnly is true, then we will not write to the cache
+	ReadOnly bool
 }
 
 func (s *StoreOptions) location() (loc Storer, err error) {
