@@ -25,15 +25,38 @@ func GetUncleCountByNumber(chain string, bn uint64) (uint64, error) {
 	}
 }
 
+// GetUncleHashesByNumber returns the uncle hashes in a block.
+func GetUncleHashesByNumber(chain string, bn uint64) ([]base.Hash, error) {
+	if count, err := GetUncleCountByNumber(chain, bn); err != nil {
+		return nil, err
+	} else if count > 0 {
+		ret := make([]base.Hash, count)
+		for i := uint64(0); i < count; i++ {
+			method := "eth_getUncleByBlockNumberAndIndex"
+			params := rpc.Params{
+				fmt.Sprintf("0x%x", bn),
+				fmt.Sprintf("0x%x", i),
+			}
+			if rawUncle, err := rpc.Query[types.RawBlock](chain, method, params); err != nil {
+				return ret, err
+			} else {
+				for _, uncle := range rawUncle.Uncles {
+					ret = append(ret, base.HexToHash(uncle))
+				}
+			}
+		}
+		return ret, nil
+	} else {
+		return []base.Hash{}, nil
+	}
+}
+
 // GetUnclesByNumber returns the number of uncles in a block.
 func GetUnclesByNumber(chain string, bn uint64) ([]types.SimpleBlock[types.SimpleTransaction], error) {
 	if count, err := GetUncleCountByNumber(chain, bn); err != nil {
 		return nil, err
-	} else {
-		if count == 0 {
-			return make([]types.SimpleBlock[types.SimpleTransaction], 0), nil
-		}
-		ret := make([]types.SimpleBlock[types.SimpleTransaction], 0, count)
+	} else if count > 0 {
+		ret := make([]types.SimpleBlock[types.SimpleTransaction], count)
 		for i := uint64(0); i < count; i++ {
 			method := "eth_getUncleByBlockNumberAndIndex"
 			params := rpc.Params{
@@ -60,5 +83,7 @@ func GetUnclesByNumber(chain string, bn uint64) ([]types.SimpleBlock[types.Simpl
 			}
 		}
 		return ret, nil
+	} else {
+		return []types.SimpleBlock[types.SimpleTransaction]{}, nil
 	}
 }
