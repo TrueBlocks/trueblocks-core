@@ -141,10 +141,12 @@ func GetBlockByNumber(chain string, bn uint64, cache *cacheNew.Store) (block typ
 		block.Transactions = append(block.Transactions, fmt.Sprint(rawTx))
 	}
 
+	if block.Uncles, err = GetUncleHashesByNumber(chain, bn); err != nil {
+		return block, err
+	}
+
 	if cache != nil {
-		if err = cache.Write(&block, nil); err != nil {
-			return
-		}
+		cache.Write(&block, nil)
 	}
 
 	return block, nil
