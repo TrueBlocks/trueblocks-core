@@ -7,6 +7,7 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
@@ -18,7 +19,7 @@ import (
 
 type UniqProcFunc func(s *types.SimpleAppearance) error
 
-func UniqFromTransDetails(chain string, procFunc UniqProcFunc, flow string, trans *types.SimpleTransaction, ts int64, addrMap AddressBooleanMap) error {
+func UniqFromTransDetails(chain string, procFunc UniqProcFunc, flow string, trans *types.SimpleTransaction, ts int64, addrMap AddressBooleanMap, cache *cacheNew.Store) error {
 	bn := trans.BlockNumber
 	txid := trans.TransactionIndex
 	traceid := utils.NOPOS
@@ -48,7 +49,7 @@ func UniqFromTransDetails(chain string, procFunc UniqProcFunc, flow string, tran
 		return err
 	}
 
-	if err := UniqFromTracesDetails(chain, procFunc, flow, trans.Traces, ts, addrMap); err != nil {
+	if err := UniqFromTracesDetails(chain, procFunc, flow, trans.Traces, ts, addrMap, cache); err != nil {
 		return err
 	}
 
@@ -124,7 +125,7 @@ func traceReason(i uint64, trace *types.SimpleTrace, r string) string {
 }
 
 // UniqFromTracesDetails extracts addresses from traces
-func UniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, traces []types.SimpleTrace, ts int64, addrMap AddressBooleanMap) (err error) {
+func UniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, traces []types.SimpleTrace, ts int64, addrMap AddressBooleanMap, cache *cacheNew.Store) (err error) {
 	for _, trace := range traces {
 		trace := trace
 		traceid := trace.TraceIndex
@@ -211,7 +212,7 @@ func UniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 							Bn:      uint64(bn),
 							Txid:    uint64(txid),
 							NeedsTs: false,
-						})
+						}, cache)
 						if err != nil {
 							msg := fmt.Sprintf("rpcCall failed at block %d, tx %d hash %s err %s", bn, txid, trace.TransactionHash, err)
 							logger.Warn(colors.Red, msg, colors.Off)

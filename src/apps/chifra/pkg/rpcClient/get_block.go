@@ -85,7 +85,7 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, cache *cacheNew.Store) (ty
 			GasPrice: txGasPrice,
 			NeedsTs:  true,
 			Ts:       ts,
-		})
+		}, cache)
 		if err != nil {
 			return block, err
 		}

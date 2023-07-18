@@ -271,7 +271,7 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 		Txid:    txid,
 		NeedsTs: true,
 		Ts:      blockTs,
-	})
+	}, nil)
 	if err != nil {
 		return
 	}
@@ -340,7 +340,7 @@ func GetTransactionByBlockAndId(chain string, bn base.Blknum, txid uint64, cache
 		Txid:    txid,
 		NeedsTs: true,
 		Ts:      blockTs,
-	})
+	}, nil)
 	if err != nil {
 		return
 	}

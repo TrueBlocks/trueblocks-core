@@ -106,7 +106,7 @@ func (opts *BlocksOptions) ProcessBlockUniqs(chain string, procFunc index.UniqPr
 				if trans.Traces, err = rpcClient.GetTracesByTransactionId(opts.Globals.Chain, trans.BlockNumber, trans.TransactionIndex); err != nil {
 					return err
 				}
-				if err = index.UniqFromTransDetails(chain, procFunc, opts.Flow, &trans, ts, addrMap); err != nil {
+				if err = index.UniqFromTransDetails(chain, procFunc, opts.Flow, &trans, ts, addrMap, nil); err != nil {
 					return err
 				}
 			}

@@ -132,7 +132,7 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 							Bn:      uint64(bn),
 							Txid:    uint64(txid),
 							NeedsTs: false,
-						})
+						}, nil)
 						if err != nil {
 							msg := fmt.Sprintf("rpcCall failed at block %d, tx %d hash %s err %s", bn, txid, trace.TransactionHash, err)
 							logger.Warn(colors.Red, msg, colors.Off)

@@ -92,7 +92,7 @@ func GetLogsByTransactionId(chain string, bn, txid uint64) ([]types.SimpleLog, e
 		Txid:    txid,
 		NeedsTs: true,
 		Ts:      blockTs,
-	})
+	}, nil)
 	if err != nil {
 		return []types.SimpleLog{}, err
 	}
