@@ -17,16 +17,11 @@
  */
 #include "acctlib.h"
 
-// BEG_ERROR_DEFINES
-// END_ERROR_DEFINES
-
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
   public:
-    // BEG_CODE_DECLARE
     blknum_t startBlock;
     blknum_t endBlock;
-    // END_CODE_DECLARE
 
     bool generate = false;
     bool audit = false;
