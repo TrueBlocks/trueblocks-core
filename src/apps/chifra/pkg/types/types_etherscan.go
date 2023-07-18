@@ -82,8 +82,8 @@ func (s *SimpleEtherscan) Model(verbose bool, format string, extraOptions map[st
 	}
 	model["date"] = utils.FormattedDate(s.Timestamp)
 
-	if strings.Contains(s.Input, "Reward") {
-		model["from"] = s.Input
+	if s.From == base.BlockRewardSender || s.From == base.UncleRewardSender {
+		model["from"] = s.From.Hex()
 		s.Input = ""
 		order = []string{
 			"blockNumber",
