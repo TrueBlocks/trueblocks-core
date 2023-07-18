@@ -46,7 +46,7 @@ slurp?addrs=wolfofethereum.eth&types=int&blocks=12524380-13675400&fmt=json
     {
       "blockNumber": 13504782,
       "date": "2021-10-28 08:59:56 UTC",
-      "ether": "0.000000043979427230",
+      "ether": "0.00000004397942723",
       "from": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
       "gas": 39091,
       "gasCost": 0,

@@ -200,13 +200,13 @@ func (opts *SlurpOptions) GetTransactionsFromEtherscan(chain string, addr, tt st
 		} else if tt == "miner" {
 			t.BlockHash = base.HexToHash("0xdeadbeef")
 			t.TransactionIndex = 99999
-			t.Input = "0xBlockReward"
+			t.From = base.BlockRewardSender
 			t.Value.SetString("5000000000000000000", 0)
 			t.To = base.HexToAddress(addr)
 		} else if tt == "uncles" {
 			t.BlockHash = base.HexToHash("0xdeadbeef")
 			t.TransactionIndex = 99998
-			t.Input = "0xUncleReward"
+			t.From = base.UncleRewardSender
 			t.Value.SetString("3750000000000000000", 0)
 			t.To = base.HexToAddress(addr)
 		}
