@@ -1,3 +1,6 @@
-all-contracts
+sql
+dynamic
 bin/*
 data
+forEveryIndex
+forEvery

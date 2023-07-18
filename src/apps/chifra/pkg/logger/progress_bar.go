@@ -10,17 +10,25 @@ import (
 )
 
 type ProgressBar struct {
-	prefix  string // the string to display first
-	percent int64  // progress percentage
-	cur     int64  // current progress
-	total   int64  // total value for progress
-	graph   string // the actual progress bar to be printed
-	ch      string // the fill value for progress bar
-	enabled bool   // enable progress bar
+	prefix    string // the string to display first
+	percent   int64  // progress percentage
+	cur       int64  // current progress
+	total     int64  // total value for progress
+	graph     string // the actual progress bar to be printed
+	ch        string // the fill value for progress bar
+	enabled   bool   // enable progress bar
+	startTime time.Time
 }
 
 func NewBar(prefix string, enabled bool, total int64) (bar *ProgressBar) {
 	return NewBarWithGraphic(prefix, enabled, total, ".")
+}
+
+func NewBarWithStart(prefix string, enabled bool, start, total int64) (bar *ProgressBar) {
+	bar = NewBar(prefix, enabled, total)
+	bar.cur = start
+	bar.startTime = time.Now()
+	return bar
 }
 
 func NewBarWithGraphic(prefix string, enabled bool, total int64, ch string) (bar *ProgressBar) {
@@ -46,19 +54,18 @@ func (bar *ProgressBar) Tick() {
 	bar.display()
 }
 
-func (bar *ProgressBar) Finish(newLine bool) {
-	if !bar.enabled {
-		return
+func (bar *ProgressBar) Finish(newLine bool) time.Duration {
+	if bar.enabled {
+		bar.graph = ""
+		for i := 0; i < 100; i += 2 {
+			bar.graph += bar.ch
+		}
+		bar.display()
+		if newLine {
+			fmt.Fprintf(os.Stderr, "\n")
+		}
 	}
-
-	bar.graph = ""
-	for i := 0; i < 100; i += 2 {
-		bar.graph += bar.ch
-	}
-	bar.display()
-	if newLine {
-		fmt.Fprintf(os.Stderr, "\n")
-	}
+	return time.Since(bar.startTime)
 }
 
 func (bar *ProgressBar) display() {
