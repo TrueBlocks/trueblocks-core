@@ -13,6 +13,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
@@ -141,7 +142,7 @@ func chunksFinishParse(args []string) *ChunksOptions {
 		opts.Mode = args[0]
 		for i, arg := range args {
 			if i > 0 {
-				if validate.IsValidAddress(arg) {
+				if base.IsValidAddress(arg) {
 					opts.Belongs = append(opts.Belongs, arg)
 				} else {
 					opts.Blocks = append(opts.Blocks, arg)

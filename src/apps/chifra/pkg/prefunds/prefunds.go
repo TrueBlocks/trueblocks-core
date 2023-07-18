@@ -7,7 +7,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/gocarina/gocsv"
 )
 
@@ -31,7 +30,7 @@ type AllocCallback func(*Allocation, *any) (bool, error)
 func LoadPrefunds(chain string, thePath string, userCallback AllocCallback) ([]Allocation, error) {
 	allocations := make([]Allocation, 0, 4000)
 	callbackFunc := func(record Allocation) error {
-		if validate.IsValidAddress(record.Address.Hex()) {
+		if base.IsValidAddress(record.Address.Hex()) {
 			alloc := Allocation{
 				Address: record.Address,
 				Balance: record.Balance,

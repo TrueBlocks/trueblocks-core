@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -18,7 +19,7 @@ import (
 )
 
 func IsBlockHash(str string) bool {
-	if !Is0xPrefixed(str) {
+	if !strings.HasPrefix(str, "0x") {
 		return false
 	}
 
@@ -26,7 +27,7 @@ func IsBlockHash(str string) bool {
 		return false
 	}
 
-	if !IsHex(str) {
+	if !base.IsHex(str) {
 		return false
 	}
 
@@ -47,7 +48,7 @@ func IsBlockNumber(str string) (bool, blknum_t) {
 	base := 10
 	source := str
 
-	if Is0xPrefixed(str) {
+	if strings.HasPrefix(str, "0x") {
 		base = 16
 		source = str[2:]
 	}
