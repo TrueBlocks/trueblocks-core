@@ -4,7 +4,7 @@ In `develop` branch:
 
 	git checkout develop                          # go to the develop branch
 	git pull                                      # make sure you have the latest code
-	edit ../src/libs/utillib/version.cpp          # bump the version number
+	edit ../src/dev_tools/utillib/version.cpp     # bump the version number
 	make test-all                                 # a number of tests wlil fail but all should only
                                                   # fail due to version change. Resolve all tests.
 	git commit -am "Final note"                   # mark the commit as final commit before m erging

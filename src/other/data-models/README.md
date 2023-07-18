@@ -40,7 +40,6 @@ List of types that support the Modeler interface
 | ./pkg/types         | types_tracefilter.go     | SimpleTraceFilter     | traceFilter       |         | x      |
 | ./pkg/types         | types_traceresult.go     | SimpleTraceResult     | traceResult       | x       | x      |
 | ./pkg/types         | types_transaction.go     | SimpleTransaction     | transaction       | x       | x      |
-| ./pkg/types         | types_transfer.go        | SimpleTransfer        | transfer          | x       | x      |
 |                     |                          |                       |                   |         |        |
 | ./api               | openapi.yaml             | <--- missing --->     | abi               |         |        |
 | ./api               | openapi.yaml             | <--- missing --->     | appearanceCount   |         |        |

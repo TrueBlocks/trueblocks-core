@@ -17,15 +17,9 @@
  */
 #include "etherlib.h"
 
-// BEG_ERROR_DEFINES
-// END_ERROR_DEFINES
-
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
   public:
-    // BEG_CODE_DECLARE
-    // END_CODE_DECLARE
-
     bool option1;
     bool option2;
 
