@@ -206,7 +206,10 @@ func mustParseUint(input any) (result uint64) {
 }
 
 func (s *SimpleTrace) MarshalCache(writer io.Writer) (err error) {
-	if err = cacheNew.WriteValue(writer, s.Action); err != nil {
+	optAction := &cacheNew.Optional[SimpleTraceAction]{
+		Value: s.Action,
+	}
+	if err = cacheNew.WriteValue(writer, optAction); err != nil {
 		return err
 	}
 
@@ -229,7 +232,12 @@ func (s *SimpleTrace) MarshalCache(writer io.Writer) (err error) {
 	if err = cacheNew.WriteValue(writer, s.Error); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.Result); err != nil {
+
+	optResult := &cacheNew.Optional[SimpleTraceResult]{
+		Value: s.Result,
+	}
+
+	if err = cacheNew.WriteValue(writer, optResult); err != nil {
 		return err
 	}
 	if err = cacheNew.WriteValue(writer, s.Subtraces); err != nil {
@@ -255,12 +263,13 @@ func (s *SimpleTrace) MarshalCache(writer io.Writer) (err error) {
 }
 
 func (s *SimpleTrace) UnmarshalCache(version uint64, reader io.Reader) (err error) {
-	if s.Action == nil {
-		s.Action = new(SimpleTraceAction)
+	optAction := &cacheNew.Optional[SimpleTraceAction]{
+		Value: s.Action,
 	}
-	if err = cacheNew.ReadValue(reader, s.Action, version); err != nil {
+	if err = cacheNew.ReadValue(reader, optAction, version); err != nil {
 		return err
 	}
+	s.Action = optAction.Get()
 
 	// ArticulatedTrace can be missing
 	optArticulatedTrace := &cacheNew.Optional[SimpleFunction]{
@@ -284,12 +293,14 @@ func (s *SimpleTrace) UnmarshalCache(version uint64, reader io.Reader) (err erro
 		return err
 	}
 
-	if s.Result == nil {
-		s.Result = new(SimpleTraceResult)
+	optResult := &cacheNew.Optional[SimpleTraceResult]{
+		Value: s.Result,
 	}
-	if err = cacheNew.ReadValue(reader, s.Result, version); err != nil {
+	if err = cacheNew.ReadValue(reader, optResult, version); err != nil {
 		return err
 	}
+	s.Result = optResult.Get()
+
 	if err = cacheNew.ReadValue(reader, &s.Subtraces, version); err != nil {
 		return err
 	}
