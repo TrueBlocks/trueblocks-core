@@ -55,7 +55,7 @@ class COptions : public COptionsBase {
     CCommandOptionArray endpointArray;
     map<string_q, string_q> hugoAliasMap;
 
-    ostringstream errorStrStream, errorDefStream, goCallStream, goPkgStream, goConvertStream;
+    ostringstream goCallStream, goPkgStream, goConvertStream;
     ostringstream goRouteStream, chifraHelpStream;
     ostringstream apiTagStream, apiPathStream;
     ostringstream goStream;

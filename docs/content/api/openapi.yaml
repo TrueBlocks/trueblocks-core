@@ -490,7 +490,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/accounts/#reconciliation">Reconciliation</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/accounts/#appearancecount">Appearancecount</a>, <a href="/data-model/accounts/#statement">Statement</a>, <a href="/data-model/chaindata/#transaction">Transaction</a>, <a href="/data-model/chaindata/#transfer">Transfer</a>, <a href="/data-model/chaindata/#receipt">Receipt</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">Traceaction</a>, <a href="/data-model/chaindata/#traceresult">Traceresult</a>, <a href="/data-model/other/#function">Function</a>, and/or <a href="/data-model/other/#parameter">Parameter</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-export">chifra export</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/accounts/#reconciliation">Reconciliation</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/accounts/#appearancecount">Appearancecount</a>, <a href="/data-model/accounts/#statement">Statement</a>, <a href="/data-model/chaindata/#transaction">Transaction</a>, <a href="/data-model/chaindata/#transfer">Transfer</a>, <a href="/data-model/chaindata/#receipt">Receipt</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">Traceaction</a>, <a href="/data-model/chaindata/#traceresult">Traceresult</a>, <a href="/data-model/chainstate/#tokenbalance">Tokenbalance</a>, <a href="/data-model/other/#function">Function</a>, and/or <a href="/data-model/other/#parameter">Parameter</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-export">chifra export</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -506,6 +506,7 @@ paths:
                         - $ref: "#/components/schemas/trace"
                         - $ref: "#/components/schemas/traceAction"
                         - $ref: "#/components/schemas/traceResult"
+                        - $ref: "#/components/schemas/tokenBalance"
                         - $ref: "#/components/schemas/function"
                         - $ref: "#/components/schemas/parameter"
                 example:
@@ -3381,29 +3382,53 @@ components:
       description: "on-chain token-related data such as totalSupply, symbol, decimals, and individual balances for a given address at a given block"
       type: object
       properties:
-        holder:
-          type: string
-          format: address
-          example: "0x2910...63d2"
-          description: "the address for which we are reporting the token balance"
-        balance:
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the block at which the report is made"
+        transactionIndex:
+          type: number
+          format: blknum
+          description: "the transaction index (if applicable) at which the report is made"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the timestamp of the block"
+        totalSupply:
           type: string
           format: int256
-          example: "258843698360318500"
-          description: "the balance at the address at the given block height"
+          description: "the total supply of the token contract"
         address:
           type: string
           format: address
           example: "0xa1e4...63b4"
-          description: "the address of the token contract being queried"
+          description: "the address of the token contract"
+        holder:
+          type: string
+          format: address
+          example: "0x2910...63d2"
+          description: "the holder address for which we are reporting"
+        priorBalance:
+          type: string
+          format: int256
+          description: "the holder's asset balance at its prior appearance"
+        balance:
+          type: string
+          format: int256
+          example: "258843698360318500"
+          description: "the holder's asset balance at the given block height"
+        diff:
+          type: string
+          format: int256
+          description: "the difference#&44; if any#&44; between the prior and current balance"
         name:
           type: string
-          example: "The DAO Original"
+          example: "GitCoin"
           description: "the name of the token contract, if available"
         symbol:
           type: string
           example: "GTC"
-          description: "the symbol for this token contract"
+          description: "the symbol of the token contract"
         decimals:
           type: number
           format: uint64
