@@ -7,9 +7,10 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10220,apps,Accounts,export,acctExport,receipts,r,,false,false,true,true,header,switch,<boolean>,export receipts instead of transactional data
 10230,apps,Accounts,export,acctExport,logs,l,,false,false,true,true,header,switch,<boolean>,export logs instead of transactional data
 10240,apps,Accounts,export,acctExport,traces,t,,false,false,true,true,header,switch,<boolean>,export traces instead of transactional data
-10215,apps,Accounts,export,acctExport,neighbors,n,,false,false,true,true,header,switch,<boolean>,export the neighbors of the given address
+10216,apps,Accounts,export,acctExport,neighbors,n,,false,false,true,true,header,switch,<boolean>,export the neighbors of the given address
 10280,apps,Accounts,export,acctExport,accounting,C,,false,false,true,true,header,switch,<boolean>,attach accounting records to the exported data (applies to transactions export only)
 10282,apps,Accounts,export,acctExport,statements,A,,false,false,true,true,header,switch,<boolean>,for the accounting options only&#44; export only statements
+10290,apps,Accounts,export,acctExport,balances,b,,false,false,true,true,gocmd,switch,<boolean>,traverse the transaction history and show each change in ETH balances
 10310,apps,Accounts,export,acctExport,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate transactions&#44; traces&#44; logs&#44; and outputs
 10320,apps,Accounts,export,acctExport,cache,o,false,false,true,true,true,header,switch,<boolean>,write transactions to the cache (see notes)
 10330,apps,Accounts,export,acctExport,cache_traces,R,false,false,true,true,true,header,switch,<boolean>,write traces to the cache (see notes)
@@ -24,7 +25,8 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10332,apps,Accounts,export,acctExport,factory,y,false,false,false,true,true,header,switch,<boolean>,for --traces only&#44; report addresses created by (or self-destructed by) the given address(es)
 10080,apps,Accounts,export,acctExport,unripe,u,,false,false,true,true,gocmd,switch,<boolean>,export transactions labeled upripe (i.e. less than 28 blocks old)
 10092,apps,Accounts,export,acctExport,load,O,,false,false,false,false,header,flag,<string>,a comma separated list of dynamic traversers to load
-10093,apps,Accounts,export,acctExport,reversed,E,,false,false,false,false,header,switch,<boolean>,produce results in reverse chronological order
+10093,apps,Accounts,export,acctExport,reversed,E,,false,false,true,true,header,switch,<boolean>,produce results in reverse chronological order
+10097,apps,Accounts,export,acctExport,no_zero,z,,false,false,true,true,gocmd,switch,<boolean>,for the --count option only&#44; suppress the display of zero appearance accounts
 10440,apps,Accounts,export,acctExport,first_block,F,0,false,false,true,true,local,flag,<blknum>,first block to process (inclusive)
 10450,apps,Accounts,export,acctExport,last_block,L,NOPOS,false,false,true,true,local,flag,<blknum>,last block to process (inclusive)
 10460,apps,Accounts,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more addresses.
@@ -34,6 +36,8 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10474,apps,Accounts,export,acctExport,n4,,,false,false,false,false,--,note,,The --logs option is significantly faster if you provide an --emitter or a --topic.
 10476,apps,Accounts,export,acctExport,n5,,,false,false,false,false,--,note,,Neighbors include every address that appears in any transaction in which the export address also appears.
 10478,apps,Accounts,export,acctExport,n6,,,false,false,false,false,--,note,,If provided&#44; --max_records dominates&#44; also&#44; if provided&#44; --first_record overrides --first_block.
+10479,apps,Accounts,export,acctExport,n7,,,false,false,false,false,--,note,,The --first_record and --max_record options are zero-based (as are the block options).
+10479,apps,Accounts,export,acctExport,n8,,,false,false,false,false,--,note,,The _block and _record options are ignored when used with the --count option.
 
 11200,apps,Accounts,monitors,acctExport,addrs,,,false,false,true,true,gocmd,positional,list<addr>,one or more addresses (0x...) to process
 11087,apps,Accounts,monitors,acctExport,deleteMe,,,false,false,true,true,gocmd,switch,<boolean>,delete a monitor&#44; but do not remove it

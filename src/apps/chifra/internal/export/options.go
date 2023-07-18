@@ -32,6 +32,7 @@ type ExportOptions struct {
 	Neighbors   bool                  `json:"neighbors,omitempty"`   // Export the neighbors of the given address
 	Accounting  bool                  `json:"accounting,omitempty"`  // Attach accounting records to the exported data (applies to transactions export only)
 	Statements  bool                  `json:"statements,omitempty"`  // For the accounting options only, export only statements
+	Balances    bool                  `json:"balances,omitempty"`    // Traverse the transaction history and show each change in ETH balances
 	Articulate  bool                  `json:"articulate,omitempty"`  // Articulate transactions, traces, logs, and outputs
 	Cache       bool                  `json:"cache,omitempty"`       // Write transactions to the cache (see notes)
 	CacheTraces bool                  `json:"cacheTraces,omitempty"` // Write traces to the cache (see notes)
@@ -47,6 +48,7 @@ type ExportOptions struct {
 	Unripe      bool                  `json:"unripe,omitempty"`      // Export transactions labeled upripe (i.e. less than 28 blocks old)
 	Load        string                `json:"load,omitempty"`        // A comma separated list of dynamic traversers to load
 	Reversed    bool                  `json:"reversed,omitempty"`    // Produce results in reverse chronological order
+	NoZero      bool                  `json:"noZero,omitempty"`      // For the --count option only, suppress the display of zero appearance accounts
 	FirstBlock  uint64                `json:"firstBlock,omitempty"`  // First block to process (inclusive)
 	LastBlock   uint64                `json:"lastBlock,omitempty"`   // Last block to process (inclusive)
 	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
@@ -73,6 +75,7 @@ func (opts *ExportOptions) testLog() {
 	logger.TestLog(opts.Neighbors, "Neighbors: ", opts.Neighbors)
 	logger.TestLog(opts.Accounting, "Accounting: ", opts.Accounting)
 	logger.TestLog(opts.Statements, "Statements: ", opts.Statements)
+	logger.TestLog(opts.Balances, "Balances: ", opts.Balances)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
 	logger.TestLog(opts.CacheTraces, "CacheTraces: ", opts.CacheTraces)
@@ -88,6 +91,7 @@ func (opts *ExportOptions) testLog() {
 	logger.TestLog(opts.Unripe, "Unripe: ", opts.Unripe)
 	logger.TestLog(len(opts.Load) > 0, "Load: ", opts.Load)
 	logger.TestLog(opts.Reversed, "Reversed: ", opts.Reversed)
+	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 	opts.Globals.TestLog()
@@ -227,6 +231,8 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 			opts.Accounting = true
 		case "statements":
 			opts.Statements = true
+		case "balances":
+			opts.Balances = true
 		case "articulate":
 			opts.Articulate = true
 		case "cache":
@@ -266,6 +272,8 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 			opts.Load = value[0]
 		case "reversed":
 			opts.Reversed = true
+		case "noZero":
+			opts.NoZero = true
 		case "firstBlock":
 			opts.FirstBlock = globals.ToUint64(value[0])
 		case "lastBlock":

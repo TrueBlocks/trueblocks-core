@@ -315,6 +315,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: balances
+          description: traverse the transaction history and show each change in ETH balances
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: articulate
           description: articulate transactions, traces, logs, and outputs
           required: false
@@ -433,6 +441,23 @@ paths:
             type: boolean
         - name: unripe
           description: export transactions labeled upripe (i.e. less than 28 blocks old)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: reversed
+          description: produce results in reverse chronological order
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: noZero
+          description: >
+            for the --count option only, suppress the display of zero appearance accounts
           required: false
           style: form
           in: query

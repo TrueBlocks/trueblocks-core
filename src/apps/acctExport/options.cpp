@@ -53,7 +53,7 @@ static const COption params[] = {
     COption("flow", "f", "enum[in|out|zero]", OPT_FLAG, "for the accounting options only, export statements with incoming, outgoing, or zero value"),  // NOLINT
     COption("factory", "y", "", OPT_SWITCH, "for --traces only, report addresses created by (or self-destructed by) the given address(es)"),  // NOLINT
     COption("load", "O", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
-    COption("reversed", "E", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
+    COption("reversed", "E", "", OPT_SWITCH, "produce results in reverse chronological order"),
     COption("first_block", "F", "<blknum>", OPT_FLAG, "first block to process (inclusive)"),
     COption("last_block", "L", "<blknum>", OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more addresses."),
@@ -415,6 +415,8 @@ COptions::COptions(void) {
     notes.push_back("The --logs option is significantly faster if you provide an --emitter or a --topic.");
     notes.push_back("Neighbors include every address that appears in any transaction in which the export address also appears.");  // NOLINT
     notes.push_back("If provided, --max_records dominates, also, if provided, --first_record overrides --first_block.");
+    notes.push_back("The --first_record and --max_record options are zero-based (as are the block options).");
+    notes.push_back("The _block and _record options are ignored when used with the --count option.");
     // clang-format on
     // END_CODE_NOTES
 
