@@ -470,8 +470,6 @@ func (s *SimpleTransaction) UnmarshalCache(version uint64, reader io.Reader) (er
 	}
 	s.Receipt = optReceipt.Get()
 
-	s.Date = utils.FormattedDate(s.Timestamp)
-
 	return
 }
 

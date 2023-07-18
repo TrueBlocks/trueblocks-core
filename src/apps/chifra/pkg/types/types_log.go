@@ -122,7 +122,10 @@ func (s *SimpleLog) Model(verbose bool, format string, extraOptions map[string]a
 			order = append(order, "compressedLog")
 		}
 
-		model["topic0"] = s.Topics[0]
+		model["topic0"] = ""
+		if len(s.Topics) > 0 {
+			model["topic0"] = s.Topics[0]
+		}
 		model["topic1"] = ""
 		if len(s.Topics) > 1 {
 			model["topic1"] = s.Topics[1]
@@ -244,10 +247,6 @@ func (s *SimpleLog) UnmarshalCache(version uint64, reader io.Reader) (err error)
 	}
 	if err = cacheNew.ReadValue(reader, &s.TransactionIndex, version); err != nil {
 		return err
-	}
-
-	if s.Timestamp > 0 {
-		s.Date = utils.FormattedDate(s.Timestamp)
 	}
 
 	return

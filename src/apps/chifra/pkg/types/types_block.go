@@ -169,7 +169,11 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 				model["transactions"] = s.Transactions
 			}
 			order = append(order, "transactions")
-			model["uncles"] = s.Uncles
+			if s.Uncles == nil {
+				model["uncles"] = []base.Hash{}
+			} else {
+				model["uncles"] = s.Uncles
+			}
 			order = append(order, "uncles")
 		}
 	} else {
@@ -267,6 +271,10 @@ func (s *SimpleBlock[Tx]) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
+	if err = cacheNew.WriteValue(writer, s.Uncles); err != nil {
+		return err
+	}
+
 	return
 }
 
@@ -301,6 +309,11 @@ func (s *SimpleBlock[string]) UnmarshalCache(version uint64, reader io.Reader) (
 
 	s.Transactions = make([]string, 0)
 	if err = cacheNew.ReadValue(reader, &s.Transactions, version); err != nil {
+		return err
+	}
+
+	s.Uncles = make([]base.Hash, 0)
+	if err = cacheNew.ReadValue(reader, &s.Uncles, version); err != nil {
 		return err
 	}
 
