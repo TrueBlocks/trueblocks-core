@@ -16,7 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *ListOptions) HandleListCount(monitorArray []monitor.Monitor) error {
+func (opts *ListOptions) HandleCount(monitorArray []monitor.Monitor) error {
 	testMode := opts.Globals.TestMode
 	if opts.Globals.Verbose {
 		for i := 0; i < len(monitorArray); i++ {
