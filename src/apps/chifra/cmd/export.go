@@ -54,7 +54,9 @@ Notes:
   - For the --logs option, you may optionally specify one or more --emitter, one or more --topics, or both.
   - The --logs option is significantly faster if you provide an --emitter or a --topic.
   - Neighbors include every address that appears in any transaction in which the export address also appears.
-  - If provided, --max_records dominates, also, if provided, --first_record overrides --first_block.`
+  - If provided, --max_records dominates, also, if provided, --first_record overrides --first_block.
+  - The --first_record and --max_record options are zero-based (as are the block options).
+  - The _block and _record options are ignored when used with the --count option.`
 
 func init() {
 	exportCmd.Flags().SortFlags = false
@@ -66,6 +68,7 @@ func init() {
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Neighbors, "neighbors", "n", false, "export the neighbors of the given address")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Accounting, "accounting", "C", false, "attach accounting records to the exported data (applies to transactions export only)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Statements, "statements", "A", false, "for the accounting options only, export only statements")
+	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Balances, "balances", "b", false, "traverse the transaction history and show each change in ETH balances")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Articulate, "articulate", "a", false, "articulate transactions, traces, logs, and outputs")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Cache, "cache", "o", false, "write transactions to the cache (see notes)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().CacheTraces, "cache_traces", "R", false, "write traces to the cache (see notes)")
@@ -81,12 +84,12 @@ One of [ in | out | zero ]`)
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Factory, "factory", "y", false, "for --traces only, report addresses created by (or self-destructed by) the given address(es)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Unripe, "unripe", "u", false, "export transactions labeled upripe (i.e. less than 28 blocks old)")
 	exportCmd.Flags().StringVarP(&exportPkg.GetOptions().Load, "load", "O", "", "a comma separated list of dynamic traversers to load (hidden)")
-	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Reversed, "reversed", "E", false, "produce results in reverse chronological order (hidden)")
+	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Reversed, "reversed", "E", false, "produce results in reverse chronological order")
+	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().NoZero, "no_zero", "z", false, "for the --count option only, suppress the display of zero appearance accounts")
 	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to process (inclusive)")
 	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to process (inclusive)")
 	if os.Getenv("TEST_MODE") != "true" {
 		exportCmd.Flags().MarkHidden("load")
-		exportCmd.Flags().MarkHidden("reversed")
 	}
 	globals.InitGlobals(exportCmd, &exportPkg.GetOptions().Globals)
 

@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/ethereum/go-ethereum"
@@ -46,7 +47,7 @@ func (opts *ExploreOptions) validateExplore() error {
 	for _, arg := range opts.Terms {
 		arg = strings.ToLower(arg)
 
-		if validate.IsValidAddress(arg) {
+		if base.IsValidAddress(arg) {
 			if strings.Contains(arg, ".eth") {
 				urls = append(urls, ExploreUrl{arg, ExploreEnsName})
 			} else {

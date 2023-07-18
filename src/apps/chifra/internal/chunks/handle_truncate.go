@@ -105,7 +105,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 					if len(addr) > 0 {
 						mon := monitor.NewMonitor(chain, addr, false /* create */)
 						var removed bool
-						if removed, err = mon.TruncateTo(uint32(latestChunk)); err != nil {
+						if removed, err = mon.TruncateTo(chain, uint32(latestChunk)); err != nil {
 							return err
 						}
 						if removed {

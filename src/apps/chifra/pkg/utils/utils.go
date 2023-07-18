@@ -223,13 +223,32 @@ func weiToEther(wei *big.Int) *big.Float {
 
 func FormattedValue(in big.Int, asEther bool, decimals int) string {
 	if asEther {
-		return weiToEther(&in).Text('f', -1*int(decimals))
+		return weiToEther(&in).Text('f', -1*decimals)
 	}
 	return in.Text(10)
 }
 
 func FormattedDate(ts int64) string {
 	return gostradamus.FromUnixTimestamp(ts).Format("2006-01-02 15:04:05 UTC")
+}
+
+func FormattedCode(verbose bool, code string) string {
+	if verbose {
+		return code
+	}
+
+	codeLen := len(code)
+	if codeLen <= 128 {
+		return code
+	}
+
+	return strings.Join(
+		[]string{
+			code[:15],
+			code[codeLen-15:],
+		},
+		"...",
+	)
 }
 
 func PointerOf[T any](value T) *T {

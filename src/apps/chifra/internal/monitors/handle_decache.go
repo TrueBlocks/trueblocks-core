@@ -10,11 +10,11 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/user"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 // HandleDecache
@@ -25,7 +25,7 @@ func (opts *MonitorsOptions) HandleDecache() error {
 	}
 
 	for _, addr := range opts.Addrs {
-		if !validate.IsValidAddress(addr) {
+		if !base.IsValidAddress(addr) {
 			continue
 		}
 

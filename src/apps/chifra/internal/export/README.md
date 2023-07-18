@@ -36,6 +36,7 @@ Flags:
   -n, --neighbors           export the neighbors of the given address
   -C, --accounting          attach accounting records to the exported data (applies to transactions export only)
   -A, --statements          for the accounting options only, export only statements
+  -b, --balances            traverse the transaction history and show each change in ETH balances
   -a, --articulate          articulate transactions, traces, logs, and outputs
   -o, --cache               write transactions to the cache (see notes)
   -R, --cache_traces        write traces to the cache (see notes)
@@ -50,6 +51,8 @@ Flags:
                             One of [ in | out | zero ]
   -y, --factory             for --traces only, report addresses created by (or self-destructed by) the given address(es)
   -u, --unripe              export transactions labeled upripe (i.e. less than 28 blocks old)
+  -E, --reversed            produce results in reverse chronological order
+  -z, --no_zero             for the --count option only, suppress the display of zero appearance accounts
   -F, --first_block uint    first block to process (inclusive)
   -L, --last_block uint     last block to process (inclusive)
   -x, --fmt string          export format, one of [none|json*|txt|csv]
@@ -63,6 +66,8 @@ Notes:
   - The --logs option is significantly faster if you provide an --emitter or a --topic.
   - Neighbors include every address that appears in any transaction in which the export address also appears.
   - If provided, --max_records dominates, also, if provided, --first_record overrides --first_block.
+  - The --first_record and --max_record options are zero-based (as are the block options).
+  - The _block and _record options are ignored when used with the --count option.
 ```
 
 Data models produced by this tool:
@@ -79,6 +84,7 @@ Data models produced by this tool:
 - [trace](/data-model/chaindata/#trace)
 - [traceaction](/data-model/chaindata/#traceaction)
 - [traceresult](/data-model/chaindata/#traceresult)
+- [tokenbalance](/data-model/chainstate/#tokenbalance)
 - [function](/data-model/other/#function)
 - [parameter](/data-model/other/#parameter)
 

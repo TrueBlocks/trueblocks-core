@@ -673,99 +673,100 @@ bool CCommandOption::finishCleanup(void) {
     return true;
 }
 
-//---------------------------------------------------------------------------------------------------
-void CCommandOption::verifyOptions(CStringArray& warnings) {
-    bool valid_kind = false;
-    for (auto kind : validOptionTypes) {
-        if (kind == option_type) {
-            valid_kind = true;
-        }
-    }
-    ostringstream warnstream;
-    if (!valid_kind)
-        warnstream << "Skipping option kind '" << option_type << "' for option '" << longName << "'|";
+// //---------------------------------------------------------------------------------------------------
+// void CCommandOption::verifyOptions(CStringArray& warnings) {
+//     bool valid_kind = false;
+//     for (auto kind : validOptionTypes) {
+//         if (kind == option_type) {
+//             valid_kind = true;
+//         }
+//     }
+//     ostringstream warnstream;
+//     if (!valid_kind)
+//         warnstream << "Skipping option kind '" << option_type << "' for option '" << longName << "'|";
 
-    // Check valid data types
-    CStringArray validTypes = {
-        "<addr>",   "<blknum>", "<pair>",    "<path>", "<range>",  "<string>",
-        "<uint32>", "<uint64>", "<boolean>", "<path>", "<double>", "<address>",
-    };
+//     // Check valid data types
+//     CStringArray validTypes = {
+//         "<addr>",   "<blknum>", "<pair>",    "<path>", "<range>",  "<string>",
+//         "<uint32>", "<uint64>", "<boolean>", "<path>", "<double>", "<address>",
+//     };
 
-    bool valid_type = false;
-    for (auto type : validTypes) {
-        if (type == data_type) {
-            valid_type = true;
-        }
-    }
-    if (!valid_type) {
-        if (startsWith(data_type, "enum"))
-            valid_type = true;
-        if (startsWith(data_type, "list"))
-            valid_type = true;
-    }
-    if (!valid_type &&
-        (option_type == "description" || option_type == "note" || option_type == "alias" || option_type == "error" ||
-         isConfig) &&
-        data_type.empty())
-        valid_type = true;
-    if (!valid_type && startsWith(data_type, "opt_"))
-        valid_type = true;
+//     bool valid_type = false;
+//     for (auto type : validTypes) {
+//         if (type == data_type) {
+//             valid_type = true;
+//         }
+//     }
+//     if (!valid_type) {
+//         if (startsWith(data_type, "enum"))
+//             valid_type = true;
+//         if (startsWith(data_type, "list"))
+//             valid_type = true;
+//     }
+//     if (!valid_type &&
+//         (option_type == "description" || option_type == "note" || option_type == "alias" || option_type == "error" ||
+//          isConfig) &&
+//         data_type.empty())
+//         valid_type = true;
+//     if (!valid_type && startsWith(data_type, "opt_"))
+//         valid_type = true;
 
-    if (!valid_type)
-        warnstream << "Unknown type '" << data_type << "' for option '" << longName << "'|";
-    if (option_type == "description" && !endsWith(description, ".") && !endsWith(description, ":"))
-        warnstream << "Description '" << description << "' should end with a period or colon.|";
-    if (option_type == "note" && !endsWith(description, ".") && !endsWith(description, ":"))
-        warnstream << "Note '" << description << "' should end with a period or colon.|";
-    if (option_type == "error" && !endsWith(description, ".") && !endsWith(description, ":"))
-        warnstream << "Error string '" << description << "' should end with a period or colon.|";
-    if ((option_type != "description" && option_type != "note" && option_type != "error" && option_type != "config") &&
-        endsWith(description, "."))
-        warnstream << "Option '" << description << "' should not end with a period.|";
-    if (isReserved(longName))
-        warnstream << "Option '" << longName << "' is a reserved word.|";
+//     if (!valid_type)
+//         warnstream << "Unknown type '" << data_type << "' for option '" << longName << "'|";
+//     if (option_type == "description" && !endsWith(description, ".") && !endsWith(description, ":"))
+//         warnstream << "Description '" << description << "' should end with a period or colon.|";
+//     if (option_type == "note" && !endsWith(description, ".") && !endsWith(description, ":"))
+//         warnstream << "Note '" << description << "' should end with a period or colon.|";
+//     if (option_type == "error" && !endsWith(description, ".") && !endsWith(description, ":"))
+//         warnstream << "Error string '" << description << "' should end with a period or colon.|";
+//     if ((option_type != "description" && option_type != "note" && option_type != "error" && option_type != "config")
+//     &&
+//         endsWith(description, "."))
+//         warnstream << "Option '" << description << "' should not end with a period.|";
+//     if (isReserved(longName))
+//         warnstream << "Option '" << longName << "' is a reserved word.|";
 
-    explode(warnings, warnstream.str(), '|');
-}
+//     explode(warnings, warnstream.str(), '|');
+// }
 
-//---------------------------------------------------------------------------------------------------
-void CCommandOption::verifyHotkey(CStringArray& warnings, map<string, string>& hotKeys) {
-    if (hotKey.empty() || contains(option_type, "positional") || contains(option_type, "description") ||
-        contains(option_type, "alias") || contains(option_type, "note") || contains(option_type, "error")) {
-        return;
-    }
+// //---------------------------------------------------------------------------------------------------
+// void CCommandOption::verifyHotkey(CStringArray& warnings, map<string, string>& hotKeys) {
+//     if (hotKey.empty() || contains(option_type, "positional") || contains(option_type, "description") ||
+//         contains(option_type, "alias") || contains(option_type, "note") || contains(option_type, "error")) {
+//         return;
+//     }
 
-    ostringstream warnstream;
-    if (hotKey == "v")
-        warnstream << tool << ":hotKey '" << longName << "-" << hotKey << "' conflicts with --verbose hotKey|";
-    if (hotKey == "h")
-        warnstream << tool << ":hotKey '" << longName << "-" << hotKey << "' conflicts with --help hotKey|";
-    if (hotKey == "x")
-        warnstream << tool << ":hotKey '" << longName << "-" << hotKey << "' conflicts with --fmt hotKey|";
+//     ostringstream warnstream;
+//     if (hotKey == "v")
+//         warnstream << tool << ":hotKey '" << longName << "-" << hotKey << "' conflicts with --verbose hotKey|";
+//     if (hotKey == "h")
+//         warnstream << tool << ":hotKey '" << longName << "-" << hotKey << "' conflicts with --help hotKey|";
+//     if (hotKey == "x")
+//         warnstream << tool << ":hotKey '" << longName << "-" << hotKey << "' conflicts with --fmt hotKey|";
 
-    const string_q HOTKEY_WARNING =
-        "Hotkey (-[{HOTKEY}]) for tool '[{TOOL}]' at command '[{LONGNAME}]:[{HOTKEY}]' +MSG+|";
-    string_q key = api_route + ":" + tool + ":" + hotKey;
-    if (!hotKeys[key].empty()) {
-        string_q warn = Format(HOTKEY_WARNING);
-        replace(warn, "+MSG+", "conflicts with existing '" + hotKeys[key] + "'");
-        warnstream << warn;
-    }
-    hotKeys[key] = longName + ":" + hotKey;  // store for later to find dups
+//     const string_q HOTKEY_WARNING =
+//         "Hotkey (-[{HOTKEY}]) for tool '[{TOOL}]' at command '[{LONGNAME}]:[{HOTKEY}]' +MSG+|";
+//     string_q key = api_route + ":" + tool + ":" + hotKey;
+//     if (!hotKeys[key].empty()) {
+//         string_q warn = Format(HOTKEY_WARNING);
+//         replace(warn, "+MSG+", "conflicts with existing '" + hotKeys[key] + "'");
+//         warnstream << warn;
+//     }
+//     hotKeys[key] = longName + ":" + hotKey;  // store for later to find dups
 
-    bool isUpper = (toLower(hotKey) != hotKey);
-    bool isFirst = hotKey == longName.substr(0, 1);
-    bool isSecond = hotKey == longName.substr(1, 1);
-    bool isContained = contains(longName, hotKey);
-    bool isCache = contains(longName, "cache");  // special weird case -- just ignore it
-    if (!isUpper && !isFirst && !isSecond && (!verbose && !isContained && !isCache)) {
-        string_q warn = Format(HOTKEY_WARNING);
-        replace(warn, "+MSG+", "is not first or second character");
-        warnstream << warn;
-    }
+//     bool isUpper = (toLower(hotKey) != hotKey);
+//     bool isFirst = hotKey == longName.substr(0, 1);
+//     bool isSecond = hotKey == longName.substr(1, 1);
+//     bool isContained = contains(longName, hotKey);
+//     bool isCache = contains(longName, "cache");  // special weird case -- just ignore it
+//     if (!isUpper && !isFirst && !isSecond && (!verbose && !isContained && !isCache)) {
+//         string_q warn = Format(HOTKEY_WARNING);
+//         replace(warn, "+MSG+", "is not first or second character");
+//         warnstream << warn;
+//     }
 
-    explode(warnings, warnstream.str(), '|');
-}
+//     explode(warnings, warnstream.str(), '|');
+// }
 
 //---------------------------------------------------------------------------------------------------
 // TODO: search for go-port

@@ -7,6 +7,7 @@ package blocksPkg
 import (
 	"errors"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/node"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -19,7 +20,7 @@ func (opts *BlocksOptions) validateBlocks() error {
 	}
 
 	for _, emitter := range opts.Emitter {
-		valid, err := validate.IsValidAddressE(emitter)
+		valid, err := base.IsValidAddressE(emitter)
 		if !valid {
 			return err
 		}

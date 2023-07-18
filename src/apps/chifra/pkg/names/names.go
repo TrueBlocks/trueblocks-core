@@ -92,7 +92,15 @@ func LoadNamesMap(chain string, parts Parts, terms []string) (map[base.Address]t
 	// Load the prefund names first...
 	if parts&Prefund != 0 {
 		prefundPath := prefunds.GetPrefundPath(chain)
-		loadPrefundMap(chain, prefundPath, terms, parts, &namesMap)
+		if prefundMap, err := prefunds.LoadPrefundMap(chain, prefundPath); err != nil {
+			return namesMap, err
+		} else {
+			for k, v := range *prefundMap {
+				if doSearch(&v, terms, parts) {
+					namesMap[k] = v
+				}
+			}
+		}
 	}
 
 	if parts&Regular != 0 {

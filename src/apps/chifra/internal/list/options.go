@@ -29,6 +29,7 @@ type ListOptions struct {
 	Silent      bool                  `json:"silent,omitempty"`      // Freshen the monitor only (no reporting)
 	FirstRecord uint64                `json:"firstRecord,omitempty"` // The first record to process
 	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process
+	Reversed    bool                  `json:"reversed,omitempty"`    // Produce results in reverse chronological order
 	FirstBlock  uint64                `json:"firstBlock,omitempty"`  // First block to export (inclusive, ignored when freshening)
 	LastBlock   uint64                `json:"lastBlock,omitempty"`   // Last block to export (inclusive, ignored when freshening)
 	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
@@ -53,6 +54,7 @@ func (opts *ListOptions) testLog() {
 	logger.TestLog(opts.Silent, "Silent: ", opts.Silent)
 	logger.TestLog(opts.FirstRecord != 1, "FirstRecord: ", opts.FirstRecord)
 	logger.TestLog(opts.MaxRecords != 250, "MaxRecords: ", opts.MaxRecords)
+	logger.TestLog(opts.Reversed, "Reversed: ", opts.Reversed)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 	opts.Globals.TestLog()
@@ -93,6 +95,8 @@ func listFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
 			opts.FirstRecord = globals.ToUint64(value[0])
 		case "maxRecords":
 			opts.MaxRecords = globals.ToUint64(value[0])
+		case "reversed":
+			opts.Reversed = true
 		case "firstBlock":
 			opts.FirstBlock = globals.ToUint64(value[0])
 		case "lastBlock":

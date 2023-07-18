@@ -23,7 +23,6 @@ type RawTokenBalance struct {
 	Address          string `json:"address"`
 	Balance          string `json:"balance"`
 	BlockNumber      string `json:"blockNumber"`
-	Date             string `json:"date"`
 	Decimals         string `json:"decimals"`
 	Diff             string `json:"diff"`
 	Holder           string `json:"holder"`
@@ -33,6 +32,7 @@ type RawTokenBalance struct {
 	Name             string `json:"name"`
 	PriorBalance     string `json:"priorBalance"`
 	Symbol           string `json:"symbol"`
+	Timestamp        string `json:"timestamp"`
 	TotalSupply      string `json:"totalSupply"`
 	TransactionIndex string `json:"transactionIndex"`
 	// EXISTING_CODE
@@ -43,7 +43,6 @@ type SimpleTokenBalance struct {
 	Address          base.Address     `json:"address"`
 	Balance          big.Int          `json:"balance"`
 	BlockNumber      base.Blknum      `json:"blockNumber"`
-	Date             string           `json:"date"`
 	Decimals         uint64           `json:"decimals"`
 	Diff             big.Int          `json:"diff,omitempty"`
 	Holder           base.Address     `json:"holder"`
@@ -53,6 +52,7 @@ type SimpleTokenBalance struct {
 	Name             string           `json:"name"`
 	PriorBalance     big.Int          `json:"priorBalance,omitempty"`
 	Symbol           string           `json:"symbol"`
+	Timestamp        base.Timestamp   `json:"timestamp"`
 	TotalSupply      big.Int          `json:"totalSupply"`
 	TransactionIndex base.Blknum      `json:"transactionIndex,omitempty"`
 	raw              *RawTokenBalance `json:"-"`

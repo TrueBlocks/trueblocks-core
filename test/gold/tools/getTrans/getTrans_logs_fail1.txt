@@ -3,7 +3,7 @@ TEST[DATE|TIME] Transactions:  [9004225.10]
 TEST[DATE|TIME] Logs:  true
 TEST[DATE|TIME] Emitter:  [0xbbbbca6a901c926f240b89eacb641d8aec7aeaf]
 TEST[DATE|TIME] Format:  json
-Error: The address option (0xbbbbca6a901c926f240b89eacb641d8aec7aeaf) must be 20 bytes long.
+Error: hex string must be an even length
 Usage:
   chifra transactions [flags] <tx_id> [tx_id...]
 

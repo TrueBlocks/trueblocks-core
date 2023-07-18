@@ -7,12 +7,14 @@ package validate
 import (
 	"strconv"
 	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
 func IsTransHash(str string) bool {
 	str = clearDirectional(str)
 
-	if !Is0xPrefixed(str) {
+	if !strings.HasPrefix(str, "0x") {
 		return false
 	}
 
@@ -20,7 +22,7 @@ func IsTransHash(str string) bool {
 		return false
 	}
 
-	if !IsHex(str) {
+	if !base.IsHex(str) {
 		return false
 	}
 
@@ -33,7 +35,7 @@ func IsTransIndex(str string) bool {
 	base := 10
 	source := str
 
-	if Is0xPrefixed(str) {
+	if strings.HasPrefix(str, "0x") {
 		base = 16
 		source = str[2:]
 	}
