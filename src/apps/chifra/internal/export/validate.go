@@ -23,6 +23,10 @@ func (opts *ExportOptions) validateExport() error {
 		return opts.BadFlag
 	}
 
+	if opts.Cache {
+		return validate.Usage("The {0} option is temporarily disabled", "--cache")
+	}
+
 	if opts.Neighbors {
 		return validate.Usage("The {0} option is currenlty disabled.", "--neighbors")
 	}

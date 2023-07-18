@@ -62,6 +62,7 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 		logger.Fatal("Should not happen in BlocksInternal")
 	}
 
+	timer := logger.NewTimer("export")
 	handled = true
 	if opts.Count {
 		err = opts.HandleCount(monitorArray)
@@ -77,9 +78,12 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 		err = opts.HandleStatements(monitorArray)
 	} else if opts.Balances {
 		err = opts.HandleBalances(monitorArray)
+	} else if opts.Neighbors {
+		err = opts.HandleNeighbors(monitorArray)
 	} else {
 		err = opts.HandleShow(monitorArray)
 	}
+	timer.Report("")
 	// EXISTING_CODE
 
 	return

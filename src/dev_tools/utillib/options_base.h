@@ -133,46 +133,6 @@ inline bool listBlocks(uint64_t bn, void* data) {
     array->push_back(bn);
     return true;
 }
-class COptionsBlockList {
-  public:
-    const COptionsBase* opts;
-    CBlknumArray numList;
-    CStringArray hashList;
-    HASHFINDFUNC hashFind;
-    blknum_t start;
-    blknum_t stop;
-    blknum_t skip;
-    blknum_t latest;
-    period_t skip_type;
-    bool hasZeroBlock{false};
-
-    COptionsBlockList(const COptionsBase* o);
-    void Init(void);
-    string_q parseBlockList_inner(const string_q& arg, blknum_t latest);
-    bool forEveryBlockNumber(UINT64VISITFUNC func, void*) const;
-    bool empty(void) const {
-        return !(hashList.size() || numList.size() || (start != stop));
-    }
-    size_t nItems(void) const {
-        return hashList.size() + numList.size() + (start - stop);
-    }
-    size_t size(void) const {
-        CUintArray nums;
-        forEveryBlockNumber(listBlocks, &nums);
-        return nums.size();
-    }
-    uint64_t operator[](size_t offset) const {
-        CUintArray nums;
-        forEveryBlockNumber(listBlocks, &nums);
-        return nums[offset];
-    }
-    bool isInRange(blknum_t bn) const;
-    blknum_t parseBlockOption(string_q& msg, blknum_t lastBlock, direction_t offset, bool& hasZero) const;
-
-  private:
-    COptionsBlockList(void) = delete;
-};
-
 class COptionsTransList {
   public:
     string_q queries;

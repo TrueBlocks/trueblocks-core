@@ -1,7 +1,6 @@
 package ledger
 
 import (
-	"fmt"
 	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -92,7 +91,8 @@ func (l *Ledger) GetStatementsFromTraces(trans *types.SimpleTransaction, s *type
 			logger.TestLog(true, "Tx reconciled with a zero value net amount. It's okay.")
 		}
 	} else {
-		logger.Warn("Transaction", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), "does not reconcile")
+		// TODO: BOGUS PERF
+		// logger.Warn("Transaction", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), "does not reconcile")
 		statements = append(statements, &ret)
 	}
 

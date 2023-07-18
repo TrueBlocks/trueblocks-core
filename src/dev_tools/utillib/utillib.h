@@ -11,13 +11,34 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "etherlib.h"
-#include "monitor.h"
-#include "acctlib.h"
-#include "apispec.h"
-#include "traverser.h"
-
-extern void acctlib_init(QUITHANDLER qh);
-extern void acctlib_cleanup(void);
+#include "basetypes.h"
+#include "sfstring.h"
+#include "basenode.h"
+#include "biglib.h"
+#include "jsonlib.h"
+#include "conversions.h"
+#include "sftime.h"
+#include "sfos.h"
+#include "database.h"
+#include "toml.h"
+#include "exportcontext.h"
+#include "prefunds.h"
+#include "names.h"
+#include "sfarchive.h"
+#include "fielddata.h"
+#include "curl_code.h"
+#include "colors.h"
+#include "performance.h"
+#include "options_base.h"
+#include "filenames.h"
+#include "name.h"
+#include "memmap.h"
+#include "rpcresult.h"
+#include "logging.h"
+#include "keccak.h"
+#include "markdown.h"
+#include "configenv.h"
+#include "key.h"
+#include "petname.h"
 
 using namespace qblocks;  // NOLINT

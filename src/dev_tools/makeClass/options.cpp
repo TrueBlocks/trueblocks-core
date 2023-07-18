@@ -19,7 +19,6 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    // BEG_CODE_OPTIONS
     // clang-format off
     COption("files", "", "list<path>", OPT_REQUIRED | OPT_POSITIONAL, "one or more class definition files"),
     COption("all", "a", "", OPT_SWITCH, "list, or run all class definitions found in the local folder"),
@@ -32,7 +31,6 @@ static const COption params[] = {
     COption("openapi", "A", "", OPT_SWITCH, "export openapi.yaml file for API documentation"),
     COption("", "", "", OPT_DESCRIPTION, "Automatically writes C++ for various purposes."),
     // clang-format on
-    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -47,21 +45,18 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    // BEG_CODE_LOCAL_INIT
     CStringArray files;
     bool options = false;
     bool gocmds = false;
     bool readmes = false;
     bool format = false;
     bool lint = false;
-    // END_CODE_LOCAL_INIT
 
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
-            // BEG_CODE_AUTO
         } else if (arg == "-a" || arg == "--all") {
             all = true;
 
@@ -95,8 +90,6 @@ bool COptions::parseArguments(string_q& command) {
         } else {
             if (!parseStringList2(this, files, arg))
                 return false;
-
-            // END_CODE_AUTO
         }
     }
 
@@ -201,8 +194,6 @@ bool COptions::parseArguments(string_q& command) {
     // Ignoring classDefs for a moment, process special options. Note: order matters
     if (openapi && !handle_datamodel())
         return false;
-    if (options && !handle_options())
-        return false;
     if (openapi && !writeOpenApiFile())
         return false;
     if (gocmds && !handle_gocmds())
@@ -243,11 +234,9 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     // END_CODE_GLOBALOPTS
 
-    // BEG_CODE_INIT
     all = false;
     sdk = false;
     openapi = false;
-    // END_CODE_INIT
 
     classDefs.clear();
     counter = CCounter();
@@ -262,20 +251,15 @@ void COptions::Init(void) {
 COptions::COptions(void) : classFile("") {
     Init();
 
-    // BEG_CODE_NOTES
     // clang-format off
     notes.push_back("The `--options` flag generates `COption` code for each of the various tools.");
     notes.push_back("More information on class definition files is found in the documentation.");
     // clang-format on
-    // END_CODE_NOTES
 
     usageErrs[ERR_NOERROR] = "No error";
     usageErrs[ERR_CLASSDEFNOTEXIST] = "./classDefinitions folder does not exist.";
     usageErrs[ERR_CONFIGMISSING] = "File {0} does not exist.";
     usageErrs[ERR_NEEDONECLASS] = "Please specify at least one className.";
-
-    // ERROR_STRINGS
-    // ERROR_STRINGS
 
     CCommandOption::registerClass();
     CClassDefinition::registerClass();

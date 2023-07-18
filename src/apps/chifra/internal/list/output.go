@@ -13,6 +13,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -59,6 +60,7 @@ func (opts *ListOptions) ListInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	timer := logger.NewTimer("list")
 	if opts.Count {
 		err = opts.HandleCount(monitorArray)
 	} else if opts.Bounds {
@@ -66,6 +68,7 @@ func (opts *ListOptions) ListInternal() (err error, handled bool) {
 	} else if !opts.Silent {
 		err = opts.HandleListAppearances(monitorArray)
 	}
+	timer.Report("")
 	// EXISTING_CODE
 
 	return

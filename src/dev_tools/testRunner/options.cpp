@@ -19,7 +19,6 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    // BEG_CODE_OPTIONS
     // clang-format off
     COption("mode", "m", "enum[cmd*|api|both]", OPT_FLAG, "determine which set of tests to run"),
     COption("filter", "f", "enum[fast*|medi|slow|all]", OPT_FLAG, "determine how long it takes to run tests"),
@@ -27,7 +26,6 @@ static const COption params[] = {
     COption("report", "r", "", OPT_SWITCH, "display performance report to screen"),
     COption("", "", "", OPT_DESCRIPTION, "Run TrueBlocks' test cases with options."),
     // clang-format on
-    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -39,9 +37,7 @@ bool COptions::parseArguments(string_q& command) {
 
     ::setenv("NO_USERQUERY", "true", 1);
 
-    // BEG_CODE_LOCAL_INIT
     string_q mode = "";
-    // END_CODE_LOCAL_INIT
     string_q path;
 
     bool hasKey = getGlobalConfig("")->getConfigStr("keys.etherscan", "apiKey", "<not_set>") != "<not_set>";
@@ -55,7 +51,6 @@ bool COptions::parseArguments(string_q& command) {
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
-            // BEG_CODE_AUTO
         } else if (startsWith(arg, "-m:") || startsWith(arg, "--mode:")) {
             if (!confirmEnum("mode", mode, arg))
                 return false;
@@ -82,8 +77,6 @@ bool COptions::parseArguments(string_q& command) {
             if (!builtInCmd(arg)) {
                 return invalid_option(arg);
             }
-
-            // END_CODE_AUTO
         } else {
             arg = trim(arg, '/');
             if (arg == "dev_tools" || arg == "dev_tools/") {
@@ -189,11 +182,9 @@ void COptions::Init(void) {
     registerOptions(nParams, params, 0);
     // END_CODE_GLOBALOPTS
 
-    // BEG_CODE_INIT
     filter = "";
     skip = 1;
     report = false;
-    // END_CODE_INIT
 
     full_test = false;
     minArgs = 0;
@@ -205,13 +196,8 @@ COptions::COptions(void) {
 
     Init();
 
-    // BEG_CODE_NOTES
     // clang-format off
     // clang-format on
-    // END_CODE_NOTES
-
-    // BEG_ERROR_STRINGS
-    // END_ERROR_STRINGS
 }
 
 //---------------------------------------------------------------------------------------------------

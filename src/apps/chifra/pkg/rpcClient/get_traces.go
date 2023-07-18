@@ -209,7 +209,6 @@ func GetTracesByFilter(chain string, filter string) ([]types.SimpleTrace, error)
 func GetTracesByTransactionHash(chain string, txHash string, transaction *types.SimpleTransaction, cache *cacheNew.Store) ([]types.SimpleTrace, error) {
 	if cache != nil && transaction != nil {
 		traceGroup := types.NewSimpleTraceGroup(transaction)
-
 		if err := cache.Read(traceGroup, nil); err == nil {
 			// success
 			return traceGroup.Traces, nil

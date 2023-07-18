@@ -31,6 +31,8 @@ func (mon *Monitor) Decache(chain string, processor cache.DecacheFunc) error {
 		}
 
 		// TODO: This should use go routines
+		// TODO: BOGUS PERF
+		// caches := []string{"blocks", "txs", "traces", "recons"}
 		caches := []string{"blocks", "txs", "traces", "recons", "abis"}
 		if cont, err := cache.DecacheItems(chain, mon.Address.Hex(), processor, caches, pairs); err != nil || !cont {
 			return err

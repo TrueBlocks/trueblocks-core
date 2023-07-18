@@ -253,12 +253,25 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 		}
 	}
 
+	tx = nil
 	if bn == 0 {
-		return GetPrefundTxByApp(chain, appearance)
+		if tx, err = GetPrefundTxByApp(chain, appearance); err != nil {
+			return nil, err
+		}
 	} else if txid == 99999 || txid == 99997 || txid == 99996 {
-		return GetRewardTxByTypeAndApp(chain, BLOCK_REWARD, appearance)
+		if tx, err = GetRewardTxByTypeAndApp(chain, BLOCK_REWARD, appearance); err != nil {
+			return nil, err
+		}
 	} else if txid == 99998 {
-		return GetRewardTxByTypeAndApp(chain, UNCLE_REWARD, appearance)
+		if tx, err = GetRewardTxByTypeAndApp(chain, UNCLE_REWARD, appearance); err != nil {
+			return nil, err
+		}
+	}
+	if tx != nil {
+		if cache != nil {
+			cache.Write(tx, nil)
+		}
+		return tx, nil
 	}
 
 	blockTs := rpc.GetBlockTimestamp(chain, bn)

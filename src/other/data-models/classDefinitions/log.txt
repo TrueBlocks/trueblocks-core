@@ -8,6 +8,4 @@ doc_group = 02-Chain Data
 doc_descr = log data as returned from the RPC (with slight enhancements)
 doc_route = 205-log
 doc_producer = logs, export, blocks
-
-cpp_output = src/libs/etherlib/
 go_output = src/apps/chifra/pkg/types

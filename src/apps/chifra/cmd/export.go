@@ -97,6 +97,10 @@ One of [ in | out | zero ]`)
 	exportCmd.SetOut(os.Stderr)
 
 	// EXISTING_CODE
+	// This is a total no-op and has the same result as `chifra export` with no options. It here to make scripting easier.
+	var unused bool
+	exportCmd.Flags().BoolVarP(&unused, "transactions", "", false, "unused")
+	exportCmd.Flags().MarkHidden("transactions")
 	// EXISTING_CODE
 
 	chifraCmd.AddCommand(exportCmd)

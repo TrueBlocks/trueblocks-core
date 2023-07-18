@@ -8,5 +8,5 @@ doc_descr = a configuration item carrying information about a single chain
 doc_route = 413-chain
 doc_producer = status, config
 
-cpp_output = src/libs/utillib/
+cpp_output = src/dev_tools/utillib/
 go_output = src/apps/chifra/pkg/types

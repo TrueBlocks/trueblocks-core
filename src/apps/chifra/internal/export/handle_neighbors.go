@@ -1,4 +1,104 @@
+// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+
 package exportPkg
+
+import (
+	"context"
+	"fmt"
+	"sort"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+)
+
+func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error {
+	chain := opts.Globals.Chain
+	testMode := opts.Globals.TestMode
+	filter := monitor.NewFilter(
+		chain,
+		true,
+		opts.Reversed,
+		!testMode,
+		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
+		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
+	)
+
+	ctx := context.Background()
+	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
+		for _, mon := range monitorArray {
+			if neighborMap, cnt, err := monitor.ReadAppearancesToMap[bool](&mon, filter); err != nil {
+				errorChan <- err
+				return
+			} else if !opts.NoZero || cnt > 0 {
+				showProgress := !opts.Globals.TestMode
+				var bar = logger.NewBar(mon.Address.Hex(), showProgress, mon.Count())
+				allNeighbors := make([]index.Reason, 0)
+				iterFunc := func(app types.SimpleAppearance, unused *bool) error {
+					if neighbors, err := index.GetNeighbors(&app); err != nil {
+						return err
+					} else {
+						allNeighbors = append(allNeighbors, neighbors...)
+						return nil
+					}
+				}
+
+				// Set up and interate over the map calling iterFunc for each appearance
+				ctx, cancel := context.WithCancel(context.Background())
+				defer cancel()
+				errChan := make(chan error)
+				go utils.IterateOverMap(ctx, errChan, neighborMap, iterFunc)
+				if stepErr := <-errChan; stepErr != nil {
+					errorChan <- stepErr
+				} else {
+					bar.Finish(true)
+				}
+
+				// Sort the items back into an ordered array by block number
+				items := make([]types.SimpleAppearance, 0, len(neighborMap))
+				for _, neighbor := range allNeighbors {
+					app := types.SimpleAppearance{
+						Address:          *neighbor.Address,
+						BlockNumber:      neighbor.App.BlockNumber,
+						TransactionIndex: neighbor.App.TransactionIndex,
+						Reason:           neighbor.Reason,
+					}
+					items = append(items, app)
+				}
+				sort.Slice(items, func(i, j int) bool {
+					if items[i].BlockNumber == items[j].BlockNumber {
+						if items[i].TransactionIndex == items[j].TransactionIndex {
+							return items[i].Address.Hex() < items[j].Address.Hex()
+						}
+						return items[i].TransactionIndex < items[j].TransactionIndex
+					}
+					return items[i].BlockNumber < items[j].BlockNumber
+				})
+
+				for _, n := range items {
+					n := n
+					modelChan <- &n
+				}
+
+			} else {
+				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
+				return
+			}
+		}
+	}
+
+	extra := map[string]interface{}{
+		"uniq": true,
+	}
+
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+}
 
 /*
 #include "options.h"

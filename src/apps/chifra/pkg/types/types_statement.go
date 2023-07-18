@@ -315,7 +315,8 @@ func (s *SimpleStatement) isNullTransfer(tx *SimpleTransaction) bool {
 	noBalanceChange := s.EndBal.Cmp(&s.BegBal) == 0 && s.MoneyMoved()
 	ret := (lotsOfLogs || mayBeAirdrop) && noBalanceChange
 
-	logger.Warn("Statement is not reconciled", s.AssetSymbol, "at", s.BlockNumber, s.TransactionIndex, s.LogIndex)
+	// TODO: BOGUS PERF
+	// logger.Warn("Statement is not reconciled", s.AssetSymbol, "at", s.BlockNumber, s.TransactionIndex, s.LogIndex)
 	logger.TestLog(true, "A possible nullTransfer")
 	logger.TestLog(true, "  nLogs:            ", len(tx.Receipt.Logs))
 	logger.TestLog(true, "    lotsOfLogs:      -->", lotsOfLogs)

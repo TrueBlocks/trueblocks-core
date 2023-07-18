@@ -29,19 +29,24 @@ func (l *Ledger) TrialBalance(msg string, r *types.SimpleStatement) bool {
 		logger.TestLog(l.TestMode, "Start of trial balance report")
 	}
 
+	// TODO: BOGUS PERF
 	okay := r.Reconciled()
 	if !okay {
 		if okay = r.CorrectForNullTransfer(l.Tx); !okay {
-			okay = r.CorrectForSomethingElse(l.Tx)
+			// TODO: BOGUS PERF
+			// okay = r.CorrectForSomethingElse(l.Tx)
+			r.CorrectForSomethingElse(l.Tx)
 		}
 	}
 
+	// TODO: BOGUS PERF
 	if okay && r.MoneyMoved() {
-		var err error
-		if r.SpotPrice, r.PriceSource, err = pricing.PriceUsd(l.Chain, l.TestMode, r); err != nil {
-			logger.Error("Failed to get price for", r.AssetSymbol, "at", r.BlockNumber, r.TransactionIndex)
-			logger.Error("Error returned from PriceUsd:", err)
-		}
+		// var err error
+		r.SpotPrice, r.PriceSource, _ = pricing.PriceUsd(l.Chain, l.TestMode, r)
+		// 	if r.SpotPrice, r.PriceSource, err = pricing.PriceUsd(l.Chain, l.TestMode, r); err != nil {
+		// 		logger.Error("Failed to get price for", r.AssetSymbol, "at", r.BlockNumber, r.TransactionIndex)
+		// 		logger.Error("Error returned from PriceUsd:", err)
+		// 	}
 	}
 
 	if l.TestMode {
