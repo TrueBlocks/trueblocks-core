@@ -38,7 +38,7 @@ func (opts *TracesOptions) HandleShowTraces() error {
 			ts := rpc.GetBlockTimestamp(opts.Globals.Chain, uint64(txIds[0].BlockNumber))
 			for _, id := range txIds {
 				// Decide on the concrete type of block.Transactions and set values
-				traces, err := rpcClient.GetTracesByTransactionId(opts.Globals.Chain, uint64(id.BlockNumber), uint64(id.TransactionIndex))
+				traces, err := rpcClient.GetTracesByTransactionId(opts.Globals.Chain, uint64(id.BlockNumber), uint64(id.TransactionIndex), nil)
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {

@@ -94,7 +94,7 @@ func GetTracesByBlockNumber(chain string, bn uint64) ([]types.SimpleTrace, error
 
 // GetTracesCountByTransactionId returns the number of traces in a given transaction
 func GetTracesCountByTransactionId(chain string, bn, txid uint64) (uint64, error) {
-	traces, err := GetTracesByTransactionId(chain, bn, txid)
+	traces, err := GetTracesByTransactionId(chain, bn, txid, nil)
 	if err != nil {
 		return 0, err
 	}
@@ -102,14 +102,25 @@ func GetTracesCountByTransactionId(chain string, bn, txid uint64) (uint64, error
 }
 
 // GetTracesByTransactionId returns a slice of traces in a given transaction
-func GetTracesByTransactionId(chain string, bn, txid uint64) ([]types.SimpleTrace, error) {
+func GetTracesByTransactionId(chain string, bn, txid uint64, cache *cacheNew.Store) ([]types.SimpleTrace, error) {
 	var ret []types.SimpleTrace
+	if cache != nil {
+		traceGroup := &types.SimpleTraceGroup{
+			BlockNumber:      bn,
+			TransactionIndex: int(txid),
+		}
+
+		if err := cache.Read(traceGroup, nil); err == nil {
+			// success
+			return traceGroup.Traces, nil
+		}
+	}
 
 	txHash, err := rpc.GetTxHashFromNumberAndId(chain, bn, txid)
 	if err != nil {
 		return ret, err
 	}
-	return GetTracesByTransactionHash(chain, txHash, nil, nil)
+	return GetTracesByTransactionHash(chain, txHash, nil, cache)
 }
 
 // GetTracesCountByTransactionHash returns the number of traces in a given transaction
