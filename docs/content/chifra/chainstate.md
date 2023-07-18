@@ -54,7 +54,7 @@ Flags:
   -p, --parts strings      control which state to export
                            One or more of [ none | some | all | balance | nonce | code | proxy | deployed | accttype ]
   -c, --changes            only report a balance when it changes from one block to the next
-  -n, --no_zero            suppress the display of zero balance accounts
+  -z, --no_zero            suppress the display of zero balance accounts
   -a, --call string        call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data
   -r, --proxy_for string   for the --call option only, redirects calls to this implementation
   -x, --fmt string         export format, one of [none|json*|txt|csv]
@@ -114,7 +114,7 @@ Flags:
                         One or more of [ name | symbol | decimals | totalSupply | version | all ]
   -b, --by_acct         consider each address an ERC20 token except the last, whose balance is reported for each token
   -c, --changes         only report a balance when it changes from one block to the next
-  -n, --no_zero         suppress the display of zero balance accounts
+  -z, --no_zero         suppress the display of zero balance accounts
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)
   -h, --help            display this help screen
