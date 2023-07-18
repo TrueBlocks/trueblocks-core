@@ -236,7 +236,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10860,apps,Admin,config,config,,,,false,false,true,true,--,description,,Report on and edit the configuration of the TrueBlocks system.
 
 20810,apps,Admin,status,cacheStatus,modes,,,false,false,true,true,gocmd,positional,list<enum[index|blooms|blocks|txs|traces|monitors|names|abis|recons|slurps|staging|unripe|maps|some*|all]>,the (optional) name of the binary cache to report on&#44; terse otherwise
-20815,apps,Admin,status,cacheStatus,first_record,c,1,false,false,true,true,gocmd,flag,<uint64>,the first record to process
+20815,apps,Admin,status,cacheStatus,first_record,c,0,false,false,true,true,gocmd,flag,<uint64>,the first record to process
 20820,apps,Admin,status,cacheStatus,max_records,e,10000,false,false,true,true,gocmd,flag,<uint64>,the maximum number of records to process
 20825,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the state of the internal binary caches.
 20830,apps,Admin,status,cacheStatus,n1,,,false,false,false,false,--,note,,The `some` mode includes index&#44; monitors&#44; names&#44; slurps&#44; and abis.
