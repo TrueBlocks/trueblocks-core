@@ -28,7 +28,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-eth
+TEST[DATE|TIME]    reconciliationType:  diff-diff-eth
 TEST[DATE|TIME]    accountedFor:        0x7fd5c846121bed2e2e46a55f992e35d85da7ffad
 TEST[DATE|TIME]    sender:              0x7fd5c846121bed2e2e46a55f992e35d85da7ffad
 TEST[DATE|TIME]    recipient:           0xec7954f452a6473c21c4078501f0bcf8b266bc99
@@ -84,7 +84,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-token
+TEST[DATE|TIME]    reconciliationType:  diff-diff-token
 TEST[DATE|TIME]    accountedFor:        0x7fd5c846121bed2e2e46a55f992e35d85da7ffad
 TEST[DATE|TIME]    sender:              0x7fd5c846121bed2e2e46a55f992e35d85da7ffad
 TEST[DATE|TIME]    recipient:           0x6b374d334d25cc9c9e15add727fdc6d647c2dc4c
@@ -161,7 +161,7 @@ TEST[DATE|TIME] End of trial balance report
       "priceSource": "maker",
       "recipient": "0xec7954f452a6473c21c4078501f0bcf8b266bc99",
       "reconciled": true,
-      "reconciliationType": "regular-eth",
+      "reconciliationType": "diff-diff-eth",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x7fd5c846121bed2e2e46a55f992e35d85da7ffad",
@@ -205,7 +205,7 @@ TEST[DATE|TIME] End of trial balance report
       "priceSource": "token-not-priced-pre-uni",
       "recipient": "0x6b374d334d25cc9c9e15add727fdc6d647c2dc4c",
       "reconciled": true,
-      "reconciliationType": "regular-token",
+      "reconciliationType": "diff-diff-token",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x7fd5c846121bed2e2e46a55f992e35d85da7ffad",

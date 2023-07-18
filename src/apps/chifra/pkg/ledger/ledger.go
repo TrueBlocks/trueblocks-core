@@ -13,33 +13,60 @@ import (
 // TODO: balances in a concurrent way before spinning through the appearances. And (2) if we did that
 // TODO: prior to doing the accounting, we could easily travers in reverse order.
 type Ledger struct {
-	Chain      string
-	AccountFor base.Address
-	Names      map[base.Address]types.SimpleName
-	TestMode   bool
-	Contexts   map[string]LedgerContext
-	AsEther    bool
-	NoZero     bool
-	UseTraces  bool
-	Tx         *types.SimpleTransaction
+	Chain       string
+	AccountFor  base.Address
+	FirstBlock  base.Blknum
+	LastBlock   base.Blknum
+	Names       map[base.Address]types.SimpleName
+	TestMode    bool
+	Contexts    map[string]LedgerContext
+	AsEther     bool
+	NoZero      bool
+	UseTraces   bool
+	AssetFilter *[]base.Address
+	Tx          *types.SimpleTransaction
 }
 
 // NewLedger returns a new empty Ledger struct
-func NewLedger(chain string, acctFor base.Address, asEther, testMode, noZero, useTraces bool) *Ledger {
+func NewLedger(chain string, acctFor base.Address, fb, lb base.Blknum, asEther, testMode, noZero, useTraces bool, assetFilters *[]string) *Ledger {
 	l := &Ledger{
 		Chain:      chain,
 		AccountFor: acctFor,
+		FirstBlock: fb,
+		LastBlock:  lb,
 		Contexts:   make(map[string]LedgerContext),
 		AsEther:    asEther,
 		TestMode:   testMode,
 		NoZero:     noZero,
 		UseTraces:  useTraces,
 	}
+	if assetFilters != nil {
+		assets := make([]base.Address, 0, len(*assetFilters))
+		for _, addr := range *assetFilters {
+			assets = append(assets, base.HexToAddress(addr))
+		}
+		l.AssetFilter = &assets
+	}
 
 	parts := names.Custom | names.Prefund | names.Regular
 	l.Names, _ = names.LoadNamesMap(chain, parts, []string{})
 
 	return l
+}
+
+// AssetOfInterest returns true if the asset filter is empty or the asset matches
+func (l *Ledger) AssetOfInterest(needle base.Address) bool {
+	if l.AssetFilter == nil || len(*l.AssetFilter) == 0 {
+		return true
+	}
+
+	for _, asset := range *l.AssetFilter {
+		if asset.Hex() == needle.Hex() {
+			return true
+		}
+	}
+
+	return false
 }
 
 func Report(r *types.SimpleStatement, ctx LedgerContext, msg string) {
