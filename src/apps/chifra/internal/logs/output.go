@@ -50,6 +50,8 @@ func (opts *LogsOptions) LogsInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	timer := logger.NewTimer()
+	msg := "chifra logs"
 	// EXISTING_CODE
 	if !opts.IsPorted() {
 		logger.Panic("Should not happen in chifra logs.")
@@ -58,6 +60,7 @@ func (opts *LogsOptions) LogsInternal() (err error, handled bool) {
 	handled = true
 	err = opts.HandleShowLogs()
 	// EXISTING_CODE
+	timer.Report(msg)
 
 	return
 }

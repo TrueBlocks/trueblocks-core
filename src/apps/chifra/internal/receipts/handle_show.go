@@ -18,6 +18,7 @@ func (opts *ReceiptsOptions) HandleShowReceipts() error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	nErrors := 0
+	// cache := opts.Globals.CacheStore(opts.Cache)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawReceipt], errorChan chan error) {

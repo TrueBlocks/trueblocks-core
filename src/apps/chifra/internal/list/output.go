@@ -51,6 +51,8 @@ func (opts *ListOptions) ListInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	timer := logger.NewTimer()
+	msg := "chifra list"
 	// EXISTING_CODE
 	handled = true // everything is handled even on failure
 
@@ -60,7 +62,6 @@ func (opts *ListOptions) ListInternal() (err error, handled bool) {
 		return err, true
 	}
 
-	timer := logger.NewTimer("list")
 	if opts.Count {
 		err = opts.HandleCount(monitorArray)
 	} else if opts.Bounds {
@@ -68,8 +69,8 @@ func (opts *ListOptions) ListInternal() (err error, handled bool) {
 	} else if !opts.Silent {
 		err = opts.HandleListAppearances(monitorArray)
 	}
-	timer.Report("")
 	// EXISTING_CODE
+	timer.Report(msg)
 
 	return
 }

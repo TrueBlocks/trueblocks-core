@@ -41,8 +41,11 @@ func (opts *[{PROPER}]Options) [{PROPER}]Internal() (err error, handled bool) {
 		return err, true
 	}
 
+	timer := logger.NewTimer()
+	msg := "chifra [{ROUTE}]"
 	// EXISTING_CODE
 	// EXISTING_CODE
+	timer.Report(msg)
 
 	return
 }

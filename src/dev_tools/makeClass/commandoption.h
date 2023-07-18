@@ -78,8 +78,8 @@ class CCommandOption : public CBaseNode {
     void* notes{nullptr};
     CStringArray aliases;
     explicit CCommandOption(const string_q& line);
-    void verifyOptions(CStringArray& warnings);
-    void verifyHotkey(CStringArray& warnings, map<string, string>& hotKeys);
+    // void verifyOptions(CStringArray& warnings);
+    // void verifyHotkey(CStringArray& warnings, map<string, string>& hotKeys);
     string_q swagger_descr;
     string_q route_list;
     bool isStringType(void) const {

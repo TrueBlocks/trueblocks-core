@@ -7,6 +7,7 @@ package blocksPkg
 import (
 	"errors"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/node"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -19,7 +20,7 @@ func (opts *BlocksOptions) validateBlocks() error {
 	}
 
 	for _, emitter := range opts.Emitter {
-		valid, err := validate.IsValidAddressE(emitter)
+		valid, err := base.IsValidAddressE(emitter)
 		if !valid {
 			return err
 		}
@@ -117,10 +118,6 @@ func (opts *BlocksOptions) validateBlocks() error {
 			if opts.Traces && !node.IsTracingNode(opts.Globals.TestMode, opts.Globals.Chain) {
 				return validate.Usage("Tracing is required for this program to work properly.")
 			}
-		}
-
-		if opts.Cache {
-			return validate.Usage("The {0} option is temporarily disabled", "--cache")
 		}
 	}
 

@@ -38,7 +38,7 @@ func (opts *TransactionsOptions) validateTransactions() error {
 			return validate.Usage("The {0} option are only available with the {1} option.", "--emitter and --topic", "--log")
 		} else if opts.Logs {
 			for _, emitter := range opts.Emitter {
-				valid, err := validate.IsValidAddressE(emitter)
+				valid, err := base.IsValidAddressE(emitter)
 				if !valid {
 					return err
 				}

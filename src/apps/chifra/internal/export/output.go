@@ -51,6 +51,8 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	timer := logger.NewTimer()
+	msg := "chifra export"
 	// EXISTING_CODE
 	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
 	var canceled bool
@@ -62,7 +64,6 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 		logger.Fatal("Should not happen in BlocksInternal")
 	}
 
-	timer := logger.NewTimer("export")
 	handled = true
 	if opts.Count {
 		err = opts.HandleCount(monitorArray)
@@ -83,8 +84,8 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 	} else {
 		err = opts.HandleShow(monitorArray)
 	}
-	timer.Report("")
 	// EXISTING_CODE
+	timer.Report(msg)
 
 	return
 }

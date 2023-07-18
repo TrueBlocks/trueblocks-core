@@ -50,6 +50,8 @@ func (opts *ConfigOptions) ConfigInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	timer := logger.NewTimer()
+	msg := "chifra config"
 	// EXISTING_CODE
 	if !opts.IsPorted() {
 		logger.Fatal("Should not happen.")
@@ -62,6 +64,7 @@ func (opts *ConfigOptions) ConfigInternal() (err error, handled bool) {
 		logger.Warn("The config tool is current unavailable. Please use the 'chifra status' tool instead.")
 	}
 	// EXISTING_CODE
+	timer.Report(msg)
 
 	return
 }

@@ -18,30 +18,6 @@ var approvalTopic = base.HexToHash(
 	"0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
 )
 
-// static bool isDepositTransfer(const string_q& logNeedle) {
-//     return logNeedle == str_2_Topic("0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c");
-// }
-
-// //-----------------------------------------------------------------------
-// static bool isWithdrawalTransfer(const string_q& logNeedle) {
-//     return logNeedle == str_2_Topic("0x7fcf532c15f0a6db0bd6d0e038bea71d30d808c7d98cb3bf7268a95bf5081b65");
-// }
-
-// //--------------------------------------------------------------
-// static bool isMintTransfer(const string_q& logNeedle) {
-//     return logNeedle == str_2_Topic("0x0f6798a560793a54c3bcfe86a93cde1e73087d944c0ea20544137d4121396885");
-// }
-
-// //--------------------------------------------------------------
-// static bool isBurnTransfer(const string_q& logNeedle) {
-//     return logNeedle == str_2_Topic("0xcc16f5dbb4873280815c1ee09dbd06736cffcc184412cf7a71a0fdb75d397ca5");
-// }
-
-// //--------------------------------------------------------------
-// static bool isStakedTransfer(const string_q& logNeedle) {
-//     return logNeedle == str_2_Topic("0x9e71bc8eea02a63969f509818f2dafb9254532904319f9dbda79b67bd34a5f3d");
-// }
-
 func ParseTransferEvent(log *types.SimpleLog) (function *types.SimpleFunction) {
 	if log.Topics[0] != transferTopic {
 		return nil

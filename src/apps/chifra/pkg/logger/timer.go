@@ -2,24 +2,25 @@ package logger
 
 import (
 	"os"
+	"strings"
 	"time"
 )
 
 var perfTiming bool
 
 func init() {
-	perfTiming = os.Getenv("TB_TIMING") == "true"
+	perfTiming = os.Getenv("TB_TIMER_ON") == "true"
 }
 
 type Timer struct {
-	name  string
-	start time.Time
+	start   time.Time
+	verbose bool
 }
 
-func NewTimer(n string) Timer {
+func NewTimer() Timer {
 	return Timer{
-		name:  n,
-		start: time.Now(),
+		start:   time.Now(),
+		verbose: false,
 	}
 }
 
@@ -28,7 +29,9 @@ func (t Timer) Report(msg string) {
 		return
 	}
 	since := time.Since(t.start)
-	Info(msg, "start", t.start)
-	Info(msg, "stop", time.Now())
-	Info(msg, "since", since.Milliseconds())
+	if t.verbose {
+		Info(msg, "start", t.start)
+		Info(msg, "stop", time.Now())
+	}
+	Info(msg+" timer:", since.Milliseconds(), "ms", strings.Repeat(" ", 80))
 }

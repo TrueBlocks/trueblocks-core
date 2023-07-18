@@ -7,6 +7,7 @@ package exportPkg
 import (
 	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -51,7 +52,7 @@ func (opts *ExportOptions) validateExport() error {
 			return err
 		}
 		for _, a := range opts.Addrs {
-			if !validate.IsValidAddress(a) {
+			if !base.IsValidAddress(a) {
 				if len(a) < 10 {
 					return validate.Usage("Invalid fourbyte: {0}", a)
 				} else if len(a) > 60 {
@@ -87,7 +88,7 @@ func (opts *ExportOptions) validateExport() error {
 
 	if opts.Logs {
 		for _, e := range opts.Emitter {
-			if !validate.IsValidAddress(e) {
+			if !base.IsValidAddress(e) {
 				return validate.Usage("Invalid emitter: {0}", e)
 			}
 		}

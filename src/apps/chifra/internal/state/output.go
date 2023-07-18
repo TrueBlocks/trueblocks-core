@@ -50,6 +50,8 @@ func (opts *StateOptions) StateInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	timer := logger.NewTimer()
+	msg := "chifra state"
 	// EXISTING_CODE
 	if !opts.IsPorted() {
 		logger.Fatal("Should not happen in StateInternal")
@@ -62,6 +64,7 @@ func (opts *StateOptions) StateInternal() (err error, handled bool) {
 		err = opts.HandleShow()
 	}
 	// EXISTING_CODE
+	timer.Report(msg)
 
 	return
 }

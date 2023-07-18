@@ -13,6 +13,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
@@ -50,6 +51,8 @@ func (opts *WhenOptions) WhenInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	timer := logger.NewTimer()
+	msg := "chifra when"
 	// EXISTING_CODE
 	// TODO: This should use StreamMany for all cases
 	handled = true
@@ -84,6 +87,7 @@ func (opts *WhenOptions) WhenInternal() (err error, handled bool) {
 		err = opts.HandleShowBlocks()
 	}
 	// EXISTING_CODE
+	timer.Report(msg)
 
 	return
 }

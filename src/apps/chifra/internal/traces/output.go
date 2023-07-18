@@ -50,6 +50,8 @@ func (opts *TracesOptions) TracesInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	timer := logger.NewTimer()
+	msg := "chifra traces"
 	// EXISTING_CODE
 	if !opts.IsPorted() {
 		logger.Fatal("Should never happen")
@@ -64,6 +66,7 @@ func (opts *TracesOptions) TracesInternal() (err error, handled bool) {
 		err = opts.HandleShowTraces()
 	}
 	// EXISTING_CODE
+	timer.Report(msg)
 
 	return
 }

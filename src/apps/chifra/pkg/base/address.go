@@ -149,11 +149,15 @@ func isValidHex(typ string, val string, nBytes int) (bool, error) {
 }
 
 func IsValidAddress(val string) bool {
-	if strings.Contains(val, ".eth") {
-		return true
-	}
-	ok, _ := isValidHex("address", val, 20)
+	ok, _ := IsValidAddressE(val)
 	return ok
+}
+
+func IsValidAddressE(val string) (bool, error) {
+	if strings.HasSuffix(val, ".eth") {
+		return true, nil
+	}
+	return isValidHex("address", val, 20)
 }
 
 // FAKE_ETH_ADDRESS is the address we use to represent ETH in the ledgers

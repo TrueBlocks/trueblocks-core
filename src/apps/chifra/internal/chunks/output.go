@@ -54,6 +54,8 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	timer := logger.NewTimer()
+	msg := "chifra chunks"
 	// EXISTING_CODE
 	if !opts.IsPorted() {
 		logger.Fatal("Should not happen in NamesInternal")
@@ -103,6 +105,7 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 		}
 	}
 	// EXISTING_CODE
+	timer.Report(msg)
 
 	return
 }
