@@ -50,6 +50,8 @@ func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	timer := logger.NewTimer()
+	msg := "chifra blocks"
 	// EXISTING_CODE
 	if !opts.IsPorted() {
 		logger.Fatal("Should not happen in BlocksInternal")
@@ -81,6 +83,7 @@ func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
 		err = opts.HandleShowBlocks()
 	}
 	// EXISTING_CODE
+	timer.Report(msg)
 
 	return
 }

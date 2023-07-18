@@ -57,6 +57,8 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	timer := logger.NewTimer()
+	msg := "chifra daemon"
 	// EXISTING_CODE
 	if !opts.IsPorted() {
 		logger.Fatal("Should not happen in DaemonInternal")
@@ -97,6 +99,7 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 	logger.Fatal(http.ListenAndServe(opts.Port, NewRouter()))
 
 	// EXISTING_CODE
+	timer.Report(msg)
 
 	return
 }

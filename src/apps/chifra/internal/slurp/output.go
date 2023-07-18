@@ -50,6 +50,8 @@ func (opts *SlurpOptions) SlurpInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	timer := logger.NewTimer()
+	msg := "chifra slurp"
 	// EXISTING_CODE
 	if !opts.IsPorted() {
 		logger.Fatal("Should not happen.")
@@ -62,6 +64,7 @@ func (opts *SlurpOptions) SlurpInternal() (err error, handled bool) {
 		err = opts.HandleShowSlurps()
 	}
 	// EXISTING_CODE
+	timer.Report(msg)
 
 	return
 }
