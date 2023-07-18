@@ -81,3 +81,17 @@ func GetRootPathFromCacheType(chain string, cacheType CacheType) string {
 	logger.Fatal("Should never happen in GetRootPathFromCacheType")
 	return ""
 }
+
+// TODO: Do paths to reconciliation files still work? I think not. This is the C++ code
+// os << getBinaryCacheFilename(CT_RECONS, "0xc011a72400e58ecd99ee497cf89e3775d4bd732f", 12, 13) << endl;
+// os << getPathToBinaryCache(CT_RECONS, "0xc011a72400e58ecd99ee497cf89e3775d4bd732f", 12, 13) << endl;
+// if (type == CT_RECONS) {
+//     string_q addr = toLower(substitute(item1, "0x", ""));
+//     string_q part1 = extract(addr, 0, 4);
+//     string_q part2 = extract(addr, 4, 4);
+//     string_q part3 = addr;
+//     replace(part3, part1, "");  // do not collapse
+//     replace(part3, part2, "");  // do not collapse
+//     os << part1 << "/" << part2 << "/" << part3 << "/";
+//     if (item2 != padNum9((uint64_t)NOPOS))
+//         os << item2 << "." << item3 << ".bin";

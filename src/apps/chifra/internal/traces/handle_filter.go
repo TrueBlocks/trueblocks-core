@@ -669,4 +669,458 @@ const char* STR_DISPLAY_TRACEFILTER = "";
 // EXISTING_CODE
 // EXISTING_CODE
 
+bool wrangleTxId(string_q& argOut, string_q& errorMsg) {
+    if (contains(argOut, "0x"))
+        return true;
+
+    // valid args are 'latest', 'bn.txid', 'bn.txid.next', or 'bn.txid.prev'
+    replaceReverse(argOut, ":", ".");
+
+    CStringArray parts;
+    explode(parts, argOut, '.');
+
+    if ((parts.size() == 2) && endsWith(argOut, ".*")) {
+        CBlock block;
+        getBlockLight(block, str_2_Uint(parts[0]));
+        argOut = parts[0] + ".0";
+        if (block.transactions.size() > 0)
+            argOut += ("-to-" + uint_2_Str(block.transactions.size()));
+        return true;
+    }
+
+    if (parts.size() == 0) {
+        errorMsg = argOut + " does not appear to be a valid transaction index (no parts).";
+        return false;
+
+    } else if (parts.size() == 1 && (parts[0] != "latest" && parts[0] != "first")) {
+        errorMsg = argOut + " does not appear to be a valid transaction index (one part, not first or latest).";
+        return false;
+
+    } else if (parts.size() > 3) {
+        errorMsg = argOut + " does not appear to be a valid transaction index (too many).";
+        return false;
+    } else {
+        // two or three parts...
+        if (!isNumeral(parts[0]) || !isNumeral(parts[1])) {
+            errorMsg = argOut + " does not appear to be a valid transaction index.";
+            return false;
+        }
+    }
+
+    if (parts.size() == 2)
+        return true;
+
+    // it's directional
+    if (parts[0] == "latest") {
+        CBlock block;
+        getBlockLight(block, "latest");
+        if (block.transactions.size() > 0) {
+            ostringstream os;
+            os << block.blockNumber << "." << (block.transactions.size() - 1);
+            argOut = os.str();
+            return true;
+        }
+        parts[0] = uint_2_Str(block.blockNumber);
+        parts[1] = "0";
+        parts[2] = "prev";
+    }
+
+    if (parts[0] == "first") {
+        argOut = "46147.0";
+        return true;
+    }
+
+    ASSERT(parts[2] == "prev" || parts[2] == "next");
+    return getDirectionalTxId(str_2_Uint(parts[0]), str_2_Uint(parts[1]), parts[2], argOut, errorMsg);
+}
+
+//--------------------------------------------------------------------------------
+bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q& argOut, string_q& errorMsg) {
+    blknum_t lastBlock = getLatestBlock_client();
+
+    if (bn < firstTransactionBlock()) {
+        argOut = uint_2_Str(firstTransactionBlock()) + ".0";
+        return true;
+    }
+
+    CBlock block;
+    getBlock(block, bn);
+
+    argOut = "";
+    txnum_t nextid = txid + 1;
+    while (argOut.empty() && bn >= firstTransactionBlock() && bn <= lastBlock) {
+        if (dir == "next") {
+            if (nextid < block.transactions.size()) {
+                argOut = uint_2_Str(block.blockNumber) + "." + uint_2_Str(nextid);
+                return true;
+            }
+            block = CBlock();
+            getBlock(block, ++bn);
+            nextid = 0;
+        } else if (dir == "prev") {
+            if (txid > 0 && block.transactions.size() > 0) {
+                argOut = uint_2_Str(block.blockNumber) + "." + uint_2_Str(txid - 1);
+                return true;
+            }
+            if (bn == 0)
+                return true;
+            block = CBlock();
+            getBlock(block, --bn);
+            txid = block.transactions.size();
+        }
+    }
+    errorMsg = "Could not find " + dir + " transaction to " + uint_2_Str(bn) + "." + uint_2_Str(txid);
+    return false;
+}
+
+//--------------------------------------------------------------------------------
+bool parseTransList2(COptionsBase* opt, COptionsTransList& transList, const string_q& argIn) {
+    string_q errorMsg;
+    string_q arg = argIn;
+    if (!wrangleTxId(arg, errorMsg))
+        return (opt ? opt->usage(errorMsg) : false);
+    string_q ret = transList.parseTransList(arg);
+    if (!ret.empty())
+        return (opt ? opt->usage(ret) : false);
+    return true;
+}
+
+//--------------------------------------------------------------
+extern bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last);
+bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last) {
+    if (last > first) {
+        size_t mid = first + ((last - first) / 2);
+        CBlock b1, b2;
+        getBlockHeader(b1, mid);
+        getBlockHeader(b2, mid + 1);
+        bool atMid = (b1.timestamp <= block.timestamp);
+        bool atMid1 = (b2.timestamp <= block.timestamp);
+        if (atMid && !atMid1) {
+            block = b1;
+            return true;
+        } else if (!atMid) {
+            // we're too high, so search below
+            return findTimestamp_binarySearch(block, first, mid - 1);
+        }
+        // we're too low, so search above
+        return findTimestamp_binarySearch(block, mid + 1, last);
+    }
+    getBlockHeader(block, first);
+    return true;
+}
+
+//---------------------------------------------------------------
+bool lookupDate(CBlock& block, const timestamp_t& ts, blknum_t latest) {
+    time_q date = ts_2_Date(ts);
+
+    // speed up
+    blknum_t start = 1, stop = latest;
+    if (date.GetYear() >= 2021) {
+        start = 11565019;
+    } else if (date.GetYear() >= 2020) {
+        start = 9193265;
+        stop = 11565019;
+    } else if (date.GetYear() >= 2019) {
+        start = 6988614;
+        stop = 9193265;
+    } else if (date.GetYear() >= 2018) {
+        start = 4832685;
+        stop = 6988614;
+    } else if (date.GetYear() >= 2017) {
+        start = 2912406;
+        stop = 4832685;
+    } else if (date.GetYear() >= 2016) {
+        start = 778482;
+        stop = 2912406;
+    }
+
+    block.timestamp = ts;
+    bool ret = findTimestamp_binarySearch(block, start, stop);
+    if (!isTestMode()) {
+        cerr << "\r";
+        cerr.flush();
+    }
+    return ret;
+}
+
+//--------------------------------------------------------------------------------
+bool parseBlockList2(COptionsBase* opt, & blocks, const string_q& argIn, blknum_t latest) {
+    string_q ret = blocks.parseBlockList_inner(argIn, latest);
+    if (endsWith(ret, "\n")) {
+        cerr << "\n  " << ret << "\n";
+        return false;
+    } else if (!ret.empty()) {
+        return (opt ? opt->usage(ret) : false);
+    }
+
+    if (blocks.skip_type != BY_NOTHING) {
+        time_q startDate = getBlockDate(blocks.start);
+        time_q stopDate = getBlockDate(blocks.stop);
+        CTimeArray times;
+        switch (blocks.skip_type) {
+            case BY_HOUR:
+                expandHourly(times, startDate, stopDate);
+                break;
+            case BY_DAY:
+                expandDaily(times, startDate, stopDate);
+                break;
+            case BY_WEEK:
+                expandWeekly(times, startDate, stopDate);
+                break;
+            case BY_MONTH:
+                expandMonthly(times, startDate, stopDate);
+                break;
+            case BY_QUARTER:
+                expandQuarterly(times, startDate, stopDate);
+                break;
+            case BY_YEAR:
+            default:
+                expandAnnually(times, startDate, stopDate);
+                break;
+        }
+        blocks.start = NOPOS;
+        blocks.stop = NOPOS;
+        for (auto t : times) {
+            CBlock block;
+            lookupDate(block, date_2_Ts(t), latest);
+            blocks.numList.push_back(block.blockNumber);
+        }
+    }
+
+    return true;
+}
+
+parseBlockOption
+(string_q& msg, blknum_t lastBlock, direction_t offset,
+                                             bool& hasZero) const {
+    blknum_t ret = NOPOS;
+
+    string_q arg = msg;
+    msg = "";
+
+    // if it's a number, return it
+    if (isNumeral(arg) || isHexStr(arg)) {
+        ret = str_2_Uint(arg);
+        if (!ret)
+            hasZero = true;
+
+    } else {
+        // if it's not a number, it better be a special value, and we better be able to find it
+        CNameValue spec;
+        if (COptionsBase::findSpecial(spec, arg)) {
+            if (spec.first == "latest")
+                spec.second = uint_2_Str(lastBlock);
+            ret = str_2_Uint(spec.second);
+            if (!ret)
+                hasZero = true;
+
+        } else {
+            msg = "The given value '" + arg + "' is not a valid identifier." + (isApiMode() ? "" : "\n");
+            return NOPOS;
+        }
+    }
+
+    ASSERT(opts);
+    if (opts->isEnabled(OPT_CHECKLATEST) && ret > lastBlock) {
+        string_q lateStr = (isTestMode() ? "--" : uint_2_Str(lastBlock));
+        msg = "Block " + arg + " is later than the last valid block " + lateStr + "." + (isApiMode() ? "" : "\n");
+        return NOPOS;
+    }
+
+    if (offset == PREV && ret > 0)
+        ret--;
+    else if (offset == NEXT && ret < lastBlock)
+        ret++;
+
+    if (!ret)
+        hasZero = true;
+    return ret;
+}
+
+//--------------------------------------------------------------------------------
+static string_q skip_markers = "untimed|annually|quarterly|monthly|weekly|daily|hourly";
+
+//--------------------------------------------------------------------------------
+string_q ::parseBlockList_inner(const string_q& argIn, blknum_t lastBlock) {
+    string_q arg = argIn;
+
+    direction_t offset = (contains(arg, ".next") ? NEXT : contains(arg, ".prev") ? PREV : NODIR);
+    arg = substitute(substitute(arg, ".next", ""), ".prev", "");
+
+    skip_type = BY_NOTHING;
+
+    // scrape off the skip marker if any
+    if (contains(arg, ":")) {
+        string_q skip_marker = arg;
+        arg = nextTokenClear(skip_marker, ':');
+        if (isNumeral(skip_marker)) {
+            skip = max(blknum_t(1), str_2_Uint(skip_marker));
+        } else {
+            if (!contains(skip_markers, skip_marker))
+                return "Input argument appears to be invalid. No such skip marker: " + argIn;
+            if (contains(skip_marker, "annually")) {
+                skip_type = BY_YEAR;
+            } else if (contains(skip_marker, "quarterly")) {
+                skip_type = BY_QUARTER;
+            } else if (contains(skip_marker, "monthly")) {
+                skip_type = BY_MONTH;
+            } else if (contains(skip_marker, "weekly")) {
+                skip_type = BY_WEEK;
+            } else if (contains(skip_marker, "daily")) {
+                skip_type = BY_DAY;
+            } else if (contains(skip_marker, "hourly")) {
+                skip_type = BY_HOUR;
+            } else {
+                ASSERT(0);  // should never happen
+                skip = 1;
+            }
+            CStringArray m;
+            explode(m, skip_markers, '|');
+            LOG_INFO("skip_type: ", m[skip_type - 19]);  // see definition of BY_YEAR for this offset
+        }
+    }
+
+    if (contains(arg, "-") || contains(arg, "+")) {
+        // If we already have a range, bail
+        if (start != stop)
+            return "Specify only a single block range at a time.";
+
+        if (startsWith(arg, "latest"))
+            return "Cannot start range with 'latest'";
+
+        if (contains(arg, "+")) {
+            string_q n = nextTokenClear(arg, '+');
+            blknum_t s1 = parseBlockOption(n, lastBlock, NODIR, hasZeroBlock);
+            if (!n.empty())
+                return n;
+            n = arg;
+            blknum_t s2 = parseBlockOption(n, lastBlock, NODIR, hasZeroBlock);
+            if (!n.empty())
+                return n;
+            s2 = s1 + s2;
+            arg = uint_2_Str(s1) + "-" + uint_2_Str(s2);
+        }
+
+        string_q stp = arg;
+        string_q strt = nextTokenClear(stp, '-');
+        string_q msg = strt;
+        start = parseBlockOption(msg, lastBlock, offset, hasZeroBlock);
+        if (!msg.empty())
+            return msg;
+        msg = stp;
+        stop = parseBlockOption(msg, lastBlock, offset, hasZeroBlock);
+        if (!msg.empty())
+            return msg;
+
+        if (stop <= start)
+            return "'stop' must be strictly larger than 'start'";
+
+    } else {
+        if (isHash(arg)) {
+            hashList.push_back(arg);
+
+        } else {
+            string_q msg = arg;
+            blknum_t num = parseBlockOption(msg, lastBlock, offset, hasZeroBlock);
+            if (!msg.empty())
+                return msg;
+            numList.push_back(num);
+        }
+    }
+
+    latest = lastBlock;
+    return "";
+}
+
+//--------------------------------------------------------------------------------
+void ::Init(void) {
+    numList.clear();
+    hashList.clear();
+    start = stop = 0;
+    skip = 1;
+    hashFind = NULL;
+}
+
+//--------------------------------------------------------------------------------
+::(const COptionsBase* o) {
+    Init();
+    opts = o;
+}
+
+//--------------------------------------------------------------------------------
+bool ::forEveryBlockNumber(UINT64VISITFUNC func, void* data) const {
+    if (!func)
+        return false;
+
+    for (uint64_t i = start; i < stop; i = i + skip) {
+        if (!(*func)(i, data))
+            return false;
+    }
+    for (size_t i = 0; i < numList.size(); i++) {
+        uint64_t n = numList[i];
+        if (!(*func)(n, data))
+            return false;
+    }
+    if (hashFind) {
+        for (size_t i = 0; i < hashList.size(); i++) {
+            uint64_t n = (*hashFind)(hashList[i], data);
+            if (n != NOPOS) {
+                if (!(*func)(n, data))
+                    return false;
+            }
+        }
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------
+bool ::isInRange(blknum_t bn) const {
+    if (start <= bn && bn < stop)
+        return true;
+    for (size_t i = 0; i < numList.size(); i++)
+        if (bn == numList[i])
+            return true;
+    return false;
+}
+
+}  // namespace qblocks
+class  {
+  public:
+    const COptionsBase* opts;
+    CBlknumArray numList;
+    CStringArray hashList;
+    HASHFINDFUNC hashFind;
+    blknum_t start;
+    blknum_t stop;
+    blknum_t skip;
+    blknum_t latest;
+    period_t skip_type;
+    bool hasZeroBlock{false};
+
+    (const COptionsBase* o);
+    void Init(void);
+    string_q parseBlockList_inner(const string_q& arg, blknum_t latest);
+    bool forEveryBlockNumber(UINT64VISITFUNC func, void*) const;
+    bool empty(void) const {
+        return !(hashList.size() || numList.size() || (start != stop));
+    }
+    size_t nItems(void) const {
+        return hashList.size() + numList.size() + (start - stop);
+    }
+    size_t size(void) const {
+        CUintArray nums;
+        forEveryBlockNumber(listBlocks, &nums);
+        return nums.size();
+    }
+    uint64_t operator[](size_t offset) const {
+        CUintArray nums;
+        forEveryBlockNumber(listBlocks, &nums);
+        return nums[offset];
+    }
+    bool isInRange(blknum_t bn) const;
+    blknum_t parseBlockOption(string_q& msg, blknum_t lastBlock, direction_t offset, bool& hasZero) const;
+
+  private:
+    (void) = delete;
+};
 */

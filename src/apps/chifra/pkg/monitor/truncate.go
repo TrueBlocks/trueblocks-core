@@ -5,7 +5,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (m *Monitor) TruncateTo(num uint32) (bool, error) {
+func (m *Monitor) TruncateTo(chain string, num uint32) (bool, error) {
 	err := m.ReadMonitorHeader()
 	if err != nil {
 		return false, err

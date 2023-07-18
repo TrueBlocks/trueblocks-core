@@ -37,21 +37,6 @@ func IsValidHex(typ string, val string, nBytes int) (bool, error) {
 	return true, nil
 }
 
-// func IsValidAddress(val string) bool {
-//	if strings.Contains(val, ".eth") {
-//		return true
-//	}
-//	ok, _ := IsValidHex("address", val, 20)
-//	return ok
-// }
-
-func IsValidAddressE(val string) (bool, error) {
-	if strings.Contains(val, ".eth") {
-		return true, nil
-	}
-	return IsValidHex("address", val, 20)
-}
-
 func IsValidHash(hash string) bool {
 	ok, err := IsValidHex("hash", hash, 32)
 	return ok && err == nil
