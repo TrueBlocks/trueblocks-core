@@ -55,6 +55,8 @@ func (opts *ExploreOptions) ExploreInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	timer := logger.NewTimer()
+	msg := "chifra explore"
 	// EXISTING_CODE
 	if !opts.IsPorted() {
 		logger.Fatal("Should not happen in ExploreInternal")
@@ -73,6 +75,7 @@ func (opts *ExploreOptions) ExploreInternal() (err error, handled bool) {
 		}
 	}
 	// EXISTING_CODE
+	timer.Report(msg)
 
 	return
 }

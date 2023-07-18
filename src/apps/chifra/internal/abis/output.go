@@ -13,6 +13,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -49,6 +50,8 @@ func (opts *AbisOptions) AbisInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	timer := logger.NewTimer()
+	msg := "chifra abis"
 	// EXISTING_CODE
 	handled = true
 	if len(opts.Find) > 0 {
@@ -61,6 +64,7 @@ func (opts *AbisOptions) AbisInternal() (err error, handled bool) {
 		err = opts.HandleAddresses()
 	}
 	// EXISTING_CODE
+	timer.Report(msg)
 
 	return
 }

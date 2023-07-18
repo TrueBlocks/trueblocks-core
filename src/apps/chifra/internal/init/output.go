@@ -50,6 +50,8 @@ func (opts *InitOptions) InitInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	timer := logger.NewTimer()
+	msg := "chifra init"
 	// EXISTING_CODE
 	if !opts.IsPorted() {
 		logger.Fatal("Should not happen in InitInternal")
@@ -63,6 +65,7 @@ func (opts *InitOptions) InitInternal() (err error, handled bool) {
 		err = opts.HandleInit()
 	}
 	// EXISTING_CODE
+	timer.Report(msg)
 
 	return
 }

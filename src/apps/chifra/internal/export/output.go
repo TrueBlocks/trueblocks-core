@@ -13,6 +13,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -49,6 +50,8 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	timer := logger.NewTimer()
+	msg := "chifra export"
 	// EXISTING_CODE
 	_, err = opts.FreshenMonitorsForExport()
 	if err != nil {
@@ -63,6 +66,7 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 	handled = true
 	err = opts.Globals.PassItOn("acctExport", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
 	// EXISTING_CODE
+	timer.Report(msg)
 
 	return
 }

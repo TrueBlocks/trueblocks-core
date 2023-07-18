@@ -50,6 +50,8 @@ func (opts *TransactionsOptions) TransactionsInternal() (err error, handled bool
 		return err, true
 	}
 
+	timer := logger.NewTimer()
+	msg := "chifra transactions"
 	// EXISTING_CODE
 	if !opts.IsPorted() {
 		logger.Fatal("Should never happen")
@@ -75,6 +77,7 @@ func (opts *TransactionsOptions) TransactionsInternal() (err error, handled bool
 		err = opts.HandleShowTxs()
 	}
 	// EXISTING_CODE
+	timer.Report(msg)
 
 	return
 }

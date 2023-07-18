@@ -16,6 +16,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
@@ -69,6 +70,8 @@ func (opts *MonitorsOptions) MonitorsInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	timer := logger.NewTimer()
+	msg := "chifra monitors"
 	// EXISTING_CODE
 	handled = true // everything is handled even on failure
 
@@ -97,6 +100,7 @@ func (opts *MonitorsOptions) MonitorsInternal() (err error, handled bool) {
 
 	}
 	// EXISTING_CODE
+	timer.Report(msg)
 
 	return
 }
