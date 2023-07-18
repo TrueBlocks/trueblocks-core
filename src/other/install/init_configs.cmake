@@ -9,7 +9,7 @@ endif()
 
 # print a message
 function(PrintLine MSG1)
-	message(STATUS ${MSG1})
+	# message(STATUS ${MSG1})
 endfunction(PrintLine)
 
 # copy the file but only if its not present
