@@ -40,8 +40,9 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		// we need to move the file to the end of the scraped range so we show progress
 		stageFn, _ := file.LatestFileInFolder(stageFolder) // it may not exist...
 		stageRange := base.RangeFromFilename(stageFn)
-		if stageRange.Last < (blazeOpts.StartBlock + opts.BlockCnt - 1) {
-			newRange := base.FileRange{First: stageRange.First, Last: blazeOpts.StartBlock + opts.BlockCnt - 1}
+		newRangeLast := utils.Min(blazeOpts.RipeBlock, blazeOpts.StartBlock+opts.BlockCnt-1)
+		if stageRange.Last < newRangeLast {
+			newRange := base.FileRange{First: stageRange.First, Last: newRangeLast}
 			newFilename := filepath.Join(stageFolder, newRange.String()+".txt")
 			os.Rename(stageFn, newFilename)
 			os.Remove(stageFn) // seems redundant, but may not be on some operating systems
@@ -139,7 +140,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		Last := uint64(0)
 		if len(parts) > 1 {
 			Last, _ = strconv.ParseUint(parts[1], 10, 32)
-			Last = utils.Max(blazeOpts.StartBlock+opts.BlockCnt-1, Last)
+			Last = utils.Max(utils.Min(blazeOpts.RipeBlock, blazeOpts.StartBlock+opts.BlockCnt-1), Last)
 		} else {
 			return true, errors.New("Cannot find last block number at lineLast in consolidate: " + lineLast)
 		}

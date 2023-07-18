@@ -1,0 +1,10 @@
+{
+  "id": "1",
+  "jsonrpc": "2.0",
+  "result": {
+    "output": "0x000000000000000000000000000000000000000000005c1d65b2473949e00000",
+    "stateDiff": null,
+    "trace": [],
+    "vmTrace": null
+  }
+}

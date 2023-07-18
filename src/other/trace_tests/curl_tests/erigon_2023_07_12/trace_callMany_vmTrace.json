@@ -1,0 +1,24 @@
+{
+  "id": "1",
+  "jsonrpc": "2.0",
+  "result": [
+    {
+      "output": "0x",
+      "stateDiff": null,
+      "trace": [],
+      "vmTrace": {
+        "code": "0x",
+        "ops": []
+      }
+    },
+    {
+      "output": "0x",
+      "stateDiff": null,
+      "trace": [],
+      "vmTrace": {
+        "code": "0x",
+        "ops": []
+      }
+    }
+  ]
+}

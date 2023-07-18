@@ -16,9 +16,6 @@ import (
 func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 	abiCache := articulate.NewAbiCache()
 	chain := opts.Globals.Chain
-	testMode := opts.Globals.TestMode
-	nErrors := 0
-	cache := opts.Globals.CacheStore(opts.Cache)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
@@ -32,23 +29,11 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 			iterCtx, iterCancel := context.WithCancel(context.Background())
 			defer iterCancel()
 
-			iterFunc := func(app identifiers.ResolvedId, value *types.SimpleTransaction) error {
-				if tx, err := app.FetchTransactionById(chain, opts.Traces /* needsTraces */, cache); err != nil {
-					return fmt.Errorf("transaction at %s returned an error: %w", app.String(), err)
-				} else if tx == nil {
-					return fmt.Errorf("transaction at %s has no logs", app.String())
-				} else {
-					if opts.Articulate && tx.ArticulatedTx == nil {
-						if err = abiCache.ArticulateTx(chain, tx); err != nil {
-							errorChan <- err // continue even with an error
-						} else if cache != nil {
-							// cache articulated
-							cache.Write(tx, nil)
-						}
-					}
-					*value = *tx
-					bar.Tick()
-					return nil
+			for _, appearance := range txIds {
+				tx, err := rpcClient.GetTransactionByAppearance(chain, &appearance, opts.Traces, nil)
+				if err != nil {
+					errorChan <- fmt.Errorf("transaction at %s returned an error: %w", strings.Replace(rng.Orig, "-", ".", -1), err)
+					continue
 				}
 			}
 
