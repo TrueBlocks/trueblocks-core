@@ -97,7 +97,7 @@ Next find the a function called `Serialize`. Make sure to find the version of th
 
 Before running the above commands do this:
 
-1. Bump the version (see the file `./src/libs/utillib/version.cpp`),
+1. Bump the version (see the file `./src/dev_tools/utillib/version.cpp`),
 
 2. Copy the code from the existing `Serialize` function into the `readBackLevel` function inside of a section protected by an `isVersionNum` test corresponding to the new version number.
 

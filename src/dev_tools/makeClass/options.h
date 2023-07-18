@@ -19,9 +19,6 @@
 #include "commandoption.h"
 #include "classdefinition.h"
 
-// BEG_ERROR_DEFINES
-// END_ERROR_DEFINES
-
 #define ERR_CLASSDEFNOTEXIST 1
 #define ERR_CONFIGMISSING 2
 #define ERR_NEEDONECLASS 3
@@ -40,11 +37,9 @@ class CCounter {
 //-------------------------------------------------------------------
 class COptions : public COptionsBase {
   public:
-    // BEG_CODE_DECLARE
     bool all;
     bool sdk;
     bool openapi;
-    // END_CODE_DECLARE
 
     CClassDefinitionArray classDefs;
     CClassDefinitionArray dataModels;
@@ -60,50 +55,10 @@ class COptions : public COptionsBase {
     CCommandOptionArray endpointArray;
     map<string_q, string_q> hugoAliasMap;
 
-    ostringstream optionStream, initStream, localStream, autoStream, headerStream, configStream;
-    ostringstream notesStream, errorStrStream, errorDefStream, goCallStream, goPkgStream, goConvertStream;
+    ostringstream errorStrStream, errorDefStream, goCallStream, goPkgStream, goConvertStream;
     ostringstream goRouteStream, chifraHelpStream;
     ostringstream apiTagStream, apiPathStream;
     ostringstream goStream;
-
-    void clearStreams(void) {
-        optionStream.str("");
-        initStream.str("");
-        localStream.str("");
-        autoStream.str("");
-        headerStream.str("");
-        configStream.str("");
-        notesStream.str("");
-        errorStrStream.str("");
-        errorDefStream.str("");
-        goCallStream.str("");
-        goConvertStream.str("");
-        goPkgStream.str("");
-        goRouteStream.str("");
-        chifraHelpStream.str("");
-        apiTagStream.str("");
-        apiPathStream.str("");
-        goStream.str("");
-
-        optionStream.clear();
-        initStream.clear();
-        localStream.clear();
-        autoStream.clear();
-        headerStream.clear();
-        configStream.clear();
-        notesStream.clear();
-        errorStrStream.clear();
-        errorDefStream.clear();
-        goCallStream.clear();
-        goConvertStream.clear();
-        goPkgStream.clear();
-        goRouteStream.clear();
-        chifraHelpStream.clear();
-        apiTagStream.clear();
-        apiPathStream.clear();
-        positionals.clear();
-        goStream.clear();
-    }
 
     COptions(void);
     ~COptions(void);
@@ -112,7 +67,6 @@ class COptions : public COptionsBase {
     void Init(void);
 
     bool handle_readmes(void);
-    bool handle_options(void);
     bool handle_gocmds(void);
     bool handle_lint(void);
     bool handle_format(void);
@@ -126,12 +80,6 @@ class COptions : public COptionsBase {
     bool handle_sdk_py(void);
     bool handle_sdk_py_paths(CStringArray& pathsOut);
     bool handle_sdk_py_types(CStringArray& typesOut);
-
-    void generate_switch(const CCommandOption& option);
-    void generate_toggle(const CCommandOption& option);
-    void generate_flag(const CCommandOption& option);
-    void generate_positional(const CCommandOption& option);
-    void generate_deprecated(const CCommandOption& option);
 
     bool handle_gocmds_cmd(const CCommandOption& cmd);
     bool handle_gocmds_options(const CCommandOption& cmd);

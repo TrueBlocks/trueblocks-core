@@ -28,7 +28,6 @@
 extern const char* STR_MONITOR_LOCKED;
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    // BEG_CODE_OPTIONS
     // clang-format off
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) to export"),
     COption("topics", "", "list<topic>", OPT_POSITIONAL, "filter by one or more log topics (only for --logs option)"),
@@ -58,7 +57,6 @@ static const COption params[] = {
     COption("last_block", "L", "<blknum>", OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more addresses."),
     // clang-format on
-    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -67,7 +65,6 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    // BEG_CODE_LOCAL_INIT
     CAddressArray addrs;
     CTopicArray topics;
     CAddressArray emitter;
@@ -75,7 +72,6 @@ bool COptions::parseArguments(string_q& command) {
     CAddressArray asset;
     blknum_t first_block = 0;
     blknum_t last_block = NOPOS;
-    // END_CODE_LOCAL_INIT
 
     blknum_t latest = meta.client;
     string_q origCmd = command;
@@ -102,7 +98,6 @@ bool COptions::parseArguments(string_q& command) {
             // do nothing -- make auto code generation easier
         } else if (arg == "--cache_tx") {
             cache = true;
-            // BEG_CODE_AUTO
         } else if (arg == "-p" || arg == "--appearances") {
             appearances = true;
 
@@ -218,8 +213,6 @@ bool COptions::parseArguments(string_q& command) {
         } else {
             if (!parseFourbyteList(this, fourbytes, arg))
                 return false;
-
-            // END_CODE_AUTO
         }
     }
 
@@ -343,11 +336,8 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    // BEG_CODE_GLOBALOPTS
     registerOptions(nParams, params, OPT_PREFUND);
-    // END_CODE_GLOBALOPTS
 
-    // BEG_CODE_INIT
     appearances = false;
     receipts = false;
     logs = false;
@@ -368,7 +358,6 @@ void COptions::Init(void) {
     factory = false;
     load = "";
     reversed = false;
-    // END_CODE_INIT
 
     // clang-format off
     skip_ddos = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", true);
@@ -407,7 +396,6 @@ void COptions::Init(void) {
 COptions::COptions(void) {
     Init();
 
-    // BEG_CODE_NOTES
     // clang-format off
     notes.push_back("An `address` must be either an ENS name or start with '0x' and be forty-two characters long.");
     notes.push_back("Articulating the export means turn the EVM's byte data into human-readable text (if possible).");
@@ -418,7 +406,6 @@ COptions::COptions(void) {
     notes.push_back("The --first_record and --max_record options are zero-based (as are the block options).");
     notes.push_back("The _block and _record options are ignored when used with the --count option.");
     // clang-format on
-    // END_CODE_NOTES
 
     // clang-format off
     configs.push_back("`cache`: write transactions to the cache (see notes).");
@@ -426,9 +413,6 @@ COptions::COptions(void) {
     configs.push_back("`skip_ddos`: toggle skipping over 2016 dDos transactions ('on' by default).");
     configs.push_back("`max_traces`: if --skip_ddos is on, this many traces defines what a ddos transaction | is (default = 250).");  // NOLINT
     // clang-format on
-
-    // BEG_ERROR_STRINGS
-    // END_ERROR_STRINGS
 }
 
 //--------------------------------------------------------------------------------
