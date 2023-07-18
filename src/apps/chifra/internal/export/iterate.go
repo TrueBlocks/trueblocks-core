@@ -23,7 +23,7 @@ func (opts *ExportOptions) readTransactions(mon *monitor.Monitor, theMap map[typ
 			BlockNumber:      uint32(app.BlockNumber),
 			TransactionIndex: uint32(app.TransactionIndex),
 		}
-		if tx, err := rpcClient.GetTransactionByAppearance(chain, &raw, readTraces); err != nil {
+		if tx, err := rpcClient.GetTransactionByAppearance(chain, &raw, readTraces, nil); err != nil {
 			return err
 		} else {
 			matchesFourByte := len(opts.Fourbytes) == 0 // either there is no four bytes...

@@ -6,6 +6,7 @@ import (
 	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -77,7 +78,7 @@ func GetPrefundTxByApp(chain string, appearance *types.RawAppearance) (tx *types
 	} else {
 		var blockHash base.Hash
 		var ts int64
-		if block, err := GetBlockByNumber(chain, uint64(0)); err != nil {
+		if block, err := GetBlockByNumber(chain, uint64(0), nil); err != nil {
 			return nil, err
 		} else {
 			blockHash = block.Hash
@@ -150,7 +151,7 @@ func getBlockReward(bn uint64) *big.Int {
 }
 
 func GetRewardTxByTypeAndApp(chain string, rt RewardType, appearance *types.RawAppearance) (*types.SimpleTransaction, error) {
-	if block, err := GetBlockByNumberWithTxs(chain, uint64(appearance.BlockNumber)); err != nil {
+	if block, err := GetBlockByNumberWithTxs(chain, uint64(appearance.BlockNumber), nil); err != nil {
 		return nil, err
 	} else {
 		if uncles, err := GetUnclesByNumber(chain, uint64(appearance.BlockNumber)); err != nil {
@@ -229,9 +230,28 @@ func GetRewardTxByTypeAndApp(chain string, rt RewardType, appearance *types.RawA
 	}
 }
 
-func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, fetchTraces bool) (tx *types.SimpleTransaction, err error) {
+func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, fetchTraces bool, cache *cacheNew.Store) (tx *types.SimpleTransaction, err error) {
 	bn := uint64(appearance.BlockNumber)
 	txid := uint64(appearance.TransactionIndex)
+
+	if cache != nil {
+		tx = &types.SimpleTransaction{
+			BlockNumber:      bn,
+			TransactionIndex: txid,
+		}
+
+		if err := cache.Read(tx, nil); err == nil {
+			// success
+			if fetchTraces {
+				traces, err := GetTracesByTransactionHash(chain, tx.Hash.Hex(), tx, cache)
+				if err != nil {
+					return nil, err
+				}
+				tx.Traces = traces
+			}
+			return tx, nil
+		}
+	}
 
 	if bn == 0 {
 		return GetPrefundTxByApp(chain, appearance)
@@ -278,12 +298,73 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 	tx.SetGasCost(&receipt)
 	tx.SetRaw(rawTx)
 
+	if cache != nil {
+		cache.Write(tx, nil)
+	}
+
 	if fetchTraces {
-		traces, err := GetTracesByTransactionHash(chain, tx.Hash.Hex(), tx)
+		traces, err := GetTracesByTransactionHash(chain, tx.Hash.Hex(), tx, cache)
 		if err != nil {
 			return nil, err
 		}
 		tx.Traces = traces
+	}
+
+	return
+}
+
+func GetTransactionByBlockAndId(chain string, bn base.Blknum, txid uint64, cache *cacheNew.Store) (tx *types.SimpleTransaction, err error) {
+	if cache != nil {
+		tx = &types.SimpleTransaction{
+			BlockNumber:      bn,
+			TransactionIndex: txid,
+		}
+
+		if err := cache.Read(tx, nil); err == nil {
+			// success
+			return tx, nil
+		}
+	}
+
+	rawTx, err := GetRawTransactionByBlockAndId(chain, bn, txid)
+	if err != nil {
+		return
+	}
+	blockTs := rpc.GetBlockTimestamp(chain, bn)
+	receipt, err := GetTransactionReceipt(chain, ReceiptQuery{
+		Bn:      bn,
+		Txid:    txid,
+		NeedsTs: true,
+		Ts:      blockTs,
+	})
+	if err != nil {
+		return
+	}
+
+	// TODO: this gets repeated
+	tx = &types.SimpleTransaction{
+		Hash:             base.HexToHash(rawTx.Hash),
+		BlockHash:        base.HexToHash(rawTx.BlockHash),
+		BlockNumber:      bn,
+		TransactionIndex: txid,
+		Nonce:            mustParseUint(rawTx.Nonce),
+		Timestamp:        blockTs,
+		From:             base.HexToAddress(rawTx.From),
+		To:               base.HexToAddress(rawTx.To),
+		Gas:              mustParseUint(rawTx.Gas),
+		GasPrice:         mustParseUint(rawTx.GasPrice),
+		GasUsed:          receipt.GasUsed,
+		Input:            rawTx.Input,
+		IsError:          receipt.IsError,
+		HasToken:         IsTokenRelated(rawTx.Input),
+		Receipt:          &receipt,
+	}
+	tx.Value.SetString(rawTx.Value, 0)
+	tx.SetGasCost(&receipt)
+	tx.SetRaw(rawTx)
+
+	if cache != nil {
+		cache.Write(tx, nil)
 	}
 
 	return

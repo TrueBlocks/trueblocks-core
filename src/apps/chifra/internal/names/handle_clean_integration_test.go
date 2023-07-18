@@ -268,6 +268,7 @@ func BenchmarkCleanConcurrent(b *testing.B) {
 			count++
 			dataset[addr] = name
 		}
+
 		b.StartTimer()
 		ctx, cancel := context.WithCancel(context.Background())
 		defer cancel()

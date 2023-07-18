@@ -11,6 +11,7 @@ import (
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
@@ -18,19 +19,33 @@ import (
 )
 
 func GetBlockHeaderByNumber(chain string, bn uint64) (types.SimpleBlock[string], error) {
-	return GetBlockByNumber(chain, bn)
+	return GetBlockByNumber(chain, bn, nil)
 }
 
 // GetBlockByNumberWithTxs fetches the block with transactions from the RPC.
-func GetBlockByNumberWithTxs(chain string, bn uint64) (types.SimpleBlock[types.SimpleTransaction], error) {
-	// TODO: load from cache if possible
-	// FIXME: without updating the block in cache (writing) some value are not
-	// FIXME: filled in and the tests fail
-	// cached, _ := cache.GetBlock(chain, bn)
-	// if cached != nil {
-	// 	block = *cached
-	// 	return
-	// }
+func GetBlockByNumberWithTxs(chain string, bn uint64, cache *cacheNew.Store) (types.SimpleBlock[types.SimpleTransaction], error) {
+	if cache != nil {
+		// We only cache blocks with transaction hashes
+		cachedBlock := types.SimpleBlock[string]{BlockNumber: bn}
+		if err := cache.Read(&cachedBlock, nil); err == nil {
+			// Success, we now have to fill in transaction objects
+			result := types.SimpleBlock[types.SimpleTransaction]{}
+			result.Transactions = make([]types.SimpleTransaction, 0, len(cachedBlock.Transactions))
+			success := true
+			for index := range cachedBlock.Transactions {
+				tx, err := GetTransactionByBlockAndId(chain, cachedBlock.BlockNumber, uint64(index), cache)
+				if err != nil {
+					success = false
+					break
+				}
+				result.Transactions = append(result.Transactions, *tx)
+			}
+			if success {
+				cachedBlock.Dup(&result)
+				return result, nil
+			}
+		}
+	}
 
 	block, rawBlock, err := loadBlock[types.SimpleTransaction](chain, bn, true)
 	block.SetRaw(rawBlock) // may have failed, but it's ok
@@ -94,13 +109,27 @@ func GetBlockByNumberWithTxs(chain string, bn uint64) (types.SimpleBlock[types.S
 		}
 		tx.SetGasCost(&receipt)
 		block.Transactions = append(block.Transactions, tx)
+		if cache != nil {
+			cache.Write(&tx, nil)
+		}
 	}
 
+	if cache != nil {
+		cache.Write(&block, nil)
+	}
 	return block, nil
 }
 
 // GetBlockByNumber fetches the block with only transactions' hashes from the RPC
-func GetBlockByNumber(chain string, bn uint64) (types.SimpleBlock[string], error) {
+func GetBlockByNumber(chain string, bn uint64, cache *cacheNew.Store) (block types.SimpleBlock[string], err error) {
+	if cache != nil {
+		block.BlockNumber = bn
+		if err := cache.Read(&block, nil); err == nil {
+			// Success
+			return block, nil
+		}
+	}
+
 	block, rawBlock, err := loadBlock[string](chain, bn, false)
 	block.SetRaw(rawBlock) // may have failed, but it's ok
 	if err != nil {
@@ -110,6 +139,12 @@ func GetBlockByNumber(chain string, bn uint64) (types.SimpleBlock[string], error
 	block.Transactions = make([]string, 0, len(rawBlock.Transactions))
 	for _, rawTx := range rawBlock.Transactions {
 		block.Transactions = append(block.Transactions, fmt.Sprint(rawTx))
+	}
+
+	if cache != nil {
+		if err = cache.Write(&block, nil); err != nil {
+			return
+		}
 	}
 
 	return block, nil

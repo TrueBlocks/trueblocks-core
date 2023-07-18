@@ -13,6 +13,7 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
@@ -108,4 +109,38 @@ func (s *SimpleTraceResult) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
+func (s *SimpleTraceResult) MarshalCache(writer io.Writer) (err error) {
+	if err = cacheNew.WriteValue(writer, s.Address); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.Code); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.GasUsed); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.Output); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (s *SimpleTraceResult) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	if err = cacheNew.ReadValue(reader, &s.Address, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.Code, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.GasUsed, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.Output, version); err != nil {
+		return err
+	}
+
+	return
+}
+
 // EXISTING_CODE

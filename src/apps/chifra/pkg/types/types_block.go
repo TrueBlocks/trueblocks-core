@@ -10,9 +10,12 @@ package types
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"io"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 )
 
 type BlockTransaction interface {
@@ -44,7 +47,7 @@ type RawBlock struct {
 	Transactions     []any  `json:"transactions"`
 	TransactionsRoot string `json:"transactionsRoot"`
 	// EXISTING_CODE
-	Uncles           []string `json:"uncles"`
+	Uncles []string `json:"uncles"`
 	// EXISTING_CODE
 }
 
@@ -63,8 +66,8 @@ type SimpleBlock[Tx BlockTransaction] struct {
 	// EXISTING_CODE
 	// Used to be Finalized which has since been removed. Until we implement IsBackLevel
 	// and upgrading cache items, this exists. We can remove it once we do so.
-	UnusedBool bool `json:"-"`
-	Uncles        []base.Hash    `json:"uncles,omitempty"`
+	UnusedBool bool        `json:"-"`
+	Uncles     []base.Hash `json:"uncles,omitempty"`
 	// EXISTING_CODE
 }
 
@@ -198,4 +201,125 @@ func (s *SimpleBlock[Tx]) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
+func (s *SimpleBlock[Tx]) CacheName() string {
+	return "Block"
+}
+
+func (s *SimpleBlock[Tx]) CacheId() string {
+	return fmt.Sprintf("%09d", s.BlockNumber)
+}
+
+func (s *SimpleBlock[Tx]) CacheLocation() (directory string, extension string) {
+	extension = "bin"
+
+	paddedBn := s.CacheId()
+
+	parts := make([]string, 3)
+	parts[0] = paddedBn[:2]
+	parts[1] = paddedBn[2:4]
+	parts[2] = paddedBn[4:6]
+	directory = filepath.Join("blocks", filepath.Join(parts...))
+	return
+}
+
+func (s *SimpleBlock[Tx]) MarshalCache(writer io.Writer) (err error) {
+	if err = cacheNew.WriteValue(writer, s.GasLimit); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.GasUsed); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.Hash); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.BlockNumber); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.ParentHash); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.Miner); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.Difficulty); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.Timestamp); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, &s.BaseFeePerGas); err != nil {
+		return err
+	}
+
+	// We only cache transaction hashes (not transaction structs), so if
+	// s.Transactions is []SimpleTransaction, we have to extract them
+	var txHashes []string
+	switch v := any(s.Transactions).(type) {
+	case []string:
+		txHashes = v
+	case []SimpleTransaction:
+		txHashes = make([]string, 0, len(s.Transactions))
+		for _, tx := range v {
+			txHashes = append(txHashes, tx.Hash.Hex())
+		}
+	}
+	if err = cacheNew.WriteValue(writer, txHashes); err != nil {
+		return err
+	}
+
+	return
+}
+
+func (s *SimpleBlock[string]) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	if err = cacheNew.ReadValue(reader, &s.GasLimit, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.GasUsed, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.Hash, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.BlockNumber, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.ParentHash, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.Miner, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.Difficulty, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.Timestamp, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.BaseFeePerGas, version); err != nil {
+		return err
+	}
+
+	s.Transactions = make([]string, 0)
+	if err = cacheNew.ReadValue(reader, &s.Transactions, version); err != nil {
+		return err
+	}
+
+	return
+}
+
+// Dup duplicates all fields but Transactions into target
+func (s *SimpleBlock[string]) Dup(target *SimpleBlock[SimpleTransaction]) {
+	target.BaseFeePerGas = s.BaseFeePerGas
+	target.BlockNumber = s.BlockNumber
+	target.Difficulty = s.Difficulty
+	target.GasLimit = s.GasLimit
+	target.GasUsed = s.GasUsed
+	target.Hash = s.Hash
+	target.Miner = s.Miner
+	target.ParentHash = s.ParentHash
+	target.Timestamp = s.Timestamp
+	target.Uncles = s.Uncles
+	target.raw = s.raw
+}
+
 // EXISTING_CODE

@@ -17,6 +17,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 )
 
@@ -373,6 +374,95 @@ func (s *SimpleFunction) Pack(callArguments []any) (packed []byte, err error) {
 	}
 	packed = abiMethod.ID
 	packed = append(packed, packedArgs...)
+
+	return
+}
+
+func (s *SimpleFunction) MarshalCache(writer io.Writer) (err error) {
+	if err = cacheNew.WriteValue(writer, s.Anonymous); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.Constant); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.Encoding); err != nil {
+		return err
+	}
+
+	inputs := make([]cacheNew.Marshaler, 0, len(s.Inputs))
+	for _, input := range s.Inputs {
+		input := input
+		inputs = append(inputs, &input)
+	}
+	if err = cacheNew.WriteValue(writer, inputs); err != nil {
+		return err
+	}
+
+	if err = cacheNew.WriteValue(writer, s.Message); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.Name); err != nil {
+		return err
+	}
+
+	outputs := make([]cacheNew.Marshaler, 0, len(s.Outputs))
+	for _, output := range s.Outputs {
+		outputs = append(outputs, &output)
+	}
+	if err = cacheNew.WriteValue(writer, outputs); err != nil {
+		return err
+	}
+
+	if err = cacheNew.WriteValue(writer, s.Signature); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.StateMutability); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.FunctionType); err != nil {
+		return err
+	}
+
+	return
+}
+
+func (s *SimpleFunction) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	if err = cacheNew.ReadValue(reader, &s.Anonymous, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.Constant, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.Encoding, version); err != nil {
+		return err
+	}
+
+	s.Inputs = make([]SimpleParameter, 0)
+	if err = cacheNew.ReadValue(reader, &s.Inputs, version); err != nil {
+		return err
+	}
+
+	if err = cacheNew.ReadValue(reader, &s.Message, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.Name, version); err != nil {
+		return err
+	}
+
+	s.Outputs = make([]SimpleParameter, 0)
+	if err = cacheNew.ReadValue(reader, &s.Outputs, version); err != nil {
+		return err
+	}
+
+	if err = cacheNew.ReadValue(reader, &s.Signature, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.StateMutability, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.FunctionType, version); err != nil {
+		return err
+	}
 
 	return
 }

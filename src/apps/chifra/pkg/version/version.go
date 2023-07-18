@@ -17,6 +17,10 @@ type Version struct {
 }
 
 func NewVersion(str string) (vers Version, err error) {
+	if str[:3] == "GHC" {
+		// First, remove the part that cannot be parsed with ParseInt
+		str = str[len("GHC-TrueBlocks//"):]
+	}
 	str = strings.Replace(strings.Replace(str, "-", ".", -1), "v", "", -1)
 	parts := strings.Split(str, ".")
 	if len(parts) > 0 {
@@ -52,4 +56,9 @@ func (ref *Version) IsEarlierThan(test Version) bool {
 		return true
 	}
 	return false
+}
+
+// Uint64 returns version as a single uint64
+func (ref *Version) Uint64() uint64 {
+	return uint64((ref.Major * 1000000) + (ref.Minor * 1000) + ref.Build)
 }

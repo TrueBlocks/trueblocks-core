@@ -46,7 +46,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 				BlockNumber:      uint32(app.BlockNumber),
 				TransactionIndex: uint32(app.TransactionIndex),
 			}
-			if tx, err := rpcClient.GetTransactionByAppearance(chain, &raw, false); err != nil {
+			if tx, err := rpcClient.GetTransactionByAppearance(chain, &raw, false, nil); err != nil {
 				errorChan <- err
 				return nil
 			} else {

@@ -34,11 +34,11 @@ func (opts *BlocksOptions) HandleShowBlocks() error {
 				var err error
 				if !opts.Hashes {
 					var b types.SimpleBlock[types.SimpleTransaction]
-					b, err = rpcClient.GetBlockByNumberWithTxs(opts.Globals.Chain, bn)
+					b, err = rpcClient.GetBlockByNumberWithTxs(opts.Globals.Chain, bn, nil)
 					block = &b
 				} else {
 					var b types.SimpleBlock[string]
-					b, err = rpcClient.GetBlockByNumber(opts.Globals.Chain, bn)
+					b, err = rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, nil)
 					block = &b
 				}
 

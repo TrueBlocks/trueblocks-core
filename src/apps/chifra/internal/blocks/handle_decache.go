@@ -24,7 +24,7 @@ func (opts *BlocksOptions) HandleDecache() error {
 			return err
 		}
 		for _, bn := range blockNums {
-			rawBlock, err := rpcClient.GetBlockByNumberWithTxs(opts.Globals.Chain, bn)
+			rawBlock, err := rpcClient.GetBlockByNumberWithTxs(opts.Globals.Chain, bn, nil)
 			if err != nil {
 				return err
 			}

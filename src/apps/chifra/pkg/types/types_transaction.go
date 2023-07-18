@@ -10,10 +10,13 @@ package types
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"io"
 	"math/big"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -148,7 +151,11 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 		"encoding",
 	}
 
-	model["date"] = utils.FormattedDate(s.Timestamp)
+	if s.Date == "" {
+		model["date"] = utils.FormattedDate(s.Timestamp)
+	} else {
+		model["date"] = s.Date
+	}
 	model["gasCost"] = s.SetGasCost(s.Receipt)
 
 	// TODO: Shouldn't this use the SimpleFunction model - the answer is yes?
@@ -329,6 +336,174 @@ func (s *SimpleTransaction) SetGasCost(receipt *SimpleReceipt) base.Gas {
 	}
 	s.GasCost = s.GasPrice * receipt.GasUsed
 	return s.GasCost
+}
+
+func (s *SimpleTransaction) CacheName() string {
+	return "Transaction"
+}
+
+func (s *SimpleTransaction) CacheId() string {
+	return fmt.Sprintf("%09d-%05d", s.BlockNumber, s.TransactionIndex)
+}
+
+func (s *SimpleTransaction) CacheLocation() (directory string, extension string) {
+	extension = "bin"
+
+	id := s.CacheId()
+
+	parts := make([]string, 3)
+	parts[0] = id[:2]
+	parts[1] = id[2:4]
+	parts[2] = id[4:6]
+	directory = filepath.Join("txs", filepath.Join(parts...))
+	return
+}
+
+func (s *SimpleTransaction) MarshalCache(writer io.Writer) (err error) {
+	optArticulatedTx := &cacheNew.Optional[SimpleFunction]{
+		Value: s.ArticulatedTx,
+	}
+	if err = cacheNew.WriteValue(writer, optArticulatedTx); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, &s.Hash); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, &s.BlockHash); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.BlockNumber); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.TransactionIndex); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.Nonce); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.Timestamp); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.From); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.To); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, &s.Value); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.Gas); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.GasPrice); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.GasUsed); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.GasCost); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.MaxFeePerGas); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.MaxPriorityFeePerGas); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.Input); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.IsError); err != nil {
+		return err
+	}
+	if err = cacheNew.WriteValue(writer, s.HasToken); err != nil {
+		return err
+	}
+
+	optReceipt := &cacheNew.Optional[SimpleReceipt]{
+		Value: s.Receipt,
+	}
+	if err = cacheNew.WriteValue(writer, optReceipt); err != nil {
+		return err
+	}
+
+	return
+}
+
+func (s *SimpleTransaction) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	optArticulatedTx := &cacheNew.Optional[SimpleFunction]{
+		Value: s.ArticulatedTx,
+	}
+	if err = cacheNew.ReadValue(reader, optArticulatedTx, version); err != nil {
+		return err
+	}
+	s.ArticulatedTx = optArticulatedTx.Get()
+
+	if err = cacheNew.ReadValue(reader, &s.Hash, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.BlockHash, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.BlockNumber, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.TransactionIndex, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.Nonce, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.Timestamp, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.From, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.To, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.Value, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.Gas, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.GasPrice, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.GasUsed, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.GasCost, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.MaxFeePerGas, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.MaxPriorityFeePerGas, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.Input, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.IsError, version); err != nil {
+		return err
+	}
+	if err = cacheNew.ReadValue(reader, &s.HasToken, version); err != nil {
+		return err
+	}
+
+	optReceipt := &cacheNew.Optional[SimpleReceipt]{
+		Value: s.Receipt,
+	}
+	if err = cacheNew.ReadValue(reader, optReceipt, version); err != nil {
+		return err
+	}
+	s.Receipt = optReceipt.Get()
+
+	return
 }
 
 // EXISTING_CODE
