@@ -53,6 +53,11 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, cache *cacheNew.Store) (ty
 		return block, err
 	}
 
+	block.Uncles = make([]base.Hash, 0, len(rawBlock.Uncles))
+	for _, uncle := range rawBlock.Uncles {
+		block.Uncles = append(block.Uncles, base.HexToHash(uncle))
+	}
+
 	ts, _ := strconv.ParseInt(rawBlock.Timestamp, 0, 64)
 	block.Transactions = make([]types.SimpleTransaction, 0, len(rawBlock.Transactions))
 	for _, rawTx := range rawBlock.Transactions {
@@ -136,13 +141,14 @@ func GetBlockByNumber(chain string, bn uint64, cache *cacheNew.Store) (block typ
 		return block, err
 	}
 
+	block.Uncles = make([]base.Hash, 0, len(rawBlock.Uncles))
+	for _, uncle := range rawBlock.Uncles {
+		block.Uncles = append(block.Uncles, base.HexToHash(uncle))
+	}
+
 	block.Transactions = make([]string, 0, len(rawBlock.Transactions))
 	for _, rawTx := range rawBlock.Transactions {
 		block.Transactions = append(block.Transactions, fmt.Sprint(rawTx))
-	}
-
-	if block.Uncles, err = GetUncleHashesByNumber(chain, bn); err != nil {
-		return block, err
 	}
 
 	if cache != nil {
