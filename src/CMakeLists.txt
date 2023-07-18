@@ -67,10 +67,7 @@ set(BASE_LIBS acct ether util ${CURL_LIBRARIES})
 
 # ----------------------------------------------------------------------------------------
 # Base included paths
-set(BASE_INCLUDE
-    "${CMAKE_SOURCE_DIR}/libs/utillib"
-    "${CMAKE_SOURCE_DIR}/libs/etherlib"
-    "${CMAKE_SOURCE_DIR}/libs/acctlib")
+set(BASE_INCLUDE "${CMAKE_SOURCE_DIR}/libs/utillib" "${CMAKE_SOURCE_DIR}/libs/etherlib" "${CMAKE_SOURCE_DIR}/libs/acctlib")
 
 # ----------------------------------------------------------------------------------------
 set(BIN_DIR ${CMAKE_SOURCE_DIR}/../bin)
@@ -80,6 +77,36 @@ set(BIN_TEST_DIR ${BIN_CMDS_DIR}/test)
 
 # ----------------------------------------------------------------------------------------
 set(CMAKE_INSTALL_PREFIX "/usr/local/" CACHE PATH "Default install directory")
+
+# ----------------------------------------------------------------------------------------
+function(ADD_GO_INSTALLABLE_PROGRAM NAME MAIN_SRC DEST_DIR)
+    get_filename_component(MAIN_SRC_ABS ${MAIN_SRC} ABSOLUTE)
+    add_custom_target(${NAME})
+    add_custom_command(TARGET ${NAME}
+                    COMMAND go build
+                    -o "${DEST_DIR}/${NAME}"
+                    ${CMAKE_GO_FLAGS} ${MAIN_SRC}
+                    WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+                    DEPENDS ${MAIN_SRC_ABS} ${MAIN_SRC})
+    add_custom_target(${NAME}_all ALL DEPENDS ${NAME})
+endfunction(ADD_GO_INSTALLABLE_PROGRAM)
+
+# ----------------------------------------------------------------------------------------
+function(COMPILE_PROTOBUFFERS NAME MAIN_SRC)
+  message("Compiling protobuf files")
+  get_filename_component(MAIN_SRC_ABS ${MAIN_SRC} ABSOLUTE)
+  add_custom_target(${NAME})
+  add_custom_command(TARGET ${NAME}
+                    COMMAND protoc
+                    --go_out=.
+                    --go_opt=paths=source_relative
+                    --go-grpc_out=.
+                    --go-grpc_opt=paths=source_relative
+                    ${MAIN_SRC}
+                    WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/proto
+                    DEPENDS ${MAIN_SRC_ABS} ${MAIN_SRC})
+  add_custom_target(${NAME}_all ALL DEPENDS ${NAME})
+endfunction(COMPILE_PROTOBUFFERS)
 
 # ----------------------------------------------------------------------------------------
 # Enable testing
@@ -97,8 +124,8 @@ add_custom_target(test-all COMMAND "${BIN_TEST_DIR}/test-all.sh" WORKING_DIRECTO
 
 # ----------------------------------------------------------------------------------------
 # Compilation order for the subfolders
+add_subdirectory(dev_tools)
 add_subdirectory(libs)
 add_subdirectory(apps)
-add_subdirectory(dev_tools)
 add_subdirectory(examples)
 add_subdirectory(other)
