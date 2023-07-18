@@ -249,10 +249,6 @@ func (s *SimpleLog) UnmarshalCache(version uint64, reader io.Reader) (err error)
 		return err
 	}
 
-	if s.Timestamp > 0 {
-		s.Date = utils.FormattedDate(s.Timestamp)
-	}
-
 	return
 }
 
