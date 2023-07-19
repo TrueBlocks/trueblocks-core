@@ -14,6 +14,9 @@ const (
 	MemoryCache
 )
 
+// NoCache indicates that we are not caching or reading from the cache
+var NoCache *Store = nil
+
 // Storer stores items in the given location. Cache is agnostic
 // of the actual location of the items (files in FS terms) and
 // Storer is responsible for all low-level work.
