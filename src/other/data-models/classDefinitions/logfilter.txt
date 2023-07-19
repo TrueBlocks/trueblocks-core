@@ -6,6 +6,4 @@ doc_group = 02-Chain Data
 doc_descr = used by the fast path log queries for various commands
 doc_route = 206-logFilter
 doc_producer = blocks, logs
-
-cpp_output =
 go_output = src/apps/chifra/pkg/types/

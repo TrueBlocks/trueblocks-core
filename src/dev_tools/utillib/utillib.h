@@ -38,6 +38,7 @@
 #include "keccak.h"
 #include "markdown.h"
 #include "configenv.h"
+#include "chain.h"
 #include "key.h"
 #include "petname.h"
 

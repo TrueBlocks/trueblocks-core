@@ -55,8 +55,7 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 	msg := "chifra export"
 	// EXISTING_CODE
 	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
-	var canceled bool
-	if canceled, err = opts.FreshenMonitorsForExport(&monitorArray); err != nil || canceled {
+	if canceled, err := opts.FreshenMonitorsForExport(&monitorArray); err != nil || canceled {
 		return err, true
 	}
 
