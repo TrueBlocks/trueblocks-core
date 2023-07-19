@@ -8,6 +8,7 @@ import (
 	"context"
 	"errors"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
@@ -36,7 +37,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 
 			for _, bn := range blockNums {
 				var block types.SimpleBlock[string]
-				if block, err = rpcClient.GetBlockByNumber(chain, bn, nil); err != nil {
+				if block, err = rpcClient.GetBlockByNumber(chain, bn, cacheNew.NoCache); err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
 						continue

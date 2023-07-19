@@ -63,6 +63,7 @@ func (opts *TransactionsOptions) HandleDecache() error {
 
 	return nil
 
+	// TODO: Review then remove
 	// pairs := []base.NumPair[uint32]{}
 	// for _, rng := range opts.TransactionIds {
 	// 	txIds, err := rng.ResolveTxs(opts.Globals.Chain)

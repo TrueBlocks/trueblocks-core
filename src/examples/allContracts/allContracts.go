@@ -26,14 +26,13 @@ func visitTrace(trace *types.SimpleTrace, data *any) error {
 }
 
 func forEveryTrace(from, to base.Blknum, visitor func(*types.SimpleTrace, *any) error) error {
-	var cache *cacheNew.Store
 	for blknum := from; blknum <= to; blknum++ {
-		if block, err := rpcClient.GetBlockByNumber("mainnet", blknum, cache); err != nil {
+		if block, err := rpcClient.GetBlockByNumber("mainnet", blknum, cacheNew.NoCache); err != nil {
 			return err
 		} else {
 			bar.Tick()
 			for _, txHash := range block.Transactions {
-				if traces, err := rpcClient.GetTracesByTransactionHash("mainnet", txHash, nil, cache); err != nil {
+				if traces, err := rpcClient.GetTracesByTransactionHash("mainnet", txHash, nil, cacheNew.NoCache); err != nil {
 					return err
 				} else {
 					for _, trace := range traces {

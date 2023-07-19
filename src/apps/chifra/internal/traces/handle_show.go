@@ -19,7 +19,7 @@ import (
 
 func (opts *TracesOptions) HandleShowTraces() error {
 	abiCache := articulate.NewAbiCache()
-	var store *cacheNew.Store = nil
+	var store *cacheNew.Store = cacheNew.NoCache
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
