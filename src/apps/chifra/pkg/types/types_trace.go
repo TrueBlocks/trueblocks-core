@@ -206,6 +206,7 @@ func mustParseUint(input any) (result uint64) {
 }
 
 func (s *SimpleTrace) MarshalCache(writer io.Writer) (err error) {
+	// Action is a pointer and it can be missing
 	optAction := &cacheNew.Optional[SimpleTraceAction]{
 		Value: s.Action,
 	}
@@ -233,6 +234,7 @@ func (s *SimpleTrace) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
+	// Result is a pointer and it can be missing
 	optResult := &cacheNew.Optional[SimpleTraceResult]{
 		Value: s.Result,
 	}

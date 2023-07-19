@@ -8,7 +8,7 @@ import (
 
 // TODO: This should be in the rpc package, but identifiers has circular imports.
 // FetchTransactionsById fetch a transaction given an identifier
-func (app *ResolvedId) FetchTransactionById(chain string, fetchTraces bool, cache *cacheNew.Store) (tx *types.SimpleTransaction, err error) {
+func (app *ResolvedId) FetchTransactionById(chain string, fetchTraces bool, store *cacheNew.Store) (tx *types.SimpleTransaction, err error) {
 	return rpcClient.GetTransactionByAppearance(
 		chain,
 		&types.RawAppearance{
@@ -16,5 +16,5 @@ func (app *ResolvedId) FetchTransactionById(chain string, fetchTraces bool, cach
 			TransactionIndex: uint32(app.TransactionIndex),
 		},
 		fetchTraces,
-		cache)
+		store)
 }

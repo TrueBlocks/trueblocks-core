@@ -102,15 +102,15 @@ func GetTracesCountByTransactionId(chain string, bn, txid uint64) (uint64, error
 }
 
 // GetTracesByTransactionId returns a slice of traces in a given transaction
-func GetTracesByTransactionId(chain string, bn, txid uint64, cache *cacheNew.Store) ([]types.SimpleTrace, error) {
+func GetTracesByTransactionId(chain string, bn, txid uint64, store *cacheNew.Store) ([]types.SimpleTrace, error) {
 	var ret []types.SimpleTrace
-	if cache != nil {
+	if store != nil {
 		traceGroup := &types.SimpleTraceGroup{
 			BlockNumber:      bn,
 			TransactionIndex: int(txid),
 		}
 
-		if err := cache.Read(traceGroup, nil); err == nil {
+		if err := store.Read(traceGroup, nil); err == nil {
 			// success
 			return traceGroup.Traces, nil
 		}
@@ -120,7 +120,7 @@ func GetTracesByTransactionId(chain string, bn, txid uint64, cache *cacheNew.Sto
 	if err != nil {
 		return ret, err
 	}
-	return GetTracesByTransactionHash(chain, txHash, nil, cache)
+	return GetTracesByTransactionHash(chain, txHash, nil, store)
 }
 
 // GetTracesCountByTransactionHash returns the number of traces in a given transaction
@@ -217,10 +217,11 @@ func GetTracesByFilter(chain string, filter string) ([]types.SimpleTrace, error)
 }
 
 // GetTracesByTransactionHash returns a slice of traces in a given transaction's hash
-func GetTracesByTransactionHash(chain string, txHash string, transaction *types.SimpleTransaction, cache *cacheNew.Store) ([]types.SimpleTrace, error) {
-	if cache != nil && transaction != nil {
+func GetTracesByTransactionHash(chain string, txHash string, transaction *types.SimpleTransaction, store *cacheNew.Store) ([]types.SimpleTrace, error) {
+	if store != nil && transaction != nil {
 		traceGroup := types.NewSimpleTraceGroup(transaction)
-		if err := cache.Read(traceGroup, nil); err == nil {
+
+		if err := store.Read(traceGroup, nil); err == nil {
 			// success
 			return traceGroup.Traces, nil
 		}
@@ -304,10 +305,10 @@ func GetTracesByTransactionHash(chain string, txHash string, transaction *types.
 			ret = append(ret, trace)
 		}
 
-		if cache != nil && transaction != nil {
+		if store != nil && transaction != nil {
 			traceGroup := types.NewSimpleTraceGroup(transaction)
 			traceGroup.Traces = ret
-			cache.Write(traceGroup, nil)
+			store.Write(traceGroup, nil)
 		}
 
 		return ret, nil

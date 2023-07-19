@@ -19,7 +19,7 @@ import (
 
 func (opts *BlocksOptions) HandleUniq() (err error) {
 	readOnly := !opts.Cache
-	cache := opts.Globals.CacheStore(readOnly)
+	store := opts.Globals.CacheStore(readOnly)
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -46,7 +46,7 @@ func (opts *BlocksOptions) HandleUniq() (err error) {
 				}
 				addrMap := make(index.AddressBooleanMap)
 				ts := rpc.GetBlockTimestamp(chain, bn)
-				if err := opts.ProcessBlockUniqs(chain, procFunc, bn, addrMap, ts, cache); err != nil {
+				if err := opts.ProcessBlockUniqs(chain, procFunc, bn, addrMap, ts, store); err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
 						continue
@@ -64,7 +64,7 @@ func (opts *BlocksOptions) HandleUniq() (err error) {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }
 
-func (opts *BlocksOptions) ProcessBlockUniqs(chain string, procFunc index.UniqProcFunc, bn uint64, addrMap index.AddressBooleanMap, ts int64, cache *cacheNew.Store) error {
+func (opts *BlocksOptions) ProcessBlockUniqs(chain string, procFunc index.UniqProcFunc, bn uint64, addrMap index.AddressBooleanMap, ts int64, store *cacheNew.Store) error {
 	if bn == 0 {
 		if namesArray, err := names.LoadNamesArray(opts.Globals.Chain, names.Prefund, names.SortByAddress, []string{}); err != nil {
 			return err
@@ -106,10 +106,10 @@ func (opts *BlocksOptions) ProcessBlockUniqs(chain string, procFunc index.UniqPr
 			}
 
 			for _, trans := range block.Transactions {
-				if trans.Traces, err = rpcClient.GetTracesByTransactionId(opts.Globals.Chain, trans.BlockNumber, trans.TransactionIndex, cache); err != nil {
+				if trans.Traces, err = rpcClient.GetTracesByTransactionId(opts.Globals.Chain, trans.BlockNumber, trans.TransactionIndex, store); err != nil {
 					return err
 				}
-				if err = index.UniqFromTransDetails(chain, procFunc, opts.Flow, &trans, ts, addrMap, cache); err != nil {
+				if err = index.UniqFromTransDetails(chain, procFunc, opts.Flow, &trans, ts, addrMap, store); err != nil {
 					return err
 				}
 			}

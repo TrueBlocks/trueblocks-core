@@ -18,7 +18,7 @@ import (
 
 func (opts *BlocksOptions) HandleCounts() error {
 	readOnly := !opts.Cache
-	cache := opts.Globals.CacheStore(readOnly)
+	store := opts.Globals.CacheStore(readOnly)
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -92,7 +92,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 
 					addrMap := make(index.AddressBooleanMap)
 					ts := rpc.GetBlockTimestamp(chain, bn)
-					if err := opts.ProcessBlockUniqs(chain, countFunc, bn, addrMap, ts, cache); err != nil {
+					if err := opts.ProcessBlockUniqs(chain, countFunc, bn, addrMap, ts, store); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {
 							continue
