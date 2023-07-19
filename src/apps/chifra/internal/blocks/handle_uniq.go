@@ -18,7 +18,7 @@ import (
 )
 
 func (opts *BlocksOptions) HandleUniq() (err error) {
-	readOnly := !opts.Cache
+	readOnly := true
 	cache := opts.Globals.CacheStore(readOnly)
 	chain := opts.Globals.Chain
 
