@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
@@ -17,6 +18,8 @@ import (
 )
 
 func (opts *BlocksOptions) HandleUniq() (err error) {
+	readOnly := !opts.Cache
+	store := opts.Globals.CacheStore(readOnly)
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -43,7 +46,7 @@ func (opts *BlocksOptions) HandleUniq() (err error) {
 				}
 				addrMap := make(index.AddressBooleanMap)
 				ts := rpc.GetBlockTimestamp(chain, bn)
-				if err := opts.ProcessBlockUniqs(chain, procFunc, bn, addrMap, ts); err != nil {
+				if err := opts.ProcessBlockUniqs(chain, procFunc, bn, addrMap, ts, store); err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
 						continue
@@ -61,7 +64,7 @@ func (opts *BlocksOptions) HandleUniq() (err error) {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }
 
-func (opts *BlocksOptions) ProcessBlockUniqs(chain string, procFunc index.UniqProcFunc, bn uint64, addrMap index.AddressBooleanMap, ts int64) error {
+func (opts *BlocksOptions) ProcessBlockUniqs(chain string, procFunc index.UniqProcFunc, bn uint64, addrMap index.AddressBooleanMap, ts int64, store *cacheNew.Store) error {
 	if bn == 0 {
 		if namesArray, err := names.LoadNamesArray(opts.Globals.Chain, names.Prefund, names.SortByAddress, []string{}); err != nil {
 			return err
@@ -103,10 +106,10 @@ func (opts *BlocksOptions) ProcessBlockUniqs(chain string, procFunc index.UniqPr
 			}
 
 			for _, trans := range block.Transactions {
-				if trans.Traces, err = rpcClient.GetTracesByTransactionId(opts.Globals.Chain, trans.BlockNumber, trans.TransactionIndex); err != nil {
+				if trans.Traces, err = rpcClient.GetTracesByTransactionId(opts.Globals.Chain, trans.BlockNumber, trans.TransactionIndex, store); err != nil {
 					return err
 				}
-				if err = index.UniqFromTransDetails(chain, procFunc, opts.Flow, &trans, ts, addrMap); err != nil {
+				if err = index.UniqFromTransDetails(chain, procFunc, opts.Flow, &trans, ts, addrMap, store); err != nil {
 					return err
 				}
 			}
