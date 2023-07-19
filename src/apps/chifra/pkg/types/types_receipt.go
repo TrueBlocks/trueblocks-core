@@ -101,8 +101,11 @@ func (s *SimpleReceipt) Model(verbose bool, format string, extraOptions map[stri
 					"address":  log.Address.Hex(),
 					"logIndex": log.LogIndex,
 					"topics":   log.Topics,
-					"data":     log.Data,
 				}
+				if len(log.Data) > 2 {
+					logModel["data"] = log.Data
+				}
+
 				if log.ArticulatedLog != nil {
 					articulatedLog := map[string]any{
 						"name": log.ArticulatedLog.Name,
@@ -118,7 +121,6 @@ func (s *SimpleReceipt) Model(verbose bool, format string, extraOptions map[stri
 			model["logs"] = logs
 		} else {
 			model["logs"] = s.Logs
-			// order = append(order, "logs")
 		}
 
 		if verbose {
@@ -169,6 +171,14 @@ func (s *SimpleReceipt) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
+func (s *SimpleReceipt) IsDefault() bool {
+	a := s.ContractAddress.IsZero()
+	b := s.EffectiveGasPrice == 0
+	c := s.GasUsed == 0
+	d := len(s.Logs) == 0
+	return a && b && c && d
+}
+
 func (s *SimpleReceipt) MarshalCache(writer io.Writer) (err error) {
 	if s == nil {
 		zero := SimpleReceipt{}

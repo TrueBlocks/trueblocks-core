@@ -14,7 +14,6 @@ receipts?transactions=1428968.4&fmt=json&articulate
             },
             "name": "PrimaryChanged"
           },
-          "data": "0x",
           "logIndex": 0,
           "topics": [
             "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
@@ -30,7 +29,6 @@ receipts?transactions=1428968.4&fmt=json&articulate
             },
             "name": "Changed"
           },
-          "data": "0x",
           "logIndex": 1,
           "topics": [
             "0xa6697e974e6a320f454390be03f74955e8978f1a6971ea6730542e37b66179bc",

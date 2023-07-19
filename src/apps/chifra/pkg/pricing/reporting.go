@@ -8,7 +8,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-type reporter struct {
+type priceDebugger struct {
 	address     base.Address
 	symbol      string
 	blockNumber base.Blknum
@@ -30,7 +30,7 @@ type reporter struct {
 }
 
 // TODO: Much of this reporting could be removed by using a String function on the types.SimpleStatement
-func (r *reporter) report(msg string, testMode bool) {
+func (r *priceDebugger) report(msg string, testMode bool) {
 	isStable := strings.Contains(msg, "stable-coin")
 	if isStable {
 		msg = ""

@@ -169,7 +169,7 @@ func FunctionFromAbiEvent(ethEvent *abi.Event) *SimpleFunction {
 // FunctionFromAbiMethod converts go-ethereum's abi.Method to our SimpleFunction
 func FunctionFromAbiMethod(ethMethod *abi.Method) *SimpleFunction {
 	// method.ID is our "four-byte"
-	fourByte := "0x" + strings.ToLower(string(base.Bytes2Hex(ethMethod.ID)))
+	fourByte := "0x" + base.Bytes2Hex(ethMethod.ID)
 
 	var functionType string
 	switch ethMethod.Type {

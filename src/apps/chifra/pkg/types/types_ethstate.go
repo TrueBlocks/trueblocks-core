@@ -11,7 +11,6 @@ package types
 // EXISTING_CODE
 import (
 	"io"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -83,11 +82,7 @@ func (s *SimpleEthState) Model(verbose bool, format string, extraOptions map[str
 					case "nonce":
 						model["nonce"] = s.Nonce
 					case "code":
-						if !verbose {
-							model["code"] = s.CodeShort()
-						} else {
-							model["code"] = s.Code
-						}
+						model["code"] = utils.FormattedCode(verbose, s.Code)
 					case "proxy":
 						model["proxy"] = s.Proxy
 					case "deployed":
@@ -134,19 +129,4 @@ func (s *SimpleEthState) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
-func (s *SimpleEthState) CodeShort() string {
-	codeLen := len(s.Code)
-	if codeLen <= 250 {
-		return s.Code
-	}
-
-	return strings.Join(
-		[]string{
-			s.Code[:20],
-			s.Code[codeLen-20:],
-		},
-		"...",
-	)
-}
-
 // EXISTING_CODE

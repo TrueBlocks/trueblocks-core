@@ -79,11 +79,13 @@ func (s *SimpleTrace) Model(verbose bool, format string, extraOptions map[string
 		"timestamp":        s.Timestamp,
 		"transactionHash":  s.TransactionHash,
 		"transactionIndex": s.TransactionIndex,
+		// "traceIndex":       s.TraceIndex,
 	}
 
 	order = []string{
 		"blockNumber",
 		"transactionIndex",
+		// "traceIndex",
 		"timestamp",
 		"error",
 		"action::callType",

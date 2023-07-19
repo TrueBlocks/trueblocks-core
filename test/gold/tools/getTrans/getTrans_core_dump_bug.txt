@@ -43,7 +43,9 @@ TEST[DATE|TIME] Format:  json
               "name": "DataDumped"
             },
             "data": "0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353",
+            "date": "2017-05-12 01:17:33 UTC",
             "logIndex": 36,
+            "timestamp": 1494551853,
             "topics": [
               "0xc48d99ca63a72003d5e809e08e7b6638ac06349daeddd2c9466b9c276a7ce67b",
               "0x000000000000000000000000d31f381ad54386895852f311fc3be2008c88cb27",

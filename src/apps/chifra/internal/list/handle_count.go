@@ -6,18 +6,16 @@ package listPkg
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *ListOptions) HandleCount(monitorArray []monitor.Monitor) error {
-	testMode := opts.Globals.TestMode
 	if opts.Globals.Verbose {
 		for i := 0; i < len(monitorArray); i++ {
 			monitorArray[i].ReadMonitorHeader()
@@ -25,48 +23,43 @@ func (opts *ListOptions) HandleCount(monitorArray []monitor.Monitor) error {
 		}
 	}
 
-	exportRange := opts.minMax()
+	chain := opts.Globals.Chain
+	testMode := opts.Globals.TestMode
+	filter := monitor.NewFilter(
+		chain,
+		false,
+		false,
+		!testMode,
+		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
+		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
+	)
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawMonitor], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if !opts.NoZero || mon.Count() > 0 {
-				mon.Close()
-				apps := make([]index.AppearanceRecord, mon.Count())
-				if err := mon.ReadAppearances(&apps); err != nil {
-					errorChan <- err
-					continue
-				}
-
-				nRecords := 0
-				for _, appearance := range apps {
-					if exportRange.IntersectsB(uint64(appearance.BlockNumber)) {
-						nRecords++
-					}
-				}
-
+			if apps, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
+				errorChan <- err
+				return
+			} else if !opts.NoZero || cnt > 0 {
 				s := types.SimpleMonitor{
 					Address:     mon.Address.Hex(),
-					NRecords:    int(nRecords),
+					NRecords:    len(apps),
 					FileSize:    file.FileSize(mon.Path()),
 					LastScanned: mon.LastScanned,
 					Deleted:     mon.Deleted,
 				}
 				if testMode {
-					s.FileSize = 1001001
+					s.FileSize = 0xdead
 					s.LastScanned = maxTestingBlock
 				}
 				modelChan <- &s
+			} else {
+				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
+				continue
 			}
 			mon.Close()
 		}
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
-}
-
-func (opts *ListOptions) minMax() (ret base.FileRange) {
-	ret.First = utils.Max(0, opts.FirstBlock)
-	ret.Last = utils.Min(utils.NOPOS, opts.LastBlock)
-	return
 }

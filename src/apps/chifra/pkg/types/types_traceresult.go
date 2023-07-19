@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -65,7 +66,7 @@ func (s *SimpleTraceResult) Model(verbose bool, format string, extraOptions map[
 			order = append(order, "address")
 		}
 		if extraOptions["traces"] != true && len(s.Code) > 2 { // "0x" is empty
-			model["code"] = s.Code
+			model["code"] = utils.FormattedCode(verbose, s.Code)
 			order = append(order, "code")
 		}
 	} else {

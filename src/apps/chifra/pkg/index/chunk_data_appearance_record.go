@@ -4,8 +4,6 @@ import (
 	"encoding/binary"
 	"io"
 	"os"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
 const (
@@ -17,15 +15,6 @@ const (
 type AppearanceRecord struct {
 	BlockNumber   uint32 `json:"blockNumber"`
 	TransactionId uint32 `json:"transactionIndex"`
-}
-
-// TODO: hack alert - this is because of a circular dependency only. Could not import index into cache package
-func AppsToNumPairs(apps []AppearanceRecord) []base.NumPair[uint32] {
-	pairs := make([]base.NumPair[uint32], len(apps))
-	for i, app := range apps {
-		pairs[i] = base.NumPair[uint32]{N1: app.BlockNumber, N2: app.TransactionId}
-	}
-	return pairs
 }
 
 func (chunk *ChunkData) ReadAppearanceRecordsAndResetOffset(addrRecord *AddressRecord) (apps []AppearanceRecord, err error) {

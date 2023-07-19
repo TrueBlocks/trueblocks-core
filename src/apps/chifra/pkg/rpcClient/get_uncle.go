@@ -67,23 +67,18 @@ func GetUnclesByNumber(chain string, bn uint64) ([]types.SimpleBlock[types.Simpl
 			if rawUncle, err := rpc.Query[types.RawBlock](chain, method, params); err != nil {
 				return ret, err
 			} else {
-				uncles := make([]base.Hash, len(rawUncle.Uncles))
-				for i, uncle := range rawUncle.Uncles {
-					uncles[i] = base.HexToHash(uncle)
-				}
 				// TODO: expand other fields if we ever need them (probably not)
 				ret = append(ret, types.SimpleBlock[types.SimpleTransaction]{
-					// BaseFeePerGas: rawUncle.BaseFeePerGas,
 					BlockNumber: mustParseUint(rawUncle.BlockNumber),
+					Hash:        base.HexToHash(rawUncle.Hash),
+					Miner:       base.HexToAddress(rawUncle.Miner),
+					ParentHash:  base.HexToHash(rawUncle.ParentHash),
+					Timestamp:   int64(mustParseUint(rawUncle.Timestamp)),
+					// Transactions: rawUncle.Transactions,
+					// BaseFeePerGas: rawUncle.BaseFeePerGas,
 					// Difficulty: rawUncle.Difficulty,
 					// GasLimit: rawUncle.GasLimit,
 					// GasUsed: rawUncle.GasUsed,
-					Hash:       base.HexToHash(rawUncle.Hash),
-					Miner:      base.HexToAddress(rawUncle.Miner),
-					ParentHash: base.HexToHash(rawUncle.ParentHash),
-					Timestamp:  int64(mustParseUint(rawUncle.Timestamp)),
-					// Transactions: rawUncle.Transactions,
-					Uncles: uncles,
 				})
 			}
 		}

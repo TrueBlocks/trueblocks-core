@@ -27,6 +27,7 @@ TEST[DATE|TIME] Format:  json
       },
       "timestamp": 1608284909,
       "to": "0xf55041e37e12cd407ad00ce2910b8269b01263b9",
+      "traces": [],
       "transactionIndex": 96,
       "value": "0"
     }

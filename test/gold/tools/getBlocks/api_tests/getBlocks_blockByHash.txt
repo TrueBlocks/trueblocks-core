@@ -23,7 +23,6 @@ blocks?blocks=0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
           "gasPrice": 50000000000,
           "gasUsed": 21000,
           "hash": "0xc8f18f5041f2d070c9688181edee313da2fe506dd3e85cb6c22409cd0bcbe476",
-          "input": "0x",
           "nonce": 727,
           "receipt": {
             "contractAddress": "0x0",
@@ -34,6 +33,7 @@ blocks?blocks=0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
           },
           "timestamp": 1455422019,
           "to": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
+          "traces": [],
           "transactionIndex": 0,
           "value": "1173451130000000000"
         },
@@ -48,7 +48,6 @@ blocks?blocks=0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
           "gasPrice": 50000000000,
           "gasUsed": 21000,
           "hash": "0xb26eb39e0eb84b470f2da07fe3ceff0d51d4e7418787589f2dda4bc3e23deeeb",
-          "input": "0x",
           "nonce": 173053,
           "receipt": {
             "contractAddress": "0x0",
@@ -59,6 +58,7 @@ blocks?blocks=0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
           },
           "timestamp": 1455422019,
           "to": "0xabcea603089850f8f6bb612a9031554d90a247cf",
+          "traces": [],
           "transactionIndex": 1,
           "value": "1864349710000000000"
         }

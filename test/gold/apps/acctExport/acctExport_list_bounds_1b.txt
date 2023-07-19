@@ -5,4 +5,4 @@ TEST[DATE|TIME] Bounds:  true
 TEST[DATE|TIME] LastBlock:  9000000
 TEST[DATE|TIME] Format:  csv
 address,nRecords,fileSize
-0xf503017d7baf7fbc0fff7492b751025c6a78179b,14,1001001
+0xf503017d7baf7fbc0fff7492b751025c6a78179b,14,57005

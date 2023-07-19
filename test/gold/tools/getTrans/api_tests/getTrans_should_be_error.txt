@@ -25,6 +25,7 @@ transactions?transactions=0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23
       },
       "timestamp": 1508131331,
       "to": "0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c",
+      "traces": [],
       "transactionIndex": 10,
       "value": "0"
     }

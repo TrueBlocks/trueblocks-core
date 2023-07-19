@@ -71,7 +71,7 @@ on       ,both ,fast  ,blocks ,tools/getBlocks ,no_trace_hashes       ,y    ,blo
 on       ,both ,fast  ,blocks ,tools/getBlocks ,no_trace_uniq         ,y    ,blocks = 4012000-4012001 & traces & uniq
 on       ,both ,fast  ,blocks ,tools/getBlocks ,bigrange_not_logs     ,y    ,blocks = 4012000-4012001 & big_range = 100
 
-on       ,both ,fast  ,blocks ,tools/getBlocks ,access_list           ,y    ,blocks = 16500011 & fmt = json & raw
+slow     ,both ,fast  ,blocks ,tools/getBlocks ,access_list           ,y    ,blocks = 16500011 & fmt = json & raw
 
 on       ,both ,fast  ,blocks ,tools/getBlocks ,flow_error_1          ,n    ,blocks = 4102000 & fmt = txt & flow = to
 slow     ,both ,fast  ,blocks ,tools/getBlocks ,flow_uniq_from        ,n    ,blocks = 4102000 & fmt = txt & uniq & flow = from

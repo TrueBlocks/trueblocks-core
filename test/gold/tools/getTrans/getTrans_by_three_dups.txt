@@ -14,7 +14,6 @@ TEST[DATE|TIME] Format:  json
       "gasPrice": 21000000000,
       "gasUsed": 21000,
       "hash": "0x9ba401a48e378440f90e8d50feac2331f38a39fd9f33e3c6c213302cef3e5887",
-      "input": "0x",
       "nonce": 9,
       "receipt": {
         "contractAddress": "0x0",
@@ -25,6 +24,7 @@ TEST[DATE|TIME] Format:  json
       },
       "timestamp": 1499633574,
       "to": "0x904b7190718aa2d025b2aded0f20a0a0fe6e6bd5",
+      "traces": [],
       "transactionIndex": 5,
       "value": "15000000000000000000"
     },
@@ -39,7 +39,6 @@ TEST[DATE|TIME] Format:  json
       "gasPrice": 21000000000,
       "gasUsed": 21000,
       "hash": "0x9ba401a48e378440f90e8d50feac2331f38a39fd9f33e3c6c213302cef3e5887",
-      "input": "0x",
       "nonce": 9,
       "receipt": {
         "contractAddress": "0x0",
@@ -50,6 +49,7 @@ TEST[DATE|TIME] Format:  json
       },
       "timestamp": 1499633574,
       "to": "0x904b7190718aa2d025b2aded0f20a0a0fe6e6bd5",
+      "traces": [],
       "transactionIndex": 5,
       "value": "15000000000000000000"
     },
@@ -64,7 +64,6 @@ TEST[DATE|TIME] Format:  json
       "gasPrice": 21000000000,
       "gasUsed": 21000,
       "hash": "0x9ba401a48e378440f90e8d50feac2331f38a39fd9f33e3c6c213302cef3e5887",
-      "input": "0x",
       "nonce": 9,
       "receipt": {
         "contractAddress": "0x0",
@@ -75,6 +74,7 @@ TEST[DATE|TIME] Format:  json
       },
       "timestamp": 1499633574,
       "to": "0x904b7190718aa2d025b2aded0f20a0a0fe6e6bd5",
+      "traces": [],
       "transactionIndex": 5,
       "value": "15000000000000000000"
     }

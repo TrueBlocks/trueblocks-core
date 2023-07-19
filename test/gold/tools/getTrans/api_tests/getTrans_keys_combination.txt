@@ -12,7 +12,6 @@ transactions?transactions=0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a07
       "gasPrice": 49775761060,
       "gasUsed": 30416,
       "hash": "0xf1e398af74afe7dff17573ab30ae0b5bdbbcfc65a5d22d69b096cf620363a3c0",
-      "input": "0x",
       "nonce": 476,
       "receipt": {
         "contractAddress": "0x0",
@@ -22,7 +21,9 @@ transactions?transactions=0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a07
           {
             "address": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
             "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
+            "date": "2017-07-09 20:52:47 UTC",
             "logIndex": 3,
+            "timestamp": 1499633567,
             "topics": [
               "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
             ]
@@ -32,6 +33,7 @@ transactions?transactions=0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a07
       },
       "timestamp": 1499633567,
       "to": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
+      "traces": [],
       "transactionIndex": 4,
       "value": "998174500000000000"
     },
@@ -57,7 +59,9 @@ transactions?transactions=0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a07
           {
             "address": "0x1a95b271b0535d15fa49932daba31ba612b52946",
             "data": "0x000000000000000000000000000000000000000000000000000000000a21fe80",
+            "date": "2017-07-09 20:52:47 UTC",
             "logIndex": 4,
+            "timestamp": 1499633567,
             "topics": [
               "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
               "0x00000000000000000000000040584168524a928ae43b4e83893f963e467e9d73",
@@ -69,6 +73,7 @@ transactions?transactions=0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a07
       },
       "timestamp": 1499633567,
       "to": "0x1a95b271b0535d15fa49932daba31ba612b52946",
+      "traces": [],
       "transactionIndex": 5,
       "value": "0"
     },
@@ -83,7 +88,6 @@ transactions?transactions=0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a07
       "gasPrice": 4000000000,
       "gasUsed": 39512,
       "hash": "0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765",
-      "input": "0x",
       "nonce": 2333166,
       "receipt": {
         "contractAddress": "0x0",
@@ -93,7 +97,9 @@ transactions?transactions=0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a07
           {
             "address": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
             "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
+            "date": "2017-07-09 20:52:47 UTC",
             "logIndex": 59,
+            "timestamp": 1499633567,
             "topics": [
               "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
             ]
@@ -101,7 +107,9 @@ transactions?transactions=0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a07
           {
             "address": "0x11b1f00bccf07754e6f1996864531fa162145cde",
             "data": "0x000000000000000000000000209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
+            "date": "2017-07-09 20:52:47 UTC",
             "logIndex": 60,
+            "timestamp": 1499633567,
             "topics": [
               "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
             ]
@@ -111,6 +119,7 @@ transactions?transactions=0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a07
       },
       "timestamp": 1499633567,
       "to": "0x11b1f00bccf07754e6f1996864531fa162145cde",
+      "traces": [],
       "transactionIndex": 68,
       "value": "202229176215950944"
     }

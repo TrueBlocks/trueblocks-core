@@ -11,28 +11,32 @@ func (m *Monitor) TruncateTo(chain string, num uint32) (bool, error) {
 		return false, err
 	}
 
-	apps := make([]index.AppearanceRecord, m.Count())
-	if err = m.ReadAppearances(&apps); err != nil {
+	if apps, cnt, err := m.ReadAndFilterAppearances(NewEmptyFilter(chain)); err != nil {
 		return false, err
-	}
-
-	var keep []index.AppearanceRecord
-	for _, app := range apps {
-		if app.BlockNumber <= num {
-			keep = append(keep, app)
+	} else if cnt == 0 {
+		return false, nil
+	} else {
+		var keep []index.AppearanceRecord
+		for _, app := range apps {
+			if app.BlockNumber <= num {
+				keep = append(keep, index.AppearanceRecord{
+					BlockNumber:   app.BlockNumber,
+					TransactionId: app.TransactionIndex,
+				})
+			}
 		}
-	}
-	lastScanned := utils.Min(num, m.Header.LastScanned)
+		lastScanned := utils.Min(num, m.Header.LastScanned)
 
-	m.Close() // so when we open it, it gets replaced
-	// Very important to note - if you use false for append, the header gets overwritten
-	// so ordering matters here and we need to write the header afterwards
-	if _, err := m.WriteAppearances(keep, false /* append */); err != nil {
+		m.Close() // so when we open it, it gets replaced
+		// Very important to note - if you use false for append, the header gets overwritten
+		// so ordering matters here and we need to write the header afterwards
+		if _, err := m.WriteAppearances(keep, false /* append */); err != nil {
+			m.Close()
+			return false, err
+		}
+		m.WriteMonHeader(m.Deleted, lastScanned, true /* force */)
 		m.Close()
-		return false, err
-	}
-	m.WriteMonHeader(m.Deleted, lastScanned, true /* force */)
-	m.Close()
 
-	return len(apps)-len(keep) > 0, nil
+		return len(apps)-len(keep) > 0, nil
+	}
 }

@@ -112,6 +112,7 @@ func (s *SimpleStatement) Model(verbose bool, format string, extraOptions map[st
 
 	// EXISTING_CODE
 	asEther := extraOptions["ether"] == true
+	decimals := int(s.Decimals)
 	model = map[string]any{
 		"blockNumber":         s.BlockNumber,
 		"transactionIndex":    s.TransactionIndex,
@@ -127,38 +128,38 @@ func (s *SimpleStatement) Model(verbose bool, format string, extraOptions map[st
 		"accountedFor":        s.AccountedFor,
 		"sender":              s.Sender,
 		"recipient":           s.Recipient,
-		"begBal":              utils.FormattedValue(s.BegBal, asEther, 18),
-		"amountNet":           utils.FormattedValue(*s.AmountNet(), asEther, 18),
-		"endBal":              utils.FormattedValue(s.EndBal, asEther, 18),
+		"begBal":              utils.FormattedValue(s.BegBal, asEther, decimals),
+		"amountNet":           utils.FormattedValue(*s.AmountNet(), asEther, decimals),
+		"endBal":              utils.FormattedValue(s.EndBal, asEther, decimals),
 		"reconciliationType":  s.ReconciliationType,
 		"reconciled":          s.Reconciled(),
-		"totalIn":             utils.FormattedValue(*s.TotalIn(), asEther, 18),
-		"amountIn":            utils.FormattedValue(s.AmountIn, asEther, 18),
-		"internalIn":          utils.FormattedValue(s.InternalIn, asEther, 18),
-		"selfDestructIn":      utils.FormattedValue(s.SelfDestructIn, asEther, 18),
-		"minerBaseRewardIn":   utils.FormattedValue(s.MinerBaseRewardIn, asEther, 18),
-		"minerNephewRewardIn": utils.FormattedValue(s.MinerNephewRewardIn, asEther, 18),
-		"minerTxFeeIn":        utils.FormattedValue(s.MinerTxFeeIn, asEther, 18),
-		"minerUncleRewardIn":  utils.FormattedValue(s.MinerUncleRewardIn, asEther, 18),
-		"correctingIn":        utils.FormattedValue(s.CorrectingIn, asEther, 18),
-		"prefundIn":           utils.FormattedValue(s.PrefundIn, asEther, 18),
-		"totalOut":            utils.FormattedValue(*s.TotalOut(), asEther, 18),
-		"amountOut":           utils.FormattedValue(s.AmountOut, asEther, 18),
-		"internalOut":         utils.FormattedValue(s.InternalOut, asEther, 18),
-		"correctingOut":       utils.FormattedValue(s.CorrectingOut, asEther, 18),
-		"selfDestructOut":     utils.FormattedValue(s.SelfDestructOut, asEther, 18),
-		"gasOut":              utils.FormattedValue(s.GasOut, asEther, 18),
-		"totalOutLessGas":     utils.FormattedValue(*s.TotalOutLessGas(), asEther, 18),
+		"totalIn":             utils.FormattedValue(*s.TotalIn(), asEther, decimals),
+		"amountIn":            utils.FormattedValue(s.AmountIn, asEther, decimals),
+		"internalIn":          utils.FormattedValue(s.InternalIn, asEther, decimals),
+		"selfDestructIn":      utils.FormattedValue(s.SelfDestructIn, asEther, decimals),
+		"minerBaseRewardIn":   utils.FormattedValue(s.MinerBaseRewardIn, asEther, decimals),
+		"minerNephewRewardIn": utils.FormattedValue(s.MinerNephewRewardIn, asEther, decimals),
+		"minerTxFeeIn":        utils.FormattedValue(s.MinerTxFeeIn, asEther, decimals),
+		"minerUncleRewardIn":  utils.FormattedValue(s.MinerUncleRewardIn, asEther, decimals),
+		"correctingIn":        utils.FormattedValue(s.CorrectingIn, asEther, decimals),
+		"prefundIn":           utils.FormattedValue(s.PrefundIn, asEther, decimals),
+		"totalOut":            utils.FormattedValue(*s.TotalOut(), asEther, decimals),
+		"amountOut":           utils.FormattedValue(s.AmountOut, asEther, decimals),
+		"internalOut":         utils.FormattedValue(s.InternalOut, asEther, decimals),
+		"correctingOut":       utils.FormattedValue(s.CorrectingOut, asEther, decimals),
+		"selfDestructOut":     utils.FormattedValue(s.SelfDestructOut, asEther, decimals),
+		"gasOut":              utils.FormattedValue(s.GasOut, asEther, decimals),
+		"totalOutLessGas":     utils.FormattedValue(*s.TotalOutLessGas(), asEther, decimals),
 		"prevAppBlk":          s.PrevAppBlk,
-		"prevBal":             utils.FormattedValue(s.PrevBal, asEther, 18),
-		"begBalDiff":          utils.FormattedValue(*s.BegBalDiff(), asEther, 18),
-		"endBalDiff":          utils.FormattedValue(*s.EndBalDiff(), asEther, 18),
-		"endBalCalc":          utils.FormattedValue(*s.EndBalCalc(), asEther, 18),
+		"prevBal":             utils.FormattedValue(s.PrevBal, asEther, decimals),
+		"begBalDiff":          utils.FormattedValue(*s.BegBalDiff(), asEther, decimals),
+		"endBalDiff":          utils.FormattedValue(*s.EndBalDiff(), asEther, decimals),
+		"endBalCalc":          utils.FormattedValue(*s.EndBalCalc(), asEther, decimals),
 		"correctingReason":    s.CorrectingReason,
 	}
 	order = []string{
-		"blockNumber", "transactionIndex", "logindex", "transactionHash", "timestamp", "date",
-		"assetAddress", "assetSymbol", "decimals", "spotPrice", "priceSource", "accountedFor",
+		"blockNumber", "transactionIndex", "logIndex", "transactionHash", "timestamp", "date",
+		"assetAddr", "assetSymbol", "decimals", "spotPrice", "priceSource", "accountedFor",
 		"sender", "recipient", "begBal", "amountNet", "endBal", "reconciliationType", "reconciled",
 		"totalIn", "amountIn", "internalIn", "selfDestructIn", "minerBaseRewardIn", "minerNephewRewardIn",
 		"minerTxFeeIn", "minerUncleRewardIn", "prefundIn", "totalOut", "amountOut", "internalOut",
@@ -266,6 +267,9 @@ func (s *SimpleStatement) Reconciled() bool {
 	return (s.EndBalDiff().Cmp(zero) == 0 && s.BegBalDiff().Cmp(zero) == 0)
 }
 
+// ClearInternal clears all the internal accounting values. Keeps AmountIn, AmountOut and GasOut
+// because those are at the top level (both the transaction itself and trace '0' have them). We
+// skip trace '0' because it's the same as the transaction.
 func (s *SimpleStatement) ClearInternal() {
 	// s.AmountIn.SetUint64(0)
 	s.InternalIn.SetUint64(0)
@@ -311,7 +315,8 @@ func (s *SimpleStatement) isNullTransfer(tx *SimpleTransaction) bool {
 	noBalanceChange := s.EndBal.Cmp(&s.BegBal) == 0 && s.MoneyMoved()
 	ret := (lotsOfLogs || mayBeAirdrop) && noBalanceChange
 
-	logger.Warn("Statement is not reconciled", s.AssetSymbol, "at", s.BlockNumber, s.TransactionIndex, s.LogIndex)
+	// TODO: BOGUS PERF
+	// logger.Warn("Statement is not reconciled", s.AssetSymbol, "at", s.BlockNumber, s.TransactionIndex, s.LogIndex)
 	logger.TestLog(true, "A possible nullTransfer")
 	logger.TestLog(true, "  nLogs:            ", len(tx.Receipt.Logs))
 	logger.TestLog(true, "    lotsOfLogs:      -->", lotsOfLogs)
@@ -331,14 +336,20 @@ func (s *SimpleStatement) isNullTransfer(tx *SimpleTransaction) bool {
 }
 
 func (s *SimpleStatement) CorrectForNullTransfer(tx *SimpleTransaction) bool {
-	if s.isNullTransfer(tx) && !s.IsEth() {
-		logger.TestLog(true, "Correcting token transfer for a null transfer")
-		amt := s.TotalIn() // use totalIn since this is the amount that was faked
-		s.AmountOut = *new(big.Int)
-		s.AmountIn = *new(big.Int)
-		s.CorrectingIn = *amt
-		s.CorrectingOut = *amt
-		s.CorrectingReason = "null-transfer"
+	if !s.IsEth() {
+		if s.isNullTransfer(tx) {
+			logger.TestLog(true, "Correcting token transfer for a null transfer")
+			amt := s.TotalIn() // use totalIn since this is the amount that was faked
+			s.AmountOut = *new(big.Int)
+			s.AmountIn = *new(big.Int)
+			s.CorrectingIn = *amt
+			s.CorrectingOut = *amt
+			s.CorrectingReason = "null-transfer"
+		} else {
+			logger.TestLog(true, "Needs correction for token transfer")
+		}
+	} else {
+		logger.TestLog(true, "Needs correction for eth")
 	}
 	return s.Reconciled()
 }
@@ -372,6 +383,8 @@ func (s *SimpleStatement) CorrectForSomethingElse(tx *SimpleTransaction) bool {
 			s.CorrectingReason += "endbal"
 		}
 		s.CorrectingReason = strings.Replace(s.CorrectingReason, "begbalendbal", "begbal-endbal", -1)
+	} else {
+		logger.TestLog(true, "Needs correction for eth")
 	}
 
 	return s.Reconciled()

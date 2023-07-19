@@ -13,6 +13,7 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 )
 
@@ -70,7 +71,7 @@ func (s *SimpleTraceAction) Model(verbose bool, format string, extraOptions map[
 	// EXISTING_CODE
 	if format == "json" {
 		if extraOptions["traces"] != true && len(s.Init) > 0 {
-			model["init"] = s.Init
+			model["init"] = utils.FormattedCode(verbose, s.Init)
 		}
 		if !s.SelfDestructed.IsZero() {
 			model["selfDestructed"] = s.SelfDestructed
@@ -84,7 +85,7 @@ func (s *SimpleTraceAction) Model(verbose bool, format string, extraOptions map[
 		if s.Gas != 0 {
 			model["gas"] = s.Gas
 		}
-		if len(s.Input) > 0 {
+		if len(s.Input) > 2 {
 			model["input"] = s.Input
 		}
 		if s.Value.String() != "0" {
@@ -105,7 +106,7 @@ func (s *SimpleTraceAction) Model(verbose bool, format string, extraOptions map[
 			model["value"] = s.Value.String()
 		}
 		if len(s.Init) > 0 {
-			model["init"] = s.Init
+			model["init"] = utils.FormattedCode(verbose, s.Init)
 		}
 		if !s.Address.IsZero() {
 			model["address"] = s.Address

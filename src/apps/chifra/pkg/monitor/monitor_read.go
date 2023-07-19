@@ -9,10 +9,10 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // ReadMonitorHeader reads the monitor's header and returns without closing the file
@@ -62,86 +62,20 @@ func (mon *Monitor) ReadAppearanceAt(idx int64, app *index.AppearanceRecord) (er
 	return
 }
 
-// ReadAppearances returns appearances starting at the first appearance in the file. The call
-// will read as many records as are available in the array. The file remains opened.
-func (mon *Monitor) ReadAppearances(apps *[]index.AppearanceRecord) (err error) {
-	if int64(len(*apps)) > mon.Count() {
-		err = fmt.Errorf("array is larger than the size of the file in ReadAppearances (%d,%d)", len(*apps), mon.Count())
-		return
-	}
-
-	if mon.ReadFp == nil {
-		path := mon.Path()
-		mon.ReadFp, err = os.OpenFile(path, os.O_RDONLY, 0644)
-		if err != nil {
-			return
-		}
-	}
-
-	// Seek past the header to get to the first record
-	_, err = mon.ReadFp.Seek(index.AppRecordWidth, io.SeekStart)
-	if err != nil {
-		return
-	}
-
-	err = binary.Read(mon.ReadFp, binary.LittleEndian, apps)
-	if err != nil {
-		return
-	}
-
-	return
-}
-
-type AppearanceSort int
-
-const (
-	NotSorted AppearanceSort = iota
-	Sorted
-	Reversed
-)
-
 func Sort(apps []index.AppearanceRecord, sortBy AppearanceSort) {
-	if sortBy == Sorted || sortBy == Reversed {
-		sort.Slice(apps, func(i, j int) bool {
-			si := (uint64(apps[i].BlockNumber) << 32) + uint64(apps[i].TransactionId)
-			sj := (uint64(apps[j].BlockNumber) << 32) + uint64(apps[j].TransactionId)
-			if sortBy == Reversed {
-				return sj < si
-			} else {
-				return si < sj
-			}
-		})
-	}
 }
 
-func ReadAppearancesToMap[T any](mon *Monitor) (theMap map[index.AppearanceRecord]*T, cnt int, err error) {
-	if apps, cnt, err := mon.ReadAppearancesToSlice(NotSorted); err != nil {
+// ReadAppearancesToMap reads all appearances from the monitor and returns a map of the appearances to the given type.
+func ReadAppearancesToMap[T any](mon *Monitor, filter *AppearanceFilter) (theMap map[types.SimpleAppearance]*T, cnt int, err error) {
+	if apps, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
 		return nil, 0, err
 	} else if cnt == 0 {
 		return nil, 0, nil
 	} else {
-		m := make(map[index.AppearanceRecord]*T, mon.Count())
+		m := make(map[types.SimpleAppearance]*T, mon.Count())
 		for _, app := range apps {
 			m[app] = new(T)
 		}
 		return m, len(m), nil
 	}
-}
-
-func (mon *Monitor) ReadAppearancesToSlice(sortBy AppearanceSort) (apps []index.AppearanceRecord, cnt int, err error) {
-	if mon.Count() == 0 {
-		return nil, 0, nil
-	}
-
-	apps = make([]index.AppearanceRecord, mon.Count())
-	if err := mon.ReadAppearances(&apps); err != nil {
-		return nil, 0, err
-	} else if len(apps) == 0 {
-		return nil, 0, nil
-	}
-
-	Sort(apps, sortBy)
-	mon.Close()
-
-	return apps, len(apps), nil
 }

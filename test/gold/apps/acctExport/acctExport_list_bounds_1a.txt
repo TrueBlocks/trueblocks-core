@@ -1,7 +1,21 @@
-chifra list  trueblocks.eth --fmt csv --last_block 9000000 --bounds
+chifra list  trueblocks.eth --fmt json --last_block 9000000 --bounds
 TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
 TEST[DATE|TIME] Bounds:  true
 TEST[DATE|TIME] LastBlock:  9000000
-TEST[DATE|TIME] Format:  csv
-address,count,firstApp,firstTs,firstDate,latestApp,latestTs,latestDate,blockSpan,blockFreq
-0xf503017d7baf7fbc0fff7492b751025c6a78179b,2381,8856290.62,1572660966,2019-11-02 02:16:06 UTC,14997007.121,1655734559,2022-06-20 14:15:59 UTC,6140717,2579
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "blockFreq": 1536,
+      "blockSpan": 21509,
+      "count": 14,
+      "firstApp": "8854723.61",
+      "firstDate": "2019-11-01 20:18:58 UTC",
+      "firstTs": 1572639538,
+      "latestApp": "8876232.84",
+      "latestDate": "2019-11-05 07:18:48 UTC",
+      "latestTs": 1572938328
+    }
+  ]
+}
