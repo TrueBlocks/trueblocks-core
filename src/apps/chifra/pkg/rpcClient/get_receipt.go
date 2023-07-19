@@ -8,6 +8,7 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -26,7 +27,21 @@ type ReceiptQuery struct {
 
 // GetTransactionReceipt fetches receipt from the RPC. If txGasPrice is provided, it will be used for
 // receipts in blocks before London
-func GetTransactionReceipt(chain string, query ReceiptQuery) (receipt types.SimpleReceipt, err error) {
+func GetTransactionReceipt(chain string, query ReceiptQuery, store *cacheNew.Store) (receipt types.SimpleReceipt, err error) {
+	if store != nil {
+		tx := &types.SimpleTransaction{
+			BlockNumber:      query.Bn,
+			TransactionIndex: query.Txid,
+		}
+		if err := store.Read(tx, nil); err == nil {
+			// success
+			if tx.Receipt == nil {
+				return receipt, nil
+			}
+			return *tx.Receipt, nil
+		}
+	}
+
 	rawReceipt, tx, err := getRawTransactionReceipt(chain, query.Bn, query.Txid)
 	if err != nil {
 		return

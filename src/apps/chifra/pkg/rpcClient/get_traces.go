@@ -94,7 +94,7 @@ func GetTracesByBlockNumber(chain string, bn uint64) ([]types.SimpleTrace, error
 
 // GetTracesCountByTransactionId returns the number of traces in a given transaction
 func GetTracesCountByTransactionId(chain string, bn, txid uint64) (uint64, error) {
-	traces, err := GetTracesByTransactionId(chain, bn, txid)
+	traces, err := GetTracesByTransactionId(chain, bn, txid, cacheNew.NoCache)
 	if err != nil {
 		return 0, err
 	}
@@ -102,19 +102,30 @@ func GetTracesCountByTransactionId(chain string, bn, txid uint64) (uint64, error
 }
 
 // GetTracesByTransactionId returns a slice of traces in a given transaction
-func GetTracesByTransactionId(chain string, bn, txid uint64) ([]types.SimpleTrace, error) {
+func GetTracesByTransactionId(chain string, bn, txid uint64, store *cacheNew.Store) ([]types.SimpleTrace, error) {
 	var ret []types.SimpleTrace
+	if store != nil {
+		traceGroup := &types.SimpleTraceGroup{
+			BlockNumber:      bn,
+			TransactionIndex: int(txid),
+		}
+
+		if err := store.Read(traceGroup, nil); err == nil {
+			// success
+			return traceGroup.Traces, nil
+		}
+	}
 
 	txHash, err := rpc.GetTxHashFromNumberAndId(chain, bn, txid)
 	if err != nil {
 		return ret, err
 	}
-	return GetTracesByTransactionHash(chain, txHash, nil, nil)
+	return GetTracesByTransactionHash(chain, txHash, nil, store)
 }
 
 // GetTracesCountByTransactionHash returns the number of traces in a given transaction
 func GetTracesCountByTransactionHash(chain string, txHash string) (uint64, error) {
-	traces, err := GetTracesByTransactionHash(chain, txHash, nil, nil)
+	traces, err := GetTracesByTransactionHash(chain, txHash, nil, cacheNew.NoCache)
 	if err != nil {
 		return 0, err
 	}
@@ -206,10 +217,11 @@ func GetTracesByFilter(chain string, filter string) ([]types.SimpleTrace, error)
 }
 
 // GetTracesByTransactionHash returns a slice of traces in a given transaction's hash
-func GetTracesByTransactionHash(chain string, txHash string, transaction *types.SimpleTransaction, cache *cacheNew.Store) ([]types.SimpleTrace, error) {
-	if cache != nil && transaction != nil {
+func GetTracesByTransactionHash(chain string, txHash string, transaction *types.SimpleTransaction, store *cacheNew.Store) ([]types.SimpleTrace, error) {
+	if store != nil && transaction != nil {
 		traceGroup := types.NewSimpleTraceGroup(transaction)
-		if err := cache.Read(traceGroup, nil); err == nil {
+
+		if err := store.Read(traceGroup, nil); err == nil {
 			// success
 			return traceGroup.Traces, nil
 		}
@@ -293,10 +305,10 @@ func GetTracesByTransactionHash(chain string, txHash string, transaction *types.
 			ret = append(ret, trace)
 		}
 
-		if cache != nil && transaction != nil {
+		if store != nil && transaction != nil {
 			traceGroup := types.NewSimpleTraceGroup(transaction)
 			traceGroup.Traces = ret
-			cache.Write(traceGroup, nil)
+			store.Write(traceGroup, nil)
 		}
 
 		return ret, nil

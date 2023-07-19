@@ -58,10 +58,6 @@ func (l *fileSystem) Writer(path string) (io.WriteCloser, error) {
 
 // Reader returns io.ReaderCloser for the item at given path
 func (l *fileSystem) Reader(path string) (io.ReadCloser, error) {
-	if err := l.makeParentDirectories(path); err != nil {
-		return nil, err
-	}
-
 	input, err := file.WaitOnLock(path, os.O_RDWR)
 	if err != nil {
 		if errors.Is(err, os.ErrNotExist) {

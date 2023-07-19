@@ -407,6 +407,7 @@ func (s *SimpleFunction) MarshalCache(writer io.Writer) (err error) {
 
 	outputs := make([]cacheNew.Marshaler, 0, len(s.Outputs))
 	for _, output := range s.Outputs {
+		output := output
 		outputs = append(outputs, &output)
 	}
 	if err = cacheNew.WriteValue(writer, outputs); err != nil {

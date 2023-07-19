@@ -212,6 +212,7 @@ func (s *SimpleReceipt) MarshalCache(writer io.Writer) (err error) {
 
 	logs := make([]cacheNew.Marshaler, 0, len(s.Logs))
 	for _, log := range s.Logs {
+		log := log
 		logs = append(logs, &log)
 	}
 	if err = cacheNew.WriteValue(writer, logs); err != nil {

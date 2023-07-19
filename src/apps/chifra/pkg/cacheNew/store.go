@@ -156,11 +156,6 @@ func (s *Store) Stat(value Locator) (result *locations.ItemInfo, err error) {
 }
 
 func (s *Store) Remove(value Locator) (err error) {
-	if s.readOnly {
-		err = ErrReadOnly
-		printErr("write", err)
-		return
-	}
 	itemPath, err := s.resolvePath(value)
 	if err != nil {
 		printErr("remove resolving path", err)
@@ -176,11 +171,6 @@ func (s *Store) Remove(value Locator) (err error) {
 type DecacheFunc func(*locations.ItemInfo) bool
 
 func (s *Store) Decache(locators []Locator, processor DecacheFunc) (err error) {
-	if s.readOnly {
-		err = ErrReadOnly
-		printErr("write", err)
-		return
-	}
 	for _, locator := range locators {
 		stats, err := s.Stat(locator)
 		if err != nil {
@@ -191,7 +181,7 @@ func (s *Store) Decache(locators []Locator, processor DecacheFunc) (err error) {
 			continue
 		}
 		if err := s.Remove(locator); err != nil {
-			return err
+			printErr("decache", err)
 		}
 	}
 
