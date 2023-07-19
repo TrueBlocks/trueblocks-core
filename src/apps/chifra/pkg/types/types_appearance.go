@@ -14,6 +14,7 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
@@ -29,7 +30,6 @@ type RawAppearance struct {
 type SimpleAppearance struct {
 	Address          base.Address   `json:"address"`
 	BlockNumber      uint32         `json:"blockNumber"`
-	Date             string         `json:"date"`
 	Reason           string         `json:"reason,omitempty"`
 	Timestamp        base.Timestamp `json:"timestamp"`
 	TraceIndex       uint32         `json:"traceIndex,omitempty"`
@@ -61,11 +61,13 @@ func (s *SimpleAppearance) Model(verbose bool, format string, extraOptions map[s
 			"blockNumber",
 			"transactionIndex",
 		}
+
 		return Model{
 			Data:  model,
 			Order: order,
 		}
 	}
+
 	model = map[string]interface{}{
 		"address":          s.Address,
 		"blockNumber":      s.BlockNumber,
@@ -75,6 +77,14 @@ func (s *SimpleAppearance) Model(verbose bool, format string, extraOptions map[s
 		"address",
 		"blockNumber",
 		"transactionIndex",
+	}
+
+	if extraOptions["namesMap"] != nil {
+		name := extraOptions["namesMap"].(map[base.Address]SimpleName)[s.Address]
+		if name.Address.Hex() != "0x0" {
+			model["name"] = name
+			order = append(order, "name")
+		}
 	}
 
 	if extraOptions["uniq"] == true {
@@ -91,11 +101,25 @@ func (s *SimpleAppearance) Model(verbose bool, format string, extraOptions map[s
 		}...)
 		if verbose {
 			model["timestamp"] = s.Timestamp
-			model["date"] = s.Date
+			model["date"] = s.Date()
 			order = append(order, []string{
 				"timestamp",
 				"date",
 			}...)
+		}
+	} else if extraOptions["export"] == true && format == "json" {
+		if verbose {
+			if s.Timestamp != utils.NOPOSI {
+				model["timestamp"] = s.Timestamp
+			}
+			model["date"] = s.Date()
+		}
+		if extraOptions["namesMap"] != nil {
+			name := extraOptions["namesMap"].(map[base.Address]SimpleName)[s.Address]
+			if name.Address.Hex() != "0x0" {
+				model["name"] = name.Name
+				order = append(order, "name")
+			}
 		}
 	} else {
 		if verbose {
@@ -108,8 +132,7 @@ func (s *SimpleAppearance) Model(verbose bool, format string, extraOptions map[s
 			}
 			model["reason"] = s.Reason
 			model["timestamp"] = s.Timestamp
-			model["date"] = s.Date
-
+			model["date"] = s.Date()
 			order = append(order, []string{
 				"reason",
 				"timestamp",
@@ -141,6 +164,10 @@ func (s *SimpleAppearance) ReadFrom(r io.Reader) (n int64, err error) {
 // EXISTING_CODE
 func (s *SimpleAppearance) GetKey() string {
 	return fmt.Sprintf("%s\t%09d\t%05d", s.Address, s.BlockNumber, s.TransactionIndex)
+}
+
+func (s *SimpleAppearance) Date() string {
+	return utils.FormattedDate(s.Timestamp)
 }
 
 // EXISTING_CODE

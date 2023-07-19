@@ -25,7 +25,6 @@ TEST[DATE|TIME] Format:  json
           "gasPrice": 50000000000,
           "gasUsed": 21000,
           "hash": "0x730724cb08a6eb17bf6b3296359d261570d343ea7944a17a9d7287d77900db08",
-          "input": "0x",
           "nonce": 9839,
           "receipt": {
             "contractAddress": "0x0",
@@ -36,6 +35,7 @@ TEST[DATE|TIME] Format:  json
           },
           "timestamp": 1455421883,
           "to": "0x789f40d61bb6436254d5b5f9cbb8cefb76916d46",
+          "traces": [],
           "transactionIndex": 0,
           "value": "1174501130000000000"
         },
@@ -50,7 +50,6 @@ TEST[DATE|TIME] Format:  json
           "gasPrice": 50000000000,
           "gasUsed": 21000,
           "hash": "0xef2ea39c20ba09553b2f3cf02380406ac766039ca56612937eed5e7f3503fb3a",
-          "input": "0x",
           "nonce": 173040,
           "receipt": {
             "contractAddress": "0x0",
@@ -61,6 +60,7 @@ TEST[DATE|TIME] Format:  json
           },
           "timestamp": 1455421883,
           "to": "0xd77ba7ef37f87d5246f35de898133e09c92ecaca",
+          "traces": [],
           "transactionIndex": 1,
           "value": "2148415350000000000"
         },
@@ -75,7 +75,6 @@ TEST[DATE|TIME] Format:  json
           "gasPrice": 50000000000,
           "gasUsed": 21000,
           "hash": "0x5352c80aa2073e21ce6c4aa5488c38455f3519955ece7dca5af3e326797bcc63",
-          "input": "0x",
           "receipt": {
             "contractAddress": "0x0",
             "effectiveGasPrice": 50000000000,
@@ -85,6 +84,7 @@ TEST[DATE|TIME] Format:  json
           },
           "timestamp": 1455421883,
           "to": "0x8ce45c9dd072be275a9ab6c3736b086702d77413",
+          "traces": [],
           "transactionIndex": 2,
           "value": "38120000000000000000"
         },
@@ -99,7 +99,6 @@ TEST[DATE|TIME] Format:  json
           "gasPrice": 50000000000,
           "gasUsed": 21000,
           "hash": "0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521",
-          "input": "0x",
           "receipt": {
             "contractAddress": "0x0",
             "effectiveGasPrice": 50000000000,
@@ -109,6 +108,7 @@ TEST[DATE|TIME] Format:  json
           },
           "timestamp": 1455421883,
           "to": "0x9b0a028eafdecde3afc0fd00b7937098388b7c8a",
+          "traces": [],
           "transactionIndex": 3,
           "value": "61848232647269079"
         }

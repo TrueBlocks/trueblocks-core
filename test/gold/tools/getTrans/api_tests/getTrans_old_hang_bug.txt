@@ -34,6 +34,7 @@ transactions?transactions=6409270.108&articulate&fmt=json
       },
       "timestamp": 1538054518,
       "to": "0x6b92d76c9d0d40e53019ffa51b6f0c9b6bc657c9",
+      "traces": [],
       "transactionIndex": 108,
       "value": "0"
     }

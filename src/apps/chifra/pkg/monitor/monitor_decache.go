@@ -8,10 +8,10 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 )
 
 // Decache removes a monitor and all cached data from the cache
@@ -20,14 +20,19 @@ func (mon *Monitor) Decache(chain string, processor cache.DecacheFunc) error {
 		defer mon.Close()
 	}
 
-	if apps, cnt, err := mon.ReadAppearancesToSlice(NotSorted); err != nil {
+	if apps, cnt, err := mon.ReadAndFilterAppearances(NewEmptyFilter(chain)); err != nil {
 		return err
 	} else if cnt == 0 {
 		return nil
 	} else {
+		pairs := make([]base.NumPair[uint32], 0, len(apps))
+		for _, app := range apps {
+			pairs = append(pairs, base.NumPair[uint32]{N1: app.BlockNumber, N2: app.TransactionIndex})
+		}
+
 		// TODO: This should use go routines
 		caches := []string{"blocks", "txs", "traces", "recons", "abis"}
-		if cont, err := cache.DecacheItems(chain, mon.Address.Hex(), processor, caches, index.AppsToNumPairs(apps)); err != nil || !cont {
+		if cont, err := cache.DecacheItems(chain, mon.Address.Hex(), processor, caches, pairs); err != nil || !cont {
 			return err
 		}
 

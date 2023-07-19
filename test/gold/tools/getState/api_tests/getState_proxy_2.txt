@@ -6,7 +6,7 @@ state?parts=all&addrs=0x7cfb89D6DF1b89A678Dcaf42B9c262593e881E22&fmt=json&blocks
       "address": "0x7cfb89d6df1b89a678dcaf42b9c262593e881e22",
       "balance": "21438692222319941062",
       "blockNumber": 14000000,
-      "code": "0x608060405273ffffff...736f6c63430007060033",
+      "code": "0x608060405273f...c63430007060033",
       "deployed": 12983248,
       "ether": "21.438692222319941062",
       "nonce": 1,

@@ -39,7 +39,9 @@ TEST[DATE|TIME] Format:  json
               "name": "Deposit"
             },
             "data": "0x0000000000000000000000000000000000000000000000000de0b6b3a7640000",
+            "date": "2016-05-19 10:19:53 UTC",
             "logIndex": 0,
+            "timestamp": 1463653193,
             "topics": [
               "0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c",
               "0x000000000000000000000000d8da6bf26964af9d7eed9e03e53415d37aa96045"

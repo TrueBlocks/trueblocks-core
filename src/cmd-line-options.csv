@@ -59,7 +59,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12025,apps,Accounts,list,acctExport,bounds,b,,false,false,true,true,gocmd,switch,<boolean>,report first and last block this address appears
 12030,apps,Accounts,list,acctExport,unripe,u,,false,false,true,true,gocmd,switch,<boolean>,list transactions labeled upripe (i.e. less than 28 blocks old)
 12010,apps,Accounts,list,acctExport,silent,s,,false,false,true,true,gocmd,switch,<boolean>,freshen the monitor only (no reporting)
-12035,apps,Accounts,list,acctExport,first_record,c,1,false,false,true,true,gocmd,flag,<uint64>,the first record to process
+12035,apps,Accounts,list,acctExport,first_record,c,0,false,false,true,true,gocmd,flag,<uint64>,the first record to process
 12040,apps,Accounts,list,acctExport,max_records,e,250,false,false,true,true,gocmd,flag,<uint64>,the maximum number of records to process
 12043,apps,Accounts,list,acctExport,reversed,E,,false,false,true,true,gocmd,switch,<boolean>,produce results in reverse chronological order
 12045,apps,Accounts,list,acctExport,first_block,F,0,false,false,true,true,gocmd,flag,<blknum>,first block to export (inclusive&#44; ignored when freshening)

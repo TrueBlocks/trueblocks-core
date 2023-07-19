@@ -24,6 +24,7 @@ transactions?transactions=0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e
       },
       "timestamp": 1468270685,
       "to": "0xcb1547417575261c4d84cab3e989acfd9f9ee35c",
+      "traces": [],
       "transactionIndex": 4,
       "value": "1000000000000000"
     }

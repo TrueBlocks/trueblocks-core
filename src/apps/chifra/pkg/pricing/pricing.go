@@ -12,7 +12,7 @@ import (
 // PriceUsd returns the price of the asset in USD
 func PriceUsd(chain string, testMode bool, statement *types.SimpleStatement) (price float64, source string, err error) {
 	if statement.IsStableCoin() {
-		r := reporter{
+		r := priceDebugger{
 			address: statement.AssetAddr,
 			symbol:  statement.AssetSymbol,
 		}

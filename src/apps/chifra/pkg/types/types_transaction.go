@@ -18,12 +18,30 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 type StorageSlot struct {
 	Address     base.Address `json:"address"`
 	StorageKeys []base.Hash  `json:"storageKeys"`
+}
+
+type Rewards struct {
+	Block  big.Int `json:"block"`
+	Nephew big.Int `json:"nephew"`
+	TxFee  big.Int `json:"txFee"`
+	Uncle  big.Int `json:"uncle"`
+}
+
+func NewReward(block, nephew, txFee, uncle *big.Int) (Rewards, big.Int) {
+	total := new(big.Int).Add(block, nephew)
+	total.Add(total, txFee)
+	total.Add(total, uncle)
+	return Rewards{
+		Block:  *block,
+		Nephew: *nephew,
+		TxFee:  *txFee,
+		Uncle:  *uncle,
+	}, *total
 }
 
 // EXISTING_CODE
@@ -80,8 +98,10 @@ type SimpleTransaction struct {
 	Value                base.Wei        `json:"value"`
 	raw                  *RawTransaction `json:"-"`
 	// EXISTING_CODE
-	GasCost base.Gas `json:"gasCost"`
-	Message string   `json:"-"`
+	GasCost    base.Gas           `json:"gasCost"`
+	Message    string             `json:"-"`
+	Rewards    *Rewards           `json:"-"`
+	Statements *[]SimpleStatement `json:"statements"`
 	// EXISTING_CODE
 }
 
@@ -98,7 +118,7 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 	var order = []string{}
 
 	// EXISTING_CODE
-	to := hexutil.Encode(s.To.Bytes())
+	to := s.To.Hex()
 	if to == "0x0000000000000000000000000000000000000000" {
 		to = "0x0" // weird special case to preserve what RPC does
 	}
@@ -129,7 +149,6 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 		"hash",
 		"isError",
 		"encoding",
-		"compressedTx",
 	}
 
 	if s.Date == "" {
@@ -142,6 +161,9 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 	// TODO: Shouldn't this use the SimpleFunction model - the answer is yes?
 	var articulatedTx map[string]interface{}
 	isArticulated := extraOptions["articulate"] == true && s.ArticulatedTx != nil
+	if isArticulated && format != "json" {
+		order = append(order, "compressedTx")
+	}
 	if isArticulated {
 		articulatedTx = map[string]interface{}{
 			"name": s.ArticulatedTx.Name,
@@ -161,6 +183,13 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 	}
 
 	if format == "json" {
+		if s.Statements != nil {
+			statements := make([]map[string]any, 0, len(*s.Statements))
+			for _, statement := range *s.Statements {
+				statements = append(statements, statement.Model(verbose, format, extraOptions).Data)
+			}
+			model["statements"] = statements
+		}
 		model["blockHash"] = s.BlockHash
 		if s.Nonce > 0 {
 			model["nonce"] = s.Nonce
@@ -168,17 +197,16 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 		model["value"] = s.Value.String()
 		model["gas"] = s.Gas
 
-		// TODO: this value could be created when RPC is queried and cached
-		// if s.Value > 0 {
 		model["ether"] = utils.FormattedValue(s.Value, true, 18)
-		// }
 		if s.MaxFeePerGas > 0 {
 			model["maxFeePerGas"] = s.MaxFeePerGas
 		}
 		if s.MaxPriorityFeePerGas > 0 {
 			model["maxPriorityFeePerGas"] = s.MaxPriorityFeePerGas
 		}
-		model["input"] = s.Input
+		if len(s.Input) > 2 {
+			model["input"] = s.Input
+		}
 		if s.HasToken {
 			model["hasToken"] = s.HasToken
 		}
@@ -186,8 +214,7 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 			model["isError"] = s.IsError
 		}
 
-		// model["receipt"] = nil
-		if s.Receipt != nil {
+		if s.Receipt != nil && !s.Receipt.IsDefault() {
 			contractAddress := s.Receipt.ContractAddress.Hex()
 
 			// TODO: this should not be hardcoded here. We have tslib.GetSpecials(), but there
@@ -211,10 +238,12 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 			logs := make([]map[string]any, 0, len(s.Receipt.Logs))
 			for _, log := range s.Receipt.Logs {
 				logModel := map[string]any{
-					"address":  log.Address.Hex(),
-					"logIndex": log.LogIndex,
-					"topics":   log.Topics,
-					"data":     log.Data,
+					"address":   log.Address.Hex(),
+					"logIndex":  log.LogIndex,
+					"topics":    log.Topics,
+					"data":      log.Data,
+					"timestamp": s.Timestamp,
+					"date":      utils.FormattedDate(s.Timestamp),
 				}
 				if extraOptions["articulate"] == true && log.ArticulatedLog != nil {
 					inputModels := ParametersToMap(log.ArticulatedLog.Inputs)
@@ -228,6 +257,8 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 			}
 			receiptModel["logs"] = logs
 			model["receipt"] = receiptModel
+		} else {
+			model["receipt"] = map[string]interface{}{}
 		}
 
 		if extraOptions["traces"] == true && len(s.Traces) > 0 {
@@ -236,6 +267,8 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 				traceModels = append(traceModels, trace.Model(verbose, format, extraOptions).Data)
 			}
 			model["traces"] = traceModels
+		} else {
+			model["traces"] = make([]map[string]any, 0)
 		}
 
 		if isArticulated {

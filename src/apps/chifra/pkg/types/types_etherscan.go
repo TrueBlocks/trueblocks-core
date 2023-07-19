@@ -140,7 +140,7 @@ func (s *SimpleEtherscan) Model(verbose bool, format string, extraOptions map[st
 		if strings.HasPrefix(a, "0x") && len(a) == 42 {
 			model["contractAddress"] = a
 		}
-		if len(s.Input) > 0 && s.Input != "deprecated" {
+		if len(s.Input) > 2 && s.Input != "deprecated" {
 			model["input"] = s.Input
 		}
 	} else {
@@ -149,7 +149,9 @@ func (s *SimpleEtherscan) Model(verbose bool, format string, extraOptions map[st
 		if s.Input == "deprecated" {
 			s.Input = "0x"
 		}
-		model["input"] = s.Input
+		if len(s.Input) > 2 {
+			model["input"] = s.Input
+		}
 	}
 
 	return Model{

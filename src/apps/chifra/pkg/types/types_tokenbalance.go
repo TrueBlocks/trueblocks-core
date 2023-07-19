@@ -74,18 +74,15 @@ func (s *SimpleTokenBalance) Model(verbose bool, format string, extraOptions map
 
 	// EXISTING_CODE
 	name := SimpleName{}
+	name.Name = "Unknown"
 	if extraOptions["namesMap"] != nil {
 		name = extraOptions["namesMap"].(map[base.Address]SimpleName)[s.Address]
-	}
-	if name.Address.Hex() == "0x0" {
-		name.Name = "Unknown"
-		name.Symbol = name.Address.Hex()[:6]
 	}
 	if name.Decimals == 0 {
 		name.Decimals = 18
 	}
 	if name.Symbol == "" {
-		name.Symbol = name.Address.Hex()[:6]
+		name.Symbol = name.Address.Prefix(6)
 	}
 
 	wanted := extraOptions["parts"].([]string)
@@ -112,16 +109,24 @@ func (s *SimpleTokenBalance) Model(verbose bool, format string, extraOptions map
 			model["balance"] = utils.FormattedValue(s.Balance, true, int(name.Decimals))
 		case "blockNumber":
 			model["blockNumber"] = s.BlockNumber
+		case "date":
+			model["date"] = s.Date()
 		case "decimals":
 			model["decimals"] = name.Decimals
+		case "diff":
+			model["diff"] = utils.FormattedValue(s.Diff, true, int(name.Decimals))
 		case "holder":
 			model["holder"] = s.Holder
 		case "name":
 			model["name"] = name.Name
 		case "symbol":
 			model["symbol"] = name.Symbol
+		case "timestamp":
+			model["timestamp"] = s.Timestamp
 		case "totalSupply":
 			model["totalSupply"] = utils.FormattedValue(s.TotalSupply, true, int(name.Decimals))
+		case "transactionIndex":
+			model["transactionIndex"] = s.TransactionIndex
 		case "units":
 			model["units"] = utils.FormattedValue(s.Balance, false, int(name.Decimals)) // present underlying units
 		case "version":
@@ -151,4 +156,8 @@ func (s *SimpleTokenBalance) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
+func (s *SimpleTokenBalance) Date() string {
+	return utils.FormattedDate(s.Timestamp)
+}
+
 // EXISTING_CODE
