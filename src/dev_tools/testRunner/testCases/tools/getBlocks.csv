@@ -66,7 +66,9 @@ on       ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_both        ,y    ,blo
 
 on       ,both ,fast  ,blocks ,tools/getBlocks ,no_uniq_uncles        ,y    ,blocks = 4012000-4012001 & uniq & uncles
 on       ,both ,fast  ,blocks ,tools/getBlocks ,no_cache_uncles       ,y    ,blocks = 4012000-4012001 & cache & uncles
-on       ,both ,fast  ,blocks ,tools/getBlocks ,no_cache_uniq         ,y    ,blocks = 4012000-4012001 & cache & uniq
+on       ,both ,fast  ,blocks ,tools/getBlocks ,decache         ,y    ,blocks = 7001001 & decache
+on       ,both ,fast  ,blocks ,tools/getBlocks ,cache_uniq         ,y    ,blocks = 7001001 & cache & uniq
+on       ,both ,fast  ,blocks ,tools/getBlocks ,cached_uniq         ,y    ,blocks = 7001001 & uniq
 on       ,both ,fast  ,blocks ,tools/getBlocks ,no_trace_hashes       ,y    ,blocks = 4012000-4012001 & traces & hashes
 on       ,both ,fast  ,blocks ,tools/getBlocks ,no_trace_uniq         ,y    ,blocks = 4012000-4012001 & traces & uniq
 on       ,both ,fast  ,blocks ,tools/getBlocks ,bigrange_not_logs     ,y    ,blocks = 4012000-4012001 & big_range = 100
