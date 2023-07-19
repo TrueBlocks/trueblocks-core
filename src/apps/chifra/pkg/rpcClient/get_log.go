@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -86,13 +87,14 @@ func GetLogCountByBlockNumber(chain string, bn uint64) (uint64, error) {
 }
 
 func GetLogsByTransactionId(chain string, bn, txid uint64) ([]types.SimpleLog, error) {
+	var store *cacheNew.Store = cacheNew.NoCache
 	blockTs := rpc.GetBlockTimestamp(chain, bn)
 	receipt, err := GetTransactionReceipt(chain, ReceiptQuery{
 		Bn:      bn,
 		Txid:    txid,
 		NeedsTs: true,
 		Ts:      blockTs,
-	})
+	}, store)
 	if err != nil {
 		return []types.SimpleLog{}, err
 	}

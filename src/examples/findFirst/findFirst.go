@@ -31,11 +31,10 @@ func main() {
 var chain = "mainnet"
 
 func slowWay() {
-	var cache *cacheNew.Store
 	start := time.Now()
 	bar := logger.NewBarWithStart("Getting stuff", true, 40000, 60000)
 	for i := 40000; i < 60000; i++ {
-		if block, err := rpcClient.GetBlockByNumber(chain, base.Blknum(i), cache); err != nil {
+		if block, err := rpcClient.GetBlockByNumber(chain, base.Blknum(i), cacheNew.NoCache); err != nil {
 			fmt.Println(err)
 		} else {
 			if len(block.Transactions) > 0 {
@@ -52,7 +51,6 @@ func slowWay() {
 }
 
 func fastWay() {
-	var cache *cacheNew.Store
 	bar := logger.NewBarWithStart("Getting stuff", true, 40000, 60000)
 
 	var TxIds []identifiers.Identifier
@@ -69,7 +67,7 @@ func fastWay() {
 		var firstBlock types.SimpleBlock[string]
 		firstBlock.BlockNumber = utils.NOPOS
 		iterateFunc := func(key identifiers.ResolvedId, value *bool) error {
-			if theBlock, err := rpcClient.GetBlockByNumber(chain, base.Blknum(key.BlockNumber), cache); err != nil {
+			if theBlock, err := rpcClient.GetBlockByNumber(chain, base.Blknum(key.BlockNumber), cacheNew.NoCache); err != nil {
 				return err
 			} else {
 				if len(theBlock.Transactions) > 0 {
