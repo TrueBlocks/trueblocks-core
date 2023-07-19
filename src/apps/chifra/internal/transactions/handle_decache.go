@@ -24,9 +24,14 @@ func (opts *TransactionsOptions) HandleDecache() error {
 			continue
 		}
 		for _, app := range txIds {
-			toRemove = append(toRemove, &types.SimpleTransaction{
+			tx := &types.SimpleTransaction{
 				BlockNumber:      uint64(app.BlockNumber),
 				TransactionIndex: uint64(app.TransactionIndex),
+			}
+			toRemove = append(toRemove, tx)
+			toRemove = append(toRemove, &types.SimpleTraceGroup{
+				BlockNumber:      tx.BlockNumber,
+				TransactionIndex: int(tx.TransactionIndex),
 			})
 		}
 	}
@@ -48,9 +53,7 @@ func (opts *TransactionsOptions) HandleDecache() error {
 		return true
 	}
 
-	if err := cache.Decache(toRemove, processorFunc); err != nil {
-		return err
-	}
+	cache.Decache(toRemove, processorFunc)
 
 	if itemsSeen == 0 {
 		logger.Info("No items matching the query were found in the cache.", strings.Repeat(" ", 60))
